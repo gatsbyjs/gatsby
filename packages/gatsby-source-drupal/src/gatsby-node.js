@@ -1,15 +1,18 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-const { URL } = require(`url`)
-const { nodeFromData } = require(`./normalize`)
+
+const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const asyncPool = require(`tiny-async-pool`)
-const micro = require(`micro`)
-const proxy = require(`http-proxy-middleware`)
+const bodyParser = require(`body-parser`)
+
+const backRefsNamesLookup = new WeakMap()
+const referencedNodesLookup = new WeakMap()
 
 exports.sourceNodes = async (
   { actions, store, cache, createNodeId, createContentDigest, reporter },
-  {
+  pluginOptions
+) => {
+  let {
     baseUrl,
     apiBase,
     basicAuth,
@@ -17,9 +20,7 @@ exports.sourceNodes = async (
     headers,
     params,
     concurrentFileRequests,
-    preview,
-  }
-) => {
+  } = pluginOptions
   const { createNode } = actions
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
   const downloadingFilesActivity = reporter.activityTimer(
@@ -80,6 +81,7 @@ exports.sourceNodes = async (
 
         let d
         try {
+          console.log(`get`, url, params)
           d = await axios.get(url, {
             auth: basicAuth,
             headers,
@@ -117,96 +119,22 @@ exports.sourceNodes = async (
 
   drupalFetchActivity.end()
 
-  // Make list of all IDs so we can check against that when creating
-  // relationships.
-  const ids = {}
+  const nodes = new Map()
+
+  // first pass - create basic nodes
   _.each(allData, contentType => {
     if (!contentType) return
-    _.each(contentType.data, datum => {
-      ids[datum.id] = true
-    })
-  })
-
-  // Create back references
-  const backRefs = {}
-
-  /**
-   * Adds back reference to linked entity, so we can later
-   * add node link.
-   */
-  const addBackRef = (linkedId, sourceDatum) => {
-    if (ids[linkedId]) {
-      if (!backRefs[linkedId]) {
-        backRefs[linkedId] = []
-      }
-      backRefs[linkedId].push({
-        id: sourceDatum.id,
-        type: sourceDatum.type,
-      })
-    }
-  }
-
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (datum.relationships) {
-        _.each(datum.relationships, (v, k) => {
-          if (!v.data) return
-
-          if (_.isArray(v.data)) {
-            v.data.forEach(data => addBackRef(data.id, datum))
-          } else {
-            addBackRef(v.data.id, datum)
-          }
-        })
-      }
-    })
-  })
-
-  // Process nodes
-  const nodes = []
-  _.each(allData, contentType => {
-    if (!contentType) return
-
     _.each(contentType.data, datum => {
       const node = nodeFromData(datum, createNodeId)
+      nodes.set(node.id, node)
+    })
+  })
 
-      node.relationships = {}
-
-      // Add relationships
-      if (datum.relationships) {
-        _.each(datum.relationships, (v, k) => {
-          if (!v.data) return
-          if (_.isArray(v.data) && v.data.length > 0) {
-            // Create array of all ids that are in our index
-            node.relationships[`${k}___NODE`] = _.compact(
-              v.data.map(data => (ids[data.id] ? createNodeId(data.id) : null))
-            )
-          } else if (ids[v.data.id]) {
-            node.relationships[`${k}___NODE`] = createNodeId(v.data.id)
-          }
-        })
-      }
-
-      // Add back reference relationships.
-      // Back reference relationships will need to be arrays,
-      // as we can't control how if node is referenced only once.
-      if (backRefs[datum.id]) {
-        backRefs[datum.id].forEach(ref => {
-          if (!node.relationships[`${ref.type}___NODE`]) {
-            node.relationships[`${ref.type}___NODE`] = []
-          }
-
-          node.relationships[`${ref.type}___NODE`].push(createNodeId(ref.id))
-        })
-      }
-
-      if (_.isEmpty(node.relationships)) {
-        delete node.relationships
-      }
-
-      node.internal.contentDigest = createContentDigest(node)
-      nodes.push(node)
+  // second pass - handle relationships and back references
+  nodes.forEach(node => {
+    handleReferences(node, {
+      getNode: nodes.get.bind(nodes),
+      createNodeId,
     })
   })
 
@@ -214,158 +142,172 @@ exports.sourceNodes = async (
   downloadingFilesActivity.start()
 
   // Download all files (await for each pool to complete to fix concurrency issues)
-  await asyncPool(concurrentFileRequests, nodes, async node => {
-    // If we have basicAuth credentials, add them to the request.
-    const auth =
-      typeof basicAuth === `object`
-        ? {
-            htaccess_user: basicAuth.username,
-            htaccess_pass: basicAuth.password,
-          }
-        : {}
-    let fileNode = null
-    let fileUrl = ``
-    let url = {}
-
-    if (node.internal.type === `files` || node.internal.type === `file__file`) {
-      fileUrl = node.url
-
-      // If node.uri is an object
-      if (typeof node.uri === `object`) {
-        // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
-        fileUrl = node.uri.url
-      }
-
-      // Resolve w/ baseUrl if node.uri isn't absolute.
-      url = new URL(fileUrl, baseUrl)
-
-      // Create the remote file from the given node
-      try {
-        fileNode = await createRemoteFileNode({
-          url: url.href,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          parentNodeId: node.id,
-          auth,
-        })
-      } catch (err) {
-        reporter.error(err)
-      }
-
-      // If the fileNode exists set the node ID of the local file
-      if (fileNode) {
-        node.localFile___NODE = fileNode.id
-      }
+  await asyncPool(
+    concurrentFileRequests,
+    [...nodes.values()].filter(isFileNode),
+    async node => {
+      await downloadFile(
+        { node, store, cache, createNode, createNodeId },
+        pluginOptions
+      )
     }
-  })
+  )
 
   downloadingFilesActivity.end()
 
   // Create each node
-  for (const node of nodes) {
+  for (const node of nodes.values()) {
+    node.internal.contentDigest = createContentDigest(node)
     createNode(node)
   }
+}
 
-  if (process.env.NODE_ENV === `development` && preview) {
-    const server = micro(async (req, res) => {
-      const request = await micro.json(req)
+exports.onCreateDevServer = (
+  { app, createNodeId, getNode, actions, store, cache, createContentDigest },
+  pluginOptions
+) => {
+  app.use(
+    `/___updatePreview/`,
+    bodyParser.text({
+      type: `application/json`,
+    }),
+    async (req, res) => {
+      const { createNode } = actions
 
-      const nodeToUpdate = JSON.parse(request).data
+      // we are missing handling of node deletion
+      const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
 
-      const node = nodeFromData(nodeToUpdate, createNodeId)
-      node.relationships = {}
-      // handle relationships
-      if (nodeToUpdate.relationships) {
-        _.each(nodeToUpdate.relationships, (value, key) => {
-          if (!value.data || (_.isArray(value.data) && !value.data.length))
-            return
-          if (_.isArray(value.data) && value.data.length > 0) {
-            value.data.forEach(data => addBackRef(data.id, nodeToUpdate))
-            node.relationships[`${key}___NODE`] = _.compact(
-              value.data.map(data => createNodeId(data.id))
-            )
-          } else {
-            addBackRef(value.data.id, nodeToUpdate)
-            node.relationships[`${key}___NODE`] = createNodeId(value.data.id)
-          }
+      const newNode = nodeFromData(nodeToUpdate, createNodeId)
+
+      const nodesToUpdate = [newNode]
+
+      handleReferences(newNode, {
+        getNode,
+        createNodeId,
+      })
+
+      const oldNode = getNode(newNode.id)
+      if (oldNode) {
+        // copy over back references from old node
+        const backRefsNames = backRefsNamesLookup.get(oldNode)
+        if (backRefsNames) {
+          backRefsNamesLookup.set(newNode, backRefsNames)
+          backRefsNames.forEach(backRefFieldName => {
+            newNode.relationships[backRefFieldName] =
+              oldNode.relationships[backRefFieldName]
+          })
+        }
+
+        const oldNodeReferencedNodes = referencedNodesLookup.get(oldNode)
+        const newNodeReferencedNodes = referencedNodesLookup.get(newNode)
+
+        // see what nodes are no longer referenced and remove backRefs from them
+        const removedReferencedNodes = _.difference(
+          oldNodeReferencedNodes,
+          newNodeReferencedNodes
+        ).map(id => getNode(id))
+
+        nodesToUpdate.push(...removedReferencedNodes)
+
+        const nodeFieldName = `${newNode.internal.type}___NODE`
+        removedReferencedNodes.forEach(referencedNode => {
+          referencedNode.relationships[
+            nodeFieldName
+          ] = referencedNode.relationships[nodeFieldName].filter(
+            id => id !== newNode.id
+          )
         })
-      }
-      // handle backRefs
-      if (backRefs[nodeToUpdate.id]) {
-        backRefs[nodeToUpdate.id].forEach(ref => {
-          if (!node.relationships[`${ref.type}___NODE`]) {
-            node.relationships[`${ref.type}___NODE`] = []
-          }
-          node.relationships[`${ref.type}___NODE`].push(createNodeId(ref.id))
-        })
+
+        // see what nodes are newly referenced, and make sure to call `createNode` on them
+        const addedReferencedNodes = _.difference(
+          newNodeReferencedNodes,
+          oldNodeReferencedNodes
+        ).map(id => getNode(id))
+
+        nodesToUpdate.push(...addedReferencedNodes)
       }
 
-      // handle file downloads
-      let fileNode
-      if (
-        node.internal.type === `files` ||
-        node.internal.type === `file__file`
-      ) {
-        try {
-          let fileUrl = node.url
-          if (typeof node.uri === `object`) {
-            // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
-            fileUrl = node.uri.url
-          }
-          // Resolve w/ baseUrl if node.uri isn't absolute.
-          const url = new URL(fileUrl, baseUrl)
-          // If we have basicAuth credentials, add them to the request.
-          const auth =
-            typeof basicAuth === `object`
-              ? {
-                  htaccess_user: basicAuth.username,
-                  htaccess_pass: basicAuth.password,
-                }
-              : {}
-          fileNode = await createRemoteFileNode({
-            url: url.href,
+      // download file
+      if (isFileNode(newNode)) {
+        await downloadFile(
+          {
+            node: newNode,
             store,
             cache,
             createNode,
             createNodeId,
-            parentNodeId: node.id,
-            auth,
-          })
-        } catch (e) {
-          // Ignore
-        }
-        if (fileNode) {
-          node.localFile___NODE = fileNode.id
-        }
+          },
+          pluginOptions
+        )
       }
 
-      node.internal.contentDigest = createContentDigest(node)
-      createNode(node)
-      console.log(`\x1b[32m`, `Updated node: ${node.id}`)
-
-      res.end(`ok`)
-    })
-    server.listen(
-      8080,
-      console.log(
-        `\x1b[32m`,
-        `listening to changes for live preview at route /___updatePreview`
-      )
-    )
-  }
+      for (const node of nodesToUpdate) {
+        if (node.internal.owner) {
+          delete node.internal.owner
+        }
+        node.internal.contentDigest = createContentDigest(node)
+        createNode(node)
+        console.log(`\x1b[32m`, `Updated node: ${node.id}`)
+      }
+    }
+  )
 }
 
-exports.onCreateDevServer = ({ app }) => {
-  app.use(
-    `/___updatePreview/`,
-    proxy({
-      target: `http://localhost:8080`,
-      secure: false,
-      pathRewrite: {
-        "/___updatePreview/": ``,
-      },
+const handleReferences = (node, { getNode, createNodeId }) => {
+  const relationships = node.relationships
+
+  if (node.drupal_relationships) {
+    const referencedNodes = []
+    _.each(node.drupal_relationships, (v, k) => {
+      if (!v.data) return
+      const nodeFieldName = `${k}___NODE`
+      if (_.isArray(v.data)) {
+        relationships[nodeFieldName] = _.compact(
+          v.data.map(data => {
+            const referencedNodeId = createNodeId(data.id)
+            if (!getNode(referencedNodeId)) {
+              return null
+            }
+
+            referencedNodes.push(referencedNodeId)
+            return referencedNodeId
+          })
+        )
+      } else {
+        const referencedNodeId = createNodeId(v.data.id)
+        if (getNode(referencedNodeId)) {
+          relationships[nodeFieldName] = referencedNodeId
+          referencedNodes.push(referencedNodeId)
+        }
+      }
     })
-  )
+
+    delete node.drupal_relationships
+    referencedNodesLookup.set(node, referencedNodes)
+    if (referencedNodes.length) {
+      const nodeFieldName = `${node.internal.type}___NODE`
+      referencedNodes.forEach(nodeID => {
+        const referencedNode = getNode(nodeID)
+        if (!referencedNode.relationships[nodeFieldName]) {
+          referencedNode.relationships[nodeFieldName] = []
+        }
+
+        if (!referencedNode.relationships[nodeFieldName].includes(node.id)) {
+          referencedNode.relationships[nodeFieldName].push(node.id)
+        }
+
+        let backRefsNames = backRefsNamesLookup.get(referencedNode)
+        if (!backRefsNames) {
+          backRefsNames = []
+          backRefsNamesLookup.set(referencedNode, backRefsNames)
+        }
+
+        if (!backRefsNames.includes(nodeFieldName)) {
+          backRefsNames.push(nodeFieldName)
+        }
+      })
+    }
+  }
+
+  node.relationships = relationships
 }
