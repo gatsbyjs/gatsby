@@ -52,7 +52,7 @@ If you want to run Cypress in Continuous Integration (CI) you have to use `cypre
     "develop": "gatsby develop",
     "cy:open": "cypress open",
     "cy:run": "cypress run", // highlight-line
-    "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open"
+    "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
     "test:e2e:ci": "start-server-and-test develop http://localhost:8000 cy:run" // highlight-line
   }
 }

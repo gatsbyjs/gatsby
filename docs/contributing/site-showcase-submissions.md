@@ -73,30 +73,24 @@ Categories currently include both _type of site_ (structure) and the _content of
 - Documentation
 - eCommerce
 - Education
-- Gallery
 - Portfolio
-- (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
+- Gallery
+- See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
 
 #### Content of site:
 
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web development.
 
 - Agency
-- Cinema
 - Education
 - Entertainment
 - Finance
 - Food
-- Health & Wellness
 - Healthcare
-- Hosting
-- Gallery
 - Government
-- Magazine
 - Marketing
-- Miscellaneous
 - Music
-- News
+- Media
 - Nonprofit
 - Open Source
 - Photography
@@ -105,7 +99,11 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 - Science
 - Technology
 - Web Development
-- (feel free to create new ones after checking to make sure the tag you want doesn't already exist)
+- See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
+
+#### Adding new tag
+
+If you think that there is something missing in the tag list, you can update [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) and add a new one. However, we encourage you to use existing tags.
 
 ### Note on Featured Sites
 

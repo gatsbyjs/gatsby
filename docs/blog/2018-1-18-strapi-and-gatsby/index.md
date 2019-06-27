@@ -209,7 +209,7 @@ Great job, our API is ready! We can start developing the static website.
 _Important links from Video:_
 
 - [Official Gatsby Documentation](/docs/)
-- [Gatsby PWA support](/offline)
+- [Gatsby PWA support](/packages/gatsby-plugin-offline/)
 
 #### Install Gatsby
 
