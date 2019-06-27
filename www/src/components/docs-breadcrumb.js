@@ -1,9 +1,8 @@
 import React from "react"
-import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
-import { mediaQueries, space, colors, fontSizes } from "../utils/presets"
+import { mediaQueries, space, fontSizes } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const Separator = ({ character = `>` }) => (
