@@ -101,6 +101,7 @@ class Runner {
     const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
     let files = [
       path.join(this.base, `src`),
+      path.join(this.base, `node_modules`),
       path.join(this.base, `.cache`, `fragments`),
     ]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
@@ -114,14 +115,15 @@ class Runner {
         []
       )
     files = files.filter(d => !d.match(/\.d\.ts$/))
+    files = files.filter(d => !d.match(/gatsby/))
     files = files.map(normalize)
 
     // Ensure all page components added as they're not necessarily in the
-    // pages directory e.g. a plugin could add a page component.  Plugins
+    // pages directory e.g. a plugin could add a page component. Plugins
     // *should* copy their components (if they add a query) to .cache so that
-    // our babel plugin to remove the query on building is active (we don't
-    // run babel on code in node_modules). Otherwise the component will throw
-    // an error in the browser of "graphql is not defined".
+    // our babel plugin to remove the query on building is active.
+    // Otherwise the component will throw an error in the browser of
+    // "graphql is not defined".
     files = files.concat(
       Array.from(store.getState().components.keys(), c => normalize(c))
     )
