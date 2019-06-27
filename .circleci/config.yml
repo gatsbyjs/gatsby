@@ -221,6 +221,7 @@ workflows:
   build-test:
     jobs:
       - bootstrap
+      - windows_unit_tests
       - lint:
           requires:
             - bootstrap
