@@ -164,3 +164,5 @@ Some things we do in order to create an inclusive, welcoming community include:
 - [Active mentorship](/contributing/pair-programming/)
 
 We’ve built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
+
+[See more here](https://www.youtube.com/watch?v=8ARA7AD4yPs&feature=youtu.be&list=PLz8Iz-Fnk_eQGt4-VFFCXYuYcuKaw4F07)

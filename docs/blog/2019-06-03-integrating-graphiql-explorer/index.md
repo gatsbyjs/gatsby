@@ -12,7 +12,7 @@ Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means th
 
 <figure>
   <video controls="controls" autoplay="false">
-    <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+    <source type="video/mp4" src="/graphiql-explore.mp4" />
     <p>Your browser does not support the video element.</p>
   </video>
   <figcaption>GraphiQL demo</figcaption>
@@ -30,7 +30,7 @@ We often hear that many developers' first usage of GraphQL is through Gatsby. Gr
 
 <figure>
   <video controls="controls" autoplay="false">
-    <source type="video/mp4" src="./graphiql-explorer-demo.mp4"></source>
+    <source type="video/mp4" src="./graphiql-explorer-demo.mp4" />
     <p>Your browser does not support the video element.</p>
   </video>
   <figcaption>GraphiQL Explorer introduction demo</figcaption>
@@ -44,7 +44,7 @@ Improvements to on-boarding users new to GraphQL isn't the only goal of integrat
 
 <figure>
   <video controls="controls" autoplay="false">
-    <source type="video/mp4" src="./graphiql-explorer-union-demo.mp4"></source>
+    <source type="video/mp4" src="./graphiql-explorer-union-demo.mp4" />
     <p>Your browser does not support the video element.</p>
   </video>
   <figcaption>GraphiQL Explorer union types support</figcaption>

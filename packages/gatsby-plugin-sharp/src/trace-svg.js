@@ -118,9 +118,13 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 
     const optionsSVG = _.defaults(args, defaultArgs)
 
+    // `srcset` attribute rejects URIs with literal spaces
+    const encodeSpaces = str => str.replace(/ /gi, `%20`)
+
     return trace(tmpFilePath, optionsSVG)
       .then(optimize)
       .then(svgToMiniDataURI)
+      .then(encodeSpaces)
   } catch (e) {
     throw e
   }

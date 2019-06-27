@@ -77,7 +77,9 @@ export const pageQuery = graphql`
       }
     }
     ssrAPIs: allGatsbyApiCall(filter: { group: { eq: "SSRAPI" } }) {
-      ...ApiCallFragment
+      group(field: name) {
+        ...ApiCallFragment
+      }
     }
   }
 `

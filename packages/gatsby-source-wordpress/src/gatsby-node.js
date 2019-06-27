@@ -24,7 +24,15 @@ let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId, createContentDigest },
+  {
+    actions,
+    getNode,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+    reporter,
+  },
   {
     baseUrl,
     protocol,
@@ -110,6 +118,9 @@ exports.sourceNodes = async (
   // Creates links between tags/categories and taxonomies.
   entities = normalize.mapTagsCategoriesToTaxonomies(entities)
 
+  // Normalize menu items
+  entities = normalize.normalizeMenuItems(entities)
+
   // Creates links from entities to media nodes
   entities = normalize.mapEntitiesToMedia(entities)
 
@@ -123,6 +134,7 @@ exports.sourceNodes = async (
     touchNode,
     getNode,
     _auth,
+    reporter,
   })
 
   // Creates links between elements and parent element.

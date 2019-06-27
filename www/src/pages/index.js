@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { colors, space, mediaQueries } from "../utils/presets"
+import { colors, space, mediaQueries, fontWeights } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -120,8 +120,10 @@ class IndexRoute extends React.Component {
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container hasSideBar={false}>
-              <div css={{ textAlign: `center` }}>
-                <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
+              <section css={{ textAlign: `center` }}>
+                <h1 css={{ fontWeight: fontWeights[1], marginTop: 0 }}>
+                  Curious yet?
+                </h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
                 </FuturaParagraph>
@@ -135,7 +137,7 @@ class IndexRoute extends React.Component {
                 >
                   Get Started
                 </Button>
-              </div>
+              </section>
             </Container>
           </div>
 

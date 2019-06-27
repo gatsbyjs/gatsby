@@ -77,7 +77,9 @@ export const pageQuery = graphql`
       }
     }
     browserAPIs: allGatsbyApiCall(filter: { group: { eq: "BrowserAPI" } }) {
-      ...ApiCallFragment
+      group(field: name) {
+        ...ApiCallFragment
+      }
     }
   }
 `

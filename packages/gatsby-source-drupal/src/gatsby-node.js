@@ -273,11 +273,27 @@ const handleReferences = (node, { getNode, createNodeId }) => {
             return referencedNodeId
           })
         )
+
+        const meta = _.compact(
+          v.data.map(data => (!_.isEmpty(data.meta) ? data.meta : null))
+        )
+        // If there's meta on the field and it's not an existing/internal one
+        // create a new node's field with that meta. It can't exist on both
+        // @see https://jsonapi.org/format/#document-resource-object-fields
+        if (!_.isEmpty(meta) && !(k in node)) {
+          node[k] = meta
+        }
       } else {
         const referencedNodeId = createNodeId(v.data.id)
         if (getNode(referencedNodeId)) {
           relationships[nodeFieldName] = referencedNodeId
           referencedNodes.push(referencedNodeId)
+        }
+        // If there's meta on the field and it's not an existing/internal one
+        // create a new node's field with that meta. It can't exist on both
+        // @see https://jsonapi.org/format/#document-resource-object-fields
+        if (!_.isEmpty(v.data.meta) && !(k in node)) {
+          node[k] = v.data.meta
         }
       }
     })

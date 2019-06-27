@@ -261,14 +261,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
-    fromPath: `/docs/gatsby-in-the-enterprise/`,
-    toPath: `/docs/building-in-the-enterprise/`,
+    fromPath: `/docs/advanced-tutorials/`,
+    toPath: `/tutorial/additional-tutorials/`,
     isPermanent: true,
   })
-
   createRedirect({
-    fromPath: `/docs/advanced-tutorials/`,
-    toPath: `/tutorial/advanced-tutorials/`,
+    fromPath: `/tutorial/advanced-tutorials/`,
+    toPath: `/tutorial/additional-tutorials/`,
     isPermanent: true,
   })
   createRedirect({

@@ -302,9 +302,8 @@ import { css } from "@emotion/core"
 import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-
+// highlight-start
 export default ({ children }) => {
-  // highlight-start
   const data = useStaticQuery(
     graphql`
       query {
@@ -316,8 +315,6 @@ export default ({ children }) => {
       }
     `
   )
-  // highlight-end
-  // highlight-start
   return (
     // highlight-end
     <div
@@ -351,8 +348,8 @@ export default ({ children }) => {
     </div>
     // highlight-start
   )
-  // highlight-end
 }
+// highlight-end
 ```
 
 Another success! 🎉

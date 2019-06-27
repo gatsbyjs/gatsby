@@ -60,7 +60,7 @@ If you find yourself wanting to teach the reader how to accomplish a series of r
 
 [Tutorials](#tutorial-template) guide users through a series of related tasks they can string together successfully. Listing prerequisites up front and limiting distractions or links away from the instructions can make a focused tutorial.
 
-[Recipes](#recipe-template) are a happy medium between step-by-step tutorials and crawling the full reference guides, by providing step-by-step guidance for short, common Gatsby tasks.
+[Recipes](#recipe-template) are a happy medium between step-by-step tutorials and crawling the full reference guides, by providing step-by-step guidance for short, common Gatsby tasks. They live in the Recipes section of the docs.
 
 ### How to choose a reference guide topic?
 
@@ -195,31 +195,57 @@ Assume the reader has basic programming knowledge like the command line, code ed
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. A recipe should include requirements and a few short steps to complete a task, listing actionable instructions inline and omitting everything else.
+[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live on the [Recipes page](/docs/recipes/) in the docs, the source of which can be found in [`docs/docs/recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) in the GitHub repo.
 
-Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability.
+A recipe should list requirements and include a few short instructions to complete a task. It should omit boilerplate and list only directly related, actionable instructions inline. Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
 
 The components of a recipe are:
 
 - The name of the recipe, which should describe a single task
-- Requirements and prerequisites
+- A list of requirements and prerequisites
 - Step-by-step directions
 - A link to a working example
 
-Recipes should be short. If you're finding a recipe is becoming too long to fit on the Docs Recipes page due to including many prerequisites or steps, consider writing a tutorial instead.
+Recipes should be short. This is accomplished by limiting steps to what is unique to the task at-hand; prerequisites and requirements should be mentioned but not include install steps for things like npm or Gatsby CLI. Linking to full reference guide, tutorial, or a working example can complete the loop for anyone who needs more help.
+
+If you're finding a recipe is becoming too long to fit on the Docs Recipes page due to including many prerequisites or steps, consider writing a tutorial instead.
+
+### Recipe categories
+
+Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an h2 heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
+
+Recipes should fall into these categories to start (suggest your idea in a GitHub issue!):
+
+- Pages/Layouts
+- Styling
+- Using a starter
+- Using themes
+- Sourcing data
+- Querying data
+- Images
+- Transforming data
+- Deploying
+
+Here's a template for a recipe category:
+
+```markdown:title=docs/docs/recipes.md
+## Category name
+```
 
 ### Recipe template
 
-````markdown
-## Recipe name
+When writing a recipe, try to include each of the below items wherever relevant.
 
-### Requirements
+````markdown:title=docs/docs/recipes.md
+### Recipe name
+
+#### Requirements
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
 - The Gatsby <Link /> component
 - The Gatsby CLI method `gatsby develop`
 
-### Directions
+#### Directions
 
 1. Open the index page component (src/pages/index.js), import the <Link />
    component from Gatsby, add a <Link /> component above the header, and give
@@ -240,8 +266,10 @@ export default () => (
 2. Run `gatsby develop` and navigate to the index page. You should have a link
    that takes you to the contact page when clicked!
 
-// optional:
-For a working example, check out **this example.**
+#### Related links
+
+- Any live demos
+- Other materials to check out
 ````
 
 ## Tutorials
