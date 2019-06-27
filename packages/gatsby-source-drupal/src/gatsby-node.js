@@ -81,7 +81,6 @@ exports.sourceNodes = async (
 
         let d
         try {
-          console.log(`get`, url, params)
           d = await axios.get(url, {
             auth: basicAuth,
             headers,
