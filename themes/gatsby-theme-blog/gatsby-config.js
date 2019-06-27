@@ -44,15 +44,15 @@ module.exports = options => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          path: options.contentDir || `posts`,
-          name: `posts`,
+          path: options.contentPath || `content/posts`,
+          name: options.contentPath || `content/posts`,
         },
       },
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          path: options.assetDir || `assets`,
-          name: `assets`,
+          path: options.assetPath || `content/assets`,
+          name: options.assetPath || `content/assets`,
         },
       },
       `gatsby-transformer-sharp`,

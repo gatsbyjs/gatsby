@@ -8,7 +8,7 @@ const debug = Debug(`gatsby-theme-notes`)
 
 // These are customizable theme options we only need to check once
 let basePath
-let contentDir
+let contentPath
 
 // These templates are simply data-fetching wrappers that import components
 const NoteTemplate = require.resolve(`./src/templates/note`)
@@ -18,9 +18,9 @@ exports.onPreBootstrap = ({ store }, themeOptions) => {
   const { program } = store.getState()
 
   basePath = themeOptions.basePath || `/`
-  contentDir = themeOptions.contentDir || `notes`
+  contentPath = themeOptions.contentPath || `content/notes`
 
-  const dirs = [path.join(program.directory, contentDir)]
+  const dirs = [path.join(program.directory, contentPath)]
 
   dirs.forEach(dir => {
     debug(`Initializing ${dir} directory`)
@@ -65,7 +65,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { mdxPages } = result.data
   const notes = mdxPages.edges.filter(
-    ({ node }) => node.parent.sourceInstanceName === `notes`
+    ({ node }) => node.parent.sourceInstanceName === contentPath
   )
 
   // Create notes pages

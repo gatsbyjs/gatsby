@@ -4,15 +4,15 @@ const mkdirp = require(`mkdirp`)
 const Debug = require(`debug`)
 
 // @TODO document theme options:
-// - takes an option `contentDir` for where the post content will live. Defaults to `posts`
-// - takes an option `assetDir` for where required assets will live. Defaults to `assets`
+// - takes an option `contentPath` for where the post content will live. Defaults to `posts`
+// - takes an option `assetPath` for where required assets will live. Defaults to `assets`
 
 const debug = Debug(`gatsby-theme-blog`)
 
 // These are customizable theme options we only need to check once
 let basePath
-let contentDir
-let assetDir
+let contentPath
+let assetPath
 
 // These templates are simply data-fetching wrappers that import components
 const PostTemplate = require.resolve(`./src/templates/post`)
@@ -23,12 +23,12 @@ exports.onPreBootstrap = ({ store }, themeOptions) => {
   const { program } = store.getState()
 
   basePath = themeOptions.basePath || `/`
-  contentDir = themeOptions.contentDir || `posts`
-  assetDir = themeOptions.assetDir || `assets`
+  contentPath = themeOptions.contentPath || `content/posts`
+  assetPath = themeOptions.assetPath || `content/assets`
 
   const dirs = [
-    path.join(program.directory, contentDir),
-    path.join(program.directory, assetDir),
+    path.join(program.directory, contentPath),
+    path.join(program.directory, assetPath),
   ]
 
   dirs.forEach(dir => {
@@ -51,7 +51,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
       mdxPages: allMdx(
         sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
-        filter: { fields: { source: { in: ["posts"] } } }
+        filter: { fields: { source: { in: ["${contentPath}"] } } }
         limit: 1000
       ) {
         edges {
@@ -136,7 +136,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     return
   }
 
-  // Create source field (according to contentDir)
+  // Create source field (according to contentPath)
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
 
@@ -146,7 +146,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     value: source,
   })
 
-  if (source === contentDir) {
+  if (source === contentPath) {
     const slug = toPostPath(fileNode)
 
     createNodeField({
