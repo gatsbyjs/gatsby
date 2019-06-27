@@ -189,6 +189,8 @@ module.exports = async (program, directory, suppliedStage) => {
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        __DISABLE_LOAD_TIME_CANONICAL_CHECK_REDIRECT__: store.getState().config
+          .disableLoadTimeCanonicalRedirectCheck,
       }),
     ]
 

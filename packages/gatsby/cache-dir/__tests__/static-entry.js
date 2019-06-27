@@ -225,6 +225,7 @@ describe(`static-entry`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
+    global.__DISABLE_LOAD_TIME_CANONICAL_CHECK_REDIRECT__ = false
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {

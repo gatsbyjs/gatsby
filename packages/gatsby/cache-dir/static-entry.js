@@ -393,6 +393,7 @@ export default (pagePath, callback) => {
     replacePostBodyComponents,
     pathname: pagePath,
     pathPrefix: __PATH_PREFIX__,
+    disableLoadTimeCanonicalRedirectCheck: __DISABLE_LOAD_TIME_CANONICAL_CHECK_REDIRECT__,
   })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(

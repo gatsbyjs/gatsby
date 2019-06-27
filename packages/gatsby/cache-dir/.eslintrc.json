@@ -4,6 +4,7 @@
   },
   "globals": {
     "__PATH_PREFIX__": false,
+    "__DISABLE_LOAD_TIME_CANONICAL_CHECK_REDIRECT__": false,
     "___emitter": false
   }
 }

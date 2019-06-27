@@ -73,6 +73,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
     pagePath &&
+    // Prevent navigation when acting as a single/static page generator
+    !__DISABLE_LOAD_TIME_CANONICAL_CHECK_REDIRECT__ &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
       loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||

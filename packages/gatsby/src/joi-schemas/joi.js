@@ -17,6 +17,7 @@ export const gatsbyConfigSchema = Joi.object()
         relativeOnly: true,
       })
     ),
+    disableLoadTimeCanonicalRedirectCheck: Joi.boolean(),
     siteMetadata: Joi.object({
       siteUrl: stripTrailingSlash(Joi.string()).uri(),
     }).unknown(),

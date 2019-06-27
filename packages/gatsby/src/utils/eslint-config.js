@@ -8,6 +8,7 @@ module.exports = schema => {
         graphql: true,
         __PATH_PREFIX__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
+        __DISABLE_LOAD_TIME_CANONICAL_CHECK_REDIRECT__: false,
       },
       extends: `react-app`,
       plugins: [`graphql`],
