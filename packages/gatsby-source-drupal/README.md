@@ -166,22 +166,6 @@ module.exports = {
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby
 
-in order for preview to work we have to set the `preview` flag to `true` in options:
-
-```javascript
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-source-drupal`,
-      options: {
-        baseUrl: `...`,
-        preview: true,
-      },
-    },
-  ],
-}
-```
-
 In your Drupal module configuration, set the update URL to your Gatsby Preview instance URL.
 
 ## How to query
