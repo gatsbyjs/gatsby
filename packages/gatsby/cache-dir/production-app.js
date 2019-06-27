@@ -28,6 +28,12 @@ setApiRunnerForLoader(apiRunner)
 
 navigationInit()
 
+window.browserLoc = {
+  pathname: window.location.pathname,
+  search: window.location.search,
+  hash: window.location.hash,
+}
+
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
@@ -62,7 +68,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  const { pagePath, location: browserLoc } = window
+  const { pagePath, browserLoc } = window
 
   // Explicitly call navigate if the canonical path (window.pagePath)
   // is different to the browser path (window.location.pathname). But
