@@ -171,6 +171,7 @@ describe(`static-entry sanity checks`, () => {
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
+    global.__DISABLE_LOAD_TIME_CANONICAL_CHECK_REDIRECT__ = false
   })
 
   const methodsToCheck = [
