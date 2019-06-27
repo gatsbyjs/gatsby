@@ -1204,7 +1204,7 @@
     - Blog page
     - Syntax highlighting in code blocks
     - Pagination Ready
-    - Ready to deploy to GitHub pages
+    - Ready to deploy to GitHub Pages
     - Automatic RSS generation
     - Automatic Sitemap generation
 - url: https://gatsby-starter-kentico-cloud.netlify.com/
@@ -2115,7 +2115,7 @@
     - Minimal design
 - url: https://thakkaryash94.github.io/gatsby-github-personal-website/
   repo: https://github.com/thakkaryash94/gatsby-github-personal-website
-  description: It is a conversion of original github personal website repo which is written in ruby for JS developers. This repository gives you the code you'll need to kickstart a personal website that showcases your work as a software developer. And when you manage the code in a GitHub repository, it will automatically render a webpage with the owner's profile information, including a photo, bio, and repositories.
+  description: It is a conversion of original GitHub personal website repo which is written in ruby for JS developers. This repository gives you the code you'll need to kickstart a personal website that showcases your work as a software developer. And when you manage the code in a GitHub repository, it will automatically render a webpage with the owner's profile information, including a photo, bio, and repositories.
   tags:
     - Portfolio
     - Onepage
@@ -2974,7 +2974,7 @@
     - Web App Manifest
 - url: https://minimal-gatsby-ts-starter.netlify.com/
   repo: https://github.com/TheoBr/minimal-gatsby-typescript-starter
-  description: Minimal Typescript Starter
+  description: Minimal TypeScript Starter
   tags:
     - Language:TypeScript
   features:
@@ -3062,7 +3062,7 @@
     - Web App Manifest
 - url: https://gatsby-starter-typescript-jest.netlify.com/
   repo: https://github.com/denningk/gatsby-starter-typescript-jest
-  description: Barebones Gatsby starter with Typescript, Jest, GitLab-CI, and other useful configurations
+  description: Barebones Gatsby starter with TypeScript, Jest, GitLab-CI, and other useful configurations
   tags:
     - Language:TypeScript
     - Testing
