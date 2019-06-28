@@ -121,11 +121,9 @@ it(`Allows to configure browser targets`, () => {
 })
 
 describe(`in production mode`, () => {
-  beforeEach(() => {
-    process.env.GATSBY_BUILD_STAGE = `build-javascript`
-  })
-
   it(`specifies proper presets`, () => {
+    process.env.GATSBY_BUILD_STAGE = `build-javascript`
+
     const targets = `last 1 version`
     const { presets, plugins } = preset(null, { targets })
 
