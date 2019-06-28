@@ -50,7 +50,10 @@ function replaceRule(value) {
     typeof value.loader === `string` &&
     value.loader.includes(`style-loader`)
   ) {
-    return MiniCssExtractPlugin.loader
+    return {
+      ...value,
+      loader: MiniCssExtractPlugin.loader,
+    }
   }
 
   return value
