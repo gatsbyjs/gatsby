@@ -144,6 +144,10 @@ Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to 
 
 You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
 
+**`initialSyncOnly`** [boolean][optional] [default: `false`]
+
+Prevents the use of sync tokens when accessing the Contentful API.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
