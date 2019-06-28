@@ -1,5 +1,5 @@
 import path from "path"
-import { get, mapValues, isPlainObject, trim, castArray } from "lodash"
+import { mapValues, isPlainObject, trim } from "lodash"
 import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
@@ -29,34 +29,20 @@ function deepMap(obj, fn) {
 
 function replaceRule(value) {
   // If `value` does not have a `test` property, it isn't a rule object.
-  if (!get(value, `test`)) {
+  if (!value || !value.test) {
     return value
   }
 
-  // Return received value if no replacements are necessary.
-  const exclude = replaceExclude(value)
-  const loader = replaceLoader(value)
-  if (!exclude && !loader) {
-    return value
+  // when javascript we exclude node_modules
+  if (value.type === `javascript/auto` && value.exclude) {
+    return {
+      ...value,
+      exclude: new RegExp(
+        [value.exclude.source, `node_modules|bower_components`].join(`|`)
+      ),
+    }
   }
 
-  return {
-    ...value,
-    exclude: exclude || value.exclude,
-    loader: loader || value.loader,
-  }
-}
-
-function replaceExclude(value) {
-  // Add exclusions to Gatsby's JavaScript rule. The CMS build should always
-  // exclude dependencies, Eg. `node_modules`.
-  if (value.type === `javascript/auto`) {
-    return [...castArray(value.exclude), /node_modules|bower_components/]
-  }
-  return null
-}
-
-function replaceLoader(value) {
   // Manually swap `style-loader` for `MiniCssExtractPlugin.loader`.
   // `style-loader` is only used in development, and doesn't allow us to pass
   // the `styles` entry css path to Netlify CMS.
@@ -66,7 +52,8 @@ function replaceLoader(value) {
   ) {
     return MiniCssExtractPlugin.loader
   }
-  return null
+
+  return value
 }
 
 exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
