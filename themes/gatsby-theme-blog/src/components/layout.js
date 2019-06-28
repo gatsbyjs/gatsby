@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import { Global } from "@emotion/core"
 import { useColorMode, css, Styled, Layout, Header, Container } from "theme-ui"
 import Toggle from "./toggle"
 
@@ -69,16 +68,6 @@ export default props => {
   return (
     <Styled.root>
       <Layout>
-        <Global
-          styles={theme =>
-            css({
-              body: {
-                color: `text`,
-                bg: `background`,
-              },
-            })(theme)
-          }
-        />
         <Container
           css={css({
             py: 4,

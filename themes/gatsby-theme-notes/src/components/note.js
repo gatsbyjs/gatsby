@@ -7,8 +7,9 @@ const WikiPage = ({
   data: {
     note: { body },
   },
+  ...props
 }) => (
-  <Layout>
+  <Layout {...props}>
     <MDXRenderer>{body}</MDXRenderer>
   </Layout>
 )
