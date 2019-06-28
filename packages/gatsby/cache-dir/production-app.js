@@ -75,7 +75,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
-      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
+      loader.pathFinder.findMatchPath(
+        stripPrefix(browserLoc.pathname, __BASE_PATH__)
+      ) ||
       pagePath === `/404.html` ||
       pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
