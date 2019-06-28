@@ -1,5 +1,4 @@
 const Joi = require(`joi`)
-import { get } from "lodash"
 const stackTrace = require(`stack-trace`)
 const errorSchema = require(`./error-schema`)
 const { errorMap, defaultError } = require(`./error-map`)

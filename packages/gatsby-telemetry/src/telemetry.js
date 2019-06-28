@@ -115,8 +115,8 @@ module.exports = class AnalyticsTracker {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
         const { error, ...restOfTags } = tags
-        tags.error.forEach(error => {
-          this.captureError(type, { error, ...restOfTags })
+        error.forEach(err => {
+          this.captureError(type, { error: err, ...restOfTags })
         })
         return
       }
