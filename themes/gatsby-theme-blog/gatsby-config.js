@@ -60,6 +60,6 @@ module.exports = options => {
       `gatsby-plugin-react-helmet`,
       `gatsby-plugin-twitter`,
       `gatsby-plugin-emotion`,
-    ],
+    ].filter(Boolean),
   }
 }
