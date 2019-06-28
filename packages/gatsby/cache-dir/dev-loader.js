@@ -8,8 +8,9 @@ class DevLoader extends BaseLoader {
   }
 
   loadPage(pagePath) {
-    return super.loadPage(pagePath).then(result => {
-      require(`./socketIo`).getPageData(pagePath)
+    const realPath = this.pathFinder.find(pagePath)
+    return super.loadPage(realPath).then(result => {
+      require(`./socketIo`).getPageData(realPath)
       return result
     })
   }
