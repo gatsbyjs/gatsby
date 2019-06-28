@@ -23,7 +23,7 @@ An early version of Drupal Gatsby preview is available to try, all the usual cav
 
 ## How to get started with Drupal + Gatsby preview
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/H72PY3wNMcI" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H72PY3wNMcI" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="Youtube video: Drupal Gatsby Preview setup walkthrough"></iframe>
 
 ### Step 1: Sign Up for Gatsby Preview Beta
 
@@ -47,14 +47,14 @@ module.exports = {
 }
 ```
 
-Once that flag is turned on the gatsby plugin is now listening for changes at a specific url. In your gatsby cloud instance you'll need to copy the preview URL. Once you have that, the Gatsby side is set up to receive updates.
+Once that flag is turned on, the Gatsby plugin will listen for changes at a specific URL. In your Gatsby Cloud instance you'll need to copy the preview URL to your clipboard. Once you have that, the Gatsby side is set up to receive updates.
 
 ### Step 3: Enable JSON API in Drupal
 
-Let’s make our transition in to Drupal. First things first, enable JSON API in your drupal instance. Then get the Gatsby Preview module at [this link on drupal.org](https://www.drupal.org/project/gatsby).
+Let’s make our transition in to Drupal. First things first, enable the JSON API in your Drupal instance. Then get the Gatsby Preview module at [this link on drupal.org](https://www.drupal.org/project/gatsby).
 
-Install it and enable it on your Drupal instance. Configuring the Drupal module is straightforward, under ‘Configuration > System’, you now have the option for ‘Gatsby Live Preview Settings’. The URL you copied earlier can be pasted into the ‘Gastby Preview Server URL’ and give that a save.
+Install the module and enable it on your Drupal instance. Configuring the Drupal module is straightforward: under ‘Configuration > System’, you should now have the option for ‘Gatsby Live Preview Settings’. The URL you copied earlier from your Gatsby Cloud instance can be pasted into the ‘Gatsby Preview Server URL’ field in Drupal and saved.
 
-Now you're all set up to use preview! Make a change to your content, press save (keystroke by keystroke updates are not available yet), and watch as Gatsby updates before Drupal even notifies you that your changes have been saved.
+Now you're all set up to use Preview! Make a change to your content, press Save (keystroke by keystroke updates are not available yet), and watch as Gatsby updates before Drupal even notifies you that your changes have been saved.
 
 ![Gatsby and Drupal integration demo with content reloading](./gatsby-drupal.gif)
