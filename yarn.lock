@@ -22809,6 +22809,14 @@ xdg-basedir@^3.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
   integrity sha1-SWsswQnsqNus/i3HK2A8F8WHCtQ=
 
+xhr-mock@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/xhr-mock/-/xhr-mock-2.4.1.tgz#cb502e3d50b8b2ec31bd61766ce516bfc1dd072f"
+  integrity sha1-y1AuPVC4suwxvWF2bOUWv8HdBy8=
+  dependencies:
+    global "^4.3.0"
+    url "^0.11.0"
+
 xhr@^2.0.1:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/xhr/-/xhr-2.5.0.tgz#bed8d1676d5ca36108667692b74b316c496e49dd"

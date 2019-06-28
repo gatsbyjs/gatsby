@@ -158,6 +158,7 @@ export class BaseLoader {
     if (this.inFlightDb.has(pagePath)) {
       return this.inFlightDb.get(pagePath)
     }
+
     const inFlight = this.loadPageDataJson(pagePath)
       .then(result => {
         if (result.status === `error`) {
@@ -348,6 +349,4 @@ export const publicLoader = {
   hovering: rawPath => instance.hovering(rawPath),
 }
 
-const loader = publicLoader
-
-export default loader
+export default publicLoader
