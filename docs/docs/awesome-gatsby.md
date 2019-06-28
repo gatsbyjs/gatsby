@@ -43,11 +43,11 @@ See the [library of official and community plugins](/plugins/)
 - [GraphQL Summit Open Source Lightning Talk on Gatsby — Kyle Mathews](https://youtu.be/y588qNiCZZo)
 - [Talk on GatsbyJS @ ViennaJS — Gerald Bauer](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
 
-## Livestreams
-- [GatsbyJS ship stream site to AWS Amplify](https://www.twitch.tv/roberttables/video/431223962)
-- [Gatsby stream cyberbarbie](https://www.twitch.tv/cyberbarbie)
-- [Gatsby livestream](https://www.twitch.tv/videos/364698758)
-- [Gatsbyjs site, moving to more advanced things | Live deployment](https://www.twitch.tv/roberttables/video/428912079)
+##  Gatsby channels 
+- [Jason Lengstorf](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx)
+- [LevelupTuts](https://www.youtube.com/watch?v=b2H7fWhQcdE)
+- [Cyberbarbie](https://www.twitch.tv/cyberbarbie)
+- [Zachary R Newton](https://www.youtube.com/watch?v=3Enmc-9YQZY)
 
 ## Gatsby tutorials
 
