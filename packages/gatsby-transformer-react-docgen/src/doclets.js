@@ -62,9 +62,9 @@ export const applyPropDoclets = prop => {
     // ex: @type {("optionA"|"optionB")}
     if (tag === `type`) {
       value = cleanDocletValue(value)
-      
+
       if (prop.type === undefined) {
-          prop.type = prop.flowType || {}
+        prop.type = prop.flowType || {}
       }
 
       prop.type.name = value
