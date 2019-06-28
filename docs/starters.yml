@@ -3075,3 +3075,14 @@
     - Detailed guide on how to deploy using AWS S3 buckets included in README
     - .gitlab-ci.yml file with blanks that can be customized for any Gatsby project
     - Configurations for EditorConfig, Prettier, and ESLint (for TypeScript)
+- url: https://gatsby-ghub.netlify.com/resume-book/
+  repo: https://github.com/dwyfrequency/gatsby-ghub
+  description: A resume builder app with authenticated routes, static marketing pages, and dynamic resume creation
+  tags:
+    - Authentication
+    - Netlify
+    - Client-side App
+  features:
+    - Netlify Identity
+    - Static Marketing pages and Dynamic Client-side Authenticated App pages
+    - SEO component
