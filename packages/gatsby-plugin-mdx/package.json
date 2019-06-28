@@ -1,0 +1,62 @@
+{
+  "name": "gatsby-plugin-mdx",
+  "version": "1.0.5",
+  "description": "mdx integration for gatsby",
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://github.com/ChristopherBiscardi/gatsby-mdx/tree/master/packages/gatsby-mdx#readme",
+  "scripts": {
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "@mdx-js/mdx": "^1.0.0",
+    "@mdx-js/react": "^1.0.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "core-js": "2",
+    "dataloader": "^1.4.0",
+    "debug": "^4.0.1",
+    "escape-string-regexp": "^1.0.5",
+    "fs-extra": "^7.0.0",
+    "gray-matter": "^4.0.1",
+    "loader-utils": "^1.2.3",
+    "lodash": "^4.17.10",
+    "mdast-util-to-string": "^1.0.4",
+    "mdast-util-toc": "^3.0.0",
+    "mime": "^2.3.1",
+    "p-queue": "^5.0.0",
+    "pretty-bytes": "^5.1.0",
+    "remark": "^10.0.0",
+    "remark-retext": "^3.1.2",
+    "retext-english": "^3.0.2",
+    "slash": "^2.0.0",
+    "static-site-generator-webpack-plugin": "^3.4.2",
+    "underscore.string": "^3.3.4",
+    "unist-util-map": "^1.0.4",
+    "unist-util-remove": "^1.0.1",
+    "unist-util-visit": "^1.4.0"
+  },
+  "devDependencies": {
+    "jest": "^24.0.0",
+    "js-combinatorics": "^0.5.3",
+    "@mdx-js/mdx": "^1.0.0",
+    "@mdx-js/react": "^1.0.0",
+    "react-test-renderer": "^16.8.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-transformer-plugin",
+    "mdx",
+    "markdown",
+    "remark",
+    "rehype"
+  ]
+}
