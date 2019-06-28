@@ -121,7 +121,7 @@ module.exports = class AnalyticsTracker {
         return
       }
 
-      tags.error_v2 = {
+      tags.errorV2 = {
         id: tags.error.id,
         text: cleanPaths(tags.error.text),
         level: tags.error.level,
