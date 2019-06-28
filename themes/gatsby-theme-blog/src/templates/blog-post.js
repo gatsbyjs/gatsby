@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { Styled, css, Main } from "theme-ui"
+import { Styled, css } from "theme-ui"
 
 import PostFooter from "../components/post-footer"
 import Layout from "../components/layout"
@@ -16,7 +16,7 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <SEO title={post.frontmatter.title} description={post.excerpt} />
-        <Main>
+        <main>
           <Styled.h1>{post.frontmatter.title}</Styled.h1>
           <Styled.p
             css={css({
@@ -28,7 +28,7 @@ class BlogPostTemplate extends React.Component {
             {post.frontmatter.date}
           </Styled.p>
           <MDXRenderer>{post.body}</MDXRenderer>
-        </Main>
+        </main>
         <PostFooter {...{ previous, next }} />
       </Layout>
     )

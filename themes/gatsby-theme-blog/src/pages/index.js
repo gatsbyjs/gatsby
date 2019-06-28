@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import { Link, graphql } from "gatsby"
-import { Styled, css, Main } from "theme-ui"
+import { Styled, css } from "theme-ui"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -16,7 +16,7 @@ const BlogIndex = ({
   },
 }) => (
   <Layout location={location} title={siteTitle}>
-    <Main>
+    <main>
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         const keywords = node.frontmatter.keywords || []
@@ -45,7 +45,7 @@ const BlogIndex = ({
           </Fragment>
         )
       })}
-    </Main>
+    </main>
     <Footer />
   </Layout>
 )
