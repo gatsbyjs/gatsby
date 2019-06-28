@@ -90,7 +90,7 @@ module.exports = class AnalyticsTracker {
     if (opts.debounce) {
       const debounceTime = 5 * 1000
       const now = Date.now()
-      const debounceKey = JSON.stringify({ type, decoration })
+      const debounceKey = JSON.stringify({ type, decoration, tags })
       const last = this.debouncer[debounceKey] || 0
       if (now - last < debounceTime) {
         return

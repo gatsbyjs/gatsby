@@ -274,6 +274,11 @@ async function fetchData({
 
   let entities = []
   if (routeResponse) {
+    if (type.indexOf(`wordpress__menus_menus`) !== -1) {
+      routeResponse = routeResponse.map(r => {
+        return { ...r, ID: r.term_id }
+      })
+    }
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
       routeResponse = routeResponse.map(r => {
@@ -293,7 +298,7 @@ async function fetchData({
     }
 
     // WordPress exposes the menu items in meta links.
-    if (type == `wordpress__wp_api_menus_menus`) {
+    if (type === `wordpress__wp_api_menus_menus`) {
       for (let menu of routeResponse) {
         if (menu.meta && menu.meta.links && menu.meta.links.self) {
           entities = entities.concat(
@@ -312,6 +317,22 @@ async function fetchData({
         }
       }
     }
+
+    // Menu nodes for WP-REST-API V2 Menus ( https://wordpress.org/plugins/wp-rest-api-v2-menus/ )
+    if (type === `wordpress__menus_menus`) {
+      for (let menu of routeResponse) {
+        entities = entities.concat(
+          await fetchData({
+            route: { url: `${url}/${menu.term_id}`, type: `${type}_items` },
+            _verbose,
+            _perPage,
+            _auth,
+            _accessToken,
+          })
+        )
+      }
+    }
+
     // TODO : Get the number of created nodes using the nodes in state.
     let length
     if (routeResponse && Array.isArray(routeResponse)) {
