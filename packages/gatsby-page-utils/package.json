@@ -1,0 +1,39 @@
+{
+  "name": "gatsby-page-utils",
+  "version": "0.0.2",
+  "description": "Gatsby library that helps creating pages",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist/ --ignore **/__tests__",
+    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "author": "Yvonnick FRIN <frin.yvonnick@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-page-utils",
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "bluebird": "^3.5.0",
+    "chokidar": "2.1.2",
+    "fs-exists-cached": "^1.0.0",
+    "glob": "^7.1.1",
+    "lodash": "^4.17.10",
+    "micromatch": "^3.1.10",
+    "slash": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.2.0",
+    "cross-env": "^5.0.5"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.0.0"
+  },
+  "files": [
+    "dist/*"
+  ]
+}
