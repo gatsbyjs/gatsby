@@ -6287,3 +6287,17 @@
   built_by: David Krasniy
   built_by_url: http://dkrasniy.com
   featured: false
+- title: Vazco
+  url: https://www.vazco.eu
+  main_url: https://www.vazco.eu
+  description: >
+    Vazco works for clients from all around the world in future-proof technologies and help them build better products.
+  categories:
+    - Agency
+    - Web Development
+    - Blog
+    - Business
+    - Technology
+  built_by: Vazco
+  built_by_url: https://www.vazco.eu
+  featured: false

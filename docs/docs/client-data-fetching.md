@@ -2,13 +2,23 @@
 title: Client Data Fetching
 ---
 
-Because a Gatsby site hydrates into a React app after loading statically, Gatsby is not just for static sites. You can fetch data dynamically on the client, as needed, as you would with any other React app.
+## Context
+
+This article touches on how to fetch data at both _build time_ and _run time_. It uses the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to fetch data at [build time](/docs/glossary#build) on the server, while it uses the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads.
+
+When this article mentions [hydration](/docs/glossary#hydration), it means that Gatsby (through React.js) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
+
+Compiling pages at [build-time](/docs/glossary#build) is useful when your website content won't change often, or when triggering a build process to recompile works fine. However, some websites with more dynamic needs require a [client-side](/docs/glossary#client-side) [runtime](/docs/glossary#runtime) to handle constantly changing content after the page loads, like a chat widget or an email client web application.
+
+## Combining build-time and client run-time data
+
+Because a Gatsby site [hydrates](/docs/glossary#hydration) into a React app after loading statically, Gatsby is not just for static sites. You can also fetch data dynamically on the client-side as needed, like you would with any other React app.
 
 To illustrate this, we'll walk through a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. This example is based loosely on Jason Lengstorf's [Gatsby with Apollo](https://github.com/jlengstorf/gatsby-with-apollo) example. We'll be fetching character data for Rick (of Rick and Morty) and a random pupper image.
 
 > Note: Check out the [full example here](https://github.com/amberleyromo/gatsby-client-data-fetching), if helpful.
 
-## 1. Create a Gatsby page component
+### 1. Create a Gatsby page component
 
 No data yet. Just the basic React page that we'll be populating.
 
@@ -33,7 +43,7 @@ class ClientFetchingExample extends Component {
 export default ClientFetchingExample
 ```
 
-## 2. Query for character info at build time
+### 2. Query for character info at build time
 
 To query for Rick's character info and image, we'll use the `gatsby-source-graphql` plugin. This will allow us to query the Rick and Morty API using Gatsby queries.
 
@@ -105,7 +115,7 @@ class ClientFetchingExample extends Component {
 export default ClientFetchingExample
 ```
 
-## 3. Fetch pupper info and image data on the client
+### 3. Fetch pupper info and image data on the client
 
 Now we'll finish out by fetching pupper info from the [Dog CEO Dog API](https://dog.ceo/dog-api/). (We'll fetch a random pupper. Rick isn't picky.)
 

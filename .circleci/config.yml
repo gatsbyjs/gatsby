@@ -66,7 +66,8 @@ aliases:
           - /docs.+/
           - /blog.+/
     requires:
-      - bootstrap
+      - lint
+      - unit_tests_node8
 
 commands:
   e2e-test:
@@ -107,12 +108,14 @@ jobs:
 
   lint:
     executor: node
+    parallelism: 2
     steps:
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: yarn lint
+      - run: yarn lint:code
+      - run: yarn lint:other
 
   unit_tests_node8:
     executor:
@@ -209,7 +212,9 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      - lint
+      - lint:
+          requires:
+            - bootstrap
       - unit_tests_node8:
           <<: *ignore_docs
           requires:
@@ -217,14 +222,14 @@ workflows:
       - unit_tests_node10:
           <<: *ignore_docs
           requires:
-            - bootstrap
+            - lint
+            - unit_tests_node8
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
-            - bootstrap
-      - unit_tests_www:
-          requires:
-            - bootstrap
+            - lint
+            - unit_tests_node8
+      - unit_tests_www
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
