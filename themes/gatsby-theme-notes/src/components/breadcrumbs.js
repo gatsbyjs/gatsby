@@ -7,7 +7,7 @@ import BreadcrumbDivider from "./breadcrumb-divider"
 import BreadcrumbHome from "./breadcrumb-home"
 
 export default ({ links }) => {
-  const { notesPath, homeText, breadcrumbSeparator } = useOptions()
+  const { basePath = `/`, homeText, breadcrumbSeparator } = useOptions()
 
   return (
     <nav
@@ -22,8 +22,8 @@ export default ({ links }) => {
       <BreadcrumbHome text={homeText} />
       <BreadcrumbDivider text={breadcrumbSeparator} />
 
-      <Styled.a as={Link} to={notesPath}>
-        {notesPath.replace(/^\//, ``)}
+      <Styled.a as={Link} to={basePath}>
+        {basePath.replace(/^\//, ``)}
       </Styled.a>
       {links.map(link => (
         <>
