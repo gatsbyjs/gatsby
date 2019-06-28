@@ -162,7 +162,16 @@ exports.sourceNodes = async (
 }
 
 exports.onCreateDevServer = (
-  { app, createNodeId, getNode, actions, store, cache, createContentDigest },
+  {
+    app,
+    createNodeId,
+    getNode,
+    actions,
+    store,
+    cache,
+    createContentDigest,
+    reporter,
+  },
   pluginOptions
 ) => {
   app.use(
@@ -171,83 +180,22 @@ exports.onCreateDevServer = (
       type: `application/json`,
     }),
     async (req, res) => {
-      const { createNode } = actions
-
       // we are missing handling of node deletion
       const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
 
-      const newNode = nodeFromData(nodeToUpdate, createNodeId)
-
-      const nodesToUpdate = [newNode]
-
-      handleReferences(newNode, {
-        getNode,
-        createNodeId,
-      })
-
-      const oldNode = getNode(newNode.id)
-      if (oldNode) {
-        // copy over back references from old node
-        const backRefsNames = backRefsNamesLookup.get(oldNode)
-        if (backRefsNames) {
-          backRefsNamesLookup.set(newNode, backRefsNames)
-          backRefsNames.forEach(backRefFieldName => {
-            newNode.relationships[backRefFieldName] =
-              oldNode.relationships[backRefFieldName]
-          })
-        }
-
-        const oldNodeReferencedNodes = referencedNodesLookup.get(oldNode)
-        const newNodeReferencedNodes = referencedNodesLookup.get(newNode)
-
-        // see what nodes are no longer referenced and remove backRefs from them
-        const removedReferencedNodes = _.difference(
-          oldNodeReferencedNodes,
-          newNodeReferencedNodes
-        ).map(id => getNode(id))
-
-        nodesToUpdate.push(...removedReferencedNodes)
-
-        const nodeFieldName = `${newNode.internal.type}___NODE`
-        removedReferencedNodes.forEach(referencedNode => {
-          referencedNode.relationships[
-            nodeFieldName
-          ] = referencedNode.relationships[nodeFieldName].filter(
-            id => id !== newNode.id
-          )
-        })
-
-        // see what nodes are newly referenced, and make sure to call `createNode` on them
-        const addedReferencedNodes = _.difference(
-          newNodeReferencedNodes,
-          oldNodeReferencedNodes
-        ).map(id => getNode(id))
-
-        nodesToUpdate.push(...addedReferencedNodes)
-      }
-
-      // download file
-      if (isFileNode(newNode)) {
-        await downloadFile(
-          {
-            node: newNode,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-          },
-          pluginOptions
-        )
-      }
-
-      for (const node of nodesToUpdate) {
-        if (node.internal.owner) {
-          delete node.internal.owner
-        }
-        node.internal.contentDigest = createContentDigest(node)
-        createNode(node)
-        console.log(`\x1b[32m`, `Updated node: ${node.id}`)
-      }
+      await handleWebhookUpdate(
+        {
+          nodeToUpdate,
+          actions,
+          cache,
+          createNodeId,
+          createContentDigest,
+          getNode,
+          reporter,
+          store,
+        },
+        pluginOptions
+      )
     }
   )
 }
@@ -326,3 +274,100 @@ const handleReferences = (node, { getNode, createNodeId }) => {
 
   node.relationships = relationships
 }
+
+const handleWebhookUpdate = async (
+  {
+    nodeToUpdate,
+    actions,
+    cache,
+    createNodeId,
+    createContentDigest,
+    getNode,
+    reporter,
+    store,
+  },
+  pluginOptions
+) => {
+  const { createNode } = actions
+
+  const newNode = nodeFromData(nodeToUpdate, createNodeId)
+
+  const nodesToUpdate = [newNode]
+
+  handleReferences(newNode, {
+    getNode,
+    createNodeId,
+  })
+
+  const oldNode = getNode(newNode.id)
+  if (oldNode) {
+    // copy over back references from old node
+    const backRefsNames = backRefsNamesLookup.get(oldNode)
+    if (backRefsNames) {
+      backRefsNamesLookup.set(newNode, backRefsNames)
+      backRefsNames.forEach(backRefFieldName => {
+        newNode.relationships[backRefFieldName] =
+          oldNode.relationships[backRefFieldName]
+      })
+    }
+
+    const oldNodeReferencedNodes = referencedNodesLookup.get(oldNode)
+    const newNodeReferencedNodes = referencedNodesLookup.get(newNode)
+
+    // see what nodes are no longer referenced and remove backRefs from them
+    const removedReferencedNodes = _.difference(
+      oldNodeReferencedNodes,
+      newNodeReferencedNodes
+    ).map(id => getNode(id))
+
+    nodesToUpdate.push(...removedReferencedNodes)
+
+    const nodeFieldName = `${newNode.internal.type}___NODE`
+    removedReferencedNodes.forEach(referencedNode => {
+      referencedNode.relationships[
+        nodeFieldName
+      ] = referencedNode.relationships[nodeFieldName].filter(
+        id => id !== newNode.id
+      )
+    })
+
+    // see what nodes are newly referenced, and make sure to call `createNode` on them
+    const addedReferencedNodes = _.difference(
+      newNodeReferencedNodes,
+      oldNodeReferencedNodes
+    ).map(id => getNode(id))
+
+    nodesToUpdate.push(...addedReferencedNodes)
+  } else {
+    // if we are inserting new node, we need to update all referenced nodes
+    const newNodeReferencedNodes = referencedNodesLookup
+      .get(newNode)
+      .map(id => getNode(id))
+    nodesToUpdate.push(...newNodeReferencedNodes)
+  }
+
+  // download file
+  if (isFileNode(newNode)) {
+    await downloadFile(
+      {
+        node: newNode,
+        store,
+        cache,
+        createNode,
+        createNodeId,
+      },
+      pluginOptions
+    )
+  }
+
+  for (const node of nodesToUpdate) {
+    if (node.internal.owner) {
+      delete node.internal.owner
+    }
+    node.internal.contentDigest = createContentDigest(node)
+    createNode(node)
+    reporter.log(`Updated node: ${node.id}`)
+  }
+}
+
+exports.handleWebhookUpdate = handleWebhookUpdate
