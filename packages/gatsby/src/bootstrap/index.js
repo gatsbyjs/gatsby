@@ -22,6 +22,8 @@ const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
 const withResolverContext = require(`../schema/context`)
+const stackTrace = require(`stack-trace`)
+import errorParser from "../query/error-parser"
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -385,13 +387,37 @@ module.exports = async (args: BootstrapArgs) => {
 
   const graphqlRunner = (query, context = {}) => {
     const schema = store.getState().schema
+    console.log(`super`)
     return graphql(
       schema,
       query,
       context,
       withResolverContext(context, schema),
       context
-    )
+    ).then(result => {
+      if (result.errors) {
+        report.panicOnBuild(
+          result.errors.map(e => {
+            // Find the file where graphql was called.
+            const file = stackTrace
+              .parse(e)
+              .find(file => /createPages/.test(file.functionName))
+            if (file) {
+              return errorParser({
+                message: e.message,
+                location: {
+                  start: { line: file.lineNumber, column: file.columnNumber },
+                },
+                filePath: file.fileName,
+              })
+            }
+            return null
+          })
+        )
+      }
+
+      return result
+    })
   }
 
   // Collect pages.
