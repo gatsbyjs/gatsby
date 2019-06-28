@@ -194,4 +194,123 @@ describe(`BaseLoader`, () => {
       expect(xhrCount).toBe(1)
     })
   })
+  describe(`loadPage`, () => {
+    it(`should be successful when component can be loaded`, async () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+      const pageData = {
+        path: `/mypage/`,
+        componentChunkName: `chunk`,
+        webpackCompilationHash: `123`,
+        result: {
+          pageContext: `something something`,
+        },
+      }
+      baseLoader.loadPageDataJson = jest.fn(() =>
+        Promise.resolve({
+          payload: pageData,
+          status: `success`,
+        })
+      )
+
+      const expectation = await baseLoader.loadPage(`/mypage/`)
+      expect(expectation).toMatchSnapshot()
+      expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
+      expect(baseLoader.pageDb.get(`/mypage`)).toEqual(
+        expect.objectContaining({
+          payload: expectation,
+          status: `success`,
+        })
+      )
+    })
+
+    it(`should set not found on finalResult`, async () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+      const pageData = {
+        path: `/mypage/`,
+        componentChunkName: `chunk`,
+        webpackCompilationHash: `123`,
+      }
+      baseLoader.loadPageDataJson = jest.fn(() =>
+        Promise.resolve({
+          payload: pageData,
+          status: `success`,
+          notFound: true,
+        })
+      )
+
+      await baseLoader.loadPage(`/mypage/`)
+      const expectation = baseLoader.pageDb.get(`/mypage`)
+      expect(expectation).toHaveProperty(`notFound`, true)
+    })
+
+    it(`should return an error when component cannot be loaded`, async () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(false), [])
+      const pageData = {
+        path: `/mypage/`,
+        componentChunkName: `chunk`,
+        webpackCompilationHash: `123`,
+      }
+      baseLoader.loadPageDataJson = jest.fn(() =>
+        Promise.resolve({
+          payload: pageData,
+          status: `success`,
+        })
+      )
+
+      await baseLoader.loadPage(`/mypage/`)
+      const expectation = baseLoader.pageDb.get(`/mypage`)
+      expect(expectation).toHaveProperty(`status`, `error`)
+    })
+
+    it(`should return an error pageData contains an error`, async () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+      const pageData = {
+        path: `/mypage/`,
+        componentChunkName: `chunk`,
+        webpackCompilationHash: `123`,
+      }
+      baseLoader.loadPageDataJson = jest.fn(() =>
+        Promise.resolve({
+          payload: pageData,
+          status: `error`,
+        })
+      )
+
+      expect(await baseLoader.loadPage(`/mypage/`)).toEqual({ status: `error` })
+      expect(baseLoader.pageDb.size).toBe(0)
+    })
+
+    it(`should cache the result of loadPage`, async () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+      baseLoader.loadPageDataJson = jest.fn(() =>
+        Promise.resolve({
+          payload: {},
+          status: `success`,
+        })
+      )
+
+      const expectation = await baseLoader.loadPage(`/mypage/`)
+      expect(await baseLoader.loadPage(`/mypage/`)).toBe(expectation)
+      expect(baseLoader.loadPageDataJson).toBeCalledTimes(1)
+    })
+
+    it(`should only run 1 network request even when called multiple times`, async () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+      baseLoader.loadPageDataJson = jest.fn(() =>
+        Promise.resolve({
+          payload: {},
+          status: `success`,
+        })
+      )
+
+      const loadPagePromise = baseLoader.loadPage(`/mypage/`)
+      expect(baseLoader.inFlightDb.size).toBe(1)
+      baseLoader.loadPage(`/mypage/`)
+      expect(baseLoader.inFlightDb.size).toBe(1)
+
+      await loadPagePromise
+
+      expect(baseLoader.inFlightDb.size).toBe(0)
+    })
+  })
 })
