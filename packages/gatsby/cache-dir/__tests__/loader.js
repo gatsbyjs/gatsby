@@ -320,7 +320,7 @@ describe(`BaseLoader`, () => {
 
       const expectation = await baseLoader.loadPage(`/mypage/`)
       expect(await baseLoader.loadPage(`/mypage/`)).toBe(expectation)
-      expect(baseLoader.loadPageDataJson).toBeCalledTimes(1)
+      expect(baseLoader.loadPageDataJson).toHaveBeenCalledTimes(1)
     })
 
     it(`should only run 1 network request even when called multiple times`, async () => {
@@ -372,7 +372,7 @@ describe(`BaseLoader`, () => {
       baseLoader.doPrefetch = jest.fn()
 
       expect(baseLoader.prefetch(`/mypath/`)).toBe(false)
-      expect(baseLoader.shouldPrefetch).toBeCalledWith(`/mypath/`)
+      expect(baseLoader.shouldPrefetch).toHaveBeenNthCalledWith(`/mypath/`)
       expect(baseLoader.doPrefetch).not.toHaveBeenCalled()
     })
 
@@ -388,9 +388,12 @@ describe(`BaseLoader`, () => {
       // wait for doPrefetchPromise
       await flushPromises()
 
-      expect(baseLoader.apiRunner).toBeCalledWith(`onPrefetchPathname`, {
-        pathname: `/mypath/`,
-      })
+      expect(baseLoader.apiRunner).toHaveBeenNthCalledWith(
+        `onPrefetchPathname`,
+        {
+          pathname: `/mypath/`,
+        }
+      )
       expect(baseLoader.apiRunner).toHaveBeenNthCalledWith(
         2,
         `onPostPrefetchPathname`,
