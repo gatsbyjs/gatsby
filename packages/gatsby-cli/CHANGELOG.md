@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.3...gatsby-cli@2.7.4) (2019-06-28)
+
+### Bug Fixes
+
+- filter out frames that are not matched to source location ([#15211](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/15211)) ([44e8f76](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/44e8f76))
+
 ## [2.7.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.2...gatsby-cli@2.7.3) (2019-06-27)
 
 **Note:** Version bump only for package gatsby-cli

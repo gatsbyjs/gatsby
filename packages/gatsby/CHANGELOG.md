@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.0...gatsby@2.11.1) (2019-06-28)
+
+### Features
+
+- **gatsby:** Rewrite resource loading - retry mechanism ([#14889](https://github.com/gatsbyjs/gatsby/issues/14889)) ([68e15e7](https://github.com/gatsbyjs/gatsby/commit/68e15e7))
+
 # [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.10.5...gatsby@2.11.0) (2019-06-27)
 
 ### Bug Fixes
