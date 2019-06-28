@@ -372,7 +372,7 @@ describe(`BaseLoader`, () => {
       baseLoader.doPrefetch = jest.fn()
 
       expect(baseLoader.prefetch(`/mypath/`)).toBe(false)
-      expect(baseLoader.shouldPrefetch).toHaveBeenNthCalledWith(`/mypath/`)
+      expect(baseLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(baseLoader.doPrefetch).not.toHaveBeenCalled()
     })
 
@@ -388,12 +388,9 @@ describe(`BaseLoader`, () => {
       // wait for doPrefetchPromise
       await flushPromises()
 
-      expect(baseLoader.apiRunner).toHaveBeenNthCalledWith(
-        `onPrefetchPathname`,
-        {
-          pathname: `/mypath/`,
-        }
-      )
+      expect(baseLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
+        pathname: `/mypath/`,
+      })
       expect(baseLoader.apiRunner).toHaveBeenNthCalledWith(
         2,
         `onPostPrefetchPathname`,
