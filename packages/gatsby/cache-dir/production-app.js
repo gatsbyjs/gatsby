@@ -12,23 +12,24 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import matchPaths from "./match-paths.json"
-import loader, { setApiRunnerForLoader } from "./loader"
+import { setLoader, ProdLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
+
+// Generated during bootstrap
+import matchPaths from "./match-paths.json"
+
+const loader = new ProdLoader(asyncRequires, matchPaths)
+setLoader(loader)
+loader.setApiRunner(apiRunner)
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
 window.___webpackCompilationHash = window.webpackCompilationHash
 
-loader.addProdRequires(asyncRequires)
-loader.addMatchPaths(matchPaths)
-setApiRunnerForLoader(apiRunner)
-
 navigationInit()
 
-// Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
@@ -39,7 +40,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   class RouteHandler extends React.Component {
     render() {
       let { location } = this.props
-
       return (
         <EnsureResources location={location}>
           {({ pageResources, location }) => (
@@ -75,7 +75,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
-      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
+      loader.pathFinder.findMatchPath(
+        stripPrefix(browserLoc.pathname, __BASE_PATH__)
+      ) ||
       pagePath === `/404.html` ||
       pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
@@ -86,7 +88,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  loader.loadPage(browserLoc.pathname).then(() => {
+  loader.loadPage(browserLoc.pathname).then(page => {
+    if (!page || page.status === `error`) {
+      throw new Error(
+        `page resources for ${
+          browserLoc.pathname
+        } not found. Not rendering React`
+      )
+    }
     const Root = () =>
       createElement(
         Router,
