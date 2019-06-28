@@ -166,6 +166,13 @@ export class BaseLoader {
             status: `error`,
           }
         }
+        if (result.status === `failure`) {
+          // throw an error so error trackers can pick this up
+          throw new Error(
+            `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`
+          )
+        }
+
         const pageData = result.payload
         const { componentChunkName } = pageData
         return this.loadComponent(componentChunkName).then(component => {
@@ -305,7 +312,6 @@ export class ProdLoader extends BaseLoader {
           return Promise.resolve()
         }
         const pageData = result.payload
-        // Tell plugins the path has been successfully prefetched
         const chunkName = pageData.componentChunkName
         const componentUrls = createComponentUrls(chunkName)
         return Promise.all(componentUrls.map(prefetchHelper)).then(

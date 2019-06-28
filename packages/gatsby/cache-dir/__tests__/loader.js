@@ -1,6 +1,9 @@
 // This is by no means a full test file for loader.js so feel free to add more tests.
 import mock from "xhr-mock"
 import { BaseLoader } from "../loader"
+import emitter from "../emitter"
+
+jest.mock(`../emitter`)
 
 describe(`BaseLoader`, () => {
   describe(`loadPageDataJson`, () => {
@@ -41,7 +44,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`should return a pageData json on success`, async () => {
-      expect.assertions(3)
       const baseLoader = new BaseLoader(null, [])
 
       mockPageData(`/mypage`, 200, true)
@@ -57,7 +59,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`should load a 404 page when page-path file is not a json`, async () => {
-      expect.assertions(3)
       const baseLoader = new BaseLoader(null, [])
 
       mockPageData(`/unknown-page`, 200, false)
@@ -79,7 +80,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`should load a 404 page when path returns a 404`, async () => {
-      expect.assertions(3)
       const baseLoader = new BaseLoader(null, [])
 
       mockPageData(`/unknown-page`, 200, false)
@@ -101,7 +101,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`should return a failure when status is 404 and 404 page is fetched`, async () => {
-      expect.assertions(3)
       const baseLoader = new BaseLoader(null, [])
 
       mockPageData(`/unknown-page`, 404, false)
@@ -120,7 +119,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`should return an error when status is 500`, async () => {
-      expect.assertions(3)
       const baseLoader = new BaseLoader(null, [])
 
       mockPageData(`/error-page`, 500, false)
@@ -137,7 +135,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`should retry 3 times before returning an error`, async () => {
-      expect.assertions(3)
       const baseLoader = new BaseLoader(null, [])
 
       mockPageData(`/blocked-page`, 0, false)
@@ -155,7 +152,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`should recover if we get 1 failure`, async () => {
-      expect.assertions(3)
       const baseLoader = new BaseLoader(null, [])
 
       let xhrCount = 0
@@ -184,7 +180,6 @@ describe(`BaseLoader`, () => {
     })
 
     it(`shouldn't load pageData multiple times`, async () => {
-      expect.assertions(2)
       const baseLoader = new BaseLoader(null, [])
 
       mockPageData(`/mypage`, 200, true)
@@ -195,6 +190,8 @@ describe(`BaseLoader`, () => {
     })
   })
   describe(`loadPage`, () => {
+    beforeEach(() => emitter.emit.mockReset())
+
     it(`should be successful when component can be loaded`, async () => {
       const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
       const pageData = {
@@ -221,6 +218,11 @@ describe(`BaseLoader`, () => {
           status: `success`,
         })
       )
+      expect(emitter.emit).toHaveBeenCalledTimes(1)
+      expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
+        page: expectation,
+        pageResources: expectation,
+      })
     })
 
     it(`should set not found on finalResult`, async () => {
@@ -241,6 +243,11 @@ describe(`BaseLoader`, () => {
       await baseLoader.loadPage(`/mypage/`)
       const expectation = baseLoader.pageDb.get(`/mypage`)
       expect(expectation).toHaveProperty(`notFound`, true)
+      expect(emitter.emit).toHaveBeenCalledTimes(1)
+      expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
+        page: expectation.payload,
+        pageResources: expectation.payload,
+      })
     })
 
     it(`should return an error when component cannot be loaded`, async () => {
@@ -260,6 +267,7 @@ describe(`BaseLoader`, () => {
       await baseLoader.loadPage(`/mypage/`)
       const expectation = baseLoader.pageDb.get(`/mypage`)
       expect(expectation).toHaveProperty(`status`, `error`)
+      expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should return an error pageData contains an error`, async () => {
@@ -278,6 +286,27 @@ describe(`BaseLoader`, () => {
 
       expect(await baseLoader.loadPage(`/mypage/`)).toEqual({ status: `error` })
       expect(baseLoader.pageDb.size).toBe(0)
+      expect(emitter.emit).toHaveBeenCalledTimes(0)
+    })
+
+    it(`should throw an error when 404 cannot be fetched`, async () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+
+      baseLoader.loadPageDataJson = jest.fn(() =>
+        Promise.resolve({
+          status: `failure`,
+        })
+      )
+
+      try {
+        await baseLoader.loadPage(`/404.html/`)
+      } catch (err) {
+        expect(err.message).toEqual(
+          expect.stringContaining(`404 page could not be found`)
+        )
+      }
+      expect(baseLoader.pageDb.size).toBe(0)
+      expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should cache the result of loadPage`, async () => {
@@ -303,14 +332,34 @@ describe(`BaseLoader`, () => {
         })
       )
 
-      const loadPagePromise = baseLoader.loadPage(`/mypage/`)
+      const loadPagePromise = baseLoader.loadPage(`/test-page/`)
       expect(baseLoader.inFlightDb.size).toBe(1)
-      baseLoader.loadPage(`/mypage/`)
+      expect(baseLoader.loadPage(`/test-page/`)).toBe(loadPagePromise)
       expect(baseLoader.inFlightDb.size).toBe(1)
 
-      await loadPagePromise
+      const expectation = await loadPagePromise
 
       expect(baseLoader.inFlightDb.size).toBe(0)
+      expect(emitter.emit).toHaveBeenCalledTimes(1)
+      expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
+        page: expectation,
+        pageResources: expectation,
+      })
+    })
+  })
+
+  describe(`loadPageSync`, () => {
+    it(`returns page resources when already fetched`, () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+
+      baseLoader.pageDb.set(`/mypage`, { payload: true })
+      expect(baseLoader.loadPageSync(`/mypage/`)).toBe(true)
+    })
+
+    it(`returns page resources when already fetched`, () => {
+      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+
+      expect(baseLoader.loadPageSync(`/mypage/`)).toBeUndefined()
     })
   })
 })
