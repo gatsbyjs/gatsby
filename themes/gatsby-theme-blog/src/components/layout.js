@@ -5,8 +5,8 @@ import { useColorMode, css, Styled, Layout, Header, Container } from "theme-ui"
 import Toggle from "./toggle"
 
 import Bio from "../components/bio"
-import sun from "../../content/assets/sun.png"
-import moon from "../../content/assets/moon.png"
+import sun from "../../assets/sun.png"
+import moon from "../../assets/moon.png"
 
 const rootPath = `${__PATH_PREFIX__}/`
 

@@ -3,7 +3,8 @@ module.exports = {
     {
       resolve: `gatsby-theme-notes`,
       options: {
-        mdx: false,
+        mdx: true,
+        basePath: `/notes`,
       },
     },
     // with gatsby-theme-ui, the last theme in the config
