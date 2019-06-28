@@ -2,6 +2,7 @@
 import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
+const levenshtein = require(`fast-levenshtein`)
 
 import { validate } from "graphql"
 import { IRTransforms } from "@gatsbyjs/relay-compiler"
@@ -21,6 +22,7 @@ import {
   multipleRootQueriesError,
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
+import errorParser from "./error-parser"
 const websocketManager = require(`../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
@@ -84,7 +86,6 @@ class Runner {
 
   reportError(message) {
     const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
-    report.panicOnBuild(queryErrorMessage)
     if (process.env.gatsby_executing_command === `develop`) {
       websocketManager.emitError(overlayErrorID, queryErrorMessage)
       lastRunHadErrors = true
@@ -142,6 +143,28 @@ class Runner {
       let errors = validate(this.schema, doc, validationRules)
 
       if (errors && errors.length) {
+        const locationOfGraphQLDocInSourceFile = doc.definitions[0].templateLoc
+
+        report.panicOnBuild(
+          errors.map(error => {
+            const graphqlLocation = error.locations[0]
+            // get location of error relative to soure file (not just graphql text)
+            const location = {
+              start: {
+                line:
+                  graphqlLocation.line +
+                  locationOfGraphQLDocInSourceFile.start.line -
+                  1,
+                column:
+                  (graphqlLocation.line === 0
+                    ? locationOfGraphQLDocInSourceFile.start.column - 1
+                    : 0) + graphqlLocation.column,
+              },
+            }
+            return errorParser({ message: error.message, filePath, location })
+          })
+        )
+
         this.reportError(graphqlValidationError(errors, filePath))
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
@@ -178,7 +201,15 @@ class Runner {
         componentPath: namePathMap.get(docName),
         error: formattedMessage,
       })
+
+      const filePath = namePathMap.get(docName)
+      const structuredError = errorParser({ message, filePath })
+      report.panicOnBuild(structuredError)
+
+      // report error to browser
+      // TODO: move browser error overlay reporting to reporter
       this.reportError(formattedMessage)
+
       return false
     }
 
@@ -191,12 +222,17 @@ class Runner {
       .slice(0, -1)
       .reduce((ctx, transform) => transform(ctx, this.schema), compilerContext)
 
+    const fragments = []
+    compilerContext.documents().forEach(node => {
+      if (node.kind === `Fragment`) {
+        fragments.push(node.name)
+      }
+    })
+
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return
-
       const { name } = node
       let filePath = namePathMap.get(name) || ``
-
       if (compiledNodes.has(filePath)) {
         let otherNode = compiledNodes.get(filePath)
         this.reportError(
@@ -211,11 +247,38 @@ class Runner {
         })
         return
       }
+      let text
+      try {
+        text = filterContextForNode(printContext.getRoot(name), printContext)
+          .documents()
+          .map(GraphQLIRPrinter.print)
+          .join(`\n`)
+      } catch (error) {
+        const regex = /Unknown\sdocument\s`(.*)`/gm
+        const str = error.toString()
+        let m
 
-      let text = filterContextForNode(printContext.getRoot(name), printContext)
-        .documents()
-        .map(GraphQLIRPrinter.print)
-        .join(`\n`)
+        let fragmentName
+        while ((m = regex.exec(str)) !== null) {
+          // This is necessary to avoid infinite loops with zero-width matches
+          if (m.index === regex.lastIndex) regex.lastIndex++
+
+          fragmentName = m[1]
+        }
+
+        const closestFragment = fragments
+          .map(f => {
+            return { fragment: f, score: levenshtein.get(fragmentName, f) }
+          })
+          .filter(f => f.score < 10)
+          .sort((a, b) => a.score > b.score)[0]?.fragment
+
+        report.panicOnBuild({
+          id: `85908`,
+          filePath,
+          context: { fragmentName, closestFragment },
+        })
+      }
 
       const query = {
         name,

@@ -62,7 +62,7 @@
     "event-source-polyfill": "^1.0.5",
     "express": "^4.16.3",
     "express-graphql": "^0.7.1",
-    "fast-levenshtein": "~2.0.4",
+    "fast-levenshtein": "^2.0.6",
     "file-loader": "^1.1.11",
     "flat": "^4.0.0",
     "fs-exists-cached": "1.0.0",
