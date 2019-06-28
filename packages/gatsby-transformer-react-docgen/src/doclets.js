@@ -64,7 +64,7 @@ export const applyPropDoclets = prop => {
       value = cleanDocletValue(value)
 
       if (prop.type === undefined) {
-        prop.type = prop.flowType || {}
+        prop.type = { ...prop.tsType } || { ...prop.flowType } || {}
       }
 
       prop.type.name = value
