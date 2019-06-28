@@ -1,8 +1,12 @@
 const errorMap = {
-  default: {
-    text: () => `You found an unknown error`,
+  "": {
+    text: context => {
+      const sourceMessage = context.sourceMessage
+        ? context.sourceMessage
+        : `There was an error`
+      return sourceMessage
+    },
     level: `ERROR`,
-    docsUrl: `https://gatsby.dev/issue-how-to`,
   },
   "95312": {
     text: () => `"window" is not available during server side rendering.`,
@@ -19,12 +23,9 @@ const errorMap = {
   },
   "85901": {
     text: context =>
-      `Oops! You found an unidentified GraphQL error\n\nOriginal error message:\n\n${
-        context.sourceMessage
-      }`,
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}`,
     type: `GRAPHQL`,
     level: `ERROR`,
-    docsUrl: `https://gatsby.dev/issue-how-to`,
   },
   "85907": {
     text: context =>
@@ -52,4 +53,4 @@ const errorMap = {
   },
 }
 
-module.exports = { errorMap, defaultError: errorMap.default }
+module.exports = { errorMap, defaultError: errorMap[``] }

@@ -42,14 +42,14 @@ const reporter: Reporter = {
    * @param {*} args
    */
   panic(...args) {
-    this.error(...args)
-    trackError(`GENERAL_PANIC`, { error: args })
+    const error = this.error(...args)
+    trackError(`GENERAL_PANIC`, { error })
     process.exit(1)
   },
 
   panicOnBuild(...args) {
-    this.error(...args)
-    trackError(`BUILD_PANIC`, { error: args })
+    const error = this.error(...args)
+    trackError(`BUILD_PANIC`, { error })
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }
@@ -60,18 +60,23 @@ const reporter: Reporter = {
     // Many paths to retain backcompat :scream:
     if (arguments.length === 2) {
       details.error = error
-      details.text = errorMeta
+      details.context = {
+        sourceMessage: errorMeta + ` ` + error.message,
+      }
     } else if (arguments.length === 1 && errorMeta instanceof Error) {
       details.error = errorMeta
-      details.text = errorMeta.message
+      details.context = {
+        sourceMessage: errorMeta.message,
+      }
     } else if (arguments.length === 1 && Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
-      errorMeta.forEach(errorItem => this.error(errorItem))
-      return
+      return errorMeta.map(errorItem => this.error(errorItem))
     } else if (arguments.length === 1 && typeof errorMeta === `object`) {
       details = Object.assign({}, errorMeta)
     } else if (arguments.length === 1 && typeof errorMeta === `string`) {
-      details.text = errorMeta
+      details.context = {
+        sourceMessage: errorMeta,
+      }
     }
 
     const structuredError = constructError({ details })
@@ -82,6 +87,7 @@ const reporter: Reporter = {
     if (structuredError.error) {
       this.log(errorFormatter.render(structuredError.error))
     }
+    return structuredError
   },
 
   /**

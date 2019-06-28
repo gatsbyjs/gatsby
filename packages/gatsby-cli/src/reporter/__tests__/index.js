@@ -1,6 +1,8 @@
 const reporter = require(`../index.js`)
 const reporterInstance = require(`../reporters`)
 
+// TODO: report.error now DOES return something. Get rid of this spying mocking stuff
+
 // report.error doesn't return anything, it creates a `structuredError` object and
 // calls reporterInstance.error(structuredError)
 

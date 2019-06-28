@@ -2,6 +2,9 @@
 
 exports[`report.error handles "Array of Errors" signature correctly 1`] = `
 Object {
+  "context": Object {
+    "sourceMessage": "Message 3 from new Error",
+  },
   "docsUrl": "https://gatsby.dev/issue-how-to",
   "error": [Error: Message 3 from new Error],
   "level": "ERROR",
@@ -12,6 +15,9 @@ Object {
 
 exports[`report.error handles "Error" signature correctly 1`] = `
 Object {
+  "context": Object {
+    "sourceMessage": "Message from new Error",
+  },
   "docsUrl": "https://gatsby.dev/issue-how-to",
   "error": [Error: Message from new Error],
   "level": "ERROR",
@@ -22,6 +28,9 @@ Object {
 
 exports[`report.error handles "String" signature correctly 1`] = `
 Object {
+  "context": Object {
+    "sourceMessage": "Error created in Jest",
+  },
   "docsUrl": "https://gatsby.dev/issue-how-to",
   "level": "ERROR",
   "stack": Any<Array>,
@@ -31,11 +40,14 @@ Object {
 
 exports[`report.error handles "String, Error" signature correctly 1`] = `
 Object {
+  "context": Object {
+    "sourceMessage": "Error string passed to reporter Message from new Error",
+  },
   "docsUrl": "https://gatsby.dev/issue-how-to",
   "error": [Error: Message from new Error],
   "level": "ERROR",
   "stack": Any<Array>,
-  "text": "Error string passed to reporter",
+  "text": "Error string passed to reporter Message from new Error",
 }
 `;
 

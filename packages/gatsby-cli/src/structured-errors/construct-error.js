@@ -14,8 +14,11 @@ const constructError = ({ details }) => {
   const structuredError = {
     ...details,
     ...result,
-    text: get(details, `text`) || result.text(details.context),
+    text: result.text(details.context),
     stack: details.error ? stackTrace.parse(details.error) : [],
+    docsUrl: result.docsUrl
+      ? result.docsUrl
+      : `https://gatsby.dev/issue-how-to`,
   }
 
   // validate

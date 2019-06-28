@@ -23,39 +23,43 @@ const File = ({ filePath, location }) => {
   )
 }
 
-const Error = ({ details }) => {
-  const origError = get(details, `error.message`, null)
-  // const stackLength = get(details, `stack.length`, 0)
-
+const DocsLink = ({ docsUrl }) => {
+  // TODO: when there's no specific docsUrl, add helpful message describing how
+  // to submit an issue
+  if (docsUrl === `https://gatsby.dev/issue-how-to`) return null
   return (
-    <Box marginY={1} flexDirection="column">
+    <Box marginTop={1}>
+      See our docs page for more info on this error: {docsUrl}
+    </Box>
+  )
+}
+
+const Error = ({ details }) => (
+  // const stackLength = get(details, `stack.length`, 0
+
+  <Box marginY={1} flexDirection="column">
+    <Box flexDirection="column">
       <Box flexDirection="column">
-        <Box flexDirection="column">
-          <Box>
-            <Box marginRight={1}>
-              <Color black bgRed>
-                {` ${details.level} `}
-                {details.id ? `#${details.id} ` : ``}
-              </Color>
-              <Color red>{details.type ? ` ` + details.type : ``}</Color>
-            </Box>
-            {origError}
+        <Box>
+          <Box marginRight={1}>
+            <Color black bgRed>
+              {` ${details.level} `}
+              {details.id ? `#${details.id} ` : ``}
+            </Color>
+            <Color red>{details.type ? ` ` + details.type : ``}</Color>
           </Box>
-          <Box marginTop={1}>{details.text}</Box>
-          {details.filePath && (
-            <Box marginTop={1}>
-              File:{` `}
-              <File filePath={details.filePath} location={details.location} />
-            </Box>
-          )}
         </Box>
-        {details.docsUrl && (
+        <Box marginTop={1}>{details.text}</Box>
+        {details.filePath && (
           <Box marginTop={1}>
-            See our docs page for more info on this error: {details.docsUrl}
+            File:{` `}
+            <File filePath={details.filePath} location={details.location} />
           </Box>
         )}
       </Box>
-      {/* TODO: use this to replace errorFormatter.render in reporter.error func
+      <DocsLink docsUrl={details.docsUrl} />
+    </Box>
+    {/* TODO: use this to replace errorFormatter.render in reporter.error func
       {stackLength > 0 && (
         <Box>
           <Color>
@@ -70,8 +74,7 @@ const Error = ({ details }) => {
           </Color>
         </Box>
       )} */}
-    </Box>
-  )
-}
+  </Box>
+)
 
 export default Error
