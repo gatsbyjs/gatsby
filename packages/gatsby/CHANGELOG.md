@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.1...gatsby@2.11.2) (2019-06-28)
+
+### Features
+
+- **gatsby-cli:** Add error codes and structured errors ([#14904](https://github.com/gatsbyjs/gatsby/issues/14904)) ([d26651e](https://github.com/gatsbyjs/gatsby/commit/d26651e))
+
 ## [2.11.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.0...gatsby@2.11.1) (2019-06-28)
 
 ### Features
