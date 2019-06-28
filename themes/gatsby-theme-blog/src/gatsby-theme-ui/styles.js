@@ -4,10 +4,6 @@ export default {
   root: {
     fontFamily: `body`,
   },
-  Container: {
-    maxWidth: 672,
-    px: 3,
-  },
   pre: {
     fontFamily: `monospace`,
     tabSize: 4,

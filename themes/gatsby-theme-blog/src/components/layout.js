@@ -8,8 +8,9 @@ export default ({ children, ...props }) => (
     <div>
       <div
         css={css({
-          variant: `styles.Container`,
+          maxWidth: `container`,
           mx: `auto`,
+          px: 3,
           py: 4,
         })}
       >

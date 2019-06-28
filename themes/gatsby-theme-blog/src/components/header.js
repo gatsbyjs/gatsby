@@ -65,8 +65,9 @@ export default ({ children, title, ...props }) => {
     <header>
       <div
         css={css({
-          variant: `styles.Container`,
+          maxWidth: `container`,
           mx: `auto`,
+          px: 3,
           pt: 4,
         })}
       >
