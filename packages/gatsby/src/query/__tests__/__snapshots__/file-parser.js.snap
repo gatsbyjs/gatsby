@@ -181,6 +181,17 @@ query {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -231,6 +242,17 @@ query {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 26,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
         },
         "text": "{ foo }",
         "variableDefinitions": Array [],
@@ -287,6 +309,17 @@ query {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -337,6 +370,17 @@ query {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 26,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
         },
         "text": "{ foo }",
         "variableDefinitions": Array [],
@@ -392,6 +436,17 @@ query {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
         },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
@@ -792,6 +847,17 @@ query {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 12,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
+        },
         "text": "
   query {
     site {
@@ -932,6 +998,17 @@ query {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 69,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
+        },
         "text": "{ allMarkdownRemark { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
       },
@@ -1064,6 +1141,17 @@ query {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 82,
+            "line": 5,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 5,
+          },
+        },
         "text": "{ allStrangeQueryName { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
       },
@@ -1119,6 +1207,17 @@ query {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 67,
+            "line": 3,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 38,
+            "line": 3,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -1173,6 +1272,17 @@ query {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 82,
+            "line": 3,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 53,
+            "line": 3,
+          },
         },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
@@ -1305,6 +1415,17 @@ query {
               },
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 69,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
         },
         "text": "{ allMarkdownRemark { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
