@@ -8,10 +8,8 @@ import moon from "../../content/assets/moon.png"
 
 const rootPath = `${__PATH_PREFIX__}/`
 
-const Title = props => {
-  const { title } = props
-
-  if (props.location.pathname === rootPath) {
+const Title = ({ children, location }) => {
+  if (location.pathname === rootPath) {
     return (
       <Styled.h1
         css={css({
@@ -28,7 +26,7 @@ const Title = props => {
           }}
           to={`/`}
         >
-          {title}
+          {children}
         </Styled.a>
       </Styled.h1>
     )
@@ -49,14 +47,14 @@ const Title = props => {
           })}
           to={`/`}
         >
-          {title}
+          {children}
         </Styled.a>
       </Styled.h3>
     )
   }
 }
 
-export default props => {
+export default ({ children, title, ...props }) => {
   const [colorMode, setColorMode] = useColorMode()
   const isDark = colorMode === `dark`
   const toggleColorMode = e => {
@@ -64,11 +62,7 @@ export default props => {
   }
 
   return (
-    <header
-      css={css({
-        display: `block`,
-      })}
-    >
+    <header>
       <div
         css={css({
           variant: `styles.Container`,
@@ -80,12 +74,16 @@ export default props => {
           css={css({
             display: `flex`,
             justifyContent: `space-between`,
-            alignItems: `center`,
+            alignItems: `baseline`,
             mb: 4,
           })}
         >
-          <Title {...props} />
+          <Title {...props}>{title}</Title>
+          {children}
           <Toggle
+            css={{
+              alignSelf: `center`,
+            }}
             icons={{
               checked: (
                 <img

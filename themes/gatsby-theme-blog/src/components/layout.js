@@ -2,7 +2,7 @@ import React from "react"
 import { css, Styled } from "theme-ui"
 import Header from "./header"
 
-export default props => (
+export default ({ children, ...props }) => (
   <Styled.root>
     <Header {...props} />
     <div>
@@ -13,7 +13,7 @@ export default props => (
           py: 4,
         })}
       >
-        {props.children}
+        {children}
       </div>
     </div>
   </Styled.root>
