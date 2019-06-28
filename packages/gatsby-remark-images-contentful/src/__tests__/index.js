@@ -63,6 +63,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
         dir: dirName,
       }
     },
+    createContentDigest: jest.fn().mockReturnValue(`contentDigest`),
   }
 }
 

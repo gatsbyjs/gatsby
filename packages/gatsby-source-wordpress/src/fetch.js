@@ -157,6 +157,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
       entities = entities.concat(
         await fetchData({
           route,
+          apiUrl: url,
           _verbose,
           _perPage,
           _auth,
@@ -241,6 +242,7 @@ async function getJWToken(_auth, url) {
  */
 async function fetchData({
   route,
+  apiUrl,
   _verbose,
   _perPage,
   _auth,
@@ -272,6 +274,11 @@ async function fetchData({
 
   let entities = []
   if (routeResponse) {
+    if (type.indexOf(`wordpress__menus_menus`) !== -1) {
+      routeResponse = routeResponse.map(r => {
+        return { ...r, ID: r.term_id }
+      })
+    }
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
       routeResponse = routeResponse.map(r => {
@@ -291,12 +298,16 @@ async function fetchData({
     }
 
     // WordPress exposes the menu items in meta links.
-    if (type == `wordpress__wp_api_menus_menus`) {
+    if (type === `wordpress__wp_api_menus_menus`) {
       for (let menu of routeResponse) {
         if (menu.meta && menu.meta.links && menu.meta.links.self) {
           entities = entities.concat(
             await fetchData({
-              route: { url: menu.meta.links.self, type: `${type}_items` },
+              route: {
+                url: useApiUrl(apiUrl, menu.meta.links.self),
+                type: `${type}_items`,
+              },
+              apiUrl,
               _verbose,
               _perPage,
               _auth,
@@ -306,6 +317,22 @@ async function fetchData({
         }
       }
     }
+
+    // Menu nodes for WP-REST-API V2 Menus ( https://wordpress.org/plugins/wp-rest-api-v2-menus/ )
+    if (type === `wordpress__menus_menus`) {
+      for (let menu of routeResponse) {
+        entities = entities.concat(
+          await fetchData({
+            route: { url: `${url}/${menu.term_id}`, type: `${type}_items` },
+            _verbose,
+            _perPage,
+            _auth,
+            _accessToken,
+          })
+        )
+      }
+    }
+
     // TODO : Get the number of created nodes using the nodes in state.
     let length
     if (routeResponse && Array.isArray(routeResponse)) {
@@ -618,6 +645,22 @@ const getRoutePath = (baseUrl, fullPath) => {
 }
 
 /**
+ * Extract the route path for an endpoint
+ *
+ * @param {string} apiUrl base site API URL
+ * @param {string} self URL that returned from server response. May contain domain differs from apiUrl
+ * @returns {string} URL to endpoint using baseURL
+ */
+const useApiUrl = (apiUrl, endpointURL) => {
+  // Replace route self host to baseUrl if differs
+  const isDifferentDomains = endpointURL.indexOf(apiUrl) === -1
+  if (isDifferentDomains) {
+    return endpointURL.replace(/(.*?)\/wp-json/, apiUrl)
+  }
+  return endpointURL
+}
+
+/**
  * Build full URL from baseUrl and fullPath.
  * Method of contructing full URL depends on wether it's hosted on wordpress.com
  * or not as wordpress.com have slightly different (custom) REST structure
@@ -644,4 +687,5 @@ const getManufacturer = route =>
 fetch.getRawEntityType = getRawEntityType
 fetch.getRoutePath = getRoutePath
 fetch.buildFullUrl = buildFullUrl
+fetch.useApiUrl = useApiUrl
 module.exports = fetch

@@ -6,14 +6,15 @@ import { colors, fonts } from "../utils/presets"
 
 const formatDate = dateString =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
+    timeZone: `UTC`,
     month: `long`,
     day: `numeric`,
     year: `numeric`,
   })
 
 const BlogPostPreviewItem = ({ post, className }) => (
-  <article className={className} css={{ position: `relative` }}>
-    <Link to={post.fields.slug} css={{ "&&": { color: colors.gray.copy } }}>
+  <article css={{ position: `relative` }} className={className}>
+    <Link to={post.fields.slug} css={{ "&&": { color: colors.text.primary } }}>
       <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
       <p>
         {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
@@ -42,7 +43,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         css={{
           display: `inline-block`,
           fontFamily: fonts.header,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         <div>
@@ -83,7 +84,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
 )
 
 export const blogPostPreviewFragment = graphql`
-  fragment BlogPostPreview_item on MarkdownRemark {
+  fragment BlogPostPreview_item on Mdx {
     excerpt
     fields {
       slug

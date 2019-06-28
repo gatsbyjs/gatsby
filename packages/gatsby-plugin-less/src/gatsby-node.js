@@ -13,6 +13,7 @@ exports.onCreateWebpackConfig = (
     options: {
       sourceMap: !PRODUCTION,
       ...lessOptions,
+      plugins: lessOptions.lessPlugins || [], // for #4645
     },
   }
 

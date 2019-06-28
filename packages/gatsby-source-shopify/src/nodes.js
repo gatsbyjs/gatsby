@@ -16,13 +16,14 @@ const PRODUCT_OPTION = `ProductOption`
 const PRODUCT_VARIANT = `ProductVariant`
 const SHOP_POLICY = `ShopPolicy`
 const PRODUCT_TYPE = `ProductType`
+const PAGE = `Page`
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
 
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
-  { createNode, createNodeId, touchNode, store, cache }
+  { createNode, createNodeId, touchNode, store, cache, reporter }
 ) => {
   let fileNodeID
 
@@ -42,6 +43,7 @@ const downloadImageAndCreateFileNode = async (
     createNode,
     createNodeId,
     parentNodeId: nodeId,
+    reporter,
   })
 
   if (fileNode) {
@@ -144,3 +146,5 @@ export const ProductVariantNode = imageArgs =>
   })
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
+
+export const PageNode = createNodeFactory(PAGE)

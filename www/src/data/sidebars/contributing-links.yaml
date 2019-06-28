@@ -12,8 +12,12 @@
           link: /contributing/contributor-swag/
         - title: Pair Programming Sessions
           link: /contributing/pair-programming/
+        - title: Gatsby Community Events
+          link: /contributing/events/
         - title: Where to Participate in the Community
           link: /contributing/where-to-participate/
+        - title: Organize a Gatsby Event
+          link: /contributing/organize-a-gatsby-event/
         - title: How to Run a Gatsby Workshop
           link: /contributing/how-to-run-a-gatsby-workshop/
         - title: How to Pitch Gatsby
@@ -33,6 +37,8 @@
           link: /contributing/how-to-label-an-issue/
         - title: Triaging GitHub Issues
           link: /contributing/triaging-github-issues/
+        - title: Managing Pull Requests
+          link: /contributing/managing-pull-requests/
         - title: Docs Contributions
           link: /contributing/docs-contributions/
           items:
@@ -59,6 +65,16 @@
               link: /contributing/submit-to-starter-library/
             - title: Submit to Plugin Library
               link: /contributing/submit-to-plugin-library/
+    - title: Gatsby Brand Guidelines
+      items:
+        - title: Color
+          link: /guidelines/color/
+        - title: Logo
+          link: /guidelines/logo/
+        - title: Typography
+          link: /guidelines/typography/
+        - title: Design Tokens
+          link: /guidelines/design-tokens/
     - title: RFC Process
       link: /contributing/rfc-process/
     - title: Gatsby's Governance Model*

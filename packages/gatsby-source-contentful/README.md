@@ -144,7 +144,15 @@ Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to 
 
 You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
 
-**`initialSyncOnly`** [boolean][optional] [default: `false`]
+**`localeFilter`** [function][optional] [default: `() => true`]
+
+Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amout of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+
+For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
+
+List of locales and their codes can be found in Contentful app -> Settings -> Locales
+
+**`forceFullSync`** [boolean][optional] [default: `false`]
 
 Prevents the use of sync tokens when accessing the Contentful API.
 
@@ -284,7 +292,7 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
           body
         }
         heroImage {
-          resolutions(width: 1600) {
+          fixed(width: 1600) {
             width
             height
             src
@@ -296,6 +304,8 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
   }
 }
 ```
+
+When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that gatsby-source-contentful also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
 
 ## More on Queries with Contentful and Gatsby
 

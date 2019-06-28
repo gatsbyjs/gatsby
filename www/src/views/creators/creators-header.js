@@ -13,30 +13,6 @@ import Checkmark from "./check.svg"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-// const CreatorsHeaderLink = ({ linkTo, children }) => (
-//   <li
-//     css={{
-//       display: `flex`,
-//       alignItems: `center`,
-//       margin: 0,
-//     }}
-//   >
-//     <Link
-//       to={linkTo}
-//       state={{ filter: `` }}
-//       activeStyle={{
-//         backgroundColor: colors.gatsby,
-//         color: colors.white,
-//       }}
-//       css={{
-//         ...styles.CreatorsHeaderLink,
-//       }}
-//     >
-//       {children}
-//     </Link>
-//   </li>
-// )
-
 class CreatorsHeader extends Component {
   render() {
     const { /*forHire, hiring,*/ submissionText } = this.props
@@ -46,37 +22,23 @@ class CreatorsHeader extends Component {
           ...styles.header,
         }}
       >
-        <Link
-          to="/creators/"
-          state={{ filter: `` }}
-          css={{
-            ...styles.creatorsLink,
-          }}
-        >
-          Creators
-        </Link>
-        {/* <nav
-          role="navigation"
+        <h1
           css={{
             display: `flex`,
-            justifyContent: `space-between`,
-            alignItems: `center`,
-            [breakpoints.sm]: {
-              justifyContent: `flex-start`,
-            },
+            height: `100%`,
+            margin: 0,
           }}
         >
-          <CreatorsHeaderLink linkTo="/creators/">All</CreatorsHeaderLink>
-          <CreatorsHeaderLink linkTo="/creators/people/">
-            People
-          </CreatorsHeaderLink>
-          <CreatorsHeaderLink linkTo="/creators/agencies/">
-            Agencies
-          </CreatorsHeaderLink>
-          <CreatorsHeaderLink linkTo="/creators/companies/">
-            Companies
-          </CreatorsHeaderLink>
-        </nav> */}
+          <Link
+            to="/creators/"
+            state={{ filter: `` }}
+            css={{
+              ...styles.creatorsLink,
+            }}
+          >
+            Creators
+          </Link>
+        </h1>
         <div
           className="creators--filters"
           css={{
@@ -84,38 +46,6 @@ class CreatorsHeader extends Component {
             flex: `2`,
           }}
         >
-          {/* <label
-            className="label"
-            css={[styles.filter, forHire && styles.activeFilter]}
-          >
-            <input
-              type="checkbox"
-              name="forHire"
-              css={{
-                ...styles.input,
-              }}
-              checked={forHire}
-              onChange={() => this.props.applyFilter(`for_hire`)}
-              disabled={hiring}
-            />
-            For Hire
-          </label>
-          <label
-            className="label"
-            css={[styles.filter, hiring && styles.activeFilter]}
-          >
-            <input
-              type="checkbox"
-              name="hiring"
-              css={{
-                ...styles.input,
-              }}
-              checked={hiring}
-              onChange={() => this.props.applyFilter(`hiring`)}
-              disabled={forHire}
-            />
-            Hiring
-          </label> */}
           <div
             css={{
               marginLeft: `auto`,
@@ -125,7 +55,7 @@ class CreatorsHeader extends Component {
           >
             <Button
               small
-              to="/docs/submit-to-creator-showcase/"
+              to="/contributing/submit-to-creator-showcase/"
               icon={<ArrowForwardIcon />}
             >
               {submissionText}
@@ -144,7 +74,7 @@ const styles = {
     display: `flex`,
     flexDirection: `row`,
     alignItems: `center`,
-    borderBottom: `1px solid ${colors.ui.light}`,
+    borderBottom: `1px solid ${colors.ui.border.subtle}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
     padding: `0 ${space[6]}`,
@@ -152,6 +82,7 @@ const styles = {
     fontFamily: fonts.header,
   },
   creatorsLink: {
+    alignSelf: `center`,
     "&&": {
       fontSize: fontSizes[4],
       color: colors.gatsby,
@@ -180,7 +111,7 @@ const styles = {
     },
   },
   filter: {
-    border: `1px solid ${colors.ui.bright}`,
+    border: `1px solid ${colors.ui.border.subtle}`,
     borderRadius: 40,
     margin: `${space[6]} ${space[1]}`,
     paddingLeft: space[1],
@@ -195,7 +126,7 @@ const styles = {
     appearance: `none`,
     width: space[4],
     height: space[4],
-    border: `1px solid ${colors.ui.bright}`,
+    border: `1px solid ${colors.lavender}`,
     borderRadius: 40,
     marginRight: `${space[2]}`,
     outline: `none`,
@@ -207,7 +138,7 @@ const styles = {
     },
   },
   activeFilter: {
-    backgroundColor: colors.ui.bright,
+    backgroundColor: colors.lavender,
     color: colors.gatsby,
   },
 }

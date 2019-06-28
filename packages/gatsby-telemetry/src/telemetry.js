@@ -7,6 +7,8 @@ const os = require(`os`)
 const { basename, join, sep } = require(`path`)
 const { execSync } = require(`child_process`)
 const isDocker = require(`is-docker`)
+const showAnalyticsNotification = require(`./showAnalyticsNotification`)
+const lodash = require(`lodash`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -17,14 +19,27 @@ module.exports = class AnalyticsTracker {
   trackingEnabled // lazy
   componentVersion
   sessionId = uuid()
+
   constructor() {
     try {
       this.componentVersion = require(`../package.json`).version
       this.installedGatsbyVersion = this.getGatsbyVersion()
       this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      this.defaultTags = this.getTagsFromEnv()
     } catch (e) {
       // ignore
     }
+  }
+
+  getTagsFromEnv() {
+    if (process.env.GATSBY_TELEMETRY_TAGS) {
+      try {
+        return JSON.parse(process.env.GATSBY_TELEMETRY_TAGS)
+      } catch (_) {
+        // ignore
+      }
+    }
+    return {}
   }
 
   getGatsbyVersion() {
@@ -59,7 +74,7 @@ module.exports = class AnalyticsTracker {
     }
     return undefined
   }
-  captureEvent(type = ``, tags = {}) {
+  captureEvent(type = ``, tags = {}, opts = { debounce: false }) {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -70,9 +85,21 @@ module.exports = class AnalyticsTracker {
     }
 
     const decoration = this.metadataCache[type]
-    delete this.metadataCache[type]
     const eventType = `${baseEventType}_${type}`
-    this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
+
+    if (opts.debounce) {
+      const debounceTime = 5 * 1000
+      const now = Date.now()
+      const debounceKey = JSON.stringify({ type, decoration, tags })
+      const last = this.debouncer[debounceKey] || 0
+      if (now - last < debounceTime) {
+        return
+      }
+      this.debouncer[debounceKey] = now
+    }
+
+    delete this.metadataCache[type]
+    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
   captureError(type, tags = {}) {
@@ -88,7 +115,7 @@ module.exports = class AnalyticsTracker {
       tags.error = sanitizeErrors(tags.error)
     }
 
-    this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
+    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
   captureBuildError(type, tags = {}) {
@@ -104,15 +131,14 @@ module.exports = class AnalyticsTracker {
       tags.error = sanitizeErrors(tags.error)
     }
 
-    this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
+    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
   buildAndStoreEvent(eventType, tags) {
     const event = {
       installedGatsbyVersion: this.installedGatsbyVersion,
       gatsbyCliVersion: this.gatsbyCliVersion,
-      ...this.defaultTags,
-      ...tags, // The schema must include these
+      ...lodash.merge({}, this.defaultTags, tags), // The schema must include these
       eventType,
       sessionId: this.sessionId,
       time: new Date(),
@@ -147,11 +173,7 @@ module.exports = class AnalyticsTracker {
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
       if (!ci.isCI) {
-        console.log(
-          `Gatsby has started collecting anonymous usage analytics to help improve Gatsby for all users.\n` +
-            `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +
-            `To learn more, checkout http://gatsby.dev/telemetry`
-        )
+        showAnalyticsNotification()
       }
       enabled = true
       this.store.updateConfig(`telemetry.enabled`, enabled)
@@ -188,10 +210,10 @@ module.exports = class AnalyticsTracker {
       nodeVersion: process.version,
       platform: os.platform(),
       release: os.release(),
-      cpus: cpus && cpus.length > 0 && cpus[0].model,
+      cpus: (cpus && cpus.length > 0 && cpus[0].model) || undefined,
       arch: os.arch(),
       ci: ci.isCI,
-      ciName: (ci.isCI && ci.name) || undefined,
+      ciName: (ci.isCI && ci.name) || process.env.CI_NAME || undefined,
       docker: isDocker(),
     }
     this.osInfo = osInfo

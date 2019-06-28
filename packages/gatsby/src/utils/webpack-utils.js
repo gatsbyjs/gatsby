@@ -206,7 +206,11 @@ module.exports = async ({
     },
 
     postcss: (options = {}) => {
-      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
+      let {
+        plugins,
+        overrideBrowserslist = supportedBrowsers,
+        ...postcssOpts
+      } = options
 
       return {
         loader: require.resolve(`postcss-loader`),
@@ -219,7 +223,7 @@ module.exports = async ({
 
             return [
               flexbugs,
-              autoprefixer({ browsers, flexbox: `no-2009` }),
+              autoprefixer({ overrideBrowserslist, flexbox: `no-2009` }),
               ...plugins,
             ]
           },
@@ -289,34 +293,20 @@ module.exports = async ({
    * JavaScript loader via babel, excludes node_modules
    */
   {
-    let js = (options = {}) => {
+    let js = ({ exclude = [], ...options } = {}) => {
+      const excludeRegex = [
+        `core-js|event-source-polyfill|webpack-hot-middleware/client`,
+      ].concat(exclude)
+
       return {
-        test: /\.jsx?$/,
-        exclude: vendorRegex,
+        test: /\.(js|mjs|jsx)$/,
+        exclude: new RegExp(excludeRegex.join(`|`)),
+        type: `javascript/auto`,
         use: [loaders.js(options)],
       }
     }
 
     rules.js = js
-  }
-
-  /**
-   * mjs loader:
-   * webpack 4 has issues automatically dealing with
-   * the .mjs extension, thus we need to explicitly
-   * add this rule to use the default webpack js loader
-   */
-  {
-    let mjs = (options = {}) => {
-      return {
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: `javascript/auto`,
-        ...options,
-      }
-    }
-
-    rules.mjs = mjs
   }
 
   {
@@ -367,7 +357,7 @@ module.exports = async ({
   rules.media = () => {
     return {
       use: [loaders.url()],
-      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+      test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
     }
   }
 

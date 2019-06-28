@@ -12,6 +12,7 @@ import {
   ProductVariantNode,
   ShopPolicyNode,
   ProductTypeNode,
+  PageNode,
 } from "./nodes"
 import {
   ARTICLES_QUERY,
@@ -20,11 +21,12 @@ import {
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
   PRODUCT_TYPES_QUERY,
+  PAGES_QUERY,
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache },
-  { shopName, accessToken, verbose = true }
+  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
+  { shopName, accessToken, verbose = true, paginationSize = 250 }
 ) => {
   const client = createClient(shopName, accessToken)
 
@@ -36,7 +38,14 @@ export const sourceNodes = async (
     console.log(formatMsg(`starting to fetch data from Shopify`))
 
     // Arguments used for file node creation.
-    const imageArgs = { createNode, createNodeId, touchNode, store, cache }
+    const imageArgs = {
+      createNode,
+      createNodeId,
+      touchNode,
+      store,
+      cache,
+      reporter,
+    }
 
     // Arguments used for node creation.
     const args = {
@@ -46,6 +55,7 @@ export const sourceNodes = async (
       formatMsg,
       verbose,
       imageArgs,
+      paginationSize,
     }
 
     // Message printed when fetching is complete.
@@ -62,6 +72,7 @@ export const sourceNodes = async (
       createNodes(`blogs`, BLOGS_QUERY, BlogNode, args),
       createNodes(`collections`, COLLECTIONS_QUERY, CollectionNode, args),
       createNodes(`productTypes`, PRODUCT_TYPES_QUERY, ProductTypeNode, args),
+      createPageNodes(`pages`, PAGES_QUERY, PageNode, args),
       createNodes(`products`, PRODUCTS_QUERY, ProductNode, args, async x => {
         if (x.variants)
           await forEach(x.variants.edges, async edge =>
@@ -93,7 +104,7 @@ const createNodes = async (
   endpoint,
   query,
   nodeFactory,
-  { client, createNode, formatMsg, verbose, imageArgs },
+  { client, createNode, formatMsg, verbose, imageArgs, paginationSize },
   f = async () => {}
 ) => {
   // Message printed when fetching is complete.
@@ -101,7 +112,7 @@ const createNodes = async (
 
   if (verbose) console.time(msg)
   await forEach(
-    await queryAll(client, [`shop`, endpoint], query),
+    await queryAll(client, [`shop`, endpoint], query, paginationSize),
     async entity => {
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)
@@ -133,5 +144,27 @@ const createShopPolicies = async ({
         createNode
       )
     )
+  if (verbose) console.timeEnd(msg)
+}
+
+const createPageNodes = async (
+  endpoint,
+  query,
+  nodeFactory,
+  { client, createNode, formatMsg, verbose, paginationSize },
+  f = async () => {}
+) => {
+  // Message printed when fetching is complete.
+  const msg = formatMsg(`fetched and processed ${endpoint}`)
+
+  if (verbose) console.time(msg)
+  await forEach(
+    await queryAll(client, [endpoint], query, paginationSize),
+    async entity => {
+      const node = await nodeFactory(entity)
+      createNode(node)
+      await f(entity)
+    }
+  )
   if (verbose) console.timeEnd(msg)
 }

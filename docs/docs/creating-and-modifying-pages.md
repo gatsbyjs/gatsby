@@ -151,6 +151,7 @@ exports.onCreatePage = ({ page, actions }) => {
   createPage({
     ...page,
     context: {
+      ...page.context,
       house: `Gryffindor`,
     },
   })
@@ -168,3 +169,5 @@ const Page = ({ pageContext }) => {
 
 export default Page
 ```
+
+Page context is serialized before being passed to pages: This means it can't be used to pass functions into components.

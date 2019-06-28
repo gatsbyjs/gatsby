@@ -228,7 +228,7 @@ class Runner {
       }
 
       if (query.isStaticQuery) {
-        query.jsonName =
+        query.id =
           `sq--` +
           _.kebabCase(
             `${path.relative(store.getState().program.directory, filePath)}`

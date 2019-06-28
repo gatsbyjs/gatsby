@@ -11,10 +11,8 @@
           link: /tutorial/part-zero/#overview-of-core-technologies
         - title: Familiarize with the command line
           link: /tutorial/part-zero/#familiarize-yourself-with-the-command-line
-        - title: Install Node.js
-          link: /tutorial/part-zero/#install-nodejs
-        - title: Familiarize with npm
-          link: /tutorial/part-zero/#familiarize-yourself-with-npm
+        - title: Install Node.js and npm
+          link: /tutorial/part-zero/#-install-nodejs-and-npm
         - title: Install Git
           link: /tutorial/part-zero/#install-git
         - title: Using the Gatsby CLI
@@ -64,7 +62,7 @@
       ui: steps
       items:
         - title: Recap of the first half of the tutorial
-          link: /tutorial/part-four/#recap-of-first-half-of-the-tutorial
+          link: /tutorial/part-four/#recap-of-the-first-half-of-the-tutorial
         - title: Data in Gatsby
           link: /tutorial/part-four/#data-in-gatsby
         - title: How Gatsby uses GraphQL
@@ -111,3 +109,18 @@
           link: /tutorial/part-eight/#add-page-metadata
         - title: Keep making it better
           link: /tutorial/part-eight/#keep-making-it-better
+    - title: Additional Tutorials
+      link: /tutorial/additional-tutorials/
+      items:
+        - title: Making a Site with User Authentication
+          link: /tutorial/authentication-tutorial/
+        - title: Making an e-commerce Gatsby Site with Stripe
+          link: /tutorial/ecommerce-tutorial/
+        - title: Using the WordPress Source Plugin
+          link: /tutorial/wordpress-source-plugin-tutorial/
+        - title: Adding Images to a WordPress Site
+          link: /tutorial/image-tutorial/
+        - title: Using the Prismic with GraphQL Source Plugin
+          link: /tutorial/prismic-source-graphql-tutorial
+        - title: Writing Documentation with Docz
+          link: /tutorial/writing-documentation-with-docz/

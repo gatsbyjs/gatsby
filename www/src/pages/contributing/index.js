@@ -7,6 +7,7 @@ import { itemListContributing } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
+import FooterLinks from "../../components/shared/footer-links"
 
 class IndexRoute extends React.Component {
   render() {
@@ -16,6 +17,10 @@ class IndexRoute extends React.Component {
           <Container>
             <Helmet>
               <title>Contributing</title>
+              <meta
+                name="description"
+                content="Learn about contributing to one of the most welcoming communities helping develop the future of the web"
+              />
             </Helmet>
             <h1 id="contributing-gatsby" css={{ marginTop: 0 }}>
               Contributing to Gatsby.js
@@ -64,6 +69,7 @@ class IndexRoute extends React.Component {
             </ul>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
           </Container>
+          <FooterLinks />
         </DocSearchContent>
       </Layout>
     )

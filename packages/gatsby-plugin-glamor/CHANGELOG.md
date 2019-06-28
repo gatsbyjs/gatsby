@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamor/compare/gatsby-plugin-glamor@2.0.10...gatsby-plugin-glamor@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-glamor
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamor/compare/gatsby-plugin-glamor@2.0.9...gatsby-plugin-glamor@2.0.10) (2019-05-24)
+
+### Bug Fixes
+
+- **PnP:** use `require.resolve` on `setBabelPreset` ([#14288](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamor/issues/14288)) ([5e54afe](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamor/commit/5e54afe))
+
 ## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamor/compare/gatsby-plugin-glamor@2.0.8...gatsby-plugin-glamor@2.0.9) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-glamor
