@@ -1,11 +1,7 @@
-import React from 'react'
-import { Link } from 'gatsby'
-import {
-  css,
-  useColorMode,
-  Styled,
-} from 'theme-ui'
-import Toggle from './toggle'
+import React from "react"
+import { Link } from "gatsby"
+import { css, useColorMode, Styled } from "theme-ui"
+import Toggle from "./toggle"
 import Bio from "../components/bio"
 import sun from "../../content/assets/sun.png"
 import moon from "../../content/assets/moon.png"
@@ -73,14 +69,15 @@ export default props => {
         display: `block`,
       })}
     >
-      <div css={css({ })}>
+      <div css={css({})}>
         <div
           css={css({
             display: `flex`,
             justifyContent: `space-between`,
             alignItems: `center`,
             mb: 4,
-          })}>
+          })}
+        >
           <Title {...props} />
           <Toggle
             icons={{
