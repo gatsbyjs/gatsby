@@ -245,7 +245,8 @@ export class BaseLoader {
     }
 
     this.doPrefetch(pagePath).then(pageData => {
-      if (!this.prefetchCompleted.has(pagePath)) {
+      const realPath = this.pathFinder.find(pagePath)
+      if (!this.prefetchCompleted.has(realPath)) {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
 
         const realPath = this.pathFinder.find(pagePath)

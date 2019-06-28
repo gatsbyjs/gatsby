@@ -350,16 +350,79 @@ describe(`BaseLoader`, () => {
 
   describe(`loadPageSync`, () => {
     it(`returns page resources when already fetched`, () => {
-      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+      const baseLoader = new BaseLoader(null, [])
 
       baseLoader.pageDb.set(`/mypage`, { payload: true })
       expect(baseLoader.loadPageSync(`/mypage/`)).toBe(true)
     })
 
     it(`returns page resources when already fetched`, () => {
-      const baseLoader = new BaseLoader(() => Promise.resolve(`instance`), [])
+      const baseLoader = new BaseLoader(null, [])
 
       expect(baseLoader.loadPageSync(`/mypage/`)).toBeUndefined()
+    })
+  })
+
+  describe(`prefetch`, () => {
+    const flushPromises = () => new Promise(resolve => setImmediate(resolve))
+
+    it(`shouldn't prefetch when shouldPrefetch is false`, () => {
+      const baseLoader = new BaseLoader(null, [])
+      baseLoader.shouldPrefetch = jest.fn(() => false)
+      baseLoader.doPrefetch = jest.fn()
+
+      expect(baseLoader.prefetch(`/mypath/`)).toBe(false)
+      expect(baseLoader.shouldPrefetch).toBeCalledWith(`/mypath/`)
+      expect(baseLoader.doPrefetch).not.toHaveBeenCalled()
+    })
+
+    it(`should prefetch when not yet triggered`, async () => {
+      jest.useFakeTimers()
+      const baseLoader = new BaseLoader(null, [])
+      baseLoader.shouldPrefetch = jest.fn(() => true)
+      baseLoader.apiRunner = jest.fn()
+      baseLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+
+      expect(baseLoader.prefetch(`/mypath/`)).toBe(true)
+
+      // wait for doPrefetchPromise
+      await flushPromises()
+
+      expect(baseLoader.apiRunner).toBeCalledWith(`onPrefetchPathname`, {
+        pathname: `/mypath/`,
+      })
+      expect(baseLoader.apiRunner).toHaveBeenNthCalledWith(
+        2,
+        `onPostPrefetchPathname`,
+        {
+          pathname: `/mypath/`,
+        }
+      )
+    })
+
+    it(`should only run apis once`, async () => {
+      const baseLoader = new BaseLoader(null, [])
+      baseLoader.shouldPrefetch = jest.fn(() => true)
+      baseLoader.apiRunner = jest.fn()
+      baseLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+
+      expect(baseLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(baseLoader.prefetch(`/mypath/`)).toBe(true)
+
+      // wait for doPrefetchPromise
+      await flushPromises()
+
+      expect(baseLoader.apiRunner).toHaveBeenCalledTimes(2)
+      expect(baseLoader.apiRunner).toHaveBeenNthCalledWith(
+        1,
+        `onPrefetchPathname`,
+        expect.anything()
+      )
+      expect(baseLoader.apiRunner).toHaveBeenNthCalledWith(
+        2,
+        `onPostPrefetchPathname`,
+        expect.anything()
+      )
     })
   })
 })
