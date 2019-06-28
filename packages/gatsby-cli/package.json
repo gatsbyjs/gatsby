@@ -68,9 +68,9 @@
   "main": "lib/index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli",
   "scripts": {
-    "build": "babel src --out-dir lib --ignore **/__tests__",
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir lib --ignore **/__tests__"
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\""
   },
   "yargs": {
     "boolean-negation": false
