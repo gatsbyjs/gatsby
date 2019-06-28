@@ -11,12 +11,6 @@ const {
   handleMultipleReplaceRenderers,
 } = require(`./validate`)
 
-const apis = {
-  node: _.keys(nodeAPIs),
-  browser: _.keys(browserAPIs),
-  ssr: _.keys(ssrAPIs),
-}
-
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
 // for subplugins.
@@ -38,6 +32,12 @@ const flattenPlugins = plugins => {
 }
 
 module.exports = async (config = {}, rootDir = null) => {
+  const apis = {
+    node: _.keys(nodeAPIs),
+    browser: _.keys(browserAPIs),
+    ssr: _.keys(ssrAPIs),
+  }
+
   // Collate internal plugins, site config plugins, site default plugins
   const plugins = loadPlugins(config, rootDir)
 
