@@ -69,7 +69,13 @@ export default props => {
         display: `block`,
       })}
     >
-      <div css={css({})}>
+      <div
+        css={css({
+          variant: `styles.Container`,
+          mx: `auto`,
+          pt: 4,
+        })}
+      >
         <div
           css={css({
             display: `flex`,

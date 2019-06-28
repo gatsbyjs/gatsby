@@ -8,6 +8,8 @@ export default props => (
     <div>
       <div
         css={css({
+          variant: `styles.Container`,
+          mx: `auto`,
           py: 4,
         })}
       >
