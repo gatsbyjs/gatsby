@@ -147,6 +147,13 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
             d.isHook = isHook
             d.text = text
             d.hash = hash
+
+            taggedTemplateExpressPath.traverse({
+              TemplateElement(templateElementPath) {
+                d.templateLoc = templateElementPath.node.loc
+              },
+            })
+
             return d
           })
 
