@@ -1,3 +1,4 @@
+import "core-js/modules/es7.promise.finally"
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import PathFinder from "./find-path"
