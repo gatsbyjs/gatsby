@@ -1,116 +1,158 @@
 const fs = require(`fs`)
-const Promise = require(`bluebird`)
-const _ = require(`lodash`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require(`path`)
+const mkdirp = require(`mkdirp`)
+const Debug = require(`debug`)
 
-exports.onPreBootstrap = ({ reporter }) => {
-  const dirs = [`content`, `content/posts`, `content/assets`]
+// @TODO document theme options:
+// - takes an option `contentPath` for where the post content will live. Defaults to `posts`
+// - takes an option `assetPath` for where required assets will live. Defaults to `assets`
+
+const debug = Debug(`gatsby-theme-blog`)
+
+// These are customizable theme options we only need to check once
+let basePath
+let contentPath
+let assetPath
+
+// These templates are simply data-fetching wrappers that import components
+const PostTemplate = require.resolve(`./src/templates/post`)
+const PostsTemplate = require.resolve(`./src/templates/posts`)
+
+// Ensure that content directories exist at site-level
+exports.onPreBootstrap = ({ store }, themeOptions) => {
+  const { program } = store.getState()
+
+  basePath = themeOptions.basePath || `/`
+  contentPath = themeOptions.contentPath || `content/posts`
+  assetPath = themeOptions.assetPath || `content/assets`
+
+  const dirs = [
+    path.join(program.directory, contentPath),
+    path.join(program.directory, assetPath),
+  ]
 
   dirs.forEach(dir => {
+    debug(`Initializing ${dir} directory`)
     if (!fs.existsSync(dir)) {
-      reporter.log(`creating the ${dir} directory`)
-      fs.mkdirSync(dir)
+      mkdirp.sync(dir)
     }
   })
 }
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const postPage = require.resolve(`./src/templates/blog-post.js`)
-    resolve(
-      graphql(
-        `
-          {
-            allMdx(
-              sort: {
-                fields: [frontmatter___date, frontmatter___title]
-                order: DESC
-              }
-              filter: {
-                fields: {
-                  source: { in: ["blog-default-posts", "blog-posts"] }
-                  slug: { ne: null }
-                }
-              }
-              limit: 1000
-            ) {
-              edges {
-                node {
-                  fields {
-                    slug
-                  }
-                  frontmatter {
-                    title
-                  }
-                }
+  const result = await graphql(`
+    {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+      mdxPages: allMdx(
+        sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
+        filter: { fields: { source: { in: ["${contentPath}"] } } }
+        limit: 1000
+      ) {
+        edges {
+          node {
+            id
+            excerpt
+            fields {
+              source
+              slug
+            }
+            frontmatter {
+              title
+              date(formatString: "MMMM DD, YYYY")
+            }
+            body
+            parent {
+              ... on File {
+                name
+                base
+                relativePath
+                sourceInstanceName
               }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          console.log(result.errors)
-          reject(result.errors)
         }
+      }
+    }
+  `)
 
-        // Create blog post pages.
-        const posts = result.data.allMdx.edges
-        _.each(posts, (post, index) => {
-          const previous =
-            index === posts.length - 1 ? null : posts[index + 1].node
-          const next = index === 0 ? null : posts[index - 1].node
+  if (result.errors) {
+    reporter.panic(result.errors)
+  }
 
-          createPage({
-            path: post.node.fields.slug,
-            component: postPage,
-            context: {
-              slug: post.node.fields.slug,
-              previous,
-              next,
-            },
-          })
-        })
-      })
-    )
+  // Create Posts and Post pages.
+  const {
+    mdxPages,
+    site: { siteMetadata },
+  } = result.data
+  const posts = mdxPages.edges
+  const siteTitle = siteMetadata.title
+
+  // Create a page for each Post
+  posts.forEach(({ node: post }, index) => {
+    const previous = index === posts.length - 1 ? null : posts[index + 1]
+    const next = index === 0 ? null : posts[index - 1]
+    const { slug } = post.fields
+    createPage({
+      path: slug,
+      component: PostTemplate,
+      context: {
+        ...post,
+        siteTitle,
+        previous,
+        next,
+      },
+    })
+  })
+
+  // // Create the Posts page
+  createPage({
+    path: basePath,
+    component: PostsTemplate,
+    context: {
+      posts,
+      siteTitle,
+    },
   })
 }
 
-let userCreatedOwnPosts = false
-
+// Create fields for post slugs and source
+// This will change with schema customization with work
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `Mdx`) {
-    // create source field
-    const fileNode = getNode(node.parent)
-    const source = fileNode.sourceInstanceName
+  const toPostPath = node => {
+    const { dir } = path.parse(node.relativePath)
+    return path.join(basePath, dir, node.name)
+  }
+
+  // Make sure it's an MDX node
+  if (node.internal.type !== `Mdx`) {
+    return
+  }
+
+  // Create source field (according to contentPath)
+  const fileNode = getNode(node.parent)
+  const source = fileNode.sourceInstanceName
+
+  createNodeField({
+    node,
+    name: `source`,
+    value: source,
+  })
+
+  if (source === contentPath) {
+    const slug = toPostPath(fileNode)
 
     createNodeField({
       node,
-      name: `source`,
-      value: source,
+      name: `slug`,
+      value: slug,
     })
-
-    const eligiblePostSources = [`blog-default-posts`, `blog-posts`]
-
-    if (eligiblePostSources.includes(source)) {
-      if (source === `blog-posts`) {
-        userCreatedOwnPosts = true
-      }
-
-      if (userCreatedOwnPosts && source === `blog-default-posts`) {
-        return
-      }
-
-      // create slug for blog posts
-      const value = createFilePath({ node, getNode })
-      createNodeField({
-        name: `slug`,
-        node,
-        value,
-      })
-    }
   }
 }

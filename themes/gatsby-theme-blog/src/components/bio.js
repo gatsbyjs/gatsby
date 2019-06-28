@@ -22,16 +22,28 @@ const Bio = () => {
 
   return (
     <Flex css={css({ mb: 4 })}>
-      <Image
-        fixed={avatar.childImageSharp.fixed}
-        alt={author}
-        css={css({
-          mr: 2,
-          mb: 0,
-          width: 48,
-          borderRadius: 99999,
-        })}
-      />
+      {avatar ? (
+        <Image
+          fixed={avatar.childImageSharp.fixed}
+          alt={author}
+          css={css({
+            mr: 2,
+            mb: 0,
+            width: 48,
+            borderRadius: 99999,
+          })}
+        />
+      ) : (
+        <div
+          css={css({
+            mr: 2,
+            mb: 0,
+            width: 48,
+            borderRadius: 99999,
+          })}
+          role="presentation"
+        />
+      )}
       <Styled.p>
         <BioContent />
       </Styled.p>
@@ -46,7 +58,8 @@ const bioQuery = graphql`
         author
       }
     }
-    avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
+    # make this request silently fail?
+    avatar: file(absolutePath: { regex: "/avatar.jpg/" }) {
       childImageSharp {
         fixed(width: 48, height: 48) {
           ...GatsbyImageSharpFixed

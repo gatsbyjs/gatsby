@@ -9,9 +9,7 @@ export const pageQuery = graphql`
   query($id: String!) {
     mdx(id: { eq: $id }) {
       id
-      code {
-        body
-      }
+      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
