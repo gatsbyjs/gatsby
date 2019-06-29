@@ -1,15 +1,5 @@
 ---
-title: How to make a fully-featured dev blog in under 10 minutes
-date: 2019-06-20
-author: Thomas Wang
-tags:
-  - blog
-  - developer experience
-  - self hosting
-  - netlify
-  - netlify cms
-  - deletemedium
-canonicalLink: https://www.thomaswang.io/blog/how-to-make-a-fully-featured-dev-blog-in-under-10-minutes/
+title: How to make a personal Gatsby blog with Netlify CMS
 ---
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JeTqxCJC56Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="YouTube video: How to make a fully-featured dev blog in under 10 minutes"></iframe>
@@ -59,11 +49,13 @@ Open the project in your code editor and open `static/admin/config.yml`. Replace
 
 ```js
 // Replace this
-backend: name: test - repo
+backend:
+  name: test-repo
 
 // With this
-backend: name: github
-repo: your - username / your - repo - name
+backend:
+  name: github
+  repo: your-username/your-repo-name
 ```
 
 To make sure that Netlify CMS has access to your GitHub, you need to set up an OAuth application on GitHub. The instructions for that are here: [https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider). Once you've configured an authentication provider then you'll be able to use Netlify CMS at your deployed site to add new posts.
