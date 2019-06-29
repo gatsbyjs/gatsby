@@ -57,7 +57,7 @@ module.exports = {
 
 Notice that you're loading `queries` from a file at `./src/utils/algolia.js` (you can of course put it wherever you like) and your Algolia ID and API key from `.env` so let's add those files.
 
-For this, you will need to navigate to [the 'API Keys' section of your Algolia profile](https://www.algolia.com/api-keys). If you already have an account, you will find your API keys here. If not, you will need to sign up for one and then navigate to this link. It should look something like this screenshot:
+For this, you will need to navigate to [the 'API Keys' section of your Algolia profile](https://www.algolia.com/api-keys). If you already have an account, you will find your API keys here. If not, you will need to sign up for one and then navigate to this link. It should look something like this screenshot, only with actual numbers instead of redacted ones:
 
 ![algolia api key screenshot](./images/algolia-api-keys.png)
 
@@ -71,7 +71,7 @@ ALGOLIA_ADMIN_KEY=lksa09sadkj1230asd09dfvj12309ajl
 
 The placeholder keys in the previous code snippet are random character sequences but the ones you copy from your Algolia profile should be the same length. One of the benefits of using this method of querying your API keys is that they all get stored in one file, on the server, and are therefore never exposed to the client-side, which increases security.
 
-Also, it's good practice to commit a `.env.example` to version control so that if someone forks your repo, they know which environment variables they need to supply.
+Since your .env file contains your real private API keys, it is considered a security risk to commit your actual `.env` file. It's good practice to commit a `.env.example` to git or other version control so that if someone forks your repo, they know which environment variables they need to supply, without committing your private keys.
 
 ```text:title=.env.example
 # rename this file to .env and supply the values listed below
