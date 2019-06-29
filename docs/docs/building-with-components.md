@@ -168,7 +168,7 @@ sites. To see full working examples, check out the
 [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in
 the Gatsby repo.
 
-# Non-page components
+### Non-page components
 A Non-page component is embedded inside some other component forming a hierarchy that can get quite deep
 Gatsby uses GraphQL to enable components to declare the data they need.Using StaticQuery, you can colocate a component with its data. 
 
