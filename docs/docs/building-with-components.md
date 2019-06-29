@@ -167,35 +167,7 @@ These are examples of the different ways React components are used in Gatsby
 sites. To see full working examples, check out the
 [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in
 the Gatsby repo.
+# Non-page components
+A Non-page component is embedded inside some other component forming a hierarchy that can get quite deep
+Gatsby uses GraphQL to enable components to declare the data they need.Using StaticQuery, you can colocate a component with its data. Hence no longer is it required to pass data down from Layout to Header. 
 
-### Querying data in components using StaticQuery
-Gatsby v2 introduces StaticQuery, a new API that allows components to retrieve data via GraphQL query.
-<br>
-Basic example
-We’ll create a new Header component:
-<br>
-```jsx:title=src/components/header.js
-import React from "react"
-import { StaticQuery, graphql } from "gatsby"
-
-export default () => (
-  <StaticQuery
-    query={graphql`
-      query HeadingQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-    render={data => (
-      <header>
-        <h1>{data.site.siteMetadata.title}</h1>
-      </header>
-    )}
-  />
-)
-```
-<br>
-Using StaticQuery, you can colocate a component with its data. No longer is it required to, say, pass data down from Layout to Header.
