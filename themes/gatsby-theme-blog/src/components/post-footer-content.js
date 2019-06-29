@@ -24,15 +24,15 @@ export default ({ previous, next }) => (
       >
         <li>
           {previous && (
-            <Styled.a as={Link} to={previous.node.fields.slug} rel="prev">
-              ← {previous.node.frontmatter.title}
+            <Styled.a as={Link} to={previous.node.slug} rel="prev">
+              ← {previous.node.title}
             </Styled.a>
           )}
         </li>
         <li>
           {next && (
-            <Styled.a as={Link} to={next.node.fields.slug} rel="next">
-              {next.node.frontmatter.title} →
+            <Styled.a as={Link} to={next.node.slug} rel="next">
+              {next.node.title} →
             </Styled.a>
           )}
         </li>

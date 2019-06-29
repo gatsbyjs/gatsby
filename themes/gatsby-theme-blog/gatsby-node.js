@@ -1,6 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
+const crypto = require(`crypto`)
 const Debug = require(`debug`)
 
 // @TODO document theme options:
@@ -39,6 +40,55 @@ exports.onPreBootstrap = ({ store }, themeOptions) => {
   })
 }
 
+const mdxResolverPassthrough = fieldName => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const type = info.schema.getType(`Mdx`)
+  const mdxNode = context.nodeModel.getNodeById({
+    id: source.parent,
+  })
+  const resolver = type.getFields()[fieldName].resolve
+  const result = await resolver(mdxNode, args, context, {
+    fieldName,
+  })
+  return result
+}
+exports.sourceNodes = ({ actions, schema }) => {
+  const { createTypes } = actions
+  createTypes(
+    schema.buildObjectType({
+      name: `BlogPost`,
+      fields: {
+        id: { type: `ID!` },
+        title: {
+          type: `String!`,
+        },
+        date: { type: `Date`, extensions: { dateformat: {} } },
+        tags: { type: `[String]!` },
+        keywords: { type: `[String]!` },
+        excerpt: {
+          type: `String!`,
+          args: {
+            pruneLength: {
+              type: `Int`,
+              defaultValue: 140,
+            },
+          },
+          resolve: mdxResolverPassthrough(`excerpt`),
+        },
+        body: {
+          type: `String!`,
+          resolve: mdxResolverPassthrough(`body`),
+        },
+      },
+      interfaces: [`Node`],
+    })
+  )
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
@@ -49,32 +99,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           title
         }
       }
-      mdxPages: allMdx(
-        sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
-        filter: { fields: { source: { in: ["${contentPath}"] } } }
+      mdxPages: allBlogPost(
+        sort: { fields: [date, title], order: DESC }
         limit: 1000
       ) {
         edges {
           node {
             id
             excerpt
-            fields {
-              source
-              slug
-            }
-            frontmatter {
-              title
-              date(formatString: "MMMM DD, YYYY")
-            }
-            body
-            parent {
-              ... on File {
-                name
-                base
-                relativePath
-                sourceInstanceName
-              }
-            }
+            slug
+            title
+            date(formatString: "MMMM DD, YYYY")
           }
         }
       }
@@ -97,7 +132,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   posts.forEach(({ node: post }, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1]
     const next = index === 0 ? null : posts[index - 1]
-    const { slug } = post.fields
+    const { slug } = post
     createPage({
       path: slug,
       component: PostTemplate,
@@ -123,8 +158,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
 // Create fields for post slugs and source
 // This will change with schema customization with work
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
+  const { createNodeField, createNode, createParentChildLink } = actions
 
   const toPostPath = node => {
     const { dir } = path.parse(node.relativePath)
@@ -140,13 +175,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const fileNode = getNode(node.parent)
   const source = fileNode.sourceInstanceName
 
-  createNodeField({
-    node,
-    name: `source`,
-    value: source,
-  })
-
-  if (source === contentPath) {
+  if (node.internal.type === `Mdx` && source === contentPath) {
     const slug = toPostPath(fileNode)
 
     createNodeField({
@@ -154,5 +183,29 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: `slug`,
       value: slug,
     })
+
+    const fieldData = {
+      title: node.frontmatter.title,
+      tags: node.frontmatter.tags || [],
+      slug,
+      date: node.frontmatter.date,
+    }
+    createNode({
+      ...fieldData,
+      // Required fields.
+      id: createNodeId(`${node.id} >>> BlogPost`),
+      parent: node.id,
+      children: [],
+      internal: {
+        type: `BlogPost`,
+        contentDigest: crypto
+          .createHash(`md5`)
+          .update(JSON.stringify(fieldData))
+          .digest(`hex`),
+        content: JSON.stringify(fieldData),
+        description: `Blog Posts`,
+      },
+    })
+    createParentChildLink({ parent: fileNode, child: node })
   }
 }

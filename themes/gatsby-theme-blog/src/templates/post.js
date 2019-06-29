@@ -9,12 +9,10 @@ export default ({ pathContext: { previous, next }, location, data }) => (
 
 export const pageQuery = graphql`
   query($id: String!) {
-    post: mdx(id: { eq: $id }) {
+    post: blogPost(id: { eq: $id }) {
       id
-      frontmatter {
-        title
-        date(formatString: "MMMM DD, YYYY")
-      }
+      title
+      date(formatString: "MMMM DD, YYYY")
       excerpt
       body
     }
