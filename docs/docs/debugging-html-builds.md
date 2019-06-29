@@ -21,6 +21,10 @@ Errors while building static HTML files generally happen for one of the followin
     "WebpackError: Invariant Violation: Minified React error #130" [since Webpack 4
     is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
     The solution is to only use `import`.
+    
+1.  Your app is not correctly [hydrated][https://reactjs.org/docs/react-dom.html], which results in gatsby develop and gatsby 
+    build being inconsistent. For example, a style change is correct in React Developer Tools, but the DOM does not reflect
+    the updated style. 
 
 1.  Some other reason :-) #1 is the most common reason building static files
     fail. If it's another reason, you have to be a bit more creative in figuring
