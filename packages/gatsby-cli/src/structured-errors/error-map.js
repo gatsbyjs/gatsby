@@ -51,6 +51,31 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  // Config errors
+  "10123": {
+    text: context =>
+      `We encountered an error while trying to load your site's ${
+        context.configName
+      }. Please fix the error and try again.`,
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
+  "10124": {
+    text: context =>
+      `It looks like you were trying to add the config file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.js"`,
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
+  "10125": {
+    text: context =>
+      `Your ${
+        context.configName
+      } file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`,
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
 }
 
 module.exports = { errorMap, defaultError: errorMap[``] }
