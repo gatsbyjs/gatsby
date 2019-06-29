@@ -387,7 +387,6 @@ module.exports = async (args: BootstrapArgs) => {
 
   const graphqlRunner = (query, context = {}) => {
     const schema = store.getState().schema
-    console.log(`super`)
     return graphql(
       schema,
       query,
