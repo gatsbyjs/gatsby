@@ -28,7 +28,7 @@ Open your Terminal and run the following command from the Gatsby CLI to create a
 gatsby new [your-project-name] https://github.com/thomaswangio/gatsby-personal-starter-blog
 ```
 
-## Step 2
+### Step 2
 
 Once the Gatsby site is finished installing all the packages and dependencies, you can now go into the directory and run the site locally.
 
