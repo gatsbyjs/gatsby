@@ -1484,14 +1484,6 @@
     - Documentation
     - Security
   featured: false
-- title: Curbside
-  description: |
-    Connecting Stores with Mobile Customers
-  main_url: "https://curbside.com/"
-  url: "https://curbside.com/"
-  categories:
-    - eCommerce
-  featured: false
 - title: Mux Video
   description: |
     API to video hosting and streaming
@@ -3518,18 +3510,6 @@
     - Web Development
   built_by: Sylvain Hamann
   built_by_url: "https://twitter.com/sylvhama"
-  featured: false
-- title: Jane Manchun Wong's Personal Website
-  main_url: "https://wongmjane.com/"
-  url: "https://wongmjane.com/"
-  description: >
-    Jane Manchun Wong's Personal Website is where she posts bug bounty write-ups, discoveries from reverse engineering apps and personal thoughts. This site is built on Gatsby v2 and it leverages the ecosystem to provide PWA features such as offline support.
-  categories:
-    - Blog
-    - Portfolio
-    - Security
-  built_by: Jane Manchun Wong
-  built_by_url: "https://twitter.com/wongmjane"
   featured: false
 - title: Luca Crea's portfolio
   main_url: https://lcrea.github.io
