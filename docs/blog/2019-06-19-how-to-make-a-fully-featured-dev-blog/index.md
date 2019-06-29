@@ -20,7 +20,7 @@ This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-pe
 
 ## Let's walk through setting up a site in 4 Steps:
 
-## Step 1
+### Step 1
 
 Open your Terminal and run the following command from the Gatsby CLI to create a new Gatsby site using [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog).
 
