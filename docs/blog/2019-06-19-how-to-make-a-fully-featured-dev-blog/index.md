@@ -12,7 +12,7 @@ tags:
 canonicalLink: https://www.thomaswang.io/blog/how-to-make-a-fully-featured-dev-blog-in-under-10-minutes/
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JeTqxCJC56Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JeTqxCJC56Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="YouTube video: How to make a fully-featured dev blog in under 10 minutes"></iframe>
 
 Do you want a personal website with a blog running at `your-domain/blog`? Do you like super fast websites with out-of-the-box performance, SEO, and best practices? Do you like automating your work with a straightforward CMS? Well you're in luck!
 
