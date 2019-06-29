@@ -396,22 +396,29 @@ module.exports = async (args: BootstrapArgs) => {
     ).then(result => {
       if (result.errors) {
         report.panicOnBuild(
-          result.errors.map(e => {
-            // Find the file where graphql was called.
-            const file = stackTrace
-              .parse(e)
-              .find(file => /createPages/.test(file.functionName))
-            if (file) {
-              return errorParser({
-                message: e.message,
-                location: {
-                  start: { line: file.lineNumber, column: file.columnNumber },
-                },
-                filePath: file.fileName,
-              })
-            }
-            return null
-          })
+          result.errors
+            .map(e => {
+              // Find the file where graphql was called.
+              const file = stackTrace
+                .parse(e)
+                .find(file => /createPages/.test(file.functionName))
+              if (file) {
+                const structuredError = errorParser({
+                  message: e.message,
+                  location: {
+                    start: { line: file.lineNumber, column: file.columnNumber },
+                  },
+                  filePath: file.fileName,
+                })
+                structuredError.context = {
+                  ...structuredError.context,
+                  fromGraphQLFunction: true,
+                }
+                return structuredError
+              }
+              return null
+            })
+            .filter(_.isObject)
         )
       }
 
