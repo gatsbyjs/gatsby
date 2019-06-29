@@ -53,7 +53,7 @@ git push -u origin master
 
 Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site".
 
-## Step 4
+### Step 4
 
 Open the project in your code editor and open `static/admin/config.yml`. Replace the following piece of code with these settings, replacing `your-username/your-repo-name` with your GitHub username and repo. Then push this code to GitHub.
 
