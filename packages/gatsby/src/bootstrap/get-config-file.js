@@ -51,7 +51,6 @@ module.exports = async function getConfigFile(
     } else if (existsSync(path.join(rootDir, `src`, configName + `.js`))) {
       report.panic({
         id: `10125`,
-        error: err,
         context: {
           configName,
         },
