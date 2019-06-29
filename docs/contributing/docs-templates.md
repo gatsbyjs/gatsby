@@ -80,7 +80,7 @@ The content of a reference guide should provide just enough information to be ac
 
 ### Reference guide template
 
-You can copy and paste the markdown text below and fill it in with your own information
+You can copy and paste the markdown text below and fill it in with your own information. See the docs contributions guide for information about [structuring accessible headings](/contributing/docs-contributions#headings).
 
 ```markdown
 ---
