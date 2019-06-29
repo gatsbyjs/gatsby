@@ -11,7 +11,9 @@ Two things before you begin:
 
 ## Why Use Algolia?
 
-Algolia is a site search hosting platform that hosts page index information for you, and then returns the results to wherever you have the site search located on your site. You tell Algolia what pages you have, where they are, and how to navigate to them, and Algolia returns those results to the user based on whatever search terms they use. With a Gatsby site, all you have to do is install the plugin, tell it what information to query, provide your credentials, and a few other configuration steps and you can implement site search on your site. This means that after the queries have run when you `gatsby build`, Algolia will have the entire index of your site available to it and can serve results to users very quickly. To learn more about the benefits of using Algolia, [check out this blog post from Netlify, who recently switched their site search to Algolia](https://www.netlify.com/blog/2017/10/10/replacing-our-search-with-algolia/).
+Algolia is a site search hosting platform that hosts page index information for you, and then returns the results to wherever you have the site search located on your site. You tell Algolia what pages you have, where they are, and how to navigate to them, and Algolia returns those results to the user based on whatever search terms they use.
+
+To implement Algolia search on your Gatsby site, you'll need to install the plugin, tell it what information to query, provide your credentials, and a few other configuration steps. This means that after the queries have run when you `gatsby build`, Algolia will have the entire index of your site available and can serve results to users very quickly. To learn more about the benefits of using Algolia, [check out this blog post from Netlify, who recently switched their site search to Algolia](https://www.netlify.com/blog/2017/10/10/replacing-our-search-with-algolia/).
 
 ## Configuring the Algolia plugin
 
