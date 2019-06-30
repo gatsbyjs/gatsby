@@ -130,7 +130,65 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ## Transforming data
 
-Transforming data in Gatsby is also plugin-driven; Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more).
+Transforming data in Gatsby is also plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more). One such Transformer plugin is gatsby-transformer-plugin that you can use to transform your markdown files to HTML.
 
-- Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
-- Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
+### Requirements
+
+- A gatsby site with `gatsby-config.js` and `index.js` page
+- A Markdown file saved in your Gatsby site `src` directory
+- The `gatsby-transformer-remark` plugin using `npm install --save gatsby-transformer-remark` command
+
+### Directions
+
+1. Add the plugin in your `gatsby-config.js` page:
+
+```
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      // CommonMark mode (default: true)
+      commonmark: true,
+      // Footnotes mode (default: true)
+      footnotes: true,
+      // Pedantic mode (default: true)
+      pedantic: true,
+      // GitHub Flavored Markdown mode (default: true)
+      gfm: true,
+      // Plugins configs
+      plugins: [],
+    },
+  },
+],
+```
+
+2. Add a GraphQL query to the `index.js` file of your Gatsby site to fetch MarkdownRemark nodes:
+
+```jsx:title=src/pages/index.js
+export const query = graphql`
+  query {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+          excerpt
+        }
+      }
+    }
+  }
+  `
+```
+3. Restart the development server and open GraphiQL. Explore the fields available on the MarkdownRemark node.
+
+4. Style your `index.js` page with HTML and CSS and run your site to view the it.
+
+### Related links
+
+- Tutorial on transforming Markdown to HTMl using `gatsby-transformer-remark` plugin[tutorial part six](/tutorial/part-six/#transformer-plugins)
+- Browse available Transformer plugins in the [Gatsby library](/plugins/?=transformer)
