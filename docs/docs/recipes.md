@@ -134,3 +134,41 @@ Transforming data in Gatsby is also plugin-driven; Transformer plugins take data
 
 - Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
 - Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
+
+## Adding a Local Font
+
+### Requirements
+
+- A Gatsby site with a component: `index.js`
+- A font file
+
+### Directions
+
+1. Copy your font file in the directory:
+
+```
+src/fonts/fontname.woff2
+```
+
+2. To use the font from a CSS file:
+
+```
+@font-face {
+  font-family: "Font Name";
+  src: url("../fonts/fontname.woff2");
+}
+```
+
+**Note:** Make sure it's called from the relevant CSS, e.g.:
+
+```
+body {
+  font-family: "Font Name", sans-serif;
+}
+```
+
+### Relevant Links
+
+* More on importing files: https://www.gatsbyjs.org/docs/importing-assets-into-files/
+* Using Typography.js for Google fonts: https://www.gatsbyjs.org/docs/typography-js/
+
