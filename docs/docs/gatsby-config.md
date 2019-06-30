@@ -115,7 +115,7 @@ module.exports = {
 }
 ```
 
-You may need to install the appropriate file transformer and source plugins for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
+You may need to install the appropriate file transformer (in this case [YAML](https://www.gatsbyjs.org/packages/gatsby-transformer-yaml/)) and set up [gatsby-source-filesystem](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/) properly for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
 
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 
