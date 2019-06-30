@@ -2,6 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { mediaQueries } from "../utils/presets"
 
 import Layout from "../components/layout"
 import {
@@ -11,6 +12,7 @@ import {
 } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
+import TableOfContents from "../components/docs-table-of-contents"
 import FooterLinks from "../components/shared/footer-links"
 
 import Container from "../components/container"
@@ -49,11 +51,26 @@ function DocsTemplate({ data, location }) {
         enableScrollSync={urlSegment === `docs` ? false : true}
       >
         <DocSearchContent>
-          <Container>
+          <Container
+            overrideCSS={{
+              [page.tableOfContents.items && mediaQueries.xxl]: {
+                maxWidth: `80rem`,
+              },
+            }}
+          >
             <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
               {page.frontmatter.title}
             </h1>
-            <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+            <TableOfContents location={location} page={page} />
+            <div
+              css={{
+                [page.tableOfContents.items && mediaQueries.xxl]: {
+                  paddingRight: `40rem`,
+                },
+              }}
+            >
+              <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+            </div>
             {page.frontmatter.issue && (
               <a
                 href={page.frontmatter.issue}
@@ -80,6 +97,7 @@ export const pageQuery = graphql`
       body
       excerpt
       timeToRead
+      tableOfContents
       fields {
         slug
         anchor
