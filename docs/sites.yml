@@ -6281,3 +6281,22 @@
   built_by: Vazco
   built_by_url: https://www.vazco.eu
   featured: false
+- title: APIs You Won't Hate
+  url: https://apisyouwonthate.com/blog
+  main_url: https://apisyouwonthate.com
+  source_url: http://github.com/apisyouwonthate/apisyouwonthate.com
+  description: >
+    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
+  categories:
+    - Blog
+    - Education
+    - eCommerce
+    - API
+    - Community
+    - Learning
+    - Open Source
+    - Technology
+    - Web Development
+  built_by: Mike Bifulco
+  built_by_url: https://github.com/mbifulco
+  featured: false
