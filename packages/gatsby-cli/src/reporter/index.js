@@ -36,6 +36,7 @@ const convertHrtime = require(`convert-hrtime`)
 
 const { getErrorFormatter } = require(`./errors`)
 const { dispatch, getStore } = require(`./redux`)
+const constructError = require(`../structured-errors/construct-error`)
 
 const getElapsedTime = activity => {
   const elapsed = process.hrtime(activity.startTime)
@@ -94,29 +95,57 @@ const reporter: Reporter = {
    * @param {*} args
    */
   panic(...args) {
-    this.error(...args)
-    trackError(`GENERAL_PANIC`, { error: args })
+    const error = this.error(...args)
+    trackError(`GENERAL_PANIC`, { error })
     process.exit(1)
   },
 
   panicOnBuild(...args) {
-    const [message, error] = args
-    this.error(message, error)
-    trackError(`BUILD_PANIC`, { error: args })
+    const error = this.error(...args)
+    trackError(`BUILD_PANIC`, { error })
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }
   },
 
-  error(message, error) {
-    if (arguments.length === 1 && typeof message !== `string`) {
-      error = message
-      message = error.message
+  error(errorMeta, error) {
+    let details = {}
+    // Many paths to retain backcompat :scream:
+    if (arguments.length === 2) {
+      details.error = error
+      details.context = {
+        sourceMessage: errorMeta + ` ` + error.message,
+      }
+    } else if (arguments.length === 1 && errorMeta instanceof Error) {
+      details.error = errorMeta
+      details.context = {
+        sourceMessage: errorMeta.message,
+      }
+    } else if (arguments.length === 1 && Array.isArray(errorMeta)) {
+      // when we get an array of messages, call this function once for each error
+      return errorMeta.map(errorItem => this.error(errorItem))
+    } else if (arguments.length === 1 && typeof errorMeta === `object`) {
+      details = Object.assign({}, errorMeta)
+    } else if (arguments.length === 1 && typeof errorMeta === `string`) {
+      details.context = {
+        sourceMessage: errorMeta,
+      }
     }
 
-    addError(message)
     if (error) this.log(errorFormatter.render(error))
+    const structuredError = constructError({ details })
+    if (structuredError) {
+      addError(structuredError)
+    }
+
+    // TODO: remove this once Error component can render this info
+    // log formatted stacktrace
+    if (structuredError.error) {
+      this.log(errorFormatter.render(structuredError.error))
+    }
+    return structuredError
   },
+
   /**
    * Set prefix on uptime.
    * @param {string} prefix - A string to prefix uptime with.
@@ -300,8 +329,8 @@ const reporter: Reporter = {
 }
 
 console.log = (...args) => reporter.log(util.format(...args))
-console.warn = (...args) => reporter.warn(util.format(...args))
-console.info = (...args) => reporter.info(util.format(...args))
-console.error = (...args) => reporter.error(util.format(...args))
+console.warn = (...args) => reporter.log(util.format(...args))
+console.info = (...args) => reporter.log(util.format(...args))
+console.error = (...args) => reporter.log(util.format(...args))
 
 module.exports = reporter

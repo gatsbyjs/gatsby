@@ -1,5 +1,5 @@
 // @flow
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -16,6 +16,7 @@ const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
+const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
 
@@ -583,10 +584,14 @@ const createNode = (
     )
   }
 
+  const trackParams = {}
   // Add the plugin name to the internal object.
   if (plugin) {
     node.internal.owner = plugin.name
+    trackParams[`pluginName`] = `${plugin.name}@${plugin.version}`
   }
+
+  trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
