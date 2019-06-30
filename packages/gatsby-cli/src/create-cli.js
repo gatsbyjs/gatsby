@@ -266,6 +266,12 @@ function buildLocalCommands(cli, isLocalSite) {
       return cmd(args)
     }),
   })
+
+  cli.command({
+    command: `data-explorer`,
+    desc: `Query the Graphql backend`,
+    handler: getCommandHandler(`data-explorer`),
+  })
 }
 
 function isLocalGatsbySite() {
