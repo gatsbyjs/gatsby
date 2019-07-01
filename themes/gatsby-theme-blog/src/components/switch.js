@@ -1,14 +1,15 @@
 import React from "react"
-import ReactSwitch from 'react-switch'
+import ReactSwitch from "react-switch"
 import { css } from "theme-ui"
 
-export const Switch = props =>
+export const Switch = props => (
   <ReactSwitch
     {...props}
     css={css({
-      bg: 'primary',
+      bg: `primary`,
     })}
   />
+)
 
 Switch.defaultProps = {
   checkedIcon: false,
