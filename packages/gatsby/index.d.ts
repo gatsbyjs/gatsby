@@ -792,7 +792,7 @@ export interface Actions {
   createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
+  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
