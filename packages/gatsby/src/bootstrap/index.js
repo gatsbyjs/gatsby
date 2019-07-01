@@ -88,7 +88,7 @@ module.exports = async (args: BootstrapArgs) => {
       type: `SET_RESOLVED_THEMES`,
       payload: themes.themes,
     })
-  } else {
+  } else if (config) {
     const plugins = await loadThemes(config, { useLegacyThemes: false })
     config = plugins.config
   }
