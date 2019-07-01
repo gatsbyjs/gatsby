@@ -5650,7 +5650,7 @@
   url: https://ers-hcl.github.io/
   main_url: https://ers-hcl.github.io/
   description: >
-    Official site for ERS-HCL github organizational site. This is a hybrid app with static and dynamic content, providing a details of the open source projects, initiatives, innovation ideas within ERS-HCL. It pulls data from various data sources including github APIs, MDX based blog posts, excel files. It also hosts an ideas app that is based on Firebase.
+    Official site for ERS-HCL GitHub organizational site. This is a hybrid app with static and dynamic content, providing a details of the open source projects, initiatives, innovation ideas within ERS-HCL. It pulls data from various data sources including GitHub APIs, MDX based blog posts, excel files. It also hosts an ideas app that is based on Firebase.
   categories:
     - Open Source
     - Blog
@@ -6110,7 +6110,7 @@
   url: https://gluginfinite.github.io
   source_url: https://github.com/cristonkrizz/glug
   description: >
-    This is a website built with Gatsby v2 that is deployed on github using github pages and netlify .
+    This is a website built with Gatsby v2 that is deployed on GitHub using GitHub Pages and Netlify.
   categories:
     - Web Development
     - Blog
