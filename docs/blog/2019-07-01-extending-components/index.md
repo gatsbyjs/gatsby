@@ -92,7 +92,7 @@ import { NewsletterButton } from "gatsby-theme-blog/src/components/newsletter"
 export default props => <NewsletterButton {...props} variant="link" />
 ```
 
-### Using the CSS Prop
+## Using the CSS Prop
 
 In addition to passing a different prop to a component you're extending,
 you might want to apply CSS using the [Emotion CSS prop](/docs/emotion).
