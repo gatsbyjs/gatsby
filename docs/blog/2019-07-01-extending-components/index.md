@@ -53,7 +53,7 @@ This workflow works, especially since the component is relatively
 straightforward. However, it could be optimized in scenarios where
 you want to wrap a component or pass a different prop.
 
-### Importing the Shadowed Component
+## Importing the Shadowed Component
 
 In the above example it'd be preferable to be able to import the
 Author component and wrap it with your Card.
