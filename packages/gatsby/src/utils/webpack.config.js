@@ -248,9 +248,9 @@ module.exports = async (program, directory, suppliedStage) => {
   function getModule() {
     const jsOptions = {}
 
-    // Speedup 🏎️💨 the build! We only include transpilation of node_modules on production builds
+    // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
-    if (stage === `develop`) {
+    if (stage !== `build-javacript`) {
       jsOptions.exclude = [`node_modules`]
     }
 
