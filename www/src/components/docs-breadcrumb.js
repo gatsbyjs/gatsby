@@ -1,11 +1,12 @@
 import React from "react"
 import { Link } from "gatsby"
+import ChevronRight from "react-icons/lib/md/chevron-right"
+import ChevronLeft from "react-icons/lib/md/chevron-left"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
 import { mediaQueries, space, fontSizes } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 
-const Separator = ({ character = `>` }) => (
+const Separator = ({ character = <ChevronRight /> }) => (
   <span style={{ margin: `0px ${space[1]}` }} role="presentation">
     {character}
   </span>
@@ -20,7 +21,7 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
       [mediaQueries.md]: {
         display: `${mobile ? `none` : `inherit`}`,
       },
-      marginBottom: rhythm(1 / 2),
+      marginBottom: space[2],
     }}
   >
     {children}
@@ -69,7 +70,7 @@ const Breadcrumb = ({ itemList, location }) => {
       </BreadcrumbNav>
       {activeItemParents && (
         <BreadcrumbNav mobile>
-          <Separator character="<" />
+          <Separator character={<ChevronLeft />} />
           <Link
             to={
               activeItemParents[activeItemParents.length - 1]
