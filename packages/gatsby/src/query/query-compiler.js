@@ -3,6 +3,7 @@ import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
 const levenshtein = require(`fast-levenshtein`)
+const fs = require(`fs`)
 
 import { validate } from "graphql"
 import { IRTransforms } from "@gatsbyjs/relay-compiler"
@@ -11,6 +12,9 @@ import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
 import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
 import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
 const _ = require(`lodash`)
+const util = require(`util`)
+const readPackageTree = require(`read-package-tree`)
+const readPackageTreeAsync = util.promisify(readPackageTree)
 
 import { store } from "../redux"
 const { boundActionCreators } = require(`../redux/actions`)
@@ -99,12 +103,22 @@ class Runner {
 
   async parseEverything() {
     const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+
+    const allNodeModules = await readPackageTreeAsync(this.base, () => true)
+
+    const modulesThatUseGatsby = allNodeModules.children.filter(
+      node =>
+        (node.package.dependencies && node.package.dependencies[`gatsby`]) ||
+        (node.package.peerDependencies &&
+          node.package.peerDependencies[`gatsby`])
+    )
+
     let files = [
       path.join(this.base, `src`),
-      path.join(this.base, `node_modules`),
       path.join(this.base, `.cache`, `fragments`),
     ]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
+      .concat(modulesThatUseGatsby.map(module => module.path))
       .reduce(
         (merged, folderPath) =>
           merged.concat(
@@ -114,6 +128,9 @@ class Runner {
           ),
         []
       )
+
+    fs.writeFileSync(path.join(this.base, `testfiles`), files.join(`\n`))
+
     files = files.filter(d => !d.match(/\.d\.ts$/))
 
     // Added this to avoid the duplicate definitions RelayParser error
