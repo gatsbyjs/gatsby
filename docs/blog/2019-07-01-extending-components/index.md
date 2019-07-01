@@ -73,7 +73,7 @@ export default props => (
 )
 ```
 
-This is a quick and efficient way to quickly customize rendering
+This is a quick and efficient way to customize rendering
 without needing to worry about the implementation details of
 the component you're looking to customize. Extending the shadowed
 component means you can use composition, leveraging a great feature
