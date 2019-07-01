@@ -131,6 +131,11 @@ class Runner {
 
     files = files.map(normalize)
 
+    // We should be able to remove the following and preliminary tests do suggest
+    // that they aren't needed anymore since we transpile node_modules now
+    // However, there could be some cases (where a page is outside of src for example)
+    // that warrant keeping this and removing later once we have more confidence (and tests)
+
     // Ensure all page components added as they're not necessarily in the
     // pages directory e.g. a plugin could add a page component. Plugins
     // *should* copy their components (if they add a query) to .cache so that
@@ -140,6 +145,7 @@ class Runner {
     files = files.concat(
       Array.from(store.getState().components.keys(), c => normalize(c))
     )
+
     files = _.uniq(files)
 
     let parser = new FileParser()
