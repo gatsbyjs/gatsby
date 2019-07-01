@@ -6281,3 +6281,16 @@
   built_by: Vazco
   built_by_url: https://www.vazco.eu
   featured: false
+- title: AwesomeDocs
+  main_url: "https://awesomedocs.traction.one/"
+  url: "https://awesomedocs.traction.one/install"
+  source_url: "https://github.com/AwesomeDocs/website"
+  description: An awesome documentation website generator!
+  featured: false
+  categories:
+    - Open Source
+    - Web Development
+    - Technology
+    - Documentation
+  built_by: Sankarsan Kampa
+  built_by_url: "https://traction.one"
