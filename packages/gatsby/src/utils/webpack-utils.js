@@ -293,7 +293,7 @@ module.exports = async ({
    * JavaScript loader via babel, excludes node_modules
    */
   {
-    let js = options => {
+    let js = (options = {}) => {
       return {
         test: /\.(js|mjs|jsx)$/,
         exclude: vendorRegex,
@@ -309,7 +309,7 @@ module.exports = async ({
    * Node_modules JavaScript loader via babel
    */
   {
-    let dependencies = options => {
+    let dependencies = (options = {}) => {
       const jsOptions = {
         babelrc: false,
         configFile: false,

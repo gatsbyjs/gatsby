@@ -22,10 +22,12 @@ describe(`webpack utils`, () => {
       expect(rule).toMatchSnapshot()
     })
 
-    it(`returns the correct exclude paths`, () => {
-      const rule = config.rules.js({
-        exclude: [`node_modules`],
-      })
+    it(`adds dependency rule`, () => {
+      expect(config.rules.dependencies).toEqual(expect.any(Function))
+    })
+
+    it(`returns default values without any options`, () => {
+      const rule = config.rules.dependencies()
 
       expect(rule).toMatchSnapshot()
     })
