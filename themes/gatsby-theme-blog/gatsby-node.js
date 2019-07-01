@@ -67,7 +67,7 @@ exports.sourceNodes = ({ actions, schema }) => {
           type: `String!`,
         },
         slug: {
-          type: `String!`
+          type: `String!`,
         },
         date: { type: `Date`, extensions: { dateformat: {} } },
         tags: { type: `[String]!` },
@@ -162,7 +162,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 // Create fields for post slugs and source
 // This will change with schema customization with work
 exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
-  const { createNodeField, createNode, createParentChildLink } = actions
+  const { createNode, createParentChildLink } = actions
 
   const toPostPath = node => {
     const { dir } = path.parse(node.relativePath)
