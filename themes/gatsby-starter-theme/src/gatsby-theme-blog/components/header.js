@@ -4,7 +4,7 @@ import { css, Styled } from "theme-ui"
 import Header from "gatsby-theme-blog/src/components/header"
 
 export default props => (
-  <Header {...props} title="Custom Title">
+  <Header {...props}>
     <Styled.a
       as={Link}
       to="/notes"
