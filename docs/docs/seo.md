@@ -53,5 +53,7 @@ For example, here is a JSON-LD structured data snippet that might appear on the 
   }
 }
 </script>
+
 ###
+
 Be sure to test your structured data using the Structured Data Testing tool during development, and the Rich result status reports after deployment, to monitor the health of your pages, which might break after deployment due to templating or serving issues
