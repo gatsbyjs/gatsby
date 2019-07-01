@@ -22,7 +22,7 @@ export interface CreateFilePathArgs {
 export interface CreateRemoteFileNodeArgs {
   url: string
   store: Store
-  cache: Cache
+  cache: Cache["cache"]
   createNode: Function
   createNodeId: Function
   parentNodeId?: string
