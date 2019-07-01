@@ -79,7 +79,7 @@ the component you're looking to customize. Extending the shadowed
 component means you can use composition, leveraging a great feature
 from React.
 
-### Applying New Props
+## Applying New Props
 
 In some cases there could be a component with different variants
 without an API to modify it outside of shadowing. With component
