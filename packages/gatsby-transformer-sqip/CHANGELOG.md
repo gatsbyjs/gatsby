@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip/compare/gatsby-transformer-sqip@2.1.2...gatsby-transformer-sqip@2.1.3) (2019-07-01)
+
+### Bug Fixes
+
+- **gatsby-transformer-sqip:** remove more leftovers from broken merge ([#15219](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip/issues/15219)) ([de04318](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip/commit/de04318))
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip/compare/gatsby-transformer-sqip@2.1.1...gatsby-transformer-sqip@2.1.2) (2019-06-24)
 
 ### Bug Fixes
