@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import { Global } from "@emotion/core"
 import { useColorMode, css, Styled, Layout, Header, Container } from "theme-ui"
-import Toggle from "./toggle"
+import Switch from "./switch"
 
 import Bio from "../components/bio"
 import sun from "../../assets/sun.png"
@@ -58,6 +58,34 @@ const Title = props => {
   }
 }
 
+const checkedIcon = (
+  <img
+    alt="moon indicating dark mode"
+    src={moon}
+    width="16"
+    height="16"
+    role="presentation"
+    css={{
+      pointerEvents: `none`,
+      margin: 4,
+    }}
+  />
+)
+
+const uncheckedIcon = (
+  <img
+    alt="sun indicating light mode"
+    src={sun}
+    width="16"
+    height="16"
+    role="presentation"
+    css={{
+      pointerEvents: `none`,
+      margin: 4,
+    }}
+  />
+)
+
 export default props => {
   const { location, children } = props
   const [colorMode, setColorMode] = useColorMode()
@@ -98,29 +126,13 @@ export default props => {
               })}
             >
               <Title {...props} />
-              <Toggle
-                icons={{
-                  checked: (
-                    <img
-                      alt="moon indicating dark mode"
-                      src={moon}
-                      width="16"
-                      height="16"
-                      role="presentation"
-                      css={{ pointerEvents: `none` }}
-                    />
-                  ),
-                  unchecked: (
-                    <img
-                      alt="sun indicating light mode"
-                      src={sun}
-                      width="16"
-                      height="16"
-                      role="presentation"
-                      css={{ pointerEvents: `none` }}
-                    />
-                  ),
-                }}
+              <Switch
+                aria-label="Toggle dark mode"
+                css={css({
+                  bg: `black`,
+                })}
+                checkedIcon={checkedIcon}
+                uncheckedIcon={uncheckedIcon}
                 checked={isDark}
                 onChange={toggleColorMode}
               />
