@@ -270,6 +270,18 @@ function buildLocalCommands(cli, isLocalSite) {
   cli.command({
     command: `data-explorer`,
     desc: `Query the Graphql backend`,
+    builder: _ =>
+      _.option(`H`, {
+        alias: `host`,
+        type: `string`,
+        default: defaultHost,
+        describe: `Set host. Defaults to ${defaultHost}`,
+      }).option(`p`, {
+        alias: `port`,
+        type: `string`,
+        default: `8000`,
+        describe: `Set port. Defaults to 8000`,
+      }),
     handler: getCommandHandler(`data-explorer`),
   })
 }
