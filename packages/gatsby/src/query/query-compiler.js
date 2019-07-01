@@ -3,7 +3,6 @@ import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
 const levenshtein = require(`fast-levenshtein`)
-const fs = require(`fs`)
 
 import { validate } from "graphql"
 import { IRTransforms } from "@gatsbyjs/relay-compiler"
@@ -119,8 +118,6 @@ class Runner {
           ),
         []
       )
-
-    fs.writeFileSync(path.join(this.base, `testfiles`), files.join(`\n`))
 
     files = files.filter(d => !d.match(/\.d\.ts$/))
 
