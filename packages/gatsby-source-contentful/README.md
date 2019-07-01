@@ -152,6 +152,10 @@ For example, to filter locales on only germany `localeFilter: locale => locale.c
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales
 
+**`forceFullSync`** [boolean][optional] [default: `false`]
+
+Prevents the use of sync tokens when accessing the Contentful API.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
