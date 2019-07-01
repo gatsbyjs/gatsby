@@ -3084,6 +3084,23 @@
     - Based on gatsby-starter-tailwind
     - Tailwind CSS Framework
     - Removes unused CSS with Purgecss
+- url: https://act-labs.github.io/
+  repo: https://github.com/act-labs/gatsby-starter-act-blog
+  description: Gatsby starter for blog/documentation using MDX, Ant Design, gatsby-plugin-combine.
+  tags:
+    - Blog
+    - Documentation
+    - Styling:Ant Design
+    - Markdown
+    - MDX
+    - SEO
+  features:
+    - Posts and snippets;
+    - SEO component;
+    - Ant Design UI components;
+    - Markdown and MDX for pages;
+    - A customized webpack and babel configuration, for complex profecianal web apps with node.js, Jest tests, etc;
+    - Progressively build more and more complex pages using gatsby-plugin-combine.
 - url: https://gatsby-ghub.netlify.com/resume-book/
   repo: https://github.com/dwyfrequency/gatsby-ghub
   description: A resume builder app with authenticated routes, static marketing pages, and dynamic resume creation
