@@ -856,11 +856,12 @@ export interface Actions {
   createRedirect(
     redirect: {
       fromPath: string
-      isPermanent: boolean
+      isPermanent?: boolean
       toPath: string
-      redirectInBrowser: boolean
-      force: boolean
-      statusCode: number
+      redirectInBrowser?: boolean
+      force?: boolean
+      statusCode?: number
+      [key: string]: unknown
     },
     plugin?: ActionPlugin
   ): void
