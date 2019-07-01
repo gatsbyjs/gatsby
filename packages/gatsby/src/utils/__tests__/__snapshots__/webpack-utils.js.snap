@@ -16,8 +16,8 @@ Object {
 
 exports[`webpack utils js returns default values without any options 2`] = `
 Object {
-  "exclude": /\\(node_modules\\|bower_components\\)/,
-  "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
+  "exclude": /@babel\\(\\?:\\\\/\\|\\\\\\\\\\{1,2\\}\\)runtime\\|core-js/,
+  "test": /\\\\\\.\\(js\\|mjs\\)\\$/,
   "type": "javascript/auto",
   "use": Array [
     Object {
@@ -26,7 +26,6 @@ Object {
         "babelrc": false,
         "compact": false,
         "configFile": false,
-        "exclude": /@babel\\(\\?:\\\\/\\|\\\\\\\\\\{1,2\\}\\)runtime/,
         "presets": Array [
           Array [
             "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
