@@ -30,7 +30,7 @@ module.exports = {
         experimentId: "YOUR_GOOGLE_EXPERIMENT_ID",
         // Set Variation ID. 0 for original 1,2,3....
         variationId: "YOUR_GOOGLE_OPTIMIZE_VARIATION_ID",
-        // Any additional options fields
+        // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
         cookieDomain: "example.com",
@@ -40,7 +40,7 @@ module.exports = {
 }
 ```
 
-See below for the complete list of [options fields](#optional-fields).
+See below for the complete list of [optional fields](#optional-fields).
 
 ## `<OutboundLink>` component
 
