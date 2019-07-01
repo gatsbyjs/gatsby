@@ -29,6 +29,7 @@
     "lodash.merge": "^4.6.1",
     "prismjs": "^1.15.0",
     "react-helmet": "^5.2.0",
+    "react-switch": "^5.0.0",
     "remark-slug": "^5.1.1",
     "theme-ui": "^0.2.0",
     "typeface-merriweather": "0.0.72",
