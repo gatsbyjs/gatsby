@@ -18,9 +18,9 @@ const Post = ({
   next,
 }) => (
   <Layout location={location} title={title}>
-    <SEO title={post.frontmatter.title} description={post.excerpt} />
+    <SEO title={post.title} description={post.excerpt} />
     <main>
-      <Styled.h1>{post.frontmatter.title}</Styled.h1>
+      <Styled.h1>{post.title}</Styled.h1>
       <Styled.p
         css={css({
           fontSize: 1,
@@ -28,7 +28,7 @@ const Post = ({
           mb: 3,
         })}
       >
-        {post.frontmatter.date}
+        {post.date}
       </Styled.p>
       <MDXRenderer>{post.body}</MDXRenderer>
     </main>

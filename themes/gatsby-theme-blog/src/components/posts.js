@@ -10,10 +10,10 @@ const Posts = ({ location, posts, siteTitle }) => (
   <Layout location={location} title={siteTitle}>
     <main>
       {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        const keywords = node.frontmatter.keywords || []
+        const title = node.title || node.slug
+        const keywords = node.keywords || []
         return (
-          <Fragment key={node.fields.slug}>
+          <Fragment key={node.slug}>
             <SEO title="Home" keywords={keywords} />
             <div>
               <Styled.h2
@@ -26,12 +26,12 @@ const Posts = ({ location, posts, siteTitle }) => (
                   css={{
                     textDecoration: `none`,
                   }}
-                  to={node.fields.slug}
+                  to={node.slug}
                 >
                   {title}
                 </Styled.a>
               </Styled.h2>
-              <small>{node.frontmatter.date}</small>
+              <small>{node.date}</small>
               <Styled.p>{node.excerpt}</Styled.p>
             </div>
           </Fragment>
