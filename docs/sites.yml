@@ -6281,6 +6281,17 @@
   built_by: Vazco
   built_by_url: https://www.vazco.eu
   featured: false
+- title: Major League Eating
+  main_url: https://majorleagueeating.com
+  url: https://majorleagueeating.com
+  description: >
+    Major League Eating is the professional competitive eating organization that runs the Nathan’s Famous Coney Island Hot Dog eating contest on July 4th, among other eating events.
+  categories:
+    - Entertainment
+    - Sports
+  built_by: Carmen Cincotti
+  built_by_url: https://github.com/ccincotti3
+  featured: false
 - title: APIs You Won't Hate
   url: https://apisyouwonthate.com/blog
   main_url: https://apisyouwonthate.com
