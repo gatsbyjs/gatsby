@@ -29,6 +29,9 @@ module.exports = function preset(_, options = {}) {
 
   const pluginBabelConfig = loadCachedConfig()
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
+  const absoluteRuntimePath = path.dirname(
+    require.resolve(`@babel/runtime/package.json`)
+  )
 
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
@@ -75,6 +78,7 @@ module.exports = function preset(_, options = {}) {
         {
           helpers: true,
           regenerator: true,
+          absoluteRuntimePath,
         },
       ],
     ],
