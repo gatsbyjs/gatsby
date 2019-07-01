@@ -6294,3 +6294,16 @@
     - Documentation
   built_by: Sankarsan Kampa
   built_by_url: "https://traction.one"
+- title: Prism Programming Language
+  main_url: "https://prism.traction.one/"
+  url: "https://prism.traction.one/"
+  source_url: "https://github.com/PrismLang/website"
+  description: Interpreted, high-level, programming language.
+  featured: false
+  categories:
+    - Programming
+    - Open Source
+    - Technology
+    - Documentation
+  built_by: Sankarsan Kampa
+  built_by_url: "https://traction.one"
