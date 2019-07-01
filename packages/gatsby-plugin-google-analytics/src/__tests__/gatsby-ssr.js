@@ -136,6 +136,35 @@ describe(`gatsby-plugin-google-analytics`, () => {
           expect(result).toMatch(/cookieName/)
           expect(result).toMatch(/sampleRate/)
         })
+
+        it(`sets additional general fields`, () => {
+          const { setPostBodyComponents } = setup({
+            transport: `beacon`,
+            allowAdFeatures: true,
+            queueTime: 5,
+          })
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).toContain(`ga('set', 'transport', 'beacon')`)
+          expect(result).toContain(`ga('set', 'allowAdFeatures', 'true')`)
+          expect(result).toContain(`ga('set', 'queueTime', '5')`)
+        })
+
+        it(`does not set fields that have an invalid value`, () => {
+          const { setPostBodyComponents } = setup({
+            allowAdFeatures: `swag`,
+          })
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).not.toContain(`allowAdFeatures`)
+        })
+
+        it(`does not set fields that were not set`, () => {
+          const { setPostBodyComponents } = setup({})
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).not.toContain(`allowAdFeatures`)
+        })
       })
     })
   })

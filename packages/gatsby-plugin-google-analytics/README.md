@@ -132,4 +132,12 @@ This plugin supports all optional Create Only Fields documented in [Google Analy
 - `legacyHistoryImport`: boolean
 - `allowLinker`: boolean
 
+This plugin also supports several optional General fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#general):
+
+- `allowAdFeatures`: boolean
+- `dataSource`: string
+- `queueTime`: number
+- `forceSSL`: boolean
+- `transport`: string
+
 These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.
