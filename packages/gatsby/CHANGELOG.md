@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.6...gatsby@2.11.7) (2019-07-01)
+
+### Bug Fixes
+
+- **gatsby:** update tsc definition for some actions ([1adb7d5](https://github.com/gatsbyjs/gatsby/commit/1adb7d5))
+
 ## [2.11.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.5...gatsby@2.11.6) (2019-06-30)
 
 ### Bug Fixes
@@ -2733,7 +2739,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Set pathPrefix if not defined to an empty string to avoid undefined #1551
   @kyleamathews
 - Fix prefixes in gatsby-link + navigateTo #1550 @kyleamathews
-- Make path to packages the same on website as github #1549 @kyleamathews
+- Make path to packages the same on website as GitHub #1549 @kyleamathews
 - Fixing sw.js 404-ing because of pathPrefix not being prefixed to sw.js
   properly. Fixing #1539 #1540 @gregsqueeb
 - [gatsby-plugin-sharp] Fix PNG generation when using the "duotone" option #1506
