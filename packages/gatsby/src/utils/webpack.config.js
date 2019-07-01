@@ -256,6 +256,13 @@ module.exports = async (program, directory, suppliedStage) => {
       rules.media(),
       rules.miscAssets(),
     ]
+
+    // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
+    // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
+    if (stage === `build-javascript`) {
+      configRules.push(rules.dependencies())
+    }
+
     if (store.getState().themes.themes) {
       configRules = configRules.concat(
         store.getState().themes.themes.map(theme => {

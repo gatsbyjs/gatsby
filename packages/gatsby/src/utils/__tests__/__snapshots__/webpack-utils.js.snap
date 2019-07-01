@@ -2,7 +2,7 @@
 
 exports[`webpack utils js returns default values without any options 1`] = `
 Object {
-  "exclude": /core-js\\|event-source-polyfill\\|webpack-hot-middleware\\\\/client/,
+  "exclude": /\\(node_modules\\|bower_components\\)/,
   "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
   "type": "javascript/auto",
   "use": Array [
@@ -14,15 +14,28 @@ Object {
 }
 `;
 
-exports[`webpack utils js returns the correct exclude paths 1`] = `
+exports[`webpack utils js returns default values without any options 2`] = `
 Object {
-  "exclude": /core-js\\|event-source-polyfill\\|webpack-hot-middleware\\\\/client\\|node_modules/,
-  "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
+  "exclude": /@babel\\(\\?:\\\\/\\|\\\\\\\\\\{1,2\\}\\)runtime\\|core-js/,
+  "test": /\\\\\\.\\(js\\|mjs\\)\\$/,
   "type": "javascript/auto",
   "use": Array [
     Object {
       "loader": "<PROJECT_ROOT>/packages/gatsby/src/utils/babel-loader.js",
-      "options": Object {},
+      "options": Object {
+        "babelrc": false,
+        "compact": false,
+        "configFile": false,
+        "presets": Array [
+          Array [
+            "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
+            Object {
+              "stage": "develop",
+            },
+          ],
+        ],
+        "sourceMaps": false,
+      },
     },
   ],
 }
