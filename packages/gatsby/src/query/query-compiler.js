@@ -12,9 +12,7 @@ import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
 import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
 import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
 const _ = require(`lodash`)
-const util = require(`util`)
-const readPackageTree = require(`read-package-tree`)
-const readPackageTreeAsync = util.promisify(readPackageTree)
+import getGatsbyDependents from "../utils/gatsby-dependents"
 
 import { store } from "../redux"
 const { boundActionCreators } = require(`../redux/actions`)
@@ -104,14 +102,7 @@ class Runner {
   async parseEverything() {
     const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
 
-    const allNodeModules = await readPackageTreeAsync(this.base, () => true)
-
-    const modulesThatUseGatsby = allNodeModules.children.filter(
-      node =>
-        (node.package.dependencies && node.package.dependencies[`gatsby`]) ||
-        (node.package.peerDependencies &&
-          node.package.peerDependencies[`gatsby`])
-    )
+    const modulesThatUseGatsby = await getGatsbyDependents()
 
     let files = [
       path.join(this.base, `src`),
