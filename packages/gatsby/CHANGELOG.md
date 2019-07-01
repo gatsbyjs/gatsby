@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.6...gatsby@2.11.7) (2019-07-01)
+
+### Bug Fixes
+
+- **gatsby:** update tsc definition for some actions ([1adb7d5](https://github.com/gatsbyjs/gatsby/commit/1adb7d5))
+
 ## [2.11.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.5...gatsby@2.11.6) (2019-06-30)
 
 ### Bug Fixes
