@@ -6346,16 +6346,15 @@
   built_by: Sankarsan Kampa
   built_by_url: "https://traction.one"
 - title: Arnondora
-  main_url: https://arnondora.in.th/
-  url: https://arnondora.in.th/
-  source_url: https://github.com/arnondora/arnondoraBlog
-  description: >
-    {titleofthesite} is a personal blog by Arnon Puitrakul
+  main_url: "https://arnondora.in.th/"
+  url: "https://arnondora.in.th/"
+  source_url: "https://github.com/arnondora/arnondoraBlog"
+  description: Arnondora is a personal blog by Arnon Puitrakul
   categories:
     - Blog
     - Programming
     - Technology
   built_by: Arnon Puitrakul
-  built_by_url: https://arnondora.in.th/
+  built_by_url: "https://arnondora.in.th/"
   featured: false
 
