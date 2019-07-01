@@ -34,7 +34,11 @@ function replaceRule(value) {
   }
 
   // when javascript we exclude node_modules
-  if (value.type === `javascript/auto` && value.exclude) {
+  if (
+    value.type === `javascript/auto` &&
+    value.exclude &&
+    value.exclude instanceof RegExp
+  ) {
     return {
       ...value,
       exclude: new RegExp(
