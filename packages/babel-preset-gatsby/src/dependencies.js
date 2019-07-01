@@ -2,12 +2,13 @@
 // @see https://github.com/facebook/create-react-app/blob/master/packages/babel-preset-react-app/dependencies.js
 
 const path = require(`path`)
+const resolve = m => require.resolve(m)
 
 module.exports = function(api, options = {}) {
   const stage = options.stage || `test`
 
   const absoluteRuntimePath = path.dirname(
-    require.resolve(`@babel/runtime/package.json`)
+    resolve(`@babel/runtime/package.json`)
   )
 
   return {
@@ -34,7 +35,7 @@ module.exports = function(api, options = {}) {
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
       [
-        require(`@babel/plugin-transform-runtime`).default,
+        resolve(`@babel/plugin-transform-runtime`),
         {
           corejs: false,
           helpers: true,
@@ -50,7 +51,7 @@ module.exports = function(api, options = {}) {
         },
       ],
       // Adds syntax support for import()
-      require(`@babel/plugin-syntax-dynamic-import`).default,
+      resolve(`@babel/plugin-syntax-dynamic-import`),
     ].filter(Boolean),
   }
 }
