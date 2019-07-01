@@ -5,8 +5,6 @@ const path = require(`path`)
 const resolve = m => require.resolve(m)
 
 module.exports = function(api, options = {}) {
-  const stage = options.stage || `test`
-
   const absoluteRuntimePath = path.dirname(
     resolve(`@babel/runtime/package.json`)
   )
@@ -30,7 +28,7 @@ module.exports = function(api, options = {}) {
           exclude: [`transform-typeof-symbol`],
         },
       ],
-    ].filter(Boolean),
+    ],
     plugins: [
       // Polyfills the runtime needed for async/await, generators, and friends
       // https://babeljs.io/docs/en/babel-plugin-transform-runtime
@@ -43,7 +41,7 @@ module.exports = function(api, options = {}) {
           // https://babeljs.io/docs/en/babel-plugin-transform-runtime#useesmodules
           // We should turn this on once the lowest version of Node LTS
           // supports ES Modules.
-          useESModules: stage !== `test`,
+          useESModules: true,
           // Undocumented option that lets us encapsulate our runtime, ensuring
           // the correct version is used
           // https://github.com/babel/babel/blob/090c364a90fe73d36a30707fc612ce037bdbbb24/packages/babel-plugin-transform-runtime/src/index.js#L35-L42
@@ -52,6 +50,6 @@ module.exports = function(api, options = {}) {
       ],
       // Adds syntax support for import()
       resolve(`@babel/plugin-syntax-dynamic-import`),
-    ].filter(Boolean),
+    ],
   }
 }

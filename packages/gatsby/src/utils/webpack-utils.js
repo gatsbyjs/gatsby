@@ -306,7 +306,7 @@ module.exports = async ({
   }
 
   /**
-   * Node_modules JavaScript loader via babel
+   * Node_modules JavaScript loader via babel (exclude core-js & babel-runtime to speedup babel transpilation)
    */
   {
     let dependencies = (options = {}) => {
