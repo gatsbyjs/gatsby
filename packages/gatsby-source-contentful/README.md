@@ -318,7 +318,8 @@ See below for a references example where you query for categories on a product:
   }
 }
 ```
-The above example assumes that you have `Product` and `Category` Content Models in your Contentful space,  and that `Product` has a `categories` field that references `Category` entries.
+
+The above example assumes that you have `Product` and `Category` Content Models in your Contentful space, and that `Product` has a `categories` field that references `Category` entries.
 
 ### Reverse references
 
@@ -337,15 +338,16 @@ See below for a reverse references example where you query for all products in a
   }
 }
 ```
+
 The above example assumes that you have `Product` and `Category` Content Models in your Contentful space, and `Product` has a `categories` field that references `Category` entries.
 
 For simplicity, it is easier to put the reference field on the child in child/parent relationships.
 
 ### Markdown transformers on Long Text fields
 
-Version 3 of `gatsby-source-contentful` creates GraphQL schema directly from the Contentful Content Model and no longer infers fields from data. 
+Version 3 of `gatsby-source-contentful` creates GraphQL schema directly from the Contentful Content Model and no longer infers fields from data.
 
-This means that queries will keep working even if your Contentful space doesn't have any fields in it. 
+This means that queries will keep working even if your Contentful space doesn't have any fields in it.
 
 There is however, an edge case for transformed data - particularly for Long Text fields that can be transformed with `gatsby-transformer-remark` or `gatsby-mdx`. The Contentful plugin is not aware of transformers so you might need to provide hints for Gatsby to create `childMarkdownRemark`/`childMdx` fields.
 
