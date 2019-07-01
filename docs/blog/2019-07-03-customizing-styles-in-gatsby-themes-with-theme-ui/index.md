@@ -73,7 +73,7 @@ mkdir src/gatsby-plugin-theme-ui
 
 Create an `index.js` file in this directory to export the theme configuration object.
 
-```js title=src/gatsby-plugin-theme-ui/index.js
+```js:title=src/gatsby-plugin-theme-ui/index.js
 export default {
   colors: {
     text: "#333",
@@ -95,7 +95,7 @@ which means that the blog theme's default configuration can be imported and used
 To extend the blog's existing styles, import the configuration object
 and use object spread syntax to merge your own custom styles.
 
-```js title=src/gatsby-plugin-theme-ui/index.js
+```js:title=src/gatsby-plugin-theme-ui/index.js
 import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui"
 
 export default {
@@ -119,11 +119,11 @@ but with a few custom colors and fonts.
 To learn more about how theming works with Theme UI, head over to the [Theme UI docs site][theme ui],
 and to learn more about using the official Gatsby themes, see our [documentation on themes][theme-docs].
 
-[progressive disclosure]: https://www.gatsbyjs.org/docs/gatsby-core-philosophy/#progressively-disclose-complexity
-[mdx]: https://www.gatsbyjs.org/docs/mdx/
-[theme-docs]: https://www.gatsbyjs.org/docs/themes/
-[shadowing]: https://www.gatsbyjs.org/blog/2019-04-29-component-shadowing/
-[typography.js]: https://www.gatsbyjs.org/docs/typography-js/
+[progressive disclosure]: /docs/gatsby-core-philosophy/#progressively-disclose-complexity
+[mdx]: /docs/mdx/
+[theme-docs]: /docs/themes/
+[shadowing]: /blog/2019-04-29-component-shadowing/
+[typography.js]: /docs/typography-js/
 [theme ui]: https://theme-ui.com
 [overreacted.io]: https://overreacted.io
 [digital garden]: https://tomcritchlow.com/2019/02/17/building-digital-garden/
