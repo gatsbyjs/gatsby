@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseLoader loadPage should be successful when component can be loaded 1`] = `
+Object {
+  "component": "instance",
+  "json": Object {
+    "pageContext": "something something",
+  },
+  "page": Object {
+    "componentChunkName": "chunk",
+    "path": "/mypage/",
+    "webpackCompilationHash": "123",
+  },
+}
+`;

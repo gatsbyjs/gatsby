@@ -48,6 +48,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 6,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 2,
+          },
+        },
+        "text": "
+query PageQueryName {
+  foo
+}
+",
         "variableDefinitions": Array [],
       },
     ],
@@ -95,6 +111,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 6,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 31,
+            "line": 2,
+          },
+        },
+        "text": "
+query {
+  foo
+}
+",
         "variableDefinitions": Array [],
       },
     ],
@@ -149,6 +181,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -199,6 +242,17 @@ Map {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 26,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
         },
         "text": "{ foo }",
         "variableDefinitions": Array [],
@@ -255,6 +309,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -305,6 +370,17 @@ Map {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 26,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
         },
         "text": "{ foo }",
         "variableDefinitions": Array [],
@@ -361,6 +437,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -408,6 +495,18 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 60,
+            "line": 8,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 8,
+          },
+        },
+        "text": "query PageQueryName { foo }",
         "variableDefinitions": Array [],
       },
     ],
@@ -458,6 +557,25 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 9,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 35,
+            "line": 2,
+          },
+        },
+        "text": "
+  fragment Fragment1 on RootQueryField {
+    foo
+  }
+  fragment Fragment2 on RootQueryField {
+    bar
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -517,6 +635,25 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 9,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 35,
+            "line": 2,
+          },
+        },
+        "text": "
+  fragment Fragment1 on RootQueryField {
+    foo
+  }
+  fragment Fragment2 on RootQueryField {
+    bar
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -576,6 +713,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 14,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 10,
+          },
+        },
+        "text": "
+  fragment Fragment3 on RootQueryField {
+    baz
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -693,6 +846,17 @@ Map {
               },
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 12,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
         },
         "text": "
   query {
@@ -834,6 +998,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 69,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
+        },
         "text": "{ allMarkdownRemark { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
       },
@@ -966,6 +1141,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 82,
+            "line": 5,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 5,
+          },
+        },
         "text": "{ allStrangeQueryName { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
       },
@@ -1021,6 +1207,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 67,
+            "line": 3,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 38,
+            "line": 3,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -1075,6 +1272,17 @@ Map {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 82,
+            "line": 3,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 53,
+            "line": 3,
+          },
         },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
@@ -1207,6 +1415,17 @@ Map {
               },
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 69,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
         },
         "text": "{ allMarkdownRemark { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
