@@ -10,7 +10,6 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
-const chalk = require(`chalk`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
@@ -150,18 +149,18 @@ module.exports = async function build(program: BuildArgs) {
       workerPool,
     })
   } catch (err) {
-    reportFailure(
-      report.stripIndent`
-        Building static HTML failed${
-          err.context && err.context.path
-            ? ` for path "${chalk.bold(err.context.path)}"`
-            : ``
-        }
+    let id = `95313` // TODO: verify error IDs exist
+    if (err.message === `ReferenceError: window is not defined`) {
+      id = `95312`
+    }
 
-        See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
-      `,
-      err
-    )
+    report.panic({
+      id,
+      error: err,
+      context: {
+        errorPath: err.context && err.context.path,
+      },
+    })
   }
   activity.end()
 
