@@ -1,7 +1,7 @@
 const { createHash } = require(`crypto`)
 const uuid = require(`uuid/v1`)
 const EventStorage = require(`./event-storage`)
-const { sanitizeErrors } = require(`./error-helpers`)
+const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
 const { basename, join, sep } = require(`path`)
@@ -106,13 +106,32 @@ module.exports = class AnalyticsTracker {
     if (!this.isTrackingEnabled()) {
       return
     }
+
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
 
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
-      tags.error = sanitizeErrors(tags.error)
+      if (Array.isArray(tags.error)) {
+        const { error, ...restOfTags } = tags
+        error.forEach(err => {
+          this.captureError(type, { error: err, ...restOfTags })
+        })
+        return
+      }
+
+      tags.errorV2 = {
+        id: tags.error.id,
+        text: cleanPaths(tags.error.text),
+        level: tags.error.level,
+        type: tags.error?.type,
+        // see if we need empty string or can just use NULL
+        stack: cleanPaths(tags.error?.error?.stack || ``),
+        context: cleanPaths(JSON.stringify(tags.error?.context)),
+      }
+
+      delete tags.error
     }
 
     this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
