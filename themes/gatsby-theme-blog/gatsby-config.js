@@ -12,6 +12,7 @@ module.exports = options => {
         github: `https://github.com/gatsbyjs/gatsby`,
       },
     },
+    __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
       mdx && {
         resolve: `gatsby-plugin-mdx`,
