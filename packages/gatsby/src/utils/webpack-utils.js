@@ -293,20 +293,46 @@ module.exports = async ({
    * JavaScript loader via babel, excludes node_modules
    */
   {
-    let js = ({ exclude = [], ...options } = {}) => {
-      const excludeRegex = [
-        `core-js|event-source-polyfill|webpack-hot-middleware/client`,
-      ].concat(exclude)
-
+    let js = (options = {}) => {
       return {
         test: /\.(js|mjs|jsx)$/,
-        exclude: new RegExp(excludeRegex.join(`|`)),
+        exclude: vendorRegex,
         type: `javascript/auto`,
         use: [loaders.js(options)],
       }
     }
 
     rules.js = js
+  }
+
+  /**
+   * Node_modules JavaScript loader via babel (exclude core-js & babel-runtime to speedup babel transpilation)
+   */
+  {
+    let dependencies = (options = {}) => {
+      const jsOptions = {
+        babelrc: false,
+        configFile: false,
+        compact: false,
+        presets: [
+          [require.resolve(`babel-preset-gatsby/dependencies`), { stage }],
+        ],
+        // If an error happens in a package, it's possible to be
+        // because it was compiled. Thus, we don't want the browser
+        // debugger to show the original code. Instead, the code
+        // being evaluated would be much more helpful.
+        sourceMaps: false,
+      }
+
+      return {
+        test: /\.(js|mjs)$/,
+        exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
+        type: `javascript/auto`,
+        use: [loaders.js(jsOptions)],
+      }
+    }
+
+    rules.dependencies = dependencies
   }
 
   {
