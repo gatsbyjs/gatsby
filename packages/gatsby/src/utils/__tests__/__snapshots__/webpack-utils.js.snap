@@ -2,7 +2,7 @@
 
 exports[`webpack utils js returns default values without any options 1`] = `
 Object {
-  "exclude": /\\(node_modules\\|bower_components\\)/,
+  "include": [Function],
   "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
   "type": "javascript/auto",
   "use": Array [
@@ -16,7 +16,7 @@ Object {
 
 exports[`webpack utils js returns default values without any options 2`] = `
 Object {
-  "exclude": /@babel\\(\\?:\\\\/\\|\\\\\\\\\\{1,2\\}\\)runtime\\|core-js/,
+  "exclude": [Function],
   "test": /\\\\\\.\\(js\\|mjs\\)\\$/,
   "type": "javascript/auto",
   "use": Array [
