@@ -868,14 +868,14 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#addThirdPartySchema */
   addThirdPartySchema(
     args: { schema: object },
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 
-  /** TODO create jsdoc on gatsbyjs.org */
+  /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
   createTypes(
     types: string | object | Array<string | object>,
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 }
