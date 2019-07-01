@@ -246,12 +246,10 @@ module.exports = async (program, directory, suppliedStage) => {
   }
 
   function getModule() {
-    const jsOptions = {}
-
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.js(jsOptions),
+      rules.js(),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
