@@ -3,7 +3,10 @@ const readPackageTree = require(`read-package-tree`)
 const readPackageTreeAsync = util.promisify(readPackageTree)
 
 module.exports = async () => {
-  const allNodeModules = await readPackageTreeAsync(this.base, () => true)
+  const allNodeModules = await readPackageTreeAsync(
+    program.directory,
+    () => true
+  )
   return allNodeModules.children.filter(
     node =>
       (node.package.dependencies && node.package.dependencies[`gatsby`]) ||
