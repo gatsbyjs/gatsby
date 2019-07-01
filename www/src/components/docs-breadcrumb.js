@@ -66,7 +66,7 @@ const Breadcrumb = ({ itemList, location }) => {
             <Separator />
           </React.Fragment>
         ))}
-        {activeItem.title}
+        <span aria-current="page">{activeItem.title}</span>
       </BreadcrumbNav>
       {activeItemParents && (
         <BreadcrumbNav mobile>
