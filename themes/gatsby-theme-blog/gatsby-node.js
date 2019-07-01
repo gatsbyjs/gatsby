@@ -66,6 +66,9 @@ exports.sourceNodes = ({ actions, schema }) => {
         title: {
           type: `String!`,
         },
+        slug: {
+          type: `String!`
+        },
         date: { type: `Date`, extensions: { dateformat: {} } },
         tags: { type: `[String]!` },
         keywords: { type: `[String]!` },
@@ -177,12 +180,6 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
 
   if (node.internal.type === `Mdx` && source === contentPath) {
     const slug = toPostPath(fileNode)
-
-    createNodeField({
-      node,
-      name: `slug`,
-      value: slug,
-    })
 
     const fieldData = {
       title: node.frontmatter.title,
