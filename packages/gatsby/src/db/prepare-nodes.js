@@ -15,9 +15,11 @@ const withResolverContext = require(`../schema/context`)
 async function prepareNodes(schema, gqlType, fields) {
   const nodes = require(`./nodes`)
   if (!_.isEmpty(fields)) {
-    await nodes.updateNodesByType(gqlType.name, node =>
-      resolveRecursive(schema, node, gqlType, fields)
-    )
+    await nodes.updateNodesByType(gqlType.name, async node => {
+      const n = await resolveRecursive(schema, node, gqlType, fields)
+      console.log(JSON.stringify(n, null, 2))
+      return n
+    })
   }
 }
 
@@ -31,32 +33,78 @@ async function resolveRecursive(schema, node, gqlType, fieldsToResolve) {
     const gqlField = gqlFields[fieldName]
     const gqlNonNullType = getNullableType(gqlField.type)
     const gqlFieldType = getNamedType(gqlField.type)
-    const field = await resolveField(schema, node, gqlField, fieldName)
-    let innerValue = field
-    if (_.isObject(fieldToResolve) && gqlField && field != null) {
+    let innerValue
+    if (gqlField.resolve) {
+      innerValue = await resolveField(schema, node, gqlField, fieldName)
+    } else {
+      innerValue = node[fieldName]
+    }
+    if (_.isObject(fieldToResolve) && gqlField && innerValue != null) {
       if (
         isCompositeType(gqlFieldType) &&
         !(gqlNonNullType instanceof GraphQLList)
       ) {
         innerValue = await resolveRecursive(
           schema,
-          field,
+          innerValue,
           gqlFieldType,
           fieldToResolve
         )
-      } else if (_.isArray(field) && gqlNonNullType instanceof GraphQLList) {
+      } else if (
+        _.isArray(innerValue) &&
+        gqlNonNullType instanceof GraphQLList
+      ) {
         innerValue = await Promise.all(
-          field.map(item =>
+          innerValue.map(item =>
             resolveRecursive(schema, item, gqlFieldType, fieldToResolve)
           )
         )
       }
     }
-    resolvedFields[fieldName] = innerValue
+    if (innerValue != null) {
+      resolvedFields[fieldName] = innerValue
+    }
   }
+
+  const processedFields = {}
+  Object.keys(resolvedFields).forEach(key => {
+    let resolvedValue
+    const value = resolvedFields[key]
+    const gqlField = gqlFields[key]
+    if (Array.isArray(value)) {
+      resolvedValue = []
+      value.forEach((item, i) => {
+        if (gqlField.resolve) {
+          resolvedValue[i] = item
+        }
+
+        if (item.$resolved) {
+          resolvedValue[i] = {
+            ...(resolvedValue[i] || {}),
+            ...item.$resolved,
+          }
+        }
+      })
+    } else {
+      if (gqlField.resolve) {
+        resolvedValue = value
+      }
+
+      if (value.$resolved) {
+        resolvedValue = {
+          ...(resolvedValue || {}),
+          ...value.$resolved,
+        }
+      }
+    }
+    if (resolvedValue) {
+      processedFields[key] = resolvedValue
+    }
+  })
+
   return {
     ...node,
-    $resolved: resolvedFields,
+    $resolved: processedFields,
   }
 }
 
@@ -67,8 +115,6 @@ function resolveField(schema, node, gqlField, fieldName) {
       schema,
       returnType: gqlField.type,
     })
-  } else if (node[fieldName] !== undefined) {
-    return node[fieldName]
   }
 
   return undefined

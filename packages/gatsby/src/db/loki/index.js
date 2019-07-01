@@ -23,6 +23,14 @@ loki.Comparators.gt = customComparators.gtHelper
 // functions in `./nodes.js`. E.g `getTypeCollName()` and
 // `getNodeTypeCollection`
 const colls = {
+  // Main node collection
+  nodes: {
+    name: `gatsby:nodes`,
+    options: {
+      unique: [`id`],
+      indices: [`id`, `internal.type`],
+    },
+  },
   // Each object has keys `id` and `typeCollName`. It's a way of
   // quickly looking up the collection that a node is contained in.
   // E.g { id: `someNodeId`, typeCollName: `gatsby:nodeType:myType` }

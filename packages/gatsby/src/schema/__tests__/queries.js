@@ -24,6 +24,7 @@ describe(`Query schema`, () => {
               [`frontmatter.authorNames`]: {
                 type: `[String!]!`,
                 async resolve(source, args, context, info) {
+                  console.log(source)
                   const authors = await context.nodeModel.runQuery({
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },

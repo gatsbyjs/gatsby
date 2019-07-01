@@ -60,9 +60,13 @@ function toMongoArgs(gqlFilter, lastFieldType) {
   _.each(gqlFilter, (v, k) => {
     if (_.isPlainObject(v)) {
       if (k === `elemMatch`) {
-        mongoArgs[`$elemMatch`] = toMongoArgs(v, lastFieldType)
+        mongoArgs[`$elemMatch`] = toMongoArgs(v, getNamedType(lastFieldType))
+      } else if (lastFieldType instanceof GraphQLList) {
+        mongoArgs[`$elemMatch`] = {
+          [k]: toMongoArgs(v, getNamedType(lastFieldType)),
+        }
       } else {
-        const gqlFieldType = getNamedType(lastFieldType).getFields()[k].type
+        const gqlFieldType = lastFieldType.getFields()[k].type
         mongoArgs[k] = toMongoArgs(v, gqlFieldType)
       }
     } else {
@@ -159,6 +163,23 @@ const toDottedFields = (filter, acc = {}, path = []) => {
   return acc
 }
 
+const objectToDottedField = (obj, path = []) => {
+  let result = {}
+  Object.keys(obj).forEach(key => {
+    const value = obj[key]
+    if (_.isPlainObject(value)) {
+      const pathResult = objectToDottedField(value, path.concat(key))
+      result = {
+        ...result,
+        ...pathResult,
+      }
+    } else {
+      result[path.concat(key).join(`.`)] = value
+    }
+  })
+  return result
+}
+
 // The query language that Gatsby has used since day 1 is `sift`. Both
 // sift and loki are mongo-like query languages, but they have some
 // subtle differences. One is that in sift, a nested filter such as
@@ -187,12 +208,19 @@ const fixNeTrue = filter =>
     return acc
   }, {})
 
-const liftResolvedFields = (args, resolvedFields) => {
-  const dottedFields = toDottedFields(resolvedFields)
+const liftResolvedFields = (args, gqlType, resolvedFields) => {
+  const dottedFields = objectToDottedField(resolvedFields)
+  const dottedFieldKeys = Object.keys(dottedFields)
+  const fields = gqlType.getFields()
   const finalArgs = {}
   Object.keys(args).forEach(key => {
     const value = args[key]
     if (dottedFields[key]) {
+      finalArgs[`$resolved.${key}`] = value
+    } else if (
+      dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
+      value.$elemMatch
+    ) {
       finalArgs[`$resolved.${key}`] = value
     } else {
       finalArgs[key] = value
@@ -205,6 +233,7 @@ const liftResolvedFields = (args, resolvedFields) => {
 const convertArgs = (gqlArgs, gqlType, resolvedFields) =>
   liftResolvedFields(
     fixNeTrue(toDottedFields(toMongoArgs(gqlArgs.filter, gqlType))),
+    gqlType,
     resolvedFields
   )
 
@@ -275,7 +304,7 @@ async function runQuery(
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
-  const lokiArgs = convertArgs(gqlArgs, gqlType)
+  const lokiArgs = convertArgs(gqlArgs, gqlType, resolvedFields)
   let possibleTypeNames
   if (
     gqlType instanceof GraphQLUnionType ||
@@ -292,7 +321,7 @@ async function runQuery(
   let sortFields
   if (possibleTypeNames.length > 1) {
     const view = getNodeTypesView(possibleTypeNames)
-    chain = view.branchResultSet()
+    chain = view.branchResultset()
   } else {
     const coll = getNodeTypeCollection(possibleTypeNames[0])
     ensureFieldIndexes(coll, lokiArgs)
@@ -309,10 +338,21 @@ async function runQuery(
     chain = coll.chain()
   }
 
+  // console.log(lokiArgs)
+  // console.log(JSON.stringify(chain.data(), null, 2))
   chain.find(lokiArgs, firstOnly)
 
   if (sortFields) {
+    const dottedFields = objectToDottedField(resolvedFields)
+    sortFields = sortFields.map(([field, order]) => {
+      if (dottedFields[field]) {
+        return [`$resolved.${field}`, order]
+      } else {
+        return [field, order]
+      }
+    })
     chain = chain.compoundsort(sortFields)
+    console.log(sortFields)
   }
 
   const result = chain.data()
