@@ -246,18 +246,10 @@ module.exports = async (program, directory, suppliedStage) => {
   }
 
   function getModule() {
-    const jsOptions = {}
-
-    // Speedup 🏎️💨 the build! We only include transpilation of node_modules on production builds
-    // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
-    if (stage === `develop`) {
-      jsOptions.exclude = [`node_modules`]
-    }
-
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.js(jsOptions),
+      rules.js(),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
