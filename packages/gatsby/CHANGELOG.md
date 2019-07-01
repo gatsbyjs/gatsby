@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.6...gatsby@2.11.7) (2019-07-01)
+
+### Bug Fixes
+
+- **gatsby:** update tsc definition for some actions ([1adb7d5](https://github.com/gatsbyjs/gatsby/commit/1adb7d5))
+
+## [2.11.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.5...gatsby@2.11.6) (2019-06-30)
+
+### Bug Fixes
+
+- pin terser-webpack-plugin ([#15253](https://github.com/gatsbyjs/gatsby/issues/15253)) ([62cdce2](https://github.com/gatsbyjs/gatsby/commit/62cdce2))
+
+## [2.11.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.4...gatsby@2.11.5) (2019-06-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.11.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.3...gatsby@2.11.4) (2019-06-29)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.11.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.2...gatsby@2.11.3) (2019-06-28)
 
 **Note:** Version bump only for package gatsby
@@ -2719,7 +2739,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Set pathPrefix if not defined to an empty string to avoid undefined #1551
   @kyleamathews
 - Fix prefixes in gatsby-link + navigateTo #1550 @kyleamathews
-- Make path to packages the same on website as github #1549 @kyleamathews
+- Make path to packages the same on website as GitHub #1549 @kyleamathews
 - Fixing sw.js 404-ing because of pathPrefix not being prefixed to sw.js
   properly. Fixing #1539 #1540 @gregsqueeb
 - [gatsby-plugin-sharp] Fix PNG generation when using the "duotone" option #1506
