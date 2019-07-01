@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import { Link } from "gatsby"
-import { Styled, css, Main } from "theme-ui"
+import { Styled, css } from "theme-ui"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -8,7 +8,7 @@ import Footer from "../components/home-footer"
 
 const Posts = ({ location, posts, siteTitle }) => (
   <Layout location={location} title={siteTitle}>
-    <Main>
+    <main>
       {posts.map(({ node }) => {
         const title = node.title || node.slug
         const keywords = node.keywords || []
@@ -37,7 +37,7 @@ const Posts = ({ location, posts, siteTitle }) => (
           </Fragment>
         )
       })}
-    </Main>
+    </main>
     <Footer />
   </Layout>
 )

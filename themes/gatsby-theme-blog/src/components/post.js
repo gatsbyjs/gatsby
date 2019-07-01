@@ -1,5 +1,5 @@
 import React from "react"
-import { Styled, css, Main } from "theme-ui"
+import { Styled, css } from "theme-ui"
 
 import PostFooter from "../components/post-footer"
 import Layout from "../components/layout"
@@ -19,7 +19,7 @@ const Post = ({
 }) => (
   <Layout location={location} title={title}>
     <SEO title={post.title} description={post.excerpt} />
-    <Main>
+    <main>
       <Styled.h1>{post.title}</Styled.h1>
       <Styled.p
         css={css({
@@ -31,7 +31,7 @@ const Post = ({
         {post.date}
       </Styled.p>
       <MDXRenderer>{post.body}</MDXRenderer>
-    </Main>
+    </main>
     <PostFooter {...{ previous, next }} />
   </Layout>
 )
