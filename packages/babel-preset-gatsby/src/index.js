@@ -53,6 +53,8 @@ module.exports = function preset(_, options = {}) {
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
+          // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
+          exclude: [`transform-typeof-symbol`],
         },
       ],
       [
@@ -76,8 +78,10 @@ module.exports = function preset(_, options = {}) {
       [
         resolve(`@babel/plugin-transform-runtime`),
         {
-          helpers: true,
+          corejs: false,
+          helpers: stage === `develop`,
           regenerator: true,
+          useESModules: stage !== `test`,
           absoluteRuntimePath,
         },
       ],
