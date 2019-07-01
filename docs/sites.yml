@@ -6281,6 +6281,14 @@
   built_by: Vazco
   built_by_url: https://www.vazco.eu
   featured: false
+- title: Sankarsan Kampa
+  main_url: "https://traction.one"
+  url: "https://traction.one"
+  description: Full time programmer, part time gamer, exploring the details of programmable systems and how to stretch their capabilities.
+  featured: false
+  categories:
+    - Portfolio
+    - Freelance
 - title: AwesomeDocs
   main_url: "https://awesomedocs.traction.one/"
   url: "https://awesomedocs.traction.one/install"
