@@ -43,7 +43,15 @@ exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
   pluginOptions
 ) => {
-  const { createNode, deleteNode } = actions
+  const { createNode, deleteNode, createTypes } = actions
+
+  if (createTypes) {
+    createTypes(`
+      type File implements Node {
+        id: ID!
+      }
+    `)
+  }
 
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
