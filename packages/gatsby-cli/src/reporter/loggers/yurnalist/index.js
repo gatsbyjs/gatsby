@@ -7,11 +7,20 @@ const yurnalist = createReporter({ emoji: true, verbose: true })
 
 const activities = {}
 
+const levelToYurnalist = {
+  LOG: `log`,
+  WARNING: `warn`,
+  ERROR: `error`,
+  INFO: `info`,
+  SUCCESS: `success`,
+}
+
 onLogAaction(action => {
   switch (action.type) {
     case `STATEFUL_LOG`:
     case `STRUCTURED_LOG`: {
-      yurnalist[action.payload.type](action.payload.text)
+      const yurnalistMethod = levelToYurnalist[action.payload.level]
+      yurnalist[yurnalistMethod](action.payload.text)
       break
     }
     case `STRUCTURED_ACTIVITY_START`: {

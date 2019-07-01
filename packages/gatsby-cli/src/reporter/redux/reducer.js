@@ -62,7 +62,7 @@ module.exports = (
     }
 
     const successLog = {
-      type: `success`,
+      level: `SUCCESS`,
       timestamp: new Date().toJSON(),
       text,
     }

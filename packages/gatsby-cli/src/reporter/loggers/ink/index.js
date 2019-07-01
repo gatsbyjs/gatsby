@@ -7,6 +7,7 @@ import Spinner from "../ink/components/spinner"
 import ProgressBar from "../ink/components/progress-bar"
 
 import { Message } from "../ink/components/messages"
+import Error from "./components/error"
 import Develop from "../ink/components/develop"
 
 import { getStore, onStoreSwap } from "../../redux/index"
@@ -40,9 +41,13 @@ class SimpleOutput extends React.Component {
           <Static>
             {messages.map((msg, index) => (
               <Box textWrap="wrap" key={index}>
-                <Message type={msg.type} hideColors={true}>
-                  {msg.text}
-                </Message>
+                {msg.level === `ERROR` ? (
+                  <Error details={msg} />
+                ) : (
+                  <Message level={msg.level} hideColors={true}>
+                    {msg.text}
+                  </Message>
+                )}
               </Box>
             ))}
           </Static>

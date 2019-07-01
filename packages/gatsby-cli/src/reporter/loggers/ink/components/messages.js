@@ -14,29 +14,27 @@ const createLabel = (text, color) => (...props) => (
   <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
 )
 
-const getLabel = type => {
-  switch (type) {
-    case `success`:
+const getLabel = level => {
+  switch (level) {
+    case `SUCCESS`:
       return createLabel(`success`, `green`)
-    case `error`:
-      return createLabel(`error`, `red`)
-    case `warn`:
+    case `WARNING`:
       return createLabel(`warn`, `yellow`)
-    case `verbose`:
+    case `DEBUG`:
       return createLabel(`verbose`, `gray`)
-    case `info`:
+    case `INFO`:
       return createLabel(`info`, `blue`)
     default:
-      return createLabel(`debug ${type}`, `blue`)
+      return createLabel(`debug ${level}`, `blue`)
   }
 }
 
-export const Message = ({ type, hideColors, children }) => {
-  if (!type || type === `log`) {
+export const Message = ({ level, hideColors, children }) => {
+  if (!level || level === `LOG`) {
     return <>{children}</>
   }
 
-  const TextLabel = getLabel(type)
+  const TextLabel = getLabel(level)
 
   return (
     <>

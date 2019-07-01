@@ -49,16 +49,14 @@ const errorFormatter = getErrorFormatter()
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
-const addMessage = type => text =>
+const addMessage = level => text =>
   dispatch({
     type: `STRUCTURED_LOG`,
     payload: {
-      type,
+      level,
       text,
     },
   })
-
-const addError = addMessage(`error`)
 
 let isVerbose = false
 
@@ -135,7 +133,10 @@ const reporter: Reporter = {
     if (error) this.log(errorFormatter.render(error))
     const structuredError = constructError({ details })
     if (structuredError) {
-      addError(structuredError)
+      dispatch({
+        type: `STRUCTURED_LOG`,
+        payload: structuredError,
+      })
     }
 
     // TODO: remove this once Error component can render this info
@@ -180,17 +181,17 @@ const reporter: Reporter = {
       dispatch({
         type: `STRUCTURED_LOG`,
         payload: {
-          type: `verbose`,
+          level: `DEBUG`,
           text,
         },
       })
     }
   },
 
-  success: addMessage(`success`),
-  info: addMessage(`info`),
-  warn: addMessage(`warn`),
-  log: addMessage(`log`),
+  success: addMessage(`SUCCESS`),
+  info: addMessage(`INFO`),
+  warn: addMessage(`WARNING`),
+  log: addMessage(`LOG`),
 
   /**
    * Time an activity.
@@ -255,7 +256,7 @@ const reporter: Reporter = {
    */
   createProgress(
     name: string,
-    total,
+    total = 0,
     start = 0,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
