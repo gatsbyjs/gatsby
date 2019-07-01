@@ -4,12 +4,14 @@ import { Global } from "@emotion/core"
 import { useColorMode, css, Styled, Layout, Header, Container } from "theme-ui"
 import Switch from "./switch"
 
-import sun from "../../content/assets/sun.png"
-import moon from "../../content/assets/moon.png"
+import Bio from "../components/bio"
+import sun from "../../assets/sun.png"
+import moon from "../../assets/moon.png"
+
+const rootPath = `${__PATH_PREFIX__}/`
 
 const Title = props => {
   const { location, title } = props
-  const rootPath = `${__PATH_PREFIX__}/`
 
   if (location.pathname === rootPath) {
     return (
@@ -35,6 +37,7 @@ const Title = props => {
   } else {
     return (
       <Styled.h3
+        as="p"
         css={css({
           my: 0,
         })}
@@ -84,7 +87,7 @@ const uncheckedIcon = (
 )
 
 export default props => {
-  const { children } = props
+  const { location, children } = props
   const [colorMode, setColorMode] = useColorMode()
   const isDark = colorMode === `dark`
   const toggleColorMode = e => {
@@ -111,22 +114,30 @@ export default props => {
         >
           <Header
             css={css({
-              justifyContent: `space-between`,
-              alignItems: `center`,
-              mb: 4,
+              display: `block`,
             })}
           >
-            <Title {...props} />
-            <Switch
-              aria-label="Toggle dark mode"
+            <div
               css={css({
-                bg: `black`,
+                display: `flex`,
+                justifyContent: `space-between`,
+                alignItems: `center`,
+                mb: 4,
               })}
-              checkedIcon={checkedIcon}
-              uncheckedIcon={uncheckedIcon}
-              checked={isDark}
-              onChange={toggleColorMode}
-            />
+            >
+              <Title {...props} />
+              <Switch
+                aria-label="Toggle dark mode"
+                css={css({
+                  bg: `black`,
+                })}
+                checkedIcon={checkedIcon}
+                uncheckedIcon={uncheckedIcon}
+                checked={isDark}
+                onChange={toggleColorMode}
+              />
+            </div>
+            {location.pathname === rootPath && <Bio />}
           </Header>
           {children}
         </Container>
