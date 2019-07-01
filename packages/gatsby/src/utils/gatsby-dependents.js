@@ -1,10 +1,8 @@
-const util = require(`util`)
-const readPackageTree = require(`read-package-tree`)
-const readPackageTreeAsync = util.promisify(readPackageTree)
+const rpt = require(`read-package-tree`)
 
 // Pass in baseDirectory from store.program.directory
 module.exports = async baseDirectory => {
-  const allNodeModules = await readPackageTreeAsync(baseDirectory, () => true)
+  const allNodeModules = await rpt(baseDirectory)
   return allNodeModules.children.filter(
     node =>
       (node.package.dependencies && node.package.dependencies[`gatsby`]) ||
