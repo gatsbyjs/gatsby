@@ -2,6 +2,11 @@ module.exports = options => {
   const { mdx = true, mdxLayouts = {} } = options
 
   return {
+    siteMetadata: {
+      title: `Notes Title Placeholder`,
+      description: `Description placeholder`,
+      siteUrl: `http://example.com/`,
+    },
     __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
       mdx && {

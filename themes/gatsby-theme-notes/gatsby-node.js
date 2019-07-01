@@ -40,6 +40,11 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await graphql(`
     {
+      site {
+        siteMetadata {
+          title
+        }
+      }
       mdxPages: allMdx {
         edges {
           node {
@@ -63,7 +68,8 @@ exports.createPages = async ({ graphql, actions }) => {
     throw new Error(`Could not query notes`, result.errors)
   }
 
-  const { mdxPages } = result.data
+  const { mdxPages, site } = result.data
+  const siteTitle = site.siteMetadata.title
   const notes = mdxPages.edges.filter(
     ({ node }) => node.parent.sourceInstanceName === contentPath
   )
@@ -115,6 +121,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: path.join(basePath, key),
       context: {
         breadcrumbs,
+        siteTitle,
         urls: value.map(v => v.url),
       },
       component: NotesTemplate,
@@ -126,6 +133,7 @@ exports.createPages = async ({ graphql, actions }) => {
     context: {
       urls: notesUrls,
       groupedNotes,
+      siteTitle,
     },
     component: NotesTemplate,
   })

@@ -6,10 +6,13 @@ import Layout from "./layout"
 const WikiPage = ({
   data: {
     note: { body },
+    site: {
+      siteMetadata: { title },
+    },
   },
   ...props
 }) => (
-  <Layout {...props}>
+  <Layout {...props} title={title}>
     <MDXRenderer>{body}</MDXRenderer>
   </Layout>
 )

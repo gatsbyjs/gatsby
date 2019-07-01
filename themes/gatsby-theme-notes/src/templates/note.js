@@ -13,5 +13,10 @@ export const pageQuery = graphql`
     image: ogImage {
       src(text: $title)
     }
+    site: site {
+      siteMetadata {
+        title
+      }
+    }
   }
 `
