@@ -6108,7 +6108,7 @@
 - title: Glug-Infinite
   main_url: https://gluginfinite.github.io
   url: https://gluginfinite.github.io
-  source_url: https://github.com/cristonkrizz/glug
+  source_url: https://github.com/crstnmac/glug
   description: >
     This is a website built with Gatsby v2 that is deployed on GitHub using GitHub Pages and Netlify.
   categories:
@@ -6117,7 +6117,7 @@
     - Portfolio
     - Agency
   built_by: Criston Macarenhas
-  built_by_url: https://github.com/cristonkrizz
+  built_by_url: https://github.com/crstnmac
   featured: false
 - title: The State of CSS Survey
   main_url: https://stateofcss.com/
