@@ -1,13 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import {
-  fontSizes,
-  colors,
-  zIndices,
-  shadows,
-  space,
-  mediaQueries,
-} from "../utils/presets"
+import { fontSizes, colors, space, mediaQueries } from "../utils/presets"
 
 function createItems(items, location) {
   return (
@@ -40,7 +33,7 @@ function TableOfContents({ page, location }) {
         },
       }}
     >
-      <h1
+      <h2
         css={{
           textTransform: `uppercase`,
           fontSize: fontSizes[2],
@@ -48,7 +41,7 @@ function TableOfContents({ page, location }) {
         }}
       >
         Table of Contents
-      </h1>
+      </h2>
       <nav>
         <ul>{createItems(page.tableOfContents.items, location)}</ul>
       </nav>
