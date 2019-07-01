@@ -114,7 +114,7 @@ export default props => (
 )
 ```
 
-### Change an Object
+## Change an Object
 
 Another use case might be changing a `theme.js` file that a Gatsby
 Theme uses to set colors globally.
