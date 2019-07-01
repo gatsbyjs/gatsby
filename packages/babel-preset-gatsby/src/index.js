@@ -79,7 +79,7 @@ module.exports = function preset(_, options = {}) {
         resolve(`@babel/plugin-transform-runtime`),
         {
           corejs: false,
-          helpers: stage === `develop`,
+          helpers: stage === `develop` || stage === `test`,
           regenerator: true,
           useESModules: stage !== `test`,
           absoluteRuntimePath,
