@@ -12,6 +12,13 @@ export function createRemoteFileNode(
   args: CreateRemoteFileNodeArgs
 ): Promise<FileSystemNode>
 
+/**
+ * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilenodefrombuffer
+ */
+export function createFileNodeFromBuffer(
+  args: CreateFileNodeFromBufferArgs
+): Promise<FileSystemNode>
+
 export interface CreateFilePathArgs {
   node: Node
   getNode: Function
@@ -34,6 +41,18 @@ export interface CreateRemoteFileNodeArgs {
   ext?: string
   name?: string
   reporter: object
+}
+
+export interface CreateFileNodeFromBufferArgs {
+  buffer: Buffer
+  store: Store
+  cache: Cache["cache"]
+  createNode: Function
+  createNodeId: Function
+  parentNodeId?: string
+  hash?: string
+  ext?: string
+  name?: string
 }
 
 export interface FileSystemNode extends Node {
