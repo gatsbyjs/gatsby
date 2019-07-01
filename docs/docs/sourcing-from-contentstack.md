@@ -2,14 +2,13 @@
 title: Sourcing from Contentstack
 ---
 
-This guide walks you through the steps involved in setting up a Gatsby site that fetches content from [Contentstack](https://www.contentstack.com/), a popular headless (or API-first) CMS. 
-
+This guide walks you through the steps involved in setting up a Gatsby site that fetches content from [Contentstack](https://www.contentstack.com/), a popular headless (or API-first) CMS.
 
 ## Why use Contentstack with Gatsby?
 
 Contentstack is a [headless CMS](https://www.contentstack.com/) that offers developers turnkey Content-as-a-Service (CaaS). It lets you create flexible content components and deliver them to any destination platform via CDN-backed Content Delivery APIs. Instead of having to create separate content for all your sites and apps, Contentstack lets you reuse content across different digital channels (web, mobile, IoT, voice, etc.) and present it optimized for its digital endpoint, be it a browser on a laptop, a smartphone, a smartwatch, a kiosk, or a jumbotron.
 
-Gatsby, with its powerful UI toolset, serves as the “head” for your websites while Contentstack – being the headless CMS – acts as the “body”. Combining these the two best-in-class tools provide a powerful solution to create modern, enterprise-grade sites and apps.  
+Gatsby, with its powerful UI toolset, serves as the “head” for your websites while Contentstack – being the headless CMS – acts as the “body”. Combining these the two best-in-class tools provide a powerful solution to create modern, enterprise-grade sites and apps.
 
 _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a Gatsby-powered site._
 
@@ -76,7 +75,7 @@ Now, you will able to query Contentstack data. Try the query below to get the 'H
     contentstackHome {
         title
         body
-    
+
 }
 ```
 
@@ -91,13 +90,13 @@ export default ({ data }) => {
     <div>
       <h1>{data.contentstackHome.title}</h1>
     </div>
-  
+
 }
 export const pageQuery = graphql`
     query HomeQuery {
       contentstackHome {
         title
-      
+
     }`
 ```
 
@@ -106,5 +105,6 @@ This will display the title of your home page on `http://localhost:8000/home` :t
 ## Closing Note
 
 The above example is meant to show you how easy it is to set up a simple Gatsby site that sources content directly from Contentstack. We have also published a few articles that demonstrate how Contentstack works with Gatsby in our [documentation](https://www.contentstack.com/docs/?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack):
-* [Getting started with Contentstack and Gatsby](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack)
-* [Build an example website using Gatsby and Contentstack](https://www.contentstack.com/blog/announcements/best-content-management-platform-2019-siia-codie-award?utm_source=prnewswire&utm_medium=referral&utm_campaign=2019_06_18_best_cms_codie_award)
+
+- [Getting started with Contentstack and Gatsby](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack)
+- [Build an example website using Gatsby and Contentstack](https://www.contentstack.com/blog/announcements/best-content-management-platform-2019-siia-codie-award?utm_source=prnewswire&utm_medium=referral&utm_campaign=2019_06_18_best_cms_codie_award)
