@@ -1,8 +1,9 @@
-const rpt = require(`read-package-tree`)
+import { store } from "../redux"
+import rpt from "read-package-tree"
 
-// Pass in baseDirectory from store.program.directory
-module.exports = async baseDirectory => {
-  const allNodeModules = await rpt(baseDirectory)
+module.exports = async () => {
+  const { program } = store.getState()
+  const allNodeModules = await rpt(program.directory)
   return allNodeModules.children.filter(
     node =>
       (node.package.dependencies && node.package.dependencies[`gatsby`]) ||
