@@ -31,7 +31,8 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
 const Breadcrumb = ({ itemList, location }) => {
   const activeItem = getActiveItem(itemList.items, location, undefined)
   const activeItemParents = getActiveItemParents(itemList.items, activeItem, [])
-
+  const topLevel = itemList.key
+  const topLevelTitle = itemList.title
   // return a shorter version of the breadcrumb on the intro page
   // because the docs intro page isn't generated from markdown
   if (activeItem.title === `Introduction`) {
@@ -41,7 +42,7 @@ const Breadcrumb = ({ itemList, location }) => {
         <BreadcrumbNav>
           <Link to="/">Home</Link>
           <Separator />
-          Docs
+          {topLevelTitle}
         </BreadcrumbNav>
         <BreadcrumbNav mobile>
           <Separator character="<" />
@@ -56,7 +57,7 @@ const Breadcrumb = ({ itemList, location }) => {
       <BreadcrumbNav>
         <Link to="/">Home</Link>
         <Separator />
-        <Link to="/docs/">Docs</Link>
+        <Link to={`/${topLevel}/`}>{topLevelTitle}</Link>
         <Separator />
         {activeItemParents.reverse().map(item => (
           <React.Fragment key={item.title}>
@@ -75,12 +76,12 @@ const Breadcrumb = ({ itemList, location }) => {
             to={
               activeItemParents[activeItemParents.length - 1]
                 ? activeItemParents[activeItemParents.length - 1].link
-                : `/docs/`
+                : `/${topLevel}/`
             }
           >
             {activeItemParents[activeItemParents.length - 1]
               ? activeItemParents[activeItemParents.length - 1].title
-              : `Docs`}
+              : topLevelTitle}
           </Link>
         </BreadcrumbNav>
       )}
