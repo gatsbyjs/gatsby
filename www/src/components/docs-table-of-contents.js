@@ -30,11 +30,9 @@ function TableOfContents({ page, location }) {
     <div
       css={{
         background: colors.white,
-        zIndex: zIndices.feedbackWidget,
 
         [mediaQueries.xxl]: {
           padding: space[6],
-          boxShadow: shadows.overlay,
           float: `right`,
           marginLeft: space[10],
           position: `sticky`,
