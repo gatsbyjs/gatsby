@@ -3091,4 +3091,4 @@
     - Ant Design UI components;
     - Markdown and MDX for pages;
     - A customized webpack and babel configuration, for complex profecianal web apps with node.js, Jest tests, etc;
-    - Progressively build more and more complex pages using gatsby-plugin-combine.     
+    - Progressively build more and more complex pages using gatsby-plugin-combine.
