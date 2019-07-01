@@ -39,6 +39,8 @@ const {
   ScalarLeafsRule,
   VariablesAreInputTypesRule,
   VariablesInAllowedPositionRule,
+  Kind,
+  print,
 } = require(`graphql`)
 
 type RootQuery = {
@@ -151,6 +153,7 @@ class Runner {
     const nameDefMap = new Map()
     const nameErrorMap = new Map()
     const documents = []
+    const fragmentMap = new Map()
 
     for (let [filePath, doc] of nodes.entries()) {
       let errors = validate(this.schema, doc, validationRules)
@@ -184,6 +187,25 @@ class Runner {
         })
         return compiledNodes
       }
+
+      // The way we currently export fragments requires duplicated ones
+      // to be filtered out since there is a global Fragment namespace
+      // We maintain a top level fragment Map to keep track of all definitions
+      // of thge fragment type and to filter them out if theythey've already been
+      // declared before
+      doc.definitions = doc.definitions.filter(definition => {
+        if (definition.kind === Kind.FRAGMENT_DEFINITION) {
+          const fragmentName = definition.name.value
+          if (fragmentMap.has(fragmentName)) {
+            if (print(definition) === fragmentMap.get(fragmentName)) {
+              return false
+            }
+          } else {
+            fragmentMap.set(fragmentName, print(definition))
+          }
+        }
+        return true
+      })
 
       documents.push(doc)
       doc.definitions.forEach((def: any) => {
