@@ -1,9 +1,5 @@
 ---
 title: Gatsby REPL
-issue: https://github.com/gatsbyjs/gatsby/issues/7484
 ---
 
-This is a stub. Help our community expand it.
-
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+The Gatsby REPL ("read-eval-print loop") is available via the Gatsby CLI. This gives you access to an interactive REPL shell within the context of your Gatsby environment. It can be launched by running the command `gatsby repl`.
