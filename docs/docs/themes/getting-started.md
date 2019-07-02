@@ -20,7 +20,7 @@ The starter for the official Gatsby blog theme does the following:
 
 ### 1. The starter installs the theme and configures it
 
-When you use a starter that's built with a theme, you will see that you're initially presented with a lighter weight `gatsby-config.js`.
+When you use a starter that's built with a theme, you will often see that you're initially presented with a lighter weight `gatsby-config.js`. Themes start doing their magic when installed via the `plugins` array:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
