@@ -80,7 +80,7 @@ Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the c
 ```GraphQL
 graphql`
   query MyQuery {
-    # Example is for a `ContentType` with a `ContenfulAsset` field
+    # Example is for a `ContentType` with a `ContentfulAsset` field
     # You could also query an asset directly via
     # `allContentfulAsset { edges{ node { } } }`
     # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
