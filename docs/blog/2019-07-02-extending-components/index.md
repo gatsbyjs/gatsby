@@ -21,7 +21,7 @@ component that you want to wrap the author's bio in.
 
 Before component extending was added this meant you had to copy over
 the entire component implementation from the theme to wrap it with
-your Card which might look something like:
+your Card. It might look something like:
 
 ```js:title=src/gatsby-theme-blog/components/author.js
 import React from "react"
@@ -47,9 +47,10 @@ export default ({ name, bio, avatar, twitterUrl, githubUrl }) => (
 )
 ```
 
-This workflow works, especially since the component is relatively
+This workflow isn't too bad, especially since the component is relatively
 straightforward. However, it could be optimized in scenarios where
-you want to wrap a component or pass a different prop.
+you want to wrap a component or pass a different prop without having
+to worry about the component's internals.
 
 ## Importing the Shadowed Component
 
