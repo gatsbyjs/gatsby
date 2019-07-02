@@ -10,7 +10,7 @@ const Footer = ({ socialLinks }) => (
   >
     {socialLinks.map((platform, i, arr) => {
       return (
-        <Fragment>
+        <Fragment key={platform.url}>
           <Styled.a
             href={platform.url}
             target="_blank"
