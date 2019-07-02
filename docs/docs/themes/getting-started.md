@@ -2,7 +2,7 @@
 title: Using a Gatsby theme
 ---
 
-To get started using themes, we'll use a starter that installs the official gatsby blog theme.
+To get started using themes, you can use a starter that installs the official Gatsby blog theme.
 
 A **regular Gatsby starter** creates a new Gatsby site that is preconfigured for a particular use case. The resulting site effectively forks off the starter — after it’s created, the site maintains no connection to the starter.
 
