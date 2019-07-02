@@ -18,7 +18,6 @@ module.exports = options => {
         },
       ],
     },
-    __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
       mdx && {
         resolve: `gatsby-plugin-mdx`,
@@ -67,6 +66,7 @@ module.exports = options => {
       `gatsby-plugin-react-helmet`,
       `gatsby-plugin-twitter`,
       `gatsby-plugin-emotion`,
+      `gatsby-plugin-theme-ui`,
     ].filter(Boolean),
   }
 }
