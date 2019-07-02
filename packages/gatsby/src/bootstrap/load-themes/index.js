@@ -60,7 +60,7 @@ const processTheme = (
 
 module.exports = async (config, { useLegacyThemes = false }) => {
   const themesA = await Promise.mapSeries(
-    useLegacyThemes ? config.__experimentalThemes : config.plugins,
+    useLegacyThemes ? config.__experimentalThemes || [] : config.plugins || [],
     async themeSpec => {
       const themeObj = await resolveTheme(themeSpec)
       return processTheme(themeObj, { useLegacyThemes })
