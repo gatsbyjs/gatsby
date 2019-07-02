@@ -8,6 +8,8 @@ A **regular Gatsby starter** creates a new Gatsby site that is preconfigured for
 
 A **Gatsby theme starter** creates a new site that installs one or more Gatsby themes. When a starter installs a theme, it maintains the connection to that theme as a standalone npm package.
 
+Installing the Gatsby blog theme starter is the same process as a regular Gatsby starter:
+
 ```shell
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 ```
