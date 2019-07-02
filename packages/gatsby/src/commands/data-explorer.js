@@ -10,6 +10,7 @@ const { formatError } = require(`graphql`)
 
 const { store } = require(`../redux`)
 const bootstrap = require(`../bootstrap`)
+const cors = require(`cors`)
 
 const withResolverContext = require(`../schema/context`)
 
@@ -20,6 +21,7 @@ module.exports = async program => {
   await bootstrap(program)
   const app = express()
 
+  app.use(cors())
   const graphqlEndpoint = `/_+graphi?ql`
 
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
