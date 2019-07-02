@@ -83,7 +83,7 @@ actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
 /**
  *
  * Report that a query has been extracted from a component. Used by
- * query-compilier.js.
+ * query-compiler.js.
  *
  * @param {Object} $0
  * @param {componentPath} $0.componentPath The path to the component that just had
@@ -106,7 +106,7 @@ actions.queryExtracted = (
 
 /**
  *
- * Report that the Relay Compilier found a graphql error when attempting to extract a query
+ * Report that the Relay Compiler found a graphql error when attempting to extract a query
  *
  * @param {Object} $0
  * @param {componentPath} $0.componentPath The path to the component that just had
@@ -152,7 +152,7 @@ actions.queryExtractedBabelSuccess = (
 
 /**
  *
- * Report that the Relay Compilier found a babel error when attempting to extract a query
+ * Report that the Relay Compiler found a babel error when attempting to extract a query
  *
  * @param {Object} $0
  * @param {componentPath} $0.componentPath The path to the component that just had

@@ -141,7 +141,7 @@ There are some implications to this change:
 
 - To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
-We reccomend the following migration path:
+We recommend the following migration path:
 
 #### 1. Convert the layout's children from a render prop to a normal prop (required)
 

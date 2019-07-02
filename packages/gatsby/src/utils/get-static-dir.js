@@ -20,13 +20,17 @@ exports.copyStaticDirs = () => {
       .filter(themeStaticPath => fs.existsSync(themeStaticPath))
       // copy the files for each folder into the user's build
       .map(folder =>
-        fs.copySync(folder, nodePath.join(process.cwd(), `public`))
+        fs.copySync(folder, nodePath.join(process.cwd(), `public`), {
+          dereference: true,
+        })
       )
   }
 
   const staticDir = nodePath.join(process.cwd(), `static`)
   if (!fs.existsSync(staticDir)) return Promise.resolve()
-  return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`))
+  return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`), {
+    dereference: true,
+  })
 }
 
 /**
