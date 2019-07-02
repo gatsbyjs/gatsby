@@ -6,21 +6,45 @@ const Debug = require(`debug`)
 
 const debug = Debug(`gatsby-theme-notes`)
 
-const Note = require.resolve(`./src/templates/note`)
-const Notes = require.resolve(`./src/templates/notes`)
+// These are customizable theme options we only need to check once
+let basePath
+let contentPath
 
-exports.createPages = async ({ graphql, actions }, pluginOptions) => {
+// These templates are simply data-fetching wrappers that import components
+const NoteTemplate = require.resolve(`./src/templates/note`)
+const NotesTemplate = require.resolve(`./src/templates/notes`)
+
+exports.onPreBootstrap = ({ store }, themeOptions) => {
+  const { program } = store.getState()
+
+  basePath = themeOptions.basePath || `/`
+  contentPath = themeOptions.contentPath || `content/notes`
+
+  const dirs = [path.join(program.directory, contentPath)]
+
+  dirs.forEach(dir => {
+    debug(`Initializing ${dir} directory`)
+    if (!fs.existsSync(dir)) {
+      mkdirp.sync(dir)
+    }
+  })
+}
+
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-
-  const { notesPath = `/notes` } = pluginOptions
 
   const toNotesPath = node => {
     const { dir } = path.parse(node.parent.relativePath)
-    return path.join(notesPath, dir, node.parent.name)
+    return path.join(basePath, dir, node.parent.name)
   }
 
   const result = await graphql(`
     {
+      site {
+        siteMetadata {
+          title
+        }
+      }
       mdxPages: allMdx {
         edges {
           node {
@@ -44,9 +68,10 @@ exports.createPages = async ({ graphql, actions }, pluginOptions) => {
     throw new Error(`Could not query notes`, result.errors)
   }
 
-  const { mdxPages } = result.data
+  const { mdxPages, site } = result.data
+  const siteTitle = site.siteMetadata.title
   const notes = mdxPages.edges.filter(
-    ({ node }) => node.parent.sourceInstanceName === `notes`
+    ({ node }) => node.parent.sourceInstanceName === contentPath
   )
 
   // Create notes pages
@@ -57,7 +82,7 @@ exports.createPages = async ({ graphql, actions }, pluginOptions) => {
         ...node,
         title: node.parent.name,
       },
-      component: Note,
+      component: NoteTemplate,
     })
   })
 
@@ -72,7 +97,7 @@ exports.createPages = async ({ graphql, actions }, pluginOptions) => {
 
     acc[dir] = acc[dir] || []
     acc[dir].push({
-      pagePath: path.join(notesPath, dir),
+      pagePath: path.join(basePath, dir),
       url: toNotesPath(node),
       ...node,
     })
@@ -86,52 +111,41 @@ exports.createPages = async ({ graphql, actions }, pluginOptions) => {
         ...acc,
         {
           name: dir,
-          url: path.join(notesPath, dir),
+          url: path.join(basePath, dir),
         },
       ],
       []
     )
 
     createPage({
-      path: path.join(notesPath, key),
+      path: path.join(basePath, key),
       context: {
         breadcrumbs,
+        siteTitle,
         urls: value.map(v => v.url),
       },
-      component: Notes,
+      component: NotesTemplate,
     })
   })
 
   createPage({
-    path: notesPath,
+    path: basePath,
     context: {
       urls: notesUrls,
       groupedNotes,
+      siteTitle,
     },
-    component: Notes,
-  })
-}
-
-exports.onPreBootstrap = ({ store }, opts) => {
-  const { program } = store.getState()
-
-  const dirs = [path.join(program.directory, opts.notes || `notes`)]
-
-  dirs.forEach(dir => {
-    debug(`Initializing ${dir} directory`)
-    if (!fs.existsSync(dir)) {
-      mkdirp.sync(dir)
-    }
+    component: NotesTemplate,
   })
 }
 
 exports.sourceNodes = (
   { actions: { createTypes, createNode }, schema },
-  { notesPath = `/notes`, homeText = `~`, breadcrumbSeparator = `/` }
+  { basePath = `/notes`, homeText = `~`, breadcrumbSeparator = `/` }
 ) => {
   // Create the Garden type to solidify the field data types
   createTypes(`type NotesConfig implements Node {
-notesPath: String!
+basePath: String!
 home: String
 breadcrumbSeparator: String
 }`)
@@ -139,7 +153,7 @@ breadcrumbSeparator: String
   // create garden data from plugin config
   const notesConfig = {
     breadcrumbSeparator,
-    notesPath,
+    basePath,
     homeText,
   }
 

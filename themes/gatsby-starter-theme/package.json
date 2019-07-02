@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-theme-blog",
+  "name": "gatsby-starter-theme",
   "private": true,
   "version": "0.0.1",
   "scripts": {
@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "gatsby": "^2.3.23",
-    "gatsby-theme-blog-mdx": "0.0.1",
-    "gatsby-theme-notes": "0.0.1",
+    "gatsby-theme-blog": "*",
+    "gatsby-theme-notes": "*",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }

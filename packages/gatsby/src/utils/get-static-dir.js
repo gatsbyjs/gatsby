@@ -31,7 +31,9 @@ exports.copyStaticDirs = () => {
 
   const staticDir = nodePath.join(process.cwd(), `static`)
   if (!fs.existsSync(staticDir)) return Promise.resolve()
-  return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`))
+  return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`), {
+    dereference: true,
+  })
 }
 
 /**
