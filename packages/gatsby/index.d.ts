@@ -878,6 +878,13 @@ export interface Actions {
     plugin?: ActionPlugin,
     traceId?: string
   ): void
+
+  /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
+  createFieldExtension(
+    extension: object,
+    plugin: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {
