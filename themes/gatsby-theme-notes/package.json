@@ -13,7 +13,7 @@
     "digital-garden"
   ],
   "devDependencies": {
-    "gatsby": "^2.4.6",
+    "gatsby": "^2.13.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

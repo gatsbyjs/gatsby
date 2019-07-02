@@ -1,5 +1,5 @@
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: `gatsby-theme-notes`,
       options: {},
