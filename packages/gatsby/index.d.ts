@@ -600,7 +600,13 @@ export interface PluginOptions {
 export type PluginCallback = (err: Error | null, result?: any) => void
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
   traceId: string
   waitForCascadingActions: boolean
 }
