@@ -27,8 +27,6 @@ To get started, in your terminal, after running the initial site setup steps [he
 
 ### `dataPaths`
 
-Is this defined?
-
 ### `getNode()`
 
 Get a single node by its ID, typically a string.
