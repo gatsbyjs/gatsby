@@ -17,8 +17,6 @@ Switch.defaultProps = {
   height: 24,
   width: 48,
   handleDiameter: 24,
-  offColor: false,
-  onColor: false,
 }
 
 export default Switch
