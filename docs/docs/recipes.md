@@ -112,13 +112,13 @@ Showtime.
 
 ## Querying data
 
-### StaticQuery
+### The StaticQuery Component
 
-`StaticQuery` lets you query data from non-page components.
+`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/).
 
 #### Directions
 
-1. You must provide the `query` and the `render` props for the `StaticQuery` component.
+1. The `StaticQuery` Component requires two render props: `query` and `render`.
 
 ```jsx:title=src/components/NonPageComponent.js
 import React from "react"
@@ -147,25 +147,26 @@ const NonPageComponent = () => (
 export default NonPageComponent
 ```
 
-2. You can now use this component as you would any other component.
+2. You can now use this component as you would [any other component](/docs/building-with-components#non-page-components).
 
-### The useStaticQuery hook
+### Querying data with the useStaticQuery hook
 
-Since Gatsby v2.1.0 you can use `useStaticQuery` to query data.
+Since Gatsby v2.1.0, you can use the `useStaticQuery` hook to query data with a JavaScript function instead of a component.
 
-The `useStaticQuery` is a React Hook. All the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html) apply.
+#### Prerequisites
 
-It takes your GraphQL query and returns the requested data.
-
-#### Requirements
-
-You'll need React and ReactDOM 16.8.0 or later installed.
+- You'll need React and ReactDOM 16.8.0 or later (keeping Gatsby updated handles this).
+- The [Rules of React Hooks](https://reactjs.org/docs/hooks-rules.html)
 
 #### Directions
 
-Let's refactor the previous example to use `useStaticQuery`.
+The `useStaticQuery` hook is a JavaScript function that takes a GraphQL query and returns the requested data.
 
 1. Import `useStaticQuery` and `graphql` from `gatsby` in order to use the hook query the data.
+
+2. In the start of a stateless functional component, assign a variable to the value of `useStaticQuery` with your `graphql` query passed as an argument.
+
+3. In the JSX code returned from your component, you can reference that variable to handle the returned data.
 
 ```jsx:title=src/components/NonPageComponent.js
 import React from "react"
@@ -196,6 +197,7 @@ export default NonPageComponent
 - [More on Static Query for querying data in components](/docs/static-query/)
 - [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
 - [More on the useStaticQuery hook](/docs/use-static-query/)
+- [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
 ## Sourcing data
 
