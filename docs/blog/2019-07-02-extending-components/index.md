@@ -1,13 +1,11 @@
 ---
 title: Extending Shadowed Components
-date: 2019-07-01
+date: 2019-07-02
 author: John Otander
 excerpt: "Extending components when using Component Shadowing can be a powerful pattern for making small changes."
 tags:
   - themes
 ---
-
-# Extending Components in Themes
 
 [Component Shadowing](/blog/2019-04-29-component-shadowing/)
 provides a powerful API for customizing the rendering of components
@@ -86,6 +84,12 @@ without an API to modify it outside of shadowing. With component
 extending you can import that component and then add your new
 prop to change it.
 
+If `NewsletterButton` accepts a `variant` prop which changes the
+look and colors of the button, you can use it when you extend
+the component. Below, `NewsletterButton` is re-exported and
+`variant="link"` is added in the shadowed file to override it's
+default value.
+
 ```js:title=src/gatsby-theme-blog/components/newsletter/button.js
 import { NewsletterButton } from "gatsby-theme-blog/src/components/newsletter"
 
@@ -114,6 +118,9 @@ export default props => (
 )
 ```
 
+**Note:** For this approach to work `NewsletterButton` has to accept a
+`className` property.
+
 ## Change an Object
 
 Another use case might be changing a `theme.js` file that a Gatsby
@@ -132,4 +139,4 @@ change a couple values from the defaults.
 
 If you need to make a small change to an existing component or
 add an additional prop, extending the component via shadowing can
-be a good pattern to do so.
+be an effective pattern.
