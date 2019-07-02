@@ -37,8 +37,6 @@ window.browserLoc = {
 }
 
 // Let the site/plugins run code very early.
-
-
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
