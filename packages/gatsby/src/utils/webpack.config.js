@@ -252,7 +252,7 @@ module.exports = async (program, directory, suppliedStage) => {
     // prettier-ignore
     let configRules = [
       rules.js({
-        modulesThatUseGatsby: modulesThatUseGatsby
+        modulesThatUseGatsby,
       }),
       rules.yaml(),
       rules.fonts(),
@@ -266,7 +266,7 @@ module.exports = async (program, directory, suppliedStage) => {
     if (stage === `build-javascript`) {
       configRules.push(
         rules.dependencies({
-          modulesThatUseGatsby: modulesThatUseGatsby,
+          modulesThatUseGatsby,
         })
       )
     }
