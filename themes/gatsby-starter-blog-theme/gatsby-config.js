@@ -13,12 +13,12 @@ module.exports = {
     siteUrl: `https://www.gatsbyjs.org/`,
     social: [
       {
-        name: "twitter",
-        url: "https://twitter.com/gatsbyjs",
+        name: `twitter`,
+        url: `https://twitter.com/gatsbyjs`,
       },
       {
-        name: "github",
-        url: "https://github.com/gatsbyjs",
+        name: `github`,
+        url: `https://github.com/gatsbyjs`,
       },
     ],
   },

@@ -9,12 +9,12 @@ module.exports = options => {
       siteUrl: `http://example.com/`,
       social: [
         {
-          name: "twitter",
-          url: "https://twitter.com/gatsbyjs",
+          name: `twitter`,
+          url: `https://twitter.com/gatsbyjs`,
         },
         {
-          name: "github",
-          url: "https://github.com/gatsbyjs",
+          name: `github`,
+          url: `https://github.com/gatsbyjs`,
         },
       ],
     },
