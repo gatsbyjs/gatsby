@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Using a Gatsby theme
 ---
 
 To get started using themes, we'll use a starter that installs the official gatsby blog theme.
