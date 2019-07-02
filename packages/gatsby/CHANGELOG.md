@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.8...gatsby@2.12.0) (2019-07-02)
+
+### Features
+
+- **gatsby:** Allow adding custom field extensions ([#14610](https://github.com/gatsbyjs/gatsby/issues/14610)) ([4f9c790](https://github.com/gatsbyjs/gatsby/commit/4f9c790))
+
 ## [2.11.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.7...gatsby@2.11.8) (2019-07-02)
 
 ### Bug Fixes
