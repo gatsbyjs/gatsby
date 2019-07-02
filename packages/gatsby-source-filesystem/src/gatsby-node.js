@@ -47,7 +47,7 @@ exports.sourceNodes = (
 
   if (createTypes) {
     createTypes(`
-      type File implements Node {
+      type File implements Node @infer {
         id: ID!
       }
     `)
