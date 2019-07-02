@@ -33,3 +33,7 @@ module.exports = {
 ```
 
 In the default setup, a blog will be served from the root path (`/`), and the notes content will be served from `/notes`.
+
+## Tutorial
+
+For a step-by-step tutorial, see the ["Using Multiple Themes Together" tutorial](/tutorial/using-multiple-themes-together).
