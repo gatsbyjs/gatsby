@@ -300,14 +300,16 @@ module.exports = async ({
       return {
         test: /\.(js|mjs|jsx)$/,
         include: modulePath => {
-          if (vendorRegex.test(modulePath)) {
-            // Does this module that use gatsby?
-            return modulesThatUseGatsby.some(module =>
-              modulePath.includes(module.path)
-            )
+          // when it's not coming from node_modules we treat it as a source file.
+          if (!vendorRegex.test(modulePath)) {
+            return true
           }
 
-          return true
+          // If the module uses Gatsby as a dependency
+          // we want to treat it as src so we can extract queries
+          return modulesThatUseGatsby.some(module =>
+            modulePath.includes(module.path)
+          )
         },
         type: `javascript/auto`,
         use: [loaders.js(options)],
@@ -353,7 +355,7 @@ module.exports = async ({
               return true
             }
             // If dep is babel-runtime or core-js, exclude
-            else if (/@babel(?:\/|\\{1,2})runtime|core-js/.test(modulePath)) {
+            if (/@babel(?:\/|\\{1,2})runtime|core-js/.test(modulePath)) {
               return true
             }
 
