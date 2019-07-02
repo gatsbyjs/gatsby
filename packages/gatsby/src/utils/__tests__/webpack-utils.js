@@ -41,6 +41,13 @@ describe(`webpack utils`, () => {
           )
         ).toEqual(true)
       })
+      it(`includes files from .cache`, () => {
+        expect(
+          js.include(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
+          )
+        ).toEqual(true)
+      })
       it(`includes dependencies that use gatsby`, () => {
         expect(
           js.include(
@@ -89,6 +96,13 @@ describe(`webpack utils`, () => {
         expect(
           dependencies.exclude(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`
+          )
+        ).toEqual(true)
+      })
+      it(`excludes files from .cache`, () => {
+        expect(
+          dependencies.exclude(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
           )
         ).toEqual(true)
       })
