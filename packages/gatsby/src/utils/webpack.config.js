@@ -11,6 +11,7 @@ const getPublicPath = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath, withTrailingSlash } = require(`./path`)
+const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -23,6 +24,7 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   4) build-html: build all HTML files
 
 module.exports = async (program, directory, suppliedStage) => {
+  const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -249,7 +251,9 @@ module.exports = async (program, directory, suppliedStage) => {
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.js(),
+      rules.js({
+        modulesThatUseGatsby,
+      }),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
@@ -260,7 +264,11 @@ module.exports = async (program, directory, suppliedStage) => {
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
     if (stage === `build-javascript`) {
-      configRules.push(rules.dependencies())
+      configRules.push(
+        rules.dependencies({
+          modulesThatUseGatsby,
+        })
+      )
     }
 
     if (store.getState().themes.themes) {
