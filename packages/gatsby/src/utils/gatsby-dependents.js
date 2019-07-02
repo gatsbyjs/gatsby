@@ -11,4 +11,4 @@ module.exports = memoize(async () => {
     /gatsby/.test(moduleName)
   )
   return allNodeModules.children
-}
+})
