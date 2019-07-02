@@ -1,16 +1,31 @@
-import React from "react"
-import { css } from "theme-ui"
-import HomeFooterContent from "./home-footer-content"
+import React, { Fragment } from "react"
+import { Styled, css } from "theme-ui"
 
-const Footer = () => (
+const Footer = ({ socialLinks }) => (
   <footer
     css={css({
       mt: 4,
       pt: 3,
     })}
   >
-    <HomeFooterContent />
+    {socialLinks.map((platform, i, arr) => {
+      return (
+        <Fragment>
+          <Styled.a
+            href={platform.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {platform.name}
+          </Styled.a>
+          {arr.length - 1 !== i && (
+            <Fragment>
+              {` `}&bull;{` `}
+            </Fragment>
+          )}
+        </Fragment>
+      )
+    })}
   </footer>
 )
-
 export default Footer

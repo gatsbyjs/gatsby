@@ -100,6 +100,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       site {
         siteMetadata {
           title
+          social {
+            name
+            url
+          }
         }
       }
       mdxPages: allBlogPost(
@@ -129,7 +133,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     site: { siteMetadata },
   } = result.data
   const posts = mdxPages.edges
-  const siteTitle = siteMetadata.title
+  const { title: siteTitle, social: socialLinks } = siteMetadata
 
   // Create a page for each Post
   posts.forEach(({ node: post }, index) => {
@@ -142,6 +146,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: {
         ...post,
         siteTitle,
+        socialLinks,
         previous,
         next,
       },
@@ -155,6 +160,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     context: {
       posts,
       siteTitle,
+      socialLinks,
     },
   })
 }
