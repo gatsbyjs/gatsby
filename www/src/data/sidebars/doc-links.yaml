@@ -90,6 +90,8 @@
               link: /docs/importing-media-content/
             - title: Working with GIFs
               link: /docs/working-with-gifs/
+            - title: Working with Images in Markdown
+              link: /docs/working-with-images-in-markdown/
         - title: Sourcing Content and Data
           link: /docs/content-and-data/
           items:
