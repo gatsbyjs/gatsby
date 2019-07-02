@@ -140,7 +140,7 @@ Add Gatsby develop and build scripts to the example site's `package.json`.
 Install all your packages by running yarn in the root directory.
 
 ```shell
-yarn 
+yarn
 ```
 
 Test your example site out to make sure everything is working as expected.
