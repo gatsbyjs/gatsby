@@ -34,6 +34,10 @@ module.exports = {
 
 In the default setup, a blog will be served from the root path (`/`), and the notes content will be served from `/notes`.
 
+![The homepage of the site created by gatsby-theme-starter](../images/gatsby-theme-starter-home.png)
+
+![The `notes` route of a site created by gatsby-theme starter](../images/gatsby-theme-starter-notes.png)
+
 ## Tutorial
 
 For a step-by-step tutorial, see the ["Using Multiple Themes Together" tutorial](/tutorial/using-multiple-themes-together).
