@@ -798,7 +798,7 @@ export interface Actions {
   createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
+  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
@@ -862,11 +862,12 @@ export interface Actions {
   createRedirect(
     redirect: {
       fromPath: string
-      isPermanent: boolean
+      isPermanent?: boolean
       toPath: string
-      redirectInBrowser: boolean
-      force: boolean
-      statusCode: number
+      redirectInBrowser?: boolean
+      force?: boolean
+      statusCode?: number
+      [key: string]: unknown
     },
     plugin?: ActionPlugin
   ): void
