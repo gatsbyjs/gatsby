@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.7...gatsby@2.11.8) (2019-07-02)
+
+### Bug Fixes
+
+- enable separate config for node_modules transpilation ([#15270](https://github.com/gatsbyjs/gatsby/issues/15270)) ([7e39a12](https://github.com/gatsbyjs/gatsby/commit/7e39a12))
+
+### Features
+
+- **gatsby:** Add gatsby-dependents util ([#15269](https://github.com/gatsbyjs/gatsby/issues/15269)) ([f55250e](https://github.com/gatsbyjs/gatsby/commit/f55250e))
+- **gatsby:** Handle duplicated fragment definitions ([#15179](https://github.com/gatsbyjs/gatsby/issues/15179)) ([a92f6e1](https://github.com/gatsbyjs/gatsby/commit/a92f6e1))
+
 ## [2.11.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.6...gatsby@2.11.7) (2019-07-01)
 
 ### Bug Fixes
