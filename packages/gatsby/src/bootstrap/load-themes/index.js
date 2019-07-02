@@ -9,7 +9,14 @@ const getConfigFile = require(`../get-config-file`)
 // get the gatsby-config file for a theme
 const resolveTheme = async themeSpec => {
   const themeName = themeSpec.resolve || themeSpec
-  const themeDir = path.dirname(require.resolve(themeName))
+  let themeDir
+  try {
+    themeDir = path.dirname(require.resolve(themeName))
+  } catch (e) {
+    // this can be local plugin, and require.resolve will throw
+    // in this case - let's return partial entry
+    return { themeName, themeSpec }
+  }
   const theme = await preferDefault(getConfigFile(themeDir, `gatsby-config`))
   // if theme is a function, call it with the themeConfig
   let themeConfig = theme
@@ -26,16 +33,22 @@ const resolveTheme = async themeSpec => {
 // Theoretically, there could be an infinite loop here but in practice there is
 // no use case for a loop so I expect that to only happen if someone is very
 // off track and creating their own set of themes
-const processTheme = ({ themeName, themeConfig, themeSpec, themeDir }) => {
+const processTheme = (
+  { themeName, themeConfig, themeSpec, themeDir },
+  { useLegacyThemes }
+) => {
+  const themesList = useLegacyThemes
+    ? themeConfig && themeConfig.__experimentalThemes
+    : themeConfig && themeConfig.plugins
   // gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
-  if (themeConfig && themeConfig.__experimentalThemes) {
+  if (themeConfig && themesList) {
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
-    return Promise.mapSeries(themeConfig.__experimentalThemes, async spec => {
+    return Promise.mapSeries(themesList, async spec => {
       const themeObj = await resolveTheme(spec)
-      return processTheme(themeObj)
+      return processTheme(themeObj, { useLegacyThemes })
     }).then(arr =>
       arr.concat([{ themeName, themeConfig, themeSpec, themeDir }])
     )
@@ -45,12 +58,12 @@ const processTheme = ({ themeName, themeConfig, themeSpec, themeDir }) => {
   }
 }
 
-module.exports = async config => {
+module.exports = async (config, { useLegacyThemes = false }) => {
   const themesA = await Promise.mapSeries(
-    config.__experimentalThemes,
+    useLegacyThemes ? config.__experimentalThemes : config.plugins,
     async themeSpec => {
       const themeObj = await resolveTheme(themeSpec)
-      return processTheme(themeObj)
+      return processTheme(themeObj, { useLegacyThemes })
     }
   ).then(arr => _.flattenDeep(arr))
 

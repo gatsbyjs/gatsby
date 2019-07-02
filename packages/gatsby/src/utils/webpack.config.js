@@ -282,6 +282,7 @@ module.exports = async (program, directory, suppliedStage) => {
         })
       )
     }
+
     switch (stage) {
       case `develop`: {
         // get schema to pass to eslint config and program for directory
