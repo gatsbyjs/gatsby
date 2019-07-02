@@ -50,7 +50,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
       }
     })
     .map(plugin => {
-      debug("userPlugins: contructing remark plugin for ", plugin);
+      debug("userPlugins: constructing remark plugin for ", plugin);
       const requiredPlugin = require(plugin.resolve);
       const wrappedPlugin = () =>
         async function transformer(markdownAST) {

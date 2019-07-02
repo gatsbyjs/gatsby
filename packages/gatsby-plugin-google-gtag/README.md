@@ -32,7 +32,7 @@ module.exports = {
           "DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
         ],
         // This object gets passed directly to the gtag config command
-        // This config will be shared accross all trackingIds
+        // This config will be shared across all trackingIds
         gtagConfig: {
           optimize_id: "OPT_CONTAINER_ID",
           anonymize_ip: true,
