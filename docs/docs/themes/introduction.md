@@ -1,5 +1,5 @@
 ---
-title: What are Gatsby themes?
+title: What Are Gatsby Themes?
 ---
 
 To introduce themes, let's walk through the journey that led to the creation of themes.
