@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Using a Gatsby Theme
 ---
 
 Scaffolding out a project that uses themes requires you to use a starter that's implemented with theming.
