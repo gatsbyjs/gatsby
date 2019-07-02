@@ -65,6 +65,16 @@
               link: /contributing/submit-to-starter-library/
             - title: Submit to Plugin Library
               link: /contributing/submit-to-plugin-library/
+    - title: Gatsby Brand Guidelines
+      items:
+        - title: Color
+          link: /guidelines/color/
+        - title: Logo
+          link: /guidelines/logo/
+        - title: Typography
+          link: /guidelines/typography/
+        - title: Design Tokens
+          link: /guidelines/design-tokens/
     - title: RFC Process
       link: /contributing/rfc-process/
     - title: Gatsby's Governance Model*

@@ -295,8 +295,9 @@ module.exports = async ({
   {
     let js = (options = {}) => {
       return {
-        test: /\.jsx?$/,
+        test: /\.(js|mjs|jsx)$/,
         exclude: vendorRegex,
+        type: `javascript/auto`,
         use: [loaders.js(options)],
       }
     }
@@ -305,22 +306,33 @@ module.exports = async ({
   }
 
   /**
-   * mjs loader:
-   * webpack 4 has issues automatically dealing with
-   * the .mjs extension, thus we need to explicitly
-   * add this rule to use the default webpack js loader
+   * Node_modules JavaScript loader via babel (exclude core-js & babel-runtime to speedup babel transpilation)
    */
   {
-    let mjs = (options = {}) => {
+    let dependencies = (options = {}) => {
+      const jsOptions = {
+        babelrc: false,
+        configFile: false,
+        compact: false,
+        presets: [
+          [require.resolve(`babel-preset-gatsby/dependencies`), { stage }],
+        ],
+        // If an error happens in a package, it's possible to be
+        // because it was compiled. Thus, we don't want the browser
+        // debugger to show the original code. Instead, the code
+        // being evaluated would be much more helpful.
+        sourceMaps: false,
+      }
+
       return {
-        test: /\.mjs$/,
-        include: /node_modules/,
+        test: /\.(js|mjs)$/,
+        exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
         type: `javascript/auto`,
-        ...options,
+        use: [loaders.js(jsOptions)],
       }
     }
 
-    rules.mjs = mjs
+    rules.dependencies = dependencies
   }
 
   {
