@@ -35,25 +35,25 @@ Customize the information on your site by replacing the site metadata in the `ga
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-theme-blog`,
+      resolve: "gatsby-theme-blog",
       options: {},
     },
   ],
   // Customize your site metadata:
   {/* highlight-start */}
   siteMetadata: {
-    title: `My Blog`,
-    author: `Amberley Romo`,
-    description: `A collection of my thoughts and writings.`,
-    siteUrl: `https://amberley.blog/`,
+    title: "My Blog",
+    author: "Amberley Romo",
+    description: "A collection of my thoughts and writings.",
+    siteUrl: "https://amberley.blog/",
     social: [
       {
-        name: `twitter`,
-        url: `https://twitter.com/amber1ey`,
+        name: "twitter",
+        url: "https://twitter.com/amber1ey",
       },
       {
-        name: `github`,
-        url: `https://github.com/amberleyromo`,
+        name: "github",
+        url: "https://github.com/amberleyromo",
       },
     ],
   },
