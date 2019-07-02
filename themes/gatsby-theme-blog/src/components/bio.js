@@ -58,8 +58,7 @@ const bioQuery = graphql`
         author
       }
     }
-    # make this request silently fail?
-    avatar: file(absolutePath: { regex: "/avatar.jpg/" }) {
+    avatar: file(absolutePath: { regex: "/avatar.(jpeg|jpg|gif|png)/" }) {
       childImageSharp {
         fixed(width: 48, height: 48) {
           ...GatsbyImageSharpFixed

@@ -7,10 +7,16 @@ module.exports = options => {
       author: `Name Placeholder`,
       description: `Description placeholder`,
       siteUrl: `http://example.com/`,
-      social: {
-        twitter: `https://twitter.com/gatsbyjs`,
-        github: `https://github.com/gatsbyjs/gatsby`,
-      },
+      social: [
+        {
+          name: `twitter`,
+          url: `https://twitter.com/gatsbyjs`,
+        },
+        {
+          name: `github`,
+          url: `https://github.com/gatsbyjs`,
+        },
+      ],
     },
     __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [

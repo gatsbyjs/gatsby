@@ -1,15 +1,44 @@
 import React from "react"
-import { css } from "theme-ui"
-import PostFooterContent from "./post-footer-content"
+import { Link } from "gatsby"
+import { css, Styled, Flex } from "theme-ui"
 
-const Footer = props => (
+import Bio from "../components/bio"
+
+const Footer = ({ previous, next }) => (
   <footer
     css={css({
       mt: 4,
       pt: 3,
     })}
   >
-    <PostFooterContent {...props} />
+    <Styled.hr />
+    <Bio />
+    {(previous || next) && (
+      <Flex
+        as="ul"
+        css={{
+          flexWrap: `wrap`,
+          justifyContent: `space-between`,
+          listStyle: `none`,
+          padding: 0,
+        }}
+      >
+        <li>
+          {previous && (
+            <Styled.a as={Link} to={previous.node.slug} rel="prev">
+              ← {previous.node.title}
+            </Styled.a>
+          )}
+        </li>
+        <li>
+          {next && (
+            <Styled.a as={Link} to={next.node.slug} rel="next">
+              {next.node.title} →
+            </Styled.a>
+          )}
+        </li>
+      </Flex>
+    )}
   </footer>
 )
 
