@@ -1,7 +1,10 @@
 // @flow
 
 const { createReporter } = require(`yurnalist`)
+const { get } = require(`lodash`)
+const path = require(`path`)
 const ProgressBar = require(`progress`)
+const chalk = require(`chalk`)
 const calcElapsedTime = require(`../../../util/calc-elapsed-time`)
 
 const VERBOSE = process.env.gatsby_log_level === `verbose`
@@ -25,7 +28,38 @@ module.exports = {
   setColors() {},
 
   success: reporter.success.bind(reporter),
-  error: reporter.error.bind(reporter),
+  error: details => {
+    const origError = get(details, `error.message`, null)
+
+    let locString = details.filePath
+      ? path.relative(process.cwd(), details.filePath)
+      : null
+
+    if (locString) {
+      const lineNumber = get(details, `location.start.line`, null)
+      if (lineNumber) {
+        locString += `:${lineNumber}`
+        const columnNumber = get(details, `location.start.column`, null)
+        if (columnNumber) {
+          locString += `:${columnNumber}`
+        }
+      }
+    }
+
+    const text = `${details.id ? chalk.red(`#${details.id} `) : ``}${
+      details.type ? `${chalk.red(details.type)} ` : ``
+    }${origError ? origError : ``}\n\n${details.text}${
+      locString ? `\n\nFile: ${chalk.blue(locString)}` : ``
+    }${
+      details.docsUrl
+        ? `\n\nSee our docs page for more info on this error: ${
+            details.docsUrl
+          }`
+        : ``
+    }`
+
+    reporter.error(text)
+  },
   verbose: reporter.verbose.bind(reporter),
   info: reporter.info.bind(reporter),
   warn: reporter.warn.bind(reporter),
