@@ -1,5 +1,5 @@
 ---
-title: Using multiple Gatsby themes.
+title: Using Multiple Gatsby Themes
 ---
 
 Gatsby themes are intended to be composable. This means you can install multiple themes alongside each other.
