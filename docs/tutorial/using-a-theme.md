@@ -93,7 +93,7 @@ In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any
 
 Let's open up the `bio-content.js` file and make some content edits:
 
-```jsx:title=my-blog/src/gatsby-theme-blog/components/bio-content.js
+```jsx:title=bio-content.js
 export default () => (
   {/* highlight-start */}
   <Fragment>
@@ -117,7 +117,7 @@ Now let's add our first blog post, and get rid of the demo content in the starte
 
 Create a new file in `my-blog/content/posts`. Name it whatever you'd like (with a `.md` or `.mdx` file extension), and add some content! Here's an example:
 
-```md:title=my-blog/content/posts/my-first-post.mdx
+```mdx:title=my-blog/content/posts/my-first-post.mdx
 ---
 title: My first post
 date: 2019-07-03
@@ -143,12 +143,12 @@ The blog theme ships with a default Gatsby purple theme, but you can override an
 
 Open up `/src/gatsby-theme-blog/gatsby-theme-ui/colors.js`, and uncomment the code in that file.
 
-```javascript:title=my-blog/src/gatsby-theme-blog/gatsby-theme-ui/colors.js
- {/* highlight-start */}
-  const blue60 = `#007acc`
-  const blue30 = `#66E0FF`
-  const blueGray = `#282c35`
- {/* highlight-end */}
+```javascript:title=colors.js
+{/* highlight-start */}
+const blue60 = "#007acc"
+const blue30 = "#66E0FF"
+const blueGray = "#282c35"
+{/* highlight-end */}
 
 export default merge({}, defaultThemeColors, {
   {/* highlight-start */}
@@ -162,9 +162,8 @@ export default merge({}, defaultThemeColors, {
         highlight: blue60,
       },
     },
-   {/* highlight-start */}
+   {/* highlight-end */}
 })
-
 ```
 
 Now, instead of a purple theme, we have a blue theme instead:

@@ -2,7 +2,9 @@
 title: Using a Gatsby Theme
 ---
 
-Scaffolding out a project that uses themes requires you to use a starter that's implemented with theming.
+The quickest way to get started using a Gatsby theme is to use a starter that's configured to use the theme.
+
+For example, `gatsby-starter-blog-theme` is a theme starter for the `gatsby-theme-blog` package.
 
 ```shell
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
@@ -16,12 +18,10 @@ For example, a theme-based starter for a blog might do the following:
 
 ```js:title=gatsby-config.js
 module.exports = {
-  themes: [
+  plugins: [
     {
       resolve: "gatsby-theme-blog",
-      options: {
-        postsPerPage: 5,
-      },
+      options: {},
     },
   ],
 }
