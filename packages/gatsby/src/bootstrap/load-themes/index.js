@@ -9,7 +9,14 @@ const getConfigFile = require(`../get-config-file`)
 // get the gatsby-config file for a theme
 const resolveTheme = async themeSpec => {
   const themeName = themeSpec.resolve || themeSpec
-  const themeDir = path.dirname(require.resolve(themeName))
+  let themeDir
+  try {
+    themeDir = path.dirname(require.resolve(themeName))
+  } catch (e) {
+    // this can be local plugin, and require.resolve will throw
+    // in this case - let's return partial entry
+    return { themeName, themeSpec }
+  }
   const theme = await preferDefault(getConfigFile(themeDir, `gatsby-config`))
   // if theme is a function, call it with the themeConfig
   let themeConfig = theme
