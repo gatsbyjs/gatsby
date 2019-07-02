@@ -497,7 +497,7 @@ const typeOwners = {}
  * @param {string} node.internal.type An arbitrary globally unique type
  * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
- * for nodes based on the type choosen here. Nodes of a given type can
+ * for nodes based on the type chosen here. Nodes of a given type can
  * only be created by one plugin.
  * @param {string} node.internal.content An optional field. This is rarely
  * used. It is used when a source plugin sources data it doesn't know how
