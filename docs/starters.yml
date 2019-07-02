@@ -3113,3 +3113,16 @@
     - Static Marketing pages and Dynamic Client-side Authenticated App pages
     - SEO component
     - Apollo GraphQL (client-side)
+- url: https://gatsby-starter-typescript-graphql.netlify.com
+  repo: https://github.com/spawnia/gatsby-starter-typescript-graphql
+  description: A Gatsby starter with typesafe GraphQL using TypeScript
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Type safety with [TypeScript](https://www.typescriptlang.org/)
+    - Typesafe GraphQL with [graphql-codegen](https://graphql-code-generator.com/)
+    - [ESLint](https://eslint.org/) with [TypeScript support](https://typescript-eslint.io/)
+    - Styling with [styled-components](https://www.styled-components.com/)
