@@ -120,6 +120,13 @@ describe(`webpack utils`, () => {
           )
         ).toEqual(false)
       })
+      it(`excludes gatsby-browser.js`, () => {
+        expect(
+          dependencies.exclude(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
+          )
+        ).toEqual(true)
+      })
     })
   })
 })
