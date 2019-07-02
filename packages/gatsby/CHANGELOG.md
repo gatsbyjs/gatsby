@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.8...gatsby@2.12.0) (2019-07-02)
+
+### Features
+
+- **gatsby:** Allow adding custom field extensions ([#14610](https://github.com/gatsbyjs/gatsby/issues/14610)) ([4f9c790](https://github.com/gatsbyjs/gatsby/commit/4f9c790))
+
+## [2.11.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.7...gatsby@2.11.8) (2019-07-02)
+
+### Bug Fixes
+
+- enable separate config for node_modules transpilation ([#15270](https://github.com/gatsbyjs/gatsby/issues/15270)) ([7e39a12](https://github.com/gatsbyjs/gatsby/commit/7e39a12))
+
+### Features
+
+- **gatsby:** Add gatsby-dependents util ([#15269](https://github.com/gatsbyjs/gatsby/issues/15269)) ([f55250e](https://github.com/gatsbyjs/gatsby/commit/f55250e))
+- **gatsby:** Handle duplicated fragment definitions ([#15179](https://github.com/gatsbyjs/gatsby/issues/15179)) ([a92f6e1](https://github.com/gatsbyjs/gatsby/commit/a92f6e1))
+
+## [2.11.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.6...gatsby@2.11.7) (2019-07-01)
+
+### Bug Fixes
+
+- **gatsby:** update tsc definition for some actions ([1adb7d5](https://github.com/gatsbyjs/gatsby/commit/1adb7d5))
+
+## [2.11.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.5...gatsby@2.11.6) (2019-06-30)
+
+### Bug Fixes
+
+- pin terser-webpack-plugin ([#15253](https://github.com/gatsbyjs/gatsby/issues/15253)) ([62cdce2](https://github.com/gatsbyjs/gatsby/commit/62cdce2))
+
+## [2.11.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.4...gatsby@2.11.5) (2019-06-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.11.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.3...gatsby@2.11.4) (2019-06-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.11.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.2...gatsby@2.11.3) (2019-06-28)
+
+**Note:** Version bump only for package gatsby
+
+## [2.11.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.1...gatsby@2.11.2) (2019-06-28)
+
+### Features
+
+- **gatsby-cli:** Add error codes and structured errors ([#14904](https://github.com/gatsbyjs/gatsby/issues/14904)) ([d26651e](https://github.com/gatsbyjs/gatsby/commit/d26651e))
+
+## [2.11.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.0...gatsby@2.11.1) (2019-06-28)
+
+### Features
+
+- **gatsby:** Rewrite resource loading - retry mechanism ([#14889](https://github.com/gatsbyjs/gatsby/issues/14889)) ([68e15e7](https://github.com/gatsbyjs/gatsby/commit/68e15e7))
+
+# [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.10.5...gatsby@2.11.0) (2019-06-27)
+
+### Bug Fixes
+
+- **gatsby:** update tsc definition of cache in NodePluginArgs ([#14955](https://github.com/gatsbyjs/gatsby/issues/14955)) ([65b42e9](https://github.com/gatsbyjs/gatsby/commit/65b42e9))
+
+### Features
+
+- **gatsby:** enable babel-loader for all dependencies ([#14111](https://github.com/gatsbyjs/gatsby/issues/14111)) ([268ed27](https://github.com/gatsbyjs/gatsby/commit/268ed27))
+- **gatsby:** Support absolute certificate paths for developme… ([#14932](https://github.com/gatsbyjs/gatsby/issues/14932)) ([7694c0c](https://github.com/gatsbyjs/gatsby/commit/7694c0c))
+
 ## [2.10.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.10.4...gatsby@2.10.5) (2019-06-25)
 
 **Note:** Version bump only for package gatsby
@@ -2692,7 +2756,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Set pathPrefix if not defined to an empty string to avoid undefined #1551
   @kyleamathews
 - Fix prefixes in gatsby-link + navigateTo #1550 @kyleamathews
-- Make path to packages the same on website as github #1549 @kyleamathews
+- Make path to packages the same on website as GitHub #1549 @kyleamathews
 - Fixing sw.js 404-ing because of pathPrefix not being prefixed to sw.js
   properly. Fixing #1539 #1540 @gregsqueeb
 - [gatsby-plugin-sharp] Fix PNG generation when using the "duotone" option #1506

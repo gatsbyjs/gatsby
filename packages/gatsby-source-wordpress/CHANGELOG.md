@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.1.1...gatsby-source-wordpress@3.1.2) (2019-06-26)
+
+### Features
+
+- **gatsby-source-wordpress:** Add support for WP-REST-API V2… ([#13343](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/13343)) ([e2c8402](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/e2c8402))
+
 ## [3.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.1.0...gatsby-source-wordpress@3.1.1) (2019-06-25)
 
 **Note:** Version bump only for package gatsby-source-wordpress

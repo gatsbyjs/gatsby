@@ -29,7 +29,7 @@ const resolveTheme = async themeSpec => {
 const processTheme = ({ themeName, themeConfig, themeSpec, themeDir }) => {
   // gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
-  // because we can't guarentee which files theme creators create first
+  // because we can't guarantee which files theme creators create first
   if (themeConfig && themeConfig.__experimentalThemes) {
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]

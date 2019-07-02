@@ -154,7 +154,7 @@ type definitions to Gatsby with the [`createTypes`](/docs/actions/#createTypes) 
 It accepts type definitions in GraphQL Schema Definition Language:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     type AuthorJson implements Node {
@@ -168,9 +168,9 @@ exports.sourceNodes = ({ actions }) => {
 Note that the rest of the fields (`name`, `firstName` etc.) don't have to be
 provided, they will still be handled by Gatsby's type inference.
 
-> Although the `createTypes` action is passed to all `gatsby-node` APIs,
-> it has to be called before schema generation. We recommend to use the
-> [`sourceNodes` API](/docs/node-apis/#sourceNodes).
+> Actions to customize Gatsby's schema generation are made available in the
+> [`createSchemaCustomization`](/docs/node-apis/#createSchemaCustomization),
+> and [`sourcesNodes`](/docs/node-apis/#sourceNodes) APIs.
 
 #### Opting out of type inference
 
@@ -184,7 +184,7 @@ in turn requires that you explicitly provide type definitions for all fields
 that should be available for querying:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     type AuthorJson implements Node @dontInfer {
@@ -216,7 +216,7 @@ named (as long as the name is unique in the schema). In our example project, the
 want to ensure that `frontmatter.tags` will always be an array of strings.
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     type MarkdownRemark implements Node {
@@ -236,7 +236,7 @@ without also specifying that this is the type of the `frontmatter` field on the
 of knowing which field the `Frontmatter` type should be applied to:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     # This will fail!!!
@@ -264,7 +264,7 @@ are more flexible than SDL syntax but less verbose than `graphql-js`. They are
 accessible on the `schema` argument passed to Node APIs.
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     schema.buildObjectType({
@@ -328,7 +328,7 @@ For this to work, we have to provide a custom field resolver. (see below for
 more info on `context.nodeModel`)
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
@@ -407,7 +407,7 @@ To add an extension to a field you can either use a directive in SDL, or the
 `extensions` property when using Gatsby Type Builders:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ action, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
@@ -453,7 +453,7 @@ out-of-the-box extension, so resolving a field to a default value (instead of
 tag to every blog post:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ action, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
@@ -476,6 +476,158 @@ exports.sourceNodes = ({ action, schema }) => {
     }),
   ]
   createTypes(typeDefs)
+}
+```
+
+#### Creating custom extensions
+
+With the [`createFieldExtension`](/docs/actions/#createFieldExtension) action
+it is possible to define custom extensions as a way to add reusable functionality
+to fields. Let's say we want to add a `fullName` field to `AuthorJson`
+and `ContributorJson`.
+
+We could of course write a `fullNameResolver`, and use it in two places:
+
+```js:title=gatsby-node.js
+const fullNameResolver = source => `${source.firstName} ${source.name}`
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  actions.createTypes([
+    {
+      name: "AuthorJson",
+      interfaces: ["Node"],
+      fields: {
+        fullName: {
+          type: "String",
+          resolve: fullNameResolver,
+        },
+      },
+    },
+    {
+      name: "ContributorJson",
+      interfaces: ["Node"],
+      fields: {
+        fullName: {
+          type: "String",
+          resolve: fullNameResolver,
+        },
+      },
+    },
+  ])
+}
+```
+
+However, to make this functionality available to other plugins as well, and make
+it usable in SDL, we can register it as a field extension.
+
+A field extension definition requires a name, and an `extend` function, which
+should return a (partial) field config (an object, with `type`, `args`, `resolve`)
+which will be merged into the existing field config.
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createFieldExtension, createTypes } = actions
+
+  createFieldExtension({
+    name: "fullName",
+    extend(options, prevFieldConfig) {
+      return {
+        resolve(source) {
+          return `${source.firstName} ${source.name}`
+        },
+      }
+    },
+  })
+
+  createTypes(`
+    type AuthorJson implements Node {
+      fullName: String @fullName
+    }
+    type ContributorJson implements Node {
+      fullName: String @fullName
+    }
+  `)
+}
+```
+
+This approach becomes a lot more powerful when plugins provide custom field
+extensions. A _very_ basic markdown transformer plugin could for example provide
+an extension to convert markdown strings into html:
+
+```js:title=gatsby-transformer-basic-md/src/gatsby-node.js
+const remark = require(`remark`)
+const html = require(`remark-html`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createFieldExtension({
+    name: "md",
+    args: {
+      sanitize: {
+        type: "Boolean!",
+        defaultValue: true,
+      },
+    },
+    // The extension `args` (above) are passed to `extend` as
+    // the first argument (`options` below)
+    extend(options, prevFieldConfig) {
+      return {
+        args: {
+          sanitize: "Boolean",
+        },
+        resolve(source, args, context, info) {
+          const fieldValue = source[info.fieldName]
+          const shouldSanitize =
+            args.sanitize != null ? args.sanitize : options.sanitize
+          const processor = remark().use(html, { sanitize: shouldSanitize })
+          return processor.processSync(fieldValue).contents
+        },
+      }
+    },
+  })
+}
+```
+
+It can then be used in any `createTypes` call by simply adding the directtive/extension
+to the field:
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type BlogPost implements Node {
+      content: String @md
+    }
+  `)
+}
+```
+
+Note that in the above example, we have additionally provided configuration options
+with `args`. This is e.g. useful to provide default field arguments:
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type BlogPost implements Node {
+      content: String @md(sanitize: false)
+    }
+  `)
+}
+```
+
+Also note that field extensions can decide themselves if an existing field resolver
+should be wrapped or overwritten. The above examples have all decided to simply return
+a new `resolve` function. Because the `extend` function receives the current field
+config as its second argument, an extension can also decide to wrap an existing resolver:
+
+```diff
+extend(options, prevFieldConfig) {
++  const { resolve } = prevFieldConfig
++  return {
++    async resolve(source, args, context, info) {
++      const resultFromPrevResolver = await resolve(source, args, context, info)
+      /* ... */
++      return processor.processSync(resultFromPrevResolver).contents
++    }
++  }
 }
 ```
 
@@ -710,7 +862,7 @@ a `TeamMember` interface and add a custom query field for all team members
 (as well as a custom resolver for full names):
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
     interface TeamMember {

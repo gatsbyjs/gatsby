@@ -117,7 +117,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
         // differently, wrapping an object tag in <p></p> tags. It also parses
         // out the object tag into three separate nodes - one for the opening
         // tag, one for the closing tag and one for a newline inside. So for any
-        // tests that recieve untransformed node back from the plugin, we strip
+        // tests that receive untransformed node back from the plugin, we strip
         // the p tags and combine the nodes into a single html string.
         if (tag === `iframe`) {
           const iframeHTML = extractIframeTag(transformed)

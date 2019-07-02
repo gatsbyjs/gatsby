@@ -1484,14 +1484,6 @@
     - Documentation
     - Security
   featured: false
-- title: Curbside
-  description: |
-    Connecting Stores with Mobile Customers
-  main_url: "https://curbside.com/"
-  url: "https://curbside.com/"
-  categories:
-    - eCommerce
-  featured: false
 - title: Mux Video
   description: |
     API to video hosting and streaming
@@ -3518,18 +3510,6 @@
     - Web Development
   built_by: Sylvain Hamann
   built_by_url: "https://twitter.com/sylvhama"
-  featured: false
-- title: Jane Manchun Wong's Personal Website
-  main_url: "https://wongmjane.com/"
-  url: "https://wongmjane.com/"
-  description: >
-    Jane Manchun Wong's Personal Website is where she posts bug bounty write-ups, discoveries from reverse engineering apps and personal thoughts. This site is built on Gatsby v2 and it leverages the ecosystem to provide PWA features such as offline support.
-  categories:
-    - Blog
-    - Portfolio
-    - Security
-  built_by: Jane Manchun Wong
-  built_by_url: "https://twitter.com/wongmjane"
   featured: false
 - title: Luca Crea's portfolio
   main_url: https://lcrea.github.io
@@ -5670,7 +5650,7 @@
   url: https://ers-hcl.github.io/
   main_url: https://ers-hcl.github.io/
   description: >
-    Official site for ERS-HCL github organizational site. This is a hybrid app with static and dynamic content, providing a details of the open source projects, initiatives, innovation ideas within ERS-HCL. It pulls data from various data sources including github APIs, MDX based blog posts, excel files. It also hosts an ideas app that is based on Firebase.
+    Official site for ERS-HCL GitHub organizational site. This is a hybrid app with static and dynamic content, providing a details of the open source projects, initiatives, innovation ideas within ERS-HCL. It pulls data from various data sources including GitHub APIs, MDX based blog posts, excel files. It also hosts an ideas app that is based on Firebase.
   categories:
     - Open Source
     - Blog
@@ -6128,16 +6108,16 @@
 - title: Glug-Infinite
   main_url: https://gluginfinite.github.io
   url: https://gluginfinite.github.io
-  source_url: https://github.com/cristonkrizz/glug
+  source_url: https://github.com/crstnmac/glug
   description: >
-    This is a website built with Gatsby v2 that is deployed on github using github pages and netlify .
+    This is a website built with Gatsby v2 that is deployed on GitHub using GitHub Pages and Netlify.
   categories:
     - Web Development
     - Blog
     - Portfolio
     - Agency
   built_by: Criston Macarenhas
-  built_by_url: https://github.com/cristonkrizz
+  built_by_url: https://github.com/crstnmac
   featured: false
 - title: The State of CSS Survey
   main_url: https://stateofcss.com/
@@ -6255,7 +6235,7 @@
   built_by: Kevin Hirczy
   built_by_url: https://nehalist.io
   featured: false
-- title: March And Ash
+- title: March and Ash
   main_url: https://marchandash.com/
   url: https://marchandash.com/
   description: >-
@@ -6264,8 +6244,8 @@
     - eCommerce
     - Business
     - Blog
-  built_by: Desarol
-  built_by_url: https://www.desarol.com
+  built_by: Blueyellow
+  built_by_url: https://blueyellow.io/
   featured: false
 - title: T Two Industries
   description: >
@@ -6301,7 +6281,7 @@
   built_by: Vazco
   built_by_url: https://www.vazco.eu
   featured: false
-- title: Solid Construction & Design
+- title: Solid Construction and Design
   url: https://www.solidconstructiondesign.com
   main_url: https://www.solidconstructiondesign.com
   description: >
@@ -6310,4 +6290,80 @@
     - Business
   built_by: David Krasniy
   built_by_url: http://dkrasniy.com
+  featured: false
+- title: Major League Eating
+  main_url: https://majorleagueeating.com
+  url: https://majorleagueeating.com
+  description: >
+    Major League Eating is the professional competitive eating organization that runs the Nathan’s Famous Coney Island Hot Dog eating contest on July 4th, among other eating events.
+  categories:
+    - Entertainment
+    - Sports
+  built_by: Carmen Cincotti
+  built_by_url: https://github.com/ccincotti3
+  featured: false
+- title: APIs You Won't Hate
+  url: https://apisyouwonthate.com/blog
+  main_url: https://apisyouwonthate.com
+  source_url: http://github.com/apisyouwonthate/apisyouwonthate.com
+  description: >
+    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
+  categories:
+    - Blog
+    - Education
+    - eCommerce
+    - API
+    - Community
+    - Learning
+    - Open Source
+    - Technology
+    - Web Development
+  built_by: Mike Bifulco
+  built_by_url: https://github.com/mbifulco
+  featured: false
+- title: Sankarsan Kampa
+  main_url: "https://traction.one"
+  url: "https://traction.one"
+  description: Full time programmer, part time gamer, exploring the details of programmable systems and how to stretch their capabilities.
+  featured: false
+  categories:
+    - Portfolio
+    - Freelance
+- title: AwesomeDocs
+  main_url: "https://awesomedocs.traction.one/"
+  url: "https://awesomedocs.traction.one/install"
+  source_url: "https://github.com/AwesomeDocs/website"
+  description: An awesome documentation website generator!
+  featured: false
+  categories:
+    - Open Source
+    - Web Development
+    - Technology
+    - Documentation
+  built_by: Sankarsan Kampa
+  built_by_url: "https://traction.one"
+- title: Prism Programming Language
+  main_url: "https://prism.traction.one/"
+  url: "https://prism.traction.one/"
+  source_url: "https://github.com/PrismLang/website"
+  description: Interpreted, high-level, programming language.
+  featured: false
+  categories:
+    - Programming
+    - Open Source
+    - Technology
+    - Documentation
+  built_by: Sankarsan Kampa
+  built_by_url: "https://traction.one"
+- title: Arnondora
+  main_url: "https://arnondora.in.th/"
+  url: "https://arnondora.in.th/"
+  source_url: "https://github.com/arnondora/arnondoraBlog"
+  description: Arnondora is a personal blog by Arnon Puitrakul
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Arnon Puitrakul
+  built_by_url: "https://arnondora.in.th/"
   featured: false

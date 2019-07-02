@@ -25,7 +25,7 @@
     "cross-env": "^5.0.5"
   },
   "keywords": [
-    "contenful",
+    "contentful",
     "gatsby",
     "gatsby-plugin",
     "images"

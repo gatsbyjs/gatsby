@@ -41,7 +41,7 @@ module.exports = async (program, directory, suppliedStage) => {
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
     const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
-    // config env is depednant on the env that it's run, this can be anything from staging-production
+    // config env is dependant on the env that it's run, this can be anything from staging-production
     // this allows you to set use different .env environments or conditions in gatsby files
     const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
     const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
@@ -245,11 +245,10 @@ module.exports = async (program, directory, suppliedStage) => {
     }
   }
 
-  function getModule(config) {
+  function getModule() {
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.mjs(),
       rules.js(),
       rules.yaml(),
       rules.fonts(),
@@ -257,6 +256,13 @@ module.exports = async (program, directory, suppliedStage) => {
       rules.media(),
       rules.miscAssets(),
     ]
+
+    // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
+    // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
+    if (stage === `build-javascript`) {
+      configRules.push(rules.dependencies())
+    }
+
     if (store.getState().themes.themes) {
       configRules = configRules.concat(
         store.getState().themes.themes.map(theme => {

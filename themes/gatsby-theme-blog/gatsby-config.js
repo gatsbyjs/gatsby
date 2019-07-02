@@ -1,51 +1,72 @@
-const path = require(`path`)
+module.exports = options => {
+  const { mdx = true } = options
 
-module.exports = ({ root }) => {
   return {
-    __experimentalThemes: [`gatsby-theme-blog-core`],
     siteMetadata: {
-      title: `Gatsby Theme Blog`,
-      author: `Kyle Mathews`,
-      description: `A starter blog demonstrating what Gatsby can do.`,
-      siteUrl: `https://gatsbyjs.github.io/gatsby-starter-blog/`,
+      title: `Blog Title Placeholder`,
+      author: `Name Placeholder`,
+      description: `Description placeholder`,
+      siteUrl: `http://example.com/`,
+      social: [
+        {
+          name: `twitter`,
+          url: `https://twitter.com/gatsbyjs`,
+        },
+        {
+          name: `github`,
+          url: `https://github.com/gatsbyjs`,
+        },
+      ],
     },
+    __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
-      `gatsby-plugin-emotion`,
+      mdx && {
+        resolve: `gatsby-plugin-mdx`,
+        options: {
+          extensions: [`.mdx`, `.md`],
+          gatsbyRemarkPlugins: [
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                // should this be configurable by the end-user?
+                maxWidth: 1380,
+                linkImagesToOriginal: false,
+              },
+            },
+            { resolve: `gatsby-remark-responsive-iframe` },
+            { resolve: `gatsby-remark-copy-linked-files` },
+            { resolve: `gatsby-remark-numbered-footnotes` },
+            { resolve: `gatsby-remark-smartypants` },
+            { resolve: `gatsby-remark-code-titles` },
+            {
+              resolve: `gatsby-remark-prismjs`,
+              options: {
+                noInlineHighlight: true,
+              },
+            },
+          ],
+          remarkPlugins: [require(`remark-slug`)],
+        },
+      },
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          path: path.resolve(`./src/assets`),
-          name: `pages`,
+          path: options.contentPath || `content/posts`,
+          name: options.contentPath || `content/posts`,
         },
       },
       {
-        resolve: `gatsby-plugin-manifest`,
+        resolve: `gatsby-source-filesystem`,
         options: {
-          name: `Gatsby Theme Blog`,
-          short_name: `GatsbyJS`,
-          start_url: `/`,
-          background_color: `#ffffff`,
-          theme_color: `#663399`,
-          display: `minimal-ui`,
-          icon: path.resolve(`src/assets/gatsby-icon.png`),
+          path: options.assetPath || `content/assets`,
+          name: options.assetPath || `content/assets`,
         },
       },
-      `gatsby-plugin-offline`,
-      {
-        resolve: `gatsby-plugin-typography`,
-        options: {
-          pathToConfigModule: path.relative(
-            root,
-            require.resolve(`./src/utils/typography`)
-          ),
-        },
-      },
-      {
-        resolve: `gatsby-plugin-page-creator`,
-        options: {
-          path: require.resolve(`./src/pages`),
-        },
-      },
-    ],
+      `gatsby-transformer-sharp`,
+      `gatsby-plugin-sharp`,
+      `gatsby-plugin-react-helmet`,
+      `gatsby-plugin-twitter`,
+      `gatsby-plugin-emotion`,
+    ].filter(Boolean),
   }
 }

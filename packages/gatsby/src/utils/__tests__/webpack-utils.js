@@ -11,19 +11,25 @@ beforeAll(async () => {
 })
 
 describe(`webpack utils`, () => {
-  describe(`mjs`, () => {
-    it(`adds .mjs rule`, () => {
-      expect(config.rules.mjs).toEqual(expect.any(Function))
+  describe(`js`, () => {
+    it(`adds .js rule`, () => {
+      expect(config.rules.js).toEqual(expect.any(Function))
     })
 
-    it(`returns correct rule`, () => {
-      const rule = config.rules.mjs()
+    it(`returns default values without any options`, () => {
+      const rule = config.rules.js()
 
-      expect(rule).toEqual({
-        include: /node_modules/,
-        test: /\.mjs$/,
-        type: `javascript/auto`,
-      })
+      expect(rule).toMatchSnapshot()
+    })
+
+    it(`adds dependency rule`, () => {
+      expect(config.rules.dependencies).toEqual(expect.any(Function))
+    })
+
+    it(`returns default values without any options`, () => {
+      const rule = config.rules.dependencies()
+
+      expect(rule).toMatchSnapshot()
     })
   })
 })
