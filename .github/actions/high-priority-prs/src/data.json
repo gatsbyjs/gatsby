@@ -7098,13 +7098,13 @@
               {
                 "commit": {
                   "authoredDate": "2019-05-19T22:50:18Z",
-                  "message": "fix focusing on navigation from 404 to different 404, improve focus managment tests"
+                  "message": "fix focusing on navigation from 404 to different 404, improve focus management tests"
                 }
               },
               {
                 "commit": {
                   "authoredDate": "2019-05-19T22:55:39Z",
-                  "message": "fix most of focus navigation focus managment in development\n\nnavigating from and to 404 doesn't focus router wrapper correctly. This is because 404 in development is special case (see notes before skipped e2e-tests/development-runtime accessibility tests). This can be fixed but require a lot of changes which would be out of scope of this PR and would potentially make it harder to merge page manifest changes, so for now lets ship fixes that are already here."
+                  "message": "fix most of focus navigation focus management in development\n\nnavigating from and to 404 doesn't focus router wrapper correctly. This is because 404 in development is special case (see notes before skipped e2e-tests/development-runtime accessibility tests). This can be fixed but require a lot of changes which would be out of scope of this PR and would potentially make it harder to merge page manifest changes, so for now lets ship fixes that are already here."
                 }
               },
               {
