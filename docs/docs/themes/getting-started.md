@@ -16,7 +16,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 
 ## What does a theme starter do?
 
-The starter for the official gatsby blog theme does the following:
+The starter for the official Gatsby blog theme does the following:
 
 ### 1. The starter installs the theme and configures it
 
