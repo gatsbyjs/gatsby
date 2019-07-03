@@ -168,7 +168,7 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
 
   const toPostPath = node => {
     const { dir } = path.parse(node.relativePath)
-    return path.join(basePath, dir, node.name)
+    return [basePath, dir, node.name].join(`/`).replace(/\/{2,}/g, `/`)
   }
 
   // Make sure it's an MDX node

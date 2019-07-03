@@ -35,7 +35,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const toNotesPath = node => {
     const { dir } = path.parse(node.parent.relativePath)
-    return path.join(basePath, dir, node.parent.name)
+    return [basePath, dir, node.parent.name].join(`/`).replace(/\/{2,}/g, `/`)
   }
 
   const result = await graphql(`
