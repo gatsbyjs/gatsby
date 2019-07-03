@@ -32,7 +32,6 @@ module.exports = options => {
                 linkImagesToOriginal: false,
               },
             },
-            { resolve: `gatsby-remark-responsive-iframe` },
             { resolve: `gatsby-remark-copy-linked-files` },
             { resolve: `gatsby-remark-numbered-footnotes` },
             { resolve: `gatsby-remark-smartypants` },
