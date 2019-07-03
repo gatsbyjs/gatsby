@@ -111,7 +111,7 @@ At this point, you should have an updated avatar, updated site details, and an u
 
 ## Add your own blog content
 
-Now let's add our first blog post, and get rid of the demo content in the starter.
+Now you can add your first blog post, and get rid of the demo content in the starter.
 
 ### Create a new blog post
 
