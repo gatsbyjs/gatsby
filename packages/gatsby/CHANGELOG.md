@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.2...gatsby@2.13.3) (2019-07-03)
+
+### Bug Fixes
+
+- **gatsby:** regression ~ show non structured grapqhl errors ([#15352](https://github.com/gatsbyjs/gatsby/issues/15352)) ([a364c3d](https://github.com/gatsbyjs/gatsby/commit/a364c3d))
+
 ## [2.13.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.1...gatsby@2.13.2) (2019-07-03)
 
 ### Bug Fixes
