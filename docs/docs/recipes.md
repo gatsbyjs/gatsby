@@ -152,7 +152,7 @@ src/fonts/fontname.woff2
 
 2. Import the font into a CSS file to bundle it into your Gatsby site:
 
-```
+```css:title=src/css/typography.css
 @font-face {
   font-family: "Font Name";
   src: url("../fonts/fontname.woff2");
