@@ -63,7 +63,7 @@ module.exports = {
 
 ## Replace the content of the bio
 
-When using Gatsby themes, we can take advantage of something called component shadowing.
+When using Gatsby themes, you can take advantage of something called component shadowing.
 
 The gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `gatsby-theme-blog/src/components/bio-content.js`.
 
