@@ -1,6 +1,8 @@
 ---
-title: "Making your site accessible"
+title: Making Your Site Accessible
 ---
+
+The Gatsby team is passionate about helping you create websites that work for everyone, with helpful defaults that bake in web accessibility as well as performance optimizations. By making your website accessible to people with disabilities, you can make more inclusive sites that reach and remove barriers for more people on the Internet.
 
 ## What is accessibility?
 
@@ -11,9 +13,9 @@ Back in the early days of the Web, Tim Berners-Lee, inventor of the World Wide W
 
 The web of today is an important resource in many aspects of life such as health care, education, or commerce. Accessibility is an important consideration when building for the web.
 
-[Web accessibility](https://www.w3.org/WAI/fundamentals/accessibility-intro/#what) means that websites, tools, and technologies are designed and developed so that people with disabilities can use them. But not only people with permanent disabilities benefit from it. Accessibility also benefits people with temporary disabilities. For example imagine being in an environment where you cannot listen to audio or if you had a broken arm.
+[Web accessibility](https://www.w3.org/WAI/fundamentals/accessibility-intro/#what) means that websites, tools, and technologies are designed and developed so that people with disabilities can use them. But not only people with permanent disabilities benefit from it. Accessibility also benefits people with temporary disabilities. For example, imagine being in an environment where you cannot listen to audio or you can't use a computer because of a broken arm.
 
-Accessibility [supports](https://www.w3.org/standards/webdesign/accessibility#case) social inclusion for everyone, and has a strong business case.
+Accessibility supports [social inclusion for everyone](https://www.w3.org/standards/webdesign/accessibility#case), and has a strong [business case](https://www.w3.org/WAI/business-case/).
 
 ## Gatsby helps build in accessibility
 
@@ -23,15 +25,34 @@ While ultimately it's up to you to develop your site with accessibility in mind,
 
 One of the most common features of every site is navigation. People should be able to navigate across your pages and content in an intuitive and accessible way.
 
-That's why every Gatsby site has an accessible navigation experience by default.
+That's why every Gatsby site aims to have an accessible navigation experience by default. Thanks to [@reach/router](https://reach.tech/router), a routing library for React, Gatsby handles page announcements for screen readers on page change. We're actively making improvements to this experience, and we [welcome your feedback](/accessibility-statement/).
 
-It is possible thanks to [@reach/router](https://reach.tech/router), a routing library for React, that provides focus management on page change. It also has a ~70% smaller bundle size than the famous [react-router](https://github.com/ReactTraining/react-router).
-
-Since the [second major release](/blog/2018-09-17-gatsby-v2/), your Gatsby sites use `@reach/router` under the hood. The [Gatsby Link Component](/docs/gatsby-link/) wraps [@reach/router's Link component](https://reach.tech/router/api/Link), so you don't need to think about it.
+Since the [second major release](/blog/2018-09-17-gatsby-v2/), your Gatsby sites use `@reach/router` under the hood. While additional accessibility testing is always a good idea, the [Gatsby Link Component](/docs/gatsby-link/) wraps [@reach/router's Link component](https://reach.tech/router/api/Link) to improve accessibility without you having to think about it.
 
 ## How to improve accessibility?
 
-Accessibility by default is a win for everyone. Learn more about web accessibility in general:
+Accessibility by default is a win for everyone. Here's a starting point for accessibility testing when making a Gatsby site or theme:
 
-- [Free course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity.
-- [WebAIM introduction](https://webaim.org/intro/) to web accessibility.
+- [Use your keyboard](https://webaim.org/techniques/keyboard/) to tab through the pages. Can you reach and operate every interactive control (links, buttons, form inputs, etc.) and see a focus indicator on the screen?
+- Use [Lighthouse](https://developers.google.com/web/tools/lighthouse/), [axe](https://www.deque.com/axe/) or [Accessibility Insights](https://accessibilityinsights.io/) to find and fix common accessibility issues in development
+- Test for [adequate color contrast](https://dequeuniversity.com/tips/color-contrast) with the [accessibility color picker in Chrome Developer Tools](https://developers.google.com/web/updates/2018/01/devtools#contrast)
+- Create inclusive and [accessible forms](/docs/building-a-contact-form#creating-an-accessible-form)
+- Employ accessible [headings, landmarks, and semantic structure](https://webaim.org/techniques/semanticstructure/)
+- Include [image, video, and audio text alternatives](https://a11y-style-guide.com/style-guide/section-media.html)
+- Test for [screen magnification and zoom](https://axesslab.com/make-site-accessible-screen-magnifiers/)
+- Ensure accessibility of [interactive menus, modals, and custom widgets](https://developer.mozilla.org/en-US/docs/Web/Accessibility/An_overview_of_accessible_web_applications_and_widgets)
+- Create safe [animations and motion](https://alistapart.com/article/designing-safer-web-animation-for-motion-sensitivity/)
+- Write [Cypress accessibility tests](/docs/end-to-end-testing/#writing-tests) for your site or application
+
+## Accessibility resources
+
+- [React accessibility](https://reactjs.org/docs/accessibility.html)
+- [Gatsby’s commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
+- [How to do an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review) from Google Web Fundamentals
+- [A11y Project's Quick Tests](https://a11yproject.com/#Quick-tests)
+- [The importance of manual accessibility testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) from Smashing Magazine
+- [Writing Automated Tests for Accessibility](https://www.24a11y.com/2017/writing-automated-tests-accessibility/)
+- [Free web accessibility course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity
+- [WebAIM introduction](https://webaim.org/intro/) to web accessibility
+- [Deque University](https://dequeuniversity.com), with free online accessibility training for people with disabilities
+- [Web.dev accessibility docs](https://web.dev/accessible)
