@@ -15,7 +15,7 @@ We've tried to design the API of themes to [_progressively disclose complexity_]
 where smart defaults are wrapped into abstractions, but customization and configuration are always available to you.
 The styles used in our official themes are no exception.
 
-## Say hello to our official themes
+## Say hello to our official Gatsby themes
 
 Today, we're releasing two official themes: a blog theme inspired by Dan Abromov's [overreacted.io][], and our notes theme,
 which is intended for freeform, non-linear content and inspired by Tom Critchlow's concept of a _[Digital Garden][]_.
