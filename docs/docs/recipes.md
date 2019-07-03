@@ -140,7 +140,7 @@ Transforming data in Gatsby is also plugin-driven; Transformer plugins take data
 ### Requirements
 
 - A Gatsby site with a component: `index.js`
-- A font file
+- A font file: `.woff2`, `.ttf`, etc.
 
 ### Directions
 
