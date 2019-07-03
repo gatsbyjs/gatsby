@@ -3,7 +3,7 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
-const { joinPath } = require(`gatsby/utils/path`)
+const { joinPath } = require(`gatsby/dist/utils/path`)
 
 const debug = Debug(`gatsby-theme-notes`)
 
