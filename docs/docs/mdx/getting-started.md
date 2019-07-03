@@ -31,9 +31,9 @@ your site.
 ## Add MDX to an existing Gatsby site
 
 If you already have a Gatsby site that you'd like to add MDX to, you
-can follow these steps for configuring the [gatsby-mdx](/packages/gatsby-mdx/) plugin:
+can follow these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/) plugin:
 
-1. **Add `gatsby-mdx`** and MDX as dependencies
+1. **Add `gatsby-plugin-mdx`** and MDX as dependencies
 
    ```sh
    yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react

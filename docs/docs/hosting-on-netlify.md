@@ -44,14 +44,14 @@ As written on the website, we only need to drag and drop our `public` folder ove
 
 #### Git Repository Setup
 
-We can use git with Netlify to host our website. There are many benefits of this such as we can have past versions of our website so that we can rollback to previous versions whenever we want, no need to manually build our website and upload it everytime we change anything. Netlify supports [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/) and [Bitbucket](https://bitbucket.org/). All we have to do is push our code to the respective repository. Our repository can be private or public.
+We can use git with Netlify to host our website. There are many benefits of this such as we can have past versions of our website so that we can rollback to previous versions whenever we want, no need to manually build our website and upload it every time we change anything. Netlify supports [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/) and [Bitbucket](https://bitbucket.org/). All we have to do is push our code to the respective repository. Our repository can be private or public.
 
 Now, login to Netlify and we will see a `New site from git` button at the top right corner on our screen. Click on it and connect with the same git provider that you used to host your website and authorize Netlify to use your account. Choose your website repository and it will take you to deploy settings with below options.
 
 - Branch to deploy: We can specify the branch, when we push to that particular branch, then only Netlify will build and deploy our site. The default is `master`.
 - Build Command: We can specify the command we want Netlify to run when we push to above branch. The default is `npm run build`.
 - Publish directory: We can specify which folder should Netlify use to host our website. eg. public, dist, build. The default is `public`.
-- Advanced build settings: If our site needs enviromnent variables to build, we can spectify them by clicking on `Show advanced` and then the `New Variable` button.
+- Advanced build settings: If our site needs environment variables to build, we can spectify them by clicking on `Show advanced` and then the `New Variable` button.
 
 Click on `Deploy site` button and Netlify will start to build and deploy process we specified. In a few moments, it will give us our site URL like `random-name.netlify.com`. We can go to the `Deploys` tab and see what is actually happening.
 

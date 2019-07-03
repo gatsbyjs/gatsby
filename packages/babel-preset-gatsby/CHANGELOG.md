@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.0...babel-preset-gatsby@0.2.1) (2019-07-02)
+
+### Bug Fixes
+
+- enable separate config for node_modules transpilation ([#15270](https://github.com/gatsbyjs/gatsby/issues/15270)) ([7e39a12](https://github.com/gatsbyjs/gatsby/commit/7e39a12))
+
 # [0.2.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.11...babel-preset-gatsby@0.2.0) (2019-06-20)
 
 **Note:** Version bump only for package babel-preset-gatsby

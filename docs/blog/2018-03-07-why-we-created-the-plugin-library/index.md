@@ -75,7 +75,7 @@ Here’s a sampling of screenshots that many community members contributed to an
 
 The plugin ecosystem is a huge part of what makes Gatsby awesome because plugins and packages make Gatsby extensible. There's a virtuous cycle where people find plugins, use them, contribute to them, and create new ones. We hope to accelerate this cycle, so the Gatsby ecosystem can develop faster and more people can build awesome sites!
 
-Here are some ways you can help make the Gatsby plugin ecoystem great:
+Here are some ways you can help make the Gatsby plugin ecosystem great:
 
 - Share feedback on the plugin library on [GitHub Issue #4394](https://github.com/gatsbyjs/gatsby/issues/4394).
 - If you created a plugin and it's not showing up in the library, double check that the package has "gatsby-plugin" in its keywords.

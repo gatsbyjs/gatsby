@@ -261,12 +261,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
-    fromPath: `/docs/gatsby-in-the-enterprise/`,
-    toPath: `/docs/building-in-the-enterprise/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
     fromPath: `/docs/advanced-tutorials/`,
     toPath: `/tutorial/additional-tutorials/`,
     isPermanent: true,
@@ -311,6 +305,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/behind-the-scenes-terminology/`,
     toPath: `/docs/gatsby-internals-terminology/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/getting-started`,
+    toPath: `/docs/themes/using-a-gatsby-theme`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/introduction`,
+    toPath: `/docs/themes/what-are-gatsby-themes`,
     isPermanent: true,
   })
 
