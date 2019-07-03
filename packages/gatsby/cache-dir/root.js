@@ -40,31 +40,29 @@ class LocationHandler extends React.Component {
     if (!loader.isPageNotFound(location.pathname)) {
       return (
         <EnsureResources location={location}>
-          {locationAndPageResources =>
-            console.log(`locAndPage`, locationAndPageResources) || (
-              <RouteUpdates location={location}>
-                <ScrollContext
+          {locationAndPageResources => (
+            <RouteUpdates location={location}>
+              <ScrollContext
+                location={location}
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <Router
+                  basepath={__BASE_PATH__}
                   location={location}
-                  shouldUpdateScroll={shouldUpdateScroll}
+                  id="gatsby-focus-wrapper"
                 >
-                  <Router
-                    basepath={__BASE_PATH__}
-                    location={location}
-                    id="gatsby-focus-wrapper"
-                  >
-                    <JSONStore
-                      path={
-                        locationAndPageResources.pageResources.page.matchPath ||
-                        locationAndPageResources.pageResources.page.path
-                      }
-                      {...this.props}
-                      {...locationAndPageResources}
-                    />
-                  </Router>
-                </ScrollContext>
-              </RouteUpdates>
-            )
-          }
+                  <JSONStore
+                    path={
+                      locationAndPageResources.pageResources.page.matchPath ||
+                      locationAndPageResources.pageResources.page.path
+                    }
+                    {...this.props}
+                    {...locationAndPageResources}
+                  />
+                </Router>
+              </ScrollContext>
+            </RouteUpdates>
+          )}
         </EnsureResources>
       )
     }
