@@ -22,7 +22,7 @@ gatsby new my-themed-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 ### Manually add to your site
 
 ```sh
-yarn add gatsby-theme-blog
+npm install --save gatsby-theme-blog
 ```
 
 ## Usage

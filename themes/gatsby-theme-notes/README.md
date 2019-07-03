@@ -22,7 +22,7 @@ gatsby new my-themed-notes https://github.com/gatsbyjs/gatsby-starter-notes-them
 ### Manually add to your site
 
 ```sh
-yarn add gatsby-theme-notes
+npm install --save gatsby-theme-notes
 ```
 
 ## Usage
