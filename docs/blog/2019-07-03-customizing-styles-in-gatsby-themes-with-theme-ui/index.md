@@ -23,7 +23,7 @@ Both themes include their own styles so that you can build and publish a blog wi
 In order to make these themes truly _themeable_, the values used for typography, color, layout, and other design tokens
 can be customized by editing part or all of a `theme` configuration object.
 This also means you can create and publish your own theme based on the official one,
-with custom typography and colors, by editing a few plain objects instead of recreating entire components.
+with custom typography and colors, by editing an object instead of recreating entire components.
 
 For sites that have multiple themes installed,
 and to help ensure a consistent look and feel,
