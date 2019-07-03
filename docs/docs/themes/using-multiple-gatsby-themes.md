@@ -7,7 +7,7 @@ Gatsby themes are intended to be composable. This means you can install multiple
 The `gatsby-starter-theme` composes two Gatsby themes: `gatsby-theme-blog` and `gatsby-theme-notes`
 
 ```shell
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-theme
+gatsby new my-notes-blog https://github.com/gatsbyjs/gatsby-starter-theme
 ```
 
 The starter includes both theme packages (`gatsby-theme-blog` and `gatsby-theme-notes`) in the starter's `gatsby-config.js` file.
