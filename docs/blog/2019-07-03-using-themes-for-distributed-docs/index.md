@@ -24,7 +24,7 @@ An alternative approach would be for each repo to deploy a piece of the website 
 
 Gatsby Themes are a great choice for this task. Themes allow us to build a full-featured Gatsby website—configuring plugins, writing custom components, using GraphQL queries—one time and apply it to multiple data sources. Themes are highly configurable, so each website can have its own defining features, like a page title, description, and more.
 
-In this blog post, I’m going to talk about some of our favourite parts about using Gatsby Themes to deliver a consistent docs experience.
+In this blog post, I’m going to talk about some of our favorite parts about using Gatsby Themes to deliver a consistent docs experience.
 
 ## Versioning with `gatsby-source-git`
 
@@ -40,11 +40,11 @@ Since Gatsby Remark plugins allow us to look at the Markdown AST of our pages at
 
 ## Sharing components and more
 
-Using [MDX](https://gatsby-mdx.netlify.com/), we’re able to write rich documentation by including React components within a Markdown document. Since `gatsby-mdx` uses Remark under the hood, all of the Remark plugin features that were mentioned in the last section still apply.
+Using [MDX](/docs/mdx/), we’re able to write rich documentation by including React components within a Markdown document. Since `gatsby-plugin-mdx` uses Remark under the hood, all of the Remark plugin features that were mentioned in the last section still apply.
 
 ![Rendering components in MDX](./images/mdx-components.png)
 
-`gatsby-mdx` also allows us to replace Markdown elements with custom React components using the [`components` prop on the `MDXProvider` component](https://gatsby-mdx.netlify.com/api-reference/mdx-provider). We use this feature to enhance our code blocks with copy buttons, filenames, and multiple language options.
+`gatsby-plugin-mdx` also allows us to replace Markdown elements with custom React components using the [`components` prop on the `MDXProvider` component](https://gatsby-mdx.netlify.com/api-reference/mdx-provider). We use this feature to enhance our code blocks with copy buttons, filenames, and multiple language options.
 
 ![Enhanced code blocks](./images/code-blocks.gif)
 
