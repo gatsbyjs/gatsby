@@ -372,3 +372,7 @@ onClick = () => {
   navigate('?foo=bar');
 }
 ```
+
+## Additional resources
+
+- [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
