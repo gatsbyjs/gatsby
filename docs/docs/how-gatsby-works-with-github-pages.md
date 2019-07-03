@@ -69,8 +69,8 @@ If you use a [custom domain](https://help.github.com/articles/using-a-custom-dom
  
  To publish your site's source files from a /docs folder on your master branch, you must have a master branch and your repository must:
 
-* Have a /docs folder in the root of the repository
-* Not follow the repository naming scheme <username>.github.ioor <orgname>.github.io
+ -Have a /docs folder in the root of the repository
+ -Not follow the repository naming scheme <username>.github.ioor <orgname>.github.io
   
 Tip: If you remove the /docs folder from the master branch after it's enabled, your site won't build and you'll get a page build error message for a missing /docs folder.
 
