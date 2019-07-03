@@ -84,7 +84,9 @@ exports.onCreatePage = async ({ page, actions }) => {
 
   if (page.path.match(/^\/paths/)) {
     page.matchPath = `/paths/*`
+    createPage(page)
+  } else if (page.path.match(/^\/client-only-paths/)) {
+    page.matchPath = `/client-only-paths/*`
+    createPage(page)
   }
-
-  createPage(page)
 }

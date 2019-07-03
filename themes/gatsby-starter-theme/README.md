@@ -39,6 +39,7 @@ Quickly get started using the Gatsby blog theme, and notes theme, together! This
 
 Here are the top-level files and directories you'll see in a site created using this theme starter.
 
+```
 gatsby-starter-theme
 ├── content
 │ ├── assets
@@ -63,6 +64,7 @@ gatsby-starter-theme
 ├── gatsby-config.js
 ├── LICENSE
 └── package.json
+```
 
 1.  **`/content`**: A content folder holding assets that the blog and notes themes expect to exist. Check out the README for each theme to learn more about the demo content.
 

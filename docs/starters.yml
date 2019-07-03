@@ -3129,3 +3129,17 @@
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
     - Google Analytics
+- url: https://gatsby-snipcart-starter.netlify.com/
+  repo: https://github.com/issydennis/gatsby-snipcart
+  description: A simple e-commerce shop built using Gatsby and Snipcart.
+  tags:
+    - eCommerce
+    - Styling:CSS-in-JS
+    - Markdown
+  features:
+    - Minimal design to allow for simple customisation.
+    - Snipcart integration provides an easy-to-use shopping cart and checkout.
+    - Individual product pages with custom fields.
+    - Products defined using markdown.
+    - Styled components.
+    - Gatsby image for optimised product images.

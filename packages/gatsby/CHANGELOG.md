@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.1...gatsby@2.13.2) (2019-07-03)
+
+### Bug Fixes
+
+- **gatsby:** fix not focusing router wrapper after navigation ([#13197](https://github.com/gatsbyjs/gatsby/issues/13197)) ([b8e2adc](https://github.com/gatsbyjs/gatsby/commit/b8e2adc))
+
 ## [2.13.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.12.1...gatsby@2.13.1) (2019-07-02)
 
 ### Bug Fixes
