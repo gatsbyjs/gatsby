@@ -31,7 +31,10 @@ you can choose which theme's styles take precedence based on their order in your
 The styles provided by each theme are only applied to the pages it generates,
 giving you complete control of your site's styles.
 
-Huge thanks to our own Amberley Romo & John Otander for their incredible work on these themes.
+Huge thanks to our own [Amberley Romo][] & [John Otander][] for their incredible work on these themes.
+
+[amberley romo]: https://mobile.twitter.com/amber1ey
+[john otander]: https://mobile.twitter.com/4lpine
 
 ## Theme UI
 
