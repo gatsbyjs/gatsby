@@ -105,6 +105,8 @@
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "themes/gatsby-theme-blog",
+    "themes/gatsby-theme-notes"
   ]
 }
