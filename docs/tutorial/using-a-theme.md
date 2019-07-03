@@ -2,7 +2,7 @@
 title: Using a Theme
 ---
 
-In this tutorial, we'll familiarize with using Gatsby themes by creating a new site using the official Gatsby blog theme.
+In this tutorial, you'll learn how to use Gatsby themes by creating a new site using the official Gatsby blog theme.
 
 ## Create a new site using the blog theme starter
 
