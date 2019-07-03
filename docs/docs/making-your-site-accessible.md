@@ -31,7 +31,7 @@ Since the [second major release](/blog/2018-09-17-gatsby-v2/), your Gatsby sites
 
 ### Gatsby builds HTML pages by default
 
-For websites, rendering static HTML pages means that JavaScript isn't required to access and navigate through content. Gatsby compiles HTML pages by default from React components, meaning you don't have to worry about setting up server-rendering yourself to support progressive enhancement and users without scripting enabled.
+For websites, rendering [static HTML](/docs/glossary#static) pages means that JavaScript isn't required to access and navigate through content. Gatsby [compiles](/docs/glossary#compiler) HTML pages by default from React components using [Node.js](/docs/glossary#nodejs), meaning you don't have to worry about setting up server-rendering yourself to support [progressive enhancement](/docs/glossary#progressive-enhancement). With Gatsby's static support out of the box, you can build dynamic sites that still enable user access without requiring [client-side](/docs/glossary#client-side) scripting.
 
 ### Linting with eslint-jsx-plugin-a11y
 
