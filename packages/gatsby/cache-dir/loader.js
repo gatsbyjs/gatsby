@@ -98,6 +98,7 @@ const toPageResources = (pageData, component = null) => {
     componentChunkName: pageData.componentChunkName,
     path: pageData.path,
     webpackCompilationHash: pageData.webpackCompilationHash,
+    matchPath: pageData.matchPath,
   }
 
   return {

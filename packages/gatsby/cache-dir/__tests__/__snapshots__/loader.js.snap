@@ -8,6 +8,7 @@ Object {
   },
   "page": Object {
     "componentChunkName": "chunk",
+    "matchPath": undefined,
     "path": "/mypage/",
     "webpackCompilationHash": "123",
   },

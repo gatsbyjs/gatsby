@@ -1,9 +1,9 @@
-import React from 'react'
-import { Router } from '@reach/router'
-import { Link } from 'gatsby'
+import React from "react"
+import { Router } from "@reach/router"
+import { Link } from "gatsby"
 
-import Layout from '../components/layout'
-import InstrumentPage from '../utils/instrument-page'
+import Layout from "../components/layout"
+import InstrumentPage from "../utils/instrument-page"
 
 const Page = props => (
   <pre data-testid="dom-marker">[client-only-path] {props.page}</pre>
