@@ -12,7 +12,7 @@ tags:
 With Gatsby themes we want to make the experience of building a site as flexible and extensible as possible.
 Themes allow you to reuse site configurations, sets of plugins, and components across multiple Gatsby sites.
 We've tried to design the API of themes to [_progressively disclose complexity_][progressive disclosure],
-where smart defaults are wrapped into abstractions, but customization and configuration are always available at your fingertips.
+where smart defaults are wrapped into abstractions, but customization and configuration are always available to you.
 The styles used in our official themes are no exception.
 
 ## Say hello to our official themes
