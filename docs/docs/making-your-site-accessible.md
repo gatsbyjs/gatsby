@@ -49,6 +49,7 @@ Accessibility by default is a win for everyone. Here's a starting point for acce
 - [React accessibility](https://reactjs.org/docs/accessibility.html)
 - [Gatsby’s commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
 - [How to do an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review) from Google Web Fundamentals
+- [A11y Project's Quick Tests](https://a11yproject.com/#Quick-tests)
 - [The importance of manual accessibility testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) from Smashing Magazine
 - [Writing Automated Tests for Accessibility](https://www.24a11y.com/2017/writing-automated-tests-accessibility/)
 - [Free web accessibility course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity
