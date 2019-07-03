@@ -9,8 +9,6 @@
 
 Quickly get started using the Gatsby blog theme, and notes theme, together! This starter creates a new Gatsby site that is preconfigured to work with the [blog theme](https://www.npmjs.com/package/gatsby-theme-blog) and the [notes theme](https://www.npmjs.com/package/gatsby-theme-notes), in harmony.
 
-psst hi abhi
-
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**
