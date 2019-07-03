@@ -18,7 +18,6 @@ module.exports = options => {
         },
       ],
     },
-    __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
       mdx && {
         resolve: `gatsby-plugin-mdx`,
@@ -33,17 +32,9 @@ module.exports = options => {
                 linkImagesToOriginal: false,
               },
             },
-            { resolve: `gatsby-remark-responsive-iframe` },
             { resolve: `gatsby-remark-copy-linked-files` },
             { resolve: `gatsby-remark-numbered-footnotes` },
             { resolve: `gatsby-remark-smartypants` },
-            { resolve: `gatsby-remark-code-titles` },
-            {
-              resolve: `gatsby-remark-prismjs`,
-              options: {
-                noInlineHighlight: true,
-              },
-            },
           ],
           remarkPlugins: [require(`remark-slug`)],
         },
@@ -67,6 +58,7 @@ module.exports = options => {
       `gatsby-plugin-react-helmet`,
       `gatsby-plugin-twitter`,
       `gatsby-plugin-emotion`,
+      `gatsby-plugin-theme-ui`,
     ].filter(Boolean),
   }
 }

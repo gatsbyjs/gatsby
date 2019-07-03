@@ -1,19 +1,18 @@
-import prism from "./prism"
-
 export default {
   root: {
     fontFamily: `body`,
   },
   pre: {
+    variant: `prism`,
     fontFamily: `monospace`,
     tabSize: 4,
     hyphens: `none`,
     marginBottom: 0,
     color: `white`,
-    bg: `none`,
+    bg: `prism.background`,
     overflow: `auto`,
+    borderRadius: 10,
     p: 3,
-    ...prism,
   },
   code: {
     fontFamily: `monospace`,
@@ -28,17 +27,6 @@ export default {
     paddingTop: `0.15em`,
     paddingBottom: `0.05em`,
     paddingX: `0.2em`,
-  },
-  div: {
-    // .gatsby-highlight is rendered *outside* of the <pre> tag
-    "&.gatsby-highlight": {
-      mx: -3,
-      mb: 3,
-      borderRadius: [0, `10px`],
-      bg: `prism.background`,
-      WebkitOverflowScrolling: `touch`,
-      overflow: `auto`,
-    },
   },
   // from typography overrideThemeStyles
   a: {

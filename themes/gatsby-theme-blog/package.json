@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-blog",
-  "version": "0.0.8",
+  "version": "0.0.11",
   "description": "A Gatsby theme for miscellaneous blogging with a dark/light mode",
   "main": "index.js",
   "license": "MIT",
@@ -8,6 +8,7 @@
     "@emotion/core": "^10.0.10",
     "@mdx-js/mdx": "^1.0.15",
     "@mdx-js/react": "^1.0.15",
+    "@theme-ui/prism": "^0.2.4",
     "@theme-ui/typography": "^0.2.0",
     "gatsby-image": "^2.0.31",
     "gatsby-plugin-emotion": "^4.0.6",
@@ -15,19 +16,16 @@
     "gatsby-plugin-mdx": "^1.0.5",
     "gatsby-plugin-react-helmet": "^3.0.7",
     "gatsby-plugin-sharp": "^2.0.36",
+    "gatsby-plugin-theme-ui": "^0.2.1",
     "gatsby-plugin-twitter": "^2.0.11",
     "gatsby-remark-code-titles": "^1.1.0-rc.0",
     "gatsby-remark-copy-linked-files": "^2.0.9",
     "gatsby-remark-images": "^3.0.11",
     "gatsby-remark-numbered-footnotes": "^1.0.0",
-    "gatsby-remark-prismjs": "^3.2.4",
-    "gatsby-remark-responsive-iframe": "^2.1.1",
     "gatsby-remark-smartypants": "^2.0.8",
     "gatsby-source-filesystem": "^2.0.23",
-    "gatsby-theme-ui": "^0.2.0",
     "gatsby-transformer-sharp": "^2.1.15",
     "lodash.merge": "^4.6.1",
-    "prismjs": "^1.15.0",
     "react-helmet": "^5.2.0",
     "react-switch": "^5.0.0",
     "remark-slug": "^5.1.1",
@@ -37,13 +35,13 @@
     "typography-theme-wordpress-2016": "^0.16.18"
   },
   "devDependencies": {
-    "gatsby": "^2.1.38",
+    "gatsby": "^2.13.1",
     "prettier": "^1.16.4",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
   "peerDependencies": {
-    "gatsby": "^2.1.38",
+    "gatsby": "^2.13.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   }

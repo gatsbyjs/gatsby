@@ -1,5 +1,5 @@
 import merge from "lodash.merge"
-import defaultThemeColors from "gatsby-theme-blog/src/gatsby-theme-ui/colors"
+import defaultThemeColors from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors"
 
 /*
  * Want to change your theme colors?
