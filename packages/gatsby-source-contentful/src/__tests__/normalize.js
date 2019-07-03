@@ -53,6 +53,8 @@ describe(`Process contentful data`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn()
+    const nodeFilter = () => true
+
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createContentTypeNodes({
@@ -66,9 +68,33 @@ describe(`Process contentful data`, () => {
         foreignReferenceMap,
         defaultLocale,
         locales,
+        nodeFilter,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
+  })
+
+  it(`filters out nodes using the nodeFilter`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    const nodeFilter = () => false
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      normalize.createContentTypeNodes({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i].map(normalize.fixIds),
+        createNode,
+        createNodeId,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        nodeFilter,
+      })
+    })
+    expect(createNode.mock.calls.length).toBe(0)
   })
 
   it(`creates nodes for each asset`, () => {
@@ -76,6 +102,7 @@ describe(`Process contentful data`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     const assets = currentSyncData.assets
+    const nodeFilter = () => true
     assets.forEach(assetItem => {
       normalize.createAssetNodes({
         assetItem,
@@ -83,9 +110,29 @@ describe(`Process contentful data`, () => {
         createNodeId,
         defaultLocale,
         locales,
+        nodeFilter,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
+  })
+
+  it(`filters out asset nodes using the nodeFilter`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const assets = currentSyncData.assets
+    const nodeFilter = () => false
+    assets.forEach(assetItem => {
+      normalize.createAssetNodes({
+        assetItem,
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        nodeFilter,
+      })
+    })
+    expect(createNode.mock.calls.length).toBe(0)
   })
 })
 

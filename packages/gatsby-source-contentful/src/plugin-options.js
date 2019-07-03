@@ -34,6 +34,7 @@ const optionsSchema = Joi.object().keys({
   forceFullSync: Joi.boolean(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
+  nodeFilter: Joi.func(),
 })
 
 const maskedFields = [`accessToken`, `spaceId`]

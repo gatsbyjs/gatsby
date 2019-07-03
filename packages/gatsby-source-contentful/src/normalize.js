@@ -244,6 +244,7 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
   locales,
+  nodeFilter,
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
@@ -482,11 +483,15 @@ exports.createContentTypeNodes = ({
 
     contentTypeNode.internal.contentDigest = contentDigest
 
-    createNode(contentTypeNode)
-    entryNodes.forEach(entryNode => {
+    if (nodeFilter(contentTypeNode)) {
+      createNode(contentTypeNode)
+    }
+
+    entryNodes.filter(nodeFilter).forEach(entryNode => {
       createNode(entryNode)
     })
-    childrenNodes.forEach(entryNode => {
+
+    childrenNodes.filter(nodeFilter).forEach(entryNode => {
       createNode(entryNode)
     })
   })
@@ -498,6 +503,7 @@ exports.createAssetNodes = ({
   createNodeId,
   defaultLocale,
   locales,
+  nodeFilter,
 }) => {
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
@@ -543,6 +549,8 @@ exports.createAssetNodes = ({
 
     assetNode.internal.contentDigest = contentDigest
 
-    createNode(assetNode)
+    if (nodeFilter(assetNode)) {
+      createNode(assetNode)
+    }
   })
 }

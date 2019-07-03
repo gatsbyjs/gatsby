@@ -101,6 +101,21 @@ describe(`Options validation`, () => {
     expect(reporter.panic).not.toBeCalled()
   })
 
+  it(`Passes with a nodeFilter option`, () => {
+    validateOptions(
+      {
+        reporter,
+      },
+      {
+        spaceId: `spaceId`,
+        accessToken: `accessToken`,
+        nodeFilter: () => false,
+      }
+    )
+
+    expect(reporter.panic).not.toBeCalled()
+  })
+
   it(`Fails with missing required options`, () => {
     validateOptions(
       {

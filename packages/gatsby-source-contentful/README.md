@@ -152,6 +152,10 @@ For example, to filter locales on only germany `localeFilter: locale => locale.c
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales
 
+**`nodeFilter`** [function][optional] [default: `(node) => true`]
+
+Before `gatsby-source-contentful` calls `createNode` for each content type, entry, and asset, it first checks with `nodeFilter` to see whether it should. It passes the node to `nodeFilter`, and only calls `createNode` if `nodeFilter` returns true. This is an opportunity to filter out nodes before they're created based on custom business logic.
+
 **`forceFullSync`** [boolean][optional] [default: `false`]
 
 Prevents the use of sync tokens when accessing the Contentful API.
