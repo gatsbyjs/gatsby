@@ -37,7 +37,7 @@ Quickly get started using the Gatsby notes theme! This starter creates a new Gat
 
 ## 🧐 What's inside?
 
-A quick look at the top-level files and directories you'll see in a site created using the notes theme starter.
+Here are the top-level files and directories you'll see in a site created using the notes theme starter.
 
 gatsby-starter-notes-theme
 ├── content
