@@ -48,6 +48,7 @@ async function fetch({
   _acfOptionPageIds,
   _hostingWPCOM,
   _auth,
+  _cookies,
   _perPage,
   _concurrentRequests,
   _includedRoutes,
@@ -113,6 +114,13 @@ Mama Route URL: ${url}
       }
     }
 
+    if (_cookies) {
+      options.headers = {
+        ...options.headers,
+        Cookie: getCookieString(_cookies),
+      }
+    }
+
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
@@ -161,6 +169,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _verbose,
           _perPage,
           _auth,
+          _cookies,
           _accessToken,
           _concurrentRequests,
         })
@@ -246,6 +255,7 @@ async function fetchData({
   _verbose,
   _perPage,
   _auth,
+  _cookies,
   _accessToken,
   _concurrentRequests,
 }) {
@@ -267,6 +277,7 @@ async function fetchData({
     url,
     _perPage,
     _auth,
+    _cookies,
     _accessToken,
     _verbose,
     _concurrentRequests,
@@ -311,6 +322,7 @@ async function fetchData({
               _verbose,
               _perPage,
               _auth,
+              _cookies,
               _accessToken,
             })
           )
@@ -328,6 +340,7 @@ async function fetchData({
             _perPage,
             _auth,
             _accessToken,
+            _cookies,
           })
         )
       }
@@ -363,7 +376,15 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _auth, _accessToken, _concurrentRequests, _verbose },
+  {
+    url,
+    _perPage,
+    _auth,
+    _cookies,
+    _accessToken,
+    _concurrentRequests,
+    _verbose,
+  },
   page = 1
 ) {
   try {
@@ -381,6 +402,13 @@ async function getPages(
       if (_accessToken) {
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
+        }
+      }
+
+      if (_cookies) {
+        o.headers = {
+          ...o.headers,
+          Cookie: getCookieString(_cookies),
         }
       }
 
@@ -683,6 +711,16 @@ const buildFullUrl = (baseUrl, fullPath, _hostingWPCOM) => {
  */
 const getManufacturer = route =>
   route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
+
+/**
+ * Build a cookie header string from an object of key value pairs
+ *
+ * @param {any} cookies
+ */
+const getCookieString = cookies =>
+  Object.entries(cookies)
+    .map(([key, value]) => `${key}=${value}`)
+    .join(`; `)
 
 fetch.getRawEntityType = getRawEntityType
 fetch.getRoutePath = getRoutePath

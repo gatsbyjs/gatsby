@@ -17,6 +17,7 @@ let _useACF = true
 let _acfOptionPageIds
 let _hostingWPCOM
 let _auth
+let _cookies
 let _perPage
 let _concurrentRequests
 let _includedRoutes
@@ -40,6 +41,7 @@ exports.sourceNodes = async (
     useACF = true,
     acfOptionPageIds = [],
     auth = {},
+    cookies = {},
     verboseOutput,
     perPage = 100,
     searchAndReplaceContentUrls = {},
@@ -51,6 +53,7 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, touchNode } = actions
   const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
+  console.log(cookies)
 
   _verbose = verboseOutput
   _siteURL = `${protocol}://${normalizedBaseUrl}`
@@ -58,6 +61,7 @@ exports.sourceNodes = async (
   _acfOptionPageIds = acfOptionPageIds
   _hostingWPCOM = hostingWPCOM
   _auth = auth
+  _cookies = cookies
   _perPage = perPage
   _concurrentRequests = concurrentRequests
   _includedRoutes = includedRoutes
@@ -72,6 +76,7 @@ exports.sourceNodes = async (
     _acfOptionPageIds,
     _hostingWPCOM,
     _auth,
+    _cookies,
     _perPage,
     _concurrentRequests,
     _includedRoutes,
