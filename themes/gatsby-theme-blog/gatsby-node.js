@@ -4,10 +4,6 @@ const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
 
-// @TODO document theme options:
-// - takes an option `contentPath` for where the post content will live. Defaults to `posts`
-// - takes an option `assetPath` for where required assets will live. Defaults to `assets`
-
 const debug = Debug(`gatsby-theme-blog`)
 
 // These are customizable theme options we only need to check once
