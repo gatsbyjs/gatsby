@@ -23,8 +23,8 @@ const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
 const { processFieldExtensions } = require(`./extensions`)
 const { getPagination } = require(`./types/pagination`)
-const { getSortInput } = require(`./types/sort`)
-const { getFilterInput } = require(`./types/filter`)
+const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
+const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
 
 const buildSchema = async ({
@@ -124,6 +124,11 @@ const processTypeComposer = async ({
 }) => {
   if (typeComposer instanceof ObjectTypeComposer) {
     await processFieldExtensions({ schemaComposer, typeComposer, parentSpan })
+    await determineSearchableFields({
+      schemaComposer,
+      typeComposer,
+      parentSpan,
+    })
     if (typeComposer.hasInterface(`Node`)) {
       await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
       await addResolvers({ schemaComposer, typeComposer, parentSpan })
@@ -139,6 +144,11 @@ const processTypeComposer = async ({
     typeComposer instanceof InterfaceTypeComposer &&
     typeComposer.getExtension(`nodeInterface`)
   ) {
+    await determineSearchableFields({
+      schemaComposer,
+      typeComposer,
+      parentSpan,
+    })
     await addResolvers({ schemaComposer, typeComposer, parentSpan })
     await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
   }
@@ -559,6 +569,40 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
     createResolvers,
     traceId: `initial-createResolvers`,
     parentSpan: parentSpan,
+  })
+}
+
+const determineSearchableFields = ({ schemaComposer, typeComposer }) => {
+  typeComposer.getFieldNames().forEach(fieldName => {
+    const field = typeComposer.getField(fieldName)
+    const extensions = typeComposer.getFieldExtensions(fieldName)
+    if (field.resolve) {
+      if (extensions.dateformat) {
+        typeComposer.extendFieldExtensions(fieldName, {
+          searchable: SEARCHABLE_ENUM.SEARCHABLE,
+          sortable: SORTABLE_ENUM.SORTABLE,
+          needsResolve: extensions.proxyFrom ? true : false,
+        })
+      } else if (!_.isEmpty(field.args)) {
+        typeComposer.extendFieldExtensions(fieldName, {
+          searchable: SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE,
+          sortable: SORTABLE_ENUM.DEPRECATED_SORTABLE,
+          needsResolve: extensions.proxyFrom ? true : false,
+        })
+      } else {
+        typeComposer.extendFieldExtensions(fieldName, {
+          searchable: SEARCHABLE_ENUM.SEARCHABLE,
+          sortable: SORTABLE_ENUM.SORTABLE,
+          needsResolve: true,
+        })
+      }
+    } else {
+      typeComposer.extendFieldExtensions(fieldName, {
+        searchable: SEARCHABLE_ENUM.SEARCHABLE,
+        sortable: SORTABLE_ENUM.SORTABLE,
+        needsResolve: false,
+      })
+    }
   })
 }
 

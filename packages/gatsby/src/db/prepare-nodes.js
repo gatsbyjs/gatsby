@@ -15,11 +15,9 @@ const withResolverContext = require(`../schema/context`)
 async function prepareNodes(schema, gqlType, fields) {
   const nodes = require(`./nodes`)
   if (!_.isEmpty(fields)) {
-    await nodes.updateNodesByType(gqlType.name, async node => {
-      const n = await resolveRecursive(schema, node, gqlType, fields)
-      console.log(JSON.stringify(n, null, 2))
-      return n
-    })
+    await nodes.updateNodesByType(gqlType.name, node =>
+      resolveRecursive(schema, node, gqlType, fields)
+    )
   }
 }
 

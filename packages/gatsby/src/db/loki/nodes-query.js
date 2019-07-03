@@ -208,26 +208,25 @@ const fixNeTrue = filter =>
     return acc
   }, {})
 
-const liftResolvedFields = (args, gqlType, resolvedFields) => {
-  const dottedFields = objectToDottedField(resolvedFields)
-  const dottedFieldKeys = Object.keys(dottedFields)
-  const fields = gqlType.getFields()
-  const finalArgs = {}
-  Object.keys(args).forEach(key => {
-    const value = args[key]
-    if (dottedFields[key]) {
-      finalArgs[`$resolved.${key}`] = value
-    } else if (
-      dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
-      value.$elemMatch
-    ) {
-      finalArgs[`$resolved.${key}`] = value
-    } else {
-      finalArgs[key] = value
-    }
-  })
-  return finalArgs
-}
+const liftResolvedFields = (args, gqlType, resolvedFields) =>
+  // const dottedFields = objectToDottedField(resolvedFields)
+  // const dottedFieldKeys = Object.keys(dottedFields)
+  // const finalArgs = {}
+  // Object.keys(args).forEach(key => {
+  //   const value = args[key]
+  //   if (dottedFields[key]) {
+  //     finalArgs[`$resolved.${key}`] = value
+  //   } else if (
+  //     dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
+  //     value.$elemMatch
+  //   ) {
+  //     finalArgs[`$resolved.${key}`] = value
+  //   } else {
+  //     finalArgs[key] = value
+  //   }
+  // })
+  // return finalArgs
+  args
 
 // Converts graphQL args to a loki filter
 const convertArgs = (gqlArgs, gqlType, resolvedFields) =>
