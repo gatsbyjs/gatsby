@@ -141,7 +141,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.sourceNodes = (
   { actions: { createTypes, createNode }, schema },
-  { basePath = `/notes`, homeText = `~`, breadcrumbSeparator = `/` }
+  { basePath = `/`, homeText = `~`, breadcrumbSeparator = `/` }
 ) => {
   // Create the Garden type to solidify the field data types
   createTypes(`type NotesConfig implements Node {
