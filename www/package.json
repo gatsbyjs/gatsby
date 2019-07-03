@@ -21,7 +21,7 @@
     "email-validator": "^1.1.1",
     "emotion-theming": "^10.0.10",
     "fuse.js": "^3.2.0",
-    "gatsby": "^2.10.1-resource-loading.10",
+    "gatsby": "^2.11.0",
     "gatsby-image": "^2.0.5",
     "gatsby-plugin-canonical-urls": "^2.0.5",
     "gatsby-plugin-catch-links": "^2.0.2",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.2.0...gatsby-plugin-manifest@2.2.1) (2019-07-02)
+
+### Features
+
+- **gatsby-plugin-manifest:** add i18n, localization ([#13471](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/13471)) ([d93e478](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/commit/d93e478)), closes [/github.com/gatsbyjs/gatsby/pull/13471#issuecomment-486056407](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/issuecomment-486056407) [/github.com/gatsbyjs/gatsby/pull/13471#discussion_r277955596](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/issues/discussion_r277955596)
+
 # [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-manifest/compare/gatsby-plugin-manifest@2.1.1...gatsby-plugin-manifest@2.2.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

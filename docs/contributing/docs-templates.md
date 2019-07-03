@@ -80,7 +80,7 @@ The content of a reference guide should provide just enough information to be ac
 
 ### Reference guide template
 
-You can copy and paste the markdown text below and fill it in with your own information
+You can copy and paste the markdown text below and fill it in with your own information. See the docs contributions guide for information about [structuring accessible headings](/contributing/docs-contributions#headings).
 
 ```markdown
 ---
@@ -202,9 +202,11 @@ A recipe should list requirements and include a few short instructions to comple
 The components of a recipe are:
 
 - The name of the recipe, which should describe a single task
-- A list of requirements and prerequisites
+- A 1-2 sentence description motivating what the recipe is for
+- Prerequisites and requirements
 - Step-by-step directions
-- A link to a working example
+  - Optional embedded examples
+- Links to additional resources
 
 Recipes should be short. This is accomplished by limiting steps to what is unique to the task at-hand; prerequisites and requirements should be mentioned but not include install steps for things like npm or Gatsby CLI. Linking to full reference guide, tutorial, or a working example can complete the loop for anyone who needs more help.
 
@@ -226,11 +228,42 @@ Recipes should fall into these categories to start (suggest your idea in a GitHu
 - Transforming data
 - Deploying
 
-Here's a template for a recipe category:
+Here's a template for a new recipe category:
 
 ```markdown:title=docs/docs/recipes.md
 ## Category name
 ```
+
+### Recipe parts
+
+#### Title and description
+
+To help motivate the purpose of a recipe, its title should clearly indicate the task being covered; not just the tool or API being used. E.g. "Using the StaticQuery Component" is more descriptive than "StaticQuery".
+
+Descriptions should be 1-2 sentences long and expand on the title to further motivate why someone would want to follow this recipe.
+
+#### Prerequisites
+
+Each recipe should include 2-5 requirements or prerequisites, some of which may not be explicitly required but are good to be aware of. These items should list any steps that must be done or checked before starting the recipe to keep it focused and succinct.
+
+Each prerequisite should include only the _item_ or _thing_ needed, not the whole step (verbs like "installed").
+
+Prerequisites example:
+
+```markdown
+- React and ReactDOM 16.8.0 or later (keeping Gatsby updated handles this)
+- The [Rules of React Hooks](https://reactjs.org/docs/hooks-rules.html)
+```
+
+#### Directions
+
+The steps should list each part of the task in detail (omitting unrelated boilerplate or installation steps), and not skip or gloss over necessary details. Typically these steps are included with an ordered list. It's subjective whether to include a code snippet for each step, and will require your best judgement (ask for help in a PR if you're not sure). For some recipes, listing each individual step in text and including a single code snippet for the recipe makes sense to keep it short.
+
+If a recipe issue recommends a live example such as a CodeSandbox embed, the recipe steps are the best place to include it.
+
+#### Additional resources
+
+This is the place to link to related docs, tutorials, and additional examples.
 
 ### Recipe template
 
@@ -239,7 +272,7 @@ When writing a recipe, try to include each of the below items wherever relevant.
 ````markdown:title=docs/docs/recipes.md
 ### Recipe name
 
-#### Requirements
+#### Prerequisites
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
 - The Gatsby <Link /> component
@@ -266,10 +299,10 @@ export default () => (
 2. Run `gatsby develop` and navigate to the index page. You should have a link
    that takes you to the contact page when clicked!
 
-#### Related links
+#### Additional resources
 
-- Any live demos
-- Other materials to check out
+- Related docs/materials to check out
+- Any other demos
 ````
 
 ## Tutorials

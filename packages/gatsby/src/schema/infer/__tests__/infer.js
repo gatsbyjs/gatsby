@@ -86,11 +86,21 @@ describe(`GraphQL type inference`, () => {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
 
-    const schemaComposer = createSchemaComposer()
+    const { builtInFieldExtensions } = require(`../../extensions`)
+    Object.keys(builtInFieldExtensions).forEach(name => {
+      const extension = builtInFieldExtensions[name]
+      store.dispatch({
+        type: `CREATE_FIELD_EXTENSION`,
+        payload: { name, extension },
+      })
+    })
+    const { fieldExtensions } = store.getState().schemaCustomization
+    const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
       nodeStore,
       types: typeDefs || [],
+      fieldExtensions,
       thirdPartySchemas: [],
       typeMapping: [],
       typeConflictReporter,

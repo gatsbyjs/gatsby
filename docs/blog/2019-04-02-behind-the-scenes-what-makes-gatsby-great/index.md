@@ -16,7 +16,7 @@ Gatsby is **great** from a multititude of perspectives. Our community is **great
 As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider [this post on the `webdev` subreddit on Reddit](https://www.reddit.com/r/webdev/comments/9z5dsr/how_does_reactjs_have_such_a_fast_website/?st=jtqbllhm&sh=60148ea7).
 
 <Pullquote citation="reddit/r/webdev">
-Genuine question, every page is loaded immediatley [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
+Genuine question, every page is loaded immediately [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
 </Pullquote>
 
 Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, as you may or may not know, is an application built with and powered by Gatsby 💪
@@ -134,7 +134,7 @@ Next:
   - Traditional examples are something like [EC2](https://aws.amazon.com/ec2/)
 - Configure the VM to be able to run Node.js code
   - Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
-- Set up auto-scaling to ensure we can accomodate and fall-over based upon heavy load or error states
+- Set up auto-scaling to ensure we can accommodate and fall-over based upon heavy load or error states
   - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
 
 Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
@@ -363,7 +363,7 @@ The feature seamlessly falls back to default behavior if `IntersectionObserver` 
 
 **Mobile**
 
-Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being avalable.
+Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being available.
 
 **Data-constrained devices**
 

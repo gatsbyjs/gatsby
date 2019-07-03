@@ -99,11 +99,11 @@ Implementing the site using Gatsby and the Kentico Cloud source plugin is super 
 - Where should I host the static files?
 - How can I automatically regenerate the site when there are content or implementation changes?
 
-The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
+The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub Pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
 
 ![Deploying static site](images/illustration-02.png)
 
-The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) - this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files - your static site. The last step of Travis is deployment to GitHub pages.
+The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub Pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) - this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files - your static site. The last step of Travis is deployment to GitHub Pages.
 
 ## Build a Static Site Today
 

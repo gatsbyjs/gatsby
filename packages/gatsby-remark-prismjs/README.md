@@ -402,7 +402,7 @@ Note:
   be defined.
 
 In case a language is extended, note that the definitions will not be merged.
-If the extended language defintion and the given definition contains the same
+If the extended language definition and the given definition contains the same
 token, the original pattern will be overwritten.
 
 One of the parameters `definition` and `insertBefore` needs to be defined.
