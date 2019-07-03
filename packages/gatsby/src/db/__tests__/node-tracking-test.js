@@ -36,6 +36,10 @@ describe(`track root nodes`, () => {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     }
     trackDbNodes()
+
+    const circularReference = {}
+    circularReference.self = circularReference
+
     createNode(
       {
         id: `id2`,
@@ -45,6 +49,7 @@ describe(`track root nodes`, () => {
           field: `fieldOfSecondNode`,
         },
         inlineArray: [1, 2, 3],
+        circularReference,
         internal: {
           type: `Test`,
           contentDigest: `digest2`,

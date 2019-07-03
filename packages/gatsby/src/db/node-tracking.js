@@ -51,7 +51,13 @@ const isTypeSupported = data => {
  * @param {string} [ignore] Fieldname that doesn't need to be tracked and sanitized
  *
  */
-const addRootNodeToInlineObject = (data, nodeId, sanitize, isNode = false) => {
+const addRootNodeToInlineObject = (
+  data,
+  nodeId,
+  path,
+  sanitize,
+  isNode = false
+) => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
@@ -61,11 +67,16 @@ const addRootNodeToInlineObject = (data, nodeId, sanitize, isNode = false) => {
     }
     let anyFieldChanged = false
     _.each(data, (o, key) => {
-      if (isNode && key === `internal`) {
+      if ((isNode && key === `internal`) || path.includes(o)) {
         returnData[key] = o
         return
       }
-      returnData[key] = addRootNodeToInlineObject(o, nodeId, sanitize)
+      returnData[key] = addRootNodeToInlineObject(
+        o,
+        nodeId,
+        path.concat([o]),
+        sanitize
+      )
 
       if (returnData[key] !== o) {
         anyFieldChanged = true
@@ -98,7 +109,7 @@ const addRootNodeToInlineObject = (data, nodeId, sanitize, isNode = false) => {
  * @param {Node} node Root Node
  */
 const trackInlineObjectsInRootNode = (node, sanitize = false) =>
-  addRootNodeToInlineObject(node, node.id, sanitize, true)
+  addRootNodeToInlineObject(node, node.id, [], sanitize, true)
 exports.trackInlineObjectsInRootNode = trackInlineObjectsInRootNode
 
 /**
