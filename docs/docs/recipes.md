@@ -161,7 +161,7 @@ src/fonts/fontname.woff2
 
 **Note:** Make sure the font name is referenced from the relevant CSS, e.g.:
 
-```
+```css:title=src/components/layout.css
 body {
   font-family: "Font Name", sans-serif;
 }
