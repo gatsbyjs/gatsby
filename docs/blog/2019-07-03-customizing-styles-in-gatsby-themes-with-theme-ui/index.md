@@ -71,7 +71,7 @@ add a `src/gatsby-plugin-theme-ui` directory to your site.
 mkdir src/gatsby-plugin-theme-ui
 ```
 
-Create an `index.js` file in this directory to export the theme configuration object.
+Create an `index.js` file in this new directory to export the theme configuration object.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 export default {
