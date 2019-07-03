@@ -150,7 +150,7 @@ Transforming data in Gatsby is also plugin-driven; Transformer plugins take data
 src/fonts/fontname.woff2
 ```
 
-2. To use the font from a CSS file:
+2. Import the font into a CSS file to bundle it into your Gatsby site:
 
 ```
 @font-face {
