@@ -25,8 +25,6 @@ require(`util.promisify/shim`)()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
-  console.log(reason)
-
   report.panic(reason)
 })
 
