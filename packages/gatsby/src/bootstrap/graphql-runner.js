@@ -3,8 +3,10 @@ const stackTrace = require(`stack-trace`)
 const withResolverContext = require(`../schema/context`)
 const errorParser = require(`../query/error-parser`).default
 
-const createGraphqlRunner = (schema, reporter) => (query, context = {}) =>
-  graphql(
+const createGraphqlRunner = (store, reporter) => (query, context = {}) => {
+  const schema = store.getState().schema
+
+  return graphql(
     schema,
     query,
     context,
@@ -46,5 +48,6 @@ const createGraphqlRunner = (schema, reporter) => (query, context = {}) =>
 
     return result
   })
+}
 
 module.exports = createGraphqlRunner

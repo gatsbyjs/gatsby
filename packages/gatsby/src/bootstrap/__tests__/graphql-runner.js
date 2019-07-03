@@ -3,6 +3,16 @@ jest.mock(`graphql`)
 const createGraphqlRunner = require(`../graphql-runner`)
 const { graphql } = require(`graphql`)
 
+const createStore = (schema = {}) => {
+  return {
+    getState: () => {
+      return {
+        schema,
+      }
+    },
+  }
+}
+
 describe(`grapqhl-runner`, () => {
   let reporter
 
@@ -13,7 +23,7 @@ describe(`grapqhl-runner`, () => {
   })
 
   it(`should return the result when grapqhl has no errors`, async () => {
-    const graphqlRunner = createGraphqlRunner({}, reporter)
+    const graphqlRunner = createGraphqlRunner(createStore(), reporter)
 
     const expectation = {
       data: {
@@ -28,7 +38,7 @@ describe(`grapqhl-runner`, () => {
   })
 
   it(`should return an errors array when structured errors found`, async () => {
-    const graphqlRunner = createGraphqlRunner({}, reporter)
+    const graphqlRunner = createGraphqlRunner(createStore(), reporter)
 
     const expectation = {
       errors: [
@@ -46,7 +56,7 @@ describe(`grapqhl-runner`, () => {
   })
 
   it(`should throw a structured error when created from createPage file`, async () => {
-    const graphqlRunner = createGraphqlRunner({}, reporter)
+    const graphqlRunner = createGraphqlRunner(createStore(), reporter)
 
     const errorObject = {
       stack: `Error
