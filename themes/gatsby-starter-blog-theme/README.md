@@ -37,7 +37,7 @@ Quickly get started using the Gatsby blog theme! This starter creates a new Gats
 
 ## 🧐 What's inside?
 
-A quick look at the top-level files and directories you'll see in a site created using the blog theme starter.
+Here are the top-level files and directories you'll see in a site created using the blog theme starter:
 
 gatsby-starter-blog-theme
 ├── content
