@@ -7,7 +7,7 @@ Gatsby themes are intended to be composable. This means you can install multiple
 The `gatsby-starter-theme` composes two Gatsby themes: `gatsby-theme-blog` and `gatsby-theme-notes`
 
 ```shell
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-theme
+gatsby new my-notes-blog https://github.com/gatsbyjs/gatsby-starter-theme
 ```
 
 The starter includes both theme packages (`gatsby-theme-blog` and `gatsby-theme-notes`) in the starter's `gatsby-config.js` file.
@@ -22,17 +22,19 @@ module.exports = {
         basePath: `/notes`,
       },
     },
-    // with gatsby-theme-ui, the last theme in the config
+    // with gatsby-plugin-theme-ui, the last theme in the config
     // will override the theme-ui context from other themes
     { resolve: `gatsby-theme-blog` },
   ],
   siteMetadata: {
-    title: `My site title`,
+    title: `Shadowed Site Title`,
   },
 }
 ```
 
 In the default setup, a blog will be served from the root path (`/`), and the notes content will be served from `/notes`.
+
+Run `gatsby develop` to start a development server and view your the site:
 
 ![The homepage of the site created by gatsby-theme-starter](../images/gatsby-theme-starter-home.png)
 
