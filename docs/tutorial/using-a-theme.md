@@ -166,7 +166,7 @@ export default merge({}, defaultThemeColors, {
 })
 ```
 
-Now, instead of a purple theme, we have a blue theme instead:
+Now, instead of a purple theme, you have a blue theme instead:
 
 ![Screenshot of project with updated color theme](./images/starter-blog-theme-updated-colors.png)
 
