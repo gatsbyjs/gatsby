@@ -80,13 +80,17 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    const themes = await loadThemes(config)
+    // TODO: deprecation message for old __experimentalThemes
+    const themes = await loadThemes(config, { useLegacyThemes: true })
     config = themes.config
 
     store.dispatch({
       type: `SET_RESOLVED_THEMES`,
       payload: themes.themes,
     })
+  } else if (config) {
+    const plugins = await loadThemes(config, { useLegacyThemes: false })
+    config = plugins.config
   }
 
   if (config && config.polyfill) {

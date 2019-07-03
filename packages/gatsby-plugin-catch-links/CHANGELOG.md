@@ -92,7 +92,7 @@ Note: this very well may fail
 
 - fix(gatsby): fix initial navigation not registering in history
 
-- chore: remove unneccessary dep
+- chore: remove unnecessary dep
 
 - fix: use **BASE_PATH** in development runtime too; add a test
 

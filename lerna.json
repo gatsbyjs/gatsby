@@ -11,7 +11,11 @@
     }
   },
   "loglevel": "success",
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*",
+    "themes/gatsby-theme-blog",
+    "themes/gatsby-theme-notes"
+  ],
   "version": "independent",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",

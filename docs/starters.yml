@@ -3113,3 +3113,33 @@
     - Static Marketing pages and Dynamic Client-side Authenticated App pages
     - SEO component
     - Apollo GraphQL (client-side)
+- url: https://lewis-gatsby-starter-i18n.firebaseapp.com
+  repo: https://github.com/lewislbr/lewis-gatsby-starter-i18n
+  description: A simple custom Gatsby starter template to start a new multilanguage website.
+  tags:
+    - i18n
+    - Styling:CSS-in-JS
+    - PWA
+    - Portfolio
+    - SEO
+  features:
+    - Automatically detects user browser language.
+    - CSS in JS with styled-components.
+    - Optimized images.
+    - Offline capabilities.
+    - Auto-generated sitemap and robots.txt.
+    - Google Analytics
+- url: https://gatsby-snipcart-starter.netlify.com/
+  repo: https://github.com/issydennis/gatsby-snipcart
+  description: A simple e-commerce shop built using Gatsby and Snipcart.
+  tags:
+    - eCommerce
+    - Styling:CSS-in-JS
+    - Markdown
+  features:
+    - Minimal design to allow for simple customisation.
+    - Snipcart integration provides an easy-to-use shopping cart and checkout.
+    - Individual product pages with custom fields.
+    - Products defined using markdown.
+    - Styled components.
+    - Gatsby image for optimised product images.

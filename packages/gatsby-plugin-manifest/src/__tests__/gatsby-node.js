@@ -10,6 +10,7 @@ jest.mock(`fs`, () => {
 /*
  * We mock sharp because it depends on fs implementation (which is mocked)
  * this causes test failures, so mock it to avoid
+ *
  */
 
 jest.mock(`sharp`, () => {
@@ -229,11 +230,8 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(3)
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      expect.anything(),
-      JSON.stringify(manifestOptions)
-    )
+    expect(sharp).toHaveBeenCalledTimes(2)
+    expect(fs.writeFileSync).toMatchSnapshot()
   })
 
   it(`does not do cache cache busting`, async () => {
@@ -249,7 +247,7 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(3)
+    expect(sharp).toHaveBeenCalledTimes(2)
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
       JSON.stringify(manifestOptions)
@@ -270,9 +268,91 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(3)
+    expect(sharp).toHaveBeenCalledTimes(2)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content.icons[0].purpose).toEqual(`all`)
     expect(content.icons[1].purpose).toEqual(`maskable`)
+  })
+
+  it(`generates all language versions`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+    const pluginSpecificOptions = {
+      localize: [
+        {
+          ...manifestOptions,
+          start_url: `/de/`,
+          lang: `de`,
+        },
+        {
+          ...manifestOptions,
+          start_url: `/es/`,
+          lang: `es`,
+        },
+        {
+          ...manifestOptions,
+          start_url: `/`,
+        },
+      ],
+    }
+    const { localize, ...manifest } = pluginSpecificOptions
+    const expectedResults = localize.concat(manifest).map(x => {
+      return { ...manifest, ...x }
+    })
+
+    await onPostBootstrap(apiArgs, pluginSpecificOptions)
+
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[0])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[1])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[2])
+    )
+  })
+
+  it(`merges default and language options`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+    const pluginSpecificOptions = {
+      ...manifestOptions,
+      localize: [
+        {
+          start_url: `/de/`,
+          lang: `de`,
+        },
+        {
+          start_url: `/es/`,
+          lang: `es`,
+        },
+      ],
+    }
+    const { localize, ...manifest } = pluginSpecificOptions
+    const expectedResults = localize
+      .concat(manifest)
+      .map(({ language, manifest }) => {
+        return {
+          ...manifestOptions,
+          ...manifest,
+        }
+      })
+
+    await onPostBootstrap(apiArgs, pluginSpecificOptions)
+
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[0])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[1])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[2])
+    )
   })
 })

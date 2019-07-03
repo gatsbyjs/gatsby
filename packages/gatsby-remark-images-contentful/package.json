@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-images-contentful",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Process Images in Contentful markdown so they can use the images API.",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "cross-env": "^5.0.5"
   },
   "keywords": [
-    "contenful",
+    "contentful",
     "gatsby",
     "gatsby-plugin",
     "images"
