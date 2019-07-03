@@ -1,4 +1,11 @@
-const { createArgsDigest } = require(`../process-file`)
+jest.mock(`got`)
+jest.mock(`../safe-sharp`, () => {
+  return {
+    simd: jest.fn(),
+  }
+})
+const { createArgsDigest, processFile } = require(`../process-file`)
+const got = require(`got`)
 
 describe(`createArgsDigest`, () => {
   const defaultArgsBaseline = {
@@ -94,5 +101,30 @@ describe(`createArgsDigest`, () => {
       testHashEqual(`maxWidth`, { maxWidth: 500 })
       testHashEqual(`base64`, { base64: true })
     })
+  })
+})
+
+describe(`processFile`, () => {
+  it(`should offload sharp transforms to the cloud`, async () => {
+    process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL = `https://example.com/image-service`
+    const transforms = {
+      outputPath: `myoutputpath/1234/file.jpg`,
+      args: {
+        width: 100,
+        height: 100,
+      },
+    }
+
+    got.post.mockImplementation(jest.fn(() => Promise.resolve()))
+
+    expect(
+      await processFile(`mypath/file.jpg`, [transforms], {
+        stripMetadata: true,
+      })
+    ).toMatchSnapshot()
+    expect(got.post).toHaveBeenCalled()
+    expect(got.post).toMatchSnapshot()
+
+    delete process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL
   })
 })
