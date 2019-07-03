@@ -1,5 +1,4 @@
 const chalk = require(`chalk`)
-const _ = require(`lodash`)
 
 const { gatsbyConfigSchema } = require(`../../joi-schemas/joi`)
 
@@ -23,20 +22,6 @@ module.exports = (state = {}, action) => {
           console.log(`"linkPrefix" should be changed to "pathPrefix"`)
         }
         throw new Error(`The site's gatsby-config.js failed validation`)
-      }
-
-      // Ensure that the pathPrefix (if set) starts with a forward slash
-      // and doesn't end with a slash.
-      if (normalizedPayload && normalizedPayload.pathPrefix) {
-        if (!_.startsWith(normalizedPayload.pathPrefix, `/`)) {
-          normalizedPayload.pathPrefix = `/${normalizedPayload.pathPrefix}`
-        }
-        if (_.endsWith(normalizedPayload.pathPrefix, `/`)) {
-          normalizedPayload.pathPrefix = normalizedPayload.pathPrefix.slice(
-            0,
-            -1
-          )
-        }
       }
 
       return {
