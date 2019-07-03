@@ -14,7 +14,7 @@ This means that the configuration and functionality isn’t directly written int
 
 The answer is now. Like right now. If you're reading this post then themes are stable.
 
-# What is stable?
+## What is "stable"?
 
 The core theme APIs have been stable for a long time under the `__experimentalThemes` flag in `gatsby-config.js`. Since they're being used in production by a number of different companies to great effect, we're promoting these APIs, specifically composition and shadowing, to stable within Gatsby core so that people can take advantage of them with confidence.
 
