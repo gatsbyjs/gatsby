@@ -91,7 +91,7 @@ In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any
 
 > 💡 The name of the directory (here `gatsby-theme-blog`) must exactly mirror the name of the name of the published theme package, which in this case is [`gatsby-theme-blog`](https://www.npmjs.com/package/gatsby-theme-blog).
 
-Let's open up the `bio-content.js` file and make some content edits:
+Open up the `bio-content.js` file and make some content edits:
 
 ```jsx:title=bio-content.js
 export default () => (
