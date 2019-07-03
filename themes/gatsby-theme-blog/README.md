@@ -27,6 +27,17 @@ yarn add gatsby-theme-blog
 
 ## Usage
 
+### Theme options
+
+| Key           | Default value     | Description                                                                                               |
+| ------------- | ----------------- | --------------------------------------------------------------------------------------------------------- |
+| `basePath`    | `/`               | Root url for all blog posts                                                                               |
+| `contentPath` | `/content/posts`  | Location of blog posts                                                                                    |
+| `assetPath`   | `/content/assets` | Location of assets                                                                                        |
+| `mdx`         | `true`            | Configure `gatsby-plugin-mdx` (if your website already is using the plugin pass `false` to turn this off) |
+
+#### Example usage
+
 ```js
 // gatsby-config.js
 module.exports = {
@@ -42,11 +53,31 @@ module.exports = {
 }
 ```
 
-### Options
+### Additional configuration
 
-| Key           | Default value     | Description                                                                                               |
-| ------------- | ----------------- | --------------------------------------------------------------------------------------------------------- |
-| `basePath`    | `/`               | Root url for all blog posts                                                                               |
-| `contentPath` | `/content/posts`  | Location of blog posts                                                                                    |
-| `assetPath`   | `/content/assets` | Location of assets                                                                                        |
-| `mdx`         | `true`            | Configure `gatsby-plugin-mdx` (if your website already is using the plugin pass `false` to turn this off) |
+In addition to the theme options, there are a handful of items you can customize via the `siteMetadata` object in your site's `gatsby-config.js`
+
+```js
+// gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    // Used for the site title and SEO
+    title: `My Blog Title`,
+    // Used to provide alt text for your avatar
+    author: `My Name`,
+    // Used for SEO
+    description: `My site description...`,
+    // Used for social links in the root footer
+    social: [
+      {
+        name: `twitter`,
+        url: `https://twitter.com/gatsbyjs`,
+      },
+      {
+        name: `github`,
+        url: `https://github.com/gatsbyjs`,
+      },
+    ],
+  },
+}
+```
