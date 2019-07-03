@@ -187,6 +187,12 @@ jobs:
           test_path: e2e-tests/production-runtime
           test_command: yarn test && yarn test:offline
 
+  e2e_tests_contentful:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/contentful
+
   starters_validate:
     executor: node
     steps:
@@ -262,6 +268,8 @@ workflows:
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_contentful:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
