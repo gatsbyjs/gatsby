@@ -70,7 +70,7 @@ gatsby-starter-theme
 
 3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 
-4.  **`.prettierrc`**: This file tells git which files it should not track / not maintain a version history for.
+4.  **`.prettierrc`**: This file tells [Prettier](https://prettier.io/) which configuration it should use to lint files.
 
 5.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. When using themes, it's where you'll include the theme plugin, and any customization options the theme provides.
 
