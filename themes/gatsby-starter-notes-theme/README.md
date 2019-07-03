@@ -39,6 +39,7 @@ Quickly get started using the Gatsby notes theme! This starter creates a new Gat
 
 Here are the top-level files and directories you'll see in a site created using the notes theme starter.
 
+```
 gatsby-starter-notes-theme
 ├── content
 │ └── notes
@@ -52,6 +53,7 @@ gatsby-starter-notes-theme
 ├── package-lock.json
 ├── package.json
 └── README.md
+```
 
 1.  **`/content`**: A content folder holding assets that the theme expects to exist. In this case, you're starting with some example notes! Delete the notes contained in `/content/notes` and start writing your own!
 
