@@ -159,7 +159,7 @@ src/fonts/fontname.woff2
 }
 ```
 
-**Note:** Make sure it's called from the relevant CSS, e.g.:
+**Note:** Make sure the font name is referenced from the relevant CSS, e.g.:
 
 ```
 body {
