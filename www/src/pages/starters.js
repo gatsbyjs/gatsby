@@ -16,7 +16,7 @@ export default StarterLibraryWrapper
 
 export const showcaseQuery = graphql`
   query SiteShowcaseQuery {
-    allStartersYaml {
+    allStartersYaml(filter: { fields: { hasScreenshot: { eq: true } } }) {
       edges {
         node {
           id

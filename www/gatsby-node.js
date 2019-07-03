@@ -413,6 +413,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                   slug
                   stub
                 }
+                hasScreenshot
               }
               url
               repo
@@ -531,6 +532,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
         if (!slug) {
+          return null
+        } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
+          reporter.warn(
+            `Starter showcase entry "${
+              edge.node.repo
+            }" seems offline. Skipping.`
+          )
           return null
         } else {
           return edge
@@ -762,6 +770,13 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       gatsbyDependencies: [[`no data`, `0`]],
       miscDependencies: [[`no data`, `0`]],
     }
+
+    // determine if screenshot is available
+    const screenshotNode = node.children
+      .map(childID => getNode(childID))
+      .find(node => node.internal.type === `Screenshot`)
+
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
 
     if (!process.env.GITHUB_API_TOKEN) {
       return createNodeField({

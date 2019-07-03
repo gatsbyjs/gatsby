@@ -72,7 +72,10 @@ export const ecosystemQuery = graphql`
   ) {
     allStartersYaml(
       filter: {
-        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+        fields: {
+          starterShowcase: { slug: { in: $featuredStarters } }
+          hasScreenshot: { eq: true }
+        }
       }
     ) {
       edges {
