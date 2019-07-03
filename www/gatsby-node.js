@@ -308,6 +308,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/themes/getting-started`,
+    toPath: `/docs/themes/using-a-gatsby-theme`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/introduction`,
+    toPath: `/docs/themes/what-are-gatsby-themes`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
