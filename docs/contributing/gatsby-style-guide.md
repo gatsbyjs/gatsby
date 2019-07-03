@@ -564,23 +564,6 @@ In practice, you can reach this goal by two general rules:
 - Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
 - When there are multiple ways to complete a task, [follow these instructions](#share-best-practices-whenever-possible).
 
-## KPIs
-
-Here is how we measure the quality of the tutorial and docs. We will use ([cohort analysis](https://www.geckoboard.com/learn/kpi-examples/mobile-app-kpis/retention-rate/) to track improvements or regressions to the tutorial and docs.
-
-### Tutorial
-
-- time to value: how quickly, effectively, and painlessly can users experience the value of Gatsby?
-- daily, weekly, monthly active users
-- daily, weekly, monthly “finishers” of the tutorial (finishers = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
-- weekly retention rate
-
-### Docs
-
-- time to task: how quickly and effectively can users accomplish tasks?
-- daily, weekly, monthly active users
-- weekly retention rate
-
 ## Why we chose GitHub for writing and maintaining docs
 
 The way the Gatsby community maintains docs and tutorials must meet the following requirements:
