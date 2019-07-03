@@ -1,5 +1,5 @@
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: `gatsby-theme-notes`,
       options: {
@@ -7,7 +7,7 @@ module.exports = {
         basePath: `/notes`,
       },
     },
-    // with gatsby-theme-ui, the last theme in the config
+    // with gatsby-plugin-theme-ui, the last theme in the config
     // will override the theme-ui context from other themes
     { resolve: `gatsby-theme-blog` },
   ],
