@@ -61,13 +61,17 @@ and we plan to build more tools and integrations around the core foundation of T
 
 To quickly demonstrate how this works,
 we'll walk through customizing the colors and typography used in the blog theme.
+Use the Gatsby CLI to create a new site with the blog theme starter.
 
-`todo: basic setup instructions from theme starter`
+```shell
+gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
+```
 
-Once you've installed the blog theme and added it to the `plugins` array in your `gatsby-config.js`,
+Once the site has been created, change to the new `my-blog` directory and
 add a `src/gatsby-plugin-theme-ui` directory to your site.
 
 ```shell
+cd my-blog
 mkdir src/gatsby-plugin-theme-ui
 ```
 
