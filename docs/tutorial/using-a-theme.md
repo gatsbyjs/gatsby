@@ -65,7 +65,7 @@ module.exports = {
 
 When using Gatsby themes, you can take advantage of something called component shadowing.
 
-The gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `gatsby-theme-blog/src/components/bio-content.js`.
+The Gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `gatsby-theme-blog/src/components/bio-content.js`.
 
 If you look at the file tree of your site, you'll see it looks like this:
 
