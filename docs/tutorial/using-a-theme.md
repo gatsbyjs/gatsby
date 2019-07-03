@@ -105,7 +105,7 @@ export default () => (
 )
 ```
 
-At this point, we have an updated avatar, updated site details, and an updated bio:
+At this point, you should have an updated avatar, updated site details, and an updated bio:
 
 ![Screenshot of project with current tutorial edits](./images/starter-blog-theme-edited.png)
 
