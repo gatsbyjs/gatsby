@@ -193,7 +193,10 @@ export const pageQuery = graphql`
     }
     allStartersYaml(
       filter: {
-        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+        fields: {
+          starterShowcase: { slug: { in: $featuredStarters } }
+          hasScreenshot: { eq: true }
+        }
       }
       sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {
