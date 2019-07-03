@@ -63,6 +63,8 @@ path: /hello-world
 I'm an example post!
 ```
 
+Once you've made some edits, run `gatsby develop` to start a development server and view your changes in a browser.
+
 ## Updating a Theme
 
 In order to update the theme to pull in the latest updates you can update the `gatsby-theme-blog` version in your site's `package.json`.
