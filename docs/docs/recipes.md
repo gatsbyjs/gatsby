@@ -169,6 +169,6 @@ body {
 
 ### Relevant Links
 
-* More on importing files: https://www.gatsbyjs.org/docs/importing-assets-into-files/
+* More on [importing assets into files](/docs/importing-assets-into-files/]
 * Using Typography.js for Google fonts: https://www.gatsbyjs.org/docs/typography-js/
 
