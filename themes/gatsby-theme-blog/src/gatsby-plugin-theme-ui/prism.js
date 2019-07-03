@@ -35,14 +35,4 @@ export default {
   ".namespace": {
     color: `prism.namespace`,
   },
-  ".gatsby-highlight-code-line": {
-    bg: `prism.highlight`,
-    display: `block`,
-    mx: -3,
-    // compensate for 4px border
-    pl: t => t.space[3] - 4,
-    pr: 3,
-    borderLeft: `4px solid`,
-    borderColor: `prism.tag`,
-  },
 }

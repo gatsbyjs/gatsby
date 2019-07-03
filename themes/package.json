@@ -4,8 +4,6 @@
     "start": "yarn workspace gatsby-starter-theme start"
   },
   "workspaces": [
-    "gatsby-theme-blog-core",
-    "gatsby-theme-blog-mdx",
     "gatsby-theme-blog",
     "gatsby-theme-notes",
     "gatsby-starter-theme",
