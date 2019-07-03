@@ -53,7 +53,6 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, touchNode } = actions
   const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
-  console.log(cookies)
 
   _verbose = verboseOutput
   _siteURL = `${protocol}://${normalizedBaseUrl}`
