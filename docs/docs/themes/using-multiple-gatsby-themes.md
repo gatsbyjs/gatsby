@@ -22,12 +22,12 @@ module.exports = {
         basePath: `/notes`,
       },
     },
-    // with gatsby-theme-ui, the last theme in the config
+    // with gatsby-plugin-theme-ui, the last theme in the config
     // will override the theme-ui context from other themes
-    { resolve: `Shadowed Site Title` },
+    { resolve: `gatsby-theme-blog` },
   ],
   siteMetadata: {
-    title: `My site title`,
+    title: `Shadowed Site Title`,
   },
 }
 ```
