@@ -170,7 +170,7 @@ Now, instead of a purple theme, you have a blue theme instead:
 
 ![Screenshot of project with updated color theme](./images/starter-blog-theme-updated-colors.png)
 
-In this file, we're pulling in the default color theme (imported as `defaultThemeColors` here), and overriding certain color keys.
+In this file, you're pulling in the default color theme (imported as `defaultThemeColors` here), and overriding certain color keys.
 
 To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`gatsby-theme-blog/src/gatsby-theme-ui/colors.js`)
 
