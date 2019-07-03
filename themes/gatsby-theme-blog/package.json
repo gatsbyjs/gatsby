@@ -3,6 +3,13 @@
   "version": "0.0.11",
   "description": "A Gatsby theme for miscellaneous blogging with a dark/light mode",
   "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-theme",
+    "gatsby-plugin",
+    "react",
+    "blog"
+  ],
   "license": "MIT",
   "dependencies": {
     "@emotion/core": "^10.0.10",

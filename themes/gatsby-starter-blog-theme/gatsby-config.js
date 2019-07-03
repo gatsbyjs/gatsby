@@ -10,7 +10,6 @@ module.exports = {
     title: `My Blog Title`,
     author: `My Name`,
     description: `My site description...`,
-    siteUrl: `https://www.gatsbyjs.org/`,
     social: [
       {
         name: `twitter`,

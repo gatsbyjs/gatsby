@@ -6,7 +6,6 @@ module.exports = options => {
       title: `Blog Title Placeholder`,
       author: `Name Placeholder`,
       description: `Description placeholder`,
-      siteUrl: `http://example.com/`,
       social: [
         {
           name: `twitter`,
