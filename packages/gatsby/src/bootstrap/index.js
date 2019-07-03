@@ -12,7 +12,6 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
-const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -21,9 +20,6 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
-const withResolverContext = require(`../schema/context`)
-const stackTrace = require(`stack-trace`)
-import errorParser from "../query/error-parser"
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -32,6 +28,7 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
+const createGraphqlRunner = require(`./graphql-runner`)
 const { extractQueries } = require(`../query/query-watcher`)
 const requiresWriter = require(`./requires-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
@@ -389,46 +386,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = (query, context = {}) => {
-    const schema = store.getState().schema
-    return graphql(
-      schema,
-      query,
-      context,
-      withResolverContext(context, schema),
-      context
-    ).then(result => {
-      if (result.errors) {
-        report.panicOnBuild(
-          result.errors
-            .map(e => {
-              // Find the file where graphql was called.
-              const file = stackTrace
-                .parse(e)
-                .find(file => /createPages/.test(file.functionName))
-              if (file) {
-                const structuredError = errorParser({
-                  message: e.message,
-                  location: {
-                    start: { line: file.lineNumber, column: file.columnNumber },
-                  },
-                  filePath: file.fileName,
-                })
-                structuredError.context = {
-                  ...structuredError.context,
-                  fromGraphQLFunction: true,
-                }
-                return structuredError
-              }
-              return null
-            })
-            .filter(_.isObject)
-        )
-      }
-
-      return result
-    })
-  }
+  const graphqlRunner = createGraphqlRunner(store, report)
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
