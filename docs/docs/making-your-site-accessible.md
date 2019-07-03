@@ -34,7 +34,7 @@ Since the [second major release](/blog/2018-09-17-gatsby-v2/), your Gatsby sites
 Accessibility by default is a win for everyone. Here's a starting point for accessibility testing when making a Gatsby site or theme:
 
 - [Use your keyboard](https://webaim.org/techniques/keyboard/) to tab through the pages. Can you reach and operate every interactive control (links, buttons, form inputs, etc.) and see a focus indicator on the screen?
-- Use a browser extension like [axe](https://www.deque.com/axe/) or [Accessibility Insights](https://accessibilityinsights.io/) to find and fix common accessibility issues in development
+- Use [Lighthouse](https://developers.google.com/web/tools/lighthouse/), [axe](https://www.deque.com/axe/) or [Accessibility Insights](https://accessibilityinsights.io/) to find and fix common accessibility issues in development
 - Test for [adequate color contrast](https://dequeuniversity.com/tips/color-contrast) with the [accessibility color picker in Chrome Developer Tools](https://developers.google.com/web/updates/2018/01/devtools#contrast)
 - Create inclusive and [accessible forms](/docs/building-a-contact-form#creating-an-accessible-form)
 - Employ accessible [headings, landmarks, and semantic structure](https://webaim.org/techniques/semanticstructure/)
@@ -55,3 +55,4 @@ Accessibility by default is a win for everyone. Here's a starting point for acce
 - [Free web accessibility course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity
 - [WebAIM introduction](https://webaim.org/intro/) to web accessibility
 - [Deque University](https://dequeuniversity.com), with free online accessibility training for people with disabilities
+- [Web.dev accessibility docs](https://web.dev/accessible)
