@@ -144,7 +144,7 @@ Transforming data in Gatsby is also plugin-driven; Transformer plugins take data
 
 ### Directions
 
-1. Copy your font file in the directory:
+1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
 
 ```
 src/fonts/fontname.woff2
