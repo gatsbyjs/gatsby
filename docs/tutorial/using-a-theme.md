@@ -139,7 +139,7 @@ Restart the dev server, and you'll see your updated blog content:
 
 ## Change the color theme
 
-The blog theme ships with a default Gatsby purple theme, but you can override and customize the theming of your site to your heart's content. In this tutorial, we'll change a few colors.
+The blog theme ships with a default Gatsby purple theme, but you can override and customize the theming of your site to your heart's content. In this tutorial, you'll change a few colors.
 
 Open up `/src/gatsby-theme-blog/gatsby-theme-ui/colors.js`, and uncomment the code in that file.
 
