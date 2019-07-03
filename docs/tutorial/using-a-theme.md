@@ -14,7 +14,7 @@ gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 
 ## Run the site
 
-Creating a new site from the starter installed all of the blog theme's dependencies for you. Let's run the site and see what we have:
+Creating a new site from the starter installed all of the blog theme's dependencies for you. Next, run the site and see what you have:
 
 ```shell
 cd my-blog
