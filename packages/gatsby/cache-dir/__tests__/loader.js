@@ -86,6 +86,22 @@ describe(`BaseLoader`, () => {
       expect(xhrCount).toBe(1)
     })
 
+    it(`should return a pageData json with an empty compilation hash (gatsby develop)`, async () => {
+      const baseLoader = new BaseLoader(null, [])
+
+      const payload = { ...defaultPayload, webpackCompilationHash: `` }
+      mockPageData(`/mypage`, 200, payload)
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/mypage`,
+        payload,
+      }
+      expect(await baseLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(baseLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
+      expect(xhrCount).toBe(1)
+    })
+
     it(`should load a 404 page when page-path file is not a json`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
