@@ -118,6 +118,9 @@ exports.sourceNodes = async (
   // Creates links between tags/categories and taxonomies.
   entities = normalize.mapTagsCategoriesToTaxonomies(entities)
 
+  // Normalize menu items
+  entities = normalize.normalizeMenuItems(entities)
+
   // Creates links from entities to media nodes
   entities = normalize.mapEntitiesToMedia(entities)
 

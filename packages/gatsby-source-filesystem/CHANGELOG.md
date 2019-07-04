@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.0...gatsby-source-filesystem@2.1.1) (2019-06-25)
+
+### Features
+
+- **gatsby-source-filesystem:** add createFileNodeFromBuffer ([#14576](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14576)) ([aa21755](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/aa21755))
+
 # [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.43...gatsby-source-filesystem@2.1.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-source-filesystem

@@ -76,7 +76,7 @@ Depending on your size and reach, there are a few ways we can work together.
 
 1. **Sharing your Gatsby-related content on Twitter.** After you publish your content, and blog about it, just tweet about it and we’re happy to retweet your content to the Gatsby community. We currently (March 2019) have an audience of over 22,000 on Twitter and a typical tweet is seen by around 7,000 developers.
 
-2. **Blogging about your integration.** Our [gatsbyjs.org](gatsbyjs.org) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
+2. **Blogging about your integration.** Our [gatsbyjs.org](/blog/) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
 
 If you’re an established vendor adding a Gatsby integration, we’d love for you to tell that story on our blog (eg [Kentico Cloud](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](/docs/how-to-contribute/#contributing-to-the-blog).
 
