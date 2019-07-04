@@ -3,7 +3,17 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
-const { joinPath } = require(`gatsby/dist/utils/path`)
+
+let joinPath
+try {
+  joinPath = require(`gatsby/utils`).joinPath
+} catch (err) {
+  // continue regardless of error
+}
+
+if (!joinPath) {
+  joinPath = (...paths) => paths.join(`/`).replace(/\/{2,}/g, `/`)
+}
 
 const debug = Debug(`gatsby-theme-blog`)
 
