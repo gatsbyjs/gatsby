@@ -54,13 +54,6 @@ starter:
   - Styling:None
   - Testing
   - Transitions
-  - Apollo
-  - App
-  - Recaptcha
-  - Form
-  - Airtable
-  - Dynamic
-  - REST
 site:
   - API
   - Accessibility

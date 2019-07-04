@@ -3079,8 +3079,7 @@
   repo: https://github.com/smakosh/gatsby-apollo-starter
   description: Gatsby Apollo starter - with client side routing
   tags:
-    - Apollo
-    - App
+    - Client-side App
     - SEO
     - Styling:CSS-in-JS
   features:
@@ -3096,9 +3095,7 @@
     - Portfolio
     - SEO
     - Netlify
-    - Form
     - Onepage
-    - Recaptcha
     - Styling:CSS-in-JS
   features:
     - Eslint/Prettier configured
@@ -3117,11 +3114,9 @@
   repo: https://github.com/smakosh/gatsby-airtable-starter
   description: Gatsby Airtable starter
   tags:
-    - Airtable
     - SEO
     - Netlify
-    - App
-    - Dynamic
+    - Client-side App
     - Styling:CSS-in-JS
   features:
     - Static content fetched from Airtable
@@ -3136,9 +3131,8 @@
   repo: https://github.com/smakosh/gatsby-app-starter-rest-api
   description: Gatsby REST API starter
   tags:
-    - REST
-    - Dynamic
-    - App
+    - Authentication
+    - Client-side App
     - Styling:CSS-in-JS
   features:
     - Dynamic content with CRUD operations with a REST API
