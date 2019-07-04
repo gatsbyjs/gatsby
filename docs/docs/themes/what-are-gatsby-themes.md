@@ -29,12 +29,9 @@ Themes solve the problems that traditional starters experience:
 
 ## What's Next?
 
-- [Getting Started](/docs/themes/using-a-gatsby-theme)
-- [Converting a Starter](/docs/themes/converting-a-starter)
+- [Using a Gatsby Theme](/docs/themes/using-a-gatsby-theme)
+- [Using Multiple Gatsby Themes](/docs/themes/using-multiple-gatsby-themes)
 - [Building Themes](/docs/themes/building-themes)
-- [Conventions](/docs/themes/conventions)
-- [Theme Composition](/docs/themes/theme-composition)
-- [API Reference](/docs/themes/api-reference)
 
 ## Related blog posts
 
