@@ -144,23 +144,7 @@ Transforming data in Gatsby is also plugin-driven. Transformer plugins take data
 
 ```
 // In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-transformer-remark`,
-    options: {
-      // CommonMark mode (default: true)
-      commonmark: true,
-      // Footnotes mode (default: true)
-      footnotes: true,
-      // Pedantic mode (default: true)
-      pedantic: true,
-      // GitHub Flavored Markdown mode (default: true)
-      gfm: true,
-      // Plugins configs
-      plugins: [],
-    },
-  },
-],
+plugins: [`gatsby-transformer-remark`],
 ```
 
 2. Add a GraphQL query to the `index.js` file of your Gatsby site to fetch MarkdownRemark nodes:
@@ -185,8 +169,6 @@ export const query = graphql`
   `
 ```
 3. Restart the development server and open GraphiQL. Explore the fields available on the MarkdownRemark node.
-
-4. Style your `index.js` page with HTML and CSS and run your site to view the it.
 
 ### Related links
 
