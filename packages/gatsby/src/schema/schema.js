@@ -113,7 +113,7 @@ const updateSchemaComposer = async ({
     parentSpan,
   })
   await Promise.all(
-    Array.from(schemaComposer.values()).map(typeComposer =>
+    Array.from(new Set(schemaComposer.values())).map(typeComposer =>
       processTypeComposer({
         schemaComposer,
         typeComposer,
