@@ -1,5 +1,5 @@
 const { createHash } = require(`crypto`)
-const uuid = require(`uuid/v1`)
+const uuid = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
 const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
