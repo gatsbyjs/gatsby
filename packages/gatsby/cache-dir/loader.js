@@ -34,16 +34,23 @@ const loadPageDataJson = loadObj => {
   const url = createPageDataUrl(pagePath)
   return doFetch(url).then(req => {
     const { status, responseText } = req
+    let isJson = false
 
-    const contentType = req.getResponseHeader(`content-type`)
-    const isJson = contentType && contentType.startsWith(`application/json`)
+    // Handle 200
+    if (status === 200) {
+      try {
+        const jsonPayload = JSON.parse(responseText)
+        if (!jsonPayload.webpackCompilationHash) {
+          throw new Error(`not a valid pageData response`)
+        }
 
-    // Handle 200 JSON (Success)
-    if (status === 200 && isJson) {
-      return Object.assign(loadObj, {
-        status: `success`,
-        payload: JSON.parse(responseText),
-      })
+        return Object.assign(loadObj, {
+          status: `success`,
+          payload: jsonPayload,
+        })
+      } catch (err) {
+        // continue regardless of error
+      }
     }
 
     // Handle 404
