@@ -5,7 +5,7 @@ const slash = require(`slash`)
 exports.sourceNodes = ({ actions, schema }) => {
   actions.createTypes(`
     # This is needed if there aren't any MarkdownRemark nodes.
-    type MarkdownRemark implements Node {
+    type MarkdownRemark implements Node @infer {
       html: String
     }
   `)
