@@ -14,6 +14,21 @@ import EnsureResources from "./ensure-resources"
 
 import { reportError, clearError } from "./error-overlay-handler"
 
+/*
+In gatsby v2 if Router is used in page using matchPaths
+paths need to contain full path.
+For example:
+  - page have `/app/*` matchPath
+  - inside template user needs to use `/app/xyz` as path
+Setting `basepath` default prop keeps current behaviour
+to not introduce breaking change.
+Remove this in v3
+*/
+Router.defaultProps = {
+  ...Router.defaultProps,
+  basepath: __BASE_PATH__,
+}
+
 if (window.__webpack_hot_middleware_reporter__ !== undefined) {
   const overlayErrorID = `webpack`
   // Report build errors

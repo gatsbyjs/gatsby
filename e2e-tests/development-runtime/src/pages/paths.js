@@ -7,7 +7,7 @@ const NotFound = () => <h1>Not Found in App</h1>
 
 const AppPage = () => (
   <Router>
-    <App path="/app" />
+    <App path="/paths/app" />
     <NotFound default />
   </Router>
 )

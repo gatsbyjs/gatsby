@@ -13,15 +13,11 @@ const routes = [`/`, `/profile`, `/dashboard`]
 
 const basePath = `/client-only-paths`
 
-const ClientOnlyPathPage = props => (
+const ClientOnlyPathPage = () => (
   <Layout>
-    <Router
-      location={props.location}
-      basepath={basePath}
-      id="client-only-paths-sub-router"
-    >
-      <Page path="/" page="index" />
-      <Page path="/:page" />
+    <Router id="client-only-paths-sub-router">
+      <Page path="/client-only-paths/" page="index" />
+      <Page path="/client-only-paths/:page" />
     </Router>
     <ul>
       {routes.map(route => (
