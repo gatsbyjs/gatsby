@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-remark",
   "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -16,8 +16,8 @@
     "mdast-util-to-hast": "^3.0.0",
     "mdast-util-to-string": "^1.0.5",
     "mdast-util-toc": "^2.0.1",
-    "remark": "^9.0.0",
-    "remark-parse": "^5.0.0",
+    "remark": "^10.0.0",
+    "remark-parse": "^6.0.0",
     "remark-retext": "^3.1.0",
     "remark-stringify": "^5.0.0",
     "retext-english": "^3.0.0",

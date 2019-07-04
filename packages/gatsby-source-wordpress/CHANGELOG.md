@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.1.3...gatsby-source-wordpress@3.1.4) (2019-07-04)
+
+### Features
+
+- **gatsby-source-wordpress:** add option to send cookies ([#15361](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/issues/15361)) ([2b08ae5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/commit/2b08ae5))
+
 ## [3.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/compare/gatsby-source-wordpress@3.1.2...gatsby-source-wordpress@3.1.3) (2019-07-02)
 
 **Note:** Version bump only for package gatsby-source-wordpress
