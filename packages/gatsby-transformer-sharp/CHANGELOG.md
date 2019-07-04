@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.2.0...gatsby-transformer-sharp@2.2.1) (2019-07-02)
+
+### Features
+
+- **gatsby-transformer-sharp:** Add default types for ImageSha… ([#15285](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/issues/15285)) ([44580c6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/commit/44580c6))
+
 # [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp/compare/gatsby-transformer-sharp@2.1.21...gatsby-transformer-sharp@2.2.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

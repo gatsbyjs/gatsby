@@ -18,3 +18,15 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
     `${program.directory}/.cache/fragments/image-sharp-fragments.js`
   )
 }
+
+exports.sourceNodes = ({ actions }) => {
+  const { createTypes } = actions
+
+  if (createTypes) {
+    createTypes(`
+      type ImageSharp implements Node @infer {
+        id: ID!
+      }
+    `)
+  }
+}

@@ -14,7 +14,7 @@ const knownOptions = {
   allowLinker: `boolean`,
 }
 
-exports.onRenderBody = (
+export const onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
@@ -31,7 +31,7 @@ exports.onRenderBody = (
     />,
   ])
 
-  let excludeGAPaths = []
+  const excludeGAPaths = []
   if (typeof pluginOptions.exclude !== `undefined`) {
     const Minimatch = require(`minimatch`).Minimatch
     pluginOptions.exclude.map(exclude => {

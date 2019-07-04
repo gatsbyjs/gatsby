@@ -1,41 +1,71 @@
+/**
+ * Bio component that queries for data
+ * with Gatsby's StaticQuery component
+ *
+ * See: https://www.gatsbyjs.org/docs/static-query/
+ */
+
 import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import Image from "gatsby-image"
+import { Styled, css, Flex } from "theme-ui"
+import BioContent from "./bio-content.js"
 
-// Import typefaces
-import "typeface-montserrat"
-import "typeface-merriweather"
+const Bio = () => {
+  const data = useStaticQuery(bioQuery)
+  const {
+    site: {
+      siteMetadata: { author },
+    },
+    avatar,
+  } = data
 
-import profilePic from "./profile-pic.jpg"
-import { rhythm } from "../utils/typography"
-
-class Bio extends React.Component {
-  render() {
-    return (
-      <div
-        css={{
-          display: `flex`,
-          marginBottom: rhythm(2.5),
-        }}
-      >
-        <img
-          src={profilePic}
-          alt={`Kyle Mathews`}
-          css={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: 0,
-            width: rhythm(2),
-            height: rhythm(2),
-          }}
+  return (
+    <Flex css={css({ mb: 4 })}>
+      {avatar ? (
+        <Image
+          fixed={avatar.childImageSharp.fixed}
+          alt={author}
+          css={css({
+            mr: 2,
+            mb: 0,
+            width: 48,
+            borderRadius: 99999,
+          })}
         />
-        <p>
-          Written by <strong>Kyle Mathews</strong> who lives and works in San
-          Francisco building useful things.{` `}
-          <a href="https://twitter.com/kylemathews">
-            You should follow him on Twitter
-          </a>
-        </p>
-      </div>
-    )
-  }
+      ) : (
+        <div
+          css={css({
+            mr: 2,
+            mb: 0,
+            width: 48,
+            borderRadius: 99999,
+          })}
+          role="presentation"
+        />
+      )}
+      <Styled.p>
+        <BioContent />
+      </Styled.p>
+    </Flex>
+  )
 }
+
+const bioQuery = graphql`
+  query BioQuery {
+    site {
+      siteMetadata {
+        author
+      }
+    }
+    avatar: file(absolutePath: { regex: "/avatar.(jpeg|jpg|gif|png)/" }) {
+      childImageSharp {
+        fixed(width: 48, height: 48) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`
 
 export default Bio
