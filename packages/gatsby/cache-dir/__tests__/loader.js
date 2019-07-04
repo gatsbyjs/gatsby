@@ -102,6 +102,26 @@ describe(`BaseLoader`, () => {
       expect(xhrCount).toBe(1)
     })
 
+    it(`should load a 404 page when page-path file is not a gatsby json`, async () => {
+      const baseLoader = new BaseLoader(null, [])
+
+      const payload = { ...defaultPayload, path: `/404.html/` }
+      mockPageData(`/unknown-page`, 200, { random: `string` }, true)
+      mockPageData(`/404.html`, 200, payload, true)
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/404.html`,
+        notFound: true,
+        payload,
+      }
+      expect(await baseLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+        expectation
+      )
+      expect(baseLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
+      expect(xhrCount).toBe(2)
+    })
+
     it(`should load a 404 page when page-path file is not a json`, async () => {
       const baseLoader = new BaseLoader(null, [])
 

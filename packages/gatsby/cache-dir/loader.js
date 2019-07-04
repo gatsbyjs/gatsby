@@ -40,7 +40,7 @@ const loadPageDataJson = loadObj => {
     if (status === 200) {
       try {
         const jsonPayload = JSON.parse(responseText)
-        if (!jsonPayload.webpackCompilationHash) {
+        if (jsonPayload.webpackCompilationHash === undefined) {
           throw new Error(`not a valid pageData response`)
         }
 
