@@ -1,12 +1,12 @@
 const {
-  defaults,
+  DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
 } = require(`./constants`)
 
 exports.onRouteUpdate = ({ pluginOptions }) => {
-  const options = Object.assign({}, defaults, pluginOptions)
+  const options = Object.assign({}, DEFAULT_OPTIONS, pluginOptions)
 
   const imageWrappers = document.querySelectorAll(`.${imageWrapperClass}`)
 

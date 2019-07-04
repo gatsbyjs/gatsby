@@ -1,5 +1,5 @@
 const {
-  defaults,
+  DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -25,7 +25,7 @@ module.exports = (
   { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
   pluginOptions
 ) => {
-  const options = _.defaults(pluginOptions, { pathPrefix }, defaults)
+  const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -178,7 +178,7 @@ module.exports = (
           // override options if it's an object, otherwise just pass through defaults
           options.withWebp === true ? {} : options.withWebp,
           pluginOptions,
-          defaults
+          DEFAULT_OPTIONS
         ),
         reporter,
       })
