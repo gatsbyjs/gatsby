@@ -136,7 +136,7 @@ Transforming data in Gatsby is also plugin-driven. Transformer plugins take data
 
 - A gatsby site with `gatsby-config.js` and `index.js` page
 - A Markdown file saved in your Gatsby site `src` directory
-- The `gatsby-transformer-remark` plugin using `npm install --save gatsby-transformer-remark` command
+- The `gatsby-transformer-remark` plugin installed
 
 ### Directions
 
