@@ -2910,12 +2910,8 @@
   description: This Starter is created for Ecommerce site with Gatsby + Contentful and snipcart
   tags:
     - eCommerce
-    - snipcart
     - CMS:Contentful
     - Blog
-    - GraphQL
-    - React
-    - Responsive Design
     - SEO
     - Disqus
   features:
