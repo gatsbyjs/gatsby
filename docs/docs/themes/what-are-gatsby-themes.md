@@ -29,7 +29,7 @@ Themes solve the problems that traditional starters experience:
 
 ## What's Next?
 
-- [Getting Started](/docs/themes/getting-started)
+- [Getting Started](/docs/themes/using-a-gatsby-theme)
 - [Converting a Starter](/docs/themes/converting-a-starter)
 - [Building Themes](/docs/themes/building-themes)
 - [Conventions](/docs/themes/conventions)
