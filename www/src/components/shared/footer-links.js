@@ -8,10 +8,8 @@ const FooterList = styled.ul`
   border-top: 1px solid ${colors.ui.border.subtle};
   font-size: ${fontSizes[1]};
   margin: 0;
-  padding: 0;
-  padding-top: ${space[9]};
+  padding: ${space[9]} ${space[6]};
   margin-top: ${space[9]};
-  padding-bottom: ${space[9]};
   list-style: none;
   text-align: center;
   width: 100%;

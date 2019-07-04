@@ -80,7 +80,7 @@ Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the c
 ```GraphQL
 graphql`
   query MyQuery {
-    # Example is for a `ContentType` with a `ContenfulAsset` field
+    # Example is for a `ContentType` with a `ContentfulAsset` field
     # You could also query an asset directly via
     # `allContentfulAsset { edges{ node { } } }`
     # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
@@ -151,6 +151,10 @@ Possibility to limit how many locales/nodes are created in graphQL. This can lim
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales
+
+**`forceFullSync`** [boolean][optional] [default: `false`]
+
+Prevents the use of sync tokens when accessing the Contentful API.
 
 ## Notes on Contentful Content Models
 

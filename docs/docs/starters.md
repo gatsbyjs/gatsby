@@ -10,7 +10,7 @@ Execute the `gatsby new` command to clone a boilerplate starter, install its dep
 
 ### Using Git repo URLs
 
-When creating a new Gatsby site, you can optionally specify a starter to base your new site on; they can come from any publicly available Git repo, such as GitHub, Gitlab, or Bitbucket. You can supply the `[URL_OF_STARTER_GIT_REPO]` directly:
+When creating a new Gatsby site, you can optionally specify a starter to base your new site on; they can come from any publicly available Git repo, such as GitHub, GitLab, or Bitbucket. You can supply the `[URL_OF_STARTER_GIT_REPO]` directly:
 
 ```shell
 gatsby new [SITE_DIRECTORY] [URL_OF_STARTER_GIT_REPO]

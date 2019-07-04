@@ -64,7 +64,7 @@ beforeEach(() => {
 
 describe("Index", () =>
   it("renders correctly", () => {
-    const tree = renderer.create(<BlogIndex />).toJSON()
+    const tree = renderer.create(<Index />).toJSON()
     expect(tree).toMatchSnapshot()
   }))
 ```

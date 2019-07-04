@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-source-wikipedia:** add axios as depedency ([#9088](https://github.com/gatsbyjs/gatsby/issues/9088)) ([b055dde](https://github.com/gatsbyjs/gatsby/commit/b055dde))
+- **gatsby-source-wikipedia:** add axios as dependency ([#9088](https://github.com/gatsbyjs/gatsby/issues/9088)) ([b055dde](https://github.com/gatsbyjs/gatsby/commit/b055dde))
 
 <a name="2.0.0"></a>
 

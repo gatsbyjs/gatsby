@@ -107,7 +107,7 @@ const useSiteMetadata = () => {
 }
 ```
 
-Now everytime you need the site title, you can use this custom hook.
+Now every time you need the site title, you can use this custom hook.
 
 ```jsx
 const Header = () => {

@@ -1,8 +1,6 @@
 const { graphql } = require(`graphql`)
-const { createSchemaComposer } = require(`../schema-composer`)
-const { buildSchema } = require(`../schema`)
-const { LocalNodeModel } = require(`../node-model`)
-const nodeStore = require(`../../db/nodes`)
+const { build } = require(`..`)
+const withResolverContext = require(`../context`)
 const { store } = require(`../../redux`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -31,24 +29,11 @@ async function queryResult(nodes, query) {
   store.dispatch({ type: `DELETE_CACHE` })
   nodes.forEach(node => store.dispatch({ type: `CREATE_NODE`, payload: node }))
 
-  const schemaComposer = createSchemaComposer()
-  const schema = await buildSchema({
-    schemaComposer,
-    nodeStore,
-    types: [],
-    thirdPartySchemas: [],
-  })
-  store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+  await build({})
+  const { schema } = store.getState()
 
-  let context = { path: `foo` }
-  return graphql(schema, query, undefined, {
-    ...context,
-    nodeModel: new LocalNodeModel({
-      schema,
-      nodeStore,
-      createPageDependency: jest.fn(),
-    }),
-  })
+  const context = { path: `foo` }
+  return graphql(schema, query, undefined, withResolverContext(context))
 }
 
 describe(`filtering on linked nodes`, () => {

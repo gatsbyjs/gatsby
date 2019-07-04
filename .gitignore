@@ -59,3 +59,6 @@ package-lock.json
 
 # starters are special; we want to persist the lock files
 !starters/*/package-lock.json
+!themes/gatsby-starter-blog-theme/package-lock.json
+!themes/gatsby-starter-notes-theme/package-lock.json
+!themes/gatsby-starter-theme/package-lock.json
