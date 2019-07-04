@@ -27,7 +27,7 @@ exports[`processFile should offload sharp transforms to the cloud 2`] = `
             },
           ],
         },
-        "responseType": "json",
+        "json": true,
       },
     ],
   ],
