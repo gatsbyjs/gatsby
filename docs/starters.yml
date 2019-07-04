@@ -3143,3 +3143,17 @@
     - Products defined using markdown.
     - Styled components.
     - Gatsby image for optimised product images.
+- url: https://anubhavsrivastava.github.io/gatsby-starter-stylish
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-stylish
+  description: Single page starter based on the Stylish Portfolio site template by startbootstrap for portfolio page
+  tags:
+    - Onepage
+    - Portfolio
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
