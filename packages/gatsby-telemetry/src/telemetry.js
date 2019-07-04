@@ -1,5 +1,5 @@
 const { createHash } = require(`crypto`)
-const uuid = require(`uuid/v4`)
+const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
 const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
@@ -18,7 +18,7 @@ module.exports = class AnalyticsTracker {
   osInfo // lazy
   trackingEnabled // lazy
   componentVersion
-  sessionId = uuid()
+  sessionId = uuidv4()
 
   constructor() {
     try {
@@ -177,7 +177,7 @@ module.exports = class AnalyticsTracker {
     }
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (!machineId) {
-      machineId = uuid()
+      machineId = uuidv4()
       this.store.updateConfig(`telemetry.machineId`, machineId)
     }
     this.machineId = machineId
