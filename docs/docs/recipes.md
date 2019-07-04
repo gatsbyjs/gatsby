@@ -132,7 +132,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 Transforming data in Gatsby is also plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more). One such Transformer plugin is gatsby-transformer-plugin that you can use to transform your markdown files to HTML.
 
-### Requirements
+### Prerequisites
 
 - A gatsby site with `gatsby-config.js` and `index.js` page
 - A Markdown file saved in your Gatsby site `src` directory
