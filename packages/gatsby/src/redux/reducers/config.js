@@ -6,9 +6,12 @@ module.exports = (state = {}, action) => {
   switch (action.type) {
     case `SET_SITE_CONFIG`: {
       // Validate the config.
-      const result = gatsbyConfigSchema.validate(action.payload)
+      const result = gatsbyConfigSchema.validate(action.payload || {})
 
-      let normalizedPayload = result.value
+      const normalizedPayload = result.value
+      // normalizedPayload.pathPrefix = normalizedPayload.pathPrefix.replace(/^\/$/, '');
+
+      console.log(result)
 
       // TODO use Redux for capturing errors from different
       // parts of Gatsby so a) can capture richer errors and b) be
@@ -24,9 +27,7 @@ module.exports = (state = {}, action) => {
         throw new Error(`The site's gatsby-config.js failed validation`)
       }
 
-      return {
-        ...normalizedPayload,
-      }
+      return normalizedPayload
     }
     default:
       return state

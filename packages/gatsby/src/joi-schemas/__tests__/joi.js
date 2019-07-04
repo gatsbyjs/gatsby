@@ -1,6 +1,17 @@
 const { gatsbyConfigSchema } = require(`../joi`)
 
 describe(`gatsby config`, () => {
+  it(`returns empty pathPrefix when not set`, async () => {
+    const config = {}
+
+    const result = await gatsbyConfigSchema.validate(config)
+    expect(result).toEqual(
+      expect.objectContaining({
+        pathPrefix: ``,
+      })
+    )
+  })
+
   it(`strips trailing slashes from url fields`, async () => {
     const config = {
       pathPrefix: `/blog///`,

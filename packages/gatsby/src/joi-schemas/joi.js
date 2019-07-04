@@ -18,10 +18,15 @@ export const gatsbyConfigSchema = Joi.object()
     ),
     pathPrefix: addLeadingSlash(
       stripTrailingSlash(
-        Joi.string().uri({
-          allowRelative: true,
-          relativeOnly: true,
-        })
+        Joi.string()
+          .uri({
+            allowRelative: true,
+            relativeOnly: true,
+          })
+          .default(``)
+          // removes single / value
+          .allow(``)
+          .replace(/^\/$/, ``)
       )
     ),
     siteMetadata: Joi.object({
