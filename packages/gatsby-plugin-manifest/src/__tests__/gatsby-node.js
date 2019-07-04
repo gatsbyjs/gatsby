@@ -38,9 +38,11 @@ jest.mock(`sharp`, () => {
   return sharp
 })
 
-jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
-  jest.fn(() => `contentDigest`)
-)
+jest.mock(`gatsby/utils`, () => {
+  return {
+    createContentDigest: jest.fn(() => `contentDigest`),
+  }
+})
 
 const fs = require(`fs`)
 const path = require(`path`)

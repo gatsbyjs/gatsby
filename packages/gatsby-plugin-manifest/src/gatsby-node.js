@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 import sharp from "./safe-sharp"
-import createContentDigest from "gatsby/dist/utils/create-content-digest"
+import { createContentDigest } from "gatsby/utils"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
 
 sharp.simd(true)
