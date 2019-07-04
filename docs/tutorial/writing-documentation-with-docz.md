@@ -54,7 +54,7 @@ route: /
 
 ## Hello world
 
-Type here the most beautyiful getting started that you ever saw!
+Type here the most beautiful getting started that you ever saw!
 ```
 
 Run the development server with `gatsby develop` and you should be greeted with the default Docz layout and a "Getting Started" heading. Stop the development server after verifying that everything works.

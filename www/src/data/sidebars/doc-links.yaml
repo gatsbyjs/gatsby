@@ -109,16 +109,16 @@
                 # This list should only include the top 5 CMSs by Gatsby plugin usage.
                 # Please do not add your headless CMS here.
                 # Instead, please add links on the /docs/headless-cms/ page
-                - title: Sourcing from WordPress
-                  link: /docs/sourcing-from-wordpress/
-                - title: Sourcing from Drupal
-                  link: /docs/sourcing-from-drupal/
                 - title: Sourcing from Contentful
                   link: /docs/sourcing-from-contentful/
-                - title: Sourcing from Prismic
-                  link: /docs/sourcing-from-prismic/
                 - title: Sourcing from Netlify CMS
                   link: /docs/sourcing-from-netlify-cms/
+                - title: Sourcing from WordPress
+                  link: /docs/sourcing-from-wordpress/
+                - title: Sourcing from Prismic
+                  link: /docs/sourcing-from-prismic/
+                - title: Sourcing from Drupal
+                  link: /docs/sourcing-from-drupal/
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           items:
@@ -189,6 +189,26 @@
               link: /starters/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
+        - title: Themes
+          link: /docs/themes/
+          items:
+            - title: What are Gatsby Themes?
+              link: /docs/themes/what-are-gatsby-themes
+            - title: Using a Gatsby Theme
+              link: /docs/themes/using-a-gatsby-theme
+            - title: Using Multiple Gatsby Themes
+              link: /docs/themes/using-multiple-gatsby-themes
+            - title: Building Themes
+              link: /docs/themes/building-themes
+              items:
+                - title: Themes API Reference
+                  link: /docs/themes/api-reference
+                - title: Converting a Starter
+                  link: /docs/themes/converting-a-starter
+                - title: Theme Composition
+                  link: /docs/themes/theme-composition
+                - title: Conventions
+                  link: /docs/themes/conventions
         - title: Styling Your Site
           link: /docs/styling/
           items:
@@ -317,6 +337,8 @@
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+            - title: Client Data Fetching
+              link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages
         - title: Improving Performance

@@ -2,8 +2,6 @@
 title: Themes API Reference
 ---
 
-> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
-
 ## Table of contents
 
 - [Core Gatsby APIs](#core-gatsby-apis)
@@ -14,7 +12,7 @@ title: Themes API Reference
 
 ## Core Gatsby APIs
 
-Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
+Themes are packaged Gatsby sites shipped as plugins, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
 
 - [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
 - [Actions](https://www.gatsbyjs.org/docs/actions/)
@@ -25,12 +23,13 @@ If you're new to Gatsby you can get started by following along with the guides f
 
 ## Configuration
 
-Similarly to plugins, you can access options that are passed to your theme.
-You can use this to make filesystem sourcing configurable, accept different nav menu items, or change branding colors from the default.
+Plugins can now include a `gatsby-config` in addition to the other `gatsby-*` files.
+
+You can access options that are passed to your theme in your theme's `gatsby-config`. You can use this to make filesystem sourcing configurable, accept different nav menu items, or change branding colors from the default.
 
 ```js:title=gatsby-config.js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: "gatsby-theme-name",
       options: {
@@ -91,7 +90,7 @@ and then configure it:
 
 ```js:title=gatsby-config.js
 module.exports = {
-  __experimentalThemes: ["gatsby-theme-blog"],
+  plugins: ["gatsby-theme-blog"],
 }
 ```
 

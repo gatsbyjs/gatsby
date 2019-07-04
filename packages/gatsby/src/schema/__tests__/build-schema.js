@@ -806,7 +806,7 @@ describe(`Build schema`, () => {
       )
     })
 
-    it(`displays error message for reserved type names`, () => {
+    it(`displays error message for reserved type names`, async () => {
       const typeDefs = [
         [`TestSortInput`, `type TestSortInput { foo: Boolean }`],
         [
@@ -822,34 +822,40 @@ describe(`Build schema`, () => {
           buildObjectType({ name: `TestFilterInput`, fields: {} }),
         ],
       ]
-      return Promise.all(
-        typeDefs.map(([name, def]) => {
-          store.dispatch({ type: `DELETE_CACHE` })
-          createTypes(def)
-          return expect(buildSchema()).rejects.toThrow(
+      expect.assertions(4)
+      for (const [name, def] of typeDefs) {
+        store.dispatch({ type: `DELETE_CACHE` })
+        createTypes(def)
+        try {
+          await buildSchema()
+        } catch (error) {
+          expect(error.message).toBe(
             `GraphQL type names ending with "FilterInput" or "SortInput" are ` +
               `reserved for internal use. Please rename \`${name}\`.`
           )
-        })
-      )
+        }
+      }
     })
 
-    it(`displays error message for reserved type names`, () => {
+    it(`displays error message for reserved built-in type names`, async () => {
       const typeDefs = [
         [`JSON`, `type JSON { foo: Boolean }`],
         [`Date`, new GraphQLObjectType({ name: `Date`, fields: {} })],
         [`Float`, buildObjectType({ name: `Float`, fields: {} })],
       ]
-      return Promise.all(
-        typeDefs.map(([name, def]) => {
-          store.dispatch({ type: `DELETE_CACHE` })
-          createTypes(def)
-          return expect(buildSchema()).rejects.toThrow(
+      expect.assertions(3)
+      for (const [name, def] of typeDefs) {
+        store.dispatch({ type: `DELETE_CACHE` })
+        createTypes(def)
+        try {
+          await buildSchema()
+        } catch (error) {
+          expect(error.message).toBe(
             `The GraphQL type \`${name}\` is reserved for internal use by ` +
               `built-in scalar types.`
           )
-        })
-      )
+        }
+      }
     })
 
     it(`allows modifying nested types`, async () => {
