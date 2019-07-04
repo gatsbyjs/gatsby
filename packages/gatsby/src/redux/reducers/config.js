@@ -9,9 +9,6 @@ module.exports = (state = {}, action) => {
       const result = gatsbyConfigSchema.validate(action.payload || {})
 
       const normalizedPayload = result.value
-      // normalizedPayload.pathPrefix = normalizedPayload.pathPrefix.replace(/^\/$/, '');
-
-      console.log(result)
 
       // TODO use Redux for capturing errors from different
       // parts of Gatsby so a) can capture richer errors and b) be
