@@ -30,6 +30,7 @@ const {
   cloneTreeUntil,
   findLastTextNode,
 } = require(`./hast-processing`)
+const codeHandler = require(`./code-handler`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -338,7 +339,10 @@ module.exports = (
         return cachedAst
       } else {
         const ast = await getAST(markdownNode)
-        const htmlAst = toHAST(ast, { allowDangerousHTML: true })
+        const htmlAst = toHAST(ast, {
+          allowDangerousHTML: true,
+          handlers: { code: codeHandler },
+        })
 
         // Save new HTML AST to cache and return
         cache.set(htmlAstCacheKey(markdownNode), htmlAst)

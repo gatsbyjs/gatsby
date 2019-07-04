@@ -832,6 +832,27 @@ This is [a reference]
   )
 })
 
+describe(`Code block metas are correctly generated`, () => {
+  bootstrapTest(
+    `code block with language and meta`,
+    `
+\`\`\`js foo bar
+console.log('hello world')
+\`\`\`
+`,
+    `htmlAst`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
+        [`language-js`]
+      )
+      expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
+        `foo bar`
+      )
+    }
+  )
+})
+
 describe(`Headings are generated correctly from schema`, () => {
   bootstrapTest(
     `returns value`,

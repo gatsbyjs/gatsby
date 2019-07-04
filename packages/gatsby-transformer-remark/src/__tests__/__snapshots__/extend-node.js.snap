@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Code block metas are correctly generated code block with language and meta 1`] = `
+Object {
+  "htmlAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "console.log('hello world')
+",
+              },
+            ],
+            "properties": Object {
+              "className": Array [
+                "language-js",
+              ],
+              "dataMeta": "foo bar",
+            },
+            "tagName": "code",
+            "type": "element",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "pre",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+}
+`;
+
 exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
 Object {
   "excerpt": "",
