@@ -8,7 +8,7 @@ Do you want a personal website with a blog running at `your-domain/blog`? Do you
 
 This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog), a Gatsby starter based on the very popular [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences are that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/), with VS Code highlighting for code blocks.
 
-## Let's walk through setting up a site in 4 Steps:
+## Walk through setting up a site in 4 steps:
 
 ### Step 1
 
