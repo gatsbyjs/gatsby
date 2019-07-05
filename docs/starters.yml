@@ -3075,6 +3075,73 @@
     - Detailed guide on how to deploy using AWS S3 buckets included in README
     - .gitlab-ci.yml file with blanks that can be customized for any Gatsby project
     - Configurations for EditorConfig, Prettier, and ESLint (for TypeScript)
+- url: https://gatsby-starter-apollo.smakosh.com/app/
+  repo: https://github.com/smakosh/gatsby-apollo-starter
+  description: Gatsby Apollo starter - with client side routing
+  tags:
+    - Client-side App
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - Apollo provider & Client side routing
+    - Eslint/Prettier configured
+    - Easy to customize
+    - Nice project structure
+    - Flex Grid components easy to customize
+- url: https://portfolio.smakosh.com/
+  repo: https://github.com/smakosh/gatsby-portfolio-dev
+  description: A portfolio for developers
+  tags:
+    - Portfolio
+    - SEO
+    - Netlify
+    - Onepage
+    - Styling:CSS-in-JS
+  features:
+    - Eslint/Prettier configured
+    - Scores 100% on a11y / Performance / PWA / SEO
+    - PWA (desktop & mobile)
+    - Easy to customize
+    - Nice project structure
+    - Amazing illustrations by Undraw.co
+    - Tablet & mobile friendly
+    - Continuous deployment with Netlify
+    - A contact form protected by Google Recaptcha
+    - Can be deployed with one click
+    - Functional components with Recompose React Hooks! ready to migrate to React hooks!
+    - Fetches your Github pinned projects with most stars (You could customize this if you wish)
+- url: https://github.com/smakosh/gatsby-airtable-starter
+  repo: https://github.com/smakosh/gatsby-airtable-starter
+  description: Gatsby Airtable starter
+  tags:
+    - SEO
+    - Netlify
+    - Client-side App
+    - Styling:CSS-in-JS
+  features:
+    - Static content fetched from Airtable
+    - Dynamic content with CRUD operations with Airtable REST API
+    - Well structured files/folders
+    - Custom React Hooks
+    - Custom Helpers instead of using third party libraries
+    - Dynamic & Static containers
+    - Global state management ready with useReducer & useContext
+    - Dummy auth but ready to add real requests
+- url: https://github.com/smakosh/gatsby-app-starter-rest-api
+  repo: https://github.com/smakosh/gatsby-app-starter-rest-api
+  description: Gatsby REST API starter
+  tags:
+    - Authentication
+    - Client-side App
+    - Styling:CSS-in-JS
+  features:
+    - Dynamic content with CRUD operations with a REST API
+    - Well structured files/folders
+    - Custom React Hooks
+    - Auth with a JWT approach
+    - Custom Helpers instead of using third party libraries
+    - Dynamic containers
+    - Global state management ready with useReducer & useContext
 - url: https://gatsbyjs-starter-tailwindplay.appseed.us/
   repo: https://github.com/app-generator/gatsbyjs-starter-tailwindplay
   description: A Gatsby v2 starter styled using Tailwind, a utility-first CSS framework. Uses Purgecss to remove unused CSS.
