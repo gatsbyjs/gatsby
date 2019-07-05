@@ -99,8 +99,8 @@ describe(`createArgsDigest`, () => {
       it(`sorts nested arguments`, () => {
         const args = {
           duotone: {
-            highlight: `#32CD32`,
             shadow: `#10c5f8`,
+            highlight: `#32CD32`,
           },
           cropFocus: 17,
         }
@@ -108,8 +108,8 @@ describe(`createArgsDigest`, () => {
         expect(actual).toEqual({
           cropFocus: 17,
           duotone: {
-            shadow: `#10c5f8`,
             highlight: `#32CD32`,
+            shadow: `#10c5f8`,
           },
         })
       })
