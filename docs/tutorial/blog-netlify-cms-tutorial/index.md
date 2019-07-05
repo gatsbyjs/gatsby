@@ -46,6 +46,8 @@ backend:
 
 To make sure that Netlify CMS has access to your GitHub repo, you need to set up an OAuth application on GitHub. The instructions for that are here: [https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider). Once you've configured an authentication provider then you'll be able to use Netlify CMS at your deployed site to add new posts.
 
+![Netlify and GitHub Authorization](https://cdn.netlify.com/67edd5b656c432888d736cd40125cb61376905bb/c1cba/img/docs/github-oauth-config.png)
+
 ### Step 4
 
 Open [github.com](http://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
