@@ -97,7 +97,6 @@ describe(`createArgsDigest`, () => {
 
     describe(`argument sorting`, () => {
       it(`sorts nested arguments`, () => {
-        // take the defaultargsbaseline, add a duotone argument (out of order)
         const args = {
           duotone: {
             highlight: `#32CD32`,
@@ -105,14 +104,12 @@ describe(`createArgsDigest`, () => {
           },
           cropFocus: 17,
         }
-        // call the method that organizes the arguments
         const actual = sortKeys(args)
-        // and ensure that the duotone argument is still preserved
         expect(actual).toEqual({
           cropFocus: 17,
           duotone: {
-            highlight: `#32CD32`,
             shadow: `#10c5f8`,
+            highlight: `#32CD32`,
           },
         })
       })
