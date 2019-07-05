@@ -64,6 +64,6 @@ To make sure that Netlify CMS has access to your GitHub, you need to set up an O
 
 Head into `gatsby-config.js` and you can edit your siteMedata, add a Google Analytics tracking ID, and your app icon/favicon.
 
-To connect your Netlify site to your custom domain, see [Netlify's instructions on custom domains](https://www.netlify.com/docs/custom-domains/). If you want to learn more about Gatsby, you can head over to the [Gatsby documentation](/docs/) and learn how to work with data and their API. To learn more about React to customize the look of your site, the [React documentation](https://reactjs.org/docs/getting-started.html) has many useful references and guides.
+To connect your Netlify site to your custom domain, see [Netlify's instructions on custom domains](https://www.netlify.com/docs/custom-domains/). If you want to learn more about Gatsby, check out the [Gatsby documentation](/docs/) and learn how to work with [sourcing data](/docs/content-and-data/) and [Gatsby APIs](/docs/api-reference/). To learn more about customizing the look of your site, the [Gatsby styling docs](/docs/styling/) and [React documentation](https://reactjs.org/docs/getting-started.html) contain useful references and guides.
 
 Happy hacking and [share with me your new blog](https://twitter.com/intent/tweet?text=%40thomaswangio%20Check%20out%20my%20new%20blog) if you want! Also, you can [subscribe to my Youtube channel](https://t.wang.sh/yt-sub) if you'd like to see more video tutorials.
