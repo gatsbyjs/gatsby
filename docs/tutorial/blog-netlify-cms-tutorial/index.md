@@ -31,20 +31,6 @@ You'll notice now you can go to `[localhost:8000](http://localhost:8000)` to see
 
 ### Step 3
 
-Open [github.com](http://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
-
-```sh
-git init
-git add .
-git commit -m "init"
-git remote add origin https://github.com/[your-username]/[your-repo-name].git
-git push -u origin master
-```
-
-Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site".
-
-### Step 4
-
 Open the project in your code editor and open `static/admin/config.yml`. Replace the following piece of code with these settings, replacing `your-username/your-repo-name` with your GitHub username and repo. Then push this code to GitHub.
 
 ```diff
@@ -60,10 +46,22 @@ backend:
 
 To make sure that Netlify CMS has access to your GitHub repo, you need to set up an OAuth application on GitHub. The instructions for that are here: [https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider). Once you've configured an authentication provider then you'll be able to use Netlify CMS at your deployed site to add new posts.
 
+### Step 4
+
+Open [github.com](http://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
+
+```sh
+git init
+git add .
+git commit -m "init"
+git remote add origin https://github.com/[your-username]/[your-repo-name].git
+git push -u origin master
+```
+
+Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site".
+
+![Netlify Dashboard](netlify-dashboard.png)
+
 ## Customizing your site
 
 Head into `gatsby-config.js` and you can edit your siteMedata, add a Google Analytics tracking ID, and your app icon/favicon.
-
-To connect your Netlify site to your custom domain, see [Netlify's instructions on custom domains](https://www.netlify.com/docs/custom-domains/). If you want to learn more about Gatsby, check out the [Gatsby documentation](/docs/) and learn how to work with [sourcing data](/docs/content-and-data/) and [Gatsby APIs](/docs/api-reference/). To learn more about customizing the look of your site, the [Gatsby styling docs](/docs/styling/) and [React documentation](https://reactjs.org/docs/getting-started.html) contain useful references and guides.
-
-Happy hacking and [share with me your new blog](https://twitter.com/intent/tweet?text=%40thomaswangio%20Check%20out%20my%20new%20blog) if you want! Also, you can [subscribe to my Youtube channel](https://t.wang.sh/yt-sub) if you'd like to see more video tutorials.
