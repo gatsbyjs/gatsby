@@ -1401,10 +1401,12 @@
     - PWA
     - Linting
   features:
-    - Markdown
+    - Markdown and MDX
     - Local search powered by Lunr
     - Syntax highlighting
     - Images
+    - Styling with Emotion
+    - Testing with Jest and react-testing-library
 - url: https://gatsby-netlify-cms-example.netlify.com/
   repo: https://github.com/robertcoopercode/gatsby-netlify-cms
   description: Gatsby starter using Netlify CMS
