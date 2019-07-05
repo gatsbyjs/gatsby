@@ -1,0 +1,22 @@
+[
+  {
+    "id": "blog-1",
+    "title": "Gatsby is pretty amazing",
+    "authors": ["m@example.com"],
+    "date": "2019-01-01",
+    "tags": ["foo", "bar"]
+  },
+  {
+    "id": "blog-2",
+    "title": "But Gatsby blog posts might not have an author",
+    "date": "2018-01-01",
+    "tags": ["baz", "bar"]
+  },
+  {
+    "id": "blog-3",
+    "title": "Or they might have more than one author",
+    "authors": ["m@example.com", "s@example.com"],
+    "date": "2017-01-01",
+    "tags": ["baz"]
+  }
+]

@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
-
+const semver = require(`semver`)
+const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
 
@@ -29,25 +30,56 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
   let message = `\n`
   message += stripIndent`
     Your plugins must export known APIs from their gatsby-${exportType}.js.
-    The following exports aren't APIs. Perhaps you made a typo or
-    your plugin is outdated?
+    The following exports aren't APIs. Perhaps you made a typo or your plugin is outdated?
 
-    See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs`
+    See https://www.gatsbyjs.org/docs/${exportType}-apis/ for the list of Gatsby ${capitalized} APIs
+  `
 
   badExports.forEach(bady => {
+    message += `\n\n`
     const similarities = stringSimiliarity.findBestMatch(bady.exportName, apis)
-    message += `\n — `
-    if (bady.pluginName == `default-site-plugin`) {
-      message += `Your site's gatsby-${exportType}.js is exporting a variable named "${
-        bady.exportName
-      }" which isn't an API.`
-    } else {
-      message += `The plugin "${bady.pluginName}@${
-        bady.pluginVersion
-      }" is exporting a variable named "${bady.exportName}" which isn't an API.`
+    const isDefaultPlugin = bady.pluginName == `default-site-plugin`
+    const badExportsMigrationMap = {
+      modifyWebpackConfig: {
+        replacement: `onCreateWebpackConfig`,
+        migrationLink: `https://gatsby.dev/update-webpack-config`,
+      },
+      wrapRootComponent: {
+        replacement: `wrapRootElement`,
+        migrationLink: `https://gatsby.dev/update-wraprootcomponent`,
+      },
     }
-    if (similarities.bestMatch.rating > 0.5) {
-      message += ` Perhaps you meant to export "${
+    const isOldAPI = Object.keys(badExportsMigrationMap).includes(
+      bady.exportName
+    )
+
+    if (isDefaultPlugin && isOldAPI) {
+      const { replacement, migrationLink } = badExportsMigrationMap[
+        bady.exportName
+      ]
+      message += stripIndent`
+        - Your site's gatsby-${exportType}.js is exporting "${
+        bady.exportName
+      }" which was removed in Gatsby v2. Refer to the migration guide for more info on upgrading to "${replacement}":
+      `
+      message += `\n ${migrationLink}`
+    } else if (isDefaultPlugin) {
+      message += stripIndent`
+        - Your site's gatsby-${exportType}.js is exporting a variable named "${
+        bady.exportName
+      }" which isn't an API.
+      `
+    } else {
+      message += stripIndent`
+        - The plugin "${bady.pluginName}@${
+        bady.pluginVersion
+      }" is exporting a variable named "${bady.exportName}" which isn't an API.
+      `
+    }
+
+    if (similarities.bestMatch.rating > 0.5 && !isOldAPI) {
+      message += `\n\n`
+      message += `Perhaps you meant to export "${
         similarities.bestMatch.target
       }"?`
     }
@@ -58,27 +90,20 @@ const getBadExportsMessage = (badExports, exportType, apis) => {
 
 const handleBadExports = ({ apis, badExports }) => {
   // Output error messages for all bad exports
-  let isBad = false
   _.toPairs(badExports).forEach(badItem => {
     const [exportType, entries] = badItem
     if (entries.length > 0) {
-      isBad = true
-      console.log(getBadExportsMessage(entries, exportType, apis[exportType]))
+      reporter.panicOnBuild(
+        getBadExportsMessage(entries, exportType, apis[exportType])
+      )
     }
   })
-  return isBad
 }
 
 /**
  * Identify which APIs each plugin exports
  */
 const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
-  const allAPIs = [...apis.node, ...apis.browser, ...apis.ssr]
-  const apiToPlugins = allAPIs.reduce((acc, value) => {
-    acc[value] = []
-    return acc
-  }, {})
-
   // Get a list of bad exports
   const badExports = {
     node: [],
@@ -95,7 +120,10 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
     const pluginNodeExports = resolveModuleExports(
-      `${plugin.resolve}/gatsby-node`
+      `${plugin.resolve}/gatsby-node`,
+      {
+        mode: `require`,
+      }
     )
     const pluginBrowserExports = resolveModuleExports(
       `${plugin.resolve}/gatsby-browser`
@@ -106,7 +134,6 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
 
     if (pluginNodeExports.length > 0) {
       plugin.nodeAPIs = _.intersection(pluginNodeExports, apis.node)
-      plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
       badExports.node = badExports.node.concat(
         getBadExports(plugin, pluginNodeExports, apis.node)
       ) // Collate any bad exports
@@ -114,9 +141,6 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
 
     if (pluginBrowserExports.length > 0) {
       plugin.browserAPIs = _.intersection(pluginBrowserExports, apis.browser)
-      plugin.browserAPIs.map(browserAPI =>
-        apiToPlugins[browserAPI].push(plugin.name)
-      )
       badExports.browser = badExports.browser.concat(
         getBadExports(plugin, pluginBrowserExports, apis.browser)
       ) // Collate any bad exports
@@ -124,21 +148,21 @@ const collatePluginAPIs = ({ apis, flattenedPlugins }) => {
 
     if (pluginSSRExports.length > 0) {
       plugin.ssrAPIs = _.intersection(pluginSSRExports, apis.ssr)
-      plugin.ssrAPIs.map(ssrAPI => apiToPlugins[ssrAPI].push(plugin.name))
       badExports.ssr = badExports.ssr.concat(
         getBadExports(plugin, pluginSSRExports, apis.ssr)
       ) // Collate any bad exports
     }
   })
 
-  return { apiToPlugins, flattenedPlugins, badExports }
+  return { flattenedPlugins, badExports }
 }
 
-const handleMultipleReplaceRenderers = ({ apiToPlugins, flattenedPlugins }) => {
+const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
   // multiple replaceRenderers may cause problems at build time
-  if (apiToPlugins.replaceRenderer.length > 1) {
-    const rendererPlugins = [...apiToPlugins.replaceRenderer]
-
+  const rendererPlugins = flattenedPlugins
+    .filter(plugin => plugin.ssrAPIs.includes(`replaceRenderer`))
+    .map(plugin => plugin.name)
+  if (rendererPlugins.length > 1) {
     if (rendererPlugins.includes(`default-site-plugin`)) {
       reporter.warn(`replaceRenderer API found in these plugins:`)
       reporter.warn(rendererPlugins.join(`, `))
@@ -184,8 +208,24 @@ const handleMultipleReplaceRenderers = ({ apiToPlugins, flattenedPlugins }) => {
   return flattenedPlugins
 }
 
+function warnOnIncompatiblePeerDependency(name, packageJSON) {
+  // Note: In the future the peer dependency should be enforced for all plugins.
+  const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
+  if (
+    gatsbyPeerDependency &&
+    !semver.satisfies(gatsbyVersion, gatsbyPeerDependency, {
+      includePrerelease: true,
+    })
+  ) {
+    reporter.warn(
+      `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion} - It requires gatsby@${gatsbyPeerDependency}`
+    )
+  }
+}
+
 module.exports = {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
+  warnOnIncompatiblePeerDependency,
 }

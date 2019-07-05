@@ -1,9 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Loader Resources are ordered correctly by count 1`] = `
-Array [
-  "page-component---src-pages-test-js",
-  "about-me.json",
-  "about.json",
-]
+exports[`BaseLoader loadPage should be successful when component can be loaded 1`] = `
+Object {
+  "component": "instance",
+  "json": Object {
+    "pageContext": "something something",
+  },
+  "page": Object {
+    "componentChunkName": "chunk",
+    "matchPath": undefined,
+    "path": "/mypage/",
+    "webpackCompilationHash": "123",
+  },
+}
 `;

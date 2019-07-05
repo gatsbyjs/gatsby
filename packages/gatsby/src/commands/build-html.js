@@ -1,60 +1,134 @@
 /* @flow */
+const Promise = require(`bluebird`)
 const webpack = require(`webpack`)
-const fs = require(`fs`)
-const debug = require(`debug`)(`gatsby:html`)
-
+const fs = require(`fs-extra`)
+const convertHrtime = require(`convert-hrtime`)
+const { chunk } = require(`lodash`)
 const webpackConfig = require(`../utils/webpack.config`)
-const { store } = require(`../redux`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
-const renderHTMLQueue = require(`../utils/html-renderer-queue`)
+const telemetry = require(`gatsby-telemetry`)
 
-module.exports = async (program: any, activity: any) => {
-  const { directory } = program
-
-  debug(`generating static HTML`)
-  // Reduce pages objects to an array of paths.
-  const pages = Array.from(store.getState().pages.values(), page => page.path)
-
-  // Static site generation.
-  const compilerConfig = await webpackConfig(
-    program,
-    directory,
-    `build-html`,
-    null
-  )
-
-  return new Promise((resolve, reject) => {
-    webpack(compilerConfig).run((e, stats) => {
-      if (e) {
-        return reject(e)
+const runWebpack = compilerConfig =>
+  new Promise((resolve, reject) => {
+    webpack(compilerConfig).run((err, stats) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(stats)
       }
-      const outputFile = `${directory}/public/render-page.js`
-      if (stats.hasErrors()) {
-        let webpackErrors = stats.toJson().errors.filter(Boolean)
-        return reject(
-          webpackErrors.length
-            ? createErrorFromString(webpackErrors[0], `${outputFile}.map`)
-            : new Error(
-                `There was an issue while building the site: ` +
-                  `\n\n${stats.toString()}`
-              )
-        )
-      }
-
-      return renderHTMLQueue(outputFile, pages, activity)
-        .then(() => {
-          // Remove the temp JS bundle file built for the static-site-generator-plugin
-          try {
-            fs.unlinkSync(outputFile)
-            fs.unlinkSync(`${outputFile}.map`)
-          } catch (e) {
-            // This function will fail on Windows with no further consequences.
-          }
-          return resolve(null, stats)
-        })
-        .catch(e => {
-          reject(createErrorFromString(e.stack, `${outputFile}.map`))
-        })
     })
   })
+
+const doBuildRenderer = async (program, webpackConfig) => {
+  const { directory } = program
+  const stats = await runWebpack(webpackConfig)
+  // render-page.js is hard coded in webpack.config
+  const outputFile = `${directory}/public/render-page.js`
+  if (stats.hasErrors()) {
+    let webpackErrors = stats.toJson().errors.filter(Boolean)
+    const error = webpackErrors.length
+      ? createErrorFromString(webpackErrors[0], `${outputFile}.map`)
+      : new Error(
+          `There was an issue while building the site: ` +
+            `\n\n${stats.toString()}`
+        )
+    throw error
+  }
+  return outputFile
+}
+
+const buildRenderer = async (program, stage) => {
+  const { directory } = program
+  const config = await webpackConfig(program, directory, stage, null)
+  return await doBuildRenderer(program, config)
+}
+
+const deleteRenderer = async rendererPath => {
+  try {
+    await fs.remove(rendererPath)
+    await fs.remove(`${rendererPath}.map`)
+  } catch (e) {
+    // This function will fail on Windows with no further consequences.
+  }
+}
+
+const renderHTMLQueue = (
+  { workerPool, activity },
+  htmlComponentRendererPath,
+  pages
+) =>
+  new Promise((resolve, reject) => {
+    // We need to only pass env vars that are set programmatically in gatsby-cli
+    // to child process. Other vars will be picked up from environment.
+    const envVars = Object.entries({
+      NODE_ENV: process.env.NODE_ENV,
+      gatsby_executing_command: process.env.gatsby_executing_command,
+      gatsby_log_level: process.env.gatsby_log_level,
+    })
+
+    const start = process.hrtime()
+    const segments = chunk(pages, 50)
+    let finished = 0
+
+    Promise.map(
+      segments,
+      pageSegment =>
+        new Promise((resolve, reject) => {
+          workerPool
+            .renderHTML({
+              htmlComponentRendererPath,
+              paths: pageSegment,
+              envVars,
+            })
+            .then(() => {
+              finished += pageSegment.length
+              if (activity) {
+                activity.setStatus(
+                  `${finished}/${pages.length} ${(
+                    finished / convertHrtime(process.hrtime(start)).seconds
+                  ).toFixed(2)} pages/second`
+                )
+              }
+              resolve()
+            })
+            .catch(reject)
+        })
+    )
+      .then(resolve)
+      .catch(reject)
+  })
+
+const doBuildPages = async ({
+  rendererPath,
+  pagePaths,
+  activity,
+  workerPool,
+}) => {
+  telemetry.decorateEvent(`BUILD_END`, {
+    siteMeasurements: { pagesCount: pagePaths.length },
+  })
+
+  try {
+    await renderHTMLQueue({ workerPool, activity }, rendererPath, pagePaths)
+  } catch (e) {
+    const prettyError = createErrorFromString(e.stack, `${rendererPath}.map`)
+    prettyError.context = e.context
+    throw prettyError
+  }
+}
+
+const buildPages = async ({
+  program,
+  stage,
+  pagePaths,
+  activity,
+  workerPool,
+}) => {
+  const rendererPath = await buildRenderer(program, stage)
+  await doBuildPages({ rendererPath, pagePaths, activity, workerPool })
+  await deleteRenderer(rendererPath)
+}
+
+module.exports = {
+  buildPages,
 }

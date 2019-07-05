@@ -1,12 +1,22 @@
-/*global __PATH_PREFIX__ */
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, NavLink } from "react-router-dom"
-import { polyfill } from "react-lifecycles-compat"
-import { createLocation, createPath } from "history"
+import { Link } from "@reach/router"
+
+import { parsePath } from "./parse-path"
+
+export { parsePath }
 
 export function withPrefix(path) {
-  return normalizePath(`${__PATH_PREFIX__}/${path}`)
+  return normalizePath(
+    [
+      typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
+      path,
+    ].join(`/`)
+  )
+}
+
+export function withAssetPrefix(path) {
+  return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
 function normalizePath(path) {
@@ -16,10 +26,7 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
-  exact: PropTypes.bool,
-  strict: PropTypes.bool,
-  isActive: PropTypes.func,
-  location: PropTypes.object,
+  partiallyActive: PropTypes.bool,
 }
 
 // Set up IntersectionObserver
@@ -42,77 +49,103 @@ const handleIntersection = (el, cb) => {
 }
 
 class GatsbyLink extends React.Component {
-  constructor(props, context) {
-    super()
+  constructor(props) {
+    super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
     if (typeof window !== `undefined` && window.IntersectionObserver) {
       IOSupported = true
     }
 
-    const { location } = context.router.history
-    const to = createLocation(props.to, null, null, location)
-
     this.state = {
-      path: createPath(to),
-      to,
       IOSupported,
-      location,
     }
     this.handleRef = this.handleRef.bind(this)
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.to === nextProps.to) return null
-    const to = createLocation(nextProps.to, null, null, prevState.location)
-    const path = createPath(to)
-    return { path, to }
   }
 
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(this.state.path)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(this.state.to.pathname)
+      ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
   handleRef(ref) {
-    this.props.innerRef && this.props.innerRef(ref)
+    if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
+      this.props.innerRef.current = ref
+    } else if (this.props.innerRef) {
+      this.props.innerRef(ref)
+    }
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
-        ___loader.enqueue(this.state.to.pathname)
+        ___loader.enqueue(parsePath(this.props.to).pathname)
       })
     }
   }
 
+  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+    if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
+      return {
+        className: [this.props.className, this.props.activeClassName]
+          .filter(Boolean)
+          .join(` `),
+        style: { ...this.props.style, ...this.props.activeStyle },
+      }
+    }
+    return null
+  }
+
   render() {
-    const { onClick, onMouseEnter, ...rest } = this.props
-    let El
-    if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-      El = NavLink
-    } else {
-      El = Link
+    const {
+      to,
+      getProps = this.defaultGetProps,
+      onClick,
+      onMouseEnter,
+      /* eslint-disable no-unused-vars */
+      activeClassName: $activeClassName,
+      activeStyle: $activeStyle,
+      innerRef: $innerRef,
+      partiallyActive,
+      state,
+      replace,
+      /* eslint-enable no-unused-vars */
+      ...rest
+    } = this.props
+
+    const LOCAL_URL = /^\/(?!\/)/
+    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
+      console.warn(
+        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
+      )
     }
 
+    const prefixedTo = withPrefix(to)
+
     return (
-      <El
+      <Link
+        to={prefixedTo}
+        state={state}
+        getProps={getProps}
+        innerRef={this.handleRef}
         onMouseEnter={e => {
-          // eslint-disable-line
-          onMouseEnter && onMouseEnter(e)
-          ___loader.hovering(this.state.path)
+          if (onMouseEnter) {
+            onMouseEnter(e)
+          }
+          ___loader.hovering(parsePath(to).pathname)
         }}
         onClick={e => {
-          // eslint-disable-line
-          onClick && onClick(e)
+          if (onClick) {
+            onClick(e)
+          }
 
           if (
             e.button === 0 && // ignore right clicks
@@ -123,47 +156,16 @@ class GatsbyLink extends React.Component {
             !e.ctrlKey &&
             !e.shiftKey
           ) {
-            // Is this link pointing to a hash on the same page? If so,
-            // just scroll there.
-            let pathname = this.state.path
-            if (pathname.split(`#`).length > 1) {
-              pathname = pathname
-                .split(`#`)
-                .slice(0, -1)
-                .join(``)
-            }
-            if (pathname === window.location.pathname) {
-              const hashFragment = this.state.path
-                .split(`#`)
-                .slice(1)
-                .join(`#`)
-              const element = hashFragment
-                ? document.getElementById(hashFragment)
-                : null
-              if (element !== null) {
-                element.scrollIntoView()
-                return true
-              } else {
-                // This is just a normal link to the current page so let's emulate default
-                // browser behavior by scrolling now to the top of the page.
-                window.scrollTo(0, 0)
-                return true
-              }
-            }
+            e.preventDefault()
 
-            // In production, make sure the necessary scripts are
+            // Make sure the necessary scripts and data are
             // loaded before continuing.
-            if (process.env.NODE_ENV === `production`) {
-              e.preventDefault()
-              window.___push(this.state.to)
-            }
+            navigate(to, { state, replace })
           }
 
           return true
         }}
         {...rest}
-        to={this.state.to}
-        innerRef={this.handleRef}
       />
     )
   }
@@ -171,29 +173,37 @@ class GatsbyLink extends React.Component {
 
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
-  innerRef: PropTypes.func,
   onClick: PropTypes.func,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  to: PropTypes.string.isRequired,
+  replace: PropTypes.bool,
 }
 
-GatsbyLink.contextTypes = {
-  router: PropTypes.object,
-}
+export default React.forwardRef((props, ref) => (
+  <GatsbyLink innerRef={ref} {...props} />
+))
 
-export default polyfill(GatsbyLink)
+export const navigate = (to, options) => {
+  window.___navigate(withPrefix(to), options)
+}
 
 export const push = to => {
-  window.___push(to)
+  console.warn(
+    `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
+  window.___push(withPrefix(to))
 }
 
 export const replace = to => {
-  window.___replace(to)
+  console.warn(
+    `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
+  window.___replace(withPrefix(to))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
   console.warn(
-    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "push" instead.`
+    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
   )
   return push(to)
 }

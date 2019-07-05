@@ -13,7 +13,7 @@
 const apis = require(`./api-ssr-docs`)
 
 // Run the specified API in any plugins that have implemented it
-module.exports = (api, args, defaultReturn) => {
+module.exports = (api, args, defaultReturn, argTransform) => {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }
@@ -25,6 +25,9 @@ module.exports = (api, args, defaultReturn) => {
       return undefined
     }
     const result = plugin.plugin[api](args, plugin.options)
+    if (result && argTransform) {
+      args = argTransform({ args, result })
+    }
     return result
   })
 

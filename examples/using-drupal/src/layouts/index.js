@@ -106,7 +106,8 @@ class DefaultLayout extends React.Component {
                 fictional magazine and publisher for illustrative purposes only
               </p>
               <p>
-                Read the{` `}
+                Read the
+                {` `}
                 <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal">
                   source for this website.
                 </a>

@@ -1,29 +1,56 @@
 import React from "react"
 import { Link } from "gatsby"
-import { rhythm, scale } from "../utils/typography"
-const _ = require(`lodash`)
+import TagsIcon from "react-icons/lib/ti/tags"
+const { kebabCase } = require(`lodash-es`)
+
+import Button from "./button"
+import { colors, space, fontSizes } from "../utils/presets"
 
 const TagsSection = ({ tags }) => {
   if (!tags) return null
   const tagLinks = tags.map((tag, i) => {
-    const divider = i < tags.length - 1 && <span>{` | `}</span>
+    const divider = i < tags.length - 1 && <span>{`, `}</span>
     return (
       <span key={tag}>
-        <Link to={`/blog/tags/${_.kebabCase(tag)}`}>{tag}</Link>
+        <Link to={`/blog/tags/${kebabCase(tag.toLowerCase())}`}>{tag}</Link>
         {divider}
       </span>
     )
   })
   return (
-    <em
-      style={{
-        ...scale(-1 / 5),
-        display: `block`,
-        marginBottom: rhythm(1),
+    <div
+      css={{
+        display: `flex`,
+        flexFlow: `row wrap`,
+        justifyContent: `space-between`,
+        alignItems: `baseline`,
+        borderTop: `1px solid ${colors.ui.border.subtle}`,
+        marginTop: space[10],
       }}
     >
-      Tagged with {tagLinks}
-    </em>
+      <em
+        css={{
+          fontSize: fontSizes[1],
+          display: `block`,
+          flexBasis: `60%`,
+          flexGrow: 1,
+          fontStyle: `normal`,
+          marginBottom: space[5],
+          marginRight: space[9],
+          marginTop: space[8],
+        }}
+      >
+        Tagged with {tagLinks}
+      </em>
+      <Button
+        css={{ flexShrink: 0 }}
+        small
+        key="blog-post-view-all-tags-button"
+        to="/blog/tags"
+      >
+        View all Tags <TagsIcon />
+      </Button>
+    </div>
   )
 }
 

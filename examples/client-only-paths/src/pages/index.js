@@ -1,117 +1,48 @@
 import React from "react"
-import { Link } from "gatsby"
-import ReactCSSTransitionGroup from "react-addons-css-transition-group"
-import { Route, Redirect } from "react-router-dom"
-
+import { Router, Link, Location } from "@reach/router"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 import "./main.css"
-import Layout from "../components/layout"
 
-class AnimationExample extends React.Component {
-  render() {
-    return (
-      <Layout>
-        <div style={{ position: `relative`, minHeight: `80vh` }}>
-          <Route
-            render={({ location }) => (
-              <div style={styles.fill}>
-                <Route
-                  exact
-                  path="/"
-                  render={() => <Redirect to="/10/90/50" />}
-                />
+const App = () => (
+  <div className="app">
+    <nav className="nav">
+      <Link to="/">Page 1</Link> <Link to="page/2">Page 2</Link>
+      {` `}
+      <Link to="page/3">Page 3</Link> <Link to="page/4">Page 4</Link>
+    </nav>
 
-                <ul style={styles.nav}>
-                  <NavLink to="/10/90/50">Red</NavLink>
-                  <NavLink to="/120/100/40">Green</NavLink>
-                  <NavLink to="/200/100/40">Blue</NavLink>
-                  <NavLink to="/310/100/50">Pink</NavLink>
-                </ul>
-
-                <div style={styles.content}>
-                  <ReactCSSTransitionGroup
-                    transitionName="fade"
-                    transitionEnterTimeout={300}
-                    transitionLeaveTimeout={300}
-                  >
-                    {/* no different than other usage of
-                ReactCSSTransitionGroup, just make
-                sure to pass `location` to `Route`
-                so it can match the old location
-                as it animates out
-            */}
-                    <Route
-                      location={location}
-                      key={location.key}
-                      path="/:h/:s/:l"
-                      component={HSL}
-                    />
-                  </ReactCSSTransitionGroup>
-                </div>
-              </div>
-            )}
-          />
-        </div>
-      </Layout>
-    )
-  }
-}
-
-const NavLink = props => (
-  <li style={styles.navItem}>
-    <Link {...props} style={{ color: `inherit` }} />
-  </li>
-)
-
-const HSL = ({ match: { params } }) => (
-  <div
-    style={{
-      ...styles.fill,
-      ...styles.hsl,
-      background: `hsl(${params.h}, ${params.s}%, ${params.l}%)`,
-    }}
-  >
-    hsl({params.h}, {params.s}%, {params.l}%)
+    <FadeTransitionRouter>
+      <Page path="/" page="1" />
+      <Page path="page/:page" />
+    </FadeTransitionRouter>
   </div>
 )
 
-const styles = {}
+const FadeTransitionRouter = props => (
+  <Location>
+    {({ location }) => (
+      <TransitionGroup className="transition-group">
+        <CSSTransition key={location.key} classNames="fade" timeout={500}>
+          {/* the only difference between a router animation and
+              any other animation is that you have to pass the
+              location to the router so the old screen renders
+              the "old location" */}
+          <Router location={location} className="router">
+            {props.children}
+          </Router>
+        </CSSTransition>
+      </TransitionGroup>
+    )}
+  </Location>
+)
 
-styles.fill = {
-  position: `absolute`,
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
-}
+const Page = props => (
+  <div
+    className="page"
+    style={{ background: `hsl(${props.page * 75}, 60%, 60%)` }}
+  >
+    {props.page}
+  </div>
+)
 
-styles.content = {
-  ...styles.fill,
-  top: `40px`,
-  textAlign: `center`,
-}
-
-styles.nav = {
-  padding: 0,
-  margin: 0,
-  position: `absolute`,
-  top: 0,
-  height: `40px`,
-  width: `100%`,
-  display: `flex`,
-}
-
-styles.navItem = {
-  textAlign: `center`,
-  flex: 1,
-  listStyleType: `none`,
-  padding: `10px`,
-}
-
-styles.hsl = {
-  ...styles.fill,
-  color: `white`,
-  paddingTop: `20px`,
-  fontSize: `30px`,
-}
-
-export default AnimationExample
+export default App

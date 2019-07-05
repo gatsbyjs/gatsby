@@ -1,98 +1,102 @@
 import React from "react"
 import { Link } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import Layout from "../../components/layout"
-import { sectionListDocs } from "../../utils/sidebar/section-list"
-import { createLinkDocs } from "../../utils/sidebar/create-link"
+import { itemListDocs } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
+import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
-import presets from "../../utils/presets"
+import FooterLinks from "../../components/shared/footer-links"
 
 class IndexRoute extends React.Component {
   render() {
     return (
-      <Layout
-        location={this.props.location}
-        createLink={createLinkDocs}
-        sectionList={sectionListDocs}
-      >
+      <Layout location={this.props.location} itemList={itemListDocs}>
         <DocSearchContent>
           <Container>
             <Helmet>
               <title>Docs</title>
+              <meta
+                name="description"
+                content="The one stop location for tutorials, guides, and information about building with Gatsby"
+              />
             </Helmet>
-            <h1 id="get-started" css={{ marginTop: 0 }}>
-              Get started
+            <h1 id="gatsby-documentation" css={{ marginTop: 0 }}>
+              Gatsby.js Documentation
             </h1>
-            <p>Gatsby is a blazing-fast static site generator for React.</p>
-            <h2>Install Gatsby{`'`}s command line tool</h2>
-            <p>
-              <code>npm install --global gatsby-cli</code>
-            </p>
-            <h2 id="using-the-gatsby-cli">Using the Gatsby CLI</h2>
+            <p>Gatsby is a blazing fast modern site generator for React.</p>
+            <h2>Get Started</h2>
+            <p>There are five main ways to get started with Gatsby:</p>
             <ol>
               <li>
-                Create a new site.
-                {` `}
-                <code>gatsby new gatsby-site</code>
+                <Link to="/tutorial/">Tutorials</Link>: Step-by-step
+                instructions on how to install Gatsby and start a project:
+                written for people without Gatsby or web development experience,
+                though these learning resources have helped developers of all
+                skill levels.
               </li>
               <li>
-                <code>cd gatsby-site</code>
+                <Link to="/docs/quick-start">Quick start</Link>: One page
+                summary of how to install Gatsby and start a new project.
               </li>
               <li>
-                <code>gatsby develop</code> — Gatsby will start a hot-reloading
-                development environment accessible at{` `}
-                <code>localhost:8000</code>
+                <Link to="/docs/recipes/">Recipes</Link>: A happy medium between
+                the tutorial and the quick start. Find some quick answers for
+                how to accomplish some specific, common tasks with Gatsby.
               </li>
               <li>
-                Try editing the javascript pages in <code>src/pages</code>.
-                Saved changes will live reload in the browser.
+                Choose your own adventure and peruse the various sections of the
+                Gatsby docs:
+                <ul>
+                  <li>
+                    <Link to="/docs/guides/">Reference Guides</Link>: Learn
+                    about the many different topics around building with Gatsby,
+                    like sourcing data, deployment, and more.
+                  </li>
+                  <li>
+                    <Link to="/docs/api-reference/">Gatsby API Reference</Link>:
+                    Learn more about Gatsby APIs and configuration.
+                  </li>
+                  <li>
+                    <Link to="/docs/releases-and-migration/">
+                      Releases &amp; Migration
+                    </Link>
+                    : Find release notes and guides for migration between major
+                    versions.
+                  </li>
+                  <li>
+                    <Link to="/docs/conceptual-guide/">Conceptual Guide</Link>:
+                    Read high-level overviews of the Gatsby approach.
+                  </li>
+                  <li>
+                    <Link to="/docs/gatsby-internals/">Gatsby Internals</Link>:
+                    Dig into how Gatsby works behind the scenes.
+                  </li>
+                  <li>
+                    <Link to="/docs/using-gatsby-professionally/">
+                      Using Gatsby Professionally
+                    </Link>
+                    : Learn tips and tricks for how to explain Gatsby to others
+                    at work, so that you have more opportunities to work with
+                    Gatsby professionally.
+                  </li>
+                </ul>
               </li>
               <li>
-                <code>gatsby build</code> — Gatsby will perform an optimized
-                production build for your site generating static HTML and
-                per-route JavaScript code bundles.
-              </li>
-              <li>
-                <code>gatsby serve</code> — Gatsby starts a local HTML server
-                for testing your built site.
+                Check out the <Link to="/ecosystem/">Ecosystem</Link> libraries
+                for Gatsby starters and plugins, as well as external community
+                resources.
               </li>
             </ol>
             <p>
-              To see detailed documentation for the CLI commands, run in the
-              terminal <code>gatsby --help</code> and for specific commands{` `}
-              <code>gatsby COMMAND_NAME --help</code> e.g.{` `}
-              <code>gatsby develop --help</code>.
+              Visit the <Link to="/contributing">Contributing</Link> section to
+              find guides on the Gatsby community, code of conduct, and how to
+              get started contributing to Gatsby.
             </p>
-            <h2 id="using-other-starters">Using other starters</h2>
-            <p>
-              Running <code>gatsby new</code> installs the default Gatsby
-              starter. There are{` `}
-              <Link to="/docs/gatsby-starters/">
-                many other official and community starters
-              </Link>
-              {` `}
-              you can use to kickstart building your Gatsby site.
-            </p>
-            <h2 id="work-through-the-tutorial">Work through the tutorial</h2>
-            <p>
-              It walks you through building a Gatsby site from scratch to a
-              finished polished site.
-              {` `}
-              <Link to="/tutorial/">Go to the tutorial</Link>.
-            </p>
-            <div
-              css={{
-                display: `block`,
-                [presets.Tablet]: {
-                  display: `none`,
-                },
-              }}
-            >
-              <h2>Documentation</h2>
-            </div>
+            <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
           </Container>
+          <FooterLinks />
         </DocSearchContent>
       </Layout>
     )

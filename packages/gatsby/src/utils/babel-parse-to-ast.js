@@ -12,7 +12,12 @@ const PARSER_OPTIONS = {
     `flow`,
     `doExpressions`,
     `objectRestSpread`,
-    `decorators`,
+    [
+      `decorators`,
+      {
+        decoratorsBeforeExport: true,
+      },
+    ],
     `classProperties`,
     `classPrivateProperties`,
     `classPrivateMethods`,
@@ -28,19 +33,24 @@ const PARSER_OPTIONS = {
     `bigInt`,
     `optionalCatchBinding`,
     `throwExpressions`,
-    `pipelineOperator`,
+    [
+      `pipelineOperator`,
+      {
+        proposal: `minimal`,
+      },
+    ],
     `nullishCoalescingOperator`,
   ],
 }
 
 export function getBabelParserOptions(filePath: string) {
-  // Flow and typescript plugins can't be enabled simultaneously
+  // Flow and TypeScript plugins can't be enabled simultaneously
   if (/\.tsx?/.test(filePath)) {
     const { plugins } = PARSER_OPTIONS
     return {
       ...PARSER_OPTIONS,
-      plugins: plugins.map(
-        plugin => (plugin === `flow` ? `typescript` : plugin)
+      plugins: plugins.map(plugin =>
+        plugin === `flow` ? `typescript` : plugin
       ),
     }
   }

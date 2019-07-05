@@ -1,67 +1,62 @@
-import React, { Component, Fragment } from "react"
+import React, { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import { colors, mediaQueries, sizes } from "../utils/presets"
 
-class PageWithPluginSearchBar extends Component {
-  render() {
-    const searchbarWidth = rhythm(17)
+const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
+  <Fragment>
+    <nav
+      css={{
+        ...styles.sidebar,
+        // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
+        display: !isPluginsIndex ? `none` : false,
+      }}
+      aria-label="Plugin navigation"
+    >
+      <PluginSearchBar location={location} />
+    </nav>
+    <main
+      id={`reach-skip-nav`}
+      css={{
+        ...styles.content,
+        // mobile: hide README on gatsbyjs.org/plugins index page
+        display: isPluginsIndex ? `none` : false,
+      }}
+    >
+      {children}
+    </main>
+  </Fragment>
+)
 
-    const styles = {
-      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
-      width: `100vw`,
-      padding: rhythm(3 / 4),
-      zIndex: 1,
-      WebkitOverflowScrolling: `touch`,
-      "::-webkit-scrollbar": {
-        width: `6px`,
-        height: `6px`,
-      },
-      "::-webkit-scrollbar-thumb": {
-        background: colors.ui.bright,
-      },
-      "::-webkit-scrollbar-track": {
-        background: colors.ui.light,
-      },
-    }
+const widthDefault = rhythm(14)
+const widthLarge = rhythm(16)
 
-    const tabletStyles = {
-      width: searchbarWidth,
+const styles = {
+  sidebar: {
+    height: `calc(100vh - ${sizes.headerHeight})`,
+    width: `100%`,
+    zIndex: 1,
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
+    [mediaQueries.md]: {
+      display: `block`,
+      width: widthDefault,
       position: `fixed`,
-      background: colors.ui.whisper,
-      borderRight: `1px solid ${colors.ui.light}`,
-    }
-
-    return (
-      <Fragment>
-        <div
-          css={{
-            ...styles,
-            // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
-            display: `${!this.props.isPluginsIndex && `none`}`,
-            [presets.Tablet]: {
-              ...tabletStyles,
-              display: `block`,
-            },
-          }}
-        >
-          <PluginSearchBar history={this.props.history} />
-        </div>
-        <div
-          css={{
-            // mobile: hide README on gatsbyjs.org/plugins index page
-            display: `${this.props.isPluginsIndex && `none`}`,
-            [presets.Tablet]: {
-              display: `block`,
-              paddingLeft: `${searchbarWidth}`,
-            },
-          }}
-        >
-          {this.props.children}
-        </div>
-      </Fragment>
-    )
-  }
+      background: colors.white,
+      borderRight: `1px solid ${colors.ui.border.subtle}`,
+    },
+    [mediaQueries.lg]: {
+      width: widthLarge,
+    },
+  },
+  content: {
+    [mediaQueries.md]: {
+      display: `block`,
+      paddingLeft: widthDefault,
+    },
+    [mediaQueries.lg]: {
+      paddingLeft: widthLarge,
+    },
+  },
 }
 
 export default PageWithPluginSearchBar

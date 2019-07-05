@@ -5,7 +5,8 @@ const IndexRoute = () => (
   <Layout>
     <div>
       <p>
-        Welcome to the GatsbyJS Sitemap Demo. Visit{` `}
+        Welcome to the GatsbyJS Sitemap Demo. Visit
+        {` `}
         <a href="/sitemap.xml">to see the generated sitemap.</a>
       </p>
       <p>

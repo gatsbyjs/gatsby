@@ -1,26 +1,34 @@
 import React from "react"
-import { renderToString } from "react-dom/server"
 import { JssProvider, SheetsRegistry, ThemeProvider } from "react-jss"
 
-exports.replaceRenderer = (
-  { bodyComponent, replaceBodyHTMLString, setHeadComponents },
-  { theme = {} }
-) => {
-  const sheets = new SheetsRegistry()
+/**
+ * Keep track of SheetRegistry for each page
+ */
+const sheetsRegistryManager = new Map()
 
-  const bodyHTML = renderToString(
+// eslint-disable-next-line react/prop-types,react/display-name
+exports.wrapRootElement = ({ element, pathname }, { theme = {} }) => {
+  const sheets = new SheetsRegistry()
+  sheetsRegistryManager.set(pathname, sheets)
+
+  return (
     <JssProvider registry={sheets}>
-      <ThemeProvider theme={theme}>{bodyComponent}</ThemeProvider>
+      <ThemeProvider theme={theme}>{element}</ThemeProvider>
     </JssProvider>
   )
+}
 
-  replaceBodyHTMLString(bodyHTML)
-  setHeadComponents([
-    <style
-      type="text/css"
-      id="server-side-jss"
-      key="server-side-jss"
-      dangerouslySetInnerHTML={{ __html: sheets.toString() }}
-    />,
-  ])
+exports.onRenderBody = ({ setHeadComponents, pathname }) => {
+  const sheets = sheetsRegistryManager.get(pathname)
+  if (sheets) {
+    setHeadComponents([
+      <style
+        type="text/css"
+        id="server-side-jss"
+        key="server-side-jss"
+        dangerouslySetInnerHTML={{ __html: sheets.toString() }}
+      />,
+    ])
+    sheetsRegistryManager.delete(pathname)
+  }
 }

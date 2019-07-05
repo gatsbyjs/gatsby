@@ -14,17 +14,19 @@ familiar with SQL, it works in a very similar way. Using a special syntax, you d
 the data you want in your component and then that data is given
 to you.
 
-Gatsby uses GraphQL to enable [page and layout
+Gatsby uses GraphQL to enable [page and StaticQuery
 components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
 
 ## Why is GraphQL so cool?
 
+For a more in-depth look, read [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+
 - Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
 - Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
 - It's the perfect data querying language for the often complex/nested data dependencies of modern applications
-- Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
+- Improve performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
 
 ## What does a GraphQL query look like?
 
@@ -56,6 +58,7 @@ A basic page component with a GraphQL query might look like this:
 
 ```jsx
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
@@ -79,8 +82,7 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
-_Note:_ Queries are only executed from Page or Layout components. For other
-components you'll want to use GraphQL [_fragments_](#fragments).
+_Note:_ To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
 
 ## How to learn GraphQL
 
@@ -106,7 +108,7 @@ retrieve data from databases and/or other APIs.
 
 Gatsby uses GraphQL at _build-time_ and _not_ for live
 sites. This is unique, and it means you don't need to run additional services (e.g. a database
-and node.js service) to use GraphQL for production websites.
+and Node.js service) to use GraphQL for production websites.
 
 Gatsby is a great framework for building apps so it's possible and encouraged
 to pair Gatsby's native build-time GraphQL with GraphQL queries running against
@@ -153,6 +155,8 @@ People often store dates like "2018-01-05" but want to display the date in some 
 }
 ```
 
+See the full list of formatting options by viewing our [GraphQL Reference page](/docs/graphql-reference/#dates).
+
 ### Markdown
 
 Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify you want the transformed HTML version instead of markdown:
@@ -174,6 +178,7 @@ This is what a component using `gatsby-image` looks like:
 ```jsx
 import React from "react"
 import Img from "gatsby-image"
+import { graphql } from "gatsby"
 
 export default ({ data }) => (
   <div>
@@ -212,9 +217,7 @@ If you wish to define your own fragments for use in your application, you can us
 
 For example if I put a fragment in a helper component, I can use that fragment in any other query:
 
-```jsx
-// src/components/PostItem.js
-
+```jsx:title=src/components/PostItem.js
 export const markdownFrontmatterFragment = graphql`
   fragment MarkdownFrontmatter on MarkdownRemark {
     frontmatter {
@@ -238,10 +241,9 @@ query($path: String!) {
 
 It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page might map over all of your posts to show them in a list.
 
-```jsx
-// src/pages/index.jsx
-
+```jsx:title=src/pages/index.jsx
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
@@ -279,10 +281,9 @@ export const query = graphql`
 
 If the index component becomes too large, you might want to refactor it into smaller components.
 
-```jsx
-// src/components/IndexPost.jsx
-
+```jsx:title=src/components/IndexPost.jsx
 import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ frontmatter: { title, date } }) => (
   <div>
@@ -304,11 +305,10 @@ export const query = graphql`
 
 Now, we can use the component together with the exported fragment in our index page.
 
-```jsx{26}
-// src/pages/index.jsx
-
-import React from "react";
-import IndexPost from "../components/IndexPost";
+```jsx:title=src/pages/index.jsx
+import React from "react"
+import IndexPost from "../components/IndexPost"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
@@ -321,8 +321,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query {
@@ -335,10 +335,12 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ## Further reading
+
+- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
 
 ### Getting started with GraphQL
 

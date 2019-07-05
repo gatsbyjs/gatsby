@@ -8,6 +8,7 @@ jest.mock(`fs-extra`, () => {
 const Remark = require(`remark`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
+const semver = require(`semver`)
 
 const plugin = require(`../`)
 
@@ -18,6 +19,15 @@ const remark = new Remark().data(`settings`, {
 })
 
 const imageURL = markdownAST => markdownAST.children[0].children[0].url
+
+const testInNode8OrHigher = (title, ...args) => {
+  const isNode8OrHigher = semver.satisfies(process.version, `>=8`)
+  if (isNode8OrHigher) {
+    it(title, ...args)
+  } else {
+    it.skip(`skipped on Node 7 or lower: ${title}`, ...args)
+  }
+}
 
 describe(`gatsby-remark-copy-linked-files`, () => {
   afterEach(() => {
@@ -122,6 +132,24 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  testInNode8OrHigher(`can copy JSX images`, async () => {
+    const mdx = require(`remark-mdx`)
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark()
+      .use(mdx)
+      .parse(`<img src="${path}" />`)
+
+    await plugin({
+      files: getFiles(path),
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy HTML multiple images`, async () => {
     const path1 = `images/sample-image.gif`
     const path2 = `images/another-sample-image.gif`
@@ -163,6 +191,30 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     const markdownAST = remark.parse(
       `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`can copy HTML videos from video elements with the src attribute`, async () => {
+    const path = `videos/sample-video.mp4`
+
+    const markdownAST = remark.parse(
+      `<video controls="controls" autoplay="true" src="${path}">\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`can copy flash from object elements with the value attribute`, async () => {
+    const path = `myMovie.swf`
+
+    const markdownAST = remark.parse(
+      `<object type="application/x-shockwave-flash">\n<param name="movie" value="${path}" />\n</object>`
     )
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })

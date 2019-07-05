@@ -1,6 +1,7 @@
 import * as PropTypes from "prop-types"
 import React from "react"
 import { rhythm } from "../utils/typography"
+import { graphql } from "gatsby"
 
 const propTypes = {
   user: PropTypes.shape({
@@ -29,8 +30,8 @@ function Avatar({ user }) {
           height: rhythm(4),
         },
         [`@media (min-width: 600px)`]: {
-          width: `inherit`,
-          height: `inherit`,
+          width: rhythm(6),
+          height: rhythm(6),
         },
       }}
     />

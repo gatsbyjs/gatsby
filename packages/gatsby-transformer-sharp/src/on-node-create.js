@@ -1,10 +1,16 @@
-const _ = require(`lodash`)
+const supportedExtensions = {
+  jpeg: true,
+  jpg: true,
+  png: true,
+  webp: true,
+  tif: true,
+  tiff: true,
+}
 
 module.exports = async function onCreateNode({ node, actions, createNodeId }) {
   const { createNode, createParentChildLink } = actions
 
-  const extensions = [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`]
-  if (!_.includes(extensions, node.extension)) {
+  if (!supportedExtensions[node.extension]) {
     return
   }
 

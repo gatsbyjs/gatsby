@@ -12,7 +12,7 @@ Querying images with GraphQL allows you to access the image's data as well as pe
 
 You'll need a few plugins for this:
 
-- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](docs/querying-with-graphql/#images)
+- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](/docs/querying-with-graphql/#images)
 - [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) powers the connections between Sharp and Gatsby Plugins
 - [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) allows you to create multiples images of the right sizes and resolutions with a query
 
@@ -22,7 +22,7 @@ You can also use arguments in your query to specify exact, minimum, and maximum 
 
 This example is for an image gallery where images stretch when the page is resized. It uses the `fluid` method and the fluid fragment to grab the right data to use in `gatsby-image` component and arguments to set the maximum width as 400px and maximum height as 250px.
 
-```jsx
+```js
 export const query = graphql`
   query {
     fileName: file(relativePath: { eq: "images/myimage.jpg" }) {
@@ -49,8 +49,8 @@ export const query = graphql`
 
 Here is an image component that uses the query from the previous example:
 
-```
-<Img fluid={data.fileName.childImageSharp.fluid}  />
+```jsx
+<Img fluid={data.fileName.childImageSharp.fluid} alt="" />
 ```
 
 ## Using Fragments To Standardize Formatting
@@ -59,34 +59,41 @@ What if you have a bunch of images and you want them all to use the same formatt
 
 A custom fragment is an easy way to standardize formatting and re-use it on multiple images:
 
-```
+```js
 export const squareImage = graphql`
-fragment squareImage on File {
-      childImageSharp {
-        fluid(maxWidth: 200, maxHeight: 200) {
-          ...GatsbyImageSharpFluid
-        }
+  fragment squareImage on File {
+    childImageSharp {
+      fluid(maxWidth: 200, maxHeight: 200) {
+        ...GatsbyImageSharpFluid
       }
-}
-`;
+    }
+  }
+`
 ```
 
 The fragment can then be referenced in the image query:
 
-```
+```js
 export const query = graphql`
   query {
-    image1:file(relativePath: { eq: "images/image1.jpg" }) {
+    image1: file(relativePath: { eq: "images/image1.jpg" }) {
       ...squareImage
     }
 
-    image2:file(relativePath: { eq: "images/image2.jpg" }) {
+    image2: file(relativePath: { eq: "images/image2.jpg" }) {
       ...squareImage
     }
 
-   image3:file(relativePath: { eq: "images/image3.jpg" }) {
+    image3: file(relativePath: { eq: "images/image3.jpg" }) {
       ...squareImage
     }
   }
-`;
+`
 ```
+
+### Additional resources
+
+- [Gatsby Image API docs](/docs/gatsby-image/)
+- [gatsby-image plugin README file](/packages/gatsby-image/)
+- [gatsby-plugin-sharp README file](/packages/gatsby-plugin-sharp/)
+- [gatsby-transformer-sharp README file](/packages/gatsby-transformer-sharp/)

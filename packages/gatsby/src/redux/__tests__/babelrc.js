@@ -1,14 +1,9 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const json5 = require(`json5`)
-
 const { actions } = require(`../actions`)
 const babelrcReducer = require(`../reducers/babelrc`)
 const {
-  addDefaultPluginsPresets,
-  actionifyBabelrc,
-} = require(`../../internal-plugins/load-babel-config/utils`)
-const { buildConfig } = require(`../../utils/babel-config`)
+  prepareOptions,
+  mergeConfigItemOptions,
+} = require(`../../utils/babel-loader-helpers`)
 
 describe(`Babelrc actions/reducer`, () => {
   it(`allows adding a new plugin`, () => {
@@ -81,34 +76,11 @@ describe(`Babelrc actions/reducer`, () => {
 
   it(`sets default presets/plugins if there's no userland babelrc`, () => {
     const fakeResolver = moduleName => `/path/to/module/${moduleName}`
-    const actionsLog = []
-    const mockActions = {
-      setBabelPreset: args => {
-        actionsLog.push(actions.setBabelPreset(args, { name: `test` }))
-      },
-      setBabelPlugin: args => {
-        actionsLog.push(actions.setBabelPlugin(args, { name: `test` }))
-      },
-    }
-    addDefaultPluginsPresets(mockActions, {
-      stage: `develop`,
-      browserslist: {},
-    })
-    addDefaultPluginsPresets(mockActions, {
-      stage: `build-html`,
-      browserslist: {},
-    })
-    const endState = actionsLog.reduce(
-      (state, action) => babelrcReducer(state, action),
-      undefined
-    )
-    expect(endState).toMatchSnapshot()
-    expect(
-      buildConfig(endState.stages.develop, `develop`, fakeResolver)
-    ).toMatchSnapshot()
-    expect(
-      buildConfig(endState.stages.develop, `build-html`, fakeResolver)
-    ).toMatchSnapshot()
+    const babel = { createConfigItem: jest.fn() }
+
+    prepareOptions(babel, fakeResolver)
+
+    expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
   })
 
   it(`allows setting options`, () => {
@@ -138,31 +110,24 @@ describe(`Babelrc actions/reducer`, () => {
     expect(state.stages[`develop-html`].options.sourceMaps).toBe(undefined)
   })
 
-  it(`handles custom .babelrc files`, async () => {
-    const file = await fs.readFile(
-      path.join(__dirname, `mocks`, `.babelrc`),
-      `utf-8`
-    )
-    const parsed = json5.parse(file)
+  it(`allows merging config items`, () => {
+    const babel = { createConfigItem: jest.fn() }
+    // This merges in new change.
+    mergeConfigItemOptions({
+      items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
+      itemToMerge: { options: { wat: 2 }, file: { resolved: `hi` } },
+      type: `plugin`,
+      babel,
+    })
+    expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
 
-    const actionsLog = []
-    const mockActions = {
-      setBabelPreset: args => {
-        actionsLog.push(actions.setBabelPreset(args, { name: `test` }))
-      },
-      setBabelPlugin: args => {
-        actionsLog.push(actions.setBabelPlugin(args, { name: `test` }))
-      },
-      setBabelOptions: args => {
-        actionsLog.push(actions.setBabelOptions(args, { name: `test` }))
-      },
-    }
-    actionifyBabelrc(parsed, mockActions)
-    const endState = actionsLog.reduce(
-      (state, action) => babelrcReducer(state, action),
-      undefined
-    )
-
-    expect(endState).toMatchSnapshot()
+    expect(
+      mergeConfigItemOptions({
+        items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
+        itemToMerge: { options: { wat: 2 }, file: { resolved: `hi2` } },
+        type: `plugin`,
+        babel,
+      })
+    ).toMatchSnapshot()
   })
 })

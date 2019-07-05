@@ -1,6 +1,6 @@
 ---
 title: Open Sourcing Gatsby Workshops
-date: "2018-05-31"
+date: 2018-05-31
 author: "Shannon Soper"
 ---
 
@@ -28,9 +28,9 @@ And that's just one page of notes (there were many more). The biggest takeaways 
 
 People are interested in tutorials that go beyond the basic [Tutorial](/tutorial/), so we created three new tutorials:
 
-- [WordPress Source Plugin Tutorial](/docs/wordpress-source-plugin-tutorial/)
-- [Adding Images to a WordPress Site](/docs/image-tutorial/)
-- [Creating a Source Plugin](/docs/source-plugin-tutorial/)
+- [WordPress Source Plugin Tutorial](/tutorial/wordpress-source-plugin-tutorial/)
+- [Adding Images to a WordPress Site](/tutorial/image-tutorial/)
+- [Creating a Source Plugin](/docs/creating-a-source-plugin/)
 
 ## Why you might want to host a workshop
 

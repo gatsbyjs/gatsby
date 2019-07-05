@@ -1,34 +1,34 @@
 {
   "name": "gatsby-link",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
-  "version": "2.0.0-beta.4",
+  "version": "2.2.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.51",
-    "@types/history": "^4.6.2",
-    "@types/react-router-dom": "^4.2.5",
-    "prop-types": "^15.6.1",
-    "react-lifecycles-compat": "^3.0.2",
-    "ric": "^1.3.0"
+    "@babel/runtime": "^7.0.0",
+    "@types/reach__router": "^1.0.0",
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.51",
-    "@babel/core": "7.0.0-beta.51",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.2.0",
     "cross-env": "^5.1.4",
-    "react-router-dom": "^4.2.2"
+    "react-testing-library": "^5.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
   "keywords": [
-    "gatsby",
-    "gatsby-component"
+    "gatsby"
   ],
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": ">2.0.0-alpha"
+    "@reach/router": "^1.1.1",
+    "gatsby": "^2.0.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link",
   "scripts": {

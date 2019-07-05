@@ -1,14 +1,16 @@
-@import '~tachyons-sass/tachyons.scss';
-@import 'variables';
+@import "~tachyons-sass/tachyons.scss";
+@import "variables";
 
-@mixin borderRadius ($radius: 5px) {
+@mixin borderRadius($radius: 5px) {
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   border-radius: $radius;
 }
 
 .sass-nav-example {
-  li { display: inline-block; }
+  li {
+    display: inline-block;
+  }
 
   a {
     @include borderRadius(3px);

@@ -1,42 +1,38 @@
-import React from "react"
+import React, { Fragment } from "react"
 
-import Sidebar from "./sidebar/sidebar"
-import presets from "../utils/presets"
+import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
+import { mediaQueries, sizes } from "../utils/presets"
 import { rhythm } from "../utils/typography"
-import findSectionForPath from "../utils/sidebar/find-section-for-path"
 
 export default props => {
   if (props.disable) {
     return props.renderContent()
   } else {
     return (
-      <div>
+      <Fragment>
         <div
           css={{
-            [presets.Tablet]: { paddingLeft: rhythm(10) },
-            [`${presets.Tablet} and (max-width:980px)`]: {
-              ".gatsby-highlight": {
-                marginLeft: 0,
-                marginRight: 0,
-              },
+            [mediaQueries.md]: {
+              paddingLeft: rhythm(sizes.sidebarWidth.default),
             },
-            [presets.Desktop]: { paddingLeft: rhythm(12) },
+            [mediaQueries.lg]: {
+              paddingLeft: rhythm(sizes.sidebarWidth.large),
+            },
           }}
         >
           {props.renderContent()}
         </div>
-        <Sidebar
-          location={props.location}
-          sectionList={props.sectionList}
-          createLink={props.createLink}
-          defaultActiveSection={findSectionForPath(
-            props.location.pathname,
-            props.sectionList
-          )}
+        <StickyResponsiveSidebar
           enableScrollSync={props.enableScrollSync}
+          itemList={props.itemList.items}
+          title={props.itemList.title}
+          sidebarKey={props.itemList.key}
+          disableExpandAll={props.itemList.disableExpandAll}
+          disableAccordions={props.itemList.disableAccordions}
           key={props.location.pathname}
+          location={props.location}
         />
-      </div>
+      </Fragment>
     )
   }
 }

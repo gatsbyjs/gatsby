@@ -24,6 +24,7 @@ const REMARK_TESTS = {
 }
 
 const remark = new Remark()
+const JSONstringifySpy = jest.spyOn(JSON, `stringify`)
 
 describe(`gatsby-remark-code-repls`, () => {
   beforeEach(() => {
@@ -32,6 +33,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
     fs.readFileSync.mockReset()
     fs.readFileSync.mockReturnValue(`const foo = "bar";`)
+    JSONstringifySpy.mockClear()
   })
 
   Object.keys(REMARK_TESTS).forEach(name => {
@@ -121,6 +123,41 @@ describe(`gatsby-remark-code-repls`, () => {
         )
       })
 
+      it(`errors if you provide multiple files in non-codesandbox examples`, () => {
+        const markdownAST = remark.parse(
+          `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
+        )
+        const runPlugin = () =>
+          plugin({ markdownAST }, { directory: `examples` })
+
+        if (protocol !== PROTOCOL_CODE_SANDBOX) {
+          expect(runPlugin).toThrow(
+            `Code example path should only contain a single file, but found more than one: ` +
+              `path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css. ` +
+              `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with codesandbox://`
+          )
+        } else {
+          expect(runPlugin).not.toThrow()
+        }
+      })
+
+      it(`supports includeMatchingCSS`, () => {
+        const markdownAST = remark.parse(
+          `[](${protocol}path/to/nested/file.js)`
+        )
+        const runPlugin = () =>
+          plugin(
+            { markdownAST },
+            {
+              directory: `examples`,
+              codepen: {
+                includeMatchingCSS: true,
+              },
+            }
+          )
+        expect(runPlugin).not.toThrow()
+      })
+
       if (protocol === PROTOCOL_CODE_SANDBOX) {
         it(`supports custom html config option for index html`, () => {
           const markdownAST = remark.parse(
@@ -131,7 +168,9 @@ describe(`gatsby-remark-code-repls`, () => {
             { markdownAST },
             {
               directory: `examples`,
-              html: `<span id="foo"></span>`,
+              codesandbox: {
+                html: `<span id="foo"></span>`,
+              },
             }
           )
 
@@ -146,11 +185,42 @@ describe(`gatsby-remark-code-repls`, () => {
           const transformed = plugin(
             { markdownAST },
             {
-              dependencies: [`react`, `react-dom@next`, `prop-types@15.5`],
+              codesandbox: {
+                dependencies: [
+                  `react`,
+                  `react-dom@next`,
+                  `prop-types@15.5`,
+                  `@babel/core@7.4.0`,
+                ],
+              },
               directory: `examples`,
             }
           )
 
+          expect(JSONstringifySpy).toHaveBeenCalledWith(
+            expect.objectContaining({
+              files: expect.objectContaining({
+                "package.json": expect.objectContaining({
+                  content: expect.objectContaining({
+                    dependencies: expect.objectContaining({
+                      react: `latest`,
+                      "react-dom": `next`,
+                      "prop-types": `15.5`,
+                      "@babel/core": `7.4.0`,
+                    }),
+                  }),
+                }),
+              }),
+            })
+          )
+          expect(transformed).toMatchSnapshot()
+        })
+
+        it(`supports importing multiple files`, () => {
+          const markdownAST = remark.parse(
+            `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
+          )
+          const transformed = plugin({ markdownAST }, { directory: `examples` })
           expect(transformed).toMatchSnapshot()
         })
       }

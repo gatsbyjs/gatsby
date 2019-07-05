@@ -6,7 +6,7 @@ import Close from "react-icons/lib/md/close"
 import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
 import * as PropTypes from "prop-types"
-import { push, StaticQuery } from "gatsby"
+import { push, StaticQuery, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
@@ -23,13 +23,13 @@ class GatsbyGramModal extends React.Component {
   componentDidMount() {
     mousetrap.bind(`left`, () => this.previous())
     mousetrap.bind(`right`, () => this.next())
-    mousetrap.bind(`spacebar`, () => this.next())
+    mousetrap.bind(`space`, () => this.next())
   }
 
   componentWillUnmount() {
     mousetrap.unbind(`left`)
     mousetrap.unbind(`right`)
-    mousetrap.unbind(`spacebar`)
+    mousetrap.unbind(`space`)
   }
 
   findCurrentIndex() {

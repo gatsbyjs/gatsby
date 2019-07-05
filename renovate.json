@@ -1,0 +1,18 @@
+{
+  "extends": ["config:base"],
+  "includePaths": [
+    "starters/**",
+    "themes/gatsby-starter-blog-theme/**",
+    "themes/gatsby-starter-notes-theme/**",
+    "themes/gatsby-starter-theme/**"
+  ],
+  "major": {
+    "enabled": false
+  },
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 20,
+  "rebaseStalePrs": false,
+  "rangeStrategy": "bump",
+  "bumpVersion": null,
+  "semanticCommitScope": "starters"
+}

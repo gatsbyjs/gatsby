@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import sortBy from "lodash/sortBy"
 import moment from "moment"
 import InsetPageLayout from "../components/Layouts/insetPage"

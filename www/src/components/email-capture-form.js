@@ -1,172 +1,334 @@
 import React from "react"
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import { css } from "glamor"
-import hex2rgba from "hex2rgba"
-import addToMailchimp from "gatsby-plugin-mailchimp"
+import styled from "@emotion/styled"
 
-let stripeAnimation = css.keyframes({
-  "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `30px 60px` },
-})
+import SendIcon from "react-icons/lib/md/send"
 
-const formInputDefaultStyles = {
-  backgroundColor: `#fff`,
-  border: `1px solid ${colors.ui.bright}`,
-  borderRadius: presets.radius,
-  color: colors.brand,
-  fontFamily: options.headerFontFamily.join(`,`),
-  padding: rhythm(1 / 2),
-  verticalAlign: `middle`,
-  transition: `all ${presets.animation.speedDefault} ${
-    presets.animation.curveDefault
-  }`,
-  "::placeholder": {
-    color: colors.lilac,
-    opacity: 1,
-  },
-}
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  fonts,
+  radii,
+  shadows,
+  lineHeights,
+} from "../utils/presets"
+import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
+import { rhythm } from "../utils/typography"
 
-class EmailCaptureForm extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      email: ``,
+const stripedBorderHeight = space[1]
+
+const Container = styled(`div`)`
+  background: ${colors.purple[5]};
+  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[10]};
+  border-radius: ${radii[2]}px;
+  margin-top: ${space[8]};
+  padding: calc(${space[6]} * 1.2);
+  padding-bottom: calc(${rhythm(space[6] * 1.2)} + ${stripedBorderHeight});
+  position: relative;
+
+  :after {
+    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
+    background: ${colors.white}
+      repeating-linear-gradient(
+        135deg,
+        ${colors.red[40]},
+        ${colors.red[40]} 20px,
+        transparent 20px,
+        transparent 40px,
+        ${colors.blue[40]} 40px,
+        ${colors.blue[40]} 60px,
+        transparent 60px,
+        transparent 80px
+      );
+    bottom: 0;
+    content: "";
+    height: ${stripedBorderHeight};
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  ${mediaQueries.lg} {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > * {
+      flex-basis: 50%;
     }
   }
+`
 
-  // Update state each time user edits their email address
-  _handleEmailChange = e => {
-    this.setState({ email: e.target.value })
+const StyledForm = styled(`form`)`
+  margin: 0;
+
+  ${mediaQueries.lg} {
+    display: ${props => (props.isHomepage ? `flex` : `block`)};
+  }
+`
+
+const Label = styled(`label`)`
+  font-size: ${fontSizes[1]};
+  :after {
+    content: ${props => (props.isRequired ? `'*'` : ``)};
+    color: ${colors.text.secondary};
+  }
+`
+
+const SingleLineInput = styled(`input`)`
+  ${formInput};
+  border-color: ${colors.purple[20]};
+  width: 100%;
+
+  :focus {
+    ${formInputFocus}
+  }
+`
+
+const SingleLineInputOnHomepage = styled(SingleLineInput)`
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[2]};
+  padding: ${space[2]};
+`
+
+const ErrorMessage = styled(`div`)`
+  color: ${colors.warning};
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[1]};
+  margin: ${space[2]} 0;
+`
+
+const SuccessMessage = styled(`div`)`
+  font-family: ${fonts.system};
+`
+
+const Submit = styled(`input`)`
+  ${buttonStyles.default};
+  margin-top: ${space[3]};
+`
+
+const SubmitOnHomepage = styled(`button`)`
+  ${buttonStyles.default};
+  font-size: ${fontSizes[3]};
+  width: 100%;
+  margin-top: ${space[3]};
+
+  span {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
 
-  // Post to MC server & handle its response
-  _postEmailToMailchimp = (email, attributes) => {
-    addToMailchimp(email, attributes)
-      .then(result => {
-        // Mailchimp always returns a 200 response
-        // So we check the result for MC errors & failures
-        if (result.result !== `success`) {
-          this.setState({
-            status: `error`,
-            msg: result.msg,
-          })
-        } else {
-          // Email address succesfully subcribed to Mailchimp
-          this.setState({
-            status: `success`,
-            msg: result.msg,
-          })
-        }
-      })
-      .catch(err => {
-        // Network failures, timeouts, etc
-        this.setState({
-          status: `error`,
-          msg: err,
-        })
-      })
+  ${mediaQueries.lg} {
+    width: auto;
+    margin-top: 0;
+    margin-left: ${space[2]};
+  }
+`
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.onSubmit = this.onSubmit.bind(this)
+
+    // let's use uncontrolled components https://reactjs.org/docs/uncontrolled-components.html
+    this.email = null
   }
 
-  _handleFormSubmit = e => {
+  state = {
+    errorMessage: ``,
+    fieldErrors: {},
+  }
+
+  onSubmit(e) {
     e.preventDefault()
-    e.stopPropagation()
 
-    this.setState(
-      {
-        status: `sending`,
-        msg: null,
+    // validation here or use Formik or something like that
+    // we can also rely on server side validation like I do right now
+
+    const { portalId, formId, sfdcCampaignId } = this.props
+    const url = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`
+    const data = {
+      fields: [
+        {
+          name: `email`,
+          value: this.email.value,
+        },
+      ],
+      context: {
+        pageUri: window.location.href,
+        pageName: document.title,
       },
-      // setState callback (subscribe email to MC)
-      this._postEmailToMailchimp(this.state.email, {
-        pathname: document.location.pathname,
-      })
-    )
+    }
+
+    if (sfdcCampaignId) {
+      data.context.sfdcCampaignId = sfdcCampaignId
+    }
+
+    const xhr = new XMLHttpRequest()
+    xhr.open(`POST`, url, false)
+    xhr.setRequestHeader(`Content-Type`, `application/json`)
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState == 4) {
+        const response = JSON.parse(xhr.responseText)
+        if (xhr.status == 200) {
+          // https://developers.hubspot.com/docs/methods/forms/submit_form_ajax
+          // docs mention response should "thankYouMessage" field,
+          // but I get inlineMessage in my testing
+          this.props.onSuccess(
+            response.thankYouMessage || response.inlineMessage
+          )
+        } else {
+          let errorMessage,
+            fieldErrors = {}
+          if (response.errors) {
+            // {"message":"Error in 'fields.email'. Invalid email address","errorType":"INVALID_EMAIL"}
+            // {"message":"Error in 'fields.email'. Required field 'email' is missing","errorType":"REQUIRED_FIELD"}
+
+            const errorRe = /^Error in 'fields.([^']+)'. (.+)$/
+            response.errors.map(error => {
+              const [, fieldName, message] = errorRe.exec(error.message)
+              fieldErrors[fieldName] = message
+            })
+
+            // hubspot use "The request is not valid" message, so probably better use custom one
+            errorMessage = `Errors in the form`
+          } else {
+            errorMessage = response.message
+          }
+
+          this.setState({ fieldErrors, errorMessage })
+        }
+      }
+    }
+
+    xhr.send(JSON.stringify(data))
   }
 
   render() {
-    const { signupMessage, confirmMessage, containerCss } = this.props
+    const { isHomepage } = this.props
+
+    const SingleLineInputComponent = isHomepage
+      ? SingleLineInputOnHomepage
+      : SingleLineInput
 
     return (
-      <div
-        css={{
-          borderTop: `2px solid ${colors.lilac}`,
-          marginTop: rhythm(3),
-          paddingTop: `${rhythm(1)}`,
-          ...containerCss,
-        }}
-      >
-        {this.state.status === `success` ? (
-          <div>{confirmMessage}</div>
-        ) : (
-          <div>
-            <p>{signupMessage}</p>
-            <form
-              id="email-capture"
-              method="post"
-              noValidate
-              css={{ margin: 0 }}
-            >
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="you@email.com"
-                  onChange={this._handleEmailChange}
-                  css={{
-                    ...formInputDefaultStyles,
-                    width: `250px`,
-                    ":focus": {
-                      borderColor: colors.gatsby,
-                      outline: 0,
-                      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-                    },
-                  }}
-                />
-                <button
-                  type="submit"
-                  onClick={this._handleFormSubmit}
-                  css={{
-                    ...formInputDefaultStyles,
-                    borderColor: colors.gatsby,
-                    color: colors.gatsby,
-                    cursor: `pointer`,
-                    fontWeight: `bold`,
-                    marginLeft: rhythm(1 / 2),
-                    ":hover, &:focus": {
-                      backgroundSize: `30px 30px`,
-                      backgroundColor: colors.gatsby,
-                      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-                      color: `#fff`,
-                      animation: `${stripeAnimation} 2.8s linear infinite`,
-                    },
-                    ":focus": {
-                      outline: 0,
-                      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-                    },
-                  }}
-                >
-                  Subscribe
-                </button>
-                {this.state.status === `error` && (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: this.state.msg }}
-                    css={{ marginTop: `${rhythm(1 / 2)}` }}
-                  />
-                )}
-              </div>
-            </form>
-          </div>
+      <StyledForm onSubmit={this.onSubmit} isHomepage={isHomepage}>
+        {!isHomepage && (
+          <Label isRequired htmlFor="email">
+            Email
+          </Label>
         )}
-      </div>
+        <SingleLineInputComponent
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          ref={input => {
+            this.email = input
+          }}
+          aria-label={isHomepage ? `Email` : ``}
+          placeholder={`your.email@example.com`}
+        />
+        {this.state.fieldErrors.email && (
+          <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
+        )}
+        {this.state.errorMessage && (
+          <ErrorMessage>{this.state.errorMessage}</ErrorMessage>
+        )}
+
+        {isHomepage ? (
+          <SubmitOnHomepage type="submit">
+            <span>
+              Subscribe
+              <SendIcon />
+            </span>
+          </SubmitOnHomepage>
+        ) : (
+          <Submit type="submit" value="Subscribe" />
+        )}
+      </StyledForm>
+    )
+  }
+}
+
+class EmailCaptureForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.onSuccess = this.onSuccess.bind(this)
+  }
+
+  state = {
+    successMessage: ``,
+  }
+
+  onSuccess(successMessage) {
+    this.setState({ successMessage })
+  }
+
+  render() {
+    const { signupMessage, isHomepage, className } = this.props
+
+    const FormComponent = props => (
+      <Form
+        onSuccess={this.onSuccess}
+        portalId="4731712"
+        formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
+        sfdcCampaignId="701f4000000Us7pAAC"
+        {...props}
+      />
+    )
+
+    return (
+      <>
+        {isHomepage ? (
+          <div className={className}>
+            {this.state.successMessage ? (
+              <SuccessMessage
+                dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
+              />
+            ) : (
+              <FormComponent isHomepage={true} />
+            )}
+          </div>
+        ) : (
+          <Container>
+            <p
+              css={{
+                color: colors.gatsby,
+                fontWeight: `bold`,
+                fontSize: fontSizes[3],
+                fontFamily: fonts.header,
+                lineHeight: lineHeights.dense,
+              }}
+            >
+              {signupMessage}
+            </p>
+            {this.state.successMessage ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: this.state.successMessage,
+                }}
+              />
+            ) : (
+              <FormComponent />
+            )}
+          </Container>
+        )}
+      </>
     )
   }
 }
 
 EmailCaptureForm.defaultProps = {
-  signupMessage: "Enjoyed this post? Receive the next one in your inbox!",
-  confirmMessage: "Thank you! Youʼll receive your first email shortly.",
-  containerCss: {},
+  signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
+  confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
+  isHomepage: false,
+  className: ``,
 }
 
 export default EmailCaptureForm

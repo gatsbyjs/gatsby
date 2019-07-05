@@ -1,27 +1,36 @@
 import React from "react"
-import { withPrefix } from "gatsby"
+import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import { defaultOptions } from "./internals"
 
-exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+// TODO: remove for v3
+const withPrefix = withAssetPrefix || fallbackWithPrefix
+
+exports.onRenderBody = ({ setHeadComponents, pathname }, pluginOptions) => {
   const { feeds } = {
     ...defaultOptions,
     ...pluginOptions,
   }
 
-  const links = feeds.map(({ output }, i) => {
-    if (output.charAt(0) !== `/`) {
-      output = `/` + output
-    }
+  const links = feeds
+    .filter(({ match }) => {
+      if (typeof match === `string`) return new RegExp(match).exec(pathname)
+      return true
+    })
+    .map(({ output, title }, i) => {
+      if (output.charAt(0) !== `/`) {
+        output = `/` + output
+      }
 
-    return (
-      <link
-        key={`gatsby-plugin-feed-${i}`}
-        rel="alternate"
-        type="application/rss+xml"
-        href={withPrefix(output)}
-      />
-    )
-  })
+      return (
+        <link
+          key={`gatsby-plugin-feed-${i}`}
+          rel="alternate"
+          type="application/rss+xml"
+          title={title}
+          href={withPrefix(output)}
+        />
+      )
+    })
 
   setHeadComponents(links)
 }

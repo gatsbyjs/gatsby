@@ -7,7 +7,7 @@ function OutboundLink(props) {
       {...props}
       onClick={e => {
         if (typeof props.onClick === `function`) {
-          props.onClick()
+          props.onClick(e)
         }
         let redirect = true
         if (

@@ -1,13 +1,18 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const babylon = require(`@babel/parser`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 
-async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
+async function onCreateNode({
+  node,
+  getNode,
+  actions,
+  loadNodeContent,
+  createContentDigest,
+}) {
   const { createNode, createParentChildLink } = actions
   const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
 
-  // This only processes javascript and typescript files.
+  // This only processes JavaScript and TypeScript files.
   if (!_.includes(fileExtsToProcess, node.extension)) {
     return
   }
@@ -20,7 +25,12 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
       `jsx`,
       `doExpressions`,
       `objectRestSpread`,
-      `decorators`,
+      [
+        `decorators`,
+        {
+          decoratorsBeforeExport: true,
+        },
+      ],
       `classProperties`,
       `exportExtensions`,
       `asyncGenerators`,
@@ -102,12 +112,7 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
         error: error,
       }
 
-      const objStr = JSON.stringify(node)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(objStr)
-        .digest(`hex`)
-
+      const contentDigest = createContentDigest(node)
       const nodeData = {
         id: `${node.id} >>> JavascriptFrontmatter`,
         children: [],

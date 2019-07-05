@@ -1,17 +1,17 @@
-@import '~normalize.css';
+@import "~normalize.css";
 // Override variables here
 // You can add new ones or update existing ones:
 
 $primary: #ad42f4;
-$info: #0060F0;
-$success: #14A900;
-$warning: #F0B800;
-$danger: #E80000;
-$text: #5C5C5C;
-$body-background: #FFFFFF;
-$background: #FFFFFF;
-$family-sans-serif: 'Varela Round', sans-serif;
-$family-serif: 'Lora', serif; // Add a serif family
+$info: #0060f0;
+$success: #14a900;
+$warning: #f0b800;
+$danger: #e80000;
+$text: #5c5c5c;
+$body-background: #ffffff;
+$background: #ffffff;
+$family-sans-serif: "Varela Round", sans-serif;
+$family-serif: "Lora", serif; // Add a serif family
 
-@import '~bulma';
-@import '~prismjs/themes/prism-coy';
+@import "~bulma";
+@import "~prismjs/themes/prism-coy";

@@ -7,14 +7,15 @@ const LZString = require(`lz-string`)
 const { join } = require(`path`)
 const map = require(`unist-util-map`)
 const normalizePath = require(`normalize-path`)
+const npa = require(`npm-package-arg`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
-  OPTION_DEFAULT_HTML,
   PROTOCOL_BABEL,
   PROTOCOL_CODEPEN,
   PROTOCOL_CODE_SANDBOX,
   PROTOCOL_RAMDA,
+  OPTION_DEFAULT_CODESANDBOX,
 } = require(`./constants`)
 
 // Matches compression used in Babel and CodeSandbox REPLs
@@ -40,13 +41,13 @@ function convertNodeToLink(node, text, href, target) {
 module.exports = (
   { markdownAST },
   {
-    defaultText = OPTION_DEFAULT_LINK_TEXT,
-    dependencies = [],
     directory,
-    html = OPTION_DEFAULT_HTML,
     target,
+    defaultText = OPTION_DEFAULT_LINK_TEXT,
+    codesandbox = OPTION_DEFAULT_CODESANDBOX,
   } = {}
 ) => {
+  codesandbox = { ...OPTION_DEFAULT_CODESANDBOX, ...codesandbox }
   if (!directory) {
     throw Error(`Required REPL option "directory" not specified`)
   } else if (!fs.existsSync(directory)) {
@@ -57,25 +58,52 @@ module.exports = (
 
   const getFilePath = (url, protocol, directory) => {
     let filePath = url.replace(protocol, ``)
-    if (!filePath.endsWith(`.js`)) {
+    if (!filePath.includes(`.`)) {
       filePath += `.js`
     }
     filePath = normalizePath(join(directory, filePath))
     return filePath
   }
 
-  const verifyFile = path => {
+  const getMultipleFilesPaths = (urls, protocol, directory) =>
+    urls
+      .replace(protocol, ``)
+      .split(`,`)
+      .map(url => {
+        if (!url.includes(`.`)) {
+          url += `.js`
+        }
+
+        return {
+          url, // filename itself
+          filePath: normalizePath(join(directory, url)), // absolute path
+        }
+      })
+
+  const verifyFile = (path, protocol) => {
+    if (protocol !== PROTOCOL_CODE_SANDBOX && path.split(`,`).length > 1) {
+      throw Error(
+        `Code example path should only contain a single file, but found more than one: ${path.replace(
+          directory,
+          ``
+        )}. ` +
+          `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with ${PROTOCOL_CODE_SANDBOX}`
+      )
+    }
     if (!fs.existsSync(path)) {
       throw Error(`Invalid REPL link specified; no such file "${path}"`)
     }
   }
+
+  const verifyMultipleFiles = (paths, protocol) =>
+    paths.forEach(path => verifyFile(path.filePath, protocol))
 
   map(markdownAST, (node, index, parent) => {
     if (node.type === `link`) {
       if (node.url.startsWith(PROTOCOL_BABEL)) {
         const filePath = getFilePath(node.url, PROTOCOL_BABEL, directory)
 
-        verifyFile(filePath)
+        verifyFile(filePath, PROTOCOL_BABEL)
 
         const code = compress(fs.readFileSync(filePath, `utf8`))
         const href = `https://babeljs.io/repl/#?presets=react&code_lz=${code}`
@@ -86,7 +114,7 @@ module.exports = (
       } else if (node.url.startsWith(PROTOCOL_CODEPEN)) {
         const filePath = getFilePath(node.url, PROTOCOL_CODEPEN, directory)
 
-        verifyFile(filePath)
+        verifyFile(filePath, PROTOCOL_CODEPEN)
 
         const href = node.url.replace(PROTOCOL_CODEPEN, `/redirect-to-codepen/`)
         const text =
@@ -94,36 +122,42 @@ module.exports = (
 
         convertNodeToLink(node, text, href, target)
       } else if (node.url.startsWith(PROTOCOL_CODE_SANDBOX)) {
-        const filePath = getFilePath(node.url, PROTOCOL_CODE_SANDBOX, directory)
-
-        verifyFile(filePath)
-
-        const code = fs.readFileSync(filePath, `utf8`)
+        const filesPaths = getMultipleFilesPaths(
+          node.url,
+          PROTOCOL_CODE_SANDBOX,
+          directory
+        )
+        verifyMultipleFiles(filesPaths, PROTOCOL_CODE_SANDBOX)
 
         // CodeSandbox GET API requires a list of "files" keyed by name
         let parameters = {
           files: {
             "package.json": {
               content: {
-                dependencies: dependencies.reduce((map, dependency) => {
-                  if (dependency.includes(`@`)) {
-                    const [name, version] = dependency.split(`@`)
-                    map[name] = version
-                  } else {
-                    map[dependency] = `latest`
-                  }
-                  return map
-                }, {}),
+                dependencies: codesandbox.dependencies.reduce(
+                  (map, dependency) => {
+                    const { name, fetchSpec } = npa(dependency)
+                    map[name] = fetchSpec
+                    return map
+                  },
+                  {}
+                ),
+
+                main: filesPaths[0].url,
               },
             },
-            "index.js": {
-              content: code,
-            },
             "index.html": {
-              content: html,
+              content: codesandbox.html,
             },
           },
         }
+
+        filesPaths.forEach((path, i) => {
+          const code = fs.readFileSync(path.filePath, `utf8`)
+          parameters.files[path.url] = {
+            content: code,
+          }
+        })
 
         // This config JSON must then be lz-string compressed
         parameters = compress(JSON.stringify(parameters))
@@ -136,7 +170,7 @@ module.exports = (
       } else if (node.url.startsWith(PROTOCOL_RAMDA)) {
         const filePath = getFilePath(node.url, PROTOCOL_RAMDA, directory)
 
-        verifyFile(filePath)
+        verifyFile(filePath, PROTOCOL_RAMDA)
 
         // Don't use `compress()` as the Ramda REPL won't understand the output.
         // It uses URI to encode the code for its urls, so we do the same.

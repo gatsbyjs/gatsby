@@ -1,5 +1,6 @@
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
+const normalizeBaseUrl = require(`./normalize-base-url`)
 
 const typePrefix = `wordpress__`
 const refactoredEntityTypes = {
@@ -13,37 +14,56 @@ const refactoredEntityTypes = {
 let _verbose
 let _siteURL
 let _useACF = true
+let _acfOptionPageIds
 let _hostingWPCOM
 let _auth
+let _cookies
 let _perPage
 let _concurrentRequests
+let _includedRoutes
 let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId },
+  {
+    actions,
+    getNode,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+    reporter,
+  },
   {
     baseUrl,
     protocol,
     hostingWPCOM,
     useACF = true,
+    acfOptionPageIds = [],
     auth = {},
+    cookies = {},
     verboseOutput,
     perPage = 100,
     searchAndReplaceContentUrls = {},
     concurrentRequests = 10,
+    includedRoutes = [`**`],
     excludedRoutes = [],
     normalizer,
   }
 ) => {
   const { createNode, touchNode } = actions
+  const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
+
   _verbose = verboseOutput
-  _siteURL = `${protocol}://${baseUrl}`
+  _siteURL = `${protocol}://${normalizedBaseUrl}`
   _useACF = useACF
+  _acfOptionPageIds = acfOptionPageIds
   _hostingWPCOM = hostingWPCOM
   _auth = auth
+  _cookies = cookies
   _perPage = perPage
   _concurrentRequests = concurrentRequests
+  _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
   _normalizer = normalizer
 
@@ -52,10 +72,13 @@ exports.sourceNodes = async (
     _verbose,
     _siteURL,
     _useACF,
+    _acfOptionPageIds,
     _hostingWPCOM,
     _auth,
+    _cookies,
     _perPage,
     _concurrentRequests,
+    _includedRoutes,
     _excludedRoutes,
     typePrefix,
     refactoredEntityTypes,
@@ -63,8 +86,14 @@ exports.sourceNodes = async (
 
   // Normalize data & create nodes
 
-  // Remove ACF key if it's not an object
+  // Create fake wordpressId form element who done have any in the database
+  entities = normalize.generateFakeWordpressId(entities)
+
+  // Remove ACF key if it's not an object, combine ACF Options
   entities = normalize.normalizeACF(entities)
+
+  // Combine ACF Option Data entities into one but split by IDs + options
+  entities = normalize.combineACF(entities)
 
   // Creates entities from object collections of entities
   entities = normalize.normalizeEntities(entities)
@@ -82,7 +111,7 @@ exports.sourceNodes = async (
   entities = normalize.excludeUnknownEntities(entities)
 
   // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(createNodeId, entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities, _siteURL)
 
   // Creates links between authors and user entities
   entities = normalize.mapAuthorsToUsers(entities)
@@ -92,6 +121,9 @@ exports.sourceNodes = async (
 
   // Creates links between tags/categories and taxonomies.
   entities = normalize.mapTagsCategoriesToTaxonomies(entities)
+
+  // Normalize menu items
+  entities = normalize.normalizeMenuItems(entities)
 
   // Creates links from entities to media nodes
   entities = normalize.mapEntitiesToMedia(entities)
@@ -104,7 +136,9 @@ exports.sourceNodes = async (
     createNode,
     createNodeId,
     touchNode,
+    getNode,
     _auth,
+    reporter,
   })
 
   // Creates links between elements and parent element.
@@ -115,6 +149,10 @@ exports.sourceNodes = async (
     entities,
     searchAndReplaceContentUrls,
   })
+
+  entities = normalize.mapPolylangTranslations(entities)
+
+  entities = normalize.createUrlPathsFromLinks(entities)
 
   // apply custom normalizer
   if (typeof _normalizer === `function`) {
@@ -133,6 +171,7 @@ exports.sourceNodes = async (
       _siteURL,
       hostingWPCOM,
       useACF,
+      acfOptionPageIds,
       auth,
       verboseOutput,
       perPage,
@@ -143,7 +182,11 @@ exports.sourceNodes = async (
   }
 
   // creates nodes for each entry
-  normalize.createNodesFromEntities({ entities, createNode })
+  normalize.createNodesFromEntities({
+    entities,
+    createNode,
+    createContentDigest,
+  })
 
   return
 }

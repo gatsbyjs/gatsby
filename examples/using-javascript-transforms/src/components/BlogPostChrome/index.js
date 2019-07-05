@@ -1,3 +1,4 @@
+import { graphql } from "gatsby"
 import React from "react"
 import HelmetBlock from "../HelmetBlock"
 import PostPublished from "../PostPublished"

@@ -1,14 +1,15 @@
 import React from "react"
-import { Link, withRouter } from "react-router-dom"
+import { Link, navigate } from "@reach/router"
 import { getCurrentUser, isLoggedIn, logout } from "../../utils/auth"
 import styles from "./status.module.css"
 
-export default withRouter(({ history }) => {
+export default () => {
   let details
   if (!isLoggedIn()) {
     details = (
       <p className={styles[`status__text`]}>
-        To get the full app experience, you’ll need to{` `}
+        To get the full app experience, you’ll need to
+        {` `}
         <Link to="/app/login">log in</Link>.
       </p>
     )
@@ -17,12 +18,14 @@ export default withRouter(({ history }) => {
 
     details = (
       <p className={styles[`status__text`]}>
-        Logged in as {name} ({email})!{` `}
+        Logged in as {name} ({email}
+        )!
+        {` `}
         <a
           href="/"
           onClick={event => {
             event.preventDefault()
-            logout(() => history.push(`/app/login`))
+            logout(() => navigate(`/app/login`))
           }}
         >
           log out
@@ -32,4 +35,4 @@ export default withRouter(({ history }) => {
   }
 
   return <div className={styles.status}>{details}</div>
-})
+}

@@ -1,3 +1,7 @@
+const mockTraceSVG = jest.fn(
+  async () => `data:image/svg+xml,%3csvg 'MOCK SVG'%3c/svg%3e`
+)
+
 jest.mock(`gatsby-plugin-sharp`, () => {
   return {
     fluid({ file, args }) {
@@ -8,13 +12,17 @@ jest.mock(`gatsby-plugin-sharp`, () => {
         src: file.absolutePath,
         srcSet: `${file.absolutePath}, ${file.absolutePath}`,
         sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
-        base64: `url('data:image/png;base64, iVBORw)`,
+        base64: `data:image/png;base64,iVBORw`,
       })
     },
+    traceSVG: mockTraceSVG,
   }
 })
 
 const Remark = require(`remark`)
+const { Potrace } = require(`potrace`)
+const queryString = require(`query-string`)
+const cheerio = require(`cheerio`)
 
 const plugin = require(`../`)
 
@@ -53,7 +61,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   return {
     files: [].concat(imagePaths).map(imagePath => {
       return {
-        absolutePath: `${dirName}/${imagePath}`,
+        absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
       }
     }),
     markdownNode: createNode(content),
@@ -119,6 +127,67 @@ test(`it transforms multiple images in markdown`, async () => {
   expect(nodes.length).toBe(imagePaths.length)
 })
 
+test(`it transforms image references in markdown`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+[refImage1]: ./${imagePath} "Ref Image Title"
+![alt text][refImage1]
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it leaves orphan image references alone`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+[refImage1]: ./${imagePath} "Ref Image Title"
+![image][refImage2]
+  `.trim()
+
+  const result = await plugin(createPluginOptions(content, imagePath))
+
+  expect(result).toEqual([])
+})
+
+test(`it transforms multiple image references in markdown`, async () => {
+  const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
+
+  const content = `
+[refImage1]: ./${imagePaths[0]} "Ref1 Image Title"
+[refImage2]: ./${imagePaths[1]} "Ref2 Image Title"
+![image 1][refImage1]
+![image 2][refImage2]
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePaths))
+
+  expect(nodes.length).toBe(imagePaths.length)
+})
+
+test(`it transforms multiple image links and image references in markdown`, async () => {
+  const imagePaths = [`images/my-image.jpeg`, `images/other-image.jpeg`]
+
+  const content = `
+[refImage1]: ./${imagePaths[0]} "Ref1 Image Title"
+[refImage2]: ./${imagePaths[1]} "Ref2 Image Title"
+![image 1][refImage1]
+![image 2][refImage2]
+![image 1](./${imagePaths[0]})
+![image 2](./${imagePaths[1]})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePaths))
+
+  expect(nodes.length).toBe(imagePaths.length * 2)
+})
+
 test(`it transforms HTML img tags`, async () => {
   const imagePath = `image/my-image.jpeg`
 
@@ -145,4 +214,306 @@ test(`it leaves non-relative HTML img tags alone`, async () => {
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
   expect(nodes[0].value).toBe(content)
+})
+
+test(`it leaves images that are already linked alone`, async () => {
+  const imagePath = `image/my-image.jpg`
+  const content = `
+[![img](./${imagePath})](https://google.com)
+`
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it leaves linked HTML img tags alone`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+<a href="https://example.org">
+  <img src="./${imagePath}">
+</a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it leaves single-line linked HTML img tags alone`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+<a href="https://example.org"><img src="./${imagePath}"></a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it handles goofy nesting properly`, async () => {
+  const imagePath = `images/this-image-already-has-a-link.jpeg`
+
+  const content = `
+  <a href="https://google.com">**![test](./${imagePath})**</a>
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+  const node = nodes.pop()
+
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms HTML img tags with query strings`, async () => {
+  const imagePath = `image/my-image.jpeg?query=string`
+
+  const content = `
+<img src="./${imagePath}">
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms images in markdown with query strings`, async () => {
+  const imagePath = `images/my-image.jpeg?query=string`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it uses tracedSVG placeholder when enabled`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    tracedSVG: { color: `COLOR_AUTO`, turnPolicy: `TURNPOLICY_LEFT` },
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+  expect(mockTraceSVG).toBeCalledTimes(1)
+
+  expect(mockTraceSVG).toBeCalledWith(
+    expect.objectContaining({
+      // fileArgs cannot be left undefined or traceSVG errors
+      fileArgs: expect.any(Object),
+      // args containing Potrace constants should be translated to their values
+      args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
+    })
+  )
+})
+
+describe(`showCaptions`, () => {
+  it(`display title as caption when showCaptions === true`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display nothing as caption when showCaptions === false`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: false,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
+
+  it(`display nothing as caption when showCaptions === []`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
+
+  it(`display alt as caption if title was not found and showCaptions === true`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display nothing as caption if no title or alt`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
+
+  it(`display alt as caption if specified first in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`alt`, `title`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display title as caption if specified first in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`, `alt`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display alt as caption if specified in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`alt`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display title as caption if specified in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`fallback to alt as caption if specified second in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`, `alt`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`fallback to title as caption if specified second in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`alt`, `title`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`fallback to no caption if no match can be found`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`],
+    })
+
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
 })

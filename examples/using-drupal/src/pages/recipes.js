@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import Layout from "../layouts"
 import Container from "../components/container"
@@ -10,7 +10,7 @@ const AllRecipes = ({ data }) => (
       <h1>Recipes</h1>
       <ul>
         {data.allRecipes.edges.map(({ node }) => (
-          <li>
+          <li key={node.fields.slug}>
             <Link to={node.fields.slug}>{node.title}</Link>
           </li>
         ))}

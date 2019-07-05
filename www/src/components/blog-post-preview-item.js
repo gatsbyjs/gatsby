@@ -1,129 +1,90 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import Img from "gatsby-image"
 
-import typography, { rhythm, scale } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import Avatar from "./avatar"
+import { colors, fonts } from "../utils/presets"
 
-class BlogPostPreviewItem extends React.Component {
-  render() {
-    const post = this.props.post
-    const avatar = post.frontmatter.author.avatar.childImageSharp.fixed
+const formatDate = dateString =>
+  new Date(dateString).toLocaleDateString(`en-EN`, {
+    timeZone: `UTC`,
+    month: `long`,
+    day: `numeric`,
+    year: `numeric`,
+  })
 
-    return (
-      <article className={this.props.className} css={{ position: `relative` }}>
-        <Link to={post.fields.slug}>
-          <h2>{post.frontmatter.title}</h2>
-          <p css={{ fontWeight: `normal` }}>
-            {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
-          </p>
-        </Link>
-        <div
-          css={{
-            display: `flex`,
-            alignItems: `center`,
-            marginBottom: rhythm(2),
-          }}
-        >
+const BlogPostPreviewItem = ({ post, className }) => (
+  <article css={{ position: `relative` }} className={className}>
+    <Link to={post.fields.slug} css={{ "&&": { color: colors.text.primary } }}>
+      <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
+      <p>
+        {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
+      </p>
+    </Link>
+    <div
+      css={{
+        display: `flex`,
+        alignItems: `center`,
+      }}
+    >
+      <Link
+        to={post.frontmatter.author.fields.slug}
+        css={{
+          position: `relative`,
+          zIndex: 1,
+          "&&": { borderBottom: `0` },
+        }}
+      >
+        <Avatar
+          image={post.frontmatter.author.avatar.childImageSharp.fixed}
+          alt={post.frontmatter.author.id}
+        />
+      </Link>
+      <div
+        css={{
+          display: `inline-block`,
+          fontFamily: fonts.header,
+          color: colors.text.secondary,
+        }}
+      >
+        <div>
           <Link
             to={post.frontmatter.author.fields.slug}
             css={{
               position: `relative`,
               zIndex: 1,
-              "&&": {
-                boxShadow: `none`,
-                borderBottom: `0`,
-                fontWeight: `normal`,
-                ":hover": {
-                  background: `transparent`,
-                },
-              },
             }}
           >
-            <Img
-              alt=""
-              fixed={avatar}
-              css={{
-                borderRadius: `100%`,
-                display: `inline-block`,
-                marginRight: rhythm(1 / 2),
-                marginBottom: 0,
-                verticalAlign: `top`,
-                // prevents image twitch in Chrome when hovering the card
-                transform: `translateZ(0)`,
-              }}
-            />
+            {post.frontmatter.author.id}
           </Link>
-          <div
-            css={{
-              display: `inline-block`,
-              fontFamily: typography.options.headerFontFamily.join(`,`),
-              color: colors.gray.calm,
-              ...scale(-2 / 5),
-              [presets.Mobile]: {
-                ...scale(-1 / 5),
-              },
-              [presets.Desktop]: {
-                ...scale(0),
-              },
-            }}
-          >
-            <div>
-              <Link
-                to={post.frontmatter.author.fields.slug}
-                css={{
-                  position: `relative`,
-                  zIndex: 1,
-                  "&&": {
-                    color: `${colors.gatsby}`,
-                    fontWeight: `normal`,
-                    ":hover": {
-                      background: colors.ui.bright,
-                    },
-                  },
-                }}
-              >
-                {post.frontmatter.author.id}
-              </Link>
-              {` `}
-              on
-              {` `}
-              {post.frontmatter.date}
-            </div>
-          </div>
+          {` `}
+          on
+          {` `}
+          {formatDate(post.frontmatter.date)}
         </div>
-        <Link
-          to={post.fields.slug}
-          css={{
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            overflow: `hidden`,
-            textIndent: `-100%`,
-            whiteSpace: `nowrap`,
-            zIndex: 0,
-            "&&": {
-              border: 0,
-              boxShadow: `none`,
-              "&:hover": {
-                background: `none`,
-              },
-            },
-          }}
-        >
-          Read more
-        </Link>
-      </article>
-    )
-  }
-}
-
-export default BlogPostPreviewItem
+      </div>
+    </div>
+    <Link
+      to={post.fields.slug}
+      css={{
+        position: `absolute`,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: `hidden`,
+        textIndent: `-100%`,
+        whiteSpace: `nowrap`,
+        zIndex: 0,
+        "&&": { border: 0 },
+      }}
+    >
+      Read more
+    </Link>
+  </article>
+)
 
 export const blogPostPreviewFragment = graphql`
-  fragment BlogPostPreview_item on MarkdownRemark {
+  fragment BlogPostPreview_item on Mdx {
     excerpt
     fields {
       slug
@@ -131,7 +92,7 @@ export const blogPostPreviewFragment = graphql`
     frontmatter {
       excerpt
       title
-      date(formatString: "MMMM Do YYYY")
+      date
       author {
         id
         fields {
@@ -140,8 +101,8 @@ export const blogPostPreviewFragment = graphql`
         avatar {
           childImageSharp {
             fixed(
-              width: 30
-              height: 30
+              width: 32
+              height: 32
               quality: 80
               traceSVG: {
                 turdSize: 10
@@ -154,6 +115,15 @@ export const blogPostPreviewFragment = graphql`
           }
         }
       }
+      cover {
+        childImageSharp {
+          fluid(maxWidth: 700, quality: 80) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
     }
   }
 `
+
+export default BlogPostPreviewItem

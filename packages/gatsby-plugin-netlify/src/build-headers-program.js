@@ -1,7 +1,8 @@
 import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
+import { parse } from "path"
 import kebabHash from "kebab-hash"
-import { HEADER_COMMENT } from "./constants"
+import { HEADER_COMMENT, IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
   COMMON_BUNDLES,
@@ -41,8 +42,18 @@ function createScriptHeaderGenerator(manifest, pathPrefix) {
       return null
     }
 
-    // Always add starting slash, as link entries start with slash as relative to deploy root
-    return linkTemplate(`${pathPrefix}/${chunk}`)
+    // convert to array if it's not already
+    const chunks = _.isArray(chunk) ? chunk : [chunk]
+
+    return chunks
+      .filter(script => {
+        const parsed = parse(script)
+        // handle only .js, .css content is inlined already
+        // and doesn't need to be pushed
+        return parsed.ext === `.js`
+      })
+      .map(script => linkTemplate(`${pathPrefix}/${script}`))
+      .join(`\n  `)
   }
 }
 
@@ -180,14 +191,11 @@ const mapUserLinkAllPageHeaders = (
     transformLink(manifest, publicFolder, pathPrefix)
   )
 
-  const duplicateHeadersByPage = _.reduce(
-    pages,
-    (combined, page) => {
-      const pathKey = headersPath(pathPrefix, page.path)
-      return defaultMerge(combined, { [pathKey]: headersList })
-    },
-    {}
-  )
+  const duplicateHeadersByPage = {}
+  pages.forEach(page => {
+    const pathKey = headersPath(pathPrefix, page.path)
+    duplicateHeadersByPage[pathKey] = headersList
+  })
 
   return defaultMerge(headers, duplicateHeadersByPage)
 }
@@ -211,12 +219,29 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
   return defaultMerge(headers, SECURITY_HEADERS)
 }
 
-const applyCachingHeaders = ({ mergeCachingHeaders }) => headers => {
+const applyCachingHeaders = (
+  pluginData,
+  { mergeCachingHeaders }
+) => headers => {
   if (!mergeCachingHeaders) {
     return headers
   }
 
-  return defaultMerge(headers, CACHING_HEADERS)
+  const chunks = Array.from(pluginData.pages.values()).map(
+    page => page.componentChunkName
+  )
+
+  chunks.push(`pages-manifest`, `app`)
+
+  const files = [].concat(...chunks.map(chunk => pluginData.manifest[chunk]))
+
+  const cachingHeaders = {}
+
+  files.forEach(file => {
+    cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+  })
+
+  return defaultMerge(headers, cachingHeaders, CACHING_HEADERS)
 }
 
 const applyTransfromHeaders = ({ transformHeaders }) => headers =>
@@ -231,9 +256,9 @@ const writeHeadersFile = ({ publicFolder }) => contents =>
 export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     validateUserOptions(pluginOptions),
-    mapUserLinkHeaders(pluginData, pluginOptions),
+    mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
-    applyCachingHeaders(pluginOptions),
+    applyCachingHeaders(pluginData, pluginOptions),
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),

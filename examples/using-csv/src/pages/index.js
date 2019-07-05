@@ -1,3 +1,4 @@
+import { graphql } from "gatsby"
 import React from "react"
 
 class IndexComponent extends React.Component {

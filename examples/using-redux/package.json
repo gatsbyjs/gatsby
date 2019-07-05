@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "^2.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "5.0.5",
@@ -19,6 +19,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
+    "start": "npm run develop",
     "serve": "gatsby serve"
   }
 }

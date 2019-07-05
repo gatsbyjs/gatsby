@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import gray from "gray-percentage"
 import Img from "gatsby-image"
 
@@ -131,6 +131,7 @@ class IndexPage extends React.Component {
                   square={true}
                   columns={4}
                   marginBottom={0}
+                  key={recipe.fields.slug}
                 />
               ))}
             </div>
@@ -147,7 +148,7 @@ class IndexPage extends React.Component {
               }}
             >
               <div css={{ maxWidth: rhythm(15) }}>
-                <h2>In this month's edition</h2>
+                <h2>In this {`month's`} edition</h2>
                 <p>
                   Quisque vitae pulvinar arcu. Aliquam ac pellentesque erat, at
                   finibus massa.
@@ -186,7 +187,11 @@ class IndexPage extends React.Component {
               }}
             >
               {nextFourPromotedRecipes.map(recipe => (
-                <PromotedCard recipe={recipe} columns={2} />
+                <PromotedCard
+                  recipe={recipe}
+                  columns={2}
+                  key={recipe.fields.slug}
+                />
               ))}
             </div>
           </Container>

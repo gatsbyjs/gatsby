@@ -21,11 +21,15 @@ export const SECURITY_HEADERS = {
     `X-Frame-Options: DENY`,
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
+    `Referrer-Policy: same-origin`,
   ],
 }
 
+export const IMMUTABLE_CACHING_HEADER = `Cache-Control: public, max-age=31536000, immutable`
+
 export const CACHING_HEADERS = {
-  "/static/*": [`Cache-Control: max-age=31536000`],
+  "/static/*": [IMMUTABLE_CACHING_HEADER],
+  "/sw.js": [`Cache-Control: no-cache`],
 }
 
 export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/

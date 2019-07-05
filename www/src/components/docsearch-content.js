@@ -1,5 +1,9 @@
 import React from "react"
+import FeedbackWidget from "./feedback-widget/feedback-widget"
 
 export default ({ children }) => (
-  <div className={`docSearch-content`}>{children}</div>
+  <main id={`reach-skip-nav`} className={`docSearch-content`}>
+    {children}
+    <FeedbackWidget />
+  </main>
 )

@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import GatsbyLink from "gatsby-link"
+import { Link } from "gatsby"
 
 class TOC extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class TOC extends React.Component {
         <ul>
           {allComponents.map(({ displayName, filePath }, index) => (
             <li key={index}>
-              <GatsbyLink to={filePath}>{displayName}</GatsbyLink>
+              <Link to={filePath}>{displayName}</Link>
             </li>
           ))}
         </ul>

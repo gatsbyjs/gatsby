@@ -2,19 +2,19 @@ const React = require(`react`)
 const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { StaticRouter, Route } = require(`react-router-dom`)
+const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
 const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
-const { dataPaths, pages } = require(`./data.json`)
-
-// Speed up looking up pages.
-const pagesObjectMap = new Map()
-pages.forEach(p => pagesObjectMap.set(p.path, p))
+const { version: gatsbyVersion } = require(`gatsby/package.json`)
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+)
+
+const chunkMapping = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
 )
 
 // const testRequireError = require("./test-require-error")
@@ -34,33 +34,60 @@ try {
   if (testRequireError(`../src/html`, err)) {
     Html = require(`./default-html`)
   } else {
-    console.log(
-      `\n\nThere was an error requiring "src/html.js"\n\n`,
-      err,
-      `\n\n`
-    )
-    process.exit()
+    throw err
   }
 }
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-function urlJoin(...parts) {
-  return parts.reduce((r, next) => {
-    const segment = next == null ? `` : String(next).replace(/^\/+/, ``)
-    return segment ? `${r.replace(/\/$/, ``)}/${segment}` : r
-  }, ``)
+const getPageDataPath = path => {
+  const fixedPagePath = path === `/` ? `index` : path
+  return join(`page-data`, fixedPagePath, `page-data.json`)
 }
 
-const getPage = path => pagesObjectMap.get(path)
+const getPageDataUrl = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  return `${__PATH_PREFIX__}/${pageDataPath}`
+}
+
+const getPageDataFile = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  return join(process.cwd(), `public`, pageDataPath)
+}
+
+const loadPageDataSync = pagePath => {
+  const pageDataPath = getPageDataPath(pagePath)
+  const pageDataFile = join(process.cwd(), `public`, pageDataPath)
+  try {
+    const pageDataJson = fs.readFileSync(pageDataFile)
+    return JSON.parse(pageDataJson)
+  } catch (error) {
+    // not an error if file is not found. There's just no page data
+    return null
+  }
+}
 
 const createElement = React.createElement
 
-export default (pagePath, callback) => {
-  const pathPrefix = `${__PATH_PREFIX__}/`
+const sanitizeComponents = components => {
+  if (Array.isArray(components)) {
+    // remove falsy items
+    return components.filter(val => (Array.isArray(val) ? val.length > 0 : val))
+  } else {
+    // we also accept single components, so we need to handle this case as well
+    return components ? [components] : []
+  }
+}
 
+export default (pagePath, callback) => {
   let bodyHtml = ``
-  let headComponents = []
+  let headComponents = [
+    <meta
+      name="generator"
+      content={`Gatsby ${gatsbyVersion}`}
+      key={`generator-${gatsbyVersion}`}
+    />,
+  ]
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []
@@ -72,7 +99,7 @@ export default (pagePath, callback) => {
   }
 
   const setHeadComponents = components => {
-    headComponents = headComponents.concat(components)
+    headComponents = headComponents.concat(sanitizeComponents(components))
   }
 
   const setHtmlAttributes = attributes => {
@@ -84,57 +111,90 @@ export default (pagePath, callback) => {
   }
 
   const setPreBodyComponents = components => {
-    preBodyComponents = preBodyComponents.concat(components)
+    preBodyComponents = preBodyComponents.concat(sanitizeComponents(components))
   }
 
   const setPostBodyComponents = components => {
-    postBodyComponents = postBodyComponents.concat(components)
+    postBodyComponents = postBodyComponents.concat(
+      sanitizeComponents(components)
+    )
   }
 
   const setBodyProps = props => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  const page = getPage(pagePath)
+  const getHeadComponents = () => headComponents
 
-  let dataAndContext = {}
-  if (page.jsonName in dataPaths) {
-    const pathToJsonData = `../public/` + dataPaths[page.jsonName]
-    try {
-      dataAndContext = JSON.parse(
-        fs.readFileSync(
-          `${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`
-        )
+  const replaceHeadComponents = components => {
+    headComponents = sanitizeComponents(components)
+  }
+
+  const getPreBodyComponents = () => preBodyComponents
+
+  const replacePreBodyComponents = components => {
+    preBodyComponents = sanitizeComponents(components)
+  }
+
+  const getPostBodyComponents = () => postBodyComponents
+
+  const replacePostBodyComponents = components => {
+    postBodyComponents = sanitizeComponents(components)
+  }
+
+  const pageDataRaw = fs.readFileSync(getPageDataFile(pagePath))
+  const pageData = JSON.parse(pageDataRaw)
+  const pageDataUrl = getPageDataUrl(pagePath)
+  const { componentChunkName } = pageData
+
+  class RouteHandler extends React.Component {
+    render() {
+      const props = {
+        ...this.props,
+        ...pageData.result,
+        // pathContext was deprecated in v2. Renamed to pageContext
+        pathContext: pageData.result ? pageData.result.pageContext : undefined,
+      }
+
+      const pageElement = createElement(
+        syncRequires.components[componentChunkName],
+        props
       )
-    } catch (e) {
-      console.log(`error`, pathToJsonData, e)
-      process.exit()
+
+      const wrappedPage = apiRunner(
+        `wrapPageElement`,
+        { element: pageElement, props },
+        pageElement,
+        ({ result }) => {
+          return { element: result, props }
+        }
+      ).pop()
+
+      return wrappedPage
     }
   }
 
-  const AltStaticRouter = apiRunner(`replaceStaticRouterComponent`)[0]
-
-  apiRunner(`replaceStaticRouterComponent`)
-
-  const bodyComponent = createElement(
-    AltStaticRouter || StaticRouter,
-    {
-      basename: pathPrefix.slice(0, -1),
-      location: {
-        pathname: pagePath,
+  const routerElement = createElement(
+    ServerLocation,
+    { url: `${__BASE_PATH__}${pagePath}` },
+    createElement(
+      Router,
+      {
+        id: `gatsby-focus-wrapper`,
+        baseuri: `${__BASE_PATH__}`,
       },
-      context: {},
-    },
-    createElement(Route, {
-      // eslint-disable-next-line react/display-name
-      render: routeProps =>
-        createElement(syncRequires.components[page.componentChunkName], {
-          ...routeProps,
-          ...dataAndContext,
-          pathContext: dataAndContext.pageContext,
-        }),
-    })
+      createElement(RouteHandler, { path: `/*` })
+    )
   )
+
+  const bodyComponent = apiRunner(
+    `wrapRootElement`,
+    { element: routerElement, pathname: pagePath },
+    routerElement,
+    ({ result }) => {
+      return { element: result, pathname: pagePath }
+    }
+  ).pop()
 
   // Let the site or plugin render the page component.
   apiRunner(`replaceRenderer`, {
@@ -146,16 +206,23 @@ export default (pagePath, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   // If no one stepped up, we'll handle it.
   if (!bodyHtml) {
-    bodyHtml = renderToString(bodyComponent)
+    try {
+      bodyHtml = renderToString(bodyComponent)
+    } catch (e) {
+      // ignore @reach/router redirect errors
+      if (!isRedirect(e)) throw e
+    }
   }
 
   // Create paths to scripts
   let scriptsAndStyles = flatten(
-    [`app`, page.componentChunkName].map(s => {
+    [`app`, componentChunkName].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
@@ -209,10 +276,11 @@ export default (pagePath, callback) => {
     setPostBodyComponents,
     setBodyProps,
     pathname: pagePath,
+    loadPageDataSync,
     bodyHtml,
     scripts,
     styles,
-    pathPrefix,
+    pathPrefix: __PATH_PREFIX__,
   })
 
   scripts
@@ -225,19 +293,18 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={urlJoin(pathPrefix, script.name)}
+          href={`${__PATH_PREFIX__}/${script.name}`}
         />
       )
     })
 
-  if (page.jsonName in dataPaths) {
-    const dataPath = `${pathPrefix}static/d/${dataPaths[page.jsonName]}.json`
+  if (pageData) {
     headComponents.push(
       <link
-        rel="preload"
-        key={dataPath}
-        href={dataPath}
         as="fetch"
+        rel="preload"
+        key={pageDataUrl}
+        href={pageDataUrl}
         crossOrigin="use-credentials"
       />
     )
@@ -256,13 +323,13 @@ export default (pagePath, callback) => {
             as="style"
             rel={style.rel}
             key={style.name}
-            href={urlJoin(pathPrefix, style.name)}
+            href={`${__PATH_PREFIX__}/${style.name}`}
           />
         )
       } else {
         headComponents.unshift(
           <style
-            data-href={urlJoin(pathPrefix, style.name)}
+            data-href={`${__PATH_PREFIX__}/${style.name}`}
             dangerouslySetInnerHTML={{
               __html: fs.readFileSync(
                 join(process.cwd(), `public`, style.name),
@@ -274,31 +341,60 @@ export default (pagePath, callback) => {
       }
     })
 
+  const webpackCompilationHash = pageData.webpackCompilationHash
+
   // Add page metadata for the current page
-  const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${
-    page.jsonName in dataPaths
-      ? `window.dataPath="${dataPaths[page.jsonName]}";`
-      : ``
-  }/*]]>*/`
+  const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";window.webpackCompilationHash="${webpackCompilationHash}";/*]]>*/`
 
   postBodyComponents.push(
     <script
       key={`script-loader`}
       id={`gatsby-script-loader`}
       dangerouslySetInnerHTML={{
-        __html: windowData,
+        __html: windowPageData,
+      }}
+    />
+  )
+
+  // Add chunk mapping metadata
+  const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+    chunkMapping
+  )};/*]]>*/`
+
+  postBodyComponents.push(
+    <script
+      key={`chunk-mapping`}
+      id={`gatsby-chunk-mapping`}
+      dangerouslySetInnerHTML={{
+        __html: scriptChunkMapping,
       }}
     />
   )
 
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
-  const bodyScripts = scripts.filter(s => s.rel !== `prefetch`).map(s => {
-    const scriptPath = `${pathPrefix}${JSON.stringify(s.name).slice(1, -1)}`
-    return <script key={scriptPath} src={scriptPath} async />
-  })
+  const bodyScripts = scripts
+    .filter(s => s.rel !== `prefetch`)
+    .map(s => {
+      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+        1,
+        -1
+      )}`
+      return <script key={scriptPath} src={scriptPath} async />
+    })
 
   postBodyComponents.push(...bodyScripts)
+
+  apiRunner(`onPreRenderHTML`, {
+    getHeadComponents,
+    replaceHeadComponents,
+    getPreBodyComponents,
+    replacePreBodyComponents,
+    getPostBodyComponents,
+    replacePostBodyComponents,
+    pathname: pagePath,
+    pathPrefix: __PATH_PREFIX__,
+  })
 
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <Html

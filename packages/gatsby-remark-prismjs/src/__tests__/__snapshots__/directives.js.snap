@@ -1,0 +1,335 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hiding lines should support hide markers in CSS 1`] = `
+Array [
+  Object {
+    "code": "html {",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "  padding: 50px;",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "}",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+]
+`;
+
+exports[`hiding lines should support hide markers in HTML 1`] = `
+Array [
+  Object {
+    "code": "<html>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "  <body>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "    <p>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "    </p>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "    <ul>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "      <li>not hidden</li>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "    </ul>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "  </body>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "</html>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+]
+`;
+
+exports[`hiding lines should support hide markers in JS 1`] = `
+Array [
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "ReactDOM.render(",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "  <div>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "    <ul>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "      <li>Not hidden</li>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "      <li>Not hidden</li>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "      <li>Not hidden</li>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "    </ul>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "  </div>,",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": ");",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+]
+`;
+
+exports[`highlighting lines highlight kitchen sink highlights multiple directives 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">import React, { Component } from \\"react\\"</span>
+<span class=\\"gatsby-highlight-code-line\\">  state = {</span>
+<span class=\\"gatsby-highlight-code-line\\">    count: 0,</span>
+<span class=\\"gatsby-highlight-code-line\\">  }</span>
+<span class=\\"gatsby-highlight-code-line\\">      count: state.count + 1,</span>
+<span class=\\"gatsby-highlight-code-line\\">  render() {</span>
+<span class=\\"gatsby-highlight-code-line\\">    const { count } = this.state</span>
+<span class=\\"gatsby-highlight-code-line\\"></span>
+<span class=\\"gatsby-highlight-code-line\\">        <button onClick={this.updateCount}>Click me</button></span>"
+`;
+
+exports[`highlighting lines highlight-line highlights line 1`] = `"<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"</span>"`;
+
+exports[`highlighting lines highlight-next-line highlights correct line 1`] = `"<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"</span>"`;
+
+exports[`highlighting lines highlight-range does not highlight and warns if range is invalid 1`] = `""`;
+
+exports[`highlighting lines highlight-range highlights correct lines 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  a = 1 + 1</span>
+<span class=\\"gatsby-highlight-code-line\\">  b = 2 + 2</span>
+<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"</span>"
+`;
+
+exports[`highlighting lines highlight-range highlights until end of code block if ranges goes farther 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  a = 1 + 1</span>
+<span class=\\"gatsby-highlight-code-line\\">  b = 2 + 2</span>
+<span class=\\"gatsby-highlight-code-line\\">  return \\"hello world\\"</span>
+<span class=\\"gatsby-highlight-code-line\\">}</span>
+<span class=\\"gatsby-highlight-code-line\\"></span>"
+`;
+
+exports[`highlighting lines highlight-start / highlight-end highlights correct lines 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">  var a = \\"b\\"</span>
+<span class=\\"gatsby-highlight-code-line\\">  return a + \\"hello world\\"</span>"
+`;
+
+exports[`highlighting lines highlight-start / highlight-end highlights without end directive 1`] = `
+"<span class=\\"gatsby-highlight-code-line\\">var a = \\"b\\"</span>
+<span class=\\"gatsby-highlight-code-line\\">return a + \\"hello world\\"</span>
+<span class=\\"gatsby-highlight-code-line\\"></span>"
+`;
+
+exports[`highlighting lines jsx comment highlights comment line 1`] = `"<span class=\\"gatsby-highlight-code-line\\">      <button>sup</button></span>"`;
+
+exports[`highlighting lines jsx comment highlights comment line after Prism highlighting 1`] = `"<span class=\\"gatsby-highlight-code-line\\">      <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>button</span><span class=\\"token punctuation\\">></span></span><span class=\\"token plain-text\\">sup</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>button</span><span class=\\"token punctuation\\">></span></span></span>"`;
+
+exports[`highlighting lines yaml highlights yaml 1`] = `"<span class=\\"gatsby-highlight-code-line\\">- title: catorce</span>"`;
+
+exports[`mixed highlight and hide lines should support mixed hide and highlight markers 1`] = `
+Array [
+  Object {
+    "code": "ReactDOM.render(",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "  <div>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "    <ul>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "<span class=\\"gatsby-highlight-code-line\\">      <li>Not hidden and highlighted</li></span>",
+    "flagSources": Array [
+      Object {
+        "directive": "highlight-range{6-8}",
+        "feature": "highlight",
+        "index": 1,
+      },
+    ],
+    "hide": false,
+    "highlight": true,
+  },
+  Object {
+    "code": "<span class=\\"gatsby-highlight-code-line\\">      <li>Not hidden and highlighted</li></span>",
+    "flagSources": Array [
+      Object {
+        "directive": "highlight-range{6-8}",
+        "feature": "highlight",
+        "index": 1,
+      },
+    ],
+    "hide": false,
+    "highlight": true,
+  },
+  Object {
+    "code": "<span class=\\"gatsby-highlight-code-line\\">      <li>Not hidden and highlighted</li></span>",
+    "flagSources": Array [
+      Object {
+        "directive": "highlight-range{6-8}",
+        "feature": "highlight",
+        "index": 1,
+      },
+    ],
+    "hide": false,
+    "highlight": true,
+  },
+  Object {
+    "code": "    </ul>",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "  </div>,",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "<span class=\\"gatsby-highlight-code-line\\">  document.getElementById('root')</span>",
+    "flagSources": Array [
+      Object {
+        "directive": "highlight-next-lineundefined",
+        "feature": "highlight",
+        "index": 15,
+      },
+    ],
+    "hide": false,
+    "highlight": true,
+  },
+  Object {
+    "code": ");",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+  Object {
+    "code": "",
+    "flagSources": Array [],
+    "hide": false,
+    "highlight": false,
+  },
+]
+`;
+
+exports[`mixed highlight and hide lines should support mixed hide and highlight markers 2`] = `
+"<span class=\\"gatsby-highlight-code-line\\">      <li>Not hidden and highlighted</li></span>
+<span class=\\"gatsby-highlight-code-line\\">      <li>Not hidden and highlighted</li></span>
+<span class=\\"gatsby-highlight-code-line\\">      <li>Not hidden and highlighted</li></span>
+<span class=\\"gatsby-highlight-code-line\\">  document.getElementById('root')</span>"
+`;

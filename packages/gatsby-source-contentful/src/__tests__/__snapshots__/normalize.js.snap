@@ -362,9 +362,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "phone": Object {
-          "en-US": Array [
-            "+1 212 260 2269",
-          ],
+          "en-US": Array [],
         },
         "website": Object {
           "en-US": "http://www.lemnos.jp/en/",
@@ -1741,6 +1739,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       },
     },
   ],
+  Array [],
   Array [
     Object {
       "fields": Object {
@@ -1766,7 +1765,6 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
               "eslint": "^4.5.0",
               "eslint-config-google": "^0.9.1",
               "eslint-config-prettier": "^2.5.0",
-              "eslint-plugin-flow-vars": "^0.5.0",
               "eslint-plugin-flowtype": "^2.35.0",
               "eslint-plugin-import": "^2.7.0",
               "eslint-plugin-jsx-a11y": "^6.0.2",
@@ -2051,6 +2049,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2066,7 +2065,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "2024479d728f9130f5a6eefb28d89f65",
+        "contentDigest": "bbf9ba4506cb99492f0b07ea3a28f737",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2077,6 +2076,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2092,7 +2092,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "3392b4440d3c91cb486b5b6c68e3bb1e",
+        "contentDigest": "11c01df3a61387333cf9f7ac613af20b",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2103,6 +2103,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "KTRF62Q4gg60q6WCsWKw8",
       "description": "by Lemnos",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2118,7 +2119,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "3a7957ae63ae0cda1078d5fca401faae",
+        "contentDigest": "a2addf44f7879e90d6b3058001a5880e",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2129,6 +2130,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "KTRF62Q4gg60q6WCsWKw8",
       "description": "by Lemnos",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2144,7 +2146,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f1229d259f36861c2b7d8b81366492e8",
+        "contentDigest": "625a2b2257595edbe4efcfc5ae336dc3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2155,6 +2157,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "Xc0ny7GWsMEMCeASWO2um",
       "description": "Merchandise image",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2170,7 +2173,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "8c5ffd7925d4fdb24a1631f04541fd13",
+        "contentDigest": "b54c3564fc75efb39c3759efee64b7f3",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2181,6 +2184,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "Xc0ny7GWsMEMCeASWO2um",
       "description": "Merchandise image",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2196,7 +2200,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5502bbb6461c9a31fb238b8e8546e47a",
+        "contentDigest": "262af8b162da9de405bf6499467768fd",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2207,6 +2211,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
       "description": "company logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2222,7 +2227,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "19d49c506794012b826a0a2a9b0f3b0b",
+        "contentDigest": "944b01fdfe82c76ed3e3e7bd1c462975",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2233,6 +2238,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
       "description": "company logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2248,7 +2254,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c4456421bdc406b0f283e79aa88a5eb1",
+        "contentDigest": "188a448b2b9c92aa20e4f2b921daff6f",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2259,6 +2265,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "6t4HKjytPi0mYgs240wkG",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2274,7 +2281,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "1972b8886a590294f24aeec43567b48c",
+        "contentDigest": "ccc48a348551b17fddce1efb97bf820b",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2285,6 +2292,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "6t4HKjytPi0mYgs240wkG",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2300,7 +2308,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "e1acc294b5b1d1c60a1d83ece78161c5",
+        "contentDigest": "cae9c5d552a6fcb3df4dea804c031845",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2311,6 +2319,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2326,7 +2335,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5059d353be1bac4c06a753c7b42d71c5",
+        "contentDigest": "df2e57e86b4fe17655ed0889ffa243a6",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2337,6 +2346,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2352,7 +2362,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f439bcacaaec96ae09c43edf4d42d498",
+        "contentDigest": "75e059f146658d383ce03f57ae2b7ffd",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2363,6 +2373,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
       "description": "category icon",
       "file": Object {
         "contentType": "image/png",
@@ -2378,7 +2389,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "160c60023250c0e35f6f0a757989a9ac",
+        "contentDigest": "5062a26112b3dbb531d472b8903d46e9",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2389,6 +2400,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
       "description": "category icon",
       "file": Object {
         "contentType": "image/png",
@@ -2404,7 +2416,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "626faa183d1c209b3705c35efd449a7b",
+        "contentDigest": "dd9c762ab326ced17232e9c96ea7a5d3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2415,6 +2427,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2430,7 +2443,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "b5e748b808c2e914f95f22b85698ee69",
+        "contentDigest": "88c4ef0ed49551a82a33cccd09171d8e",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2441,6 +2454,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2456,7 +2470,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "59a0fa2823b13dfd61ba168af0d64d9f",
+        "contentDigest": "891168271aa495c6afed1ba1014fa918",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2467,6 +2481,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "wtrHxeu3zEoEce2MokCSi",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2482,7 +2497,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "7a128b72c470086f65127423e06d2c1c",
+        "contentDigest": "dfdac1f5a977d38a8ece0762c6ff1ed1",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2493,6 +2508,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "wtrHxeu3zEoEce2MokCSi",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2508,7 +2524,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c9f99cac382777dbdd0f200ec6df2cdd",
+        "contentDigest": "3e873879f0cc2622be2c1199a8f9d0d8",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2519,6 +2535,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2534,7 +2551,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c9c930bacc6d354ed7c6626b52bf1c23",
+        "contentDigest": "4c42ff152ccfc22a7a8ad3fdb728d300",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2545,6 +2562,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2560,7 +2578,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "1ce83ba45d499820e9e5b7e03ebc9bc0",
+        "contentDigest": "ac654073536701214d653f3df7e31eca",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2571,6 +2589,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2586,7 +2605,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "e8cf0751f0fd103bc88049a11aebeaa8",
+        "contentDigest": "827ff632f8631d9317517068e0485c2d",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2597,6 +2616,7 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2612,7 +2632,7 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "81e0040ddb8b946c56f2cab7a449e345",
+        "contentDigest": "5f38ab0214338d7b18e434a4a0509945",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2923,15 +2943,13 @@ Array [
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6f4e1ac05fd8ddf9416fd6817495171a",
+        "contentDigest": "519b0291d3d4f6b873db1e7041f8a8c6",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "en-US",
       "parent": "Brand",
-      "phone": Array [
-        "+1 212 260 2269",
-      ],
+      "phone": Array [],
       "product___NODE": Array [
         "uuid-from-gatsby",
       ],
@@ -3126,15 +3144,13 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "b06eff771a044bee1ef9ed561dc4e655",
+        "contentDigest": "8e519d7f8faaffd4950e0ac610f60faf",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
       "node_locale": "de",
       "parent": "Brand",
-      "phone": Array [
-        "+1 212 260 2269",
-      ],
+      "phone": Array [],
       "product___NODE": Array [
         "uuid-from-gatsby",
       ],
@@ -3842,6 +3858,34 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
   Array [
     Object {
       "children": Array [],
+      "description": "",
+      "displayField": "name",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "type": "ContentfulContentType",
+      },
+      "name": "StTest",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "name",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "type": "ContentfulContentType",
+      },
+      "name": "StTest",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
       "description": "just for testing JSON fields",
       "displayField": null,
       "id": "uuid-from-gatsby",
@@ -3894,7 +3938,6 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "eslint": "^4.5.0",
         "eslint-config-google": "^0.9.1",
         "eslint-config-prettier": "^2.5.0",
-        "eslint-plugin-flow-vars": "^0.5.0",
         "eslint-plugin-flowtype": "^2.35.0",
         "eslint-plugin-import": "^2.7.0",
         "eslint-plugin-jsx-a11y": "^6.0.2",
@@ -3920,8 +3963,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       ],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepare\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write \\\\\\"www/*.js\\\\\\" \\\\\\"www/src/**/*.js\\\\\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write \\\\\\"scripts/**/*.js\\\\\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write \\\\\\"examples/**/gatsby-node.js\\\\\\" \\\\\\"examples/**/gatsby-config.js\\\\\\" \\\\\\"examples/**/src/**/*.js\\\\\\"\\",\\"format-packages\\":\\"prettier-eslint --write \\\\\\"packages/*/src/**/*.js\\\\\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write \\\\\\"packages/gatsby/cache-dir/*.js\\\\\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"babel-cli\\":\\"^6.26.0\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"babel-runtime\\":\\"^6.26.0\\",\\"babel-register\\":\\"^6.26.0\\",\\"babel-preset-env\\":\\"^1.6.0\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"babel-preset-flow\\":\\"^6.23.0\\",\\"babel-preset-react\\":\\"^6.24.1\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"eslint-plugin-flow-vars\\":\\"^0.5.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
-        "contentDigest": "d6e32c46a38382c6eebfc6349000b2b6",
+        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepare\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write /\\"www/*.js/\\" /\\"www/src/**/*.js/\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write /\\"scripts/**/*.js/\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write /\\"examples/**/gatsby-node.js/\\" /\\"examples/**/gatsby-config.js/\\" /\\"examples/**/src/**/*.js/\\"\\",\\"format-packages\\":\\"prettier-eslint --write /\\"packages/*/src/**/*.js/\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write /\\"packages/gatsby/cache-dir/*.js/\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"babel-cli\\":\\"^6.26.0\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"babel-runtime\\":\\"^6.26.0\\",\\"babel-register\\":\\"^6.26.0\\",\\"babel-preset-env\\":\\"^1.6.0\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"babel-preset-flow\\":\\"^6.23.0\\",\\"babel-preset-react\\":\\"^6.24.1\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
+        "contentDigest": "bd3309e9154a040413fe8717b19fd4d3",
         "mediaType": "application/json",
         "type": "contentfulJsonTestJsonTestJsonNode",
       },
@@ -4011,7 +4054,6 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "eslint": "^4.5.0",
         "eslint-config-google": "^0.9.1",
         "eslint-config-prettier": "^2.5.0",
-        "eslint-plugin-flow-vars": "^0.5.0",
         "eslint-plugin-flowtype": "^2.35.0",
         "eslint-plugin-import": "^2.7.0",
         "eslint-plugin-jsx-a11y": "^6.0.2",
@@ -4037,8 +4079,8 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       ],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepare\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write \\\\\\"www/*.js\\\\\\" \\\\\\"www/src/**/*.js\\\\\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write \\\\\\"scripts/**/*.js\\\\\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write \\\\\\"examples/**/gatsby-node.js\\\\\\" \\\\\\"examples/**/gatsby-config.js\\\\\\" \\\\\\"examples/**/src/**/*.js\\\\\\"\\",\\"format-packages\\":\\"prettier-eslint --write \\\\\\"packages/*/src/**/*.js\\\\\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write \\\\\\"packages/gatsby/cache-dir/*.js\\\\\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"babel-cli\\":\\"^6.26.0\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"babel-runtime\\":\\"^6.26.0\\",\\"babel-register\\":\\"^6.26.0\\",\\"babel-preset-env\\":\\"^1.6.0\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"babel-preset-flow\\":\\"^6.23.0\\",\\"babel-preset-react\\":\\"^6.24.1\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"eslint-plugin-flow-vars\\":\\"^0.5.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
-        "contentDigest": "d6e32c46a38382c6eebfc6349000b2b6",
+        "content": "{\\"engines\\":{\\"yarn\\":\\"^1.2.1\\"},\\"private\\":true,\\"scripts\\":{\\"jest\\":\\"jest\\",\\"lint\\":\\"eslint --ext .js,.jsx packages/**/src\\",\\"plop\\":\\"plop\\",\\"test\\":\\"yarn lint && yarn jest\\",\\"lerna\\":\\"lerna\\",\\"watch\\":\\"lerna run watch --no-sort --stream --concurrency 999\\",\\"format\\":\\"npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts\\",\\"publish\\":\\"lerna publish\\",\\"bootstrap\\":\\"yarn && npm run check-versions && lerna run prepare\\",\\"lint:flow\\":\\"babel-node scripts/flow-check.js\\",\\"remotedev\\":\\"remotedev --hostname=localhost --port=19999\\",\\"test_bkup\\":\\"npm run lint && npm run test-node && npm run test-integration\\",\\"format-www\\":\\"prettier-eslint --write /\\"www/*.js/\\" /\\"www/src/**/*.js/\\"\\",\\"test:watch\\":\\"jest --watch\\",\\"test:update\\":\\"jest --updateSnapshot\\",\\"publish-next\\":\\"lerna publish --npm-tag=next\\",\\"check-versions\\":\\"babel-node scripts/check-versions.js\\",\\"format-scripts\\":\\"prettier-eslint --write /\\"scripts/**/*.js/\\"\\",\\"publish-canary\\":\\"lerna publish --canary --yes\\",\\"format-examples\\":\\"prettier-eslint --write /\\"examples/**/gatsby-node.js/\\" /\\"examples/**/gatsby-config.js/\\" /\\"examples/**/src/**/*.js/\\"\\",\\"format-packages\\":\\"prettier-eslint --write /\\"packages/*/src/**/*.js/\\"\\",\\"format-cache-dir\\":\\"prettier-eslint --write /\\"packages/gatsby/cache-dir/*.js/\\"\\"},\\"workspaces\\":[\\"packages/*\\"],\\"eslintIgnore\\":[\\"interfaces\\",\\"**/__tests__/fixtures/\\"],\\"devDependencies\\":{\\"glob\\":\\"^7.1.1\\",\\"jest\\":\\"^20.0.4\\",\\"plop\\":\\"^1.8.1\\",\\"lerna\\":\\"^2.1.1\\",\\"eslint\\":\\"^4.5.0\\",\\"rimraf\\":\\"^2.6.1\\",\\"chokidar\\":\\"^1.7.0\\",\\"flow-bin\\":\\"^0.42.0\\",\\"jest-cli\\":\\"^20.0.4\\",\\"prettier\\":\\"^1.7.0\\",\\"babel-cli\\":\\"^6.26.0\\",\\"cross-env\\":\\"^5.0.5\\",\\"babel-jest\\":\\"^20.0.3\\",\\"babel-eslint\\":\\"^7.2.3\\",\\"babel-runtime\\":\\"^6.26.0\\",\\"babel-register\\":\\"^6.26.0\\",\\"babel-preset-env\\":\\"^1.6.0\\",\\"remotedev-server\\":\\"^0.2.3\\",\\"babel-preset-flow\\":\\"^6.23.0\\",\\"babel-preset-react\\":\\"^6.24.1\\",\\"babel-plugin-lodash\\":\\"^3.2.11\\",\\"eslint-plugin-react\\":\\"^7.3.0\\",\\"prettier-eslint-cli\\":\\"4.2.x\\",\\"babel-preset-stage-0\\":\\"^6.24.1\\",\\"eslint-config-google\\":\\"^0.9.1\\",\\"eslint-plugin-import\\":\\"^2.7.0\\",\\"eslint-config-prettier\\":\\"^2.5.0\\",\\"eslint-plugin-flowtype\\":\\"^2.35.0\\",\\"eslint-plugin-jsx-a11y\\":\\"^6.0.2\\",\\"eslint-plugin-prettier\\":\\"^2.2.0\\",\\"babel-plugin-transform-runtime\\":\\"^6.23.0\\",\\"babel-plugin-add-module-exports\\":\\"^0.2.1\\",\\"babel-plugin-transform-flow-strip-types\\":\\"^6.22.0\\",\\"babel-plugin-transform-async-to-generator\\":\\"^6.24.1\\"}}",
+        "contentDigest": "bd3309e9154a040413fe8717b19fd4d3",
         "mediaType": "application/json",
         "type": "contentfulJsonTestJsonTestJsonNode",
       },

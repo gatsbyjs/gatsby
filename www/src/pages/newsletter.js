@@ -1,26 +1,30 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
-import { rhythm } from "../utils/typography"
-import { colors } from "../utils/presets"
+import { Helmet } from "react-helmet"
+import { colors, space } from "../utils/presets"
 
 import Layout from "../components/layout"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
+import FooterLinks from "../components/shared/footer-links"
 
 class NewsLetter extends Component {
   render() {
-    const { location, data } = this.props
+    const { location } = this.props
 
     return (
       <Layout location={location}>
         <Helmet>
           <title>Newsletter</title>
+          <meta
+            name="description"
+            content="Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community, hear about new features, tips & tricks, and what people are building."
+          />
         </Helmet>
         <Container
           hasSideBar={false}
           css={{
-            display: "flex",
-            flexDirection: "column",
+            display: `flex`,
+            flexDirection: `column`,
           }}
         >
           <h1 id="introduction" style={{ marginTop: 0 }}>
@@ -35,13 +39,14 @@ class NewsLetter extends Component {
           <EmailCaptureForm
             signupMessage="Sign up for the Gatsby Newsletter"
             confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
-            containerCss={{
-              marginTop: rhythm(1),
-              paddingTop: rhythm(1 / 2),
+            overrideCSS={{
+              marginTop: space[5],
+              paddingTop: space[3],
               borderTop: `2px solid ${colors.lilac}`,
             }}
           />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }
