@@ -6,7 +6,7 @@ title: Make a Gatsby Blog with Netlify CMS
 
 Do you want a personal website with a blog running at `your-domain/blog`? Do you like super fast websites with out-of-the-box performance, SEO, and best practices? Do you like automating your work with a straightforward CMS? Well you're in luck!
 
-This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog), a Gatsby starter that I made that is based on the very popular [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences being that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/), and VS Code highlighting for code blocks.
+This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog), a Gatsby starter based on the very popular [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences are that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/), with VS Code highlighting for code blocks.
 
 ## Let's walk through setting up a site in 4 Steps:
 
