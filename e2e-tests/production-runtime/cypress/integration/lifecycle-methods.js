@@ -30,7 +30,7 @@ describe(`Production build tests`, () => {
       .click()
       .waitForRouteChange()
 
-    cy.getTestElement(`/page/dashboard`)
+    cy.getTestElement(`/nested/foo`)
       .click()
       .waitForRouteChange()
 
