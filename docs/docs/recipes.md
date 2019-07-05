@@ -96,21 +96,11 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 ### Using Styled Components
 
-#### Requirements
+#### Prerequisites
 
-- Install the necessary dependencies for styled-components, including the Gatsby plugin
-
-```shell
-npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components
-```
+- [Install gatsby-pluging-styled-components, styled-components, and babel-plugin-styled-components and its necessary dependencies](/packages/gatsby-plugin-styled-components/) for use in Gatsby
 
 - Add it to your site’s gatsby-config.js
-
-```javascript:title=gatsby-config.js
-module.exports = {
-  plugins: [`gatsby-plugin-styled-components`],
-}
-```
 
 #### Directions
 
@@ -143,7 +133,7 @@ const Username = styled.h2`
 
 const User = props => (
   <UserWrapper>
-    <Avatar src={props.avatar} alt="" />
+    <Avatar src={props.avatar} alt={props.username} />
     <Username>{props.username}</Username>
   </UserWrapper>
 )
