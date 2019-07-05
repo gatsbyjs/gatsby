@@ -3240,3 +3240,16 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://lewis-gatsby-starter-basic.firebaseapp.com
+  repo: https://github.com/lewislbr/lewis-gatsby-starter-basic
+  description: A simple custom basic Gatsby starter template to start a new website.
+  tags:
+    - Styling:CSS-in-JS
+    - PWA
+    - SEO
+  features:
+    - Bare-bones starter.
+    - CSS in JS with styled-components.
+    - Optimized images.
+    - Offline capabilities.
+    - Auto-generated sitemap and robots.txt.
