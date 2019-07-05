@@ -15,7 +15,7 @@ export declare function joinPath(...paths: string[]): string
 /**
  * Calculate CPU core count
  *
- * @param {boolean} useEnvVar Use the 'GATSBY_CPU_COUNT' env var to calculate the requested type of CPU cores
+ * @param {boolean} ignoreEnvVar Ignore the 'GATSBY_CPU_COUNT' env var to calculate the requested type of CPU cores
  * @return {number} Count of the requested type of CPU cores. Defaults to number of physical cores or 1
  */
-export declare function cpuCoreCount(useEnvVar: boolean): number
+export declare function cpuCoreCount(ignoreEnvVar?: boolean): number

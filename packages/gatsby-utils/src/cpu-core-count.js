@@ -1,11 +1,11 @@
 /**
  * @type {import('../index').cpuCoreCount}
  */
-const cpuCoreCount = (useEnvVar = true) => {
+const cpuCoreCount = ignoreEnvVar => {
   try {
     let coreCount = require(`./physical-cpu-count`) || 1
 
-    if (!useEnvVar) {
+    if (ignoreEnvVar) {
       // Return the physical CPU count,
       // or default to 1 if we can't detect
       return coreCount
