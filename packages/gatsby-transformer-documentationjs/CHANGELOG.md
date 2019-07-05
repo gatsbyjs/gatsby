@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@4.0.3...gatsby-transformer-documentationjs@4.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@4.0.2...gatsby-transformer-documentationjs@4.0.3) (2019-06-07)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
 ## [4.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@4.0.1...gatsby-transformer-documentationjs@4.0.2) (2019-05-17)
 
 ### Bug Fixes
@@ -13,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-transformer-documentationjs:** bump documentationjs to get typescript support ([#13751](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/issues/13751)) ([e5f9a22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/commit/e5f9a22)), closes [#13692](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/issues/13692)
+- **gatsby-transformer-documentationjs:** bump documentationjs to get TypeScript support ([#13751](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/issues/13751)) ([e5f9a22](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/commit/e5f9a22)), closes [#13692](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/issues/13692)
 
 # [4.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-documentationjs/compare/gatsby-transformer-documentationjs@3.0.1...gatsby-transformer-documentationjs@4.0.0) (2019-04-30)
 

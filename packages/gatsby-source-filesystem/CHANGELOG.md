@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.1...gatsby-source-filesystem@2.1.2) (2019-07-02)
+
+### Bug Fixes
+
+- **gatsby:** various Typescript definitions ([#15268](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/b8f3ed5))
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.0...gatsby-source-filesystem@2.1.1) (2019-06-25)
+
+### Features
+
+- **gatsby-source-filesystem:** add createFileNodeFromBuffer ([#14576](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14576)) ([aa21755](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/aa21755))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.43...gatsby-source-filesystem@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.43](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.40...gatsby-source-filesystem@2.0.43) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/2594623))
+
+## [2.0.42](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.41...gatsby-source-filesystem@2.0.42) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/2594623))
+
+## [2.0.41](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.40...gatsby-source-filesystem@2.0.41) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.40](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.39...gatsby-source-filesystem@2.0.40) (2019-06-18)
+
+### Features
+
+- **gatsby-cli:** move progressbar into ink ([#14220](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14220)) ([967597c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/967597c))
+
+## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.38...gatsby-source-filesystem@2.0.39) (2019-06-10)
+
+### Features
+
+- **gatsby-source-filesystem:** remove slash ([#14372](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14372)) ([1d9ba86](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/1d9ba86))
+
 ## [2.0.38](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.37...gatsby-source-filesystem@2.0.38) (2019-05-31)
 
 ### Features

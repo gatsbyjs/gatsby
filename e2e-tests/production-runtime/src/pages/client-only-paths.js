@@ -15,7 +15,11 @@ const basePath = `/client-only-paths`
 
 const ClientOnlyPathPage = props => (
   <Layout>
-    <Router location={props.location} basepath={basePath}>
+    <Router
+      location={props.location}
+      basepath={basePath}
+      id="client-only-paths-sub-router"
+    >
       <Page path="/" page="index" />
       <Page path="/:page" />
     </Router>

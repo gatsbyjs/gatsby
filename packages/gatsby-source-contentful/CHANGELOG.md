@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.5...gatsby-source-contentful@2.1.6) (2019-07-03)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.4...gatsby-source-contentful@2.1.5) (2019-07-02)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.3...gatsby-source-contentful@2.1.4) (2019-07-01)
+
+### Features
+
+- **gatsby-source-contentful:** Add option to not use sync tokens ([#15203](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/15203)) ([251f9a8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/251f9a8))
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.2...gatsby-source-contentful@2.1.3) (2019-06-25)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.1...gatsby-source-contentful@2.1.2) (2019-06-24)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.0...gatsby-source-contentful@2.1.1) (2019-06-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.75...gatsby-source-contentful@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.75](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.72...gatsby-source-contentful@2.0.75) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/2594623))
+
+## [2.0.74](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.73...gatsby-source-contentful@2.0.74) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/2594623))
+
+## [2.0.73](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.72...gatsby-source-contentful@2.0.73) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.72](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.71...gatsby-source-contentful@2.0.72) (2019-06-18)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Restricts images to 4000 max image width/height ([#14760](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14760)) ([177d35c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/177d35c))
+
+## [2.0.71](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.69...gatsby-source-contentful@2.0.71) (2019-06-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.70](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.69...gatsby-source-contentful@2.0.70) (2019-06-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.0.69](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.68...gatsby-source-contentful@2.0.69) (2019-06-10)
+
+### Features
+
+- **gatsby-source-contentful:** Remove default image transform width ([#14159](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14159)) ([d24e22f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/d24e22f))
+
+## [2.0.68](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.67...gatsby-source-contentful@2.0.68) (2019-06-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.0.67](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.0.66...gatsby-source-contentful@2.0.67) (2019-05-31)
 
 ### Bug Fixes

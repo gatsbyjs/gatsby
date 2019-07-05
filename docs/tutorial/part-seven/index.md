@@ -84,8 +84,8 @@ exports.onCreateNode = ({ node, getNode }) => {
 }
 ```
 
-There in your terminal you should see the relative paths for your two markdown
-files.
+After restarting your development server, you should see the relative paths for your two markdown
+files print to the terminal screen.
 
 ![markdown-relative-path](markdown-relative-path.png)
 

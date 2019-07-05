@@ -22,5 +22,9 @@ const monospace = [
   `Courier New`,
   `monospace`,
 ]
+const serif = [`Georgia`, `Times New Roman`, `Times`, `serif`]
 
-export default { system, header, monospace }
+// @todo think about naming, e.g.
+// system -> sans
+// header -> brand
+export default { system, header, monospace, serif }

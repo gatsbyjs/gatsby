@@ -29,34 +29,31 @@ onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
 })
 
-const getPages = directory =>
-  fs
-    .readFile(path.join(directory, `.cache`, `pages.json`))
-    .then(contents => JSON.parse(contents))
-    .catch(() => [])
+const readMatchPaths = async program => {
+  const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
+  const rawJSON = await fs.readFile(filePath)
+  return JSON.parse(rawJSON)
+}
 
-const clientOnlyPathsRouter = (pages, options) => {
-  const clientOnlyRoutes = pages.filter(page => page.matchPath)
-  return (req, res, next) => {
-    const { url } = req
-    if (req.accepts(`html`)) {
-      const route = clientOnlyRoutes.find(
-        clientRoute => reachMatch(clientRoute.matchPath, url) !== null
-      )
-      if (route && route.path) {
-        return res.sendFile(
-          path.join(route.path, `index.html`),
-          options,
-          err => {
-            if (err) {
-              next()
-            }
+const matchPathRouter = (matchPaths, options) => (req, res, next) => {
+  const { url } = req
+  if (req.accepts(`html`)) {
+    const matchPath = matchPaths.find(
+      ({ matchPath }) => reachMatch(matchPath, url) !== null
+    )
+    if (matchPath) {
+      return res.sendFile(
+        path.join(matchPath.path, `index.html`),
+        options,
+        err => {
+          if (err) {
+            next()
           }
-        )
-      }
+        }
+      )
     }
-    return next()
   }
+  return next()
 }
 
 module.exports = async program => {
@@ -74,7 +71,6 @@ module.exports = async program => {
   const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
   const root = path.join(program.directory, `public`)
-  const pages = await getPages(program.directory)
 
   const app = express()
   const router = express.Router()
@@ -83,7 +79,8 @@ module.exports = async program => {
 
   router.use(compression())
   router.use(express.static(`public`))
-  router.use(clientOnlyPathsRouter(pages, { root }))
+  const matchPaths = await readMatchPaths(program)
+  router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })

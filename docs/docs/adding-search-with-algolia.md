@@ -11,7 +11,7 @@ Two things before you begin:
 
 ## Configuring the Algolia plugin
 
-First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia) and [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) to your project. `react-instantsearch` is Algolia's library containing off-the-shelf React components which you can import to save yourself a lot of work. You'll also be using `dotenv` which gets shipped with Gatsby by default. You're going to need it to specify your Algolia app ID and both the search and admin API keys without commiting them to version control.
+First, you'll need to add [`gatsby-plugin-algolia`](https://github.com/algolia/gatsby-plugin-algolia) and [`react-instantsearch-dom`](https://github.com/algolia/react-instantsearch) to your project. `react-instantsearch` is Algolia's library containing off-the-shelf React components which you can import to save yourself a lot of work. You'll also be using `dotenv` which gets shipped with Gatsby by default. You're going to need it to specify your Algolia app ID and both the search and admin API keys without committing them to version control.
 
 ```shell
 npm install --save gatsby-plugin-algolia react-instantsearch-dom algoliasearch dotenv
@@ -353,7 +353,7 @@ The `Input` component is where the user enters the search string. It is quite sh
 
 Now let's look at the styled components `SearchIcon`, `Form`, `Input` as well as the ones imported in `index.js`.
 
-## `styled.js`
+## `styles.js`
 
 ```js:title=src/components/search/styles.js
 import React from "react"
@@ -495,7 +495,7 @@ Now you're almost done, two small steps remain. First you need to put together a
 
 ## `hitComps.js`
 
-```js:title=src/components/Search/hitComps.js
+```js:title=src/components/search/hitComps.js
 import React, { Fragment } from "react"
 import { Highlight, Snippet } from "react-instantsearch-dom"
 import { Link } from "gatsby"

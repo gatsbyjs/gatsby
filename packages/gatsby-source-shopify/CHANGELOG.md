@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.1.2...gatsby-source-shopify@2.1.3) (2019-07-02)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.1.1...gatsby-source-shopify@2.1.2) (2019-06-25)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.1.0...gatsby-source-shopify@2.1.1) (2019-06-24)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** fix pages query path ([#14604](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/issues/14604)) ([5013f27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/commit/5013f27))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.41...gatsby-source-shopify@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.41](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.38...gatsby-source-shopify@2.0.41) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/commit/2594623))
+
+## [2.0.40](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.39...gatsby-source-shopify@2.0.40) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/commit/2594623))
+
+## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.38...gatsby-source-shopify@2.0.39) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.38](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.37...gatsby-source-shopify@2.0.38) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.36...gatsby-source-shopify@2.0.37) (2019-06-10)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify/compare/gatsby-source-shopify@2.0.35...gatsby-source-shopify@2.0.36) (2019-06-04)
 
 ### Features

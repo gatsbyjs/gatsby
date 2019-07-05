@@ -1,5 +1,5 @@
 ---
-title: Gatsby Link
+title: Gatsby Link API
 ---
 
 For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function which is used for programmatic navigation.
@@ -372,3 +372,7 @@ onClick = () => {
   navigate('?foo=bar');
 }
 ```
+
+## Additional resources
+
+- [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)

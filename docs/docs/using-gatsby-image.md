@@ -1,8 +1,6 @@
 ---
-title: Using Gatsby Image
+title: Using Gatsby Image to Prevent Image Bloat
 ---
-
-# Using gatsby-image to prevent image bloat
 
 `gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
 
@@ -15,6 +13,8 @@ title: Using Gatsby Image
 - uses the new [IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to cheaply lazy load images
 - holds an image’s position so your page doesn’t jump around as images load
 - makes it easy to add a placeholder—either a gray background or a blurry version of the image.
+
+_For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image/) docs._
 
 ## Problem
 
@@ -105,11 +105,12 @@ export default ({ data }) => (
 
 This GraphQL query creates multiple sizes of the image and when the page is rendered the image that is appropriate for the current screen resolution (e.g. desktop, mobile, and everything in between) is used. The `gatsby-image` component automatically enables a blur-up effect as well as lazy loading images that are not currently on screen.
 
-So this is all very nice and it’s far better to be able to use this from NPM vs. implementing it yourself or cobbling together several standalone libraries.
+So this is all very nice and it’s far better to be able to use this from npm vs. implementing it yourself or cobbling together several standalone libraries.
 
-### References:
+### Additional resources
 
-- [Gatsby image plugin README file](/packages/gatsby-image/)
+- [Gatsby Image API docs](/docs/gatsby-image/)
+- [gatsby-image plugin README file](/packages/gatsby-image/)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
 - [Blog articles about gatsby-image](/blog/tags/gatsby-image/)
 - [Starters that use gatsby-image](/starters/?d=gatsby-image&v=2)

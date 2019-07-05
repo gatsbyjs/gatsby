@@ -134,7 +134,7 @@ Next:
   - Traditional examples are something like [EC2](https://aws.amazon.com/ec2/)
 - Configure the VM to be able to run Node.js code
   - Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
-- Set up auto-scaling to ensure we can accomodate and fall-over based upon heavy load or error states
+- Set up auto-scaling to ensure we can accommodate and fall-over based upon heavy load or error states
   - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
 
 Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
@@ -363,7 +363,7 @@ The feature seamlessly falls back to default behavior if `IntersectionObserver` 
 
 **Mobile**
 
-Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being avalable.
+Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being available.
 
 **Data-constrained devices**
 

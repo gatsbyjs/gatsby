@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe/compare/gatsby-remark-responsive-iframe@2.2.0...gatsby-remark-responsive-iframe@2.2.1) (2019-06-25)
+
+### Bug Fixes
+
+- **gatsby-remark-responsive-iframe:** Support MDX by visiting JSX nodes ([#13913](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe/issues/13913)) ([8da38c0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe/commit/8da38c0)), closes [#13552](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe/issues/13552)
+
+# [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe/compare/gatsby-remark-responsive-iframe@2.1.1...gatsby-remark-responsive-iframe@2.2.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe/compare/gatsby-remark-responsive-iframe@2.1.0...gatsby-remark-responsive-iframe@2.1.1) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-remark-responsive-iframe

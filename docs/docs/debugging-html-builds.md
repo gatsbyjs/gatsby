@@ -22,6 +22,10 @@ Errors while building static HTML files generally happen for one of the followin
     is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
     The solution is to only use `import`.
 
+1.  Your app is not correctly [hydrated](https://reactjs.org/docs/react-dom.html), which results in gatsby develop and gatsby
+    build being inconsistent. It's possible that a change in a file like `gatsby-ssr` or `gatsby-browser` has a structure that is
+    not reflected in the other file, meaning that there is a mismatch between client and server output.
+
 1.  Some other reason :-) #1 is the most common reason building static files
     fail. If it's another reason, you have to be a bit more creative in figuring
     out the problem.

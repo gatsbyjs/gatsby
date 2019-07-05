@@ -1,5 +1,5 @@
 // @flow
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -8,7 +8,6 @@ const path = require(`path`)
 const fs = require(`fs`)
 const truePath = require(`true-case-path`)
 const url = require(`url`)
-const kebabHash = require(`kebab-hash`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
@@ -17,6 +16,7 @@ const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
+const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
 
@@ -52,7 +52,6 @@ type Page = {
   component: string,
   context: Object,
   internalComponentName: string,
-  jsonName: string,
   componentChunkName: string,
   updatedAt: number,
 }
@@ -266,18 +265,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
   }
 
-  let jsonName
   let internalComponentName
   if (page.path === `/`) {
-    jsonName = `index`
     internalComponentName = `ComponentIndex`
   } else {
-    jsonName = `${kebabHash(page.path)}`
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
   let internalPage: Page = {
-    jsonName,
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -502,7 +497,7 @@ const typeOwners = {}
  * @param {string} node.internal.type An arbitrary globally unique type
  * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
- * for nodes based on the type choosen here. Nodes of a given type can
+ * for nodes based on the type chosen here. Nodes of a given type can
  * only be created by one plugin.
  * @param {string} node.internal.content An optional field. This is rarely
  * used. It is used when a source plugin sources data it doesn't know how
@@ -589,10 +584,14 @@ const createNode = (
     )
   }
 
+  const trackParams = {}
   // Add the plugin name to the internal object.
   if (plugin) {
     node.internal.owner = plugin.name
+    trackParams[`pluginName`] = `${plugin.name}@${plugin.version}`
   }
+
+  trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
@@ -1130,9 +1129,14 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
- * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
- * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ * // Generally you create redirects while creating pages.
+ * exports.createPages = ({ graphql, actions }) => {
+ *   const { createRedirect } = actions
+ *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ *   // Create pages here
+ * }
  */
 actions.createRedirect = ({
   fromPath,
@@ -1154,6 +1158,37 @@ actions.createRedirect = ({
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
+    },
+  }
+}
+
+/**
+ * Create a dependency between a page and data.
+ *
+ * @param {Object} $0
+ * @param {string} $0.path the path to the page
+ * @param {string} $0.nodeId A node ID
+ * @param {string} $0.connection A connection type
+ * @private
+ */
+actions.createPageDependency = (
+  {
+    path,
+    nodeId,
+    connection,
+  }: { path: string, nodeId: string, connection: string },
+  plugin: string = ``
+) => {
+  console.warn(
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+  )
+  return {
+    type: `CREATE_COMPONENT_DEPENDENCY`,
+    plugin,
+    payload: {
+      path,
+      nodeId,
+      connection,
     },
   }
 }

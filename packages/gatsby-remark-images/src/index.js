@@ -1,4 +1,5 @@
 const {
+  DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -24,18 +25,7 @@ module.exports = (
   { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
   pluginOptions
 ) => {
-  const defaults = {
-    maxWidth: 650,
-    wrapperStyle: ``,
-    backgroundColor: `white`,
-    linkImagesToOriginal: true,
-    showCaptions: false,
-    pathPrefix,
-    withWebp: false,
-    tracedSVG: false,
-  }
-
-  const options = _.defaults(pluginOptions, defaults)
+  const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -81,12 +71,30 @@ module.exports = (
     }
   }
 
-  const getNodeTitle = (node, alt, defaultAlt) => {
-    if (node.title) {
-      return node.title
-    } else if (alt && alt.length > 0 && alt !== defaultAlt) {
-      return alt
+  const getImageCaption = (node, alt, defaultAlt) => {
+    const captionOptions = Array.isArray(options.showCaptions)
+      ? options.showCaptions
+      : options.showCaptions === true
+      ? [`title`, `alt`]
+      : false
+
+    if (captionOptions) {
+      for (const option of captionOptions) {
+        switch (option) {
+          case `title`:
+            if (node.title) {
+              return node.title
+            }
+            break
+          case `alt`:
+            if (alt && alt !== defaultAlt) {
+              return alt
+            }
+            break
+        }
+      }
     }
+
     return ``
   }
 
@@ -141,32 +149,16 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    const alt = overWrites.alt
-      ? overWrites.alt
-      : node.alt
-      ? node.alt
-      : defaultAlt
-
-    const title = node.title ? node.title : ``
-
-    const imageStyle = `
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      vertical-align: middle;
-      position: absolute;
-      top: 0;
-      left: 0;
-      box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};`.replace(
-      /\s*(\S+:)\s*/g,
-      `$1`
+    const alt = _.escape(
+      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
     )
+
+    const title = node.title ? node.title : alt
 
     // Create our base image tag
     let imageTag = `
       <img
         class="${imageClass}"
-        style="${imageStyle}"
         alt="${alt}"
         title="${title}"
         src="${fallbackSrc}"
@@ -184,7 +176,7 @@ module.exports = (
           // override options if it's an object, otherwise just pass through defaults
           options.withWebp === true ? {} : options.withWebp,
           pluginOptions,
-          defaults
+          DEFAULT_OPTIONS
         ),
         reporter,
       })
@@ -207,7 +199,6 @@ module.exports = (
         />
         <img
           class="${imageClass}"
-          style="${imageStyle}"
           src="${fallbackSrc}"
           alt="${alt}"
           title="${title}"
@@ -251,21 +242,15 @@ module.exports = (
         : options.wrapperStyle
 
     // Construct new image node w/ aspect ratio placeholder
-    const showCaptions =
-      options.showCaptions && getNodeTitle(node, alt, defaultAlt)
+    const imageCaption =
+      options.showCaptions && getImageCaption(node, alt, defaultAlt)
+
     let rawHTML = `
   <span
-    class="${imageWrapperClass}"
-    style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-      showCaptions ? `` : wrapperStyle
-    } max-width: ${presentationWidth}px;"
-  >
-    <span
-      class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
-    ></span>
-    ${imageTag}
-  </span>
+    class="${imageBackgroundClass}"
+    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
+  ></span>
+  ${imageTag}
   `.trim()
 
     // Make linking to original image optional.
@@ -283,16 +268,23 @@ module.exports = (
     `.trim()
     }
 
+    rawHTML = `
+    <span
+      class="${imageWrapperClass}"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+        imageCaption ? `` : wrapperStyle
+      } max-width: ${presentationWidth}px;"
+    >
+      ${rawHTML}
+    </span>
+    `.trim()
+
     // Wrap in figure and use title as caption
-    if (showCaptions) {
+    if (imageCaption) {
       rawHTML = `
   <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
     ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${getNodeTitle(
-      node,
-      alt,
-      defaultAlt
-    )}</figcaption>
+    <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
   </figure>
       `.trim()
     }

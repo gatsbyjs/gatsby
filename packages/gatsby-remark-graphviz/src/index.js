@@ -11,13 +11,19 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   let codeNodes = []
 
   visit(markdownAST, `code`, node => {
-    const chunks = (node.lang || ``).match(
-      /^(?<lang>\S+)(\s+(?<attrString>.+))?/
-    )
+    const chunks = (node.lang || ``).match(/^(\S+)(\s+(.+))?/)
+
+    if (!chunks || !chunks.length) {
+      return node
+    }
+
+    const lang = chunks[1]
+    const attrString = chunks[3]
+
     // Only act on languages supported by graphviz
-    if (chunks && validLanguages.includes(chunks.groups.lang)) {
-      node.lang = chunks.groups.lang
-      codeNodes.push({ node, attrString: chunks.groups.attrString })
+    if (validLanguages.includes(lang)) {
+      node.lang = lang
+      codeNodes.push({ node, attrString: attrString })
     }
     return node
   })

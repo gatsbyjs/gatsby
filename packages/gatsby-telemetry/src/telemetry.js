@@ -1,13 +1,14 @@
 const { createHash } = require(`crypto`)
 const uuid = require(`uuid/v1`)
 const EventStorage = require(`./event-storage`)
-const { sanitizeErrors } = require(`./error-helpers`)
+const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
 const { basename, join, sep } = require(`path`)
 const { execSync } = require(`child_process`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
+const lodash = require(`lodash`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -18,14 +19,27 @@ module.exports = class AnalyticsTracker {
   trackingEnabled // lazy
   componentVersion
   sessionId = uuid()
+
   constructor() {
     try {
       this.componentVersion = require(`../package.json`).version
       this.installedGatsbyVersion = this.getGatsbyVersion()
       this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      this.defaultTags = this.getTagsFromEnv()
     } catch (e) {
       // ignore
     }
+  }
+
+  getTagsFromEnv() {
+    if (process.env.GATSBY_TELEMETRY_TAGS) {
+      try {
+        return JSON.parse(process.env.GATSBY_TELEMETRY_TAGS)
+      } catch (_) {
+        // ignore
+      }
+    }
+    return {}
   }
 
   getGatsbyVersion() {
@@ -60,7 +74,7 @@ module.exports = class AnalyticsTracker {
     }
     return undefined
   }
-  captureEvent(type = ``, tags = {}) {
+  captureEvent(type = ``, tags = {}, opts = { debounce: false }) {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -71,25 +85,56 @@ module.exports = class AnalyticsTracker {
     }
 
     const decoration = this.metadataCache[type]
-    delete this.metadataCache[type]
     const eventType = `${baseEventType}_${type}`
-    this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
+
+    if (opts.debounce) {
+      const debounceTime = 5 * 1000
+      const now = Date.now()
+      const debounceKey = JSON.stringify({ type, decoration, tags })
+      const last = this.debouncer[debounceKey] || 0
+      if (now - last < debounceTime) {
+        return
+      }
+      this.debouncer[debounceKey] = now
+    }
+
+    delete this.metadataCache[type]
+    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
   captureError(type, tags = {}) {
     if (!this.isTrackingEnabled()) {
       return
     }
+
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
 
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
-      tags.error = sanitizeErrors(tags.error)
+      if (Array.isArray(tags.error)) {
+        const { error, ...restOfTags } = tags
+        error.forEach(err => {
+          this.captureError(type, { error: err, ...restOfTags })
+        })
+        return
+      }
+
+      tags.errorV2 = {
+        id: tags.error.id,
+        text: cleanPaths(tags.error.text),
+        level: tags.error.level,
+        type: tags.error?.type,
+        // see if we need empty string or can just use NULL
+        stack: cleanPaths(tags.error?.error?.stack || ``),
+        context: cleanPaths(JSON.stringify(tags.error?.context)),
+      }
+
+      delete tags.error
     }
 
-    this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
+    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
   captureBuildError(type, tags = {}) {
@@ -105,15 +150,14 @@ module.exports = class AnalyticsTracker {
       tags.error = sanitizeErrors(tags.error)
     }
 
-    this.buildAndStoreEvent(eventType, Object.assign(tags, decoration))
+    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
   buildAndStoreEvent(eventType, tags) {
     const event = {
       installedGatsbyVersion: this.installedGatsbyVersion,
       gatsbyCliVersion: this.gatsbyCliVersion,
-      ...this.defaultTags,
-      ...tags, // The schema must include these
+      ...lodash.merge({}, this.defaultTags, tags), // The schema must include these
       eventType,
       sessionId: this.sessionId,
       time: new Date(),

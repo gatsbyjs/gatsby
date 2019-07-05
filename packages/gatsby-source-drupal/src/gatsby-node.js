@@ -179,8 +179,23 @@ exports.sourceNodes = async (
             node.relationships[`${k}___NODE`] = _.compact(
               v.data.map(data => (ids[data.id] ? createNodeId(data.id) : null))
             )
+            var meta = _.compact(
+              v.data.map(data => (!_.isEmpty(data.meta) ? data.meta : null))
+            )
+            // If there's meta on the field and it's not an existing/internal one
+            // create a new node's field with that meta. It can't exist on both
+            // @see https://jsonapi.org/format/#document-resource-object-fields
+            if (!_.isEmpty(meta) && !(k in node)) {
+              node[k] = meta
+            }
           } else if (ids[v.data.id]) {
             node.relationships[`${k}___NODE`] = createNodeId(v.data.id)
+            // If there's meta on the field and it's not an existing/internal one
+            // create a new node's field with that meta. It can't exist on both
+            // @see https://jsonapi.org/format/#document-resource-object-fields
+            if (!_.isEmpty(v.data.meta) && !(k in node)) {
+              node[k] = v.data.meta
+            }
           }
         })
       }
@@ -246,6 +261,7 @@ exports.sourceNodes = async (
           createNodeId,
           parentNodeId: node.id,
           auth,
+          reporter,
         })
       } catch (err) {
         reporter.error(err)

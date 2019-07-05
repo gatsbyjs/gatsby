@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/compare/gatsby-transformer-json@2.1.11...gatsby-transformer-json@2.2.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
 ## [2.1.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-json/compare/gatsby-transformer-json@2.1.10...gatsby-transformer-json@2.1.11) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-transformer-json

@@ -25,6 +25,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     store,
     cache,
     getNodes,
+    reporter,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
@@ -62,6 +63,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
             cache,
             createNode,
             createNodeId,
+            reporter,
           })
 
           if (fileNode) {

@@ -86,6 +86,13 @@ module.exports = {
         path: `${__dirname}/src/data/ecosystem/`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `guidelines`,
+        path: `${__dirname}/src/data/guidelines/`,
+      },
+    },
     `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
