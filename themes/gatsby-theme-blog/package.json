@@ -36,7 +36,7 @@
     "react-helmet": "^5.2.1",
     "react-switch": "^5.0.0",
     "remark-slug": "^5.1.2",
-    "theme-ui": "^0.2.5",
+    "theme-ui": "^0.2.6",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.54",
     "typography-theme-wordpress-2016": "^0.16.19"
