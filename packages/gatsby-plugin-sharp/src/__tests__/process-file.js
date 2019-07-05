@@ -1,4 +1,4 @@
-const { createArgsDigest } = require(`../process-file`)
+const { createArgsDigest, sortKeys } = require(`../process-file`)
 
 describe(`createArgsDigest`, () => {
   const defaultArgsBaseline = {
@@ -93,6 +93,29 @@ describe(`createArgsDigest`, () => {
     describe(`not used arguments`, () => {
       testHashEqual(`maxWidth`, { maxWidth: 500 })
       testHashEqual(`base64`, { base64: true })
+    })
+
+    describe(`argument sorting`, () => {
+      it(`sorts nested arguments`, () => {
+        // take the defaultargsbaseline, add a duotone argument (out of order)
+        const args = {
+          duotone: {
+            highlight: `#32CD32`,
+            shadow: `#10c5f8`,
+          },
+          cropFocus: 17,
+        }
+        // call the method that organizes the arguments
+        const actual = sortKeys(args)
+        // and ensure that the duotone argument is still preserved
+        expect(actual).toEqual({
+          cropFocus: 17,
+          duotone: {
+            highlight: `#32CD32`,
+            shadow: `#10c5f8`,
+          },
+        })
+      })
     })
   })
 })
