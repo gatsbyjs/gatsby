@@ -101,7 +101,7 @@ class Runner {
   }
 
   async parseEverything() {
-    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+    const filesRegex = path.join(`/!(node_modules)/**/`, `*.+(t|j)s?(x)`)
 
     const modulesThatUseGatsby = await getGatsbyDependents()
 
