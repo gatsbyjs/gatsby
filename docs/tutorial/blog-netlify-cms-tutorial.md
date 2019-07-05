@@ -47,7 +47,7 @@ Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Gi
 
 Open the project in your code editor and open `static/admin/config.yml`. Replace the following piece of code with these settings, replacing `your-username/your-repo-name` with your GitHub username and repo. Then push this code to GitHub.
 
-```yml
+```diff
 // Replace this
 backend:
   name: test-repo
