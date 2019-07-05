@@ -1,10 +1,10 @@
 {
-  "name": "@gatsbyjs/utils",
+  "name": "gatsby-core-utils",
   "version": "1.0.0",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
-    "@gatsbyjs/utils"
+    "gatsby-core-utils"
   ],
   "author": "Ward Peeters <ward@coding-tech.com>",
   "homepage": "https://www.gatsbyjs.org/",

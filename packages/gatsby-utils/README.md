@@ -1,11 +1,11 @@
-# `@gatsbyjs/utils`
+# `gatsby-core-utils`
 
 A list of utilities used in multiple gatsby packages.
 
 ## Usage
 
 ```sh
-npm install --save @gatsbyjs/utils
+npm install --save gatsby-core-utils
 ```
 
 ### createContentDigest
@@ -13,7 +13,7 @@ npm install --save @gatsbyjs/utils
 Encrypts an input using md5 hash of hexadecimal digest.
 
 ```js
-const { createContentDigest } = require("@gatsbyjs/utils")
+const { createContentDigest } = require("gatsby-core-utils")
 
 const options = {
   key: "value",
@@ -37,14 +37,14 @@ This function can be controlled by an env variable `GATSBY_CPU_COUNT` setting th
 | any number    | Sets cpu count to that specific number                 |
 
 ```js
-const { cpuCoreCount } = require("@gatsbyjs/utils")
+const { cpuCoreCount } = require("gatsby-core-utils")
 
 const coreCount = cpuCoreCount(false)
 // ...
 ```
 
 ```js
-const { cpuCoreCount } = require("@gatsbyjs/utils")
+const { cpuCoreCount } = require("gatsby-core-utils")
 process.env.GATSBY_CPU_COUNT = "logical-cores"
 
 const coreCount = cpuCoreCount()
@@ -56,7 +56,7 @@ const coreCount = cpuCoreCount()
 A utility that joins paths with a `/` on windows and unix-type platforms. This can also be used for URL concatenation.
 
 ```js
-const { joinPath } = require("@gatsbyjs/utils")
+const { joinPath } = require("gatsby-core-utils")
 
 const BASEPATH = "/mybase/"
 const pathname = "./gatsby/is/awesome"
