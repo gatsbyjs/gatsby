@@ -2878,6 +2878,20 @@
   features:
     - Same as the official starter blog
     - Integration with Lunr.js
+- url: https://oneshopper.netlify.com
+  repo: https://github.com/rohitguptab/OneShopper
+  description: This Starter is created for Ecommerce site with Gatsby + Contentful and snipcart
+  tags:
+    - eCommerce
+    - CMS:Contentful
+    - Blog
+    - SEO
+    - Disqus
+  features:
+    - Blog post listing with previews for each blog post.
+    - Store page listing all the Products and includes features like Rating, Price, Checkout, More then one Product images with tabbing.
+    - Contact form with Email notification.
+    - Index pages design with Latest Post, Latest Blog, Deal of week and Banner.
 - url: https://anubhavsrivastava.github.io/gatsby-starter-spectral
   repo: https://github.com/anubhavsrivastava/gatsby-starter-spectral
   description: Single page starter based on the Spectral site template by HTML5 up, with landing, Generic and Elements(Component) page
