@@ -1,21 +1,27 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const findCacheDir = require(`find-cache-dir`)
-
 module.exports.getPath = getPath
 module.exports.load = load
 module.exports.save = save
 
 function getPath() {
-  return path.join(cacheDir, `cache.json`)
+  return path.join(cacheDir, `font-preload-cache.json`)
 }
 
-let cache
-const cacheDir = findCacheDir({ name: `gatsby-plugin-preload-fonts` })
+function createEmptyCache() {
+  return {
+    timestamp: Date.now(),
+    hash: `initial-run`,
+    assets: {},
+  }
+}
 
+const cacheDir = process.cwd()
+
+let cache
 try {
-  fs.ensureDir(cacheDir)
+  fs.accessSync(cacheDir, fs.constants.W_OK)
 } catch (e) {
   console.log(
     `could not write to cache directory, please make sure the following path exists and is writable`
@@ -33,11 +39,7 @@ function load() {
     cache = JSON.parse(json)
     return cache
   } catch (err) {
-    return {
-      timestamp: Date.now(),
-      hash: `initial-run`,
-      assets: {},
-    }
+    return createEmptyCache()
   }
 }
 

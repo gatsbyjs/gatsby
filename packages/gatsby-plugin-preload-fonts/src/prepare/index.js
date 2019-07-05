@@ -40,7 +40,7 @@ export async function main() {
     `:bar`,
     bold(blue(`:percent`)),
     dim(`eta :etas`),
-    green(`:last`),
+    ``,
   ]
   const bar = new ProgressBar(sections.join(` `), {
     width: 35,
@@ -50,9 +50,8 @@ export async function main() {
   })
   logger.setAdapter((...args) => bar.interrupt(args.join(` `)))
 
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({ args: process.argv.slice(2) })
   const page = await browser.newPage()
-  let last = ``
   page.on(`requestfinished`, req => {
     if (req.url().match(/(socket\.io|commons\.js)/)) return
 
@@ -67,8 +66,7 @@ export async function main() {
         cache.assets[pathname] = {}
       }
       cache.assets[pathname][req.url()] = true
-      last = ellipses(`found ${req.url()}`, 40)
-      bar.update({ last })
+      bar.interrupt(green(ellipses(` found ${req.url()}`, 80)))
     }
   })
 
@@ -86,7 +84,7 @@ export async function main() {
     hash.update(route)
     logger.info(`visit`, route)
     await page.goto(endpoint(route), { waitUntil: `networkidle2` })
-    bar.tick({ last })
+    bar.tick()
   }
 
   await browser.close()

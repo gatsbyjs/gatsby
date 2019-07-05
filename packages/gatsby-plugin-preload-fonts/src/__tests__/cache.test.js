@@ -48,7 +48,7 @@ describe(`cache`, () => {
     save({ some: `cache` })
 
     expect(writeFileSync).toHaveBeenCalledWith(
-      `cache.json`,
+      `font-preload-cache.json`,
       `{"some":"cache"}`,
       `utf-8`
     )
