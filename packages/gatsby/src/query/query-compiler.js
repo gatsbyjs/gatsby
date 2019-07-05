@@ -101,7 +101,8 @@ class Runner {
   }
 
   async parseEverything() {
-    const filesRegex = path.join(`/!(node_modules)/**/`, `*.+(t|j)s?(x)`)
+    const filesRegex = `*.+(t|j)s?(x)`
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
 
     const modulesThatUseGatsby = await getGatsbyDependents()
 
@@ -114,7 +115,7 @@ class Runner {
       .reduce(
         (merged, folderPath) =>
           merged.concat(
-            glob.sync(path.join(folderPath, filesRegex), {
+            glob.sync(path.join(folderPath, pathRegex), {
               nodir: true,
             })
           ),
