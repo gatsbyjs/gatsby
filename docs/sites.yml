@@ -6357,6 +6357,18 @@
   built_by: Arnon Puitrakul
   built_by_url: "https://arnondora.in.th/"
   featured: false
+- title: KingsDesign
+  url: "https://www.kingsdesign.com.au/"
+  main_url: "https://www.kingsdesign.com.au/"
+  description: KingsDesign is a Hobart based web design and development company. KingsDesign creates, designs, measures and improves web based solutions for businesses and organisations across Australia.
+  categories:
+    - Agency
+    - Technology
+    - Portfolio
+    - Consulting
+    - User Experience
+  built_by: KingsDesign
+  built_by_url: "https://www.kingsdesign.com.au"
 - title: EasyFloh | Easy Flows for all
   url: "https://www.easyfloh.com"
   main_url: "https://www.easyfloh.com"
