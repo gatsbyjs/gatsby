@@ -1,4 +1,5 @@
-const { isAbstractType } = require(`graphql`)
+const _ = require(`lodash`)
+const { isAbstractType, getNamedType } = require(`graphql`)
 
 const { getQueryFields } = require(`./common/query`)
 
@@ -62,9 +63,20 @@ async function run(args) {
       nodes,
     })
   } else {
-    await prepareNodes(args.gqlSchema, gqlType, fields)
+    const fieldsToResolve = determineResolvableFields(
+      args.gqlComposer,
+      args.gqlSchema,
+      args.gqlType,
+      fields
+    )
+    await prepareNodes(
+      args.gqlComposer,
+      args.gqlSchema,
+      gqlType,
+      fieldsToResolve
+    )
 
-    return lokiRunQuery(args, fields)
+    return lokiRunQuery(args, fieldsToResolve)
   }
 }
 
@@ -81,6 +93,37 @@ const toNodeTypeNames = (schema, gqlTypeName) => {
   return possibleTypes
     .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
     .map(type => type.name)
+}
+
+const determineResolvableFields = (schemaComposer, schema, type, fields) => {
+  const fieldsToResolve = {}
+  const gqlFields = type.getFields()
+  Object.keys(fields).forEach(fieldName => {
+    const field = fields[fieldName]
+    const gqlField = gqlFields[fieldName]
+    const gqlFieldType = getNamedType(gqlField.type)
+    const typeComposer = schemaComposer.getAnyTC(type.name)
+    const needsResolve = typeComposer.getFieldExtension(
+      fieldName,
+      `needsResolve`
+    )
+    if (_.isObject(field) && gqlField) {
+      const innerResolved = determineResolvableFields(
+        schemaComposer,
+        schema,
+        gqlFieldType,
+        field
+      )
+      if (!_.isEmpty(innerResolved)) {
+        fieldsToResolve[fieldName] = innerResolved
+      } else if (_.isEmpty(innerResolved) && needsResolve) {
+        fieldsToResolve[fieldName] = true
+      }
+    } else if (needsResolve) {
+      fieldsToResolve[fieldName] = true
+    }
+  })
+  return fieldsToResolve
 }
 
 module.exports.run = run

@@ -148,6 +148,7 @@ async function queryResult(nodes, query) {
   return graphql(schema, query, undefined, {
     ...context,
     nodeModel: new LocalNodeModel({
+      schemaComposer,
       schema,
       nodeStore,
       createPageDependency: jest.fn(),

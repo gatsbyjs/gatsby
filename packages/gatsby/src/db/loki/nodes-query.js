@@ -208,25 +208,25 @@ const fixNeTrue = filter =>
     return acc
   }, {})
 
-const liftResolvedFields = (args, gqlType, resolvedFields) =>
-  // const dottedFields = objectToDottedField(resolvedFields)
-  // const dottedFieldKeys = Object.keys(dottedFields)
-  // const finalArgs = {}
-  // Object.keys(args).forEach(key => {
-  //   const value = args[key]
-  //   if (dottedFields[key]) {
-  //     finalArgs[`$resolved.${key}`] = value
-  //   } else if (
-  //     dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
-  //     value.$elemMatch
-  //   ) {
-  //     finalArgs[`$resolved.${key}`] = value
-  //   } else {
-  //     finalArgs[key] = value
-  //   }
-  // })
-  // return finalArgs
-  args
+const liftResolvedFields = (args, gqlType, resolvedFields) => {
+  const dottedFields = objectToDottedField(resolvedFields)
+  const dottedFieldKeys = Object.keys(dottedFields)
+  const finalArgs = {}
+  Object.keys(args).forEach(key => {
+    const value = args[key]
+    if (dottedFields[key]) {
+      finalArgs[`$resolved.${key}`] = value
+    } else if (
+      dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
+      value.$elemMatch
+    ) {
+      finalArgs[`$resolved.${key}`] = value
+    } else {
+      finalArgs[key] = value
+    }
+  })
+  return finalArgs
+}
 
 // Converts graphQL args to a loki filter
 const convertArgs = (gqlArgs, gqlType, resolvedFields) =>
@@ -304,6 +304,12 @@ async function runQuery(
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
   const lokiArgs = convertArgs(gqlArgs, gqlType, resolvedFields)
+  console.log(
+    JSON.stringify(queryArgs, null, 2),
+    resolvedFields,
+    JSON.stringify(lokiArgs, null, 2)
+  )
+
   let possibleTypeNames
   if (
     gqlType instanceof GraphQLUnionType ||
@@ -337,9 +343,13 @@ async function runQuery(
     chain = coll.chain()
   }
 
+  console.log(`source`, JSON.stringify(chain.data(), null, 2))
+
   // console.log(lokiArgs)
   // console.log(JSON.stringify(chain.data(), null, 2))
   chain.find(lokiArgs, firstOnly)
+
+  console.log(`result`, JSON.stringify(chain.data()))
 
   if (sortFields) {
     const dottedFields = objectToDottedField(resolvedFields)
@@ -351,10 +361,10 @@ async function runQuery(
       }
     })
     chain = chain.compoundsort(sortFields)
-    console.log(sortFields)
   }
 
   const result = chain.data()
+
   return result
 }
 

@@ -21,12 +21,17 @@ const buildTestSchema = async nodes => {
     types: [],
     thirdPartySchemas: [],
   })
-  return schema
+  return { schema, schemaComposer }
 }
 const queryResult = async (nodes, query) => {
-  const schema = await buildTestSchema(nodes)
+  const { schema, schemaComposer } = await buildTestSchema(nodes)
   return graphql(schema, query, undefined, {
-    nodeModel: new LocalNodeModel({ schema, nodeStore, createPageDependency }),
+    nodeModel: new LocalNodeModel({
+      schema,
+      nodeStore,
+      createPageDependency,
+      schemaComposer,
+    }),
   })
 }
 
@@ -176,7 +181,7 @@ describe(`GraphQL Input args`, () => {
         },
       },
     ]
-    const schema = await buildTestSchema(nodes)
+    const { schema } = await buildTestSchema(nodes)
     const fields = schema.getType(`TestFilterInput`).getFields()
 
     expect(Object.keys(fields.foo.type.getFields())[2]).toEqual(`foo_moo`)
@@ -197,7 +202,7 @@ describe(`GraphQL Input args`, () => {
         longint: 3000000000,
       },
     ]
-    const schema = await buildTestSchema(nodes)
+    const { schema } = await buildTestSchema(nodes)
     const fields = schema.getType(`TestFilterInput`).getFields()
 
     expect(fields.int32.type.name).toBe(`IntQueryOperatorInput`)

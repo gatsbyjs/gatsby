@@ -1,6 +1,6 @@
 const { LocalNodeModel } = require(`./node-model`)
 
-const withResolverContext = (context, schema) => {
+const withResolverContext = (context, schema, schemaComposer) => {
   const nodeStore = require(`../db/nodes`)
   const createPageDependency = require(`../redux/actions/add-page-dependency`)
 
@@ -9,6 +9,7 @@ const withResolverContext = (context, schema) => {
     nodeModel: new LocalNodeModel({
       nodeStore,
       schema,
+      schemaComposer,
       createPageDependency,
       path: context.path,
     }),

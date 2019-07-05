@@ -541,6 +541,9 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                     ...info,
                     originalResolver: originalResolver || defaultFieldResolver,
                   })
+                tc.extendFieldExtensions(fieldName, {
+                  needsResolve: true,
+                })
               }
               tc.extendField(fieldName, newConfig)
             } else if (fieldTypeName) {
@@ -587,7 +590,7 @@ const determineSearchableFields = ({ schemaComposer, typeComposer }) => {
         typeComposer.extendFieldExtensions(fieldName, {
           searchable: SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE,
           sortable: SORTABLE_ENUM.DEPRECATED_SORTABLE,
-          needsResolve: extensions.proxyFrom ? true : false,
+          needsResolve: true,
         })
       } else {
         typeComposer.extendFieldExtensions(fieldName, {

@@ -96,7 +96,7 @@ describe(`GraphQL type inference`, () => {
       typeConflictReporter,
       ...(buildSchemaArgs || {}),
     })
-    return schema
+    return { schema, schemaComposer }
   }
 
   const getQueryResult = async (
@@ -106,7 +106,11 @@ describe(`GraphQL type inference`, () => {
     extraquery = ``,
     typeDefs
   ) => {
-    const schema = await buildTestSchema(nodes, buildSchemaArgs, typeDefs)
+    const { schema, schemaComposer } = await buildTestSchema(
+      nodes,
+      buildSchemaArgs,
+      typeDefs
+    )
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     return graphql(
       schema,
@@ -126,6 +130,7 @@ describe(`GraphQL type inference`, () => {
         path: `/`,
         nodeModel: new LocalNodeModel({
           schema,
+          schemaComposer,
           nodeStore,
           createPageDependency,
         }),
@@ -134,7 +139,7 @@ describe(`GraphQL type inference`, () => {
   }
 
   const getInferredFields = async (nodes, buildSchemaArgs) => {
-    const schema = await buildTestSchema(nodes, buildSchemaArgs)
+    const { schema } = await buildTestSchema(nodes, buildSchemaArgs)
     return schema.getType(`Test`).getFields()
   }
 
@@ -480,7 +485,7 @@ describe(`GraphQL type inference`, () => {
         },
       },
     ]
-    const schema = await buildTestSchema(nodes)
+    const { schema, schemaComposer } = await buildTestSchema(nodes)
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     const result = await graphql(
       schema,
@@ -505,6 +510,7 @@ describe(`GraphQL type inference`, () => {
         path: `/`,
         nodeModel: new LocalNodeModel({
           schema,
+          schemaComposer,
           nodeStore,
           createPageDependency,
         }),
@@ -1066,7 +1072,7 @@ Object {
             id: `2`,
           },
         ].concat(getLinkedNodes())
-        const schema = await buildTestSchema(nodes)
+        const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 
@@ -1097,7 +1103,7 @@ Object {
             id: `2`,
           },
         ].concat(getLinkedNodes())
-        const schema = await buildTestSchema(nodes)
+        const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 

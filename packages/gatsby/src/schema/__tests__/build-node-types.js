@@ -70,6 +70,7 @@ describe(`build-node-types`, () => {
     let { data, errors } = await graphql(schema, query, undefined, {
       ...context,
       nodeModel: new LocalNodeModel({
+        schemaComposer,
         schema,
         nodeStore,
         createPageDependency,

@@ -54,8 +54,15 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, nodeStore, createPageDependency, path }) {
+  constructor({
+    schema,
+    schemaComposer,
+    nodeStore,
+    createPageDependency,
+    path,
+  }) {
     this.schema = schema
+    this.schemaComposer = schemaComposer
     this.nodeStore = nodeStore
     this.createPageDependency = createPageDependency
     this.path = path
@@ -172,6 +179,7 @@ class LocalNodeModel {
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
+      gqlComposer: this.schemaComposer,
       gqlType,
     })
 

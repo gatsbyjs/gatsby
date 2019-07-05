@@ -384,12 +384,15 @@ module.exports = async (args: BootstrapArgs) => {
   })
 
   const graphqlRunner = (query, context = {}) => {
-    const schema = store.getState().schema
+    const {
+      schema,
+      schemaCustomization: { composer: schemaComposer },
+    } = store.getState()
     return graphql(
       schema,
       query,
       context,
-      withResolverContext(context, schema),
+      withResolverContext(context, schema, schemaComposer),
       context
     )
   }

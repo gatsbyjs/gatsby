@@ -12,19 +12,33 @@ const {
 } = require(`graphql`)
 const withResolverContext = require(`../schema/context`)
 
-async function prepareNodes(schema, gqlType, fields) {
+async function prepareNodes(schemaComposer, schema, type, fields) {
   const nodes = require(`./nodes`)
   if (!_.isEmpty(fields)) {
-    await nodes.updateNodesByType(gqlType.name, node =>
-      resolveRecursive(schema, node, gqlType, fields)
-    )
+    await nodes.updateNodesByType(type.name, async node => {
+      const newNode = await resolveRecursive(
+        schemaComposer,
+        schema,
+        node,
+        type,
+        fields
+      )
+      // console.log(newNode)
+      return newNode
+    })
   }
 }
 
 module.exports = prepareNodes
 
-async function resolveRecursive(schema, node, gqlType, fieldsToResolve) {
-  const gqlFields = gqlType.getFields()
+async function resolveRecursive(
+  schemaComposer,
+  schema,
+  node,
+  type,
+  fieldsToResolve
+) {
+  const gqlFields = type.getFields()
   const resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
@@ -33,7 +47,13 @@ async function resolveRecursive(schema, node, gqlType, fieldsToResolve) {
     const gqlFieldType = getNamedType(gqlField.type)
     let innerValue
     if (gqlField.resolve) {
-      innerValue = await resolveField(schema, node, gqlField, fieldName)
+      innerValue = await resolveField(
+        schemaComposer,
+        schema,
+        node,
+        gqlField,
+        fieldName
+      )
     } else {
       innerValue = node[fieldName]
     }
@@ -43,6 +63,7 @@ async function resolveRecursive(schema, node, gqlType, fieldsToResolve) {
         !(gqlNonNullType instanceof GraphQLList)
       ) {
         innerValue = await resolveRecursive(
+          schemaComposer,
           schema,
           innerValue,
           gqlFieldType,
@@ -54,7 +75,13 @@ async function resolveRecursive(schema, node, gqlType, fieldsToResolve) {
       ) {
         innerValue = await Promise.all(
           innerValue.map(item =>
-            resolveRecursive(schema, item, gqlFieldType, fieldToResolve)
+            resolveRecursive(
+              schemaComposer,
+              schema,
+              item,
+              gqlFieldType,
+              fieldToResolve
+            )
           )
         )
       }
@@ -106,13 +133,18 @@ async function resolveRecursive(schema, node, gqlType, fieldsToResolve) {
   }
 }
 
-function resolveField(schema, node, gqlField, fieldName) {
+function resolveField(schemaComposer, schema, node, gqlField, fieldName) {
   if (gqlField.resolve) {
-    return gqlField.resolve(node, {}, withResolverContext({}, schema), {
-      fieldName,
-      schema,
-      returnType: gqlField.type,
-    })
+    return gqlField.resolve(
+      node,
+      {},
+      withResolverContext({}, schema, schemaComposer),
+      {
+        fieldName,
+        schema,
+        returnType: gqlField.type,
+      }
+    )
   }
 
   return undefined

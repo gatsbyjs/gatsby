@@ -11,9 +11,15 @@ const nodes = require(`./fixtures/queries`)
 
 describe(`Query schema`, () => {
   let schema
+  let schemaComposer
 
   const runQuery = query =>
-    graphql(schema, query, undefined, withResolverContext({}, schema))
+    graphql(
+      schema,
+      query,
+      undefined,
+      withResolverContext({}, schema, schemaComposer)
+    )
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation(async (api, ...args) => {
@@ -142,6 +148,7 @@ describe(`Query schema`, () => {
 
     await build({})
     schema = store.getState().schema
+    schemaComposer = store.getState().schemaCustomization.composer
   })
 
   describe(`on children fields`, () => {
@@ -411,7 +418,7 @@ describe(`Query schema`, () => {
       expect(results.data).toEqual(expected)
     })
 
-    it(`handles query arguments`, async () => {
+    it(`handles query arguments 2`, async () => {
       const query = `
         {
           author(

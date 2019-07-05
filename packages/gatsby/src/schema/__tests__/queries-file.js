@@ -110,9 +110,15 @@ const nodes = [
 
 describe(`Query fields of type File`, () => {
   let schema
+  let schemaComposer
 
   const runQuery = query =>
-    graphql(schema, query, undefined, withResolverContext({}, schema))
+    graphql(
+      schema,
+      query,
+      undefined,
+      withResolverContext({}, schema, schemaComposer)
+    )
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
@@ -126,6 +132,7 @@ describe(`Query fields of type File`, () => {
 
     await build({})
     schema = store.getState().schema
+    schemaComposer = store.getState().schemaCustomization.composer
   })
 
   it(`finds File nodes`, async () => {

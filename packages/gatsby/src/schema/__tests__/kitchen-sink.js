@@ -23,9 +23,15 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 // XXX(freiksenet): Expand
 describe(`Kitchen sink schema test`, () => {
   let schema
+  let schemaComposer
 
   const runQuery = query =>
-    graphql(schema, query, undefined, withResolverContext({}, schema))
+    graphql(
+      schema,
+      query,
+      undefined,
+      withResolverContext({}, schema, schemaComposer)
+    )
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation((api, ...args) => {
@@ -76,6 +82,7 @@ describe(`Kitchen sink schema test`, () => {
     )
     await build({})
     schema = store.getState().schema
+    schemaComposer = store.getState().schemaCustomization.composer
   })
 
   it(`passes kitchen sink query`, async () => {
