@@ -1,4 +1,4 @@
-const uuid = require(`uuid/v1`)
+const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
 const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
@@ -17,7 +17,7 @@ module.exports = class AnalyticsTracker {
   osInfo // lazy
   trackingEnabled // lazy
   componentVersion
-  sessionId = uuid()
+  sessionId = this.getSessionId()
 
   constructor() {
     try {
@@ -28,6 +28,15 @@ module.exports = class AnalyticsTracker {
     } catch (e) {
       // ignore
     }
+  }
+
+  // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
+  // Hence we need to use process level globals that are not scoped to this module
+  getSessionId() {
+    return (
+      process.gatsbyTelemetrySessionId ||
+      (process.gatsbyTelemetrySessionId = uuidv4())
+    )
   }
 
   getTagsFromEnv() {
@@ -176,7 +185,7 @@ module.exports = class AnalyticsTracker {
     }
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (!machineId) {
-      machineId = uuid()
+      machineId = uuidv4()
       this.store.updateConfig(`telemetry.machineId`, machineId)
     }
     this.machineId = machineId
