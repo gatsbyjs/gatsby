@@ -1,5 +1,5 @@
 ---
-title: How to make a personal Gatsby blog with Netlify CMS
+title: Make a Gatsby Blog with Netlify CMS
 ---
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JeTqxCJC56Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="YouTube video: How to make a fully-featured dev blog in under 10 minutes"></iframe>
