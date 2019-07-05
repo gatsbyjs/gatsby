@@ -7,6 +7,7 @@ const debug = require("debug")("gatsby-mdx:gen-mdx");
 
 const getSourcePluginsAsRemarkPlugins = require("./get-source-plugins-as-remark-plugins");
 const htmlAttrToJSXAttr = require("./babel-plugin-html-attr-to-jsx-attr");
+const removeExportKeywords = require("./babel-plugin-remove-export-keywords");
 const BabelPluginPluckImports = require("./babel-plugin-pluck-imports");
 
 /*
@@ -127,7 +128,7 @@ ${code}`;
     const instance = new BabelPluginPluckImports();
     const result = babel.transform(code, {
       configFile: false,
-      plugins: [instance.plugin, objRestSpread, htmlAttrToJSXAttr],
+      plugins: [instance.plugin, objRestSpread, htmlAttrToJSXAttr, removeExportKeywords],
       presets: [
         require("@babel/preset-react"),
         [
@@ -160,7 +161,6 @@ ${code}`;
         /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
         "return MDXContent;"
       )
-      .replace(/\nexport /g, "\n");
   }
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)
