@@ -1,11 +1,6 @@
 {
   "extends": ["config:base"],
-  "includePaths": [
-    "starters/**",
-    "themes/gatsby-starter-blog-theme/**",
-    "themes/gatsby-starter-notes-theme/**",
-    "themes/gatsby-starter-theme/**"
-  ],
+  "includePaths": ["starters/**", "themes/**"],
   "major": {
     "enabled": false
   },
