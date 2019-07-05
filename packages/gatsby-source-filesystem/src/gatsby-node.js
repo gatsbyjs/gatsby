@@ -187,7 +187,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-file-node`)
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
-  type File implements Node {
+  type File implements Node @infer {
     birthtime: Date @deprecated(reason: "Use \`birthTime\` instead")
     birthtimeMs: Float @deprecated(reason: "Use \`birthTime\` instead")
   }
