@@ -6381,6 +6381,20 @@
   built_by: Vikram Aroskar
   built_by_url: "https://medium.com/@vikramaroskar"
   featured: false
+- title: Home Alarm Report
+  url: https://homealarmreport.com/
+  main_url: https://homealarmreport.com/
+  description: >
+    Home Alarm Report is dedicated to helping consumers make informed decisions 
+    about home security solutions. The site was easily migrated from a legacy WordPress 
+    installation and the dev team chose Gatsby for its site speed and SEO capabilities.
+  categories:
+    - Blog
+    - Business
+    - SEO
+    - Technology
+  built_by: Centerfield Media
+  built_by_url: https://www.centerfield.com
 - title: Just | FX for treasurers
   url: "https://www.gojust.com"
   main_url: "https://www.gojust.com"
