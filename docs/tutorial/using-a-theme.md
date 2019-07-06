@@ -81,7 +81,7 @@ my-blog
 │   └── gatsby-theme-blog
 │       ├── components
 │       │   └── bio-content.js
-│       └── gatsby-theme-ui
+│       └── gatsby-plugin-theme-ui
 │           └── colors.js
 ├── gatsby-config.js
 └── package.json
@@ -141,7 +141,7 @@ Restart the dev server, and you'll see your updated blog content:
 
 The blog theme ships with a default Gatsby purple theme, but you can override and customize the theming of your site to your heart's content. In this tutorial, you'll change a few colors.
 
-Open up `/src/gatsby-theme-blog/gatsby-theme-ui/colors.js`, and uncomment the code in that file.
+Open up `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/colors.js`, and uncomment the code in that file.
 
 ```javascript:title=colors.js
 {/* highlight-start */}
@@ -172,7 +172,7 @@ Now, instead of a purple theme, you have a blue theme instead:
 
 In this file, you're pulling in the default color theme (imported as `defaultThemeColors` here), and overriding certain color keys.
 
-To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`gatsby-theme-blog/src/gatsby-theme-ui/colors.js`)
+To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors.js`)
 
 ## Wrapping up
 
