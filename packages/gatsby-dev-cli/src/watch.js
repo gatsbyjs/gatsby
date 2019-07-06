@@ -107,7 +107,7 @@ function watch(
 
   const getPackagesToInstall = packages =>
     packages.forEach(pkg => {
-      if (localPackages.includes(pkg)) {
+      if (localPackages.includes(pkg) && !packagesToInstall.includes(pkg)) {
         packagesToInstall.push(pkg)
       }
       if (depTree[pkg]) {
