@@ -1,11 +1,15 @@
+jest.spyOn(process, `cwd`).mockImplementationOnce(() => `/project/root`)
+
 const { readFileSync, writeFileSync } = require(`fs-extra`)
 const { load, save } = require(`../prepare/cache`)
+const { join } = require(`path`)
 
 jest.mock(`fs-extra`, () => {
   return {
-    ensureDir: jest.fn(),
+    accessSync: jest.fn(),
     readFileSync: jest.fn(),
     writeFileSync: jest.fn(),
+    constants: { W_OK: 1 },
   }
 })
 jest.mock(`find-cache-dir`, () => () => ``)
@@ -48,7 +52,7 @@ describe(`cache`, () => {
     save({ some: `cache` })
 
     expect(writeFileSync).toHaveBeenCalledWith(
-      `font-preload-cache.json`,
+      join(`/project/root`, `font-preload-cache.json`),
       `{"some":"cache"}`,
       `utf-8`
     )

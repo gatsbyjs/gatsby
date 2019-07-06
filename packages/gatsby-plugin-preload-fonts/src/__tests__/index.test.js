@@ -22,6 +22,14 @@ jest.mock(`puppeteer`, () => {
     launch: jest.fn(),
   }
 })
+jest.mock(`progress`, () => {
+  function ProgressBar() {
+    this.interrupt = jest.fn()
+    this.tick = jest.fn()
+  }
+
+  return ProgressBar
+})
 jest.spyOn(console, `log`).mockImplementation(() => {})
 
 const mockPageRequests = requests => {
