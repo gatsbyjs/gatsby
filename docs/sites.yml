@@ -6330,47 +6330,6 @@
     - Web Development
     - Technology
     - Documentation
-    - Marketing
-  built_by: LWB Digital Team
-  built_by_url: 'https://twitter.com/LWBAustralia'
-- title: Bejamas - JAM Experts for hire
-  main_url: 'https://bejamas.io/'
-  url: 'https://bejamas.io/'
-  featured: false
-  description: >-
-    We help agencies and companies with JAMStack tools. This includes web development using Static Site Generators, Headless CMS, CI / CD and CDN setup.
-  categories:
-    - Technology
-    - Web Dev
-    - Agency
-    - Creative
-    - Marketing
-  built_by: Bejamas.io
-  built_by_url: 'https://bejamas.io/'
-- title: Zensum
-  main_url: 'https://zensum.se/'
-  url: 'https://zensum.se/'
-  featured: false
-  description: >-
-    Borrow money quickly and safely through Zensum. We compare Sweden's leading banks and credit institutions. Choose from multiple offers and lower your monthly cost. [Translated from Swedish]
-  categories:
-    - Technology
-    - Finance
-    - Corporate
-    - Marketing
-  built_by: Bejamas
-  built_by_url: 'https://bejamas.io/'
-- title: StatusHub - Easy to use Hosted Status Page Service
-  main_url: 'https://statushub.com/'
-  url: 'https://statushub.com/'
-  featured: false
-  description: >-
-    Set up your very own service status page in minutes with StatusHub. Allow customers to subscribe to be updated automatically.
-  categories:
-    - Technology
-    - Marketing
-  built_by: Bejamas
-  built_by_url: 'https://bejamas.io/'
   built_by: Sankarsan Kampa
   built_by_url: "https://traction.one"
 - title: Prism Programming Language
@@ -6445,7 +6404,7 @@
   built_by: Bejamas
   built_by_url: "https://bejamas.io/"
   featured: false
-  - title: Atelier Cartier Blumen
+- title: Atelier Cartier Blumen
   url: "https://www.ateliercartier.ch"
   main_url: "https://www.ateliercartier.ch"
   description: >
@@ -6456,7 +6415,7 @@
   built_by: Bejamas
   built_by_url: "https://bejamas.io/"
   featured: false
-  - title: Veronym – Cloud Security Service Provider
+- title: Veronym – Cloud Security Service Provider
   url: "https://www.veronym.com"
   main_url: "https://www.veronym.com"
   description: >
