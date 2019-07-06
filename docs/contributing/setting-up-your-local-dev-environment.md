@@ -39,5 +39,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
   - Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
+  - To run tests for a single package you can run: `yarn jest <package-name>`.
+  - To run a single test file you can run: `yarn jest <file-path>`.
 - Commit and push to your fork.
 - Create a pull request from your branch.

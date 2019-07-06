@@ -1312,7 +1312,7 @@
     - Technology
     - Finance
     - Marketing
-  built_by: Bejamas.io
+  built_by: Bejamas
   built_by_url: "https://bejamas.io/"
 - title: StatusHub - Easy to use Hosted Status Page Service
   main_url: "https://statushub.com/"
@@ -1324,7 +1324,7 @@
   categories:
     - Technology
     - Marketing
-  built_by: Bejamas.io
+  built_by: Bejamas
   built_by_url: "https://bejamas.io/"
 - title: Matthias Kretschmann Portfolio
   main_url: "https://matthiaskretschmann.com/"
@@ -4559,7 +4559,7 @@
     - Blog
     - Portfolio
     - Agency
-  built_by: bejamas
+  built_by: Bejamas
   built_by_url: https://bejamas.io/
   featured: false
 - title: Jean Regisser's Portfolio
@@ -6357,6 +6357,18 @@
   built_by: Arnon Puitrakul
   built_by_url: "https://arnondora.in.th/"
   featured: false
+- title: KingsDesign
+  url: "https://www.kingsdesign.com.au/"
+  main_url: "https://www.kingsdesign.com.au/"
+  description: KingsDesign is a Hobart based web design and development company. KingsDesign creates, designs, measures and improves web based solutions for businesses and organisations across Australia.
+  categories:
+    - Agency
+    - Technology
+    - Portfolio
+    - Consulting
+    - User Experience
+  built_by: KingsDesign
+  built_by_url: "https://www.kingsdesign.com.au"
 - title: EasyFloh | Easy Flows for all
   url: "https://www.easyfloh.com"
   main_url: "https://www.easyfloh.com"
@@ -6383,4 +6395,60 @@
     - Technolog
   built_by: Centerfield Media
   built_by_url: https://www.centerfield.com
+- title: Just | FX for treasurers
+  url: "https://www.gojust.com"
+  main_url: "https://www.gojust.com"
+  description: >
+    Just provides a single centralized view of FX for corporate treasurers. See interbank market prices, and access transaction cost analysis.
+  categories:
+    - Finance
+    - Technology
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Bureau for Good | Nonprofit branding, web and print communications
+  url: "https://www.bureauforgood.com"
+  main_url: "https://www.bureauforgood.com"
+  description: >
+    Bureau for Good helps nonprofits explain why they matter across digital & print media. Bureau for Good crafts purpose-driven identities, websites & print materials for changemakers.
+  categories:
+    - Nonprofit
+    - Agency
+    - Design
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Atelier Cartier Blumen
+  url: "https://www.ateliercartier.ch"
+  main_url: "https://www.ateliercartier.ch"
+  description: >
+    Im schönen Kreis 6 in Zürich kreiert Nicole Cartier Blumenkompositionen anhand Charaktereigenschaften oder Geschichten zur Person an. Für wen ist Dein Blumenstrauss gedacht? Einzigartige Floristik Blumensträusse, Blumenabos, Events, Shootings. Site designed by https://www.stolfo.co
+  categories:
+    - eCommerce
+    - Design
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Veronym – Cloud Security Service Provider
+  url: "https://www.veronym.com"
+  main_url: "https://www.veronym.com"
+  description: >
+    Veronym is securing your digital transformation. A comprehensive Internet security solution for business. Stay safe no matter how, where and when you connect.
+  categories:
+    - Security
+    - Technology
+    - Business
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Devahoy
+  url: "https://devahoy.com/"
+  main_url: "https://devahoy.com/"
+  description: >
+    Devahoy is a personal blog written in Thai about software development.
+  categories:
+    - Blog
+    - Programming
+  built_by: Chai Phonbopit
+  built_by_url: "https://github.com/phonbopit"
   featured: false
