@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.6.0...gatsby-transformer-remark@2.6.1) (2019-07-06)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** fix spaces between text-bearing block-level elements in plain text excerpts ([#15040](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/15040)) ([84ec96d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/84ec96d))
+
 # [2.6.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.5.0...gatsby-transformer-remark@2.6.0) (2019-07-04)
 
 ### Features
