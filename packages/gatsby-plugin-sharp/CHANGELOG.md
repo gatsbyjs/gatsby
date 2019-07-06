@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.2.2...gatsby-plugin-sharp@2.2.3) (2019-07-06)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** sort nested options ([#15459](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/issues/15459)) ([6ea8c29](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/commit/6ea8c29))
+
 ## [2.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp/compare/gatsby-plugin-sharp@2.2.1...gatsby-plugin-sharp@2.2.2) (2019-07-02)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
