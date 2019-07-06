@@ -3253,3 +3253,15 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://contentful-starter.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby_contentful_starter
+  description: An Awesome Starter Kit to help you get going with Contentful and Gatsby Js
+  tags:
+    - Blog
+    - CMS:Contentful
+    - CMS:Headless
+  features:
+    - Responsive Design
+    - Blazing Fast
+    - Ready made Components
+    - Includes Contentful Delivery API for production build
