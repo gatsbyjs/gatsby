@@ -448,6 +448,114 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
   )
 
   bootstrapTest(
+    `excerpt does not have leading or trailing spaces`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+ My pony likes space on the left and right! `,
+    `excerpt`,
+    node => {
+      expect(node.excerpt).toMatch(`My pony likes space on the left and right!`)
+    },
+    {}
+  )
+
+  bootstrapTest(
+    `excerpt has spaces between paragraphs`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+My pony is little.
+
+Little is my pony.`,
+    `excerpt`,
+    node => {
+      expect(node.excerpt).toMatch(`My pony is little. Little is my pony.`)
+    },
+    {}
+  )
+
+  bootstrapTest(
+    `excerpt has spaces between headings`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+# Ponies: The Definitive Guide
+
+# What time is it?
+
+It's pony time.`,
+    `excerpt`,
+    node => {
+      expect(node.excerpt).toMatch(
+        `Ponies: The Definitive Guide What time is it? It's pony time.`
+      )
+    },
+    {}
+  )
+
+  bootstrapTest(
+    `excerpt has spaces between table cells`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+| Pony           | Owner    |
+| -------------- | -------- |
+| My Little Pony | Me, Duh  |`,
+    `excerpt`,
+    node => {
+      expect(node.excerpt).toMatch(`Pony Owner My Little Pony Me, Duh`)
+    },
+    {}
+  )
+
+  bootstrapTest(
+    `excerpt converts linebreaks into spaces`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+If my pony ain't broke,${`  `}
+don't fix it.`,
+    // ^ Explicit syntax for trailing spaces to not get accidentally trimmed.
+    `excerpt`,
+    node => {
+      expect(node.excerpt).toMatch(`If my pony ain't broke, don't fix it.`)
+    },
+    {}
+  )
+
+  bootstrapTest(
+    `excerpt does not have more than one space between elements`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+
+# Pony express
+
+[some-link]: https://pony.my
+
+Pony express had nothing on my little pony.`,
+    `excerpt`,
+    node => {
+      expect(node.excerpt).toMatch(
+        `Pony express Pony express had nothing on my little pony.`
+      )
+    },
+    {}
+  )
+
+  bootstrapTest(
     `given raw html in the text body, this html is not escaped`,
     `---
 title: "my little pony"
