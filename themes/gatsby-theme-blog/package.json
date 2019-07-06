@@ -15,7 +15,7 @@
     "@emotion/core": "^10.0.14",
     "@mdx-js/mdx": "^1.0.21",
     "@mdx-js/react": "^1.0.21",
-    "@theme-ui/prism": "^0.2.5",
+    "@theme-ui/prism": "^0.2.8",
     "@theme-ui/typography": "^0.2.5",
     "gatsby-image": "^2.2.4",
     "gatsby-plugin-emotion": "^4.1.0",
