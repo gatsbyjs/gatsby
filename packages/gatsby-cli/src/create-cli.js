@@ -53,8 +53,8 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`current directory: ${directory}`)
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site. \n` +
-          `Either the current working directory does not contain a valid package.json or ` +
-          `'gatsby' is not specified as a dependency`
+        `Either the current working directory does not contain a valid package.json or ` +
+        `'gatsby' is not specified as a dependency`
       )
     }
 
@@ -156,7 +156,7 @@ function buildLocalCommands(cli, isLocalSite) {
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
         // kills it so this is fine.
-        return new Promise(resolve => {})
+        return new Promise(resolve => { })
       })
     ),
   })
@@ -266,7 +266,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `repl`,
-    desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
+    desc: `Get a node repl with context of Gatsby environment, see (/docs/gatsby-repl/)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
