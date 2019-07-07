@@ -23,7 +23,38 @@ To get started, in your terminal, after running the initial site setup steps [he
 
 ### `babelrc`
 
+Returns an object with the global `babelrc` settings.
+
+Usage: `babelrc`
+
+Example:
+```js
+// Command:
+gatsby > babelrc
+// Returns:
+{ stages:
+   { develop: { plugins: [], presets: [], options: [Object] },
+     'develop-html': { plugins: [], presets: [], options: [Object] },
+     'build-html': { plugins: [], presets: [], options: [Object] },
+     'build-javascript': { plugins: [], presets: [], options: [Object] } } }
+```
+
 ### `components`
+Returns a Map object with all of the components in your Gatsby environment (see [Mozilla Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) docs for more information on Map objects and how to use them). Propeties that get returned: `name`, `componentPath`, `id`, `query`, and `hash`.
+
+Usage: `components`
+
+Example:
+
+```js
+// Command:
+gatsby > for( var [key, value] of components ) { console.log(key + ' = ' + value.pages); }
+// Returns: a list of components and the pages they are used on...
+.../my-blog-starter/src/templates/blog-post.js = /hi-folks/,/my-second-post/,/hello-world/
+.../my-blog-starter/src/pages/404.js = /404/,/404.html
+.../my-blog-starter/src/pages/index.js = /
+.../my-blog-starter/.cache/dev-404-page.js = /dev-404-page/
+```
 
 ### `dataPaths`
 
@@ -169,7 +200,7 @@ gatsby > siteConfig.siteMetadata
 
 ### `staticQueries`
 
-Returns a Map object with all of the static queries in your Gatsby environment (see [Mozilla Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) docs for more information on Map objects and how to use them).
+Returns a Map object with all of the static queries in your Gatsby environment. Propeties that get returned: `name`, `componentPath`, `id`, `query`, and `hash`.
 
 Usage: `staticQueries`
 
@@ -177,7 +208,7 @@ Example:
 
 ```js
 // Command:
-gatsby > for( var [key, value] of sQs ) { console.log(key + ' = ' + value.componentPath); }
+gatsby > for( var [key, value] of staticQueries ) { console.log(key + ' = ' + value.componentPath); }
 // Returns:
 sq--src-components-seo-js = .../my-blog-starter/src/components/seo.js
 sq--src-components-bio-js = .../my-blog-starter/src/components/bio.js
