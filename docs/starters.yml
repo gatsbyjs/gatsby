@@ -3257,11 +3257,10 @@
   repo: https://github.com/Gherciu/gatsby-all-in
   description: Gatsby starter for creating any type of site
   tags:
-    - Universal site
     - Linting
-    - A11y
     - Testing
-    - Redux
+    - SEO
+    - PWA
   features:
     - Designed for lazy developers ;)
     - Redux configured
