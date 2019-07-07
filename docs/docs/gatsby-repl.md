@@ -131,3 +131,17 @@ gatsby > pages[0]
 ### `siteConfig`
 
 ### `staticQueries`
+
+Returns a Map object with all of the static queries in your Gatsby environment (see [Mozilla Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) docs for more information on Map objects and how to use them).
+
+Usage: `staticQueries`
+
+Example:
+
+```js
+// Command:
+gatsby > for( var [key, value] of sQs ) { console.log(key + ' = ' + value.componentPath); }
+// Returns:
+sq--src-components-seo-js = .../my-blog-starter/src/components/seo.js
+sq--src-components-bio-js = .../my-blog-starter/src/components/bio.js
+```
