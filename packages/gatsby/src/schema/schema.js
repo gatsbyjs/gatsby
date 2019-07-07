@@ -741,11 +741,9 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const queryName = _.camelCase(typeName)
   const queryNamePlural = _.camelCase(`all ${typeName}`)
   schemaComposer.Query.addFields({
-    [queryName]: new GraphQLNonNull(typeComposer.getResolver(`findOne`)),
-    [queryNamePlural]: new GraphQLNonNull(
-      typeComposer.getResolver(`findManyPaginated`)
-    ),
-  })
+    [queryName]: typeComposer.getResolver(`findOne`),
+    [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),
+  }).makeFieldNonNull([queryName, queryNamePlural])
 }
 
 const parseTypes = ({
