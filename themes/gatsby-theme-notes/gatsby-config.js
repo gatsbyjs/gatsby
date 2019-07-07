@@ -7,7 +7,6 @@ module.exports = options => {
       description: `Description placeholder`,
       siteUrl: `http://example.com/`,
     },
-    __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
       mdx && {
         resolve: `gatsby-plugin-mdx`,
@@ -35,6 +34,7 @@ module.exports = options => {
           modules: [`gatsby-theme-notes`],
         },
       },
+      `gatsby-plugin-theme-ui`,
     ].filter(Boolean),
   }
 }

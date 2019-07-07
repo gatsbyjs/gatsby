@@ -10,21 +10,24 @@ const { store } = require(`../redux`)
  */
 exports.copyStaticDirs = () => {
   // access the store to get themes
-  const { themes } = store.getState() // ensure there are themes
+  const { themes, flattenedPlugins } = store.getState()
+  // if there are legacy themes, only use them. Otherwise proceed with plugins
+  const themesSet = themes.themes
+    ? themes.themes
+    : flattenedPlugins.map(plugin => {
+        return {
+          themeDir: plugin.pluginFilepath,
+          themeName: plugin.name,
+        }
+      })
 
-  if (themes && themes.themes) {
-    themes.themes
-      // create an array of potential theme static folders
-      .map(theme => nodePath.resolve(theme.themeDir, `static`))
-      // filter out the static folders that don't exist
-      .filter(themeStaticPath => fs.existsSync(themeStaticPath))
-      // copy the files for each folder into the user's build
-      .map(folder =>
-        fs.copySync(folder, nodePath.join(process.cwd(), `public`), {
-          dereference: true,
-        })
-      )
-  }
+  themesSet
+    // create an array of potential theme static folders
+    .map(theme => nodePath.resolve(theme.themeDir, `static`))
+    // filter out the static folders that don't exist
+    .filter(themeStaticPath => fs.existsSync(themeStaticPath))
+    // copy the files for each folder into the user's build
+    .map(folder => fs.copySync(folder, nodePath.join(process.cwd(), `public`)))
 
   const staticDir = nodePath.join(process.cwd(), `static`)
   if (!fs.existsSync(staticDir)) return Promise.resolve()

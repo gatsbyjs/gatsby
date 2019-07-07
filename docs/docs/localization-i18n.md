@@ -14,7 +14,7 @@ There are a few React i18n packages out there. Several options include [react-in
 
 ### gatsby-plugin-i18n
 
-This plugin helps you use `react-intl`, `i18next` or and other i18n library with Gatsby. This plugin does not translate or format your content rather it creates routes for each language, allowing Google to more easily find the correct version of your site, and if you need to, designate alternative UI layouts.
+This plugin helps you use `react-intl`, `i18next` or any other i18n library with Gatsby. This plugin does not translate or format your content, but rather it creates routes for each language, allowing Google to more easily find the correct version of your site, and if you need to, designate alternative UI layouts.
 
 The naming format follows .**languageKey**.js for files and /**languageKey**/path/fileName for URLs.
 

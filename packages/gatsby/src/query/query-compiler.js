@@ -10,6 +10,7 @@ import RelayParser from "@gatsbyjs/relay-compiler/lib/RelayParser"
 import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
 import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
 import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
+import getGatsbyDependents from "../utils/gatsby-dependents"
 const _ = require(`lodash`)
 
 import { store } from "../redux"
@@ -102,11 +103,14 @@ class Runner {
   async parseEverything() {
     const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
 
+    const modulesThatUseGatsby = await getGatsbyDependents()
+
     let files = [
       path.join(this.base, `src`),
       path.join(this.base, `.cache`, `fragments`),
     ]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
+      .concat(modulesThatUseGatsby.map(module => module.path))
       .reduce(
         (merged, folderPath) =>
           merged.concat(
@@ -358,11 +362,19 @@ export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
-  const { program, schema, themes } = store.getState()
+  const { program, schema, themes, flattenedPlugins } = store.getState()
 
   const runner = new Runner(
     program.directory,
-    resolveThemes(themes.themes),
+    resolveThemes(
+      themes.themes
+        ? themes.themes
+        : flattenedPlugins.map(plugin => {
+            return {
+              themeDir: plugin.pluginFilepath,
+            }
+          })
+    ),
     schema
   )
 

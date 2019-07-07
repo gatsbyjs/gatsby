@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.1...gatsby-source-filesystem@2.1.2) (2019-07-02)
+
+### Bug Fixes
+
+- **gatsby:** various Typescript definitions ([#15268](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/b8f3ed5))
+
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.0...gatsby-source-filesystem@2.1.1) (2019-06-25)
 
 ### Features

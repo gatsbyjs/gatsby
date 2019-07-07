@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.5...gatsby@2.13.6) (2019-07-06)
+
+### Bug Fixes
+
+- **gatsby:** parse pageData response when contentType is not s… ([#15410](https://github.com/gatsbyjs/gatsby/issues/15410)) ([8bf80be](https://github.com/gatsbyjs/gatsby/commit/8bf80be))
+
+## [2.13.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.4...gatsby@2.13.5) (2019-07-06)
+
+### Bug Fixes
+
+- **PnP:** updates the test to account for the property name ch… ([#15463](https://github.com/gatsbyjs/gatsby/issues/15463)) ([f657474](https://github.com/gatsbyjs/gatsby/commit/f657474))
+
+## [2.13.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.3...gatsby@2.13.4) (2019-07-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.2...gatsby@2.13.3) (2019-07-03)
+
+### Bug Fixes
+
+- **gatsby:** regression ~ show non structured grapqhl errors ([#15352](https://github.com/gatsbyjs/gatsby/issues/15352)) ([a364c3d](https://github.com/gatsbyjs/gatsby/commit/a364c3d))
+
+## [2.13.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.1...gatsby@2.13.2) (2019-07-03)
+
+### Bug Fixes
+
+- **gatsby:** fix not focusing router wrapper after navigation ([#13197](https://github.com/gatsbyjs/gatsby/issues/13197)) ([b8e2adc](https://github.com/gatsbyjs/gatsby/commit/b8e2adc))
+
+## [2.13.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.12.1...gatsby@2.13.1) (2019-07-02)
+
+### Bug Fixes
+
+- **gatsby:** Default to empty arrays in load-themes ([#15331](https://github.com/gatsbyjs/gatsby/issues/15331)) ([6366914](https://github.com/gatsbyjs/gatsby/commit/6366914))
+
+### Features
+
+- **gatsby:** Make \_\_experimentalThemes part of plugin APIs ([#15144](https://github.com/gatsbyjs/gatsby/issues/15144)) ([3dce8cb](https://github.com/gatsbyjs/gatsby/commit/3dce8cb))
+
+## [2.12.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.12.1...gatsby@2.12.2) (2019-07-02)
+
+### Bug Fixes
+
+- **gatsby:** Default to empty arrays in load-themes ([#15331](https://github.com/gatsbyjs/gatsby/issues/15331)) ([6366914](https://github.com/gatsbyjs/gatsby/commit/6366914))
+
+### Features
+
+- **gatsby:** Make \_\_experimentalThemes part of plugin APIs ([#15144](https://github.com/gatsbyjs/gatsby/issues/15144)) ([3dce8cb](https://github.com/gatsbyjs/gatsby/commit/3dce8cb))
+
+## [2.12.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.12.0...gatsby@2.12.1) (2019-07-02)
+
+### Bug Fixes
+
+- **gatsby:** adds the missing micromatch dependency ([#15310](https://github.com/gatsbyjs/gatsby/issues/15310)) ([5f66f21](https://github.com/gatsbyjs/gatsby/commit/5f66f21))
+- **gatsby:** Exclude gatsby itself in gatsby-dependents ([#15318](https://github.com/gatsbyjs/gatsby/issues/15318)) ([25cd90e](https://github.com/gatsbyjs/gatsby/commit/25cd90e))
+- **gatsby:** various Typescript definitions ([#15268](https://github.com/gatsbyjs/gatsby/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/commit/b8f3ed5))
+- **themes:** normalize plugin entries before merging plugin ar… ([#15307](https://github.com/gatsbyjs/gatsby/issues/15307)) ([300d331](https://github.com/gatsbyjs/gatsby/commit/300d331))
+
+### Features
+
+- **gatsby:** enable babel in deps ([#15284](https://github.com/gatsbyjs/gatsby/issues/15284)) ([4ea3fa1](https://github.com/gatsbyjs/gatsby/commit/4ea3fa1))
+- **gatsby:** Refine typing on createPages’ graphql function ([#14575](https://github.com/gatsbyjs/gatsby/issues/14575)) ([5bedc01](https://github.com/gatsbyjs/gatsby/commit/5bedc01))
+- **gatsby:** support symlinked directories ([#15295](https://github.com/gatsbyjs/gatsby/issues/15295)) ([54b417f](https://github.com/gatsbyjs/gatsby/commit/54b417f))
+- **gatsby:** Switch to name based package filtering for speed ([#15308](https://github.com/gatsbyjs/gatsby/issues/15308)) ([b79e96a](https://github.com/gatsbyjs/gatsby/commit/b79e96a))
+
 # [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.11.8...gatsby@2.12.0) (2019-07-02)
 
 ### Features

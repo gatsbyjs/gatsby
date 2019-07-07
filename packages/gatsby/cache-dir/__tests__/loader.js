@@ -14,16 +14,29 @@ describe(`BaseLoader`, () => {
     /**
      * @param {string} path
      * @param {number} status
-     * @param {boolean} json
+     * @param {string|Object?} responseText
+     * @param {boolean?} json
      */
-    const mockPageData = (path, status, json) => {
+    const mockPageData = (path, status, responseText = ``, json = false) => {
       mock.get(`/page-data${path}/page-data.json`, (req, res) => {
         xhrCount++
         if (json) {
           res.header(`content-type`, `application/json`)
         }
-        return res.status(status).body(json ? `{ "path": "${path}/" }` : ``)
+
+        return res
+          .status(status)
+          .body(
+            typeof responseText === `string`
+              ? responseText
+              : JSON.stringify(responseText)
+          )
       })
+    }
+
+    const defaultPayload = {
+      path: `/mypage/`,
+      webpackCompilationHash: `1234`,
     }
 
     // replace the real XHR object with the mock XHR object before each test
@@ -46,31 +59,81 @@ describe(`BaseLoader`, () => {
     it(`should return a pageData json on success`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
-      mockPageData(`/mypage`, 200, true)
+      mockPageData(`/mypage`, 200, defaultPayload, true)
 
       const expectation = {
         status: `success`,
         pagePath: `/mypage`,
-        payload: { path: `/mypage/` },
+        payload: defaultPayload,
       }
       expect(await baseLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
       expect(baseLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
 
-    it(`should load a 404 page when page-path file is not a json`, async () => {
+    it(`should return a pageData json on success without contentType`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
-      mockPageData(`/unknown-page`, 200, false)
-      mockPageData(`/404.html`, 200, true)
+      mockPageData(`/mypage`, 200, defaultPayload)
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/mypage`,
+        payload: defaultPayload,
+      }
+      expect(await baseLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(baseLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
+      expect(xhrCount).toBe(1)
+    })
+
+    it(`should return a pageData json with an empty compilation hash (gatsby develop)`, async () => {
+      const baseLoader = new BaseLoader(null, [])
+
+      const payload = { ...defaultPayload, webpackCompilationHash: `` }
+      mockPageData(`/mypage`, 200, payload)
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/mypage`,
+        payload,
+      }
+      expect(await baseLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(baseLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
+      expect(xhrCount).toBe(1)
+    })
+
+    it(`should load a 404 page when page-path file is not a gatsby json`, async () => {
+      const baseLoader = new BaseLoader(null, [])
+
+      const payload = { ...defaultPayload, path: `/404.html/` }
+      mockPageData(`/unknown-page`, 200, { random: `string` }, true)
+      mockPageData(`/404.html`, 200, payload, true)
 
       const expectation = {
         status: `success`,
         pagePath: `/404.html`,
         notFound: true,
-        payload: {
-          path: `/404.html/`,
-        },
+        payload,
+      }
+      expect(await baseLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+        expectation
+      )
+      expect(baseLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
+      expect(xhrCount).toBe(2)
+    })
+
+    it(`should load a 404 page when page-path file is not a json`, async () => {
+      const baseLoader = new BaseLoader(null, [])
+
+      const payload = { ...defaultPayload, path: `/404.html/` }
+      mockPageData(`/unknown-page`, 200)
+      mockPageData(`/404.html`, 200, payload, true)
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/404.html`,
+        notFound: true,
+        payload,
       }
       expect(await baseLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
@@ -82,16 +145,15 @@ describe(`BaseLoader`, () => {
     it(`should load a 404 page when path returns a 404`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
-      mockPageData(`/unknown-page`, 200, false)
-      mockPageData(`/404.html`, 200, true)
+      const payload = { ...defaultPayload, path: `/404.html/` }
+      mockPageData(`/unknown-page`, 200)
+      mockPageData(`/404.html`, 200, payload, true)
 
       const expectation = {
         status: `success`,
         pagePath: `/404.html`,
         notFound: true,
-        payload: {
-          path: `/404.html/`,
-        },
+        payload,
       }
       expect(await baseLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
@@ -103,8 +165,8 @@ describe(`BaseLoader`, () => {
     it(`should return a failure when status is 404 and 404 page is fetched`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
-      mockPageData(`/unknown-page`, 404, false)
-      mockPageData(`/404.html`, 404, false)
+      mockPageData(`/unknown-page`, 404)
+      mockPageData(`/404.html`, 404)
 
       const expectation = {
         status: `failure`,
@@ -121,7 +183,7 @@ describe(`BaseLoader`, () => {
     it(`should return an error when status is 500`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
-      mockPageData(`/error-page`, 500, false)
+      mockPageData(`/error-page`, 500)
 
       const expectation = {
         status: `error`,
@@ -137,7 +199,7 @@ describe(`BaseLoader`, () => {
     it(`should retry 3 times before returning an error`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
-      mockPageData(`/blocked-page`, 0, false)
+      mockPageData(`/blocked-page`, 0)
 
       const expectation = {
         status: `error`,
@@ -153,6 +215,10 @@ describe(`BaseLoader`, () => {
 
     it(`should recover if we get 1 failure`, async () => {
       const baseLoader = new BaseLoader(null, [])
+      const payload = {
+        path: `/blocked-page/`,
+        webpackCompilationHash: `1234`,
+      }
 
       let xhrCount = 0
       mock.get(`/page-data/blocked-page/page-data.json`, (req, res) => {
@@ -160,7 +226,7 @@ describe(`BaseLoader`, () => {
           return res.status(0).body(``)
         } else {
           res.header(`content-type`, `application/json`)
-          return res.status(200).body(`{ "path": "/blocked-page/" }`)
+          return res.status(200).body(JSON.stringify(payload))
         }
       })
 
@@ -168,9 +234,7 @@ describe(`BaseLoader`, () => {
         status: `success`,
         retries: 1,
         pagePath: `/blocked-page`,
-        payload: {
-          path: `/blocked-page/`,
-        },
+        payload,
       }
       expect(await baseLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
         expectation
@@ -182,7 +246,7 @@ describe(`BaseLoader`, () => {
     it(`shouldn't load pageData multiple times`, async () => {
       const baseLoader = new BaseLoader(null, [])
 
-      mockPageData(`/mypage`, 200, true)
+      mockPageData(`/mypage`, 200, defaultPayload, true)
 
       const expectation = await baseLoader.loadPageDataJson(`/mypage/`)
       expect(await baseLoader.loadPageDataJson(`/mypage/`)).toBe(expectation)

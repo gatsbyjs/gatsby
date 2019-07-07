@@ -2,19 +2,16 @@
 title: Themes API Reference
 ---
 
-> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
-
 ## Table of contents
 
 - [Core Gatsby APIs](#core-gatsby-apis)
 - [Configuration](#configuration)
 - [Component shadowing](#component-shadowing)
 - [Theme composition](#theme-composition)
-- [Add theme transpilation](#add-theme-transpilation)
 
 ## Core Gatsby APIs
 
-Themes are packaged Gatsby sites, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
+Themes are packaged Gatsby sites shipped as plugins, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
 
 - [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
 - [Actions](https://www.gatsbyjs.org/docs/actions/)
@@ -25,12 +22,13 @@ If you're new to Gatsby you can get started by following along with the guides f
 
 ## Configuration
 
-Similarly to plugins, you can access options that are passed to your theme.
-You can use this to make filesystem sourcing configurable, accept different nav menu items, or change branding colors from the default.
+Plugins can now include a `gatsby-config` in addition to the other `gatsby-*` files.
+
+You can access options that are passed to your theme in your theme's `gatsby-config`. You can use this to make filesystem sourcing configurable, accept different nav menu items, or change branding colors from the default.
 
 ```js:title=gatsby-config.js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: "gatsby-theme-name",
       options: {
@@ -91,44 +89,6 @@ and then configure it:
 
 ```js:title=gatsby-config.js
 module.exports = {
-  __experimentalThemes: ["gatsby-theme-blog"],
-}
-```
-
-## Add theme transpilation
-
-**Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
-
-Since your theme will be installed, it will end up in `node_modules` which Gatsby doesn't transpile by default.
-This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
-
-You will need to install the package:
-
-```shell
-npm install --save gatsby-plugin-compile-es6-packages
-```
-
-And then add it to your plugins list:
-
-```js:title=gatsby-config.js
-const path = require("path")
-
-module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-plugin-page-creator",
-      options: {
-        path: path.join(__dirname, "src", "pages"),
-      },
-    },
-    {
-      resolve: "gatsby-plugin-compile-es6-packages",
-      options: {
-        // replace with the name of your theme
-        // highlight-next-line
-        modules: ["gatsby-theme-developer"],
-      },
-    },
-  ],
+  plugins: ["gatsby-theme-blog"],
 }
 ```
