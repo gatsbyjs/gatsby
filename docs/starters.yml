@@ -3253,3 +3253,20 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://github/Gherciu/gatsby-all-in
+  repo: https://github/Gherciu/gatsby-all-in
+  description: Gatsby starter for creating any type of site
+  tags:
+    - Universal site
+    - Linting
+    - A11y
+    - Testing
+    - Redux
+  features:
+    - Designed for lazy developers ;)
+    - Redux configured
+    - Pre-commit hooks configured
+    - Folders well structured and documented
+    - Sass preconfigured
+    - Helmet preconfigured
+    - Antd UI framework
