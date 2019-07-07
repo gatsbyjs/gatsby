@@ -5,11 +5,30 @@ title: Recipes
 <!-- Basic template for a Gatsby recipe:
 
 ## Task to accomplish.
+1-2 sentences about it. The more concise and focused, the better!
 
-1-2 sentences about it.
-Relevant links out (tutorial, doc pages, plugin readmes, etc). -->
+### Prerequisites
+- System/version requirements
+- Everything necessary to set up the task
+- Including setting up accounts at other sites, like Netlify
+- See [docs templates](/docs/docs-templates/) for formatting tips
 
-Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](/docs/)? Here's a quick guiding reference for how to build things, Gatsby style.
+### Step-by-step directions
+Each step should be repeatable and to-the-point. Anything not critical to the task should be omitted.
+
+#### Live example (optional)
+A live example may not be possible depending on the nature of the recipe, in which case it is fine to omit.
+
+### Additional resources
+- Tutorials
+- Docs pages
+- Plugin READMEs
+- etc.
+
+See [docs templates](/docs/docs-templates/) in the contributing docs for more help.
+-->
+
+Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
 ## Table of Contents
 
@@ -56,11 +75,11 @@ You can create pages in Gatsby explicitly by defining React components in `src/p
 
 Routing in Gatsby relies on the `<Link />` component.
 
-### Requirements
+### Prerequisites
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
 - The Gatsby `<Link />` component
-- `gatsby develop`
+- The [Gatsby CLI](/docs/gatsby-cli/) to run `gatsby develop`
 
 ### Directions
 

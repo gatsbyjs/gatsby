@@ -290,13 +290,27 @@ module.exports = async ({
   const rules = {}
 
   /**
-   * JavaScript loader via babel, excludes node_modules
+   * JavaScript loader via babel, includes userland code
+   * and packages that depend on `gatsby`
    */
   {
-    let js = (options = {}) => {
+    let js = (
+      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
+    ) => {
       return {
         test: /\.(js|mjs|jsx)$/,
-        exclude: vendorRegex,
+        include: modulePath => {
+          // when it's not coming from node_modules we treat it as a source file.
+          if (!vendorRegex.test(modulePath)) {
+            return true
+          }
+
+          // If the module uses Gatsby as a dependency
+          // we want to treat it as src so we can extract queries
+          return modulesThatUseGatsby.some(module =>
+            modulePath.includes(module.path)
+          )
+        },
         type: `javascript/auto`,
         use: [loaders.js(options)],
       }
@@ -306,10 +320,14 @@ module.exports = async ({
   }
 
   /**
-   * Node_modules JavaScript loader via babel (exclude core-js & babel-runtime to speedup babel transpilation)
+   * Node_modules JavaScript loader via babel
+   * Excludes core-js & babel-runtime to speedup babel transpilation
+   * Excludes modules that use Gatsby since the `rules.js` already transpiles those
    */
   {
-    let dependencies = (options = {}) => {
+    let dependencies = (
+      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
+    ) => {
       const jsOptions = {
         babelrc: false,
         configFile: false,
@@ -326,7 +344,28 @@ module.exports = async ({
 
       return {
         test: /\.(js|mjs)$/,
-        exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
+        exclude: modulePath => {
+          if (vendorRegex.test(modulePath)) {
+            // If dep uses Gatsby, exclude
+            if (
+              modulesThatUseGatsby.some(module =>
+                modulePath.includes(module.path)
+              )
+            ) {
+              return true
+            }
+            // If dep is babel-runtime or core-js, exclude
+            if (/@babel(?:\/|\\{1,2})runtime|core-js/.test(modulePath)) {
+              return true
+            }
+
+            // If dep is in node_modules and none of the above, include
+            return false
+          }
+
+          // If dep is user land code, exclude
+          return true
+        },
         type: `javascript/auto`,
         use: [loaders.js(jsOptions)],
       }

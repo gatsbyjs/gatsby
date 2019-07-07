@@ -1,10 +1,13 @@
 const {
+  DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
 } = require(`./constants`)
 
-exports.onRouteUpdate = () => {
+exports.onRouteUpdate = ({ pluginOptions }) => {
+  const options = Object.assign({}, DEFAULT_OPTIONS, pluginOptions)
+
   const imageWrappers = document.querySelectorAll(`.${imageWrapperClass}`)
 
   // https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/
@@ -19,17 +22,26 @@ exports.onRouteUpdate = () => {
 
     const onImageLoad = () => {
       backgroundElement.style.transition = `opacity 0.5s 0.5s`
-      backgroundElement.style.opacity = 0
       imageElement.style.transition = `opacity 0.5s`
-      imageElement.style.opacity = 1
-      imageElement.removeEventListener(`load`, onImageLoad)
+      onImageComplete()
     }
 
-    if (imageElement.complete) {
+    const onImageComplete = () => {
       backgroundElement.style.opacity = 0
-    } else {
-      imageElement.style.opacity = 0
-      imageElement.addEventListener(`load`, onImageLoad)
+      imageElement.style.opacity = 1
+      imageElement.style.color = `inherit`
+      imageElement.style.boxShadow = `inset 0px 0px 0px 400px ${
+        options.backgroundColor
+      }`
+      imageElement.removeEventListener(`load`, onImageLoad)
+      imageElement.removeEventListener(`error`, onImageComplete)
+    }
+
+    imageElement.style.opacity = 0
+    imageElement.addEventListener(`load`, onImageLoad)
+    imageElement.addEventListener(`error`, onImageComplete)
+    if (imageElement.complete) {
+      onImageComplete()
     }
   }
 }

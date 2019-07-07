@@ -1,7 +1,7 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import React, { createElement } from "react"
+import React from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate } from "@reach/router"
+import { Router, navigate, Location } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import {
@@ -37,7 +37,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
-  class RouteHandler extends React.Component {
+  class LocationHandler extends React.Component {
     render() {
       let { location } = this.props
       return (
@@ -48,12 +48,24 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
               >
-                <PageRenderer
-                  {...this.props}
+                <Router
+                  basepath={__BASE_PATH__}
                   location={location}
-                  pageResources={pageResources}
-                  {...pageResources.json}
-                />
+                  id="gatsby-focus-wrapper"
+                >
+                  <PageRenderer
+                    path={
+                      pageResources.page.path === `/404.html`
+                        ? location.pathname
+                        : pageResources.page.matchPath ||
+                          pageResources.page.path
+                    }
+                    {...this.props}
+                    location={location}
+                    pageResources={pageResources}
+                    {...pageResources.json}
+                  />
+                </Router>
               </ScrollContext>
             </RouteUpdates>
           )}
@@ -96,14 +108,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         } not found. Not rendering React`
       )
     }
-    const Root = () =>
-      createElement(
-        Router,
-        {
-          basepath: __BASE_PATH__,
-        },
-        createElement(RouteHandler, { path: `/*` })
-      )
+    const Root = () => (
+      <Location>
+        {locationContext => <LocationHandler {...locationContext} />}
+      </Location>
+    )
 
     const WrappedRoot = apiRunner(
       `wrapRootElement`,

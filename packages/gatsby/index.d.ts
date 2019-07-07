@@ -600,7 +600,13 @@ export interface PluginOptions {
 export type PluginCallback = (err: Error | null, result?: any) => void
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
   traceId: string
   waitForCascadingActions: boolean
 }
@@ -792,7 +798,7 @@ export interface Actions {
   createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
+  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
@@ -856,11 +862,12 @@ export interface Actions {
   createRedirect(
     redirect: {
       fromPath: string
-      isPermanent: boolean
+      isPermanent?: boolean
       toPath: string
-      redirectInBrowser: boolean
-      force: boolean
-      statusCode: number
+      redirectInBrowser?: boolean
+      force?: boolean
+      statusCode?: number
+      [key: string]: unknown
     },
     plugin?: ActionPlugin
   ): void
@@ -876,6 +883,13 @@ export interface Actions {
   createTypes(
     types: string | object | Array<string | object>,
     plugin?: ActionPlugin,
+    traceId?: string
+  ): void
+
+  /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
+  createFieldExtension(
+    extension: object,
+    plugin: ActionPlugin,
     traceId?: string
   ): void
 }

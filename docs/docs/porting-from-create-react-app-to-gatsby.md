@@ -167,7 +167,7 @@ For more information about errors encountered during builds, see the doc on [deb
 
 ### Routing
 
-There are two possibilites of routes that you can set up: static and client-only. Gatsby automatically turns React components in the pages folder into static routes. This means that a statically rendered page directly corresponds to index.html files in the app's built assets, whereas a client-only route is rendered by the client and configured by the routing setup you define. Both types of pages can [fetch data at runtime](/docs/client-data-fetching/) just like any other React app.
+There are two possibilities of routes that you can set up: static and client-only. Gatsby automatically turns React components in the pages folder into static routes. This means that a statically rendered page directly corresponds to index.html files in the app's built assets, whereas a client-only route is rendered by the client and configured by the routing setup you define. Both types of pages can [fetch data at runtime](/docs/client-data-fetching/) just like any other React app.
 
 > **Note**: An advantage to having pages in separate files like this is a defined way of [automatically code splitting](/docs/how-code-splitting-works/), whereas Create React App requires you to use the `import()` syntax to assign what elements should be loaded dynamically
 
