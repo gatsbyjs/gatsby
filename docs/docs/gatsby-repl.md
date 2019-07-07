@@ -128,7 +128,44 @@ gatsby > pages[0]
 
 ### `schema`
 
+Returns the GraphQL schema of your Gatsby environment as an object.
+
+Usages: `schema` or `schema[<property>]`
+
+Example:
+```js
+// Command:
+gatsby > schema._implementations
+// Result:
+[Object: null prototype] {
+  Node:
+   [ File,
+     MarkdownRemark,
+     ImageSharp,
+     SitePage,
+     SitePlugin,
+     Site,
+     Directory ] } // Returns the property value of implementations.
+```
+
 ### `siteConfig`
+
+Returns the the settings you would find in the `gatsby-config.js` file of your site as an object.
+
+Usages: `siteConfig` or `siteConfig[<property>]`
+
+Example:
+
+```js
+// Command:
+gatsby > siteConfig.siteMetadata
+// Returns:
+{ title: 'Gatsby Starter Blog',
+  author: 'Kyle Mathews',
+  description: 'A starter blog demonstrating what Gatsby can do.',
+  siteUrl: 'https://gatsby-starter-blog-demo.netlify.com/',
+  social: { twitter: 'kylemathews' } } // returns just the siteMetadata value of the config.
+```
 
 ### `staticQueries`
 
