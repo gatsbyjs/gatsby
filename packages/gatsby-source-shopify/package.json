@@ -7,8 +7,12 @@
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "npm run build -- --watch"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopfiy#readme",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-source-shopify"
+  },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },

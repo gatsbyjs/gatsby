@@ -3,6 +3,7 @@
   "description": "Gatsby transformer plugin for JavaScript to extract exports.frontmatter statically.",
   "version": "2.1.0",
   "author": "Jacob Bolda <me@jacobbolda.com>",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter#readme",
   "dependencies": {
     "@babel/parser": "^7.0.0",
     "@babel/runtime": "^7.0.0",
@@ -25,7 +26,11 @@
     "gatsby": "^2.0.15",
     "gatsby-source-filesystem": "^2.0.3"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-transformer-javascript-frontmatter"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",

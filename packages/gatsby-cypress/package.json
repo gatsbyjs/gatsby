@@ -3,7 +3,11 @@
   "version": "0.2.0",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-cypress"
+  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress#readme",
   "author": "David Bailey <david.j.b@vivaldi.net>",
   "license": "MIT",

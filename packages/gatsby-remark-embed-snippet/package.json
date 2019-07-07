@@ -31,7 +31,11 @@
   },
   "license": "MIT",
   "main": "index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-remark-embed-snippet"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",

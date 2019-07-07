@@ -30,7 +30,11 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-link"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",

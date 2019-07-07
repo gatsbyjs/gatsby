@@ -23,7 +23,8 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-guess-js#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-guess-js"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-guess-js"
   },
   "license": "MIT",
   "dependencies": {

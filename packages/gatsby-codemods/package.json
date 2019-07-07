@@ -19,7 +19,8 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-codemods#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-codemods"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-codemods"
   },
   "license": "MIT",
   "dependencies": {

@@ -15,7 +15,11 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-no-sourcemaps",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-no-sourcemaps"
+  },
   "peerDependencies": {
     "gatsby": "^2.0.0"
   },
