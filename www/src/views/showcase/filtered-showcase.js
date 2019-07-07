@@ -18,7 +18,8 @@ import {
 const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, edge) => {
     if (edge.node.categories) {
-      if (edge.node.categories.filter(c => categories.includes(c)).length) {
+      const filteredCategories = edge.node.categories.filter(c => categories.includes(c))
+      if (categories.length === 0 || filteredCategories.length === categories.length) {
         aggregated.push(edge)
       }
 
@@ -72,7 +73,7 @@ class FilteredShowcase extends Component {
     }
 
     // create map of categories with totals
-    const aggregatedCategories = data.allSitesYaml.edges.reduce(
+    const aggregatedCategories = items.reduce(
       (categories, edge) => {
         if (edge.node.categories) {
           edge.node.categories.forEach(category => {
