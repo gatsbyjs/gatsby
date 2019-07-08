@@ -7,9 +7,11 @@ const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugi
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
+const getPublicPath = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { withBasePath } = require(`./path`)
+const { withBasePath, withTrailingSlash } = require(`./path`)
+const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -21,12 +23,8 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
 
-module.exports = async (
-  program,
-  directory,
-  suppliedStage,
-  webpackPort = 1500
-) => {
+module.exports = async (program, directory, suppliedStage) => {
+  const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -36,12 +34,16 @@ module.exports = async (
   const stage = suppliedStage
   const { rules, loaders, plugins } = await createUtils({ stage, program })
 
+  const { assetPrefix, pathPrefix } = store.getState().config
+
+  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
+
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
     const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
-    // config env is depednant on the env that it's run, this can be anything from staging-production
+    // config env is dependant on the env that it's run, this can be anything from staging-production
     // this allows you to set use different .env environments or conditions in gatsby files
     const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
     const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
@@ -98,7 +100,7 @@ module.exports = async (
       if (pubPath.substr(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
-        hmrBasePath = `${pubPath}/`
+        hmrBasePath = withTrailingSlash(pubPath)
       }
     }
 
@@ -133,18 +135,14 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath: program.prefixPaths
-            ? `${store.getState().config.pathPrefix}/`
-            : `/`,
+          publicPath: withTrailingSlash(publicPath),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -156,7 +154,7 @@ module.exports = async (
       case `develop`:
         return {
           commons: [
-            `event-source-polyfill`,
+            require.resolve(`event-source-polyfill`),
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -188,8 +186,10 @@ module.exports = async (
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
         ...processEnv(stage, `development`),
-        __PATH_PREFIX__: JSON.stringify(
-          program.prefixPaths ? store.getState().config.pathPrefix : ``
+        __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
+        __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
+        __ASSET_PREFIX__: JSON.stringify(
+          program.prefixPaths ? assetPrefix : ``
         ),
       }),
     ]
@@ -247,18 +247,42 @@ module.exports = async (
     }
   }
 
-  function getModule(config) {
+  function getModule() {
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.mjs(),
-      rules.js(),
+      rules.js({
+        modulesThatUseGatsby,
+      }),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
       rules.media(),
       rules.miscAssets(),
     ]
+
+    // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
+    // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
+    if (stage === `build-javascript`) {
+      configRules.push(
+        rules.dependencies({
+          modulesThatUseGatsby,
+        })
+      )
+    }
+
+    if (store.getState().themes.themes) {
+      configRules = configRules.concat(
+        store.getState().themes.themes.map(theme => {
+          return {
+            test: /\.jsx?$/,
+            include: theme.themeDir,
+            use: [loaders.js()],
+          }
+        })
+      )
+    }
+
     switch (stage) {
       case `develop`: {
         // get schema to pass to eslint config and program for directory
@@ -274,6 +298,16 @@ module.exports = async (
             oneOf: [rules.cssModules(), rules.css()],
           },
         ])
+
+        // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
+        // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
+        configRules.push({
+          include: /node_modules/,
+          test: /\.jsx?$/,
+          use: {
+            loader: require.resolve(`./webpack-hmr-hooks-patch`),
+          },
+        })
 
         break
       }
@@ -316,9 +350,9 @@ module.exports = async (
     return { rules: configRules }
   }
 
-  function getResolve() {
+  function getResolve(stage) {
     const { program } = store.getState()
-    return {
+    const resolve = {
       // Use the program's extension list (generated via the
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
@@ -348,6 +382,19 @@ module.exports = async (
         PnpWebpackPlugin,
       ],
     }
+
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+    if (target === `web`) {
+      // force to use es modules when importing internals of @reach.router
+      // for browser bundles
+      resolve.alias[`@reach/router`] = path.join(
+        path.dirname(require.resolve(`@reach/router/package.json`)),
+        `es`
+      )
+    }
+
+    return resolve
   }
 
   function getResolveLoader() {
@@ -395,7 +442,7 @@ module.exports = async (
     mode: getMode(),
 
     resolveLoader: getResolveLoader(),
-    resolve: getResolve(),
+    resolve: getResolve(stage),
 
     node: {
       __filename: true,
@@ -432,47 +479,62 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
+    // Packages we want to externalize to save some build time
+    // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
     const externalList = [
-      // match `lodash` and `lodash/foo`
-      // but not things like `lodash-es`
-      `lodash`,
-      /^lodash\//,
-      `react`,
-      /^react-dom\//,
-      `pify`,
-      `@reach/router`,
       `@reach/router/lib/history`,
+      `@reach/router`,
       `common-tags`,
+      /^core-js\//,
+      `crypto`,
+      `debug`,
+      `fs`,
+      `https`,
+      `http`,
+      `lodash`,
       `path`,
       `semver`,
-      `react-helmet`,
-      `minimatch`,
-      `fs`,
-      /^core-js\//,
-      `es6-promise`,
-      `crypto`,
+      /^lodash\//,
       `zlib`,
-      `http`,
-      `https`,
-      `debug`,
     ]
+
+    // Packages we want to externalize because meant to be user-provided
+    const userExternalList = [
+      `es6-promise`,
+      `minimatch`,
+      `pify`,
+      `react-helmet`,
+      `react`,
+      /^react-dom\//,
+    ]
+
+    const checkItem = (item, request) => {
+      if (typeof item === `string` && item === request) {
+        return true
+      } else if (item instanceof RegExp && item.test(request)) {
+        return true
+      }
+      return false
+    }
+
+    const isExternal = request => {
+      if (externalList.some(item => checkItem(item, request))) {
+        return `umd ${require.resolve(request)}`
+      }
+      if (userExternalList.some(item => checkItem(item, request))) {
+        return `umd ${request}`
+      }
+      return null
+    }
 
     config.externals = [
       function(context, request, callback) {
-        if (
-          externalList.some(item => {
-            if (typeof item === `string` && item === request) {
-              return true
-            } else if (item instanceof RegExp && item.test(request)) {
-              return true
-            }
-
-            return false
-          })
-        ) {
-          return callback(null, `umd ${request}`)
+        const external = isExternal(request)
+        if (external !== null) {
+          callback(null, external)
+        } else {
+          callback()
         }
-        return callback()
       },
     ]
   }

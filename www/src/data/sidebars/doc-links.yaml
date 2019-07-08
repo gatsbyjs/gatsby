@@ -13,7 +13,7 @@
       link: /starters/
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby/
-    - title: Guides
+    - title: Reference Guides
       link: /docs/guides/
       items:
         - title: Preparing Your Environment
@@ -28,12 +28,12 @@
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
-            - title: Preparing your Site for Deployment*
+            - title: Preparing your Site for Deployment
               link: /docs/preparing-for-deployment/
             - title: Deploying to AWS Amplify
-              link: /docs/deploying-to-aws-amplify
+              link: /docs/deploying-to-aws-amplify/
             - title: Deploying to S3 and CloudFront
-              link: /docs/deploying-to-s3-cloudfront
+              link: /docs/deploying-to-s3-cloudfront/
             - title: Deploying to Aerobatic
               link: /docs/deploying-to-aerobatic/
             - title: Deploying to Heroku
@@ -43,9 +43,11 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
             - title: Hosting on Netlify
-              link: /docs/hosting-on-netlify
+              link: /docs/hosting-on-netlify/
             - title: Deploying to Render
               link: /docs/deploying-to-render/
+            - title: Deploying to Surge
+              link: /docs/deploying-to-surge/
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -86,6 +88,8 @@
               link: /docs/working-with-video/
             - title: Importing Media Content
               link: /docs/importing-media-content/
+            - title: Working with GIFs
+              link: /docs/working-with-gifs/
         - title: Sourcing Content and Data
           link: /docs/content-and-data/
           items:
@@ -105,16 +109,16 @@
                 # This list should only include the top 5 CMSs by Gatsby plugin usage.
                 # Please do not add your headless CMS here.
                 # Instead, please add links on the /docs/headless-cms/ page
-                - title: Sourcing from WordPress
-                  link: /docs/sourcing-from-wordpress/
-                - title: Sourcing from Drupal
-                  link: /docs/sourcing-from-drupal/
                 - title: Sourcing from Contentful
                   link: /docs/sourcing-from-contentful/
-                - title: Sourcing from Prismic
-                  link: /docs/sourcing-from-prismic/
                 - title: Sourcing from Netlify CMS
                   link: /docs/sourcing-from-netlify-cms/
+                - title: Sourcing from WordPress
+                  link: /docs/sourcing-from-wordpress/
+                - title: Sourcing from Prismic
+                  link: /docs/sourcing-from-prismic/
+                - title: Sourcing from Drupal
+                  link: /docs/sourcing-from-drupal/
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           items:
@@ -147,16 +151,37 @@
         - title: Plugins
           link: /docs/plugins/
           items:
-            - title: How Plugins Work
-              link: /docs/how-plugins-work/
-            - title: Creating a Transformer Plugin
-              link: /docs/creating-a-transformer-plugin/
-            - title: Creating a Source Plugin
-              link: /docs/creating-a-source-plugin/
-            - title: Source Plugin Tutorial
-              link: /docs/source-plugin-tutorial/
+            - title: What is a Plugin?
+              link: /docs/what-is-a-plugin/
+            - title: Using a Plugin in Your Site
+              link: /docs/using-a-plugin-in-your-site/
+            - title: What You Don't Need Plugins For
+              link: /docs/what-you-dont-need-plugins-for/
+            - title: Loading Plugins from Your Local Plugins Folder
+              link: /docs/loading-plugins-from-your-local-plugins-folder/
             - title: Plugin Library
               link: /plugins/
+            - title: Creating Plugins
+              link: /docs/creating-plugins/
+              items:
+                - title: Naming a Plugin
+                  link: /docs/naming-a-plugin/
+                - title: Files Gatsby Looks for in a Plugin
+                  link: /docs/files-gatsby-looks-for-in-a-plugin/
+                - title: Creating a Local Plugin
+                  link: /docs/creating-a-local-plugin/
+                - title: Creating a Source Plugin
+                  link: /docs/creating-a-source-plugin/
+                - title: Creating a Transformer Plugin
+                  link: /docs/creating-a-transformer-plugin/
+                - title: Submit to Plugin Library
+                  link: /contributing/submit-to-plugin-library/
+                - title: Pixabay Image Source Plugin Tutorial
+                  link: /docs/pixabay-source-plugin-tutorial/
+                - title: Remark Plugin Tutorial
+                  link: /docs/remark-plugin-tutorial/
+                - title: Maintaining a Plugin*
+                  link: /docs/maintaining-a-plugin/
         - title: Starters
           link: /docs/starters/
           items:
@@ -164,33 +189,59 @@
               link: /starters/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
+        - title: Themes
+          link: /docs/themes/
+          items:
+            - title: What are Gatsby Themes?
+              link: /docs/themes/what-are-gatsby-themes
+            - title: Using a Gatsby Theme
+              link: /docs/themes/using-a-gatsby-theme
+            - title: Using Multiple Gatsby Themes
+              link: /docs/themes/using-multiple-gatsby-themes
+            - title: Building Themes
+              link: /docs/themes/building-themes
+              items:
+                - title: Themes API Reference
+                  link: /docs/themes/api-reference
+                - title: Converting a Starter
+                  link: /docs/themes/converting-a-starter
+                - title: Theme Composition
+                  link: /docs/themes/theme-composition
+                - title: Conventions
+                  link: /docs/themes/conventions
         - title: Styling Your Site
           link: /docs/styling/
           items:
             - title: Using Layout Components
               link: /docs/layout-components/
-            - title: Using CSS Modules
+            - title: Standard, Global CSS Files
+              link: /docs/global-css/
+            - title: Component-Scoped CSS Modules
               link: /docs/css-modules/
-            - title: Using Typography.js
-              link: /docs/typography-js/
-            - title: Using CSS-in-JS Library Emotion
-              link: /docs/emotion/
-            - title: Using CSS-in-JS Library Glamor
-              link: /docs/glamor/
-            - title: Using CSS-in-JS Library Styled Components
-              link: /docs/styled-components/
-            - title: Creating Global Styles
-              link: /docs/creating-global-styles/
-            - title: Writing Component CSS
-              link: /docs/component-css/
-            - title: Using PostCSS
-              link: /docs/post-css/
-            - title: Using TailwindCSS
-              link: /docs/tailwind-css/
-        - title: Adding Components to Content with MDX
+            - title: Enhancing with CSS-in-JS
+              link: /docs/css-in-js/
+              items:
+                - title: Emotion
+                  link: /docs/emotion/
+                - title: Styled-Components
+                  link: /docs/styled-components/
+            - title: CSS Libraries and Frameworks
+              link: /docs/css-libraries-and-frameworks/
+              items:
+                - title: Typography.js
+                  link: /docs/typography-js/
+                - title: Using Sass
+                  link: /docs/sass/
+                - title: Using PostCSS
+                  link: /docs/post-css/
+                - title: Using TailwindCSS
+                  link: /docs/tailwind-css/
+                - title: Using Bulma
+                  link: /docs/bulma/
+        - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           items:
-            - title: Getting Started
+            - title: Getting Started with MDX
               link: /docs/mdx/getting-started/
             - title: Writing Pages
               link: /docs/mdx/writing-pages/
@@ -233,6 +284,8 @@
         - title: Adding Website Functionality
           link: /docs/adding-website-functionality/
           items:
+            - title: Linking Between Pages
+              link: /docs/linking-between-pages/
             - title: Adding Search
               link: /docs/adding-search/
               items:
@@ -248,6 +301,8 @@
               link: /docs/building-a-site-with-authentication/
             - title: Adding Forms
               link: /docs/adding-forms/
+            - title: Building a Contact Form
+              link: /docs/building-a-contact-form
             - title: Adding a 404 Page
               link: /docs/add-404-page/
             - title: Adding an SEO Component
@@ -256,12 +311,12 @@
               link: /docs/adding-tags-and-categories-to-blog-posts/
             - title: Adding Pagination
               link: /docs/adding-pagination/
+            - title: Adding Comments
+              link: /docs/adding-comments/
             - title: Creating a Sitemap
               link: /docs/creating-a-sitemap/
             - title: Adding an RSS Feed
               link: /docs/adding-an-rss-feed/
-            - title: Linking Between Pages
-              link: /docs/linking-between-pages/
             - title: Adding Page Transitions
               link: /docs/adding-page-transitions/
               items:
@@ -282,6 +337,10 @@
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+            - title: Client Data Fetching
+              link: /docs/client-data-fetching/
+            - title: Using Client-Side Only Packages
+              link: /docs/using-client-side-only-packages
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -296,7 +355,7 @@
             - title: Adding a Manifest File
               link: /docs/add-a-manifest-file/
             - title: Adding Offline Support with a Service Worker
-              link: /docs/add-offline-support-with-a-service-worker
+              link: /docs/add-offline-support-with-a-service-worker/
             - title: Adding Page Metadata
               link: /docs/add-page-metadata/
             - title: Search Engine Optimization (SEO)
@@ -308,11 +367,18 @@
           items:
             - title: Creating Prefixed 404 Pages for Different Languages
               link: /docs/creating-prefixed-404-pages-for-different-languages/
-    - title: API Reference
+        - title: Porting to Gatsby
+          link: /docs/porting-to-gatsby/
+          items:
+            - title: Porting from Create React App to Gatsby
+              link: /docs/porting-from-create-react-app-to-gatsby/
+    - title: Gatsby API
       link: /docs/api-reference/
       items:
         - title: Gatsby Link
           link: /docs/gatsby-link/
+        - title: Gatsby Image
+          link: /docs/gatsby-image/
         - title: Gatsby Config
           link: /docs/gatsby-config/
         - title: Gatsby Node APIs
@@ -329,6 +395,8 @@
           link: /docs/node-model/
         - title: Node Interface
           link: /docs/node-interface/
+        - title: Customizing the GraphQL Schema
+          link: /docs/schema-customization/
         - title: API Philosophy
           link: /docs/api-specification/
     - title: Releases & Migration
@@ -345,7 +413,7 @@
     - title: Conceptual Guide
       link: /docs/conceptual-guide/
       items:
-        - title: The Gatsby Core Philosophy*
+        - title: The Gatsby Core Philosophy
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
@@ -359,8 +427,10 @@
           link: /docs/prpl-pattern/
         - title: Querying Data with GraphQL
           link: /docs/querying-with-graphql/
-    - title: Behind the Scenes
-      link: /docs/behind-the-scenes/
+        - title: Security in Gatsby*
+          link: /docs/security-in-gatsby/
+    - title: Gatsby Internals
+      link: /docs/gatsby-internals/
       items:
         - title: How APIs/Plugins Are Run
           link: /docs/how-plugins-apis-are-run/
@@ -409,25 +479,10 @@
           link: /docs/resource-handling-and-service-workers/
         - title: Data Storage (Redux)*
           link: /docs/data-storage-redux/
-        - title: Build Caching*
+        - title: Build Caching
           link: /docs/build-caching/
         - title: Terminology
-          link: /docs/behind-the-scenes-terminology/
-    - title: Advanced Tutorials
-      link: /docs/advanced-tutorials/
-      items:
-        - title: Making a Site with User Authentication
-          link: /docs/authentication-tutorial/
-        - title: Making an e-commerce Gatsby Site
-          link: /docs/ecommerce-tutorial/
-        - title: Creating a Source Plugin
-          link: /docs/source-plugin-tutorial/
-        - title: Using the WordPress Source Plugin
-          link: /docs/wordpress-source-plugin-tutorial/
-        - title: Adding Images to a WordPress Site
-          link: /docs/image-tutorial/
-        - title: Writing Documentation with Docz
-          link: /docs/writing-documentation-with-docz/
+          link: /docs/gatsby-internals-terminology/
     - title: Using Gatsby Professionally
       link: /docs/using-gatsby-professionally/
       items:
@@ -438,17 +493,17 @@
         - title: Winning Over Different Stakeholders
           link: /docs/winning-over-stakeholders/
           items:
-            - title: Developers*
+            - title: Developers
               link: /docs/winning-over-developers/
-            - title: Engineering Leaders*
+            - title: Engineering Leaders
               link: /docs/winning-over-engineering-leaders/
             - title: Marketers
               link: /docs/winning-over-marketers/
-            - title: Executives*
+            - title: Executives
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/
-        - title: Spreading Gatsby In Different Types of Organizations*
+        - title: Spreading Gatsby In Different Types of Organizations
           link: /docs/different-organization-types/
           items:
             - title: As a Freelancer*
@@ -466,20 +521,24 @@
                   link: /docs/going-gatsby-only/
             - title: Inside a Company
               link: /docs/gatsby-for-companies/
+            - title: Inside an Enterprise (Large Company)
+              link: /docs/gatsby-in-the-enterprise/
               items:
-                - title: Answering IT/Security Questions*
+                - title: Answering IT/Security Questions
                   link: /docs/answering-it-security/
+                - title: Setting Up Gatsby Without Gatsby New
+                  link: /docs/setting-up-gatsby-without-gatsby-new
         - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:
-            - title: Sharing Components Across Websites*
+            - title: Sharing Components Across Websites
               link: /docs/sharing-components-across-websites/
               items:
                 - title: Component Libraries
                   link: /docs/component-libraries/
                 - title: Making Components Discoverable*
                   link: /docs/making-components-discoverable/
-        - title: How Gatsby Boosts Your Career*
+        - title: How Gatsby Boosts Your Career
           link: /docs/how-gatsby-boosts-career/
     - title: Contributing
       link: /contributing/
@@ -499,7 +558,7 @@
       link: /docs/gatsby-cli/
     - title: Cheat Sheet
       link: /docs/cheat-sheet/
-    - title: Glossary*
+    - title: Glossary
       link: /docs/glossary/
     - title: Gatsby REPL*
       link: /docs/gatsby-repl/

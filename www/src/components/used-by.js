@@ -5,7 +5,7 @@ import {
   fontSizes,
   transition,
   colors,
-  breakpoints,
+  mediaQueries,
   fonts,
 } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
@@ -17,14 +17,14 @@ const Icon = ({ icon, alt, href }) => (
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         marginBottom: 0,
         height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
       },
-      [breakpoints.md]: {
+      [mediaQueries.md]: {
         height: `calc(12px + 1vw)`,
       },
     }}
@@ -76,13 +76,13 @@ const UsedBy = () => (
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
         paddingLeft: 0,
         flex: `0 1 auto`,
       },
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         paddingTop: rhythm(5),
       },
     }}
@@ -94,7 +94,7 @@ const UsedBy = () => (
         flexShrink: `1`,
         alignSelf: `flex-end`,
         transform: `translateZ(0)`,
-        [breakpoints.sm]: {
+        [mediaQueries.sm]: {
           flexGrow: `0`,
         },
       }}
@@ -105,7 +105,7 @@ const UsedBy = () => (
           fontFamily: fonts.header,
           fontSize: fontSizes[1],
           marginBottom: 0,
-          [breakpoints.sm]: {
+          [mediaQueries.sm]: {
             fontSize: fontSizes[2],
             textAlign: `right`,
           },

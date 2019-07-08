@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-medium/compare/gatsby-source-medium@2.0.8...gatsby-source-medium@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-medium
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-medium/compare/gatsby-source-medium@2.0.7...gatsby-source-medium@2.0.8) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-source-medium
+
 ## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-medium/compare/gatsby-source-medium@2.0.6...gatsby-source-medium@2.0.7) (2019-04-02)
 
 **Note:** Version bump only for package gatsby-source-medium

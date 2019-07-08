@@ -1,12 +1,11 @@
-export default [
-  `0.75rem`,
-  `0.875rem`,
-  `1rem`,
-  `1.125rem`,
-  `1.25rem`,
-  `1.5rem`,
-  `1.75rem`,
-  `2rem`,
-  `2.25rem`,
-  `2.625rem`,
-]
+// scale
+let scale = [8]
+
+for (var i = 0; i < 18; i++) {
+  scale[i + 1] = scale[i] + (parseInt((i - 2) / 4) + 1) * 2
+}
+
+// get rid of 8 and 10px font sizes
+scale.splice(0, 2)
+
+export default scale

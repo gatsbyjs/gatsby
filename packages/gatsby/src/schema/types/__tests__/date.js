@@ -335,6 +335,7 @@ const nodes = [
     invalidDate14: ``,
     invalidDate15: ` `,
     invalidDate16: `2012-04-01T00:basketball`,
+    defaultFormatDate: `2010-01-30T23:59:59.999-07:00`,
   },
 ]
 
@@ -346,33 +347,7 @@ describe(`dateResolver`, () => {
     )
   })
 
-  const buildTestSchema = async ({
-    infer = true,
-    addDefaultResolvers = true,
-  }) => {
-    const inferDirective = infer ? `@infer` : `@dontInfer`
-    const noDefaultResolvers = addDefaultResolvers ? `false` : `true`
-    const typeDefs = [
-      `
-      type Test implements Node ${inferDirective}(noDefaultResolvers: ${noDefaultResolvers}) {
-        testDate: Date
-        explicitValidDate: Date
-        invalidHighPrecision: Date
-        invalidDate8: Date
-        invalidDate9: Date
-        invalidDate10: Date
-        invalidDate11: Date
-        invalidDate12: Date
-        invalidDate13: Date
-        invalidDate14: Date
-        invalidDate15: Date
-        invalidDate16: Date
-      }`,
-    ]
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
-    )
-
+  const buildTestSchema = async () => {
     await build({})
     return store.getState().schema
   }
@@ -423,12 +398,12 @@ describe(`dateResolver`, () => {
     expect(fields.invalidDate5.resolve).toBeUndefined()
     expect(fields.invalidDate6.resolve).toBeUndefined()
     expect(fields.invalidDate7.resolve).toBeUndefined()
-    expect(fields.invalidDate8.resolve).toBeUndefined()
+    expect(fields.invalidDate8).toBeUndefined()
     expect(fields.invalidDate9.resolve).toBeUndefined()
-    expect(fields.invalidDate10.resolve).toBeUndefined()
+    expect(fields.invalidDate10).toBeUndefined()
     expect(fields.invalidDate11.resolve).toBeUndefined()
-    expect(fields.invalidDate12.resolve).toBeUndefined()
-    expect(fields.invalidDate13.resolve).toBeUndefined()
+    expect(fields.invalidDate12).toBeUndefined()
+    expect(fields.invalidDate13).toBeUndefined()
     expect(fields.invalidDate14.resolve).toBeUndefined()
     expect(fields.invalidDate15.resolve).toBeUndefined()
     expect(fields.invalidDate16.resolve).toBeUndefined()

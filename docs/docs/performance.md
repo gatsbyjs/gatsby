@@ -9,4 +9,4 @@ In this section we'll cover some ways you can optimize caching, set up `https` o
 
 May your Lighthouse scores all be in the green. 😀
 
-[[guidelist]]
+<GuideList slug={props.slug} />

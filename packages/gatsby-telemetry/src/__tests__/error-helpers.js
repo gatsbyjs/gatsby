@@ -52,7 +52,7 @@ describe(`Errors Helpers`, () => {
         expect.stringContaining(errormessage)
       )
       expect(sanitizedErrorString).toEqual(
-        expect.not.stringContaining(process.cwd())
+        expect.not.stringContaining(process.cwd().replace(`\\`, `\\\\`))
       )
     })
 

@@ -6,6 +6,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "css",
           "position": Position {
             "end": Object {
               "column": 24,
@@ -19,10 +20,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span> <span class=\\"token punctuation\\">}</span></code></pre>
-        </div>",
+          "type": "code",
+          "value": "html { height: 100%; }",
         },
       ],
       "position": Position {
@@ -63,6 +62,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "html",
           "position": Position {
             "end": Object {
               "column": 25,
@@ -76,10 +76,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-html\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>html</span><span class=\\"token punctuation\\">></span></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span></code></pre>
-        </div>",
+          "type": "code",
+          "value": "<html></html>",
         },
       ],
       "position": Position {
@@ -120,6 +118,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "jsx",
           "position": Position {
             "end": Object {
               "column": 23,
@@ -133,10 +132,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span></code></pre>
-        </div>",
+          "type": "code",
+          "value": "const foo = \\"bar\\";",
         },
       ],
       "position": Position {
@@ -177,6 +174,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "markup",
           "position": Position {
             "end": Object {
               "column": 23,
@@ -190,10 +188,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-markup\\"><code># Hi</code></pre>
-        </div>",
+          "type": "code",
+          "value": "# Hi",
         },
       ],
       "position": Position {
@@ -234,6 +230,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "yaml",
           "position": Position {
             "end": Object {
               "column": 25,
@@ -247,10 +244,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-yaml\\"><code><span class=\\"token key atrule\\">name</span><span class=\\"token punctuation\\">:</span> Brian Vaughn</code></pre>
-        </div>",
+          "type": "code",
+          "value": "name: Brian Vaughn",
         },
       ],
       "position": Position {
@@ -291,6 +286,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "bash",
           "position": Position {
             "end": Object {
               "column": 23,
@@ -304,10 +300,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-bash\\"><code><span class=\\"token function\\">pwd</span></code></pre>
-        </div>",
+          "type": "code",
+          "value": "pwd",
         },
       ],
       "position": Position {
@@ -348,6 +342,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "none",
           "position": Position {
             "end": Object {
               "column": 20,
@@ -361,10 +356,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-none\\"><code>const foo = \\"bar\\";</code></pre>
-        </div>",
+          "type": "code",
+          "value": "const foo = \\"bar\\";",
         },
       ],
       "position": Position {
@@ -405,6 +398,7 @@ Object {
     Object {
       "children": Array [
         Object {
+          "lang": "jsx",
           "position": Position {
             "end": Object {
               "column": 23,
@@ -418,10 +412,8 @@ Object {
               "offset": 0,
             },
           },
-          "type": "html",
-          "value": "<div class=\\"gatsby-highlight\\">
-        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span></code></pre>
-        </div>",
+          "type": "code",
+          "value": "const foo = \\"bar\\";",
         },
       ],
       "position": Position {

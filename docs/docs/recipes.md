@@ -5,11 +5,30 @@ title: Recipes
 <!-- Basic template for a Gatsby recipe:
 
 ## Task to accomplish.
+1-2 sentences about it. The more concise and focused, the better!
 
-1-2 sentences about it.
-Relevant links out (tutorial, doc pages, plugin readmes, etc). -->
+### Prerequisites
+- System/version requirements
+- Everything necessary to set up the task
+- Including setting up accounts at other sites, like Netlify
+- See [docs templates](/docs/docs-templates/) for formatting tips
 
-Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](/docs/)? Here's a quick guiding reference for how to build things, Gatsby style.
+### Step-by-step directions
+Each step should be repeatable and to-the-point. Anything not critical to the task should be omitted.
+
+#### Live example (optional)
+A live example may not be possible depending on the nature of the recipe, in which case it is fine to omit.
+
+### Additional resources
+- Tutorials
+- Docs pages
+- Plugin READMEs
+- etc.
+
+See [docs templates](/docs/docs-templates/) in the contributing docs for more help.
+-->
+
+Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
 ## Table of Contents
 
@@ -54,10 +73,33 @@ You can create pages in Gatsby explicitly by defining React components in `src/p
 
 ## Linking between pages
 
-Routing in Gatsby relies on the `<Link />` component, a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link).
+Routing in Gatsby relies on the `<Link />` component.
 
-- Walk through using Gatsby's `<Link />` component in [tutorial part one](/tutorial/part-one/#linking-between-pages)
-- Learn more about how `<Link />` works [in the docs](/docs/gatsby-link/)
+### Prerequisites
+
+- A Gatsby site with two page components: `index.js` and `contact.js`
+- The Gatsby `<Link />` component
+- The [Gatsby CLI](/docs/gatsby-cli/) to run `gatsby develop`
+
+### Directions
+
+1. Open the index page component (`src/pages/index.js`), import the `<Link />` component from Gatsby, add a `<Link />` component above the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import { Link } from "gatsby"
+
+export default () => (
+  <div style={{ color: `purple` }}>
+    <Link to="/contact/">Contact</Link>
+    <p>What a world.</p>
+  </div>
+)
+```
+
+2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
+
+> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
 
 ## Styling
 
@@ -103,7 +145,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
-- Understand source plugins by building one in the [source plugin tutorial](/docs/source-plugin-tutorial/)
+- Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
 
 ## Transforming data
 

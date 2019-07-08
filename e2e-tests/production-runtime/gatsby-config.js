@@ -1,10 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
-    author: {
-      name: `Kyle Mathews`,
-      bio: `lives and works in San Francisco building useful things`,
-    },
+    author: `Kyle Mathews`,
+    description: `This is site for production runtime e2e tests`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

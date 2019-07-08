@@ -226,4 +226,21 @@ describe(`Resolve module exports`, () => {
     })
     expect(result).toEqual([`foo`])
   })
+
+  it(`Resolves exports when using require mode - returns empty array when module doesn't exist`, () => {
+    const result = resolveModuleExports(`require/not-existing-module`, {
+      mode: `require`,
+    })
+    expect(result).toEqual([])
+  })
+
+  it(`Resolves exports when using require mode - panic on errors`, () => {
+    jest.mock(`require/module-error`)
+
+    resolveModuleExports(`require/module-error`, {
+      mode: `require`,
+    })
+
+    expect(reporter.panic).toBeCalled()
+  })
 })

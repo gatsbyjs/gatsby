@@ -1,4 +1,4 @@
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
 const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp`)
 const duotone = require(`./duotone`)
@@ -41,6 +41,7 @@ const argsWhitelist = [
   `jpegProgressive`,
   `grayscale`,
   `rotate`,
+  `trim`,
   `duotone`,
   `fit`,
   `background`,
@@ -57,6 +58,7 @@ const argsWhitelist = [
  * @property {boolean} jpegProgressive
  * @property {boolean} grayscale
  * @property {number} rotate
+ * @property {number} trim
  * @property {object} duotone
  */
 
@@ -79,8 +81,6 @@ exports.processFile = (file, transforms, options = {}) => {
     if (!options.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
-
-    pipeline = pipeline.rotate()
   } catch (err) {
     throw new Error(`Failed to process image ${file}`)
   }
@@ -90,6 +90,14 @@ exports.processFile = (file, transforms, options = {}) => {
     debug(`Start processing ${outputPath}`)
 
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
+
+    if (args.trim) {
+      clonedPipeline = clonedPipeline.trim(args.trim)
+    }
+
+    if (!args.rotate) {
+      clonedPipeline = clonedPipeline.rotate()
+    }
 
     // Sharp only allows ints as height/width. Since both aren't always
     // set, check first before trying to round them.
@@ -233,10 +241,29 @@ exports.createArgsDigest = args => {
 
   const argsDigest = crypto
     .createHash(`md5`)
-    .update(JSON.stringify(filtered, Object.keys(filtered).sort()))
+    .update(JSON.stringify(sortKeys(filtered)))
     .digest(`hex`)
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
   return argsDigestShort
 }
+
+const sortKeys = object => {
+  var sortedObj = {},
+    keys = _.keys(object)
+
+  keys = _.sortBy(keys, key => key)
+
+  _.each(keys, key => {
+    if (typeof object[key] == `object` && !(object[key] instanceof Array)) {
+      sortedObj[key] = sortKeys(object[key])
+    } else {
+      sortedObj[key] = object[key]
+    }
+  })
+
+  return sortedObj
+}
+
+exports.sortKeys = sortKeys

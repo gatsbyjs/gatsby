@@ -7,7 +7,7 @@ import squarespace from "../assets/squarespace-compressed.png"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   lineHeights,
   fonts,
 } from "../utils/presets"
@@ -18,7 +18,7 @@ const subHeaderTitleStyles = {
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [breakpoints.xs]: {
+  [mediaQueries.xs]: {
     height: rhythm(5 / 4),
   },
 }
@@ -53,13 +53,13 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: colors.ui.whisper,
+          background: colors.ui.background,
           fontWeight: 600,
           lineHeight: lineHeights.dense,
           textAlign: `left`,
           verticalAlign: `middle`,
           fontFamily: fonts.header,
-          borderColor: colors.ui.light,
+          borderColor: colors.ui.border.subtle,
           padding: space[3],
         }}
       >

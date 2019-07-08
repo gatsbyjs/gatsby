@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.13...gatsby-remark-graphviz@1.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [1.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.12...gatsby-remark-graphviz@1.0.13) (2019-06-19)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [1.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.11...gatsby-remark-graphviz@1.0.12) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [1.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.10...gatsby-remark-graphviz@1.0.11) (2019-06-10)
+
+### Bug Fixes
+
+- **gatsby-remark-graphviz:** fix graphviz on node < 10 ([#14691](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/issues/14691)) ([728a63d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/commit/728a63d))
+
+## [1.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.9...gatsby-remark-graphviz@1.0.10) (2019-06-04)
+
+### Features
+
+- **gatsby-remark-graphviz:** custom SVG attributes and default styling ([#11624](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/issues/11624)) ([e64ac14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/commit/e64ac14))
+
 ## [1.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz/compare/gatsby-remark-graphviz@1.0.8...gatsby-remark-graphviz@1.0.9) (2019-03-15)
 
 **Note:** Version bump only for package gatsby-remark-graphviz

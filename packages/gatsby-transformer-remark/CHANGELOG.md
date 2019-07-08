@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.6.0...gatsby-transformer-remark@2.6.1) (2019-07-06)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** fix spaces between text-bearing block-level elements in plain text excerpts ([#15040](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/15040)) ([84ec96d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/84ec96d))
+
+# [2.6.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.5.0...gatsby-transformer-remark@2.6.0) (2019-07-04)
+
+### Features
+
+- **gatsby-transformer-remark:** add meta support to code block ([#15348](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/15348)) ([13f0c27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/13f0c27))
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.4.0...gatsby-transformer-remark@2.5.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.12...gatsby-transformer-remark@2.4.0) (2019-06-14)
+
+### Features
+
+- **gatsby-transformer-remark:** change excerpt behavior ([#14723](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/14723)) ([4f72687](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/4f72687))
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.11...gatsby-transformer-remark@2.3.12) (2019-04-25)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** fix excerpt generation - strip excessive white spaces, extract alt from images ([#12878](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/12878)) ([ceb0d72](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/ceb0d72))
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.10...gatsby-transformer-remark@2.3.11) (2019-04-24)
+
+### Bug Fixes
+
+- Add fallback for createContentDigest ([#13584](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/13584)) ([093f1f2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/093f1f2))
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.9...gatsby-transformer-remark@2.3.10) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.8...gatsby-transformer-remark@2.3.9) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
 ## [2.3.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.3.7...gatsby-transformer-remark@2.3.8) (2019-03-21)
 
 **Note:** Version bump only for package gatsby-transformer-remark

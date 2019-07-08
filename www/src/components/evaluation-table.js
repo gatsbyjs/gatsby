@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
 } from "../utils/presets"
@@ -124,7 +124,7 @@ class EvaluationTable extends Component {
                                 cursor: j >= 0 ? `pointer` : `inherit`,
                               },
                               borderBottom: !showTooltip(s, i)
-                                ? `1px solid ${colors.ui.light}`
+                                ? `1px solid ${colors.ui.border.subtle}`
                                 : `none`,
                               minWidth: 40,
                               paddingRight: 0,
@@ -161,7 +161,7 @@ class EvaluationTable extends Component {
                           css={{
                             paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
-                              [breakpoints.xs]: {
+                              [mediaQueries.xs]: {
                                 paddingRight: `${space[3]}`,
                                 paddingLeft: `${space[3]}`,
                               },

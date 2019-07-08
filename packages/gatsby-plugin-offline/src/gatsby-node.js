@@ -91,6 +91,11 @@ exports.onPostBuild = (args, pluginOptions) => {
         handler: `cacheFirst`,
       },
       {
+        // page-data.json files are not content hashed
+        urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+        handler: `networkFirst`,
+      },
+      {
         // Add runtime caching of various other page resources
         urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `staleWhileRevalidate`,

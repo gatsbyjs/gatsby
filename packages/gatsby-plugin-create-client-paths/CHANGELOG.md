@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths/compare/gatsby-plugin-create-client-paths@2.1.0...gatsby-plugin-create-client-paths@2.1.1) (2019-06-21)
+
+### Bug Fixes
+
+- **gatsby-plugin-create-client-paths:** set matchPath correctly ([#15014](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths/issues/15014)) ([e69800b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths/commit/e69800b))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths/compare/gatsby-plugin-create-client-paths@2.0.5...gatsby-plugin-create-client-paths@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-create-client-paths
+
 ## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths/compare/gatsby-plugin-create-client-paths@2.0.4...gatsby-plugin-create-client-paths@2.0.5) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-create-client-paths

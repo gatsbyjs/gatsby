@@ -2,11 +2,13 @@
 title: Blog & Website Contributions
 ---
 
-We wholeheartedly welcome contributions to the Gatsby blog and website! Instructions on this page:
+We wholeheartedly welcome contributions to the Gatsby blog and website!
 
-- [Contributing to the blog](#contributing-to-the-blog)
-  - [Blog post format](#blog-post-format)
-- [Making changes to the website](#making-changes-to-the-website)
+Here are some things to keep in mind when deciding where to contribute to Gatsby:
+
+- [Blog posts](#contributing-to-the-blog) work best for case studies and time-sensitive storytelling (see the [blog post format](#blog-post-format)).
+- [Docs](/contributing/docs-contributions/) are continually relevant and discoverable learning materials that go beyond any one case study or situation.
+- [Website changes](#making-changes-to-the-website) that improve either of these are always welcome!
 
 ## Contributing to the blog
 

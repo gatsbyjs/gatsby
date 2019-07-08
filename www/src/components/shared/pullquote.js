@@ -8,7 +8,7 @@ import {
   colors,
   radii,
   space,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
   fonts,
@@ -31,7 +31,7 @@ const PullquoteRoot = styled(`blockquote`)`
     margin: ${space[8]} 0;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     line-height: ${lineHeights.loose};
     margin: ${space[8]} -3.5rem;
     padding: 2.8rem 3.5rem;
@@ -58,15 +58,15 @@ const QuotationMark = styled(`span`)`
   top: ${space[7]};
 
   svg {
-    fill: ${colors.gatsbyDark};
+    fill: ${colors.purple[80]};
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     left: 3rem;
     top: 2.8rem;
 
     svg {
-      fill: ${colors.gatsbyDark};
+      fill: ${colors.purple[80]};
       transform: scale(1.1);
     }
   }
@@ -89,10 +89,10 @@ const Star = styled(`span`)`
     width: 20px;
 
     svg {
-      fill: ${colors.lemon};
+      fill: ${colors.yellow[40]};
     }
 
-    ${breakpoints.lg} {
+    ${mediaQueries.lg} {
       height: 27px;
       width: 27px;
     }
@@ -121,7 +121,7 @@ const Star = styled(`span`)`
     width: 14px;
 
     svg {
-      fill: ${colors.mint};
+      fill: ${colors.teal[40]};
     }
     .variantB & {
       bottom: 0;
@@ -147,7 +147,7 @@ const Star = styled(`span`)`
     width: ${space[3]};
 
     svg {
-      fill: ${colors.warning};
+      fill: ${colors.red[60]};
     }
 
     .variantB & {

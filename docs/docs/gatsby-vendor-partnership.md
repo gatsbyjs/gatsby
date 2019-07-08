@@ -10,9 +10,9 @@ This document explains a bit what exactly that would look like.
 
 Gatsby is a web framework for creating blazing fast, compelling apps and websites without needing to become a performance expert.
 
-Created in 2015 by [Kyle Mathews](https://www.gatsbyjs.org/contributors/kyle-mathews/), it’s now backed by the commercial entity Gatsby Inc.
+Created in 2015 by [Kyle Mathews](/contributors/kyle-mathews/), it’s now backed by the commercial entity Gatsby Inc.
 
-Gatsby has a 100,000+ strong community of users and contributors that have built [750+ plugins](https://www.gatsbyjs.org/plugins/) and [250+ integrations](https://www.gatsbyjs.org/plugins/?=gatsby-source) (as of Mar 2019).
+Gatsby has a 100,000+ strong community of users and contributors that have built [750+ plugins](/plugins/) and [250+ integrations](/plugins/?=gatsby-source) (as of Mar 2019).
 
 You can read more at [gatsbyjs.com](https://www.gatsbyjs.com/).
 
@@ -28,7 +28,7 @@ While vendor partners have many reasons for working with Gatsby and investing in
 
 ## How to Work With Gatsby
 
-We’d love to have you as part of our community. One of our values is "[you belong here](https://www.gatsbyjs.org/blog/2018-09-07-gatsby-values/#you-belong-here)." We’d love for some of our community to use and adopt your solution.
+We’d love to have you as part of our community. One of our values is "[you belong here](/blog/2018-09-07-gatsby-values/#you-belong-here)." We’d love for some of our community to use and adopt your solution.
 
 Typically, there are four key phases or stages of partnership, depending on at any given time how much it makes sense for us to work together.
 
@@ -44,27 +44,27 @@ These stages are:
 
 ### Step One: Building a Gatsby Integration
 
-If you haven’t yet integrated with Gatsby, [developer documentation](https://www.gatsbyjs.org/docs/creating-a-source-plugin/) for creating a Gatsby "source plugin" is here.
+If you haven’t yet integrated with Gatsby, [developer documentation](/docs/creating-a-source-plugin/) for creating a Gatsby "source plugin" is here.
 
 In addition, you’ll probably want to create an "example" application. We call this a “starter”.
 
-However development is most convenient, when you publish these, they should be in separate code repositories on Github.
+However development is most convenient, when you publish these, they should be in separate code repositories on GitHub.
 
 Current partners have reported development timelines of 2-3 days when the content schema is fully defined by their platform, around up to 2 weeks when their platforms allowing the user to completely define the content schema, for a team of 1-2 developers.
 
 If you have a GraphQL-based API, you **may not need to build an integration at all** -- Gatsby supports integration with GraphQL APIs via so-called ["schema stitching"](/blog/2018-09-25-announcing-graphql-stitching-support/).
 
-If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](https://www.gatsbyjs.org/docs/plugin-authoring/) and [source plugin tutorial](https://www.gatsbyjs.org/docs/source-plugin-tutorial/).
+If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/docs/pixabay-source-plugin-tutorial/).
 
-If you still have questions, please[ raise an issue on Github](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](https://www.gatsbyjs.org/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
+If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
 
 ### Step Two: Launching Your Gatsby Integration
 
 To launch your Gatsby integration, there are two steps:
 
-1. **Publishing your integration to our [plugin library](https://www.gatsbyjs.org/plugins/)**. If you built the integration, we have [developer documentation](https://www.gatsbyjs.org/docs/plugin-authoring/#publishing-a-plugin-to-the-library) for publishing that integration to the Node.js package registry (npm). Once you publish it, over the next 24 hours, our system will automatically pull it in.
+1. **Publishing your integration to our [plugin library](/plugins/)**. If you built the integration, we have [developer documentation](/docs/plugin-authoring/#publishing-a-plugin-to-the-library) for publishing that integration to the Node.js package registry (npm). Once you publish it, over the next 24 hours, our system will automatically pull it in.
 
-2. **Add your example to our [starter library](https://www.gatsbyjs.org/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](http://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](https://www.gatsbyjs.org/contributing/submit-to-starter-library/).
+2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](http://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](/contributing/submit-to-starter-library/).
 
 ### Step Three: Co-Marketing With Gatsby
 
@@ -76,15 +76,15 @@ Depending on your size and reach, there are a few ways we can work together.
 
 1. **Sharing your Gatsby-related content on Twitter.** After you publish your content, and blog about it, just tweet about it and we’re happy to retweet your content to the Gatsby community. We currently (March 2019) have an audience of over 22,000 on Twitter and a typical tweet is seen by around 7,000 developers.
 
-2. **Blogging about your integration.** Our [gatsbyjs.org](gatsbyjs.org) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
+2. **Blogging about your integration.** Our [gatsbyjs.org](/blog/) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
 
-If you’re an established vendor adding a Gatsby integration, we’d love for you to tell that story on our blog (eg [Kentico Cloud](https://www.gatsbyjs.org/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](https://www.gatsbyjs.org/docs/how-to-contribute/#contributing-to-the-blog).
+If you’re an established vendor adding a Gatsby integration, we’d love for you to tell that story on our blog (eg [Kentico Cloud](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](/docs/how-to-contribute/#contributing-to-the-blog).
 
 3. **Writing a case study**. If you have customers using Gatsby & your solution, you can work with our marketing team at marketing@gatsbyjs.com to put together a joint case study of how our solutions work together, and post this on the gatsbyjs.org blog
 
 ### Step Four: Integrating with Gatsby Preview and Co-Selling
 
-Our [Preview](https://www.gatsbyjs.com/preview/) product is currently in [closed beta](https://www.gatsbyjs.org/blog/2019-03-22-introducing-gatsby-preview-beta/), and only supports Contentful as a CMS.
+Our [Preview](https://www.gatsbyjs.com/preview/) product is currently in [closed beta](/blog/2019-03-22-introducing-gatsby-preview-beta/), and only supports Contentful as a CMS.
 
 We’re in the process of opening it to more users and building support in for additional CMS systems. If this is interesting to you, we’d love to chat more.
 
@@ -94,11 +94,11 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 - A staging environment accessible by API. Some examples: [Contentful’s Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/), [DatoCMS staging environment](https://www.datocms.com/changelog/multiple-deployment-environments), etc
 
-- A way to alert Gatsby Prevew about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending webhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
+- A way to alert Gatsby Preview about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending webhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
 
 - A button in the CMS editor where users can click through to Preview
 
-- Featured on a plugin marketplace, if applicable. Eg, [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview/)
+- Featured on a plugin marketplace, if applicable. Eg, [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview-sidebar/)
 
 #### Marketing & Sales:
 
@@ -110,7 +110,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 ## Conclusion: The Content Mesh
 
-One of the trends we’re seeing is that the CMS is becoming a "[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)" -- best of breed tools are emerging with distinct feature set -- headless CMS, specialized CMS, forms, analytics, auth, A/B testing, UI frameworks, and so on.
+One of the trends we’re seeing is that the CMS is becoming a "[content mesh](/blog/2018-10-04-journey-to-the-content-mesh/)" -- best of breed tools are emerging with distinct feature set -- headless CMS, specialized CMS, forms, analytics, auth, A/B testing, UI frameworks, and so on.
 
 In this new world, the key to producing really high quality sites is making it easy for developer teams to choose best of breed tools that are tightly integrated with each other.
 

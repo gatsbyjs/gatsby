@@ -111,13 +111,10 @@ export const pageQuery = graphql`
             fluid(maxWidth: 700) {
               ...GatsbyImageSharpFluid_noBase64
             }
-            resize(
-              width: 1500
-              height: 1500
-              cropFocus: CENTER
-              toFormat: JPG
-            ) {
+            resize(width: 1200, height: 627, cropFocus: NORTH, toFormat: JPG) {
               src
+              height
+              width
             }
           }
         }

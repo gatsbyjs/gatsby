@@ -1,19 +1,19 @@
 {
   "name": "gatsby-transformer-screenshot",
   "description": "Gatsby transformer plugin that uses AWS Lambda to take screenshots of websites",
-  "version": "2.0.13",
+  "version": "2.1.0",
   "author": "David Beckley <beckl.ds@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "better-queue": "^3.8.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.1.4",
+    "babel-preset-gatsby-package": "^0.2.0",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot#readme",
@@ -34,5 +34,8 @@
     "prepare-lambda-package": "babel lambda --out-dir lambda-dist && cp lambda/package.json lambda-dist/package.json && cd lambda-dist && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install --production",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

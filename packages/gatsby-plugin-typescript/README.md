@@ -21,6 +21,8 @@ module.exports = {
 }
 ```
 
+_**Please note**: If packages don't ship with TypeScript definitions you'll need to manually install those type definitions, e.g. for React. A typical Gatsby project would need: `npm install --save-dev @types/react @types/react-dom @types/node.`_
+
 ## Options
 
 When adding this plugin to your `gatsby-config.js`, you can pass in options to override the default [@babel/preset-typescript](https://babeljs.io/docs/en/babel-preset-typescript#options) config.
@@ -46,7 +48,7 @@ For more detailed documentation on the available options, visit https://babeljs.
 ## Caveats
 
 This plugin uses [`babel-plugin-transform-typescript`](https://babeljs.io/docs/en/babel-plugin-transform-typescript.html)
-to transpile typescript. It does _not do type checking_. Also since the TypeScript
+to transpile TypeScript. It does _not do type checking_. Also since the TypeScript
 compiler is not involved, the following applies:
 
 > Does not support namespaces.

@@ -1,7 +1,8 @@
 import React, { Component } from "react"
+import { Helmet } from "react-helmet"
+
 import Container from "../components/container"
 import Rotator from "../components/rotator"
-import Unbird from "../components/unbird"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
@@ -12,6 +13,13 @@ class Plugins extends Component {
   render() {
     return (
       <>
+        <Helmet>
+          <title>Plugins</title>
+          <meta
+            name="description"
+            content="The library for searching and exploring Gatsby's vast plugin ecosystem to implement Node.js packages using Gatsby APIs"
+          />
+        </Helmet>
         <Container
           overrideCSS={{
             alignItems: `center`,
@@ -42,6 +50,7 @@ class Plugins extends Component {
             <h1
               css={{
                 fontSize: fontSizes[6],
+                fontWeight: `700`,
                 marginLeft: space[5],
                 marginRight: space[5],
                 marginBottom: 0,
@@ -81,7 +90,7 @@ class Plugins extends Component {
                   pluginName: `gatsby-plugin-typography`,
                 },
                 {
-                  text: `Typescript?`,
+                  text: `TypeScript?`,
                   pluginName: `gatsby-plugin-typescript`,
                 },
                 {
@@ -101,7 +110,7 @@ class Plugins extends Component {
 
             <p
               css={{
-                color: colors.gray.lightCopy,
+                color: colors.text.secondary,
                 fontSize: fontSizes[2],
                 textAlign: `center`,
               }}
@@ -110,17 +119,12 @@ class Plugins extends Component {
               blazing fast site even more awesome. If you
               {`'`}d like to create your own plugin, see the
               {` `}
-              <Link to="/docs/how-plugins-work/">Plugin Authoring</Link> page in
+              <Link to="/docs/creating-plugins/">Plugin Authoring</Link> page in
               the docs! To learn more about Gatsby plugins, visit the
               {` `}
               <Link to="/docs/plugins">plugins doc page</Link>.
             </p>
           </div>
-          <Unbird
-            dataSetId="5c1ac24b4a828a169b6c235c"
-            publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
-            feedbackPrompt="Have feedback on the Plugin Library?"
-          />
           <FooterLinks />
         </Container>
       </>

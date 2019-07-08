@@ -8,7 +8,7 @@ const ResetFilters = ({ onClick }) => (
     <button
       css={{
         alignItems: `center`,
-        background: colors.ui.light,
+        background: colors.purple[10],
         border: 0,
         borderRadius: radii[1],
         color: colors.gatsby,
@@ -16,7 +16,8 @@ const ResetFilters = ({ onClick }) => (
         display: `flex`,
         fontFamily: fonts.header,
         marginTop: space[6],
-        paddingRight: space[6],
+        paddingLeft: space[2],
+        paddingRight: space[3],
         textAlign: `left`,
         "&:hover": {
           background: colors.gatsby,

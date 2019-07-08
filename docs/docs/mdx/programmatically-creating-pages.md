@@ -18,27 +18,27 @@ support for MDX so you can start your blog. The posts will live in
 - [Add MDX files](#add-mdx-files)
 - [Generate slugs](#generate-slugs)
 - [Create pages](#create-pages-from-sourced-mdx-files)
-- [Make a template](#make-a-template-for-your-post)
+- [Make a template](#make-a-template-for-your-posts)
 
 ## Source MDX pages from the filesystem
 
 To let Gatsby know that you'll be working with MDX content you need to
-add `gatsby-mdx` to the plugins array in your `gatsby-config.js`
+add `gatsby-plugin-mdx` to the plugins array in your `gatsby-config.js`
 file.
 
 You'll need to use `gatsby-source-filesystem` and tell it to source
 "posts" from a folder called `content/posts` located in the project's
 root.
 
-> _NOTE: `gatsby-mdx` uses `.mdx` by default as a file extension to
+> **NOTE**: `gatsby-plugin-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](api-reference/options/extensions) if you want._
+> extension](/packages/gatsby-plugin-mdx#extensions) if you want.
 
 ```javascript=gatsby-config.js
 module.exports = {
   plugins: [
     // Add support for *.mdx files in gatsby
-    "gatsby-mdx",
+    "gatsby-plugin-mdx",
 
     // Add a collection called "posts" that looks
     // for files in content/posts/
@@ -54,7 +54,7 @@ module.exports = {
 ```
 
 You can read about
-[`gatsby-source-filesystem`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme)
+[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
 if you'd like to learn more.
 
 ## Add MDX Files
@@ -67,14 +67,14 @@ Make a folder called `content/posts` and create two files in it called
 a terminal by using the following commands from the root of your
 project.
 
-```sh
+```shell
 mkdir -p content/posts
 touch content/posts/blog-{1,2}.mdx
 ```
 
-> _NOTE:
+> **NOTE**:
 > `mkdir -p path/to/a/directory` will create every folder in the path if
-> it does not exist._
+> it does not exist.
 >
 > _`touch <filename>` will create an empty file named `<filename>`. The
 > brackets (`{}`) are [an
@@ -154,8 +154,8 @@ In order to create pages from the sourced MDX files, you need
 to construct a query that finds all MDX nodes and pulls out
 the `slug` field added earlier.
 
-> \_NOTE: you can open up a GraphiQL console for query testing
-> in your browser at <https://localhost:8000/\_\_\_graphql>
+> **NOTE**: You can open up a GraphiQL console for query testing
+> in your browser at <http://localhost:8000/___graphql>
 
 ```graphql
 query {
@@ -234,7 +234,7 @@ API.
 
 Make a file called `posts-page-layout.js` in `src/components`. This component
 will be rendered as the template for all posts. There's a component,
-`MDXRenderer` which is used by `gatsby-mdx` that will be used to render any
+`MDXRenderer` which is used by `gatsby-plugin-mdx` that will be used to render any
 programmatically accessed MDX content.
 
 First, create a component that accepts the queried MDX data (which will be
@@ -243,7 +243,7 @@ added in the next step).
 ```javascript:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
-import MDXRenderer from "gatsby-mdx/mdx-renderer"
+import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer"
 
 function PageTemplate({ data: { mdx } }) {
   return (
@@ -281,7 +281,7 @@ component should look like:
 ```javascript:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
-import MDXRenderer from "gatsby-mdx/mdx-renderer"
+import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer"
 
 function PageTemplate({ data: { mdx } }) {
   return (
@@ -311,14 +311,14 @@ That's it, you're done. Run `gatsby develop` and enjoy your new MDX
 powers.
 
 Now you have all the pieces you need to programmatically create pages
-with Gatsby and `gatsby-mdx`. Check out our other guides to find out
-more about all of the cool stuff you can do with `gatsby-mdx`.
+with Gatsby and `gatsby-plugin-mdx`. Check out our other guides to find out
+more about all of the cool stuff you can do with `gatsby-plugin-mdx`.
 
 ## Bonus: Make a Blog Index
 
 ```javascript:title=src/pages/index.js
-import React from 'react'
-import { Link, graphql } from 'gatsby'
+import React from "react"
+import { Link, graphql } from "gatsby"
 
 const BlogIndex = ({ data }) => {
   const { edges: posts } = data.allMdx
@@ -335,7 +335,7 @@ const BlogIndex = ({ data }) => {
             </Link>
             <p>{post.excerpt}</p>
           </li>
-        ))
+        ))}
       </ul>
     </div>
   )

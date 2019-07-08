@@ -30,6 +30,7 @@ const {
   cloneTreeUntil,
   findLastTextNode,
 } = require(`./hast-processing`)
+const codeHandler = require(`./code-handler`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -76,6 +77,19 @@ const safeGetCache = ({ getCache, cache }) => id => {
  * @type {Map<string,Promise>}
  */
 const ASTPromiseMap = new Map()
+
+/**
+ * Set of all Markdown node types which, when encountered, generate an extra to
+ * separate text.
+ *
+ * @type {Set<string>}
+ */
+const SpaceMarkdownNodeTypesSet = new Set([
+  `paragraph`,
+  `heading`,
+  `tableCell`,
+  `break`,
+])
 
 module.exports = (
   {
@@ -338,7 +352,10 @@ module.exports = (
         return cachedAst
       } else {
         const ast = await getAST(markdownNode)
-        const htmlAst = toHAST(ast, { allowDangerousHTML: true })
+        const htmlAst = toHAST(ast, {
+          allowDangerousHTML: true,
+          handlers: { code: codeHandler },
+        })
 
         // Save new HTML AST to cache and return
         cache.set(htmlAstCacheKey(markdownNode), htmlAst)
@@ -409,43 +426,110 @@ module.exports = (
       return excerptAST
     }
 
-    async function getExcerpt(
+    async function getExcerptHtml(
       markdownNode,
-      { format, pruneLength, truncate, excerptSeparator }
+      pruneLength,
+      truncate,
+      excerptSeparator
     ) {
-      if (format === `html`) {
-        const excerptAST = await getExcerptAst(markdownNode, {
-          pruneLength,
-          truncate,
-          excerptSeparator,
-        })
-        const html = hastToHTML(excerptAST, {
-          allowDangerousHTML: true,
-        })
-        return html
-      }
+      const excerptAST = await getExcerptAst(markdownNode, {
+        pruneLength,
+        truncate,
+        excerptSeparator,
+      })
+      const html = hastToHTML(excerptAST, {
+        allowDangerousHTML: true,
+      })
+      return html
+    }
 
-      if (markdownNode.excerpt) {
+    async function getExcerptMarkdown(
+      markdownNode,
+      pruneLength,
+      truncate,
+      excerptSeparator
+    ) {
+      if (excerptSeparator) {
         return markdownNode.excerpt
       }
+      // TODO truncate respecting markdown AST
+      const excerptText = markdownNode.rawMarkdownBody
+      if (!truncate) {
+        return prune(excerptText, pruneLength, `…`)
+      }
+      return _.truncate(excerptText, {
+        length: pruneLength,
+        omission: `…`,
+      })
+    }
 
+    async function getExcerptPlain(
+      markdownNode,
+      pruneLength,
+      truncate,
+      excerptSeparator
+    ) {
       const text = await getAST(markdownNode).then(ast => {
-        const excerptNodes = []
-        visit(ast, node => {
-          if (node.type === `text` || node.type === `inlineCode`) {
-            excerptNodes.push(node.value)
+        let excerptNodes = []
+        let isBeforeSeparator = true
+        visit(
+          ast,
+          node => isBeforeSeparator,
+          node => {
+            if (excerptSeparator && node.value === excerptSeparator) {
+              isBeforeSeparator = false
+            } else if (node.type === `text` || node.type === `inlineCode`) {
+              excerptNodes.push(node.value)
+            } else if (node.type === `image`) {
+              excerptNodes.push(node.alt)
+            } else if (SpaceMarkdownNodeTypesSet.has(node.type)) {
+              // Add a space when encountering one of these node types.
+              excerptNodes.push(` `)
+            }
           }
-          return
-        })
-        if (!truncate) {
-          return prune(excerptNodes.join(` `), pruneLength, `…`)
+        )
+
+        const excerptText = excerptNodes.join(``).trim()
+
+        if (excerptSeparator) {
+          return excerptText
         }
-        return _.truncate(excerptNodes.join(` `), {
+        if (!truncate) {
+          return prune(excerptText, pruneLength, `…`)
+        }
+        return _.truncate(excerptText, {
           length: pruneLength,
           omission: `…`,
         })
       })
       return text
+    }
+
+    async function getExcerpt(
+      markdownNode,
+      { format, pruneLength, truncate, excerptSeparator }
+    ) {
+      if (format === `html`) {
+        return getExcerptHtml(
+          markdownNode,
+          pruneLength,
+          truncate,
+          excerptSeparator
+        )
+      } else if (format === `markdown`) {
+        return getExcerptMarkdown(
+          markdownNode,
+          pruneLength,
+          truncate,
+          excerptSeparator
+        )
+      }
+      return getExcerptPlain(
+        markdownNode,
+        pruneLength,
+        truncate,
+        excerptSeparator
+      )
     }
 
     const HeadingType = new GraphQLObjectType({
@@ -483,6 +567,7 @@ module.exports = (
       values: {
         PLAIN: { value: `plain` },
         HTML: { value: `html` },
+        MARKDOWN: { value: `markdown` },
       },
     })
 

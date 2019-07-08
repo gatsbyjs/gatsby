@@ -25,7 +25,7 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
   </figcaption>
 </figure>
 
-> _[Source plugins](/docs/source-plugin-tutorial/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
+> _[Source plugins](/docs/creating-a-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
 
 We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)).
 
@@ -44,7 +44,7 @@ That's it!
 
 ### The tldr; (in tweet form)
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">➡ Did you know you can create pages in <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> w/unstructured data? This code will:<br><br>✅ Load data from the <a href="https://twitter.com/PokeAPI?ref_src=twsrc%5Etfw">@PokeAPI</a> <br>✅ Create a page with links to all Pokémon<br>✅ Create individual Pokémon pages<br>✅ Create pages for abilities of each Pokémon<br><br>Repo: <a href="https://t.co/GoQoOYteLW">https://t.co/GoQoOYteLW</a> <a href="https://t.co/CrQWIGnVfl">pic.twitter.com/CrQWIGnVfl</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1050855455759593472?ref_src=twsrc%5Etfw">October 12, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">➡ Did you know you can create pages in <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> w/unstructured data? This code will:<br/><br/>✅ Load data from the <a href="https://twitter.com/PokeAPI?ref_src=twsrc%5Etfw">@PokeAPI</a> <br/>✅ Create a page with links to all Pokémon<br/>✅ Create individual Pokémon pages<br/>✅ Create pages for abilities of each Pokémon<br/><br/>Repo: <a href="https://t.co/GoQoOYteLW">https://t.co/GoQoOYteLW</a> <a href="https://t.co/CrQWIGnVfl">pic.twitter.com/CrQWIGnVfl</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1050855455759593472?ref_src=twsrc%5Etfw">October 12, 2018</a></blockquote>
 
 ### Breaking down the example
 

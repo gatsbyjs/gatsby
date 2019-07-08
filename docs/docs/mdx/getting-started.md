@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Getting Started with MDX
 ---
 
 The fastest way to get started with Gatsby + MDX is to use the [MDX
@@ -19,11 +19,10 @@ your site.
 
    ```sh
    cd my-mdx-starter/
-   npm install
    gatsby develop
    ```
 
-1. **Open the site** running at http://localhost:8000!
+1. **Open the site** running at http://localhost:8000
 
 1. **Update the MDX content** by opening the `my-mdx-starter` directory
    in your code editor of choice and edit `src/pages/index.mdx`.
@@ -32,28 +31,32 @@ your site.
 ## Add MDX to an existing Gatsby site
 
 If you already have a Gatsby site that you'd like to add MDX to, you
-can follow these steps for configuring the [gatsby-mdx](/packages/gatsby-mdx/) plugin:
+can follow these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/) plugin:
 
-1. **Add `gatsby-mdx`** and MDX as dependencies
+1. **Add `gatsby-plugin-mdx`** and MDX as dependencies
 
    ```sh
-   yarn add gatsby-mdx @mdx-js/mdx @mdx-js/react
+   yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
    ```
 
-   If you're upgrading from v0, [check out the MDX migration guide](https://mdxjs.com/migrating/v1).
+   > **Note:** If you're upgrading from v0, additionally [check out the MDX migration guide](https://mdxjs.com/migrating/v1).
 
-1. **Update your `gatsby-config.js`** to use the `gatsby-mdx` plugin
+1. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
 
    ```javascript:title=gatsby-config.js
    module.exports = {
      plugins: [
        // ....
-       `gatsby-mdx`,
+       `gatsby-plugin-mdx`,
      ],
    }
    ```
 
-1. **Restart `gatsby develop`** and add an `.mdx` page to `src/pages`
+1. **Restart `gatsby develop`** and add an `.mdx` page to `src/pages
+
+> **Note:** If you want to query for frontmatter, exports, or other fields like
+> `tableOfContents` and you haven't previously added a `gatsby-source-filesystem`
+> pointing at `src/pages` in your project, you'll want to add one now.
 
 ## What's next?
 

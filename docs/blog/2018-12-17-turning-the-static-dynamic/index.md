@@ -20,7 +20,7 @@ Today I'd like to show you how you can incrementally add functionality to a Gats
 
 Why would you use something like Gatsby over Jekyll or Hugo or one of the [hundreds of Static Site Generators](https://www.staticgen.com/) out there? [There are many reasons](/blog/2018-2-27-why-i-upgraded-my-website-to-gatsbyjs-from-jekyll/), but one of the unique selling points is how Gatsby helps you build ["Static Progressive Web Apps"](/docs/progressive-web-app/#progressive-web-app) with React.
 
-[Gatsby's ability to rehydrate](/docs/production-app/#dom-hydration) (what a delicious word!) the DOM means you can do incredibly dynamic things with Javascript and React that would be much harder with legacy SSG's.
+[Gatsby's ability to rehydrate](/docs/production-app/#dom-hydration) (what a delicious word!) the DOM means you can do incredibly dynamic things with JavaScript and React that would be much harder with legacy SSG's.
 
 Let's say you have a typical static Gatsby site, like [gatsby-starter-default](/starters/gatsby-starter-default). You can `npm run build` it, and it spits out a bunch of HTML files. Great! I can host that for free!
 
@@ -57,7 +57,7 @@ Let's walk through the steps:
   },
 ```
 
-3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each Javascript/Typescript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
+3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each JavaScript/TypeScript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
 
 ```toml
 [build]

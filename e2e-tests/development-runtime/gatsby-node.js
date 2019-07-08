@@ -42,10 +42,19 @@ exports.createPages = async function createPages({
           }
         }
       }
+
+      allFakeData {
+        nodes {
+          fields {
+            slug
+          }
+        }
+      }
     }
   `)
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+  const previewItemTemplate = path.resolve(`src/templates/preview-item.js`)
 
   data.posts.edges.forEach(({ node }) => {
     const { slug } = node.fields
@@ -57,4 +66,27 @@ exports.createPages = async function createPages({
       },
     })
   })
+
+  data.allFakeData.nodes.forEach(node => {
+    const { slug } = node.fields
+    createPage({
+      path: slug,
+      component: previewItemTemplate,
+      context: {
+        slug,
+      },
+    })
+  })
+}
+
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+
+  if (page.path.match(/^\/paths/)) {
+    page.matchPath = `/paths/*`
+    createPage(page)
+  } else if (page.path.match(/^\/client-only-paths/)) {
+    page.matchPath = `/client-only-paths/*`
+    createPage(page)
+  }
 }

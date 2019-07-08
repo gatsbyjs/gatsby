@@ -55,9 +55,8 @@ blog with a theme I added [Tachyons](http://tachyons.io/). I managed to
 replicate 99% of my previous theme with classes from Tachyons. Something that I
 would like to do better is to remove the parts of Tachyons that I’m not using.
 
-My current CSS file has less than 30 lines. The rest of the layout is created
-with tachyons classes:
-[https://github.com/singuerinc/blog/blob/master/src/layouts/index.css](https://github.com/singuerinc/blog/blob/master/src/layouts/index.css)
+[My current CSS file](https://github.com/singuerinc/blog/blob/master/src/layouts/index.css) has less than 30 lines. The rest of the layout is created
+with tachyons classes.
 
 ### Slug + Date
 
@@ -133,9 +132,8 @@ Some key points:
   into the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) to recreate the
   Atom Feed)
 - React and GraphQL for free with Gatsby
-- Since I am confident with the Node ecosystem I'm able to contribute: First
-  pull request to Gatsby:
-  [https://github.com/gatsbyjs/gatsby/pull/2569](https://github.com/gatsbyjs/gatsby/pull/2569)
+- Since I am confident with the Node ecosystem I'm able to contribute: [First
+  pull request to Gatsby](https://github.com/gatsbyjs/gatsby/pull/2569)
 - Netlify vs GitLab Pages (hopefully 100% uptime)
 
 ## Final thoughts
@@ -145,10 +143,8 @@ completely changed. For me it is a whole new experience—easier, and faster.
 
 I wanted to move the blog to Node a long time ago and it is finally there!
 
-Next is to convert my portfolio (also built with Jekyll):
-[https://www.singuerinc.com/](https://www.singuerinc.com/)
+Next is to convert [my portfolio](https://www.singuerinc.com/) (also built with Jekyll).
 
 ## Show me the code
 
-If you want to take a look at the code you can do it, it is published in GitHub:
-[https://github.com/singuerinc/blog](https://github.com/singuerinc/blog)
+If you want to take a look at [the code](https://github.com/singuerinc/blog) you can do it, it is published in GitHub.

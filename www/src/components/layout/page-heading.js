@@ -5,16 +5,17 @@ import styled from "@emotion/styled"
 import {
   colors,
   space,
-  breakpoints,
+  mediaQueries,
   sizes,
   lineHeights,
   fontSizes,
 } from "../../utils/presets"
+import { svgStyles } from "../../utils/styles"
 
 const PageHeadingContainer = styled(`header`)`
   padding: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     left: 0;
     position: fixed;
     padding: 0;
@@ -32,7 +33,7 @@ const H1 = styled(`h1`)`
   position: relative;
   width: 100%;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     transform: rotate(-90deg) translate(calc(-100% - ${space[7]}), ${space[4]});
     transform-origin: top left;
   }
@@ -45,9 +46,9 @@ const H1 = styled(`h1`)`
     position: absolute;
     right: -${space[3]};
     z-index: -1;
-    color: ${colors.ui.whisper};
+    color: ${colors.purple[5]};
 
-    ${breakpoints.md} {
+    ${mediaQueries.md} {
       display: block;
     }
   }
@@ -64,50 +65,8 @@ const Icon = styled(`span`)`
     margin: 0;
   }
 
-  .svg-stroke {
-    stroke-miterlimit: 10;
-    stroke-width: 1.4173;
-  }
-
-  .svg-stroke-accent {
-    stroke: ${colors.lavender};
-  }
-  .svg-stroke-lilac {
-    stroke: ${colors.lavender};
-  }
-  .svg-fill-lilac {
-    fill: ${colors.lavender};
-  }
-  .svg-fill-gatsby {
-    fill: ${colors.lavender};
-  }
-  .svg-fill-brightest {
-    fill: ${colors.white};
-  }
-  .svg-fill-accent {
-    fill: ${colors.lavender};
-  }
-  .svg-stroke-gatsby {
-    stroke: ${colors.lavender};
-  }
-  .svg-fill-gradient-accent-white-top {
-    fill: transparent;
-  }
-  .svg-fill-gradient-accent-white-45deg {
-    fill: transparent;
-  }
-  .svg-fill-gradient-accent-white-bottom: {
-    fill: ${colors.white};
-  }
-  .svg-fill-gradient-purple {
-    fill: ${colors.lavender};
-  }
-  .svg-stroke-gradient-purple {
-    stroke: ${colors.lavender};
-  }
-  .svg-fill-wisteria {
-    fill: transparent;
-  }
+  ${svgStyles.stroke}
+  ${svgStyles.default}
 `
 
 const PageHeading = ({ title, icon }) => (

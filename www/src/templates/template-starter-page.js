@@ -4,7 +4,7 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 
-import { breakpoints } from "../utils/presets"
+import { mediaQueries } from "../utils/presets"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
 import StarterScreenshot from "../views/starter/screenshot"
@@ -92,7 +92,7 @@ class StarterTemplate extends React.Component {
               css={{
                 display: `flex`,
                 flexDirection: `column-reverse`,
-                [breakpoints.sm]: {
+                [mediaQueries.sm]: {
                   flexDirection: `column`,
                 },
               }}
