@@ -20,7 +20,8 @@ jest.mock(`gatsby-source-filesystem`, () => {
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const { sourceNodes, handleWebhookUpdate } = require(`../gatsby-node`)
+const { sourceNodes } = require(`../gatsby-node`)
+const { handleWebhookUpdate } = require(`../utils`)
 
 describe(`gatsby-source-drupal`, () => {
   const nodes = {}
