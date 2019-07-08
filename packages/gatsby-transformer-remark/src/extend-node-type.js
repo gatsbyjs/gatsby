@@ -78,6 +78,19 @@ const safeGetCache = ({ getCache, cache }) => id => {
  */
 const ASTPromiseMap = new Map()
 
+/**
+ * Set of all Markdown node types which, when encountered, generate an extra to
+ * separate text.
+ *
+ * @type {Set<string>}
+ */
+const SpaceMarkdownNodeTypesSet = new Set([
+  `paragraph`,
+  `heading`,
+  `tableCell`,
+  `break`,
+])
+
 module.exports = (
   {
     type,
@@ -465,18 +478,18 @@ module.exports = (
           node => {
             if (excerptSeparator && node.value === excerptSeparator) {
               isBeforeSeparator = false
-              return
-            }
-            if (node.type === `text` || node.type === `inlineCode`) {
+            } else if (node.type === `text` || node.type === `inlineCode`) {
               excerptNodes.push(node.value)
-            }
-            if (node.type === `image`) {
+            } else if (node.type === `image`) {
               excerptNodes.push(node.alt)
+            } else if (SpaceMarkdownNodeTypesSet.has(node.type)) {
+              // Add a space when encountering one of these node types.
+              excerptNodes.push(` `)
             }
           }
         )
 
-        const excerptText = excerptNodes.join(``)
+        const excerptText = excerptNodes.join(``).trim()
 
         if (excerptSeparator) {
           return excerptText
