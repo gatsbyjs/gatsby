@@ -3,7 +3,7 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
-const { joinPath } = require(`gatsby-core-utils`)
+const { urlResolve } = require(`gatsby-core-utils`)
 
 const debug = Debug(`gatsby-theme-blog`)
 
@@ -169,7 +169,7 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
 
   const toPostPath = node => {
     const { dir } = path.parse(node.relativePath)
-    return joinPath(basePath, dir, node.name)
+    return urlResolve(basePath, dir, node.name)
   }
 
   // Make sure it's an MDX node
