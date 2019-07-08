@@ -109,7 +109,6 @@
     "react-dev-utils": "^4.2.3",
     "react-error-overlay": "^3.0.0",
     "react-hot-loader": "^4.12.5",
-    "read-package-tree": "^5.3.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "semver": "^5.6.0",
