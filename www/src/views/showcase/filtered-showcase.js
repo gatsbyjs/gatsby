@@ -18,8 +18,13 @@ import {
 const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, edge) => {
     if (edge.node.categories) {
-      const filteredCategories = edge.node.categories.filter(c => categories.includes(c))
-      if (categories.length === 0 || filteredCategories.length === categories.length) {
+      const filteredCategories = edge.node.categories.filter(c =>
+        categories.includes(c)
+      )
+      if (
+        categories.length === 0 ||
+        filteredCategories.length === categories.length
+      ) {
         aggregated.push(edge)
       }
 
@@ -73,24 +78,21 @@ class FilteredShowcase extends Component {
     }
 
     // create map of categories with totals
-    const aggregatedCategories = items.reduce(
-      (categories, edge) => {
-        if (edge.node.categories) {
-          edge.node.categories.forEach(category => {
-            // if we already have the category recorded, increase count
-            if (categories[category]) {
-              categories[category] = categories[category] + 1
-            } else {
-              // record first encounter of category
-              categories[category] = 1
-            }
-          })
-        }
+    const aggregatedCategories = items.reduce((categories, edge) => {
+      if (edge.node.categories) {
+        edge.node.categories.forEach(category => {
+          // if we already have the category recorded, increase count
+          if (categories[category]) {
+            categories[category] = categories[category] + 1
+          } else {
+            // record first encounter of category
+            categories[category] = 1
+          }
+        })
+      }
 
-        return { ...categories }
-      },
-      {}
-    )
+      return { ...categories }
+    }, {})
 
     // get sorted set of categories to generate list with
     const categoryKeys = Object.keys(aggregatedCategories).sort((a, b) => {
