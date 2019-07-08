@@ -29,16 +29,22 @@ const getTreeFromNodeModules = async (
   const packageJSON = await readJSON(require.resolve(join(dir, `package.json`)))
   await Promise.all(
     Array.from(getAllDependencies(packageJSON)).map(async ([name, version]) => {
-      const currentDependency = {
-        name,
-        version,
-        path: dirname(requireFromHere.resolve(`${name}/package.json`)),
-      }
-      if (filterFn(currentDependency)) {
-        await getTreeFromNodeModules(currentDependency.path, filterFn, results)
-        if (!results.has(currentDependency.name))
-          results.set(currentDependency.name, currentDependency)
-      }
+      try {
+        const currentDependency = {
+          name,
+          version,
+          path: dirname(requireFromHere.resolve(`${name}/package.json`)),
+        }
+        if (filterFn(currentDependency)) {
+          await getTreeFromNodeModules(
+            currentDependency.path,
+            filterFn,
+            results
+          )
+          if (!results.has(currentDependency.name))
+            results.set(currentDependency.name, currentDependency)
+        }
+      } catch (error) {}
     })
   )
   return Array.from(results.values())
