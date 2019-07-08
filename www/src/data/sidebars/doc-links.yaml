@@ -189,6 +189,26 @@
               link: /starters/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
+        - title: Themes
+          link: /docs/themes/
+          items:
+            - title: What are Gatsby Themes?
+              link: /docs/themes/what-are-gatsby-themes
+            - title: Using a Gatsby Theme
+              link: /docs/themes/using-a-gatsby-theme
+            - title: Using Multiple Gatsby Themes
+              link: /docs/themes/using-multiple-gatsby-themes
+            - title: Building Themes
+              link: /docs/themes/building-themes
+              items:
+                - title: Themes API Reference
+                  link: /docs/themes/api-reference
+                - title: Converting a Starter
+                  link: /docs/themes/converting-a-starter
+                - title: Theme Composition
+                  link: /docs/themes/theme-composition
+                - title: Conventions
+                  link: /docs/themes/conventions
         - title: Styling Your Site
           link: /docs/styling/
           items:

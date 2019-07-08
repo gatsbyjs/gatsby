@@ -20,7 +20,7 @@ export interface Reporter {
   setNoColor(isNoColor: boolean): void;
   panic(...args: Array<any>): void;
   panicOnBuild(...args: Array<any>): void;
-  error(message: string, error?: Object): void;
+  error(errorMeta: string | Object, error?: Object): void;
   uptime(prefix: string): void;
   success: LogMessageType;
   verbose: LogMessageType;

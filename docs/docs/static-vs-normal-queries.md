@@ -2,9 +2,14 @@
 title: Static vs Normal Queries
 ---
 
-## TODO Difference between normal and Static Queries
+## How StaticQuery differs from page query
 
-Static Queries don't need to get run for each page. Just once
+StaticQuery can do most of the things that page query can, including fragments. The main differences are:
+
+- page queries can accept variables (via `pageContext`) but can only be added to _page_ components
+- StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
+- StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
+- Static Queries don't need to get run for each page.(ie:Just once)
 
 ### staticQueryComponents
 

@@ -47,56 +47,57 @@ module.exports = async function generateSqip(options) {
     let primitiveData = await cache.get(cacheKey)
     let svg
 
-    debug(
-      `Executing preview generation request for ${name} (${contentDigest}-${optionsHash})`
-    )
-
     if (!primitiveData) {
-      if (await exists(cachePath)) {
-        debug(
-          `Primitive result file already exists for ${name} (${contentDigest}-${optionsHash})`
-        )
-        const svgBuffer = await readFile(cachePath)
-        svg = svgBuffer.toString()
-      } else {
-        debug(
-          `Generate primitive result file of ${name} (${contentDigest}-${optionsHash})`
-        )
+      debug(
+        `Executing preview generation request for ${name} (${contentDigest}-${optionsHash})`
+      )
 
-        const result = await new Promise((resolve, reject) => {
-          try {
-            const result = sqip({
-              filename: absolutePath,
-              ...sqipOptions,
-            })
-            resolve(result)
-          } catch (error) {
-            reject(error)
-          }
-        })
+      try {
+        if (await exists(cachePath)) {
+          debug(
+            `Primitive result file already exists for ${name} (${contentDigest}-${optionsHash})`
+          )
+          const svgBuffer = await readFile(cachePath)
+          svg = svgBuffer.toString()
+        } else {
+          debug(
+            `Generate primitive result file of ${name} (${contentDigest}-${optionsHash})`
+          )
 
-        svg = result.final_svg
+          const result = await new Promise((resolve, reject) => {
+            try {
+              const result = sqip({
+                filename: absolutePath,
+                ...sqipOptions,
+              })
+              resolve(result)
+            } catch (error) {
+              reject(error)
+            }
+          })
 
-        await writeFile(cachePath, svg)
-        debug(
-          `Wrote primitive result file to disk for ${name} (${contentDigest}-${optionsHash})`
-        )
+          svg = result.final_svg
+
+          await writeFile(cachePath, svg)
+          debug(
+            `Wrote primitive result file to disk for ${name} (${contentDigest}-${optionsHash})`
+          )
+        }
+
+        primitiveData = {
+          svg,
+          dataURI: svgToMiniDataURI(svg),
+        }
+
+        await cache.set(cacheKey, primitiveData)
+      } catch (err) {
+        err.message = `Unable to generate SQIP for ${name} (${contentDigest}-${optionsHash})\n${
+          err.message
+        }`
+
+        throw err
       }
-
-      primitiveData = {
-        svg,
-        dataURI: svgToMiniDataURI(svg),
-      }
-
-      await cache.set(cacheKey, primitiveData)
     }
-
-    primitiveData = {
-      svg,
-      dataURI: svgToMiniDataURI(svg),
-    }
-
-    await cache.set(cacheKey, primitiveData)
 
     return primitiveData
   })
