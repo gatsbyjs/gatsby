@@ -1,14 +1,14 @@
 ---
-title: Working With Images in Markdown
+title: Working With Images in Markdown Posts and Pages
 ---
 
-When building Gatsby sites composed primarily of markdown pages, insertion of images can enhance the content around it. Adding images can be done in multiple ways.
+When building Gatsby sites composed primarily of Markdown pages or posts, insertion of images can enhance the content. Adding images can be done in multiple ways.
 
-## Featured images with Frontmatter fields
+## Featured images with Frontmatter metadata
 
-In sites like a blog, you may want to include a featured image that appears at the top of a page. One way to do this can be by grabbing the image filename from a frontmatter field and then transforming it with `gatsby-plugin-sharp` in a GraphQL query.
+In sites like a blog, you may want to include a featured image that appears at the top of a page. One way to do this is to grab the image filename from a frontmatter field and then transforming it with `gatsby-plugin-sharp` in a GraphQL query.
 
-It is assumed you already have programatically generated pages from markdown using renderers like `gatsby-transformer-remark` or `gatsby-plugin-mdx`. If not, take a read through up to [Part 7 of the Gatsby Tutorial](tutorial/part-seven/). This will build upon the tutorial and as such, `gatsby-transformer-remark` will be used for this example
+This solution assumes you already have programmatically generated pages from Markdown with renderers like `gatsby-transformer-remark` or `gatsby-plugin-mdx`. If not, take a read through up to [Part 7 of the Gatsby Tutorial](tutorial/part-seven/). This will build upon the tutorial and as such, `gatsby-transformer-remark` will be used for this example.
 
 > Note: This can be done similarly using [MDX](/docs/mdx/) as well. Instead of the `markdownRemark` nodes in GraphQL, `Mdx` can be swapped in and should work.
 
@@ -47,11 +47,11 @@ featuredImage: ./awesome-image.png
 Content goes here!
 ```
 
-The field is going to be the relative path to the image we want to use.
+The `featuredImage` field should include the relative path to an image you want to use.
 
-Next, you can now query it in GraphQL. If the filepath points to an actual image, it will be transformed into a `File` node in GraphQL and then you can get the image data out of it by using the `childImageSharp` field.
+You can now query for the featured image in GraphQL. If the filepath points to an actual image, it will be transformed into a `File` node in GraphQL and then you can get the image data out of it by using the `childImageSharp` field.
 
-This can be added to the page query in the markdown template file. In this example, a [Fluid query](/packages/gatsby-image/#fluid-queries) is used to make a responsive image.
+This can be added to the GraphQL query in a Markdown template file. In this example, a [Fluid query](/docs/gatsby-image#images-that-stretch-across-a-fluid-container) is used to make a responsive image.
 
 ```jsx:title=src/templates/blog-post.js
 export const query = graphql`
@@ -75,7 +75,7 @@ export const query = graphql`
 `
 ```
 
-Now in the markup for the page, load the `gatsby-image` package and pass the results of the graphQL query into an `<Img />` component.
+Also in the Markdown post template, import the `gatsby-image` package and pass the results of the graphQL query into an `<Img />` component.
 
 ```jsx:title=src/templates/blog-post.js
 import React from "react"
@@ -128,7 +128,7 @@ Your featured image should now appear on the generated page right below the main
 
 ## Inline images with `gatsby-remark-images`
 
-Images also may be included in the markdown body itself. To do this, the plugin [gatsby-remark-images](/packages/gatsby-remark-images) comes in handy.
+Images also may be included in the Markdown body itself. The plugin [gatsby-remark-images](/packages/gatsby-remark-images) comes in handy for this.
 
 Start out by installing `gatsby-remark-images` and `gatsby-plugin-sharp`.
 
@@ -138,7 +138,7 @@ npm install --save gatsby-remark-images gatsby-plugin-sharp
 
 Also be make sure that `gatsby-source-filesystem` is installed and points at the directory where your images are located.
 
-Then, configure the plugins by adding it into your `gatsby-config` file. As with the previous example, either `Remark` or `MDX` can be used. `gatsby-plugin-mdx` will be used in this usecase. Put the `gatsby-remark-images` plugin within the `gatsbyRemarkPlugins` option field of `gatsby-plugin-mdx`.
+Configure the plugins in your `gatsby-config` file. As with the previous example, either `Remark` or `MDX` can be used; `gatsby-plugin-mdx` will be used in this case. Put the `gatsby-remark-images` plugin within the `gatsbyRemarkPlugins` option field of `gatsby-plugin-mdx`.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -167,7 +167,7 @@ module.exports = {
 }
 ```
 
-Then, we can use the default markdown syntax for images and they will be processed by Sharp and will appear as if we placed it in a `gatsby-image` component.
+With this configuration, you can use the default Markdown syntax for images. They will be processed by Sharp and appear as if you placed them in a `gatsby-image` component.
 
 ```md
 ![Awesome image](./my-awesome-image.png)
