@@ -44,6 +44,11 @@ const typeExtensions = {
       },
     },
   },
+  queryable: {
+    description:
+      `Adds root query fields for an interface. All implementing types ` +
+      `must also implement the Node interface.`,
+  },
 }
 
 const builtInFieldExtensions = {
