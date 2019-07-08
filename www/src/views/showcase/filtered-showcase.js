@@ -15,6 +15,8 @@ import {
   ContentContainer,
 } from "../shared/sidebar"
 
+const OPEN_SOURCE_CATEGORY = 'Open Source';
+
 const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, edge) => {
     if (edge.node.categories) {
@@ -79,26 +81,35 @@ class FilteredShowcase extends Component {
 
     // create map of categories with totals
     const aggregatedCategories = items.reduce((categories, edge) => {
-      if (edge.node.categories) {
-        edge.node.categories.forEach(category => {
-          // if we already have the category recorded, increase count
-          if (categories[category]) {
-            categories[category] = categories[category] + 1
-          } else {
-            // record first encounter of category
-            categories[category] = 1
-          }
-        })
+      if (!edge.node.categories) {
+        edge.node.categories = [];
       }
+      const idx = edge.node.categories.indexOf(OPEN_SOURCE_CATEGORY);
+      if (idx !== -1) {
+        edge.node.categories.splice(idx, 1);
+      }
+      if (edge.node.source_url) {
+        edge.node.categories.push(OPEN_SOURCE_CATEGORY);
+      }
+      edge.node.categories.forEach(category => {
+        // if we already have the category recorded, increase count
+        if (categories[category]) {
+          categories[category] = categories[category] + 1
+        } else {
+          // record first encounter of category
+          categories[category] = 1
+        }
+      })
+      edge.node.categories.sort((str1, str2) => {
+        return str1.toLowerCase().localeCompare(str2.toLowerCase())
+      });
 
       return { ...categories }
     }, {})
 
     // get sorted set of categories to generate list with
     const categoryKeys = Object.keys(aggregatedCategories).sort((a, b) => {
-      if (a < b) return -1
-      if (a > b) return 1
-      return 0
+      return str1.toLowerCase().localeCompare(str2.toLowerCase())
     })
 
     return (
