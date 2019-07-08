@@ -158,8 +158,8 @@ import Login from "../components/login"
 const App = () => (
   <Layout>
     <Router>
-      <Profile path="/app/profile" />
-      <Login path="/app/login" />
+      <Profile path="/profile" />
+      <Login path="/login" />
     </Router>
   </Layout>
 )
