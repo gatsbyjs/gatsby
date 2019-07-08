@@ -4,7 +4,7 @@ jest.mock(`../safe-sharp`, () => {
     simd: jest.fn(),
   }
 })
-const { createArgsDigest, processFile } = require(`../process-file`)
+const { createArgsDigest, processFile, sortKeys } = require(`../process-file`)
 const got = require(`got`)
 
 describe(`createArgsDigest`, () => {
@@ -100,6 +100,26 @@ describe(`createArgsDigest`, () => {
     describe(`not used arguments`, () => {
       testHashEqual(`maxWidth`, { maxWidth: 500 })
       testHashEqual(`base64`, { base64: true })
+    })
+
+    describe(`argument sorting`, () => {
+      it(`sorts nested arguments`, () => {
+        const args = {
+          duotone: {
+            shadow: `#10c5f8`,
+            highlight: `#32CD32`,
+          },
+          cropFocus: 17,
+        }
+        const actual = sortKeys(args)
+        expect(actual).toEqual({
+          cropFocus: 17,
+          duotone: {
+            highlight: `#32CD32`,
+            shadow: `#10c5f8`,
+          },
+        })
+      })
     })
   })
 })

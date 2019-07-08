@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.2.2...gatsby-source-drupal@3.2.3) (2019-07-08)
+
+### Features
+
+- **gatsby-source-drupal:** added preview feature ([#14630](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/14630)) ([a045a32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/a045a32))
+
 ## [3.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.2.1...gatsby-source-drupal@3.2.2) (2019-07-02)
 
 **Note:** Version bump only for package gatsby-source-drupal
