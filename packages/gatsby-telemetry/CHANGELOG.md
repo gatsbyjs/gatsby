@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.1.2...gatsby-telemetry@1.1.3) (2019-07-05)
+
+### Features
+
+- **gatsby-telemetry:** Use v4 instead of v1 uuids ([#15431](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/issues/15431)) ([b310822](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/commit/b310822))
+
 ## [1.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry/compare/gatsby-telemetry@1.1.1...gatsby-telemetry@1.1.2) (2019-06-28)
 
 ### Features

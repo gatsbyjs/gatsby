@@ -29,6 +29,28 @@ That's why every Gatsby site aims to have an accessible navigation experience by
 
 Since the [second major release](/blog/2018-09-17-gatsby-v2/), your Gatsby sites use `@reach/router` under the hood. While additional accessibility testing is always a good idea, the [Gatsby Link Component](/docs/gatsby-link/) wraps [@reach/router's Link component](https://reach.tech/router/api/Link) to improve accessibility without you having to think about it.
 
+### Gatsby builds HTML pages by default
+
+For websites, rendering [static HTML](/docs/glossary#static) pages means that JavaScript isn't required to access and navigate through content. Gatsby [compiles](/docs/glossary#compiler) HTML pages by default from React components using [Node.js](/docs/glossary#nodejs), meaning you don't have to worry about setting up server-rendering yourself to support [progressive enhancement](/docs/glossary#progressive-enhancement). With Gatsby's static support out of the box, you can build dynamic sites that still enable user access without requiring [client-side](/docs/glossary#client-side) scripting.
+
+### Linting with eslint-jsx-plugin-a11y
+
+Gatsby ships with `eslint-config-react-app` by default, which includes the `eslint-jsx-plugin-a11y` package. [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y) is an accessibility [linting](/docs/glossary#linting) tool for your code, helping you develop more inclusive Gatsby projects. This plugin encourages you to include alternative text for image tags, validates [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminates redundant role properties, among other things. It's a start to testing for accessibility: [further recommendations](#how-to-improve-accessibility) can be found below.
+
+Including this plugin and its [recommended rule set](https://github.com/facebook/create-react-app/tree/master/packages/eslint-config-react-app#accessibility-checks) reduces the time required to implement accessibility by reminding you throughout development. The rules enabled in `eslint-plugin-jsx-a11y` by default can be [customized in `.eslintrc`](/docs/eslint/#configuring-eslint).
+
+```json:title=.eslintrc
+{
+  "extends": ["react-app", "plugin:jsx-a11y/recommended"],
+  "plugins": ["jsx-a11y"],
+  "rules": {
+    "jsx-a11y/rule-name": 2
+  }
+}
+```
+
+For more on supported rules, check out the docs for [`eslint-plugin-jsx-a11y`](https://github.com/evcohen/eslint-plugin-jsx-a11y).
+
 ## How to improve accessibility?
 
 Accessibility by default is a win for everyone. Here's a starting point for accessibility testing when making a Gatsby site or theme:

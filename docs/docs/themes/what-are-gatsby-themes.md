@@ -17,7 +17,7 @@ These traditional starters take a first step toward reducing the level of effort
 
 ## Gatsby themes
 
-Enter themes. Gatsby themes allow Gatsby site functionality to be packaged as a standalone products for others (and yourself!) to easily reuse. Using a traditional starter, all of your default configuration lives directly in your site. Using a theme, all of your default configuration lives in an npm package.
+Enter themes. Gatsby themes allow Gatsby site functionality to be packaged as a standalone product for others (and yourself!) to easily reuse. Using a traditional starter, all of your default configuration lives directly in your site. Using a theme, all of your default configuration lives in an npm package.
 
 Themes solve the problems that traditional starters experience:
 
@@ -29,12 +29,9 @@ Themes solve the problems that traditional starters experience:
 
 ## What's Next?
 
-- [Getting Started](/docs/themes/getting-started)
-- [Converting a Starter](/docs/themes/converting-a-starter)
+- [Using a Gatsby Theme](/docs/themes/using-a-gatsby-theme)
+- [Using Multiple Gatsby Themes](/docs/themes/using-multiple-gatsby-themes)
 - [Building Themes](/docs/themes/building-themes)
-- [Conventions](/docs/themes/conventions)
-- [Theme Composition](/docs/themes/theme-composition)
-- [API Reference](/docs/themes/api-reference)
 
 ## Related blog posts
 
