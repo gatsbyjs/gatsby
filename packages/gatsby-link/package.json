@@ -12,10 +12,9 @@
     "prop-types": "^15.6.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.0",
     "cross-env": "^5.1.4",
+    "microbundle": "0.12.0-next.3",
     "react-testing-library": "^5.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
@@ -24,6 +23,8 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "module": "index.modern.mjs",
+  "source": "src/index.js",
   "peerDependencies": {
     "@reach/router": "^1.1.1",
     "gatsby": "^2.0.0",
@@ -32,9 +33,9 @@
   },
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "microbundle --format modern,cjs --external react,react-dom,prop-types",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "microbundle watch"
   },
   "types": "index.d.ts"
 }

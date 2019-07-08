@@ -1,3 +1,5 @@
 /*.js
+/*.mjs
+/*.map
 /withIEPolyfill/*.js
 yarn.lock

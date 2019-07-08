@@ -1,12 +1,20 @@
 const r = require(`./resolver`)
 
-function preset(context, options = {}) {
-  const { browser = false, debug = false, nodeVersion = `8.0` } = options
+const modernConfig = {
+  loose: true,
+  targets: {
+    esmodules: true,
+  },
+  useBuiltIns: false,
+}
+
+function preset(_, options = {}) {
+  const { browser = false, debug = false, nodeVersion = `8.0`, modern = process.env.MODERN } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
   const PRODUCTION = (BABEL_ENV || NODE_ENV) === `production`
 
-  const browserConfig = {
+  const browserConfig = modern ? modernConfig : {
     useBuiltIns: false,
     targets: {
       browsers: PRODUCTION
@@ -31,7 +39,7 @@ function preset(context, options = {}) {
             debug: !!debug,
             useBuiltIns: `entry`,
             shippedProposals: true,
-            modules: `commonjs`,
+            modules: modern ? false : `commonjs`,
           },
           browser ? browserConfig : nodeConfig
         ),
@@ -42,9 +50,8 @@ function preset(context, options = {}) {
     plugins: [
       r(`@babel/plugin-proposal-class-properties`),
       r(`@babel/plugin-proposal-optional-chaining`),
-      r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),
-    ],
+    ].concat(modern ? [] : r(`@babel/plugin-transform-runtime`))
   }
 }
 
