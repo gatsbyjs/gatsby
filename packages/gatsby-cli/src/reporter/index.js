@@ -59,6 +59,9 @@ const reporter: Reporter = {
     let details = {}
     // Many paths to retain backcompat :scream:
     if (arguments.length === 2) {
+      if (Array.isArray(error)) {
+        return error.map(errorItem => this.error(errorMeta, errorItem))
+      }
       details.error = error
       details.context = {
         sourceMessage: errorMeta + ` ` + error.message,

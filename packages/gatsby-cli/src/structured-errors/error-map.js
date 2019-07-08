@@ -21,6 +21,11 @@ const errorMap = {
     level: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  "98123": {
+    text: context => `Generating JavaScript bundles failed`,
+    type: `WEBPACK`,
+    level: `ERROR`,
+  },
   "85901": {
     text: context =>
       `There was an error in your GraphQL query:\n\n${context.sourceMessage}`,

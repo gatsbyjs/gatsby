@@ -18,9 +18,12 @@ module.exports = async program => {
         return
       }
 
-      const jsonStats = stats.toJson()
-      if (jsonStats.errors && jsonStats.errors.length > 0) {
-        reject(jsonStats.errors)
+      if (
+        stats.compilation &&
+        stats.compilation.errors &&
+        stats.compilation.errors.length > 0
+      ) {
+        reject(stats.compilation.errors)
         return
       }
 
