@@ -26,7 +26,13 @@ const getTreeFromNodeModules = async (
   results = new Map()
 ) => {
   const requireFromHere = createRequireFromPath(`${dir}/:internal:`)
-  const packageJSON = await readJSON(require.resolve(join(dir, `package.json`)))
+  let packageJSON
+  try {
+    packageJSON = await readJSON(require.resolve(join(dir, `package.json`)))
+  } catch (error) {
+    packageJSON = {}
+  }
+
   await Promise.all(
     Array.from(getAllDependencies(packageJSON)).map(async ([name, version]) => {
       try {
