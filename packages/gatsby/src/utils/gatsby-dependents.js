@@ -44,7 +44,10 @@ const getTreeFromNodeModules = async (
           if (!results.has(currentDependency.name))
             results.set(currentDependency.name, currentDependency)
         }
-      } catch (error) {}
+      } catch (error) {
+        // Sometimes dev dependencies of dependencies aren't installed
+        // when using `yarn`. This is okay and safe to ignore.
+      }
     })
   )
   return Array.from(results.values())
