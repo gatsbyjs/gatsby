@@ -29,7 +29,7 @@
   "source": "src/index.js",
   "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image",
   "scripts": {
-    "build": "microbundle --format modern,cjs --external react,react-dom,prop-types --no-compress",
+    "build": "microbundle --format modern,cjs --external react,react-dom,prop-types",
     "build:polyfill": "microbundle --entry src/withIEPolyfill/index.js --output withIEPolyfill --format modern --external react,react-dom,prop-types",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "microbundle watch"
