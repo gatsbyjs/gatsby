@@ -3,6 +3,10 @@ beforeEach(() => {
   cy.visit(`/preview`).waitForRouteChange()
 })
 
+after(() => {
+  reset()
+})
+
 const update = (times = 1) =>
   new Array(times)
     .fill(undefined)
@@ -47,5 +51,14 @@ describe(`Gatsby Preview (Updating)`, () => {
     cy.get(`li`)
       .its(`length`)
       .should(`be`, 1)
+  })
+
+  it(`can be triggered with webhook data`, () => {
+    cy.exec(`npm run update:webhook`)
+
+    cy.get(`li`)
+      .last()
+      .invoke(`text`)
+      .should(`contain`, `Webhook`)
   })
 })

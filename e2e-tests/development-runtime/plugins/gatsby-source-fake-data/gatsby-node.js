@@ -25,22 +25,20 @@ exports.sourceNodes = async function sourceNodes({
     createContentDigest,
   }
 
-  const [updated, deleted = []] = await api.sync(helpers)
-
-  updated.forEach(node => createNode(node))
-  deleted.forEach(node => {
-    const existing = getNode(node.id)
-    if (existing) {
-      deleteNode({
-        node: existing,
-      })
-    }
-  })
-
-  console.log(webhookBody)
-
   if (webhookBody && webhookBody.items) {
     reporter.info(`Webhook data detected; creating nodes`)
     webhookBody.items.forEach(node => createNode(api.getNode(node, helpers)))
+  } else {
+    const [updated, deleted = []] = await api.sync(helpers)
+
+    updated.forEach(node => createNode(node))
+    deleted.forEach(node => {
+      const existing = getNode(node.id)
+      if (existing) {
+        deleteNode({
+          node: existing,
+        })
+      }
+    })
   }
 }

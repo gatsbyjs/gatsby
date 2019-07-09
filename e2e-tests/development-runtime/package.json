@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
-    "gatsby": "2.9.11-dev-1561047938436",
+    "gatsby": "^2.4.4",
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-manifest": "^2.0.17",
     "gatsby-plugin-offline": "^2.1.0",
@@ -35,7 +35,7 @@
     "reset": "node scripts/reset.js",
     "reset:preview": "node plugins/gatsby-source-fake-data/reset.js && npm run update:preview",
     "update": "node scripts/update.js",
-    "update:webhook": "curl -d '{\"items\":[{\"updates\":0,\"uuid\":999,\"title\":\"Hello World (999)\",\"message\":\"testing\"}]}' -H 'Content-Type: application/x-www-form-urlencoded' -X POST http://localhost:8000/__refresh",
+    "update:webhook": "node scripts/webhook.js",
     "update:preview": "curl -X POST http://localhost:8000/__refresh",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "cy:open": "cypress open",
