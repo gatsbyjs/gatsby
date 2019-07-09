@@ -193,7 +193,7 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
-      - run: sh ./scripts/clone-and-validate.sh starters
+      - run: sh ./scripts/clone-and-validate.sh "starters/*"
 
   starters_publish:
     executor: node
@@ -206,14 +206,14 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-and-validate.sh starters true
+      - run: sh ./scripts/clone-and-validate.sh "starters/*" true
 
   theme_starters_validate:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "themes/*|.circleci/*"
-      - run: sh ./scripts/clone-and-validate-theme-starters.sh
+      - run: ./scripts/assert-changed-files.sh ""themes/gatsby-starter-*"|.circleci/*"
+      - run: sh ./scripts/clone-and-validate.sh "themes/gatsby-starter-*"
 
   theme_starters_publish:
     executor: node
@@ -225,7 +225,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-and-validate-theme-starters.sh true
+      - run: sh ./scripts/clone-and-validate.sh "themes/gatsby-starter-*" true
 
 workflows:
   version: 2

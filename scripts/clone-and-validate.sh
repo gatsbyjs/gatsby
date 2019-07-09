@@ -1,5 +1,5 @@
 #!/bin/bash
-FOLDER=$1
+GLOB=$1
 CLONE=$2
 IS_CI="${CI:-false}"
 BASE=$(pwd)
@@ -9,7 +9,7 @@ if [ "$IS_CI" = true ]; then
   sudo apt-get update && sudo apt-get install jq
 fi
 
-for folder in $FOLDER/*; do
+for folder in $GLOB; do
   [ -d "$folder" ] || continue # only directories
   cd $BASE
 
