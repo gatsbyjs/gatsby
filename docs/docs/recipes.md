@@ -147,7 +147,7 @@ Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetc
 plugins: [`gatsby-transformer-remark`],
 ```
 
-2. Add a GraphQL query to the `index.js` file of your Gatsby site to fetch MarkdownRemark nodes:
+2. Add a GraphQL query to the `index.js` file of your Gatsby site to fetch `MarkdownRemark` nodes:
 
 ```jsx:title=src/pages/index.js
 export const query = graphql`
