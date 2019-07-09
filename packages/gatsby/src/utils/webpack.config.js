@@ -265,7 +265,7 @@ module.exports = async (program, directory, suppliedStage) => {
       // Gatsby main router changes it, to keep v2 behaviour.
       // We will need to most likely remove this for v3.
       {
-        test: /reach\/router\/es\/index/,
+        test: require.resolve(`@reach/router/es/index`),
         type: `javascript/auto`,
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
