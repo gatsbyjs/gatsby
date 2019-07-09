@@ -173,4 +173,4 @@ export const query = graphql`
 ### Related links
 
 - Tutorial on transforming Markdown to HTMl using `gatsby-transformer-remark` plugin[tutorial part six](/tutorial/part-six/#transformer-plugins)
-- Browse available Transformer plugins in the [Gatsby library](/plugins/?=transformer)
+- Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)
