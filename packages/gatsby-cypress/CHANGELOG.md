@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress/compare/gatsby-cypress@0.1.9...gatsby-cypress@0.2.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-cypress
+
 ## [0.1.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cypress/compare/gatsby-cypress@0.1.8...gatsby-cypress@0.1.9) (2019-04-24)
 
 **Note:** Version bump only for package gatsby-cypress

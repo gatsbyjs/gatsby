@@ -1,0 +1,35 @@
+image:
+  file: .gitpod.Dockerfile
+tasks:
+  - init: >
+      yarn run bootstrap &&
+      cd ./examples/gatsbygram &&
+      yarn install &&
+      gatsby-dev --set-path-to-repo ../.. &&
+      gatsby-dev --scan-once &&
+      npx gatsby build &&
+      cd ../.. &&
+      touch /tmp/done.txt
+    command: >
+      yarn run watch --scope={gatsby,gatsby-image,gatsby-link}
+  - openMode: split-right
+    before: >
+      cd ./examples/gatsbygram
+    command: >
+      gp await-port 8000 &&
+      gatsby-dev --set-path-to-repo ../.. &&
+      gatsby-dev
+  - before: >
+      cd ./examples/gatsbygram
+    init: |
+      until [ -f /tmp/done.txt ]
+      do
+          sleep 2
+      done
+    command: >
+      npx gatsby develop
+ports:
+  - port: 8000
+    onOpen: open-preview
+  - port: 31997 # yarn mutex
+    onOpen: ignore
