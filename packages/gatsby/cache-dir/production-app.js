@@ -54,12 +54,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   id="gatsby-focus-wrapper"
                 >
                   <PageRenderer
-                    path={
+                    path={encodeURI(
                       pageResources.page.path === `/404.html`
                         ? location.pathname
                         : pageResources.page.matchPath ||
-                          pageResources.page.path
-                    }
+                            pageResources.page.path
+                    )}
                     {...this.props}
                     location={location}
                     pageResources={pageResources}

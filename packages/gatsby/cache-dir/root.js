@@ -52,10 +52,10 @@ class LocationHandler extends React.Component {
                   id="gatsby-focus-wrapper"
                 >
                   <JSONStore
-                    path={
+                    path={encodeURI(
                       locationAndPageResources.pageResources.page.matchPath ||
-                      locationAndPageResources.pageResources.page.path
-                    }
+                        locationAndPageResources.pageResources.page.path
+                    )}
                     {...this.props}
                     {...locationAndPageResources}
                   />
