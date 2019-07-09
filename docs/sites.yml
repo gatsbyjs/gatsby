@@ -6490,3 +6490,17 @@
     - Freelance
   built_by: Daniel Spajic
   featured: false
+- title: Cosmotory
+  url: https://cosmotory.netlify.com/
+  main_url: https://https://cosmotory.netlify.com/
+  description: >
+    This is the educational blog containing various courses,learning materials from various authors from all over the world.
+  categories:
+    - Blog
+    - Community
+    - Nonprofit
+    - Open Source
+    - Education
+  built_by: Hanishraj B Rao.
+  built_by_url: https://hanishrao.netlify.com/
+  featured: false

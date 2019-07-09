@@ -14,12 +14,12 @@
     "digital-garden"
   ],
   "devDependencies": {
-    "gatsby": "^2.13.6",
+    "gatsby": "^2.13.9",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "peerDependencies": {
-    "gatsby": "^2.13.6",
+    "gatsby": "^2.13.9",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

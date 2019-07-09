@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.8...gatsby@2.13.9) (2019-07-08)
+
+### Bug Fixes
+
+- **gatsby:** support for yarn workspaces in gatsby-dependents ([#15517](https://github.com/gatsbyjs/gatsby/issues/15517)) ([3b5e41b](https://github.com/gatsbyjs/gatsby/commit/3b5e41b))
+
+## [2.13.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.7...gatsby@2.13.8) (2019-07-08)
+
+### Bug Fixes
+
+- **gatsby:** speed up and lower memory of createPages ([#15503](https://github.com/gatsbyjs/gatsby/issues/15503)) ([0ffa8bc](https://github.com/gatsbyjs/gatsby/commit/0ffa8bc))
+
+## [2.13.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.6...gatsby@2.13.7) (2019-07-07)
+
+### Bug Fixes
+
+- **gatsby:** bump `react-hot-loader` version to fix regression… ([#15485](https://github.com/gatsbyjs/gatsby/issues/15485)) ([02eaaa4](https://github.com/gatsbyjs/gatsby/commit/02eaaa4))
+- **gatsby:** Exclude node_modules when depth > 1 ([#15442](https://github.com/gatsbyjs/gatsby/issues/15442)) ([ba0c3cb](https://github.com/gatsbyjs/gatsby/commit/ba0c3cb))
+
 ## [2.13.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.5...gatsby@2.13.6) (2019-07-06)
 
 ### Bug Fixes
