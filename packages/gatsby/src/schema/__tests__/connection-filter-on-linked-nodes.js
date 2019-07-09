@@ -216,17 +216,53 @@ describe(`filtering on linked nodes`, () => {
       ]),
       `
         {
-          eq:allTest(filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }) {
-            edges { node { foo } }
+          eq: allTest(
+            filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
-          in:allTest(filter: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } }) {
-            edges { node { foo } }
+          in: allTest(
+            filter: {
+              linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } }
+            }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
-          insideInlineArrayEq:allTest(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } } } }) {
-            edges { node { foo } }
+          insideInlineArrayEq: allTest(
+            filter: {
+              array: {
+                elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } }
+              }
+            }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
-          insideInlineArrayIn:allTest(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } } } }) {
-            edges { node { foo } }
+          insideInlineArrayIn: allTest(
+            filter: {
+              array: {
+                elemMatch: {
+                  linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } }
+                }
+              }
+            }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
         }
       `
@@ -239,6 +275,8 @@ describe(`filtering on linked nodes`, () => {
         },
       }
     }
+
+    console.log(JSON.stringify(result, null, 2))
 
     expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
     expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))

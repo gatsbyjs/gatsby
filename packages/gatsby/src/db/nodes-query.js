@@ -73,6 +73,7 @@ async function run(args) {
       args.gqlComposer,
       args.gqlSchema,
       gqlType,
+      fields,
       fieldsToResolve
     )
 

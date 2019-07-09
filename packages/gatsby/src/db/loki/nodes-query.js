@@ -9,6 +9,7 @@ const {
 const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection, getNodeTypesView } = require(`./nodes`)
 const { emitter } = require(`../../redux`)
+const { getValueAt } = require(`../../utils/get-value-at`)
 
 // Cleared on DELETE_CACHE
 const fieldUsages = {}
@@ -221,6 +222,8 @@ const liftResolvedFields = (args, gqlType, resolvedFields) => {
       value.$elemMatch
     ) {
       finalArgs[`$resolved.${key}`] = value
+    } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
+      finalArgs[`$resolved.${key}`] = value
     } else {
       finalArgs[key] = value
     }
@@ -304,11 +307,6 @@ async function runQuery(
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
   const lokiArgs = convertArgs(gqlArgs, gqlType, resolvedFields)
-  console.log(
-    JSON.stringify(queryArgs, null, 2),
-    resolvedFields,
-    JSON.stringify(lokiArgs, null, 2)
-  )
 
   let possibleTypeNames
   if (
@@ -343,29 +341,34 @@ async function runQuery(
     chain = coll.chain()
   }
 
-  console.log(`source`, JSON.stringify(chain.data(), null, 2))
-
-  // console.log(lokiArgs)
-  // console.log(JSON.stringify(chain.data(), null, 2))
+  // console.log(lokiArgs, chain.data())
   chain.find(lokiArgs, firstOnly)
-
-  console.log(`result`, JSON.stringify(chain.data()))
 
   if (sortFields) {
     const dottedFields = objectToDottedField(resolvedFields)
+    const dottedFieldKeys = Object.keys(dottedFields)
     sortFields = sortFields.map(([field, order]) => {
-      if (dottedFields[field]) {
+      if (
+        dottedFields[field] ||
+        dottedFieldKeys.some(key => field.startsWith(key))
+      ) {
         return [`$resolved.${field}`, order]
       } else {
         return [field, order]
       }
     })
-    chain = chain.compoundsort(sortFields)
+    // TODO make it only use orderBy sorting in worst case
+    // chain = chain.compoundsort(sortFields)
+    const sortFieldAccessors = sortFields.map(([field, _]) => v =>
+      getValueAt(v, field)
+    )
+    const sortFieldOrder = sortFields.map(([_, order]) =>
+      order ? `desc` : `asc`
+    )
+    return _.orderBy(chain.data(), sortFieldAccessors, sortFieldOrder)
+  } else {
+    return chain.data()
   }
-
-  const result = chain.data()
-
-  return result
 }
 
 module.exports = runQuery

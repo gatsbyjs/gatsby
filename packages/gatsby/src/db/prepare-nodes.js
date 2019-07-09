@@ -12,19 +12,28 @@ const {
 } = require(`graphql`)
 const withResolverContext = require(`../schema/context`)
 
-async function prepareNodes(schemaComposer, schema, type, fields) {
+async function prepareNodes(
+  schemaComposer,
+  schema,
+  type,
+  queryFields,
+  fieldsToResolve
+) {
   const nodes = require(`./nodes`)
-  if (!_.isEmpty(fields)) {
+  if (!_.isEmpty(fieldsToResolve)) {
     await nodes.updateNodesByType(type.name, async node => {
-      const newNode = await resolveRecursive(
+      const resolvedFields = await resolveRecursive(
         schemaComposer,
         schema,
         node,
         type,
-        fields
+        queryFields,
+        fieldsToResolve
       )
-      // console.log(newNode)
-      return newNode
+      return {
+        ...node,
+        $resolved: _.merge(node.$resolved || {}, resolvedFields),
+      }
     })
   }
 }
@@ -36,12 +45,14 @@ async function resolveRecursive(
   schema,
   node,
   type,
+  queryFields,
   fieldsToResolve
 ) {
   const gqlFields = type.getFields()
-  const resolvedFields = {}
+  let resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
+    const queryField = queryFields[fieldName]
     const gqlField = gqlFields[fieldName]
     const gqlNonNullType = getNullableType(gqlField.type)
     const gqlFieldType = getNamedType(gqlField.type)
@@ -57,7 +68,7 @@ async function resolveRecursive(
     } else {
       innerValue = node[fieldName]
     }
-    if (_.isObject(fieldToResolve) && gqlField && innerValue != null) {
+    if (gqlField && innerValue != null) {
       if (
         isCompositeType(gqlFieldType) &&
         !(gqlNonNullType instanceof GraphQLList)
@@ -67,9 +78,11 @@ async function resolveRecursive(
           schema,
           innerValue,
           gqlFieldType,
-          fieldToResolve
+          queryField,
+          _.isObject(fieldToResolve) ? fieldToResolve : queryField
         )
       } else if (
+        isCompositeType(gqlFieldType) &&
         _.isArray(innerValue) &&
         gqlNonNullType instanceof GraphQLList
       ) {
@@ -80,7 +93,8 @@ async function resolveRecursive(
               schema,
               item,
               gqlFieldType,
-              fieldToResolve
+              queryField,
+              _.isObject(fieldToResolve) ? fieldToResolve : queryField
             )
           )
         )
@@ -91,61 +105,24 @@ async function resolveRecursive(
     }
   }
 
-  const processedFields = {}
-  Object.keys(resolvedFields).forEach(key => {
-    let resolvedValue
-    const value = resolvedFields[key]
-    const gqlField = gqlFields[key]
-    if (Array.isArray(value)) {
-      resolvedValue = []
-      value.forEach((item, i) => {
-        if (gqlField.resolve) {
-          resolvedValue[i] = item
-        }
-
-        if (item.$resolved) {
-          resolvedValue[i] = {
-            ...(resolvedValue[i] || {}),
-            ...item.$resolved,
-          }
-        }
-      })
-    } else {
-      if (gqlField.resolve) {
-        resolvedValue = value
-      }
-
-      if (value.$resolved) {
-        resolvedValue = {
-          ...(resolvedValue || {}),
-          ...value.$resolved,
-        }
-      }
-    }
-    if (resolvedValue) {
-      processedFields[key] = resolvedValue
+  Object.keys(queryFields).forEach(key => {
+    if (!fieldsToResolve[key] && node[key]) {
+      resolvedFields[key] = node[key]
     }
   })
 
-  return {
-    ...node,
-    $resolved: processedFields,
-  }
+  return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
 
 function resolveField(schemaComposer, schema, node, gqlField, fieldName) {
-  if (gqlField.resolve) {
-    return gqlField.resolve(
-      node,
-      {},
-      withResolverContext({}, schema, schemaComposer),
-      {
-        fieldName,
-        schema,
-        returnType: gqlField.type,
-      }
-    )
-  }
-
-  return undefined
+  return gqlField.resolve(
+    node,
+    {},
+    withResolverContext({}, schema, schemaComposer),
+    {
+      fieldName,
+      schema,
+      returnType: gqlField.type,
+    }
+  )
 }

@@ -72,7 +72,6 @@ function getNodeTypeCollection(type) {
 function getNodeTypesView(types) {
   const typesViewName = makeTypesViewName(types)
   const coll = getDb().getCollection(colls.nodeMeta.name)
-  console.log(coll.data[0])
   let view = coll.getDynamicView(typesViewName)
   if (!view) {
     view = coll.addDynamicView(typesViewName, {

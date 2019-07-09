@@ -30,7 +30,6 @@ describe(`Query schema`, () => {
               [`frontmatter.authorNames`]: {
                 type: `[String!]!`,
                 async resolve(source, args, context, info) {
-                  console.log(source)
                   const authors = await context.nodeModel.runQuery({
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },
@@ -418,7 +417,7 @@ describe(`Query schema`, () => {
       expect(results.data).toEqual(expected)
     })
 
-    it(`handles query arguments 2`, async () => {
+    it(`handles query arguments`, async () => {
       const query = `
         {
           author(

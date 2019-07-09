@@ -355,6 +355,7 @@ describe(`NodeModel`, () => {
     it(`returns an object's top most ancestor node`, () => {
       const node = nodes.find(node => node.id === `post1`)
       const obj = node.frontmatter.authors
+
       const result = nodeModel.findRootNodeAncestor(obj)
       expect(result.id).toBe(`file1`)
     })

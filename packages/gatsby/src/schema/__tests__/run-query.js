@@ -147,7 +147,7 @@ function makeGqlType(nodes) {
     typeComposer: tc,
     exampleValue: getExampleValue({ nodes, typeName }),
   })
-  return tc.getType()
+  return { sc, type: tc.getType() }
 }
 
 function resetDb(nodes) {
@@ -160,11 +160,12 @@ function resetDb(nodes) {
 async function runQuery(queryArgs) {
   const nodes = makeNodes()
   resetDb(nodes)
-  const gqlType = makeGqlType(nodes)
+  const { sc, type: gqlType } = makeGqlType(nodes)
   const args = {
     gqlType,
     firstOnly: false,
     queryArgs,
+    gqlComposer: sc,
   }
   return await nodesQuery.run(args)
 }

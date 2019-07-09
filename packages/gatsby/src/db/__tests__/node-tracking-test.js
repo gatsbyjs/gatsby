@@ -89,6 +89,7 @@ describe(`track root nodes`, () => {
   })
 
   describe(`Tracks nodes returned by queries`, () => {
+    let sc
     let type
 
     beforeAll(async () => {
@@ -98,7 +99,7 @@ describe(`track root nodes`, () => {
       } = require(`../../schema/infer/add-inferred-fields`)
       const { getExampleValue } = require(`../../schema/infer/example-value`)
 
-      const sc = createSchemaComposer()
+      sc = createSchemaComposer()
       const typeName = `Test`
       const tc = sc.createObjectTC(typeName)
       addInferredFields({
@@ -114,6 +115,7 @@ describe(`track root nodes`, () => {
         queryArgs: {},
         gqlType: type,
         firstOnly: false,
+        gqlComposer: sc,
       })
 
       expect(result.length).toEqual(2)
@@ -134,6 +136,7 @@ describe(`track root nodes`, () => {
         },
         gqlType: type,
         firstOnly: false,
+        gqlComposer: sc,
       })
 
       expect(result.length).toEqual(1)
