@@ -6478,6 +6478,18 @@
   built_by: Nicola B.
   built_by_url: https://www.linkedin.com/in/nicola-b/
   featured: false
+- title: Daniel Spajic
+  url: https://danieljs.tech/
+  main_url: https://danieljs.tech/
+  source_url: https://github.com/dspacejs/portfolio
+  description: >
+    Passionate front-end developer with a deep, yet diverse skillset.
+  categories:
+    - Portfolio
+    - Programming
+    - Freelance
+  built_by: Daniel Spajic
+  featured: false
 - title: Cosmotory
   url: https://cosmotory.netlify.com/
   main_url: https://https://cosmotory.netlify.com/
