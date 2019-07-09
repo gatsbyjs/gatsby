@@ -6504,3 +6504,15 @@
   built_by: Hanishraj B Rao.
   built_by_url: https://hanishrao.netlify.com/
   featured: false
+- title: Mojo
+  url: https://www.mojo.is
+  main_url: https://www.mojo.is/
+  description: >
+    We help companies create beautiful digital experiences
+  categories:
+    - Agency
+    - Technology
+    - Consulting
+    - User Experience
+    - Web Development
+  featured: false
