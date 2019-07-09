@@ -122,8 +122,32 @@ To wrap pages with layouts, use normal React components.
 
 ## Deploying
 
-Showtime.
+Showtime.  Once you are happy with your site, you are ready to go live with it!
 
+## Prerequisites
+-A Gatsby site ([check out the Tutorial if you don't yet have a Gatsby site](/tutorial/part-zero))  
+-The [Gatsby CLI](docs/gatsby-cli)
+
+## Directions
+1. Stop your development server if it is running (`Ctrl + C` on your command line in most cases)
+2. If you want the standard path prefix for your site (`/`), run `gatsby build` using the Gatsby CLI on the command line. The files you need to copy to your server will now be in the `public` folder.
+3. If you'd like to have the index of your site be at a path other than `/`, set a path prefix by adding the following to your `gatsby-config.js` and replacing `yourpathprefix` with your desired path prefix:
+```js:title=gatsby-config.js
+module.exports = {
+  pathPrefix: `/yourpathprefix`
+}
+```
+There are a few reasons you might want to do this--for instance, if you are hosting a blog built with Gatsby on a domain where you are running another site not built on Gatsby. The main site would direct to `example.com`, and by setting a path prefix you can have `example.com/blog` load your Gatsby site directly.  
+4. Once your path prefix is set in your `gatsby-config.js`, run `gatsby build`, but make sure to add the `--prefix-paths` flag, like so:
+
+```shell
+gatsby build --prefix-paths
+```  
+With this flag added, Gatsby will automatically add your path prefix to the beginning of all of your site's URLs and will automatically update all `<Link>` tags as well.  
+5. It is generally helpful to make sure that your site looks the same when running `gatsby build` as it did when running `gatsby develop`. By running `gatsby serve` after you build your site, you can test out (and debug if necessary) the finished product before deploying it live.  
+6. From here, you can either copy the files in your `public` folder directly to your server, or deploy to one of many popular servers. Check out the [deployment docs for specific hosting platforms and how to deploy to them](/docs/preparing-for-deployment).  
+
+##Additional Resources
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
 - Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
 - Learn about [performance optimization](/docs/performance/)
