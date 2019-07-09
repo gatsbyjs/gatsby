@@ -193,7 +193,7 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "starters/*|themes/gatsby-starter-*|.circleci/*"
-      - run: sh ./scripts/clone-and-validate.sh "starters/* themes/gatsby-starter-*"
+      - run: sh ./scripts/validate-starters.sh "starters/* themes/gatsby-starter-*"
 
   starters_publish:
     executor: node
@@ -206,7 +206,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-and-validate.sh "starters/* themes/gatsby-starter-*" true
+      - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
 
 workflows:
   version: 2
