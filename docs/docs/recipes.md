@@ -168,7 +168,7 @@ export const query = graphql`
   }
   `
 ```
-3. Restart the development server and open GraphiQL. Explore the fields available on the MarkdownRemark node.
+3. Restart the development server and open GraphiQL at `http://localhost:8000/___graphql`. Explore the fields available on the `MarkdownRemark` node.
 
 ### Related links
 
