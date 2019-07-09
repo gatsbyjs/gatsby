@@ -134,7 +134,7 @@ Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetc
 
 ### Prerequisites
 
-- A gatsby site with `gatsby-config.js` and `index.js` page
+- A Gatsby site with `gatsby-config.js` and an `index.js` page
 - A Markdown file saved in your Gatsby site `src` directory
 - The `gatsby-transformer-remark` plugin installed
 
