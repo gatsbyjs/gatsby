@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.1.0...gatsby-plugin-netlify-cms@4.1.1) (2019-07-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** exclude node_modules from cms ([#15191](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/15191)) ([a767854](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/a767854))
+
 # [4.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.0.3...gatsby-plugin-netlify-cms@4.1.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms

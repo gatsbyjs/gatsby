@@ -13,7 +13,7 @@ const actions = {}
  * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
  * (by eg namespacing the schema).
  *
- * @availableIn [sourceNodes]
+ * @availableIn [createSchemaCustomization, sourceNodes]
  *
  * @param {Object} $0
  * @param {GraphQLSchema} $0.schema GraphQL schema to add
@@ -35,7 +35,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
 /**
  * Add type definitions to the GraphQL schema.
  *
- * @availableIn [sourceNodes]
+ * @availableIn [createSchemaCustomization, sourceNodes]
  *
  * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
  *
@@ -55,8 +55,8 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  *   a `relativePath` foreign-key field) are added. This behavior can be
  *   customised with `@infer`, `@dontInfer` directives or extensions. Fields
  *   may be assigned resolver (and other option like args) with additional
- *   directives. Currently `@dateformat`, `@link` and `@fileByRelativePath` are
- *   available.
+ *   directives. Currently `@dateformat`, `@link`, `@fileByRelativePath` and
+ *   `@proxy` are available.
  *
  *
  * Schema customization controls:
@@ -73,7 +73,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  * * `@fileByRelativePath` - connect to a File node. Same arguments. The
  *   difference from link is that this normalizes the relative path to be
  *   relative from the path where source node is found.
- * * `proxy` - in case the underlying node data contains field names with
+ * * `@proxy` - in case the underlying node data contains field names with
  *   characters that are invalid in GraphQL, `proxy` allows to explicitly
  *   proxy those properties to fields with valid field names. Takes a `from` arg.
  *
@@ -190,6 +190,77 @@ actions.createTypes = (
   }
 }
 
+const { reservedExtensionNames } = require(`../../schema/extensions`)
+import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
+/**
+ * Add a field extension to the GraphQL schema.
+ *
+ * Extensions allow defining custom behavior which can be added to fields
+ * via directive (in SDL) or on the `extensions` prop (with Type Builders).
+ *
+ * The extension definition takes a `name`, an `extend` function, and optional
+ * extension `args` for options. The `extend` function has to return a (partial)
+ * field config, and receives the extension options and the previous field config
+ * as arguments.
+ *
+ * @availableIn [createSchemaCustomization, sourceNodes]
+ *
+ * @param {GraphQLFieldExtensionDefinition} extension The field extension definition
+ * @example
+ * exports.createSchemaCustomization = ({ actions }) => {
+ *   const { createFieldExtension } = actions
+ *   createFieldExtension({
+ *     name: 'motivate',
+ *     args: {
+ *       caffeine: 'Int'
+ *     },
+ *     extend(options, prevFieldConfig) {
+ *       return {
+ *         type: 'String',
+ *         args: {
+ *           sunshine: {
+ *             type: 'Int',
+ *             defaultValue: 0,
+ *           },
+ *         },
+ *         resolve(source, args, context, info) {
+ *           const motivation = (options.caffeine || 0) - args.sunshine
+ *           if (motivation > 5) return 'Work! Work! Work!'
+ *           return 'Maybe tomorrow.'
+ *         },
+ *       }
+ *     },
+ *   })
+ * }
+ */
+actions.createFieldExtension = (
+  extension: GraphQLFieldExtensionDefinition,
+  plugin: Plugin,
+  traceId?: string
+) => (dispatch, getState) => {
+  const { name } = extension || {}
+  const { fieldExtensions } = getState().schemaCustomization
+
+  if (!name) {
+    report.error(`The provided field extension must have a \`name\` property.`)
+  } else if (reservedExtensionNames.includes(name)) {
+    report.error(
+      `The field extension name \`${name}\` is reserved for internal use.`
+    )
+  } else if (fieldExtensions[name]) {
+    report.error(
+      `A field extension with the name \`${name}\` has already been registered.`
+    )
+  } else {
+    dispatch({
+      type: `CREATE_FIELD_EXTENSION`,
+      plugin,
+      traceId,
+      payload: { name, extension },
+    })
+  }
+}
+
 const withDeprecationWarning = (actionName, action, api, allowedIn) => (
   ...args
 ) => {
@@ -226,12 +297,12 @@ const mapAvailableActionsToAPIs = restrictions => {
   actionNames.forEach(actionName => {
     const action = actions[actionName]
 
-    const allowedIn = restrictions[actionName][ALLOWED_IN]
+    const allowedIn = restrictions[actionName][ALLOWED_IN] || []
     allowedIn.forEach(api =>
       set(availableActionsByAPI, api, actionName, action)
     )
 
-    const deprecatedIn = restrictions[actionName][DEPRECATED_IN]
+    const deprecatedIn = restrictions[actionName][DEPRECATED_IN] || []
     deprecatedIn.forEach(api =>
       set(
         availableActionsByAPI,
@@ -258,12 +329,15 @@ const mapAvailableActionsToAPIs = restrictions => {
 }
 
 const availableActionsByAPI = mapAvailableActionsToAPIs({
+  createFieldExtension: {
+    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
+  },
   createTypes: {
-    [ALLOWED_IN]: [`sourceNodes`],
+    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
     [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
   },
   addThirdPartySchema: {
-    [ALLOWED_IN]: [`sourceNodes`],
+    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
     [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
   },
 })
