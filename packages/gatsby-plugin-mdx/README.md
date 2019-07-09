@@ -24,7 +24,8 @@ components.
   - [Configuration](#configuration)
     - [Extensions](#extensions)
     - [Default layouts](#default-layouts)
-    - [Global scope](#global-scope)
+    - [Imports](#imports)
+    - [Shortcodes](#shortcodes)
     - [Gatbsy remark plugins](#gatsby-remark-plugins)
     - [Markdown plugins](#remark-plugins)
     - [HAST plugins](#rehype-plugins)
@@ -188,7 +189,7 @@ module.exports = {
 }
 ```
 
-#### Global scope
+#### Imports
 
 When importing a react component into your MDX, you can import it using the `import`
 statement as in JavaScript.
@@ -203,44 +204,39 @@ Here's a color picker!
 <SketchPicker />
 ```
 
-If you want to allow usage of a component from anywhere, add it to the `globalScope`
-field in the options inside `gatsby-config.js`:
+#### Shortcodes
+
+If you want to allow usage of a component from anywhere (often referred to as a
+shortcode), you can pass it to the
+[MDXProvider](https://www.gatsbyjs.org/docs/mdx/customizing-components/).
 
 ```js
-// gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-mdx`,
-      options: {
-        globalScope: `
-          import { SketchPicker } from "react-color";
+// src/components/layout.js
+import React from "react"
+import { MDXProvider } from "@mdx-js/react"
+import { YouTube, Twitter, TomatoBox } from "./ui"
 
-          export default { SketchPicker };
-        `,
-      },
-    },
-  ],
-}
+const shortcodes = { YouTube, Twitter, TomatoBox }
+
+export default ({ children }) => (
+  <MDXProvider components={shortcodes}>{children}</MDXProvider>
+)
 ```
 
-All that is needed is to import the components you wish to be globally available and
-then put them into an exported object.
-
-Then, in any MDX file, you can insert the components without the import.
+Then, in any MDX file, you can render `YouTube`, `Twitter`, and `TomatoBox` without
+an import.
 
 ```mdx
 # Hello, world!
 
-Here's a color picker
+Here's a YouTube embed
 
-<SketchPicker />
+<TomatoBox>
+  <YouTube id="123abc" />
+</TomatoBox>
 ```
 
-> :warning: Note: globalScope is not working yet in any mdx file in `src/pages`, but there is an
-> issue to resolve this:
->
-> ChristopherBiscardi/gatsby-mdx#239
+[Read more about MDX shortcodes](https://mdxjs.com/blog/shortcodes)
 
 #### Gatsby remark plugins
 
