@@ -106,7 +106,7 @@ describe(`Production build tests`, () => {
         // `page-2-message` element so the test will fail on
         // assertion. Using failOnStatusCode here
         // only to workaround cypress weirdness
-        // failOnStatusCode: false,
+        failOnStatusCode: false,
       }).waitForRouteChange()
 
       cy.getTestElement(`page-2-message`)
