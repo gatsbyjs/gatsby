@@ -30,17 +30,18 @@ Gatsby [builds](/docs/glossary#build) [static]/docs/glossary#static) HTML pages 
 These are some common accessibility barriers when it comes to client-side routing:
 
 - Without page refreshes, screen reader users may not be informed that the page has changed.
-- Without a page refresh or focus management, a user’s keyboard focus point may be kept in the same place as where they clicked, which isn’t intuitive. 
-    - In layouts where the page changes partially to include a deep-linked modal dialog or other view layer, a user’s focus point could be left in an entirely wrong spot on the page.
+- Without a page refresh or focus management, a user’s keyboard focus point may be kept in the same place as where they clicked, which isn’t intuitive.
+  - In layouts where the page changes partially to include a deep-linked modal dialog or other view layer, a user’s focus point could be left in an entirely wrong spot on the page.
 - Without visible focus outlines, sighted keyboard, switch, and voice dictation users can’t see their focus point on the screen when views change with focus management.
 
 Some of the commonly recommended solutions include (references at the end of this post):
-- Dynamically set focus to an HTML wrapper element on page change, to both move focus to the new content and make an announcement in AT. 
-    - This pattern often uses `tabindex="-1"` on a DIV or other block-level element to allow focus to be placed on an otherwise non-interactive element.
+
+- Dynamically set focus to an HTML wrapper element on page change, to both move focus to the new content and make an announcement in AT.
+  - This pattern often uses `tabindex="-1"` on a DIV or other block-level element to allow focus to be placed on an otherwise non-interactive element.
 - Dynamically set focus to a h1-h6 heading element instead of a wrapper to move focus to new content and make a shorter AT announcement.
-    - This also typically requires `tabindex="-1"` to focus the heading with JavaScript in a cross-browser way.
+  - This also typically requires `tabindex="-1"` to focus the heading with JavaScript in a cross-browser way.
 - Dynamically set focus to an interactive element like a button to put keyboard users on an operable button/UI control in the correct part of the app and announce it to AT users.
-    - The name of the button matters a lot here.
+  - The name of the button matters a lot here.
 - Leave focus where it is and make an [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) announcement instead.
 - Reset focus to the top of the application (i.e. a parent wrapper element) to mimic a traditional browser refresh and announce new content in AT.
 - Turn on focus outlines for keyboard and screen reader users while suppressing them for the mouse using [CSS :focus-visible and polyfill](https://github.com/WICG/focus-visible) or the [What Input](https://github.com/ten1seven/what-input) library.
@@ -52,7 +53,7 @@ By user testing a few variations of known routing techniques, we gained some val
 
 ## Working with Fable
 
-We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. Marcy connected with Fable’s lead front end developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through. 
+We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. Marcy connected with Fable’s lead front end developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through.
 
 The experience of testing with people with disabilities and the results that followed felt very important, and something product teams should seek out regularly. We’d highly recommend this process for anyone working on digital experiences; particularly if you can test prototypes to adapt to the findings early and often in design & development. User testing for accessibility can provide game-changing detail that you’ll be eternally grateful to have uncovered. Addressing accessibility issues sooner than later is both a [smart business investment](https://www.w3.org/WAI/business-case/) and can make your project more [inclusive](https://www.microsoft.com/design/inclusive/) from the start!
 
@@ -63,6 +64,7 @@ Fable’s online platform allows you to set up Meetings or Tickets for your sess
 Meetings are recommended for testing demos of a product with assistive technology, to co-design user experiences and conduct research, or to solve complex problems that customers have complained about. Tickets, on the other hand, are “like engaging a diverse team of QA analysts” to test usability and compatibility on important user journeys within your site. You can get video recordings of the sessions, which may come in handy for later analysis.
 
 In our meetings, we tested with:
+
 - Sam using NVDA and Chrome on Windows 10
 - Ka using JAWS and Firefox on Windows
 - Yvone using screen magnification in Chrome on a Samsung Note 9, and ZoomText for Chrome on Mac
@@ -76,6 +78,7 @@ In each of the sessions, Marcy learned about the tester’s browsing method and 
 We wanted to know the best approach for guiding users with disabilities through JavaScript-heavy web applications, which don’t use traditional page reloads to reset the user’s focus point and announce new pages in assistive technologies.
 
 The [prototypes for these tests](https://marcysutton.com/prototype-testing-accessible-clientside-routing/#What-are-Prototypes) covered some of the common techniques for enhancing the page loading experience for users with disabilities, each centered around the mechanics of loading new content. These techniques included:
+
 - [Example 1](https://marcy.codes/prototypes/routing/example-1.html): No focus change, with a Live Region announcement for screen readers
 - [Example 2](https://marcy.codes/prototypes/routing/example-2.html): Focus reset to application wrapper element, with a Live Region announcement for screen readers
 - [Example 3](https://marcy.codes/prototypes/routing/example-3.html): Focus changed to a heading element in the newly changed content
@@ -93,6 +96,7 @@ These tests were a good reminder that accessibility goes beyond support for scre
 ### Takeaways from screen reader users
 
 A big motivation to test with screen reader users was to confirm whether the recommended focus management techniques actually worked for them. The prototypes included a few approaches specifically targeted at screen reader users, including:
+
 - Live Region announcements on view changes to inform screen reader users of changing content;
 - focus management sent to a wrapper element;
 - focus management sent to the first heading element.
@@ -103,7 +107,7 @@ A big motivation to test with screen reader users was to confirm whether the rec
 
 **A back button would help** to use browser history (this was a limitation of the prototypes).
 
-**Putting `aria-current` on links to indicate which one is active helps** in applications. We made a note to try using `aria-label` instead of `aria-labelledby` on section elements to minimize duplicate announcements in NVDA and JAWS (when the section is labelledby a heading). 
+**Putting `aria-current` on links to indicate which one is active helps** in applications. We made a note to try using `aria-label` instead of `aria-labelledby` on section elements to minimize duplicate announcements in NVDA and JAWS (when the section is labelledby a heading).
 
 **Add a heading to each major section of the UI**, like navigation, **even if [visually hidden](https://a11yproject.com/posts/how-to-hide-content/)**–as many AT users don’t navigate by landmarks but do navigate by headings.
 
@@ -113,7 +117,7 @@ The conclusion for these tests from one screen reader user when asked if they co
 
 Users with low vision magnify the screen and zoom into pages to see them better: screen magnification at the OS level, screen magnifying AT like [ZoomText](https://www.zoomtext.com/), browser zoom, and more. In this user test, the participant found **visible focus outlines to be helpful** for orienting oneself in the application.
 
-For sighted magnification users, our **first couple of prototypes were quite useless as they relied on screen reader announcements**, which were inapplicable in this scenario (the same would apply to a UI pattern like the proposed [“toast”](https://github.com/jackbsteinberg/std-toast) element). Despite having developed with accessibility in mind–including visible focus outlines–the **prototypes pretty much fell apart when zoomed way in** on a Samsung Note 9 phone with the Chrome browser. 
+For sighted magnification users, our **first couple of prototypes were quite useless as they relied on screen reader announcements**, which were inapplicable in this scenario (the same would apply to a UI pattern like the proposed [“toast”](https://github.com/jackbsteinberg/std-toast) element). Despite having developed with accessibility in mind–including visible focus outlines–the **prototypes pretty much fell apart when zoomed way in** on a Samsung Note 9 phone with the Chrome browser.
 
 For the focus management techniques, horizontal scrolling presented an issue without a mobile viewport: if focus was sent to a wrapper or heading spanning a width much larger than the screen, **mobile Chrome would scroll to the middle of it and cut off the beginning and end of the text...making it illegible**. This was exacerbated in our prototypes until we adjusted the design to fit a single column, but still wasn’t great to have a visible focus outline covering so much of the screen. Some of this seemed limited to Samsung’s Chrome browser and weren’t reproducible elsewhere, but even with slightly better scroll/focus behavior it illustrated the **need for responsive pages that adapt to fit smaller screens** without as much horizontal scrolling.
 
@@ -128,19 +132,19 @@ With this test in particular we started considering other solutions, which becam
 
 ### Takeaways from voice navigation
 
-The first obvious thing with **navigating by voice** was that the **visible focus indicator was helpful** to orient the user’s place on the screen; Dragon NaturallySpeaking did not provide a focus outline, at least with their configuration. In the first two prototypes relying on ARIA Live Regions to announce changes, there wasn’t much to observe for a sighted voice navigation user. 
+The first obvious thing with **navigating by voice** was that the **visible focus indicator was helpful** to orient the user’s place on the screen; Dragon NaturallySpeaking did not provide a focus outline, at least with their configuration. In the first two prototypes relying on ARIA Live Regions to announce changes, there wasn’t much to observe for a sighted voice navigation user.
 
 In prototypes 3, 4, and 5, **moving focus and showing a visible focus outline was helpful** as it showed an element of interest and **guided their attention** to the relevant content. **Focusing on a heading or smaller element was easier** to discern the focus outline than a wrapper element that went to the edge of the screen.
 
 ### Takeaways from keyboard-only navigation
 
-As a bonus in user testing session #4, we had some user feedback with the keyboard only. They couldn’t get to the main region in the prototypes with the keyboard alone, which would have helped. This was striking because even though that content area is marked up with an HTML `<main>` landmark, without assistive technology that element is not reachable by keyboard. If it contained links or other interactive elements those would be reachable, but not the main region itself. 
+As a bonus in user testing session #4, we had some user feedback with the keyboard only. They couldn’t get to the main region in the prototypes with the keyboard alone, which would have helped. This was striking because even though that content area is marked up with an HTML `<main>` landmark, without assistive technology that element is not reachable by keyboard. If it contained links or other interactive elements those would be reachable, but not the main region itself.
 
 Rather than making regions focusable (which would make them reachable, but not operable)–a common misconception when developing for ATs which have their own ways to navigate–**adding a button target** came up again as an idea to receive focus in an area of the page. A control like this could:
 
 a) receive focus, both in the natural tab order and programmatically with scripting
 b) be labeled to act as a focus management target
-c) be small enough in dimensions to not be cut off when zoomed in, and 
+c) be small enough in dimensions to not be cut off when zoomed in, and
 d) operate as a skip link back somewhere (which might make labeling for AT tricky...but it can be sorted out)
 
 At this point, we were strongly considering moving to a component-based approach instead of trying to handle this all dynamically with routing and programmatic focus alone. But we had one more test to conduct.
@@ -164,7 +168,7 @@ Gatsby could look for a component with a given className, id attribute, or ref, 
 
 We’re limited on what we can do programmatically at the framework level since users can source content from anywhere. There are cool accessibility innovations happening in React core with [Focus Scopes and Focus Managers](https://github.com/facebook/react/issues/16009), and we’re working directly with the team behind React/Reach Router for future component solutions. But if we can implement a solid UI pattern that supports these user requirements and make it extremely easy to adopt, our hunch is that client-rendered apps will become a heck of a lot more accessible.
 
-Having user research data is what’s driving these improvements forward. As web professionals, we should look to users with disabilities to tell us what works for them rather than always assuming we know. It’s difficult to make something that works for absolutely everyone, but we can make more informed decisions with a bit of research. 
+Having user research data is what’s driving these improvements forward. As web professionals, we should look to users with disabilities to tell us what works for them rather than always assuming we know. It’s difficult to make something that works for absolutely everyone, but we can make more informed decisions with a bit of research.
 
 Thanks to Fable Tech Labs and your community of testers for helping us with this initiative!
 
