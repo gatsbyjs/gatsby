@@ -14,16 +14,16 @@ const generateGTMIframe = ({ id, environmentParamStr }) =>
 const generateDefaultDataLayer = (dataLayer, reporter) => {
   let result = `window.dataLayer = window.dataLayer || [];`
 
-  if (typeof dataLayer === `function`) {
-    result += `window.dataLayer.push((${dataLayer})());`
+  if (dataLayer.type === `function`) {
+    result += `window.dataLayer.push((${dataLayer.value})());`
   } else {
-    if (typeof dataLayer !== `object` || dataLayer.constructor !== Object) {
+    if (dataLayer.type !== `object` || dataLayer.value.constructor !== Object) {
       reporter.panic(
         `Oops the plugin option "defaultDataLayer" should be a plain object. "${dataLayer}" is not valid.`
       )
     }
 
-    result += `window.dataLayer.push(${JSON.stringify(dataLayer)});`
+    result += `window.dataLayer.push(${JSON.stringify(dataLayer.value)});`
   }
 
   return stripIndent`${result}`
