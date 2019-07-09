@@ -48,25 +48,16 @@ Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql
 
 ```graphql
 {
-  allMarkdownRemark(
-    sort: { order: DESC, fields: [frontmatter___date] }
-    limit: 1000
-  ) {
-    edges {
-      node {
-        fields {
-          slug
-        }
-        frontmatter {
-          tags
-        }
-      }
+  allMarkdownRemark {
+    group(field: frontmatter___tags) {
+      tag: fieldValue
+      totalCount
     }
   }
 }
 ```
 
-The resulting data includes the `slug` field and `tags` frontmatter for each post, which is all the data we'll need to create pages for each tag which contain a list of posts under that tag. Let's make the tag page template now:
+The above query groups posts by `tags`, and return each `tag` with the number of posts for each as `totalCount`. We could also extract some post data in each group, but to create a page for each tag, we only need to know the tag name. Let's make the tag page template now:
 
 ## Make a tags page template (for `/tags/{tag}`)
 
@@ -177,7 +168,7 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      allMarkdownRemark(
+      poatsRemark: allMarkdownRemark(
         sort: { order: DESC, fields: [frontmatter___date] }
         limit: 2000
       ) {
@@ -192,13 +183,18 @@ exports.createPages = ({ actions, graphql }) => {
           }
         }
       }
+      tagsGroup: allMarkdownRemark(limit: 2000) {
+        group(field: frontmatter___tags) {
+          fieldValue
+        }
+      }
     }
   `).then(result => {
     if (result.errors) {
       return Promise.reject(result.errors)
     }
 
-    const posts = result.data.allMarkdownRemark.edges
+    const posts = result.data.poatsRemark.edges
 
     // Create post detail pages
     posts.forEach(({ node }) => {
@@ -208,24 +204,16 @@ exports.createPages = ({ actions, graphql }) => {
       })
     })
 
-    // Tag pages:
-    let tags = []
-    // Iterate through each post, putting all found tags into `tags`
-    _.each(posts, edge => {
-      if (_.get(edge, "node.frontmatter.tags")) {
-        tags = tags.concat(edge.node.frontmatter.tags)
-      }
-    })
-    // Eliminate duplicate tags
-    tags = _.uniq(tags)
+    // Extract tag data from query
+    const tags = result.data.tagsGroup.group
 
     // Make tag pages
     tags.forEach(tag => {
       createPage({
-        path: `/tags/${_.kebabCase(tag)}/`,
+        path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
         component: tagTemplate,
         context: {
-          tag,
+          tag: tag.fieldValue,
         },
       })
     })
@@ -236,11 +224,12 @@ exports.createPages = ({ actions, graphql }) => {
 Some notes:
 
 - Our GraphQL query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
-- While making the tag pages, note that we pass `tag` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
+- We have 2 `allMarkdownRemark` bits so we must alias one of them. We alias both to avoid generic names their content.
+- While making the tag pages, note that we pass `tag.name` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
-Our `/tags` page will simply list out all tags, followed by the number of posts with that tag:
+Our `/tags` page will simply list out all tags, followed by the number of posts with that tag. We can get the data with the first query we wrote earlier, that groups posts by tags:
 
 ```jsx:title=src/pages/tags.js
 import React from "react"
