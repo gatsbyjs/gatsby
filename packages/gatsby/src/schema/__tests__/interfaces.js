@@ -1,6 +1,10 @@
 const { graphql } = require(`graphql`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
+const {
+  buildInterfaceType,
+  buildObjectType,
+} = require(`../types/type-builders`)
 const { store } = require(`../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../redux/actions/restricted`)
@@ -27,6 +31,20 @@ describe(`Queryable interfaces`, () => {
       {
         id: `anothertest1`,
         internal: { type: `AnotherTest` },
+        foo: `foooo`,
+        baz: `baz`,
+        date: new Date(`2018-01-01`),
+      },
+      {
+        id: `tbtest1`,
+        internal: { type: `TBTest` },
+        foo: `foo`,
+        bar: `bar`,
+        date: new Date(`2019-01-01`),
+      },
+      {
+        id: `anotherbttest1`,
+        internal: { type: `AnotherTBTest` },
         foo: `foooo`,
         baz: `baz`,
         date: new Date(`2018-01-01`),
@@ -84,26 +102,104 @@ describe(`Queryable interfaces`, () => {
     expect(rootQueryFields.allWrongInterface).toBeUndefined()
   })
 
-  it(`does not add root query fields for interfaces when types don't implement Node interface`, async () => {
+  it(`does not add root query fields for interface without @queryable extension`, async () => {
     dispatch(
       createTypes(`
-          interface WrongInterface @queryable {
-            foo: String
-          }
-          type Wrong implements WrongInterface {
-            foo: String
-          }
-          type WrongAgain implements WrongInterface {
-            foo: String
-          }
-        `)
+        interface WrongInterface {
+          foo: String
+        }
+        type Wrong implements Node & WrongInterface {
+          foo: String
+        }
+        type WrongAgain implements Node & WrongInterface {
+          foo: String
+        }
+      `)
     )
-    await buildSchema()
-    expect(report.panic).toBeCalledWith(
-      `Interfaces with the \`queryable\` extension must only be ` +
-        `implemented by types which also implement the \`Node\` ` +
-        `interface. Check the type definition of \`Wrong\`, \`WrongAgain\`.`
+    const schema = await buildSchema()
+    const rootQueryFields = schema.getType(`Query`).getFields()
+    expect(rootQueryFields.wrongInterface).toBeUndefined()
+    expect(rootQueryFields.allWrongInterface).toBeUndefined()
+  })
+
+  it(`adds root query fields for interface with @queryable extension (type builder)`, async () => {
+    dispatch(
+      createTypes([
+        buildInterfaceType({
+          name: `TypeBuilderInterface`,
+          extensions: {
+            queryable: true,
+          },
+          fields: {
+            foo: `String`,
+            date: {
+              type: `Date`,
+              extensions: {
+                dateformat: true,
+              },
+            },
+          },
+        }),
+        buildObjectType({
+          name: `TBTest`,
+          interfaces: [`Node`, `TypeBuilderInterface`],
+          fields: {
+            foo: `String`,
+            date: {
+              type: `Date`,
+              extensions: {
+                dateformat: true,
+              },
+            },
+          },
+        }),
+        buildObjectType({
+          name: `AnotherTBTest`,
+          interfaces: [`Node`, `TypeBuilderInterface`],
+          fields: {
+            foo: `String`,
+            date: {
+              type: `Date`,
+              extensions: {
+                dateformat: true,
+              },
+            },
+          },
+        }),
+      ])
     )
+    const query = `
+      {
+        allTypeBuilderInterface(
+          filter: { foo: { eq: "foooo" } }
+        ) {
+          nodes {
+            foo
+            date(formatString: "YYYY")
+          }
+        }
+        typeBuilderInterface(foo: { eq: "foooo" }) {
+          foo
+          date(formatString: "MM/DD/YYYY")
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allTypeBuilderInterface: {
+        nodes: [
+          {
+            foo: `foooo`,
+            date: `2018`,
+          },
+        ],
+      },
+      typeBuilderInterface: {
+        foo: `foooo`,
+        date: `01/01/2018`,
+      },
+    }
+    expect(results).toEqual(expected)
   })
 
   it(`returns correct results for query`, async () => {
