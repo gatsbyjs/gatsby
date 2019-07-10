@@ -71,7 +71,9 @@ const Breadcrumb = ({ itemList, location }) => {
             </React.Fragment>
           )
         })}
-        <span aria-current="page">{activeItem.title}</span>
+        <span aria-current="page">
+          {activeItem.breadcrumbTitle || activeItem.title}
+        </span>
       </BreadcrumbNav>
       {/* render a smaller view on mobile viewports with only previous breadcrumb */}
       {activeItemParents && (
