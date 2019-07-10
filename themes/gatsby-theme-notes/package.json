@@ -14,12 +14,12 @@
     "digital-garden"
   ],
   "devDependencies": {
-    "gatsby": "^2.13.9",
+    "gatsby": "^2.13.12",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "peerDependencies": {
-    "gatsby": "^2.13.9",
+    "gatsby": "^2.13.12",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -34,7 +34,7 @@
     "gatsby-plugin-og-image": "0.0.1",
     "gatsby-plugin-redirects": "^1.0.0",
     "gatsby-plugin-theme-ui": "^0.2.6",
-    "gatsby-source-filesystem": "^2.1.2",
+    "gatsby-source-filesystem": "^2.1.3",
     "is-present": "^1.0.0",
     "react-feather": "^1.1.6",
     "theme-ui": "^0.2.6"
