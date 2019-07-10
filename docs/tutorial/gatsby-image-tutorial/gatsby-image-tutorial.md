@@ -133,7 +133,7 @@ const HomePage = ({ data }) => {
       <Img
         className="headshot"
         fixed={data.file.childImageSharp.fixed}
-        alt="headshot"
+        alt=""
       />
     </Layout>
   )
