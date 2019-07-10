@@ -314,10 +314,10 @@ export default (pagePath, callback) => {
     .slice(0)
     .reverse()
     .forEach(style => {
-      // Add <link>s for styles that should be prefetched
+      // Add <link>s for styles that should be prefetched or preloaded
       // otherwise, inline as a <style> tag
 
-      if (style.rel === `prefetch`) {
+      if (style.rel === `prefetch` || style.rel === `preload`) {
         headComponents.push(
           <link
             as="style"
