@@ -30,6 +30,7 @@ So if your project has a `books.xml` with
       <publish_date>2000-10-01</publish_date>
       <description>An in-depth look at creating applications
       with XML.</description>
+      <description_html><![CDATA[<p>An in-depth look at creating applications with XML.</p>]]></description_html>
    </book>
    <book id="bk102">
       <author>Ralls, Kim</author>
@@ -40,11 +41,12 @@ So if your project has a `books.xml` with
       <description>A former architect battles corporate zombies,
       an evil sorceress, and her own childhood to become queen
       of the world.</description>
+      <description_html><![CDATA[<p>A former architect battles <strong>corporate zombies</strong>, an evil sorceress, and her own childhood to become queen of the world.</p>]]></description_html>
    </book>
 </catalog>
 ```
 
-The plugin uses [xml-parser](https://www.npmjs.com/package/xml-parser) to convert it to json
+The plugin uses [xml-js](https://www.npmjs.com/package/xml-js) to convert it to json
 
 ```json
 {
@@ -62,93 +64,76 @@ The plugin uses [xml-parser](https://www.npmjs.com/package/xml-parser) to conver
         "attributes": {
           "id": "bk101"
         },
-        "children": [
-          {
-            "name": "author",
-            "attributes": {},
-            "children": [],
-            "content": "Gambardella, Matthew"
-          },
-          {
-            "name": "title",
-            "attributes": {},
-            "children": [],
-            "content": "XML Developer's Guide"
-          },
-          {
-            "name": "genre",
-            "attributes": {},
-            "children": [],
-            "content": "Computer"
-          },
-          {
-            "name": "price",
-            "attributes": {},
-            "children": [],
-            "content": "44.95"
-          },
-          {
-            "name": "publish_date",
-            "attributes": {},
-            "children": [],
-            "content": "2000-10-01"
-          },
-          {
-            "name": "description",
-            "attributes": {},
-            "children": [],
-            "content": "An in-depth look at creating applications\n      with XML."
-          }
-        ],
-        "content": ""
+        "author": {
+          "text": "Gambardella, Matthew",
+        },
+        "children": [],
+        "description": {
+          "text": "An in-depth look at creating applications
+              with XML.",
+        },
+        "description_html": {
+          "cdata": "<p>An in-depth look at creating applications
+              with XML.</p>",
+        },
+        "genre": {
+          "text": "Computer",
+        },
+        "id": "bk101",
+        "internal": {
+          "contentDigest": "contentDigest",
+          "type": "NodeNameXml",
+        },
+        "parent": "whatever",
+        "price": {
+          "text": "44.95",
+        },
+        "publish_date": {
+          "text": "2000-10-01",
+        },
+        "title": {
+          "text": "XML Developer's Guide",
+        },
       },
       {
         "name": "book",
         "attributes": {
           "id": "bk102"
         },
-        "children": [
-          {
-            "name": "author",
-            "attributes": {},
-            "children": [],
-            "content": "Ralls, Kim"
-          },
-          {
-            "name": "title",
-            "attributes": {},
-            "children": [],
-            "content": "Midnight Rain"
-          },
-          {
-            "name": "genre",
-            "attributes": {},
-            "children": [],
-            "content": "Fantasy"
-          },
-          {
-            "name": "price",
-            "attributes": {},
-            "children": [],
-            "content": "5.95"
-          },
-          {
-            "name": "publish_date",
-            "attributes": {},
-            "children": [],
-            "content": "2000-12-16"
-          },
-          {
-            "name": "description",
-            "attributes": {},
-            "children": [],
-            "content": "A former architect battles corporate zombies,\n      an evil sorceress, and her own childhood to become queen\n      of the world."
-          }
-        ],
-        "content": ""
+        "author": {
+          "text": "Ralls, Kim",
+        },
+        "children": [],
+        "description": {
+          "text": "A former architect battles corporate zombies,
+              an evil sorceress, and her own childhood to become queen
+              of the world.",
+        },
+        "description_html": {
+          "cdata": "<p>A former architect battles <strong>corporate zombies</strong>,
+              an evil sorceress, and her own childhood to become queen
+              of the world.</p>",
+        },
+        "genre": {
+          "text": "Fantasy",
+        },
+        "id": "bk102",
+        "internal": {
+          "contentDigest": "contentDigest",
+          "type": "NodeNameXml",
+        },
+        "parent": "whatever",
+        "price": {
+          "text": "5.95",
+        },
+        "publish_date": {
+          "text": "2000-12-16",
+        },
+        "title": {
+          "text": "Midnight Rain",
+        },
       }
     ],
-    "content": ""
   }
 }
 ```
@@ -164,10 +149,29 @@ You'd be able to query your books like:
   allBooksXml {
     edges {
       node {
-        name
-        xmlChildren {
-          name
-          content
+        attributes {
+          id
+        }
+        author {
+          text
+        }
+        title {
+          text
+        }
+        genre {
+          text
+        }
+        price {
+          text
+        }
+        publish_date {
+          text
+        }
+        description {
+          text
+        }
+        description_html {
+          cdata
         }
       }
     }
@@ -184,64 +188,58 @@ Which would return:
       "edges": [
         {
           "node": {
-            "name": "book",
-            "xmlChildren": [
-              {
-                "name": "author",
-                "content": "Gambardella, Matthew"
-              },
-              {
-                "name": "title",
-                "content": "XML Developer's Guide"
-              },
-              {
-                "name": "genre",
-                "content": "Computer"
-              },
-              {
-                "name": "price",
-                "content": "44.95"
-              },
-              {
-                "name": "publish_date",
-                "content": "2000-10-01"
-              },
-              {
-                "name": "description",
-                "content": "An in-depth look at creating applications\n      with XML."
-              }
-            ]
+            "attributes": {
+              "id": "bk101"
+            },
+            "author": {
+              "text": "Gambardella, Matthew"
+            },
+            "title": {
+              "text": "XML Developer's Guide"
+            },
+            "genre": {
+              "text": "Computer"
+            },
+            "price": {
+              "text": "44.95"
+            },
+            "publish_date": {
+              "text": "2000-10-01"
+            },
+            "description": {
+              "text": "An in-depth look at creating applications with XML."
+            },
+            "description_html": {
+              "cdata": "<p>An in-depth look at creating applications with XML.</p>"
+            }
           }
         },
         {
           "node": {
-            "name": "book",
-            "xmlChildren": [
-              {
-                "name": "author",
-                "content": "Ralls, Kim"
-              },
-              {
-                "name": "title",
-                "content": "Midnight Rain"
-              },
-              {
-                "name": "genre",
-                "content": "Fantasy"
-              },
-              {
-                "name": "price",
-                "content": "5.95"
-              },
-              {
-                "name": "publish_date",
-                "content": "2000-12-16"
-              },
-              {
-                "name": "description",
-                "content": "A former architect battles corporate zombies,\n      an evil sorceress, and her own childhood to become queen\n      of the world."
-              }
-            ]
+            "attributes": {
+              "id": "bk102"
+            },
+            "author": {
+              "text": "Ralls, Kim"
+            },
+            "title": {
+              "text": "Midnight Rain"
+            },
+            "genre": {
+              "text": "Fantasy"
+            },
+            "price": {
+              "text": "5.95"
+            },
+            "publish_date": {
+              "text": "2000-12-16"
+            },
+            "description": {
+              "text": "A former architect battles corporate zombies, an evil sorceress, and her own childhood to become queen of the world."
+            },
+            "description_html": {
+              "cdata": "<p>A former architect battles <strong>corporate zombies</strong>, an evil sorceress, and her own childhood to become queen of the world.</p>"
+            }
           }
         }
       ]

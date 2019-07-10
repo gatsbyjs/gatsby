@@ -21619,6 +21619,13 @@ xlsx@^0.14.0:
     exit-on-epipe "~1.0.1"
     ssf "~0.10.2"
 
+xml-js@^1.6.11:
+  version "1.6.11"
+  resolved "https://registry.npmjs.org/xml-js/-/xml-js-1.6.11.tgz#927d2f6947f7f1c19a316dd8eea3614e8b18f8e9"
+  integrity sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==
+  dependencies:
+    sax "^1.2.4"
+
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
@@ -21626,12 +21633,6 @@ xml-name-validator@^3.0.0:
 xml-parse-from-string@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/xml-parse-from-string/-/xml-parse-from-string-1.0.1.tgz#a9029e929d3dbcded169f3c6e28238d95a5d5a28"
-
-xml-parser@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/xml-parser/-/xml-parser-1.2.1.tgz#c31f4c34f2975db82ad013222120592736156fcd"
-  dependencies:
-    debug "^2.2.0"
 
 xml2js@^0.4.5:
   version "0.4.19"
