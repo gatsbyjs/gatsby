@@ -126,7 +126,7 @@ exports.sourceNodes = function sourceNodes({ actions }) {
 You can now apply configuration to type builder types through an exposed `extensions` property.
 
 ```js
-schema.createObjectType({
+schema.buildObjectType({
   name: MyType,
   extensions: {
     infer: true,
