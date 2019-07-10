@@ -1,21 +1,30 @@
-const transformWebpackError = (stage, webpackError) => {
-  // console.log(__filename, { stage, e })
+const stageCodeToReadableLabel = {
+  "build-javascript": `Generating JavaScript bundles`,
+  "build-html": `Generating SSR bundle`,
+}
 
-  let filePath = webpackError?.module?.resource
-  const e2 = {
+const transformWebpackError = (stage, webpackError) => {
+  return {
     id: `98123`,
     filePath: webpackError?.module?.resource,
-    location: webpackError?.error?.loc
-      ? {
-          start: webpackError.error.loc,
-        }
-      : null,
+    location:
+      webpackError?.module?.resource && webpackError?.error?.loc
+        ? {
+            start: webpackError.error.loc,
+          }
+        : undefined,
     context: {
       stage,
+      stageLabel: stageCodeToReadableLabel[stage],
+      message: webpackError?.error?.message || webpackError?.message,
     },
+
+    // We use original error to display stack trace for the most part.
+    // In case of webpack error stack will include internals of webpack
+    // or one of loaders (for example babel-loader) and doesn't provide
+    // much value to user, so it's purposely omitted.
+    // error: webpackError?.error || webpackError,
   }
-  return e2
-  // return e
 }
 
 module.exports = (stage, webpackError) => {

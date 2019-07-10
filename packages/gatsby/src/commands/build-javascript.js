@@ -18,11 +18,7 @@ module.exports = async program => {
         return
       }
 
-      if (
-        stats.compilation &&
-        stats.compilation.errors &&
-        stats.compilation.errors.length > 0
-      ) {
+      if (stats.hasErrors()) {
         reject(stats.compilation.errors)
         return
       }

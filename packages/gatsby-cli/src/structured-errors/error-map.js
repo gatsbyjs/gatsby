@@ -22,7 +22,7 @@ const errorMap = {
     docsUrl: `https://gatsby.dev/debug-html`,
   },
   "98123": {
-    text: context => `Generating JavaScript bundles failed`,
+    text: context => `${context.stageLabel} failed\n\n${context.message}`,
     type: `WEBPACK`,
     level: `ERROR`,
   },
