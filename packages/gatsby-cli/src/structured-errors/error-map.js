@@ -78,7 +78,7 @@ const errorMap = {
   },
   "11321": {
     text: context =>
-      `${context.pluginName} threw an error while running the ${
+      `"${context.pluginName}" threw an error while running the ${
         context.api
       } lifecycle:\n\n${context.message}`,
     type: `PLUGIN`,
