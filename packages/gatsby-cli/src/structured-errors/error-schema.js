@@ -10,7 +10,7 @@ const errorSchema = Joi.object().keys({
   text: Joi.string(),
   stack: Joi.array().items(Joi.object({}).unknown()),
   level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
-  type: Joi.string().valid([`GRAPHQL`, `CONFIG`]),
+  type: Joi.string().valid([`GRAPHQL`, `CONFIG`, `WEBPACK`]),
   filePath: Joi.string(),
   location: Joi.object({
     start: Position.required(),
