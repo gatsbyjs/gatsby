@@ -32,7 +32,7 @@ const Breadcrumb = ({ itemList, location }) => {
   const activeItem = getActiveItem(itemList.items, location, undefined)
   const activeItemParents = getActiveItemParents(itemList.items, activeItem, [])
   const topLevel = itemList.key
-  const topLevelTitle = itemList.title
+  const topLevelTitle = itemList.breadcrumbTitle || itemList.title
   // return a shorter version of the breadcrumb on the intro page
   // because the docs intro page isn't generated from markdown
   if (activeItem.title === `Introduction`) {
