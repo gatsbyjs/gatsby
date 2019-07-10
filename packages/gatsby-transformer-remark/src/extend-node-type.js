@@ -94,6 +94,7 @@ const SpaceMarkdownNodeTypesSet = new Set([
 module.exports = (
   {
     type,
+    basePath,
     pathPrefix,
     getNode,
     getNodesByType,
@@ -108,7 +109,7 @@ module.exports = (
     return {}
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
-  pathPrefixCacheStr = pathPrefix || ``
+  pathPrefixCacheStr = basePath || ``
 
   const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
@@ -203,7 +204,7 @@ module.exports = (
       })
       const markdownAST = remark.parse(markdownNode.internal.content)
 
-      if (pathPrefix) {
+      if (basePath) {
         // Ensure relative links include `pathPrefix`
         visit(markdownAST, [`link`, `definition`], node => {
           if (
@@ -211,7 +212,7 @@ module.exports = (
             node.url.startsWith(`/`) &&
             !node.url.startsWith(`//`)
           ) {
-            node.url = withPathPrefix(node.url, pathPrefix)
+            node.url = withPathPrefix(node.url, basePath)
           }
         })
       }
@@ -259,7 +260,7 @@ module.exports = (
               markdownNode,
               getNode,
               files: fileNodes,
-              pathPrefix,
+              basePath,
               reporter,
               cache: getCache(plugin.name),
               getCache,
@@ -322,7 +323,7 @@ module.exports = (
                 return null
               }
               node.url = [
-                pathPrefix,
+                basePath,
                 _.get(markdownNode, appliedTocOptions.pathToSlugField),
                 node.url,
               ]
