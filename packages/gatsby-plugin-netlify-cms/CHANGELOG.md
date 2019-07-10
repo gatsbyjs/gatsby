@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.1.1...gatsby-plugin-netlify-cms@4.1.2) (2019-07-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** remove dependency rule from custom compilation ([#15591](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/15591)) ([5886544](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/5886544))
+
+### Features
+
+- **gatsby-plugin-netlify-cms:** add deprecation message for netlify-cms ([#15588](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/issues/15588)) ([7932414](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/commit/7932414))
+
 ## [4.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms/compare/gatsby-plugin-netlify-cms@4.1.0...gatsby-plugin-netlify-cms@4.1.1) (2019-07-01)
 
 ### Bug Fixes
