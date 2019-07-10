@@ -1,6 +1,6 @@
 import crypto from "crypto"
 import http from "http"
-import { tmpdir, type } from "os"
+import { tmpdir } from "os"
 import { resolve, parse } from "path"
 
 import { pathExists, createWriteStream, ensureDir, unlink } from "fs-extra"
@@ -10,15 +10,16 @@ import imageminGiflossy from "imagemin-giflossy"
 import PQueue from "p-queue"
 
 export default class FFMPEG {
-  constructor({ cacheDir, rootDir }) {
+  constructor({ cacheDir, rootDir, ffmpegPath, ffprobePath }) {
     this.queue = new PQueue({ concurrency: 1 })
     this.cacheDir = cacheDir
     this.rootDir = rootDir
 
-    if (type() === `Linux`) {
-      // @todo make configurable
-      ffmpeg.setFfmpegPath(resolve(__dirname, `bin`, `ffmpeg`))
-      ffmpeg.setFfprobePath(resolve(__dirname, `bin`, `ffprobe`))
+    if (ffmpegPath) {
+      ffmpeg.setFfmpegPath(ffmpegPath)
+    }
+    if (ffprobePath) {
+      ffmpeg.setFfprobePath(ffprobePath)
     }
   }
 

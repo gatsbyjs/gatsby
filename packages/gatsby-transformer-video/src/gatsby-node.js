@@ -5,7 +5,10 @@ import { ensureDir } from "fs-extra"
 
 import FFMPEG from "./ffmpeg"
 
-exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
+exports.setFieldsOnGraphQLNodeType = (
+  { type, store },
+  { ffmpegPath, ffprobePath }
+) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -17,7 +20,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
     `${rootDir}/node_modules/.cache/gatsby-transformer-video/`
   )
 
-  const ffmpeg = new FFMPEG({ cacheDir, rootDir })
+  const ffmpeg = new FFMPEG({ cacheDir, rootDir, ffmpegPath, ffprobePath })
 
   return {
     videopreview: {
