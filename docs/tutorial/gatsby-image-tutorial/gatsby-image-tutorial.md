@@ -181,12 +181,6 @@ Here's an example of a query from a list of conferences in a YAML file with an i
 
 In this case the query starts with `allSpeakingYaml` to direct `graphql` to look for this data in the `speaking.yaml` file in your `src/data` folder referenced in `gatsby-config.js`. If you want to query a file named `blog.yaml`, for example, you'd start the query with `allBlogYaml`.
 
-### Troubleshooting queries
-
-A common error you might run into is `Unknown field allSpeakingYaml on type Query`, where `allSpeakingYaml` is replaced with something specific to your code. What the error boils down to is that `graphql` is unable to find a matching result. This can mean it couldn't find a file that matched the first line, meaning that no `speaking.yaml` file exists.
-This "Unknown field" error can also be triggered by finding the file but not the associated content structure the query asks for.
-Yet another way to find this error is by leaving out the `gatsby-source-filesystem` plugin; without it, the folder that holds the data is not visible to `graphql` and it will throw the same error.
-
 ## Rendering images sourced from YAML
 
 In order to reference your images in YAML make sure that the relative paths are accurate. The path to each image should be relative to the location of the `.yaml` file pointing to it. And all of these files need to be in a directory visible to the `gatsby-source-filesystem` plugin configured in `gatsby-config.js`.
@@ -279,13 +273,17 @@ talks: allSpeakingYaml {
 When you do that, you’ve changed the reference to the query object available in your JSX code. While it was previously referenced as this:
 
 ```jsx
-{data.allSpeakingYaml.edges.map(({ node }) => ())
+{data.allSpeakingYaml.edges.map(({ node }) => (
+   <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
+))
 ```
 
 Giving it an alias does not add a level of complexity to the response object, it just replaces it. So you end up with the same structure, referenced like this (note the alias `talks` in place of the longer `allSpeakingYaml`):
 
 ```jsx
-{data.talks.edges.map(({ node }) => ())
+{data.talks.edges.map(({ node }) => (
+    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
+))
 ```
 
 The top-level object name of `data` is implicit. This is important because when you conduct multiple queries as part of a single component, Gatsby still passes the entire result to the component.
@@ -328,7 +326,9 @@ With that understanding, you can combine two queries referencing images and use 
 Notice that this example uses aliasing for one query and not the other. This is allowed; there is no requirement that all your queries use aliasing. In this case, the JSX would look like this to access the `speaking.yaml` content.
 
 ```jsx
-{data.allSpeakingYaml.edges.map(({ node }) => ())
+{data.allSpeakingYaml.edges.map(({ node }) => (
+     <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
+))
 ```
 
 And then like this to access the image using the alias name `banner`.
