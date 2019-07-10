@@ -10,10 +10,9 @@ import imageminGiflossy from "imagemin-giflossy"
 import PQueue from "p-queue"
 
 export default class FFMPEG {
-  constructor({ cacheDir, publicDir, rootDir }) {
+  constructor({ cacheDir, rootDir }) {
     this.queue = new PQueue({ concurrency: 1 })
     this.cacheDir = cacheDir
-    this.publicDir = publicDir
     this.rootDir = rootDir
 
     if (type() === `Linux`) {
@@ -30,7 +29,6 @@ export default class FFMPEG {
     internal: { contentDigest },
   }) => {
     await ensureDir(this.cacheDir)
-    await ensureDir(this.publicDir)
 
     const { name, ext } = parse(fileName)
     const absolutePath = resolve(
@@ -117,11 +115,7 @@ export default class FFMPEG {
     })
   }
 
-  createPreviewFilters = async ({
-    foo,
-    bar: { width, duration, fps },
-    info,
-  }) => {
+  createPreviewFilters = ({ fieldArgs: { width, duration, fps }, info }) => {
     const { duration: sourceDuration } = info.streams[0]
     return [
       {
@@ -153,10 +147,16 @@ export default class FFMPEG {
 
   createPreviewMp4 = (...args) =>
     this.queue.add(() => this.convertToPreviewMp4(...args))
-  convertToPreviewMp4 = async ({ path, filename, fieldArgs, info }) => {
+  convertToPreviewMp4 = async ({
+    publicDir,
+    path,
+    filename,
+    fieldArgs,
+    info,
+  }) => {
     const { duration } = fieldArgs
 
-    const publicPath = resolve(this.publicDir, `${filename}-preview.mp4`)
+    const publicPath = resolve(publicDir, `${filename}-preview.mp4`)
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       console.log(`[MP4] Converting ${path} (${filename})`)
@@ -177,10 +177,16 @@ export default class FFMPEG {
 
   createPreviewWebp = (...args) =>
     this.queue.add(() => this.convertToPreviewWebp(...args))
-  convertToPreviewWebp = async ({ path, filename, fieldArgs, info }) => {
+  convertToPreviewWebp = async ({
+    publicDir,
+    path,
+    filename,
+    fieldArgs,
+    info,
+  }) => {
     const { duration } = fieldArgs
 
-    const publicPath = resolve(this.publicDir, `${filename}-preview.webp`)
+    const publicPath = resolve(publicDir, `${filename}-preview.webp`)
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       console.log(`[WEBP] Converting ${path} (${filename})`)
@@ -201,10 +207,16 @@ export default class FFMPEG {
 
   createPreviewGif = (...args) =>
     this.queue.add(() => this.convertToPreviewGif(...args))
-  convertToPreviewGif = async ({ path, filename, fieldArgs, info }) => {
+  convertToPreviewGif = async ({
+    publicDir,
+    path,
+    filename,
+    fieldArgs,
+    info,
+  }) => {
     const { duration } = fieldArgs
 
-    const publicPath = resolve(this.publicDir, `${filename}-preview.gif`)
+    const publicPath = resolve(publicDir, `${filename}-preview.gif`)
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       const tmpPath = resolve(tmpdir(), `${filename}-preview.gif`)
@@ -240,7 +252,7 @@ export default class FFMPEG {
 
       console.log(`[GIF] Optimizing`)
       await imagemin([tmpPath], {
-        destination: this.publicDir,
+        destination: publicDir,
         use: [imageminGiflossy({ lossy: 120 })],
       })
 
@@ -251,10 +263,10 @@ export default class FFMPEG {
   }
 
   createH264 = (...args) => this.queue.add(() => this.convertToH264(...args))
-  convertToH264 = async ({ path, filename, fieldArgs }) => {
+  convertToH264 = async ({ publicDir, path, filename, fieldArgs }) => {
     const { maxWidth, maxHeight } = fieldArgs
 
-    const publicPath = resolve(this.publicDir, `${filename}-h264.mp4`)
+    const publicPath = resolve(publicDir, `${filename}-h264.mp4`)
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       console.log(`[H264] Converting ${path} (${filename})`)
@@ -279,10 +291,10 @@ export default class FFMPEG {
   }
 
   createH265 = (...args) => this.queue.add(() => this.convertToH265(...args))
-  convertToH265 = async ({ path, filename, fieldArgs }) => {
+  convertToH265 = async ({ publicDir, path, filename, fieldArgs }) => {
     const { maxWidth, maxHeight } = fieldArgs
 
-    const publicPath = resolve(this.publicDir, `${filename}-h265.mp4`)
+    const publicPath = resolve(publicDir, `${filename}-h265.mp4`)
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       console.log(`[H265] Converting ${path} (${filename})`)

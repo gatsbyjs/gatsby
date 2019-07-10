@@ -1,6 +1,7 @@
-import { resolve } from "path"
+import { resolve, join } from "path"
 
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from "gatsby/graphql"
+import { ensureDir } from "fs-extra"
 
 import FFMPEG from "./ffmpeg"
 
@@ -12,14 +13,11 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
   const program = store.getState().program
   const rootDir = program.directory
 
-  // @todo make configurable
   const cacheDir = resolve(
     `${rootDir}/node_modules/.cache/gatsby-transformer-video/`
   )
-  // @todo make configurable
-  const publicDir = resolve(`${rootDir}/public/assets/videos/`)
 
-  const ffmpeg = new FFMPEG({ publicDir, cacheDir, rootDir })
+  const ffmpeg = new FFMPEG({ cacheDir, rootDir })
 
   return {
     videopreview: {
@@ -35,6 +33,10 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
         width: { type: GraphQLInt, defaultValue: 300 },
         duration: { type: GraphQLInt, defaultValue: 5 },
         fps: { type: GraphQLInt, defaultValue: 6 },
+        publicPath: {
+          type: GraphQLString,
+          defaultValue: `assets/video-previews`,
+        },
       },
       async resolve(video, fieldArgs, context) {
         if (video.file.contentType.indexOf(`video/`) === -1) {
@@ -46,8 +48,13 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
           fieldArgs,
         })
 
+        const publicDir = join(rootDir, `public`, fieldArgs.publicPath)
+
+        await ensureDir(publicDir)
+
         try {
           const mp4 = await ffmpeg.createPreviewMp4({
+            publicDir,
             path,
             filename,
             info,
@@ -55,6 +62,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
             video,
           })
           const webp = await ffmpeg.createPreviewWebp({
+            publicDir,
             path,
             filename,
             info,
@@ -62,6 +70,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
             video,
           })
           const gif = await ffmpeg.createPreviewGif({
+            publicDir,
             path,
             filename,
             info,
@@ -91,6 +100,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
       args: {
         maxWidth: { type: GraphQLInt, defaultValue: 1920 },
         maxHeight: { type: GraphQLInt, defaultValue: 1080 },
+        publicPath: { type: GraphQLString, defaultValue: `assets/videos` },
       },
       async resolve(video, fieldArgs, context) {
         if (video.file.contentType.indexOf(`video/`) === -1) {
@@ -102,8 +112,13 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
           fieldArgs,
         })
 
+        const publicDir = join(rootDir, `public`, fieldArgs.publicPath)
+
+        await ensureDir(publicDir)
+
         try {
           const h264 = await ffmpeg.createH264({
+            publicDir,
             path,
             filename,
             info,
@@ -111,6 +126,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
             video,
           })
           const h265 = await ffmpeg.createH265({
+            publicDir,
             path,
             filename,
             info,
