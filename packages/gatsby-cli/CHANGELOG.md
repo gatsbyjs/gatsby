@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.8...gatsby-cli@2.7.9) (2019-07-10)
+
+### Bug Fixes
+
+- don't break joi validation for production bundles webpack… ([#15602](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/15602)) ([4c50024](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/4c50024))
+- don't break joi validation for unhandledRejections & apirunner ([#15600](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/15600)) ([14ba538](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/14ba538))
+
+## [2.7.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.7...gatsby-cli@2.7.8) (2019-07-05)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.6...gatsby-cli@2.7.7) (2019-06-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.5...gatsby-cli@2.7.6) (2019-06-28)
+
+### Bug Fixes
+
+- **gatsby-cli:** depend upon [@hapi](https://github.com/hapi)/joi ([#15221](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/15221)) ([59a021d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/59a021d))
+
+## [2.7.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.4...gatsby-cli@2.7.5) (2019-06-28)
+
+### Features
+
+- **gatsby-cli:** Add error codes and structured errors ([#14904](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/14904)) ([d26651e](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/d26651e))
+
+## [2.7.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.3...gatsby-cli@2.7.4) (2019-06-28)
+
+### Bug Fixes
+
+- filter out frames that are not matched to source location ([#15211](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/issues/15211)) ([44e8f76](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/commit/44e8f76))
+
+## [2.7.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.2...gatsby-cli@2.7.3) (2019-06-27)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.7.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli/compare/gatsby-cli@2.7.1...gatsby-cli@2.7.2) (2019-06-24)
 
 ### Bug Fixes

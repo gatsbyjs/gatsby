@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.6.1...gatsby-transformer-remark@2.6.2) (2019-07-10)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Fix transformer-remark when using assetPrefix ([#15518](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/15518)) ([44f7550](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/44f7550))
+
+## [2.6.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.6.0...gatsby-transformer-remark@2.6.1) (2019-07-06)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** fix spaces between text-bearing block-level elements in plain text excerpts ([#15040](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/15040)) ([84ec96d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/84ec96d))
+
+# [2.6.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.5.0...gatsby-transformer-remark@2.6.0) (2019-07-04)
+
+### Features
+
+- **gatsby-transformer-remark:** add meta support to code block ([#15348](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/15348)) ([13f0c27](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/13f0c27))
+
 # [2.5.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.4.0...gatsby-transformer-remark@2.5.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-transformer-remark
