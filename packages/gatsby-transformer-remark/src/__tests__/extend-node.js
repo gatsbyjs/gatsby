@@ -920,6 +920,30 @@ final text`,
   )
 })
 
+describe(`Relative links keep being relative`, () => {
+  const assetPrefix = ``
+  const basePath = `/prefix`
+  const pathPrefix = assetPrefix + basePath
+
+  bootstrapTest(
+    `relative links are not prefixed`,
+    `
+This is [a link](path/to/page1).
+
+This is [a reference]
+
+[a reference]: ./path/to/page2
+`,
+    `html`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.html).toMatch(`<a href="path/to/page1">`)
+      expect(node.html).toMatch(`<a href="./path/to/page2">`)
+    },
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
+  )
+})
+
 describe(`Links are correctly prefixed`, () => {
   const assetPrefix = ``
   const basePath = `/prefix`
