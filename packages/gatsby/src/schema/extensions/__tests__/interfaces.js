@@ -1,15 +1,15 @@
 const { graphql } = require(`graphql`)
-const { build } = require(`..`)
-const withResolverContext = require(`../context`)
+const { build } = require(`../..`)
+const withResolverContext = require(`../../context`)
 const {
   buildInterfaceType,
   buildObjectType,
-} = require(`../types/type-builders`)
-const { store } = require(`../../redux`)
+} = require(`../../types/type-builders`)
+const { store } = require(`../../../redux`)
 const { dispatch } = store
-const { actions } = require(`../../redux/actions/restricted`)
+const { actions } = require(`../../../redux/actions/restricted`)
 const { createTypes } = actions
-require(`../../db/__tests__/fixtures/ensure-loki`)()
+require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.panic = jest.fn()
@@ -17,7 +17,7 @@ afterEach(() => {
   report.panic.mockClear()
 })
 
-describe(`Queryable interfaces`, () => {
+describe(`Queryable Node interfaces`, () => {
   beforeEach(() => {
     dispatch({ type: `DELETE_CACHE` })
     const nodes = [
@@ -55,7 +55,7 @@ describe(`Queryable interfaces`, () => {
     })
     dispatch(
       createTypes(`
-        interface TestInterface @queryable {
+        interface TestInterface @nodeInterface {
           foo: String
           date: Date @dateformat
         }
@@ -73,7 +73,7 @@ describe(`Queryable interfaces`, () => {
     )
   })
 
-  it(`adds root query fields for interface with @queryable extension`, async () => {
+  it(`adds root query fields for interface with @nodeInterface extension`, async () => {
     const schema = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
     expect(rootQueryFields.testInterface).toBeDefined()
@@ -82,7 +82,7 @@ describe(`Queryable interfaces`, () => {
     expect(rootQueryFields.allTestInterface.resolve).toBeDefined()
   })
 
-  it(`does not add root query fields for interface without @queryable extension`, async () => {
+  it(`does not add root query fields for interface without @nodeInterface extension`, async () => {
     dispatch(
       createTypes(`
         interface WrongInterface {
@@ -102,33 +102,35 @@ describe(`Queryable interfaces`, () => {
     expect(rootQueryFields.allWrongInterface).toBeUndefined()
   })
 
-  it(`does not add root query fields for interface without @queryable extension`, async () => {
+  it(`shows error when not all types implementing the queryable interface als implement the Node interface`, async () => {
     dispatch(
       createTypes(`
-        interface WrongInterface {
+        interface WrongInterface @nodeInterface {
           foo: String
         }
-        type Wrong implements Node & WrongInterface {
+        type Wrong implements WrongInterface {
           foo: String
         }
-        type WrongAgain implements Node & WrongInterface {
+        type WrongAgain implements WrongInterface {
           foo: String
         }
       `)
     )
-    const schema = await buildSchema()
-    const rootQueryFields = schema.getType(`Query`).getFields()
-    expect(rootQueryFields.wrongInterface).toBeUndefined()
-    expect(rootQueryFields.allWrongInterface).toBeUndefined()
+    await buildSchema()
+    expect(report.panic).toBeCalledWith(
+      `Interfaces with the \`nodeInterface\` extension must only be implemented ` +
+        `by types which also implement the \`Node\` interface. Check the type ` +
+        `definition of \`Wrong\`, \`WrongAgain\`.`
+    )
   })
 
-  it(`adds root query fields for interface with @queryable extension (type builder)`, async () => {
+  it(`adds root query fields for interface with @nodeInterface extension (type builder)`, async () => {
     dispatch(
       createTypes([
         buildInterfaceType({
           name: `TypeBuilderInterface`,
           extensions: {
-            queryable: true,
+            nodeInterface: true,
           },
           fields: {
             foo: `String`,
@@ -321,7 +323,7 @@ const buildSchema = async () => {
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema({})
+  const schema = await buildSchema()
   const results = await graphql(
     schema,
     query,

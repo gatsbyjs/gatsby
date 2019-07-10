@@ -153,8 +153,8 @@ const processTypeComposer = async ({
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
     }
   } else if (typeComposer instanceof InterfaceTypeComposer) {
-    if (typeComposer.getExtension(`queryable`)) {
-      // We only process field extensions for queryable interfaces, so we get
+    if (typeComposer.getExtension(`nodeInterface`)) {
+      // We only process field extensions for queryable Node interfaces, so we get
       // the input args on the root query type, e.g. `formatString` etc. for `dateformat`
       await processFieldExtensions({
         schemaComposer,
@@ -329,9 +329,9 @@ const addExtensions = ({
             )
           }
           break
-        case `queryable`:
+        case `nodeInterface`:
           if (typeComposer instanceof InterfaceTypeComposer) {
-            typeComposer.setExtension(`queryable`, true)
+            typeComposer.setExtension(`nodeInterface`, true)
           }
           break
         default:
@@ -870,7 +870,7 @@ const checkQueryableInterfaces = ({ schemaComposer }) => {
   schemaComposer.forEach(type => {
     if (
       type instanceof InterfaceTypeComposer &&
-      type.getExtension(`queryable`)
+      type.getExtension(`nodeInterface`)
     ) {
       queryableInterfaces.add(type.getTypeName())
     }
@@ -889,7 +889,7 @@ const checkQueryableInterfaces = ({ schemaComposer }) => {
   })
   if (incorrectTypes.length) {
     report.panic(
-      `Interfaces with the \`queryable\` extension must only be ` +
+      `Interfaces with the \`nodeInterface\` extension must only be ` +
         `implemented by types which also implement the \`Node\` ` +
         `interface. Check the type definition of ` +
         `${incorrectTypes.map(t => `\`${t}\``).join(`, `)}.`
