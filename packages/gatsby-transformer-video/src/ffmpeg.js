@@ -9,7 +9,7 @@ import imagemin from "imagemin"
 import imageminGiflossy from "imagemin-giflossy"
 import PQueue from "p-queue"
 
-export class FFMPEG {
+export default class FFMPEG {
   constructor({ cacheDir, publicDir, rootDir }) {
     this.queue = new PQueue({ concurrency: 1 })
     this.cacheDir = cacheDir
@@ -151,7 +151,8 @@ export class FFMPEG {
     ]
   }
 
-  createPreviewMp4 = this.queue.add((...args) => this.convertToPreviewMp4(args))
+  createPreviewMp4 = (...args) =>
+    this.queue.add(() => this.convertToPreviewMp4(...args))
   convertToPreviewMp4 = async ({ path, filename, fieldArgs, info }) => {
     const { duration } = fieldArgs
 
@@ -174,9 +175,8 @@ export class FFMPEG {
     return publicPath.replace(`${this.rootDir}/public`, ``)
   }
 
-  createPreviewWebp = this.queue.add((...args) =>
-    this.convertToPreviewWebp(args)
-  )
+  createPreviewWebp = (...args) =>
+    this.queue.add(() => this.convertToPreviewWebp(...args))
   convertToPreviewWebp = async ({ path, filename, fieldArgs, info }) => {
     const { duration } = fieldArgs
 
@@ -199,7 +199,8 @@ export class FFMPEG {
     return publicPath.replace(`${this.rootDir}/public`, ``)
   }
 
-  createPreviewGif = this.queue.add((...args) => this.convertToPreviewGif(args))
+  createPreviewGif = (...args) =>
+    this.queue.add(() => this.convertToPreviewGif(...args))
   convertToPreviewGif = async ({ path, filename, fieldArgs, info }) => {
     const { duration } = fieldArgs
 
@@ -249,7 +250,7 @@ export class FFMPEG {
     return publicPath.replace(`${this.rootDir}/public`, ``)
   }
 
-  createH264 = this.queue.add((...args) => this.convertToH264(args))
+  createH264 = (...args) => this.queue.add(() => this.convertToH264(...args))
   convertToH264 = async ({ path, filename, fieldArgs }) => {
     const { maxWidth, maxHeight } = fieldArgs
 
@@ -277,7 +278,7 @@ export class FFMPEG {
     return publicPath.replace(`${this.rootDir}/public`, ``)
   }
 
-  createH265 = this.queue.add((...args) => this.convertToH265(args))
+  createH265 = (...args) => this.queue.add(() => this.convertToH265(...args))
   convertToH265 = async ({ path, filename, fieldArgs }) => {
     const { maxWidth, maxHeight } = fieldArgs
 

@@ -8,15 +8,16 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
-  // @todo make configurable
-  const cacheDir = resolve(
-    `${program.directory}/node_modules/.cache/gatsby-transformer-video/`
-  )
-  // @todo make configurable
-  const publicDir = resolve(`${program.directory}/public/assets/videos/`)
 
   const program = store.getState().program
   const rootDir = program.directory
+
+  // @todo make configurable
+  const cacheDir = resolve(
+    `${rootDir}/node_modules/.cache/gatsby-transformer-video/`
+  )
+  // @todo make configurable
+  const publicDir = resolve(`${rootDir}/public/assets/videos/`)
 
   const ffmpeg = new FFMPEG({ publicDir, cacheDir, rootDir })
 
@@ -40,7 +41,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
           return null
         }
 
-        const { path, filename, info } = await ffmpeg.prepareVideo({
+        const { path, filename, info } = await ffmpeg.analyzeVideo({
           video,
           fieldArgs,
         })
@@ -96,7 +97,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, store }) => {
           return null
         }
 
-        const { path, filename, info } = await ffmpeg.prepareVideo({
+        const { path, filename, info } = await ffmpeg.analyzeVideo({
           video,
           fieldArgs,
         })
