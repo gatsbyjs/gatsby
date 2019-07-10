@@ -588,7 +588,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-It can then be used in any `createTypes` call by simply adding the directtive/extension
+It can then be used in any `createTypes` call by simply adding the directive/extension
 to the field:
 
 ```js:title=gatsby-node.js
@@ -631,6 +631,10 @@ extend(options, prevFieldConfig) {
 +  }
 }
 ```
+
+If multiple field extensions are added to a field, resolvers are processed in this order:
+first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field
+extension resolvers execute from left to right.
 
 ## createResolvers API
 
