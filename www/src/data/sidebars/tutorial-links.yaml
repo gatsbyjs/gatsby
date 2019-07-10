@@ -109,6 +109,13 @@
           link: /tutorial/part-eight/#add-page-metadata
         - title: Keep making it better
           link: /tutorial/part-eight/#keep-making-it-better
+    - title: Theme tutorials
+      link: /tutorial/theme-tutorials/
+      items:
+        - title: Using a Theme
+          link: /tutorial/using-a-theme
+        - title: Using Multiple Themes Together
+          link: /tutorial/using-multiple-themes-together/
     - title: Additional Tutorials
       link: /tutorial/additional-tutorials/
       items:

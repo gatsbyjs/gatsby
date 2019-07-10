@@ -5,6 +5,9 @@ import Spinner from "./components/spinner"
 import ProgressBar from "./components/progress-bar"
 import Develop from "./components/develop"
 import { Message } from "./components/messages"
+
+import Error from "./components/error"
+
 import isTTY from "../../../util/is-tty"
 import calcElapsedTime from "../../../util/calc-elapsed-time"
 
@@ -95,21 +98,17 @@ export default class GatsbyReporter extends React.Component {
     this.verbose = isVerbose
   }
 
-  _addMessage(type, str) {
+  _addMessage(type, details) {
     // threat null/undefind as an empty character, it seems like ink can't handle empty str
-    if (!str) {
-      str = `\u2800`
+    if (!details) {
+      details = `\u2800`
     }
+
+    const msg = { type, details }
 
     this.setState(state => {
       return {
-        messages: [
-          ...state.messages,
-          {
-            text: str,
-            type,
-          },
-        ],
+        messages: [...state.messages, msg],
       }
     })
   }
@@ -150,9 +149,13 @@ export default class GatsbyReporter extends React.Component {
           <Static>
             {messages.map((msg, index) => (
               <Box textWrap="wrap" key={index}>
-                <Message type={msg.type} hideColors={disableColors}>
-                  {msg.text}
-                </Message>
+                {msg.type === `error` ? (
+                  <Error type={msg.type} details={msg.details} />
+                ) : (
+                  <Message type={msg.type} hideColors={disableColors}>
+                    {msg.details}
+                  </Message>
+                )}
               </Box>
             ))}
           </Static>

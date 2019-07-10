@@ -18,6 +18,7 @@ const write = async ({ publicDir }, page, result, webpackCompilationHash) => {
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
+    matchPath: page.matchPath,
     webpackCompilationHash,
     result,
   }

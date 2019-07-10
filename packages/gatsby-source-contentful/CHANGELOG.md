@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.8...gatsby-source-contentful@2.1.9) (2019-07-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.7...gatsby-source-contentful@2.1.8) (2019-07-06)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.6...gatsby-source-contentful@2.1.7) (2019-07-05)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** include locale in asset cache key ([#14994](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/14994)) ([e6fb93a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/e6fb93a))
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.5...gatsby-source-contentful@2.1.6) (2019-07-03)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.4...gatsby-source-contentful@2.1.5) (2019-07-02)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.3...gatsby-source-contentful@2.1.4) (2019-07-01)
+
+### Features
+
+- **gatsby-source-contentful:** Add option to not use sync tokens ([#15203](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/issues/15203)) ([251f9a8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/commit/251f9a8))
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful/compare/gatsby-source-contentful@2.1.2...gatsby-source-contentful@2.1.3) (2019-06-25)
 
 **Note:** Version bump only for package gatsby-source-contentful

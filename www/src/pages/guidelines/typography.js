@@ -404,10 +404,10 @@ const Typography = ({ location }) => (
             </Heading>
             <Text fontSize={{ xxs: 2, md: 3 }} mb={7}>
               <p>
-                Over the last few years, the modern Javascript ecosystem has
+                Over the last few years, the modern JavaScript ecosystem has
                 created tools that allow developers to build quicker with fewer
                 bugs. Gatsby gives you easy access to features like modern
-                Javascript syntax, code bundling and hot reloading, without
+                JavaScript syntax, code bundling and hot reloading, without
                 having to maintain custom tooling. Build app-like experiences
                 faster — with Gatsby.
               </p>
