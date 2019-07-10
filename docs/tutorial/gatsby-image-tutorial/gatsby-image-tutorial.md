@@ -157,7 +157,7 @@ export default HomePage
 
 Another way to source images is through YAML (or Markdown). This example uses the `gatsby-transformer-yaml` plugin to query the YAML files. More information about that plugin can be found in the [Gatsby plugin library](/packages/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
 
-Here's an example of a query from a list of conferences in a YAML file:
+Here's an example of a query from a list of conferences in a YAML file with an image for each one:
 
 ```graphql
 {
