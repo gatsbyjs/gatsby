@@ -333,7 +333,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       let pluginName =
         plugin.name === `default-site-plugin`
           ? `gatsby-node.js`
-          : `${plugin.name}`
+          : plugin.name
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
