@@ -1,7 +1,7 @@
 ---
 title: What we learned from user testing of accessible client-side routing techniques with Fable Tech Labs
 author: Marcy Sutton
-date: 2019-07-10
+date: 2019-07-11
 excerpt: "We conducted 5 user testing sessions for accessibility research with Fable Tech Labs to determine which client-side routing techniques are the most ergonomic and intuitive to users with disabilities, and if any of the techniques presented barriers detracting from their browsing experience."
 tags:
   - accessibility
