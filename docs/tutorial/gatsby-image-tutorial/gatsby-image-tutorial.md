@@ -101,7 +101,7 @@ You might expect the relative path to be relative to the file the code sits in, 
 
 Another thing to note about this query is how it uses the fragment `GatsbyImageSharpFixed` to return a fixed width and height image. You could also use the fragment `GatsbyImageSharpFluid` which produces scalable images that fill their container instead of fitting specific dimensions. In `gatsby-image`, _fluid_ images are meant for images that don’t have a finite size depending on the screen, where as other images are _fixed_.
 
-The query will return a processed image at the highest depth. That is, the deepest part of the return object. The returned result will be automatically passed into the component and attached to the `data` prop. You can then display the image using JSX to automatically output responsive, highly performant HTML.
+The query will return a data object including the processed image in a format usable by the `gatsby-image` component. The returned result will be automatically passed into the component and attached to the `data` prop. You can then display the image using JSX to automatically output responsive, highly performant HTML.
 
 To display the image, start by importing the component provided by `gatsby-image`.
 
