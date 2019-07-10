@@ -54,21 +54,26 @@ const Breadcrumb = ({ itemList, location }) => {
 
   return (
     <>
+      {/* render the default view on desktop sizes with all links displayed */}
       <BreadcrumbNav>
         <Link to="/">Home</Link>
         <Separator />
         <Link to={`/${topLevel}/`}>{topLevelTitle}</Link>
         <Separator />
-        {activeItemParents.reverse().map(item => (
-          <React.Fragment key={item.title}>
-            <span>
-              <Link to={item.link}>{item.title}</Link>
-            </span>
-            <Separator />
-          </React.Fragment>
-        ))}
+        {activeItemParents.reverse().map(item => {
+          const itemTitle = item.breadcrumbTitle || item.title
+          return (
+            <React.Fragment key={itemTitle}>
+              <span>
+                <Link to={item.link}>{itemTitle}</Link>
+              </span>
+              <Separator />
+            </React.Fragment>
+          )
+        })}
         <span aria-current="page">{activeItem.title}</span>
       </BreadcrumbNav>
+      {/* render a smaller view on mobile viewports with only previous breadcrumb */}
       {activeItemParents && (
         <BreadcrumbNav mobile>
           <Separator character={<ChevronLeft />} />
@@ -80,7 +85,9 @@ const Breadcrumb = ({ itemList, location }) => {
             }
           >
             {activeItemParents[activeItemParents.length - 1]
-              ? activeItemParents[activeItemParents.length - 1].title
+              ? activeItemParents[activeItemParents.length - 1]
+                  .breadcrumbTitle ||
+                activeItemParents[activeItemParents.length - 1].title
               : topLevelTitle}
           </Link>
         </BreadcrumbNav>
