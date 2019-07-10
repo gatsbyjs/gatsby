@@ -23,7 +23,9 @@ As Sam Bhagwat wrote [when announcing Gatsby Preview](blog/2018-07-17-announcing
 
 > When a copywriter edits a headline in their CMS, they shouldn’t have to imagine what their change looks like in context. They should see it—immediately.
 
-**We're excited to announce that we're launching (in beta) live preview with Drupal and Gatsby!**
+At [Third and Grove](https://www.thirdandgrove.com/), we've been working on a preview module for Drupal to be used with Gatsby Cloud.
+
+**Today, we're excited to announce that we're beta launching live preview with Drupal and Gatsby!**
 
 With modern JavaScript, React’s component model, and Progressive Web App features built in, Gatsby + Gatsby Preview is a compelling alternative to traditional CMS site building, while still allowing content teams to use mature CMS content workflows. So far, it's been available for Contentful, Sanity, DatoCMS, and Contentstack. 
 
