@@ -3,8 +3,9 @@ title: "Integrating Sentry Into Your Gatsby Project"
 date: "2019-05-25"
 author: "Jonathan Reeves"
 tags:
-    - bug monitoring
+    - error monitoring
     - post
+    - sentry
 ---
 ## Assuming knowledge on my part
 I'm going to do something that you are told not to ever do and assume that you already have a project created and are just looking to install an error tracking software to help you fix and resolve errors before any users find it or at least before majority of your users find it and start complaining. 
