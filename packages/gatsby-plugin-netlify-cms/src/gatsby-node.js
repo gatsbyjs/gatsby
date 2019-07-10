@@ -63,6 +63,17 @@ function replaceRule(value) {
   return value
 }
 
+exports.onPreInit = ({ reporter }) => {
+  try {
+    require.resolve(`netlify-cms`)
+    reporter.warn(
+      `The netlify-cms package is deprecated, please install netlify-cms-app instead. You can do this by running "npm install netlify-cms-app"`
+    )
+  } catch (err) {
+    // carry on
+  }
+}
+
 exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
