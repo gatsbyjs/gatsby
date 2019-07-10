@@ -70,14 +70,15 @@ return <button onClick={methodDoesNotExist}>Break the world</button>
 
 Step 5. With the event in place you can now click on the issues link on the navigation bar to your left. This page will list out your events that you have in progress and also in real time. You can use the drop down menus to select how to sort the issues.
 
-![Underscores Theme](./images/example-event.png)
+![Issues Navigation Link Highlight](./images/navigation-issues.png)
 
 ## Seeing the List of User's affected
 
-If you want to see the list of users that are affected by the erros then click on the blue numbers on the issues page. You will then be redirected to the list of users. The below screenshot will show the blue number and location of what I am talking about.
+If you want to see the list of users that are affected by the errors then click on the blue numbers on the issues page. You will then be redirected to the list of users. The below screenshot will show the users list.
 
 ![Users affected](./images/affected-users.png)
 
 **_Note: This also works to get a list of events. You just click the blue number under Events instead of Users._**
 
+The image below shows the same as above but for the events with arrows highlighting the numbers you can click on to see the given list.
 ![Events affected](./images/affected-event-list.png)
