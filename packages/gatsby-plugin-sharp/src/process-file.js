@@ -93,9 +93,6 @@ exports.processFile = (file, transforms, options = {}) => {
               json: true,
             })
             .then(() => transform)
-            .catch(err => {
-              console.log(err)
-            })
 
           return cloudPromise
         }
@@ -111,7 +108,6 @@ exports.processFile = (file, transforms, options = {}) => {
       pipeline = pipeline.withMetadata()
     }
   } catch (err) {
-    console.log(err)
     throw new Error(`Failed to process image ${file}`)
   }
 
