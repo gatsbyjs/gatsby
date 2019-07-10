@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.6.1...gatsby-transformer-remark@2.6.2) (2019-07-10)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Fix transformer-remark when using assetPrefix ([#15518](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/issues/15518)) ([44f7550](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/commit/44f7550))
+
 ## [2.6.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark/compare/gatsby-transformer-remark@2.6.0...gatsby-transformer-remark@2.6.1) (2019-07-06)
 
 ### Bug Fixes
