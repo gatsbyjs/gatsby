@@ -35,12 +35,13 @@ These are some common accessibility barriers when it comes to client-side routin
 - Without visible focus outlines, sighted keyboard, switch, and voice dictation users can’t see their focus point on the screen when views change with focus management.
 
 Some of the commonly recommended solutions include (references at the end of this post):
+
 - Dynamically set focus to an HTML wrapper element on page change, to both move focus to the new content and make an announcement in assistive technology.
-    - This pattern often uses `tabindex="-1"` on a DIV or other block-level element to allow focus to be placed on an otherwise non-interactive element.
+  - This pattern often uses `tabindex="-1"` on a DIV or other block-level element to allow focus to be placed on an otherwise non-interactive element.
 - Dynamically set focus to a h1-h6 heading element instead of a wrapper to move focus to new content and make a shorter screen reader announcement.
-    - This also typically requires `tabindex="-1"` to focus the heading with JavaScript in a cross-browser way.
+  - This also typically requires `tabindex="-1"` to focus the heading with JavaScript in a cross-browser way.
 - Dynamically set focus to an interactive element like a button to put keyboard users on an operable button/UI control in the correct part of the app and announce it to screen reader users.
-    - The name of the button matters a lot here.
+  - The name of the button matters a lot here.
 - Leave focus where it is and make an [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) announcement instead.
 - Reset focus to the top of the application (i.e. a parent wrapper element) to mimic a traditional browser refresh and announce new content in assistive technology.
 - Turn on focus outlines for keyboard and screen reader users while suppressing them for the mouse using [CSS :focus-visible and polyfill](https://github.com/WICG/focus-visible) or the [What Input](https://github.com/ten1seven/what-input) library.
@@ -52,7 +53,7 @@ By user testing a few variations of known routing techniques, we gained some val
 
 ## Working with Fable
 
-We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. I (Marcy) connected with Fable’s lead front end developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through. 
+We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. I (Marcy) connected with Fable’s lead front end developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through.
 
 The experience of testing with people with disabilities and the results that followed felt very important, and something product teams should seek out regularly. We’d highly recommend this process for anyone working on digital experiences; particularly if you can test prototypes to adapt to the findings early and often in design & development. User testing for accessibility can provide game-changing detail that you’ll be eternally grateful to have uncovered. Addressing accessibility issues sooner than later is both a [smart business investment](https://www.w3.org/WAI/business-case/) and can make your project more [inclusive](https://www.microsoft.com/design/inclusive/) from the start!
 
@@ -158,7 +159,7 @@ The tester also mentioned that **navigating to the bottom of a screen required t
 
 The exact implementation(s) we integrate into Gatsby will likely evolve as we try things out and iterate on improvements. But the recommended approach coming out of these research sessions includes:
 
-- Rendering an interactive UI control in each view that becomes visible when the user navigates through the app by keyboard. 
+- Rendering an interactive UI control in each view that becomes visible when the user navigates through the app by keyboard.
 - Making it function as a tab stop in a content region for keyboard users and providing a way to skip back to navigation so it is actually operable: a skip link is the most natural choice for this.
 - Making the control small in width and height (like a link or icon button) so the focus outline and content aren’t cut off when zoomed way in.
 - Putting an `aria-label` or `aria-labelledby` attribute with an indication of the nearby content (like a heading), and what action the control does. E.g. “Portfolio, skip back to navigation”. This would benefit from more user testing.
@@ -168,7 +169,7 @@ Part of the challenge with this work is what might be ideal for one user with a 
 
 ### Updating our approach in Gatsby and React
 
-To make this proposal a reality, Gatsby could look for an interactive skip link component with a given `className`, `id` attribute, or `ref`, and focus it when pages change through navigation as a result of user action. The automatic wrapper focus behavior that shipped with Gatsby’s implementation of `@reach/router` would act as a fallback in the absence of such a component. Another idea is for Gatsby or React to adopt an algorithm to look for the first heading in a content area and dynamically inject a skip link next to it – similar to a [permalinked header](https://www.gatsbyjs.org/packages/gatsby-remark-autolink-headers/) but providing a skip action to take the user back somewhere. 
+To make this proposal a reality, Gatsby could look for an interactive skip link component with a given `className`, `id` attribute, or `ref`, and focus it when pages change through navigation as a result of user action. The automatic wrapper focus behavior that shipped with Gatsby’s implementation of `@reach/router` would act as a fallback in the absence of such a component. Another idea is for Gatsby or React to adopt an algorithm to look for the first heading in a content area and dynamically inject a skip link next to it – similar to a [permalinked header](https://www.gatsbyjs.org/packages/gatsby-remark-autolink-headers/) but providing a skip action to take the user back somewhere.
 
 The most accessible and best performing pattern will likely be an opt-in component where the developer can specify where the control should go in the DOM and how it should be labeled. But it’s worth pointing out that if a solution can be handled automatically, it would have a wider impact amongst developers who aren't prioritizing accessibility.
 
