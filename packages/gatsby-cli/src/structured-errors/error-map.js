@@ -76,6 +76,14 @@ const errorMap = {
     type: `CONFIG`,
     level: `ERROR`,
   },
+  "10126": {
+    text: context =>
+      `${context.pluginName} threw an error while running the ${
+        context.api
+      } lifecycle:\n\n${context.message}`,
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
 }
 
 module.exports = { errorMap, defaultError: errorMap[``] }
