@@ -13,8 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "@emotion/core": "^10.0.14",
-    "@mdx-js/mdx": "^1.0.21",
-    "@mdx-js/react": "^1.0.21",
+    "@mdx-js/mdx": "^1.0.23",
+    "@mdx-js/react": "^1.0.23",
     "@theme-ui/prism": "^0.2.8",
     "@theme-ui/typography": "^0.2.5",
     "gatsby-image": "^2.2.4",
