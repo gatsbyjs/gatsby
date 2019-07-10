@@ -1050,7 +1050,7 @@ const buildSchema = async () => {
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema({})
+  const schema = await buildSchema()
   const results = await graphql(
     schema,
     query,
