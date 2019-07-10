@@ -166,6 +166,13 @@ Here's an example of a query from a list of conferences in a YAML file with an i
       node {
         conference
         year
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }
