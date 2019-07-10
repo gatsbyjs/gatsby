@@ -67,9 +67,11 @@ Let’s make our transition in to Drupal. First things first, enable the JSON AP
 
 Install the module and enable it on your Drupal instance. Configuring the Drupal module is straightforward: under ‘Configuration > System’, you should now have the option for ‘Gatsby Live Preview Settings’. The URL you copied earlier from your Gatsby Cloud instance can be pasted into the ‘Gatsby Preview Server URL’ field in Drupal and saved.
 
-Now you're all set up to use Preview! Make a change to your content, press Save, and watch as Gatsby updates before Drupal even notifies you that your changes have been saved. We're not at keystroke-by-keystroke _yet_ -- but that's coming!
+Now you're all set up to use Preview! Make a change to your content, press Save, and watch as Gatsby updates before Drupal even notifies you that your changes have been saved. 
 
 ![Gatsby and Drupal integration demo with content reloading](./gatsby-drupal.gif)
+
+You can see above how fast this feedback loop is -- and we're working on making it even faster (keystroke-by-keystroke!)
 
 ## Conclusion
 
