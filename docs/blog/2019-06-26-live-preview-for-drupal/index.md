@@ -1,6 +1,6 @@
 ---
 title: "Hot Off the Keyboard: Live Preview for Drupal + Gatsby (And 3 Steps to Get Started)"
-date: 2019-06-26
+date: 2019-07-10
 author: Grant Glidewell
 tags:
   - drupal
@@ -9,19 +9,29 @@ tags:
   - tutorials
 ---
 
-The dream, a CMS with preview and all the content bells and whistles combined with a front end that is modern, with bells and whistles of its own.
+It's the dream: a CMS with rich content modelling capabilities combined with a [modern frontend](/blog/2018-10-11-rise-of-modern-web-development/) with features like declarative, reusable UIs, modern Javascript, hot reloading, versioning and so on. 
 
-Two people will be excited about this article.
+Two types of people will be excited about this article.
 
 1. The developer who has been eyeing Gatsby but their clients are hesitant to leave an established workflow that includes previewing their work.
 
-1. And the other is a content focused client who wants their site to be cutting edge, but doesn't want to leave the comfortable workflow that includes being able to see what the content will become.
+2. A content focused client who wants their site to be cutting edge, but doesn't want to leave their comfortable workflow that allows them to rapidly toggle between content changes and the visual impact of those changes on the website.
 
-These people have one major need in common: live preview with Drupal and Gatsby. Well, that day has arrived, it is now possible to have your cake (yummy Gatsby cake) and use that Drupal fork to eat it too.
+As Sam Bhagwat wrote [when announcing Gatsby Preview](blog/2018-07-17-announcing-gatsby-preview/):
 
-An early version of Drupal Gatsby preview is available to try, all the usual caveats apply for this early version. We do not recommend this for production and if you do use this please be patient and expect hiccups. With that out of the way, let's get to the how!
+> Content teams are creators. And creators, as Bret Victor put it, “need an immediate connection to what they’re making.”
 
-## How to get started with Drupal + Gatsby preview
+> When a copywriter edits a headline in their CMS, they shouldn’t have to imagine what their change looks like in context. They should see it—immediately.
+
+**We're excited to announce that we're launching (in beta) live preview with Drupal and Gatsby!**
+
+With modern JavaScript, React’s component model, and Progressive Web App features built in, Gatsby + Gatsby Preview is a compelling alternative to traditional CMS site building, while still allowing content teams to use mature CMS content workflows. So far, it's been available for Contentful, Sanity, DatoCMS, and Contentstack. 
+
+Today's launch of Gatsby Preview + Drupal is a major milestone, making Gatsby Preview available for a huge, thriving open-source community. 
+
+Here's how it works:
+
+## Getting started
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/H72PY3wNMcI" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="Youtube video: Drupal Gatsby Preview setup walkthrough"></iframe>
 
@@ -55,6 +65,14 @@ Let’s make our transition in to Drupal. First things first, enable the JSON AP
 
 Install the module and enable it on your Drupal instance. Configuring the Drupal module is straightforward: under ‘Configuration > System’, you should now have the option for ‘Gatsby Live Preview Settings’. The URL you copied earlier from your Gatsby Cloud instance can be pasted into the ‘Gatsby Preview Server URL’ field in Drupal and saved.
 
-Now you're all set up to use Preview! Make a change to your content, press Save (keystroke by keystroke updates are not available yet), and watch as Gatsby updates before Drupal even notifies you that your changes have been saved.
+Now you're all set up to use Preview! Make a change to your content, press Save, and watch as Gatsby updates before Drupal even notifies you that your changes have been saved. We're not at keystroke-by-keystroke _yet_ -- but that's coming!
 
 ![Gatsby and Drupal integration demo with content reloading](./gatsby-drupal.gif)
+
+## Conclusion
+
+As you're testing out Gatsby Preview + Drupal, and using it for company or client projects, please [let the Gatsby team know](support@gatsbyjs.com) if you experience any issues. 
+
+Drupal-based agencies and companies who want to improve client outcomes, site performance and UI/UX, and modernize their engineering stack while increase engineering team satisfaction have a powerful new tool in their toolkit. 
+
+We're excited to see what comes next! 
