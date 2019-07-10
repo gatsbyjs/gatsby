@@ -1,8 +1,6 @@
 import { onRouteUpdate } from "../gatsby-browser"
 import { Minimatch } from "minimatch"
 
-jest.useFakeTimers()
-
 describe(`gatsby-plugin-google-analytics`, () => {
   describe(`gatsby-browser`, () => {
     describe(`onRouteUpdate`, () => {
@@ -29,10 +27,15 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         beforeEach(() => {
+          jest.useFakeTimers()
           window.ga = jest.fn()
           window.requestAnimationFrame = jest.fn(cb => {
             cb()
           })
+        })
+
+        afterEach(() => {
+          jest.resetAllMocks()
         })
 
         it(`does not send page view when ga is undefined`, () => {
@@ -66,6 +69,15 @@ describe(`gatsby-plugin-google-analytics`, () => {
           delete window.requestAnimationFrame
 
           onRouteUpdate({})
+
+          jest.runAllTimers()
+
+          expect(setTimeout).toHaveBeenCalledTimes(1)
+          expect(window.ga).toHaveBeenCalledTimes(2)
+        })
+
+        it(`uses setTimeout when pageTransitionDelay is set`, () => {
+          onRouteUpdate({}, { pageTransitionDelay: 1000 })
 
           jest.runAllTimers()
 

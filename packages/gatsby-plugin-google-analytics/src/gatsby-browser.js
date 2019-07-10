@@ -1,4 +1,4 @@
-export const onRouteUpdate = ({ location }) => {
+export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
   if (process.env.NODE_ENV !== `production` || typeof ga !== `function`) {
     return null
   }
@@ -20,13 +20,14 @@ export const onRouteUpdate = ({ location }) => {
     window.ga(`send`, `pageview`)
   }
 
-  if (`requestAnimationFrame` in window) {
+  const delay = pluginOptions.pageTransitionDelay
+  if (delay || !(`requestAnimationFrame` in window)) {
+    // minimum delay to simulate a pair of requestAnimationFrame calls
+    setTimeout(sendPageView, Math.min(32, delay))
+  } else {
     requestAnimationFrame(() => {
       requestAnimationFrame(sendPageView)
     })
-  } else {
-    // simulate 2 rAF calls
-    setTimeout(sendPageView, 32)
   }
 
   return null
