@@ -341,7 +341,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         })
 
         reporter.panicOnBuild({
-          id: `10126`,
+          id: `11321`,
           context: {
             pluginName,
             api,

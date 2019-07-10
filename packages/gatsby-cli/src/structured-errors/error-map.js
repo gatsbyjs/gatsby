@@ -76,12 +76,12 @@ const errorMap = {
     type: `CONFIG`,
     level: `ERROR`,
   },
-  "10126": {
+  "11321": {
     text: context =>
       `${context.pluginName} threw an error while running the ${
         context.api
       } lifecycle:\n\n${context.message}`,
-    type: `CONFIG`,
+    type: `PLUGIN`,
     level: `ERROR`,
   },
 }
