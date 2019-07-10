@@ -9,6 +9,7 @@
     "gatsby-plugin-manifest": "^2.0.17",
     "gatsby-plugin-offline": "^2.0.23",
     "gatsby-plugin-react-helmet": "^3.0.6",
+    "gatsby-seo": "^0.1.0",
     "glob": "^7.1.3",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",

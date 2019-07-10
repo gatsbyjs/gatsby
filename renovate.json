@@ -1,6 +1,6 @@
 {
   "extends": ["config:base"],
-  "includePaths": ["starters/**"],
+  "includePaths": ["starters/**", "themes/**"],
   "major": {
     "enabled": false
   },
