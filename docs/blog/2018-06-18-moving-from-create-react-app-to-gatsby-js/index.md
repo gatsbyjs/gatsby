@@ -146,43 +146,37 @@ Your `gatsby-node.js` file will look like this:
 ```js
 const path = require("path")
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
+exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
-  return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
-    // Query for markdown nodes to use in creating pages.
-    resolve(
-      graphql(
-        `
-          {
-            allContentfulBlogPost(limit: 1000) {
-              edges {
-                node {
-                  slug
-                }
-              }
+
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+
+  // Query for markdown nodes to use in creating pages.
+  const result = await graphql(
+    `
+      {
+        allContentfulBlogPost(limit: 1000) {
+          edges {
+            node {
+              slug
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(result.errors)
         }
+      }
+    `
+  )
 
-        // Create blog post pages.
-        result.data.allContentfulBlogPost.edges.forEach(edge => {
-          createPage({
-            path: `${edge.node.slug}`, // required
-            component: blogPostTemplate,
-            context: {
-              slug: edge.node.slug, // in react this will be the `:slug` part
-            },
-          })
-        })
+  if (result.errors) throw new Error(result.errors)
 
-        return
-      })
-    )
+  // Create blog post pages.
+  result.data.allContentfulBlogPost.edges.forEach(edge => {
+    createPage({
+      path: `${edge.node.slug}`, // required
+      component: blogPostTemplate,
+      context: {
+        slug: edge.node.slug, // in react this will be the `:slug` part
+      },
+    })
   })
 }
 ```

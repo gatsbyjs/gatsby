@@ -259,7 +259,7 @@ const createLocalePage = (page, createPage) => {
   }
 }
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = ({ actions }) => {
   const { createPage } = actions
 
   // generate your dynamic content here...
