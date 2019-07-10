@@ -75,6 +75,6 @@ Now you're all set up to use Preview! Make a change to your content, press Save,
 
 As you're testing out Gatsby Preview + Drupal, and using it for company or client projects, please [let the Gatsby team know](support@gatsbyjs.com) if you experience any issues. 
 
-Drupal-based agencies and companies who want to improve client outcomes, site performance and UI/UX, and modernize their engineering stack while increase engineering team satisfaction have a powerful new tool in their toolkit. 
+Drupal-based agencies and companies who want to improve client outcomes, site performance and UI/UX, and modernize their engineering stack while increasing engineering team satisfaction have a powerful new tool in their toolkit. 
 
 We're excited to see what comes next! 
