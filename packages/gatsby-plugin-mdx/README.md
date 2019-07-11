@@ -39,13 +39,13 @@ components.
 Install with npm:
 
 ```sh
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/tag @mdx-js/react
+npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
 
 ```sh
-yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/tag @mdx-js/react
+yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 ## Usage
