@@ -185,15 +185,20 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
-  // A component wasn't set.
+  // Check if a component is set.
   if (!page.component) {
-    report.panic({
-      id: `11322`,
-      context: {
-        pluginName: name,
-        pageObject: page,
-      },
-    })
+    if (process.env.NODE_ENV !== `test`) {
+      report.panic({
+        id: `11322`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+        },
+      })
+    } else {
+      // For test
+      return `A component must be set when creating a page`
+    }
   }
 
   // Don't check if the component exists during tests as we use a lot of fake
@@ -208,67 +213,70 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           component: page.component,
         },
       })
-    } else if (page.component) {
-      if (!path.isAbsolute(page.component)) {
-        // Don't log out when testing
-        if (process.env.NODE_ENV !== `test`) {
-          report.panic({
-            id: `11326`,
-            context: {
-              pluginName: name,
-              pageObject: page,
-              component: page.component,
-            },
-          })
-        } else {
-          const message = `${name} must set the absolute path to the page component when create creating a page`
-          return message
-        }
-      }
+    }
+  }
+  if (!path.isAbsolute(page.component)) {
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      report.panic({
+        id: `11326`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
+    } else {
+      const message = `${name} must set the absolute path to the page component when create creating a page`
+      return message
+    }
+  }
 
-      // check if we've processed this component path
-      // before, before running the expensive "truePath"
-      // operation
-      if (pageComponentCache[page.component]) {
-        page.component = pageComponentCache[page.component]
-      } else {
-        const originalPageComponent = page.component
+  // check if we've processed this component path
+  // before, before running the expensive "truePath"
+  // operation
+  //
+  // Skip during testing as the paths don't exist on disk.
+  if (process.env.NODE_ENV !== `test`) {
+    if (pageComponentCache[page.component]) {
+      page.component = pageComponentCache[page.component]
+    } else {
+      const originalPageComponent = page.component
 
-        // normalize component path
-        page.component = slash(page.component)
-        // check if path uses correct casing - incorrect casing will
-        // cause issues in query compiler and inconsistencies when
-        // developing on Mac or Windows and trying to deploy from
-        // linux CI/CD pipeline
-        const trueComponentPath = slash(truePath(page.component))
-        if (trueComponentPath !== page.component) {
-          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-            const markers = page.component
-              .split(``)
-              .map((letter, index) => {
-                if (letter !== trueComponentPath[index]) {
-                  return `^`
-                }
-                return ` `
-              })
-              .join(``)
+      // normalize component path
+      page.component = slash(page.component)
+      // check if path uses correct casing - incorrect casing will
+      // cause issues in query compiler and inconsistencies when
+      // developing on Mac or Windows and trying to deploy from
+      // linux CI/CD pipeline
+      const trueComponentPath = slash(truePath(page.component))
+      if (trueComponentPath !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== trueComponentPath[index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
 
-            report.warn(
-              stripIndent`
+          report.warn(
+            stripIndent`
             ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
             page.component:     "${page.component}"
             path in filesystem: "${trueComponentPath}"
                                  ${markers}
           `
-            )
-            hasWarnedForPageComponentInvalidCasing.add(page.component)
-          }
-
-          page.component = trueComponentPath
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
-        pageComponentCache[originalPageComponent] = page.component
+
+        page.component = trueComponentPath
       }
+      pageComponentCache[originalPageComponent] = page.component
     }
   }
 
