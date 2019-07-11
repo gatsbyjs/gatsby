@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0",
     "@hapi/joi": "^15.0.0",
     "fs-extra": "^7.0.1",
-    "lodash.merge": "^4.6.0",
+    "lodash.merge": "^4.6.2",
     "rss": "^1.2.2"
   },
   "devDependencies": {
