@@ -1,5 +1,5 @@
 import React from "react"
 
-export default ({ dateObject }) => {
-  return <span data-testid="time">{dateObject.toTimeString()}</span>
-}
+export default ({ dateObject }) => (
+  <span data-testid="time">{dateObject.toTimeString()}</span>
+)
