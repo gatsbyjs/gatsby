@@ -241,10 +241,29 @@ exports.createArgsDigest = args => {
 
   const argsDigest = crypto
     .createHash(`md5`)
-    .update(JSON.stringify(filtered, Object.keys(filtered).sort()))
+    .update(JSON.stringify(sortKeys(filtered)))
     .digest(`hex`)
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
   return argsDigestShort
 }
+
+const sortKeys = object => {
+  var sortedObj = {},
+    keys = _.keys(object)
+
+  keys = _.sortBy(keys, key => key)
+
+  _.each(keys, key => {
+    if (typeof object[key] == `object` && !(object[key] instanceof Array)) {
+      sortedObj[key] = sortKeys(object[key])
+    } else {
+      sortedObj[key] = object[key]
+    }
+  })
+
+  return sortedObj
+}
+
+exports.sortKeys = sortKeys

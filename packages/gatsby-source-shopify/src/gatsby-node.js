@@ -88,7 +88,7 @@ export const sourceNodes = async (
     ])
     console.timeEnd(msg)
   } catch (e) {
-    console.error(chalk`\n{red error} an error occured while sourcing data`)
+    console.error(chalk`\n{red error} an error occurred while sourcing data`)
 
     // If not a GraphQL request error, let Gatsby print the error.
     if (!e.hasOwnProperty(`request`)) throw e

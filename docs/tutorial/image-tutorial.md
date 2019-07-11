@@ -70,7 +70,8 @@ module.exports = {
 
 ### Installing plugins to help with images
 
-Now you’ll configure gatsby-source-filesystem to load the image directory, add a GraphQL query to a page, add an image to the page, and then view the result in the browser.
+Now you will need to add the `gatsby-transformer-sharp` and `gatsby-plugin-sharp` plugins to `gatsby-config.js`, add a GraphQL query to a page, add an image to the page, and then view the result in the browser.
+
 First, you’ll need to install a few plugins and their dependencies:
 
 ```shell
@@ -101,7 +102,7 @@ module.exports = {
         // The protocol. This can be http or https.
         protocol: `http`,
         // Indicates whether the site is hosted on wordpress.com.
-        // If false, then the asumption is made that the site is self hosted.
+        // If false, then the assumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
@@ -111,7 +112,6 @@ module.exports = {
       },
     },
     // highlight-start
-    "gatsby-plugin-react-helmet",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     // highlight-end

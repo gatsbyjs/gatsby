@@ -48,10 +48,10 @@ const Banner = () => (
   <BannerContainer className="banner">
     <InnerContainer>
       <Content>
-        <OutboundLink href="https://www.gatsbyjs.com/impossible-foods-webinar/">
+        <OutboundLink href="https://www.gatsbyjs.com/ibm-themes-webinar/">
           Register now
         </OutboundLink>
-        {`: "ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale and Flexibility" Webinar 6/26 10am PT`}
+        {`: "IBM and Gatsby Themes: Driving Impact Through Design" Webinar 7/25 10am PT  `}
       </Content>
     </InnerContainer>
   </BannerContainer>

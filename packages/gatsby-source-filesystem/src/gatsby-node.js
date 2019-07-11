@@ -183,3 +183,14 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 }
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-file-node`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+  type File implements Node @infer {
+    birthtime: Date @deprecated(reason: "Use \`birthTime\` instead")
+    birthtimeMs: Float @deprecated(reason: "Use \`birthTime\` instead")
+  }
+  `
+  createTypes(typeDefs)
+}
