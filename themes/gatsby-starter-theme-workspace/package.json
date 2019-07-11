@@ -1,0 +1,11 @@
+{
+  "name": "gatsby-starter-theme-develop",
+  "private": true,
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "gatsby-theme-minimal",
+    "example"
+  ]
+}
