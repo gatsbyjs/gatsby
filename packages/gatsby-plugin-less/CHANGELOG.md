@@ -7,112 +7,112 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-less
 
-# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.13...gatsby-plugin-less@2.1.0) (2019-06-20)
+# [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.13...gatsby-plugin-less@2.1.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
-## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.12...gatsby-plugin-less@2.0.13) (2019-05-14)
+## [2.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.12...gatsby-plugin-less@2.0.13) (2019-05-14)
 
 ### Features
 
-- **gatsby-plugin-less:** allow passing less plugins ([#12898](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/issues/12898)) ([8933ca9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/commit/8933ca9))
+- **gatsby-plugin-less:** allow passing less plugins ([#12898](https://github.com/gatsbyjs/gatsby/issues/12898)) ([8933ca9](https://github.com/gatsbyjs/gatsby/commit/8933ca9))
 
-## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.11...gatsby-plugin-less@2.0.12) (2019-03-11)
-
-**Note:** Version bump only for package gatsby-plugin-less
-
-## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.10...gatsby-plugin-less@2.0.11) (2019-02-01)
+## [2.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.11...gatsby-plugin-less@2.0.12) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
-## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.9...gatsby-plugin-less@2.0.10) (2019-02-01)
+## [2.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.10...gatsby-plugin-less@2.0.11) (2019-02-01)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.9...gatsby-plugin-less@2.0.10) (2019-02-01)
 
 ### Bug Fixes
 
-- **core:** Disable HMR for CSS modules ([#11032](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/issues/11032)) ([97c98e9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/commit/97c98e9))
+- **core:** Disable HMR for CSS modules ([#11032](https://github.com/gatsbyjs/gatsby/issues/11032)) ([97c98e9](https://github.com/gatsbyjs/gatsby/commit/97c98e9))
 
-## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.8...gatsby-plugin-less@2.0.9) (2019-01-28)
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.8...gatsby-plugin-less@2.0.9) (2019-01-28)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.8"></a>
 
-## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.7...gatsby-plugin-less@2.0.8) (2018-11-29)
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.7...gatsby-plugin-less@2.0.8) (2018-11-29)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.7"></a>
 
-## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.6...gatsby-plugin-less@2.0.7) (2018-10-29)
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.6...gatsby-plugin-less@2.0.7) (2018-10-29)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.6"></a>
 
-## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.5...gatsby-plugin-less@2.0.6) (2018-10-23)
+## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.5...gatsby-plugin-less@2.0.6) (2018-10-23)
 
 ### Features
 
-- **gatsby-plugin-less:** add support for overriding the default options of `css-loader` ([#9237](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/issues/9237)) ([ba82bc4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/commit/ba82bc4)), closes [#9142](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/issues/9142)
+- **gatsby-plugin-less:** add support for overriding the default options of `css-loader` ([#9237](https://github.com/gatsbyjs/gatsby/issues/9237)) ([ba82bc4](https://github.com/gatsbyjs/gatsby/commit/ba82bc4)), closes [#9142](https://github.com/gatsbyjs/gatsby/issues/9142)
 
 <a name="2.0.5"></a>
 
-## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-rc.2...gatsby-plugin-less@2.0.5) (2018-09-17)
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-rc.2...gatsby-plugin-less@2.0.5) (2018-09-17)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-rc.2"></a>
 
-# [2.0.0-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-rc.1...gatsby-plugin-less@2.0.0-rc.2) (2018-09-17)
+# [2.0.0-rc.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-rc.1...gatsby-plugin-less@2.0.0-rc.2) (2018-09-17)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-rc.1"></a>
 
-# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-rc.0...gatsby-plugin-less@2.0.0-rc.1) (2018-08-29)
+# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-rc.0...gatsby-plugin-less@2.0.0-rc.1) (2018-08-29)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-rc.0"></a>
 
-# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-beta.5...gatsby-plugin-less@2.0.0-rc.0) (2018-08-21)
+# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-beta.5...gatsby-plugin-less@2.0.0-rc.0) (2018-08-21)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-beta.5"></a>
 
-# [2.0.0-beta.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-beta.4...gatsby-plugin-less@2.0.0-beta.5) (2018-07-21)
+# [2.0.0-beta.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-beta.4...gatsby-plugin-less@2.0.0-beta.5) (2018-07-21)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-beta.4"></a>
 
-# [2.0.0-beta.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-beta.3...gatsby-plugin-less@2.0.0-beta.4) (2018-07-09)
+# [2.0.0-beta.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-beta.3...gatsby-plugin-less@2.0.0-beta.4) (2018-07-09)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-beta.3"></a>
 
-# [2.0.0-beta.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-beta.2...gatsby-plugin-less@2.0.0-beta.3) (2018-06-27)
+# [2.0.0-beta.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-beta.2...gatsby-plugin-less@2.0.0-beta.3) (2018-06-27)
 
 ### Bug Fixes
 
-- use the language loader for imports not postcss ([#6173](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/issues/6173)) ([7190fe1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/commit/7190fe1))
+- use the language loader for imports not postcss ([#6173](https://github.com/gatsbyjs/gatsby/issues/6173)) ([7190fe1](https://github.com/gatsbyjs/gatsby/commit/7190fe1))
 
 <a name="2.0.0-beta.2"></a>
 
-# [2.0.0-beta.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-beta.1...gatsby-plugin-less@2.0.0-beta.2) (2018-06-20)
+# [2.0.0-beta.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-beta.1...gatsby-plugin-less@2.0.0-beta.2) (2018-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-beta.1"></a>
 
-# [2.0.0-beta.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@2.0.0-beta.0...gatsby-plugin-less@2.0.0-beta.1) (2018-06-17)
+# [2.0.0-beta.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@2.0.0-beta.0...gatsby-plugin-less@2.0.0-beta.1) (2018-06-17)
 
 **Note:** Version bump only for package gatsby-plugin-less
 
 <a name="2.0.0-beta.0"></a>
 
-# [2.0.0-beta.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-less/compare/gatsby-plugin-less@1.1.8...gatsby-plugin-less@2.0.0-beta.0) (2018-06-17)
+# [2.0.0-beta.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@1.1.8...gatsby-plugin-less@2.0.0-beta.0) (2018-06-17)
 
 **Note:** Version bump only for package gatsby-plugin-less

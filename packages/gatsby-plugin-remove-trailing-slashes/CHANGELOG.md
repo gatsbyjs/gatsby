@@ -7,104 +7,104 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
-# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.11...gatsby-plugin-remove-trailing-slashes@2.1.0) (2019-06-20)
+# [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.11...gatsby-plugin-remove-trailing-slashes@2.1.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
-## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.10...gatsby-plugin-remove-trailing-slashes@2.0.11) (2019-04-23)
+## [2.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.10...gatsby-plugin-remove-trailing-slashes@2.0.11) (2019-04-23)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
-## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.9...gatsby-plugin-remove-trailing-slashes@2.0.10) (2019-03-11)
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.9...gatsby-plugin-remove-trailing-slashes@2.0.10) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
-## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.8...gatsby-plugin-remove-trailing-slashes@2.0.9) (2019-02-28)
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.8...gatsby-plugin-remove-trailing-slashes@2.0.9) (2019-02-28)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
-## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.7...gatsby-plugin-remove-trailing-slashes@2.0.8) (2019-02-25)
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.7...gatsby-plugin-remove-trailing-slashes@2.0.8) (2019-02-25)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
-## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.6...gatsby-plugin-remove-trailing-slashes@2.0.7) (2019-02-01)
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.6...gatsby-plugin-remove-trailing-slashes@2.0.7) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.6"></a>
 
-## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.5...gatsby-plugin-remove-trailing-slashes@2.0.6) (2018-11-29)
+## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.5...gatsby-plugin-remove-trailing-slashes@2.0.6) (2018-11-29)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.5"></a>
 
-## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.4...gatsby-plugin-remove-trailing-slashes@2.0.5) (2018-11-08)
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.4...gatsby-plugin-remove-trailing-slashes@2.0.5) (2018-11-08)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.4"></a>
 
-## [2.0.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.3...gatsby-plugin-remove-trailing-slashes@2.0.4) (2018-10-29)
+## [2.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.3...gatsby-plugin-remove-trailing-slashes@2.0.4) (2018-10-29)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.3"></a>
 
-## [2.0.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.2...gatsby-plugin-remove-trailing-slashes@2.0.3) (2018-10-03)
+## [2.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.2...gatsby-plugin-remove-trailing-slashes@2.0.3) (2018-10-03)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.2"></a>
 
-## [2.0.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.1...gatsby-plugin-remove-trailing-slashes@2.0.2) (2018-10-01)
+## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.1...gatsby-plugin-remove-trailing-slashes@2.0.2) (2018-10-01)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.1"></a>
 
-## [2.0.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-rc.1...gatsby-plugin-remove-trailing-slashes@2.0.1) (2018-10-01)
+## [2.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-rc.1...gatsby-plugin-remove-trailing-slashes@2.0.1) (2018-10-01)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.0"></a>
 
-# [2.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-rc.1...gatsby-plugin-remove-trailing-slashes@2.0.0) (2018-09-17)
+# [2.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-rc.1...gatsby-plugin-remove-trailing-slashes@2.0.0) (2018-09-17)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.0-rc.1"></a>
 
-# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-rc.0...gatsby-plugin-remove-trailing-slashes@2.0.0-rc.1) (2018-08-29)
+# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-rc.0...gatsby-plugin-remove-trailing-slashes@2.0.0-rc.1) (2018-08-29)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.0-rc.0"></a>
 
-# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.3...gatsby-plugin-remove-trailing-slashes@2.0.0-rc.0) (2018-08-21)
+# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.3...gatsby-plugin-remove-trailing-slashes@2.0.0-rc.0) (2018-08-21)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.0-beta.3"></a>
 
-# [2.0.0-beta.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.2...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.3) (2018-07-21)
+# [2.0.0-beta.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.2...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.3) (2018-07-21)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.0-beta.2"></a>
 
-# [2.0.0-beta.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.1...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.2) (2018-06-20)
+# [2.0.0-beta.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.1...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.2) (2018-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.0-beta.1"></a>
 
-# [2.0.0-beta.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.0...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.1) (2018-06-17)
+# [2.0.0-beta.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@2.0.0-beta.0...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.1) (2018-06-17)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
 
 <a name="2.0.0-beta.0"></a>
 
-# [2.0.0-beta.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-remove-trailing-slashes/compare/gatsby-plugin-remove-trailing-slashes@1.0.9...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.0) (2018-06-17)
+# [2.0.0-beta.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-remove-trailing-slashes@1.0.9...gatsby-plugin-remove-trailing-slashes@2.0.0-beta.0) (2018-06-17)
 
 **Note:** Version bump only for package gatsby-plugin-remove-trailing-slashes
