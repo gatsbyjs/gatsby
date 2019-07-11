@@ -77,7 +77,7 @@
               breadcrumbTitle: Babel Plugin Macros
             - title: Adding a Custom Webpack Config
               link: /docs/add-custom-webpack-config/
-              breadcrumbTitle: webpack Config
+              breadcrumbTitle: Webpack Config
             - title: Customizing html.js
               link: /docs/custom-html/
               breadcrumbTitle: html.js
@@ -145,7 +145,7 @@
                   breadcrumbTitle: Netlify CMS
                 - title: Sourcing from WordPress
                   link: /docs/sourcing-from-wordpress/
-                  breadcrumbTitle: Wordpress
+                  breadcrumbTitle: WordPress
                 - title: Sourcing from Prismic
                   link: /docs/sourcing-from-prismic/
                   breadcrumbTitle: Prismic
