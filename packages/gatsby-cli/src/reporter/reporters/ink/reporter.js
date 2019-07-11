@@ -1,19 +1,33 @@
 import React from "react"
 import { Static, Box } from "ink"
-import { isCI } from "ci-info"
 import chalk from "chalk"
-import Activity, { calcElapsedTime } from "./components/activity"
+import Spinner from "./components/spinner"
+import ProgressBar from "./components/progress-bar"
+import Develop from "./components/develop"
 import { Message } from "./components/messages"
 
-const showProgress = process.stdout.isTTY && !isCI
+import Error from "./components/error"
 
-const generateActivityFinishedText = (name, activity) => {
-  let successText = `${name} - ${calcElapsedTime(activity.startTime)} s`
-  if (activity.status) {
-    successText += ` — ${activity.status}`
-  }
+import isTTY from "../../../util/is-tty"
+import calcElapsedTime from "../../../util/calc-elapsed-time"
 
-  return successText
+const showProgress = isTTY
+
+const successTextGenerator = {
+  spinner: activity => {
+    let successText = `${activity.id} - ${calcElapsedTime(
+      activity.startTime
+    )} s`
+    if (activity.status) {
+      successText += ` — ${activity.status}`
+    }
+
+    return successText
+  },
+  progress: activity =>
+    `${activity.id} — ${activity.current}/${activity.total} - ${calcElapsedTime(
+      activity.startTime
+    )} s`,
 }
 
 export default class GatsbyReporter extends React.Component {
@@ -22,48 +36,49 @@ export default class GatsbyReporter extends React.Component {
     verbose: false,
     messages: [],
     activities: {},
+    stage: { stage: `init`, context: {} },
   }
 
   format = chalk
 
-  createActivity = name => {
+  setStage = stage => {
+    this.setState({ stage })
+  }
+
+  createActivity = ({ id, ...options }) => {
+    this.setState(state => {
+      return {
+        activities: {
+          ...state.activities,
+          [id]: {
+            id,
+            ...options,
+          },
+        },
+      }
+    })
+
     return {
-      start: () => {
+      update: newState => {
         this.setState(state => {
           return {
             activities: {
               ...state.activities,
-              [name]: {
-                status: ``,
-                startTime: process.hrtime(),
+              [id]: {
+                ...state.activities[id],
+                ...newState,
               },
             },
           }
         })
       },
-      setStatus: status => {
-        this.setState(state => {
-          const activity = state.activities[name]
-
-          return {
-            activities: {
-              ...state.activities,
-              [name]: {
-                ...activity,
-                status: status,
-              },
-            },
-          }
-        })
-      },
-      end: () => {
-        const activity = this.state.activities[name]
-
-        this.success(generateActivityFinishedText(name, activity))
+      done: () => {
+        const activity = this.state.activities[id]
+        this.success(successTextGenerator[activity.type]({ id, ...activity }))
 
         this.setState(state => {
           const activities = { ...state.activities }
-          delete activities[name]
+          delete activities[id]
 
           return {
             activities,
@@ -83,21 +98,17 @@ export default class GatsbyReporter extends React.Component {
     this.verbose = isVerbose
   }
 
-  _addMessage(type, str) {
+  _addMessage(type, details) {
     // threat null/undefind as an empty character, it seems like ink can't handle empty str
-    if (!str) {
-      str = `\u2800`
+    if (!details) {
+      details = `\u2800`
     }
+
+    const msg = { type, details }
 
     this.setState(state => {
       return {
-        messages: [
-          ...state.messages,
-          {
-            text: str,
-            type,
-          },
-        ],
+        messages: [...state.messages, msg],
       }
     })
   }
@@ -116,28 +127,56 @@ export default class GatsbyReporter extends React.Component {
   }
 
   render() {
+    const { activities, messages, disableColors, stage } = this.state
+
+    const spinners = []
+    const progressBars = []
+    if (showProgress) {
+      Object.keys(activities).forEach(activityName => {
+        const activity = activities[activityName]
+        if (activity.type === `spinner`) {
+          spinners.push(activity)
+        }
+        if (activity.type === `progress` && activity.startTime) {
+          progressBars.push(activity)
+        }
+      })
+    }
+
     return (
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static>
-            {this.state.messages.map((msg, index) => (
+            {messages.map((msg, index) => (
               <Box textWrap="wrap" key={index}>
-                <Message type={msg.type} hideColors={this.state.disableColors}>
-                  {msg.text}
-                </Message>
+                {msg.type === `error` ? (
+                  <Error type={msg.type} details={msg.details} />
+                ) : (
+                  <Message type={msg.type} hideColors={disableColors}>
+                    {msg.details}
+                  </Message>
+                )}
               </Box>
             ))}
           </Static>
 
-          {showProgress &&
-            Object.keys(this.state.activities).map(activityName => (
-              <Activity
-                key={activityName}
-                name={activityName}
-                {...this.state.activities[activityName]}
-              />
-            ))}
+          {spinners.map(activity => (
+            <Spinner key={activity.id} name={activity.id} {...activity} />
+          ))}
+
+          {progressBars.map(activity => (
+            <ProgressBar
+              key={activity.id}
+              message={activity.id}
+              total={activity.total}
+              current={activity.current}
+              startTime={activity.startTime}
+            />
+          ))}
         </Box>
+        {stage.stage === `DevelopBootstrapFinished` && (
+          <Develop stage={stage} />
+        )}
       </Box>
     )
   }

@@ -28,9 +28,9 @@ Therefore we are excited to announce some changes in how we perform inference. I
 
 ### `noDefaultResolvers` and inference modes
 
-First of all, we are deprecating `noDefaultResolvers`. It was an argument of `infer` and `dontInfer`. We feel it was confusing and in some cases it didn't even actually add resolvers :). We will support `noDefaultResolvers` until version 3, after which `@infer` behaviour (see below) will become a default and `noDefaultResolvers` will be removed.
+First of all, we are deprecating `noDefaultResolvers`. It was an argument of `infer` and `dontInfer`. We feel it was confusing and in some cases it didn't even actually add resolvers :). We will support `noDefaultResolvers` until version 3, after which `@infer` behavior (see below) will become a default and `noDefaultResolvers` will be removed.
 
-We didn't want to break things, so we keep old default behaviour, even though we think it's not optimal. Add explicit `@infer` and resolver extensions (like `@link`) to fields to be future proof.
+We didn't want to break things, so we keep old default behavior, even though we think it's not optimal. Add explicit `@infer` and resolver extensions (like `@link`) to fields to be future proof.
 
 #### Default (deprecated, removed in v3)
 

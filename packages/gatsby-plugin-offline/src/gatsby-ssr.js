@@ -13,7 +13,8 @@ export const onPreRenderHTML = ({
         type === `link` &&
         props.as === `fetch` &&
         props.rel === `preload` &&
-        props.href.startsWith(`/static/d/`)
+        (props.href.startsWith(`/static/d/`) ||
+          props.href.startsWith(`/page-data/`))
       )
   )
 

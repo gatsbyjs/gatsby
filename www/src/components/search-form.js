@@ -54,7 +54,7 @@ const algoliaStyles = css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
-    color: ${colors.gray.calm} !important;
+    color: ${colors.text.secondary} !important;
     font-size: ${fontSizes[1]} !important;
     font-weight: normal !important;
     padding: ${space[1]} ${space[3]} !important;
@@ -62,7 +62,7 @@ const algoliaStyles = css`
 
   .algolia-autocomplete
     .algolia-docsearch-suggestion--subcategory-column:before {
-    background: ${colors.ui.light} !important;
+    background: ${colors.purple[10]} !important;
   }
 
   .algolia-autocomplete
@@ -82,8 +82,8 @@ const algoliaStyles = css`
 
   /* Caret */
   .algolia-autocomplete .ds-dropdown-menu::before {
-    border-top-color: ${colors.gray.border} !important;
-    border-right-color: ${colors.gray.border} !important;
+    border-top-color: ${colors.ui.border.subtle} !important;
+    border-right-color: ${colors.ui.border.subtle} !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
@@ -91,17 +91,17 @@ const algoliaStyles = css`
       100vh - ${sizes.headerHeight} - ${sizes.bannerHeight}
     ) !important;
     padding: 0 !important;
-    border-color: ${colors.gray.border} !important;
+    border-color: ${colors.ui.border.subtle} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    background-color: ${colors.ui.bright} !important;
+    background-color: ${colors.lavender} !important;
     box-shadow: 0 !important;
     color: ${colors.gatsby} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--text {
-    color: ${colors.gray.calm} !important;
+    color: ${colors.text.secondary} !important;
   }
 
   .algolia-autocomplete
@@ -122,7 +122,7 @@ const algoliaStyles = css`
     .ds-suggestion.ds-cursor
     .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
     .algolia-docsearch-suggestion--content {
-    background-color: ${colors.ui.light} !important;
+    background-color: ${colors.ui.hover} !important;
   }
 
   .algolia-autocomplete
@@ -160,7 +160,7 @@ const algoliaStyles = css`
     padding: ${space[1]} ${space[3]} !important;
     margin-top: 0 !important;
     font-size: ${fontSizes[1]} !important;
-    border-color: ${colors.gray.border} !important;
+    border-color: ${colors.ui.border.subtle} !important;
     color: ${colors.gatsby} !important;
     font-weight: bold !important;
   }
@@ -181,7 +181,7 @@ const algoliaStyles = css`
     width: 100% !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px solid ${colors.gray.border} !important;
+    border-top: 1px solid ${colors.ui.border.subtle} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {
@@ -227,7 +227,7 @@ const algoliaStyles = css`
       top: 0 !important;
       height: 100% !important;
       width: 1px !important;
-      background: ${colors.ui.light} !important;
+      background: ${colors.purple[10]} !important;
     }
 
     .algolia-autocomplete
@@ -407,7 +407,7 @@ class SearchForm extends Component {
                 transition.curve.default
               }`,
               ":focus": {
-                backgroundColor: colors.ui.light,
+                backgroundColor: colors.purple[10],
                 color: colors.gatsby,
                 outline: 0,
                 width: rhythm(5),
@@ -416,7 +416,7 @@ class SearchForm extends Component {
                 backgroundColor: colors.white,
                 width: rhythm(3.75),
                 ":focus": {
-                  backgroundColor: colors.ui.light,
+                  backgroundColor: colors.purple[10],
                 },
               },
             }}

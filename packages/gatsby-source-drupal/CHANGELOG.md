@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.4...gatsby-source-drupal@3.2.5) (2019-07-11)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.2.4](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.2.3...gatsby-source-drupal@3.2.4) (2019-07-10)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.2.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.2.2...gatsby-source-drupal@3.2.3) (2019-07-08)
+
+### Features
+
+- **gatsby-source-drupal:** added preview feature ([#14630](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/14630)) ([a045a32](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/a045a32))
+
+## [3.2.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.2.1...gatsby-source-drupal@3.2.2) (2019-07-02)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.2.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.2.0...gatsby-source-drupal@3.2.1) (2019-06-25)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [3.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.16...gatsby-source-drupal@3.2.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.16](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.13...gatsby-source-drupal@3.1.16) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/2594623))
+
+## [3.1.15](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.14...gatsby-source-drupal@3.1.15) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/2594623))
+
+## [3.1.14](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.13...gatsby-source-drupal@3.1.14) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.12...gatsby-source-drupal@3.1.13) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.11...gatsby-source-drupal@3.1.12) (2019-06-14)
+
+### Features
+
+- **gatsby-source-drupal:** Copy relationship meta (if any) to a node's field ([#14562](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/issues/14562)) ([83e2ee3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/commit/83e2ee3))
+
+## [3.1.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.10...gatsby-source-drupal@3.1.11) (2019-06-10)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.1.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.9...gatsby-source-drupal@3.1.10) (2019-05-31)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 ## [3.1.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal/compare/gatsby-source-drupal@3.1.8...gatsby-source-drupal@3.1.9) (2019-05-20)
 
 **Note:** Version bump only for package gatsby-source-drupal

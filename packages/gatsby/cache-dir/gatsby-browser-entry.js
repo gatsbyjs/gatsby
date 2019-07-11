@@ -13,22 +13,35 @@ import PageRenderer from "./public-page-renderer"
 
 const StaticQueryContext = React.createContext({})
 
-const StaticQuery = props => (
-  <StaticQueryContext.Consumer>
-    {staticQueryData => {
-      if (
-        props.data ||
-        (staticQueryData[props.query] && staticQueryData[props.query].data)
-      ) {
-        return (props.render || props.children)(
-          props.data ? props.data.data : staticQueryData[props.query].data
-        )
-      } else {
-        return <div>Loading (StaticQuery)</div>
-      }
-    }}
-  </StaticQueryContext.Consumer>
-)
+function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
+  const finalData = data
+    ? data.data
+    : staticQueryData[query] && staticQueryData[query].data
+
+  return (
+    <React.Fragment>
+      {finalData && render(finalData)}
+      {!finalData && <div>Loading (StaticQuery)</div>}
+    </React.Fragment>
+  )
+}
+
+const StaticQuery = props => {
+  const { data, query, render, children } = props
+
+  return (
+    <StaticQueryContext.Consumer>
+      {staticQueryData => (
+        <StaticQueryDataRenderer
+          data={data}
+          query={query}
+          render={render || children}
+          staticQueryData={staticQueryData}
+        />
+      )}
+    </StaticQueryContext.Consumer>
+  )
+}
 
 const useStaticQuery = query => {
   if (

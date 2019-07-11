@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Code block metas are correctly generated code block with language and meta 1`] = `
+Object {
+  "htmlAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "console.log('hello world')
+",
+              },
+            ],
+            "properties": Object {
+              "className": Array [
+                "language-js",
+              ],
+              "dataMeta": "foo bar",
+            },
+            "tagName": "code",
+            "type": "element",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "pre",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+}
+`;
+
 exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
 Object {
   "excerpt": "",
@@ -130,8 +167,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony?
-",
+  "excerpt": "Where oh where is my little pony?",
   "excerptAst": Object {
     "children": Array [
       Object {
@@ -159,6 +195,26 @@ Object {
   "frontmatter": Object {
     "title": "my little pony",
   },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given HTML correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "<p>Where oh where <strong>is</strong> my little pony?</p>
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given MARKDOWN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where **is** my little pony?
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given PLAIN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?",
 }
 `;
 
@@ -414,6 +470,20 @@ exports[`Links are correctly prefixed correctly prefixes links 1`] = `
 Object {
   "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
 <p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Links are correctly prefixed when assetPrefix is used correctly prefixes links 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Relative links keep being relative relative links are not prefixed 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"./path/to/page2\\">a reference</a></p>",
 }
 `;
 

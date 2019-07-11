@@ -27,23 +27,25 @@ class BlogPostTemplate extends React.Component {
   render() {
     const {
       pageContext: { prev, next },
-      data: { markdownRemark: post },
+      data: { mdx: post },
       location: { href },
     } = this.props
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        fontFamily: fonts.header,
-        fontWeight: `bold`,
         color: colors.gatsby,
+        fontFamily: fonts.header,
+        fontSize: fontSizes[3],
+        fontWeight: `bold`,
+        lineHeight: lineHeights.dense,
       },
     }
     const prevNextLabelStyles = {
-      marginTop: 0,
-      marginBottom: 0,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
+      fontSize: fontSizes[2],
       fontWeight: `normal`,
-      lineHeight: lineHeights.solid,
+      marginBottom: space[2],
+      marginTop: 0,
     }
     const BioLine = ({ children }) => (
       <p
@@ -51,7 +53,7 @@ class BlogPostTemplate extends React.Component {
           lineHeight: lineHeights.dense,
           fontFamily: fonts.header,
           margin: 0,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         {children}
@@ -162,16 +164,16 @@ class BlogPostTemplate extends React.Component {
                     css={{
                       fontSize: fontSizes[3],
                       marginBottom: space[1],
-                      color: `${colors.gatsby}`,
+                      color: colors.link.color,
                     }}
                   >
                     <span
                       css={{
-                        borderBottom: `1px solid ${colors.ui.bright}`,
+                        borderBottom: `1px solid ${colors.link.border}`,
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": { background: colors.ui.bright },
+                        "&:hover": { borderColor: colors.link.hoverBorder },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -187,7 +189,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {this.props.data.mdx.fields.publishedAt}
+                        {post.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -201,7 +203,7 @@ class BlogPostTemplate extends React.Component {
                 [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
-              {this.props.data.mdx.frontmatter.title}
+              {post.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
@@ -220,29 +222,29 @@ class BlogPostTemplate extends React.Component {
                 </div>
               )}
             <section className="post-body">
-              <MDXRenderer>{this.props.data.mdx.body}</MDXRenderer>
+              <MDXRenderer>{post.body}</MDXRenderer>
             </section>
-            <TagsSection tags={this.props.data.mdx.frontmatter.tags} />
+            <TagsSection tags={post.frontmatter.tags} />
             <EmailCaptureForm />
           </main>
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${colors.ui.light}`,
+            borderTop: `1px solid ${colors.ui.border.subtle}`,
             marginTop: space[9],
             [mediaQueries.md]: {
-              paddingBottom: space[5],
               paddingTop: space[5],
             },
             [mediaQueries.lg]: {
-              paddingBottom: space[9],
-              paddingTop: space[9],
+              paddingTop: space[7],
             },
           }}
         >
           <Container>
             <div
-              css={{ [mediaQueries.sm]: { display: `flex`, width: `100%` } }}
+              css={{
+                [mediaQueries.sm]: { display: `flex`, width: `100%` },
+              }}
             >
               <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
                 {prev && (

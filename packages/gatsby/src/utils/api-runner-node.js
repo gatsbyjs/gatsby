@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
+const { bindActionCreators } = require(`redux`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -85,8 +86,18 @@ const runAPI = (plugin, api, args) => {
       hasNodeChanged,
       getNodeAndSavePathDependency,
     } = require(`../db/nodes`)
-    const { boundActionCreators } = require(`../redux/actions`)
-
+    const {
+      publicActions,
+      restrictedActionsAvailableInAPI,
+    } = require(`../redux/actions`)
+    const availableActions = {
+      ...publicActions,
+      ...(restrictedActionsAvailableInAPI[api] || {}),
+    }
+    const boundActionCreators = bindActionCreators(
+      availableActions,
+      store.dispatch
+    )
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,
@@ -320,9 +331,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       }
 
       let pluginName =
-        plugin.name === `default-site-plugin`
-          ? `gatsby-node.js`
-          : `Plugin ${plugin.name}`
+        plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
@@ -330,7 +339,17 @@ module.exports = async (api, args = {}, pluginSource) =>
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
         })
-        reporter.panicOnBuild(`${pluginName} returned an error`, err)
+
+        reporter.panicOnBuild({
+          id: `11321`,
+          context: {
+            pluginName,
+            api,
+            message: err instanceof Error ? err.message : err,
+          },
+          error: err instanceof Error ? err : undefined,
+        })
+
         return null
       })
     }).then(results => {

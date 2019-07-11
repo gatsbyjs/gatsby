@@ -13,7 +13,7 @@ const HomepageFeatures = () => (
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,
-      borderBottom: `1px solid ${colors.ui.light}`,
+      borderBottom: `1px solid ${colors.purple[10]}`,
     }}
   >
     <Card>

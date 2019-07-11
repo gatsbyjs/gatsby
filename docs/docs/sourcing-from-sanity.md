@@ -10,7 +10,7 @@ You can use Sanity as a headless CMS that lets your authors work in a user frien
 
 ## Getting started
 
-Begin with setting up a Gatsby project. If you want to start from scrach, the [Quick Start guide](/docs) is a good place to begin. Come back to this guide when you're set up.
+Begin with setting up a Gatsby project. If you want to start from scrach, the [Quick Start guide](/docs/quick-start) is a good place to begin. Come back to this guide when you're set up.
 
 You can also check out [the company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we have set up. It contains both a configured Sanity Studio and a Gatsby frontend, which you can get up and running within minutes. It can be an useful reference for how to build a website using structured content. Follow the instructions in its README.md to get up and running.
 
@@ -166,7 +166,7 @@ For instance, if you have a `project` document type in Sanity that you want to g
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage, createPageDependency } = actions
+  const { createPage } = actions
 
   const result = await graphql(`
     {
@@ -204,8 +204,6 @@ exports.createPages = async ({ graphql, actions }) => {
       component: require.resolve("./src/templates/project.js"),
       context: { slug: edge.node.slug.current },
     })
-
-    createPageDependency({ path, nodeId: edge.node.id })
   })
 }
 ```

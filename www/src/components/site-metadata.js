@@ -22,7 +22,7 @@ const SiteMetadata = ({ pathname }) => {
   `)
 
   return (
-    <Helmet defaultTitle={title} titleTemplate={`%s | ${title}`}>
+    <Helmet defer={false} defaultTitle={title} titleTemplate={`%s | ${title}`}>
       <html lang="en" />
       <link rel="canonical" href={`${siteUrl}${pathname}`} />
       <meta name="docsearch:version" content="2.0" />

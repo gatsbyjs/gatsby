@@ -86,7 +86,7 @@ Fortunately, this is an easy fix using [environment variables](/docs/environment
 
 ### Private Content
 
-Private content, whether dynamic or static, is another solution and is well documented in Gatsby's [authentication tutorial](/docs/authentication-tutorial/#security-notice).
+Private content, whether dynamic or static, is another solution and is well documented in Gatsby's [authentication tutorial](/tutorial/authentication-tutorial/#security-notice).
 
 **TL;DR:** Authenticate users using JSON Web Tokens(JWTs) and dynamically render pages only to authorized users. Any API calls that need to be made in order to fetch content can use the user's JWT and be verified by the API. If you need to access a third party API, any API keys can be stored securely by your API which is securely authenticated to using the JWT.
 
@@ -140,6 +140,6 @@ Now go make awesome Gatsby sites that are completely secure! For more informatio
 
 - **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
 
-- **[Gatsby Authentication Tutorial](/docs/authentication-tutorial/#security-notice)**
+- **[Gatsby Authentication Tutorial](/tutorial/authentication-tutorial/#security-notice)**
 
 **Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain incomplete or inaccurate information. It is your responsibility to properly secure your sites.

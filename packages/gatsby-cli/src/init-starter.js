@@ -9,6 +9,8 @@ const url = require(`url`)
 const isValid = require(`is-valid-path`)
 const existsSync = require(`fs-exists-cached`).sync
 const { trackCli, trackError } = require(`gatsby-telemetry`)
+const prompts = require(`prompts`)
+const opn = require(`better-opn`)
 
 const {
   getPackageManager,
@@ -17,8 +19,10 @@ const {
 const isTTY = require(`./util/is-tty`)
 const spawn = (cmd: string, options: any) => {
   const [file, ...args] = cmd.split(/\s+/)
-  return execa(file, args, { stdio: `inherit`, ...options })
+  return spawnWithArgs(file, args, options)
 }
+const spawnWithArgs = (file: string, args: string[], options: any) =>
+  execa(file, args, { stdio: `inherit`, ...options })
 
 // Checks the existence of yarn package and user preference if it exists
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
@@ -152,11 +156,15 @@ const clone = async (hostInfo: any, rootPath: string) => {
     url = hostInfo.https({ noCommittish: true, noGitPlus: true })
   }
 
-  const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
+  const branch = hostInfo.committish ? [`-b`, `hostInfo.committish`] : [``]
 
   report.info(`Creating new site from git: ${url}`)
 
-  await spawn(`git clone ${branch} ${url} ${rootPath} --single-branch`)
+  const args = [`clone`, ...branch, url, rootPath, `--single-branch`].filter(
+    arg => Boolean(arg)
+  )
+
+  await spawnWithArgs(`git`, args)
 
   report.success(`Created starter directory layout`)
 
@@ -169,6 +177,51 @@ const clone = async (hostInfo: any, rootPath: string) => {
   if (!isGit) await createInitialGitCommit(rootPath, url)
 }
 
+const getPaths = async (starterPath: string, rootPath: string) => {
+  let selectedOtherStarter = false
+
+  // if no args are passed, prompt user for path and starter
+  if (!starterPath && !rootPath) {
+    const response = await prompts.prompt([
+      {
+        type: `text`,
+        name: `path`,
+        message: `What is your project called?`,
+        initial: `my-gatsby-project`,
+      },
+      {
+        type: `select`,
+        name: `starter`,
+        message: `What starter would you like to use?`,
+        choices: [
+          { title: `gatsby-starter-default`, value: `gatsby-starter-default` },
+          {
+            title: `gatsby-starter-hello-world`,
+            value: `gatsby-starter-hello-world`,
+          },
+          { title: `gatsby-starter-blog`, value: `gatsby-starter-blog` },
+          { title: `(Use a different starter)`, value: `different` },
+        ],
+        initial: 0,
+      },
+    ])
+    // exit gracefully if responses aren't provided
+    if (!response.starter || !response.path) {
+      process.exit()
+    }
+
+    selectedOtherStarter = response.starter === `different`
+    starterPath = `gatsbyjs/${response.starter}`
+    rootPath = response.path
+  }
+
+  // set defaults if no root or starter has been set yet
+  rootPath = rootPath || process.cwd()
+  starterPath = starterPath || `gatsbyjs/gatsby-starter-default`
+
+  return { starterPath, rootPath, selectedOtherStarter }
+}
+
 type InitOptions = {
   rootPath?: string,
 }
@@ -177,9 +230,21 @@ type InitOptions = {
  * Main function that clones or copies the starter.
  */
 module.exports = async (starter: string, options: InitOptions = {}) => {
-  const rootPath = options.rootPath || process.cwd()
+  const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
+    starter,
+    options.rootPath
+  )
 
   const urlObject = url.parse(rootPath)
+
+  if (selectedOtherStarter) {
+    report.info(
+      `Opening the starter library at https://gatsby.dev/starters?v=2...\nThe starter library has a variety of options for starters you can browse\n\nYou can then use the gatsby new command with the link to a repository of a starter you'd like to use, for example:\ngatsby new ${rootPath} https://github.com/gatsbyjs/gatsby-starter-default`
+    )
+    opn(`https://gatsby.dev/starters?v=2`)
+    return
+  }
+
   if (urlObject.protocol && urlObject.host) {
     trackError(`NEW_PROJECT_NAME_MISSING`)
     report.panic(
@@ -203,9 +268,9 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
     return
   }
 
-  const hostedInfo = hostedGitInfo.fromUrl(starter)
+  const hostedInfo = hostedGitInfo.fromUrl(starterPath)
 
-  trackCli(`NEW_PROJECT`, { starterName: starter })
+  trackCli(`NEW_PROJECT`, { starterName: starterPath })
   if (hostedInfo) await clone(hostedInfo, rootPath)
-  else await copy(starter, rootPath)
+  else await copy(starterPath, rootPath)
 }

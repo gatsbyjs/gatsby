@@ -340,7 +340,7 @@ test(`it uses tracedSVG placeholder when enabled`, async () => {
 })
 
 describe(`showCaptions`, () => {
-  it(`display title as caption`, async () => {
+  it(`display title as caption when showCaptions === true`, async () => {
     const imagePath = `images/my-image.jpeg`
     const content = `![some alt](./${imagePath} "some title")`
 
@@ -355,7 +355,35 @@ describe(`showCaptions`, () => {
     expect(node.value).toMatchSnapshot()
   })
 
-  it(`display alt as caption if title was not found`, async () => {
+  it(`display nothing as caption when showCaptions === false`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: false,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
+
+  it(`display nothing as caption when showCaptions === []`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
+
+  it(`display alt as caption if title was not found and showCaptions === true`, async () => {
     const imagePath = `images/my-image.jpeg`
     const content = `![some alt](./${imagePath})`
 
@@ -368,5 +396,124 @@ describe(`showCaptions`, () => {
     const $ = cheerio.load(node.value)
     expect($(`figcaption`).text()).toEqual(`some alt`)
     expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display nothing as caption if no title or alt`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
+  })
+
+  it(`display alt as caption if specified first in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`alt`, `title`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display title as caption if specified first in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`, `alt`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display alt as caption if specified in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`alt`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display title as caption if specified in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`fallback to alt as caption if specified second in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`, `alt`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some alt`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`fallback to title as caption if specified second in showCaptions array`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`alt`, `title`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).text()).toEqual(`some title`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`fallback to no caption if no match can be found`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath})`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`title`],
+    })
+
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
   })
 })

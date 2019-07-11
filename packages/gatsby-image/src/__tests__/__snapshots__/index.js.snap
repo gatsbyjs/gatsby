@@ -22,11 +22,16 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
         srcset="some srcSetWebp"
         type="image/webp"
       />
+      <source
+        srcset="some srcSet"
+      />
       <img
         alt="Alt text for the image"
         crossorigin="anonymous"
+        draggable="true"
         height="100"
         itemprop="item-prop-for-the-image"
+        loading="lazy"
         src="test_image.jpg"
         srcset="some srcSet"
         style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity 1000ms;"
@@ -35,7 +40,7 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
       />
     </picture>
     <noscript>
-      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;img loading="lazy" width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;source srcset="some srcSet" /&gt;&lt;img loading="lazy" width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
     </noscript>
   </div>
 </div>
@@ -63,11 +68,16 @@ exports[`<Image /> should render fixed size images 1`] = `
         srcset="some srcSetWebp"
         type="image/webp"
       />
+      <source
+        srcset="some srcSet"
+      />
       <img
         alt="Alt text for the image"
         crossorigin="anonymous"
+        draggable="true"
         height="100"
         itemprop="item-prop-for-the-image"
+        loading="lazy"
         src="test_image.jpg"
         srcset="some srcSet"
         style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity 500ms;"
@@ -76,7 +86,7 @@ exports[`<Image /> should render fixed size images 1`] = `
       />
     </picture>
     <noscript>
-      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;img loading="lazy" width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;source srcset="some srcSet" /&gt;&lt;img loading="lazy" width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
     </noscript>
   </div>
 </div>
@@ -108,10 +118,16 @@ exports[`<Image /> should render fluid images 1`] = `
         srcset="some srcSetWebp"
         type="image/webp"
       />
+      <source
+        sizes="(max-width: 600px) 100vw, 600px"
+        srcset="some srcSet"
+      />
       <img
         alt="Alt text for the image"
         crossorigin="anonymous"
+        draggable="true"
         itemprop="item-prop-for-the-image"
+        loading="lazy"
         sizes="(max-width: 600px) 100vw, 600px"
         src="test_image.jpg"
         srcset="some srcSet"
@@ -120,7 +136,139 @@ exports[`<Image /> should render fluid images 1`] = `
       />
     </picture>
     <noscript>
-      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;img loading="lazy" sizes="(max-width: 600px) 100vw, 600px" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;source srcset="some srcSet" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;img loading="lazy" sizes="(max-width: 600px) 100vw, 600px" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+    </noscript>
+  </div>
+</div>
+`;
+
+exports[`<Image /> should render multiple fixed image variants 1`] = `
+<div>
+  <div
+    class="fixedImage gatsby-image-wrapper"
+    style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
+  >
+    <div
+      style="background-color: lightgray; width: 100px; opacity: 1; height: 100px; transition-delay: 500ms;"
+      title="Title for the image"
+    />
+    <picture>
+      <source
+        media="only screen and (min-width: 768px)"
+        srcset="other_string_of_base64"
+      />
+      <source
+        srcset="string_of_base64"
+      />
+      <img
+        alt=""
+        class="placeholder"
+        src="other_string_of_base64"
+        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;"
+        title="Title for the image"
+      />
+    </picture>
+    <picture>
+      <source
+        media="only screen and (min-width: 768px)"
+        srcset="some other srcSetWebp"
+        type="image/webp"
+      />
+      <source
+        media="only screen and (min-width: 768px)"
+        srcset="some other srcSet"
+      />
+      <source
+        srcset="some srcSetWebp"
+        type="image/webp"
+      />
+      <source
+        srcset="some srcSet"
+      />
+      <img
+        alt="Alt text for the image"
+        crossorigin="anonymous"
+        height="100"
+        itemprop="item-prop-for-the-image"
+        loading="lazy"
+        src="test_image_2.jpg"
+        srcset="some other srcSet"
+        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity 500ms;"
+        title="Title for the image"
+        width="100"
+      />
+    </picture>
+    <noscript>
+      &lt;picture&gt;&lt;source type='image/webp' media="only screen and (min-width: 768px)" srcset="some other srcSetWebp" /&gt;&lt;source media="only screen and (min-width: 768px)" srcset="some other srcSet" /&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;source srcset="some srcSet" /&gt;&lt;img loading="lazy" width="100" height="100" srcset="some other srcSet" src="test_image_2.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+    </noscript>
+  </div>
+</div>
+`;
+
+exports[`<Image /> should render multiple fluid image variants 1`] = `
+<div>
+  <div
+    class="fixedImage gatsby-image-wrapper"
+    style="position: relative; overflow: hidden; display: inline;"
+  >
+    <div
+      style="width: 100%; padding-bottom: 50%;"
+    />
+    <div
+      style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 500ms;"
+      title="Title for the image"
+    />
+    <picture>
+      <source
+        media="only screen and (min-width: 768px)"
+        srcset="string_of_base64"
+      />
+      <source
+        srcset="string_of_base64"
+      />
+      <img
+        alt=""
+        class="placeholder"
+        src="string_of_base64"
+        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;"
+        title="Title for the image"
+      />
+    </picture>
+    <picture>
+      <source
+        media="only screen and (min-width: 768px)"
+        sizes="(max-width: 600px) 100vw, 600px"
+        srcset="some other srcSetWebp"
+        type="image/webp"
+      />
+      <source
+        media="only screen and (min-width: 768px)"
+        sizes="(max-width: 600px) 100vw, 600px"
+        srcset="some other srcSet"
+      />
+      <source
+        sizes="(max-width: 600px) 100vw, 600px"
+        srcset="some srcSetWebp"
+        type="image/webp"
+      />
+      <source
+        sizes="(max-width: 600px) 100vw, 600px"
+        srcset="some srcSet"
+      />
+      <img
+        alt="Alt text for the image"
+        crossorigin="anonymous"
+        itemprop="item-prop-for-the-image"
+        loading="lazy"
+        sizes="(max-width: 600px) 100vw, 600px"
+        src="test_image_2.jpg"
+        srcset="some other srcSet"
+        style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity 500ms;"
+        title="Title for the image"
+      />
+    </picture>
+    <noscript>
+      &lt;picture&gt;&lt;source type='image/webp' media="only screen and (min-width: 768px)" srcset="some other srcSetWebp" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;source media="only screen and (min-width: 768px)" srcset="some other srcSet" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;source type='image/webp' srcset="some srcSetWebp" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;source srcset="some srcSet" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;img loading="lazy" sizes="(max-width: 600px) 100vw, 600px" srcset="some other srcSet" src="test_image_2.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
     </noscript>
   </div>
 </div>

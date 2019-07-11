@@ -16,10 +16,10 @@ Object {
       "query": "",
     },
   },
-  "jsonDataPaths": Object {},
   "staticQueryComponents": Map {},
   "status": Object {
     "plugins": Object {},
   },
+  "webpackCompilationHash": "",
 }
 `;

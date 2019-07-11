@@ -8,6 +8,7 @@ import {
   radii,
   shadows,
   space,
+  zIndices,
 } from "../../utils/presets"
 
 const boldEntry = keyframes`
@@ -30,12 +31,12 @@ const opacityEntry = keyframes`
 
 const WrapperDiv = styled(`div`)`
   background-color: ${colors.white};
-  border-top: 1px solid ${colors.gray.border};
+  border-top: 1px solid ${colors.ui.border.subtle};
   height: 100%;
   opacity: 0.5;
   padding: ${space[6]} 0;
   width: 100%;
-  z-index: 2;
+  z-index: ${zIndices.feedbackWidget};
 
   [tabindex="-1"]:focus {
     outline: none;
@@ -72,7 +73,7 @@ const WrapperDiv = styled(`div`)`
 
   ${mediaQueries.lg} {
     box-shadow: ${shadows.overlay};
-    border: 1px solid ${colors.gray.border};
+    border: 0;
     border-radius: ${radii[2]}px;
     height: 100%;
     padding: ${space[7]} ${space[6]};

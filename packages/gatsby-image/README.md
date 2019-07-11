@@ -10,7 +10,7 @@ optimize image loading for your sites. `gatsby-image` uses
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 to power its image transformations.
 
-_Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It's
+_Note: gatsby-image is **not** a drop-in replacement for `<img />`. It's
 optimized for fixed width/height images and images that stretch the full-width
 of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
@@ -331,31 +331,86 @@ You will need to add it in your graphql query as is shown in the following snipp
 }
 ```
 
+## Art-directing multiple images
+
+`gatsby-image` supports showing different images at different breakpoints, which is known as [art direction](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#Art_direction). To do this, you can define your own array of `fixed` or `fluid` images, along with a `media` key per image, and pass it to `gatsby-image`'s `fixed` or `fluid` props. The `media` key that is set on an image can be any valid CSS media query.
+
+```jsx
+import React from "react"
+import { graphql } from "gatsby"
+import Img from "gatsby-image"
+
+export default ({ data }) => {
+  // Set up the array of image data and `media` keys.
+  // You can have as many entries as you'd like.
+  const sources = [
+    data.mobileImage.childImageSharp.fluid,
+    {
+      ...data.desktopImage.childImageSharp.fluid,
+      media: `(min-width: 768px)`,
+    },
+  ]
+
+  return (
+    <div>
+      <h1>Hello art-directed gatsby-image</h1>
+      <Img fluid={sources} />
+    </div>
+  )
+}
+
+export const query = graphql`
+  query {
+    mobileImage(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
+      childImageSharp {
+        fluid(maxWidth: 1000, quality: 100) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    desktopImage(
+      relativePath: { eq: "blog/avatars/kyle-mathews-desktop.jpeg" }
+    ) {
+      childImageSharp {
+        fluid(maxWidth: 2000, quality: 100) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
+```
+
+While you could achieve a similar effect with plain CSS media queries, `gatsby-image` accomplishes this using the `<picture>` tag, which ensures that browsers only download the image they need for a given breakpoint.
+
 ## `gatsby-image` props
 
-| Name                   | Type                | Description                                                                                                                 |
-| ---------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `fixed`                | `object`            | Data returned from the `fixed` query                                                                                        |
-| `fluid`                | `object`            | Data returned from the `fluid` query                                                                                        |
-| `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                     |
-| `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                               |
-| `title`                | `string`            | Passed to the `img` element                                                                                                 |
-| `alt`                  | `string`            | Passed to the `img` element                                                                                                 |
-| `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                 |
-| `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                |
-| `style`                | `object`            | Spread into the default styles of the wrapper element                                                                       |
-| `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                  |
-| `placeholderStyle`     | `object`            | Spread into the default styles of the placeholder `img` element                                                             |
-| `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                     |
-| `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
-| `onLoad`               | `func`              | A callback that is called when the full-size image has loaded.                                                              |
-| `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter { wasCached: boolean } provided.   |
-| `onError`              | `func`              | A callback that is called when the image fails to load.                                                                     |
-| `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                             |
-| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.          |
-| `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.        |
-| `loading`              | `string`            | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`. Defaults to `lazy`.                      |
-| `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                   |
+| Name                   | Type                | Description                                                                                                                                   |
+| ---------------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fixed`                | `object` / `array`  | Data returned from the `fixed` query. When prop is an array it has to be combined with `media` keys, allows for art directing `fixed` images. |
+| `fluid`                | `object` / `array`  | Data returned from the `fluid` query. When prop is an array it has to be combined with `media` keys, allows for art directing `fluid` images. |
+| `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                                       |
+| `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                                                 |
+| `title`                | `string`            | Passed to the `img` element                                                                                                                   |
+| `alt`                  | `string`            | Passed to the `img` element. Defaults to an empty string `alt=""`                                                                             |
+| `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                                   |
+| `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                                  |
+| `style`                | `object`            | Spread into the default styles of the wrapper element                                                                                         |
+| `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                                    |
+| `placeholderStyle`     | `object`            | Spread into the default styles of the placeholder `img` element                                                                               |
+| `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                                       |
+| `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string.                   |
+| `onLoad`               | `func`              | A callback that is called when the full-size image has loaded.                                                                                |
+| `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter { wasCached: boolean } provided.                     |
+| `onError`              | `func`              | A callback that is called when the image fails to load.                                                                                       |
+| `Tag`                  | `string`            | Which HTML tag to use for wrapping elements. Defaults to `div`.                                                                               |
+| `objectFit`            | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `cover`.                            |
+| `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.                          |
+| `loading`              | `string`            | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`. Defaults to `lazy`.                                        |
+| `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                                     |
+| `fixedImages`          | `array`             | An array of objects returned from `fixed` queries. When combined with `media` keys, allows for art directing `fixed` images.                  |
+| `fluidImages`          | `array`             | An array of objects returned from `fluid` queries. When combined with `media` keys, allows for art directing `fluid` images.                  |
+| `draggable`            | `bool`              | Set the img tag draggable to either `false`, `true`                                                                                           |
 
 ## Image processing arguments
 
@@ -366,6 +421,7 @@ You will need to add it in your graphql query as is shown in the following snipp
 
 - If you want to set `display: none;` on a component using a `fixed` prop,
   you need to also pass in to the style prop `{ display: 'inherit' }`.
+- Be aware that from a SEO perspective it is advisable not to change the image parameters lightheartedly once the website has been published. Every time you change properties within _fluid_ or _fixed_ (like _quality_ or _maxWidth_), the absolute path of the image changes. These properties generate the hash we use in our absolute path. This happens even if the image didn't change its name. As a result, the image could appear on the image SERP as "new" one. (more details [can be found on this issue](https://github.com/gatsbyjs/gatsby/issues/13742))
 - By default, images don't load until JavaScript is loaded. Gatsby's automatic code
   splitting generally makes this fine but if images seem slow coming in on a
   page, check how much JavaScript is being loaded there.

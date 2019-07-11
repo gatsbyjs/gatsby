@@ -50,6 +50,7 @@ class Plugins extends Component {
             <h1
               css={{
                 fontSize: fontSizes[6],
+                fontWeight: `700`,
                 marginLeft: space[5],
                 marginRight: space[5],
                 marginBottom: 0,
@@ -109,7 +110,7 @@ class Plugins extends Component {
 
             <p
               css={{
-                color: colors.gray.lightCopy,
+                color: colors.text.secondary,
                 fontSize: fontSizes[2],
                 textAlign: `center`,
               }}

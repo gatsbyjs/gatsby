@@ -84,7 +84,7 @@ export default Details
 
 const styles = {
   headline: {
-    color: colors.gray.calm,
+    color: colors.text.secondary,
     fontFamily: fonts.header,
     paddingRight: space[5],
   },

@@ -10,7 +10,7 @@ import {
 } from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
 import { Link } from "gatsby"
-import DownloadArrow from "react-icons/lib/md/file-download"
+import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 import AlgoliaLogo from "../assets/algolia.svg"
 import GatsbyIcon from "../monogram.svg"
 import { debounce, unescape } from "lodash-es"
@@ -26,7 +26,7 @@ import {
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
-import { skipLink } from "../utils/styles"
+import { skipLink, formInput, formInputFocus } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
@@ -65,14 +65,9 @@ const searchBoxStyles = css`
   }
 
   .ais-SearchBox-input {
+    ${formInput}
     -webkit-appearance: none;
-    background: ${colors.white};
-    border: 1px solid ${colors.ui.bright};
-    border-radius: ${radii[2]}px;
-    color: ${colors.gatsby};
     display: inline-block;
-    font-size: ${fontSizes[3]};
-    font-family: ${fonts.header};
     height: ${searchInputHeight};
     padding: 0;
     padding-right: ${searchInputHeight};
@@ -94,15 +89,14 @@ const searchBoxStyles = css`
 
   .ais-SearchBox-input:active,
   .ais-SearchBox-input:focus {
-    border-color: ${colors.lilac};
-    box-shadow: 0 0 0 3px ${colors.ui.bright};
+    ${formInputFocus}
   }
 
   .ais-SearchBox-input::-webkit-input-placeholder,
   .ais-SearchBox-input::-moz-placeholder,
   .ais-SearchBox-input:-ms-input-placeholder,
   .ais-SearchBox-input::placeholder {
-    color: ${colors.lilac};
+    color: ${colors.text.placeholder};
   }
 
   .ais-SearchBox-submit,
@@ -128,18 +122,20 @@ const searchBoxStyles = css`
     right: inherit;
     left: ${searchInputWrapperMargin};
     border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
   .ais-SearchBox-submit:focus {
     outline: 0;
   }
   .ais-SearchBox-submit:focus svg {
-    fill: ${colors.gatsby};
+    fill: ${colors.lilac};
   }
   .ais-SearchBox-submit svg {
     width: ${space[4]};
     height: ${space[4]};
-    vertical-align: middle;
-    fill: ${colors.ui.bright};
+    fill: ${colors.text.placeholder};
   }
 
   .ais-SearchBox-reset {
@@ -157,10 +153,15 @@ const searchBoxStyles = css`
     fill: ${colors.gatsby};
   }
   .ais-SearchBox-reset svg {
-    fill: ${colors.ui.bright};
+    fill: ${colors.text.placeholder};
     width: ${space[3]};
     height: ${space[3]};
     vertical-align: middle;
+  }
+  .ais-SearchBox-input:valid ~ .ais-SearchBox-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .ais-InfiniteHits-list {
@@ -215,7 +216,7 @@ class Search extends Component {
       >
         <div
           css={{
-            borderBottom: `1px solid ${colors.ui.light}`,
+            borderBottom: `1px solid ${colors.ui.border.subtle}`,
             display: `flex`,
             flexDirection: `column`,
             width: `100%`,
@@ -249,12 +250,12 @@ class Search extends Component {
           <div
             css={{
               alignItems: `center`,
-              color: colors.gray.calm,
+              color: colors.text.secondary,
               display: `flex`,
               height: searchMetaHeight,
               paddingLeft: space[6],
               paddingRight: space[6],
-              fontSize: fontSizes[1],
+              fontSize: fontSizes[0],
             }}
           >
             <Stats
@@ -346,9 +347,8 @@ const Result = ({ hit, pathname, query }) => {
       aria-current={selected ? `true` : undefined}
       css={{
         "&&": {
-          background: selected ? colors.ui.whisper : false,
+          background: selected ? colors.ui.hover : false,
           borderBottom: 0,
-          color: colors.gray.dark,
           display: `block`,
           fontWeight: `400`,
           padding: `${space[5]} ${space[6]}`,
@@ -358,10 +358,10 @@ const Result = ({ hit, pathname, query }) => {
           }`,
           zIndex: selected ? 1 : false,
           "&:hover": {
-            background: selected ? colors.ui.whisper : colors.white,
+            background: selected ? colors.ui.hover : colors.white,
           },
           "&:before": {
-            background: colors.gray.border,
+            background: colors.ui.border.subtle,
             bottom: 0,
             content: `''`,
             height: 1,
@@ -369,6 +369,9 @@ const Result = ({ hit, pathname, query }) => {
             position: `absolute`,
             top: `auto`,
             width: `100%`,
+            [mediaQueries.md]: {
+              display: `none`,
+            },
           },
           "&:after": {
             background: selected ? colors.gatsby : false,
@@ -392,12 +395,12 @@ const Result = ({ hit, pathname, query }) => {
       >
         <h2
           css={{
-            color: selected ? colors.gatsby : false,
-            fontSize: `inherit`,
-            fontFamily: fonts.header,
-            fontWeight: `bold`,
-            display: `flex`,
             alignItems: `center`,
+            color: selected ? colors.gatsby : false,
+            display: `flex`,
+            fontFamily: fonts.system,
+            fontSize: fontSizes[1],
+            fontWeight: `bold`,
             marginBottom: 0,
             marginTop: 0,
           }}
@@ -413,7 +416,7 @@ const Result = ({ hit, pathname, query }) => {
           aria-hidden
           css={{
             alignItems: `center`,
-            color: selected ? colors.lilac : colors.gray.bright,
+            color: selected ? colors.lilac : colors.text.secondary,
             display: `flex`,
             fontSize: fontSizes[0],
           }}
@@ -427,7 +430,7 @@ const Result = ({ hit, pathname, query }) => {
                 css={{
                   height: 12,
                   marginBottom: 0,
-                  marginRight: 5,
+                  marginRight: 4,
                   filter: selected ? false : `grayscale(100%)`,
                   opacity: selected ? false : `0.2`,
                 }}
@@ -442,20 +445,13 @@ const Result = ({ hit, pathname, query }) => {
           >
             {hit.humanDownloadsLast30Days}
             {` `}
-            <span
-              css={{
-                color: selected ? colors.lilac : colors.gray.bright,
-                marginLeft: space[1],
-              }}
-            >
-              <DownloadArrow />
-            </span>
+            <ArrowDownwardIcon />
           </span>
         </div>
       </div>
       <div
         css={{
-          color: selected ? `inherit` : colors.gray.calm,
+          color: selected ? `inherit` : colors.text.secondary,
           fontSize: fontSizes[1],
         }}
       >
