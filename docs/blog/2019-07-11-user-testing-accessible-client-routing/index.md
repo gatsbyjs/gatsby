@@ -104,7 +104,7 @@ A big motivation to test with screen reader users was to confirm whether the rec
 - focus management sent to a wrapper element;
 - focus management sent to the first heading element.
 
-**Focusing on a wrapper element for new content worked okay** with our test subjects: they were informed of the new content and moved into the right place. It was **very subtle compared to focusing on a heading**, and better than resetting the page to the top (think Gmail - it would be a pain to have to start over every time you click on a link.) In general, we found that **resetting focus to the top of the app would be very overwhelming**, especially in large applications.
+**Focusing on a wrapper element for new content worked okay** with our test subjects: they were informed of the new content and moved into the right place. It was **very subtle compared to focusing on a heading**, and better than resetting the page to the top (think Gmail - it would be a pain to have to start over every time you click on a link). In general, we found that **resetting focus to the top of the app would be very overwhelming**, especially in large applications.
 
 **Focusing on a heading was found to be the best experience**, as it would save time and make it clear what happened. In NVDA, there was some duplicate reading of content and `<main>` was doing some extra announcements–seemed like an screen reader quirk more than a problem with the prototype.
 
