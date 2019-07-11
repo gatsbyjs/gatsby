@@ -81,7 +81,6 @@ const pascalCase = _.flow(
   _.camelCase,
   _.upperFirst
 )
-const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const pageComponentCache = {}
 const fileOkCache = {}
@@ -111,7 +110,6 @@ actions.createPage = (
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
@@ -120,13 +118,17 @@ actions.createPage = (
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
     if (process.env.NODE_ENV !== `test`) {
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
+      report.panic({
+        id: `11323`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          message,
+        },
+      })
     } else {
       return message
     }
-    noPageOrComponent = true
   }
 
   // Validate that the context object doesn't overlap with any core page fields
@@ -172,33 +174,58 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
             `
       if (process.env.NODE_ENV === `test`) {
         return error
-        // Only error if the context version is different than the page
-        // version.  People in v1 often thought that they needed to also pass
-        // the path to context for it to be available in GraphQL
-      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
-        report.panic(error)
       } else {
-        if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
-          report.warn(error)
-          hasWarnedForPageComponentInvalidContext.add(page.component)
-        }
+        report.panic({
+          id: `11324`,
+          context: {
+            message: error,
+          },
+        })
       }
     }
+  }
+
+  // A component wasn't set.
+  if (!page.component) {
+    report.panic({
+      id: `11322`,
+      context: {
+        pluginName: name,
+        pageObject: page,
+      },
+    })
   }
 
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
     if (!fileExistsSync(page.component)) {
-      const message = `${name} created a page with a component that doesn't exist. Missing component is ${
-        page.component
-      }`
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-      noPageOrComponent = true
+      report.panic({
+        id: `11325`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
     } else if (page.component) {
+      if (!path.isAbsolute(page.component)) {
+        // Don't log out when testing
+        if (process.env.NODE_ENV !== `test`) {
+          report.panic({
+            id: `11326`,
+            context: {
+              pluginName: name,
+              pageObject: page,
+              component: page.component,
+            },
+          })
+        } else {
+          const message = `${name} must set the absolute path to the page component when create creating a page`
+          return message
+        }
+      }
+
       // check if we've processed this component path
       // before, before running the expensive "truePath"
       // operation
@@ -243,26 +270,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         pageComponentCache[originalPageComponent] = page.component
       }
     }
-  }
-
-  if (!page.component || !path.isAbsolute(page.component)) {
-    const message = `${name} must set the absolute path to the page component when create creating a page`
-    // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-    } else {
-      return message
-    }
-    noPageOrComponent = true
-  }
-
-  if (noPageOrComponent) {
-    report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
-    )
   }
 
   let internalComponentName
@@ -325,12 +332,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        report.panicOnBuild(
-          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
-        )
+        report.panicOnBuild({
+          id: `11327`,
+          context: {
+            relativePath,
+          },
+        })
       }
 
       if (!includesDefaultExport) {
+        report.panicOnBuild({
+          id: `11328`,
+          context: {
+            fileName,
+          },
+        })
         report.panicOnBuild(
           `[${fileName}] The page component must export a React component for it to be valid`
         )
