@@ -7,96 +7,96 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
-# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.13...gatsby-plugin-twitter@2.1.0) (2019-06-20)
+# [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.13...gatsby-plugin-twitter@2.1.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
-## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.12...gatsby-plugin-twitter@2.0.13) (2019-03-16)
+## [2.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.12...gatsby-plugin-twitter@2.0.13) (2019-03-16)
 
 ### Features
 
-- **gatsby-plugin-twitter:** load widget for all Twitter embeds ([#12607](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/issues/12607)) ([bb5d62d](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/commit/bb5d62d))
+- **gatsby-plugin-twitter:** load widget for all Twitter embeds ([#12607](https://github.com/gatsbyjs/gatsby/issues/12607)) ([bb5d62d](https://github.com/gatsbyjs/gatsby/commit/bb5d62d))
 
-## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.11...gatsby-plugin-twitter@2.0.12) (2019-03-11)
+## [2.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.11...gatsby-plugin-twitter@2.0.12) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
-## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.10...gatsby-plugin-twitter@2.0.11) (2019-03-05)
+## [2.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.10...gatsby-plugin-twitter@2.0.11) (2019-03-05)
 
 ### Bug Fixes
 
-- **gatsby-plugin-twitter:** add back semi-colons to injected script ([#12296](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/issues/12296)) ([b939b8b](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/commit/b939b8b)), closes [#12193](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/issues/12193) [/github.com/gatsbyjs/gatsby/pull/12193#issuecomment-469418343](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/issues/issuecomment-469418343)
+- **gatsby-plugin-twitter:** add back semi-colons to injected script ([#12296](https://github.com/gatsbyjs/gatsby/issues/12296)) ([b939b8b](https://github.com/gatsbyjs/gatsby/commit/b939b8b)), closes [#12193](https://github.com/gatsbyjs/gatsby/issues/12193) [/github.com/gatsbyjs/gatsby/pull/12193#issuecomment-469418343](https://github.com/gatsbyjs/gatsby/issues/issuecomment-469418343)
 
-## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.9...gatsby-plugin-twitter@2.0.10) (2019-03-04)
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.9...gatsby-plugin-twitter@2.0.10) (2019-03-04)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
-## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.8...gatsby-plugin-twitter@2.0.9) (2019-02-01)
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.8...gatsby-plugin-twitter@2.0.9) (2019-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.8"></a>
 
-## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.7...gatsby-plugin-twitter@2.0.8) (2018-11-29)
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.7...gatsby-plugin-twitter@2.0.8) (2018-11-29)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.7"></a>
 
-## [2.0.7](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.6...gatsby-plugin-twitter@2.0.7) (2018-10-29)
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.6...gatsby-plugin-twitter@2.0.7) (2018-10-29)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.6"></a>
 
-## [2.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.5...gatsby-plugin-twitter@2.0.6) (2018-10-01)
+## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.5...gatsby-plugin-twitter@2.0.6) (2018-10-01)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.5"></a>
 
-## [2.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.0-rc.2...gatsby-plugin-twitter@2.0.5) (2018-09-17)
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.0-rc.2...gatsby-plugin-twitter@2.0.5) (2018-09-17)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.0-rc.2"></a>
 
-# [2.0.0-rc.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.0-rc.1...gatsby-plugin-twitter@2.0.0-rc.2) (2018-09-05)
+# [2.0.0-rc.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.0-rc.1...gatsby-plugin-twitter@2.0.0-rc.2) (2018-09-05)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.0-rc.1"></a>
 
-# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.0-rc.0...gatsby-plugin-twitter@2.0.0-rc.1) (2018-08-29)
+# [2.0.0-rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.0-rc.0...gatsby-plugin-twitter@2.0.0-rc.1) (2018-08-29)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.0-rc.0"></a>
 
-# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.0-beta.3...gatsby-plugin-twitter@2.0.0-rc.0) (2018-08-21)
+# [2.0.0-rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.0-beta.3...gatsby-plugin-twitter@2.0.0-rc.0) (2018-08-21)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.0-beta.3"></a>
 
-# [2.0.0-beta.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.0-beta.2...gatsby-plugin-twitter@2.0.0-beta.3) (2018-07-21)
+# [2.0.0-beta.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.0-beta.2...gatsby-plugin-twitter@2.0.0-beta.3) (2018-07-21)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.0-beta.2"></a>
 
-# [2.0.0-beta.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.0-beta.1...gatsby-plugin-twitter@2.0.0-beta.2) (2018-06-20)
+# [2.0.0-beta.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.0-beta.1...gatsby-plugin-twitter@2.0.0-beta.2) (2018-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.0-beta.1"></a>
 
-# [2.0.0-beta.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@2.0.0-beta.0...gatsby-plugin-twitter@2.0.0-beta.1) (2018-06-17)
+# [2.0.0-beta.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.0.0-beta.0...gatsby-plugin-twitter@2.0.0-beta.1) (2018-06-17)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
 
 <a name="2.0.0-beta.0"></a>
 
-# [2.0.0-beta.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-twitter/compare/gatsby-plugin-twitter@1.0.20...gatsby-plugin-twitter@2.0.0-beta.0) (2018-06-17)
+# [2.0.0-beta.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@1.0.20...gatsby-plugin-twitter@2.0.0-beta.0) (2018-06-17)
 
 **Note:** Version bump only for package gatsby-plugin-twitter
