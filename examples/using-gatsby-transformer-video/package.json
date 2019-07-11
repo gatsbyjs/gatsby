@@ -1,0 +1,18 @@
+{
+  "name": "using-gatsby-transformer-video",
+  "private": true,
+  "description": "Gatsby example site using using-gatsby-transformer-video",
+  "author": "Benedikt Rötsch <opensource@axe312.de>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-source-filesystem": "^2.1.4",
+    "gatsby-transformer-video": "0.0.2-dev-1562860270414"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

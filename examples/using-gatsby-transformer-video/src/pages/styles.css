@@ -1,0 +1,21 @@
+body {
+  font-family: sans-serif;
+}
+
+picture,
+img,
+video {
+  width: 100%;
+  height: auto;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid > * {
+  flex: 0 1 280px;
+  padding: 10px;
+  overflow: hidden;
+}
