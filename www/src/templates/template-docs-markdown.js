@@ -12,6 +12,7 @@ import {
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import FooterLinks from "../components/shared/footer-links"
+import Breadcrumb from "../components/docs-breadcrumb"
 
 import Container from "../components/container"
 
@@ -50,6 +51,7 @@ function DocsTemplate({ data, location }) {
       >
         <DocSearchContent>
           <Container>
+            <Breadcrumb location={location} itemList={itemList} />
             <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
               {page.frontmatter.title}
             </h1>
