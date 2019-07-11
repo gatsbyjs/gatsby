@@ -165,6 +165,38 @@ In both cases, you should see a Gatsby site successfully running in development 
 
 ## Add static data to a theme
 
+In this example, you'll source data from a YAML file into the `gatsby-theme-events` theme.
+
+In the `gatsby-theme-events` directory, create a new `data` directory. Inside that, create a new file, `events.yml`.
+
+Add some sample data:
+
+```yaml:title=gatsby-theme-events/data/events.yml
+- name: React Rally
+  location: Salt Lake City, UT
+  start_date: 2019-08-22
+  end_date: 2019-08-23
+  url: https://www.reactrally.com/
+
+- name: DinosaurJS
+  location: Denver, CO
+  start_date: 2019-06-20
+  end_date: 2019-06-21
+  url: https://dinosaurjs.org/
+
+- name: JSHeroes
+  location: Cluj-Napoca, Romania
+  start_date: 2020-04-23
+  end_date: 2020-04-24
+  url: https://jsheroes.io/
+
+- name: The Lead Developer
+  location: Austin, TX
+  start_date: 2019-11-08
+  end_date: 2019-11-08
+  url: https://austin2019.theleaddeveloper.com/
+```
+
 ## Create a data directory using the `onPreBootstrap` lifecycle
 
 ## Set up to create data-driven pages
