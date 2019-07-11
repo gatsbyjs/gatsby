@@ -107,6 +107,10 @@ function DocsTemplate({ data, location }) {
                       top: `calc(${sizes.headerHeight} + ${
                         sizes.bannerHeight
                       } + ${space[9]})`,
+                      maxHeight: `calc(100vh - ${sizes.headerHeight} - ${
+                        sizes.bannerHeight
+                      } - ${space[9]} - ${space[9]})`,
+                      overflow: `auto`,
                     },
                   }}
                 >
