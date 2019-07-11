@@ -27,7 +27,11 @@
   "peerDependencies": {
     "gatsby": "^2.0.33"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-transformer-screenshot"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "build-lambda-package": "npm run prepare-lambda-package && cp chrome/headless_shell.tar.gz lambda-dist && cd lambda-dist && zip -rq ../lambda-package.zip .",

@@ -35,7 +35,11 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-dev-cli"
+  },
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",

@@ -39,7 +39,11 @@
   "peerDependencies": {
     "gatsby": "^2.0.0"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-remark-graphviz"
+  },
   "scripts": {
     "build": "babel --out-dir . src --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",

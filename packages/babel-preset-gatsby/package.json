@@ -2,6 +2,12 @@
   "name": "babel-preset-gatsby",
   "version": "0.2.1",
   "author": "Philipp Spiess <hello@philippspiess.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/babel-preset-gatsby"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby#readme",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",

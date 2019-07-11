@@ -13,6 +13,12 @@
     "notes",
     "digital-garden"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "themes/gatsby-theme-notes"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes#readme",
   "devDependencies": {
     "gatsby": "^2.13.13",
     "react": "^16.8.6",

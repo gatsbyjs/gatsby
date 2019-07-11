@@ -13,7 +13,12 @@
   ],
   "author": "Yvonnick FRIN <frin.yvonnick@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-page-utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-page-utils"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-page-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",

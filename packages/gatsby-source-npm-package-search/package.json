@@ -3,6 +3,12 @@
   "description": "Search NPM packages and pull NPM & GitHub metadata from Algolia's NPM index",
   "version": "2.1.0",
   "author": "james.a.stack@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-source-npm-package-search"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-npm-package-search#readme",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "algoliasearch": "^3.25.1"
