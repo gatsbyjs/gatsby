@@ -45,7 +45,7 @@ const Breadcrumb = ({ itemList, location }) => {
           {topLevelTitle}
         </BreadcrumbNav>
         <BreadcrumbNav mobile>
-          <Separator character="<" />
+          <Separator character={<ChevronLeft />} />
           <Link to="/">Home</Link>
         </BreadcrumbNav>
       </>
