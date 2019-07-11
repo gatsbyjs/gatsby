@@ -69,15 +69,14 @@ gatsby-plugin-mdx exposes a configuration API that can be used similarly to
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                             | Default                                | Description                                                          |
-| ----------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------- |
-| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process    |
-| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                       |
-| [`globalScope`](#global-scope)                  | `""`                                   | Define components and variables that are accessible to all MDX files |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                   |
-| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                               |
-| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                               |
-| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                     |
+| Key                                             | Default                                | Description                                                       |
+| ----------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
+| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process |
+| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                    |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                |
+| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                            |
+| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                            |
+| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                  |
 
 #### Extensions
 
