@@ -347,9 +347,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
             fileName,
           },
         })
-        report.panicOnBuild(
-          `[${fileName}] The page component must export a React component for it to be valid`
-        )
       }
     }
 
