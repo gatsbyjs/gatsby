@@ -130,7 +130,10 @@ export default class FFMPEG {
     })
   }
 
-  createPreviewFilters = ({ fieldArgs: { width, duration, fps }, info }) => {
+  createPreviewFilters = ({
+    fieldArgs: { maxWidth, maxHeight, duration, fps },
+    info,
+  }) => {
     const { duration: sourceDuration } = info.streams[0]
     return [
       {
@@ -153,7 +156,7 @@ export default class FFMPEG {
       },
       {
         filter: `scale`,
-        options: `${width}:-2:flags=lanczos`,
+        options: this.generateScaleFilter({ maxWidth, maxHeight }),
         inputs: `desaturated`,
         outputs: `rescaled`,
       },
@@ -297,7 +300,7 @@ export default class FFMPEG {
         .complexFilter([
           {
             filter: `scale`,
-            options: `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2`,
+            options: this.generateScaleFilter({ maxWidth, maxHeight }),
           },
         ])
         .outputOptions([
@@ -328,7 +331,7 @@ export default class FFMPEG {
         .complexFilter([
           {
             filter: `scale`,
-            options: `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2`,
+            options: this.generateScaleFilter({ maxWidth, maxHeight }),
           },
         ])
         .outputOptions([
@@ -343,5 +346,12 @@ export default class FFMPEG {
     }
 
     return publicPath.replace(`${this.rootDir}/public`, ``)
+  }
+
+  generateScaleFilter({ maxWidth, maxHeight }) {
+    if (!maxHeight) {
+      return `${maxWidth}:-2:flags=lanczos`
+    }
+    return `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2:flags=lanczos`
   }
 }
