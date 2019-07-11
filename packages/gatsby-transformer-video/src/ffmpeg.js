@@ -180,7 +180,12 @@ export default class FFMPEG {
         .videoCodec(`libx264`)
         .duration(duration)
         .complexFilter(this.createPreviewFilters({ fieldArgs, info }), `output`)
-        .outputOptions([`-c:v libx264`, `-crf 30`])
+        .outputOptions([
+          `-c:v libx264`,
+          `-crf 34`,
+          `-preset veryslow`,
+          `-pix_fmt yuv420p`,
+        ])
 
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
@@ -295,7 +300,7 @@ export default class FFMPEG {
             options: `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2`,
           },
         ])
-        .outputOptions([`-crf 28`])
+        .outputOptions([`-crf 28`, `-preset veryslow`, `-pix_fmt yuv420p`])
 
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
@@ -322,7 +327,7 @@ export default class FFMPEG {
             options: `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2`,
           },
         ])
-        .outputOptions([`-crf 32`])
+        .outputOptions([`-crf 34`, `-preset veryslow`, `-pix_fmt yuv420p`])
 
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
