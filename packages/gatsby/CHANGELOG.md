@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.14...gatsby@2.13.15) (2019-07-11)
+
+### Bug Fixes
+
+- **gatsby:** handle `/404/`, `/404`, `404/` or `404` page paths ([#15615](https://github.com/gatsbyjs/gatsby/issues/15615)) ([482ea8d](https://github.com/gatsbyjs/gatsby/commit/482ea8d))
+
 ## [2.13.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.13...gatsby@2.13.14) (2019-07-11)
 
 **Note:** Version bump only for package gatsby
