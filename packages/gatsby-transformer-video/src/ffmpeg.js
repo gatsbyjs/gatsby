@@ -69,8 +69,22 @@ export default class FFMPEG {
     return absolutePath
   }
 
-  analyzeVideo = async ({ video, fieldArgs }) => {
-    const path = await this.queue.add(() => this.cacheVideo(video))
+  analyzeVideo = async ({ video, fieldArgs, type }) => {
+    let path
+
+    if (type === `File`) {
+      path = video.absolutePath
+    }
+
+    if (type === `ContentfulAsset`) {
+      path = await this.queue.add(() => this.cacheVideo(video))
+    }
+
+    if (!path) {
+      throw new Error(
+        `Unable to extract asset file path for ${type} (${video.id})`
+      )
+    }
 
     const optionsHash = crypto
       .createHash(`md5`)

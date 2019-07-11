@@ -9,7 +9,7 @@ exports.setFieldsOnGraphQLNodeType = (
   { type, store },
   { ffmpegPath, ffprobePath }
 ) => {
-  if (type.name !== `ContentfulAsset`) {
+  if (![`File`, `ContentfulAsset`].includes(type.name)) {
     return {}
   }
 
@@ -22,10 +22,39 @@ exports.setFieldsOnGraphQLNodeType = (
 
   const ffmpeg = new FFMPEG({ cacheDir, rootDir, ffmpegPath, ffprobePath })
 
+  async function prepareVideo({ video, fieldArgs }) {
+    const { type } = video.internal
+
+    let fileType = null
+    if (type === `File`) {
+      fileType = video.internal.mediaType
+    }
+
+    if (type === `ContentfulAsset`) {
+      fileType = video.internal.mediaType
+    }
+
+    if (!fileType) {
+      throw new Error(
+        `Unable to extract asset file type for ${type} (${video.id})`
+      )
+    }
+
+    if (fileType.indexOf(`video/`) === -1) {
+      return false
+    }
+
+    return ffmpeg.analyzeVideo({
+      type,
+      video,
+      fieldArgs,
+    })
+  }
+
   return {
-    videopreview: {
+    videoPreview: {
       type: new GraphQLObjectType({
-        name: `TransfomerVideoPreview`,
+        name: `TransformerVideoPreview${type.name}`,
         fields: {
           mp4: { type: GraphQLString },
           webp: { type: GraphQLString },
@@ -41,15 +70,17 @@ exports.setFieldsOnGraphQLNodeType = (
           defaultValue: `assets/video-previews`,
         },
       },
-      async resolve(video, fieldArgs, context) {
-        if (video.file.contentType.indexOf(`video/`) === -1) {
-          return null
-        }
-
-        const { path, filename, info } = await ffmpeg.analyzeVideo({
+      async resolve(video, fieldArgs) {
+        const metadata = await prepareVideo({
           video,
           fieldArgs,
         })
+
+        if (!metadata) {
+          return null
+        }
+
+        const { path, filename, info } = metadata
 
         const publicDir = join(rootDir, `public`, fieldArgs.publicPath)
 
@@ -80,7 +111,6 @@ exports.setFieldsOnGraphQLNodeType = (
             fieldArgs,
             video,
           })
-
           return {
             mp4,
             webp,
@@ -94,7 +124,7 @@ exports.setFieldsOnGraphQLNodeType = (
     },
     video: {
       type: new GraphQLObjectType({
-        name: `TransfomerVideoVideo`,
+        name: `TransformerVideoVideo${type.name}`,
         fields: {
           h264: { type: GraphQLString },
           h265: { type: GraphQLString },
@@ -105,15 +135,17 @@ exports.setFieldsOnGraphQLNodeType = (
         maxHeight: { type: GraphQLInt, defaultValue: 1080 },
         publicPath: { type: GraphQLString, defaultValue: `assets/videos` },
       },
-      async resolve(video, fieldArgs, context) {
-        if (video.file.contentType.indexOf(`video/`) === -1) {
-          return null
-        }
-
-        const { path, filename, info } = await ffmpeg.analyzeVideo({
+      async resolve(video, fieldArgs) {
+        const metadata = await prepareVideo({
           video,
           fieldArgs,
         })
+
+        if (!metadata) {
+          return null
+        }
+
+        const { path, filename, info } = metadata
 
         const publicDir = join(rootDir, `public`, fieldArgs.publicPath)
 
