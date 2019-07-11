@@ -12,7 +12,6 @@ To get started, in your terminal, after running the initial site setup steps [he
 
 - [`babelrc`](#babelrc)
 - [`components`](#components)
-- [`dataPaths`](#dataPaths)
 - [`getNode`](#getNode)
 - [`getNodes`](#getNodes)
 - [`nodes`](#nodes)
@@ -28,6 +27,7 @@ Returns an object with the global `babelrc` settings.
 Usage: `babelrc`
 
 Example:
+
 ```js
 // Command:
 gatsby > babelrc
@@ -40,6 +40,7 @@ gatsby > babelrc
 ```
 
 ### `components`
+
 Returns a Map object with all of the components in your Gatsby environment (see [Mozilla Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) docs for more information on Map objects and how to use them). Propeties that get returned: `name`, `componentPath`, `id`, `query`, and `hash`.
 
 Usage: `components`
@@ -55,8 +56,6 @@ gatsby > for( var [key, value] of components ) { console.log(key + ' = ' + value
 .../my-blog-starter/src/pages/index.js = /
 .../my-blog-starter/.cache/dev-404-page.js = /dev-404-page/
 ```
-
-### `dataPaths`
 
 ### `getNode()`
 
@@ -164,6 +163,7 @@ Returns the GraphQL schema of your Gatsby environment as an object.
 Usages: `schema` or `schema[<property>]`
 
 Example:
+
 ```js
 // Command:
 gatsby > schema._implementations

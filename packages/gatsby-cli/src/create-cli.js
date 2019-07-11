@@ -52,9 +52,9 @@ function buildLocalCommands(cli, isLocalSite) {
       cli.showHelp()
       report.verbose(`current directory: ${directory}`)
       return report.panic(
-        `gatsby <${command}> can only be run for a gatsby site. \n` +
-        `Either the current working directory does not contain a valid package.json or ` +
-        `'gatsby' is not specified as a dependency`
+        `gatsby <${command}> can only be run for a gatsby site.\n` +
+          `Either the current working directory does not contain a valid package.json or ` +
+          `'gatsby' is not specified as a dependency`
       )
     }
 
@@ -156,7 +156,7 @@ function buildLocalCommands(cli, isLocalSite) {
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
         // kills it so this is fine.
-        return new Promise(resolve => { })
+        return new Promise(resolve => {})
       })
     ),
   })
