@@ -91,6 +91,7 @@ First:
   or
   yarn add resolve-url-loader --dev
 ```
+
 And then:
 
 ```javascript
@@ -98,9 +99,9 @@ plugins: [
   {
     resolve: "gatsby-plugin-sass",
     options: {
-      useResolveUrlLoader: true
-    }
-  }
+      useResolveUrlLoader: true,
+    },
+  },
 ]
 ```
 
@@ -113,11 +114,11 @@ plugins: [
     options: {
       useResolveUrlLoader: {
         options: {
-          debug: true
-        }
-      }
-    }
-  }
+          debug: true,
+        },
+      },
+    },
+  },
 ]
 ```
 
@@ -130,11 +131,11 @@ plugins: [
     options: {
       useResolveUrlLoader: {
         options: {
-          sourceMap: true //default is false
-        }
-      }
-    }
-  }
+          sourceMap: true, //default is false
+        },
+      },
+    },
+  },
 ]
 ```
 
