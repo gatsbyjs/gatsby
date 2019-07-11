@@ -1,5 +1,6 @@
 ---
 title: What we learned from user testing of accessible client-side routing techniques with Fable Tech Labs
+image: "./images/magnification-a11y.png"
 author: Marcy Sutton
 date: 2019-07-11
 excerpt: "We conducted 5 user testing sessions for accessibility research with Fable Tech Labs to determine which client-side routing techniques are the most ergonomic and intuitive to users with disabilities, and if any of the techniques presented barriers detracting from their browsing experience."
@@ -84,6 +85,8 @@ The [prototypes for these tests](https://marcysutton.com/prototype-testing-acces
 - [Example 3](https://marcy.codes/prototypes/routing/example-3.html): Focus changed to a heading element in the newly changed content
 - [Example 4](https://marcy.codes/prototypes/routing/example-4.html): Focus changed to an element wrapping the newly changed content
 - [Example 5](https://marcy.codes/prototypes/routing/example-5.html): Focus changed to a wrapper element at 100% width, rather than side-by-side (added during testing session #3 on zooming/magnification)
+
+These prototypes used [Doggo Ipsum](https://doggoipsum.com/) for placeholder text, which made for some fun testing experiences. "Cuuuuuute long bois" was my personal favorite, captured in testing screenshots. :)
 
 ## Testing results
 
