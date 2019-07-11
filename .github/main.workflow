@@ -9,6 +9,8 @@ action "high-priority-prs" {
     "GITHUB_TOKEN",
     "SLACK_TOKEN",
     "SLACK_CHANNEL_ID",
+    "SLACK_CORE_CHANNEL_ID",
+    "SLACK_LEARNING_CHANNEL_ID",
   ]
 }
 
@@ -19,5 +21,5 @@ workflow "Site Showcase Validator workflow" {
 
 action "gatsby-site-showcase-validator" {
   uses = "./.github/actions/gatsby-site-showcase-validator"
-  secrets = ["SLACK_CORE_CHANNEL_ID", "SLACK_LEARNING_CHANNEL_ID", "SLACK_TOKEN", "SLACK_CHANNEL_ID", "GITHUB_TOKEN"]
+  secrets = ["SLACK_TOKEN", "SLACK_CHANNEL_ID", "GITHUB_TOKEN"]
 }
