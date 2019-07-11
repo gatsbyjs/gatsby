@@ -287,3 +287,36 @@
   image: images/mangoart.png
   for_hire: true
   portfolio: true
+- name: Brew Digital
+  type: agency
+  image: images/brew-digital.jpg
+  description: >-
+    Hi, We are Brew, a digital marketing agency in Birmingham UK. We work with companies of all sizes delivering websites, apps, marketing campaigns, data integrations, social campaigns and PPC. 
+
+    We love Gatsby and we would love to work with you on your next project, drop us a message if there is anything we can help with.
+  location: Birmingham UK
+  website: https://www.wearebrew.co.uk
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Liferay Design
+  type: company
+  image: images/liferay-design.png
+  description: >-
+    We are Liferay's design team — based in Brazil, California, Germany, Italy, Spain, and maybe soon in your hometown. We moved our site to Gatsby in 2018 and haven't looked back since.
+  location: Worldwide
+  website: https://liferay.design
+  github: https://github.com/liferay-design
+  for_hire: false
+  hiring: true
+- name: Sankarsan Kampa
+  type: individual
+  description: >-
+    Hey! I'm Sankarsan (aka Traction). I'm a programmer who likes
+    building & breaking programmable systems, exploring their
+    details and stretching their capabilities.
+  website: "https://traction.one/"
+  github: "https://github.com/k3rn31p4nic"
+  image: images/sankarsan-kampa.jpg
+  for_hire: true
+  portfolio: true

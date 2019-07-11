@@ -4,7 +4,7 @@ title: Sourcing from Contentful
 
 ## What is Contentful? Why choose it?
 
-Contentful is a headless Content Management System (CMS) that lets you organize your content into what could be called “modules,” or little bits of data that can be rearranged to appear nicely on mobile devices, tablets, computers, virtual reality devices (maybe someday?) and more.
+[Contentful](https://www.contentful.com/) is a headless Content Management System (CMS) that lets you organize your content into what could be called “modules,” or little bits of data that can be rearranged to appear nicely on mobile devices, tablets, computers, virtual reality devices (maybe someday?) and more.
 
 Actually, the way Contentful handles bits of content means that you can push content out when new technology develops without having to redesign, rewrite, or rethink all of it for a new format.
 

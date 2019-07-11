@@ -1,5 +1,5 @@
 ---
-title: Programmatically create pages from data
+title: Creating Pages from Data Programatically
 ---
 
 Gatsby and its ecosystem of plugins provide all kinds of data through a

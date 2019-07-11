@@ -2,6 +2,10 @@
 title: GraphQL Node Types Creation
 ---
 
+> This documentation isn't up to date with latest
+> [schema customization changes](/docs/schema-customization). Help Gatsby by
+> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+
 Gatsby creates a [GraphQLObjectType](https://graphql.org/graphql-js/type/#graphqlobjecttype) for each distinct `node.internal.type` that is created during the source-nodes phase. Find out below how this is done.
 
 ## GraphQL Types for each type of node
@@ -112,7 +116,7 @@ The core of this step creates a GraphQL Field object, where the type is inferred
 
 If however, the value is an object or array, we recurse, using [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) to create the GraphQL fields.
 
-In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L52) functions), then we return the appropariate custom type.
+In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L52) functions), then we return the appropriate custom type.
 
 ### Child/Parent fields
 

@@ -130,9 +130,55 @@ This snippet contains a custom `gatsby-plugin-feed` setup in `gatsby-config.js` 
 
 The `output` field in your feed object allows you to customize the filename for your RSS feed, and `title` for the name of your site's RSS feed.
 
+By default, feed is referenced in every page. You can customize this behavior by providing an extra field `match` of type `string`. This string will be used to build a `RegExp`, and this regular expression will be used to test the `pathname` of current page. Only pages that satisfied the regular expression will have feed reference included.
+
 To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`.
 
 > NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
+
+## Syntax for iTunes RSS blocks
+
+If creating a RSS feed for a podcast you probably will want to include iTunes RSS blocks. They take the format of `itunes:author` which GraphQL does not read. Here's an example of how to implement iTunes RSS blocks using this plugin:
+
+```js:title=gatsby.config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        /* highlight-start */
+        setup: () => ({
+          custom_namespaces: {
+            itunes: 'http://www.itunes.com/dtds/podcast-1.0.dtd',
+          },
+          custom_elements: [
+            { 'itunes:author': 'Michael Scott' },
+            { 'itunes:explicit': 'clean' },
+          ],
+        }),
+        /* highlight-end */
+        feeds: [
+          {
+            ...
+          },
+        ],
+      },
+    },
+  ],
+}
+```
 
 ## Happy blogging!
 

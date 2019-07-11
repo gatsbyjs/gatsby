@@ -1,10 +1,10 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
 import {
@@ -20,40 +20,32 @@ import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
-import HubspotForm from "../components/hubspot-form"
-import Pullquote from "../components/shared/pullquote"
-import Chart from "../components/chart"
 import Avatar from "../components/avatar"
 import FooterLinks from "../components/shared/footer-links"
 
-const renderAst = new rehypeReact({
-  createElement: React.createElement,
-  components: {
-    "hubspot-form": HubspotForm,
-    "date-chart": Chart,
-    pullquote: Pullquote,
-  },
-}).Compiler
-
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
-    const prev = this.props.pageContext.prev
-    const next = this.props.pageContext.next
+    const {
+      pageContext: { prev, next },
+      data: { mdx: post },
+      location: { href },
+    } = this.props
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        fontFamily: fonts.header,
-        fontWeight: `bold`,
         color: colors.gatsby,
+        fontFamily: fonts.header,
+        fontSize: fontSizes[3],
+        fontWeight: `bold`,
+        lineHeight: lineHeights.dense,
       },
     }
     const prevNextLabelStyles = {
-      marginTop: 0,
-      marginBottom: 0,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
+      fontSize: fontSizes[2],
       fontWeight: `normal`,
-      lineHeight: lineHeights.solid,
+      marginBottom: space[2],
+      marginTop: 0,
     }
     const BioLine = ({ children }) => (
       <p
@@ -61,7 +53,7 @@ class BlogPostTemplate extends React.Component {
           lineHeight: lineHeights.dense,
           fontFamily: fonts.header,
           margin: 0,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         {children}
@@ -73,7 +65,6 @@ class BlogPostTemplate extends React.Component {
         <link rel="canonical" href={post.frontmatter.canonicalLink} />
       )
     }
-
     return (
       <Layout location={this.props.location}>
         <Container>
@@ -109,6 +100,7 @@ class BlogPostTemplate extends React.Component {
               <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
+              <meta property="og:url" content={href} />
               {post.frontmatter.image && (
                 <meta
                   property="og:image"
@@ -172,16 +164,16 @@ class BlogPostTemplate extends React.Component {
                     css={{
                       fontSize: fontSizes[3],
                       marginBottom: space[1],
-                      color: `${colors.gatsby}`,
+                      color: colors.link.color,
                     }}
                   >
                     <span
                       css={{
-                        borderBottom: `1px solid ${colors.ui.bright}`,
+                        borderBottom: `1px solid ${colors.link.border}`,
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": { background: colors.ui.bright },
+                        "&:hover": { borderColor: colors.link.hoverBorder },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -197,7 +189,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {this.props.data.markdownRemark.fields.publishedAt}
+                        {post.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -211,7 +203,7 @@ class BlogPostTemplate extends React.Component {
                 [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
-              {this.props.data.markdownRemark.frontmatter.title}
+              {post.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
@@ -230,31 +222,29 @@ class BlogPostTemplate extends React.Component {
                 </div>
               )}
             <section className="post-body">
-              {renderAst(this.props.data.markdownRemark.htmlAst)}
+              <MDXRenderer>{post.body}</MDXRenderer>
             </section>
-            <TagsSection
-              tags={this.props.data.markdownRemark.frontmatter.tags}
-            />
+            <TagsSection tags={post.frontmatter.tags} />
             <EmailCaptureForm />
           </main>
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${colors.ui.light}`,
+            borderTop: `1px solid ${colors.ui.border.subtle}`,
             marginTop: space[9],
             [mediaQueries.md]: {
-              paddingBottom: space[5],
               paddingTop: space[5],
             },
             [mediaQueries.lg]: {
-              paddingBottom: space[9],
-              paddingTop: space[9],
+              paddingTop: space[7],
             },
           }}
         >
           <Container>
             <div
-              css={{ [mediaQueries.sm]: { display: `flex`, width: `100%` } }}
+              css={{
+                [mediaQueries.sm]: { display: `flex`, width: `100%` },
+              }}
             >
               <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
                 {prev && (
@@ -309,8 +299,8 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      htmlAst
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
       excerpt
       timeToRead
       fields {

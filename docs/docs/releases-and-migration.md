@@ -5,4 +5,4 @@ overview: true
 
 Find release notes and guides for migration between major versions.
 
-[[guidelist]]
+<GuideList slug={props.slug} />

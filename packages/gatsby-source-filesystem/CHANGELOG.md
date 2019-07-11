@@ -3,6 +3,88 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.3...gatsby-source-filesystem@2.1.4) (2019-07-11)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.2...gatsby-source-filesystem@2.1.3) (2019-07-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.2](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.1...gatsby-source-filesystem@2.1.2) (2019-07-02)
+
+### Bug Fixes
+
+- **gatsby:** various Typescript definitions ([#15268](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/b8f3ed5))
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.1.0...gatsby-source-filesystem@2.1.1) (2019-06-25)
+
+### Features
+
+- **gatsby-source-filesystem:** add createFileNodeFromBuffer ([#14576](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14576)) ([aa21755](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/aa21755))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.43...gatsby-source-filesystem@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.43](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.40...gatsby-source-filesystem@2.0.43) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/2594623))
+
+## [2.0.42](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.41...gatsby-source-filesystem@2.0.42) (2019-06-19)
+
+### Bug Fixes
+
+- fix gatsby-cli dep in source-filesystem & plugin-sharp ([#14881](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14881)) ([2594623](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/2594623))
+
+## [2.0.41](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.40...gatsby-source-filesystem@2.0.41) (2019-06-18)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.0.40](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.39...gatsby-source-filesystem@2.0.40) (2019-06-18)
+
+### Features
+
+- **gatsby-cli:** move progressbar into ink ([#14220](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14220)) ([967597c](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/967597c))
+
+## [2.0.39](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.38...gatsby-source-filesystem@2.0.39) (2019-06-10)
+
+### Features
+
+- **gatsby-source-filesystem:** remove slash ([#14372](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14372)) ([1d9ba86](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/1d9ba86))
+
+## [2.0.38](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.37...gatsby-source-filesystem@2.0.38) (2019-05-31)
+
+### Features
+
+- **gatsby-source-filesystem:** add an environment variable to control concurrent queue size ([#13110](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/13110)) ([90aa247](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/90aa247))
+
+## [2.0.37](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.36...gatsby-source-filesystem@2.0.37) (2019-05-20)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** fix unhandled rejection by returning promise chain ([#14180](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14180)) ([53c91b5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/53c91b5))
+
+## [2.0.36](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.35...gatsby-source-filesystem@2.0.36) (2019-05-16)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** fix createRemoteFileNode ts types ([#14086](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/14086)) ([e47da77](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/e47da77))
+
+## [2.0.35](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.34...gatsby-source-filesystem@2.0.35) (2019-05-15)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** createRemoteFileNode rejects promise instead resolving on failure ([#12348](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/12348)) ([c2c5cea](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/c2c5cea))
+
+## [2.0.34](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.33...gatsby-source-filesystem@2.0.34) (2019-05-14)
+
+### Features
+
+- **gatsby:** allow awaiting API run triggered by createNode action ([#12748](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/issues/12748)) ([17a67a5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/commit/17a67a5))
+
 ## [2.0.33](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem/compare/gatsby-source-filesystem@2.0.32...gatsby-source-filesystem@2.0.33) (2019-04-30)
 
 **Note:** Version bump only for package gatsby-source-filesystem

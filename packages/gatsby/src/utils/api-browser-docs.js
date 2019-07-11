@@ -146,7 +146,7 @@ exports.replaceComponentRenderer = true
  * @returns {ReactNode} Wrapped element
  * @example
  * const React = require("react")
- * const Layout = require("./src/components/layout")
+ * const Layout = require("./src/components/layout").default
  *
  * exports.wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get
@@ -189,7 +189,7 @@ exports.wrapRootElement = true
  * for plugins with custom prefetching logic.
  * @param {object} $0
  * @param {string} $0.pathname The pathname whose resources should now be prefetched
- * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
+ * @param {function} $0.loadPage Function for fetching resources related to pathname
  * @param {pluginOptions} pluginOptions
  */
 exports.onPrefetchPathname = true
@@ -199,7 +199,6 @@ exports.onPrefetchPathname = true
  * for plugins with custom prefetching logic.
  * @param {object} $0
  * @param {string} $0.pathname The pathname whose resources have now been prefetched
- * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
  * @param {pluginOptions} pluginOptions
  */
 exports.onPostPrefetchPathname = true

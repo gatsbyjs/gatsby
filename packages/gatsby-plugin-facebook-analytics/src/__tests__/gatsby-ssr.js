@@ -56,6 +56,60 @@ describe(`gatsby-plugin-facebook-analytics`, () => {
 
         expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
       })
+
+      it(`sets the correct SDK version when set in the config`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1, version: `v3.3` }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
+
+      it(`sets the existing SDK version as default when no version is set in config`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1 }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
+
+      it(`sets the correct xfbml value when set in the config`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1, xfbml: false }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
+
+      it(`sets xfbml to true by default`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1 }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
+
+      it(`sets the correct cookie value when set in the config`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1, cookie: true }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
+
+      it(`sets cookie to false by default`, () => {
+        const setPostBodyComponents = jest.fn()
+        const pluginOptions = { appId: 1 }
+
+        onRenderBody({ setPostBodyComponents }, pluginOptions)
+
+        expect(setPostBodyComponents.mock.calls).toMatchSnapshot()
+      })
     })
   })
 })

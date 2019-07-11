@@ -24,7 +24,7 @@ In this series of blog posts, I'll be talking about how to build a Gatsby.js sit
 
 <figure>
   <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/3o7ZeTmU77UlPyeR2w/giphy.mp4">
+    <source src="https://media.giphy.com/media/3o7ZeTmU77UlPyeR2w/giphy.mp4"/>
   </video>
   <figcaption>Kylo Ren Approves!</figcaption>
 </figure>
@@ -41,7 +41,7 @@ Second, I believe that plugins are a double-edged sword. They allow some cool fu
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src='https://media.giphy.com/media/CBFgxojcXwac/giphy.mp4'>
+    <source src='https://media.giphy.com/media/CBFgxojcXwac/giphy.mp4'/>
   </video>
   <figcaption>Unbelievable</figcaption>
 </figure>
@@ -62,7 +62,7 @@ Now let's get down to business...
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/xUOwGmsFStnxzIGC2s/giphy.mp4">
+    <source src="https://media.giphy.com/media/xUOwGmsFStnxzIGC2s/giphy.mp4"/>
   </video>
   <figcaption>Let's get down to business</figcaption>
 </figure>
@@ -107,8 +107,8 @@ One of the great functions in WordPress is the ability for users to easily creat
 
 <figure>
 <video autoplay muted loop>
-  <source src="./images/wp_netlify_build.webm">
-  <source src="./images/wp_netlify_build.mp4">
+  <source src="./images/wp_netlify_build.webm"/>
+  <source src="./images/wp_netlify_build.mp4"/>
 </video>
 <figcaption>WP Trigger Netlify Build shows Netlify status</figcaption>
 </figure>
@@ -119,7 +119,7 @@ Netlify has the ability to create webhooks that you can grab to say, "Hey, there
 
 <figure>
 <video autoplay muted loop>
-  <source src="https://media.giphy.com/media/qyX9oq2ZmsPwk/giphy.mp4">
+  <source src="https://media.giphy.com/media/qyX9oq2ZmsPwk/giphy.mp4"/>
 </video>
 <figcaption>We gon' have lots of fixins</figcaption>
 </figure>

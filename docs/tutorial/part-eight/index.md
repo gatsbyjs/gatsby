@@ -29,7 +29,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 
 ### ✋ Create a production build
 
-1.  Stop the development server (if it's still running) and run:
+1.  Stop the development server (if it's still running) and run the following command:
 
 ```shell
 gatsby build
@@ -43,7 +43,7 @@ gatsby build
 gatsby serve
 ```
 
-Once this starts, you can now view your site at `localhost:9000`.
+Once this starts, you can view your site at [`localhost:9000`](http://localhost:9000).
 
 ### Run a Lighthouse audit
 
@@ -85,7 +85,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install --save gatsby-plugin-manifest
 ```
 
-2. Add a favicon for your app under `src/images/icon.png`. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+2. Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
 
 3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
@@ -95,15 +95,15 @@ npm install --save gatsby-plugin-manifest
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: "GatsbyJS",
-        short_name: "GatsbyJS",
-        start_url: "/",
-        background_color: "#6b37bf",
-        theme_color: "#6b37bf",
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
-        display: "standalone",
-        icon: "src/images/icon.png", // This path is relative to the root of the site.
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
   ]
@@ -130,21 +130,30 @@ npm install --save gatsby-plugin-offline
 
 ```javascript:title=gatsby-config.js
 {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-manifest`,
-            options: {
-                ...
-            }
-        },
-        'gatsby-plugin-offline'
-    ]
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    // highlight-next-line
+    `gatsby-plugin-offline`,
+  ]
 }
 ```
 
 That's all you need to get started with service workers with Gatsby.
 
-> 💡 The manifest plugin should be listed _before_ the offline plugin so that the offline plugin can cache the created `manifest.webmanifest`.
+> 💡 The offline plugin should be listed _after_ the manifest plugin so that the offline plugin can cache the created `manifest.webmanifest`.
 
 ## Add page metadata
 
@@ -166,7 +175,25 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 ```javascript:title=gatsby-config.js
 {
-  plugins: [`gatsby-plugin-react-helmet`]
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    `gatsby-plugin-offline`,
+    // highlight-next-line
+    `gatsby-plugin-react-helmet`,
+  ]
 }
 ```
 
@@ -220,7 +247,9 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ## That's all, folks
 
-Well, not quite. Just for this tutorial. This is just the beginning. Keep going!
+Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutorial/additional-tutorials/) to check out for more guided use cases.
+
+This is just the beginning. Keep going!
 
 - Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
 - Did you write a cool blog post about what you learned? Share that, too!

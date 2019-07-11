@@ -1,8 +1,8 @@
 const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
-const { GraphQLList, getNullableType, getNamedType } = require(`graphql`)
-const { getValueAt } = require(`./utils/get-value-at`)
+const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
+const { getValueAt } = require(`../utils/get-value-at`)
 
 const findMany = typeName => ({ args, context, info }) =>
   context.nodeModel.runQuery(
@@ -25,7 +25,17 @@ const findOne = typeName => ({ args, context, info }) =>
   )
 
 const findManyPaginated = typeName => async rp => {
-  const result = await findMany(typeName)(rp)
+  // Peek into selection set and pass on the `field` arg of `group` and
+  // `distinct` which might need to be resolved. The easiest way to check if
+  // `group` or `distinct` are in the selection set is with the `projection`
+  // field which is added by `graphql-compose`'s `Resolver`. If we find it
+  // there, get the actual `field` arg.
+  const group = rp.projection.group && getProjectedField(rp.info, `group`)
+  const distinct =
+    rp.projection.distinct && getProjectedField(rp.info, `distinct`)
+  const args = { ...rp.args, group: group || [], distinct: distinct || [] }
+
+  const result = await findMany(typeName)({ ...rp, args })
   return paginate(result, { skip: rp.args.skip, limit: rp.args.limit })
 }
 
@@ -105,8 +115,16 @@ const paginate = (results = [], { skip = 0, limit }) => {
   }
 }
 
-const link = ({ by, from }) => async (source, args, context, info) => {
-  const fieldValue = source && source[from || info.fieldName]
+const link = ({ by = `id`, from }, originalResolver) => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const fieldValue = await originalResolver(source, args, context, {
+    ...info,
+    fieldName: from || info.fieldName,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -146,14 +164,33 @@ const link = ({ by, from }) => async (source, args, context, info) => {
     }
   }, fieldValue)
 
-  return context.nodeModel.runQuery(
+  const result = await context.nodeModel.runQuery(
     { query: args, firstOnly: !(returnType instanceof GraphQLList), type },
     { path: context.path }
   )
+  if (
+    returnType instanceof GraphQLList &&
+    Array.isArray(fieldValue) &&
+    Array.isArray(result)
+  ) {
+    return fieldValue.map(value =>
+      result.find(obj => getValueAt(obj, by) === value)
+    )
+  } else {
+    return result
+  }
 }
 
-const fileByPath = (source, args, context, info) => {
-  const fieldValue = source && source[info.fieldName]
+const fileByPath = ({ from }, originalResolver) => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const fieldValue = await originalResolver(source, args, context, {
+    ...info,
+    fieldName: from || info.fieldName,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -192,6 +229,62 @@ const resolveValue = (resolve, value) =>
   Array.isArray(value)
     ? value.map(v => resolveValue(resolve, v))
     : resolve(value)
+
+const getProjectedField = (info, fieldName) => {
+  const selectionSet = info.fieldNodes[0].selectionSet
+  const fieldNodes = getFieldNodeByNameInSelectionSet(
+    selectionSet,
+    fieldName,
+    info
+  )
+
+  const fieldEnum = getNullableType(
+    getNullableType(info.returnType)
+      .getFields()
+      [fieldName].args.find(arg => arg.name === `field`).type
+  )
+
+  return fieldNodes.reduce((acc, fieldNode) => {
+    const fieldArg = fieldNode.arguments.find(arg => arg.name.value === `field`)
+    if (fieldArg) {
+      const enumKey = fieldArg.value.value
+      return [...acc, fieldEnum.getValue(enumKey).value]
+    } else {
+      return acc
+    }
+  }, [])
+}
+
+const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
+  selectionSet.selections.reduce((acc, selection) => {
+    if (selection.kind === Kind.FRAGMENT_SPREAD) {
+      const fragmentDef = info.fragments[selection.name.value]
+      if (fragmentDef) {
+        return [
+          ...acc,
+          ...getFieldNodeByNameInSelectionSet(
+            fragmentDef.selectionSet,
+            fieldName,
+            info
+          ),
+        ]
+      }
+    } else if (selection.kind === Kind.INLINE_FRAGMENT) {
+      return [
+        ...acc,
+        ...getFieldNodeByNameInSelectionSet(
+          selection.selectionSet,
+          fieldName,
+          info
+        ),
+      ]
+    } /* FIELD_NODE */ else {
+      if (selection.name.value === fieldName) {
+        return [...acc, selection]
+      }
+    }
+    return acc
+  }, [])
 
 module.exports = {
   findManyPaginated,

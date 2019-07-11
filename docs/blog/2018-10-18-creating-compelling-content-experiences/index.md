@@ -36,7 +36,7 @@ This allows content teams to replace their heavyweight CMS monolith with their c
 
 ### Second, pick a UI development library
 
-[React and Angular are both excellent, ubiquitious, modern choices](/blog/2018-10-11-rise-of-modern-web-development), with rich community ecosystems to address website-specific concerns like:
+[React and Angular are both excellent, ubiquitous, modern choices](/blog/2018-10-11-rise-of-modern-web-development), with rich community ecosystems to address website-specific concerns like:
 
 - SEO
 - Routing

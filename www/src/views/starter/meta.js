@@ -8,7 +8,6 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
     css={{
       fontFamily: fonts.header,
-      color: colors.gray.dark,
       display: `flex`,
       flexWrap: `wrap`,
       width: `100%`,
@@ -44,26 +43,22 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       <div>
         <span
           css={{
+            alignItems: `center`,
             color: colors.accent,
-            paddingRight: 10,
+            display: `inline-flex`,
+            paddingRight: space[5],
           }}
         >
-          <MdStar style={{ verticalAlign: `sub` }} />
+          <MdStar />
           {` `}
-          <span css={{ color: colors.gray.light }}>{starter.stars}</span>
+          <span css={{ color: colors.text.primary, paddingLeft: space[1] }}>
+            {starter.stars}
+          </span>
         </span>
       </div>
 
       <div>
-        <span
-          css={{
-            color: colors.gray.calm,
-            fontFamily: fonts.header,
-            paddingRight: 8,
-          }}
-        >
-          Updated
-        </span>
+        <span css={{ paddingRight: 8 }}>Updated</span>
         {showDate(starter.lastUpdated)}
       </div>
     </div>
@@ -75,7 +70,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         display: `flex`,
         flexWrap: `nowrap`,
         flexGrow: 1,
-        borderBottom: `1px solid ${colors.ui.light}`,
+        borderBottom: `1px solid ${colors.ui.border.subtle}`,
         paddingBottom: space[3],
         [mediaQueries.sm]: {
           borderBottom: 0,
@@ -91,7 +86,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           textOverflow: `ellipsis`,
         }}
       >
-        <span css={{ color: colors.gray.light }}>{`By  `}</span>
+        <span css={{ color: colors.text.secondary }}>{`By `}</span>
         <a
           css={{
             "&&": {

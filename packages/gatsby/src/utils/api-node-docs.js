@@ -155,7 +155,7 @@ exports.onCreatePage = true
  * *Note:* Import GraphQL types from `gatsby/graphql` and don't add the `graphql`
  * package to your project/plugin dependencies to avoid `Schema must
  * contain unique named types but contains multiple types named` errors.
- * `gatsby/graphql` exports all builtin GraphQL types as well as the `graphQLJSON`
+ * `gatsby/graphql` exports all builtin GraphQL types as well as the `GraphQLJSON`
  * type.
  *
  * Many transformer plugins use this to add fields that take arguments.
@@ -194,6 +194,54 @@ exports.onCreatePage = true
  * }
  */
 exports.setFieldsOnGraphQLNodeType = true
+
+/**
+ * Customize Gatsby's GraphQL schema by creating type definitions, field
+ * extensions or adding third-party schemas.
+ *
+ * The [`createTypes`](/docs/actions/#createTypes),
+ * [`createFieldExtension`](/docs/actions/#createFieldExtension) and
+ * [`addThirdPartySchema`](/docs/actions/#addThirdPartySchema) actions
+ * are only available in this API. For details on their usage please refer to
+ * the actions documentation.
+ *
+ * This API runs immediately before schema generation. For modifications of the
+ * generated schema, e.g. to customize added third-party types, use the
+ * [`createResolvers`](/docs/node-apis/#createResolvers) API.
+ *
+ * @param {object} $0
+ * @param {object} $0.actions
+ * @param {object} $0.actions.createTypes
+ * @param {object} $0.actions.createFieldExtension
+ * @param {object} $0.actions.addThirdPartySchema
+ * @example
+ * exports.createSchemaCustomization = ({ actions }) => {
+ *   const { createTypes, createFieldExtension } = actions
+ *
+ *   createFieldExtension({
+ *     name: 'shout',
+ *     extend: () => ({
+ *       resolve(source, args, context, info) {
+ *         return String(source[info.fieldName]).toUpperCase()
+ *       }
+ *     })
+ *   })
+ *
+ *   const typeDefs = `
+ *     type MarkdownRemark implements Node @dontInfer {
+ *       frontmatter: Frontmatter
+ *     }
+ *     type Frontmatter {
+ *       title: String!
+ *       tagline: String @shout
+ *       date: Date @dateformat
+ *       image: File @fileByRelativePath
+ *     }
+ *   `
+ *   createTypes(typeDefs)
+ * }
+ */
+exports.createSchemaCustomization = true
 
 /**
  * Add custom field resolvers to the GraphQL schema.

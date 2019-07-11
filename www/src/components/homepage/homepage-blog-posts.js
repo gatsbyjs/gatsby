@@ -95,8 +95,7 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
       justify-content: flex-start;
 
       &:hover {
-        color: ${colors.gatsby};
-        background: ${colors.ui.whisper};
+        background: ${colors.purple[80]};
       }
     }
   }

@@ -13,25 +13,19 @@ import {
   lineHeights,
   fontSizes,
   fonts,
+  fontWeights,
 } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `0, 0, 0, 0.025`
+const stripeColor = colors.purple[70]
 const stripeSize = 15
-const stripeAnimation = keyframes({
-  "0%": {
-    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
-  },
-  "100%": { backgroundPosition: `0 0` },
-})
 const stripeBg = {
-  backgroundColor: colors.ui.whisper,
+  backgroundColor: colors.purple[80],
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
-  animation: `${stripeAnimation} 14s linear infinite`,
+  backgroundImage: `linear-gradient(45deg, ${stripeColor} 25%, transparent 25%, transparent 50%, ${stripeColor} 50%, ${stripeColor} 75%, transparent 75%, transparent)`,
 }
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
@@ -56,7 +50,6 @@ const SegmentTitle = ({ children }) => (
     css={{
       display: `inline`,
       background: colors.accent,
-      color: colors.gray.copy,
       borderRadius: radii[1],
       margin: `0 auto`,
       position: `relative`,
@@ -95,7 +88,7 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.ui.light}`,
+  border: `1px solid ${colors.purple[10]}`,
   borderRadius: radii[2],
   padding: `${space[5]} ${space[7]} 0`,
 }
@@ -155,10 +148,8 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     css={{
-      color: colors.gray.dark,
-      margin: 0,
-      fontStyle: `normal`,
       fontSize: fontSizes[2],
+      margin: 0,
     }}
   >
     {children}
@@ -170,7 +161,7 @@ const ItemDescription = ({ children }) => (
     css={{
       lineHeight: lineHeights.dense,
       display: `block`,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
       fontSize: fontSizes[1],
       fontFamily: fonts.system,
     }}
@@ -183,7 +174,7 @@ const ItemDescriptionLink = ({ to, children }) => (
   <Link
     css={{
       "&&": {
-        color: colors.gatsbyDark,
+        color: colors.purple[80],
       },
     }}
     to={to}
@@ -262,6 +253,7 @@ const Diagram = () => (
       >
         <h1
           css={{
+            fontWeight: fontWeights[1],
             marginTop: 0,
             marginBottom: space[6],
             [mediaQueries.md]: {

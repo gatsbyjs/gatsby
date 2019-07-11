@@ -32,23 +32,23 @@ const MastheadContent = () => (
     <h1
       css={{
         color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 3.5vw)`,
+        fontSize: `calc(12px + 2vh + 3vw)`,
         letterSpacing: letterSpacings.tight,
         lineHeight: lineHeights.solid,
-        margin: `0 auto ${space[7]}`,
+        margin: `0 auto ${space[6]}`,
         maxWidth: `15em`,
         WebkitFontSmoothing: `antialiased`,
       }}
     >
-      Fast in every way that matters
+      Fast in every way that&nbsp;matters
     </h1>
     <p
       css={{
-        color: colors.gray.copy,
         fontFamily: fonts.header,
         fontSize: fontSizes[4],
+        lineHeight: lineHeights.dense,
         maxWidth: rhythm(30),
-        margin: `0 auto ${space[7]}`,
+        margin: `0 auto ${space[10]}`,
         WebkitFontSmoothing: `antialiased`,
         [mediaQueries.sm]: {
           fontSize: fontSizes[5],

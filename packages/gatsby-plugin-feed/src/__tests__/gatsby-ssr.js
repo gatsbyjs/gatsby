@@ -105,4 +105,33 @@ describe(`Adds <Link> for feed to head`, () => {
     expect(setHeadComponents).toMatchSnapshot()
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
   })
+
+  it(`creates Link only if pathname satisfied match`, async () => {
+    const pluginOptions = {
+      feeds: [
+        {
+          output: `gryffindor/feed.xml`,
+          title: `Gryffindor's RSS Feed`,
+          match: `^/gryffindor/`,
+        },
+        {
+          output: `ravenclaw/feed.xml`,
+          title: `Ravenclaw's RSS Feed`,
+          match: `^/ravenclaw/`,
+        },
+      ],
+    }
+    const setHeadComponents = jest.fn()
+
+    await onRenderBody(
+      {
+        setHeadComponents,
+        pathname: `/gryffindor/welcome`,
+      },
+      pluginOptions
+    )
+
+    expect(setHeadComponents).toMatchSnapshot()
+    expect(setHeadComponents).toHaveBeenCalledTimes(1)
+  })
 })

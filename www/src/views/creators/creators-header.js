@@ -22,15 +22,23 @@ class CreatorsHeader extends Component {
           ...styles.header,
         }}
       >
-        <Link
-          to="/creators/"
-          state={{ filter: `` }}
+        <h1
           css={{
-            ...styles.creatorsLink,
+            display: `flex`,
+            height: `100%`,
+            margin: 0,
           }}
         >
-          Creators
-        </Link>
+          <Link
+            to="/creators/"
+            state={{ filter: `` }}
+            css={{
+              ...styles.creatorsLink,
+            }}
+          >
+            Creators
+          </Link>
+        </h1>
         <div
           className="creators--filters"
           css={{
@@ -66,7 +74,7 @@ const styles = {
     display: `flex`,
     flexDirection: `row`,
     alignItems: `center`,
-    borderBottom: `1px solid ${colors.ui.light}`,
+    borderBottom: `1px solid ${colors.ui.border.subtle}`,
     backgroundColor: `rgba(255,255,255,0.975)`,
     zIndex: `2`,
     padding: `0 ${space[6]}`,
@@ -74,6 +82,7 @@ const styles = {
     fontFamily: fonts.header,
   },
   creatorsLink: {
+    alignSelf: `center`,
     "&&": {
       fontSize: fontSizes[4],
       color: colors.gatsby,
@@ -102,7 +111,7 @@ const styles = {
     },
   },
   filter: {
-    border: `1px solid ${colors.ui.bright}`,
+    border: `1px solid ${colors.ui.border.subtle}`,
     borderRadius: 40,
     margin: `${space[6]} ${space[1]}`,
     paddingLeft: space[1],
@@ -117,7 +126,7 @@ const styles = {
     appearance: `none`,
     width: space[4],
     height: space[4],
-    border: `1px solid ${colors.ui.bright}`,
+    border: `1px solid ${colors.lavender}`,
     borderRadius: 40,
     marginRight: `${space[2]}`,
     outline: `none`,
@@ -129,7 +138,7 @@ const styles = {
     },
   },
   activeFilter: {
-    backgroundColor: colors.ui.bright,
+    backgroundColor: colors.lavender,
     color: colors.gatsby,
   },
 }
