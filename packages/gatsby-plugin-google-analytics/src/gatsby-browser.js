@@ -20,7 +20,8 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
     window.ga(`send`, `pageview`)
   }
 
-  const delay = pluginOptions.pageTransitionDelay
+  const delay = Math.max(32, pluginOptions.pageTransitionDelay)
+  setTimeout(sendPageView, delay)
   if (delay || !(`requestAnimationFrame` in window)) {
     // minimum delay to simulate a pair of requestAnimationFrame calls
     setTimeout(sendPageView, Math.min(32, delay))

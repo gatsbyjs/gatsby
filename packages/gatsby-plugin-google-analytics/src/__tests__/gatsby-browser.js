@@ -81,7 +81,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
           jest.runAllTimers()
 
-          expect(setTimeout).toHaveBeenCalledTimes(1)
+          expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 1000)
           expect(window.ga).toHaveBeenCalledTimes(2)
         })
       })
