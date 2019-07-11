@@ -9,7 +9,7 @@ const teams = [
     channelId: process.env.SLACK_CORE_CHANNEL_ID,
   },
   {
-    id: `MDQ6VGVhbTI5MzI3MjM=`,
+    id: `MDQ6VGVhbTMzMDc4MzY=`,
     name: `learning`,
     channelId: process.env.SLACK_LEARNING_CHANNEL_ID,
   },
