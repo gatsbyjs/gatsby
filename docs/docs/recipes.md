@@ -32,46 +32,27 @@ Craving a happy medium between [full-length tutorials](/tutorial/) and crawling 
 
 ## Table of Contents
 
-- [Using Gatsby without Graphql](#using-gatsby-without-graphql)
-- [Gatsby project structure](#gatsby-project-structure)
-- [Using a starter](#using-a-starter)
-- [Creating pages](#creating-pages)
-- [Linking between pages](#linking-between-pages)
-- [Styling](#styling)
-- [Creating layouts](#creating-layouts)
-- [Deploying](#deploying)
-- [Querying data](#querying-data)
-- [Sourcing data](#sourcing-data)
-- [Transforming data](#transforming-data)
+1. [Pages and Layouts](#pages-and-layouts)
+2. [Styling with CSS](#styling-with-css)
+3. [Working with starters](#working-with-starters)
+4. [Working with themes](#working-with-themes)
+5. [Sourcing data](#sourcing-data)
+6. [Querying data](#querying-data)
+7. [Working with images](#working-with-images)
+8. [Transforming data](#transforming-data)
+9. [Deploying your site](#deploying-your-site)
 
-## Using Gatsby without GraphQL
 
-You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-- Learn how to pull unstructured data into Gatsby sites in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- Learn when and how to use GraphQL and source plugins for more complex Gatsby sites in [Querying data with GraphQL](/docs/querying-with-graphql/)
 
-## Gatsby project structure
 
-Read the [Gatsby project structure](/docs/gatsby-project-structure/) guide for a tour of the folders and files you may see inside a Gatsby project.
 
-## Using a starter
 
-Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
-- Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
-- Browse the [Starter Library](/starters/)
-- Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
-## Creating pages
 
-You can create pages in Gatsby explicitly by defining React components in `src/pages/`, or programmatically by using the `createPages` API.
 
-- Walk through creating a page by defining a React component in `src/pages` in [tutorial part one](/tutorial/part-one/#familiarizing-with-gatsby-pages)
-- Walk through programmatically creating pages in [tutorial part seven](/tutorial/part-seven/)
-- Check out the docs overview on [creating and modifying pages](/docs/creating-and-modifying-pages/)
 
-## Linking between pages
 
 Routing in Gatsby relies on the `<Link />` component.
 
@@ -101,7 +82,7 @@ export default () => (
 
 > **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
 
-## Styling
+## 2. Styling with CSS
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
@@ -113,25 +94,29 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
 - Use [CSS Modules](/tutorial/part-two/#css-modules)
 
-## Creating layouts
+## 3. Working with starters
 
-To wrap pages with layouts, use normal React components.
+Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
-- Walk through creating a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
-- Gatsby v1 approached layouts differently. If the context is helpful, learn about the [differences in v2](/blog/2018-06-08-life-after-layouts/)
+- Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
+- Browse the [Starter Library](/starters/)
+- Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
-## Deploying
+## 4. Working with themes
 
-Showtime.
+Coming soon!
 
-- Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
-- Learn about [performance optimization](/docs/performance/)
-- Read about [other deployment related topics](/docs/deploying-and-hosting/)
+## 5. Sourcing data
 
-## Querying data
+Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
 
-### The StaticQuery Component
+- Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
+- Search available source plugins in the [Gatsby library](/plugins/?=source)
+- Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
+
+## 6. Querying data
+
+### 6.1 The StaticQuery Component
 
 `StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/).
 
@@ -218,17 +203,22 @@ export default NonPageComponent
 - [More on the useStaticQuery hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
-## Sourcing data
+## 7. Working with images
 
-Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
+Coming soon!
 
-- Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
-- Search available source plugins in the [Gatsby library](/plugins/?=source)
-- Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
-
-## Transforming data
+## 8. Transforming data
 
 Transforming data in Gatsby is also plugin-driven; Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more).
 
 - Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
 - Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
+
+## 9. Deploying your site
+
+Showtime.
+
+- Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
+- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
+- Learn about [performance optimization](/docs/performance/)
+- Read about [other deployment related topics](/docs/deploying-and-hosting/)
