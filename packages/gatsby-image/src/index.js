@@ -88,7 +88,7 @@ const hasIOSupport = isBrowser && window.IntersectionObserver
 let io
 const listeners = new WeakMap()
 
-function getIO() {
+function getIO({ root = null, rootMargin = "200px", threshold = 0 } = {}) {
   if (
     typeof io === `undefined` &&
     typeof window !== `undefined` &&
@@ -108,7 +108,11 @@ function getIO() {
           }
         })
       },
-      { rootMargin: `200px` }
+      {
+        root,
+        rootMargin,
+        threshold,
+      }
     )
   }
 
@@ -182,8 +186,8 @@ function generateNoscriptSources(imageVariants) {
     .join(``)
 }
 
-const listenToIntersections = (el, cb) => {
-  const observer = getIO()
+const listenToIntersections = (el, ioOptions, cb) => {
+  const observer = getIO(ioOptions)
 
   if (observer) {
     observer.observe(el)
@@ -329,28 +333,32 @@ class Image extends React.Component {
   // Specific to IntersectionObserver based lazy-load support
   handleRef(ref) {
     if (this.useIOSupport && ref) {
-      this.cleanUpListeners = listenToIntersections(ref, () => {
-        const imageInCache = inImageCache(this.props)
-        if (
-          !this.state.isVisible &&
-          typeof this.props.onStartLoad === `function`
-        ) {
-          this.props.onStartLoad({ wasCached: imageInCache })
-        }
+      this.cleanUpListeners = listenToIntersections(
+        ref,
+        this.props.ioOptions,
+        () => {
+          const imageInCache = inImageCache(this.props)
+          if (
+            !this.state.isVisible &&
+            typeof this.props.onStartLoad === `function`
+          ) {
+            this.props.onStartLoad({ wasCached: imageInCache })
+          }
 
-        // imgCached and imgLoaded must update after isVisible,
-        // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
-        // imgLoaded and imgCached are in a 2nd setState call to be changed together,
-        // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () =>
-          this.setState({
-            imgLoaded: imageInCache,
-            // `currentSrc` should be a string, but can be `undefined` in IE,
-            // !! operator validates the value is not undefined/null/""
-            imgCached: !!this.imageRef.current.currentSrc,
-          })
-        )
-      })
+          // imgCached and imgLoaded must update after isVisible,
+          // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
+          // imgLoaded and imgCached are in a 2nd setState call to be changed together,
+          // avoiding initiating unnecessary animation frames from style changes.
+          this.setState({ isVisible: true }, () =>
+            this.setState({
+              imgLoaded: imageInCache,
+              // `currentSrc` should be a string, but can be `undefined` in IE,
+              // !! operator validates the value is not undefined/null/""
+              imgCached: !!this.imageRef.current.currentSrc,
+            })
+          )
+        }
+      )
     }
   }
 
@@ -675,6 +683,14 @@ Image.propTypes = {
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
   draggable: PropTypes.bool,
+  ioOptions: PropTypes.shape({
+    root: PropTypes.intanceOf(HTMLElement),
+    rootMargin: PropTypes.string,
+    threshold: PropTypes.oneOf([
+      PropTypes.number,
+      PropTypes.arrayOf(PropTypes.number),
+    ]),
+  }),
 }
 
 export default Image
