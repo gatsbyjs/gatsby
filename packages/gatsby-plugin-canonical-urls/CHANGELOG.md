@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@2.1.0...gatsby-plugin-canonical-urls@2.1.1) (2019-07-11)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
 # [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-canonical-urls/compare/gatsby-plugin-canonical-urls@2.0.13...gatsby-plugin-canonical-urls@2.1.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-plugin-canonical-urls

@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.0",
+    "babel-preset-gatsby-package": "^0.2.1",
     "cross-env": "^5.1.4"
   },
   "engines": {
