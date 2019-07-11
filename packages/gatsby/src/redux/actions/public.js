@@ -81,6 +81,7 @@ const pascalCase = _.flow(
   _.camelCase,
   _.upperFirst
 )
+const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const pageComponentCache = {}
 const fileOkCache = {}
@@ -174,13 +175,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
             `
       if (process.env.NODE_ENV === `test`) {
         return error
-      } else {
+        // Only error if the context version is different than the page
+        // version.  People in v1 often thought that they needed to also pass
+        // the path to context for it to be available in GraphQL
+      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
         report.panic({
           id: `11324`,
           context: {
             message: error,
           },
         })
+      } else {
+        if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
+          report.warn(error)
+          hasWarnedForPageComponentInvalidContext.add(page.component)
+        }
       }
     }
   }
