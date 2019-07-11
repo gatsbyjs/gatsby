@@ -62,13 +62,16 @@ exports.setFieldsOnGraphQLNodeType = (
         },
       }),
       args: {
-        width: { type: GraphQLInt, defaultValue: 300 },
-        duration: { type: GraphQLInt, defaultValue: 5 },
-        fps: { type: GraphQLInt, defaultValue: 6 },
+        maxWidth: { type: GraphQLInt, defaultValue: 560 },
+        maxHeight: { type: GraphQLInt, defaultValue: null },
+        duration: { type: GraphQLInt, defaultValue: 3 },
+        fps: { type: GraphQLInt, defaultValue: 3 },
         publicPath: {
           type: GraphQLString,
           defaultValue: `assets/video-previews`,
         },
+        h264Crf: { type: GraphQLInt, defaultValue: 34 },
+        h264Preset: { type: GraphQLInt, defaultValue: `veryslow` },
       },
       async resolve(video, fieldArgs) {
         const metadata = await prepareVideo({
@@ -132,8 +135,12 @@ exports.setFieldsOnGraphQLNodeType = (
       }),
       args: {
         maxWidth: { type: GraphQLInt, defaultValue: 1920 },
-        maxHeight: { type: GraphQLInt, defaultValue: 1080 },
+        maxHeight: { type: GraphQLInt, defaultValue: null },
         publicPath: { type: GraphQLString, defaultValue: `assets/videos` },
+        h264Crf: { type: GraphQLInt, defaultValue: 28 },
+        h264Preset: { type: GraphQLInt, defaultValue: `veryslow` },
+        h265Crf: { type: GraphQLInt, defaultValue: 34 },
+        h265Preset: { type: GraphQLInt, defaultValue: `veryslow` },
       },
       async resolve(video, fieldArgs) {
         const metadata = await prepareVideo({

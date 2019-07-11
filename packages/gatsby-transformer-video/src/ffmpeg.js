@@ -169,7 +169,7 @@ export default class FFMPEG {
     fieldArgs,
     info,
   }) => {
-    const { duration } = fieldArgs
+    const { duration, h264Crf, h264Preset } = fieldArgs
 
     const publicPath = resolve(publicDir, `${filename}-preview.mp4`)
     const alreadyExists = await pathExists(publicPath)
@@ -182,8 +182,8 @@ export default class FFMPEG {
         .complexFilter(this.createPreviewFilters({ fieldArgs, info }), `output`)
         .outputOptions([
           `-c:v libx264`,
-          `-crf 34`,
-          `-preset veryslow`,
+          `-crf ${h264Crf}`,
+          `-preset ${h264Preset}`,
           `-pix_fmt yuv420p`,
         ])
 
@@ -284,7 +284,7 @@ export default class FFMPEG {
 
   createH264 = (...args) => this.queue.add(() => this.convertToH264(...args))
   convertToH264 = async ({ publicDir, path, filename, fieldArgs }) => {
-    const { maxWidth, maxHeight } = fieldArgs
+    const { maxWidth, maxHeight, h264Crf, h264Preset } = fieldArgs
 
     const publicPath = resolve(publicDir, `${filename}-h264.mp4`)
     const alreadyExists = await pathExists(publicPath)
@@ -300,7 +300,11 @@ export default class FFMPEG {
             options: `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2`,
           },
         ])
-        .outputOptions([`-crf 28`, `-preset veryslow`, `-pix_fmt yuv420p`])
+        .outputOptions([
+          `-crf ${h264Crf}`,
+          `-preset ${h264Preset}`,
+          `-pix_fmt yuv420p`,
+        ])
 
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
@@ -312,7 +316,7 @@ export default class FFMPEG {
 
   createH265 = (...args) => this.queue.add(() => this.convertToH265(...args))
   convertToH265 = async ({ publicDir, path, filename, fieldArgs }) => {
-    const { maxWidth, maxHeight } = fieldArgs
+    const { maxWidth, maxHeight, h265Crf, h265Preset } = fieldArgs
 
     const publicPath = resolve(publicDir, `${filename}-h265.mp4`)
     const alreadyExists = await pathExists(publicPath)
@@ -327,7 +331,11 @@ export default class FFMPEG {
             options: `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2`,
           },
         ])
-        .outputOptions([`-crf 34`, `-preset veryslow`, `-pix_fmt yuv420p`])
+        .outputOptions([
+          `-crf ${h265Crf}`,
+          `-preset ${h265Preset}`,
+          `-pix_fmt yuv420p`,
+        ])
 
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
