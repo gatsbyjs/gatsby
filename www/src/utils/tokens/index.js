@@ -11,6 +11,7 @@ import transition from "./transition"
 import fontSizes from "./font-sizes"
 import fonts from "./fonts"
 import zIndices from "./z-indices"
+import fontWeights from "./font-weights"
 
 export {
   breakpoints,
@@ -25,5 +26,6 @@ export {
   transition,
   fontSizes,
   fonts,
+  fontWeights,
   zIndices,
 }

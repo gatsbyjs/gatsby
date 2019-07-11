@@ -5,11 +5,17 @@ import domReady from "@mikaelkristiansson/domready"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import loader, { setApiRunnerForLoader } from "./loader"
+import { setLoader } from "./loader"
+import DevLoader from "./dev-loader"
 import syncRequires from "./sync-requires"
+// Generated during bootstrap
+import matchPaths from "./match-paths.json"
 
 window.___emitter = emitter
-setApiRunnerForLoader(apiRunner)
+
+const loader = new DevLoader(syncRequires, matchPaths)
+setLoader(loader)
+loader.setApiRunner(apiRunner)
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -48,7 +54,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     ReactDOM.render
   )[0]
 
-  loader.addDevRequires(syncRequires)
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),

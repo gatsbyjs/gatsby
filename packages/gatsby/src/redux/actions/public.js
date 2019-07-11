@@ -1,5 +1,5 @@
 // @flow
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -16,6 +16,7 @@ const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
+const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
 
@@ -496,7 +497,7 @@ const typeOwners = {}
  * @param {string} node.internal.type An arbitrary globally unique type
  * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
- * for nodes based on the type choosen here. Nodes of a given type can
+ * for nodes based on the type chosen here. Nodes of a given type can
  * only be created by one plugin.
  * @param {string} node.internal.content An optional field. This is rarely
  * used. It is used when a source plugin sources data it doesn't know how
@@ -583,10 +584,14 @@ const createNode = (
     )
   }
 
+  const trackParams = {}
   // Add the plugin name to the internal object.
   if (plugin) {
     node.internal.owner = plugin.name
+    trackParams[`pluginName`] = `${plugin.name}@${plugin.version}`
   }
+
+  trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
@@ -1153,6 +1158,37 @@ actions.createRedirect = ({
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
+    },
+  }
+}
+
+/**
+ * Create a dependency between a page and data.
+ *
+ * @param {Object} $0
+ * @param {string} $0.path the path to the page
+ * @param {string} $0.nodeId A node ID
+ * @param {string} $0.connection A connection type
+ * @private
+ */
+actions.createPageDependency = (
+  {
+    path,
+    nodeId,
+    connection,
+  }: { path: string, nodeId: string, connection: string },
+  plugin: string = ``
+) => {
+  console.warn(
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+  )
+  return {
+    type: `CREATE_COMPONENT_DEPENDENCY`,
+    plugin,
+    payload: {
+      path,
+      nodeId,
+      connection,
     },
   }
 }

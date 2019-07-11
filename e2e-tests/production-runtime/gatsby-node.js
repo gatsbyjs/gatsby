@@ -1,3 +1,12 @@
+const path = require(`path`)
+
+exports.createPages = ({ actions: { createPage } }) => {
+  createPage({
+    path: `/안녕`,
+    component: path.resolve(`src/pages/page-2.js`),
+  })
+}
+
 exports.onCreatePage = ({ page, actions }) => {
   switch (page.path) {
     case `/client-only-paths/`:

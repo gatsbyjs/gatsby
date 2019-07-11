@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wikipedia@2.1.0...gatsby-source-wikipedia@2.1.1) (2019-07-11)
+
+**Note:** Version bump only for package gatsby-source-wikipedia
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wikipedia/compare/gatsby-source-wikipedia@2.0.8...gatsby-source-wikipedia@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-source-wikipedia
+
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wikipedia/compare/gatsby-source-wikipedia@2.0.7...gatsby-source-wikipedia@2.0.8) (2019-05-31)
 
 **Note:** Version bump only for package gatsby-source-wikipedia
@@ -41,7 +49,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-source-wikipedia:** add axios as depedency ([#9088](https://github.com/gatsbyjs/gatsby/issues/9088)) ([b055dde](https://github.com/gatsbyjs/gatsby/commit/b055dde))
+- **gatsby-source-wikipedia:** add axios as dependency ([#9088](https://github.com/gatsbyjs/gatsby/issues/9088)) ([b055dde](https://github.com/gatsbyjs/gatsby/commit/b055dde))
 
 <a name="2.0.0"></a>
 

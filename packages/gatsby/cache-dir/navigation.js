@@ -82,6 +82,16 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.loadPage(pathname).then(pageResources => {
+    // If no page resources, then refresh the page
+    // Do this, rather than simply `window.location.reload()`, so that
+    // pressing the back/forward buttons work - otherwise when pressing
+    // back, the browser will just change the URL and expect JS to handle
+    // the change, which won't always work since it might not be a Gatsby
+    // page.
+    if (!pageResources || pageResources.status === `error`) {
+      window.history.replaceState({}, ``, location.href)
+      window.location = pathname
+    }
     // If the loaded page has a different compilation hash to the
     // window, then a rebuild has occurred on the server. Reload.
     if (process.env.NODE_ENV === `production` && pageResources) {

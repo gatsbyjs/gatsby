@@ -115,8 +115,16 @@ const paginate = (results = [], { skip = 0, limit }) => {
   }
 }
 
-const link = ({ by = `id`, from }) => async (source, args, context, info) => {
-  const fieldValue = source && source[from || info.fieldName]
+const link = ({ by = `id`, from }, originalResolver) => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const fieldValue = await originalResolver(source, args, context, {
+    ...info,
+    fieldName: from || info.fieldName,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -173,8 +181,16 @@ const link = ({ by = `id`, from }) => async (source, args, context, info) => {
   }
 }
 
-const fileByPath = ({ from }) => (source, args, context, info) => {
-  const fieldValue = source && source[from || info.fieldName]
+const fileByPath = ({ from }, originalResolver) => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const fieldValue = await originalResolver(source, args, context, {
+    ...info,
+    fieldName: from || info.fieldName,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (

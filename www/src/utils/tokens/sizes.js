@@ -7,4 +7,5 @@ export default {
     default: 11,
     large: 12,
   },
+  avatar: `2rem`,
 }

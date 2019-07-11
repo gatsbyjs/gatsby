@@ -1,5 +1,5 @@
 ---
-title: Gatsby Config
+title: Gatsby Config API
 ---
 
 Site configuration options for a Gatsby site are placed in a file at the root of the project folder called `gatsby-config.js`.
@@ -114,6 +114,8 @@ module.exports = {
   },
 }
 ```
+
+You may need to install the appropriate file transformer (in this case [YAML](/packages/gatsby-transformer-yaml/)) and set up [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) properly for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
 
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 

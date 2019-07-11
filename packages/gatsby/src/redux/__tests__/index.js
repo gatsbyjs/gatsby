@@ -66,14 +66,4 @@ describe(`redux db`, () => {
     // yuck - loki and redux will have different shape of redux state (nodes and nodesByType)
     expect(_.omit(data, [`nodes`, `nodesByType`])).toMatchSnapshot()
   })
-
-  it(`does not write to the cache when DANGEROUSLY_DISABLE_OOM is set`, async () => {
-    process.env.DANGEROUSLY_DISABLE_OOM = true
-
-    await saveState()
-
-    expect(writeToCache).not.toBeCalled()
-
-    delete process.env.DANGEROUSLY_DISABLE_OOM
-  })
 })

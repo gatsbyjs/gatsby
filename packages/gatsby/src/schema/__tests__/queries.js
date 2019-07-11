@@ -1029,61 +1029,6 @@ Object {
 `)
       })
 
-      it(`handles groups added in random places with aliases`, async () => {
-        const query = `
-          fragment GroupTest on MarkdownConnection {
-            group(field: frontmatter___authors___name) {
-              fieldValue
-            }
-          }
-
-          fragment GroupTestWrapper on MarkdownConnection {
-            ...GroupTest
-            anotherGroup: group(field: frontmatter___title) {
-              fieldValue
-            }
-          }
-
-          {
-            allMarkdown {
-              ...GroupTestWrapper
-              thirdGroup: group(field: frontmatter___date) {
-                fieldValue
-              }
-            }
-          }
-        `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
-        expect(results.data).toMatchInlineSnapshot(`
-Object {
-  "allMarkdown": Object {
-    "anotherGroup": Array [
-      Object {
-        "fieldValue": "Markdown File 1",
-      },
-      Object {
-        "fieldValue": "Markdown File 2",
-      },
-    ],
-    "group": Array [
-      Object {
-        "fieldValue": "Author 1",
-      },
-      Object {
-        "fieldValue": "Author 2",
-      },
-    ],
-    "thirdGroup": Array [
-      Object {
-        "fieldValue": "2019-01-01T00:00:00.000Z",
-      },
-    ],
-  },
-}
-`)
-      })
-
       it(`groups null result`, async () => {
         const query = `
           {

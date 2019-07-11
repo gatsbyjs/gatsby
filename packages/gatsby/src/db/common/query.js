@@ -12,7 +12,7 @@ const getQueryFields = ({ filter, sort, group, distinct }) => {
   }
 
   if (distinct && !Array.isArray(distinct)) {
-    distinct = [group]
+    distinct = [distinct]
   } else if (distinct == null) {
     distinct = []
   }

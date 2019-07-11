@@ -101,7 +101,7 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveFixed(image, {
         width: 2250,
       })
-      expect(resp.srcSet.split(`,`).length).toBe(3)
+      expect(resp.srcSet.split(`,`).length).toBe(1)
       expect(resp).toMatchSnapshot()
     })
   })
@@ -141,7 +141,7 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveFluid(image, {
         maxWidth: 2250,
       })
-      expect(resp.srcSet.split(`,`).length).toBe(5)
+      expect(resp.srcSet.split(`,`).length).toBe(3)
       expect(resp).toMatchSnapshot()
     })
   })
