@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.0...gatsby-transformer-toml@2.2.1) (2019-07-11)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
 # [2.2.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml/compare/gatsby-transformer-toml@2.1.9...gatsby-transformer-toml@2.2.0) (2019-06-20)
 
 **Note:** Version bump only for package gatsby-transformer-toml
