@@ -11,7 +11,7 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
   if (pathIsExcluded) return null
 
   // wrap inside a timeout to make sure react-helmet is done with it's changes (https://github.com/gatsbyjs/gatsby/issues/9139)
-  // reactHelmet is using requestAnimationFrame so we should use it too: https://github.com/nfl/react-helmet/blob/5.2.0/src/HelmetUtils.js#L296-L299
+  // reactHelmet is using requestAnimationFrame: https://github.com/nfl/react-helmet/blob/5.2.0/src/HelmetUtils.js#L296-L299
   const sendPageView = () => {
     const pagePath = location
       ? location.pathname + location.search + location.hash
@@ -20,16 +20,9 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
     window.ga(`send`, `pageview`)
   }
 
-  const delay = Math.max(32, pluginOptions.pageTransitionDelay)
+  // Minimum delay for reactHelmet's requestAnimationFrame
+  const delay = Math.max(32, pluginOptions.pageTransitionDelay || 0)
   setTimeout(sendPageView, delay)
-  if (delay || !(`requestAnimationFrame` in window)) {
-    // minimum delay to simulate a pair of requestAnimationFrame calls
-    setTimeout(sendPageView, Math.min(32, delay))
-  } else {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(sendPageView)
-    })
-  }
 
   return null
 }
