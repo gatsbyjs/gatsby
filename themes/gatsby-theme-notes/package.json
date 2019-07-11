@@ -35,7 +35,7 @@
     "@mdx-js/react": "^1.0.23",
     "gatsby-plugin-compile-es6-packages": "^1.1.0",
     "gatsby-plugin-emotion": "^4.1.1",
-    "gatsby-plugin-mdx": "^1.0.9",
+    "gatsby-plugin-mdx": "^1.0.11",
     "gatsby-plugin-meta-redirect": "^1.1.1",
     "gatsby-plugin-og-image": "0.0.1",
     "gatsby-plugin-redirects": "^1.0.0",
