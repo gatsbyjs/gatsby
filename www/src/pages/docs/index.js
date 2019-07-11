@@ -8,6 +8,7 @@ import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
 import FooterLinks from "../../components/shared/footer-links"
+import Breadcrumb from "../../components/docs-breadcrumb"
 
 class IndexRoute extends React.Component {
   render() {
@@ -22,6 +23,7 @@ class IndexRoute extends React.Component {
                 content="The one stop location for tutorials, guides, and information about building with Gatsby"
               />
             </Helmet>
+            <Breadcrumb itemList={itemListDocs} location={location} />
             <h1 id="gatsby-documentation" css={{ marginTop: 0 }}>
               Gatsby.js Documentation
             </h1>
