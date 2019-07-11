@@ -6492,7 +6492,7 @@
   featured: false
 - title: Cosmotory
   url: https://cosmotory.netlify.com/
-  main_url: https://https://cosmotory.netlify.com/
+  main_url: https://cosmotory.netlify.com/
   description: >
     This is the educational blog containing various courses,learning materials from various authors from all over the world.
   categories:
@@ -6503,6 +6503,18 @@
     - Education
   built_by: Hanishraj B Rao.
   built_by_url: https://hanishrao.netlify.com/
+  featured: false
+- title: Armorblox | Security Powered by Understanding
+  url: https://www.armorblox.com
+  main_url: https://www.armorblox.com
+  description: >
+    Armorblox is a venture-backed stealth cybersecurity startup, on a mission to build a game-changing enterprise security platform.
+  categories:
+    - Security
+    - Technology
+    - Business
+  built_by: Bejamas
+  built_by_url: https://bejamas.io
   featured: false
 - title: Mojo
   url: https://www.mojo.is

@@ -116,6 +116,7 @@ jobs:
       - <<: *persist_cache
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: yarn check-repo-fields
 
   unit_tests_node8:
     executor:
