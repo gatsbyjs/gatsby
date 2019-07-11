@@ -23,7 +23,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.0.0"
+    "@babel/runtime": "^7.0.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "fs-extra": "^8.1.0",
+    "imagemin": "^7.0.0",
+    "imagemin-giflossy": "^5.1.10",
+    "p-queue": "^6.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
