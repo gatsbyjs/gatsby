@@ -65,7 +65,7 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 
 Some notable files and their definitions:
 
-- `gatsby-config.js`  — configure options for a Gatsby site, with metadata for project title, description, plugins, etc.
+- `gatsby-config.js` — configure options for a Gatsby site, with metadata for project title, description, plugins, etc.
 - `gatsby-node.js` — implement Gatsby’s Node.js APIs to customize and extend default settings affecting the build process
 - `gatsby-browser.js` — customize and extend default settings affecting the browser, using Gatsby’s browser APIs
 - `gatsby-ssr.js` — use Gatsby’s server-side rendering APIs to customize default settings affecting server-side rendering
@@ -82,6 +82,7 @@ Gatsby core automatically turns React components in `src/pages` into pages with 
 For example, components at `src/pages/index.js` and `src/pages/about.js` would automatically create pages from those filenames for the site's index page (`/`) and `/about`.
 
 #### Prerequisites
+
 - A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 
@@ -102,6 +103,7 @@ const AboutPage = () => (
 
 export default AboutPage
 ```
+
 3. Run `gatsby develop` to start the development server.
 4. Visit your new page in the browser: `http://localhost:8000/about`
 
@@ -141,11 +143,12 @@ export default () => (
 
 ### 1.4 Creating pages with `createPage`
 
-Using Gatsby's [`createPages` API](/docs/actions/#createPage), you can create pages dynamically from a variety of data sources, including Markdown or Wordpress content. 
+Using Gatsby's [`createPages` API](/docs/actions/#createPage), you can create pages dynamically from a variety of data sources, including Markdown or Wordpress content.
 
 This recipe shows how to create pages from Markdown files on your local filesystem using Gatsby's GraphQL data layer.
 
 #### Prerequisites
+
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 - The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
@@ -167,6 +170,7 @@ module.exports = {
     },
   ]
 ```
+
 2. Add a Markdown post to `src/content`, including frontmatter for the title, date, and path, with some initial content for the body of the post:
 
 ```markdown:title=src/content/my-first-post.md
@@ -219,15 +223,14 @@ exports.createPages = ({ actions, graphql }) => {
   })
 }
 ```
+
 3. Add a post template in `src/templates`, including a GraphQL query for generating pages dynamically from Markdown content at build time:
 
 ```jsx:title=src/templates/post.js
 import React from "react"
 import { graphql } from "gatsby"
 
-export default function Template({
-  data,
-}) {
+export default function Template({ data }) {
   const { markdownRemark } = data // data.markdownRemark holds your post data
   const { frontmatter, html } = markdownRemark
   return (
@@ -255,6 +258,7 @@ export const pageQuery = graphql`
   }
 `
 ```
+
 4. Run `gatsby develop` to start the development server.
 5. View your post in the browser: `http://localhost:8000/my-first-post`
 
@@ -266,7 +270,6 @@ export const pageQuery = graphql`
 - [Adding Markdown pages](/docs/adding-markdown-pages/)
 - [Adding a list of Markdown blog posts](/docs/adding-a-list-of-markdown-blog-posts/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
-
 
 ### 1.5 Creating pages without GraphQL
 
@@ -283,7 +286,7 @@ You can use the node `createPages` API to pull unstructured data directly into G
 1. In `gatsby-node.js`, add the JavaScript code to fetch data from the PokéAPI and programmatically create an index page:
 
 ```js:title=gatsby-node.js
-const axios = require('axios')
+const axios = require("axios")
 
 const get = endpoint => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
 
@@ -295,13 +298,13 @@ const getPokemonData = names =>
     })
   )
 exports.createPages = async ({ actions: { createPage } }) => {
-  const allPokemon = await getPokemonData(['pikachu', 'charizard', 'squirtle'])
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
 
   // Create a page that lists Pokémon.
   createPage({
     path: `/`,
-    component: require.resolve('./src/templates/all-pokemon.js'),
-    context: { allPokemon }
+    component: require.resolve("./src/templates/all-pokemon.js"),
+    context: { allPokemon },
   })
 }
 ```
@@ -309,18 +312,19 @@ exports.createPages = async ({ actions: { createPage } }) => {
 2. Create a template to display Pokémon on the homepage:
 
 ```js:title=src/templates/all-pokemon.js
-import React from 'react'
+import React from "react"
 
 export default ({ pageContext: { allPokemon } }) => (
   <div>
     <h1>Behold, the Pokémon!</h1>
     <ul>
       {allPokemon.map(allPokemon => (
-        <li
-          key={allPokemon.pokemon.id}
-        >
-            <img src={allPokemon.pokemon.sprites.front_default} alt={allPokemon.pokemon.name} />
-            <p>{allPokemon.pokemon.name}</p>
+        <li key={allPokemon.pokemon.id}>
+          <img
+            src={allPokemon.pokemon.sprites.front_default}
+            alt={allPokemon.pokemon.name}
+          />
+          <p>{allPokemon.pokemon.name}</p>
         </li>
       ))}
     </ul>
