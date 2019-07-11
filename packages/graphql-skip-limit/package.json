@@ -26,7 +26,11 @@
   ],
   "license": "MIT",
   "main": "dist/index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/graphql-skip-limit"
+  },
   "scripts": {
     "build": "babel src --out-dir dist",
     "prepare": "cross-env NODE_ENV=production npm run build",
