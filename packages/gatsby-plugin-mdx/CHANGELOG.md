@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.10...gatsby-plugin-mdx@1.0.11) (2019-07-11)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** add missing change-case dependency ([#15638](https://github.com/gatsbyjs/gatsby/issues/15638)) ([74d33c6](https://github.com/gatsbyjs/gatsby/commit/74d33c6))
+
 ## [1.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.9...gatsby-plugin-mdx@1.0.10) (2019-07-11)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
