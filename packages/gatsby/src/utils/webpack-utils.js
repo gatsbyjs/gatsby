@@ -524,7 +524,24 @@ module.exports = async ({
       ...options,
     })
 
-  plugins.minifyCss = (options = {}) => new OptimizeCssAssetsPlugin(options)
+  plugins.minifyCss = (
+    options = {
+      cssProcessorPluginOptions: {
+        preset: [
+          `default`,
+          {
+            svgo: {
+              plugins: [
+                {
+                  convertShapeToPath: false,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    }
+  ) => new OptimizeCssAssetsPlugin(options)
 
   /**
    * Extracts css requires into a single file;
