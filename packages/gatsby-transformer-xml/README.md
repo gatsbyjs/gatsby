@@ -13,6 +13,43 @@ Parses XML files. It supports also attributes
 plugins: [`gatsby-transformer-xml`]
 ```
 
+**With options**
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-xml`,
+    options: {
+      // Whether to trim whitespace characters that may exist before and after the text.
+      trim: false,
+      // Whether to attempt converting text of numerals or of boolean values to native type. For example, "123" will be 123 and "true" will be true
+      nativeType: false,
+      // Whether to ignore parsing declaration property. That is, no declaration property will be generated.
+      ignoreDeclaration: true,
+      // Whether to ignore parsing comments of the elements. That is, no comment will be generated.
+      ignoreComment: true,
+      // Whether to ignore parsing processing instruction property. That is, no instruction property will be generated.
+      ignoreInstruction: false,
+      // Whether to ignore parsing attributes of elements.That is, no attributes property will be generated.
+      ignoreAttributes: false,
+      // Whether to ignore parsing CData of the elements. That is, no cdata will be generated.
+      ignoreCdata: false,
+      // Whether to ignore parsing Doctype of the elements. That is, no doctype will be generated.
+      ignoreDoctype: false,
+      // Whether to ignore parsing texts of the elements. That is, no text will be generated.
+      ignoreText: false,
+      // Use Legacy output format (nodes have xmlChildren array with key value-pairs of name/content)
+      useLegacyOutput: false,
+    },
+  },
+],
+```
+
+## Migration from 2.x to 3.x
+
+Version 3 of this plugin is backwards compatible with the output format provided by 2.x. Just set the `useLegacyOutput` to true, and you should be good to go.
+
 ## Parsing algorithm
 
 The algorithm for arrays is to convert each item in the array into a node.
@@ -249,3 +286,98 @@ Which would return:
 ```
 
 Note that the root element "catalog" is ignored, and nodes are created with the children elements.
+
+## How to query (LEGACY MODE)
+
+You'd be able to query your books like:
+
+```graphql
+{
+  allBooksXml {
+    edges {
+      node {
+        name
+        xmlChildren {
+          name
+          content
+        }
+      }
+    }
+  }
+}
+```
+
+Which would return:
+
+```json
+{
+  "data": {
+    "allBooksXml": {
+      "edges": [
+        {
+          "node": {
+            "name": "book",
+            "xmlChildren": [
+              {
+                "name": "author",
+                "content": "Gambardella, Matthew"
+              },
+              {
+                "name": "title",
+                "content": "XML Developer's Guide"
+              },
+              {
+                "name": "genre",
+                "content": "Computer"
+              },
+              {
+                "name": "price",
+                "content": "44.95"
+              },
+              {
+                "name": "publish_date",
+                "content": "2000-10-01"
+              },
+              {
+                "name": "description",
+                "content": "An in-depth look at creating applications\n      with XML."
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "name": "book",
+            "xmlChildren": [
+              {
+                "name": "author",
+                "content": "Ralls, Kim"
+              },
+              {
+                "name": "title",
+                "content": "Midnight Rain"
+              },
+              {
+                "name": "genre",
+                "content": "Fantasy"
+              },
+              {
+                "name": "price",
+                "content": "5.95"
+              },
+              {
+                "name": "publish_date",
+                "content": "2000-12-16"
+              },
+              {
+                "name": "description",
+                "content": "A former architect battles corporate zombies,\n      an evil sorceress, and her own childhood to become queen\n      of the world."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+```

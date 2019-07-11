@@ -24,6 +24,14 @@ describe(`Process XML nodes correctly`, () => {
             <genre>Computer</genre>
             <price>44.95</price>
             <publish_date>2000-10-01</publish_date>
+            <publish_date_explicit>
+              <year>2000</year>
+              <month>
+                10
+                <month_name lang="en-gb">October</month_name>
+              </month>
+              <day>01</day>
+            </publish_date_explicit>
             <description>An in-depth look at creating applications
             with XML.</description>
             <description_html><![CDATA[
@@ -37,6 +45,14 @@ describe(`Process XML nodes correctly`, () => {
             <genre>Fantasy</genre>
             <price>5.95</price>
             <publish_date>2000-12-16</publish_date>
+            <publish_date_explicit>
+              <year>2000</year>
+              <month>
+                12
+                <month_name lang="en-gb">December</month_name>
+              </month>
+              <day>16</day>
+            </publish_date_explicit>
             <description>A former architect battles corporate zombies,
             an evil sorceress, and her own childhood to become queen
             of the world.</description>
@@ -58,17 +74,70 @@ describe(`Process XML nodes correctly`, () => {
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-      createContentDigest,
-    }).then(() => {
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      {}
+    ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2)
       expect(createParentChildLink).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  it(`correctly creates nodes from XML with plugin options set`, async () => {
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      { ignoreDeclaration: false }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly creates nodes from XML in the legacy v2.x format`, async () => {
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      { useLegacyOutput: true, ignoreDeclaration: false }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
     })
   })
 })
