@@ -7,8 +7,6 @@ describe(`Components`, () => {
   })
   it(`added by themes can be shadowed`, () => {
     cy.visit(`/shadowed`).waitForRouteChange()
-    cy.getTestElement(`title`).contains(
-      `A title since the theme didn't have one`
-    )
+    cy.getTestElement(`time`).contains(`2:39:07 PM`)
   })
 })
