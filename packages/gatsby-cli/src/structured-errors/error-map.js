@@ -104,7 +104,7 @@ const errorMap = {
     text: context =>
       `${
         context.pluginName
-      } must set the page path when creating a page\n\nThe page object passed to createPage:\n${JSON.stringify(
+      } must set the page path when creating a page.\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.pageObject,
         null,
         4
