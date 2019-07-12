@@ -357,15 +357,14 @@ describe(`NodeModel`, () => {
 
   describe(`findRootNodeAncestor`, () => {
     it(`returns an object's top most ancestor node`, () => {
-      const node = nodes.find(node => node.id === `post1`)
+      const node = nodeModel.getNodeById({ id: `post1` })
       const obj = node.frontmatter.authors
-
       const result = nodeModel.findRootNodeAncestor(obj)
       expect(result.id).toBe(`file1`)
     })
 
     it(`returns an object's ancestor node that matches the provided predicate`, () => {
-      const node = nodes.find(node => node.id === `post1`)
+      const node = nodeModel.getNodeById({ id: `post1` })
       const obj = node.frontmatter.authors
       const predicate = obj => obj.internal && obj.internal.type === `File`
       const result = nodeModel.findRootNodeAncestor(obj, predicate)

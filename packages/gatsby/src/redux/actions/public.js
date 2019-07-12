@@ -10,7 +10,6 @@ const truePath = require(`true-case-path`)
 const url = require(`url`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
@@ -622,7 +621,8 @@ const createNode = (
     )
   }
 
-  node = trackInlineObjectsInRootNode(node, true)
+  // TODO: REMOVE
+  // node = trackInlineObjectsInRootNode(node, true)
 
   const oldNode = getNode(node.id)
 

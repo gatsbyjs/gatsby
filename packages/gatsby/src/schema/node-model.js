@@ -5,8 +5,13 @@ const {
   isAbstractType,
   GraphQLOutputType,
   GraphQLUnionType,
+  GraphQLList,
+  getNamedType,
+  getNullableType,
+  isCompositeType,
 } = require(`graphql`)
 const invariant = require(`invariant`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 type IDOrNode = string | { id: string }
 type TypeOrTypeName = string | GraphQLOutputType
@@ -51,6 +56,8 @@ export interface NodeModel {
     result: nodeOrNodes,
     pageDependencies?: PageDependencies
   ): nodesOrNodes;
+  findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null;
+  trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node;
 }
 
 class LocalNodeModel {
@@ -66,6 +73,7 @@ class LocalNodeModel {
     this.nodeStore = nodeStore
     this.createPageDependency = createPageDependency
     this.path = path
+    this.rootNodeMap = new WeakMap()
   }
 
   /**
@@ -90,6 +98,10 @@ class LocalNodeModel {
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
       result = nodeTypeNames.includes(node.internal.type) ? node : null
+    }
+
+    if (result) {
+      this.trackInlineObjectsInRootNode(node)
     }
 
     return this.trackPageDependencies(result, pageDependencies)
@@ -117,6 +129,10 @@ class LocalNodeModel {
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
       result = nodes.filter(node => nodeTypeNames.includes(node.internal.type))
+    }
+
+    if (result) {
+      result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
     return this.trackPageDependencies(result, pageDependencies)
@@ -147,6 +163,10 @@ class LocalNodeModel {
       result = nodes.filter(Boolean)
     }
 
+    if (result) {
+      result.forEach(node => this.trackInlineObjectsInRootNode(node))
+    }
+
     if (pageDependencies) {
       return this.trackPageDependencies(result, pageDependencies)
     } else {
@@ -175,21 +195,39 @@ class LocalNodeModel {
       `Querying GraphQLUnion types is not supported.`
     )
 
+    const fields = getQueryFields({
+      filter: query.filter,
+      sort: query.sort,
+      group: query.group,
+      distinct: query.distinct,
+    })
+    const fieldsToResolve = determineResolvableFields(
+      this.schemaComposer,
+      this.schema,
+      gqlType,
+      fields
+    )
+    await this.prepareNodes(gqlType, fields, fieldsToResolve)
+
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
       gqlComposer: this.schemaComposer,
       gqlType,
+      resolvedFields: fieldsToResolve,
     })
 
     let result = queryResult
     if (args.firstOnly) {
       if (result && result.length > 0) {
         result = result[0]
+        this.trackInlineObjectsInRootNode(result)
       } else {
         result = null
       }
+    } else if (result) {
+      result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
     return this.trackPageDependencies(result, pageDependencies)
@@ -205,15 +243,48 @@ class LocalNodeModel {
   }
 
   /**
-   * Get the root ancestor node for an object's parent node, or its first
-   * ancestor matching a specified condition.
-   *
-   * @param {(Object|Array)} obj An object belonging to a Node, or a Node object
-   * @param {Function} [predicate] Optional condition to match
-   * @returns {(Node|null)}
+   * Adds link between inline objects/arrays contained in Node object
+   * and that Node object.
+   * @param {Node} node Root Node
    */
-  findRootNodeAncestor(obj, predicate) {
-    return this.nodeStore.findRootNodeAncestor(obj, predicate)
+  trackInlineObjectsInRootNode(node) {
+    return addRootNodeToInlineObject(
+      this.rootNodeMap,
+      node,
+      node.id,
+      true,
+      true
+    )
+  }
+
+  /**
+   * Finds top most ancestor of node that contains passed Object or Array
+   * @param {(Object|Array)} obj Object/Array belonging to Node object or Node object
+   * @param {nodePredicate} [predicate] Optional callback to check if ancestor meets defined conditions
+   * @returns {Node} Top most ancestor if predicate is not specified
+   * or first node that meet predicate conditions if predicate is specified
+   */
+  findRootNodeAncestor(obj, predicate = null) {
+    let iterations = 0
+    let node = obj
+
+    while (iterations++ < 100) {
+      if (predicate && predicate(node)) return node
+
+      const parent = node.parent && getNodeById(this.nodeStore, node.parent)
+      const id = this.rootNodeMap.get(node)
+      const trackedParent = id && getNodeById(this.nodeStore, id)
+
+      if (!parent && !trackedParent) return node
+
+      node = parent || trackedParent
+    }
+
+    reporter.error(
+      `It looks like you have a node that's set its parent as itself:\n\n` +
+        node
+    )
+    return null
   }
 
   /**
@@ -244,6 +315,28 @@ class LocalNodeModel {
 
     return result
   }
+
+  async prepareNodes(type, queryFields, fieldsToResolve) {
+    if (!_.isEmpty(fieldsToResolve)) {
+      await this.nodeStore.updateNodesByType(type.name, async node => {
+        this.trackInlineObjectsInRootNode(node)
+        const resolvedFields = await resolveRecursive(
+          this,
+          this.schemaComposer,
+          this.schema,
+          node,
+          type,
+          queryFields,
+          fieldsToResolve
+        )
+        const newNode = {
+          ...node,
+          $resolved: _.merge(node.$resolved || {}, resolvedFields),
+        }
+        return newNode
+      })
+    }
+  }
 }
 
 const getNodeById = (nodeStore, id) => {
@@ -269,6 +362,294 @@ const toNodeTypeNames = (schema, gqlTypeName) => {
   return possibleTypes
     .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
     .map(type => type.name)
+}
+
+const getQueryFields = ({ filter, sort, group, distinct }) => {
+  const filterFields = filter ? dropQueryOperators(filter) : {}
+  const sortFields = (sort && sort.fields) || []
+
+  if (group && !Array.isArray(group)) {
+    group = [group]
+  } else if (group == null) {
+    group = []
+  }
+
+  if (distinct && !Array.isArray(distinct)) {
+    distinct = [distinct]
+  } else if (distinct == null) {
+    distinct = []
+  }
+
+  return merge(
+    filterFields,
+    ...sortFields.map(pathToObject),
+    ...group.map(pathToObject),
+    ...distinct.map(pathToObject)
+  )
+}
+
+const pathToObject = path => {
+  if (path && typeof path === `string`) {
+    return path.split(`.`).reduceRight((acc, key) => {
+      return { [key]: acc }
+    }, true)
+  }
+  return {}
+}
+
+const dropQueryOperators = filter =>
+  Object.keys(filter).reduce((acc, key) => {
+    const value = filter[key]
+    const k = Object.keys(value)[0]
+    const v = value[k]
+    if (_.isPlainObject(value) && _.isPlainObject(v)) {
+      acc[key] =
+        k === `elemMatch` ? dropQueryOperators(v) : dropQueryOperators(value)
+    } else {
+      acc[key] = true
+    }
+    return acc
+  }, {})
+
+const mergeObjects = (obj1, obj2) =>
+  Object.keys(obj2).reduce((acc, key) => {
+    const value = obj2[key]
+    if (typeof value === `object` && value && acc[key]) {
+      acc[key] = mergeObjects(acc[key], value)
+    } else {
+      acc[key] = value
+    }
+    return acc
+  }, obj1)
+
+const merge = (...objects) => {
+  const [first, ...rest] = objects.filter(Boolean)
+  return rest.reduce((acc, obj) => mergeObjects(acc, obj), { ...first })
+}
+
+async function resolveRecursive(
+  nodeModel,
+  schemaComposer,
+  schema,
+  node,
+  type,
+  queryFields,
+  fieldsToResolve
+) {
+  const gqlFields = type.getFields()
+  let resolvedFields = {}
+  for (const fieldName of Object.keys(fieldsToResolve)) {
+    const fieldToResolve = fieldsToResolve[fieldName]
+    const queryField = queryFields[fieldName]
+    const gqlField = gqlFields[fieldName]
+    const gqlNonNullType = getNullableType(gqlField.type)
+    const gqlFieldType = getNamedType(gqlField.type)
+    let innerValue
+    if (gqlField.resolve) {
+      innerValue = await resolveField(
+        nodeModel,
+        schemaComposer,
+        schema,
+        node,
+        gqlField,
+        fieldName
+      )
+    } else {
+      innerValue = node[fieldName]
+    }
+    if (gqlField && innerValue != null) {
+      if (
+        isCompositeType(gqlFieldType) &&
+        !(gqlNonNullType instanceof GraphQLList)
+      ) {
+        innerValue = await resolveRecursive(
+          nodeModel,
+          schemaComposer,
+          schema,
+          innerValue,
+          gqlFieldType,
+          queryField,
+          _.isObject(fieldToResolve) ? fieldToResolve : queryField
+        )
+      } else if (
+        isCompositeType(gqlFieldType) &&
+        _.isArray(innerValue) &&
+        gqlNonNullType instanceof GraphQLList
+      ) {
+        innerValue = await Promise.all(
+          innerValue.map(item =>
+            resolveRecursive(
+              nodeModel,
+              schemaComposer,
+              schema,
+              item,
+              gqlFieldType,
+              queryField,
+              _.isObject(fieldToResolve) ? fieldToResolve : queryField
+            )
+          )
+        )
+      }
+    }
+    if (innerValue != null) {
+      resolvedFields[fieldName] = innerValue
+    }
+  }
+
+  Object.keys(queryFields).forEach(key => {
+    if (!fieldsToResolve[key] && node[key]) {
+      resolvedFields[key] = node[key]
+    }
+  })
+
+  return _.pickBy(resolvedFields, (value, key) => queryFields[key])
+}
+
+function resolveField(
+  nodeModel,
+  schemaComposer,
+  schema,
+  node,
+  gqlField,
+  fieldName
+) {
+  return gqlField.resolve(
+    node,
+    {},
+    {
+      nodeModel,
+    },
+    {
+      fieldName,
+      schema,
+      returnType: gqlField.type,
+    }
+  )
+}
+
+const determineResolvableFields = (schemaComposer, schema, type, fields) => {
+  const fieldsToResolve = {}
+  const gqlFields = type.getFields()
+  Object.keys(fields).forEach(fieldName => {
+    const field = fields[fieldName]
+    const gqlField = gqlFields[fieldName]
+    const gqlFieldType = getNamedType(gqlField.type)
+    const typeComposer = schemaComposer.getAnyTC(type.name)
+    const needsResolve = typeComposer.getFieldExtension(
+      fieldName,
+      `needsResolve`
+    )
+    if (_.isObject(field) && gqlField) {
+      const innerResolved = determineResolvableFields(
+        schemaComposer,
+        schema,
+        gqlFieldType,
+        field
+      )
+      if (!_.isEmpty(innerResolved)) {
+        fieldsToResolve[fieldName] = innerResolved
+      } else if (_.isEmpty(innerResolved) && needsResolve) {
+        fieldsToResolve[fieldName] = true
+      }
+    } else if (needsResolve) {
+      fieldsToResolve[fieldName] = true
+    }
+  })
+  return fieldsToResolve
+}
+
+/**
+ * Add link between passed data and Node. This function shouldn't be used
+ * directly. Use higher level `trackInlineObjectsInRootNode`
+ * @see trackInlineObjectsInRootNode
+ * @param {(Object|Array)} data Inline object or array
+ * @param {string} nodeId Id of node that contains data passed in first parameter
+ * @param {boolean} sanitize Wether to strip objects of unuspported and not serializable fields
+ * @param {string} [ignore] Fieldname that doesn't need to be tracked and sanitized
+ *
+ */
+const addRootNodeToInlineObject = (
+  rootNodeMap,
+  data,
+  nodeId,
+  sanitize,
+  isNode = false
+) => {
+  const isPlainObject = _.isPlainObject(data)
+
+  if (isPlainObject || _.isArray(data)) {
+    let returnData = data
+    if (sanitize) {
+      returnData = isPlainObject ? {} : []
+    }
+    let anyFieldChanged = false
+    _.each(data, (o, key) => {
+      if (isNode && key === `internal`) {
+        returnData[key] = o
+        return
+      }
+      returnData[key] = addRootNodeToInlineObject(
+        rootNodeMap,
+        o,
+        nodeId,
+        sanitize
+      )
+
+      if (returnData[key] !== o) {
+        anyFieldChanged = true
+      }
+    })
+
+    if (anyFieldChanged) {
+      data = omitUndefined(returnData)
+    }
+
+    // don't need to track node itself
+    if (!isNode) {
+      rootNodeMap.set(data, nodeId)
+    }
+
+    // arrays and plain objects are supported - no need to to sanitize
+    return data
+  }
+
+  if (sanitize && !isTypeSupported(data)) {
+    return undefined
+  }
+  // either supported or not sanitizing
+  return data
+}
+
+/**
+ * @param {Object} data
+ * @returns {Object} data without undefined values
+ */
+const omitUndefined = data => {
+  const isPlainObject = _.isPlainObject(data)
+  if (isPlainObject) {
+    return _.pickBy(data, p => p !== undefined)
+  }
+
+  return data.filter(p => p !== undefined)
+}
+
+/**
+ * @param {*} data
+ * @return {boolean}
+ */
+const isTypeSupported = data => {
+  if (data === null) {
+    return true
+  }
+
+  const type = typeof data
+  const isSupported =
+    type === `number` ||
+    type === `string` ||
+    type === `boolean` ||
+    data instanceof Date
+
+  return isSupported
 }
 
 module.exports = {

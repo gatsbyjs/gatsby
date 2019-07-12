@@ -1232,12 +1232,16 @@ const buildSchema = async () => {
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema({})
+  await build({})
+  const {
+    schema,
+    schemaCustomization: { composer: schemaComposer },
+  } = store.getState()
   const results = await graphql(
     schema,
     query,
     undefined,
-    withResolverContext({})
+    withResolverContext({}, schema, schemaComposer)
   )
   expect(results.errors).toBeUndefined()
   return results.data
