@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.4...gatsby-plugin-netlify-cms@4.1.5) (2019-07-12)
+
+### Features
+
+- **gatsby-plugin-netlify-cms:** add custom favicon to cms ([#14883](https://github.com/gatsbyjs/gatsby/issues/14883)) ([2cf13ae](https://github.com/gatsbyjs/gatsby/commit/2cf13ae))
+
 ## [4.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.3...gatsby-plugin-netlify-cms@4.1.4) (2019-07-12)
 
 ### Bug Fixes
