@@ -15,7 +15,8 @@
     "@babel/preset-env": "^7.4.1",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.4.5",
-    "babel-plugin-macros": "^2.4.2"
+    "babel-plugin-macros": "^2.4.2",
+    "babel-plugin-dynamic-import-node": "^1.2.0"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0"
