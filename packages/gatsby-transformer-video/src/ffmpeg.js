@@ -265,9 +265,17 @@ export default class FFMPEG {
       await this.executeFfmpeg(ffmpegSession, tmpPath)
 
       console.log(`[GIF] Optimizing`)
+
       await imagemin([tmpPath], {
         destination: publicDir,
-        use: [imageminGiflossy({ lossy: 120 })],
+        plugins: [
+          imageminGiflossy({
+            optimizationLevel: 3,
+            lossy: 200,
+            noLogicalScreen: true,
+            optimize: `3`,
+          }),
+        ],
       })
 
       console.log(`[GIF] Done`)
