@@ -3265,4 +3265,4 @@
     - Type safety with TypeScript
     - Typesafe GraphQL with graphql-code-generator
     - ESLint with TypeScript support
-      - Styling with styled-components
+    - Styling with styled-components
