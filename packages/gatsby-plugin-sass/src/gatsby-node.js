@@ -2,7 +2,7 @@ import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
-  { cssLoaderOptions = {}, postCssPlugins, ...sassOptions }
+  { cssLoaderOptions = {}, postCssPlugins, useResolveUrlLoader, ...sassOptions }
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`
@@ -11,7 +11,7 @@ exports.onCreateWebpackConfig = (
   const sassLoader = {
     loader: resolve(`sass-loader`),
     options: {
-      sourceMap: !PRODUCTION,
+      sourceMap: useResolveUrlLoader ? true : !PRODUCTION,
       ...sassOptions,
     },
   }
@@ -26,6 +26,12 @@ exports.onCreateWebpackConfig = (
           loaders.postcss({ plugins: postCssPlugins }),
           sassLoader,
         ],
+  }
+  if (useResolveUrlLoader && !isSSR) {
+    sassRule.use.splice(-1, 0, {
+      loader: `resolve-url-loader`,
+      options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
+    })
   }
   const sassRuleModules = {
     test: /\.module\.s(a|c)ss$/,

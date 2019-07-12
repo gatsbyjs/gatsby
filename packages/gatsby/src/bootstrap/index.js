@@ -12,7 +12,6 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
-const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -21,7 +20,6 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
-const withResolverContext = require(`../schema/context`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -30,6 +28,7 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
+const createGraphqlRunner = require(`./graphql-runner`)
 const { extractQueries } = require(`../query/query-watcher`)
 const requiresWriter = require(`./requires-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
@@ -78,13 +77,17 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    const themes = await loadThemes(config)
+    // TODO: deprecation message for old __experimentalThemes
+    const themes = await loadThemes(config, { useLegacyThemes: true })
     config = themes.config
 
     store.dispatch({
       type: `SET_RESOLVED_THEMES`,
       payload: themes.themes,
     })
+  } else if (config) {
+    const plugins = await loadThemes(config, { useLegacyThemes: false })
+    config = plugins.config
   }
 
   if (config && config.polyfill) {
@@ -383,16 +386,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = (query, context = {}) => {
-    const schema = store.getState().schema
-    return graphql(
-      schema,
-      query,
-      context,
-      withResolverContext(context, schema),
-      context
-    )
-  }
+  const graphqlRunner = createGraphqlRunner(store, report)
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {

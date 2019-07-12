@@ -8,6 +8,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -75,6 +76,31 @@ const argsWhitelist = [
 exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
+    // adds gatsby cloud image service to gatsby-sharp
+    // this is an experimental api so it can be removed without any warnings
+    if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
+      let cloudPromise
+
+      return transforms.map(transform => {
+        if (!cloudPromise) {
+          cloudPromise = got
+            .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
+              body: {
+                file,
+                transforms,
+                options,
+              },
+              json: true,
+            })
+            .then(() => transform)
+
+          return cloudPromise
+        }
+
+        return Promise.resolve(transform)
+      })
+    }
+
     pipeline = sharp(file)
 
     // Keep Metadata
@@ -241,10 +267,29 @@ exports.createArgsDigest = args => {
 
   const argsDigest = crypto
     .createHash(`md5`)
-    .update(JSON.stringify(filtered, Object.keys(filtered).sort()))
+    .update(JSON.stringify(sortKeys(filtered)))
     .digest(`hex`)
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
   return argsDigestShort
 }
+
+const sortKeys = object => {
+  var sortedObj = {},
+    keys = _.keys(object)
+
+  keys = _.sortBy(keys, key => key)
+
+  _.each(keys, key => {
+    if (typeof object[key] == `object` && !(object[key] instanceof Array)) {
+      sortedObj[key] = sortKeys(object[key])
+    } else {
+      sortedObj[key] = object[key]
+    }
+  })
+
+  return sortedObj
+}
+
+exports.sortKeys = sortKeys
