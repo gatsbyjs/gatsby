@@ -50,6 +50,12 @@ it(`Specifies proper presets and plugins for test stage`, () => {
         useESModules: false,
       },
     ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
+      },
+    ],
   ])
 })
 
@@ -109,6 +115,12 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
         regenerator: true,
         corejs: false,
         useESModules: true,
+      },
+    ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
       },
     ],
   ])
