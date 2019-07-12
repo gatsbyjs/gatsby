@@ -3266,3 +3266,15 @@
     - Typesafe GraphQL with graphql-code-generator
     - ESLint with TypeScript support
     - Styling with styled-components
+- url: https://gatsby-tailwind-serif.netlify.com/
+  repo: https://github.com/windedge/gatsby-tailwind-serif
+  description: A Gatsby theme based on gatsby-serif-theme, rewrite with Tailwind CSS.
+  tags:
+    - Styling:Tailwind
+    - Markdown
+  features:
+    - Based on gatsby-serif-theme
+    - Tailwind CSS Framework
+    - Removes unused CSS with Purgecss
+    - Responsive design
+    - Suitable for small business website

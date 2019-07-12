@@ -1,6 +1,6 @@
-![Logo](../../img/gatsby-mdx.png)
+![Logo](./img/gatsby-mdx.png)
 
-> gatsby-mdx is _the_ official integration for using [MDX](https://mdxjs.com)
+> gatsby-plugin-mdx is the official integration for using [MDX](https://mdxjs.com)
 > with [Gatsby](https://www.gatsbyjs.org/).
 
 # What’s MDX?
@@ -12,10 +12,10 @@ components.
 
 ### Read more about MDX
 
-- [:grey_question: Why MDX?](https://www.gatsbyjs.org/docs/mdx/why/)
-- [:books: Gatsby guide](https://www.gatsbyjs.org/docs/mdx/)
-- [:mega: Language](https://mdxjs.com)
-- [:woman_scientist: Specification](https://github.com/mdx-js/specification)
+- [❔ Why MDX?](https://www.gatsbyjs.org/docs/mdx/why/)
+- [📚 Gatsby guide](https://www.gatsbyjs.org/docs/mdx/)
+- [📣 Language](https://mdxjs.com)
+- [👩‍🔬 Specification](https://github.com/mdx-js/specification)
 
 ## Table of contents
 
@@ -24,7 +24,8 @@ components.
   - [Configuration](#configuration)
     - [Extensions](#extensions)
     - [Default layouts](#default-layouts)
-    - [Global scope](#global-scope)
+    - [Imports](#imports)
+    - [Shortcodes](#shortcodes)
     - [Gatbsy remark plugins](#gatsby-remark-plugins)
     - [Markdown plugins](#remark-plugins)
     - [HAST plugins](#rehype-plugins)
@@ -38,23 +39,23 @@ components.
 Install with npm:
 
 ```sh
-npm install --save gatsby-mdx @mdx-js/mdx @mdx-js/tag @mdx-js/react
+npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
 
 ```sh
-yarn add gatsby-mdx @mdx-js/mdx @mdx-js/tag @mdx-js/react
+yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 ## Usage
 
-After installing gatsby-mdx you can add it to your plugins list in your
+After installing gatsby-plugin-mdx you can add it to your plugins list in your
 `gatsby-config.js`.
 
 ```js
 module.exports = {
-  plugins: [`gatsby-mdx`],
+  plugins: [`gatsby-plugin-mdx`],
 }
 ```
 
@@ -64,25 +65,24 @@ with Markdown media types into MDX content.
 
 ### Configuration
 
-gatsby-mdx exposes a configuration API that can be used similarly to
+gatsby-plugin-mdx exposes a configuration API that can be used similarly to
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                             | Default                                | Description                                                          |
-| ----------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------- |
-| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-mdx will process           |
-| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                       |
-| [`globalScope`](#global-scope)                  | `""`                                   | Define components and variables that are accessible to all MDX files |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                   |
-| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                               |
-| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                               |
-| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                     |
+| Key                                             | Default                                | Description                                                       |
+| ----------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
+| [`extensions`](#extensions)                     | `[".mdx"]`                             | Configure the file extensions that gatsby-plugin-mdx will process |
+| [`defaultLayouts`](#default-layouts)            | `{}`                                   | Set the layout components for MDX source types                    |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`                                   | Use Gatsby-specific remark plugins                                |
+| [`remarkPlugins`](#remark-plugins)              | `[]`                                   | Specify remark plugins                                            |
+| [`rehypePlugins`](#rehype-plugins)              | `[]`                                   | Specify rehype plugins                                            |
+| [`mediaTypes`](#media-types)                    | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                  |
 
 #### Extensions
 
 By default, only files with the `.mdx` file extension are treated as MDX when
 using `gatsby-source-filesystem`. To use `.md` or other file extensions, you can
-define an array of file extensions in the `gatsby-mdx` section of your
+define an array of file extensions in the `gatsby-plugin-mdx` section of your
 `gatsby-config.js`.
 
 ```js
@@ -90,7 +90,7 @@ define an array of file extensions in the `gatsby-mdx` section of your
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
       },
@@ -111,7 +111,7 @@ layout defined, even if it's imported manually using `import MDX from './thing.m
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
           posts: require.resolve("./src/components/posts-layout.js"),
@@ -154,7 +154,7 @@ export default PageLayout
 some content
 ```
 
-Sometimes you don't want to include the layout in every file, so `gatsby-mdx`
+Sometimes you don't want to include the layout in every file, so `gatsby-plugin-mdx`
 offers the option to set default layouts in the `gatsby-config.js` plugin
 config. Set the key to the `name` set in the `gatsby-source-filesystem` config.
 If no matching default layout is found, the `default` default layout is used.
@@ -169,7 +169,7 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
           posts: require.resolve("./src/components/posts-layout.js"),
@@ -188,7 +188,7 @@ module.exports = {
 }
 ```
 
-#### Global scope
+#### Imports
 
 When importing a react component into your MDX, you can import it using the `import`
 statement as in JavaScript.
@@ -203,44 +203,39 @@ Here's a color picker!
 <SketchPicker />
 ```
 
-If you want to allow usage of a component from anywhere, add it to the `globalScope`
-field in the options inside `gatsby-config.js`:
+#### Shortcodes
+
+If you want to allow usage of a component from anywhere (often referred to as a
+shortcode), you can pass it to the
+[MDXProvider](https://www.gatsbyjs.org/docs/mdx/customizing-components/).
 
 ```js
-// gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-mdx`,
-      options: {
-        globalScope: `
-          import { SketchPicker } from "react-color";
+// src/components/layout.js
+import React from "react"
+import { MDXProvider } from "@mdx-js/react"
+import { YouTube, Twitter, TomatoBox } from "./ui"
 
-          export default { SketchPicker };
-        `,
-      },
-    },
-  ],
-}
+const shortcodes = { YouTube, Twitter, TomatoBox }
+
+export default ({ children }) => (
+  <MDXProvider components={shortcodes}>{children}</MDXProvider>
+)
 ```
 
-All that is needed is to import the components you wish to be globally available and
-then put them into an exported object.
-
-Then, in any MDX file, you can insert the components without the import.
+Then, in any MDX file, you can render `YouTube`, `Twitter`, and `TomatoBox` without
+an import.
 
 ```mdx
 # Hello, world!
 
-Here's a color picker
+Here's a YouTube embed
 
-<SketchPicker />
+<TomatoBox>
+  <YouTube id="123abc" />
+</TomatoBox>
 ```
 
-> :warning: Note: globalScope is not working yet in any mdx file in `src/pages`, but there is an
-> issue to resolve this:
->
-> ChristopherBiscardi/gatsby-mdx#239
+[Read more about MDX shortcodes](https://mdxjs.com/blog/shortcodes)
 
 #### Gatsby remark plugins
 
@@ -261,7 +256,7 @@ images can be optimized by Gatsby and you should continue using it.
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         gatsbyRemarkPlugins: [
           {
@@ -298,7 +293,7 @@ for processing MDX content.
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         remarkPlugins: [require("remark-abbr")],
       },
@@ -320,7 +315,7 @@ for processing MDX content.
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         rehypePlugins: [require("rehype-slug")],
       },
@@ -331,7 +326,7 @@ module.exports = {
 
 #### Media types
 
-Deciding what content gets processed by gatsby-mdx. This is an
+Deciding what content gets processed by gatsby-plugin-mdx. This is an
 advanced option that is useful for dealing with specialized generated
 content. It is not intended to be configured for most users.
 
@@ -340,7 +335,7 @@ content. It is not intended to be configured for most users.
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         mediaTypes: [`text/markdown`, `text/x-markdown`],
       },
@@ -358,7 +353,7 @@ choose which nodes to process by looking at the media type.
 
 ### Components
 
-MDX and gatsby-mdx use components for different things like rendering
+MDX and gatsby-plugin-mdx use components for different things like rendering
 and component mappings.
 
 #### MDXProvider
@@ -441,7 +436,7 @@ just like a normal React component.
 Using a page query:
 
 ```js
-import { MDXRenderer } from "gatsby-mdx"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default class MyPageLayout {
   render() {
