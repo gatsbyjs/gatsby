@@ -54,6 +54,7 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
     "build": "gatsby build",
     "clean": "gatsby clean",
     "develop": "gatsby develop"
+  }
 }
 ```
 
@@ -113,6 +114,8 @@ You should now see the following dependencies in your `site/package.json`:
 ```
 
 If you run `yarn workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
+
+[@TODO: screenshot of terminal]
 
 ### Add peer dependencies to `gatsby-theme-events`
 
@@ -197,13 +200,556 @@ Add some sample data:
   url: https://austin2019.theleaddeveloper.com/
 ```
 
+To read this YAML data, you'll need to install a few more dependencies:
+
+```shell
+yarn workspace gatsby-theme-events add gatsby-source-filesystem gatsby-transformer-yaml
+```
+
+> 💡 `gatsby-source-filesystem` will let you load the `events.yml` file. `gatsby-transformer-yaml` will let you parse it as YAML data.
+
+Create a `gatsby-config.js` file in the `gatsby-theme-events` directory:
+
+```javascript:title=gatsby-theme-events/config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: "data",
+      },
+    },
+    {
+      resolve: "gatsby-transformer-yaml",
+      options: {
+        typeName: "Event",
+      },
+    },
+  ],
+}
+```
+
+With this saved, restart the dev server:
+
+```shell
+yarn workspace gatsby-theme-events develop
+```
+
+Open up the GraphiQL explorer for the site, and make a test query on the "Events" type:
+
+```graphql
+query MyQuery {
+  allEventsYaml {
+    edges {
+      node {
+        name
+      }
+    }
+  }
+}
+```
+
+When you execute the query, you should see the GraphQL server successfully return four event names:
+
+![Successful execution of the previously described query, in the GraphiQL explorer](./images/building-a-theme-events-test-query.png)
+
 ## Create a data directory using the `onPreBootstrap` lifecycle
+
+Create a `gatsby-node.js` file in `gatsby-theme-events`.
+
+If we fire up our theme, and the "data" directory doesn't exist, `gatsby-source-filesystem` will throw an error. To guard against this, you'll use the `onPreBootstrap` API hook to check if the data directory exists, and, if not, create it:
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+const fs = require("fs")
+
+// Make sure the data directory exists
+exports.onPreBootstrap = ({ reporter }, options) => {
+  const contentPath = options.contentPath || "data"
+
+  if (!fs.existsSync(contentPath)) {
+    reporter.info(`creating the ${contentPath} directory`)
+    fs.mkdirSync(contentPath)
+  }
+}
+```
 
 ## Set up to create data-driven pages
 
-## Create data-driven pages using GraphQL and `creataPages`
+To actually create pages, we'll need to:
+
+- Define the "Event" type
+- Define resolvers for custom fields on the "Event" type
+- Query for events
+
+### Define the "Event" type
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+const fs = require("fs")
+
+// Make sure the data directory exists
+exports.onPreBootstrap = ({ reporter }, options) => {
+  const contentPath = options.contentPath || "data"
+
+  if (!fs.existsSync(contentPath)) {
+    reporter.info(`creating the ${contentPath} directory`)
+    fs.mkdirSync(contentPath)
+  }
+}
+
+// highlight-start
+// Define the "Event" type
+exports.sourceNodes = ({ actions }) => {
+  actions.createTypes(`
+    type Event implements Node @dontInfer {
+      id: ID!
+      name: String!
+      location: String!
+      startDate: Date! @dateformat @proxy(from: "start_date")
+      endDate: Date! @dateformat @proxy(from: "end_date")
+      url: String!
+      slug: String!
+    }
+  `)
+}
+// highlight-end
+```
+
+1. You'll use the `createTypes` to create the new "Event" type
+2. The "Event" type will implement the typical Gatsby "Node" interface.
+3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
+4. In addition to an "id" field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](g/docs/actions/#createTypes)_.
+5. You'll also create a "slug" field. You'll notice our event data doesn't include "slug" data. You'll define this in the next step.
+
+### Define resolvers for any custom fields (slug)
+
+Gatsby gives us a createResolvers API hook. That gives us a function called createResolvers. Inside this function, we are going to set up a base path.
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+const fs = require("fs")
+
+// Make sure the data directory exists
+exports.onPreBootstrap = ({ reporter }, options) => {
+  const contentPath = options.contentPath || "data"
+
+  if (!fs.existsSync(contentPath)) {
+    reporter.info(`creating the ${contentPath} directory`)
+    fs.mkdirSync(contentPath)
+  }
+}
+
+// Define the "Event" type
+exports.sourceNodes = ({ actions }) => {
+  actions.createTypes(`
+    type Event implements Node @dontInfer {
+      id: ID!
+      name: String!
+      location: String!
+      startDate: Date! @dateformat @proxy(from: "start_date")
+      endDate: Date! @dateformat @proxy(from: "end_date")
+      url: String!
+      slug: String!
+    }
+  `)
+}
+
+// highlight-start
+// Define resolvers for custom fields
+exports.createResolvers = ({ createResolvers }, options) => {
+  const basePath = options.basePath || "/"
+
+  // Quick-and-dirty helper to convert strings into URL-friendly slugs.
+  const slugify = str => {
+    const slug = str
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "")
+
+    return `/${basePath}/${slug}`.replace(/\/\/+/g, "/")
+  }
+
+  createResolvers({
+    Event: {
+      slug: {
+        resolve: source => slugify(source.name),
+      },
+    },
+  })
+}
+// highlight-end
+```
+
+Let's take a deeper look at what's happening in this `createResolvers` API hook.
+
+You'll default the `basePath` to the root path (`"/"`):
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+exports.createResolvers = ({ createResolvers }, options) => {
+  // highlight-next-line
+  const basePath = options.basePath || "/"
+
+  // Quick-and-dirty helper to convert strings into URL-friendly slugs.
+  const slugify = str => {
+    const slug = str
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-\$)+/g, "")
+
+    return `/${basePath}/${slug}`.replace(/\/\/+/g, "/")
+  }
+
+  createResolvers({
+    Event: {
+      slug: {
+        resolve: source => slugify(source.name),
+      },
+    },
+  })
+}
+```
+
+You'll define helper, `slugify` to help generate the slugs:
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+exports.createResolvers = ({ createResolvers }, options) => {
+  const basePath = options.basePath || "/"
+
+  // highlight-start
+  // Quick-and-dirty helper to convert strings into URL-friendly slugs.
+  const slugify = str => {
+    const slug = str
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-\$)+/g, "")
+
+    return `/${basePath}/${slug}`.replace(/\/\/+/g, "/")
+  }
+  // highlight-end
+
+  createResolvers({
+    Event: {
+      slug: {
+        resolve: source => slugify(source.name),
+      },
+    },
+  })
+}
+```
+
+Then you'll define a resolver for the `"slug"` field, on the `"Event"` type:
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+exports.createResolvers = ({ createResolvers }, options) => {
+  const basePath = options.basePath || "/"
+
+  // Quick-and-dirty helper to convert strings into URL-friendly slugs.
+  const slugify = str => {
+    const slug = str
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-\$)+/g, "")
+
+    return `/${basePath}/${slug}`.replace(/\/\/+/g, "/")
+  }
+
+  // highlight-start
+  createResolvers({
+    Event: {
+      slug: {
+        resolve: source => slugify(source.name),
+      },
+    },
+  })
+  // highlight-end
+}
+```
+
+> 💡 The resolver function receives the `source`, which in this case is the `Event` node.
+
+Test that this is working by running `gatsby-theme-events` again:
+
+```shell
+yarn workspace gatsby-theme-events develop
+```
+
+If you query this time for `allEvents`, you'll see the `Event` data, including the new slugs:
+
+![Successful execution of the previously described query, in the GraphiQL explorer](./images/building-a-theme-query-event-type.png)
+
+## Create data-driven pages using GraphQL and `createPages`
+
+The last step in `gatsby-node.js` is to create pages for both the event previews, and individual event pages. To do that, you'll use the `createPages` API hook.
+
+> 💡 Note that the previous contents of `gatsby-node.js` are left intact, we'll just omit them from the code snippets in this section, for brevity.
+
+### Set up the call to create the root page
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+// query for events and create pages
+// highlight-start
+exports.createPages = async ({ actions, graphql, reporter }, options) => {
+  const basePath = options.basePath || "/"
+  actions.createPage({
+    path: basePath,
+    component: require.resolve("./src/templates/events.js"),
+  })
+}
+// highlight-end
+```
+
+- You'll default the `basePath` to the root path (`"/"`)
+- Then you'll set up the call to the `createPage` action to create the a page at the base path.
+  - _Note that the component listed doesn't exist yet -- we'll create that shortly._
+
+### Query for events
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+// query for events and create pages
+exports.createPages = async ({ actions, graphql, reporter }, options) => {
+  const basePath = options.basePath || "/"
+  actions.createPage({
+    path: basePath,
+    component: require.resolve("./src/templates/events.js"),
+  })
+
+  // highlight-start
+  const result = await graphql(`
+    query {
+      allEvent(sort: { fields: startDate, order: ASC }) {
+        nodes {
+          id
+          slug
+        }
+      }
+    }
+  `)
+
+  if (result.errors) {
+    reporter.panic("error loading events", result.errors)
+    return
+  }
+  // highlight-end
+}
+```
+
+- You'll retrieve all events, sorted by start date, in ascending order.
+- You'll handle the error, in case the GraphQL query failed.
+
+### Create a page for each event
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+// query for events and create pages
+exports.createPages = async ({ actions, graphql, reporter }, options) => {
+  const basePath = options.basePath || "/"
+  actions.createPage({
+    path: basePath,
+    component: require.resolve("./src/templates/events.js"),
+  })
+
+  const result = await graphql(`
+    query {
+      allEvent(sort: { fields: startDate, order: ASC }) {
+        nodes {
+          id
+          slug
+        }
+      }
+    }
+  `)
+
+  if (result.errors) {
+    reporter.panic("error loading events", result.errors)
+    return
+  }
+
+  // highlight-start
+  const events = result.data.allEvent.nodes
+
+  events.forEach(event => {
+    const slug = event.slug
+
+    actions.createPage({
+      path: slug,
+      component: require.resolve("./src/templates/event.js"),
+      context: {
+        eventID: event.id,
+      },
+    })
+  })
+  // highlight-end
+}
+```
+
+- You'll grab the event nodes queried from GraphQL.
+- You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
+  - _Note that we're "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
+
+### Create the "event" and "events" template components.
+
+The last step to make sure that these pages build is to create the page template components.
+
+Create new files for the event template, and the events template:
+
+#### Event template
+
+```javascript:title=gatsby-theme-events/src/templates/events.js
+import React from "react"
+
+const EventsTemplate = () => <p>TODO: Build the events page template</p>
+
+export default EventsTemplate
+```
+
+#### Events template
+
+```javascript:title=gatsby-theme-events/src/templates/event.js
+import React from "react"
+
+const EventTemplate = () => <p>TODO: Build the event page template</p>
+
+export default EventTemplate
+```
+
+### Test that pages are building
+
+To test that the root path (`"/"`) and individual event pages are building successfully, run gatsby-theme-events in develop mode again:
+
+```shell
+yarn workspace gatsby-theme-events develop
+```
+
+You should see the placeholder `events.js` component at [localhost:8000](http://localhost:8000/).
+
+If you hit [http://localhost:8000/404](http://localhost:8000/404) (for example -- or any route that doesn't exist) you should see a listing of event pages, all building with the placeholder `event.js` component.
 
 ## Display sorted data with `useStaticQuery`
+
+To show event data, you'll import `graphql` and `useStaticQuery` from Gatsby in the events.js component.
+
+```javascript:title=gatsby-theme-events/src/templates/events.js
+import React from "react"
+// highlight-next-line
+import { graphql, useStaticQuery } from "gatsby"
+
+const EventsTemplate = () => <p>TODO: Build the events page template</p>
+
+export default EventsTemplate
+```
+
+Refactor the `EventsTemplate` component to include a static query for events data:
+
+```javascript:title=gatsby-theme-events/src/templates/events.js
+import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
+
+// highlight-start
+const EventsTemplate = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      allEvent(sort: { fields: startDate, order: ASC }) {
+        nodes {
+          id
+          name
+          startDate
+          endDate
+          location
+          url
+          slug
+        }
+      }
+    }
+  `)
+
+  const events = data.allEvent.nodes
+
+  return <p>TODO: Build the events page template</p>
+}
+// highlight-end
+
+export default EventsTemplate
+```
+
+### Create the UI to display event data
+
+Start creating the UI to display the event data.
+
+#### Create a general layout component
+
+Create a new file at `gatsby-theme-events/src/components/layout.js`:
+
+```javascript:title=gatsby-theme-events/src/components/layout.js
+import React from "react"
+
+const Layout = ({ children }) => (
+  <div>
+    <h1>Gatsby Events Theme</h1>
+    {children}
+  </div>
+)
+
+export default Layout
+```
+
+#### Create an events list component
+
+Create a new file at `gatsby-theme-events/src/components/event-list.js`:
+
+```javascript:title=gatsby-theme-events/src/components/event-list.js
+import React from "react"
+
+const EventList = ({ events }) => <pre>{JSON.stringify(events, null, 2)}</pre>
+
+export default EventList
+```
+
+For now, this component will just return whatever data you send it on the `events` prop.
+
+### Add the layout and events list components to the events page
+
+```javascript:title=gatsby-theme-events/src/templates/events.js
+import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
+// highlight-start
+import Layout from "../components/layout"
+import EventList from "../components/event-list"
+// highlight-end
+
+const EventsTemplate = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      allEvent(sort: { fields: startDate, order: ASC }) {
+        nodes {
+          id
+          name
+          startDate
+          endDate
+          location
+          url
+          slug
+        }
+      }
+    }
+  `)
+
+  const events = data.allEvent.nodes
+
+  // highlight-start
+  return (
+    <Layout>
+      <EventList events={events} />
+    </Layout>
+  )
+  // highlight-end
+}
+
+export default EventsTemplate
+```
+
+- Import the two new components.
+- Refactor the render method to use the new components, and give the `<EventList>` component the events data.
+
+To test that it's working, open up [localhost:8000](http://localhost:8000/) again. You should see the "Gatsby Events Theme" header from `<Layout>` component, and the stringified event data from the `<EventList>` component.
+
+![The root path view, with a header of "Gatsby Events Theme", and stringified JSON event data](./images/building-a-theme-events-page-data.png)
 
 ## Style and format dates in React
 
@@ -218,3 +764,7 @@ Add some sample data:
 ## Consume a theme in a Gatsby application
 
 ## Use component shadowing to override theme components
+
+```
+
+```
