@@ -6,11 +6,12 @@ tags:
   - error monitoring
   - post
   - sentry
+  - react
 ---
 
 ## Assuming knowledge on my part
 
-I'm going to do something that you are told not to ever do and assume that you already have a project created and are just looking to install an error tracking software to help you fix and resolve errors before any users find it or at least before majority of your users find it and start complaining.
+In this blog I'm going to assume that you already have a project created and are just looking to install an error tracking software to help you fix and resolve errors before any users find it or at least before majority of your users find it and start complaining.
 
 ## What is Sentry?
 
@@ -30,7 +31,7 @@ Step 2. Now that you are setup with an account and logged in you should be taken
 
 ![Projects Page Example](./images/projects-page.png)
 
-Step 3. I am going to be using React in this tutorial. We are now going to install the Sentry SDK as a dependency using yarn or npm. You will need to use @sentry/browser as well which we will setup below.
+Step 3. I am going to be using React in this tutorial. We are now going to install the Sentry SDK as a dependency using yarn or npm. You will need to use `@sentry/browser` as well which we will setup below.
 
 ```shell
 # Using yarn
@@ -76,7 +77,7 @@ Step 5. With the event in place you can now click on the issues link on the navi
 
 If you want to see the list of users that are affected by the errors then click on the blue numbers on the issues page. You will then be redirected to the list of users. The below screenshot will show the users list.
 
-![Users affected](./images/affected-users.png)
+![Users affected](./images/error-event.png)
 
 **_Note: This also works to get a list of events. You just click the blue number under Events instead of Users._**
 
