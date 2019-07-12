@@ -7,13 +7,13 @@
     "gatsby-core-utils"
   ],
   "author": "Ward Peeters <ward@coding-tech.com>",
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-utils#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-utils"
+    "directory": "packages/gatsby-core-utils"
   },
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore **/__tests__",
