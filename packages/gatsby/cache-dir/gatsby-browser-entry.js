@@ -10,9 +10,6 @@ import Link, {
   parsePath,
 } from "gatsby-link"
 
-import Img from "gatsby-image"
-import ImgWithIEPolyfill from "gatsby-image/withIEPolyfill"
-
 import PageRenderer from "./public-page-renderer"
 
 const StaticQueryContext = React.createContext({})
@@ -86,8 +83,6 @@ function graphql() {
 }
 
 export {
-  Img,
-  ImgWithIEPolyfill,
   Link,
   withAssetPrefix,
   withPrefix,
@@ -102,3 +97,6 @@ export {
   PageRenderer,
   useStaticQuery,
 }
+
+export { default as Img } from "gatsby-image"
+export { default as ImgWithIEPolyfill } from "gatsby-image/withIEPolyfill"
