@@ -1,11 +1,17 @@
 // This is by no means a full test file for loader.js so feel free to add more tests.
 import mock from "xhr-mock"
-import { ProdLoader } from "../loader"
+import DevLoader from "../dev-loader"
 import emitter from "../emitter"
 
 jest.mock(`../emitter`)
+jest.mock(`../socketIo`, () => {
+  return {
+    default: jest.fn(),
+    getPageData: jest.fn(),
+  }
+})
 
-describe(`Production loader`, () => {
+describe(`Dev loader`, () => {
   describe(`loadPageDataJson`, () => {
     let originalBasePath
     let originalPathPrefix
@@ -57,7 +63,7 @@ describe(`Production loader`, () => {
     })
 
     it(`should return a pageData json on success`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       mockPageData(`/mypage`, 200, defaultPayload, true)
 
@@ -66,13 +72,13 @@ describe(`Production loader`, () => {
         pagePath: `/mypage`,
         payload: defaultPayload,
       }
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
-      expect(prodLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
 
     it(`should return a pageData json on success without contentType`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       mockPageData(`/mypage`, 200, defaultPayload)
 
@@ -81,13 +87,13 @@ describe(`Production loader`, () => {
         pagePath: `/mypage`,
         payload: defaultPayload,
       }
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
-      expect(prodLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
 
     it(`should return a pageData json with an empty compilation hash (gatsby develop)`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       const payload = { ...defaultPayload, webpackCompilationHash: `` }
       mockPageData(`/mypage`, 200, payload)
@@ -97,13 +103,13 @@ describe(`Production loader`, () => {
         pagePath: `/mypage`,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
-      expect(prodLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
 
     it(`should load a 404 page when page-path file is not a gatsby json`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       const payload = { ...defaultPayload, path: `/404.html/` }
       mockPageData(`/unknown-page`, 200, { random: `string` }, true)
@@ -115,15 +121,15 @@ describe(`Production loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
-      expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
     })
 
     it(`should load a 404 page when page-path file is not a json`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       const payload = { ...defaultPayload, path: `/404.html/` }
       mockPageData(`/unknown-page`, 200)
@@ -135,15 +141,15 @@ describe(`Production loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
-      expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
     })
 
     it(`should load a 404 page when path returns a 404`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       const payload = { ...defaultPayload, path: `/404.html/` }
       mockPageData(`/unknown-page`, 200)
@@ -155,33 +161,41 @@ describe(`Production loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
-      expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
     })
 
-    it(`should return a failure when status is 404 and 404 page is fetched`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+    it(`should return the dev-404-page when no 404 page can be found`, async () => {
+      const devLoader = new DevLoader(null, [])
 
+      const payload = { ...defaultPayload, path: `/dev-404-page/` }
       mockPageData(`/unknown-page`, 404)
       mockPageData(`/404.html`, 404)
+      mockPageData(`/dev-404-page`, 200, payload, true)
 
       const expectation = {
-        status: `failure`,
-        pagePath: `/404.html`,
+        status: `success`,
+        pagePath: `/dev-404-page`,
         notFound: true,
+        payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
-      expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
-      expect(xhrCount).toBe(2)
+
+      expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual({
+        notFound: true,
+        pagePath: `/404.html`,
+        status: `failure`,
+      })
+      expect(xhrCount).toBe(3)
     })
 
     it(`should return an error when status is 500`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       mockPageData(`/error-page`, 500)
 
@@ -189,15 +203,15 @@ describe(`Production loader`, () => {
         status: `error`,
         pagePath: `/error-page`,
       }
-      expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual(
         expectation
       )
-      expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
 
     it(`should retry 3 times before returning an error`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       mockPageData(`/blocked-page`, 0)
 
@@ -206,15 +220,15 @@ describe(`Production loader`, () => {
         retries: 3,
         pagePath: `/blocked-page`,
       }
-      expect(await prodLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
         expectation
       )
-      expect(prodLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
       expect(xhrCount).toBe(4)
     })
 
     it(`should recover if we get 1 failure`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
       const payload = {
         path: `/blocked-page/`,
         webpackCompilationHash: `1234`,
@@ -236,26 +250,26 @@ describe(`Production loader`, () => {
         pagePath: `/blocked-page`,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
         expectation
       )
-      expect(prodLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
+      expect(devLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
     })
 
     it(`shouldn't load pageData multiple times`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
       mockPageData(`/mypage`, 200, defaultPayload, true)
 
-      const expectation = await prodLoader.loadPageDataJson(`/mypage/`)
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toBe(expectation)
+      const expectation = await devLoader.loadPageDataJson(`/mypage/`)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toBe(expectation)
       expect(xhrCount).toBe(1)
     })
   })
 
   describe(`loadPage`, () => {
-    const createAsyncRequires = components => {
+    const createSyncRequires = components => {
       return {
         components,
       }
@@ -264,10 +278,10 @@ describe(`Production loader`, () => {
     beforeEach(() => emitter.emit.mockReset())
 
     it(`should be successful when component can be loaded`, async () => {
-      const asyncRequires = createAsyncRequires({
-        chunk: () => Promise.resolve(`instance`),
+      const syncRequires = createSyncRequires({
+        chunk: `instance`,
       })
-      const prodLoader = new ProdLoader(asyncRequires, [])
+      const devLoader = new DevLoader(syncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
@@ -276,17 +290,17 @@ describe(`Production loader`, () => {
           pageContext: `something something`,
         },
       }
-      prodLoader.loadPageDataJson = jest.fn(() =>
+      devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           payload: pageData,
           status: `success`,
         })
       )
 
-      const expectation = await prodLoader.loadPage(`/mypage/`)
+      const expectation = await devLoader.loadPage(`/mypage/`)
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
-      expect(prodLoader.pageDb.get(`/mypage`)).toEqual(
+      expect(devLoader.pageDb.get(`/mypage`)).toEqual(
         expect.objectContaining({
           payload: expectation,
           status: `success`,
@@ -300,16 +314,16 @@ describe(`Production loader`, () => {
     })
 
     it(`should set not found on finalResult`, async () => {
-      const asyncRequires = createAsyncRequires({
-        chunk: () => Promise.resolve(`instance`),
+      const syncRequires = createSyncRequires({
+        chunk: `instance`,
       })
-      const prodLoader = new ProdLoader(asyncRequires, [])
+      const devLoader = new DevLoader(syncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
         webpackCompilationHash: `123`,
       }
-      prodLoader.loadPageDataJson = jest.fn(() =>
+      devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           payload: pageData,
           status: `success`,
@@ -317,8 +331,8 @@ describe(`Production loader`, () => {
         })
       )
 
-      await prodLoader.loadPage(`/mypage/`)
-      const expectation = prodLoader.pageDb.get(`/mypage`)
+      await devLoader.loadPage(`/mypage/`)
+      const expectation = devLoader.pageDb.get(`/mypage`)
       expect(expectation).toHaveProperty(`notFound`, true)
       expect(emitter.emit).toHaveBeenCalledTimes(1)
       expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
@@ -328,76 +342,76 @@ describe(`Production loader`, () => {
     })
 
     it(`should return an error when component cannot be loaded`, async () => {
-      const asyncRequires = createAsyncRequires({
-        chunk: () => Promise.resolve(false),
+      const syncRequires = createSyncRequires({
+        chunk: false,
       })
-      const prodLoader = new ProdLoader(asyncRequires, [])
+      const devLoader = new DevLoader(syncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
         webpackCompilationHash: `123`,
       }
-      prodLoader.loadPageDataJson = jest.fn(() =>
+      devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           payload: pageData,
           status: `success`,
         })
       )
 
-      await prodLoader.loadPage(`/mypage/`)
-      const expectation = prodLoader.pageDb.get(`/mypage`)
+      await devLoader.loadPage(`/mypage/`)
+      const expectation = devLoader.pageDb.get(`/mypage`)
       expect(expectation).toHaveProperty(`status`, `error`)
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should return an error pageData contains an error`, async () => {
-      const asyncRequires = createAsyncRequires({
-        chunk: () => Promise.resolve(`instance`),
+      const syncRequires = createSyncRequires({
+        chunk: `instance`,
       })
-      const prodLoader = new ProdLoader(asyncRequires, [])
+      const devLoader = new DevLoader(syncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
         webpackCompilationHash: `123`,
       }
-      prodLoader.loadPageDataJson = jest.fn(() =>
+      devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           payload: pageData,
           status: `error`,
         })
       )
 
-      expect(await prodLoader.loadPage(`/mypage/`)).toEqual({ status: `error` })
-      expect(prodLoader.pageDb.size).toBe(0)
+      expect(await devLoader.loadPage(`/mypage/`)).toEqual({ status: `error` })
+      expect(devLoader.pageDb.size).toBe(0)
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should throw an error when 404 cannot be fetched`, async () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
-      prodLoader.loadPageDataJson = jest.fn(() =>
+      devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           status: `failure`,
         })
       )
 
       try {
-        await prodLoader.loadPage(`/404.html/`)
+        await devLoader.loadPage(`/404.html/`)
       } catch (err) {
         expect(err.message).toEqual(
           expect.stringContaining(`404 page could not be found`)
         )
       }
-      expect(prodLoader.pageDb.size).toBe(0)
+      expect(devLoader.pageDb.size).toBe(0)
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should cache the result of loadPage`, async () => {
-      const asyncRequires = createAsyncRequires({
-        chunk: () => Promise.resolve(`instance`),
+      const syncRequires = createSyncRequires({
+        chunk: `instance`,
       })
-      const prodLoader = new ProdLoader(asyncRequires, [])
-      prodLoader.loadPageDataJson = jest.fn(() =>
+      const devLoader = new DevLoader(syncRequires, [])
+      devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           payload: {
             componentChunkName: `chunk`,
@@ -406,53 +420,24 @@ describe(`Production loader`, () => {
         })
       )
 
-      const expectation = await prodLoader.loadPage(`/mypage/`)
-      expect(await prodLoader.loadPage(`/mypage/`)).toBe(expectation)
-      expect(prodLoader.loadPageDataJson).toHaveBeenCalledTimes(1)
-    })
-
-    it(`should only run 1 network request even when called multiple times`, async () => {
-      const asyncRequires = createAsyncRequires({
-        chunk: () => Promise.resolve(`instance`),
-      })
-      const prodLoader = new ProdLoader(asyncRequires, [])
-      prodLoader.loadPageDataJson = jest.fn(() =>
-        Promise.resolve({
-          payload: {
-            componentChunkName: `chunk`,
-          },
-          status: `success`,
-        })
-      )
-
-      const loadPagePromise = prodLoader.loadPage(`/test-page/`)
-      expect(prodLoader.inFlightDb.size).toBe(1)
-      expect(prodLoader.loadPage(`/test-page/`)).toBe(loadPagePromise)
-      expect(prodLoader.inFlightDb.size).toBe(1)
-
-      const expectation = await loadPagePromise
-
-      expect(prodLoader.inFlightDb.size).toBe(0)
-      expect(emitter.emit).toHaveBeenCalledTimes(1)
-      expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
-        page: expectation,
-        pageResources: expectation,
-      })
+      const expectation = await devLoader.loadPage(`/mypage/`)
+      expect(await devLoader.loadPage(`/mypage/`)).toBe(expectation)
+      expect(devLoader.loadPageDataJson).toHaveBeenCalledTimes(1)
     })
   })
 
   describe(`loadPageSync`, () => {
     it(`returns page resources when already fetched`, () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
-      prodLoader.pageDb.set(`/mypage`, { payload: true })
-      expect(prodLoader.loadPageSync(`/mypage/`)).toBe(true)
+      devLoader.pageDb.set(`/mypage`, { payload: true })
+      expect(devLoader.loadPageSync(`/mypage/`)).toBe(true)
     })
 
     it(`returns page resources when already fetched`, () => {
-      const prodLoader = new ProdLoader(null, [])
+      const devLoader = new DevLoader(null, [])
 
-      expect(prodLoader.loadPageSync(`/mypage/`)).toBeUndefined()
+      expect(devLoader.loadPageSync(`/mypage/`)).toBeUndefined()
     })
   })
 
@@ -460,31 +445,31 @@ describe(`Production loader`, () => {
     const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
     it(`shouldn't prefetch when shouldPrefetch is false`, () => {
-      const prodLoader = new ProdLoader(null, [])
-      prodLoader.shouldPrefetch = jest.fn(() => false)
-      prodLoader.doPrefetch = jest.fn()
+      const devLoader = new DevLoader(null, [])
+      devLoader.shouldPrefetch = jest.fn(() => false)
+      devLoader.doPrefetch = jest.fn()
 
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(false)
-      expect(prodLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
-      expect(prodLoader.doPrefetch).not.toHaveBeenCalled()
+      expect(devLoader.prefetch(`/mypath/`)).toBe(false)
+      expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
+      expect(devLoader.doPrefetch).not.toHaveBeenCalled()
     })
 
     it(`should prefetch when not yet triggered`, async () => {
       jest.useFakeTimers()
-      const prodLoader = new ProdLoader(null, [])
-      prodLoader.shouldPrefetch = jest.fn(() => true)
-      prodLoader.apiRunner = jest.fn()
-      prodLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+      const devLoader = new DevLoader(null, [])
+      devLoader.shouldPrefetch = jest.fn(() => true)
+      devLoader.apiRunner = jest.fn()
+      devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
 
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
 
       // wait for doPrefetchPromise
       await flushPromises()
 
-      expect(prodLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
+      expect(devLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
         pathname: `/mypath/`,
       })
-      expect(prodLoader.apiRunner).toHaveBeenNthCalledWith(
+      expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
         2,
         `onPostPrefetchPathname`,
         {
@@ -494,24 +479,24 @@ describe(`Production loader`, () => {
     })
 
     it(`should only run apis once`, async () => {
-      const prodLoader = new ProdLoader(null, [])
-      prodLoader.shouldPrefetch = jest.fn(() => true)
-      prodLoader.apiRunner = jest.fn()
-      prodLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+      const devLoader = new DevLoader(null, [])
+      devLoader.shouldPrefetch = jest.fn(() => true)
+      devLoader.apiRunner = jest.fn()
+      devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
 
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(true)
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
 
       // wait for doPrefetchPromise
       await flushPromises()
 
-      expect(prodLoader.apiRunner).toHaveBeenCalledTimes(2)
-      expect(prodLoader.apiRunner).toHaveBeenNthCalledWith(
+      expect(devLoader.apiRunner).toHaveBeenCalledTimes(2)
+      expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
         1,
         `onPrefetchPathname`,
         expect.anything()
       )
-      expect(prodLoader.apiRunner).toHaveBeenNthCalledWith(
+      expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
         2,
         `onPostPrefetchPathname`,
         expect.anything()
