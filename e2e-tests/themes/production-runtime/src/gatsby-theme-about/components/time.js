@@ -1,5 +1,5 @@
 import React from "react"
 
-export default ({ dateObject }) => (
-  <span data-testid="time">{dateObject.toLocaleTimeString(`en-US`)}</span>
+export default ({ date }) => (
+  <span data-testid="time">{date.toLocaleTimeString(`en-US`)}</span>
 )

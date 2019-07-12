@@ -4,7 +4,7 @@ import { graphql } from "gatsby"
 export default ({ data }) => (
   <>
     <p data-testid="title">{data.site.siteMetadata.title}</p>
-    <p data-testid="description">{data.site.siteMetadata.description}</p>
+    <p data-testid="author">{data.site.siteMetadata.author}</p>
   </>
 )
 
@@ -13,7 +13,7 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        description
+        author
       }
     }
   }

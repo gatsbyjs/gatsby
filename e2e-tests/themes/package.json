@@ -1,8 +1,10 @@
 {
   "private": true,
+  "scripts": {
+    "test": "yarn workspace production-runtime test"
+  },
   "workspaces": [
     "gatsby-theme-about",
-    "development-runtime",
     "production-runtime"
   ]
 }
