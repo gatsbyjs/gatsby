@@ -6543,3 +6543,14 @@
   built_by: Marcel Hauri
   built_by_url: https://marcelhauri.ch
   featured: false
+- title: Projektmanagementblog
+  url: https://www.projektmanagementblog.de
+  main_url: https://www.projektmanagementblog.de/
+  source_url: https://github.com/StephanWeinhold/pmblog
+  description: >
+    Thoughts about modern project management. Built with Gatsby and Tachyons, based on Advanced Starter.
+  categories:
+    - Blog
+  built_by: Stephan Weinhold
+  built_by_url: https://stephanweinhold.com/
+  featured: false
