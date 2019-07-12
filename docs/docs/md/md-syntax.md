@@ -2,6 +2,20 @@
 title: Markdown Syntax
 ---
 
+## Frontmatter
+- Fancy word for metadata for your markdown
+- Variables that can later be injected into your components
+- Must be:
+  - At the top of the file
+  - Valid YAML
+  - Between triple dashed lines
+  ```
+  ---
+  title: My Frontmatter Title
+  example_boolean: true
+  ---
+  ```
+
 ## Headings
 
 ```
@@ -128,6 +142,18 @@ title: Markdown Syntax
 >
 > more quotes
 
+## Code Comments
+
+- Inline:
+  - Enclose the text in backticks \`code\`
+  - Your `code` will look like this
+
+
+- Code Blocks:
+  - Indent a block by four spaces
+  -     Your code will look like this
+
 ## Helpful Resources
 
 - https://daringfireball.net/projects/markdown/syntax
+- https://www.markdownguide.org/basic-syntax
