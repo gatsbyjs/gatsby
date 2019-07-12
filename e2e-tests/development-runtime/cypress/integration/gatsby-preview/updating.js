@@ -53,6 +53,7 @@ describe(`Gatsby Preview (Updating)`, () => {
 
   /*
    * TODO: get this test passing in CI
+   * https://github.com/testing-library/cypress-testing-library/issues/23
    */
   it.skip(`can be triggered with webhook data`, () => {
     cy.exec(`npm run update:webhook`)
