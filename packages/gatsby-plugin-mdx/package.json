@@ -4,7 +4,7 @@
   "description": "MDX integration for Gatsby",
   "main": "index.js",
   "license": "MIT",
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#readme",
   "scripts": {
     "test": "jest"
   },
