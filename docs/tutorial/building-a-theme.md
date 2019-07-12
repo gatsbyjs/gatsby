@@ -751,6 +751,83 @@ To test that it's working, open up [localhost:8000](http://localhost:8000/) agai
 
 ![The root path view, with a header of "Gatsby Events Theme", and stringified JSON event data](./images/building-a-theme-events-page-data.png)
 
+### Update the event list component
+
+Update the event list component to use the `event` data in markup, rather than displaying the raw data:
+
+```jsx:title=gatsby-theme-events/src/components/event-list.js
+import React from "react"
+// highlight-start
+import { Link } from "gatsby"
+
+const EventList = ({ events }) => (
+  <>
+    <h2>Upcoming Events</h2>
+    <ul>
+      {events.map(event => (
+        <li key={event.id}>
+          <strong>
+            <Link to={event.slug}>{event.name}</Link>
+          </strong>
+          <br />
+          {new Date(event.startDate).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}{" "}
+          in {event.location}
+        </li>
+      ))}
+    </ul>
+  </>
+)
+// highlight-end
+
+export default EventList
+```
+
+- You've created a header for "Upcoming Events"
+- You've mapped over all of the "event" records, displaying:
+  - The event name (which links to the event page)
+  - The date of the event
+  - The location of the event
+
+Checking [localhost:8000](http://localhost:8000/) again, you should see the new markup:
+
+![The events page, shown with markup defined](./images/building-a-theme-events-page-markup.png)
+
+## Display and query data by id with context and static queries
+
+Similar to EventList, you'll need to create a React component template for an individual Event page.
+
+### Add a page query
+
+First, you'll create a page query to query for individual events by id.
+
+```javascript:title=gatsby-theme-events/src/templates/event.js
+import React from "react"
+// highlight-start
+import { graphql } from "gatsby"
+
+export const query = graphql`
+  query($eventID: String!) {
+    event(id: { eq: $eventID }) {
+      name
+      url
+      startDate(formatString: "MMMM DD YYYY")
+      endDate(formatString: "MMMM DD YYYY")
+      location
+      slug
+    }
+  }
+`
+// highlight-end
+
+const EventTemplate = () => <p>TODO: Build the event page template</p>
+
+export default EventTemplate
+```
+
 ## Style and format dates in React
 
 ## Configure a theme to take options
@@ -764,7 +841,3 @@ To test that it's working, open up [localhost:8000](http://localhost:8000/) agai
 ## Consume a theme in a Gatsby application
 
 ## Use component shadowing to override theme components
-
-```
-
-```
