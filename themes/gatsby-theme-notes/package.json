@@ -33,6 +33,7 @@
     "@emotion/core": "^10.0.14",
     "@mdx-js/mdx": "^1.0.24",
     "@mdx-js/react": "^1.0.23",
+    "gatsby-core-utils": "^1.0.3",
     "gatsby-plugin-compile-es6-packages": "^1.1.0",
     "gatsby-plugin-emotion": "^4.1.1",
     "gatsby-plugin-mdx": "^1.0.12",
