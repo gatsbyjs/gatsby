@@ -3294,3 +3294,20 @@
     - Replace HTML tags with React components upon rendering Markdown, enabling design systems
     - Hide pages from being editable by the CMS
     - Minimal and extensible
+- url: https://gatsby-airtable-advanced-starter.marcomelilli.com
+  repo: https://github.com/marcomelilli/gatsby-airtable-advanced-starter
+  description: A Gatsby Starter Blog using Airtable as backend
+  tags:
+    - Airtable
+    - Blog
+    - Styling:None
+  features:
+    - Dynamic content from Airtable
+    - Does not contain any UI frameworks
+    - Tags
+    - Categories
+    - Authors
+    - Disqus
+    - Offline support
+    - Web App Manifest
+    - SEO
