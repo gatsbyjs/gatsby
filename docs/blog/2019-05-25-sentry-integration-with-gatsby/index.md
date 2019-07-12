@@ -43,7 +43,7 @@ $ npm install @sentry/browser
 
 ## React code to connect to Sentry
 
-After installing Sentry you will be given a value which has been dubbed a DSN or Data Source Name. It looks a lot like a standard URL, but it's just a representation of the configuration required by the Sentry SDKs. It consists of several things including the protocol, public key, the server address, and the project identifier.
+Step 4. After installing Sentry you will be given a value which has been dubbed a DSN or Data Source Name. It looks a lot like a standard URL, but it's just a representation of the configuration required by the Sentry SDKs. It consists of several things including the protocol, public key, the server address, and the project identifier.
 
 You should initialize the Sentry browser SDK as soon as possible during your application load up, before initializing React.
 
