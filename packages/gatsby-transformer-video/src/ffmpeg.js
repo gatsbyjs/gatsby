@@ -135,32 +135,23 @@ export default class FFMPEG {
     info,
   }) => {
     const { duration: sourceDuration } = info.streams[0]
-    return [
-      {
-        filter: `setpts`,
-        options: `${(duration / sourceDuration).toFixed(6)}*PTS`,
-        inputs: `rescaled`,
-        outputs: `speed-up`,
-      },
-      {
-        filter: `fps`,
-        options: fps,
-        inputs: `speed-up`,
-        outputs: `output`,
-      },
-      {
-        // @todo make sure this is configurable
-        filter: `eq`,
-        options: `saturation=0`,
-        outputs: `desaturated`,
-      },
-      {
-        filter: `scale`,
-        options: this.generateScaleFilter({ maxWidth, maxHeight }),
-        inputs: `desaturated`,
-        outputs: `rescaled`,
-      },
+    const previewFilters = [
+      `setpts=${(duration / sourceDuration).toFixed(6)}*PTS`,
+      `fps=${fps}`,
+      `scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`,
     ]
+
+    return previewFilters
+  }
+
+  createCustomFilters = ({ fieldArgs: { saturated = false } }) => {
+    const filters = []
+
+    if (saturated) {
+      filters.push(`eq=saturation=0`)
+    }
+
+    return filters
   }
 
   createPreviewMp4 = (...args) =>
@@ -178,11 +169,15 @@ export default class FFMPEG {
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       console.log(`[MP4] Converting ${path} (${filename})`)
+      const filters = [
+        ...this.createPreviewFilters({ fieldArgs, info }),
+        ...this.createCustomFilters({ fieldArgs }),
+      ].join(`,`)
       const ffmpegSession = ffmpeg()
         .input(path)
         .videoCodec(`libx264`)
         .duration(duration)
-        .complexFilter(this.createPreviewFilters({ fieldArgs, info }), `output`)
+        .complexFilter([filters])
         .outputOptions([
           `-c:v libx264`,
           `-crf ${h264Crf}`,
@@ -213,11 +208,16 @@ export default class FFMPEG {
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       console.log(`[WEBP] Converting ${path} (${filename})`)
+      const filters = [
+        ...this.createPreviewFilters({ fieldArgs, info }),
+        ...this.createCustomFilters({ fieldArgs }),
+      ].join(`,`)
+
       const ffmpegSession = ffmpeg()
         .input(path)
         .duration(duration)
         .videoCodec(`libwebp`)
-        .complexFilter(this.createPreviewFilters({ fieldArgs, info }), `output`)
+        .complexFilter([filters])
         .outputOptions([`-preset picture`, `-compression_level 6`, `-loop 0`])
 
       await this.executeFfmpeg(ffmpegSession, publicPath)
@@ -245,31 +245,20 @@ export default class FFMPEG {
       const tmpPath = resolve(tmpdir(), `${filename}-preview.gif`)
 
       console.log(`[GIF] Converting ${path} (${filename})`)
+
+      const filters = [
+        ...this.createPreviewFilters({ fieldArgs, info }),
+        ...this.createCustomFilters({ fieldArgs }),
+        // High quality gif: https://engineering.giphy.com/how-to-make-gifs-wit g/
+        `split [a][b]`,
+        `[a] palettegen [p]`,
+        `[b][p] paletteuse`,
+      ].join(`,`)
+
       const ffmpegSession = ffmpeg()
         .input(path)
         .duration(duration)
-        .complexFilter([
-          ...this.createPreviewFilters({ fieldArgs, info }),
-          {
-            filter: `split`,
-            inputs: `output`,
-            outputs: [`o1`, `o2`],
-          },
-          {
-            filter: `palettegen`,
-            inputs: `o1`,
-            outputs: `p`,
-          },
-          {
-            filter: `fifo`,
-            inputs: `o2`,
-            outputs: `o3`,
-          },
-          {
-            filter: `paletteuse`,
-            inputs: [`o3`, `p`],
-          },
-        ])
+        .complexFilter([filters])
 
       await this.executeFfmpeg(ffmpegSession, tmpPath)
 
@@ -294,15 +283,15 @@ export default class FFMPEG {
     if (!alreadyExists) {
       console.log(`[H264] Converting ${path} (${filename})`)
 
+      const filters = [
+        `scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`,
+        ...this.createCustomFilters({ fieldArgs }),
+      ].join(`,`)
+
       const ffmpegSession = ffmpeg()
         .input(path)
         .videoCodec(`libx264`)
-        .complexFilter([
-          {
-            filter: `scale`,
-            options: this.generateScaleFilter({ maxWidth, maxHeight }),
-          },
-        ])
+        .complexFilter([filters])
         .outputOptions([
           `-crf ${h264Crf}`,
           `-preset ${h264Preset}`,
@@ -325,15 +314,16 @@ export default class FFMPEG {
     const alreadyExists = await pathExists(publicPath)
     if (!alreadyExists) {
       console.log(`[H265] Converting ${path} (${filename})`)
+
+      const filters = [
+        `scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`,
+        ...this.createCustomFilters({ fieldArgs }),
+      ].join(`,`)
+
       const ffmpegSession = ffmpeg()
         .input(path)
         .videoCodec(`libx265`)
-        .complexFilter([
-          {
-            filter: `scale`,
-            options: this.generateScaleFilter({ maxWidth, maxHeight }),
-          },
-        ])
+        .complexFilter([filters])
         .outputOptions([
           `-crf ${h265Crf}`,
           `-preset ${h265Preset}`,

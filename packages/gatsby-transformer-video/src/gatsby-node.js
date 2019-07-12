@@ -1,6 +1,11 @@
 import { resolve, join } from "path"
 
-import { GraphQLObjectType, GraphQLString, GraphQLInt } from "gatsby/graphql"
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLBoolean,
+} from "gatsby/graphql"
 import { ensureDir } from "fs-extra"
 
 import FFMPEG from "./ffmpeg"
@@ -66,12 +71,13 @@ exports.setFieldsOnGraphQLNodeType = (
         maxHeight: { type: GraphQLInt, defaultValue: null },
         duration: { type: GraphQLInt, defaultValue: 3 },
         fps: { type: GraphQLInt, defaultValue: 3 },
+        saturated: { type: GraphQLBoolean, defaultValue: false },
         publicPath: {
           type: GraphQLString,
           defaultValue: `assets/video-previews`,
         },
         h264Crf: { type: GraphQLInt, defaultValue: 34 },
-        h264Preset: { type: GraphQLInt, defaultValue: `veryslow` },
+        h264Preset: { type: GraphQLString, defaultValue: `veryslow` },
       },
       async resolve(video, fieldArgs) {
         const metadata = await prepareVideo({
@@ -136,11 +142,12 @@ exports.setFieldsOnGraphQLNodeType = (
       args: {
         maxWidth: { type: GraphQLInt, defaultValue: 1920 },
         maxHeight: { type: GraphQLInt, defaultValue: null },
+        saturated: { type: GraphQLBoolean, defaultValue: false },
         publicPath: { type: GraphQLString, defaultValue: `assets/videos` },
         h264Crf: { type: GraphQLInt, defaultValue: 28 },
-        h264Preset: { type: GraphQLInt, defaultValue: `veryslow` },
+        h264Preset: { type: GraphQLString, defaultValue: `veryslow` },
         h265Crf: { type: GraphQLInt, defaultValue: 34 },
-        h265Preset: { type: GraphQLInt, defaultValue: `veryslow` },
+        h265Preset: { type: GraphQLString, defaultValue: `veryslow` },
       },
       async resolve(video, fieldArgs) {
         const metadata = await prepareVideo({
