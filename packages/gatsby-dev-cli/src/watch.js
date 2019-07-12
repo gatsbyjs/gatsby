@@ -118,7 +118,7 @@ async function watch(
     ignoredPackageJSON.set(packageName, contentArray)
 
     return () => {
-      ignoredPackageJSON.delete(ignoredPackageJSON)
+      ignoredPackageJSON.delete(packageName)
     }
   }
 
