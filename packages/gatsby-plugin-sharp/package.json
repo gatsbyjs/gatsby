@@ -11,6 +11,7 @@
     "async": "^2.1.2",
     "bluebird": "^3.5.0",
     "fs-extra": "^7.0.0",
+    "got": "^8.3.2",
     "imagemin": "^6.0.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^6.0.0",
