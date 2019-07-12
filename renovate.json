@@ -9,5 +9,5 @@
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
-  "semanticCommitScope": "starters"
+  "semanticCommitScope": null
 }
