@@ -98,7 +98,7 @@ yarn workspace site add gatsby react react-dom gatsby-theme-events@*
 - When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
 - You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
 
-> 💡 For more detail on using yarn workspaces, you might be interested to check out (@TODO link Jackson's blog post)
+> 💡 For more detail on using yarn workspaces, you might be interested to check out our [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
 
 You should now see the following dependencies in your `site/package.json`:
 
@@ -115,7 +115,24 @@ You should now see the following dependencies in your `site/package.json`:
 
 If you run `yarn workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
 
-[@TODO: screenshot of terminal]
+```shell
+{
+  "gatsby-theme-events": {
+    "location": "gatsby-theme-events",
+    "workspaceDependencies": [],
+    "mismatchedWorkspaceDependencies": []
+  },
+  "site": {
+    "location": "site",
+    // highlight-start
+    "workspaceDependencies": [
+      "gatsby-theme-events"
+    ],
+    // highlight-end
+    "mismatchedWorkspaceDependencies": []
+  }
+}
+```
 
 ### Add peer dependencies to `gatsby-theme-events`
 
@@ -210,7 +227,7 @@ yarn workspace gatsby-theme-events add gatsby-source-filesystem gatsby-transform
 
 Create a `gatsby-config.js` file in the `gatsby-theme-events` directory:
 
-```javascript:title=gatsby-theme-events/config.js
+```javascript:title=gatsby-theme-events/gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -235,11 +252,11 @@ With this saved, restart the dev server:
 yarn workspace gatsby-theme-events develop
 ```
 
-Open up the GraphiQL explorer for the site, and make a test query on the "Events" type:
+Open up the GraphiQL explorer for the site, and make a test query on "allEvents":
 
 ```graphql
 query MyQuery {
-  allEventsYaml {
+  allEvents {
     edges {
       node {
         name
@@ -830,11 +847,13 @@ export default EventTemplate
 
 ### Modify the event template to access event data
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```javascript:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 import { graphql } from "gatsby"
-// highlight-next-line
+// highlight-start
 import Layout from "../components/layout"
+import Event from "../components/event"
+// highlight-end
 
 export const query = graphql`
   query($eventID: String!) {
@@ -971,8 +990,9 @@ Update the `gatsby-theme-events/gatsby-config.js` to accept options:
 
 ```javascript:title=gatsby-theme-events/gatsby-config.js
 // highlight-next-line
-module.exports = ({ contentPath = "data", basePath = "/" }) => {
+module.exports = ({ contentPath = "data", basePath = "/" }) => ({
   plugins: [
+    "gatsby-plugin-theme-ui",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -986,8 +1006,8 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => {
         typeName: "Event",
       },
     },
-  ]
-}
+  ],
+})
 ```
 
 The `contentPath` will default to "data", and the basePath will default to root, '/'.
