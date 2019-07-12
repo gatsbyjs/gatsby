@@ -3253,6 +3253,19 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://gatsby-starter-typescript-graphql.netlify.com
+  repo: https://github.com/spawnia/gatsby-starter-typescript-graphql
+  description: A Gatsby starter with typesafe GraphQL using TypeScript
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Type safety with TypeScript
+    - Typesafe GraphQL with graphql-code-generator
+    - ESLint with TypeScript support
+    - Styling with styled-components
 - url: https://gatsby-tailwind-serif.netlify.com/
   repo: https://github.com/windedge/gatsby-tailwind-serif
   description: A Gatsby theme based on gatsby-serif-theme, rewrite with Tailwind CSS.
@@ -3265,3 +3278,36 @@
     - Removes unused CSS with Purgecss
     - Responsive design
     - Suitable for small business website
+- url: https://mystifying-mclean-5c7fce.netlify.com
+  repo: https://github.com/renvrant/gatsby-mdx-netlify-cms-starter
+  description: An extension of the default starter with Netlify CMS and MDX support.
+  tags:
+    - MDX
+    - Markdown
+    - Netlify
+    - CMS:Netlify
+    - Styling:None
+  features:
+    - MDX and Netlify CMS support
+    - Use React components in Netlify CMS Editor and other markdown files
+    - Allow editors to choose a page template
+    - Replace HTML tags with React components upon rendering Markdown, enabling design systems
+    - Hide pages from being editable by the CMS
+    - Minimal and extensible
+- url: https://gatsby-airtable-advanced-starter.marcomelilli.com
+  repo: https://github.com/marcomelilli/gatsby-airtable-advanced-starter
+  description: A Gatsby Starter Blog using Airtable as backend
+  tags:
+    - Airtable
+    - Blog
+    - Styling:None
+  features:
+    - Dynamic content from Airtable
+    - Does not contain any UI frameworks
+    - Tags
+    - Categories
+    - Authors
+    - Disqus
+    - Offline support
+    - Web App Manifest
+    - SEO
