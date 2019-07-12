@@ -148,60 +148,22 @@ it(`Allows to configure browser targets`, () => {
 })
 
 describe(`in production mode`, () => {
-  it(`specifies proper presets`, () => {
+  it(`adds babel-plugin-transform-react-remove-prop-types`, () => {
     process.env.GATSBY_BUILD_STAGE = `build-javascript`
 
-    const targets = `last 1 version`
-    const { presets, plugins } = preset(null, { targets })
+    const { plugins } = preset()
 
-    expect(presets).toEqual([
-      [
-        expect.stringContaining(path.join(`@babel`, `preset-env`)),
-        {
-          corejs: 2,
-          loose: true,
-          modules: false,
-          useBuiltIns: `usage`,
-          targets,
-        },
-      ],
-      [
-        expect.stringContaining(path.join(`@babel`, `preset-react`)),
-        {
-          development: false,
-          pragma: `React.createElement`,
-          useBuiltIns: true,
-        },
-      ],
-    ])
-    expect(plugins).toEqual([
-      [
-        expect.stringContaining(
-          path.join(`@babel`, `plugin-proposal-class-properties`)
-        ),
-        { loose: true },
-      ],
-      expect.stringContaining(`babel-plugin-macros`),
-      expect.stringContaining(
-        path.join(`@babel`, `plugin-syntax-dynamic-import`)
-      ),
-      [
-        expect.stringContaining(
-          path.join(`@babel`, `plugin-transform-runtime`)
-        ),
-        {
-          helpers: true,
-          regenerator: true,
-        },
-      ],
-      [
-        expect.stringContaining(
-          path.join(`babel-plugin-transform-react-remove-prop-types`)
-        ),
-        {
-          removeImport: true,
-        },
-      ],
-    ])
+    expect(plugins).toEqual(
+      expect.arrayContaining([
+        [
+          expect.stringContaining(
+            path.join(`babel-plugin-transform-react-remove-prop-types`)
+          ),
+          {
+            removeImport: true,
+          },
+        ],
+      ])
+    )
   })
 })
