@@ -2,9 +2,11 @@ const path = require(`path`)
 
 const resolve = m => require.resolve(m)
 
+const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
+
 const loadCachedConfig = () => {
   let pluginBabelConfig = {}
-  if (process.env.NODE_ENV !== `test`) {
+  if (!IS_TEST) {
     try {
       pluginBabelConfig = require(path.join(
         process.cwd(),
@@ -91,6 +93,7 @@ module.exports = function preset(_, options = {}) {
           loose: false, // Fixes #14848
         },
       ],
-    ],
+      IS_TEST && resolve(`babel-plugin-dynamic-import-node`),
+    ].filter(Boolean),
   }
 }
