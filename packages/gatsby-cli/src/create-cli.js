@@ -266,7 +266,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `repl`,
-    desc: `Get a node repl with context of Gatsby environment, see (/docs/gatsby-repl/)`,
+    desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)

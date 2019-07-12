@@ -41,7 +41,7 @@ gatsby > babelrc
 
 ### `components`
 
-Returns a Map object with all of the components in your Gatsby environment (see [Mozilla Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) docs for more information on Map objects and how to use them). Propeties that get returned: `name`, `componentPath`, `id`, `query`, and `hash`.
+Returns a Map object with all of the components in your Gatsby environment (see [Mozilla Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) docs for more information on Map objects and how to use them). Propeties that get returned: `name`, `componentPath`, `query`, `pages`, and `isInBootstrap:`.
 
 Usage: `components`
 
