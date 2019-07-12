@@ -155,7 +155,7 @@ plugins: [
 ]
 ```
 
-NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader which is required even in production. You can then configure it then in the resolve-url-loader options then:
+NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for sass files in the plugin:
 
 ```javascript
 plugins: [
