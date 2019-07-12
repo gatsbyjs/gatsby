@@ -861,16 +861,14 @@ export default EventTemplate
 
 We're wishful programming here again -- the `<Event>` component doesn't exist yet. Create that component in `gatsby-theme-events/src/components/event.js`:
 
-## Style and format dates in React
+```javascript:title=gatsby-theme-events/src/components/event.js
+import React from "react"
 
-## Configure a theme to take options
+const Event = props => <pre>{JSON.stringify(props, null, 2)}</pre>
 
-## Make themes extendable with gatsby-theme-ui
+export default Event
+```
 
-## Use and override a theme using component shadowing
+To start off, as before, stringify the props data getting handed to the component, to make sure you're getting the data you expect:
 
-## Publish a theme to npm
-
-## Consume a theme in a Gatsby application
-
-## Use component shadowing to override theme components
+![Successfully passing event data to individual event pages](./images/building-a-theme-individual-event-data.png)
