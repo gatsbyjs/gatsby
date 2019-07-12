@@ -24,6 +24,8 @@ module.exports = {
         respectDNT: true,
         // Avoids sending pageview hits from custom paths
         exclude: ["/preview/**", "/do-not-track/me/too/"],
+        // Delays sending pageview hits on route update (in milliseconds)
+        pageTransitionDelay: 0,
         // Enables Google Optimize using your container Id
         optimizeId: "YOUR_GOOGLE_OPTIMIZE_TRACKING_ID",
         // Enables Google Optimize Experiment ID
@@ -101,6 +103,10 @@ If you enable this optional option, Google Analytics will not be loaded at all f
 ### `exclude`
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+
+### `pageTransitionDelay`
+
+If your site uses any custom transitions on route update (e.g. [`gatsby-plugin-transition-link`](https://www.gatsbyjs.org/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)), then you can delay processing the page view event until the new page is mounted.
 
 ### `optimizeId`
 
