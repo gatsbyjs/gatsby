@@ -50,6 +50,7 @@ it(`Specifies proper presets and plugins for test stage`, () => {
         useESModules: false,
       },
     ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 
@@ -111,6 +112,7 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
         useESModules: true,
       },
     ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 
