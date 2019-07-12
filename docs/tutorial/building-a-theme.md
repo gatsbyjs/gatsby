@@ -263,8 +263,8 @@ If we fire up our theme, and the "data" directory doesn't exist, `gatsby-source-
 const fs = require("fs")
 
 // Make sure the data directory exists
-exports.onPreBootstrap = ({ reporter }, options) => {
-  const contentPath = options.contentPath || "data"
+exports.onPreBootstrap = ({ reporter }) => {
+  const contentPath = "data"
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -287,8 +287,8 @@ To actually create pages, we'll need to:
 const fs = require("fs")
 
 // Make sure the data directory exists
-exports.onPreBootstrap = ({ reporter }, options) => {
-  const contentPath = options.contentPath || "data"
+exports.onPreBootstrap = ({ reporter }) => {
+  const contentPath = "data"
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -328,8 +328,8 @@ Gatsby gives us a createResolvers API hook. That gives us a function called crea
 const fs = require("fs")
 
 // Make sure the data directory exists
-exports.onPreBootstrap = ({ reporter }, options) => {
-  const contentPath = options.contentPath || "data"
+exports.onPreBootstrap = ({ reporter }) => {
+  const contentPath = "data"
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -354,8 +354,8 @@ exports.sourceNodes = ({ actions }) => {
 
 // highlight-start
 // Define resolvers for custom fields
-exports.createResolvers = ({ createResolvers }, options) => {
-  const basePath = options.basePath || "/"
+exports.createResolvers = ({ createResolvers }) => {
+  const basePath = "/"
 
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
   const slugify = str => {
@@ -383,9 +383,9 @@ Let's take a deeper look at what's happening in this `createResolvers` API hook.
 You'll default the `basePath` to the root path (`"/"`):
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
-exports.createResolvers = ({ createResolvers }, options) => {
+exports.createResolvers = ({ createResolvers }) => {
   // highlight-next-line
-  const basePath = options.basePath || "/"
+  const basePath = "/"
 
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
   const slugify = str => {
@@ -410,8 +410,8 @@ exports.createResolvers = ({ createResolvers }, options) => {
 You'll define helper, `slugify` to help generate the slugs:
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
-exports.createResolvers = ({ createResolvers }, options) => {
-  const basePath = options.basePath || "/"
+exports.createResolvers = ({ createResolvers }) => {
+  const basePath = "/"
 
   // highlight-start
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
@@ -438,8 +438,8 @@ exports.createResolvers = ({ createResolvers }, options) => {
 Then you'll define a resolver for the `"slug"` field, on the `"Event"` type:
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
-exports.createResolvers = ({ createResolvers }, options) => {
-  const basePath = options.basePath || "/"
+exports.createResolvers = ({ createResolvers }) => {
+  const basePath = "/"
 
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
   const slugify = str => {
@@ -486,8 +486,8 @@ The last step in `gatsby-node.js` is to create pages for both the event previews
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 // query for events and create pages
 // highlight-start
-exports.createPages = async ({ actions, graphql, reporter }, options) => {
-  const basePath = options.basePath || "/"
+exports.createPages = async ({ actions, graphql, reporter }) => {
+  const basePath = "/"
   actions.createPage({
     path: basePath,
     component: require.resolve("./src/templates/events.js"),
@@ -504,8 +504,8 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 // query for events and create pages
-exports.createPages = async ({ actions, graphql, reporter }, options) => {
-  const basePath = options.basePath || "/"
+exports.createPages = async ({ actions, graphql, reporter }) => {
+  const basePath = "/"
   actions.createPage({
     path: basePath,
     component: require.resolve("./src/templates/events.js"),
@@ -538,8 +538,8 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 // query for events and create pages
-exports.createPages = async ({ actions, graphql, reporter }, options) => {
-  const basePath = options.basePath || "/"
+exports.createPages = async ({ actions, graphql, reporter }) => {
+  const basePath = "/"
   actions.createPage({
     path: basePath,
     component: require.resolve("./src/templates/events.js"),
@@ -872,3 +872,190 @@ export default Event
 To start off, as before, stringify the props data getting handed to the component, to make sure you're getting the data you expect:
 
 ![Successfully passing event data to individual event pages](./images/building-a-theme-individual-event-data.png)
+
+Data is logging on the individual event pages. As before, now update the component to use markup, rather than displaying the raw data:
+
+```javascript:title=gatsby-theme-events/src/components/event.js
+import React from "react"
+
+// highlight-start
+const Event = ({ name, location, url, startDate, endDate }) => (
+  <div>
+    <h2>
+      {name} ({location})
+    </h2>
+    <p>
+      {startDate}-{endDate}
+    </p>
+    <p>
+      Website: <a href={url}>{url}</a>
+    </p>
+  </div>
+)
+// highlight-end
+
+export default Event
+```
+
+Now, the individual event page reflects the updated markup:
+
+![Updated markup in individual event page template](./images/building-a-theme-individual-event-markup.png)
+
+## Style and format dates in React
+
+Now let's refactor this component with a little bit of business logic to display the event dates in a way that's a little more human-readable.
+
+- If the event is one-day: June 30 2019
+- If the event is multi-day: July 4-6, 2019
+- If the event spans different months: July 30 - August 2 2019
+
+```javascript:title=gatsby-theme-events/src/components/event.js
+import React from "react"
+
+// highlight-start
+const getDate = (date, { day = true, month = true, year = true } = {}) =>
+  date.toLocaleDateString("en-US", {
+    day: day ? "numeric" : undefined,
+    month: month ? "long" : undefined,
+    year: year ? "numeric" : undefined,
+  })
+
+const EventDate = ({ startDate, endDate }) => {
+  const start = new Date(startDate)
+  const end = new Date(endDate)
+  const isOneDay = start.toDateString() === end.toDateString()
+
+  return (
+    <>
+      <time dateTime={start.toISOString()}>
+        {getDate(start, { year: isOneDay })}
+      </time>
+      {!isOneDay && (
+        <>
+          –
+          <time dateTime={end.toISOString()}>
+            {getDate(end, { month: start.getMonth() !== end.getMonth() })}
+          </time>
+        </>
+      )}
+    </>
+  )
+}
+
+const Event = ({ name, location, url, startDate, endDate }) => (
+  <div>
+    <h2>
+      {name} ({location})
+    </h2>
+    <p>
+      <EventDate startDate={startDate} endDate={endDate} />
+    </p>
+    <p>
+      Website: <a href={url}>{url}</a>
+    </p>
+  </div>
+)
+// highlight-end
+
+export default Event
+```
+
+> 💡 We won't go into detail on this date refactor in the written tutorial.
+> For more detail, refer to the [Egghead lesson and transcript](https://egghead.io/lessons/react-style-and-format-dates-in-react).
+
+## Configure a theme to take options
+
+In a Gatsby theme, you can pass options both to `gatsby-config.js`, and to `gatsby-node.js`.
+
+Update the `gatsby-theme-events/gatsby-config.js` to accept options:
+
+```javascript:title=gatsby-theme-events/gatsby-config.js
+// highlight-next-line
+module.exports = ({ contentPath = "data", basePath = "/" }) => {
+  plugins: [
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        // highlight-next-line
+        path: contentPath,
+      },
+    },
+    {
+      resolve: "gatsby-transformer-yaml",
+      options: {
+        typeName: "Event",
+      },
+    },
+  ]
+}
+```
+
+The `contentPath` will default to "data", and the basePath will default to root, '/'.
+
+In `gatsby-node.js` provided in the `gatsby-config.js` file as a second argument to the API hooks. Update the `contentPath` to accommodate setting that option in the config:
+
+```javascript:title=gatsby-theme-events/gatsby-node.js
+// highlight-start
+exports.onPreBootstrap = ({ reporter }, options) => {
+  const contentPath = options.contentPath || "data"
+  // highlight-end
+
+  // {...}
+}
+
+exports.sourceNodes = ({ actions }) => {
+  // {...}
+}
+
+// highlight-start
+exports.createResolvers = ({ createResolvers }, options) => {
+  const basePath = options.basePath || "/"
+  // highlight-end
+
+  // {...}
+}
+
+// highlight-start
+exports.createPages = async ({ actions, graphql, reporter }, options) => {
+  const basePath = options.basePath || "/"
+  // highlight-end
+
+  // {...}
+}
+```
+
+So far, you've mostly been working in the `gatsby-theme-events` space. Now, to test this options-setting, we'll make some adjustments to `site`.
+
+### Set up `site/gatsby-config.js`
+
+Create a `gatsby-config.js` file inside `site`:
+
+```javascript:title=site/gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-theme-events",
+      options: {
+        contentPath: "events",
+        basePath: "/events",
+      },
+    },
+  ],
+}
+```
+
+- `contentPath` is set to "events". So, rather than looking in the default "data" directory for content, the site will be looking for content in an "events" directory.
+- `basePath` is set to "events". So, rather than creating the events listing at the root (`"/"`), we should see an events listing page at `/events`.
+
+To test this, run the site:
+
+```shell
+yarn workspace site develop
+```
+
+Once this is running, you can observe two things:
+
+1. An "events" directory has automatically been generated for you in `site/events`.
+2. If you hit [localhost:8000/404](http://localhost:8000/404) (or any other route that doesn't exist), you'll see that the site has created an `/events` page.
+
+However, we don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the development server.
