@@ -1,6 +1,6 @@
 const fs = require(`fs`)
 
-exports.sourceNodes = ({ actions, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
 
   // Type definitions can be provided in SDL

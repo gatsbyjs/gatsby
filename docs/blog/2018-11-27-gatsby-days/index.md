@@ -6,10 +6,6 @@ tags:
   - events
 ---
 
-<a href="https://www.eventbrite.com/e/gatsby-days-tickets-51837151315">
-  <img alt="Gatsby Days" src="./images/gatsby-days.png" />
-</a>
-
 When I started as Director of Marketing at Gatsby 4 months ago, I was impressed with the enthusiasm and energy I saw in the community around Gatsby. And as I’ve started to connect with developers at technology meetups and conferences, I’ve heard so many of you talk about interest in Gatsby-sponsored events. Well, now the wait is over!
 
 ## Announcing Gatsby Days

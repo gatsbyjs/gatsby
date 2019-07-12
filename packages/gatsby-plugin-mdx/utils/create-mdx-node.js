@@ -28,7 +28,6 @@ module.exports = async ({ id, node, content }) => {
   mdxNode.frontmatter = {
     title: ``, // always include a title
     ...frontmatter,
-    _PARENT: node.id
   };
 
   mdxNode.excerpt = frontmatter.excerpt;

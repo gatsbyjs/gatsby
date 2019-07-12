@@ -78,7 +78,7 @@ You can control the layout, spacing and size of the rendered SVG by using [Graph
     }
     ```
 
-This will give you a slighly smaller SVG:
+This will give you a slightly smaller SVG:
 
 ```dot
 digraph graphname {

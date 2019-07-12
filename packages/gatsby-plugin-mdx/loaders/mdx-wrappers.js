@@ -3,7 +3,7 @@ const loaderUtils = require("loader-utils");
 /**
  * loads a generated file that allows us to require all of the plugins
  * that implement wrapRootElement in their gatsby-ssr.js file.
- * When using gatsby-mdx with gatsby-plugin-feed, this keeps the build from
+ * When using gatsby-plugin-mdx with gatsby-plugin-feed, this keeps the build from
  * breaking when using GraphQL to query the html field.
  *
  * results in a file that looks like:

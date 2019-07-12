@@ -6,14 +6,15 @@ const parse = require("date-fns/parse")
 const isBefore = require("date-fns/is_before")
 const differenceInDays = require("date-fns/difference_in_days")
 const tools = new Toolkit({
-  secrets: ["SLACK_TOKEN", "SLACK_CHANNEL_ID"],
+  secrets: [
+    "SLACK_TOKEN",
+    "SLACK_CORE_CHANNEL_ID",
+    "SLACK_LEARNING_CHANNEL_ID",
+  ],
 })
 
 const token = process.env.SLACK_TOKEN
 const web = new WebClient(token)
-
-// const filecontents = tools.getFile(".github/actions/gatsby-pr-bot/data.json")
-// const data = JSON.parse(filecontents)
 
 const maintainers = {
   "https://github.com/wardpeet": {
@@ -87,7 +88,7 @@ const maintainers = {
   "https://github.com/gillkyle": {
     name: "Kyle Gill",
     slackUsername: "@kylegill",
-  }
+  },
 }
 
 const ignoreMessages = ["Merge branch 'master'", "Merge remote-tracking branch"]
@@ -116,11 +117,9 @@ const processData = (data, now = new Date()) => {
   prs.nodes.forEach(pr => {
     pr.participants = {}
     pr.participants.nodes = _.uniqBy(
-      pr.comments.nodes
-        .filter(c => c.author.url != pr.author.url)
-        .map(c => {
-          return { url: c.author.url }
-        }),
+      pr.comments.nodes.filter(c => c.author.url != pr.author.url).map(c => {
+        return { url: c.author.url }
+      }),
       node => node.url
     )
   })
@@ -210,7 +209,7 @@ const processData = (data, now = new Date()) => {
   return queues
 }
 
-const report = queues => {
+const report = ({ queues, channelId }) => {
   const report = prMessage(queues, maintainers)
 
   tools.log.info(JSON.stringify(report, null, 4))
@@ -223,7 +222,7 @@ const report = queues => {
     try {
       // See: https://api.slack.com/methods/chat.postMessage
       const res = await web.chat.postMessage({
-        channel: process.env.SLACK_CHANNEL_ID,
+        channel: channelId,
         blocks: report,
       })
 

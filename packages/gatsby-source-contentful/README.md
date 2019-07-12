@@ -80,7 +80,7 @@ Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the c
 ```GraphQL
 graphql`
   query MyQuery {
-    # Example is for a `ContentType` with a `ContenfulAsset` field
+    # Example is for a `ContentType` with a `ContentfulAsset` field
     # You could also query an asset directly via
     # `allContentfulAsset { edges{ node { } } }`
     # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
@@ -162,7 +162,7 @@ There are currently some things to keep in mind when building your content model
 
 1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
+2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 

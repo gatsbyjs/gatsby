@@ -172,7 +172,7 @@ exports.checkDepsChanges = async ({
         )
       } else {
         console.warn(
-          `Installation of depenencies after initial scan is not implemented`
+          `Installation of dependencies after initial scan is not implemented`
         )
       }
       return {
