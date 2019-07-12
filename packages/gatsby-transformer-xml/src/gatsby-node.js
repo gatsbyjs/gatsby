@@ -22,7 +22,7 @@ async function onCreateNode(
   }
 
   const {
-    useLegacyOutput,
+    useElementNamesAsKeys,
     nativeType,
     trim,
     ignoreDeclaration,
@@ -35,22 +35,20 @@ async function onCreateNode(
   } = pluginOptions
 
   // merge defaults with plugin options
-  const options = _.pickBy(
-    Object.assign({}, defaultOptions, {
-      nativeType: typeof nativeType !== `undefined` ? nativeType : false,
-      trim,
-      ignoreDeclaration:
-        typeof ignoreDeclaration !== `undefined` ? ignoreDeclaration : true,
-      ignoreInstruction,
-      ignoreAttributes,
-      ignoreComment:
-        typeof ignoreComment !== `undefined` ? ignoreComment : true,
-      ignoreCdata,
-      ignoreDoctype,
-      ignoreText,
-    }),
-    _.identity
-  )
+  const options = Object.assign({}, defaultOptions, {
+    nativeType: typeof nativeType !== `undefined` ? nativeType : false,
+    trim: typeof trim !== `undefined` ? trim : false,
+    ignoreDeclaration:
+      typeof ignoreDeclaration !== `undefined` ? ignoreDeclaration : true,
+    ignoreInstruction:
+      typeof ignoreInstruction !== `undefined` ? ignoreInstruction : false,
+    ignoreAttributes:
+      typeof ignoreAttributes !== `undefined` ? ignoreAttributes : false,
+    ignoreComment: typeof ignoreComment !== `undefined` ? ignoreComment : true,
+    ignoreCdata: typeof ignoreCdata !== `undefined` ? ignoreCdata : false,
+    ignoreDoctype: typeof ignoreDoctype !== `undefined` ? ignoreDoctype : false,
+    ignoreText: typeof ignoreText !== `undefined` ? ignoreText : false,
+  })
 
   const { createNode, createParentChildLink } = actions // We only care about XML content.
   const localXML = await loadNodeContent(node)
@@ -107,7 +105,7 @@ async function onCreateNode(
        * property. The xmlChildren property is later mapped from the children
        * property.
        */
-      if (useLegacyOutput) {
+      if (!useElementNamesAsKeys) {
         /* If the childValue is an array, we need to create an object
          * for each item in the array.
          */
@@ -182,7 +180,7 @@ async function onCreateNode(
       },
     }
   }
-  if (useLegacyOutput) {
+  if (!useElementNamesAsKeys) {
     xmlnodeArray = children.map((obj, i) => {
       if (obj.children) {
         obj.xmlChildren = obj.children

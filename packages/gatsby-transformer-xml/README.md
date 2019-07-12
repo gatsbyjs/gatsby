@@ -15,6 +15,13 @@ plugins: [`gatsby-transformer-xml`]
 
 **With options**
 
+All of the below options are _optional_ and not required.
+All options, save from `useElementNamesAsKeys`, are options passed to `xml-js` plugin, which does the XML -> JSON conversion.
+
+Only a subset of the [xml-js options](https://www.npmjs.com/package/xml-js#options-for-converting-xml-%E2%86%92-js-object--json) are available. Allowing for non-compact mode would currently break the implementation.
+
+The option values displayed below are the plugin defaults.
+
 ```javascript
 // In your gatsby-config.js
 plugins: [
@@ -39,16 +46,12 @@ plugins: [
       ignoreDoctype: false,
       // Whether to ignore parsing texts of the elements. That is, no text will be generated.
       ignoreText: false,
-      // Use Legacy output format (nodes have xmlChildren array with key value-pairs of name/content)
-      useLegacyOutput: false,
+      // Use XML Element names as keys in your graphql schema
+      useElementNamesAsKeys: false,
     },
   },
 ],
 ```
-
-## Migration from 2.x to 3.x
-
-Version 3 of this plugin is backwards compatible with the output format provided by 2.x. Just set the `useLegacyOutput` to true, and you should be good to go.
 
 ## Parsing algorithm
 
@@ -186,6 +189,112 @@ You'd be able to query your books like:
   allBooksXml {
     edges {
       node {
+        name
+        xmlChildren {
+          name
+          content
+        }
+      }
+    }
+  }
+}
+```
+
+Which would return:
+
+```json
+{
+  "data": {
+    "allBooksXml": {
+      "edges": [
+        {
+          "node": {
+            "name": "book",
+            "xmlChildren": [
+              {
+                "name": "author",
+                "content": "Gambardella, Matthew"
+              },
+              {
+                "name": "title",
+                "content": "XML Developer's Guide"
+              },
+              {
+                "name": "genre",
+                "content": "Computer"
+              },
+              {
+                "name": "price",
+                "content": "44.95"
+              },
+              {
+                "name": "publish_date",
+                "content": "2000-10-01"
+              },
+              {
+                "name": "description",
+                "content": "An in-depth look at creating applications\n      with XML."
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "name": "book",
+            "xmlChildren": [
+              {
+                "name": "author",
+                "content": "Ralls, Kim"
+              },
+              {
+                "name": "title",
+                "content": "Midnight Rain"
+              },
+              {
+                "name": "genre",
+                "content": "Fantasy"
+              },
+              {
+                "name": "price",
+                "content": "5.95"
+              },
+              {
+                "name": "publish_date",
+                "content": "2000-12-16"
+              },
+              {
+                "name": "description",
+                "content": "A former architect battles corporate zombies,\n      an evil sorceress, and her own childhood to become queen\n      of the world."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+Note that the root element "catalog" is ignored, and nodes are created with the children elements.
+
+## Using element names as keys
+
+Version 2.2.0 of this plugin introduces the possibility to use XML element names as keys, instead of an array of xmlChildren.
+Set the `useElementNamesAsKey` to `true`, and you should be good to go.
+
+This can be useful if you like to use the object destructuring syntax, instead of querying an array of xmlChildren.
+
+## How to query (useElementNamesAsKeys-mode)
+
+If you've set `useElementNamesAsKeys` to `true`, the plugin will use your XML element names as keys, instead of generating an array of XML children
+
+You'd be able to query your books like this:
+
+```graphql
+{
+  allBooksXml {
+    edges {
+      node {
         attributes {
           id
         }
@@ -277,103 +386,6 @@ Which would return:
             "description_html": {
               "cdata": "<p>A former architect battles <strong>corporate zombies</strong>, an evil sorceress, and her own childhood to become queen of the world.</p>"
             }
-          }
-        }
-      ]
-    }
-  }
-}
-```
-
-Note that the root element "catalog" is ignored, and nodes are created with the children elements.
-
-## How to query (LEGACY MODE)
-
-You'd be able to query your books like:
-
-```graphql
-{
-  allBooksXml {
-    edges {
-      node {
-        name
-        xmlChildren {
-          name
-          content
-        }
-      }
-    }
-  }
-}
-```
-
-Which would return:
-
-```json
-{
-  "data": {
-    "allBooksXml": {
-      "edges": [
-        {
-          "node": {
-            "name": "book",
-            "xmlChildren": [
-              {
-                "name": "author",
-                "content": "Gambardella, Matthew"
-              },
-              {
-                "name": "title",
-                "content": "XML Developer's Guide"
-              },
-              {
-                "name": "genre",
-                "content": "Computer"
-              },
-              {
-                "name": "price",
-                "content": "44.95"
-              },
-              {
-                "name": "publish_date",
-                "content": "2000-10-01"
-              },
-              {
-                "name": "description",
-                "content": "An in-depth look at creating applications\n      with XML."
-              }
-            ]
-          }
-        },
-        {
-          "node": {
-            "name": "book",
-            "xmlChildren": [
-              {
-                "name": "author",
-                "content": "Ralls, Kim"
-              },
-              {
-                "name": "title",
-                "content": "Midnight Rain"
-              },
-              {
-                "name": "genre",
-                "content": "Fantasy"
-              },
-              {
-                "name": "price",
-                "content": "5.95"
-              },
-              {
-                "name": "publish_date",
-                "content": "2000-12-16"
-              },
-              {
-                "name": "description",
-                "content": "A former architect battles corporate zombies,\n      an evil sorceress, and her own childhood to become queen\n      of the world."
-              }
-            ]
           }
         }
       ]
