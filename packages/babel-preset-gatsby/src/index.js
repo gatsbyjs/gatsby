@@ -2,7 +2,7 @@ const path = require(`path`)
 
 const resolve = m => require.resolve(m)
 
-const IS_TEST = process.env.NODE_ENV === `test`
+const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
 
 const loadCachedConfig = () => {
   let pluginBabelConfig = {}
