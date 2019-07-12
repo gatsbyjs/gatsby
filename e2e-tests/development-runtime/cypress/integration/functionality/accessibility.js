@@ -74,7 +74,7 @@ describe(`focus managment`, () => {
 
     cy.changeFocus()
     cy.assertRouterWrapperFocus(false)
-    cy.navigateAndWaitForRouteChange(`/client-only-paths/profile`)
+    cy.navigateAndWaitForRouteChange(`/client-only-paths/page/profile`)
 
     // inner paths are handled by router instance defined in client-only-paths page
     // which means that navigating inside those should be handled by that router

@@ -97,4 +97,32 @@ describe(`Production build tests`, () => {
     cy.getTestElement(`process.env.EXISTING_VAR`).contains(`"foo bar"`)
     cy.getTestElement(`process.env.NOT_EXISTING_VAR`).should(`be.empty`)
   })
+
+  describe(`Supports unicode characters in urls`, () => {
+    it(`Can navigate directly`, () => {
+      cy.visit(`/안녕/`, {
+        // Cypress seems to think it's 404
+        // even if it's not. 404 page doesn't have
+        // `page-2-message` element so the test will fail on
+        // assertion. Using failOnStatusCode here
+        // only to workaround cypress weirdness
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`Can navigate on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`)
+        .click()
+        .waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+  })
 })
