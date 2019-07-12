@@ -11,7 +11,7 @@ Provides drop-in support for SASS/SCSS stylesheets
 1. Include the plugin in your `gatsby-config.js` file.
 
 ```javascript:title="gatsby-config.js"
-plugins: [`gatsby-plugin-sass`];
+plugins: [`gatsby-plugin-sass`]
 ```
 
 2. Write your stylesheets in Sass/SCSS and require or import them as normal.
@@ -26,7 +26,7 @@ html {
 ```
 
 ```javascript
-import("./src/index.sass");
+import("./src/index.sass")
 ```
 
 ## Other options
@@ -56,11 +56,11 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       cssLoaderOptions: {
-        camelCase: false
-      }
-    }
-  }
-];
+        camelCase: false,
+      },
+    },
+  },
+]
 ```
 
 ### Alternative Sass Implementations
@@ -77,10 +77,10 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      implementation: require("sass")
-    }
-  }
-];
+      implementation: require("sass"),
+    },
+  },
+]
 ```
 
 ### SASS Precision
@@ -94,10 +94,10 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       postCssPlugins: [somePostCssPlugin()],
-      precision: 8
-    }
-  }
-];
+      precision: 8,
+    },
+  },
+]
 ```
 
 ### With CSS Modules
@@ -133,10 +133,10 @@ plugins: [
   {
     resolve: "gatsby-plugin-sass",
     options: {
-      useResolveUrlLoader: true
-    }
-  }
-];
+      useResolveUrlLoader: true,
+    },
+  },
+]
 ```
 
 You can also configure resolve-url-plugin providing some options (see plugin documentation for all options https://github.com/bholloway/resolve-url-loader):
@@ -148,12 +148,12 @@ plugins: [
     options: {
       useResolveUrlLoader: {
         options: {
-          debug: true
-        }
-      }
-    }
-  }
-];
+          debug: true,
+        },
+      },
+    },
+  },
+]
 ```
 
 NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for sass files in the plugin:
@@ -165,12 +165,12 @@ plugins: [
     options: {
       useResolveUrlLoader: {
         options: {
-          sourceMap: true //default is false
-        }
-      }
-    }
-  }
-];
+          sourceMap: true, //default is false
+        },
+      },
+    },
+  },
+]
 ```
 
 ## Breaking changes history
