@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Production loader loadPage should be successful when component can be loaded 1`] = `
+exports[`Dev loader loadPage should be successful when component can be loaded 1`] = `
 Object {
   "component": "instance",
   "json": Object {
