@@ -6528,3 +6528,18 @@
     - User Experience
     - Web Development
   featured: false
+- title: Marcel Hauri
+  url: https://marcelhauri.ch/
+  main_url: https://marcelhauri.ch/
+  description: >
+    Marcel Hauri is an award-winning Magento developer and e-commerce specialist.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Community
+    - Open Source
+    - eCommerce
+  built_by: Marcel Hauri
+  built_by_url: https://marcelhauri.ch
+  featured: false
