@@ -4,7 +4,7 @@ describe(`Merge gatsby config`, () => {
   it(`Merging empty config is an identity operation`, () => {
     const emptyConfig = {}
     const basicConfig = {
-      plugins: [`gatsby-mdx`],
+      plugins: [`gatsby-plugin-mdx`],
     }
 
     expect(mergeGatsbyConfig(basicConfig, emptyConfig)).toEqual(basicConfig)
@@ -13,14 +13,14 @@ describe(`Merge gatsby config`, () => {
 
   it(`Merging plugins concatenates them`, () => {
     const basicConfig = {
-      plugins: [`gatsby-mdx`],
+      plugins: [`gatsby-plugin-mdx`],
     }
     const morePlugins = {
       plugins: [`a-plugin`, `b-plugin`, { resolve: `c-plugin`, options: {} }],
     }
     expect(mergeGatsbyConfig(basicConfig, morePlugins)).toEqual({
       plugins: [
-        `gatsby-mdx`,
+        `gatsby-plugin-mdx`,
         `a-plugin`,
         `b-plugin`,
         { resolve: `c-plugin`, options: {} },
@@ -31,26 +31,26 @@ describe(`Merge gatsby config`, () => {
         `a-plugin`,
         `b-plugin`,
         { resolve: `c-plugin`, options: {} },
-        `gatsby-mdx`,
+        `gatsby-plugin-mdx`,
       ],
     })
   })
 
   it(`Merging plugins uniqs them, keeping the first occurrence`, () => {
     const basicConfig = {
-      plugins: [`gatsby-mdx`],
+      plugins: [`gatsby-plugin-mdx`],
     }
     const morePlugins = {
       plugins: [
         `a-plugin`,
-        `gatsby-mdx`,
+        `gatsby-plugin-mdx`,
         `b-plugin`,
         { resolve: `c-plugin`, options: {} },
       ],
     }
     expect(mergeGatsbyConfig(basicConfig, morePlugins)).toEqual({
       plugins: [
-        `gatsby-mdx`,
+        `gatsby-plugin-mdx`,
         `a-plugin`,
         `b-plugin`,
         { resolve: `c-plugin`, options: {} },
@@ -59,7 +59,7 @@ describe(`Merge gatsby config`, () => {
     expect(mergeGatsbyConfig(morePlugins, basicConfig)).toEqual({
       plugins: [
         `a-plugin`,
-        `gatsby-mdx`,
+        `gatsby-plugin-mdx`,
         `b-plugin`,
         { resolve: `c-plugin`, options: {} },
       ],

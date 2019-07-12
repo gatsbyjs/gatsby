@@ -290,13 +290,28 @@ module.exports = async ({
   const rules = {}
 
   /**
-   * JavaScript loader via babel, excludes node_modules
+   * JavaScript loader via babel, includes userland code
+   * and packages that depend on `gatsby`
    */
   {
-    let js = (options = {}) => {
+    let js = (
+      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
+    ) => {
       return {
-        test: /\.jsx?$/,
-        exclude: vendorRegex,
+        test: /\.(js|mjs|jsx)$/,
+        include: modulePath => {
+          // when it's not coming from node_modules we treat it as a source file.
+          if (!vendorRegex.test(modulePath)) {
+            return true
+          }
+
+          // If the module uses Gatsby as a dependency
+          // we want to treat it as src so we can extract queries
+          return modulesThatUseGatsby.some(module =>
+            modulePath.includes(module.path)
+          )
+        },
+        type: `javascript/auto`,
         use: [loaders.js(options)],
       }
     }
@@ -305,22 +320,58 @@ module.exports = async ({
   }
 
   /**
-   * mjs loader:
-   * webpack 4 has issues automatically dealing with
-   * the .mjs extension, thus we need to explicitly
-   * add this rule to use the default webpack js loader
+   * Node_modules JavaScript loader via babel
+   * Excludes core-js & babel-runtime to speedup babel transpilation
+   * Excludes modules that use Gatsby since the `rules.js` already transpiles those
    */
   {
-    let mjs = (options = {}) => {
+    let dependencies = (
+      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
+    ) => {
+      const jsOptions = {
+        babelrc: false,
+        configFile: false,
+        compact: false,
+        presets: [
+          [require.resolve(`babel-preset-gatsby/dependencies`), { stage }],
+        ],
+        // If an error happens in a package, it's possible to be
+        // because it was compiled. Thus, we don't want the browser
+        // debugger to show the original code. Instead, the code
+        // being evaluated would be much more helpful.
+        sourceMaps: false,
+      }
+
       return {
-        test: /\.mjs$/,
-        include: /node_modules/,
+        test: /\.(js|mjs)$/,
+        exclude: modulePath => {
+          if (vendorRegex.test(modulePath)) {
+            // If dep uses Gatsby, exclude
+            if (
+              modulesThatUseGatsby.some(module =>
+                modulePath.includes(module.path)
+              )
+            ) {
+              return true
+            }
+            // If dep is babel-runtime or core-js, exclude
+            if (/@babel(?:\/|\\{1,2})runtime|core-js/.test(modulePath)) {
+              return true
+            }
+
+            // If dep is in node_modules and none of the above, include
+            return false
+          }
+
+          // If dep is user land code, exclude
+          return true
+        },
         type: `javascript/auto`,
-        ...options,
+        use: [loaders.js(jsOptions)],
       }
     }
 
-    rules.mjs = mjs
+    rules.dependencies = dependencies
   }
 
   {
@@ -473,7 +524,72 @@ module.exports = async ({
       ...options,
     })
 
-  plugins.minifyCss = (options = {}) => new OptimizeCssAssetsPlugin(options)
+  plugins.minifyCss = (
+    options = {
+      cssProcessorPluginOptions: {
+        preset: [
+          `default`,
+          {
+            svgo: {
+              full: true,
+              plugins: [
+                {
+                  // potentially destructive plugins removed - see https://github.com/gatsbyjs/gatsby/issues/15629
+                  // convertShapeToPath: true,
+                  // removeViewBox: true,
+                  removeUselessDefs: true,
+                  addAttributesToSVGElement: true,
+                  addClassesToSVGElement: true,
+                  cleanupAttrs: true,
+                  cleanupEnableBackground: true,
+                  cleanupIDs: true,
+                  cleanupListOfValues: true,
+                  cleanupNumericValues: true,
+                  collapseGroups: true,
+                  convertColors: true,
+                  convertPathData: true,
+                  convertStyleToAttrs: true,
+                  convertTransform: true,
+                  inlineStyles: true,
+                  mergePaths: true,
+                  minifyStyles: true,
+                  moveElemsAttrsToGroup: true,
+                  moveGroupAttrsToElems: true,
+                  prefixIds: true,
+                  removeAttributesBySelector: true,
+                  removeAttrs: true,
+                  removeComments: true,
+                  removeDesc: true,
+                  removeDimensions: true,
+                  removeDoctype: true,
+                  removeEditorsNSData: true,
+                  removeElementsByAttr: true,
+                  removeEmptyAttrs: true,
+                  removeEmptyContainers: true,
+                  removeEmptyText: true,
+                  removeHiddenElems: true,
+                  removeMetadata: true,
+                  removeNonInheritableGroupAttrs: true,
+                  removeOffCanvasPaths: true,
+                  removeRasterImages: true,
+                  removeScriptElement: true,
+                  removeStyleElement: true,
+                  removeTitle: true,
+                  removeUnknownsAndDefaults: true,
+                  removeUnusedNS: true,
+                  removeUselessStrokeAndFill: true,
+                  removeXMLNS: true,
+                  removeXMLProcInst: true,
+                  reusePaths: true,
+                  sortAttrs: true,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    }
+  ) => new OptimizeCssAssetsPlugin(options)
 
   /**
    * Extracts css requires into a single file;

@@ -71,6 +71,7 @@ exports.sourceNodes = async (
   // Get sync token if it exists.
   let syncToken
   if (
+    !pluginConfig.get(`forceFullSync`) &&
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
     store.getState().status.plugins[`gatsby-source-contentful`][
