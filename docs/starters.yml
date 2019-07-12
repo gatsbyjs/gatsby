@@ -3278,3 +3278,19 @@
     - Removes unused CSS with Purgecss
     - Responsive design
     - Suitable for small business website
+- url: https://mystifying-mclean-5c7fce.netlify.com
+  repo: https://github.com/renvrant/gatsby-mdx-netlify-cms-starter
+  description: An extension of the default starter with Netlify CMS and MDX support.
+  tags:
+    - MDX
+    - Markdown
+    - Netlify
+    - CMS:Netlify
+    - Styling:None
+  features:
+    - MDX and Netlify CMS support
+    - Use React components in Netlify CMS Editor and other markdown files
+    - Allow editors to choose a page template
+    - Replace HTML tags with React components upon rendering Markdown, enabling design systems
+    - Hide pages from being editable by the CMS
+    - Minimal and extensible
