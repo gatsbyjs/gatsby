@@ -7,7 +7,7 @@
 export declare function createContentDigest(input: any): string
 
 /**
- * Joins all given path segments together using a forward slash (/) as a delimiter
+ * Joins all given path segments and converts
  * @param {string[]} paths A sequence of path segments
  */
 export declare function joinPath(...paths: string[]): string
@@ -19,3 +19,9 @@ export declare function joinPath(...paths: string[]): string
  * @return {number} Count of the requested type of CPU cores. Defaults to number of physical cores or 1
  */
 export declare function cpuCoreCount(ignoreEnvVar?: boolean): number
+
+/**
+ * Joins all given segments and converts using a forward slash (/) as a delimiter
+ * @param {string[]} segments A sequence of segments
+ */
+export declare function urlResolve(...segments: string[]): string
