@@ -3284,7 +3284,7 @@
   tags:
     - Blog
     - CMS:Contentful
-    - CMS:Headless 
+    - CMS:Headless
   features:
     - Bare-bones starter.
     - Dynamic content from Contentful CMS
