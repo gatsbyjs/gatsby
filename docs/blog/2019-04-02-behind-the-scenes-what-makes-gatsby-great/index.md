@@ -134,7 +134,7 @@ Next:
   - Traditional examples are something like [EC2](https://aws.amazon.com/ec2/)
 - Configure the VM to be able to run Node.js code
   - Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
-- Set up auto-scaling to ensure we can accomodate and fall-over based upon heavy load or error states
+- Set up auto-scaling to ensure we can accommodate and fall-over based upon heavy load or error states
   - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
 
 Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
@@ -198,7 +198,7 @@ export default function Contact() {
 
 Pretty vanilla looking component! We are rendering a `form` with some validation and functionality provided by the excellent libraries [`yup`](https://www.npmjs.com/package/yup) and [`Formik`](https://github.com/jaredpalmer/formik). The likelihood that these libraries are used in _all_ routes in our application is unlikely--yet this is traditionally the approach that many take with bundling their client-side JS libraries. This means that even if a particular route (e.g. `/about`) is _not using_ certain libraries that they will still likely be included in a monolithic JavaScript bundle containing all dependencies. However--Gatsby, your friendly _web app compiler_, is a little smarter!
 
-We use code-splitting (enabled via our internalized dependency [Webpack](https://webpackjs.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
+We use code-splitting (enabled via our internalized dependency [Webpack](https://webpack.js.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
 
 ```title=public/
 ├── 404
@@ -363,7 +363,7 @@ The feature seamlessly falls back to default behavior if `IntersectionObserver` 
 
 **Mobile**
 
-Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being avalable.
+Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being available.
 
 **Data-constrained devices**
 

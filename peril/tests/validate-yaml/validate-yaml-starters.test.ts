@@ -195,7 +195,7 @@ describe("a new PR", () => {
     )
   })
 
-  it(`Doesn't allow non github repos`, async () => {
+  it(`Doesn't allow non GitHub repos`, async () => {
     setStartersYmlContent(`
     - url: http://gatsbyjs.github.io/gatsby-starter-default/
       repo: https://gitlab.com/gatsbyjs/gatsby-starter-default

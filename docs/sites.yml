@@ -1090,15 +1090,6 @@
   categories:
     - Marketing
     - Technology
-- title: F1 Vision
-  main_url: "https://www.f1vision.com/"
-  url: "https://www.f1vision.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Entertainment
-    - Technology
-    - eCommerce
 - title: Yuuniworks Portfolio / Blog
   main_url: "https://www.yuuniworks.com/"
   url: "https://www.yuuniworks.com/"
@@ -1312,7 +1303,7 @@
     - Technology
     - Finance
     - Marketing
-  built_by: Bejamas.io
+  built_by: Bejamas
   built_by_url: "https://bejamas.io/"
 - title: StatusHub - Easy to use Hosted Status Page Service
   main_url: "https://statushub.com/"
@@ -1324,7 +1315,7 @@
   categories:
     - Technology
     - Marketing
-  built_by: Bejamas.io
+  built_by: Bejamas
   built_by_url: "https://bejamas.io/"
 - title: Matthias Kretschmann Portfolio
   main_url: "https://matthiaskretschmann.com/"
@@ -1483,14 +1474,6 @@
   categories:
     - Documentation
     - Security
-  featured: false
-- title: Curbside
-  description: |
-    Connecting Stores with Mobile Customers
-  main_url: "https://curbside.com/"
-  url: "https://curbside.com/"
-  categories:
-    - eCommerce
   featured: false
 - title: Mux Video
   description: |
@@ -3519,18 +3502,6 @@
   built_by: Sylvain Hamann
   built_by_url: "https://twitter.com/sylvhama"
   featured: false
-- title: Jane Manchun Wong's Personal Website
-  main_url: "https://wongmjane.com/"
-  url: "https://wongmjane.com/"
-  description: >
-    Jane Manchun Wong's Personal Website is where she posts bug bounty write-ups, discoveries from reverse engineering apps and personal thoughts. This site is built on Gatsby v2 and it leverages the ecosystem to provide PWA features such as offline support.
-  categories:
-    - Blog
-    - Portfolio
-    - Security
-  built_by: Jane Manchun Wong
-  built_by_url: "https://twitter.com/wongmjane"
-  featured: false
 - title: Luca Crea's portfolio
   main_url: https://lcrea.github.io
   url: https://lcrea.github.io
@@ -4579,7 +4550,7 @@
     - Blog
     - Portfolio
     - Agency
-  built_by: bejamas
+  built_by: Bejamas
   built_by_url: https://bejamas.io/
   featured: false
 - title: Jean Regisser's Portfolio
@@ -5670,7 +5641,7 @@
   url: https://ers-hcl.github.io/
   main_url: https://ers-hcl.github.io/
   description: >
-    Official site for ERS-HCL github organizational site. This is a hybrid app with static and dynamic content, providing a details of the open source projects, initiatives, innovation ideas within ERS-HCL. It pulls data from various data sources including github APIs, MDX based blog posts, excel files. It also hosts an ideas app that is based on Firebase.
+    Official site for ERS-HCL GitHub organizational site. This is a hybrid app with static and dynamic content, providing a details of the open source projects, initiatives, innovation ideas within ERS-HCL. It pulls data from various data sources including GitHub APIs, MDX based blog posts, excel files. It also hosts an ideas app that is based on Firebase.
   categories:
     - Open Source
     - Blog
@@ -6128,16 +6099,16 @@
 - title: Glug-Infinite
   main_url: https://gluginfinite.github.io
   url: https://gluginfinite.github.io
-  source_url: https://github.com/cristonkrizz/glug
+  source_url: https://github.com/crstnmac/glug
   description: >
-    This is a website built with Gatsby v2 that is deployed on github using github pages and netlify .
+    This is a website built with Gatsby v2 that is deployed on GitHub using GitHub Pages and Netlify.
   categories:
     - Web Development
     - Blog
     - Portfolio
     - Agency
   built_by: Criston Macarenhas
-  built_by_url: https://github.com/cristonkrizz
+  built_by_url: https://github.com/crstnmac
   featured: false
 - title: The State of CSS Survey
   main_url: https://stateofcss.com/
@@ -6255,7 +6226,7 @@
   built_by: Kevin Hirczy
   built_by_url: https://nehalist.io
   featured: false
-- title: March And Ash
+- title: March and Ash
   main_url: https://marchandash.com/
   url: https://marchandash.com/
   description: >-
@@ -6264,8 +6235,8 @@
     - eCommerce
     - Business
     - Blog
-  built_by: Desarol
-  built_by_url: https://www.desarol.com
+  built_by: Blueyellow
+  built_by_url: https://blueyellow.io/
   featured: false
 - title: T Two Industries
   description: >
@@ -6300,4 +6271,286 @@
     - Technology
   built_by: Vazco
   built_by_url: https://www.vazco.eu
+  featured: false
+- title: Major League Eating
+  main_url: https://majorleagueeating.com
+  url: https://majorleagueeating.com
+  description: >
+    Major League Eating is the professional competitive eating organization that runs the Nathan’s Famous Coney Island Hot Dog eating contest on July 4th, among other eating events.
+  categories:
+    - Entertainment
+    - Sports
+  built_by: Carmen Cincotti
+  built_by_url: https://github.com/ccincotti3
+  featured: false
+- title: APIs You Won't Hate
+  url: https://apisyouwonthate.com/blog
+  main_url: https://apisyouwonthate.com
+  source_url: http://github.com/apisyouwonthate/apisyouwonthate.com
+  description: >
+    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
+  categories:
+    - Blog
+    - Education
+    - eCommerce
+    - API
+    - Community
+    - Learning
+    - Open Source
+    - Technology
+    - Web Development
+  built_by: Mike Bifulco
+  built_by_url: https://github.com/mbifulco
+  featured: false
+- title: Sankarsan Kampa
+  main_url: "https://traction.one"
+  url: "https://traction.one"
+  description: Full time programmer, part time gamer, exploring the details of programmable systems and how to stretch their capabilities.
+  featured: false
+  categories:
+    - Portfolio
+    - Freelance
+- title: AwesomeDocs
+  main_url: "https://awesomedocs.traction.one/"
+  url: "https://awesomedocs.traction.one/install"
+  source_url: "https://github.com/AwesomeDocs/website"
+  description: An awesome documentation website generator!
+  featured: false
+  categories:
+    - Open Source
+    - Web Development
+    - Technology
+    - Documentation
+  built_by: Sankarsan Kampa
+  built_by_url: "https://traction.one"
+- title: Prism Programming Language
+  main_url: "https://prism.traction.one/"
+  url: "https://prism.traction.one/"
+  source_url: "https://github.com/PrismLang/website"
+  description: Interpreted, high-level, programming language.
+  featured: false
+  categories:
+    - Programming
+    - Open Source
+    - Technology
+    - Documentation
+  built_by: Sankarsan Kampa
+  built_by_url: "https://traction.one"
+- title: Arnondora
+  main_url: "https://arnondora.in.th/"
+  url: "https://arnondora.in.th/"
+  source_url: "https://github.com/arnondora/arnondoraBlog"
+  description: Arnondora is a personal blog by Arnon Puitrakul
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Arnon Puitrakul
+  built_by_url: "https://arnondora.in.th/"
+  featured: false
+- title: KingsDesign
+  url: "https://www.kingsdesign.com.au/"
+  main_url: "https://www.kingsdesign.com.au/"
+  description: KingsDesign is a Hobart based web design and development company. KingsDesign creates, designs, measures and improves web based solutions for businesses and organisations across Australia.
+  categories:
+    - Agency
+    - Technology
+    - Portfolio
+    - Consulting
+    - User Experience
+  built_by: KingsDesign
+  built_by_url: "https://www.kingsdesign.com.au"
+- title: EasyFloh | Easy Flows for all
+  url: "https://www.easyfloh.com"
+  main_url: "https://www.easyfloh.com"
+  description: >
+    EasyFloh is for creating simple flows for your organisation. An organisation
+    can design own flows with own stages.
+  categories:
+    - Business
+    - Landing Page
+  built_by: Vikram Aroskar
+  built_by_url: "https://medium.com/@vikramaroskar"
+  featured: false
+- title: Home Alarm Report
+  url: https://homealarmreport.com/
+  main_url: https://homealarmreport.com/
+  description: >
+    Home Alarm Report is dedicated to helping consumers make informed decisions 
+    about home security solutions. The site was easily migrated from a legacy WordPress 
+    installation and the dev team chose Gatsby for its site speed and SEO capabilities.
+  categories:
+    - Blog
+    - Business
+    - SEO
+    - Technology
+  built_by: Centerfield Media
+  built_by_url: https://www.centerfield.com
+- title: Just | FX for treasurers
+  url: "https://www.gojust.com"
+  main_url: "https://www.gojust.com"
+  description: >
+    Just provides a single centralized view of FX for corporate treasurers. See interbank market prices, and access transaction cost analysis.
+  categories:
+    - Finance
+    - Technology
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Bureau for Good | Nonprofit branding, web and print communications
+  url: "https://www.bureauforgood.com"
+  main_url: "https://www.bureauforgood.com"
+  description: >
+    Bureau for Good helps nonprofits explain why they matter across digital & print media. Bureau for Good crafts purpose-driven identities, websites & print materials for changemakers.
+  categories:
+    - Nonprofit
+    - Agency
+    - Design
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Atelier Cartier Blumen
+  url: "https://www.ateliercartier.ch"
+  main_url: "https://www.ateliercartier.ch"
+  description: >
+    Im schönen Kreis 6 in Zürich kreiert Nicole Cartier Blumenkompositionen anhand Charaktereigenschaften oder Geschichten zur Person an. Für wen ist Dein Blumenstrauss gedacht? Einzigartige Floristik Blumensträusse, Blumenabos, Events, Shootings. Site designed by https://www.stolfo.co
+  categories:
+    - eCommerce
+    - Design
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Veronym – Cloud Security Service Provider
+  url: "https://www.veronym.com"
+  main_url: "https://www.veronym.com"
+  description: >
+    Veronym is securing your digital transformation. A comprehensive Internet security solution for business. Stay safe no matter how, where and when you connect.
+  categories:
+    - Security
+    - Technology
+    - Business
+  built_by: Bejamas
+  built_by_url: "https://bejamas.io/"
+  featured: false
+- title: Devahoy
+  url: "https://devahoy.com/"
+  main_url: "https://devahoy.com/"
+  description: >
+    Devahoy is a personal blog written in Thai about software development.
+  categories:
+    - Blog
+    - Programming
+  built_by: Chai Phonbopit
+  built_by_url: "https://github.com/phonbopit"
+  featured: false
+- title: Venus Lover
+  url: https://venuslover.com
+  main_url: https://venuslover.com
+  description: >
+    Venus Lover is a mobile app for iOS and Android so you can read your daily horoscope and have your natal chart, including the interpretation of the ascendant, planets, houses and aspects.
+  categories:
+    - App
+    - Consulting
+    - Education
+    - Landing Page
+- title: Onramp
+  url: https://www.onramp.io/
+  main_url: https://www.onramp.io/
+  description: >
+    Onramp is a technical workforce solutions company. We help corporate clients build new pipelines of talent to meet their technical and HR goals. We specialize in discovering new pools of talent and provide customized training so candidates are qualified and better prepared employees.
+  categories:
+    - Business
+    - Education
+    - Landing Page
+  built_by: Nicola B.
+  built_by_url: https://www.linkedin.com/in/nicola-b/
+  featured: false
+- title: Write/Speak/Code
+  url: https://www.writespeakcode.com/
+  main_url: https://www.writespeakcode.com/
+  description: >
+    Write/Speak/Code is a non-profit on a mission to promote the visibility and leadership of technologists with marginalized genders through peer-led professional development.
+  categories:
+    - Community
+    - Nonprofit
+    - Open Source
+    - Conference
+  built_by: Nicola B.
+  built_by_url: https://www.linkedin.com/in/nicola-b/
+  featured: false
+- title: Daniel Spajic
+  url: https://danieljs.tech/
+  main_url: https://danieljs.tech/
+  source_url: https://github.com/dspacejs/portfolio
+  description: >
+    Passionate front-end developer with a deep, yet diverse skillset.
+  categories:
+    - Portfolio
+    - Programming
+    - Freelance
+  built_by: Daniel Spajic
+  featured: false
+- title: Cosmotory
+  url: https://cosmotory.netlify.com/
+  main_url: https://cosmotory.netlify.com/
+  description: >
+    This is the educational blog containing various courses,learning materials from various authors from all over the world.
+  categories:
+    - Blog
+    - Community
+    - Nonprofit
+    - Open Source
+    - Education
+  built_by: Hanishraj B Rao.
+  built_by_url: https://hanishrao.netlify.com/
+  featured: false
+- title: Armorblox | Security Powered by Understanding
+  url: https://www.armorblox.com
+  main_url: https://www.armorblox.com
+  description: >
+    Armorblox is a venture-backed stealth cybersecurity startup, on a mission to build a game-changing enterprise security platform.
+  categories:
+    - Security
+    - Technology
+    - Business
+  built_by: Bejamas
+  built_by_url: https://bejamas.io
+  featured: false
+- title: Mojo
+  url: https://www.mojo.is
+  main_url: https://www.mojo.is/
+  description: >
+    We help companies create beautiful digital experiences
+  categories:
+    - Agency
+    - Technology
+    - Consulting
+    - User Experience
+    - Web Development
+  featured: false
+- title: Marcel Hauri
+  url: https://marcelhauri.ch/
+  main_url: https://marcelhauri.ch/
+  description: >
+    Marcel Hauri is an award-winning Magento developer and e-commerce specialist.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Community
+    - Open Source
+    - eCommerce
+  built_by: Marcel Hauri
+  built_by_url: https://marcelhauri.ch
+  featured: false
+- title: Projektmanagementblog
+  url: https://www.projektmanagementblog.de
+  main_url: https://www.projektmanagementblog.de/
+  source_url: https://github.com/StephanWeinhold/pmblog
+  description: >
+    Thoughts about modern project management. Built with Gatsby and Tachyons, based on Advanced Starter.
+  categories:
+    - Blog
+  built_by: Stephan Weinhold
+  built_by_url: https://stephanweinhold.com/
   featured: false

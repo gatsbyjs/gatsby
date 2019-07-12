@@ -3,37 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.1.1](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.1.0...gatsby-plugin-page-creator@2.1.1) (2019-06-24)
-
-### Features
-
-- **gatsby-page-utils:** extract logic for watching a directory from gatsby-page-creator so can reuse for custom page creation ([#14051](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/14051)) ([68d9d6f](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/commit/68d9d6f))
-
-# [2.1.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.13...gatsby-plugin-page-creator@2.1.0) (2019-06-20)
-
-**Note:** Version bump only for package gatsby-plugin-page-creator
-
-## [2.0.13](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.12...gatsby-plugin-page-creator@2.0.13) (2019-05-14)
-
-**Note:** Version bump only for package gatsby-plugin-page-creator
-
-## [2.0.12](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.11...gatsby-plugin-page-creator@2.0.12) (2019-03-26)
-
-### Features
-
-- **gatsby-plugin-page-creator:** add ignore support via plugin options, fix test file ignores on Windows ([#11304](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/11304)) ([9fdc223](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/commit/9fdc223)), closes [/github.com/gatsbyjs/gatsby/blob/026d2a956296cb01936bcf45d2be1066dd844d00/packages/gatsby-plugin-page-creator/src/gatsby-node.js#L51-L66](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/L51-L66) [/github.com/gatsbyjs/gatsby/blob/026d2a956296cb01936bcf45d2be1066dd844d00/packages/gatsby-plugin-page-creator/src/validate-path.js#L11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/L11) [#11168](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/11168)
-
-## [2.0.11](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.10...gatsby-plugin-page-creator@2.0.11) (2019-03-22)
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.3...gatsby-plugin-page-creator@2.1.4) (2019-07-12)
 
 ### Bug Fixes
 
-- **gatsby-source-filesystem:** pin chokidar@2.1.2 to fix unix issues ([#12759](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/issues/12759)) ([0ea1505](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/commit/0ea1505))
+- correct links in package changelogs ([#15630](https://github.com/gatsbyjs/gatsby/issues/15630)) ([d07b9dd](https://github.com/gatsbyjs/gatsby/commit/d07b9dd))
 
-## [2.0.10](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.9...gatsby-plugin-page-creator@2.0.10) (2019-03-11)
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.2...gatsby-plugin-page-creator@2.1.3) (2019-07-11)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
 
-## [2.0.9](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator/compare/gatsby-plugin-page-creator@2.0.8...gatsby-plugin-page-creator@2.0.9) (2019-03-05)
+## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.1...gatsby-plugin-page-creator@2.1.2) (2019-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.0...gatsby-plugin-page-creator@2.1.1) (2019-06-24)
+
+### Features
+
+- **gatsby-page-utils:** extract logic for watching a directory from gatsby-page-creator so can reuse for custom page creation ([#14051](https://github.com/gatsbyjs/gatsby/issues/14051)) ([68d9d6f](https://github.com/gatsbyjs/gatsby/commit/68d9d6f))
+
+# [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.13...gatsby-plugin-page-creator@2.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.12...gatsby-plugin-page-creator@2.0.13) (2019-05-14)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.11...gatsby-plugin-page-creator@2.0.12) (2019-03-26)
+
+### Features
+
+- **gatsby-plugin-page-creator:** add ignore support via plugin options, fix test file ignores on Windows ([#11304](https://github.com/gatsbyjs/gatsby/issues/11304)) ([9fdc223](https://github.com/gatsbyjs/gatsby/commit/9fdc223)), closes [/github.com/gatsbyjs/gatsby/blob/026d2a956296cb01936bcf45d2be1066dd844d00/packages/gatsby-plugin-page-creator/src/gatsby-node.js#L51-L66](https://github.com/gatsbyjs/gatsby/issues/L51-L66) [/github.com/gatsbyjs/gatsby/blob/026d2a956296cb01936bcf45d2be1066dd844d00/packages/gatsby-plugin-page-creator/src/validate-path.js#L11](https://github.com/gatsbyjs/gatsby/issues/L11) [#11168](https://github.com/gatsbyjs/gatsby/issues/11168)
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.10...gatsby-plugin-page-creator@2.0.11) (2019-03-22)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** pin chokidar@2.1.2 to fix unix issues ([#12759](https://github.com/gatsbyjs/gatsby/issues/12759)) ([0ea1505](https://github.com/gatsbyjs/gatsby/commit/0ea1505))
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.9...gatsby-plugin-page-creator@2.0.10) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.0.8...gatsby-plugin-page-creator@2.0.9) (2019-03-05)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
 

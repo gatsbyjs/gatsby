@@ -18,8 +18,11 @@ class DevLoader extends BaseLoader {
   loadPageDataJson(rawPath) {
     return super.loadPageDataJson(rawPath).then(data => {
       // when we can't find a proper 404.html we fallback to dev-404-page
+      // we need to make sure to mark it as not found.
       if (data.status === `failure`) {
-        return this.loadPageDataJson(`/dev-404-page/`)
+        return this.loadPageDataJson(`/dev-404-page/`).then(result =>
+          Object.assign({}, data, result)
+        )
       }
 
       return data

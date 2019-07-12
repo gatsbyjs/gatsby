@@ -1,13 +1,28 @@
-# gatsby-theme-notes
+<p align="center">
+  <a href="https://www.gatsbyjs.org">
+    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+  </a>
+</p>
+<h1 align="center">
+  The Gatsby notes theme
+</h1>
 
-A Gatsby Theme for publishing notes to your website.
-
-![image](https://user-images.githubusercontent.com/1424573/57794512-07bcd800-7701-11e9-8b09-4d275efeeb82.png)
+A Gatsby theme for publishing notes to your website.
 
 ## Installation
 
+### Use the notes theme starter
+
+This will generate a new site that pre-configures use of the notes theme.
+
 ```sh
-yarn add gatsby-theme-notes
+gatsby new my-themed-notes https://github.com/gatsbyjs/gatsby-starter-notes-theme
+```
+
+### Manually add to your site
+
+```sh
+npm install --save gatsby-theme-notes
 ```
 
 ## Usage
@@ -15,11 +30,12 @@ yarn add gatsby-theme-notes
 ```js
 // gatsby-config.js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: `gatsby-theme-notes`,
       options: {
-        notesPath: `/txt`,
+        // basePath defaults to `/`
+        basePath: `/notes`,
       },
     },
   ],
@@ -28,9 +44,10 @@ module.exports = {
 
 ### Options
 
-| Key                   | Default value | Description                                                                                      |
-| --------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
-| `notesPath`           | `/notes`      | Root url for all notes pages                                                                     |
-| `mdx`                 | `true`        | Configure `gatsby-mdx` (if your website already is using the plugin pass `false` to turn it off) |
-| `homeText`            | `~`           | Root text for notes breadcrumb trail                                                             |
-| `breadcrumbSeparator` | `/`           | Separator for the breadcrumb trail                                                               |
+| Key                   | Default value    | Description                                                                                               |
+| --------------------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
+| `basePath`            | `/`              | Root url for all notes pages                                                                              |
+| `contentPath`         | `/content/notes` | Location of notes content                                                                                 |
+| `mdx`                 | `true`           | Configure `gatsby-plugin-mdx` (if your website already is using the plugin pass `false` to turn this off) |
+| `homeText`            | `~`              | Root text for notes breadcrumb trail                                                                      |
+| `breadcrumbSeparator` | `/`              | Separator for the breadcrumb trail                                                                        |

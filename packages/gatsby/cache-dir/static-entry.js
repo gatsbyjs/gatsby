@@ -180,6 +180,7 @@ export default (pagePath, callback) => {
     createElement(
       Router,
       {
+        id: `gatsby-focus-wrapper`,
         baseuri: `${__BASE_PATH__}`,
       },
       createElement(RouteHandler, { path: `/*` })
