@@ -534,7 +534,9 @@ module.exports = async ({
               full: true,
               plugins: [
                 {
-                  // convertShapeToPath: true, // removed - see https://github.com/gatsbyjs/gatsby/issues/15629
+                  // potentially destructive plugins removed - see https://github.com/gatsbyjs/gatsby/issues/15629
+                  // convertShapeToPath: true,
+                  // removeViewBox: true,
                   removeUselessDefs: true,
                   addAttributesToSVGElement: true,
                   addClassesToSVGElement: true,
@@ -576,7 +578,6 @@ module.exports = async ({
                   removeUnknownsAndDefaults: true,
                   removeUnusedNS: true,
                   removeUselessStrokeAndFill: true,
-                  removeViewBox: true,
                   removeXMLNS: true,
                   removeXMLProcInst: true,
                   reusePaths: true,
