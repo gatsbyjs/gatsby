@@ -61,7 +61,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ## Trigger your first event from development environment
 
-Step 4. You can actually trigger your first event from your development environment by raising an exception somewhere within your application. A great example, which is in the documentation for Sentry, is to render a button like so:
+Step 5. You can actually trigger your first event from your development environment by raising an exception somewhere within your application. A great example, which is in the documentation for Sentry, is to render a button like so:
 
 ```js
 return <button onClick={methodDoesNotExist}>Break the world</button>
@@ -69,7 +69,7 @@ return <button onClick={methodDoesNotExist}>Break the world</button>
 
 ## Looking at your events page
 
-Step 5. With the event in place you can now click on the issues link on the navigation bar to your left. This page will list out your events that you have in progress and also in real time. You can use the drop down menus to select how to sort the issues.
+Step 6. With the event in place you can now click on the issues link on the navigation bar to your left. This page will list out your events that you have in progress and also in real time. You can use the drop down menus to select how to sort the issues.
 
 ![Issues Navigation Link Highlight](./images/navigation-issues.png)
 
