@@ -828,6 +828,39 @@ const EventTemplate = () => <p>TODO: Build the event page template</p>
 export default EventTemplate
 ```
 
+### Modify the event template to access event data
+
+```javascript:title=gatsby-theme-events/src/templates/events.js
+import React from "react"
+import { graphql } from "gatsby"
+// highlight-next-line
+import Layout from "../components/layout"
+
+export const query = graphql`
+  query($eventID: String!) {
+    event(id: { eq: $eventID }) {
+      name
+      url
+      startDate(formatString: "MMMM DD YYYY")
+      endDate(formatString: "MMMM DD YYYY")
+      location
+      slug
+    }
+  }
+`
+// highlight-start
+const EventTemplate = ({ data: { event } }) => (
+  <Layout>
+    <Event {...event} />
+  </Layout>
+)
+// highlight-end
+
+export default EventTemplate
+```
+
+We're wishful programming here again -- the `<Event>` component doesn't exist yet. Create that component in `gatsby-theme-events/src/components/event.js`:
+
 ## Style and format dates in React
 
 ## Configure a theme to take options
