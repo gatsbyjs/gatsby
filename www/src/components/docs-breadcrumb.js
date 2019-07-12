@@ -29,6 +29,9 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
 )
 
 const Breadcrumb = ({ itemList, location }) => {
+  // provide escape if no itemList is provided so breadcrumb isn't rendered
+  if (itemList === undefined) return null
+
   const activeItem = getActiveItem(itemList.items, location, undefined)
   const activeItemParents = getActiveItemParents(itemList.items, activeItem, [])
   const topLevel = itemList.key
@@ -45,7 +48,7 @@ const Breadcrumb = ({ itemList, location }) => {
           {topLevelTitle}
         </BreadcrumbNav>
         <BreadcrumbNav mobile>
-          <Separator character="<" />
+          <Separator character={<ChevronLeft />} />
           <Link to="/">Home</Link>
         </BreadcrumbNav>
       </>

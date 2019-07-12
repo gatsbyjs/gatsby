@@ -50,6 +50,13 @@ it(`Specifies proper presets and plugins for test stage`, () => {
         useESModules: false,
       },
     ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
+      },
+    ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 
@@ -111,6 +118,13 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
         useESModules: true,
       },
     ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
+      },
+    ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 

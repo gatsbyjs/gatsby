@@ -524,7 +524,72 @@ module.exports = async ({
       ...options,
     })
 
-  plugins.minifyCss = (options = {}) => new OptimizeCssAssetsPlugin(options)
+  plugins.minifyCss = (
+    options = {
+      cssProcessorPluginOptions: {
+        preset: [
+          `default`,
+          {
+            svgo: {
+              full: true,
+              plugins: [
+                {
+                  // potentially destructive plugins removed - see https://github.com/gatsbyjs/gatsby/issues/15629
+                  // convertShapeToPath: true,
+                  // removeViewBox: true,
+                  removeUselessDefs: true,
+                  addAttributesToSVGElement: true,
+                  addClassesToSVGElement: true,
+                  cleanupAttrs: true,
+                  cleanupEnableBackground: true,
+                  cleanupIDs: true,
+                  cleanupListOfValues: true,
+                  cleanupNumericValues: true,
+                  collapseGroups: true,
+                  convertColors: true,
+                  convertPathData: true,
+                  convertStyleToAttrs: true,
+                  convertTransform: true,
+                  inlineStyles: true,
+                  mergePaths: true,
+                  minifyStyles: true,
+                  moveElemsAttrsToGroup: true,
+                  moveGroupAttrsToElems: true,
+                  prefixIds: true,
+                  removeAttributesBySelector: true,
+                  removeAttrs: true,
+                  removeComments: true,
+                  removeDesc: true,
+                  removeDimensions: true,
+                  removeDoctype: true,
+                  removeEditorsNSData: true,
+                  removeElementsByAttr: true,
+                  removeEmptyAttrs: true,
+                  removeEmptyContainers: true,
+                  removeEmptyText: true,
+                  removeHiddenElems: true,
+                  removeMetadata: true,
+                  removeNonInheritableGroupAttrs: true,
+                  removeOffCanvasPaths: true,
+                  removeRasterImages: true,
+                  removeScriptElement: true,
+                  removeStyleElement: true,
+                  removeTitle: true,
+                  removeUnknownsAndDefaults: true,
+                  removeUnusedNS: true,
+                  removeUselessStrokeAndFill: true,
+                  removeXMLNS: true,
+                  removeXMLProcInst: true,
+                  reusePaths: true,
+                  sortAttrs: true,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    }
+  ) => new OptimizeCssAssetsPlugin(options)
 
   /**
    * Extracts css requires into a single file;

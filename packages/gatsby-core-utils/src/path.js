@@ -8,7 +8,7 @@ export function joinPath(...paths) {
   const joinedPath = path.join(...paths)
   if (os.platform() === `win32`) {
     return joinedPath.replace(/\\/g, `\\\\`)
-  } else {
-    return joinedPath
   }
+
+  return joinedPath
 }
