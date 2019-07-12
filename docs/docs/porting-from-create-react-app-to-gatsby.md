@@ -217,7 +217,7 @@ Create React App will require you to eject or rely on another workaround to edit
 
 #### Context providers
 
-React's context API allows you to share state from a higher component and distribute it to components below it in the component tree without having to deal with issues like prop drilling [prop drilling](https://kentcdodds.com/blog/prop-drilling).
+React's context API allows you to share state from a higher component and distribute it to components below it in the component tree without having to deal with issues like [prop drilling](https://kentcdodds.com/blog/prop-drilling).
 
 How do you share state across components like a theme without one top level `App.js` file? Gatsby has a `wrapRootElement` and a `wrapPageElement` API that allow you to wrap the root element or all pages of your Gatsby site with components you want.
 

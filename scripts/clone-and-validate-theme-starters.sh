@@ -8,7 +8,7 @@ if [ "$IS_CI" = true ]; then
   sudo apt-get update && sudo apt-get install jq
 fi
 
-for folder in "themes/gatsby-starter-blog-theme" "themes/gatsby-starter-notes-theme" "themes/gatsby-starter-theme"; do
+for folder in "themes/gatsby-starter-blog-theme" "themes/gatsby-starter-notes-theme" "themes/gatsby-starter-theme" "themes/gatsby-starter-theme-workspace"; do
   [ -d "$folder" ] || continue # only directories
   cd $BASE
 

@@ -43,6 +43,16 @@ describe(`GraphQL field extensions`, () => {
         internal: { type: `Test` },
         olleh: `world`,
       },
+      {
+        id: `test5`,
+        internal: { type: `AnotherTest` },
+        date: `2019-01-01`,
+      },
+      {
+        id: `test6`,
+        internal: { type: `AnotherTest` },
+        date: 0,
+      },
     ]
     nodes.forEach(node => {
       dispatch({ type: `CREATE_NODE`, payload: { ...node } })
@@ -1041,6 +1051,178 @@ describe(`GraphQL field extensions`, () => {
     expect(report.error).toBeCalledWith(
       `Field extension \`what\` on \`Test.hi\` is not available.`
     )
+  })
+
+  it(`built-in extensions wrap resolver`, async () => {
+    dispatch(
+      createFieldExtension({
+        name: `zeroToNull`,
+        extend(options, prevFieldConfig) {
+          const originalResolver =
+            prevFieldConfig.resolve || defaultFieldResolver
+          return {
+            async resolve(...rp) {
+              const fieldValue = await originalResolver(...rp)
+              if (fieldValue === 0) {
+                return null
+              }
+              return fieldValue
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes(`
+        type AnotherTest implements Node {
+          date: Date @zeroToNull @dateformat
+          reverse: Date @dateformat @zeroToNull @proxy(from: "date")
+        }
+      `)
+    )
+    const query = `
+      {
+        allAnotherTest {
+          nodes {
+            date(formatString: "MM/DD/YYYY")
+            reverse(formatString: "MM/DD/YYYY")
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allAnotherTest: {
+        nodes: [
+          {
+            date: `01/01/2019`,
+            reverse: `01/01/2019`,
+          },
+          {
+            date: null,
+            reverse: `Invalid date`,
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
+
+  it(`built-in extensions merge extension args`, async () => {
+    dispatch(
+      createFieldExtension({
+        name: `replace`,
+        extend(options, prevFieldConfig) {
+          const originalResolver =
+            prevFieldConfig.resolve || defaultFieldResolver
+          return {
+            args: {
+              ...prevFieldConfig.args,
+              match: `String!`,
+              replaceWith: `String!`,
+            },
+            async resolve(source, args, context, info) {
+              const fieldValue = await originalResolver(
+                source,
+                args,
+                context,
+                info
+              )
+              if (fieldValue == args.match) {
+                return args.replaceWith
+              }
+              return fieldValue
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes(`
+        type AnotherTest implements Node {
+          date: Date @replace @dateformat
+          reverse: Date @dateformat @replace @proxy(from: "date")
+        }
+      `)
+    )
+    const query = `
+      {
+        allAnotherTest {
+          nodes {
+            date(formatString: "MM/DD/YYYY", match: "0", replaceWith: "1978-09-26")
+            reverse(formatString: "MM/DD/YYYY", match: "Invalid date", replaceWith: "WRONG!")
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allAnotherTest: {
+        nodes: [
+          {
+            date: `01/01/2019`,
+            reverse: `01/01/2019`,
+          },
+          {
+            date: `09/26/1978`,
+            reverse: `WRONG!`,
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
+
+  it(`built-in extensions wraps custom resolver`, async () => {
+    dispatch(
+      createTypes(
+        buildObjectType({
+          name: `AnotherTest`,
+          interfaces: [`Node`],
+          fields: {
+            date: {
+              type: `Date`,
+              extensions: {
+                dateformat: true,
+              },
+              args: {
+                replaceZeroWith: `String!`,
+              },
+              resolve(source, args, context, info) {
+                const fieldValue = source[info.fieldName]
+                if (fieldValue === 0) {
+                  return args.alt
+                }
+                return fieldValue
+              },
+            },
+          },
+        })
+      )
+    )
+    const query = `
+      {
+        allAnotherTest {
+          nodes {
+            date(formatString: "MM/DD/YYYY", replaceZeroWith: "1978-09-26")
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allAnotherTest: {
+        nodes: [
+          {
+            date: `01/01/2019`,
+          },
+          {
+            date: null,
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
   })
 })
 

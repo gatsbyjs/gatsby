@@ -111,7 +111,6 @@ actions.createPage = (
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
@@ -120,13 +119,17 @@ actions.createPage = (
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
     if (process.env.NODE_ENV !== `test`) {
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
+      report.panic({
+        id: `11323`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          message,
+        },
+      })
     } else {
       return message
     }
-    noPageOrComponent = true
   }
 
   // Validate that the context object doesn't overlap with any core page fields
@@ -176,7 +179,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
-        report.panic(error)
+        report.panic({
+          id: `11324`,
+          context: {
+            message: error,
+          },
+        })
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           report.warn(error)
@@ -186,83 +194,99 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  // Check if a component is set.
+  if (!page.component) {
+    if (process.env.NODE_ENV !== `test`) {
+      report.panic({
+        id: `11322`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+        },
+      })
+    } else {
+      // For test
+      return `A component must be set when creating a page`
+    }
+  }
+
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
     if (!fileExistsSync(page.component)) {
-      const message = `${name} created a page with a component that doesn't exist. Missing component is ${
-        page.component
-      }`
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-      noPageOrComponent = true
-    } else if (page.component) {
-      // check if we've processed this component path
-      // before, before running the expensive "truePath"
-      // operation
-      if (pageComponentCache[page.component]) {
-        page.component = pageComponentCache[page.component]
-      } else {
-        const originalPageComponent = page.component
+      report.panic({
+        id: `11325`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
+    }
+  }
+  if (!path.isAbsolute(page.component)) {
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      report.panic({
+        id: `11326`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
+    } else {
+      const message = `${name} must set the absolute path to the page component when create creating a page`
+      return message
+    }
+  }
 
-        // normalize component path
-        page.component = slash(page.component)
-        // check if path uses correct casing - incorrect casing will
-        // cause issues in query compiler and inconsistencies when
-        // developing on Mac or Windows and trying to deploy from
-        // linux CI/CD pipeline
-        const trueComponentPath = slash(truePath(page.component))
-        if (trueComponentPath !== page.component) {
-          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-            const markers = page.component
-              .split(``)
-              .map((letter, index) => {
-                if (letter !== trueComponentPath[index]) {
-                  return `^`
-                }
-                return ` `
-              })
-              .join(``)
+  // check if we've processed this component path
+  // before, before running the expensive "truePath"
+  // operation
+  //
+  // Skip during testing as the paths don't exist on disk.
+  if (process.env.NODE_ENV !== `test`) {
+    if (pageComponentCache[page.component]) {
+      page.component = pageComponentCache[page.component]
+    } else {
+      const originalPageComponent = page.component
 
-            report.warn(
-              stripIndent`
+      // normalize component path
+      page.component = slash(page.component)
+      // check if path uses correct casing - incorrect casing will
+      // cause issues in query compiler and inconsistencies when
+      // developing on Mac or Windows and trying to deploy from
+      // linux CI/CD pipeline
+      const trueComponentPath = slash(truePath(page.component))
+      if (trueComponentPath !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== trueComponentPath[index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
+
+          report.warn(
+            stripIndent`
             ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
             page.component:     "${page.component}"
             path in filesystem: "${trueComponentPath}"
                                  ${markers}
           `
-            )
-            hasWarnedForPageComponentInvalidCasing.add(page.component)
-          }
-
-          page.component = trueComponentPath
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
-        pageComponentCache[originalPageComponent] = page.component
+
+        page.component = trueComponentPath
       }
+      pageComponentCache[originalPageComponent] = page.component
     }
-  }
-
-  if (!page.component || !path.isAbsolute(page.component)) {
-    const message = `${name} must set the absolute path to the page component when create creating a page`
-    // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-    } else {
-      return message
-    }
-    noPageOrComponent = true
-  }
-
-  if (noPageOrComponent) {
-    report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
-    )
   }
 
   let internalComponentName
@@ -325,15 +349,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        report.panicOnBuild(
-          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
-        )
+        report.panicOnBuild({
+          id: `11327`,
+          context: {
+            relativePath,
+          },
+        })
       }
 
       if (!includesDefaultExport) {
-        report.panicOnBuild(
-          `[${fileName}] The page component must export a React component for it to be valid`
-        )
+        report.panicOnBuild({
+          id: `11328`,
+          context: {
+            fileName,
+          },
+        })
       }
     }
 
