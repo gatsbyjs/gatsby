@@ -3253,6 +3253,19 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://gatsby-starter-typescript-graphql.netlify.com
+  repo: https://github.com/spawnia/gatsby-starter-typescript-graphql
+  description: A Gatsby starter with typesafe GraphQL using TypeScript
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Type safety with TypeScript
+    - Typesafe GraphQL with graphql-code-generator
+    - ESLint with TypeScript support
+    - Styling with styled-components
 - url: https://gatsby-tailwind-serif.netlify.com/
   repo: https://github.com/windedge/gatsby-tailwind-serif
   description: A Gatsby theme based on gatsby-serif-theme, rewrite with Tailwind CSS.
