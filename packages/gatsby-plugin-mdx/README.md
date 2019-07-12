@@ -1,6 +1,6 @@
 ![Logo](./img/gatsby-mdx.png)
 
-> gatsby-plugin-mdx is _the_ official integration for using [MDX](https://mdxjs.com)
+> gatsby-plugin-mdx is the official integration for using [MDX](https://mdxjs.com)
 > with [Gatsby](https://www.gatsbyjs.org/).
 
 # What’s MDX?
