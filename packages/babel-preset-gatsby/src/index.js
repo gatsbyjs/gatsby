@@ -87,6 +87,12 @@ module.exports = function preset(_, options = {}) {
           absoluteRuntimePath,
         },
       ],
+      [
+        resolve(`@babel/plugin-transform-spread`),
+        {
+          loose: false, // Fixes #14848
+        },
+      ],
       IS_TEST && resolve(`babel-plugin-dynamic-import-node`),
     ].filter(Boolean),
   }
