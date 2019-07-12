@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.15...gatsby@2.13.16) (2019-07-12)
+
+### Bug Fixes
+
+- **gatsby:** Make createPage action errors structured ([#15619](https://github.com/gatsbyjs/gatsby/issues/15619)) ([44654be](https://github.com/gatsbyjs/gatsby/commit/44654be))
+- **svg:** don't try to use convertShapeToPath svgo optim ([#15636](https://github.com/gatsbyjs/gatsby/issues/15636)) ([4db78dc](https://github.com/gatsbyjs/gatsby/commit/4db78dc))
+
+## [2.13.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.14...gatsby@2.13.15) (2019-07-11)
+
+### Bug Fixes
+
+- **gatsby:** handle `/404/`, `/404`, `404/` or `404` page paths ([#15615](https://github.com/gatsbyjs/gatsby/issues/15615)) ([482ea8d](https://github.com/gatsbyjs/gatsby/commit/482ea8d))
+
+## [2.13.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.13...gatsby@2.13.14) (2019-07-11)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.12...gatsby@2.13.13) (2019-07-10)
+
+### Bug Fixes
+
+- don't break joi validation for production bundles webpack… ([#15602](https://github.com/gatsbyjs/gatsby/issues/15602)) ([4c50024](https://github.com/gatsbyjs/gatsby/commit/4c50024))
+- don't break joi validation for unhandledRejections & apirunner ([#15600](https://github.com/gatsbyjs/gatsby/issues/15600)) ([14ba538](https://github.com/gatsbyjs/gatsby/commit/14ba538))
+
 ## [2.13.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.11...gatsby@2.13.12) (2019-07-10)
 
 ### Bug Fixes
