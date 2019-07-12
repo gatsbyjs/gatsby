@@ -1090,15 +1090,6 @@
   categories:
     - Marketing
     - Technology
-- title: F1 Vision
-  main_url: "https://www.f1vision.com/"
-  url: "https://www.f1vision.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Entertainment
-    - Technology
-    - eCommerce
 - title: Yuuniworks Portfolio / Blog
   main_url: "https://www.yuuniworks.com/"
   url: "https://www.yuuniworks.com/"
@@ -6381,6 +6372,20 @@
   built_by: Vikram Aroskar
   built_by_url: "https://medium.com/@vikramaroskar"
   featured: false
+- title: Home Alarm Report
+  url: https://homealarmreport.com/
+  main_url: https://homealarmreport.com/
+  description: >
+    Home Alarm Report is dedicated to helping consumers make informed decisions 
+    about home security solutions. The site was easily migrated from a legacy WordPress 
+    installation and the dev team chose Gatsby for its site speed and SEO capabilities.
+  categories:
+    - Blog
+    - Business
+    - SEO
+    - Technology
+  built_by: Centerfield Media
+  built_by_url: https://www.centerfield.com
 - title: Just | FX for treasurers
   url: "https://www.gojust.com"
   main_url: "https://www.gojust.com"
@@ -6437,4 +6442,115 @@
     - Programming
   built_by: Chai Phonbopit
   built_by_url: "https://github.com/phonbopit"
+  featured: false
+- title: Venus Lover
+  url: https://venuslover.com
+  main_url: https://venuslover.com
+  description: >
+    Venus Lover is a mobile app for iOS and Android so you can read your daily horoscope and have your natal chart, including the interpretation of the ascendant, planets, houses and aspects.
+  categories:
+    - App
+    - Consulting
+    - Education
+    - Landing Page
+- title: Onramp
+  url: https://www.onramp.io/
+  main_url: https://www.onramp.io/
+  description: >
+    Onramp is a technical workforce solutions company. We help corporate clients build new pipelines of talent to meet their technical and HR goals. We specialize in discovering new pools of talent and provide customized training so candidates are qualified and better prepared employees.
+  categories:
+    - Business
+    - Education
+    - Landing Page
+  built_by: Nicola B.
+  built_by_url: https://www.linkedin.com/in/nicola-b/
+  featured: false
+- title: Write/Speak/Code
+  url: https://www.writespeakcode.com/
+  main_url: https://www.writespeakcode.com/
+  description: >
+    Write/Speak/Code is a non-profit on a mission to promote the visibility and leadership of technologists with marginalized genders through peer-led professional development.
+  categories:
+    - Community
+    - Nonprofit
+    - Open Source
+    - Conference
+  built_by: Nicola B.
+  built_by_url: https://www.linkedin.com/in/nicola-b/
+  featured: false
+- title: Daniel Spajic
+  url: https://danieljs.tech/
+  main_url: https://danieljs.tech/
+  source_url: https://github.com/dspacejs/portfolio
+  description: >
+    Passionate front-end developer with a deep, yet diverse skillset.
+  categories:
+    - Portfolio
+    - Programming
+    - Freelance
+  built_by: Daniel Spajic
+  featured: false
+- title: Cosmotory
+  url: https://cosmotory.netlify.com/
+  main_url: https://cosmotory.netlify.com/
+  description: >
+    This is the educational blog containing various courses,learning materials from various authors from all over the world.
+  categories:
+    - Blog
+    - Community
+    - Nonprofit
+    - Open Source
+    - Education
+  built_by: Hanishraj B Rao.
+  built_by_url: https://hanishrao.netlify.com/
+  featured: false
+- title: Armorblox | Security Powered by Understanding
+  url: https://www.armorblox.com
+  main_url: https://www.armorblox.com
+  description: >
+    Armorblox is a venture-backed stealth cybersecurity startup, on a mission to build a game-changing enterprise security platform.
+  categories:
+    - Security
+    - Technology
+    - Business
+  built_by: Bejamas
+  built_by_url: https://bejamas.io
+  featured: false
+- title: Mojo
+  url: https://www.mojo.is
+  main_url: https://www.mojo.is/
+  description: >
+    We help companies create beautiful digital experiences
+  categories:
+    - Agency
+    - Technology
+    - Consulting
+    - User Experience
+    - Web Development
+  featured: false
+- title: Marcel Hauri
+  url: https://marcelhauri.ch/
+  main_url: https://marcelhauri.ch/
+  description: >
+    Marcel Hauri is an award-winning Magento developer and e-commerce specialist.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Community
+    - Open Source
+    - eCommerce
+  built_by: Marcel Hauri
+  built_by_url: https://marcelhauri.ch
+  featured: false
+- title: Projektmanagementblog
+  url: https://www.projektmanagementblog.de
+  main_url: https://www.projektmanagementblog.de/
+  source_url: https://github.com/StephanWeinhold/pmblog
+  description: >
+    Thoughts about modern project management. Built with Gatsby and Tachyons, based on Advanced Starter.
+  categories:
+    - Blog
+  built_by: Stephan Weinhold
+  built_by_url: https://stephanweinhold.com/
   featured: false

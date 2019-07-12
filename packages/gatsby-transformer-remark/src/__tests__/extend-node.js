@@ -920,7 +920,35 @@ final text`,
   )
 })
 
+describe(`Relative links keep being relative`, () => {
+  const assetPrefix = ``
+  const basePath = `/prefix`
+  const pathPrefix = assetPrefix + basePath
+
+  bootstrapTest(
+    `relative links are not prefixed`,
+    `
+This is [a link](path/to/page1).
+
+This is [a reference]
+
+[a reference]: ./path/to/page2
+`,
+    `html`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.html).toMatch(`<a href="path/to/page1">`)
+      expect(node.html).toMatch(`<a href="./path/to/page2">`)
+    },
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
+  )
+})
+
 describe(`Links are correctly prefixed`, () => {
+  const assetPrefix = ``
+  const basePath = `/prefix`
+  const pathPrefix = assetPrefix + basePath
+
   bootstrapTest(
     `correctly prefixes links`,
     `
@@ -936,7 +964,31 @@ This is [a reference]
       expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
       expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
     },
-    { additionalParameters: { pathPrefix: `/prefix` } }
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
+  )
+})
+
+describe(`Links are correctly prefixed when assetPrefix is used`, () => {
+  const assetPrefix = `https://example.com/assets`
+  const basePath = `/prefix`
+  const pathPrefix = assetPrefix + basePath
+
+  bootstrapTest(
+    `correctly prefixes links`,
+    `
+This is [a link](/path/to/page1).
+
+This is [a reference]
+
+[a reference]: /path/to/page2
+`,
+    `html`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
+    },
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
   )
 })
 

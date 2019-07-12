@@ -55,7 +55,7 @@ const builtInFieldExtensions = {
       locale: { type: GraphQLString },
     },
     extend(args, fieldConfig) {
-      return getDateResolver(args)
+      return getDateResolver(args, fieldConfig)
     },
   },
 
@@ -72,8 +72,9 @@ const builtInFieldExtensions = {
       },
     },
     extend(args, fieldConfig) {
+      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: link(args),
+        resolve: link(args, originalResolver),
       }
     },
   },
@@ -87,8 +88,9 @@ const builtInFieldExtensions = {
       },
     },
     extend(args, fieldConfig) {
+      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: fileByPath(args),
+        resolve: fileByPath(args, originalResolver),
       }
     },
   },
@@ -102,10 +104,10 @@ const builtInFieldExtensions = {
       },
     },
     extend({ from }, fieldConfig) {
-      const resolver = fieldConfig.resolve || defaultFieldResolver
+      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
         resolve(source, args, context, info) {
-          return resolver(source, args, context, {
+          return originalResolver(source, args, context, {
             ...info,
             fieldName: from,
           })

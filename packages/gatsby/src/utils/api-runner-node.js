@@ -331,9 +331,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       }
 
       let pluginName =
-        plugin.name === `default-site-plugin`
-          ? `gatsby-node.js`
-          : `Plugin ${plugin.name}`
+        plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
@@ -341,7 +339,17 @@ module.exports = async (api, args = {}, pluginSource) =>
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
         })
-        reporter.panicOnBuild(`${pluginName} returned an error`, err)
+
+        reporter.panicOnBuild({
+          id: `11321`,
+          context: {
+            pluginName,
+            api,
+            message: err instanceof Error ? err.message : err,
+          },
+          error: err instanceof Error ? err : undefined,
+        })
+
         return null
       })
     }).then(results => {
