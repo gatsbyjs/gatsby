@@ -118,11 +118,13 @@ export default class FFMPEG {
             lastLoggedPercent = progress.percent
           }
         })
-        .on(`error`, function(err) {
+        .on(`error`, function(err, stdout, stderr) {
+          console.log(stdout, stderr)
           console.log(`[FFMPEG] An error occurred: ` + err.message)
           reject(err)
         })
-        .on(`end`, function() {
+        .on(`end`, function(stdout, stderr) {
+          console.log(stdout, stderr)
           console.log(`[FFMPEG] Finished`)
           resolve()
         })
