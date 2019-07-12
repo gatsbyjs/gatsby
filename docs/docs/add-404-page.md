@@ -3,7 +3,7 @@ title: "Adding a 404 Page"
 ---
 
 To create a 404 page create a page whose path matches the regex
-`/404*`. Most often you'll want to create a React component page at
+`^\/?404\/?$` (`/404/`, `/404`, `404/` or `404`). Most often you'll want to create a React component page at
 `src/pages/404.js`.
 
 Gatsby ensures that your 404 page is built as `404.html` as many static hosting

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.14...gatsby@2.13.15) (2019-07-11)
+
+### Bug Fixes
+
+- **gatsby:** handle `/404/`, `/404`, `404/` or `404` page paths ([#15615](https://github.com/gatsbyjs/gatsby/issues/15615)) ([482ea8d](https://github.com/gatsbyjs/gatsby/commit/482ea8d))
+
+## [2.13.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.13...gatsby@2.13.14) (2019-07-11)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.12...gatsby@2.13.13) (2019-07-10)
+
+### Bug Fixes
+
+- don't break joi validation for production bundles webpack… ([#15602](https://github.com/gatsbyjs/gatsby/issues/15602)) ([4c50024](https://github.com/gatsbyjs/gatsby/commit/4c50024))
+- don't break joi validation for unhandledRejections & apirunner ([#15600](https://github.com/gatsbyjs/gatsby/issues/15600)) ([14ba538](https://github.com/gatsbyjs/gatsby/commit/14ba538))
+
+## [2.13.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.11...gatsby@2.13.12) (2019-07-10)
+
+### Bug Fixes
+
+- **gatsby:** Prefer nodes over inline objects in findRootNodeAncestor ([#14843](https://github.com/gatsbyjs/gatsby/issues/14843)) ([e18acb6](https://github.com/gatsbyjs/gatsby/commit/e18acb6))
+
+### Features
+
+- **gatsby:** Make builtin field extensions wrap resolvers ([#15515](https://github.com/gatsbyjs/gatsby/issues/15515)) ([c2edf6c](https://github.com/gatsbyjs/gatsby/commit/c2edf6c))
+
+## [2.13.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.10...gatsby@2.13.11) (2019-07-09)
+
+### Bug Fixes
+
+- support unicode paths ([#15552](https://github.com/gatsbyjs/gatsby/issues/15552)) ([f3b9912](https://github.com/gatsbyjs/gatsby/commit/f3b9912))
+
 ## [2.13.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.9...gatsby@2.13.10) (2019-07-09)
 
 ### Bug Fixes

@@ -2,12 +2,8 @@
 *                                               @gatsbyjs/core
 
 # All docs must be reviewed by the docs team.
-/docs/                                          @gatsbyjs/docs
-
-# The ecosystem files are error-prone, so we require an extra set of eyes on them.
-/docs/*                                         @gatsbyjs/ecosystem
-/docs/creators/*                                @gatsbyjs/ecosystem
-/docs/creators/images/*                         @gatsbyjs/ecosystem
+/docs/                                          @gatsbyjs/learning
+**/README.md                                    @gatsbyjs/learning
 
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website
