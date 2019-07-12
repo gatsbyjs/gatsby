@@ -45,18 +45,6 @@ module.exports = function preset(_, options = {}) {
     }
   }
 
-  const plugins = []
-
-  if (stage === `build-javascript`) {
-    plugins.push([
-      // Remove PropTypes from production build
-      resolve(`babel-plugin-transform-react-remove-prop-types`),
-      {
-        removeImport: true,
-      },
-    ])
-  }
-
   return {
     presets: [
       [
