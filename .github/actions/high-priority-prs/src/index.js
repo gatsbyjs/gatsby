@@ -19,15 +19,15 @@ const start = async function() {
   const data = await fetch()
   if (data) {
     const queues = processData(data)
-    teams.forEach(team => {
+    await Promise.all(teams.map(team => {
       if (team.name === `core`) {
         // send report of all PRs (without filtering) to Core
-        report({ queues, channelId: team.channelId })
+        return report({ queues, channelId: team.channelId })
       } else {
         // send filtered reports to respective teams
-        report(filter(queues, team))
+        return report(filter(queues, team))
       }
-    })
+    }))
   }
 }
 
