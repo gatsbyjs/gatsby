@@ -119,12 +119,12 @@ export default class FFMPEG {
           }
         })
         .on(`error`, function(err, stdout, stderr) {
-          console.log(stdout, stderr)
+          console.log(`\n---\n`, stdout, stderr, `\n---\n`)
           console.log(`[FFMPEG] An error occurred: ` + err.message)
           reject(err)
         })
         .on(`end`, function(stdout, stderr) {
-          console.log(stdout, stderr)
+          console.log(`\n---\n`, stdout, stderr, `\n---\n`)
           console.log(`[FFMPEG] Finished`)
           resolve()
         })
@@ -175,6 +175,9 @@ export default class FFMPEG {
         ...this.createPreviewFilters({ fieldArgs, info }),
         ...this.createCustomFilters({ fieldArgs }),
       ].join(`,`)
+
+      console.log(`Applied complex filter: ${filters}`)
+
       const ffmpegSession = ffmpeg()
         .input(path)
         .videoCodec(`libx264`)
@@ -214,6 +217,8 @@ export default class FFMPEG {
         ...this.createPreviewFilters({ fieldArgs, info }),
         ...this.createCustomFilters({ fieldArgs }),
       ].join(`,`)
+
+      console.log(`Applied complex filter: ${filters}`)
 
       const ffmpegSession = ffmpeg()
         .input(path)
@@ -298,6 +303,8 @@ export default class FFMPEG {
         ...this.createCustomFilters({ fieldArgs }),
       ].join(`,`)
 
+      console.log(`Applied complex filter: ${filters}`)
+
       const ffmpegSession = ffmpeg()
         .input(path)
         .videoCodec(`libx264`)
@@ -329,6 +336,8 @@ export default class FFMPEG {
         `scale=${this.generateScaleFilter({ maxWidth, maxHeight })}`,
         ...this.createCustomFilters({ fieldArgs }),
       ].join(`,`)
+
+      console.log(`Applied complex filter: ${filters}`)
 
       const ffmpegSession = ffmpeg()
         .input(path)
