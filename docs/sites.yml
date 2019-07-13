@@ -6554,3 +6554,11 @@
   built_by: Stephan Weinhold
   built_by_url: https://stephanweinhold.com/
   featured: false
+- title: Relocation Hero
+  url: https://relocationhero.com
+  main_url: https://relocationhero.com
+  description: >
+    Blog with FAQs related to Germany relocation. Built with Gatsby.
+  categories:
+    - Blog
+  featured: false
