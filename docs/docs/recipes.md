@@ -129,6 +129,37 @@ Showtime.
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/deploying-and-hosting/)
 
+
+### Deploying to Netlify
+
+Use `netlify-cli` to deploy your gatsby application without getting out of command line interface.
+
+#### Prerequisites
+
+- A Gatsby site with a single component `index.js`.
+- [netlify-cli](https://www.npmjs.com/package/netlify-cli)  npm package
+- The Gatsby CLI method `gatsby build`
+
+#### Directions
+
+1. Build your gatsby application using `gatsby build`
+
+2. Login into netlify using `netlify login` 
+
+3. Run the command `netlify build`. Select the "Create & configure a new site" option.
+
+4. Choose a custom website name if you want or press enter to receive a random one.
+
+5. Choose your [Team](/docs/teams/).
+
+6. Change the deploy path to `public/`
+
+7. Make sure that everything looks fine before deploying to production using `netlify deploy --prod`
+
+#### Additional resources
+
+-  [Hosting on Netlify](/docs/hosting-on-netlify) 
+
 ## Querying data
 
 ### The StaticQuery Component
