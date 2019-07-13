@@ -3312,7 +3312,6 @@
     - Web App Manifest
     - SEO
 - url: https://gatsby-simple-blog.thundermiracle.com
-- url: https://gatsby-simple-blog.netlify.com
   repo: https://github.com/thundermiracle/gatsby-simple-blog
   description: A gatsby-starter-blog with overreacted looking and tags, breadcrumbs, disqus, i18n, eslint supported
   tags:
