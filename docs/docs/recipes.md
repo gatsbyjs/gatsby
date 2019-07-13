@@ -159,6 +159,7 @@ Use `netlify-cli` to deploy your gatsby application without getting out of comma
 #### Additional resources
 
 -  [Hosting on Netlify](/docs/hosting-on-netlify) 
+-  [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
 
 ## Querying data
 
