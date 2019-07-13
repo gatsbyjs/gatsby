@@ -25,7 +25,7 @@
     "chokidar": "2.1.2",
     "fs-exists-cached": "^1.0.0",
     "glob": "^7.1.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "micromatch": "^3.1.10",
     "slash": "^1.0.0"
   },

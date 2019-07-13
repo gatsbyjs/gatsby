@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0",
     "cheerio": "^1.0.0-rc.2",
     "is-relative-url": "^2.0.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "mdast-util-definitions": "^1.2.0",
     "potrace": "^2.1.1",
     "query-string": "^6.1.0",

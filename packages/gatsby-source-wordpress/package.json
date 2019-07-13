@@ -16,7 +16,7 @@
     "deep-map-keys": "^1.2.0",
     "gatsby-source-filesystem": "^2.1.5",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "minimatch": "^3.0.4",
     "qs": "^6.4.0"
   },

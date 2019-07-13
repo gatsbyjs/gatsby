@@ -85,7 +85,7 @@
     "jest-worker": "^23.2.0",
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "md5": "^2.2.1",
     "md5-file": "^3.1.1",
     "micromatch": "^3.1.10",

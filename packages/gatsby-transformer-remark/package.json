@@ -12,7 +12,7 @@
     "gray-matter": "^4.0.0",
     "hast-util-raw": "^4.0.0",
     "hast-util-to-html": "^4.0.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "mdast-util-to-hast": "^3.0.0",
     "mdast-util-to-string": "^1.0.5",
     "mdast-util-toc": "^2.0.1",

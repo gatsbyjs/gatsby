@@ -17,7 +17,7 @@
     "fs-extra": "^7.0.1",
     "git-up": "4.0.1",
     "is-docker": "1.1.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "node-fetch": "2.3.0",
     "resolve-cwd": "^2.0.0",
     "source-map": "^0.5.7",

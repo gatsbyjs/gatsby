@@ -29,7 +29,7 @@
     "gatsby-telemetry": "^1.1.5",
     "hosted-git-info": "^2.6.0",
     "is-valid-path": "^0.1.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "meant": "^1.0.1",
     "node-fetch": "^2.6.0",
     "object.entries": "^1.1.0",
