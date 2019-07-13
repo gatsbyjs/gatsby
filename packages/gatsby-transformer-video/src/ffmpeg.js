@@ -146,11 +146,11 @@ export default class FFMPEG {
     return previewFilters
   }
 
-  createCustomFilters = ({ fieldArgs: { saturated = false } }) => {
+  createCustomFilters = ({ fieldArgs: { saturation } }) => {
     const filters = []
 
-    if (saturated) {
-      filters.push(`eq=saturation=0`)
+    if (saturation !== 1) {
+      filters.push(`eq=saturation=${saturation}`)
     }
 
     return filters

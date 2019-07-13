@@ -4,7 +4,7 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLBoolean,
+  GraphQLFloat,
 } from "gatsby/graphql"
 import { ensureDir } from "fs-extra"
 
@@ -71,7 +71,7 @@ exports.setFieldsOnGraphQLNodeType = (
         maxHeight: { type: GraphQLInt, defaultValue: null },
         duration: { type: GraphQLInt, defaultValue: 3 },
         fps: { type: GraphQLInt, defaultValue: 3 },
-        saturated: { type: GraphQLBoolean, defaultValue: false },
+        saturation: { type: GraphQLFloat, defaultValue: 1 },
         publicPath: {
           type: GraphQLString,
           defaultValue: `assets/video-previews`,
@@ -142,7 +142,7 @@ exports.setFieldsOnGraphQLNodeType = (
       args: {
         maxWidth: { type: GraphQLInt, defaultValue: 1920 },
         maxHeight: { type: GraphQLInt, defaultValue: null },
-        saturated: { type: GraphQLBoolean, defaultValue: false },
+        saturation: { type: GraphQLFloat, defaultValue: 1 },
         publicPath: { type: GraphQLString, defaultValue: `assets/videos` },
         h264Crf: { type: GraphQLInt, defaultValue: 28 },
         h264Preset: { type: GraphQLString, defaultValue: `veryslow` },
