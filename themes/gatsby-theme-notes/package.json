@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.14",
-    "@mdx-js/mdx": "^1.0.25",
-    "@mdx-js/react": "^1.0.23",
+    "@mdx-js/mdx": "^1.0.27",
+    "@mdx-js/react": "^1.0.27",
     "gatsby-core-utils": "^1.0.3",
     "gatsby-plugin-compile-es6-packages": "^1.1.0",
     "gatsby-plugin-emotion": "^4.1.2",
