@@ -16,7 +16,7 @@
     "@babel/runtime": "^7.0.0",
     "fs-extra": "^4.0.2",
     "kebab-hash": "^0.1.2",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "webpack-assets-manifest": "^3.0.2"
   },
   "devDependencies": {
