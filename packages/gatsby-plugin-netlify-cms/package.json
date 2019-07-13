@@ -10,7 +10,7 @@
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
     "html-webpack-exclude-assets-plugin": "^0.0.7",
     "html-webpack-plugin": "^3.2.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "mini-css-extract-plugin": "^0.4.1",
     "netlify-identity-widget": "^1.4.11",
     "webpack": "^4.16.0"

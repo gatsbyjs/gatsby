@@ -20,7 +20,7 @@
     "gatsby-source-filesystem": "^2.1.5",
     "is-online": "^7.0.0",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "qs": "^6.4.0"
   },
   "devDependencies": {
