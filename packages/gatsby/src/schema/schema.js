@@ -473,6 +473,12 @@ const createTypeComposerFromGatsbyType = ({
     case GatsbyGraphQLTypeKind.INTERFACE: {
       return InterfaceTypeComposer.createTemp(type.config, schemaComposer)
     }
+    case GatsbyGraphQLTypeKind.ENUM: {
+      return EnumTypeComposer.createTemp(type.config, schemaComposer)
+    }
+    case GatsbyGraphQLTypeKind.SCALAR: {
+      return ScalarTypeComposer.createTemp(type.config, schemaComposer)
+    }
     default: {
       report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
       return null
