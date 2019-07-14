@@ -8,6 +8,7 @@ it(`Specifies proper presets and plugins for test stage`, () => {
     [
       expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
+        exclude: [`transform-typeof-symbol`],
         corejs: 2,
         loose: true,
         modules: `commonjs`,
@@ -40,10 +41,22 @@ it(`Specifies proper presets and plugins for test stage`, () => {
     [
       expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
       {
+        absoluteRuntimePath: expect.stringContaining(
+          path.join(`@babel`, `runtime`)
+        ),
+        corejs: false,
         helpers: true,
         regenerator: true,
+        useESModules: false,
       },
     ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
+      },
+    ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 
@@ -63,6 +76,7 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
     [
       expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
+        exclude: [`transform-typeof-symbol`],
         corejs: 2,
         loose: true,
         modules: false,
@@ -95,10 +109,22 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
     [
       expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
       {
-        helpers: true,
+        absoluteRuntimePath: expect.stringContaining(
+          path.join(`@babel`, `runtime`)
+        ),
+        helpers: false,
         regenerator: true,
+        corejs: false,
+        useESModules: true,
       },
     ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
+      },
+    ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 
@@ -111,6 +137,7 @@ it(`Allows to configure browser targets`, () => {
   expect(presets[0]).toEqual([
     expect.stringContaining(path.join(`@babel`, `preset-env`)),
     {
+      exclude: [`transform-typeof-symbol`],
       corejs: 2,
       loose: true,
       modules: false,
@@ -118,4 +145,25 @@ it(`Allows to configure browser targets`, () => {
       targets,
     },
   ])
+})
+
+describe(`in production mode`, () => {
+  it(`adds babel-plugin-transform-react-remove-prop-types`, () => {
+    process.env.GATSBY_BUILD_STAGE = `build-javascript`
+
+    const { plugins } = preset()
+
+    expect(plugins).toEqual(
+      expect.arrayContaining([
+        [
+          expect.stringContaining(
+            path.join(`babel-plugin-transform-react-remove-prop-types`)
+          ),
+          {
+            removeImport: true,
+          },
+        ],
+      ])
+    )
+  })
 })

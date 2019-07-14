@@ -1,4 +1,4 @@
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 
 const stripTrailingSlash = chain => chain.replace(/(\w)\/+$/, `$1`)
 
