@@ -56,6 +56,7 @@ describe(`Queryable Node interfaces`, () => {
     dispatch(
       createTypes(`
         interface TestInterface @nodeInterface {
+          id: ID!
           foo: String
           date: Date @dateformat
         }
@@ -86,6 +87,7 @@ describe(`Queryable Node interfaces`, () => {
     dispatch(
       createTypes(`
         interface WrongInterface {
+          id: ID!
           foo: String
         }
         type Wrong implements Node & WrongInterface {
@@ -106,6 +108,7 @@ describe(`Queryable Node interfaces`, () => {
     dispatch(
       createTypes(`
         interface WrongInterface @nodeInterface {
+          id: ID!
           foo: String
         }
         type Wrong implements WrongInterface {
@@ -133,6 +136,7 @@ describe(`Queryable Node interfaces`, () => {
             nodeInterface: true,
           },
           fields: {
+            id: `ID!`,
             foo: `String`,
             date: {
               type: `Date`,
@@ -314,6 +318,26 @@ describe(`Queryable Node interfaces`, () => {
       },
     }
     expect(results).toEqual(expected)
+  })
+
+  it(`shows error when interface with @nodeInterface extension does not have id field`, async () => {
+    dispatch(
+      createTypes(`
+        interface NotWrongInterface @nodeInterface {
+          id: ID!
+          foo: String
+        }
+        interface WrongInterface @nodeInterface {
+          foo: String
+        }
+      `)
+    )
+    await buildSchema()
+    expect(report.panic).toBeCalledTimes(1)
+    expect(report.panic).toBeCalledWith(
+      `Interfaces with the \`nodeInterface\` extension must have a field ` +
+        `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`
+    )
   })
 })
 

@@ -331,6 +331,16 @@ const addExtensions = ({
           break
         case `nodeInterface`:
           if (typeComposer instanceof InterfaceTypeComposer) {
+            if (
+              !typeComposer.hasField(`id`) ||
+              typeComposer.getFieldType(`id`).toString() !== `ID!`
+            ) {
+              report.panic(
+                `Interfaces with the \`nodeInterface\` extension must have a field ` +
+                  `\`id\` of type \`ID!\`. Check the type definition of ` +
+                  `\`${typeComposer.getTypeName()}\`.`
+              )
+            }
             typeComposer.setExtension(`nodeInterface`, true)
           }
           break
