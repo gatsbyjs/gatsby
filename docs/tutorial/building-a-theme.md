@@ -1313,11 +1313,76 @@ By publishing your theme to npm, you make it available to pull in as a dependenc
 
 ### Namespace your theme
 
-The most important one is that we want to name space our theme. This helps us keep track of who publish it, and it also helps avoid naming collisions.
+It's important to namespace your theme. It helps differentiate between published packages, and avoid naming collisions.
+
+```json:title=gatsby-theme-events/package.json
+{
+  // highlight-next-line
+  "name": "yourname/gatsby-theme-events",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "develop": "gatsby develop"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.13.19",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "gatsby": "^2.13.19",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.14",
+    "@emotion/styled": "^10.0.14",
+    "@mdx-js/react": "^1.0.27",
+    "gatsby-plugin-theme-ui": "^0.2.6",
+    "gatsby-source-filesystem": "^2.1.5",
+    "gatsby-transformer-yaml": "^2.2.2",
+    "theme-ui": "^0.2.13"
+  }
+}
+```
 
 ### Make sure you're logged in to npm
 
-### Prepare your theme to be published
+To check whether you're logged in to npm, run `npm whoami`:
+
+```shell
+npm whoami
+```
+
+If you're logged in, it will return your npm username.
+
+If you're not logged in, it will return an error.
+
+To log in, run `npm adduser`:
+
+```shell
+npm adduser
+```
+
+You'll be prompted for your npm username and password, and an email. (If you don't have one, create one now).
+
+Now that your theme is namespaced, and you're logged in to npm, you're ready to publish.
+
+### Publish your theme
+
+Change directories into the `gatsby-theme-events` directory and run npm publish:
+
+```shell
+cd gatsby-theme-events
+npm publish
+```
+
+> 💡 Because it's namespaced, you'll need to include public access.
+
+Now it's published! After publishing, you'll be able to find your theme on npm at npmjs.com/{yourpackagename}
 
 ## Consume a theme in a Gatsby application
 
