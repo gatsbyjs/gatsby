@@ -31,4 +31,4 @@ const Page = () => (
 )
 ```
 
-The [API reference](/docs/docs/gatsby-link/) has more documentation.
+The [API reference](/docs/docs/gatsby-link) has more documentation.
