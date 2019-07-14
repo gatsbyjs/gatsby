@@ -50,6 +50,13 @@ it(`Specifies proper presets and plugins for test stage`, () => {
         useESModules: false,
       },
     ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
+      },
+    ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 
@@ -111,6 +118,13 @@ it(`Specifies proper presets and plugins for build-html stage`, () => {
         useESModules: true,
       },
     ],
+    [
+      expect.stringContaining(path.join(`@babel`, `plugin-transform-spread`)),
+      {
+        loose: false,
+      },
+    ],
+    expect.stringContaining(`babel-plugin-dynamic-import-node`),
   ])
 })
 
@@ -131,4 +145,25 @@ it(`Allows to configure browser targets`, () => {
       targets,
     },
   ])
+})
+
+describe(`in production mode`, () => {
+  it(`adds babel-plugin-transform-react-remove-prop-types`, () => {
+    process.env.GATSBY_BUILD_STAGE = `build-javascript`
+
+    const { plugins } = preset()
+
+    expect(plugins).toEqual(
+      expect.arrayContaining([
+        [
+          expect.stringContaining(
+            path.join(`babel-plugin-transform-react-remove-prop-types`)
+          ),
+          {
+            removeImport: true,
+          },
+        ],
+      ])
+    )
+  })
 })
