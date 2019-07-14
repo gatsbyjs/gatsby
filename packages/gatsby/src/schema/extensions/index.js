@@ -115,6 +115,68 @@ const builtInFieldExtensions = {
       }
     },
   },
+
+  memoize: {
+    name: `memoize`,
+    args: {
+      fields: [`String!`],
+    },
+    extend(options, fieldConfig) {
+      // TODO: Use `cache-manager` instance
+      const cachedResults = new Map()
+      const cachedPromises = new Map()
+
+      return {
+        async resolve(source, args, context, info) {
+          const fieldValue = source[info.fieldName]
+
+          if (!fieldConfig.resolve) {
+            return fieldValue
+          }
+
+          // if (
+          //   fieldValue &&
+          //   fieldValue.internal &&
+          //   fieldValue.internal.contentDigest
+          // ) {
+          //   return fieldValue
+          // }
+          // if (
+          //   Array.isArray(fieldValue) &&
+          //   fieldValue.length &&
+          //   fieldValue[0].internal &&
+          //   fieldValue[0].internal.contentDigest
+          // ) {
+          //   return fieldValue
+          // }
+
+          const type = info.returnType.toString()
+          const fieldValues = options.fields
+            ? options.fields.map(field => source[field])
+            : [fieldValue]
+          const cacheKey = JSON.stringify([type, fieldValues, args])
+
+          if (cachedResults.has(cacheKey)) {
+            return cachedResults.get(cacheKey)
+          }
+          if (cachedPromises.has(cacheKey)) {
+            return cachedPromises.get(cacheKey)
+          }
+
+          const promise = fieldConfig
+            .resolve(source, args, context, info)
+            .then(result => {
+              cachedResults.set(cacheKey, result)
+              cachedPromises.delete(cacheKey)
+              return result
+            })
+          cachedPromises.set(cacheKey, promise)
+
+          return promise
+        },
+      }
+    },
+  },
 }
 
 // Reserved for internal use
