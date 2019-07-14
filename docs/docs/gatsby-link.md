@@ -8,13 +8,7 @@ Gatsby's `<Link>` component enables linking to internal pages as well as a power
 
 The component is a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link) that adds useful enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
 
-## How to use Gatsby Link
-
-<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
-
-Video hosted on [egghead.io][egghead].
-
-### Replace `a` tags with the `Link` tag for local links
+### How to use gatsby-link
 
 In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag.
 
