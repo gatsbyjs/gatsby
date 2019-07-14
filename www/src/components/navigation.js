@@ -126,6 +126,7 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/docs/">Docs</NavItem>
             <NavItem linkTo="/tutorial/">Tutorials</NavItem>
             <NavItem linkTo="/plugins/">Plugins</NavItem>
+            <NavItem linkTo="/starters/">Starters</NavItem>
             <NavItem linkTo="/features/">Features</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
