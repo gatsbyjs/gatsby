@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.20...gatsby@2.13.21) (2019-07-14)
+
+### Features
+
+- **gatsby:** Add enum and scalar type builders ([#15689](https://github.com/gatsbyjs/gatsby/issues/15689)) ([e12d79d](https://github.com/gatsbyjs/gatsby/commit/e12d79d))
+
 ## [2.13.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.19...gatsby@2.13.20) (2019-07-13)
 
 **Note:** Version bump only for package gatsby
