@@ -26,7 +26,7 @@ Starting in January 2018, Google [rewards faster sites with a bump in search ran
 
 Adding metadata to pages, such as page title and description, helps search engines understand your content and when to show your pages in search results.
 
-A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components.
+A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](https://www.gatsbyjs.org/docs/add-seo-component/) to your Gatsby app.
 
 Some examples using react-helmet:
 

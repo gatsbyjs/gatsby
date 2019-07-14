@@ -184,7 +184,7 @@ describe(`Get example value for type inference`, () => {
     expect(example.foo).toBe(INVALID_VALUE)
   })
 
-  it(`doesn't confuse empty fields for polymorhpic ones`, () => {
+  it(`doesn't confuse empty fields for polymorphic ones`, () => {
     let example = getExampleValue({
       nodes: [{ foo: { bar: 1 } }, { foo: null }, { foo: { field: 1 } }],
       typeConflictReporter,

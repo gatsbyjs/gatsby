@@ -2,9 +2,11 @@ const path = require(`path`)
 
 const resolve = m => require.resolve(m)
 
+const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
+
 const loadCachedConfig = () => {
   let pluginBabelConfig = {}
-  if (process.env.NODE_ENV !== `test`) {
+  if (!IS_TEST) {
     try {
       pluginBabelConfig = require(path.join(
         process.cwd(),
@@ -29,6 +31,9 @@ module.exports = function preset(_, options = {}) {
 
   const pluginBabelConfig = loadCachedConfig()
   const stage = process.env.GATSBY_BUILD_STAGE || `test`
+  const absoluteRuntimePath = path.dirname(
+    require.resolve(`@babel/runtime/package.json`)
+  )
 
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
@@ -50,6 +55,8 @@ module.exports = function preset(_, options = {}) {
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
+          // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
+          exclude: [`transform-typeof-symbol`],
         },
       ],
       [
@@ -73,10 +80,27 @@ module.exports = function preset(_, options = {}) {
       [
         resolve(`@babel/plugin-transform-runtime`),
         {
-          helpers: true,
+          corejs: false,
+          helpers: stage === `develop` || stage === `test`,
           regenerator: true,
+          useESModules: stage !== `test`,
+          absoluteRuntimePath,
         },
       ],
-    ],
+      [
+        resolve(`@babel/plugin-transform-spread`),
+        {
+          loose: false, // Fixes #14848
+        },
+      ],
+      IS_TEST && resolve(`babel-plugin-dynamic-import-node`),
+      stage === `build-javascript` && [
+        // Remove PropTypes from production build
+        resolve(`babel-plugin-transform-react-remove-prop-types`),
+        {
+          removeImport: true,
+        },
+      ],
+    ].filter(Boolean),
   }
 }

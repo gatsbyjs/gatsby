@@ -53,7 +53,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   return {
     sqip: {
       type: new GraphQLObjectType({
-        name: `Sqip`,
+        name: `SqipSharp`,
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },
@@ -143,14 +143,16 @@ async function sqipContentful({ type, cache, store }) {
   const cacheImage = require(`gatsby-source-contentful/cache-image`)
 
   const program = store.getState().program
-  const cacheDir = resolve(`${program.directory}/.cache/sqip/`)
+  const cacheDir = resolve(
+    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
+  )
 
   await ensureDir(cacheDir)
 
   return {
     sqip: {
       type: new GraphQLObjectType({
-        name: `Sqip`,
+        name: `SqipContentful`,
         fields: {
           svg: { type: GraphQLString },
           dataURI: { type: GraphQLString },

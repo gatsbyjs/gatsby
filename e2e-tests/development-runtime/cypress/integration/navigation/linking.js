@@ -71,4 +71,24 @@ describe(`navigation`, () => {
       cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
     })
   })
+
+  describe(`Supports unicode characters in urls`, () => {
+    it(`Can navigate directly`, () => {
+      cy.visit(`/안녕`).waitForRouteChange()
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`Can navigate on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`)
+        .click()
+        .waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+  })
 })

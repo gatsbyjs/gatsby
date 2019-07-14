@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.4...babel-preset-gatsby@0.2.5) (2019-07-12)
+
+### Features
+
+- **babel-preset-gatsby:** add babel-plugin-transform-react-remove-prop-types for production builds ([#14987](https://github.com/gatsbyjs/gatsby/issues/14987)) ([633e9ea](https://github.com/gatsbyjs/gatsby/commit/633e9ea)), closes [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814)
+
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.3...babel-preset-gatsby@0.2.4) (2019-07-12)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** Add babel-plugin-dynamic-import-node for tests ([#15657](https://github.com/gatsbyjs/gatsby/issues/15657)) ([ad5e8a0](https://github.com/gatsbyjs/gatsby/commit/ad5e8a0))
+
+## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.2...babel-preset-gatsby@0.2.3) (2019-07-12)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** Ensure the spread operator works ([#15172](https://github.com/gatsbyjs/gatsby/issues/15172)) ([bd07262](https://github.com/gatsbyjs/gatsby/commit/bd07262))
+
+## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.1...babel-preset-gatsby@0.2.2) (2019-07-11)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.2.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.0...babel-preset-gatsby@0.2.1) (2019-07-02)
+
+### Bug Fixes
+
+- enable separate config for node_modules transpilation ([#15270](https://github.com/gatsbyjs/gatsby/issues/15270)) ([7e39a12](https://github.com/gatsbyjs/gatsby/commit/7e39a12))
+
 # [0.2.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.1.11...babel-preset-gatsby@0.2.0) (2019-06-20)
 
 **Note:** Version bump only for package babel-preset-gatsby

@@ -2,7 +2,7 @@
 title: Introducing Gatsby Preview Beta
 date: 2019-03-22
 author: Marisa Morby
-excerpt: "Introducing the Gatsby Preview Beta: learn more and sign up today for early access to our first commerical product."
+excerpt: "Introducing the Gatsby Preview Beta: learn more and sign up today for early access to our first commercial product."
 tags:
   - preview
   - cloud
