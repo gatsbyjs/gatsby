@@ -252,11 +252,11 @@ With this saved, restart the dev server:
 yarn workspace gatsby-theme-events develop
 ```
 
-Open up the GraphiQL explorer for the site, and make a test query on "allEvents":
+Open up the GraphiQL explorer for the site, and make a test query on "allEvent":
 
 ```graphql
 query MyQuery {
-  allEvents {
+  allEvent {
     edges {
       node {
         name
@@ -488,7 +488,7 @@ Test that this is working by running `gatsby-theme-events` again:
 yarn workspace gatsby-theme-events develop
 ```
 
-If you query this time for `allEvents`, you'll see the `Event` data, including the new slugs:
+If you query this time for `allEvent`, you'll see the `Event` data, including the new slugs:
 
 ![Successful execution of the previously described query, in the GraphiQL explorer](./images/building-a-theme-query-event-type.png)
 
@@ -992,7 +992,6 @@ Update the `gatsby-theme-events/gatsby-config.js` to accept options:
 // highlight-next-line
 module.exports = ({ contentPath = "data", basePath = "/" }) => ({
   plugins: [
-    "gatsby-plugin-theme-ui",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -1044,7 +1043,9 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
-So far, you've mostly been working in the `gatsby-theme-events` space. Now, to test this options-setting, we'll make some adjustments to `site`.
+> 💡 Up til now, you've mostly been working in the `gatsby-theme-events` space. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead.
+
+Test out this new options-setting, by making some adjustments to `site`.
 
 ### Set up `site/gatsby-config.js`
 
@@ -1073,9 +1074,126 @@ To test this, run the site:
 yarn workspace site develop
 ```
 
-Once this is running, you can observe two things:
+Once this is running, you'll observe two things:
 
 1. An "events" directory has automatically been generated for you in `site/events`.
 2. If you hit [localhost:8000/404](http://localhost:8000/404) (or any other route that doesn't exist), you'll see that the site has created an `/events` page.
 
 However, we don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the development server.
+
+## Make themes extendable with gatsby-plugin-theme-ui
+
+You can make your theme styles extendable using the `gatsby-plugin-theme-ui` package.
+
+Install dependencies:
+
+```shell
+yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/core @emotion/styled and @mdx-js/react
+```
+
+Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
+
+```javascript:title=gatsby-theme-events/gatsby-config.js
+module.exports = ({ contentPath = "data", basePath = "/" }) => ({
+  plugins: [
+    // highlight-next-line
+    "gatsby-plugin-theme-ui",
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: contentPath,
+      },
+    },
+    {
+      resolve: "gatsby-transformer-yaml",
+      options: {
+        typeName: "Event",
+      },
+    },
+  ],
+})
+```
+
+`gatsby-plugin-theme-ui` takes a global theme context object, and makes it available to all themes using `gatsby-plugin-theme-ui`.
+
+To use it, create a `theme.js` file in `gatsby-theme-events/src`:
+
+```javascript:title=gatsby-theme-events/src/theme.js
+export const theme = {
+  space: [0, 4, 8, 16, 32],
+  fonts: {
+    body: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+  },
+  fontSizes: [16, 18, 20, 22, 27, 36],
+  lineHeights: {
+    body: 1.45,
+    heading: 1.1,
+  },
+  colors: {
+    gray: ["#efefef", "#ddd", "#333", "#111"],
+    background: "#fff",
+    primary: "rebeccapurple",
+  },
+  sizes: {
+    default: "90vw",
+    max: "540px",
+  },
+  styles: {
+    Layout: {
+      color: "gray.2",
+      fontFamily: "body",
+      fontSize: 1,
+      lineHeight: "body",
+    },
+    Header: {
+      backgroundColor: "primary",
+      color: "background",
+      fontWeight: "bold",
+      margin: "0 auto",
+      maxWidth: "max",
+      padding: 3,
+      width: "default",
+      a: {
+        color: "inherit",
+      },
+    },
+    Main: {
+      margin: "0 auto",
+      maxWidth: "max",
+      width: "default",
+    },
+    Container: {
+      padding: 3,
+    },
+    h1: {
+      color: "gray.3",
+      fontSize: 5,
+      fontWeight: "bold",
+      lineHeight: "heading",
+      margin: "1rem 0 0",
+    },
+    ul: {
+      borderTop: "1px solid",
+      borderColor: "gray.0",
+      listStyle: "none",
+      padding: 0,
+    },
+    li: {
+      borderBottom: "1px solid",
+      borderColor: "gray.1",
+      padding: 2,
+      "&:focus-within,&:hover": {
+        backgroundColor: "gray.0",
+      },
+    },
+  },
+}
+
+export default theme
+```
+
+`gatsby-plugin-theme-ui` uses [Theme UI](https://theme-ui.com/), which is part of a [System UI network of tools](https://system-ui.com/), all of which follow the [System UI theme specification](https://system-ui.com/theme/).
+
+## Use and override a theme with component shadowing
+
+Using component shadowing, you can override the defaults in theme-ui.
