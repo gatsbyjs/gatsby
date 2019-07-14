@@ -3,6 +3,8 @@
 # TODO: Can we do this all on Alpine for a smaller image?
 FROM node:8
 
+ENV LANG="C.UTF-8"
+
 WORKDIR /usr/src/app
 COPY . .
 RUN yarn && cd www && yarn && yarn run build
