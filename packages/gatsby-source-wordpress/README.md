@@ -893,7 +893,7 @@ If you have custom post types or metadata that are not showing up within the sch
 
 - **Custom Meta**
 
-  To retrieve custom post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`. You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see https://developer.wordpress.org/reference/functions/register_meta/.
+  To retrieve custom post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`. You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see <https://developer.wordpress.org/reference/functions/register_meta/>.
 
 - **Custom Post Types**
 
@@ -970,7 +970,7 @@ In order to resolve this, you can manually change the `post_parent` value of the
 
 ### TypeError - `Cannot read property 'id' of undefined` with WordPress.com
 
-While there are other reasons this can occur (see issues), a very specific version of this issue occurs when a particlar tag, category, file (or any other referenced object) is referenced in a post but cannot be mapped to the list of related items to generate the proper node. 
+While there are other reasons this can occur (see issues), a very specific version of this issue occurs when a particlar tag, category, file (or any other referenced object) is referenced in a post but cannot be mapped to the list of related items to generate the proper node.
 
 This problem occurs because WordPress.com's API lacks the `X-WP-Total` and `X-WP-TotalPages` headers, which are used to determine the number of items and number of pages to pull from the API. Because of this, lower WordPress.com plans (Starter, Personal, and Premium) will not traverse the 2,...n pages and **will not be able to work with more than 100 items**.
 
@@ -998,4 +998,3 @@ Please note that you need to add `dotenv`, as mentioned earlier, to expose envir
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://www.gatsbyjs.org/docs/environment-variables
-
