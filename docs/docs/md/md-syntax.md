@@ -153,6 +153,31 @@ title: Markdown Syntax
   - Indent a block by four spaces
   -     Your code will look like this
 
+
+## MD vs MDX
+- MDX is a superset of Markdown. It allows you to write JSX inside markdown. This includes importing and rendering React components!
+
+## Processing Markdown and MDX in Gatsby:
+
+- In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](https://www.gatsbyjs.org/docs/sourcing-from-the-filesystem) plugin
+- You can check out the package [here](https://www.gatsbyjs.org/packages/gatsby-source-filesystem) for more information on how it works!
+
+
+## Frontmatter + MDX Example
+```
+---
+description: A simple example of a description in frontmatter
+---
+
+import { Chart } from '../components/chart'
+
+# Here’s a chart
+
+The chart is rendered inside our MDX document.
+
+<Chart description={description} />
+```
+
 ## Helpful Resources
 
 - https://daringfireball.net/projects/markdown/syntax
