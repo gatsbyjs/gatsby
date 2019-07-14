@@ -1092,7 +1092,7 @@ You can make your theme styles extendable using the `gatsby-plugin-theme-ui` pac
 Install dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/core @emotion/styled and @mdx-js/react
+yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/core @emotion/styled @mdx-js/react
 ```
 
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
@@ -1200,4 +1200,125 @@ export default theme
 
 ## Use and override a theme with component shadowing
 
-Using component shadowing, you can override the defaults in theme-ui.
+To use the theme you've defined, you'll need to use component shadowing to override the default theme in `gatsby-plugin-theme-ui`.
+
+> 💡 "Component shadowing" is a mechanism to override default provided by a Gatsby theme. To dig deeper on component shadowing, check out [this blog post on the subject](/blog/2019-04-29-component-shadowing/).
+
+You'll use component shadowing to activate the custom theme defined in the previous step.
+
+Create a new file at `gatsby-theme-events/src/gatsby-plugin-theme-ui/index.js`:
+
+```javascript:title=gatsby-theme-events/src/gatsby-plugin-theme-ui/index.js
+import { theme } from "../theme"
+
+export default theme
+```
+
+Now, refactor the `layout.js` component in `gatsby-theme-events` to actually use Theme UI.
+
+First, import the `Layout`, `Header`, `Main`, and `Container` [components from Theme UI](https://theme-ui.com/layout).
+
+```javascript:title=gatsby-theme-events/src/components/layout.js
+import React from "react"
+// highlight-next-line
+import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+
+const Layout = ({ children }) => (
+  <div>
+    <h1>Gatsby Events Theme</h1>
+    {children}
+  </div>
+)
+
+export default Layout
+```
+
+Next, refactor the `layout.js` component to use the Theme UI components:
+
+```javascript:title=gatsby-theme-events/src/components/layout.js
+import React from "react"
+import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+
+// highlight-start
+const Layout = ({ children }) => {
+  return (
+    <ThemeLayout>
+      <Header>Gatsby Events Theme</Header>
+      <Main>
+        <Container>{children}</Container>
+      </Main>
+    </ThemeLayout>
+  )
+}
+// highlight-end
+
+export default Layout
+```
+
+Run the site to see the theme changes that are starting to take effect:
+
+```shell
+yarn workspace site develop
+```
+
+![Theme UI changes starting to take effect on the site. For example, the header is now purple.](./images/building-a-theme-theme-ui-changes.png)
+
+To continue applying theme styles, you can use the `Style` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
+
+```javascript:title=gatsby-theme-events/src/components/event-list.js
+import React from "react"
+import { Link } from "gatsby"
+// highlight-next-line
+import { Styled } from "theme-ui"
+
+const EventList = ({ events }) => {
+  return (
+    <>
+      // highlight-next-line
+      <Styled.h1>Upcoming Events</Styled.h1>
+      // highlight-next-line
+      <Styled.ul>
+        {events.map(event => (
+          // highlight-next-line
+          <Styled.li key={event.id}>
+            <strong>
+              <Link to={event.slug}>{event.name}</Link>
+            </strong>
+            <br />
+            {new Date(event.startDate).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}{" "}
+            in {event.location}
+            // highlight-next-line
+          </Styled.li>
+        ))}
+        // highlight-next-line
+      </Styled.ul>
+    </>
+  )
+}
+
+export default EventList
+```
+
+By replacing the `h1` with `Styled.h1`, `ul` with `Styled.ul`, and `li` with `Styled.li`, the theme styles for those elements have been applied:
+
+![Theme UI style changes showing on the events listing.](./images/building-a-theme-events-listing-styling.png)
+
+## Publish a theme to npm
+
+By publishing your theme to npm, you make it available to pull in as a dependency for any of your projects, and for anyone in the community to use, too.
+
+### Namespace your theme
+
+The most important one is that we want to name space our theme. This helps us keep track of who publish it, and it also helps avoid naming collisions.
+
+### Make sure you're logged in to npm
+
+### Prepare your theme to be published
+
+## Consume a theme in a Gatsby application
+
+## Use component shadowing to override theme components
