@@ -188,12 +188,17 @@ plugins.
 
 ## How to use Gatsby with Wordpress.com hosting
 
+### For Blogger, Personal, and Premium Plans
+
 Set `hostingWPCOM: true`.
 
 You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/).
 
-Note : you don't need this for Wordpress.org hosting in which your WordPress
-will behave like a self-hosted instance.
+Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
+
+### For Business, and eCommerce Plans
+
+Business and eCommerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
 
 ## Test your WordPress API
 
@@ -963,6 +968,14 @@ which prevents Gatsby from retrieving it.
 
 In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
 
+### TypeError - `Cannot read property 'id' of undefined` with WordPress.com
+
+While there are other reasons this can occur (see issues), a very specific version of this issue occurs when a particlar tag, category, file (or any other referenced object) is referenced in a post but cannot be mapped to the list of related items to generate the proper node. 
+
+This problem occurs because WordPress.com's API lacks the `X-WP-Total` and `X-WP-TotalPages` headers, which are used to determine the number of items and number of pages to pull from the API. Because of this, lower WordPress.com plans (Starter, Personal, and Premium) will not traverse the 2,...n pages and **will not be able to work with more than 100 items**.
+
+Note: The plugin is currently using `https://public-api.wordpress.com/wp/v2/sites/[site]/` base endpoint, instead of what is in the WordPress.com documentation (`https://public-api.wordpress.com/rest/v1.1/sites/[site]/`. the `wp/v2` closely resembles the WordPress.org API, whereas the `rest/v1` and `rest/v1.1` enpoints behave differently.
+
 ### ACF Option Pages - Option page data not showing or not updating
 
 This issue occurs when you are trying to pull in data from your ACF Option pages. On certain occasions (initial setup or rebuilding) the data will not appear or won't update to the latest data.
@@ -985,3 +998,4 @@ Please note that you need to add `dotenv`, as mentioned earlier, to expose envir
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://www.gatsbyjs.org/docs/environment-variables
+
