@@ -1444,3 +1444,59 @@ Save, and you'll see the new event data in your project:
 ![The new site, with your new test event data.](./images/building-a-theme-add-test-event.png)
 
 ## Use component shadowing to override theme components
+
+"Component shadowing" in Gatsby themes allow us to override or modify components in the theme. Let's use our new "theme-test" project to experiment with this.
+
+Start by adding a `src` folder to your project.
+
+Inside `src`, create a folder with the same title as your theme.
+
+> 💡 Note, with a namespaced theme, this will be two directories deep. For example, using the example of `@jlengstorf/gatsby-theme-events`, the file tree of your project will look like this:
+
+```text
+.
+├── data
+│   └── events.yml
+├── src
+│   └── @jlengstorf
+│       └── gatsby-theme-events
+├── gatsby-config.js
+├── package.json
+└── yarn.lock
+```
+
+Anything inside `theme-test/src/@jlengstorf/gatsby-theme-events` will "shadow" the `@jlengstorf/gatsby-theme-events` theme.
+
+### Override theme colors
+
+To test this shadowing, let's override `theme.js`:
+
+```javascript:title=theme-test/src/@jlengstorf/gatsby-theme-events/theme.js
+import { theme as baseTheme } from "@jlengstorf/gatsby-theme-events/src/theme"
+
+export const theme = {
+  ...baseTheme,
+  colors: {
+    ...baseTheme.colors,
+    primary: "blue",
+  },
+}
+```
+
+<!-- @TODO screenshot -->
+
+### Override an entire component
+
+To override an entire component, create a new file in your project, corresponding to that file in the theme.
+
+For example, create a new file in your "theme-test" project to override `layout.js`.
+
+```javascript:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
+import React from "react"
+
+export default ({ children }) => <>{children}</>
+```
+
+If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component's been completely overridden.
+
+<!-- @TODO screenshot -->
