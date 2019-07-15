@@ -1386,4 +1386,61 @@ Now it's published! After publishing, you'll be able to find your theme on npm a
 
 ## Consume a theme in a Gatsby application
 
+Let's test the theme you've created by created!
+
+### Set up a new Gatsby site
+
+Make a new directory called `theme-test`, and set up the project:
+
+```shell
+mkdir theme-test
+cd theme-test
+yarn init -y
+yarn add react react-dom gatsby @jlengstorf/gatsby-theme-events
+```
+
+> 💡 Where it says `@jlengstorf/gatsby-theme-events`, use the theme you just published instead! Or if you didn't want to actually publish your test theme, go ahead and use `@jlengstorf/gatsby-theme-events`.
+
+### Configure the theme
+
+Open up the code for this new project.
+
+Create a new `gatsby-config.js` file in the root:
+
+```javascript:title=theme-test/gatsby-config.js
+module.exports = {
+  plugins: ["@jlengstorf/gatsby-theme-events"],
+}
+```
+
+### Install the Gatsby CLI
+
+Run:
+
+```shell
+yarn global add gatsby-cli
+```
+
+### Run the site
+
+Making sure you're in your `/theme-test` directory, run `gatsby develop` to start the site.
+
+![The new site, running your new Gatsby theme.](./images/building-a-theme-running-theme.png)
+
+### Add some data
+
+In your project, create a directory, `data`. Inside `data`, create a new file, `events.yml`:
+
+```yaml:title=theme-test/data/events.yml
+- name: Party
+  location: My House
+  start_date: 2019-06-26
+  end_date: 2019-06-26
+  url: https://jason.af/party
+```
+
+Save, and you'll see the new event data in your project:
+
+![The new site, with your new test event data.](./images/building-a-theme-add-test-event.png)
+
 ## Use component shadowing to override theme components
