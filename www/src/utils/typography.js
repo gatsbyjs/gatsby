@@ -2,18 +2,17 @@ import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import {
   space,
-  fontSizes as fontSizeTokens,
+  fontSizes,
   colors,
   transition,
   radii,
   mediaQueries,
   lineHeights,
   letterSpacings,
-  fonts,
   fontWeights,
-} from "./tokens"
-
-const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
+} from "./presets"
+// typography.js expects an array, so grab font stacks directly from tokens
+import { fonts } from "./tokens"
 
 const _options = {
   bodyFontFamily: fonts.system,
@@ -40,18 +39,18 @@ const _options = {
         letterSpacing: letterSpacings.tight,
       },
       h2: {
-        marginTop: rhythm(space[9]),
+        marginTop: space[9],
       },
       h3: {
-        marginTop: rhythm(space[9]),
+        marginTop: space[9],
       },
       "h4, h5, h6": { fontSize: fontSizes[3] },
       "h5, h6": { fontWeight: fontWeights[0] },
       h6: { fontSize: fontSizes[2] },
       blockquote: {
-        paddingLeft: rhythm(space[6]),
+        paddingLeft: space[6],
         marginLeft: 0,
-        borderLeft: `${rhythm(space[1])} solid ${colors.ui.border.subtle}`,
+        borderLeft: `${space[1]} solid ${colors.ui.border.subtle}`,
       },
       hr: {
         backgroundColor: colors.ui.border.subtle,
@@ -93,7 +92,7 @@ const _options = {
       ".gatsby-highlight pre[class*='language-']": {
         backgroundColor: `transparent`,
         border: 0,
-        padding: `${rhythm(space[6])} 0`,
+        padding: `${space[6]} 0`,
         WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class*='language-']::before": {
@@ -104,9 +103,9 @@ const _options = {
         fontFamily: fonts.monospace.join(`,`),
         letterSpacing: letterSpacings.tracked,
         lineHeight: lineHeights.solid,
-        padding: `${rhythm(space[1])} ${rhythm(space[2])}`,
+        padding: `${space[1]} ${space[2]}`,
         position: `absolute`,
-        right: rhythm(space[6]),
+        right: space[6],
         textAlign: `right`,
         textTransform: `uppercase`,
         top: `0`,
@@ -183,22 +182,20 @@ const _options = {
         float: `left`,
         minWidth: `100%`,
         // reset code vertical padding declared earlier
-        padding: `0 ${rhythm(space[6])}`,
+        padding: `0 ${space[6]}`,
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
-        marginRight: `${rhythm(-space[6])}`,
-        marginLeft: `${rhythm(-space[6])}`,
-        paddingRight: rhythm(space[6]),
-        paddingLeft: rhythm(space[5]),
-        borderLeft: `${rhythm(space[1])} solid ${
-          colors.code.lineHighlightBorder
-        }`,
+        marginLeft: `-${space[6]}`,
+        marginRight: `-${space[6]}`,
+        paddingLeft: space[5],
+        paddingRight: space[6],
+        borderLeft: `${space[1]} solid ${colors.code.lineHighlightBorder}`,
         display: `block`,
       },
       ".gatsby-highlight pre::-webkit-scrollbar": {
-        width: rhythm(space[2]),
-        height: rhythm(space[2]),
+        width: space[2],
+        height: space[2],
       },
       ".gatsby-highlight pre::-webkit-scrollbar-thumb": {
         background: colors.code.scrollbarThumb,
@@ -212,7 +209,7 @@ const _options = {
         fontSize: fontSizes[1],
         lineHeight: lineHeights.dense,
         paddingTop: rhythm(3 / 8),
-        marginBottom: rhythm(space[9]),
+        marginBottom: space[9],
         display: `block`,
         fontStyle: `normal`,
         color: colors.text.secondary,
@@ -240,8 +237,8 @@ const _options = {
       ".post-body figcaption": {
         color: colors.text.secondary,
         fontSize: `87.5%`,
-        marginTop: rhythm(space[1]),
-        marginBottom: rhythm(space[3]),
+        marginTop: space[1],
+        marginBottom: space[3],
       },
       //
       ".main-body a.anchor": {
@@ -256,17 +253,17 @@ const _options = {
       // gatsby-image
       ".main-body a.gatsby-resp-image-link": {
         borderBottom: `transparent`,
-        marginTop: rhythm(space[9]),
-        marginBottom: rhythm(space[9]),
+        marginTop: space[9],
+        marginBottom: space[9],
       },
       ".main-body figure a.gatsby-resp-image-link": {
         borderBottom: `transparent`,
-        marginTop: rhythm(space[9]),
+        marginTop: space[9],
         marginBottom: 0,
       },
       ".gatsby-highlight, .gatsby-code-title, .post-body .gatsby-resp-image-link": {
-        marginLeft: rhythm(-space[6]),
-        marginRight: rhythm(-space[6]),
+        marginLeft: `-${space[6]}`,
+        marginRight: `-${space[6]}`,
       },
       ".gatsby-resp-image-link": {
         borderRadius: `${radii[1]}px`,
@@ -278,7 +275,7 @@ const _options = {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
-        padding: `${rhythm(space[5])} ${rhythm(space[6])} ${rhythm(space[4])}`,
+        padding: `${space[5]} ${space[6]} ${space[4]}`,
         fontSize: fontSizes[0],
       },
       [mediaQueries.md]: {
@@ -296,18 +293,18 @@ const _options = {
       },
       video: {
         width: `100%`,
-        marginBottom: rhythm(space[6]),
+        marginBottom: space[6],
       },
       ".twitter-tweet-rendered": {
-        margin: `${rhythm(space[9])} auto !important`,
+        margin: `${space[9]} auto !important`,
       },
       ".egghead-video": {
         border: `none`,
       },
       [mediaQueries.lg]: {
         ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
-          marginLeft: rhythm(-space[6]),
-          marginRight: rhythm(-space[6]),
+          marginLeft: `-${space[6]}`,
+          marginRight: `-${space[6]}`,
         },
       },
       [mediaQueries.xxl]: {

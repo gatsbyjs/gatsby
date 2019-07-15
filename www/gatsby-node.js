@@ -282,7 +282,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
   createRedirect({
     fromPath: `/docs/image-tutorial/`,
-    toPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
     isPermanent: true,
   })
   createRedirect({

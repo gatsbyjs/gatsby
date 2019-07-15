@@ -12,7 +12,7 @@ module.exports = function() {
     files
       .map(
         (file, i) =>
-          `const scope_${i} = require('${slash(
+          `var scope_${i} = require('${slash(
             path.join(abs, file)
           )}').default;`
       )
