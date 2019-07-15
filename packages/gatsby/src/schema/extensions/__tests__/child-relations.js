@@ -641,11 +641,188 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(results).toEqual(expected)
   })
 
-  it.todo(`adds children fields to interfaces with @nodeInterface`)
-  it.todo(
-    `adds children fields to interfaces with @nodeInterface (mime-type relation)`
-  )
-  it.todo(`does not add children fields to interfaces without @nodeInterface`)
+  it(`adds children fields to interfaces with @nodeInterface`, async () => {
+    dispatch(
+      createTypes(`
+        interface Ancestors @nodeInterface {
+          id: ID!
+        }
+        type Parent implements Node & Ancestors {
+          id: ID!
+        }
+        type AnotherChild implements Node @childOf(types: ["Ancestors"], many: true) {
+          name: String
+        }
+      `)
+    )
+    const query = `
+      {
+        allAncestors {
+          nodes {
+            childrenAnotherChild {
+              id
+            }
+          }
+        }
+        allParent {
+          nodes {
+            childrenAnotherChild {
+              id
+            }
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allAncestors: {
+        nodes: [
+          {
+            childrenAnotherChild: [
+              {
+                id: `anotherchild1`,
+              },
+              {
+                id: `anotherchild2`,
+              },
+            ],
+          },
+          {
+            childrenAnotherChild: [],
+          },
+        ],
+      },
+      allParent: {
+        nodes: [
+          {
+            childrenAnotherChild: [
+              {
+                id: `anotherchild1`,
+              },
+              {
+                id: `anotherchild2`,
+              },
+            ],
+          },
+          {
+            childrenAnotherChild: [],
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
+
+  it(`adds children fields to interfaces with @nodeInterface (mime-type relation)`, async () => {
+    dispatch(
+      createTypes(`
+        interface Ancestors @nodeInterface @mimeTypes(types: ["application/listenup"]) {
+          id: ID!
+        }
+        type Parent implements Node & Ancestors @mimeTypes(types: ["application/listenup"]) {
+          id: ID!
+        }
+        type Child implements Node @childOf(mimeTypes: ["application/listenup"]) {
+          name: String
+        }
+      `)
+    )
+    const query = `
+      {
+        allAncestors {
+          nodes {
+            childChild {
+              id
+            }
+          }
+        }
+        allParent {
+          nodes {
+            childChild {
+              id
+            }
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allAncestors: {
+        nodes: [
+          {
+            childChild: {
+              id: `child1`,
+            },
+          },
+          {
+            childChild: {
+              id: `child2`,
+            },
+          },
+        ],
+      },
+      allParent: {
+        nodes: [
+          {
+            childChild: {
+              id: `child1`,
+            },
+          },
+          {
+            childChild: {
+              id: `child2`,
+            },
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
+
+  it(`does not add children fields to interfaces without @nodeInterface`, async () => {
+    dispatch(
+      createTypes(`
+        interface Ancestors {
+          id: ID!
+        }
+        type Parent implements Node & Ancestors{
+          id: ID!
+        }
+        type Child implements Node @childOf(types: ["Ancestors"]) {
+          name: String
+        }
+      `)
+    )
+    await buildSchema()
+    expect(report.error).toBeCalledWith(
+      `With the \`childOf\` extension, children fields can only be added to ` +
+        `interfaces which have the \`@nodeInterface\` extension.\n` +
+        `Check the type definition of \`Ancestors\`.`
+    )
+  })
+
+  it(`does not add children fields from interfaces without @nodeInterface`, async () => {
+    dispatch(
+      createTypes(`
+        type Parent implements Node {
+          id: ID!
+        }
+        interface NextGeneration @childOf(types: ["Parent"]) {
+          id: ID!
+          name: String
+        }
+        type Child implements Node & NextGeneration @childOf(types: ["Parent"]) {
+          name: String
+        }
+      `)
+    )
+    await buildSchema()
+    expect(report.error).toBeCalledWith(
+      `The \`childOf\` extension can only be used on interface types that have ` +
+        `the \`@nodeInterface\` extension.\n` +
+        `Check the type definition of \`NextGeneration\`.`
+    )
+  })
 })
 
 const buildSchema = async () => {

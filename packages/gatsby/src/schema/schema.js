@@ -700,17 +700,18 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
         )
         return
       }
-      // FIXME: Needs #15545
-      // if (
-      //   type instanceof InterfaceTypeComposer &&
-      //   !type.hasExtension(`nodeInterface`)
-      // ) {
-      //   report.error(
-      //     `The \`childOf\` extension can only be used on interface types that have the \`@nodeInterface\` extension.\n` +
-      //       `Check the type definition of \`${type.getTypeName()}\`.`
-      //   )
-      //   return
-      // }
+      debugger
+      if (
+        type instanceof InterfaceTypeComposer &&
+        !type.hasExtension(`nodeInterface`)
+      ) {
+        report.error(
+          `The \`childOf\` extension can only be used on interface types that ` +
+            `have the \`@nodeInterface\` extension.\n` +
+            `Check the type definition of \`${type.getTypeName()}\`.`
+        )
+        return
+      }
 
       const { types, mimeTypes, many } = type.getExtension(`childOf`)
       new Set(types).forEach(parentType => {
@@ -730,6 +731,17 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
 
   parentTypesToChildren.forEach((children, parent) => {
     const typeComposer = schemaComposer.getAnyTC(parent)
+    if (
+      typeComposer instanceof InterfaceTypeComposer &&
+      !typeComposer.hasExtension(`nodeInterface`)
+    ) {
+      report.error(
+        `With the \`childOf\` extension, children fields can only be added to ` +
+          `interfaces which have the \`@nodeInterface\` extension.\n` +
+          `Check the type definition of \`${typeComposer.getTypeName()}\`.`
+      )
+      return
+    }
     children.forEach((many, child) => {
       if (many) {
         typeComposer.addFields(createChildrenField(child.getTypeName()))
@@ -744,6 +756,17 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
     if (parentTypes) {
       parentTypes.forEach(parent => {
         const typeComposer = schemaComposer.getAnyTC(parent)
+        if (
+          typeComposer instanceof InterfaceTypeComposer &&
+          !typeComposer.hasExtension(`nodeInterface`)
+        ) {
+          report.error(
+            `With the \`childOf\` extension, children fields can only be added to ` +
+              `interfaces which have the \`@nodeInterface\` extension.\n` +
+              `Check the type definition of \`${typeComposer.getTypeName()}\`.`
+          )
+          return
+        }
         children.forEach((many, child) => {
           if (many) {
             typeComposer.addFields(createChildrenField(child.getTypeName()))
