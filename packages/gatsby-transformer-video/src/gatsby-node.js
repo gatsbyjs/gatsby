@@ -36,7 +36,7 @@ exports.setFieldsOnGraphQLNodeType = (
     }
 
     if (type === `ContentfulAsset`) {
-      fileType = video.internal.mediaType
+      fileType = video.file.contentType
     }
 
     if (!fileType) {

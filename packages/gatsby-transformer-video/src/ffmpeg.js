@@ -23,7 +23,7 @@ export default class FFMPEG {
     }
   }
 
-  cacheVideo = async ({
+  cacheContentfulVideo = async ({
     id,
     contentful_id: cid,
     file: { url, fileName },
@@ -77,7 +77,7 @@ export default class FFMPEG {
     }
 
     if (type === `ContentfulAsset`) {
-      path = await this.queue.add(() => this.cacheVideo(video))
+      path = await this.queue.add(() => this.cacheContentfulVideo(video))
     }
 
     if (!path) {
