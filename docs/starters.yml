@@ -3311,22 +3311,16 @@
     - Offline support
     - Web App Manifest
     - SEO
-- url: https://gatsby-simple-blog.thundermiracle.com
-  repo: https://github.com/thundermiracle/gatsby-simple-blog
-  description: A gatsby-starter-blog with overreacted looking and tags, breadcrumbs, disqus, i18n, eslint supported
+- url: https://contentful-starter.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby_contentful_starter
+  description: An Awesome Starter Kit to help you get going with Contentful and Gatsby
   tags:
-    - i18n
     - Blog
-    - Netlify
-    - Linting
-    - Disqus
-    - Testing
+    - CMS:Contentful
+    - CMS:Headless
   features:
-    - Easily Configurable
-    - Tags
-    - Breadcrumbs
-    - Tags
-    - Disqus
-    - i18n
-    - ESLint
-    - Jest
+    - Bare-bones starter.
+    - Dynamic content from Contentful CMS
+    - Ready made Components
+    - Responsive Design
+    - Includes Contentful Delivery API for production build
