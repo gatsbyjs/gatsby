@@ -188,7 +188,14 @@ jobs:
           test_path: e2e-tests/production-runtime
           test_command: yarn test && yarn test:offline
 
-  e2e_tests_themes:
+  themes_e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/development-runtime
+          test_command: yarn test
+
+  themes_e2e_tests_production_runtime:
     <<: *e2e-executor
     steps:
       - e2e-test:
@@ -252,7 +259,9 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
-      - e2e_tests_themes:
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
