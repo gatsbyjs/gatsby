@@ -331,7 +331,14 @@ export default class FFMPEG {
 
   createH264 = (...args) => this.queue.add(() => this.convertToH264(...args))
   convertToH264 = async ({ publicDir, path, filename, fieldArgs }) => {
-    const { maxWidth, maxHeight, h264Crf, h264Preset } = fieldArgs
+    const {
+      maxWidth,
+      maxHeight,
+      h264Crf,
+      h264Preset,
+      h264MaxRate,
+      h264BufSize,
+    } = fieldArgs
 
     const publicPath = resolve(publicDir, `${filename}-h264.mp4`)
     const alreadyExists = await pathExists(publicPath)
@@ -349,11 +356,15 @@ export default class FFMPEG {
         .input(path)
         .videoCodec(`libx264`)
         .complexFilter([filters])
-        .outputOptions([
-          `-crf ${h264Crf}`,
-          `-preset ${h264Preset}`,
-          `-pix_fmt yuv420p`,
-        ])
+        .outputOptions(
+          [
+            h264Crf && `-crf ${h264Crf}`,
+            h264Preset && `-preset ${h264Preset}`,
+            h264MaxRate && `-maxrate ${h264MaxRate}`,
+            h264BufSize && `-bufsize ${h264BufSize}`,
+            `-pix_fmt yuv420p`,
+          ].filter(Boolean)
+        )
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
@@ -366,7 +377,14 @@ export default class FFMPEG {
 
   createH265 = (...args) => this.queue.add(() => this.convertToH265(...args))
   convertToH265 = async ({ publicDir, path, filename, fieldArgs }) => {
-    const { maxWidth, maxHeight, h265Crf, h265Preset } = fieldArgs
+    const {
+      maxWidth,
+      maxHeight,
+      h265Crf,
+      h265Preset,
+      h265MaxRate,
+      h265BufSize,
+    } = fieldArgs
 
     const publicPath = resolve(publicDir, `${filename}-h265.mp4`)
     const alreadyExists = await pathExists(publicPath)
@@ -384,11 +402,15 @@ export default class FFMPEG {
         .input(path)
         .videoCodec(`libx265`)
         .complexFilter([filters])
-        .outputOptions([
-          `-crf ${h265Crf}`,
-          `-preset ${h265Preset}`,
-          `-pix_fmt yuv420p`,
-        ])
+        .outputOptions(
+          [
+            h265Crf && `-crf ${h265Crf}`,
+            h265Preset && `-preset ${h265Preset}`,
+            h265MaxRate && `-maxrate ${h265MaxRate}`,
+            h265BufSize && `-bufsize ${h265BufSize}`,
+            `-pix_fmt yuv420p`,
+          ].filter(Boolean)
+        )
 
       this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
