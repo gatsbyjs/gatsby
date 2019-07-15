@@ -1379,7 +1379,7 @@ Change directories into the `gatsby-theme-events` directory and run npm publish:
 
 ```shell
 cd gatsby-theme-events
-npm publish
+npm publish --access public
 ```
 
 > 💡 Because it's namespaced, you'll need to include public access.
