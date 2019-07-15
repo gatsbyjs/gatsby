@@ -119,6 +119,8 @@
     - title: Additional Tutorials
       link: /tutorial/additional-tutorials/
       items:
+        - title: Using Gatsby Image with Your Site
+          link: /tutorial/gatsby-image-tutorial/
         - title: Making a Site with User Authentication
           link: /tutorial/authentication-tutorial/
         - title: Making an e-commerce Gatsby Site with Stripe
