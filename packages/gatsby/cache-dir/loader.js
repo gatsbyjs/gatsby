@@ -1,7 +1,7 @@
 import "core-js/modules/es7.promise.finally"
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
-import PathFinder from "./find-path"
+import { setMatchPaths, findMatchPath, cleanPath } from "./find-path"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -135,7 +135,7 @@ export class BaseLoader {
     this.prefetchTriggered = new Set()
     this.prefetchCompleted = new Set()
     this.loadComponent = loadComponent
-    this.pathFinder = new PathFinder(matchPaths)
+    setMatchPaths(matchPaths)
   }
 
   setApiRunner(apiRunner) {
@@ -144,7 +144,7 @@ export class BaseLoader {
   }
 
   loadPageDataJson(rawPath) {
-    const pagePath = this.pathFinder.find(rawPath)
+    const pagePath = cleanPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
     }
@@ -156,9 +156,13 @@ export class BaseLoader {
     })
   }
 
+  findMatchPath(rawPath) {
+    return findMatchPath(rawPath)
+  }
+
   // TODO check all uses of this and whether they use undefined for page resources not exist
   loadPage(rawPath) {
-    const pagePath = this.pathFinder.find(rawPath)
+    const pagePath = cleanPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       return Promise.resolve(page.payload)
@@ -169,6 +173,14 @@ export class BaseLoader {
 
     const inFlight = this.loadPageDataJson(pagePath)
       .then(result => {
+        if (result.notFound) {
+          // if request was a 404, we should fallback to findMatchPath.
+          let foundMatchPatch = findMatchPath(pagePath)
+          if (foundMatchPatch !== pagePath) {
+            return this.loadPage(foundMatchPatch)
+          }
+        }
+
         if (result.status === `error`) {
           return {
             status: `error`,
@@ -215,7 +227,7 @@ export class BaseLoader {
 
   // returns undefined if loading page ran into errors
   loadPageSync(rawPath) {
-    const pagePath = this.pathFinder.find(rawPath)
+    const pagePath = cleanPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       return this.pageDb.get(pagePath).payload
     }
@@ -242,22 +254,36 @@ export class BaseLoader {
   }
 
   prefetch(pagePath) {
-    if (!this.shouldPrefetch(pagePath)) {
+    const realPath = cleanPath(pagePath)
+    if (!this.shouldPrefetch(realPath)) {
       return false
     }
+
+    let hasPrefetched = true
+
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
-    if (!this.prefetchTriggered.has(pagePath)) {
-      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
-      this.prefetchTriggered.add(pagePath)
+    if (!this.prefetchTriggered.has(realPath)) {
+      this.apiRunner(`onPrefetchPathname`, { pathname: realPath })
+      hasPrefetched = false
+      this.prefetchTriggered.add(realPath)
     }
 
-    this.doPrefetch(pagePath).then(pageData => {
-      const realPath = this.pathFinder.find(pagePath)
-      if (!this.prefetchCompleted.has(realPath)) {
-        this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
+    if (hasPrefetched) {
+      return true
+    }
 
-        const realPath = this.pathFinder.find(pagePath)
+    this.doPrefetch(realPath).then(pageData => {
+      if (!pageData) {
+        const matchPath = findMatchPath(realPath)
+
+        if (matchPath !== realPath) {
+          return this.prefetch(matchPath)
+        }
+      }
+
+      if (!this.prefetchCompleted.has(realPath)) {
+        this.apiRunner(`onPostPrefetchPathname`, { pathname: realPath })
         this.prefetchCompleted.add(realPath)
       }
     })
@@ -274,7 +300,7 @@ export class BaseLoader {
   }
 
   getResourceURLsForPathname(rawPath) {
-    const pagePath = this.pathFinder.find(rawPath)
+    const pagePath = cleanPath(rawPath)
     const page = this.pageDataDb.get(pagePath)
     if (page) {
       const pageResources = toPageResources(page.payload)
@@ -289,7 +315,7 @@ export class BaseLoader {
   }
 
   isPageNotFound(rawPath) {
-    const pagePath = this.pathFinder.find(rawPath)
+    const pagePath = cleanPath(rawPath)
     const page = this.pageDb.get(pagePath)
     return page && page.notFound === true
   }
