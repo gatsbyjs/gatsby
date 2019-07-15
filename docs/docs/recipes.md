@@ -132,7 +132,7 @@ Showtime.
 
 ### Deploying to Netlify
 
-Use `netlify-cli` to deploy your gatsby application without getting out of command line interface.
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
 
 #### Prerequisites
 
