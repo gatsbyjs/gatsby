@@ -23,6 +23,7 @@
     "fuse.js": "^3.2.0",
     "gatsby": "^2.11.0",
     "gatsby-image": "^2.0.5",
+    "gatsby-design-tokens": "*",
     "gatsby-plugin-canonical-urls": "^2.0.5",
     "gatsby-plugin-catch-links": "^2.0.2",
     "gatsby-plugin-emotion": "^4.0.3",

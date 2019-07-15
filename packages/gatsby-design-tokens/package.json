@@ -1,0 +1,8 @@
+{
+  "name": "gatsby-design-tokens",
+  "version": "1.0.0",
+  "description": "Design Tokens",
+  "main": "index.js",
+  "author": "Florian Kissling",
+  "license": "MIT"
+}
