@@ -44,6 +44,12 @@ const typeExtensions = {
       },
     },
   },
+  nodeInterface: {
+    description:
+      `Adds root query fields for an interface. All implementing types ` +
+      `must also implement the Node interface.`,
+    locations: [DirectiveLocation.INTERFACE],
+  },
 }
 
 const builtInFieldExtensions = {
@@ -130,17 +136,21 @@ const reservedExtensionNames = [
   ...Object.keys(builtInFieldExtensions),
 ]
 
-const toDirectives = ({ schemaComposer, extensions, locations }) =>
+const toDirectives = ({
+  schemaComposer,
+  extensions,
+  locations: defaultLocations,
+}) =>
   Object.keys(extensions).map(name => {
     const extension = extensions[name]
-    const { args, description } = extension
+    const { args, description, locations } = extension
     // Support the `graphql-compose` style of directly providing the field type as string
     const normalizedArgs = schemaComposer.typeMapper.convertArgConfigMap(args)
     return new GraphQLDirective({
       name,
       args: normalizedArgs,
       description,
-      locations,
+      locations: locations || defaultLocations,
     })
   })
 
