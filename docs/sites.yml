@@ -6554,3 +6554,15 @@
   built_by: Stephan Weinhold
   built_by_url: https://stephanweinhold.com/
   featured: false
+- title: MAZECX
+  url: https://maze.cx
+  main_url: https://maze.cx
+  description: >
+    MAZECX is a digital agency designed to solve challenges by unleashing human potential to process more and execute faster using technology.
+  categories:
+    - Agency
+    - Design
+    - Technology
+    - User Experience
+    - Web Development
+  featured: false
