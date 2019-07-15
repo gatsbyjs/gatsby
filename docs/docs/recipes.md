@@ -112,7 +112,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 ```jsx:title=src/pages/index.js
 import React from "react"
-import styled from "styled-components"
+import styled from "styled-components" //highlight-line
 
 const Container = styled.div`
   margin: 3rem auto;
