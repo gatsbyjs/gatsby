@@ -188,7 +188,7 @@ jobs:
     <<: *e2e-executor
     environment:
       CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: c9ea1b91-eed6-4bac-be41-eccd75a48969
+      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -204,7 +204,7 @@ jobs:
     <<: *e2e-executor
     environment:
       CYPRESS_PROJECT_ID: 9parq5
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
+      CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
       - e2e-test:
           test_path: e2e-tests/themes/development-runtime
