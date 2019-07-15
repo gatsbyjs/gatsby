@@ -3324,6 +3324,25 @@
     - Ready made Components
     - Responsive Design
     - Includes Contentful Delivery API for production build
+- url: https://gatsby-simple-blog.thundermiracle.com
+  repo: https://github.com/thundermiracle/gatsby-simple-blog
+  description: A gatsby-starter-blog with overreacted looking and tags, breadcrumbs, disqus, i18n, eslint supported
+  tags:
+    - i18n
+    - Blog
+    - Netlify
+    - Linting
+    - Disqus
+    - Testing
+  features:
+    - Easily Configurable
+    - Tags
+    - Breadcrumbs
+    - Tags
+    - Disqus
+    - i18n
+    - ESLint
+    - Jest
 - url: https://anubhavsrivastava.github.io/gatsby-starter-grayscale
   repo: https://github.com/anubhavsrivastava/gatsby-starter-grayscale
   description: Single page starter based on the Grayscale site template by startbootstrap for portfolio page
