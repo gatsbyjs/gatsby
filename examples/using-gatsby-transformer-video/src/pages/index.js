@@ -55,7 +55,12 @@ export const query = graphql`
             mp4
             webp
           }
-          video {
+          video(
+            overlay: "gatsby.png"
+            overlayX: "end"
+            overlayY: "start"
+            overlayPadding: 25
+          ) {
             h264
             h265
           }

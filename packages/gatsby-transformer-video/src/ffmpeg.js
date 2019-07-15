@@ -146,14 +146,51 @@ export default class FFMPEG {
     return previewFilters
   }
 
-  createCustomFilters = ({ fieldArgs: { saturation } }) => {
+  createCustomFilters = ({
+    fieldArgs: { saturation, overlay, overlayX, overlayY, overlayPadding },
+  }) => {
     const filters = []
+
+    if (overlay) {
+      const padding = overlayPadding === undefined ? 10 : overlayPadding
+      let x = overlayX === undefined ? `center` : overlayX
+      let y = overlayY === undefined ? `center` : overlayY
+
+      if (x === `start`) {
+        x = padding
+      }
+      if (x === `center`) {
+        x = `(main_w-overlay_w)/2`
+      }
+      if (x === `end`) {
+        x = `main_w-overlay_w-${padding}`
+      }
+
+      if (y === `start`) {
+        y = padding
+      }
+      if (y === `center`) {
+        y = `(main_h-overlay_h)/2`
+      }
+      if (y === `end`) {
+        y = `main_h-overlay_h-${padding}`
+      }
+
+      filters.push(`overlay=x=${x}:y=${y}`)
+    }
 
     if (saturation !== 1) {
       filters.push(`eq=saturation=${saturation}`)
     }
 
     return filters
+  }
+
+  enhanceFfmpegForFilters = ({ fieldArgs: { overlay }, ffmpegSession }) => {
+    if (overlay) {
+      const path = resolve(this.rootDir, overlay)
+      ffmpegSession.input(path)
+    }
   }
 
   createPreviewMp4 = (...args) =>
@@ -190,6 +227,7 @@ export default class FFMPEG {
           `-pix_fmt yuv420p`,
         ])
 
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
       console.log(`[MP4] Done`)
@@ -227,6 +265,7 @@ export default class FFMPEG {
         .complexFilter([filters])
         .outputOptions([`-preset picture`, `-compression_level 6`, `-loop 0`])
 
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
       console.log(`[WEBP] Done`)
@@ -267,6 +306,7 @@ export default class FFMPEG {
         .duration(duration)
         .complexFilter([filters])
 
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, tmpPath)
 
       console.log(`[GIF] Optimizing`)
@@ -315,6 +355,7 @@ export default class FFMPEG {
           `-pix_fmt yuv420p`,
         ])
 
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
       console.log(`[H264] Done`)
@@ -349,6 +390,7 @@ export default class FFMPEG {
           `-pix_fmt yuv420p`,
         ])
 
+      this.enhanceFfmpegForFilters({ ffmpegSession, fieldArgs })
       await this.executeFfmpeg(ffmpegSession, publicPath)
 
       console.log(`[H265] Done`)
