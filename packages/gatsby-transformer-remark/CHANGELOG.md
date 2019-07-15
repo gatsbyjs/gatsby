@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.5...gatsby-transformer-remark@2.6.6) (2019-07-15)
+
+### Features
+
+- **gatsby-transformer-remark:** Allow remark subplugins to modify graphql types owned by parent plugin [#15688](https://github.com/gatsbyjs/gatsby/issues/15688) ([6959c6d](https://github.com/gatsbyjs/gatsby/commit/6959c6d))
+
 ## [2.6.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.4...gatsby-transformer-remark@2.6.5) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-transformer-remark
