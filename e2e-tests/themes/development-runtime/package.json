@@ -17,6 +17,9 @@
     "serve": "gatsby serve",
     "start": "npm run develop",
     "test": "cross-env CYPRESS_SUPPORT=y npm run start-server-and-test",
+    "posttest": "npm run reset",
+    "reset": "node scripts/reset.js",
+    "update": "node scripts/update.js",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "cy:open": "cypress open",
     "cy:run": "cypress run --browser chrome"
