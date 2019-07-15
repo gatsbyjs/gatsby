@@ -126,7 +126,7 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 
 #### Prerequisites
 
--A Gatsby site ([check out the Tutorial if you don't yet have a Gatsby site](/tutorial/))  
+-A [Gatsby site](/docs/quick-start)
 -The [Gatsby CLI](/docs/gatsby-cli)
 
 #### Directions
