@@ -777,8 +777,8 @@ export interface Actions {
   deletePage(args: { path: string; component: string }): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
-  createPage(
-    args: { path: string; component: string; context: Record<string, unknown> },
+  createPage<TContext = Record<string, unknown>>(
+    args: { path: string; component: string; context: TContext },
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
