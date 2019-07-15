@@ -1120,7 +1120,7 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => ({
 })
 ```
 
-`gatsby-plugin-theme-ui` takes a global theme context object, and makes it available to all themes using `gatsby-plugin-theme-ui`.
+`gatsby-plugin-theme-ui` takes a global theme context object and makes it available to all themes using `gatsby-plugin-theme-ui`.
 
 To use it, create a `theme.js` file in `gatsby-theme-events/src`:
 
