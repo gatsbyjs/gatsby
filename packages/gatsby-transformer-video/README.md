@@ -38,15 +38,41 @@ module.exports = {
 
 ```graphql
 query {
-  contentfulAsset {
-    video {
-      h264
-      h265
+  allFile {
+    edges {
+      node {
+        id
+        videoPreview(duration: 2, fps: 3, maxWidth: 600) {
+          gif
+          mp4
+          webp
+        }
+        video(
+          overlay: "gatsby.png"
+          overlayX: "end"
+          overlayY: "start"
+          overlayPadding: 25
+        ) {
+          h264
+          h265
+        }
+      }
     }
-    videopreview(width: 600, fps: 4, duration: 3) {
-      mp4
-      webp
-      gif
+  }
+  allContentfulAsset {
+    edges {
+      node {
+        id
+        videoPreview(width: 600, fps: 4, duration: 3) {
+          mp4
+          webp
+          gif
+        }
+        video {
+          h264
+          h265
+        }
+      }
     }
   }
 }
