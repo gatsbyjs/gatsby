@@ -3311,15 +3311,61 @@
     - Offline support
     - Web App Manifest
     - SEO
+- url: https://contentful-starter.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby_contentful_starter
+  description: An Awesome Starter Kit to help you get going with Contentful and Gatsby
+  tags:
+    - Blog
+    - CMS:Contentful
+    - CMS:Headless
+  features:
+    - Bare-bones starter.
+    - Dynamic content from Contentful CMS
+    - Ready made Components
+    - Responsive Design
+    - Includes Contentful Delivery API for production build
+- url: https://gatsby-simple-blog.thundermiracle.com
+  repo: https://github.com/thundermiracle/gatsby-simple-blog
+  description: A gatsby-starter-blog with overreacted looking and tags, breadcrumbs, disqus, i18n, eslint supported
+  tags:
+    - i18n
+    - Blog
+    - Netlify
+    - Linting
+    - Disqus
+    - Testing
+  features:
+    - Easily Configurable
+    - Tags
+    - Breadcrumbs
+    - Tags
+    - Disqus
+    - i18n
+    - ESLint
+    - Jest
+- url: https://anubhavsrivastava.github.io/gatsby-starter-grayscale
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-grayscale
+  description: Single page starter based on the Grayscale site template by startbootstrap for portfolio page
+  tags:
+    - Onepage
+    - Portfolio
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
 - url: https://gatsby-all-in.netlify.com
   repo: https://github.com/Gherciu/gatsby-all-in
   description: A starter that includes the most popular js libraries, already pre-configured and ready for use.
   tags:
     - Linting
     - Netlify
+    - Styling:Tailwind
   features:
     - Tailwind CSS Framework
     - Antd UI Framework pre-configured
     - Redux for managing state
     - Eslint and Stylelint to enforce code style
-    - Web App Manifest
