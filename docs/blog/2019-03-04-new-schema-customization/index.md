@@ -126,7 +126,6 @@ type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
   birthday: Date
 }
 
-
 # For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
 type AuthorJson implements Node @infer {
   id: ID!
