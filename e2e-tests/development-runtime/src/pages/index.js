@@ -20,6 +20,9 @@ const IndexPage = ({ data }) => (
     <Link to="/page-2/" data-testid="page-two">
       Go to page 2
     </Link>
+    <Link to="/안녕" data-testid="page-with-unicode-path">
+      Go to page with unicode path
+    </Link>
     <Link to="/__non_existant_page__/" data-testid="broken-link">
       Go to a broken link
     </Link>
