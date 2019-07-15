@@ -642,7 +642,7 @@ If you hit [http://localhost:8000/404](http://localhost:8000/404) (for example -
 
 ## Display sorted data with `useStaticQuery`
 
-To show event data, you'll import `graphql` and `useStaticQuery` from Gatsby in the events.js component.
+To show event data, you'll import `graphql` and `useStaticQuery` from Gatsby in the `events.js` component.
 
 ```javascript:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
