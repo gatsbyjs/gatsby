@@ -1,4 +1,3 @@
 {
-  "baseUrl": "http://localhost:9000/blog",
-  "projectId": "pzj19c"
+  "baseUrl": "http://localhost:9000/blog"
 }
