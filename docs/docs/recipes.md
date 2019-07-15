@@ -160,7 +160,7 @@ With this flag added, Gatsby will automatically add your path prefix to the begi
 5. Make sure that your site looks the same when running `gatsby build` as with `gatsby develop`. By running `gatsby serve` when you build your site, you can test out (and debug if necessary) the finished product before deploying it live.
 
 ```shell
-gatsby serve
+gatsby build && gatsby serve
 ```
 
 5. From here, you can either copy the files in your `public` folder directly to your server, or deploy to one of many popular servers. Check out the [deployment docs for specific hosting platforms and how to deploy to them](/docs/deploying-and-hosting/).
