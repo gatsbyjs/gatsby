@@ -6564,3 +6564,13 @@
   built_by: Anthony Boyd
   built_by_url: https://www.anthonyboyd.com/
   featured: false
+- title: Relocation Hero
+  url: https://relocationhero.com
+  main_url: https://relocationhero.com
+  description: >
+    Blog with FAQs related to Germany relocation. Built with Gatsby.
+  categories:
+    - Blog
+    - Consulting
+    - Community
+  featured: false
