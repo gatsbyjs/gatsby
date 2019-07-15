@@ -104,7 +104,11 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 #### Directions
 
-1. Open the index page component (src/pages/index.js), import the styled-components package, and create some styled components
+1. Open the index page component (`src/pages/index.js`) and import the `styled-components` package
+
+2. Style components by creating style blocks for each element type
+
+3. Apply to the page by including styled components in the JSX
 
 ```jsx:title=src/pages/index.js
 import React from "react"
