@@ -94,6 +94,13 @@ module.exports = function preset(_, options = {}) {
         },
       ],
       IS_TEST && resolve(`babel-plugin-dynamic-import-node`),
+      stage === `build-javascript` && [
+        // Remove PropTypes from production build
+        resolve(`babel-plugin-transform-react-remove-prop-types`),
+        {
+          removeImport: true,
+        },
+      ],
     ].filter(Boolean),
   }
 }
