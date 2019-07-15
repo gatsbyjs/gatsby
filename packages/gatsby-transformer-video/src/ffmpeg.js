@@ -401,8 +401,8 @@ export default class FFMPEG {
 
   generateScaleFilter({ maxWidth, maxHeight }) {
     if (!maxHeight) {
-      return `${maxWidth}:-2:flags=lanczos`
+      return `'min(${maxWidth},iw)':-2:flags=lanczos`
     }
-    return `iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)):-2:flags=lanczos`
+    return `'min(iw*min(1\\,min(${maxWidth}/iw\\,${maxHeight}/ih)), iw)':-2:flags=lanczos`
   }
 }
