@@ -15,29 +15,29 @@ it(`does not crash when no pluginConfig is provided`, () => {
 
 const DO_NOT_TRACK_STRING = `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
 
+it(`adds a preconnect link for Google Analytics`, () => {
+  const mocks = {
+    setHeadComponents: jest.fn(),
+    setPostBodyComponents: jest.fn(),
+  }
+  const pluginOptions = {
+    trackingIds: [`GA_TRACKING_ID`],
+    pluginConfig: {},
+  }
+
+  onRenderBody(mocks, pluginOptions)
+  const [link] = mocks.setHeadComponents.mock.calls[0][0]
+
+  expect(link).toEqual(
+    <link
+      rel="preconnect dns-prefetch"
+      key="preconnect-google-analytics"
+      href="https://www.google-analytics.com"
+    />
+  )
+})
+
 describe(`respectDNT`, () => {
-  it(`adds a preconnect link for Google Analytics`, () => {
-    const mocks = {
-      setHeadComponents: jest.fn(),
-      setPostBodyComponents: jest.fn(),
-    }
-    const pluginOptions = {
-      trackingIds: [`GA_TRACKING_ID`],
-      pluginConfig: {},
-    }
-
-    onRenderBody(mocks, pluginOptions)
-    const [link] = mocks.setHeadComponents.mock.calls[0][0]
-
-    expect(link).toEqual(
-      <link
-        rel="preconnect dns-prefetch"
-        key="preconnect-google-analytics"
-        href="https://www.google-analytics.com"
-      />
-    )
-  })
-
   it(`defaults respectDNT option to false`, () => {
     const mocks = {
       setHeadComponents: jest.fn(),
