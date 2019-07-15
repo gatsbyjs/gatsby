@@ -52,7 +52,7 @@ function buildLocalCommands(cli, isLocalSite) {
       cli.showHelp()
       report.verbose(`current directory: ${directory}`)
       return report.panic(
-        `gatsby <${command}> can only be run for a gatsby site. \n` +
+        `gatsby <${command}> can only be run for a gatsby site.\n` +
           `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`
       )
@@ -266,7 +266,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `repl`,
-    desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
+    desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
