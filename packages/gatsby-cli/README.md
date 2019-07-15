@@ -2,8 +2,8 @@
 
 The Gatsby command line interface (CLI). It is used to perform common functionality, such as creating a Gatsby application based on a starter, spinning up a hot-reloading local development server, and more!
 
-Let's you create new Gatsby apps using
-[Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/).
+Lets you create new Gatsby apps using
+[Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/). It also lets you run commands on sites. The tool runs code from the `gatsby` package installed locally.
 
 ## How to use
 
