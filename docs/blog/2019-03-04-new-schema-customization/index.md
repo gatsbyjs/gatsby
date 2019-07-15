@@ -117,7 +117,7 @@ You can specify types for some or all of the fields that you have on the given n
 
 ```graphql
 # For this type `name` won't be added
-type AuthorJson implements Node @dontInfer() {
+type AuthorJson implements Node @dontInfer {
   birthday: Date
 }
 
@@ -128,7 +128,7 @@ type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
 
 
 # For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
-type AuthorJson implements Node @infer() {
+type AuthorJson implements Node @infer {
   id: ID!
 }
 
