@@ -28,9 +28,9 @@ Now we have the `develop` script available to be used which will use our package
 
 ## How to use
 
-The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
+The Gatsby CLI is available via [npm](https://www.npmjs.com/). If you want to run a single command, you can use [npx](https://npm.im/npx), e.g. `npx gatsby-cli new gatsby-site`. If you want to install it globally, run `npm install -g gatsby-cli`.
 
-Run `gatsby --help` for full help.
+Run `npx gatsby-cli --help` or `gatsby --help` for full help.
 
 ### `new`
 
