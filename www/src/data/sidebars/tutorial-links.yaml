@@ -120,6 +120,8 @@
     - title: Additional Tutorials
       link: /tutorial/additional-tutorials/
       items:
+        - title: Using Gatsby Image with Your Site
+          link: /tutorial/gatsby-image-tutorial/
         - title: Making a Site with User Authentication
           link: /tutorial/authentication-tutorial/
         - title: Making an e-commerce Gatsby Site with Stripe
@@ -127,7 +129,7 @@
         - title: Using the WordPress Source Plugin
           link: /tutorial/wordpress-source-plugin-tutorial/
         - title: Adding Images to a WordPress Site
-          link: /tutorial/image-tutorial/
+          link: /tutorial/wordpress-image-tutorial/
         - title: Using the Prismic with GraphQL Source Plugin
           link: /tutorial/prismic-source-graphql-tutorial
         - title: Writing Documentation with Docz
