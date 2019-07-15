@@ -3,5 +3,6 @@
   "workspaces": [
     "gatsby-theme-about",
     "production-runtime"
+    "development-runtime"
   ]
 }
