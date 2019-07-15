@@ -139,7 +139,7 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 gatsby build
 ```
 
-3. If you'd like to have the index of your site be at a path other than `/`, set a path prefix by adding the following to your `gatsby-config.js` and replacing `yourpathprefix` with your desired path prefix:
+3. To include a site path other than `/` (such as `/site-name/`), set a path prefix by adding the following to your `gatsby-config.js` and replacing `yourpathprefix` with your desired path prefix:
 
 ```js:title=gatsby-config.js
 module.exports = {
