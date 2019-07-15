@@ -170,7 +170,7 @@ gatsby build && gatsby serve
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/preparing-for-deployment/)
-
+- Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
 ## Querying data
 
 ### The StaticQuery Component
