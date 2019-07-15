@@ -98,7 +98,8 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 #### Prerequisites
 
-- [Install gatsby-pluging-styled-components, styled-components, and babel-plugin-styled-components and its necessary dependencies](/packages/gatsby-plugin-styled-components/) for use in Gatsby
+- A [Gatsby site](/docs/quick-start/) with an index page component
+- [gatsby-pluging-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `gatsby-config.js`
 
 - Add it to your site’s gatsby-config.js
 
