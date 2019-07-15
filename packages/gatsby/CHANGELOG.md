@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.21...gatsby@2.13.22) (2019-07-15)
+
+### Bug Fixes
+
+- **gatsby:** Add NodeInput for createNode function types ([#14537](https://github.com/gatsbyjs/gatsby/issues/14537)) ([1b549e8](https://github.com/gatsbyjs/gatsby/commit/1b549e8))
+
+### Features
+
+- **gatsby:** Add nodeInterface extension ([#15545](https://github.com/gatsbyjs/gatsby/issues/15545)) ([8c46237](https://github.com/gatsbyjs/gatsby/commit/8c46237))
+- **gatsby:** add prefetchPathname the public api ([#13985](https://github.com/gatsbyjs/gatsby/issues/13985)) ([7173f96](https://github.com/gatsbyjs/gatsby/commit/7173f96))
+
 ## [2.13.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.20...gatsby@2.13.21) (2019-07-14)
 
 ### Features
