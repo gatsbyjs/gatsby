@@ -3324,3 +3324,17 @@
     - Ready made Components
     - Responsive Design
     - Includes Contentful Delivery API for production build
+- url: https://anubhavsrivastava.github.io/gatsby-starter-grayscale
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-grayscale
+  description: Single page starter based on the Grayscale site template by startbootstrap for portfolio page
+  tags:
+    - Onepage
+    - Portfolio
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
