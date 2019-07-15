@@ -29,7 +29,6 @@ class Pagination extends React.Component {
     return (
       <div
         css={{
-          background: colors.ui.background,
           display: `flex`,
           justifyContent: `space-between`,
           margin: `0 -${space[6]}`,

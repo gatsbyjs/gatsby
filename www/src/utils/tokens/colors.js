@@ -153,6 +153,7 @@ export default {
     color: palette.purple[50],
     border: palette.purple[30],
     hoverBorder: palette.purple[50],
+    hoverColor: palette.purple[60],
   },
   text: {
     header: palette.black,

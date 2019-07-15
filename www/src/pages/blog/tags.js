@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
@@ -77,21 +79,19 @@ class TagsPage extends React.Component {
           </Helmet>
           <div>
             <div
-              css={{
+              sx={{
                 display: `flex`,
                 flexFlow: `row nowrap`,
                 justifyContent: `space-between`,
                 alignItems: `center`,
-                paddingTop: space[9],
-                paddingBottom: space[6],
-                borderBottom: `1px solid ${colors.ui.border.subtle}`,
+                pt: 9,
+                pb: 6,
+                borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
               }}
             >
-              <h1 css={{ margin: 0 }}>
-                Tags ({Object.keys(uniqGroup).length || 0})
-              </h1>
+              <h1 sx={{ m: 0 }}>Tags ({Object.keys(uniqGroup).length || 0})</h1>
               <div>
-                <label css={{ position: `relative` }}>
+                <label sx={{ position: `relative` }}>
                   <input
                     css={styles.searchInput}
                     id="tagsFilter"
@@ -119,12 +119,12 @@ class TagsPage extends React.Component {
               </div>
             </div>
             <ul
-              css={{
+              sx={{
                 display: `flex`,
                 flexFlow: `row wrap`,
                 justifyContent: `start`,
-                padding: 0,
-                margin: 0,
+                p: 0,
+                m: 0,
               }}
             >
               {results.length > 0 ? (
@@ -134,9 +134,10 @@ class TagsPage extends React.Component {
                   const buildTag = (
                     <li
                       key={tag.fieldValue}
-                      css={{
-                        padding: `${space[3]} ${space[1]}`,
-                        margin: space[4],
+                      sx={{
+                        py: 3,
+                        px: 1,
+                        m: 4,
                         listStyleType: `none`,
                       }}
                     >
@@ -150,7 +151,7 @@ class TagsPage extends React.Component {
                     currentLetter = firstLetter
                     return (
                       <React.Fragment key={`letterheader-${currentLetter}`}>
-                        <h4 css={{ width: `100%`, flexBasis: `100%` }}>
+                        <h4 sx={{ width: `100%`, flexBasis: `100%` }}>
                           {currentLetter.toUpperCase()}
                         </h4>
                         {buildTag}

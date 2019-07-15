@@ -1,10 +1,12 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { colors, space, mediaQueries, fontWeights } from "../utils/presets"
+import { space, mediaQueries, fontWeights } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -103,15 +105,17 @@ class IndexRoute extends React.Component {
         >
           <MastheadContent />
           <div
-            css={{
-              padding: space[6],
-              paddingTop: 0,
+            sx={{
+              p: 6,
+              pt: 0,
               width: `100%`,
-              borderBottom: `1px solid ${colors.purple[10]}`,
-              borderTop: `1px solid ${colors.purple[10]}`,
-              background: colors.purple[5],
+              borderColor: `ui.border.subtle`,
+              borderBottomWidth: `1px`,
+              borderBottomStyle: `solid`,
+              borderTopWidth: `1px`,
+              borderTopStyle: `solid`,
               [mediaQueries.xl]: {
-                padding: space[8],
+                p: 8,
               },
             }}
           >

@@ -1,5 +1,6 @@
 import React from "react"
-import { MDXProvider } from "@mdx-js/react"
+import { ThemeProvider, ColorMode } from "theme-ui"
+import theme from "./src/gatsby-plugin-theme-ui"
 import GuideList from "./src/components/guide-list.js"
 import HubspotForm from "./src/components/hubspot-form"
 import Pullquote from "./src/components/shared/pullquote"
@@ -13,5 +14,8 @@ const components = {
 }
 
 export default ({ element }) => (
-  <MDXProvider components={components}>{element}</MDXProvider>
+  <ThemeProvider theme={theme} components={components}>
+    <ColorMode />
+    {element}
+  </ThemeProvider>
 )

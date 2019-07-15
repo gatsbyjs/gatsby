@@ -454,7 +454,6 @@ class SearchForm extends Component {
   }
 }
 SearchForm.propTypes = {
-  iconColor: PropTypes.string,
   offsetVertical: PropTypes.string,
 }
 export default SearchForm

@@ -1,6 +1,7 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 
-import { colors } from "../../utils/presets"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/logos"
 import Card from "../card"
 import CardHeadline from "../card-headline"
@@ -9,11 +10,11 @@ import FuturaParagraph from "../futura-paragraph"
 
 const HomepageFeatures = () => (
   <div
-    css={{
+    sx={{
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,
-      borderBottom: `1px solid ${colors.purple[10]}`,
+      borderBottom: t => `1px solid ${t.colors.purple[10]}`,
     }}
   >
     <Card>
@@ -58,7 +59,7 @@ const HomepageFeatures = () => (
     </Card>
     <Card>
       <CardHeadline>
-        <em css={{ color: colors.gatsby, fontStyle: `normal` }}>Static</em>
+        <em sx={{ color: `gatsby`, fontStyle: `normal` }}>Static</em>
         {` `}
         Progressive Web Apps
       </CardHeadline>

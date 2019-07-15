@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import {
   InstantSearch,
@@ -215,8 +217,10 @@ class Search extends Component {
         }}
       >
         <div
-          css={{
-            borderBottom: `1px solid ${colors.ui.border.subtle}`,
+          sx={{
+            borderBottomWidth: `1px`,
+            borderBottomStyle: `solid`,
+            borderColor: `ui.border.subtle`,
             display: `flex`,
             flexDirection: `column`,
             width: `100%`,

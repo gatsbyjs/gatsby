@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import { Link } from "gatsby"
 
@@ -87,7 +89,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 </div>
                 {node.featured && (
                   <Link
-                    css={{
+                    sx={{
                       "&&": {
                         display: `none`,
                         transition: `background ${transition.speed.slow} ${
@@ -97,10 +99,10 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                         }`,
                         [mediaQueries.lg]: {
                           alignItems: `center`,
-                          background: colors.accent,
+                          background: `accent`,
                           border: `none`,
-                          borderTopRightRadius: radii[1],
-                          borderBottomLeftRadius: radii[1],
+                          borderTopRightRadius: 1,
+                          borderBottomLeftRadius: 1,
                           boxShadow: `none`,
                           cursor: `pointer`,
                           display: `flex`,

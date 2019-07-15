@@ -1,63 +1,55 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import React from "react"
 import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
-import {
-  colors,
-  space,
-  radii,
-  transition,
-  fontSizes,
-  lineHeights,
-} from "../../utils/presets"
+import { transition } from "../../utils/presets"
+
+const iconStyles = {
+  display: `inline-block`,
+  mr: 2,
+}
 
 const ExpandAllButton = ({ onClick, expandAll }) => (
   <button
     onClick={onClick}
-    css={{
-      fontSize: fontSizes[0],
-      lineHeight: lineHeights.solid,
-      background: `transparent`,
-      border: `none`,
-      borderRadius: radii[1],
-      color: colors.text.secondary,
-      display: `flex`,
-      cursor: `pointer`,
+    sx={{
       alignItems: `center`,
+      bg: `transparent`,
+      border: `none`,
+      borderRadius: 1,
+      color: `text.secondary`,
+      cursor: `pointer`,
+      display: `flex`,
       flexGrow: 0,
-      paddingTop: space[2],
-      paddingBottom: space[2],
+      fontSize: 0,
+      lineHeight: `solid`,
+      py: 2,
       textAlign: `left`,
       transition: `all ${transition.speed.fast}`,
       "&:hover": {
-        background: colors.purple[10],
-        color: colors.gatsby,
+        bg: `purple.10`,
+        color: `gatsby`,
       },
     }}
   >
     {expandAll ? (
-      <Fragment>
-        <span>Collapse All</span>
-        <span css={{ ...styles.icon }}>
+      <>
+        <span sx={iconStyles}>
           <GoFold />
         </span>
-      </Fragment>
+        <span>Collapse All</span>
+      </>
     ) : (
-      <Fragment>
-        <span>Expand All</span>
-        <span css={{ ...styles.icon }}>
+      <>
+        <span sx={iconStyles}>
           <GoUnfold />
         </span>
-      </Fragment>
+        <span>Expand All</span>
+      </>
     )}
   </button>
 )
 
 export default ExpandAllButton
-
-const styles = {
-  icon: {
-    display: `inline-block`,
-    marginLeft: 8,
-  },
-}

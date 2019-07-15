@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
@@ -11,14 +13,7 @@ import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
 
-import {
-  colors,
-  space,
-  transition,
-  radii,
-  shadows,
-  mediaQueries,
-} from "../utils/presets"
+import { space, mediaQueries } from "../utils/presets"
 import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 class BlogPostsIndex extends React.Component {
@@ -27,20 +22,17 @@ class BlogPostsIndex extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <main
-          id={`reach-skip-nav`}
-          css={{ [breakpointGutter]: { background: colors.ui.background } }}
-        >
+        <main id={`reach-skip-nav`}>
           <Helmet>
             <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
           <Container>
             <h1
-              css={{
-                marginTop: 0,
-                marginBottom: space[8],
+              sx={{
+                mt: 0,
+                mb: 8,
+                // refactor: screen reader stuff again
                 [mediaQueries.md]: {
-                  marginTop: 0,
                   position: `absolute`,
                   width: 1,
                   height: 1,
@@ -58,34 +50,35 @@ class BlogPostsIndex extends React.Component {
               <BlogPostPreviewItem
                 post={node}
                 key={node.fields.slug}
-                css={{
-                  borderBottom: `1px solid ${colors.ui.border.subtle}`,
-                  paddingBottom: space[8],
-                  marginBottom:
-                    index === allMdx.edges.length - 1 ? 0 : space[8],
+                sx={{
+                  borderBottomWidth: `1px`,
+                  borderBottomStyle: `solid`,
+                  borderColor: `ui.border.subtle`,
+                  pb: 8,
+                  mb: index === allMdx.edges.length - 1 ? 0 : 8,
                   ...pullIntoGutter,
                   [breakpointGutter]: {
-                    padding: space[9],
-                    boxShadow: shadows.raised,
-                    background: colors.white,
-                    borderRadius: radii[2],
+                    p: 9,
+                    boxShadow: `raised`,
+                    bg: `white`,
+                    borderRadius: 2,
                     border: 0,
-                    marginBottom: space[6],
-                    marginLeft: 0,
-                    marginRight: 0,
-                    transition: `transform ${transition.speed.default} ${
-                      transition.curve.default
-                    },  box-shadow ${transition.speed.default} ${
-                      transition.curve.default
-                    }, padding ${transition.speed.default} ${
-                      transition.curve.default
-                    }`,
+                    mb: 6,
+                    mx: 0,
+                    transition: t =>
+                      `transform ${t.transition.speed.default} ${
+                        t.transition.curve.default
+                      },  box-shadow ${t.transition.speed.default} ${
+                        t.transition.curve.default
+                      }, padding ${t.transition.speed.default} ${
+                        t.transition.curve.default
+                      }`,
                     "&:hover": {
-                      transform: `translateY(-${space[1]})`,
-                      boxShadow: shadows.overlay,
+                      transform: t => `translateY(-${t.space[1]})`,
+                      boxShadow: `overlay`,
                     },
                     "&:active": {
-                      boxShadow: shadows.cardActive,
+                      boxShadow: `cardActive`,
                       transform: `translateY(0)`,
                     },
                   },
@@ -98,11 +91,12 @@ class BlogPostsIndex extends React.Component {
             ))}
             <Pagination context={this.props.pageContext} />
             <div
-              css={{
-                background: colors.ui.background,
+              sx={{
                 ...pullIntoGutter,
-                paddingBottom: space[6],
-                borderBottom: `1px solid ${colors.ui.border.subtle}`,
+                pb: 6,
+                borderBottomWidth: `1px`,
+                borderBottomStyle: `solid`,
+                borderColor: `ui.border.subtle`,
                 display: `flex`,
                 flexFlow: `row nowrap`,
                 justifyContent: `flex-end`,

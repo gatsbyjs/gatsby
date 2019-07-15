@@ -1,9 +1,10 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
-import { colors, space, transition } from "../../utils/presets"
-import presets from "../../utils/sidebar/presets"
+import { space, transition } from "../../utils/presets"
 
 const ItemWithSubitems = ({
   activeItemLink,
@@ -89,17 +90,17 @@ class Accordion extends React.Component {
 
     return (
       <li
-        css={{
-          background:
+        sx={{
+          bg:
             (isParentOfActiveItem && item.level === 0) ||
             (isActive && item.level === 0)
-              ? presets.activeSectionBackground
+              ? `sidebar.activeSectionBackground`
               : false,
           position: `relative`,
           transition: `all ${transition.speed.fast} ${
             transition.curve.default
           }`,
-          marginTop:
+          mt:
             item.level === 0 && disableAccordions && !isSingle
               ? `${space[4]} !important`
               : false,
@@ -108,10 +109,12 @@ class Accordion extends React.Component {
               "::before": {
                 content: `" "`,
                 position: `absolute`,
-                borderTop:
+                borderTopWidth: `1px`,
+                borderTopStyle: `solid`,
+                borderColor:
                   !isExpanded && !isSingle && !isActive
-                    ? `1px solid ${colors.ui.border.subtle}`
-                    : `1px solid ${colors.purple[10]}`,
+                    ? `ui.border.subtle`
+                    : `sidebar.itemBorderActive`,
                 left:
                   (isParentOfActiveItem && isExpanded) ||
                   (isActive && isExpanded)
@@ -143,14 +146,14 @@ class Accordion extends React.Component {
         />
         <ul
           id={uid}
-          css={{
+          sx={{
+            display: isExpanded ? `block` : `none`,
             listStyle: `none`,
             margin: 0,
             position: `relative`,
-            display: isExpanded ? `block` : `none`,
             ...(item.ui === `steps` && {
               "&:after": {
-                background: colors.ui.border.subtle,
+                backgroundColor: `ui.border.subtle`,
                 bottom: 0,
                 content: `''`,
                 left: 27,

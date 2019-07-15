@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import SvgDefs from "../assets/svg-defs"
@@ -14,11 +16,8 @@ import {
   radii,
   space,
   mediaQueries,
-  sizes,
   fontSizes,
   lineHeights,
-  fonts,
-  zIndices,
 } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 
@@ -54,9 +53,12 @@ const MobileNavigation = () => (
   <>
     <span
       css={{
+        // refactor: we have this in a couple places
         position: `absolute`,
         width: 1,
-        height: 1,
+        // this is 0 because shows in dark mode,
+        // fix that
+        height: 0,
         padding: 0,
         overflow: `hidden`,
         clip: `rect(0,0,0,0)`,
@@ -67,18 +69,20 @@ const MobileNavigation = () => (
       <SvgDefs />
     </span>
     <div
-      css={{
+      sx={{
         position: `fixed`,
         display: `flex`,
         justifyContent: `space-around`,
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: zIndices.navigation,
-        borderTop: `1px solid ${colors.ui.border.subtle}`,
-        background: colors.white,
-        height: sizes.headerHeight,
-        fontFamily: fonts.header,
+        zIndex: `navigation`,
+        borderTopWidth: `1px`,
+        borderTopStyle: `solid`,
+        borderColor: `ui.border.subtle`,
+        bg: `white`,
+        height: `headerHeight`,
+        fontFamily: `header`,
         paddingBottom: `env(safe-area-inset-bottom)`,
         [mediaQueries.md]: {
           display: `none`,

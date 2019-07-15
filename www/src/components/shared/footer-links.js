@@ -1,46 +1,45 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
-import styled from "@emotion/styled"
-import { colors, space, fontSizes } from "../../utils/presets"
-
-const FooterList = styled.ul`
-  background: ${props => (props.bg ? props.bg : `0`)};
-  border-top: 1px solid ${colors.ui.border.subtle};
-  font-size: ${fontSizes[1]};
-  margin: 0;
-  padding: ${space[9]} ${space[6]};
-  margin-top: ${space[9]};
-  list-style: none;
-  text-align: center;
-  width: 100%;
-
-  li {
-    display: inline-block;
-    &:after {
-      color: ${colors.grey[30]};
-      content: "•";
-      padding-left: 1em;
-      padding-right: 1em;
-    }
-
-    &:last-of-type:after {
-      content: none;
-    }
-
-    a {
-      color: ${colors.text.secondary};
-      border-color: ${colors.grey[30]};
-
-      &:hover {
-        color: ${colors.gatsby};
-        border-color: ${colors.link.hoverBorder};
-      }
-    }
-  }
-`
 
 const FooterLinks = props => (
-  <FooterList bottomMargin={props.bottomMargin}>
+  <ul
+    sx={{
+      background: props => (props.bg ? props.bg : `0`),
+      borderColor: `ui.border.subtle`,
+      borderTopStyle: `solid`,
+      borderTopWidth: `1px`,
+      fontSize: 1,
+      listStyle: `none`,
+      m: 0,
+      mb: props => (props.bottomMargin ? props.bottomMargin : 0),
+      mt: 9,
+      px: 6,
+      py: 9,
+      textAlign: `center`,
+      width: `100%`,
+      "& li": {
+        display: `inline-block`,
+        "&:after": {
+          color: `text.secondary`,
+          content: `"•"`,
+          padding: 3,
+        },
+        "&:last-of-type:after": {
+          content: `none`,
+        },
+        "& a": {
+          color: `link.color`,
+          borderColor: `link.border`,
+          "&:hover": {
+            color: `link.hoverColor`,
+            borderColor: `link.hoverBorder`,
+          },
+        },
+      },
+    }}
+  >
     <li>
       <Link to="/accessibility-statement">Accessibility Statement</Link>
     </li>
@@ -50,7 +49,7 @@ const FooterLinks = props => (
     <li>
       <a href="https://www.gatsbyjs.com">Gatsbyjs.com</a>
     </li>
-  </FooterList>
+  </ul>
 )
 
 export default FooterLinks

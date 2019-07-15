@@ -48,6 +48,8 @@ export const Actions = styled(`div`)`
   justify-content: space-between;
 `
 
+// refactor—we have this in navigation-mobile,
+// and in some shared styles thing for the showcase views
 export const ScreenReaderText = styled(`span`)`
   border: 0;
   clip: rect(0, 0, 0, 0);

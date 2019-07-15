@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
@@ -21,10 +23,10 @@ const Chevron = ({ isExpanded }) => (
       height: `100%`,
       width: `100%`,
       paddingTop: `1.3em`,
-      minHeight: presets.itemMinHeight,
-      minWidth: presets.itemMinHeight,
+      minHeight: `sidebarItemMinHeight`,
+      minWidth: `sidebarItemMinHeight`,
       "&:hover": {
-        background: presets.activeSectionBackground,
+        backgroundColor: `sidebar.activeSectionBackground`,
       },
     }}
   >
@@ -52,7 +54,7 @@ const TitleButton = ({
   <button
     aria-expanded={isExpanded}
     aria-controls={uid}
-    css={{
+    sx={{
       ...styles.resetButton,
       ...styles.button,
       paddingLeft: item.level === 0 ? space[6] : 0,
@@ -75,8 +77,8 @@ const TitleButton = ({
           top: 0,
           bottom: 0,
           right: 0,
-          minHeight: presets.itemMinHeight,
-          width: presets.itemMinHeight,
+          minHeight: `sidebarItemMinHeight`,
+          width: `sidebarItemMinHeight`,
         }}
       >
         <Chevron isExpanded={isExpanded} />
@@ -107,7 +109,9 @@ const SplitButton = ({
     <span
       css={{
         flexGrow: 1,
-        // borderRight: `1px solid ${presets.itemBorderColor}`,
+        // borderRightWidth: "1px",
+        // borderRightStyle: "solid",
+        // borderRightColor: "sidebar.itemBorderColor"
       }}
     >
       {createLink({
@@ -139,12 +143,12 @@ const SplitButton = ({
       aria-label={item.title + (isExpanded ? ` collapse` : ` expand`)}
       css={{
         ...styles.resetButton,
-        marginLeft: `auto`,
-        position: `absolute`,
-        top: 0,
         bottom: 0,
-        right: 0,
+        marginLeft: `auto`,
         minHeight: presets.itemMinHeight,
+        position: `absolute`,
+        right: 0,
+        top: 0,
         width: presets.itemMinHeight,
         zIndex: 1,
       }}
@@ -177,25 +181,25 @@ const Title = ({ item, isActive, isExpanded }) => (
 
 const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
   <h3
-    css={{
+    sx={{
       alignItems: `center`,
       display: `flex`,
-      fontSize: fontSizes[1],
-      // fontFamily: fonts.system,
+      fontSize: 1,
+      // fontFamily: "system",
       // fontWeight: isActive ? `bold` : `normal`,
       fontWeight: `normal`,
       textTransform: `uppercase`,
-      letterSpacing: letterSpacings.tracked,
+      letterSpacing: `tracked`,
       margin: 0,
       ...(item.level === 0 && { ...styles.level0 }),
       color:
         isExpanded && !disabled
-          ? colors.gatsby
+          ? `gatsby`
           : disabled
-          ? colors.text.secondary
+          ? `text.secondary`
           : false,
       "&:hover": {
-        color: disabled ? false : colors.gatsby,
+        color: disabled ? false : `gatsby`,
       },
     }}
   >
@@ -224,12 +228,12 @@ const styles = {
     height: 1,
     position: `absolute`,
     right: 0,
-    left: space[6],
+    left: 6,
   },
   level0: {
-    fontFamily: fonts.header,
-    letterSpacing: letterSpacings.tracked,
+    fontFamily: `header`,
+    letterSpacing: `tracked`,
     textTransform: `uppercase`,
-    fontSize: fontSizes[1],
+    fontSize: 1,
   },
 }
