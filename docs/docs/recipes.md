@@ -129,7 +129,6 @@ Showtime.
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/deploying-and-hosting/)
 
-
 ### Deploying to Netlify
 
 Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
@@ -137,14 +136,14 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 #### Prerequisites
 
 - A Gatsby site with a single component `index.js`.
-- [netlify-cli](https://www.npmjs.com/package/netlify-cli)  npm package
+- [netlify-cli](https://www.npmjs.com/package/netlify-cli) npm package
 - The Gatsby CLI method `gatsby build`
 
 #### Directions
 
 1. Build your gatsby application using `gatsby build`
 
-2. Login into netlify using `netlify login` 
+2. Login into netlify using `netlify login`
 
 3. Run the command `netlify build`. Select the "Create & configure a new site" option.
 
@@ -158,8 +157,8 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 #### Additional resources
 
--  [Hosting on Netlify](/docs/hosting-on-netlify) 
--  [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+- [Hosting on Netlify](/docs/hosting-on-netlify)
+- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
 
 ## Querying data
 
