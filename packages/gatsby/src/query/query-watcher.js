@@ -229,7 +229,7 @@ const watch = async rootDir => {
   const packagePaths = modulesThatUseGatsby.map(module => {
     const filesRegex = `*.+(t|j)s?(x)`
     const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
-    slash(path.join(module.path, pathRegex))
+    return slash(path.join(module.path, pathRegex))
   })
 
   watcher = chokidar
