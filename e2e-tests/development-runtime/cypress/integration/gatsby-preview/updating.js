@@ -3,7 +3,7 @@ beforeEach(() => {
   cy.visit(`/preview`).waitForRouteChange()
 })
 
-after(reset)
+after(() => reset())
 
 const update = (times = 1) =>
   new Array(times)
