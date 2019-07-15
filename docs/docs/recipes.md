@@ -133,7 +133,7 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 
 1. Stop your development server if it is running (`Ctrl + C` on your command line in most cases)
 
-2. If you want the standard path prefix for your site (`/`), run `gatsby build` using the Gatsby CLI on the command line. The files you need to copy to your server will now be in the `public` folder.
+2. For the standard site path at the root directory (`/`), run `gatsby build` using the Gatsby CLI on the command line. The built files will now be in the `public` folder.
 
 ```shell
 gatsby build
