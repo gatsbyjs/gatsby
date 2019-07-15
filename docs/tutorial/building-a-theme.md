@@ -1320,7 +1320,7 @@ It's important to namespace your theme. It helps differentiate between published
 ```json:title=gatsby-theme-events/package.json
 {
   // highlight-next-line
-  "name": "yourname/gatsby-theme-events",
+  "name": "@yournpmusername/gatsby-theme-events",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
