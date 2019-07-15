@@ -3374,9 +3374,10 @@
   description: A gatsby starter that full responsive blog.
   tags:
     - Blog
-    - Styled-components
+    - AWS
     - Pagination
-    - AWS S3
+    - SEO
+    - Styling:CSS-in-JS
   features:
     - Tags & Categorys.
     - Pagination.
