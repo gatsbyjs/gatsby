@@ -158,7 +158,7 @@ export default () => (
 )
 ```
 
-2. Run `gatsby develop` to see the changes
+4. Run `gatsby develop` to see the changes
 
 #### Related Links
 
