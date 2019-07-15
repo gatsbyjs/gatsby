@@ -5,25 +5,9 @@ The Gatsby command line interface (CLI). It is used to perform common functional
 Let's you create new Gatsby apps using
 [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/).
 
-The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally--in fact, this was previously how we recommended using the CLI.
-
-However, global installs of the Gatsby CLI can sometimes lead to subtle bugs in behavior and functionality if the version of the globally installed executable does not match the version of Gatsby in your application. To avoid this, we highly recommend using the `package.json` script variant of these commands, typically exposed _for you_ with most starters.
-
-For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
-
-```json:title
-{
-  "scripts": {
-    "develop": "gatsby develop"
-  }
-}
-```
-
-We can now use the `develop` script tied to our app's version of Gatsby, rather than a globally installed version. This script can be invoked by using the name of the script, e.g. `npm run develop` in this case. Feel free to [read more about NPM scripts](https://docs.npmjs.com/misc/scripts) if you're interested!
-
 ## How to use
 
-The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
+The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
 Run `gatsby --help` for full help.
 
