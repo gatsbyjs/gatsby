@@ -3357,3 +3357,15 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-all-in.netlify.com
+  repo: https://github.com/Gherciu/gatsby-all-in
+  description: A starter that includes the most popular js libraries, already pre-configured and ready for use.
+  tags:
+    - Linting
+    - Netlify
+    - Styling:Tailwind
+  features:
+    - Tailwind CSS Framework
+    - Antd UI Framework pre-configured
+    - Redux for managing state
+    - Eslint and Stylelint to enforce code style
