@@ -149,7 +149,7 @@ module.exports = {
 
 There are a few reasons you might want to do this--for instance, if you are hosting a blog built with Gatsby on a domain where you are running another site not built on Gatsby. The main site would direct to `example.com`, and by setting a path prefix you can have `example.com/blog` load your Gatsby site directly.
 
-Once your path prefix is set in your `gatsby-config.js`, run `gatsby build`, but make sure to add the `--prefix-paths` flag, like so:
+4. With a path prefix set in `gatsby-config.js`, run `gatsby build` with the `--prefix-paths` flag to automatically add the prefix to the beginning of all Gatsby site URLs and `<Link>` tags.
 
 ```shell
 gatsby build --prefix-paths
