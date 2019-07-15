@@ -222,6 +222,17 @@ jobs:
       - run: git config --global user.email "admin@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
 
+  build_www:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          command: yarn build
+          working_directory: ~/project/www
+
 workflows:
   version: 2
   build-test:
@@ -270,3 +281,15 @@ workflows:
             branches:
               only:
                 - master
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build_www:
+          # Check CircleCI web ui for context details (env vars)
+          context: build_www
