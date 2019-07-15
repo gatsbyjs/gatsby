@@ -3369,3 +3369,21 @@
     - Antd UI Framework pre-configured
     - Redux for managing state
     - Eslint and Stylelint to enforce code style
+- url: http://demo.nagui.me
+  repo: https://github.com/kimnagui/gatsby-starter-nagui
+  description: A gatsby starter that full responsive blog.
+  tags:
+    - Blog
+    - AWS
+    - Pagination
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - Tags & Categorys.
+    - Pagination.
+    - Show Recent Posts for category.
+    - Styled-Components.
+    - Mobile-First CSS.
+    - Syntax highlighting in code blocks using PrismJS(Dracula).
+    - Google Analytics.
+    - Deploy AWS S3.
