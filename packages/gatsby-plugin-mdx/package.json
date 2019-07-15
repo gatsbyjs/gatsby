@@ -1,12 +1,17 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "1.0.7",
-  "description": "mdx integration for gatsby",
+  "version": "1.0.13",
+  "description": "MDX integration for Gatsby",
   "main": "index.js",
   "license": "MIT",
-  "homepage": "https://github.com/ChristopherBiscardi/gatsby-mdx/tree/master/packages/gatsby-mdx#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#readme",
   "scripts": {
     "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-mdx"
   },
   "peerDependencies": {
     "@mdx-js/mdx": "^1.0.0",
@@ -17,6 +22,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "change-case": "^3.1.0",
     "core-js": "2",
     "dataloader": "^1.4.0",
     "debug": "^4.0.1",
@@ -24,7 +30,7 @@
     "fs-extra": "^7.0.0",
     "gray-matter": "^4.0.1",
     "loader-utils": "^1.2.3",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "mdast-util-to-string": "^1.0.4",
     "mdast-util-toc": "^3.0.0",
     "mime": "^2.3.1",

@@ -345,8 +345,6 @@ See below for a reverse references example where you query for all products in a
 
 The above example assumes that you have `Product` and `Category` Content Models in your Contentful space, and `Product` has a `categories` field that references `Category` entries.
 
-For simplicity, it is easier to put the reference field on the child in child/parent relationships.
-
 ### Markdown transformers on Long Text fields
 
 Version 3 of `gatsby-source-contentful` creates GraphQL schema directly from the Contentful Content Model and no longer infers fields from data.

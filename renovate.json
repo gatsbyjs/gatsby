@@ -1,11 +1,6 @@
 {
-  "extends": ["config:base"],
-  "includePaths": [
-    "starters/**",
-    "themes/gatsby-starter-blog-theme/**",
-    "themes/gatsby-starter-notes-theme/**",
-    "themes/gatsby-starter-theme/**"
-  ],
+  "extends": ["config:base", ":disablePeerDependencies"],
+  "includePaths": ["starters/**", "themes/**"],
   "major": {
     "enabled": false
   },
@@ -14,5 +9,5 @@
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
-  "semanticCommitScope": "starters"
+  "semanticCommitScope": null
 }
