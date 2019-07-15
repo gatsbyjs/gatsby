@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.4...babel-preset-gatsby@0.2.5) (2019-07-12)
+
+### Features
+
+- **babel-preset-gatsby:** add babel-plugin-transform-react-remove-prop-types for production builds ([#14987](https://github.com/gatsbyjs/gatsby/issues/14987)) ([633e9ea](https://github.com/gatsbyjs/gatsby/commit/633e9ea)), closes [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814)
+
 ## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.3...babel-preset-gatsby@0.2.4) (2019-07-12)
 
 ### Bug Fixes

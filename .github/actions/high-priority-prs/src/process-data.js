@@ -89,6 +89,10 @@ const maintainers = {
     name: "Kyle Gill",
     slackUsername: "@kylegill",
   },
+  "https://github.com/amberleyromo": {
+    name: "Amberley Romo",
+    slackUsername: "@amberley",
+  },
 }
 
 const ignoreMessages = ["Merge branch 'master'", "Merge remote-tracking branch"]
