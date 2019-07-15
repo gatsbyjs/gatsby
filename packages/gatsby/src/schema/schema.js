@@ -700,7 +700,6 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
         )
         return
       }
-      debugger
       if (
         type instanceof InterfaceTypeComposer &&
         !type.hasExtension(`nodeInterface`)
