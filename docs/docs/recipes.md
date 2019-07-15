@@ -155,7 +155,6 @@ There are a few reasons to do this--for instance, hosting a blog built with Gats
 gatsby build --prefix-paths
 ```
 
-With this flag added, Gatsby will automatically add your path prefix to the beginning of all of your site's URLs and will automatically update all `<Link>` tags as well.
 
 5. Make sure that your site looks the same when running `gatsby build` as with `gatsby develop`. By running `gatsby serve` when you build your site, you can test out (and debug if necessary) the finished product before deploying it live.
 
