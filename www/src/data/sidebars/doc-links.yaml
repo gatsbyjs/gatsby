@@ -233,9 +233,6 @@
               link: /docs/mdx/plugins/
         - title: Markdown
           link: /docs/md/
-          items:
-            - title: Markdown Syntax
-              link: /docs/md/md-syntax/
         - title: Adding Testing
           link: /docs/testing/
           items:

@@ -1,8 +1,9 @@
 ---
-title: Markdown Syntax
+title: Markdown
 ---
 
 ## Frontmatter
+
 - Fancy word for metadata for your markdown
 - Variables that can later be injected into your components
 - Must be:
@@ -16,7 +17,9 @@ title: Markdown Syntax
   ---
   ```
 
-## Headings
+## Syntax
+
+### Headings
 
 ```
 # heading 1
@@ -44,7 +47,7 @@ title: Markdown Syntax
 - Correct usage of each heading should follow the
   [accessibility guidelines](https://www.w3.org/WAI/tutorials/page-structure/headings/) set by the World Wide Web Consortium (W3C)
 
-## Emphasized text
+### Emphasized text
 
 - Italic
   - one asterisk or one underscore
@@ -60,7 +63,7 @@ title: Markdown Syntax
     - `***italic and bold***` or `___italic and bold___`
     - **_italic and bold!!_**
 
-## Lists
+### Lists
 
 - Unordered
 
@@ -95,7 +98,7 @@ title: Markdown Syntax
   2. Two
   3. Three
 
-## Links and Images
+### Links and Images
 
 - Link
 
@@ -117,7 +120,7 @@ title: Markdown Syntax
 ![](path-to-image)
 ```
 
-## Blockquote
+### Blockquote
 
 - Use `>` to declare a blockquote
 - Adding multiple `>` with create nested blockquotes
@@ -148,13 +151,12 @@ title: Markdown Syntax
   - Enclose the text in backticks \`code\`
   - Your `code` will look like this
 
-
-- Code Blocks:
+* Code Blocks:
   - Indent a block by four spaces
   -     Your code will look like this
 
-
 ## MD vs MDX
+
 - MDX is a superset of Markdown. It allows you to write JSX inside markdown. This includes importing and rendering React components!
 
 ## Processing Markdown and MDX in Gatsby:
@@ -162,8 +164,8 @@ title: Markdown Syntax
 - In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](https://www.gatsbyjs.org/docs/sourcing-from-the-filesystem) plugin
 - You can check out the package [here](https://www.gatsbyjs.org/packages/gatsby-source-filesystem) for more information on how it works!
 
-
 ## Frontmatter + MDX Example
+
 ```
 ---
 description: A simple example of a description in frontmatter
