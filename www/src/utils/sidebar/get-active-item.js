@@ -29,6 +29,7 @@ const isItemActive = (location, item, activeItemHash) => {
   return false
 }
 
+// find the current active item in the sidebar
 const getActiveItem = (itemList, location, activeItemHash) => {
   for (let item of itemList) {
     if (item.link) {
