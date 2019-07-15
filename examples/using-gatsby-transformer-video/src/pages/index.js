@@ -50,12 +50,12 @@ export const query = graphql`
       edges {
         node {
           id
-          videoPreview(duration: 3, fps: 4, maxWidth: 600) {
+          videoPreview(duration: 2, fps: 3, maxWidth: 600) {
             gif
             mp4
             webp
           }
-          video(maxWidth: 1920) {
+          video {
             h264
             h265
           }

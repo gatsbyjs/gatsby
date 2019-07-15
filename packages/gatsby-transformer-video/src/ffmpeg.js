@@ -276,7 +276,7 @@ export default class FFMPEG {
         plugins: [
           imageminGiflossy({
             optimizationLevel: 3,
-            lossy: 200,
+            lossy: 120,
             noLogicalScreen: true,
             optimize: `3`,
           }),
