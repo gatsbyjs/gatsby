@@ -496,7 +496,7 @@ If you query this time for `allEvent`, you'll see the `Event` data, including th
 
 ## Create data-driven pages using GraphQL and `createPages`
 
-The last step in `gatsby-node.js` is to create pages for both the event previews, and individual event pages. To do that, you'll use the `createPages` API hook.
+The last step in `gatsby-node.js` is to create pages for both the event previews and individual event pages. To do that, you'll use the `createPages` API hook.
 
 > 💡 Note that the previous contents of `gatsby-node.js` are left intact, we'll just omit them from the code snippets in this section, for brevity.
 
