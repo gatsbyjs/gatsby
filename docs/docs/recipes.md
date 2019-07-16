@@ -40,6 +40,7 @@ Craving a happy medium between [full-length tutorials](/tutorial/) and crawling 
 - [Styling](#styling)
 - [Creating layouts](#creating-layouts)
 - [Deploying](#deploying)
+- [Images](#images)
 - [Querying data](#querying-data)
 - [Sourcing data](#sourcing-data)
 - [Transforming data](#transforming-data)
@@ -217,6 +218,63 @@ export default NonPageComponent
 - [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
 - [More on the useStaticQuery hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
+
+## Images
+
+### Import an image into a component with webpack
+
+#### Prerequisites
+
+- an image (`.jpg`, `.png`, `.gif`, etc.) in the `src` folder
+
+#### Directions
+
+1. Something something something
+
+### Reference an image from the `static` folder
+
+As an alternative to importing assets with webpack, the `static` folder allows access to content that gets copied into the `public` folder when built.
+
+This is an **escape route** for [specific use cases](/docs/static-folder/#when-to-use-the-static-folder), and other methods like [importing with webpack](#import-an-image-into-a-component-with-webpack) are recommended to leverage optimizations made by Gatsby
+
+#### Prerequisites
+
+- A Gatsby Site with a `.js`
+- An image (`.jpg`, `.png`, `.gif`, etc.) in the `static` folder
+
+#### Directions
+
+1. Ensure that your image is in your `static` folder at the root of the project, your project structure might look something like this:
+
+```
+├── gatsby-config.js
+├── src
+│   └── pages
+│       └── index.js
+├── static
+│       └── fiesta.jpg
+```
+
+2. In `index.js`, add an `<img>` tag with the `src` as the relative path of the file from the `static` folder, and an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
+
+```jsx:title=src/pages/index.js
+import React from "react"
+
+export default () => (
+  <main>
+    <img src={`fiesta.jpg`} alt="Dogs in party hats celebrating at an event" />
+  </main>
+)
+```
+
+3. Run `gatsby develop` to start the development server.
+4. View your image in the browser: `http://localhost:8000/`
+
+#### Additional resources
+
+- [Example repo referencing an image from the static folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-static-image)
+- [Using the Static Folder](/docs/static-folder/)
+- [More on all image techniques in Gatsby](/docs/images-and-files/)
 
 ## Sourcing data
 
