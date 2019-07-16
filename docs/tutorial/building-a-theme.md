@@ -59,7 +59,7 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
 ```
 
 - The `"name"` corresponds to the yarn workspace you defined earlier, in the root-level `package.json` folder.
-- Because we'll be installing `gatsby-theme-events` as a package, we have to specify a `"main"` entry point.
+- Because you'll install `gatsby-theme-events` as a package, you have to specify a `"main"` entry point.
   - This file won't do anything, but it does need to resolve, so create a new file in `gatsby-theme-events` called `index.js`.
 
 ```javascript:title=gatsby-theme-events/index.js
