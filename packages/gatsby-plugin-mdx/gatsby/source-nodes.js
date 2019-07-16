@@ -14,7 +14,7 @@ const toString = require("mdast-util-to-string");
 const generateTOC = require("mdast-util-toc");
 const prune = require("underscore.string/prune");
 
-const debug = require("debug")("gatsby-mdx:extend-node-type");
+const debug = require("debug")("gatsby-plugin-mdx:extend-node-type");
 const getTableOfContents = require("../utils/get-table-of-content");
 const defaultOptions = require("../utils/default-options");
 const genMDX = require("../utils/gen-mdx");

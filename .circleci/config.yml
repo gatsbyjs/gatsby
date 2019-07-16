@@ -116,6 +116,7 @@ jobs:
       - <<: *persist_cache
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: yarn check-repo-fields
 
   unit_tests_node8:
     executor:
@@ -187,12 +188,26 @@ jobs:
           test_path: e2e-tests/production-runtime
           test_command: yarn test && yarn test:offline
 
+  themes_e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/development-runtime
+          test_command: yarn test
+
+  themes_e2e_tests_production_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/production-runtime
+          test_command: yarn test
+
   starters_validate:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
-      - run: sh ./scripts/clone-and-validate.sh starters
+      - run: ./scripts/assert-changed-files.sh "starters/*|themes/gatsby-starter-*|.circleci/*"
+      - run: sh ./scripts/validate-starters.sh "starters/* themes/gatsby-starter-*"
 
   starters_publish:
     executor: node
@@ -205,26 +220,20 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-and-validate.sh starters true
+      - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
 
-  theme_starters_validate:
-    executor: node
+  build_www:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge # ++ RAM and CPU
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "themes/*|.circleci/*"
-      - run: sh ./scripts/clone-and-validate-theme-starters.sh
-
-  theme_starters_publish:
-    executor: node
-    steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
-      - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
-      - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-and-validate-theme-starters.sh true
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          command: yarn build
+          working_directory: ~/project/www
 
 workflows:
   version: 2
@@ -263,6 +272,10 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
@@ -270,10 +283,15 @@ workflows:
             branches:
               only:
                 - master
-      - theme_starters_validate:
-          <<: *ignore_master
-      - theme_starters_publish:
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
           filters:
             branches:
               only:
                 - master
+    jobs:
+      - build_www:
+          # Check CircleCI web ui for context details (env vars)
+          context: build_www

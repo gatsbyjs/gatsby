@@ -47,6 +47,7 @@ exports.publishPackagesLocallyAndInstall = async ({
   localPackages,
   root,
   ignorePackageJSONChanges,
+  yarnWorkspaceRoot,
 }) => {
   await startServer()
 
@@ -64,5 +65,5 @@ exports.publishPackagesLocallyAndInstall = async ({
 
   const packagesToInstall = _.intersection(packagesToPublish, localPackages)
 
-  await installPackages({ packagesToInstall })
+  await installPackages({ packagesToInstall, yarnWorkspaceRoot })
 }
