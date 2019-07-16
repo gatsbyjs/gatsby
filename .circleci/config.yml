@@ -314,4 +314,6 @@ workflows:
           # Check CircleCI web ui for context details (env vars)
           context: build_www
       - deploy_www:
+          requires:
+            - build_www
           context: build_www
