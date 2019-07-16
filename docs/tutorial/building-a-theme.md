@@ -723,7 +723,10 @@ export default EventList
 For now, this component will display a stringified object from the JSON data you send it on the `events` prop.
 
 ### Add the layout and events list components to the events page
+By updating the `events.js` template with the following code, you will:
 
+- Import the two new components.
+- Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
 ```javascript:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
