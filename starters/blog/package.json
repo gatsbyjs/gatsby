@@ -8,7 +8,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "gatsby": "^2.13.21",
+    "gatsby": "^2.13.23",
     "gatsby-image": "^2.2.6",
     "gatsby-plugin-feed": "^2.3.4",
     "gatsby-plugin-google-analytics": "^2.1.4",
@@ -23,7 +23,7 @@
     "gatsby-remark-responsive-iframe": "^2.2.4",
     "gatsby-remark-smartypants": "^2.1.2",
     "gatsby-source-filesystem": "^2.1.5",
-    "gatsby-transformer-remark": "^2.6.5",
+    "gatsby-transformer-remark": "^2.6.6",
     "gatsby-transformer-sharp": "^2.2.3",
     "prismjs": "^1.16.0",
     "react": "^16.8.6",
