@@ -2,19 +2,19 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 
 import Avatar from "./avatar"
-import { options } from "../utils/typography"
-import { colors } from "../utils/presets"
+import { colors, fonts } from "../utils/presets"
 
 const formatDate = dateString =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
+    timeZone: `UTC`,
     month: `long`,
     day: `numeric`,
     year: `numeric`,
   })
 
 const BlogPostPreviewItem = ({ post, className }) => (
-  <article className={className} css={{ position: `relative` }}>
-    <Link to={post.fields.slug} css={{ "&&": { color: colors.gray.copy } }}>
+  <article css={{ position: `relative` }} className={className}>
+    <Link to={post.fields.slug} css={{ "&&": { color: colors.text.primary } }}>
       <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
       <p>
         {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
@@ -42,8 +42,8 @@ const BlogPostPreviewItem = ({ post, className }) => (
       <div
         css={{
           display: `inline-block`,
-          fontFamily: options.headerFontFamily.join(`,`),
-          color: colors.gray.calm,
+          fontFamily: fonts.header,
+          color: colors.text.secondary,
         }}
       >
         <div>
@@ -84,7 +84,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
 )
 
 export const blogPostPreviewFragment = graphql`
-  fragment BlogPostPreview_item on MarkdownRemark {
+  fragment BlogPostPreview_item on Mdx {
     excerpt
     fields {
       slug

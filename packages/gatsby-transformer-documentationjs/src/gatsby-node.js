@@ -11,8 +11,16 @@ const stringifyMarkdownAST = (node = ``) => {
   }
 }
 
-const docId = (parentId, docsJson) =>
-  `documentationJS ${parentId} path #${JSON.stringify(docsJson.path)}`
+const docId = (parentId, docsJson) => {
+  const lineNumber = docsJson.loc
+    ? docsJson.loc.start.line
+    : docsJson.lineNumber
+
+  return `documentationJS ${parentId} path #${JSON.stringify(
+    docsJson.path
+  )} line ${lineNumber}`
+}
+
 const descriptionId = (parentId, name) =>
   `${parentId}--DocumentationJSComponentDescription--${name}`
 
@@ -34,6 +42,138 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
   return descriptionNode
 }
 
+exports.sourceNodes = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type DocumentationJs implements Node {
+      name: String
+      kind: String
+      memberof: String
+      scope: String
+      access: String
+      readonly: Boolean
+      abstract: Boolean
+      generator: Boolean
+      async: Boolean
+      override: Boolean
+      hideconstructor: Boolean
+      alias: String
+      copyright: String
+      author: String
+      license: String
+      since: String
+      lends: String
+      type: DoctrineType
+      default: JSON
+      augments: [DocumentationJs] @link(from: "augments___NODE")
+      examples: [DocumentationJsExample]
+      implements: [DocumentationJs] @link(from: "implements___NODE")
+      params: [DocumentationJs] @link(from: "params___NODE")
+      properties: [DocumentationJs] @link(from: "properties___NODE")
+      returns: [DocumentationJs] @link(from: "returns___NODE")
+      throws: [DocumentationJs] @link(from: "throws___NODE")
+      todos: [DocumentationJs] @link(from: "todos___NODE")
+      yields: [DocumentationJs] @link(from: "yields___NODE")
+      members: DocumentationJsMembers
+      codeLocation: DocumenationJSLocationRange
+      docsLocation: DocumenationJSLocationRange
+    }
+
+    type DocumentationJSLocation {
+      line: Int
+      column: Int
+    }
+
+    type DocumenationJSLocationRange {
+      start: DocumentationJSLocation
+      end: DocumentationJSLocation
+    }
+
+    type DocumentationJsExample {
+      caption: String
+      description: String
+      highlighted: String
+      raw: String
+    }
+
+    type DocumentationJsMembers {
+      static: [DocumentationJs] @link(from: "static___NODE")
+      instance: [DocumentationJs] @link(from: "instance___NODE")
+      events: [DocumentationJs] @link(from: "events___NODE")
+      global: [DocumentationJs] @link(from: "global___NODE")
+      inner: [DocumentationJs] @link(from: "inner___NODE")
+    }
+
+    type DoctrineType {
+      type: String
+      name: String
+      elements: [JSON]
+      expression: JSON
+      applications: [JSON]
+      params: [JSON]
+      fields: [JSON]
+      result: JSON
+      typeDef: DocumentationJs @link(from: "typeDef___NODE")
+    }
+  `
+  createTypes(typeDefs)
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    DocumentationJs: {
+      type: {
+        // resolve `typeDef___NODE` recursively
+        resolve: (source, _, context) => {
+          if (!source.type) {
+            return null
+          }
+
+          const fieldsToVisit = [`elements`, `expression`, `applications`]
+
+          const resolve = obj => {
+            if (!obj.typeDef___NODE) {
+              return obj
+            }
+
+            return {
+              ...obj,
+              typeDef: context.nodeModel.getNodeById(
+                { id: obj.typeDef___NODE, type: `DocumentationJs` },
+                { path: context.path }
+              ),
+            }
+          }
+
+          const visit = obj => {
+            if (!obj) {
+              return null
+            }
+
+            const ret = { ...obj }
+
+            fieldsToVisit.forEach(fieldName => {
+              const v = obj[fieldName]
+              if (!v) {
+                return
+              }
+
+              if (Array.isArray(v)) {
+                ret[fieldName] = v.map(t => visit(resolve(t)))
+              } else {
+                ret[fieldName] = visit(resolve(v))
+              }
+            })
+            return ret
+          }
+
+          return visit(resolve(source.type))
+        },
+      },
+    },
+  })
+}
+
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
@@ -43,8 +183,12 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
   const { createNode, createParentChildLink } = actions
 
   if (
-    node.internal.mediaType !== `application/javascript` ||
-    node.internal.type !== `File`
+    node.internal.type !== `File` ||
+    !(
+      node.internal.mediaType === `application/javascript` ||
+      node.extension === `tsx` ||
+      node.extension === `ts`
+    )
   ) {
     return null
   }
@@ -135,13 +279,28 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       const children = []
 
-      const picked = _.pick(docsJson, [
+      let picked = _.pick(docsJson, [
         `kind`,
         `memberof`,
         `name`,
         `scope`,
         `type`,
         `default`,
+        `readonly`,
+        `access`,
+        `abstract`,
+        `generator`,
+        `async`,
+        `override`,
+        `hideconstructor`,
+        `alias`,
+        `copyright`,
+        `author`,
+        `license`,
+        `since`,
+        `lends`,
+        `examples`,
+        `tags`,
       ])
 
       picked.optional = false
@@ -156,6 +315,9 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       }
 
       if (picked.type) {
+        if (picked.type === `OptionalType` && docsJson.expression) {
+          picked = { ...picked, optional: true, ...docsJson.expression }
+        }
         if (picked.type.type === `OptionalType` && picked.type.expression) {
           picked.optional = true
           picked.type = picked.type.expression
@@ -182,7 +344,16 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         }
       })
 
-      const docsSubfields = [`params`, `properties`, `returns`]
+      const docsSubfields = [
+        `augments`,
+        `implements`,
+        `params`,
+        `properties`,
+        `returns`,
+        `throws`,
+        `todos`,
+        `yields`,
+      ]
       docsSubfields.forEach(fieldName => {
         if (docsJson[fieldName] && docsJson[fieldName].length > 0) {
           picked[`${fieldName}___NODE`] = docsJson[fieldName].map(
@@ -246,6 +417,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       if (docsJson.examples) {
         picked.examples = docsJson.examples.map(example => {
           return {
+            ...example,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,

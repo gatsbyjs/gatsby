@@ -4,15 +4,21 @@ import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
-import presets, { colors, space, breakpoints } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import {
+  colors,
+  space,
+  mediaQueries,
+  lineHeights,
+  fonts,
+} from "../utils/presets"
+import { rhythm } from "../utils/typography"
 
 const subHeaderTitleStyles = {
-  height: rhythm(space[6]),
+  height: space[6],
   marginBottom: 0,
   display: `block`,
   margin: `auto`,
-  [breakpoints.xs]: {
+  [mediaQueries.xs]: {
     height: rhythm(5 / 4),
   },
 }
@@ -47,14 +53,14 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: colors.ui.whisper,
+          background: colors.ui.background,
           fontWeight: 600,
-          lineHeight: presets.lineHeights.dense,
+          lineHeight: lineHeights.dense,
           textAlign: `left`,
           verticalAlign: `middle`,
-          fontFamily: options.headerFontFamily.join(`,`),
-          borderColor: colors.ui.light,
-          padding: rhythm(space[3]),
+          fontFamily: fonts.header,
+          borderColor: colors.ui.border.subtle,
+          padding: space[3],
         }}
       >
         {header || props.category || `Feature`}

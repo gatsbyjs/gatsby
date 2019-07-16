@@ -87,5 +87,5 @@ We had a great time and learned a lot from this year's Hacktoberfest! Thanks to 
 
 Check out other posts from this year's Gatsby Hacktoberfest:
 
-- [Hacktoberfest kickoff](https://www.gatsbyjs.org/blog/2018-10-09-hacktoberfest-kickoff/)
-- [Uptick in docs contributions for Gatsby Hacktoberfest](https://www.gatsbyjs.org/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/)
+- [Hacktoberfest kickoff](/blog/2018-10-09-hacktoberfest-kickoff/)
+- [Uptick in docs contributions for Gatsby Hacktoberfest](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/)

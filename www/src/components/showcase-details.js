@@ -4,14 +4,15 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import presets, {
+import {
   colors,
   space,
+  fontSizes,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
+  fonts,
 } from "../utils/presets"
-import { options, rhythm } from "../utils/typography"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -23,8 +24,8 @@ import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
-const gutter = rhythm(space[6])
-const gutterDesktop = rhythm(space[8])
+const gutter = space[6]
+const gutterDesktop = space[8]
 
 const styles = {
   link: {
@@ -33,7 +34,7 @@ const styles = {
   },
   prevNextLink: {
     color: colors.lilac,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     position: `absolute`,
     top: 280,
     width: 300,
@@ -48,13 +49,13 @@ const styles = {
     boxShadow: shadows.overlay,
   },
   prevNextPermalinkLabel: {
-    color: colors.gray.calm,
-    fontFamily: options.headerFontFamily.join(`,`),
+    color: colors.text.secondary,
+    fontFamily: fonts.header,
     fontWeight: `normal`,
   },
   prevNextPermalinkImage: {
     marginBottom: 0,
-    marginTop: rhythm(space[6]),
+    marginTop: space[6],
   },
   prevNextPermalinkTitle: {
     color: colors.gatsby,
@@ -76,12 +77,12 @@ const styles = {
     marginRight: 4,
     verticalAlign: `sub`,
     position: `absolute`,
-    left: `-${rhythm(space[6])}`,
+    left: `-${space[6]}`,
     top: `50%`,
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: rhythm(space[8]),
+    marginLeft: space[8],
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,
@@ -250,7 +251,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }}
             >
               <Helmet>
-                <title>{data.sitesYaml.title}</title>
+                <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
                 <meta
                   property="og:image"
                   content={`https://www.gatsbyjs.org${
@@ -265,14 +266,44 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       .childImageSharp.resize.src
                   }`}
                 />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta
+                  name="og:title"
+                  value={`${data.sitesYaml.title}: Showcase | GatsbyJS`}
+                />
+                <meta
+                  property="og:image:width"
+                  content={
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.width
+                  }
+                />
+                <meta
+                  property="og:image:height"
+                  content={
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.height
+                  }
+                />
+                <meta
+                  property="og:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
+                />
+                <meta
+                  name="twitter:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
+                />
               </Helmet>
               <div
                 css={{
                   padding: gutter,
-                  paddingBottom: rhythm(space[2]),
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     padding: gutterDesktop,
-                    paddingBottom: rhythm(space[6]),
+                    paddingRight: isModal ? 96 : false,
                   },
                 }}
               >
@@ -287,7 +318,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   {cleanUrl(data.sitesYaml.main_url)}
                 </a>
                 {data.sitesYaml.built_by && (
-                  <span css={{ color: colors.gray.calm }}>
+                  <span css={{ color: colors.text.secondary }}>
                     <span
                       css={{
                         paddingRight: 8,
@@ -316,10 +347,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 css={{
                   display: `flex`,
-                  borderTop: `1px solid ${colors.ui.light}`,
-                  fontFamily: options.headerFontFamily.join(`,`),
+                  borderTop: `1px solid ${colors.ui.border.subtle}`,
+                  fontFamily: fonts.header,
                   margin: `0 ${gutter}`,
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     margin: `0 ${gutterDesktop}`,
                   },
                 }}
@@ -327,7 +358,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 {data.sitesYaml.featured && (
                   <div
                     css={{
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                       color: colors.gatsby,
                       display: `flex`,
                       fontWeight: `bold`,
@@ -352,7 +383,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       padding: 20,
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                     }}
                   >
                     <a
@@ -363,7 +394,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     >
                       <GithubIcon
                         style={{
-                          fontSize: presets.scale[4],
+                          fontSize: fontSizes[4],
                           marginRight: 10,
                           verticalAlign: `text-bottom`,
                         }}
@@ -377,7 +408,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     css={{
                       padding: 20,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.light}`,
+                      borderRight: `1px solid ${colors.ui.border.subtle}`,
                     }}
                   >
                     <img
@@ -411,17 +442,17 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         border: 0,
                         borderRadius: radii[1],
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
-                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontFamily: fonts.header,
                         fontWeight: `bold`,
-                        marginRight: rhythm(space[2]),
-                        padding: `${rhythm(space[1])} ${rhythm(space[4])}`,
+                        marginRight: space[2],
+                        padding: `${space[1]} ${space[4]}`,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {
                           color: colors.white,
                           borderBottom: `none`,
                         },
-                        [shouldShowVisitButtonOnMobile && breakpoints.sm]: {
+                        [shouldShowVisitButtonOnMobile && mediaQueries.sm]: {
                           display: `block`,
                         },
                       }}
@@ -435,7 +466,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       {` `}
                     </a>
                     <ShareMenu
-                      css={{ display: `flex`, minWidth: 32, minHeight: 32 }}
+                      css={{
+                        display: `flex`,
+                        alignItems: `center`,
+                        minWidth: 32,
+                        minHeight: 32,
+                      }}
                       url={data.sitesYaml.main_url}
                       title={data.sitesYaml.title}
                       image={`https://www.gatsbyjs.org${
@@ -446,25 +482,23 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   </div>
                 </div>
               </div>
-              <div css={{ borderTop: `1px solid ${colors.ui.light}` }}>
-                <Img
-                  key={data.sitesYaml.id}
-                  fluid={
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.fluid
-                  }
-                  alt={`Screenshot of ${data.sitesYaml.title}`}
-                  css={{
-                    boxShadow: isModal
-                      ? false
-                      : sharedStyles.screenshot.boxShadow,
-                  }}
-                />
-              </div>
+              <Img
+                key={data.sitesYaml.id}
+                fluid={
+                  data.sitesYaml.childScreenshot.screenshotFile.childImageSharp
+                    .fluid
+                }
+                alt={`Screenshot of ${data.sitesYaml.title}`}
+                css={{
+                  boxShadow: isModal
+                    ? false
+                    : sharedStyles.screenshot.boxShadow,
+                }}
+              />
               <div
                 css={{
                   padding: gutter,
-                  [breakpoints.lg]: {
+                  [mediaQueries.lg]: {
                     padding: gutterDesktop,
                   },
                 }}
@@ -473,12 +507,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <div
                   css={{
                     display: `flex`,
-                    fontFamily: options.headerFontFamily.join(`,`),
+                    fontFamily: fonts.header,
                   }}
                 >
                   <div
                     css={{
-                      color: colors.gray.calm,
+                      color: colors.text.secondary,
                       paddingRight: 20,
                     }}
                   >

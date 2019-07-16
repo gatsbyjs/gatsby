@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 
-import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 
 const Example = ({ example }) => (
   <div className="gatsby-highlight">
@@ -20,7 +20,7 @@ const ExamplesBlock = ({ definition }) => {
   if (definition.examples && definition.examples.length > 0) {
     return (
       <div>
-        <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
+        <h4 css={{ marginTop: space[6] }}>Example</h4>
         {` `}
         {definition.examples.map((example, i) => (
           <Example example={example} key={`example ${i}`} />

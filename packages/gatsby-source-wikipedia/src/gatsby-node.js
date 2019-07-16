@@ -1,7 +1,10 @@
 const Promise = require(`bluebird`)
 const { fetchNodesFromSearch } = require(`./fetch`)
 
-exports.sourceNodes = ({ actions, createNodeId }, pluginOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  pluginOptions
+) => {
   const { createNode } = actions
   return Promise.map(pluginOptions.queries, ({ query, limit }) =>
     fetchNodesFromSearch({ query, limit }).then(results =>
@@ -17,10 +20,7 @@ exports.sourceNodes = ({ actions, createNodeId }, pluginOptions) => {
             type: `WikipediaArticle`,
           },
         }
-        node.internal.contentDigest = require(`crypto`)
-          .createHash(`md5`)
-          .update(JSON.stringify(node))
-          .digest(`hex`)
+        node.internal.contentDigest = createContentDigest(node)
         createNode(node)
       })
     )

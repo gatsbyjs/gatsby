@@ -19,7 +19,7 @@ Watching the spread of GraphQL has all been incredibly exciting to watch and a f
 
 But unfortunately, these new GraphQL APIs have been awkward to use inside Gatsby as you first had to wrap the API inside a Gatsby source plugin before you could query the data from your components.
 
-To fix this, [Gatsby 2.0](/blog/2018-09-17-gatsby-v2/) adds experimental support for schema stitching of external GraphQL APIs to its internal schema. Schema stitching allows merging multiple GraphQL schemas together, which greatly simplifies working with third-party GraphQL APIs. Along with low-level support for stitching in general, we are shipping an official [gatsby-source-graphql](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) plugin, which enables connecting to an arbitrary GraphQL API with just a few lines of configuration!
+To fix this, [Gatsby 2.0](/blog/2018-09-17-gatsby-v2/) adds experimental support for schema stitching of external GraphQL APIs to its internal schema. Schema stitching allows merging multiple GraphQL schemas together, which greatly simplifies working with third-party GraphQL APIs. Along with low-level support for stitching in general, we are shipping an official [gatsby-source-graphql](/packages/gatsby-source-graphql/) plugin, which enables connecting to an arbitrary GraphQL API with just a few lines of configuration!
 
 # Getting started
 

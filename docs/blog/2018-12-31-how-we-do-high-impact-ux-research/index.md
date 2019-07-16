@@ -75,7 +75,7 @@ _Not super accurate!_
 
 ![image of gatsbyjs.org homepage above the fold](gatsby-days-dot-org-homepage.png)
 
-When looking at the image above, users had a lot of unanswered questions about Gatsby. We found that the diagram below the fold (see image below) and [the READme file in GitHub](https://github.com/gatsbyjs/gatsby#--gatsby-v2) gave the most accurate impressions of Gatsby, and those aren’t super visible.
+When looking at the image above, users had a lot of unanswered questions about Gatsby. We found that the diagram below the fold (see image below) and [the README file in GitHub](https://github.com/gatsbyjs/gatsby#--gatsby-v2) gave the most accurate impressions of Gatsby, and those aren’t super visible.
 
 ![image of diagram below the fold on gatsbyjs.org homepage](gatsby-days-dot-org-diagram.png)
 

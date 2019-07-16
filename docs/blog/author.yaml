@@ -14,6 +14,10 @@
   bio: Freelance Web Developer http://line37.com . Maintainer of https://reactfaq.site
   avatar: avatars/tim-arney.jpg
   twitter: "@timarney"
+- id: Tara Arnold
+  bio: Senior Marketing Content Strategist https://mediacurrent.com
+  avatar: avatars/tara-arnold-mc.png
+  twitter: "@mediacurrent"
 - id: Ian Sinnott
   bio: Zealous about simplicity. Loves JavaScript, UX, the web. https://www.iansinnott.com
   avatar: avatars/ian-sinnott.jpg
@@ -59,7 +63,7 @@
   avatar: avatars/arden-de-raaij.jpg
   twitter: "@ardennl"
 - id: Shannon Soper
-  bio: UX researcher and educational psychology fan. Teaches piano and keeps up with her dog's Instagram fans @dgtrwatson.
+  bio: UX designer and educational psychology, music, & art fan. Keeps up with her dog's Instagram fans @dgtrwatson.
   avatar: avatars/shannon-soper.jpg
   twitter: "@shannonb_ux"
 - id: Sam Bhagwat
@@ -246,3 +250,81 @@
   bio: OSS Maintainer @ GatsbyJS. Full Stack Developer. Consultant. Scuba Diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
+- id: Tania Rascia
+  bio: Designer, developer, writer. I build open source projects and write the missing instruction manuals of the web.
+  avatar: avatars/tania-rascia.jpg
+  twitter: "@taniarascia"
+- id: Kym Ellis
+  bio: Marketing lead @TryGhost. Traveler, photographer and aspiring sailor!
+  avatar: avatars/kym-ellis.jpg
+  twitter: "@kymellis"
+- id: Alex Moon
+  bio: Full-Stack developer. OSS Contributor @ GatsbyJS. Thru-hiker.
+  avatar: avatars/alex-moon.jpg
+  twitter: "@moon_meister"
+- id: Preston So
+  bio: Product strategist. Developer advocate. Book author. Off-the-beaten-path traveler. Language nerd. Transit lover. Fantasy mapmaker.
+  avatar: avatars/preston-so.png
+  twitter: "@prestonso"
+- id: Jim Ettig
+  bio: Loves learning how our customers benefit from our service. Wine Snob. Dog Owner. Music lover.
+  avatar: avatars/jim-ettig.jpg
+  twitter: "@unclejge"
+- id: Marcy Sutton
+  bio: Head of Learning at Gatsby, cyclist, animal lover, pie baker.
+  avatar: avatars/marcy-sutton.jpg
+  twitter: "@marcysutton"
+- id: Allan Pooley
+  bio: Big half of Little & Big. Frontend Developer. Also makes stuff with wood.
+  avatar: avatars/allan-pooley.jpg
+  twitter: "@PooleyAllan"
+- id: Tim Smith
+  bio: Programmer Analyst @HonCompany. Freelance Web Developer. Person.
+  avatar: avatars/tim-smith.jpg
+  twitter: "@iam_timsmith"
+- id: John Otander
+  bio: Building things at Gatsby. Writing things at johno.com.
+  avatar: avatars/john-otander.jpg
+  twitter: "@4lpine"
+- id: Cory Mortimer
+  bio: Software Engineer at Housecall Pro. Previously KnuEdge, Intuit. Passionate about front-end technologies, user-friendly design.
+  avatar: avatars/cory-mortimer.png
+- id: Aileen Nowak
+  bio: JavaScript lover. JAMStack enthusiast. Developer at Ghost.org
+  avatar: avatars/aileen-nowak.jpeg
+- id: Brent Jackson
+  bio: Software developer @ GatsbyJS. Loves cats, design systems, CSS, and JavaScript.
+  avatar: avatars/brent-jackson.jpg
+  twitter: "@jxnblk"
+- id: Michal Piechowiak
+  bio: Software developer @ GatsbyJS. Likes solving weird problems, skiing and watching/reading sci-fi. In that order.
+  avatar: avatars/michal-piechowiak.jpeg
+  twitter: "@mipiechowiak"
+- id: Justin Emond
+  bio: Drupal engineer to CEO @ ThirdAndGrove. A good day is solving client problems and trying new craft beer
+  avatar: avatars/justin-emond.jpeg
+  twitter: "@justinpemond"
+- id: Michelle Gienow
+  bio: Writes things @ GatsbyJS. Chaotic good frontend dev, caffeine addict, backyard chicken wrangler 🐓.
+  avatar: avatars/michelle-gienow.jpg
+  twitter: "@michellegienow"
+- id: Anthony Marcar
+  bio: "Distributed Systems consultant, Clojure enthusiast, bicycle tourer"
+  avatar: avatars/anthony-marcar.jpg
+  twitter: "@Moocar"
+- id: Benjamin Lannon
+  bio: Web Developer, Open Source advocate, new tech explorer - https://lannonbr.com/
+  avatar: avatars/benjamin-lannon.jpg
+  twitter: "@lannonbr"
+- id: Hashim Warren
+  bio: Marketer turned Web Developer  - https://hashim.xyz
+  avatar: avatars/hashim-warren.jpg
+  twitter: "@hashim_warren"
+- id: Caitlin Cashin
+  bio: Marketing woman-of-all-work, collector of hobbies, very opinionated about opera.
+  avatar: avatars/caitlin-cashin.jpg
+  twitter: "@caitlinthefirst"
+- id: Trevor Blades
+  bio: Web Developer at Apollo. Always learning!
+  avatar: avatars/trevor-blades.jpg
+  twitter: "@trevorblades"

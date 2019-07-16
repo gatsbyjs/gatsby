@@ -1,6 +1,5 @@
 import React from "react"
 
-import { rhythm } from "../../utils/typography"
 import { colors, space, letterSpacings } from "../../utils/presets"
 
 const Badge = ({ forHire, children, customCSS }) => (
@@ -21,10 +20,10 @@ export default Badge
 const styles = {
   badge: {
     borderRadius: 20,
-    padding: `0 ${rhythm(space[2])}`,
+    padding: `0 ${space[2]}`,
   },
   hiring: {
-    background: colors.ui.light,
+    background: colors.purple[10],
     color: colors.lilac,
   },
   forHire: {

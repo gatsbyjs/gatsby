@@ -1,6 +1,5 @@
 import fs from "fs"
 import sysPath from "path"
-import crypto from "crypto"
 
 // default icons for generating icons
 exports.defaultIcons = [
@@ -61,15 +60,6 @@ exports.doesIconExist = function doesIconExist(srcIcon) {
 
     return false
   }
-}
-
-exports.createContentDigest = function createContentDigest(content) {
-  let digest = crypto
-    .createHash(`sha1`)
-    .update(content)
-    .digest(`hex`)
-
-  return digest
 }
 
 /**

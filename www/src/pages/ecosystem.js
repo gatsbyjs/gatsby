@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
+import FooterLinks from "../components/shared/footer-links"
 
 import { EcosystemIcon } from "../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../assets/ecosystem-icons"
@@ -56,6 +57,7 @@ class EcosystemPage extends Component {
           starters={starters}
           plugins={plugins}
         />
+        <FooterLinks />
       </Layout>
     )
   }
@@ -70,7 +72,10 @@ export const ecosystemQuery = graphql`
   ) {
     allStartersYaml(
       filter: {
-        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+        fields: {
+          starterShowcase: { slug: { in: $featuredStarters } }
+          hasScreenshot: { eq: true }
+        }
       }
     ) {
       edges {

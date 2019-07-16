@@ -203,7 +203,7 @@ module.exports = (
   })
 
   // For each HTML Node
-  visit(markdownAST, `html`, node => {
+  visit(markdownAST, [`html`, `jsx`], node => {
     const $ = cheerio.load(node.value)
 
     function processUrl({ url }) {
@@ -266,6 +266,11 @@ module.exports = (
       $(`audio source[src], audio[src]`),
       `src`
     ).forEach(processUrl)
+
+    // Handle flash embed tags.
+    extractUrlAttributeAndElement($(`object param[value]`), `value`).forEach(
+      processUrl
+    )
 
     // Handle a tags.
     extractUrlAttributeAndElement($(`a[href]`), `href`).forEach(processUrl)

@@ -6,7 +6,7 @@ title: Commands (Gatsby CLI)
 
 The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including like running a development server and building out your Gatsby application for deployment.
 
-_We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md)._
+_We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md), and our [cheat sheet](/docs/cheat-sheet/) has all the top CLI commands ready to print out._
 
 ## Note on globally installed executables
 
@@ -65,11 +65,11 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                                                |
-| :--------------------------: | ---------------------------------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    |
-| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
+|            Option            | Description                                                                                               |
+| :--------------------------: | --------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                       |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                   |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
 
 ### `serve`
 
@@ -111,6 +111,16 @@ This is useful as a last resort when your local project seems to have issues or 
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 - Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
 
+### `plugin`
+
+Run commands pertaining to gatsby plugins.
+
+#### `docs`
+
+`gatsby plugin docs`
+
+Directs you to documentation about using and creating plugins.
+
 ### Repl
 
 Get a Node.js REPL (interactive shell) with context of your Gatsby environment:
@@ -141,4 +151,4 @@ You can type in a command, such as one of these:
 
 When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
-<!-- TODO: add repl documentation link when ready -->
+See the Gatsby REPL documentation [here](/docs/gatsby-repl/).

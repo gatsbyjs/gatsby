@@ -1,28 +1,30 @@
 import React from "react"
-import { rhythm, options } from "../utils/typography"
-import presets, {
+import { rhythm } from "../utils/typography"
+import {
   space,
+  fontSizes,
   transition,
   colors,
-  breakpoints,
+  mediaQueries,
+  fonts,
 } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
     css={{
-      marginRight: rhythm(space[6]),
+      marginRight: space[6],
       display: `inline-block`,
       padding: 0,
       height: `calc(14px + 1vw)`,
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         marginBottom: 0,
         height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
         },
       },
-      [breakpoints.md]: {
+      [mediaQueries.md]: {
         height: `calc(12px + 1vw)`,
       },
     }}
@@ -64,9 +66,9 @@ const UsedBy = () => (
     className="Masthead-usedBy"
     css={{
       display: `flex`,
-      padding: rhythm(space[8]),
-      paddingTop: rhythm(space[5]),
-      paddingBottom: rhythm(space[5]),
+      padding: space[8],
+      paddingTop: space[5],
+      paddingBottom: space[5],
       marginBottom: rhythm(3),
       transition: `padding-top ${transition.speed.fast} ${
         transition.curve.default
@@ -74,13 +76,13 @@ const UsedBy = () => (
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
         paddingLeft: 0,
         flex: `0 1 auto`,
       },
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         paddingTop: rhythm(5),
       },
     }}
@@ -92,7 +94,7 @@ const UsedBy = () => (
         flexShrink: `1`,
         alignSelf: `flex-end`,
         transform: `translateZ(0)`,
-        [breakpoints.sm]: {
+        [mediaQueries.sm]: {
           flexGrow: `0`,
         },
       }}
@@ -100,11 +102,11 @@ const UsedBy = () => (
       <p
         css={{
           color: colors.lilac,
-          fontFamily: options.headerFontFamily.join(`,`),
-          fontSize: presets.scale[1],
+          fontFamily: fonts.header,
+          fontSize: fontSizes[1],
           marginBottom: 0,
-          [breakpoints.sm]: {
-            fontSize: presets.scale[2],
+          [mediaQueries.sm]: {
+            fontSize: fontSizes[2],
             textAlign: `right`,
           },
         }}

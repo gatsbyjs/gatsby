@@ -80,7 +80,7 @@ Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the c
 ```GraphQL
 graphql`
   query MyQuery {
-    # Example is for a `ContentType` with a `ContenfulAsset` field
+    # Example is for a `ContentType` with a `ContentfulAsset` field
     # You could also query an asset directly via
     # `allContentfulAsset { edges{ node { } } }`
     # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
@@ -138,7 +138,23 @@ The base host for all the API requests, by default it's 'cdn.contentful.com', if
 
 The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).
 
+**`downloadLocal`** [boolean][optional] [default: `false`]
+
+Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to query a `ContentfulAsset`'s `localFile` field, which is not linked to Contentful's CDN. Useful for reducing data usage.
+
 You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
+
+**`localeFilter`** [function][optional] [default: `() => true`]
+
+Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amout of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+
+For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
+
+List of locales and their codes can be found in Contentful app -> Settings -> Locales
+
+**`forceFullSync`** [boolean][optional] [default: `false`]
+
+Prevents the use of sync tokens when accessing the Contentful API.
 
 ## Notes on Contentful Content Models
 
@@ -146,7 +162,7 @@ There are currently some things to keep in mind when building your content model
 
 1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
+2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 
@@ -276,7 +292,7 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
           body
         }
         heroImage {
-          resolutions(width: 1600) {
+          fixed(width: 1600) {
             width
             height
             src
@@ -288,6 +304,8 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
   }
 }
 ```
+
+When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that gatsby-source-contentful also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
 
 ## More on Queries with Contentful and Gatsby
 

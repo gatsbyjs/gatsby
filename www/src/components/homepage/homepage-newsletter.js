@@ -6,32 +6,42 @@ import EmailCaptureForm from "../../components/email-capture-form"
 
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors, space, radii, breakpoints } from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
+import {
+  colors,
+  space,
+  radii,
+  mediaQueries,
+  fontSizes,
+  letterSpacings,
+  lineHeights,
+  fonts,
+  fontWeights,
+} from "../../utils/presets"
 
-const stripedBorderHeight = rhythm(space[2])
+const stripedBorderHeight = space[1]
 
 const Container = styled(`div`)`
-  border: 1px solid ${colors.ui.light};
+  border: 1px solid ${colors.ui.border.subtle};
   border-radius: ${radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${rhythm(space[8])};
-  padding: ${rhythm(space[8] * 1.2)};
+  margin-bottom: ${space[8]};
+  padding: calc(${space[8]} * 1.2);
   padding-bottom: calc(${rhythm(space[8] * 1.2)} + ${stripedBorderHeight});
   position: relative;
 
   :after {
     border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
-    background: ${colors.ui.whisper}
+    background: ${colors.white}
       repeating-linear-gradient(
         135deg,
-        ${colors.lemon},
-        ${colors.lemon} 20px,
+        ${colors.yellow[40]},
+        ${colors.yellow[40]} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.mint} 40px,
-        ${colors.mint} 60px,
+        ${colors.teal[40]} 40px,
+        ${colors.teal[40]} 60px,
         transparent 60px,
         transparent 80px
       );
@@ -43,7 +53,7 @@ const Container = styled(`div`)`
     position: absolute;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-direction: row;
     justify-content: space-between;
 
@@ -54,33 +64,34 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -${rhythm(space[1])};
+  left: -${space[1]};
   position: absolute;
-  top: -${rhythm(space[2])};
+  top: -${space[2]};
 `
 
 const Name = styled(`h3`)`
   color: ${colors.lilac};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: ${presets.scale[1]};
-  font-weight: normal;
-  letter-spacing: ${presets.letterSpacings.tracked};
+  font-family: ${fonts.header};
+  font-size: ${fontSizes[1]};
+  font-weight: ${fontWeights[0]};
+  letter-spacing: ${letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
 
 const Title = styled(`h1`)`
   color: ${colors.gatsby};
-  font-size: ${presets.scale[4]};
-  line-height: ${presets.lineHeights.dense};
+  font-size: ${fontSizes[4]};
+  font-weight: ${fontWeights[1]};
+  line-height: ${lineHeights.dense};
   margin: 0;
-  margin-top: ${rhythm(space[1])};
+  margin-top: ${space[1]};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: ${rhythm(space[5])};
+  margin-top: ${space[5]};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin-top: 0;
   }
 `

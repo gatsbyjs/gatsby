@@ -35,7 +35,7 @@ plugin itself, resulting in `[...themeA.plugins, themeA, ...themeB.plugins, them
 any plugin it includes.
 
 For more on this, read [Introducing Gatsby
-Themes](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/).
+Themes](/blog/2018-11-11-introducing-gatsby-themes/).
 
 We introduced one major change to composition after the initial release to
 support child themes. A child theme is a theme that also uses the
@@ -102,7 +102,7 @@ In fact, any file that is processed by webpack can be shadowed.
 
 To learn more about child themes and component shadowing, [read this themes
 update blog
-post](https://www.gatsbyjs.org/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/).
+post](/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/).
 
 ## Improving Documentation
 
@@ -142,7 +142,7 @@ core community `BlogPost` type with multi-author support. It would be
 immediately compatible with any theme that used the `BlogPost` type.
 
 If you're following closely you may have already seen [a blog post by Mikhail
-Novikov](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/) on
+Novikov](/blog/2019-03-04-new-schema-customization/) on
 the new schema customization APIs: `createTypes` and `createResolvers`. These
 are the primitives we are using to build data abstractions to use with themes.
 We're still experimenting and doing research here so I won't show any code

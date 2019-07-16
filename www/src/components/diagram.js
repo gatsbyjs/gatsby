@@ -2,32 +2,30 @@ import React, { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm, options } from "../utils/typography"
-import presets, {
+import { rhythm } from "../utils/typography"
+import {
   colors,
   space,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
+  letterSpacings,
+  lineHeights,
+  fontSizes,
+  fonts,
+  fontWeights,
 } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `0, 0, 0, 0.025`
+const stripeColor = colors.purple[70]
 const stripeSize = 15
-const stripeAnimation = keyframes({
-  "0%": {
-    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
-  },
-  "100%": { backgroundPosition: `0 0` },
-})
 const stripeBg = {
-  backgroundColor: colors.ui.whisper,
+  backgroundColor: colors.purple[80],
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
-  animation: `${stripeAnimation} 14s linear infinite`,
+  backgroundImage: `linear-gradient(45deg, ${stripeColor} 25%, transparent 25%, transparent 50%, ${stripeColor} 50%, ${stripeColor} 75%, transparent 75%, transparent)`,
 }
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
@@ -52,16 +50,15 @@ const SegmentTitle = ({ children }) => (
     css={{
       display: `inline`,
       background: colors.accent,
-      color: colors.gray.copy,
       borderRadius: radii[1],
       margin: `0 auto`,
       position: `relative`,
-      bottom: `-${rhythm(space[2])}`,
-      padding: `${rhythm(space[2])} ${rhythm(space[3])}`,
+      bottom: `-${space[2]}`,
+      padding: `${space[2]} ${space[3]}`,
       fontWeight: `normal`,
-      letterSpacing: presets.letterSpacings.tracked,
-      fontSize: presets.scale[1],
-      lineHeight: presets.lineHeights.solid,
+      letterSpacing: letterSpacings.tracked,
+      fontSize: fontSizes[1],
+      lineHeight: lineHeights.solid,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -91,9 +88,9 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.ui.light}`,
+  border: `1px solid ${colors.purple[10]}`,
   borderRadius: radii[2],
-  padding: `${rhythm(space[5])} ${rhythm(space[7])} 0`,
+  padding: `${space[5]} ${space[7]} 0`,
 }
 
 const borderAndBoxShadow = {
@@ -118,18 +115,18 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(space[3])} ${rhythm(space[4])}` }
+const boxPadding = { padding: `${space[3]} ${space[4]}` }
 
 const SourceItem = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
-      padding: `0 ${rhythm(space[4])} ${rhythm(space[5])}`,
+      padding: `0 ${space[4]} ${space[5]}`,
       display: `flex`,
-      [breakpoints.xs]: {
+      [mediaQueries.xs]: {
         flex: `1 1 50%`,
       },
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         flex: `1 1 33%`,
         maxWidth: `33%`,
       },
@@ -139,7 +136,7 @@ const SourceItem = ({ children }) => (
       css={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: presets.lineHeights.dense,
+        lineHeight: lineHeights.dense,
         textAlign: `left`,
       }}
     >
@@ -151,10 +148,8 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     css={{
-      color: colors.gray.dark,
+      fontSize: fontSizes[2],
       margin: 0,
-      fontStyle: `normal`,
-      fontSize: presets.scale[2],
     }}
   >
     {children}
@@ -164,11 +159,11 @@ const ItemTitle = ({ children }) => (
 const ItemDescription = ({ children }) => (
   <small
     css={{
-      lineHeight: presets.lineHeights.dense,
+      lineHeight: lineHeights.dense,
       display: `block`,
-      color: colors.gray.calm,
-      fontSize: presets.scale[1],
-      fontFamily: options.systemFontFamily.join(`,`),
+      color: colors.text.secondary,
+      fontSize: fontSizes[1],
+      fontFamily: fonts.system,
     }}
   >
     {children}
@@ -176,18 +171,27 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link to={to}>{children}</Link>
+  <Link
+    css={{
+      "&&": {
+        color: colors.purple[80],
+      },
+    }}
+    to={to}
+  >
+    {children}
+  </Link>
 )
 
 const Gatsby = () => (
   <div
     css={{
       ...borderAndBoxShadow,
-      padding: rhythm(space[5]),
+      padding: space[5],
       margin: `0 auto`,
       width: rhythm(5.5),
       height: rhythm(5.5),
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         width: rhythm(6),
         height: rhythm(6),
       },
@@ -197,12 +201,12 @@ const Gatsby = () => (
       src={logo}
       css={{
         display: `inline-block`,
-        height: rhythm(space[8]),
+        height: space[8],
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
-        [breakpoints.lg]: {
-          height: rhythm(space[9]),
+        [mediaQueries.lg]: {
+          height: space[9],
         },
       }}
       alt="Gatsby"
@@ -210,7 +214,7 @@ const Gatsby = () => (
     <ItemDescription>
       <small
         css={{
-          marginTop: rhythm(space[1]),
+          marginTop: space[1],
           display: `block`,
         }}
       >
@@ -241,26 +245,25 @@ const Diagram = () => (
       <section
         className="Diagram"
         css={{
-          fontFamily: options.headerFontFamily.join(`,`),
-          padding: rhythm(space[6]),
+          fontFamily: fonts.header,
+          padding: space[6],
           textAlign: `center`,
           flex: `1 1 100%`,
         }}
       >
         <h1
           css={{
+            fontWeight: fontWeights[1],
             marginTop: 0,
-            marginBottom: rhythm(space[6]),
-            [breakpoints.md]: {
-              marginTop: rhythm(space[6]),
+            marginBottom: space[6],
+            [mediaQueries.md]: {
+              marginTop: space[6],
             },
           }}
         >
           How Gatsby works
         </h1>
-        <div
-          css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(space[9])}` }}
-        >
+        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${space[9]}` }}>
           <FuturaParagraph>
             Pull data from <em>anywhere</em>
           </FuturaParagraph>
@@ -306,8 +309,8 @@ const Diagram = () => (
               css={{
                 ...borderAndBoxShadow,
                 ...boxPadding,
-                paddingTop: rhythm(space[3]),
-                paddingBottom: rhythm(space[3]),
+                paddingTop: space[3],
+                paddingBottom: space[3],
                 width: `auto`,
                 display: `inline-block`,
               }}
@@ -330,7 +333,7 @@ const Diagram = () => (
           <div
             css={{
               ...box,
-              paddingBottom: rhythm(space[5]),
+              paddingBottom: space[5],
             }}
           >
             <ItemTitle>Static Web Host</ItemTitle>

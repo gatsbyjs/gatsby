@@ -3,7 +3,6 @@ import { graphql } from "gatsby"
 
 import DocBlock from "./doc-block"
 import { SubHeader } from "./utils"
-// import { rhythm } from "../../utils/typography"
 
 const ReturnBlock = ({ definition, level }) => {
   if (definition.returns && definition.returns.length > 0) {

@@ -1,5 +1,3 @@
-const _ = require(`lodash`)
-
 const { emitter, store } = require(`../redux`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { boundActionCreators } = require(`../redux/actions`)
@@ -32,23 +30,6 @@ emitter.on(`API_RUNNING_QUEUE_EMPTY`, () => {
 
 const runCreatePages = async () => {
   pagesDirty = false
-  const plugins = store.getState().plugins
-  // Test which plugins implement createPagesStatefully so we can
-  // ignore their pages.
-  const statefulPlugins = plugins
-    .filter(p => {
-      try {
-        const gatsbyNode = require(`${p.resolve}/gatsby-node`)
-        if (gatsbyNode.createPagesStatefully) {
-          return true
-        } else {
-          return false
-        }
-      } catch (e) {
-        return false
-      }
-    })
-    .map(p => p.id)
 
   const timestamp = Date.now()
 
@@ -61,7 +42,7 @@ const runCreatePages = async () => {
   // Delete pages that weren't updated when running createPages.
   Array.from(store.getState().pages.values()).forEach(page => {
     if (
-      !_.includes(statefulPlugins, page.pluginCreatorId) &&
+      !page.isCreatedByStatefulCreatePages &&
       page.updatedAt < timestamp &&
       page.path !== `/404.html`
     ) {

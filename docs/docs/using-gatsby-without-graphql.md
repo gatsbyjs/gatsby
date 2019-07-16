@@ -1,5 +1,5 @@
 ---
-title: Using Gatsby without GraphQL
+title: Gatsby without GraphQL
 ---
 
 Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. However, source plugins (or even Gatsby nodes) aren't strictly necessary to pull data into a Gatsby site! It's also possible to use an “unstructured data” approach in Gatsby sites, no GraphQL required.
@@ -35,8 +35,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
 }
 ```
 
-- `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
-- The [`createPage` action](https://www.gatsbyjs.org/docs/actions/#createPage) is what actually creates the page.
+- `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
+- The [`createPage` action](/docs/actions/#createPage) is what actually creates the page.
 
 On the highlighted lines, the data is being supplied to the page template, where it can be accessed as props:
 
@@ -100,7 +100,7 @@ Another difficulty added when working with unstructured data is that your data f
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
 1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/how-plugins-work/) guide and consider building your own!
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ## Further reading
 

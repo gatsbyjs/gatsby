@@ -26,7 +26,7 @@ For this guide, you don't have to worry about most of the features. You'll just 
 
 #### Adding content to existing pages
 
-Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the [Gatsby CLI installed](https://www.gatsbyjs.org/docs/quick-start/#install-gatsbys-command-line-tool), create a new site and navigate to it in your terminal:
+Now that you have some content to pull, you can create a basic Gatsby site to display the content. Assuming you have the [Gatsby CLI installed](/docs/quick-start/#install-gatsbys-command-line-tool), create a new site and navigate to it in your terminal:
 
 ```shell
 gatsby new kentico-cloud-guide
@@ -53,8 +53,9 @@ module.exports = {
           deliveryClientConfig: {
             projectId: `<YourProjectID>` // Fill in your Project ID
           },
+          // Please note that with the Sample Project generated above, `en-US` is the default language for the project and this config. For a blank project, this needs to be `default`.
           languageCodenames: [
-                    `en-US` // Or whatever languages you have installed in your project (Project settings -> Localization)
+                    `en-US` // Or the languages in your project (Project settings -> Localization)
           ]
       }
     },
@@ -217,4 +218,4 @@ You've seen how to set up a simple Gatsby site that sources content from Kentico
 - See [more about what the Kentico Cloud source plugin can do](https://github.com/Kentico/gatsby-source-kentico-cloud#features).
 - Read the [Kentico Cloud documentation](https://developer.kenticocloud.com/docs) to see what's possible.
 - Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kentico-cloud) to see a more complete example.
-- Read a [blog post about using Kentico Cloud and Gatsby](https://www.gatsbyjs.org/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).
+- Read a [blog post about using Kentico Cloud and Gatsby](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).

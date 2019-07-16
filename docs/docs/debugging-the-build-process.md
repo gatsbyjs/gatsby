@@ -6,8 +6,8 @@ Gatsby's `build` and `develop` steps run as a Node.js application which you can 
 
 In this guide you will learn how to debug some code using:
 
-- [VS Code debugger](<#vs-code-debugger-(auto-config)>) (Auto-Config)
-- [VS Code debugger](<#vs-code-debugger-(manual-config)>) (Manual-Config)
+- [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
+- [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
 - [Chrome DevTools for Node](#chrome-devtools-for-node)
 
 As an example let's use the following code snippet in a `gatsby-node.js` file:

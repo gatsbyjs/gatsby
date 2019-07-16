@@ -1,6 +1,6 @@
 if (process.env.GATSBY_DB_NODES === `loki`) {
   const _ = require(`lodash`)
-  const nodeTypes = require(`../../../schema/build-node-types`)
+  const { GraphQLObjectType } = require(`graphql`)
   const { store } = require(`../../../redux`)
   const runQuery = require(`../nodes-query`)
   const { getNodeTypeCollection } = require(`../nodes`)
@@ -21,11 +21,11 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
     for (const node of nodes) {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     }
-    const gqlType = nodeTypes.buildNodeObjectType({
-      typeName: `Test`,
-      nodes,
-      pluginFields: [],
-      processedTypes: {},
+    const gqlType = new GraphQLObjectType({
+      name: `Test`,
+      fields: {
+        foo: { type: `String` },
+      },
     })
     const queryArgs = { filter: { foo: { eq: `bar` } } }
     const args = { gqlType, queryArgs }

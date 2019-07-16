@@ -7,6 +7,9 @@ jest.mock(`../index`, () => {
       getState: jest.fn(),
     },
     dispath: () => {},
+    emitter: {
+      on: jest.fn(),
+    },
   }
 })
 

@@ -1,11 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
+const { kebabCase } = require(`lodash-es`)
 
 import Button from "./button"
-import { rhythm } from "../utils/typography"
-import presets, { space } from "../utils/presets"
-const _ = require(`lodash`)
+import { colors, space, fontSizes } from "../utils/presets"
 
 const TagsSection = ({ tags }) => {
   if (!tags) return null
@@ -13,7 +12,7 @@ const TagsSection = ({ tags }) => {
     const divider = i < tags.length - 1 && <span>{`, `}</span>
     return (
       <span key={tag}>
-        <Link to={`/blog/tags/${_.kebabCase(tag.toLowerCase())}`}>{tag}</Link>
+        <Link to={`/blog/tags/${kebabCase(tag.toLowerCase())}`}>{tag}</Link>
         {divider}
       </span>
     )
@@ -25,18 +24,20 @@ const TagsSection = ({ tags }) => {
         flexFlow: `row wrap`,
         justifyContent: `space-between`,
         alignItems: `baseline`,
+        borderTop: `1px solid ${colors.ui.border.subtle}`,
+        marginTop: space[10],
       }}
     >
       <em
         css={{
-          fontSize: presets.scale[1],
+          fontSize: fontSizes[1],
           display: `block`,
           flexBasis: `60%`,
           flexGrow: 1,
           fontStyle: `normal`,
-          marginBottom: rhythm(space[5]),
-          marginRight: rhythm(space[9]),
-          marginTop: rhythm(3),
+          marginBottom: space[5],
+          marginRight: space[9],
+          marginTop: space[8],
         }}
       >
         Tagged with {tagLinks}
@@ -47,7 +48,7 @@ const TagsSection = ({ tags }) => {
         key="blog-post-view-all-tags-button"
         to="/blog/tags"
       >
-        View All Tags <TagsIcon />
+        View all Tags <TagsIcon />
       </Button>
     </div>
   )

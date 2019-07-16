@@ -22,6 +22,11 @@ const argv = require(`yargs`)
     `Set path to Gatsby repository.
 You typically only need to configure this once.`
   )
+  .nargs(`force-install`, 0)
+  .describe(
+    `force-install`,
+    `Disables copying files into node_modules and forces usage of local npm repository.`
+  )
   .alias(`C`, `copy-all`)
   .nargs(`C`, 0)
   .describe(
@@ -68,23 +73,17 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
   process.exit()
 }
 
+// get list of packages from monorepo
+const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
+
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-let packages = Object.keys(
-  _.merge({}, localPkg.dependencies, localPkg.devDependencies)
+// intersect dependencies with monoRepoPackags to get list of packages that are used
+let localPackages = _.intersection(
+  monoRepoPackages,
+  Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies))
 )
 
-if (argv.copyAll) {
-  packages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
-} else {
-  const { dependencies } = JSON.parse(
-    fs.readFileSync(path.join(gatsbyLocation, `packages/gatsby/package.json`))
-  )
-  packages = packages
-    .concat(Object.keys(dependencies))
-    .filter(p => p.startsWith(`gatsby`))
-}
-
-if (!argv.packages && _.isEmpty(packages)) {
+if (!argv.packages && _.isEmpty(localPackages)) {
   console.error(
     `
 You haven't got any gatsby dependencies into your current package.json
@@ -101,7 +100,10 @@ gatsby-dev will pick them up.
   process.exit()
 }
 
-watch(gatsbyLocation, argv.packages || packages, {
+watch(gatsbyLocation, argv.packages, {
+  localPackages,
   quiet: argv.quiet,
   scanOnce: argv.scanOnce,
+  forceInstall: argv.forceInstall,
+  monoRepoPackages,
 })

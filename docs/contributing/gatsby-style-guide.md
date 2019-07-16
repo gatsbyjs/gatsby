@@ -36,15 +36,19 @@ The community plans, writes, and maintains these Docs on GitHub.
 - [Best practices](#best-practices)
   - [Support software versions](#software-versions)
   - [Share best practices whenever possible](#share-best-practices-whenever-possible)
-- [The difference between tutorials and docs](#the-difference-between-tutorials-and-docs)
-  - [Tutorial](#tutorial)
-    - [Tutorial Audience](#tutorial-audience)
-    - [Tutorial Purpose](#tutorial-purpose)
-    - [Tutorial Tone and style](#tutorial-tone-and-style)
-  - [Docs](#docs)
-    - [Docs Audience](#docs-audience)
-    - [Docs Purpose](#docs-purpose)
-    - [Docs Tone and style](#docs-tone-and-style)
+- [The difference between tutorials, recipes, and docs](#the-difference-between-tutorials-recipes-and-docs)
+- [Tutorials](#tutorials)
+  - [Tutorials Audience](#tutorials-audience)
+  - [Tutorials Purpose](#tutorials-purpose)
+  - [Tutorials Tone and style](#tutorials-tone-and-style)
+- [Recipes](#recipes)
+  - [Recipes Audience](#recipes-audience)
+  - [Recipes Purpose](#recipes-purpose)
+  - [Recipes Tone and style](#recipes-tone-and-style)
+- [Docs](#docs)
+  - [Docs Audience](#docs-audience)
+  - [Docs Purpose](#docs-purpose)
+  - [Docs Tone and style](#docs-tone-and-style)
 
 ## Welcome!
 
@@ -64,13 +68,14 @@ Before you begin writing, make sure to read the rest of this style guide.
 Docs can cover a broad range of topics. Please see the following
 examples:
 
-- [guides](/docs/add-404-page/)
-- [guide overviews](/docs/styling/)
-- [tutorials](/tutorial/part-one/)
-- [plugin READme](/packages/gatsby-source-filesystem/)
-- [starter READme](https://github.com/gatsbyjs/gatsby-starter-default)
+- [Reference guides](/docs/add-404-page/)
+- [Reference guide overviews](/docs/styling/)
+- [Recipes](/docs/recipes/)
+- [Tutorials](/tutorial/part-one/)
+- [Plugin README](/packages/gatsby-source-filesystem/)
+- [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/how-to-contribute/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
@@ -153,7 +158,17 @@ Concise writing communicates the bare minimum without redundancy. Strive to make
 
 ### Use clear hyperlinks
 
-Hyperlinks should contain the clearest words to indicate where the link will lead you. So instead of linking to the word [here](https://www.gatsbyjs.org/) link to [Gatsby's docs](https://www.gatsbyjs.org/).
+Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/).
+
+```markdown
+<!-- Good -->
+
+[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+
+<!-- Bad -->
+
+[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
@@ -205,7 +220,7 @@ Here are some folder name examples:
 - querying-data-with-graphql
 
 Note: Just to clarify, you can include special characters in the article title
-but _not_ in the `.md` file name or folder name (e.g. Title: What is GraphQL? and Folder Name:
+but _not_ in the `.md` file name or folder name (e.g. title: What is GraphQL? and Folder Name:
 what-is-graphql).
 
 ## Grammar and formatting
@@ -405,7 +420,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 
@@ -436,17 +451,19 @@ When there are multiple ways to complete a task, the docs should explain the fol
 
 For example, `gatsby-image` is a component that includes Gatsby best practices for handling images, yet there are more fundamental and common ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
 
-## The difference between tutorials and docs
+## The difference between tutorials, recipes, and docs
 
 The main tutorial at `/tutorial/` is optimized for users who are not experts in React and/or JavaScript, and therefore has a different purpose, tone, and style than the docs. The docs at `/docs/` are optimized for those with intermediate to expert mastery with React and JavaScript.
 
-## Tutorial
+## Tutorials
 
-### Tutorial audience
+### Tutorials audience
 
-Through research, it's clear that developers of all skill levels read the tutorial and go back to reference it later.
+Through research, it's clear that developers of all skill levels read the main Gatsby tutorial and go back to reference it later.
 
-The tutorial should prioritize helping users with the following attributes and goals.
+Additional tutorials provide supplemental learning content for more Gatsby workflows as well as opportunities for members of the Gatsby community to contribute to the docs.
+
+Gatsby tutorials should prioritize helping users with the following attributes and goals.
 
 Attributes:
 
@@ -460,14 +477,14 @@ Looking for:
 - a way to learn and/or improve React skills
 - a way to start a site and/or app project that uses React
 
-### Tutorial purpose
+### Tutorials purpose
 
-By following the steps in the tutorial, a user should:
+By following the steps in a Gatsby tutorial, a user should:
 
 - Experience the value of Gatsby as quickly as possible. With Gatsby, a user typically values that it takes fewer steps (and is therefore easier) to:
   - start coding immediately without being an expert
   - start a new project
-  - make edits and see them thru hot reloading
+  - make edits and see them through hot reloading
   - publish a site
   - do basic tasks like create pages, link between pages, create routing, change styles
 - Know how to and actually start and deploy a site as quickly as possible.
@@ -476,9 +493,9 @@ By following the steps in the tutorial, a user should:
 - Use enough React to do basic tasks like creating pages, links, styles.
 - Have fun!
 
-### Tutorial tone and style
+### Tutorials tone and style
 
-The tone and style of the tutorial should effectively help the audience reach their goals.
+The tone and style of a Gatsby tutorial should effectively help the audience reach their goals.
 
 ### Use personal "you" and be warm
 
@@ -486,7 +503,7 @@ The main tutorial ought to use the same personal “you” like the rest of the 
 
 > Why not use "yay" in the docs as well? Since the tutorial's goal is to help users complete a series of steps, it is possible and helpful to congratulate them on successfully completing each step. Guides in the docs act as reference guides that users can browse at will rather than read from top to bottom. It doesn't make sense to congratulate someone on finishing a guide, since it's not a series of steps.
 
-#### Don't make users think more than is necessary
+### Don't make users think more than is necessary
 
 Because the audience of the tutorial is people who do not consider themselves experts in React, it's important to reduce the amount of new information to bare minimum. The goal: give people only the information necessary to complete a task and to know how to repeat the task again, outside of the context of the tutorial.
 
@@ -495,7 +512,38 @@ In practice, you can reach this goal by two rules of thumb:
 - Reduce the number of hyperlinks, tabs, and environments to the least number required to complete the tasks in the tutorial.
 - When there are multiple ways to complete a task, give people only one way. This way ought to be the best practice possible within the constraints of the lowest supported versions of software. If the best practice isn't possible with the lowest supported versions of software, mention that as a side note.
 
+## Recipes
+
+### Recipes audience
+
+Recipes are for anyone looking to complete a common Gatsby task, however they may appeal to intermediate to advanced learners due to their brevity and focus on Gatsby-specific details without going through every setup step.
+
+### Recipes purpose
+
+Recipes provide concise step-by-step instructions for common Gatsby tasks. Each recipe should include a title, 1-2 sentence description motivating why the recipe is important, a list of prerequisites, steps to complete the task including an optional live example, and any additional references.
+
+### Recipes tone and style
+
+Recipes are shorter and more concise than tutorials but more hands-on than reference guides. They should be friendly but information-dense. This is accomplished by focusing on only what is relevant and actionable to a recipe task, anticipating any new or difficult concepts with links to additional materials to continue learning.
+
 ## Docs
+
+"Docs" in Gatsby generally refers to the following sections:
+
+- Quick Start
+- Recipes
+- Reference Guides
+- Gatsby API
+- Releases & Migration
+- Conceptual Guide
+- Gatsby Internals
+- Using Gatsby Professionally
+- Contributing
+- Partnering with Gatsby
+- Commands (Gatsby CLI)
+- Cheat Sheet
+- Glossary
+- Gatsby REPL
 
 ### Docs audience
 
@@ -536,6 +584,7 @@ By referencing the docs, a user should:
   - portfolio
   - e-commerce
   - authenticated
+  - accessible
 
 ### Docs tone and style
 
@@ -545,7 +594,7 @@ The tone and style of the docs should effectively help the audience reach their 
 
 The docs use the personal “you” to address the user.
 
-#### Give experts as much relevant info to get the task done as quickly as possible
+### Give experts as much relevant info to get the task done as quickly as possible
 
 Because the audience of the docs is people who have intermediate to expert level of mastery with React, it's important to provide the information needed to complete tasks in addition to all relevant and helpful context, references, and alternatives. The goal: give people the information necessary to get tasks done as quickly and effectively as possible.
 
@@ -553,23 +602,6 @@ In practice, you can reach this goal by two general rules:
 
 - Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
 - When there are multiple ways to complete a task, [follow these instructions](#share-best-practices-whenever-possible).
-
-## KPIs
-
-Here is how we measure the quality of the tutorial and docs. We will use ([cohort analysis](https://www.geckoboard.com/learn/kpi-examples/mobile-app-kpis/retention-rate/) to track improvements or regressions to the tutorial and docs.
-
-### Tutorial
-
-- time to value: how quickly, effectively, and painlessly can users experience the value of Gatsby?
-- daily, weekly, monthly active users
-- daily, weekly, monthly “finishers” of the tutorial (finishers = people who spend 5 mins minimum on each page of tutorial and go through whole thing)
-- weekly retention rate
-
-### Docs
-
-- time to task: how quickly and effectively can users accomplish tasks?
-- daily, weekly, monthly active users
-- weekly retention rate
 
 ## Why we chose GitHub for writing and maintaining docs
 

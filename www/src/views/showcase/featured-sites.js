@@ -1,25 +1,42 @@
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import hex2rgba from "hex2rgba"
 
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import { options, rhythm } from "../../utils/typography"
-import presets, {
+import {
   colors,
   space,
   transition,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
+  fontSizes,
+  fonts,
 } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
+const featuredSitesCard = {
+  display: `flex`,
+  flexDirection: `column`,
+  flexGrow: 0,
+  flexShrink: 0,
+  width: 320,
+  marginBottom: space[9],
+  marginRight: space[6],
+  [mediaQueries.xl]: {
+    width: 360,
+    marginRight: space[8],
+  },
+  [mediaQueries.xxl]: {
+    width: 400,
+  },
+}
 
 class FeaturedSites extends Component {
   setFilterToFeatured = e => {
@@ -35,10 +52,10 @@ class FeaturedSites extends Component {
       <section
         className="featured-sites"
         css={{
-          margin: `${rhythm(space[6])} ${rhythm(space[6])} 0`,
+          margin: `${space[6]} ${space[6]} 0`,
           position: `relative`,
           display: `none`,
-          [breakpoints.lg]: {
+          [mediaQueries.lg]: {
             display: `block`,
           },
         }}
@@ -59,7 +76,7 @@ class FeaturedSites extends Component {
         />
         <div
           css={{
-            marginBottom: rhythm(space[9]),
+            marginBottom: space[9],
             display: `flex`,
             alignItems: `center`,
             flexWrap: `wrap`,
@@ -68,13 +85,12 @@ class FeaturedSites extends Component {
           <img
             src={FeaturedSitesIcon}
             alt="icon"
-            css={{ marginBottom: 0, height: rhythm(space[4]) }}
+            css={{ marginBottom: 0, height: space[4] }}
           />
           <h1
             css={{
-              fontSize: presets.scale[4],
-              color: colors.gray.dark,
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontSize: fontSizes[4],
+              fontFamily: fonts.header,
               fontWeight: `bold`,
               marginRight: 30,
               marginLeft: 4,
@@ -89,8 +105,8 @@ class FeaturedSites extends Component {
             css={{
               ...styles.withTitleHover,
               display: `none`,
-              fontSize: presets.scale[1],
-              [breakpoints.sm]: {
+              fontSize: fontSizes[1],
+              [mediaQueries.sm]: {
                 display: `block`,
               },
               "&&": {
@@ -116,11 +132,11 @@ class FeaturedSites extends Component {
           >
             <div
               css={{
-                color: colors.gray.calm,
-                fontSize: presets.scale[1],
+                color: colors.text.secondary,
+                fontSize: fontSizes[1],
                 marginRight: 15,
                 display: `none`,
-                [breakpoints.md]: {
+                [mediaQueries.md]: {
                   display: `block`,
                 },
               }}
@@ -149,16 +165,16 @@ class FeaturedSites extends Component {
               display: `flex`,
               overflowX: `scroll`,
               flexShrink: 0,
-              margin: `0 -${rhythm(space[6])}`,
-              padding: `3px ${rhythm(space[6])} 0`,
-              ...styles.scrollbar,
+              margin: `0 -${space[6]}`,
+              padding: `3px ${space[6]} 0`,
+              borderBottom: `1px solid ${colors.ui.border.subtle}`,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
                 css={{
-                  ...styles.featuredSitesCard,
+                  ...featuredSitesCard,
                   ...styles.withTitleHover,
                 }}
               >
@@ -166,10 +182,10 @@ class FeaturedSites extends Component {
                   css={{
                     "&&": {
                       borderBottom: `none`,
-                      fontSize: presets.scale[3],
+                      fontSize: fontSizes[3],
                       fontWeight: `bold`,
-                      color: colors.gray.dark,
-                      fontFamily: options.headerFontFamily.join(`,`),
+                      color: colors.text.header,
+                      fontFamily: fonts.header,
                       transition: `box-shadow ${transition.speed.slow} ${
                         transition.curve.default
                       }, transform .3s ${transition.curve.default}`,
@@ -195,10 +211,10 @@ class FeaturedSites extends Component {
                 </Link>
                 <div
                   css={{
-                    fontSize: presets.scale[1],
-                    color: colors.gray.calm,
+                    fontSize: fontSizes[1],
+                    color: colors.text.secondary,
                     fontWeight: `normal`,
-                    [breakpoints.lg]: {
+                    [mediaQueries.lg]: {
                       marginTop: `auto`,
                     },
                   }}
@@ -206,7 +222,7 @@ class FeaturedSites extends Component {
                   {node.built_by && (
                     <div
                       css={{
-                        fontFamily: options.headerFontFamily.join(`,`),
+                        fontFamily: fonts.header,
                       }}
                     >
                       Built by {node.built_by}
@@ -227,8 +243,8 @@ class FeaturedSites extends Component {
               <a
                 href="#showcase"
                 css={{
-                  marginRight: `${rhythm(space[6])} !important`,
-                  backgroundColor: hex2rgba(colors.ui.light, 0.25),
+                  marginRight: `${space[6]} !important`,
+                  backgroundColor: colors.purple[5],
                   borderRadius: radii[1],
                   textAlign: `center`,
                   "&&": {
@@ -238,11 +254,11 @@ class FeaturedSites extends Component {
                     }`,
                     "&:hover": {
                       background: colors.white,
-                      transform: `translateY(-${rhythm(space[1])})`,
+                      transform: `translateY(-${space[1]})`,
                       boxShadow: shadows.overlay,
                     },
                   },
-                  ...styles.featuredSitesCard,
+                  ...featuredSitesCard,
                 }}
                 onClick={this.setFilterToFeatured}
               >
@@ -266,11 +282,11 @@ class FeaturedSites extends Component {
                         height: 44,
                         width: `auto`,
                         display: `block`,
-                        margin: `0 auto ${rhythm(space[6])}`,
-                        [breakpoints.md]: {
+                        margin: `0 auto ${space[6]}`,
+                        [mediaQueries.md]: {
                           height: 64,
                         },
-                        [breakpoints.xl]: {
+                        [mediaQueries.xl]: {
                           height: 72,
                         },
 
@@ -294,11 +310,11 @@ class FeaturedSites extends Component {
             css={{
               position: `absolute`,
               top: `0`,
-              bottom: rhythm(space[6]),
-              right: `-${rhythm(space[6])}`,
+              bottom: space[6],
+              right: `-${space[6]}`,
               width: 60,
               pointerEvents: `none`,
-              background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
+              background: `linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)`,
             }}
           />
         </div>

@@ -14,11 +14,6 @@ plugins: [
   {
     resolve: `gatsby-transformer-remark`,
     options: {
-
-      // Defaults to `() => true`
-      filter: node => node.sourceInstanceName === `blog`,
-      // Defaults to `MarkdownRemark`
-      type: `BlogPost`,
       // CommonMark mode (default: true)
       commonmark: true,
       // Footnotes mode (default: true)
@@ -190,6 +185,20 @@ It's also possible to ask Gatsby to return excerpts formatted as HTML. You might
     edges {
       node {
         excerpt(format: HTML)
+      }
+    }
+  }
+}
+```
+
+You can also get excerpts in Markdown format.
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: MARKDOWN)
       }
     }
   }

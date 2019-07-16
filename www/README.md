@@ -27,18 +27,16 @@ To develop on the starter library, you'll need to supply a GitHub personal acces
 GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
-### Working with feedback widgets
+### Enabling guess.js
 
-Several areas of the site include feedback widgets (currently starter library and plugin library). These aren't configured to work in development, unless you have set the public keys (as environment variables) for each widget.
+Guess.js is disabled by default and can be enabled by setting `ANALYTICS_SERVICE_ACCOUNT` and `ANALYTICS_SERVICE_ACCOUNT_KEY` env variables. These variables need to have access to the gatsbyjs.org analytics.
 
 If you have access to the keys, add them like so:
 
 ```
-GATSBY_FEEDBACK_KEY_PLUGINLIB=ADD_KEY
-GATSBY_FEEDBACK_KEY_STARTERLIB=ADD_KEY
+ANALYTICS_SERVICE_ACCOUNT="service account@email.com"
+ANALYTICS_SERVICE_ACCOUNT_KEY="PEM KEY VALUE"
 ```
-
-If there's a problem with the feedback widgets, please open an issue in the repo.
 
 ## Running slow build? (Screenshots placeholder)
 
@@ -51,3 +49,7 @@ GATSBY_SCREENSHOT_PLACEHOLDER=true
 ```
 
 For more information checkout [`gatsby-transformer-screenshot` docs](http://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image).
+
+## Design tokens
+
+Please make use of the design tokens available in `src/utils/presets` when adding or modifying component CSS styles. You can find a work-in-progress documentation of these tokens at https://www.gatsbyjs.org/guidelines/design-tokens/ (and on some of the sibling pages documenting color and typography).

@@ -20,19 +20,20 @@ exports.resolvableExtensions = true
  *   // Query for markdown nodes to use in creating pages.
  *   // You can query for whatever data you want to create pages for e.g.
  *   // products, portfolio items, landing pages, etc.
+ *   // Variables can be added as the second function parameter
  *   return graphql(`
- *     {
- *       allMarkdownRemark(limit: 1000) {
+ *     query loadPagesQuery ($limit: Int!) {
+ *       allMarkdownRemark(limit: $limit) {
  *         edges {
  *           node {
- *             fields {
+ *             frontmatter {
  *               slug
  *             }
  *           }
  *         }
  *       }
  *     }
- *   `).then(result => {
+ *   `, { limit: 1000 }).then(result => {
  *     if (result.errors) {
  *       throw result.errors
  *     }
@@ -41,7 +42,7 @@ exports.resolvableExtensions = true
  *     result.data.allMarkdownRemark.edges.forEach(edge => {
  *       createPage({
  *         // Path for this page — required
- *         path: `${edge.node.fields.slug}`,
+ *         path: `${edge.node.frontmatter.slug}`,
  *         component: blogPostTemplate,
  *         context: {
  *           // Add optional context data to be inserted
@@ -154,7 +155,7 @@ exports.onCreatePage = true
  * *Note:* Import GraphQL types from `gatsby/graphql` and don't add the `graphql`
  * package to your project/plugin dependencies to avoid `Schema must
  * contain unique named types but contains multiple types named` errors.
- * `gatsby/graphql` exports all builtin GraphQL types as well as the `graphQLJSON`
+ * `gatsby/graphql` exports all builtin GraphQL types as well as the `GraphQLJSON`
  * type.
  *
  * Many transformer plugins use this to add fields that take arguments.
@@ -193,6 +194,122 @@ exports.onCreatePage = true
  * }
  */
 exports.setFieldsOnGraphQLNodeType = true
+
+/**
+ * Customize Gatsby's GraphQL schema by creating type definitions, field
+ * extensions or adding third-party schemas.
+ *
+ * The [`createTypes`](/docs/actions/#createTypes),
+ * [`createFieldExtension`](/docs/actions/#createFieldExtension) and
+ * [`addThirdPartySchema`](/docs/actions/#addThirdPartySchema) actions
+ * are only available in this API. For details on their usage please refer to
+ * the actions documentation.
+ *
+ * This API runs immediately before schema generation. For modifications of the
+ * generated schema, e.g. to customize added third-party types, use the
+ * [`createResolvers`](/docs/node-apis/#createResolvers) API.
+ *
+ * @param {object} $0
+ * @param {object} $0.actions
+ * @param {object} $0.actions.createTypes
+ * @param {object} $0.actions.createFieldExtension
+ * @param {object} $0.actions.addThirdPartySchema
+ * @example
+ * exports.createSchemaCustomization = ({ actions }) => {
+ *   const { createTypes, createFieldExtension } = actions
+ *
+ *   createFieldExtension({
+ *     name: 'shout',
+ *     extend: () => ({
+ *       resolve(source, args, context, info) {
+ *         return String(source[info.fieldName]).toUpperCase()
+ *       }
+ *     })
+ *   })
+ *
+ *   const typeDefs = `
+ *     type MarkdownRemark implements Node @dontInfer {
+ *       frontmatter: Frontmatter
+ *     }
+ *     type Frontmatter {
+ *       title: String!
+ *       tagline: String @shout
+ *       date: Date @dateformat
+ *       image: File @fileByRelativePath
+ *     }
+ *   `
+ *   createTypes(typeDefs)
+ * }
+ */
+exports.createSchemaCustomization = true
+
+/**
+ * Add custom field resolvers to the GraphQL schema.
+ *
+ * Allows adding new fields to types by providing field configs, or adding resolver
+ * functions to existing fields.
+ *
+ * Things to note:
+ * * Overriding field types is disallowed, instead use the `createTypes`
+ *   action. In case of types added from third-party schemas, where this is not
+ *   possible, overriding field types is allowed.
+ * * New fields will not be available on `filter` and `sort` input types. Extend
+ *   types defined with `createTypes` if you need this.
+ * * In field configs, types can be referenced as strings.
+ * * When extending a field with an existing field resolver, the original
+ *   resolver function is available from `info.originalResolver`.
+ * * The `createResolvers` API is called as the last step in schema generation.
+ *   Thus, an intermediate schema is made available on the `schema` property.
+ *   In resolver functions themselves, it is recommended to access the final
+ *   built schema from `info.schema`.
+ * * Gatsby's data layer, including all internal query capabilities, is
+ *   exposed on [`context.nodeModel`](/docs/node-model/). The node store can be
+ *   queried directly with `getAllNodes`, `getNodeById` and `getNodesByIds`,
+ *   while more advanced queries can be composed with `runQuery`. Note that
+ *   `runQuery` will call field resolvers before querying, so e.g. foreign-key
+ *   fields will be expanded to full nodes. The other methods on `nodeModel`
+ *   don't do this.
+ * * It is possible to add fields to the root `Query` type.
+ * * When using the first resolver argument (`source` in the example below,
+ *   often also called `parent` or `root`), take care of the fact that field
+ *   resolvers can be called more than once in a query, e.g. when the field is
+ *   present both in the input filter and in the selection set. This means that
+ *   foreign-key fields on `source` can be either resolved or not-resolved.
+ *
+ * For fuller examples, see [`using-type-definitions`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions).
+ *
+ * @param {object} $0
+ * @param {GraphQLSchema} $0.schema Current GraphQL schema
+ * @param {function} $0.createResolvers Add custom resolvers to GraphQL field configs
+ * @param {object} $1
+ * @param {object} $1.resolvers Resolvers from plugin options in `gatsby-config.js`.
+ * @example
+ * exports.createResolvers = ({ createResolvers }) => {
+ *   const resolvers = {
+ *     Author: {
+ *       fullName: {
+ *         resolve: (source, args, context, info) => {
+ *           return source.firstName + source.lastName
+ *         }
+ *       },
+ *     },
+ *     Query: {
+ *       allRecentPosts: {
+ *         type: [`BlogPost`],
+ *         resolve: (source, args, context, info) => {
+ *           const posts = context.nodeModel.getAllNodes({ type: `BlogPost` })
+ *           const recentPosts = posts.filter(
+ *             post => post.publishedAt > Date.UTC(2018, 0, 1)
+ *           )
+ *           return recentPosts
+ *         }
+ *       }
+ *     }
+ *   }
+ *   createResolvers(resolvers)
+ * }
+ */
+exports.createResolvers = true
 
 /**
  * Ask compile-to-js plugins to process source to JavaScript so the query

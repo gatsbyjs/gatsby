@@ -1,3 +1,5 @@
+import { onPreRenderHTML, onRenderBody } from "../gatsby-ssr"
+
 jest.mock(
   `../.cache/typography`,
   () => {
@@ -5,8 +7,6 @@ jest.mock(
   },
   { virtual: true }
 )
-
-import { onPreRenderHTML, onRenderBody } from "../gatsby-ssr"
 
 const clone = arr => arr.reduce((merged, item) => merged.concat(item), [])
 

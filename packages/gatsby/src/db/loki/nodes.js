@@ -126,7 +126,7 @@ function getNode(id) {
 /**
  * Returns all nodes of a type (where `typeName ==
  * node.internal.type`). This is an O(1) operation since nodes are
- * already stored in seperate collections by type
+ * already stored in separate collections by type
  */
 function getNodesByType(typeName) {
   invariant(typeName, `typeName is null`)
@@ -141,8 +141,8 @@ function getNodesByType(typeName) {
  * `getNodesByType` should be used instead. Or at least where possible
  */
 function getNodes() {
-  const nodeTypes = getDb().getCollection(colls.nodeTypes.name).data
-  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType.type))
+  const nodeTypes = getTypes()
+  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType))
 }
 
 /**
@@ -311,7 +311,9 @@ function reducer(state = new Map(), action) {
       return null
 
     case `DELETE_NODE`: {
-      deleteNode(action.payload)
+      if (action.payload) {
+        deleteNode(action.payload)
+      }
       return null
     }
 
@@ -335,9 +337,9 @@ module.exports = {
   getNodes,
   getNode,
   getNodesByType,
+  getTypes,
   hasNodeChanged,
   getNodeAndSavePathDependency,
-  getTypes,
 
   createNode,
   updateNode,

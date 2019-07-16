@@ -1,14 +1,14 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
-import sortBy from "lodash/sortBy"
+import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
-import { rhythm } from "../../utils/typography"
 import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
+import normalizeGatsbyApiCall from "../../utils/normalize-gatsby-api-call"
 
 class NodeAPIDocs extends React.Component {
   render() {
@@ -16,11 +16,25 @@ class NodeAPIDocs extends React.Component {
       this.props.data.file.childrenDocumentationJs,
       func => func.name
     )
+
+    const normalized = normalizeGatsbyApiCall(this.props.data.nodeAPIs.group)
+
+    const mergedFuncs = funcs.map(func => {
+      return {
+        ...func,
+        ...normalized.find(n => n.name === func.name),
+      }
+    })
+
     return (
       <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
             <title>Node APIs</title>
+            <meta
+              name="description"
+              content="Documentation on Node APIs used in Gatsby build process for common uses like creating pages"
+            />
           </Helmet>
           <h1 id="gatsby-node-apis" css={{ marginTop: 0 }}>
             Gatsby Node APIs
@@ -48,18 +62,18 @@ class NodeAPIDocs extends React.Component {
               <code
                 className="language-javascript"
                 dangerouslySetInnerHTML={{
-                  __html: `// Promise API
-  exports.createPages = () => {
-    return new Promise((resolve, reject) => {
-      // do async work
-    })
-  }
+                  __html: `<span class="token comment">// Promise API</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">createPages</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// do async work</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-  // Callback API
-  exports.createPages = (_, pluginOptions, cb) => {
-    // do Async work
-    cb()
-  }`,
+<span class="token comment">// Callback API</span>
+exports<span class="token punctuation">.</span><span class="token function-variable function">createPages</span> <span class="token operator">=</span> <span class="token punctuation">(</span>_<span class="token punctuation">,</span> pluginOptions<span class="token punctuation">,</span> cb<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// do Async work</span>
+  <span class="token function">cb</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>`,
                 }}
               />
             </pre>
@@ -68,16 +82,16 @@ class NodeAPIDocs extends React.Component {
             If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>Usage</h2>
-          <p css={{ marginBottom: rhythm(space[5]) }}>
+          <h2 css={{ marginBottom: space[3] }}>Usage</h2>
+          <p css={{ marginBottom: space[5] }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>APIs</h2>
+          <h2 css={{ marginBottom: space[3] }}>APIs</h2>
           <ul>
-            {funcs.map((node, i) => (
+            {funcs.map(node => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
               </li>
@@ -86,7 +100,7 @@ class NodeAPIDocs extends React.Component {
           <br />
           <hr />
           <h2>Reference</h2>
-          <APIReference docs={funcs} />
+          <APIReference docs={mergedFuncs} />
         </Container>
       </Layout>
     )
@@ -101,6 +115,11 @@ export const pageQuery = graphql`
       childrenDocumentationJs {
         name
         ...DocumentationFragment
+      }
+    }
+    nodeAPIs: allGatsbyApiCall(filter: { group: { eq: "NodeAPI" } }) {
+      group(field: name) {
+        ...ApiCallFragment
       }
     }
   }

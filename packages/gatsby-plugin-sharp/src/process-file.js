@@ -1,4 +1,4 @@
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
 const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp`)
 const duotone = require(`./duotone`)
@@ -6,6 +6,9 @@ const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
+const _ = require(`lodash`)
+const crypto = require(`crypto`)
+const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -24,17 +27,86 @@ try {
   // doesn't support cpu-core-count utility.
 }
 
-module.exports = (file, transforms, options = {}) => {
+/**
+ * List of arguments used by `processFile` function.
+ * This is used to generate args hash using only
+ * arguments that affect output of that function.
+ */
+const argsWhitelist = [
+  `height`,
+  `width`,
+  `cropFocus`,
+  `toFormat`,
+  `pngCompressionLevel`,
+  `quality`,
+  `jpegProgressive`,
+  `grayscale`,
+  `rotate`,
+  `trim`,
+  `duotone`,
+  `fit`,
+  `background`,
+]
+
+/**
+ * @typedef {Object} TransformArgs
+ * @property {number} height
+ * @property {number} width
+ * @property {number} cropFocus
+ * @property {string} toFormat
+ * @property {number} pngCompressionLevel
+ * @property {number} quality
+ * @property {boolean} jpegProgressive
+ * @property {boolean} grayscale
+ * @property {number} rotate
+ * @property {number} trim
+ * @property {object} duotone
+ */
+
+/**+
+ * @typedef {Object} Transform
+ * @property {string} outputPath
+ * @property {TransformArgs} args
+ */
+
+/**
+ * @param {String} file
+ * @param {Transform[]} transforms
+ */
+exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
+    // adds gatsby cloud image service to gatsby-sharp
+    // this is an experimental api so it can be removed without any warnings
+    if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
+      let cloudPromise
+
+      return transforms.map(transform => {
+        if (!cloudPromise) {
+          cloudPromise = got
+            .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
+              body: {
+                file,
+                transforms,
+                options,
+              },
+              json: true,
+            })
+            .then(() => transform)
+
+          return cloudPromise
+        }
+
+        return Promise.resolve(transform)
+      })
+    }
+
     pipeline = sharp(file)
 
     // Keep Metadata
     if (!options.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
-
-    pipeline = pipeline.rotate()
   } catch (err) {
     throw new Error(`Failed to process image ${file}`)
   }
@@ -44,6 +116,14 @@ module.exports = (file, transforms, options = {}) => {
     debug(`Start processing ${outputPath}`)
 
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
+
+    if (args.trim) {
+      clonedPipeline = clonedPipeline.trim(args.trim)
+    }
+
+    if (!args.rotate) {
+      clonedPipeline = clonedPipeline.rotate()
+    }
 
     // Sharp only allows ints as height/width. Since both aren't always
     // set, check first before trying to round them.
@@ -60,6 +140,8 @@ module.exports = (file, transforms, options = {}) => {
     clonedPipeline
       .resize(roundedWidth, roundedHeight, {
         position: args.cropFocus,
+        fit: args.fit,
+        background: args.background,
       })
       .png({
         compressionLevel: args.pngCompressionLevel,
@@ -169,3 +251,45 @@ const compressWebP = (pipeline, outputPath, options) =>
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
+
+exports.createArgsDigest = args => {
+  const filtered = _.pickBy(args, (value, key) => {
+    // remove falsy
+    if (!value) return false
+    if (args.toFormat.match(/^jp*/) && _.includes(key, `png`)) {
+      return false
+    } else if (args.toFormat.match(/^png/) && key.match(/^jp*/)) {
+      return false
+    }
+    // after initial processing - get rid of unknown/unneeded fields
+    return argsWhitelist.includes(key)
+  })
+
+  const argsDigest = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(sortKeys(filtered)))
+    .digest(`hex`)
+
+  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
+
+  return argsDigestShort
+}
+
+const sortKeys = object => {
+  var sortedObj = {},
+    keys = _.keys(object)
+
+  keys = _.sortBy(keys, key => key)
+
+  _.each(keys, key => {
+    if (typeof object[key] == `object` && !(object[key] instanceof Array)) {
+      sortedObj[key] = sortKeys(object[key])
+    } else {
+      sortedObj[key] = object[key]
+    }
+  })
+
+  return sortedObj
+}
+
+exports.sortKeys = sortKeys

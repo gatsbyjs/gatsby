@@ -17,6 +17,7 @@ let _useACF = true
 let _acfOptionPageIds
 let _hostingWPCOM
 let _auth
+let _cookies
 let _perPage
 let _concurrentRequests
 let _includedRoutes
@@ -24,7 +25,15 @@ let _excludedRoutes
 let _normalizer
 
 exports.sourceNodes = async (
-  { actions, getNode, store, cache, createNodeId },
+  {
+    actions,
+    getNode,
+    store,
+    cache,
+    createNodeId,
+    createContentDigest,
+    reporter,
+  },
   {
     baseUrl,
     protocol,
@@ -32,6 +41,7 @@ exports.sourceNodes = async (
     useACF = true,
     acfOptionPageIds = [],
     auth = {},
+    cookies = {},
     verboseOutput,
     perPage = 100,
     searchAndReplaceContentUrls = {},
@@ -50,6 +60,7 @@ exports.sourceNodes = async (
   _acfOptionPageIds = acfOptionPageIds
   _hostingWPCOM = hostingWPCOM
   _auth = auth
+  _cookies = cookies
   _perPage = perPage
   _concurrentRequests = concurrentRequests
   _includedRoutes = includedRoutes
@@ -64,6 +75,7 @@ exports.sourceNodes = async (
     _acfOptionPageIds,
     _hostingWPCOM,
     _auth,
+    _cookies,
     _perPage,
     _concurrentRequests,
     _includedRoutes,
@@ -73,6 +85,9 @@ exports.sourceNodes = async (
   })
 
   // Normalize data & create nodes
+
+  // Create fake wordpressId form element who done have any in the database
+  entities = normalize.generateFakeWordpressId(entities)
 
   // Remove ACF key if it's not an object, combine ACF Options
   entities = normalize.normalizeACF(entities)
@@ -96,7 +111,7 @@ exports.sourceNodes = async (
   entities = normalize.excludeUnknownEntities(entities)
 
   // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(createNodeId, entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities, _siteURL)
 
   // Creates links between authors and user entities
   entities = normalize.mapAuthorsToUsers(entities)
@@ -106,6 +121,9 @@ exports.sourceNodes = async (
 
   // Creates links between tags/categories and taxonomies.
   entities = normalize.mapTagsCategoriesToTaxonomies(entities)
+
+  // Normalize menu items
+  entities = normalize.normalizeMenuItems(entities)
 
   // Creates links from entities to media nodes
   entities = normalize.mapEntitiesToMedia(entities)
@@ -118,7 +136,9 @@ exports.sourceNodes = async (
     createNode,
     createNodeId,
     touchNode,
+    getNode,
     _auth,
+    reporter,
   })
 
   // Creates links between elements and parent element.
@@ -162,7 +182,11 @@ exports.sourceNodes = async (
   }
 
   // creates nodes for each entry
-  normalize.createNodesFromEntities({ entities, createNode })
+  normalize.createNodesFromEntities({
+    entities,
+    createNode,
+    createContentDigest,
+  })
 
   return
 }

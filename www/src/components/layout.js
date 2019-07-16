@@ -10,10 +10,11 @@ import {
   radii,
   space,
   shadows,
-  breakpoints,
-  dimensions,
+  sizes,
+  fontSizes,
+  zIndices,
 } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
@@ -25,6 +26,7 @@ import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
+import "../fonts/Webfonts/futurapt_bold_macroman/stylesheet.css"
 
 import { skipLink } from "../utils/styles"
 
@@ -92,7 +94,7 @@ class DefaultLayout extends React.Component {
                 width: `750px`,
                 background: `none`,
                 border: `none`,
-                padding: `${rhythm(space[8])} 0`,
+                padding: `${space[8]} 0`,
                 overflow: `visible`,
               },
               overlay: {
@@ -103,7 +105,7 @@ class DefaultLayout extends React.Component {
                 bottom: `unset`,
                 minHeight: `100%`,
                 minWidth: `100%`,
-                zIndex: 10,
+                zIndex: zIndices.modal,
                 overflowY: `auto`,
                 backgroundColor: `rgba(255, 255, 255, 0.95)`,
               },
@@ -122,20 +124,21 @@ class DefaultLayout extends React.Component {
               <button
                 onClick={this.handleCloseModal}
                 css={{
-                  background: colors.ui.bright,
+                  background: colors.white,
                   border: 0,
-                  borderBottomLeftRadius: radii[1],
-                  borderTopRightRadius: radii[1],
-                  color: colors.gatsby,
+                  borderRadius: radii[6],
+                  color: colors.text.secondary,
                   cursor: `pointer`,
                   position: `absolute`,
                   left: `auto`,
-                  right: 0,
+                  right: space[7],
+                  top: space[8],
                   height: 40,
                   width: 40,
+                  fontSize: fontSizes[4],
                   "&:hover": {
-                    background: colors.gatsby,
-                    color: colors.white,
+                    background: colors.ui.hover,
+                    color: colors.gatsby,
                   },
                 }}
               >
@@ -161,13 +164,11 @@ class DefaultLayout extends React.Component {
           css={{
             paddingLeft: `env(safe-area-inset-left)`,
             paddingRight: `env(safe-area-inset-right)`,
-            paddingTop: dimensions.bannerHeight,
+            paddingTop: sizes.bannerHeight,
             // make room for the mobile navigation
-            paddingBottom: dimensions.headerHeight,
-            [breakpoints.md]: {
-              paddingTop: `calc(${dimensions.bannerHeight} + ${
-                dimensions.headerHeight
-              })`,
+            paddingBottom: sizes.headerHeight,
+            [breakpointGutter]: {
+              paddingTop: `calc(${sizes.bannerHeight} + ${sizes.headerHeight})`,
               paddingBottom: 0,
             },
           }}

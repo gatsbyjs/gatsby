@@ -1,11 +1,8 @@
 import React, { Component } from "react"
-import HubspotForm from "react-hubspot-form"
-import hex2rgba from "hex2rgba"
+import HubspotForm from "./react-hubspot-form"
 
-import presets, { colors, radii, space } from "../utils/presets"
-import { rhythm } from "../utils/typography"
-import { formInput } from "../utils/styles"
-import { buttonStyles } from "../utils/styles"
+import { colors, space, fontSizes } from "../utils/presets"
+import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
   render() {
@@ -18,10 +15,6 @@ export default class GatsbyHubspotForm extends Component {
     return (
       <div
         css={{
-          backgroundColor: colors.ui.light,
-          borderRadius: radii[1],
-          color: colors.gatsby,
-          padding: rhythm(space[4]),
           "& form": {
             margin: 0,
           },
@@ -30,16 +23,13 @@ export default class GatsbyHubspotForm extends Component {
             width: `100%`,
           },
           "& .hs-form-field": {
-            paddingBottom: rhythm(space[5]),
+            paddingBottom: space[5],
           },
           "& ul.hs-error-msgs": {
             listStyleType: `none`,
             margin: 0,
             color: colors.warning,
-            fontSize: presets.scale[1],
-          },
-          "& .hs-form-required": {
-            color: colors.warning,
+            fontSize: fontSizes[1],
           },
           "& .hs-form input": {
             ...formInput,
@@ -47,13 +37,17 @@ export default class GatsbyHubspotForm extends Component {
           '& .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="number"]': {
             width: `100% !important`,
             ":focus": {
-              borderColor: colors.gatsby,
-              outline: 0,
-              boxShadow: `0 0 0 ${rhythm(space[1])} ${hex2rgba(
-                colors.lilac,
-                0.25
-              )}`,
+              ...formInputFocus,
             },
+          },
+          "& label": {
+            // a bit unsure about the implications of the next line
+            display: `inline-block`,
+            fontSize: fontSizes[1],
+            paddingBottom: space[1],
+          },
+          "& .hs-form-required": {
+            color: colors.text.secondary,
           },
           "& .hs-button.primary": {
             ...buttonStyles.default,

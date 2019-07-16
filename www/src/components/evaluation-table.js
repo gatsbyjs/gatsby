@@ -1,11 +1,16 @@
 import React, { Component } from "react"
-import presets, { colors, space, breakpoints } from "../utils/presets"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  lineHeights,
+} from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
-import { rhythm } from "../utils/typography"
 
 class EvaluationTable extends Component {
   constructor() {
@@ -17,25 +22,14 @@ class EvaluationTable extends Component {
       const words = txt.split(` `)
       return [
         words.slice(0, words.length - 1).join(` `),
-        <span
-          css={
-            {
-              // WebkitHyphens: `auto`,
-              // MsHyphens: `auto`,
-              // hyphens: `auto`,
-              // wordBreak: `break-all`,
-              // display: `inline-block`,
-            }
-          }
-          key={`info-icon-${words[words.length - 1]}`}
-        >
+        <span key={`info-icon-${words[words.length - 1]}`}>
           {` `}
           {`${words[words.length - 1]} `}
           <img
             src={infoIcon}
             css={{
-              height: rhythm(space[3]),
-              marginBottom: rhythm(space[1]),
+              height: space[3],
+              marginBottom: space[1],
               verticalAlign: `baseline`,
             }}
             alt={`Info Icon`}
@@ -59,7 +53,9 @@ class EvaluationTable extends Component {
             >
               <button
                 css={{
+                  background: `none`,
                   border: 0,
+                  cursor: `inherit`,
                   padding: 0,
                   textAlign: `left`,
                 }}
@@ -128,15 +124,15 @@ class EvaluationTable extends Component {
                                 cursor: j >= 0 ? `pointer` : `inherit`,
                               },
                               borderBottom: !showTooltip(s, i)
-                                ? `1px solid ${colors.ui.light}`
+                                ? `1px solid ${colors.ui.border.subtle}`
                                 : `none`,
                               minWidth: 40,
                               paddingRight: 0,
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: presets.scale[1],
-                              lineHeight: presets.lineHeights.solid,
+                              fontSize: fontSizes[1],
+                              lineHeight: lineHeights.solid,
                             }}
                             id={
                               j === 0
@@ -163,11 +159,11 @@ class EvaluationTable extends Component {
                       >
                         <td
                           css={{
-                            paddingBottom: `calc(${rhythm(space[5])} - 1px)`,
+                            paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
-                              [breakpoints.xs]: {
-                                paddingRight: `${rhythm(space[3])}`,
-                                paddingLeft: `${rhythm(space[3])}`,
+                              [mediaQueries.xs]: {
+                                paddingRight: `${space[3]}`,
+                                paddingLeft: `${space[3]}`,
                               },
                             },
                           }}

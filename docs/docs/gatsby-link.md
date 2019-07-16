@@ -1,5 +1,5 @@
 ---
-title: Gatsby Link
+title: Gatsby Link API
 ---
 
 For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function which is used for programmatic navigation.
@@ -10,7 +10,7 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 ## How to use Gatsby Link
 
-<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -39,7 +39,7 @@ const Page = () => (
 
 ### Add custom styles for the currently active link
 
-<iframe title="Screencast on egghead of how to style the currently active link in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to style the currently active link in Gatsby." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -103,9 +103,11 @@ const Header = <>
 </>;
 ```
 
+_**Note:** Available from Gatsby V2.1.31, if you are experiencing issues please check your version and/or update._
+
 ### Pass state as props to the linked page
 
-<iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -138,7 +140,7 @@ const Photo = ({ location, photoId }) => {
 
 ### Replace history to change “back” button behavior
 
-<iframe title="Screencast on egghead of how to replace history on navigation." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
+<iframe title="Screencast on egghead of how to replace history on navigation." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -163,11 +165,11 @@ const AreYouSureLink = () => (
 
 ## How to use the `navigate` helper function
 
-<iframe title="Screencast on egghead of how to navigate programmatically in Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
+<iframe title="Screencast on egghead of how to navigate programmatically in Gatsby." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
 
 Video hosted on [egghead.io][egghead].
 
-Sometimes you need to navigate to pages programatically, such as during form submissions. In these cases, `Link` won’t work.
+Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work.
 
 _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release._
 
@@ -296,9 +298,10 @@ following may be a good starting point:
 ```jsx
 import { Link as GatsbyLink } from "gatsby"
 
-// Since DOM elements <a> cannot receive activeClassName,
-// destructure the prop here and pass it only to GatsbyLink
-const Link = ({ children, to, activeClassName, ...other }) => {
+// Since DOM elements <a> cannot receive activeClassName
+// and partiallyActive, destructure the prop here and
+// pass it only to GatsbyLink
+const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
   // will start with exactly one slash, and that anything else is external.
@@ -307,7 +310,12 @@ const Link = ({ children, to, activeClassName, ...other }) => {
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <GatsbyLink to={to} activeClassName={activeClassName} {...other}>
+      <GatsbyLink
+        to={to}
+        activeClassName={activeClassName}
+        partiallyActive={partiallyActive}
+        {...other}
+      >
         {children}
       </GatsbyLink>
     )
@@ -364,3 +372,7 @@ onClick = () => {
   navigate('?foo=bar');
 }
 ```
+
+## Additional resources
+
+- [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)

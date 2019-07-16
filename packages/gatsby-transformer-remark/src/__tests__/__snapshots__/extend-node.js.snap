@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Code block metas are correctly generated code block with language and meta 1`] = `
+Object {
+  "htmlAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "console.log('hello world')
+",
+              },
+            ],
+            "properties": Object {
+              "className": Array [
+                "language-js",
+              ],
+              "dataMeta": "foo bar",
+            },
+            "tagName": "code",
+            "type": "element",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "pre",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+}
+`;
+
 exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
 Object {
   "excerpt": "",
@@ -22,13 +59,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony?",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony?",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -42,13 +87,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -62,13 +115,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony? Lorem ipsum…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -82,13 +143,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is my little pony? Lorem ipsum dol…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dol…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -98,8 +167,7 @@ Object {
 
 exports[`Excerpt is generated correctly from schema correctly uses excerpt separator 1`] = `
 Object {
-  "excerpt": "Where oh where is my little pony?
-",
+  "excerpt": "Where oh where is my little pony?",
   "excerptAst": Object {
     "children": Array [
       Object {
@@ -130,78 +198,106 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema given HTML correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "<p>Where oh where <strong>is</strong> my little pony?</p>
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given MARKDOWN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where **is** my little pony?
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given PLAIN correctly uses excerpt separator 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony?",
+}
+`;
+
 exports[`Excerpt is generated correctly from schema given an html format, it correctly maps nested markdown to html 1`] = `
 Object {
   "excerpt": "<p>Where oh <a href=\\"nick.com\\"><em>where</em></a> <strong><em>is</em></strong> <img src=\\"pony.png\\" alt=\\"that pony\\">?</p>",
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh ",
-      },
-      Object {
         "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh ",
+          },
           Object {
             "children": Array [
               Object {
-                "type": "text",
-                "value": "where",
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "where",
+                  },
+                ],
+                "properties": Object {},
+                "tagName": "em",
+                "type": "element",
               },
             ],
-            "properties": Object {},
-            "tagName": "em",
+            "properties": Object {
+              "href": "nick.com",
+            },
+            "tagName": "a",
             "type": "element",
           },
-        ],
-        "properties": Object {
-          "href": "nick.com",
-        },
-        "tagName": "a",
-        "type": "element",
-      },
-      Object {
-        "type": "text",
-        "value": " ",
-      },
-      Object {
-        "children": Array [
+          Object {
+            "type": "text",
+            "value": " ",
+          },
           Object {
             "children": Array [
               Object {
-                "type": "text",
-                "value": "is",
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "is",
+                  },
+                ],
+                "properties": Object {},
+                "tagName": "em",
+                "type": "element",
               },
             ],
             "properties": Object {},
-            "tagName": "em",
+            "tagName": "strong",
             "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": " ",
+          },
+          Object {
+            "children": Array [],
+            "properties": Object {
+              "alt": "that pony",
+              "src": "pony.png",
+            },
+            "tagName": "img",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": "?",
           },
         ],
         "properties": Object {},
-        "tagName": "strong",
+        "tagName": "p",
         "type": "element",
-      },
-      Object {
-        "type": "text",
-        "value": " ",
-      },
-      Object {
-        "children": Array [],
-        "properties": Object {
-          "alt": "that pony",
-          "src": "pony.png",
-        },
-        "tagName": "img",
-        "type": "element",
-      },
-      Object {
-        "type": "text",
-        "value": "?",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -215,13 +311,21 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where oh where is that pony? Is he in the stable…",
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is that pony? Is he in the stable…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
       },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -284,28 +388,36 @@ Object {
   "excerptAst": Object {
     "children": Array [
       Object {
-        "type": "text",
-        "value": "Where is my ",
-      },
-      Object {
         "children": Array [
           Object {
             "type": "text",
-            "value": "pony",
+            "value": "Where is my ",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "pony",
+              },
+            ],
+            "properties": Object {},
+            "tagName": "code",
+            "type": "element",
+          },
+          Object {
+            "type": "text",
+            "value": " named leo?",
           },
         ],
         "properties": Object {},
-        "tagName": "code",
+        "tagName": "p",
         "type": "element",
       },
-      Object {
-        "type": "text",
-        "value": " named leo?",
-      },
     ],
-    "properties": Object {},
-    "tagName": "p",
-    "type": "element",
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
   },
   "frontmatter": Object {
     "title": "my little pony",
@@ -358,6 +470,20 @@ exports[`Links are correctly prefixed correctly prefixes links 1`] = `
 Object {
   "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
 <p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Links are correctly prefixed when assetPrefix is used correctly prefixes links 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Relative links keep being relative relative links are not prefixed 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"./path/to/page2\\">a reference</a></p>",
 }
 `;
 

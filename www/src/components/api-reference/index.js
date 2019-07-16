@@ -3,10 +3,11 @@ import { graphql } from "gatsby"
 
 import DocBlock from "./doc-block"
 
-import { rhythm } from "../../utils/typography"
+import { space } from "../../utils/presets"
 
 export default ({
   docs,
+  githubPath = null,
   showTopLevelSignatures = false,
   ignoreParams = [],
 }) => (
@@ -15,11 +16,12 @@ export default ({
       <div
         id={definition.name}
         key={`reference list ${definition.name}`}
-        css={{ marginBottom: rhythm(1) }}
+        css={{ marginBottom: space[6] }}
       >
         {i !== 0 && <hr />}
         <DocBlock
           definition={definition}
+          githubPath={githubPath}
           showSignature={showTopLevelSignatures}
           level={0}
           linkableTitle={true}
@@ -34,21 +36,37 @@ export const pageQuery = graphql`
   fragment DocumentationDescriptionFragment on DocumentationJs {
     name
     description {
-      childMarkdownRemark {
-        html
+      childMdx {
+        body
       }
     }
     deprecated {
-      childMarkdownRemark {
-        html
+      childMdx {
+        body
       }
     }
   }
 
   fragment DocumentationFragment on DocumentationJs {
+    kind
     ...DocumentationDescriptionFragment
     ...DocumentationExampleFragment
     ...DocumentationParamsFragment
     ...DocumentationReturnsFragment
+  }
+
+  fragment ApiCallFragment on GatsbyAPICallGroupConnection {
+    name: fieldValue
+    nodes {
+      file
+      codeLocation {
+        start {
+          line
+        }
+        end {
+          line
+        }
+      }
+    }
   }
 `

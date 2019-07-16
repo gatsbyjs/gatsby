@@ -1,19 +1,29 @@
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, breakpoints } from "../utils/presets"
+import { rhythm } from "../utils/typography"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  lineHeights,
+  letterSpacings,
+  fonts,
+} from "../utils/presets"
 import Button from "./button"
 
 const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
-      margin: `0 ${rhythm(space[8])}`,
-      paddingBottom: rhythm(space[9]),
-      paddingTop: rhythm(space[9]),
+      margin: `0 auto`,
+      paddingBottom: space[9],
+      paddingTop: space[9],
+      paddingLeft: space[8],
+      paddingRight: space[8],
       textAlign: `center`,
-      [breakpoints.md]: {
+      [mediaQueries.md]: {
         paddingBottom: rhythm(3),
         paddingTop: rhythm(3),
       },
@@ -22,29 +32,29 @@ const MastheadContent = () => (
     <h1
       css={{
         color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 3.5vw)`,
-        letterSpacing: presets.letterSpacings.tight,
-        lineHeight: presets.lineHeights.solid,
-        margin: `0 auto ${rhythm(space[7])}`,
+        fontSize: `calc(12px + 2vh + 3vw)`,
+        letterSpacing: letterSpacings.tight,
+        lineHeight: lineHeights.solid,
+        margin: `0 auto ${space[6]}`,
         maxWidth: `15em`,
         WebkitFontSmoothing: `antialiased`,
       }}
     >
-      Fast in every way that matters
+      Fast in every way that&nbsp;matters
     </h1>
     <p
       css={{
-        color: colors.gray.copy,
-        fontFamily: options.headerFontFamily.join(`,`),
-        fontSize: presets.scale[4],
+        fontFamily: fonts.header,
+        fontSize: fontSizes[4],
+        lineHeight: lineHeights.dense,
         maxWidth: rhythm(30),
-        margin: `0 auto ${rhythm(space[7])}`,
+        margin: `0 auto ${space[10]}`,
         WebkitFontSmoothing: `antialiased`,
-        [breakpoints.sm]: {
-          fontSize: presets.scale[5],
+        [mediaQueries.sm]: {
+          fontSize: fontSizes[5],
         },
-        [breakpoints.lg]: {
-          fontSize: presets.scale[6],
+        [mediaQueries.lg]: {
+          fontSize: fontSizes[6],
         },
       }}
     >

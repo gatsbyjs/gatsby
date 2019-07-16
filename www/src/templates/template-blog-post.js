@@ -1,63 +1,59 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import rehypeReact from "rehype-react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
-import presets, {
+import {
   colors,
   space,
   transition,
-  breakpoints,
+  mediaQueries,
+  lineHeights,
+  fontSizes,
+  fonts,
 } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
-import HubspotForm from "../components/hubspot-form"
-import Pullquote from "../components/shared/pullquote"
-import Chart from "../components/chart"
 import Avatar from "../components/avatar"
-
-const renderAst = new rehypeReact({
-  createElement: React.createElement,
-  components: {
-    "hubspot-form": HubspotForm,
-    "date-chart": Chart,
-    pullquote: Pullquote,
-  },
-}).Compiler
+import FooterLinks from "../components/shared/footer-links"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
-    const prev = this.props.pageContext.prev
-    const next = this.props.pageContext.next
+    const {
+      pageContext: { prev, next },
+      data: { mdx: post },
+      location: { href },
+    } = this.props
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        fontFamily: options.headerFontFamily.join(`,`),
-        fontWeight: `bold`,
         color: colors.gatsby,
+        fontFamily: fonts.header,
+        fontSize: fontSizes[3],
+        fontWeight: `bold`,
+        lineHeight: lineHeights.dense,
       },
     }
     const prevNextLabelStyles = {
-      marginTop: 0,
-      marginBottom: 0,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
+      fontSize: fontSizes[2],
       fontWeight: `normal`,
-      lineHeight: presets.lineHeights.solid,
+      marginBottom: space[2],
+      marginTop: 0,
     }
     const BioLine = ({ children }) => (
       <p
         css={{
-          lineHeight: presets.lineHeights.dense,
-          fontFamily: options.headerFontFamily.join(`,`),
+          lineHeight: lineHeights.dense,
+          fontFamily: fonts.header,
           margin: 0,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         {children}
@@ -69,7 +65,6 @@ class BlogPostTemplate extends React.Component {
         <link rel="canonical" href={post.frontmatter.canonicalLink} />
       )
     }
-
     return (
       <Layout location={this.props.location}>
         <Container>
@@ -105,6 +100,7 @@ class BlogPostTemplate extends React.Component {
               <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
+              <meta property="og:url" content={href} />
               {post.frontmatter.image && (
                 <meta
                   property="og:image"
@@ -145,10 +141,10 @@ class BlogPostTemplate extends React.Component {
             <section
               css={{
                 display: `flex`,
-                marginBottom: rhythm(space[5]),
-                [breakpoints.md]: {
-                  marginTop: rhythm(space[3]),
-                  marginBottom: rhythm(space[9]),
+                marginBottom: space[5],
+                [mediaQueries.md]: {
+                  marginTop: space[3],
+                  marginBottom: space[9],
                 },
               }}
             >
@@ -166,18 +162,18 @@ class BlogPostTemplate extends React.Component {
                 <Link to={post.frontmatter.author.fields.slug}>
                   <h4
                     css={{
-                      fontSize: presets.scale[3],
-                      marginBottom: rhythm(space[1]),
-                      color: `${colors.gatsby}`,
+                      fontSize: fontSizes[3],
+                      marginBottom: space[1],
+                      color: colors.link.color,
                     }}
                   >
                     <span
                       css={{
-                        borderBottom: `1px solid ${colors.ui.bright}`,
+                        borderBottom: `1px solid ${colors.link.border}`,
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": { background: colors.ui.bright },
+                        "&:hover": { borderColor: colors.link.hoverBorder },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -193,7 +189,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {this.props.data.markdownRemark.fields.publishedAt}
+                        {post.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -204,14 +200,14 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [breakpoints.lg]: { marginBottom: rhythm(5 / 4) },
+                [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
-              {this.props.data.markdownRemark.frontmatter.title}
+              {post.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
-                <div css={{ marginBottom: rhythm(space[5]) }}>
+                <div css={{ marginBottom: space[5] }}>
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                   {post.frontmatter.imageAuthor &&
                     post.frontmatter.imageAuthorLink && (
@@ -226,40 +222,38 @@ class BlogPostTemplate extends React.Component {
                 </div>
               )}
             <section className="post-body">
-              {renderAst(this.props.data.markdownRemark.htmlAst)}
+              <MDXRenderer>{post.body}</MDXRenderer>
             </section>
-            <TagsSection
-              tags={this.props.data.markdownRemark.frontmatter.tags}
-            />
+            <TagsSection tags={post.frontmatter.tags} />
             <EmailCaptureForm />
           </main>
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${colors.ui.light}`,
-            marginTop: rhythm(space[9]),
-            [breakpoints.md]: {
-              marginTop: rhythm(space[9]),
-              paddingBottom: rhythm(space[5]),
-              paddingTop: rhythm(space[5]),
+            borderTop: `1px solid ${colors.ui.border.subtle}`,
+            marginTop: space[9],
+            [mediaQueries.md]: {
+              paddingTop: space[5],
             },
-            [breakpoints.lg]: {
-              marginTop: rhythm(3),
-              paddingBottom: rhythm(space[9]),
-              paddingTop: rhythm(space[9]),
+            [mediaQueries.lg]: {
+              paddingTop: space[7],
             },
           }}
         >
           <Container>
-            <div css={{ [breakpoints.sm]: { display: `flex`, width: `100%` } }}>
-              <div css={{ [breakpoints.sm]: { width: `50%` } }}>
+            <div
+              css={{
+                [mediaQueries.sm]: { display: `flex`, width: `100%` },
+              }}
+            >
+              <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
                 {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
                       css={{
-                        [breakpoints.md]: {
-                          marginLeft: `-${rhythm(space[4])}`,
+                        [mediaQueries.md]: {
+                          marginLeft: `-${space[4]}`,
                         },
                       }}
                     >
@@ -272,8 +266,8 @@ class BlogPostTemplate extends React.Component {
               <div
                 css={{
                   textAlign: `right`,
-                  marginTop: rhythm(space[5]),
-                  [breakpoints.sm]: { marginTop: 0, width: `50%` },
+                  marginTop: space[5],
+                  [mediaQueries.sm]: { marginTop: 0, width: `50%` },
                 }}
               >
                 {next && (
@@ -281,8 +275,8 @@ class BlogPostTemplate extends React.Component {
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
                       css={{
-                        [breakpoints.md]: {
-                          marginRight: `-${rhythm(space[4])}`,
+                        [mediaQueries.md]: {
+                          marginRight: `-${space[4]}`,
                         },
                       }}
                     >
@@ -294,6 +288,7 @@ class BlogPostTemplate extends React.Component {
               </div>
             </div>
           </Container>
+          <FooterLinks />
         </div>
       </Layout>
     )
@@ -304,8 +299,8 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      htmlAst
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
       excerpt
       timeToRead
       fields {

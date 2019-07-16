@@ -12,7 +12,7 @@ Without providing some context, it can seem like GraphQL is overkill for somethi
   title="Screencast on egghead of creating pages in Gatsby from hard-coded React components."
   src="https://egghead.io/lessons/gatsby-create-a-gatsby-page-without-any-data/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -61,7 +61,7 @@ In the simplest cases, this is all that’s required for building pages with Gat
   title="Screencast on egghead of creating pages from hard-coded context data in Gatsby."
   src="https://egghead.io/lessons/gatsby-create-a-gatsby-page-with-hard-coded-data/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -114,7 +114,7 @@ In some cases, this approach may be enough. However, it’s often necessary to c
   title="Screencast on egghead of creating pages from JSON data in Gatsby."
   src="https://egghead.io/lessons/gatsby-create-pages-from-json-with-images/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -224,7 +224,7 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
   title="Screencast on egghead of adding data to GraphQL in Gatsby."
   src="https://egghead.io/lessons/gatsby-make-data-queryable-in-graphql-with-gatsby/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -240,7 +240,7 @@ In addition to the plugins, we’ll use [`gatsby-image`](/packages/gatsby-image/
 
 Install these packages using the command line:
 
-```bash
+```shell
 npm install --save gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-image
 ```
 
@@ -264,7 +264,7 @@ module.exports = {
 
 To check that this worked, let’s use the GraphQL Playground, which is available during development, by running:
 
-```
+```shell
 GATSBY_GRAPHQL_IDE=playground gatsby develop
 ```
 
@@ -302,7 +302,7 @@ The results will appear in the panel between the query and the docs, and they’
   title="Screencast on egghead of generating pages using GraphQL in Gatsby."
   src="https://egghead.io/lessons/gatsby-create-pages-in-gatsby-using-graphql/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -393,7 +393,7 @@ A few notes about this file:
 
 1. The result of the query is added to the template component as the `data` prop.
 2. The image path was automatically converted by the Sharp transformer into a “child node” that includes optimized versions of the image.
-3. The query uses a [GraphQL fragment](https://www.gatsbyjs.org/packages/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
+3. The query uses a [GraphQL fragment](/packages/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
 4. The `img` tag has been swapped out for a `gatsby-image` component named `Image`. Instead of a `src` attribute, it accepts an object with optimized image data.
 
 Save this file, run `gatsby develop`, then open `localhost:8000/gql/purple-hat/`:

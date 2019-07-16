@@ -1,8 +1,7 @@
 import React from "react"
-import { rhythm } from "../utils/typography"
 import { colors, space } from "../utils/presets"
 
-const bgDefault = colors.accentLight
+const bgDefault = colors.orange[20]
 const bgFeatureAvailability = colors.accent
 
 const getBackground = num => {
@@ -24,8 +23,8 @@ const getBackground = num => {
 }
 
 const basicStyling = {
-  height: rhythm(space[5]),
-  width: rhythm(space[5]),
+  height: space[5],
+  width: space[5],
   borderRadius: `50%`,
   margin: `0 auto`,
 }

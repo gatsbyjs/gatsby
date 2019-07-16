@@ -33,4 +33,4 @@ fields:
   hidden: false
   default: ''
 pages:
-- docs/blog/2019-03-07-sell-gatsby-to-clients/how-to-talk-about-gatsby-to-clients-and-your-team.md
+- docs/blog/2019-03-15-design-code-blog-post/index.md

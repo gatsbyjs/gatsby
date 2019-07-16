@@ -6,32 +6,33 @@ import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
-import { rhythm } from "../../utils/typography"
-import presets, {
+import {
   colors,
   space,
   letterSpacings,
   lineHeights,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
+  fontSizes,
+  fontWeights,
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
   background: ${colors.white};
-  padding: 0 ${rhythm(space[6])};
-  margin-bottom: ${rhythm(space[3])};
+  padding: 0 ${space[6]};
+  margin-bottom: ${space[3]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     box-shadow: ${shadows.raised};
     border-radius: ${radii[2]}px;
     display: flex;
-    flex-basis: calc(50% - ${rhythm(space[5])});
+    flex-basis: calc(50% - ${space[5]});
     flex-direction: column;
     flex-grow: 0;
-    margin: 0 ${rhythm(space[2])} ${rhythm(space[6])};
+    margin: 0 ${space[2]} ${space[6]};
     max-height: 60vh;
-    padding: ${rhythm(space[6])};
+    padding: ${space[6]};
     padding-bottom: 0;
 
     :last-child {
@@ -39,13 +40,13 @@ const EcosystemSectionRoot = styled(`section`)`
     }
   }
 
-  ${breakpoints.lg} {
-    flex-basis: calc(33.33% - ${rhythm(space[5])});
+  ${mediaQueries.lg} {
+    flex-basis: calc(33.33% - ${space[5]});
     max-height: 100%;
 
     :last-child {
       align-self: flex-start;
-      padding-bottom: ${rhythm(space[6])};
+      padding-bottom: ${space[6]};
     }
   }
 
@@ -62,45 +63,46 @@ const Title = styled(`h1`)`
   align-items: center;
   color: ${colors.gatsby};
   display: flex;
-  font-size: ${presets.scale[4]};
+  font-size: ${fontSizes[4]};
+  font-weight: ${fontWeights[1]};
   line-height: ${lineHeights.solid};
   margin: 0;
-  margin-bottom: ${rhythm(space[1])};
-  min-height: ${rhythm(space[7])};
+  margin-bottom: ${space[1]};
+  min-height: ${space[7]};
 
   span {
-    margin: 0 ${rhythm(space[1])} 0 0;
+    margin: 0 ${space[1]} 0 0;
   }
 `
 
 const Icon = styled(`span`)`
   display: block;
-  height: ${rhythm(space[7])};
-  width: ${rhythm(space[7])};
+  height: ${space[7]};
+  width: ${space[7]};
 `
 
 const SubTitle = styled(`h2`)`
   color: ${colors.lilac};
-  font-size: ${presets.scale[1]};
+  font-size: ${fontSizes[1]};
   font-weight: normal;
   letter-spacing: ${letterSpacings.tracked};
   margin: 0;
-  margin-top: ${rhythm(space[5])};
+  margin-top: ${space[5]};
   text-transform: uppercase;
 `
 
 const Description = styled(`p`)`
-  color: ${colors.gray.lightCopy};
-  font-size: ${presets.scale[2]};
+  color: ${colors.text.primary};
+  font-size: ${fontSizes[2]};
 `
 
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${rhythm(space[1])};
+  margin-top: -${space[1]};
 
   > a {
-    margin: ${rhythm(space[1])} ${rhythm(space[2])} ${rhythm(space[1])} 0;
+    margin: ${space[1]} ${space[2]} ${space[1]} 0;
   }
 `
 

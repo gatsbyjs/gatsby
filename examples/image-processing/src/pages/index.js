@@ -316,7 +316,7 @@ class Index extends React.Component {
         </p>
         <p>
           Automatically create images for different resolutions — we do 1x,
-          1.5x, 2x, and 3x.
+          1.5x, and 2x.
           {` `}
         </p>
 

@@ -59,11 +59,11 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 
 #### Options
 
-|            Option            | Description                                                                                                 | Default |
-| :--------------------------: | ----------------------------------------------------------------------------------------------------------- | :-----: |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                         | `false` |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                     | `false` |
-| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
+|            Option            | Description                                                                                                | Default |
+| :--------------------------: | ---------------------------------------------------------------------------------------------------------- | :-----: |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `false` |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    | `false` |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
 
 ### `serve`
 
@@ -86,6 +86,16 @@ At the root of a Gatsby app run `gatsby clean` to wipe out the cache (`.cache` f
 - GraphQL error, e.g. this GraphQL resource _should_ be present but is not
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 - Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
+
+### `plugin`
+
+Run commands pertaining to gatsby plugins.
+
+#### `docs`
+
+`gatsby plugin docs`
+
+Directs you to documentation about using and creating plugins.
 
 ### `info`
 

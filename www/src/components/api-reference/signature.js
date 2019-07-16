@@ -5,10 +5,10 @@ import { css } from "@emotion/core"
 import { graphql } from "gatsby"
 
 import { SubHeader } from "./utils"
-import { options, rhythm } from "../../utils/typography"
+import { space, fonts } from "../../utils/presets"
 
 const Wrapper = styled(`span`)`
-  font-family: ${options.headerFontFamily.join(`,`)};
+  font-family: ${fonts.header};
   font-weight: 400;
 
   :before,
@@ -27,7 +27,7 @@ const Wrapper = styled(`span`)`
     props.block &&
     css`
       display: block;
-      margin-top: ${rhythm(0.35)};
+      margin-top: ${space[2]};
     `};
 `
 
@@ -104,7 +104,7 @@ const FunctionSignature = ({ definition, block, ignoreParams }) => {
         .map((param, index) => (
           <React.Fragment key={param.name}>
             {index > 0 && <Punctuation>, </Punctuation>}
-            {param.name}
+            {param.name === `$0` ? `apiCallbackContext` : param.name}
             {param.type && (
               <React.Fragment>
                 <Punctuation>{param.optional && `?`}:</Punctuation>
@@ -125,7 +125,7 @@ const FunctionSignature = ({ definition, block, ignoreParams }) => {
       {definition.returns && definition.returns.length ? (
         <TypeExpression type={definition.returns[0].type} />
       ) : (
-        <TypeComponent>null</TypeComponent>
+        <TypeComponent>undefined</TypeComponent>
       )}
     </Wrapper>
   )
@@ -206,18 +206,9 @@ export const fragment = graphql`
     type {
       name
       type
-      elements {
-        name
-        type
-      }
-      expression {
-        type
-        name
-      }
-      applications {
-        type
-        name
-      }
+      elements
+      expression
+      applications
     }
   }
 `

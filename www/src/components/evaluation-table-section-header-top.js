@@ -1,5 +1,12 @@
 import React from "react"
-import presets, { colors, space, radii, breakpoints } from "../utils/presets"
+import {
+  colors,
+  space,
+  radii,
+  mediaQueries,
+  fontSizes,
+  lineHeights,
+} from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
@@ -17,19 +24,19 @@ const superHeader = () => (
         key={i}
         css={{
           "&&": {
-            padding: `${rhythm(space[3])} ${rhythm(space[3])} ${rhythm(3 / 8)}`,
+            padding: `${space[3]} ${space[3]} ${rhythm(3 / 8)}`,
           },
           display: `none`,
           textTransform: `uppercase`,
-          fontSize: presets.scale[0],
-          lineHeight: presets.lineHeights.solid,
+          fontSize: fontSizes[0],
+          lineHeight: lineHeights.solid,
           fontWeight: 500,
           textAlign: `center`,
           verticalAlign: `bottom`,
           width: i === 0 ? 120 : `inherit`,
           border: 0,
-          color: colors.gray.calm,
-          background: colors.ui.whisper,
+          color: colors.text.secondary,
+          background: colors.ui.background,
           "span:first-of-type": {
             borderTopLeftRadius: radii[2],
             textAlign: `left`,
@@ -37,14 +44,14 @@ const superHeader = () => (
           "&:last-child": {
             borderTopRightRadius: radii[2],
           },
-          [breakpoints.xs]: {
+          [mediaQueries.xs]: {
             display: `table-cell`,
             width: 125,
           },
-          [breakpoints.md]: {
+          [mediaQueries.md]: {
             width: 150,
           },
-          [breakpoints.lg]: {
+          [mediaQueries.lg]: {
             width: 175,
           },
         }}

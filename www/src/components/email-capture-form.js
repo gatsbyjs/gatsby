@@ -3,65 +3,115 @@ import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import { rhythm, options } from "../utils/typography"
-import presets, { colors, space, radii, breakpoints } from "../utils/presets"
-import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/styles"
-import { buttonStyles } from "../utils/styles"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  fonts,
+  radii,
+  shadows,
+  lineHeights,
+} from "../utils/presets"
+import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
+import { rhythm } from "../utils/typography"
+
+const stripedBorderHeight = space[1]
+
+const Container = styled(`div`)`
+  background: ${colors.purple[5]};
+  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[10]};
+  border-radius: ${radii[2]}px;
+  margin-top: ${space[8]};
+  padding: calc(${space[6]} * 1.2);
+  padding-bottom: calc(${rhythm(space[6] * 1.2)} + ${stripedBorderHeight});
+  position: relative;
+
+  :after {
+    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
+    background: ${colors.white}
+      repeating-linear-gradient(
+        135deg,
+        ${colors.red[40]},
+        ${colors.red[40]} 20px,
+        transparent 20px,
+        transparent 40px,
+        ${colors.blue[40]} 40px,
+        ${colors.blue[40]} 60px,
+        transparent 60px,
+        transparent 80px
+      );
+    bottom: 0;
+    content: "";
+    height: ${stripedBorderHeight};
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  ${mediaQueries.lg} {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > * {
+      flex-basis: 50%;
+    }
+  }
+`
 
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
 
 const Label = styled(`label`)`
+  font-size: ${fontSizes[1]};
   :after {
     content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${colors.warning};
+    color: ${colors.text.secondary};
   }
 `
 
 const SingleLineInput = styled(`input`)`
   ${formInput};
+  border-color: ${colors.purple[20]};
   width: 100%;
 
   :focus {
-    border-color: ${colors.gatsby};
-    outline: 0;
-    box-shadow: 0 0 0 ${rhythm(space[1])} ${hex2rgba(colors.lilac, 0.25)};
+    ${formInputFocus}
   }
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: ${presets.scale[2]};
-  padding: ${rhythm(space[2])};
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[2]};
+  padding: ${space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
   color: ${colors.warning};
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: ${presets.scale[1]};
-  margin: ${rhythm(space[2])} 0;
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[1]};
+  margin: ${space[2]} 0;
 `
 
-const SuccesMessage = styled(`div`)`
-  font-family: ${options.systemFontFamily.join(`,`)};
+const SuccessMessage = styled(`div`)`
+  font-family: ${fonts.system};
 `
 
 const Submit = styled(`input`)`
   ${buttonStyles.default};
-  margin-top: ${rhythm(space[3])};
+  margin-top: ${space[3]};
 `
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
-  font-size: ${presets.scale[3]};
+  font-size: ${fontSizes[3]};
   width: 100%;
-  margin-top: ${rhythm(space[3])};
+  margin-top: ${space[3]};
 
   span {
     align-items: center;
@@ -70,10 +120,10 @@ const SubmitOnHomepage = styled(`button`)`
     justify-content: space-between;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     width: auto;
     margin-top: 0;
-    margin-left: ${rhythm(space[2])};
+    margin-left: ${space[2]};
   }
 `
 
@@ -182,7 +232,7 @@ class Form extends React.Component {
             this.email = input
           }}
           aria-label={isHomepage ? `Email` : ``}
-          placeholder={isHomepage ? `your.email@example.com` : ``}
+          placeholder={`your.email@example.com`}
         />
         {this.state.fieldErrors.email && (
           <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
@@ -221,7 +271,7 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS, isHomepage, className } = this.props
+    const { signupMessage, isHomepage, className } = this.props
 
     const FormComponent = props => (
       <Form
@@ -238,7 +288,7 @@ class EmailCaptureForm extends React.Component {
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
-              <SuccesMessage
+              <SuccessMessage
                 dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
               />
             ) : (
@@ -246,38 +296,28 @@ class EmailCaptureForm extends React.Component {
             )}
           </div>
         ) : (
-          <div
-            css={{
-              borderTop: `1px solid ${colors.ui.light}`,
-              fontFamily: options.headerFontFamily.join(`,`),
-              marginTop: rhythm(space[9]),
-              paddingTop: rhythm(space[5]),
-              ...overrideCSS,
-            }}
-          >
-            <div>
-              <p>{signupMessage}</p>
+          <Container>
+            <p
+              css={{
+                color: colors.gatsby,
+                fontWeight: `bold`,
+                fontSize: fontSizes[3],
+                fontFamily: fonts.header,
+                lineHeight: lineHeights.dense,
+              }}
+            >
+              {signupMessage}
+            </p>
+            {this.state.successMessage ? (
               <div
-                css={{
-                  backgroundColor: colors.ui.light,
-                  borderRadius: radii[1],
-                  color: colors.gatsby,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  padding: rhythm(space[4]),
+                dangerouslySetInnerHTML={{
+                  __html: this.state.successMessage,
                 }}
-              >
-                {this.state.successMessage ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: this.state.successMessage,
-                    }}
-                  />
-                ) : (
-                  <FormComponent />
-                )}
-              </div>
-            </div>
-          </div>
+              />
+            ) : (
+              <FormComponent />
+            )}
+          </Container>
         )}
       </>
     )
@@ -287,7 +327,6 @@ class EmailCaptureForm extends React.Component {
 EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
-  overrideCSS: {},
   isHomepage: false,
   className: ``,
 }

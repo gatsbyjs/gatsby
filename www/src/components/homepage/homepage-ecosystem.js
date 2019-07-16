@@ -18,13 +18,15 @@ import {
 import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, {
+import {
   colors,
   space,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
+  fontSizes,
+  letterSpacings,
+  fonts,
 } from "../../utils/presets"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
@@ -33,21 +35,21 @@ const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     flex-direction: row;
-    margin: 0 -${rhythm(space[2])};
+    margin: 0 -${space[2]};
   }
 `
 
 const Section = styled(EcosystemSection)`
   box-shadow: ${shadows.raised};
   border-radius: ${radii[2]}px;
-  margin-bottom: ${rhythm(space[6])};
-  padding: ${rhythm(space[6])};
+  margin-bottom: ${space[6]};
+  padding: ${space[6]};
 
-  ${breakpoints.md} {
-    margin: 0 ${rhythm(space[2])} 0;
-    padding: ${rhythm(space[6])};
+  ${mediaQueries.md} {
+    margin: 0 ${space[2]} 0;
+    padding: ${space[6]};
 
     :last-child {
       align-self: stretch;
@@ -56,28 +58,27 @@ const Section = styled(EcosystemSection)`
 `
 
 const SubTitle = styled(`h3`)`
-  color: ${colors.lemon};
-  font-size: ${presets.scale[3]};
-  margin-bottom: ${rhythm(space[1])};
-  margin-top: ${rhythm(space[7])};
+  font-size: ${fontSizes[3]};
+  margin-bottom: ${space[1]};
+  margin-top: ${space[7]};
 
-  ${breakpoints.lg} {
-    margin-left: ${rhythm(space[9])};
-    margin-bottom: ${rhythm(space[4])};
+  ${mediaQueries.lg} {
+    margin-left: ${space[9]};
+    margin-bottom: ${space[4]};
   }
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${rhythm(space[6])};
+  margin: 0 -${space[6]};
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     margin: 0;
     overflow-x: visible;
   }
 `
 
 const FeaturedItemsList = styled(HorizontalScrollerContent)`
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -86,17 +87,17 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${rhythm(space[6])};
+  margin-right: ${space[6]};
 
-  ${breakpoints.md} {
+  ${mediaQueries.md} {
     border-bottom: none;
-    margin: ${rhythm(space[6])};
+    margin: ${space[6]};
     margin-top: 0;
     margin-left: 0;
     width: 20rem;
   }
 
-  ${breakpoints.lg} {
+  ${mediaQueries.lg} {
     flex-basis: 28%;
 
     :nth-of-type(4) {
@@ -105,42 +106,42 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${rhythm(space[5])} + ${rhythm(space[6])});
+    padding-left: calc(${space[5]} + ${space[6]});
     position: relative;
     border: 0;
     box-shadow: ${shadows.raised};
 
-    ${breakpoints.md} {
+    ${mediaQueries.md} {
       border-radius: ${radii[2]}px;
     }
 
-    ${breakpoints.lg} {
+    ${mediaQueries.lg} {
       :hover {
-        background: ${colors.ui.whisper};
+        background: ${colors.ui.hover};
       }
     }
 
     :before {
       background: ${props =>
-        props.item.type === `Starter` ? colors.skyLight : colors.accentLight};
+        props.item.type === `Starter` ? colors.teal[10] : colors.orange[20]};
       border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;
       position: absolute;
       top: 0;
-      width: ${rhythm(space[5])};
+      width: ${space[5]};
     }
 
     :after {
       bottom: 0;
       content: "${props => props.item.type}";
       color: ${props =>
-        props.item.type === `Starter` ? colors.skyDark : colors.accentDark};
-      font-family: ${options.headerFontFamily.join(`,`)};
-      font-size: ${presets.scale[1]};
+        props.item.type === `Starter` ? colors.blue[70] : colors.orange[90]};
+      font-family: ${fonts.header};
+      font-size: ${fontSizes[1]};
       left: 0;
-      letter-spacing: ${presets.letterSpacings.tracked};
+      letter-spacing: ${letterSpacings.tracked};
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;
@@ -162,7 +163,6 @@ const HomepageEcosystem = ({ featuredItems }) => (
         tracking: `Plugins - Explore the Gatsby Ecosystem`,
       },
     ]}
-    inverseStyle={true}
   >
     <Sections>
       <Section
@@ -173,7 +173,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
           { label: `Browse Plugins`, to: `/plugins/` },
           {
             label: `Creating Plugins`,
-            to: `/docs/plugin-authoring/`,
+            to: `/docs/creating-plugins/`,
             secondary: true,
           },
           { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },

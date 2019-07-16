@@ -4,14 +4,16 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import presets, {
+import {
   colors,
   space,
+  fontSizes,
   transition,
-  breakpoints,
-  dimensions,
+  mediaQueries,
+  sizes,
+  letterSpacings,
 } from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
+import presets from "../../utils/sidebar/presets"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -63,7 +65,7 @@ class SidebarBody extends Component {
     const node = this.scrollRef.current
 
     if (hasLocalStorage) {
-      const key = this.props.itemList[0].key
+      const key = this.props.sidebarKey
       const initialState = this.state
       const localState = this._readLocalStorage(key)
 
@@ -113,7 +115,7 @@ class SidebarBody extends Component {
           props.itemList,
           activeItemLink,
           []
-        ),
+        ).map(link => link.title),
         activeItemHash: props.activeItemHash,
       }
     }
@@ -131,14 +133,14 @@ class SidebarBody extends Component {
     const state = {
       openSectionHash: {},
       expandAll: false,
-      key: props.itemList[0].key,
+      key: props.sidebarKey,
       activeItemHash: props.activeItemHash,
       activeItemLink: activeItemLink,
       activeItemParents: getActiveItemParents(
         props.itemList,
         activeItemLink,
         []
-      ),
+      ).map(link => link.title),
     }
 
     getOpenItemHash(props.itemList, state)
@@ -199,6 +201,8 @@ class SidebarBody extends Component {
     const { closeSidebar, itemList, location, onPositionChange } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
+    const isSingle = itemList.filter(item => item.level === 0).length === 1
+
     return (
       <section
         aria-label="Secondary Navigation"
@@ -206,7 +210,7 @@ class SidebarBody extends Component {
         className="docSearch-sidebar"
         css={{ height: `100%` }}
       >
-        {!itemList[0].disableExpandAll && (
+        {!this.props.disableExpandAll && (
           <header css={{ ...styles.utils }}>
             <ExpandAllButton
               onClick={this._expandAll}
@@ -228,27 +232,47 @@ class SidebarBody extends Component {
           ref={this.scrollRef}
           css={{
             ...styles.sidebarScrollContainer,
-            height: itemList[0].disableExpandAll
+            height: this.props.disableExpandAll
               ? `100%`
-              : `calc(100% - ${dimensions.sidebarUtilityHeight})`,
-            [breakpoints.md]: {
+              : `calc(100% - ${sizes.sidebarUtilityHeight})`,
+            [mediaQueries.md]: {
               ...styles.sidebarScrollContainerTablet,
             },
           }}
         >
+          <h3
+            css={{
+              color: colors.text.secondary,
+              paddingLeft: space[6],
+              paddingRight: space[6],
+              fontSize: fontSizes[1],
+              paddingTop: space[6],
+              margin: 0,
+              fontWeight: `normal`,
+              textTransform: `uppercase`,
+              letterSpacing: letterSpacings.tracked,
+              // [mediaQueries.md]: {
+              //   display: `none`,
+              // },
+            }}
+          >
+            {this.props.title}
+          </h3>
           <ul css={{ ...styles.list }}>
             {itemList.map((item, index) => (
               <Item
                 activeItemLink={activeItemLink}
                 activeItemParents={activeItemParents}
-                isActive={openSectionHash[item.title]}
+                isActive={item.link === location.pathname}
+                isExpanded={openSectionHash[item.title]}
                 item={item}
                 key={index}
-                level={0}
                 location={location}
                 onLinkClick={closeSidebar}
                 onSectionTitleClick={this._toggleSection}
                 openSectionHash={openSectionHash}
+                isSingle={isSingle}
+                disableAccordions={this.props.disableAccordions}
               />
             ))}
           </ul>
@@ -262,47 +286,33 @@ export default SidebarBody
 
 const styles = {
   utils: {
-    borderRight: `1px solid ${colors.ui.light}`,
+    borderRight: `1px solid ${colors.ui.border.subtle}`,
     display: `flex`,
     alignItems: `center`,
-    height: dimensions.sidebarUtilityHeight,
-    background: colors.ui.whisper,
-    paddingLeft: 20,
-    paddingRight: 8,
-    borderBottom: `1px solid ${colors.ui.border}`,
+    height: sizes.sidebarUtilityHeight,
+    background: presets.backgroundDefault,
+    paddingLeft: space[4],
+    paddingRight: space[6],
   },
   sidebarScrollContainer: {
     WebkitOverflowScrolling: `touch`,
-    background: colors.white,
+    background: presets.backgroundDefault,
     border: 0,
     display: `block`,
     overflowY: `auto`,
     transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
     zIndex: 10,
-    borderRight: `1px solid ${colors.ui.light}`,
-    "::-webkit-scrollbar": {
-      height: rhythm(space[2]),
-      width: rhythm(space[2]),
-    },
-    "::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
-    },
-    "::-webkit-scrollbar-thumb:hover": {
-      background: colors.lilac,
-    },
-    "::-webkit-scrollbar-track": {
-      background: colors.ui.light,
-    },
+    borderRight: `1px solid ${colors.ui.border.subtle}`,
   },
   sidebarScrollContainerTablet: {
-    backgroundColor: colors.ui.whisper,
-    top: `calc(${dimensions.headerHeight} + ${dimensions.bannerHeight})`,
+    backgroundColor: presets.backgroundTablet,
+    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
   },
   list: {
     margin: 0,
-    paddingTop: rhythm(space[6]),
-    paddingBottom: rhythm(space[6]),
-    fontSize: presets.scale[1],
+    paddingTop: space[4],
+    paddingBottom: space[4],
+    fontSize: fontSizes[1],
     "& li": {
       margin: 0,
       listStyle: `none`,

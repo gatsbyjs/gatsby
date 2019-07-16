@@ -32,7 +32,7 @@ _Utilize developers to prototype faster_
 
 In order to do user testing, usually user researchers work with designers to construct pixel perfect prototypes of various options, either static or clickable. Constructing and iterating on these artifacts can take days or weeks.
 
-Gatsby makes another option possible. Some Gatsby users report [setting up a production site](https://www.gatsbyjs.org/blog/2018-01-18-how-boston-gov-used-gatsby-to-be-selected-as-an-amazon-hq2-candidate-city/) with live UI that is building and deploying in under an hour.
+Gatsby makes another option possible. Some Gatsby users report [setting up a production site](/blog/2018-01-18-how-boston-gov-used-gatsby-to-be-selected-as-an-amazon-hq2-candidate-city/) with live UI that is building and deploying in under an hour.
 
 Especially if your organization already uses a React or HTML-based component library, your team may consider bringing in a developer to construct live wireframe-level prototypes. This may enable you to accelerate the user research process, start the development process with a working prototype rather than from scratch, and ultimately let you arrive at a better version of your site.
 
@@ -50,7 +50,7 @@ Gatsby's extensible system of API hooks, tight integration with static hosts lik
 
 _Use development pages to communicate project status & collaborate with designers_
 
-One option some teams have found powerful is to create static page components within Gatsby to [handle necessary parts of the development/QA workflow](https://www.gatsbyjs.org/blog/2018-04-11-trying-out-gatsby-at-work-and-co/#1-pre-integration-qa).
+One option some teams have found powerful is to create static page components within Gatsby to [handle necessary parts of the development/QA workflow](/blog/2018-04-11-trying-out-gatsby-at-work-and-co/#1-pre-integration-qa).
 
 This could include:
 
@@ -60,4 +60,4 @@ This could include:
 
 _Use branch and pull request-based artifacts to collaborate on specific pieces of work_
 
-Using the [branch and pull request-based artifacts](https://www.gatsbyjs.org/blog/2018-04-11-trying-out-gatsby-at-work-and-co/#building-staging-urls) automatically created by a service like Netlify for collaboration between developers, designers, and QA. Because generated artifacts are static, pull request collaboration workflows are resilient to underlying content schema changes, such as field deletion, that might break a typical CMS development environment.
+Using the [branch and pull request-based artifacts](/blog/2018-04-11-trying-out-gatsby-at-work-and-co/#building-staging-urls) automatically created by a service like Netlify for collaboration between developers, designers, and QA. Because generated artifacts are static, pull request collaboration workflows are resilient to underlying content schema changes, such as field deletion, that might break a typical CMS development environment.
