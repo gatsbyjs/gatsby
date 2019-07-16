@@ -925,7 +925,7 @@ Now, the individual event page reflects the updated markup:
 
 ## Style and format dates in React
 
-Now let's refactor this component with a little bit of business logic to display the event dates in a way that's a little more human-readable.
+Now you'll refactor this component with some business logic to display the event dates in a way that's more human-readable.
 
 - If the event is one-day: June 30 2019
 - If the event is multi-day: July 4-6, 2019
