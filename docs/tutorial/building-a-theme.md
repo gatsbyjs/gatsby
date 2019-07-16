@@ -454,7 +454,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-Then you'll define a resolver for the `"slug"` field, on the `"Event"` type:
+Then you'll define a resolver for the `slug` field, on the `Event` type:
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 exports.createResolvers = ({ createResolvers }) => {
