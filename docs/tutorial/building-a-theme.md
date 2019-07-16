@@ -630,7 +630,7 @@ export default EventTemplate
 
 ### Test that pages are building
 
-To test that the root path (`"/"`) and individual event pages are building successfully, run gatsby-theme-events in develop mode again:
+To test that the root path (`"/"`) and individual event pages are building successfully, run `gatsby-theme-events` in develop mode again:
 
 ```shell
 yarn workspace gatsby-theme-events develop
