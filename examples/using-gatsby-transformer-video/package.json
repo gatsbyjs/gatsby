@@ -7,7 +7,7 @@
     "gatsby": "latest",
     "gatsby-link": "latest",
     "gatsby-source-filesystem": "^2.1.4",
-    "gatsby-transformer-video": "^0.0.3"
+    "gatsby-transformer-video": "^0.0.4"
   },
   "license": "MIT",
   "main": "n/a",
