@@ -1,33 +1,15 @@
-import borders from "./borders"
-import breakpoints from "./breakpoints"
-import colors from "./colors"
-import fonts from "./fonts"
-import fontSizes from "./font-sizes"
-import fontWeights from "./font-weights"
-import letterSpacings from "./letter-spacings"
-import lineHeights from "./line-heights"
-import mediaQueries from "./media-queries"
-import radii from "./radii"
-import shadows from "./shadows"
-import sizes from "./sizes"
-import space from "./space"
-import transition from "./transition"
-import zIndices from "./z-indices"
-
-export {
-  borders,
-  breakpoints,
-  colors,
-  fonts,
-  fontSizes,
-  fontWeights,
-  letterSpacings,
-  lineHeights,
-  mediaQueries,
-  radii,
-  shadows,
-  sizes,
-  space,
-  transition,
-  zIndices,
-}
+export { default as borders } from "./borders"
+export { default as breakpoints } from "./breakpoints"
+export { default as colors } from "./colors"
+export { default as fonts } from "./fonts"
+export { default as fontSizes } from "./font-sizes"
+export { default as fontWeights } from "./font-weights"
+export { default as letterSpacings } from "./letter-spacings"
+export { default as lineHeights } from "./line-heights"
+export { default as mediaQueries } from "./media-queries"
+export { default as radii } from "./radii"
+export { default as shadows } from "./shadows"
+export { default as sizes } from "./sizes"
+export { default as space } from "./space"
+export { default as transition } from "./transition"
+export { default as zIndices } from "./z-indices"
