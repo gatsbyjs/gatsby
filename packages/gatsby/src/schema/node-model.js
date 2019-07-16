@@ -564,92 +564,28 @@ const determineResolvableFields = (schemaComposer, schema, type, fields) => {
  * @see trackInlineObjectsInRootNode
  * @param {(Object|Array)} data Inline object or array
  * @param {string} nodeId Id of node that contains data passed in first parameter
- * @param {boolean} sanitize Wether to strip objects of unuspported and not serializable fields
- * @param {string} [ignore] Fieldname that doesn't need to be tracked and sanitized
- *
  */
 const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  sanitize,
   isNode = false
 ) => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
-    let returnData = data
-    if (sanitize) {
-      returnData = isPlainObject ? {} : []
-    }
-    let anyFieldChanged = false
     _.each(data, (o, key) => {
       if (isNode && key === `internal`) {
-        returnData[key] = o
         return
-      }
-      returnData[key] = addRootNodeToInlineObject(
-        rootNodeMap,
-        o,
-        nodeId,
-        sanitize
-      )
-
-      if (returnData[key] !== o) {
-        anyFieldChanged = true
+      } else {
+        addRootNodeToInlineObject(rootNodeMap, o, nodeId)
       }
     })
-
-    if (anyFieldChanged) {
-      data = omitUndefined(returnData)
-    }
-
     // don't need to track node itself
     if (!isNode) {
       rootNodeMap.set(data, nodeId)
     }
-
-    // arrays and plain objects are supported - no need to to sanitize
-    return data
   }
-
-  if (sanitize && !isTypeSupported(data)) {
-    return undefined
-  }
-  // either supported or not sanitizing
-  return data
-}
-
-/**
- * @param {Object} data
- * @returns {Object} data without undefined values
- */
-const omitUndefined = data => {
-  const isPlainObject = _.isPlainObject(data)
-  if (isPlainObject) {
-    return _.pickBy(data, p => p !== undefined)
-  }
-
-  return data.filter(p => p !== undefined)
-}
-
-/**
- * @param {*} data
- * @return {boolean}
- */
-const isTypeSupported = data => {
-  if (data === null) {
-    return true
-  }
-
-  const type = typeof data
-  const isSupported =
-    type === `number` ||
-    type === `string` ||
-    type === `boolean` ||
-    data instanceof Date
-
-  return isSupported
 }
 
 module.exports = {

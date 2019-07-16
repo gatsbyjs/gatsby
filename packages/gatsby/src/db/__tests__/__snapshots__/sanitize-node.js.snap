@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`track root nodes Node sanitization Remove not supported fields / values 1`] = `
+exports[`node sanitization Remove not supported fields / values 1`] = `
 Object {
   "children": Array [],
   "id": "id1",

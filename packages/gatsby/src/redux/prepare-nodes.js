@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
+// const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`../redux`)
 const { getNullableType, getNamedType } = require(`graphql`)
 const withResolverContext = require(`../schema/context`)
@@ -100,7 +100,7 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
 
         const enhancedNodeGenerationPromise = new Promise(resolve => {
           resolveRecursive(node, fieldsToSift, gqlFields).then(resolvedNode => {
-            trackInlineObjectsInRootNode(resolvedNode)
+            // trackInlineObjectsInRootNode(resolvedNode)
             if (cacheKey) {
               enhancedNodeCache.set(cacheKey, resolvedNode)
             }

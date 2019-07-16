@@ -3,7 +3,6 @@ const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 const typeOf = require(`type-of`)
 const util = require(`util`)
-const { findRootNodeAncestor } = require(`../../db/node-tracking`)
 
 export type TypeConflictExample = {
   value: mixed,
@@ -22,9 +21,10 @@ const isNodeWithDescription = node =>
 
 const findNodeDescription = obj => {
   if (obj) {
-    const node = findRootNodeAncestor(obj, isNodeWithDescription)
-    if (isNodeWithDescription(node)) {
-      return node.internal.description
+    // TODO: Maybe get this back
+    // const node = findRootNodeAncestor(obj, isNodeWithDescription)
+    if (isNodeWithDescription(obj)) {
+      return obj.internal.description
     }
   }
   return ``

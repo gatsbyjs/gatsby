@@ -7,12 +7,6 @@ const {
   GraphQLList,
 } = require(`graphql`)
 
-jest.mock(`../../db/node-tracking`, () => {
-  return {
-    trackInlineObjectsInRootNode: () => jest.fn(),
-  }
-})
-
 const mockNodes = [
   {
     id: `id_1`,
