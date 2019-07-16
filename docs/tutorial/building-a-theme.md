@@ -1451,7 +1451,7 @@ Save, and you'll see the new event data in your project:
 
 ## Use component shadowing to override theme components
 
-"Component shadowing" in Gatsby themes allow us to override or modify components in the theme. Let's use our new "theme-test" project to experiment with this.
+"Component shadowing" in Gatsby themes allow you to override or modify components in the theme. Use your new "theme-test" project to experiment with this.
 
 Start by adding a `src` folder to your project.
 
