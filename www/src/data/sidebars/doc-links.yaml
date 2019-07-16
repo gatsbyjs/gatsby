@@ -275,7 +275,7 @@
                   link: /docs/tailwind-css/
                 - title: Using Bulma
                   link: /docs/bulma/
-                - title: Theme UI
+                - title: Using Theme UI
                   link: /docs/theme-ui/
         - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
