@@ -818,7 +818,7 @@ Checking [localhost:8000](http://localhost:8000/) again, you should see the new 
 
 ## Display and query data by id with context and static queries
 
-Similar to EventList, you'll need to create a React component template for an individual Event page.
+Similar to `EventList`, you'll need to create a React component template for an individual `Event` page.
 
 ### Add a page query
 
