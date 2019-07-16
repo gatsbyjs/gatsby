@@ -1012,7 +1012,7 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => ({
 })
 ```
 
-The `contentPath` will default to "data", and the basePath will default to root, '/'.
+The `contentPath` will default to "data", and the `basePath` will default to the root, "/".
 
 In `gatsby-node.js` provided in the `gatsby-config.js` file as a second argument to the API hooks. Update the `contentPath` to accommodate setting that option in the config:
 
