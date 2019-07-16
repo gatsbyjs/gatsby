@@ -225,7 +225,7 @@ jobs:
   build_www:
     docker:
       - image: circleci/node:12
-    resource_class: large # ++ RAM and CPU
+    resource_class: xlarge # ++ RAM and CPU
     steps:
       - checkout
       - run:
