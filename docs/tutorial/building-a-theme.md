@@ -766,7 +766,6 @@ const EventsTemplate = () => {
 export default EventsTemplate
 ```
 
-- Import the two new components.
 - Refactor the render method to use the new components, and give the `<EventList>` component the events data.
 
 To test that it's working, open up [localhost:8000](http://localhost:8000/) again. You should see the "Gatsby Events Theme" header from `<Layout>` component, and the stringified event data from the `<EventList>` component.
