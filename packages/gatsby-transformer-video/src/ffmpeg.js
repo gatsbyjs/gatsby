@@ -406,8 +406,9 @@ export default class FFMPEG {
           [
             h265Crf && `-crf ${h265Crf}`,
             h265Preset && `-preset ${h265Preset}`,
-            h265MaxRate && `-maxrate ${h265MaxRate}`,
-            h265BufSize && `-bufsize ${h265BufSize}`,
+            h265MaxRate &&
+              h265BufSize &&
+              `-x265-params vbv-maxrate=${h265MaxRate}:vbv-bufsize=${h265BufSize}`,
             `-pix_fmt yuv420p`,
           ].filter(Boolean)
         )
