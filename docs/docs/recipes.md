@@ -42,6 +42,7 @@ Craving a happy medium between [full-length tutorials](/tutorial/) and crawling 
 - [Deploying](#deploying)
 - [Querying data](#querying-data)
 - [Sourcing data](#sourcing-data)
+- [Sourcing content](#Sourcing-Content)
 - [Transforming data](#transforming-data)
 
 ## Using Gatsby without GraphQL
@@ -225,6 +226,46 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
+
+## Sourcing Content
+
+### Directly importing data (json & yaml)
+
+#### Prerequisites
+
+- A Gatsby site with two page components `index.js` and `page-2.js`
+- A valid YAML file and a valid JSON file inside a folder on your Gatsby website.
+
+#### Directions
+
+1. To import YAML content directly into a page. Open the index.js page component (src/pages/index.js), import the YAML file into the component as a default export.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import YAMLContent from "your-folder/your-yaml-file.yaml"
+
+export default () => (
+  <div style={{ color: `purple` }}>
+    <p>YAMLContent.the-property-you-want-to-display</p>
+  </div>
+)
+```
+
+2. To import JSON content directly into a page, open the page-2.js page component (src/pages/page-2.js) import the JSON file into the component as a default export.
+
+```jsx:title=src/pages/page-2.js
+import React from "react"
+import JSONContent from "your-folder/your-json-file.json"
+
+export default () => (
+  <div style={{ color: `purple` }}>
+    <p>JSONContent.the-property-you-want-to-display</p>
+  </div>
+)
+```
+
+3. Run `gatsby develop` and navigate to the index page. You should have a page with content sourced directly from a YAML file.
+   Navigate to page-2 and you should have a page with content sourced directly from a JSON file.
 
 ## Transforming data
 
