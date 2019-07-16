@@ -1069,7 +1069,7 @@ module.exports = {
 ```
 
 - `contentPath` is set to "events". So, rather than looking in the default "data" directory for content, the site will be looking for content in an "events" directory.
-- `basePath` is set to "events". So, rather than creating the events listing at the root (`"/"`), we should see an events listing page at `/events`.
+- `basePath` is set to "events". So, rather than creating the events listing at the root (`"/"`), you should see an events listing page at `/events`.
 
 To test this, run the site:
 
