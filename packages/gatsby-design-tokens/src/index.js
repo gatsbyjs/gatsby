@@ -1,3 +1,4 @@
+import borders from "./borders"
 import breakpoints from "./breakpoints"
 import mediaQueries from "./media-queries"
 import colors from "./colors"
@@ -14,6 +15,7 @@ import zIndices from "./z-indices"
 import fontWeights from "./font-weights"
 
 export {
+  borders,
   breakpoints,
   mediaQueries,
   colors,
