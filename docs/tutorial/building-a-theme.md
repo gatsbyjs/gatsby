@@ -1016,7 +1016,9 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => ({
 
 The `contentPath` will default to "data", and the `basePath` will default to the root, "/".
 
-In `gatsby-node.js` provided in the `gatsby-config.js` file as a second argument to the API hooks. Update the `contentPath` to accommodate setting that option in the config:
+In `gatsby-node.js`, the options that were added to the `gatsby-config.js` function are provided as a second argument to Gatsby's API hooks.
+
+Update the `contentPath` to use the option set in `gatsby-config.js`:
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 // highlight-start
