@@ -1,5 +1,5 @@
 export default {
-  feedbackWidget: 2,
+  widget: 2,
   navigation: 5,
   banner: 10,
   modal: 10,
