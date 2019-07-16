@@ -426,7 +426,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-You'll define helper, `slugify` to help generate the slugs:
+You'll define a helper, `slugify` to help generate the slugs:
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 exports.createResolvers = ({ createResolvers }) => {
