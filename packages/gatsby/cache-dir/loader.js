@@ -258,26 +258,20 @@ export class BaseLoader {
   }
 
   prefetch(pagePath) {
-    const realPath = cleanPath(pagePath)
     if (!this.shouldPrefetch(pagePath)) {
       return false
     }
-
-    let hasPrefetched = true
 
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
     if (!this.prefetchTriggered.has(pagePath)) {
       this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
-      hasPrefetched = false
       this.prefetchTriggered.add(pagePath)
     }
 
-    if (hasPrefetched) {
-      return true
-    }
-
-    // eslint-disable-²next-line consistent-return
+    const realPath = cleanPath(pagePath)
+    // Todo make doPrefetch logic cacheable
+    // eslint-disable-next-line consistent-return
     this.doPrefetch(realPath).then(pageData => {
       if (!pageData) {
         const matchPath = findMatchPath(realPath)
