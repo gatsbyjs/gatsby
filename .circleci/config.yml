@@ -223,7 +223,9 @@ jobs:
       - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
 
   build_www:
-    executor: node
+    docker:
+      - image: circleci/node:12
+    resource_class: large # ++ RAM and CPU
     steps:
       - checkout
       - run:
