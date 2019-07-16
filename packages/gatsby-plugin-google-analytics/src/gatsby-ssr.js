@@ -21,9 +21,6 @@ const knownOptions = {
     forceSSL: `boolean`,
     transport: `string`,
   },
-  aLaCarte: {
-    anonymize: `boolean`,
-  },
 }
 
 export const onRenderBody = (
