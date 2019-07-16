@@ -822,7 +822,7 @@ Similar to `EventList`, you'll need to create a React component template for an 
 
 ### Add a page query
 
-First, you'll create a page query to query for individual events by id.
+First, you'll create a page query to query for individual events by `id`.
 
 ```javascript:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
