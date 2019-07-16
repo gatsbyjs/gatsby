@@ -151,12 +151,10 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 
 // highlight-next-line
 const IndexPage = ({ data }) => (
   <Layout>
-    <SEO title="Home" />
     // highlight-next-line
     <h1>{data.site.siteMetadata.title}</h1>
   </Layout>
