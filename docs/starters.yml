@@ -3387,3 +3387,17 @@
     - Syntax highlighting in code blocks using PrismJS(Dracula).
     - Google Analytics.
     - Deploy AWS S3.
+- url: https://anubhavsrivastava.github.io/gatsby-starter-newage
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-newage
+  description: Single page starter based on the New Age site template by startbootstrap for portfolio page/Mobile app launch
+  tags:
+    - Onepage
+    - Portfolio
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
