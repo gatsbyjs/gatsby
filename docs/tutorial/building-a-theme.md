@@ -720,7 +720,7 @@ const EventList = ({ events }) => <pre>{JSON.stringify(events, null, 2)}</pre>
 export default EventList
 ```
 
-For now, this component will just return whatever data you send it on the `events` prop.
+For now, this component will display a stringified object from the JSON data you send it on the `events` prop.
 
 ### Add the layout and events list components to the events page
 
