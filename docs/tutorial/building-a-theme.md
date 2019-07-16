@@ -4,8 +4,6 @@ title: Building a Theme
 
 In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring).
 
-## Overview
-
 ## Set up yarn workspaces
 
 In this section, you'll learn how to structure folders and configure Yarn workspaces to develop Gatsby themes. You'll create two workspaces, `gatsby-theme-events` and `site`.
@@ -14,7 +12,7 @@ Each workspace can be run separately, as well as one depending on the other. In 
 
 ### Create a new empty folder
 
-Title your folder anything you wish. This example will use  `authoring-themes-tutorial`.
+Title your folder anything you wish. This example will use `authoring-themes-tutorial`.
 
 ### Add a `package.json`
 
@@ -723,6 +721,7 @@ export default EventList
 For now, this component will display a stringified object from the JSON data you send it on the `events` prop.
 
 ### Add the layout and events list components to the events page
+
 By updating the `events.js` template with the following code, you will:
 By updating the `events.js` template with the following code, you will:
 
@@ -730,6 +729,7 @@ By updating the `events.js` template with the following code, you will:
 - Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
 - Import the two new components.
 - Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
+
 ```javascript:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
@@ -768,7 +768,6 @@ const EventsTemplate = () => {
 
 export default EventsTemplate
 ```
-
 
 To test that it's working, open up [localhost:8000](http://localhost:8000/) again. You should see the "Gatsby Events Theme" header from `<Layout>` component, and the stringified event data from the `<EventList>` component.
 
