@@ -8,6 +8,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -75,6 +76,31 @@ const argsWhitelist = [
 exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
+    // adds gatsby cloud image service to gatsby-sharp
+    // this is an experimental api so it can be removed without any warnings
+    if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
+      let cloudPromise
+
+      return transforms.map(transform => {
+        if (!cloudPromise) {
+          cloudPromise = got
+            .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
+              body: {
+                file,
+                transforms,
+                options,
+              },
+              json: true,
+            })
+            .then(() => transform)
+
+          return cloudPromise
+        }
+
+        return Promise.resolve(transform)
+      })
+    }
+
     pipeline = sharp(file)
 
     // Keep Metadata
