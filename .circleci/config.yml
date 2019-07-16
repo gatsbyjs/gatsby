@@ -157,12 +157,6 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
 
-  e2e_tests_gatsbygram:
-    <<: *e2e-executor
-    steps:
-      - e2e-test:
-          test_path: examples/gatsbygram
-
   e2e_tests_path-prefix:
     <<: *e2e-executor
     steps:
@@ -222,6 +216,31 @@ jobs:
       - run: git config --global user.email "admin@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
 
+  build_www:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge # ++ RAM and CPU
+    steps:
+      - checkout
+      - restore_cache:
+          key: www_public_dir_1
+      - restore_cache:
+          key: www-cache_dir_1
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          command: yarn build
+          working_directory: ~/project/www
+      - save_cache:
+          key: www_public_dir_1
+          paths:
+            - ~/project/www/public
+      - save_cache:
+          key: www_cache_dir_1
+          paths:
+            - ~/project/www/.cache
+
 workflows:
   version: 2
   build-test:
@@ -249,8 +268,6 @@ workflows:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
-      - e2e_tests_gatsbygram:
-          <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
@@ -270,3 +287,15 @@ workflows:
             branches:
               only:
                 - master
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build_www:
+          # Check CircleCI web ui for context details (env vars)
+          context: build_www
