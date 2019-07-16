@@ -188,7 +188,14 @@ jobs:
           test_path: e2e-tests/production-runtime
           test_command: yarn test && yarn test:offline
 
-  e2e_tests_themes:
+  themes_e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/development-runtime
+          test_command: yarn test
+
+  themes_e2e_tests_production_runtime:
     <<: *e2e-executor
     steps:
       - e2e-test:
@@ -214,6 +221,31 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
+
+  build_www:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge # ++ RAM and CPU
+    steps:
+      - checkout
+      - restore_cache:
+          key: www_public_dir_1
+      - restore_cache:
+          key: www-cache_dir_1
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          command: yarn build
+          working_directory: ~/project/www
+      - save_cache:
+          key: www_public_dir_1
+          paths:
+            - ~/project/www/public
+      - save_cache:
+          key: www_cache_dir_1
+          paths:
+            - ~/project/www/.cache
 
 workflows:
   version: 2
@@ -252,7 +284,9 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
-      - e2e_tests_themes:
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
@@ -261,3 +295,15 @@ workflows:
             branches:
               only:
                 - master
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build_www:
+          # Check CircleCI web ui for context details (env vars)
+          context: build_www

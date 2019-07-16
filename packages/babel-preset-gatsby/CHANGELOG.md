@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.6](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.5...babel-preset-gatsby@0.2.6) (2019-07-15)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** add [@babel](https://github.com/babel)/plugin-transform-spread as dependencies ([#15714](https://github.com/gatsbyjs/gatsby/issues/15714)) ([dfde933](https://github.com/gatsbyjs/gatsby/commit/dfde933))
+
 ## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.4...babel-preset-gatsby@0.2.5) (2019-07-12)
 
 ### Features

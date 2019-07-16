@@ -123,6 +123,7 @@ const updateSchemaComposer = async ({
       })
     )
   )
+  checkQueryableInterfaces({ schemaComposer })
   await addThirdPartySchemas({ schemaComposer, thirdPartySchemas, parentSpan })
   await addCustomResolveFunctions({ schemaComposer, parentSpan })
 }
@@ -143,11 +144,22 @@ const processTypeComposer = async ({
     })
     if (typeComposer.hasInterface(`Node`)) {
       await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
-      await addResolvers({ schemaComposer, typeComposer, parentSpan })
       await addConvenienceChildrenFields({
         schemaComposer,
         typeComposer,
         nodeStore,
+        parentSpan,
+      })
+      await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
+    }
+  } else if (typeComposer instanceof InterfaceTypeComposer) {
+    if (typeComposer.getExtension(`nodeInterface`)) {
+      // We only process field extensions for queryable Node interfaces, so we get
+      // the input args on the root query type, e.g. `formatString` etc. for `dateformat`
+      await processFieldExtensions({
+        schemaComposer,
+        typeComposer,
+        fieldExtensions,
         parentSpan,
       })
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
@@ -315,6 +327,21 @@ const addExtensions = ({
               `addDefaultResolvers`,
               !args.noDefaultResolvers
             )
+          }
+          break
+        case `nodeInterface`:
+          if (typeComposer instanceof InterfaceTypeComposer) {
+            if (
+              !typeComposer.hasField(`id`) ||
+              typeComposer.getFieldType(`id`).toString() !== `ID!`
+            ) {
+              report.panic(
+                `Interfaces with the \`nodeInterface\` extension must have a field ` +
+                  `\`id\` of type \`ID!\`. Check the type definition of ` +
+                  `\`${typeComposer.getTypeName()}\`.`
+              )
+            }
+            typeComposer.setExtension(`nodeInterface`, true)
           }
           break
         default:
@@ -634,47 +661,6 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
   })
 }
 
-const addResolvers = ({ schemaComposer, typeComposer }) => {
-  const typeName = typeComposer.getTypeName()
-
-  // TODO: We should have an abstraction for keeping and clearing
-  // related TypeComposers and InputTypeComposers.
-  // Also see the comment on the skipped test in `rebuild-schema`.
-  typeComposer.removeInputTypeComposer()
-
-  const sortInputTC = getSortInput({
-    schemaComposer,
-    typeComposer,
-  })
-  const filterInputTC = getFilterInput({
-    schemaComposer,
-    typeComposer,
-  })
-  const paginationTC = getPagination({
-    schemaComposer,
-    typeComposer,
-  })
-  typeComposer.addResolver({
-    name: `findOne`,
-    type: typeComposer,
-    args: {
-      ...filterInputTC.getFields(),
-    },
-    resolve: findOne(typeName),
-  })
-  typeComposer.addResolver({
-    name: `findManyPaginated`,
-    type: paginationTC,
-    args: {
-      filter: filterInputTC,
-      sort: sortInputTC,
-      skip: `Int`,
-      limit: `Int`,
-    },
-    resolve: findManyPaginated(typeName),
-  })
-}
-
 const addConvenienceChildrenFields = ({
   schemaComposer,
   typeComposer,
@@ -742,13 +728,47 @@ function groupChildNodesByType({ nodeStore, nodes }) {
 }
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
+  // TODO: We should have an abstraction for keeping and clearing
+  // related TypeComposers and InputTypeComposers.
+  // Also see the comment on the skipped test in `rebuild-schema`.
+  typeComposer.removeInputTypeComposer()
+
+  const sortInputTC = getSortInput({
+    schemaComposer,
+    typeComposer,
+  })
+  const filterInputTC = getFilterInput({
+    schemaComposer,
+    typeComposer,
+  })
+  const paginationTC = getPagination({
+    schemaComposer,
+    typeComposer,
+  })
+
   const typeName = typeComposer.getTypeName()
   // not strictly correctly, result is `npmPackage` and `allNpmPackage` from type `NPMPackage`
   const queryName = _.camelCase(typeName)
   const queryNamePlural = _.camelCase(`all ${typeName}`)
+
   schemaComposer.Query.addFields({
-    [queryName]: typeComposer.getResolver(`findOne`),
-    [queryNamePlural]: typeComposer.getResolver(`findManyPaginated`),
+    [queryName]: {
+      type: typeComposer,
+      args: {
+        ...filterInputTC.getFields(),
+      },
+      resolve: findOne(typeName),
+    },
+    [queryNamePlural]: {
+      type: paginationTC,
+      args: {
+        filter: filterInputTC,
+        sort: sortInputTC,
+        skip: `Int`,
+        limit: `Int`,
+      },
+      resolve: findManyPaginated(typeName),
+    },
   })
 }
 
@@ -858,5 +878,37 @@ const validate = (type, value) => {
     return value.map(v => validate(type.ofType, v))
   } else {
     return type.parseValue(value)
+  }
+}
+
+const checkQueryableInterfaces = ({ schemaComposer }) => {
+  const queryableInterfaces = new Set()
+  schemaComposer.forEach(type => {
+    if (
+      type instanceof InterfaceTypeComposer &&
+      type.getExtension(`nodeInterface`)
+    ) {
+      queryableInterfaces.add(type.getTypeName())
+    }
+  })
+  const incorrectTypes = []
+  schemaComposer.forEach(type => {
+    if (type instanceof ObjectTypeComposer) {
+      const interfaces = type.getInterfaces()
+      if (
+        interfaces.some(iface => queryableInterfaces.has(iface.name)) &&
+        !type.hasInterface(`Node`)
+      ) {
+        incorrectTypes.push(type.getTypeName())
+      }
+    }
+  })
+  if (incorrectTypes.length) {
+    report.panic(
+      `Interfaces with the \`nodeInterface\` extension must only be ` +
+        `implemented by types which also implement the \`Node\` ` +
+        `interface. Check the type definition of ` +
+        `${incorrectTypes.map(t => `\`${t}\``).join(`, `)}.`
+    )
   }
 }
