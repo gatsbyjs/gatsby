@@ -267,17 +267,17 @@ export class BaseLoader {
 
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
-    if (!this.prefetchTriggered.has(realPath)) {
+    if (!this.prefetchTriggered.has(pagePath)) {
       this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
       hasPrefetched = false
-      this.prefetchTriggered.add(realPath)
+      this.prefetchTriggered.add(pagePath)
     }
 
     if (hasPrefetched) {
       return true
     }
 
-    // eslint-disable-next-line consistent-return
+    // eslint-disable-²next-line consistent-return
     this.doPrefetch(realPath).then(pageData => {
       if (!pageData) {
         const matchPath = findMatchPath(realPath)
@@ -287,9 +287,9 @@ export class BaseLoader {
         }
       }
 
-      if (!this.prefetchCompleted.has(realPath)) {
+      if (!this.prefetchCompleted.has(pagePath)) {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
-        this.prefetchCompleted.add(realPath)
+        this.prefetchCompleted.add(pagePath)
       }
     })
 
