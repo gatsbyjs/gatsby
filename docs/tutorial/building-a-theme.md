@@ -254,7 +254,7 @@ With this saved, restart the dev server:
 yarn workspace gatsby-theme-events develop
 ```
 
-Open up the GraphiQL explorer for the site, and make a test query on "allEvent":
+Open up the GraphiQL explorer for the site, and make a test query on `allEvent`:
 
 ```graphql
 query MyQuery {
