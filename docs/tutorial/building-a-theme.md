@@ -891,7 +891,7 @@ const Event = props => <pre>{JSON.stringify(props, null, 2)}</pre>
 export default Event
 ```
 
-To start off, as before, stringify the props data getting handed to the component, to make sure you're getting the data you expect:
+To start off, as before, run `JSON.stringify` on the props data getting passed to the component to make sure you're getting the data you expect:
 
 ![Successfully passing event data to individual event pages](./images/building-a-theme-individual-event-data.png)
 
