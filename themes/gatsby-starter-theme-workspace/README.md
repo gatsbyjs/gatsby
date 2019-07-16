@@ -16,7 +16,6 @@ yarn workspace example develop
 ## Layout
 
 ```shell
-➜ tree . -L 2 -I node_modules
 .
 ├── README.md
 ├── gatsby-theme-minimal
