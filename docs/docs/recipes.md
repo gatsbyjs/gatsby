@@ -228,7 +228,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ## Transforming data
 
-Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more). `gatsby-transformer-plugin` can transform your markdown files to HTML.
+Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more). `gatsby-transformer-plugin` can transform Markdown files to HTML.
 
 ### Prerequisites
 
