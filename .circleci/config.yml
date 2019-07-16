@@ -230,7 +230,8 @@ jobs:
           command: yarn
           working_directory: ~/project/www
       - run:
-          command: yarn build
+          # manually match cpu_count to vcpus available in resource_class
+          command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
           key: www_public_dir_1
