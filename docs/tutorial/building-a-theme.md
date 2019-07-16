@@ -498,7 +498,7 @@ If you query this time for `allEvent`, you'll see the `Event` data, including th
 
 The last step in `gatsby-node.js` is to create pages for both the event previews and individual event pages. To do that, you'll use the `createPages` API hook.
 
-> 💡 Note that the previous contents of `gatsby-node.js` are left intact; we'll just omit them from the code snippets in this section for brevity.
+> 💡 Note that the previous contents of `gatsby-node.js` should be left intact; they are omitted from the code snippets in this section for brevity.
 
 ### Set up the call to create the root page
 
