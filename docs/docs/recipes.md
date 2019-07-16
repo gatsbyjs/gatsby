@@ -239,7 +239,7 @@ Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetc
 
 ### Directions
 
-1. Add the plugin in your `gatsby-config.js` page:
+1. Add the transformer plugin in your `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 plugins: [`gatsby-transformer-remark`],
