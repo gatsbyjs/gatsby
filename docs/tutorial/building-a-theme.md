@@ -14,7 +14,7 @@ Each workspace can be run separately, as well as one depending on the other. In 
 
 ### Create a new empty folder
 
-Title it anything you wish. Through this example, we'll call it `authoring-themes-tutorial`.
+Title your folder anything you wish. This example will use  `authoring-themes-tutorial`.
 
 ### Add a `package.json`
 
