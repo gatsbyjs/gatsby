@@ -881,7 +881,7 @@ const EventTemplate = ({ data: { event } }) => (
 export default EventTemplate
 ```
 
-We're wishful programming here again -- the `<Event>` component doesn't exist yet. Create that component in `gatsby-theme-events/src/components/event.js`:
+There's some wishful programming here again -- the `<Event>` component doesn't exist yet. Create that component in `gatsby-theme-events/src/components/event.js`:
 
 ```javascript:title=gatsby-theme-events/src/components/event.js
 import React from "react"
