@@ -10,9 +10,9 @@ import {
   lineHeights,
   letterSpacings,
   fontWeights,
-} from "gatsby-design-tokens"
+} from "./presets"
 // typography.js expects an array, so grab font stacks directly from tokens
-import fonts from "./tokens/fonts"
+import { fonts } from "gatsby-design-tokens"
 
 const _options = {
   bodyFontFamily: fonts.system,

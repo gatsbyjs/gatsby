@@ -1,19 +1,19 @@
 import {
   borders,
   breakpoints,
-  mediaQueries,
   colors,
-  sizes,
+  fonts as fontTokens,
+  fontSizes as fontSizeTokens,
+  fontWeights,
   letterSpacings,
   lineHeights,
+  mediaQueries,
   radii,
   shadows,
+  sizes,
   space as spaceTokens,
-  fontSizes as fontSizeTokens,
   transition,
-  fonts as fontTokens,
   zIndices,
-  fontWeights,
 } from "gatsby-design-tokens"
 
 let fonts = {}
@@ -25,19 +25,19 @@ const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
 const space = spaceTokens.map(token => `${token / 16}rem`)
 
 export {
+  borders,
   breakpoints,
-  mediaQueries,
   colors,
-  sizes,
-  transition,
-  radii,
-  shadows,
+  fonts,
+  fontSizes,
+  fontWeights,
   letterSpacings,
   lineHeights,
+  mediaQueries,
+  radii,
+  shadows,
+  sizes,
   space,
-  fontSizes,
-  fonts,
+  transition,
   zIndices,
-  fontWeights,
-  borders,
 }
