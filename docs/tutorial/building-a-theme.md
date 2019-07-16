@@ -1392,7 +1392,7 @@ Now it's published! After publishing, you'll be able to find your theme on npm a
 
 ## Consume a theme in a Gatsby application
 
-Let's test the theme you've created!
+Now it's time to test the theme you've created!
 
 ### Set up a new Gatsby site
 
