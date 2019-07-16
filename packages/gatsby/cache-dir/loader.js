@@ -176,7 +176,7 @@ export class BaseLoader {
         if (result.notFound) {
           // if request was a 404, we should fallback to findMatchPath.
           let foundMatchPatch = findMatchPath(pagePath)
-          if (foundMatchPatch !== pagePath) {
+          if (foundMatchPatch && foundMatchPatch !== pagePath) {
             return this.loadPage(foundMatchPatch)
           }
         }
@@ -255,7 +255,7 @@ export class BaseLoader {
 
   prefetch(pagePath) {
     const realPath = cleanPath(pagePath)
-    if (!this.shouldPrefetch(realPath)) {
+    if (!this.shouldPrefetch(pagePath)) {
       return false
     }
 
@@ -264,7 +264,7 @@ export class BaseLoader {
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
     if (!this.prefetchTriggered.has(realPath)) {
-      this.apiRunner(`onPrefetchPathname`, { pathname: realPath })
+      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
       hasPrefetched = false
       this.prefetchTriggered.add(realPath)
     }
@@ -278,13 +278,13 @@ export class BaseLoader {
       if (!pageData) {
         const matchPath = findMatchPath(realPath)
 
-        if (matchPath !== realPath) {
+        if (matchPath && matchPath !== realPath) {
           return this.prefetch(matchPath)
         }
       }
 
       if (!this.prefetchCompleted.has(realPath)) {
-        this.apiRunner(`onPostPrefetchPathname`, { pathname: realPath })
+        this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
         this.prefetchCompleted.add(realPath)
       }
     })
