@@ -333,7 +333,7 @@ exports.sourceNodes = ({ actions }) => {
 // highlight-end
 ```
 
-1. You'll use the `createTypes` to create the new "Event" type
+1. You'll use the `createTypes` to create the new `Event` type
 2. The "Event" type will implement the typical Gatsby "Node" interface.
 3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
 4. In addition to an "id" field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](g/docs/actions/#createTypes)_.
