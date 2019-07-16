@@ -1049,7 +1049,7 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
-> 💡 Up til now, you've mostly been working in the `gatsby-theme-events` space. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead.
+> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead.
 
 Test out this new options-setting, by making some adjustments to `site`.
 
