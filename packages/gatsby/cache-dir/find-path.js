@@ -3,27 +3,16 @@ import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
 
 let matchPaths = []
-const pathCache = new Map()
 
 const trimPathname = rawPathname => {
   let pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
   let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
-  // Remove any hashfragment
-  if (trimmedPathname.split(`#`).length > 1) {
-    trimmedPathname = trimmedPathname
-      .split(`#`)
-      .slice(0, -1)
-      .join(``)
-  }
+    // Remove any hashfragment
+    .split(`#`)[0]
+    // Remove search query
+    .split(`?`)[0]
 
-  // Remove search query
-  if (trimmedPathname.split(`?`).length > 1) {
-    trimmedPathname = trimmedPathname
-      .split(`?`)
-      .slice(0, -1)
-      .join(``)
-  }
   return trimmedPathname
 }
 
@@ -45,7 +34,7 @@ export const setMatchPaths = value => {
  * @return {string|null}
  */
 export const findMatchPath = rawPathname => {
-  const trimmedPathname = trimPathname(rawPathname)
+  const trimmedPathname = cleanPath(rawPathname)
 
   for (const { matchPath, path } of matchPaths) {
     if (match(matchPath, trimmedPathname)) {
@@ -66,17 +55,12 @@ export const findMatchPath = rawPathname => {
 export const cleanPath = rawPathname => {
   const trimmedPathname = trimPathname(rawPathname)
 
-  if (pathCache.has(trimmedPathname)) {
-    return pathCache.get(trimmedPathname)
-  }
-
   let foundPath = trimmedPathname
   if (foundPath === `/index.html`) {
     foundPath = `/`
   }
 
-  foundPath = normalizePagePath(trimmedPathname)
-  pathCache.set(trimmedPathname, foundPath)
+  foundPath = normalizePagePath(foundPath)
 
   return foundPath
 }
