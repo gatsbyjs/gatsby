@@ -517,7 +517,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
 - You'll default the `basePath` to the root path (`"/"`)
 - Then you'll set up the call to the `createPage` action to create the a page at the base path.
-  - _Note that the component listed doesn't exist yet -- we'll create that shortly._
+  - _Note that the component listed doesn't exist yet -- you'll create that shortly._
 
 ### Query for events
 
