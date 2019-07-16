@@ -341,7 +341,7 @@ exports.sourceNodes = ({ actions }) => {
 
 ### Define resolvers for any custom fields (slug)
 
-Gatsby gives us a createResolvers API hook. That gives us a function called createResolvers. Inside this function, we are going to set up a base path.
+Gatsby provides a `createResolvers` API hook. That gives you a function called `createResolvers`. Inside this function, you will set up a base path.
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 const fs = require("fs")
