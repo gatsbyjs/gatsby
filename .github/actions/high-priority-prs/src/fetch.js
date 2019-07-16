@@ -65,7 +65,11 @@ query GitHubOpenPullRequestsQuery {
 module.exports = async () => {
   let data
   try {
-    data = await tools.github.graphql(query)
+    data = await tools.github.graphql(query, {
+      headers: {
+        authorization: `token ${process.env.PERSONAL_GITHUB_TOKEN}`,
+      },
+    })
     // const filecontents = tools.getFile(
     //   ".github/actions/high-priority-prs/src/data.json"
     // )
