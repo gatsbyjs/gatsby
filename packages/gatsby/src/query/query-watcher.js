@@ -237,6 +237,9 @@ const watch = async rootDir => {
       slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
       ...packagePaths,
     ])
+    .on(`add`, path => {
+      debounceCompile()
+    })
     .on(`change`, path => {
       debounceCompile()
     })
