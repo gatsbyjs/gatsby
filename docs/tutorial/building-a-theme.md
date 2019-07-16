@@ -294,7 +294,7 @@ exports.onPreBootstrap = ({ reporter }) => {
 
 ## Set up to create data-driven pages
 
-To actually create pages, we'll need to:
+To actually create pages, you'll need to:
 
 - Define the "Event" type
 - Define resolvers for custom fields on the "Event" type
