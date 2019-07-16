@@ -2,7 +2,6 @@
   "name": "example",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:ChristopherBiscardi/gatsby-theme-minimal-example.git",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
   "scripts": {
