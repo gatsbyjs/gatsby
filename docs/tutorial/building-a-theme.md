@@ -1475,7 +1475,7 @@ Anything inside `theme-test/src/@jlengstorf/gatsby-theme-events` will "shadow" t
 
 ### Override theme colors
 
-To test this shadowing, let's override `theme.js`:
+To test this shadowing, override `theme.js` with some custom colors:
 
 ```javascript:title=theme-test/src/@jlengstorf/gatsby-theme-events/theme.js
 import { theme as baseTheme } from "@jlengstorf/gatsby-theme-events/src/theme"
