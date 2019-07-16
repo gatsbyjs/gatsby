@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-design-tokens",
+  "version": "0.0.0",
+  "description": "Gatsby Design Tokens",
+  "main": "index.js",
+  "author": "Florian Kissling <flo@gatsbyjs.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-design-tokens"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "babel-preset-gatsby-package": "^0.2.2",
+    "cross-env": "^5.1.4"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
