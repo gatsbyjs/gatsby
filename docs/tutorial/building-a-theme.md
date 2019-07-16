@@ -100,7 +100,7 @@ yarn workspace site add gatsby react react-dom gatsby-theme-events@*
 - When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
 - You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
 
-> 💡 For more detail on using yarn workspaces, you might be interested to check out our [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
+> 💡 For more detail on using yarn workspaces, you might be interested to check out Gatsby's [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
 
 You should now see the following dependencies in your `site/package.json`:
 
