@@ -273,6 +273,7 @@ export class BaseLoader {
       return true
     }
 
+    // eslint-disable-next-line consistent-return
     this.doPrefetch(realPath).then(pageData => {
       if (!pageData) {
         const matchPath = findMatchPath(realPath)
