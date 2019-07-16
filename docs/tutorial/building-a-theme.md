@@ -296,7 +296,7 @@ exports.onPreBootstrap = ({ reporter }) => {
 
 To actually create pages, you'll need to:
 
-- Define the "Event" type
+- Define the `Event` type
 - Define resolvers for custom fields on the "Event" type
 - Query for events
 
