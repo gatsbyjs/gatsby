@@ -1085,7 +1085,7 @@ Once this is running, you'll observe two things:
 1. An "events" directory has automatically been generated for you in `site/events`.
 2. If you hit [localhost:8000/404](http://localhost:8000/404) (or any other route that doesn't exist), you'll see that the site has created an `/events` page.
 
-However, we don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the dev server:
+However, you don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the dev server:
 
 ![Running the site, the basepath is now `/events`](./images/building-a-theme-changed-basepath.png)
 
