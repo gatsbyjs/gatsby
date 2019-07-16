@@ -10,7 +10,7 @@ In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tuto
 
 In this section, you'll learn how to structure folders and configure Yarn workspaces to develop Gatsby themes. You'll create two workspaces, `gatsby-theme-events` and `site`.
 
-You'll see how each workspace can be run separately, as well as one depending on the other. In this example, `gatsby-theme-events` will be a dependency of `site`.
+Each workspace can be run separately, as well as one depending on the other. In this example, `gatsby-theme-events` will be a dependency of `site`.
 
 ### Create a new empty folder
 
