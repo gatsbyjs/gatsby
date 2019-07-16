@@ -223,13 +223,44 @@ export default NonPageComponent
 
 ### Import an image into a component with webpack
 
+Images can be imported right into a JavaScript module with webpack. The imported image will give you the URL of the file once it is minified and put in the public folder, which can then be passed to an `<img>` like a regular path.
+
 #### Prerequisites
 
+- A Gatsby Site with a `.js` file exporting a React component
 - an image (`.jpg`, `.png`, `.gif`, etc.) in the `src` folder
 
 #### Directions
 
-1. Something something something
+1. Import your file from its path in the `src` folder:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+// Tell webpack this JS file uses this image
+import FiestaImg from "../assets/fiesta.jpg" // highlight-line
+
+export default () => ()
+```
+
+2. In `index.js`, add an `<img>` tag with the `src` as the name of the import you used from webpack (in this case `FiestaImg`), and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import FiestaImg from "../assets/fiesta.jpg"
+
+export default () => (
+  // The import result is the URL of your image
+  <img src={FiestaImg} alt="A dog smiling in a party hat" /> // highlight-line
+)
+```
+
+3. Run `gatsby develop` to start the development server.
+4. View your image in the browser: `http://localhost:8000/`
+
+#### Additional resources
+
+- [Example repo importing an image with webpack](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-webpack-image)
+- [More on all image techniques in Gatsby](/docs/images-and-files/)
 
 ### Reference an image from the `static` folder
 
@@ -239,7 +270,7 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 
 #### Prerequisites
 
-- A Gatsby Site with a `.js`
+- A Gatsby Site with a `.js` file exporting a React component
 - An image (`.jpg`, `.png`, `.gif`, etc.) in the `static` folder
 
 #### Directions
@@ -255,15 +286,13 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 │       └── fiesta.jpg
 ```
 
-2. In `index.js`, add an `<img>` tag with the `src` as the relative path of the file from the `static` folder, and an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
+2. In `index.js`, add an `<img>` tag with the `src` as the relative path of the file from the `static` folder, and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
 
 ```jsx:title=src/pages/index.js
 import React from "react"
 
 export default () => (
-  <main>
-    <img src={`fiesta.jpg`} alt="Dogs in party hats celebrating at an event" />
-  </main>
+  <img src={`fiesta.jpg`} alt="A dog smiling in a party hat" /> // highlight-line
 )
 ```
 
