@@ -1089,7 +1089,7 @@ However, you don't have any event data in the site. Copy the `events.yml` file f
 
 ![Running the site, the basepath is now `/events`](./images/building-a-theme-changed-basepath.png)
 
-The events listing page will now be accessible at [http://localhost:8000/events](http://localhost:8000/events). Hitting [the root path](http://localhost:8000/) will now return a 404.
+The events listing page will now be accessible at [http://localhost:8000/events](http://localhost:8000/events). Hitting [the root path](http://localhost:8000/) will return a 404.
 
 ## Make themes extendable with gatsby-plugin-theme-ui
 
