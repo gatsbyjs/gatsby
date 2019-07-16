@@ -6376,8 +6376,8 @@
   url: https://homealarmreport.com/
   main_url: https://homealarmreport.com/
   description: >
-    Home Alarm Report is dedicated to helping consumers make informed decisions 
-    about home security solutions. The site was easily migrated from a legacy WordPress 
+    Home Alarm Report is dedicated to helping consumers make informed decisions
+    about home security solutions. The site was easily migrated from a legacy WordPress
     installation and the dev team chose Gatsby for its site speed and SEO capabilities.
   categories:
     - Blog
@@ -6573,4 +6573,18 @@
     - Blog
     - Consulting
     - Community
+  featured: false
+- title: Arpit Goyal
+  url: https://arpitgoyal.com
+  main_url: https://arpitgoyal.com
+  source_url: https://github.com/92arpitgoyal/ag-blog
+  description: >
+    Blog and portfolio website of a Front-end Developer turned Product Manager.
+  categories:
+    - Blog
+    - Portfolio
+    - Technology
+    - User Experience
+  built_by: Arpit Goyal
+  built_by_url: https://twitter.com/_arpitgoyal
   featured: false
