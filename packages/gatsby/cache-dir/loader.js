@@ -177,7 +177,11 @@ export class BaseLoader {
           // if request was a 404, we should fallback to findMatchPath.
           let foundMatchPatch = findMatchPath(pagePath)
           if (foundMatchPatch && foundMatchPatch !== pagePath) {
-            return this.loadPage(foundMatchPatch)
+            return this.loadPage(foundMatchPatch).then(pageResources => {
+              this.pageDb.set(pagePath, this.pageDb.get(foundMatchPatch))
+
+              return pageResources
+            })
           }
         }
 
