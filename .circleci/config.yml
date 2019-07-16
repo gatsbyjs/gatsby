@@ -241,6 +241,20 @@ jobs:
           paths:
             - ~/project/www/.cache
 
+  deploy_www:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          key: www_public_dir_1
+      - run:
+          command: yarn global add netlify-cli
+          working_directory: ~/project/www
+      - run:
+          command: netlify deploy --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Nightly build deployed from job $CIRCLE_BUILD_URL" # --prod
+          working_directory: ~/project/www
+
 workflows:
   version: 2
   build-test:
@@ -298,4 +312,6 @@ workflows:
     jobs:
       - build_www:
           # Check CircleCI web ui for context details (env vars)
+          context: build_www
+      - deploy_www:
           context: build_www
