@@ -397,7 +397,7 @@ exports.createResolvers = ({ createResolvers }) => {
 // highlight-end
 ```
 
-Let's take a deeper look at what's happening in this `createResolvers` API hook.
+Here's a deeper look at what's happening in this `createResolvers` API hook.
 
 You'll default the `basePath` to the root path (`"/"`):
 
