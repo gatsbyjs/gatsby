@@ -1,3 +1,3 @@
 # gatsby-design-tokens
 
-_TODO_: document purpose and usage once we hit 1.0.0
+Design tokens for Gatsby products including our brand colours, fonts and other guidelines.
