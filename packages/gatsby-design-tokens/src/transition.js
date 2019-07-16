@@ -6,6 +6,5 @@ export default {
     default: `250ms`,
     fast: `100ms`,
     slow: `350ms`,
-    slower: `500ms`,
   },
 }
