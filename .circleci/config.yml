@@ -253,7 +253,7 @@ jobs:
           command: yarn add netlify-cli
           working_directory: ~/project/www
       - run:
-          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI job $CIRCLE_BUILD_URL"
+          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
           working_directory: ~/project/www
 
 workflows:
