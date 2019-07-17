@@ -238,9 +238,11 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`add`, path => {
+      console.log(`add`, path)
       debounceCompile()
     })
     .on(`change`, path => {
+      console.log(`change`, path)
       debounceCompile()
     })
 
