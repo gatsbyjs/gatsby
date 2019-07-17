@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 
+import { ScreenReaderText } from "./feedback-widget/styled-elements"
 import {
   space,
   fonts,
@@ -27,13 +28,13 @@ const delay = duration => new Promise(resolve => setTimeout(resolve, duration))
 function Copy({ className, content, duration, fileName, trim = false }) {
   const [copied, setCopied] = useState(false)
 
+  const label = copied
+    ? `${fileName ? fileName + ` ` : ``}copied to clipboard`
+    : `${fileName ? fileName + `: ` : ``}copy code to clipboard`
+
   return (
     <button
-      aria-label={
-        copied
-          ? `${fileName ? fileName + ` ` : ``}copied to clipboard`
-          : `${fileName ? fileName + `: ` : ``}copy code to clipboard`
-      }
+      aria-label={label}
       className={className}
       disabled={copied}
       css={{
@@ -60,6 +61,7 @@ function Copy({ className, content, duration, fileName, trim = false }) {
       }}
     >
       {copied ? `Copied` : `Copy`}
+      <ScreenReaderText>{label}</ScreenReaderText>
     </button>
   )
 }
