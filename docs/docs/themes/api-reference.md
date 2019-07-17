@@ -138,7 +138,7 @@ module.exports = {
 
 Themes at their core are an algorithm that merges multiple `gatsby-config.js` files together into a single config your site can use to build with. To do that we need to define how to combine two `gatsby-config.js`s together. Before we can do that, we need to flatten the parent/child relationships into a single array. This results in the final ordering when considering which shadowing file to use if multiple are available.
 
-Our first example results in a final ordering of `['gatsby-theme-parent', 'gatsby-theme-child']` (parents always come before their children so that children can override functionality), while our second example results in `['gatsby-theme-blog', 'gatsby-theme-core']`.
+Our first example results in a final ordering of `['gatsby-theme-parent', 'gatsby-theme-child']` (parents always come before their children so that children can override functionality), while our second example results in `['gatsby-theme-blog', 'gatsby-theme-notes']`.
 
 Once we have the final ordering of themes we merge them together using a reduce function. [This reduce function](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/merge-gatsby-config.js) specifies the way each key in `gatsby-config.js` will merge together. Unless otherwise specified below, the last value wins.
 
