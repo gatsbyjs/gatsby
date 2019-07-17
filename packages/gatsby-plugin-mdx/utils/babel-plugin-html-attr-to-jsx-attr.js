@@ -17,7 +17,7 @@ const valueFromType = value => {
     case "boolean":
       return t.booleanLiteral(value);
     default:
-      throw new Error("gatsby-mdx needs to include a new type");
+      throw new Error("gatsby-plugin-mdx needs to include a new type");
   }
 };
 

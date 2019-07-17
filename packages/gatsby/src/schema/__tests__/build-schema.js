@@ -1102,7 +1102,7 @@ describe(`Build schema`, () => {
       const type = schema.getType(`PostFrontmatter`)
       const fields = type.getFields()
       expect(
-        fields[`date`].resolve(
+        await fields[`date`].resolve(
           { date: new Date(2019, 10, 10) },
           { formatString: `YYYY` },
           {},
@@ -1112,7 +1112,7 @@ describe(`Build schema`, () => {
         )
       ).toEqual(`2019`)
       expect(
-        fields[`date`].resolve(
+        await fields[`date`].resolve(
           { date: new Date(2010, 10, 10) },
           { formatString: `YYYY` },
           {},

@@ -78,7 +78,7 @@ Users should be able to:
 
 Here's what's next in [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/5927). Feel free to tackle any part of this project and contribute to it or discuss new possibilities!
 
-## Sneak peak into the next UX project
+## Sneak peek into the next UX project
 
 Our next UX project is finishing up the starter showcase, which will look similar to the site showcase and also have a major functional difference: filter by dependency. Please contribute to these issues to help out!
 

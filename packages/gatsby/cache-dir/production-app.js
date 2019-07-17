@@ -73,12 +73,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   id="gatsby-focus-wrapper"
                 >
                   <RouteHandler
-                    path={
+                    path={encodeURI(
                       pageResources.page.path === `/404.html`
                         ? location.pathname
                         : pageResources.page.matchPath ||
-                          pageResources.page.path
-                    }
+                            pageResources.page.path
+                    )}
                     {...this.props}
                     location={location}
                     pageResources={pageResources}
@@ -106,9 +106,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
-      loader.pathFinder.findMatchPath(
-        stripPrefix(browserLoc.pathname, __BASE_PATH__)
-      ) ||
+      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
       pagePath === `/404.html` ||
       pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)

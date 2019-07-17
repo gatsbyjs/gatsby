@@ -22,6 +22,7 @@
     "emotion-theming": "^10.0.10",
     "fuse.js": "^3.2.0",
     "gatsby": "^2.11.0",
+    "gatsby-design-tokens": "0.0.1",
     "gatsby-image": "^2.0.5",
     "gatsby-plugin-canonical-urls": "^2.0.5",
     "gatsby-plugin-catch-links": "^2.0.2",
