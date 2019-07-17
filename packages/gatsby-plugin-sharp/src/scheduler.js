@@ -3,12 +3,13 @@ const { existsSync } = require(`fs`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
 const { createProgress } = require(`./utils`)
+const cpuCoreCount = require(`gatsby/dist/utils/worker/cpu-core-count`)
 
 const toProcess = {}
 let totalJobs = 0
 const q = queue((task, callback) => {
   task(callback)
-}, 1)
+}, cpuCoreCount())
 
 let bar
 // when the queue is empty we stop the progressbar
