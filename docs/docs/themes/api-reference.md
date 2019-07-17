@@ -81,7 +81,7 @@ Taking a closer look at our `Header` example, let's say we have a theme called `
 
 We'd like the `Header` component to do something different (maybe change colors, maybe add additional navigation items, really anything you can think of). To do that, we create a file in our site at `src/gatsby-theme-amazing/components/header.js`. We can now export any React component we want from this file and Gatsby will use it instead of the theme's component.
 
-note: you can shadow components from other themes too using the same method. Use the destination path in your new theme instead of in your site. Read more about advanced applications of this in [latent shadowing](https://johno.com/latent-component-shadowing).
+> 💡 Note: you can shadow components from other themes using the same method. Read more about advanced applications in [latent shadowing](https://johno.com/latent-component-shadowing).
 
 ### Extending
 
