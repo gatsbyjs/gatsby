@@ -40,7 +40,9 @@ module.exports = {
 }
 ```
 
-You can access options that are passed to your theme in your theme's `gatsby-config`. You can use this to make filesystem sourcing configurable, accept different nav menu items, or change branding colors from the default. To take advantage of the options that are passed in when configuring your theme in a user's site, return a function in your theme's `gatsby-config.js`. The argument the function receives are the options the user passed in.
+You can access options that are passed to your theme in your theme's `gatsby-config`. You can use options to make filesystem sourcing configurable, accept different nav menu items, change branding colors from the default, and anything else you want to make configurable.
+
+To take advantage of the options that are passed in when configuring your theme in a user's site, return a function in your theme's `gatsby-config.js`. The argument the function receives is the options the user passed in.
 
 ```js:title=gatsby-config.js
 module.exports = themeOptions => {
