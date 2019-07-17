@@ -723,10 +723,7 @@ For now, this component will display a stringified object from the JSON data you
 ### Add the layout and events list components to the events page
 
 By updating the `events.js` template with the following code, you will:
-By updating the `events.js` template with the following code, you will:
 
-- Import the two new components.
-- Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
 - Import the two new components.
 - Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
 
@@ -1454,7 +1451,56 @@ Save, and you'll see the new event data in your project:
 
 "Component shadowing" in Gatsby themes allow you to override or modify components in the theme. Use your new "theme-test" project to experiment with this.
 
-Start by adding a `src` folder to your project.
+### Override theme colors
+
+In the root of `theme-test`, add a `src` folder. Inside `src`, add a folder titled `gatsby-plugin-theme-ui`.
+
+Inside `gatsby-plugin-theme-ui`, create a new file, `index.js`.
+
+Your file tree will look like this:
+
+```text
+.
+├── data
+│   └── events.yml
+├── src
+│   └── gatsby-plugin-theme-ui
+│       └── index.js
+├── .gitignore
+├── gatsby-config.js
+├── package.json
+└── yarn.lock
+```
+
+Inside the new `index.js` file, add the following:
+
+```javascript:title=theme-test/src/gatsby-plugin-theme-ui/index.js
+import merge from "lodash.merge"
+import { theme } from "@jlengstorf/gatsby-theme-events"
+
+export default merge({}, theme, {
+  colors: {
+    primary: "blue",
+  },
+})
+```
+
+You'll be using `lodash.merge`, so install that now:
+
+```shell
+yarn add lodash.merge
+```
+
+Restart the dev server for `theme-test`. Your local site should now have a blue header instead of a purple one:
+
+![Test site, with banner color overridden.](./images/building-a-theme-override-colors.png)
+
+A few notable things are happening in this `index.js` file:
+
+- The `theme` import from `@jlengstorf/gatsby-theme-events` is the base UI theme from `@jlengstorf/gatsby-theme-events`.
+- The new object exported from `index.js` uses `lodash.merge` to deeply merge the base UI theme with the theme overrides of your choice. In this case, changing the primary color to blue.
+
+### Override an entire component
 
 Inside `src`, create a folder with the same title as your theme.
 
@@ -1465,38 +1511,19 @@ Inside `src`, create a folder with the same title as your theme.
 ├── data
 │   └── events.yml
 ├── src
-│   └── @jlengstorf
-│       └── gatsby-theme-events
+│   ├── @jlengstorf
+│   │   └── gatsby-theme-events
+│   └── gatsby-plugin-theme-ui
+│       └── index.js
+├── .gitignore
 ├── gatsby-config.js
 ├── package.json
 └── yarn.lock
 ```
 
-Anything inside `theme-test/src/@jlengstorf/gatsby-theme-events` will "shadow" the `@jlengstorf/gatsby-theme-events` theme.
+Anything inside `theme-test/src/@jlengstorf/gatsby-theme-events` will "shadow" the components in `@jlengstorf/gatsby-theme-events`.
 
-### Override theme colors
-
-To test this shadowing, override `theme.js` with some custom colors:
-
-```javascript:title=theme-test/src/@jlengstorf/gatsby-theme-events/theme.js
-import { theme as baseTheme } from "@jlengstorf/gatsby-theme-events/src/theme"
-
-export const theme = {
-  ...baseTheme,
-  colors: {
-    ...baseTheme.colors,
-    primary: "blue",
-  },
-}
-```
-
-<!-- @TODO screenshot -->
-
-### Override an entire component
-
-To override an entire component, create a new file in your project, corresponding to that file in the theme.
-
-For example, create a new file in your "theme-test" project to override `layout.js`.
+For example, create a new file to override the layout component: `theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js`.
 
 ```javascript:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
 import React from "react"
@@ -1504,9 +1531,9 @@ import React from "react"
 export default ({ children }) => <>{children}</>
 ```
 
-If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component's been completely overridden.
+If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component has been completely overridden:
 
-<!-- @TODO screenshot -->
+![Test site, with layout component overridden.](./images/building-a-theme-override-component.png)
 
 ## Conclusion
 
