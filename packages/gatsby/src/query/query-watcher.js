@@ -9,7 +9,7 @@
  ***/
 
 const _ = require(`lodash`)
-const chokidar = require(`chokidar`)
+const Watchpack = require(`watchpack`)
 
 const path = require(`path`)
 const slash = require(`slash`)
@@ -227,22 +227,25 @@ const watch = async rootDir => {
 
   const modulesThatUseGatsby = await getGatsbyDependents()
 
-  const packagePaths = modulesThatUseGatsby.map(module => {
-    const filesRegex = `*.+(t|j)s?(x)`
-    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
-    return slash(path.join(module.path, pathRegex))
+  const packagePaths = modulesThatUseGatsby.map(module => slash(module.path))
+
+  var wp = new Watchpack({
+    aggregateTimeout: 1000,
+
+    poll: true,
+
+    followSymlinks: true,
   })
 
-  watcher = chokidar
-    .watch([
-      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
-      ...packagePaths,
-    ])
-    .on(`change`, path => {
-      debounceCompile()
-    })
+  wp.watch(
+    [...filesToWatch],
+    [slash(path.join(rootDir, `src`)), ...packagePaths],
+    Date.now() - 10000
+  )
 
-  filesToWatch.forEach(filePath => watcher.add(filePath))
+  wp.on(`change`, function(filePath, mtime) {
+    debounceCompile()
+  })
 }
 
 exports.startWatchDeletePage = () => {
