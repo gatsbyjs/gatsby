@@ -1,6 +1,16 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 
+import {
+  space,
+  fonts,
+  fontSizes,
+  colors,
+  radii,
+  lineHeights,
+  letterSpacings,
+} from "../utils/presets"
+
 const copyToClipboard = content => {
   const el = document.createElement(`textarea`)
   el.value = content
@@ -20,6 +30,21 @@ function Copy({ content, duration = 2500, trim = false }) {
 
   return (
     <button
+      css={{
+        background: colors.text.header,
+        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
+        color: `#ddd`,
+        fontSize: fontSizes[0],
+        fontFamily: fonts.monospace,
+        letterSpacing: letterSpacings.tracked,
+        lineHeight: lineHeights.solid,
+        padding: `${space[1]} ${space[2]}`,
+        position: `absolute`,
+        left: space[6],
+        textAlign: `right`,
+        textTransform: `uppercase`,
+        top: `0`,
+      }}
       onClick={async () => {
         copyToClipboard(trim ? content.trim() : content)
 
