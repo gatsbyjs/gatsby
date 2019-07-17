@@ -254,6 +254,7 @@ jobs:
           working_directory: ~/project/www
       - run:
           command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
+          no_output_timeout: 2h
           working_directory: ~/project/www
 
 workflows:
@@ -302,10 +303,10 @@ workflows:
             branches:
               only:
                 - master
-  nightly:
+  www_deploy:
     triggers:
       - schedule:
-          cron: "0 * * * *"
+          cron: "0 */4 * * *"
           filters:
             branches:
               only:
