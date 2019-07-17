@@ -98,7 +98,7 @@ export default props => <Header {...props} myProp="true" />
 
 Taking this approach means that when we upgrade our theme later we can also take advantage of all the updates to the `Header` component because we haven't fully replaced it, just modified it.
 
-### What path do use to shadow a file?
+### What path should be used to shadow a file?
 
 Until we build tooling to support automatically handling shadowing you will have to figure out how to convert paths in a theme into paths in your site on your own. Luckily the way to do that is few steps. Take the `src` directory from the theme, and move it to the front of the path, then write a file at that location in your site. Looking back on our `Header` example, this is the path to the component in our theme:
 
