@@ -216,7 +216,7 @@ export default merge({}, baseTheme, {
 ## Styling MDX content
 
 Theme UI includes a way to style elements in MDX documents without the need to add global CSS to your site.
-This is useful for authoring Gatsby themes that can be installed alongside othere themes.
+This is useful for authoring Gatsby themes that can be installed alongside other themes.
 
 In your Theme UI configuration, add a `styles` object to target elements rendered from MDX.
 
