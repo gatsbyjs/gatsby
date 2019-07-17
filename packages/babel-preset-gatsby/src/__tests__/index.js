@@ -153,6 +153,7 @@ it(`Allows to configure modern builds`, () => {
     expect.stringContaining(path.join(`@babel`, `preset-env`)),
     {
       corejs: 2,
+      exclude: [`transform-typeof-symbol`],
       loose: true,
       modules: false,
       useBuiltIns: `usage`,
