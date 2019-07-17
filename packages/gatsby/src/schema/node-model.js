@@ -73,7 +73,10 @@ class LocalNodeModel {
     this.nodeStore = nodeStore
     this.createPageDependency = createPageDependency
     this.path = path
-    this.rootNodeMap = new WeakMap()
+
+    this._rootNodeMap = new WeakMap()
+    this._prepareNodesQueues = {}
+    this._prepareNodesPromises = {}
   }
 
   /**
@@ -233,6 +236,74 @@ class LocalNodeModel {
     return this.trackPageDependencies(result, pageDependencies)
   }
 
+  prepareNodes(type, queryFields, fieldsToResolve) {
+    const typeName = type.name
+    if (!this._prepareNodesQueues[typeName]) {
+      this._prepareNodesQueues[typeName] = []
+    }
+
+    this._prepareNodesQueues[typeName].push({
+      queryFields,
+      fieldsToResolve,
+    })
+
+    if (!this._prepareNodesPromises[typeName]) {
+      this._prepareNodesPromises[typeName] = new Promise(resolve => {
+        process.nextTick(async () => {
+          await this._doResolvePrepareNodesQueue(type)
+          resolve()
+        })
+      })
+    }
+
+    return this._prepareNodesPromises[typeName]
+  }
+
+  async _doResolvePrepareNodesQueue(type) {
+    const typeName = type.name
+    const queue = this._prepareNodesQueues[typeName]
+    this._prepareNodesQueues[typeName] = []
+    this._prepareNodesPromises[typeName] = null
+
+    const { queryFields, fieldsToResolve } = queue.reduce(
+      (
+        { queryFields, fieldsToResolve },
+        { queryFields: nextQueryFields, fieldsToResolve: nextFieldsToResolve }
+      ) => {
+        return {
+          queryFields: _.merge(queryFields, nextQueryFields),
+          fieldsToResolve: _.merge(fieldsToResolve, nextFieldsToResolve),
+        }
+      },
+      {
+        queryFields: {},
+        fieldsToResolve: {},
+      }
+    )
+
+    // console.log(type, queryFields, fieldsToResolve)
+
+    if (!_.isEmpty(fieldsToResolve)) {
+      await this.nodeStore.updateNodesByType(type.name, async node => {
+        this.trackInlineObjectsInRootNode(node)
+        const resolvedFields = await resolveRecursive(
+          this,
+          this.schemaComposer,
+          this.schema,
+          node,
+          type,
+          queryFields,
+          fieldsToResolve
+        )
+        const newNode = {
+          ...node,
+          $resolved: _.merge(node.$resolved || {}, resolvedFields),
+        }
+        return newNode
+      })
+    }
+  }
+
   /**
    * Get the names of all node types in the store.
    *
@@ -249,7 +320,7 @@ class LocalNodeModel {
    */
   trackInlineObjectsInRootNode(node) {
     return addRootNodeToInlineObject(
-      this.rootNodeMap,
+      this._rootNodeMap,
       node,
       node.id,
       true,
@@ -272,7 +343,7 @@ class LocalNodeModel {
       if (predicate && predicate(node)) return node
 
       const parent = node.parent && getNodeById(this.nodeStore, node.parent)
-      const id = this.rootNodeMap.get(node)
+      const id = this._rootNodeMap.get(node)
       const trackedParent = id && getNodeById(this.nodeStore, id)
 
       if (!parent && !trackedParent) return node
@@ -314,28 +385,6 @@ class LocalNodeModel {
     }
 
     return result
-  }
-
-  async prepareNodes(type, queryFields, fieldsToResolve) {
-    if (!_.isEmpty(fieldsToResolve)) {
-      await this.nodeStore.updateNodesByType(type.name, async node => {
-        this.trackInlineObjectsInRootNode(node)
-        const resolvedFields = await resolveRecursive(
-          this,
-          this.schemaComposer,
-          this.schema,
-          node,
-          type,
-          queryFields,
-          fieldsToResolve
-        )
-        const newNode = {
-          ...node,
-          $resolved: _.merge(node.$resolved || {}, resolvedFields),
-        }
-        return newNode
-      })
-    }
   }
 }
 
