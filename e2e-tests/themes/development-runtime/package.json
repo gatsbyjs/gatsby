@@ -1,0 +1,35 @@
+{
+  "name": "development-runtime",
+  "description": "Gatsby default starter",
+  "version": "1.0.0",
+  "author": "Sidhartha Chatterjee <sid@gatsbyjs.com>",
+  "dependencies": {
+    "gatsby": "^2.13.14",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "gatsby-theme-about": "*"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"src/**/*.js\"",
+    "serve": "gatsby serve",
+    "start": "npm run develop",
+    "test": "cross-env CYPRESS_SUPPORT=y npm run start-server-and-test",
+    "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --browser chrome"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "cypress": "^3.1.3",
+    "gatsby-cypress": "^0.1.7",
+    "prettier": "^1.15.2",
+    "start-server-and-test": "^1.7.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  }
+}

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.2...gatsby-cypress@0.2.3) (2019-07-15)
+
+### Features
+
+- **gatsby-cypress:** Add ability to pass in options in getTestElement ([#15743](https://github.com/gatsbyjs/gatsby/issues/15743)) ([8eaddef](https://github.com/gatsbyjs/gatsby/commit/8eaddef))
+
 ## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.1...gatsby-cypress@0.2.2) (2019-07-12)
 
 ### Bug Fixes
