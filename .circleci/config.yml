@@ -223,9 +223,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: www_public_dir_1
+          key: www_public_dir_1_{{ epoch }}
       - restore_cache:
-          key: www_cache_dir_1
+          key: www_cache_dir_1_{{ epoch }}
       - run:
           command: yarn
           working_directory: ~/project/www
@@ -234,11 +234,11 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: www_public_dir_1
+          key: www_public_dir_1_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: www_cache_dir_1
+          key: www_cache_dir_1_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
@@ -248,12 +248,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: www_public_dir_1
+          key: www_public_dir_1_{{ epoch }}
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
       - run:
-          command: node_modules/.bin/netlify deploy --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Nightly build deployed from job $CIRCLE_BUILD_URL" # --prod
+          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI job $CIRCLE_BUILD_URL"
           working_directory: ~/project/www
 
 workflows:
