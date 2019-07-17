@@ -120,8 +120,19 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
 Now that you have a pretty way to define the path for your pages, you can create the pages programmatically:
 
 ```javascript:title=gatsby-node.js
-const path = require(`path`)
+const path = require(`path`) // highlight-line
 
+exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
+  if (node.internal.type === `KenticoCloudItemArticle`) {
+    createNodeField({
+      node,
+      name: `slug`,
+      value: node.elements.url_pattern.value,
+    })
+  }
+}
+
+// highlight-start
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -152,6 +163,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 }
+// highlight-end
 ```
 
 Now create a basic template to display each article with a title and the body that you pull with a GraphQL query:
