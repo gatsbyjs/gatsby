@@ -92,7 +92,6 @@ const _options = {
       ".gatsby-highlight pre[class^='language-']": {
         backgroundColor: `transparent`,
         border: 0,
-        padding: `${space[6]} 0`,
         WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class^='language-']::before": {
