@@ -30,6 +30,11 @@ function Copy({ content, duration = 2500, trim = false }) {
 
   return (
     <button
+      aria-label={
+        text === `Copy`
+          ? `Copy text to clipboard`
+          : `Text has been copied to clipboard`
+      }
       css={{
         background: colors.text.header,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
@@ -40,7 +45,7 @@ function Copy({ content, duration = 2500, trim = false }) {
         lineHeight: lineHeights.solid,
         padding: `${space[1]} ${space[2]}`,
         position: `absolute`,
-        left: space[6],
+        right: space[6],
         textAlign: `right`,
         textTransform: `uppercase`,
         top: `0`,

@@ -1,6 +1,7 @@
 import React from "react"
 
 import Copy from "./copy"
+import { fonts, space } from "../utils/presets"
 
 const getParams = (name = ``) => {
   const [lang, params = ``] = name.split(`:`)
@@ -18,10 +19,14 @@ export default props => {
   const content = props.children.props.children
   return (
     <div className="gatsby-highlight">
-      <span className="gatsby-highlight-header">
-        {title && <div className="gatsby-code-title">{title}</div>}
+      <div className="gatsby-highlight-header">
+        {title && (
+          <div css={{ fontFamily: fonts.monospace, paddingTop: space[4] }}>
+            {title}
+          </div>
+        )}
         <Copy content={content} />
-      </span>
+      </div>
       <pre className={`language-${language}`} data-language={language}>
         <code>{content}</code>
       </pre>

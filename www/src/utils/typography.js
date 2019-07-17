@@ -105,7 +105,7 @@ const _options = {
         lineHeight: lineHeights.solid,
         padding: `${space[1]} ${space[2]}`,
         position: `absolute`,
-        right: space[6],
+        left: space[6],
         textAlign: `right`,
         textTransform: `uppercase`,
         top: `0`,
@@ -271,7 +271,7 @@ const _options = {
       },
       // gatsby-remark-code-titles styles
       // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
-      ".gatsby-code-title": {
+      ".gatsby-highlight-header": {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
@@ -279,15 +279,15 @@ const _options = {
         fontSize: fontSizes[0],
       },
       [mediaQueries.md]: {
-        ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
+        ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-highlight-header": {
           marginLeft: 0,
           marginRight: 0,
           borderRadius: `${radii[2]}px`,
         },
-        ".gatsby-code-title": {
+        ".gatsby-highlight-header": {
           borderRadius: `${radii[2]}px ${radii[2]}px 0 0`,
         },
-        ".gatsby-code-title + .gatsby-highlight": {
+        ".gatsby-highlight-header + .gatsby-highlight": {
           borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         },
       },
