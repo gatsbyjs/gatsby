@@ -12,25 +12,13 @@ tags:
   - themes
 ---
 
-<<<<<<< HEAD
 Shadowing is a powerful feature that allows theme users to override components,
 objects, and anything else in a theme's `src` directory.
-=======
-[Shadowing](/blog/2019-04-29-component-shadowing)
-is a powerful feature that allows theme users to override components, objects,
-and anything else in a theme's `src` directory. This works by using a [webpack
-resolver plugin](https://webpack.js.org/api/resolvers/) that maps themes
-in a `gatsby-config.js` to possible shadowed files. This gets especially
-mind melty because themes can add parent themes to a configuration so we
-need to be able to walk the composition of themes to determine the "last
-shadow" since the last one wins in the algorithm.
->>>>>>> A few tweaks
 
 > **Note** This is a technical deep dive into how Shadowing works. If you'd
 > like to learn about what Shadowing is, see the [What is Component Shadowing?](/blog/2019-04-29-component-shadowing/)
 > blog post.
 
-<<<<<<< HEAD
 Shadowing works by using a [webpack resolver plugin](https://webpack.js.org/api/resolvers/)
 that maps themes in a `gatsby-config.js` to possible shadowed files. This gets
 especially mind melty because themes can add parent themes to a configuration so we
@@ -38,9 +26,6 @@ need to be able to walk the composition of themes to determine the "last shadow"
 since the last shadowed theme file wins in the algorithm.
 
 ## Theme Composition
-=======
-## Theme composition
->>>>>>> A few tweaks
 
 It's important to begin discussing how the composition of themes works. An
 end user of a theme can configure any number of themes. Each of these
@@ -135,7 +120,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   apply(resolver) {
-    resolver.plugin(`relative`, (request, callback) => { // highlight-line
+    resolver.plugin(`relative`, (request, callback) => {
+      // highlight-line
       // ...
     })
   }
@@ -272,14 +258,13 @@ from start to finish.
 const locationsToCheck = [
   // User's site
   path.join(path.resolve(`.`), `src`, theme),
-]
-  .concat(
-    Array.from(themes)
-      // Last theme wins, so start matching reverse
-      .reverse()
-      // Create the full theme directory path to check against
-      .map(({ themeDir }) => path.join(themeDir, `src`, theme))
-  )
+].concat(
+  Array.from(themes)
+    // Last theme wins, so start matching reverse
+    .reverse()
+    // Create the full theme directory path to check against
+    .map(({ themeDir }) => path.join(themeDir, `src`, theme))
+)
 ```
 
 Additionally, the original theme is removed because that's the default
@@ -428,7 +413,7 @@ import Box from "gatsby-theme-tomato/src/box"
 import Card from "../components/card"
 
 export default props => (
-  <div style={{ padding: '20px', backgroundColor: 'rebeccapurple' }}>
+  <div style={{ padding: "20px", backgroundColor: "rebeccapurple" }}>
     <Box {...props} />
   </div>
 )
