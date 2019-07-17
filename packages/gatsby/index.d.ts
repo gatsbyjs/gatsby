@@ -670,7 +670,7 @@ export interface SourceNodesArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
-  schema: object
+  intermediateSchema: object
   createResolvers: Function
   traceId: `initial-createResolvers`
 }

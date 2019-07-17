@@ -621,7 +621,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
     })
   }
   await apiRunner(`createResolvers`, {
-    schema: intermediateSchema,
+    intermediateSchema,
     createResolvers,
     traceId: `initial-createResolvers`,
     parentSpan,
