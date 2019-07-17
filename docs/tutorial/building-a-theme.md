@@ -61,7 +61,7 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
   - This file won't do anything, but it does need to resolve, so create a new file in `gatsby-theme-events` called `index.js`.
 
 ```javascript:title=gatsby-theme-events/index.js
-// noop
+// boop
 ```
 
 This file is intentionally empty — because the `main` field is pointing to `index.js`, this file needs to exist for Node to properly resolve the package. To avoid confusion, add a small comment to indicate that the file doesn't do anything; it just needs to exist and was left blank on purpose.
