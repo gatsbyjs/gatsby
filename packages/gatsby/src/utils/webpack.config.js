@@ -40,7 +40,6 @@ module.exports = async (
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
-  console.log(suppliedStage);
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.

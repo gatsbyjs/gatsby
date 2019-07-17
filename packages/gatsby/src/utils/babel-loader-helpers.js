@@ -2,24 +2,20 @@ const path = require(`path`)
 const _ = require(`lodash`)
 
 const loadCachedConfig = () => {
-  let pluginBabelConfig = {
+  const testConfig = {
     stages: {
       test: { plugins: [], presets: [] },
     },
   }
+  let babelState = {}
   if (process.env.NODE_ENV !== `test`) {
-    pluginBabelConfig = require(path.join(
-      process.cwd(),
-      `./.cache/babelState.json`
-    ))
+    babelState = require(path.join(process.cwd(), `./.cache/babelState.json`))
   }
-  return pluginBabelConfig
+  return _.merge(testConfig, babelState)
 }
 
 const getCustomOptions = stage => {
   const pluginBabelConfig = loadCachedConfig()
-  console.log('babel stage', stage)
-  console.log(pluginBabelConfig.stages)
   return pluginBabelConfig.stages[stage].options
 }
 
