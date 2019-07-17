@@ -100,7 +100,9 @@ Taking this approach means that when we upgrade our theme later we can also take
 
 ### What path should be used to shadow a file?
 
-Until we build tooling to support automatically handling shadowing you will have to figure out how to convert paths in a theme into paths in your site on your own. Luckily the way to do that is few steps. Take the `src` directory from the theme, and move it to the front of the path, then write a file at that location in your site. Looking back on our `Header` example, this is the path to the component in our theme:
+Until we build tooling to support automatically handling shadowing, you will have to manually locate paths in a theme and create the correct shadowing paths in your site.
+
+Luckily, the way to do that is only a few steps. Take the `src` directory from the theme, and move it to the front of the path, then write a file at that location in your site. Looking back on our `Header` example, this is the path to the component in our theme:
 
 ```
 gatsby-theme-amazing/src/components/header.js
