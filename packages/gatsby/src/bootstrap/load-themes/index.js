@@ -11,11 +11,15 @@ const resolveTheme = async themeSpec => {
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
   try {
+    // theme is an node-resolvable module
     themeDir = path.dirname(require.resolve(themeName))
   } catch (e) {
-    // this can be local plugin, and require.resolve will throw
-    // in this case - let's return partial entry
-    return { themeName, themeSpec }
+    // is a local plugin OR it doesn't exist
+    try {
+      themeDir = path.dirname(require.resolve(`./plugins` + themeName))
+    } catch (localErr) {
+      throw e
+    }
   }
   const theme = await preferDefault(getConfigFile(themeDir, `gatsby-config`))
   // if theme is a function, call it with the themeConfig
