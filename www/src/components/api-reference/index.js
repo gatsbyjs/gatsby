@@ -7,6 +7,7 @@ import { space } from "../../utils/presets"
 
 export default ({
   docs,
+  githubPath = null,
   showTopLevelSignatures = false,
   ignoreParams = [],
 }) => (
@@ -20,6 +21,7 @@ export default ({
         {i !== 0 && <hr />}
         <DocBlock
           definition={definition}
+          githubPath={githubPath}
           showSignature={showTopLevelSignatures}
           level={0}
           linkableTitle={true}
@@ -51,5 +53,20 @@ export const pageQuery = graphql`
     ...DocumentationExampleFragment
     ...DocumentationParamsFragment
     ...DocumentationReturnsFragment
+  }
+
+  fragment ApiCallFragment on GatsbyAPICallGroupConnection {
+    name: fieldValue
+    nodes {
+      file
+      codeLocation {
+        start {
+          line
+        }
+        end {
+          line
+        }
+      }
+    }
   }
 `

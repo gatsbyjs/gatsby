@@ -6,7 +6,7 @@ const seedConstant = `638f7a53-c567-4eca-8fc1-b23efb1cfb2b`
 /**
  * createNodeId() Generate UUID
  *
- * @param {String} id - A string of arbitary length
+ * @param {String} id - A string of arbitrary length
  * @param {String} namespace - Namespace to use for UUID
  *
  * @return {String} - UUID

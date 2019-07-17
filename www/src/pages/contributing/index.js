@@ -68,9 +68,8 @@ class IndexRoute extends React.Component {
               </li>
             </ul>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
-
-            <FooterLinks />
           </Container>
+          <FooterLinks />
         </DocSearchContent>
       </Layout>
     )

@@ -1,18 +1,19 @@
 const { sep } = require(`path`)
 
 // Removes all user paths
+const regexpEscape = str => str.replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`)
 const cleanPaths = (str, separator = sep) => {
   const stack = process.cwd().split(separator)
 
-  // windows still has the 'C:' but unix has '' but C:
-  // is not a big deal so we'll let it slip
   while (stack.length > 1) {
     const currentPath = stack.join(separator)
-    const currentRegex = new RegExp(
-      currentPath.replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`),
-      `g`
-    )
+    const currentRegex = new RegExp(regexpEscape(currentPath), `g`)
     str = str.replace(currentRegex, `$SNIP`)
+
+    const currentPath2 = stack.join(separator + separator)
+    const currentRegex2 = new RegExp(regexpEscape(currentPath2), `g`)
+    str = str.replace(currentRegex2, `$SNIP`)
+
     stack.pop()
   }
   return str

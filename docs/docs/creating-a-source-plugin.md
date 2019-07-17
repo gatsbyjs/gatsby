@@ -110,7 +110,7 @@ At a high-level, these are the jobs of a source plugin:
   contentDigests.
 - "Link" nodes types you create as appropriate (see
   [_Node Link_](/docs/api-specification/) in the API specification concepts
-  section.
+  section).
 - Return either a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
 
 ## Getting helper functions
@@ -132,7 +132,7 @@ There are two ways of adding node relationships in Gatsby: (1) transformations (
 
 ### Option 1: transformation relationships
 
-An example of a transformation relationship is the `gatsby-transformer-remark` plugin, which transforms a parent `fileNode`'s markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action `createParentChildLink`. Transformation relationships are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `fileNode` and wouldn't ever exist if the parent `fileNode` hadn't been created.
+An example of a transformation relationship is the `gatsby-transformer-remark` plugin, which transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/actions/#createParentChildLink). Transformation relationships are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and wouldn't ever exist if the parent `File` node hadn't been created.
 
 Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there are no nodes left over that were derived from older versions of data but shouldn't exist any longer.
 
@@ -142,7 +142,7 @@ In order to create a parent/child relationship, when calling `createNode` for th
 
 _Examples_
 
-[Here's the above example](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-remark/src/on-node-create.js#L34-L64) from the `gatsby-transformer-remark` source plugin.
+[Here's the above example](https://github.com/gatsbyjs/gatsby/blob/72077527b4acd3f2109ed5a2fcb780cddefee35a/packages/gatsby-transformer-remark/src/on-node-create.js#L39-L67) from the `gatsby-transformer-remark` source plugin.
 
 [Here's another example](https://github.com/gatsbyjs/gatsby/blob/1fb19f9ad16618acdac7eda33d295d8ceba7f393/packages/gatsby-transformer-sharp/src/on-node-create.js#L3-L25) from the `gatsby-transformer-sharp` source plugin.
 

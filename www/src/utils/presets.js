@@ -1,37 +1,43 @@
 import {
+  borders,
   breakpoints,
-  mediaQueries,
   colors,
-  sizes,
+  fonts as fontTokens,
+  fontSizes as fontSizeTokens,
+  fontWeights,
   letterSpacings,
   lineHeights,
+  mediaQueries,
   radii,
   shadows,
+  sizes,
   space as spaceTokens,
-  fontSizes,
   transition,
-  fonts as fontTokens,
-} from "./tokens"
-import { rhythm } from "./typography"
-
-const space = spaceTokens.map(token => rhythm(token))
+  zIndices,
+} from "gatsby-design-tokens"
 
 let fonts = {}
 for (let fontFamily in fontTokens) {
-  fonts[fontFamily] = fontTokens[fontFamily].join(`,`)
+  fonts[fontFamily] = fontTokens[fontFamily].join(`, `)
 }
 
+const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
+const space = spaceTokens.map(token => `${token / 16}rem`)
+
 export {
+  borders,
   breakpoints,
-  mediaQueries,
   colors,
-  sizes,
-  transition,
-  radii,
-  shadows,
+  fonts,
+  fontSizes,
+  fontWeights,
   letterSpacings,
   lineHeights,
+  mediaQueries,
+  radii,
+  shadows,
+  sizes,
   space,
-  fontSizes,
-  fonts,
+  transition,
+  zIndices,
 }

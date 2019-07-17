@@ -19,9 +19,9 @@ You must know how to set up a basic Gatsby project. If you need to, check the
 
 To create a common authentication workflow, you can usually follow these steps:
 
-- [Create client-only routes](/docs/authentication-tutorial/#creating-client-only-routes),
+- [Create client-only routes](/tutorial/authentication-tutorial/#creating-client-only-routes),
   to tell Gatsby which routes should be rendered on demand
-- [Wrap private content in a PrivateRoute component](/docs/authentication-tutorial/#controlling-private-routes),
+- [Wrap private content in a PrivateRoute component](/tutorial/authentication-tutorial/#controlling-private-routes),
   to check if a user is authenticated or not, therefore rendering the content or
   redirecting to another page (usually, the login page)
 
@@ -55,7 +55,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 If you want more information about authenticated areas with Gatsby, this (non-exhaustive list) may help:
 
-- [Making a site with user authentication](/docs/authentication-tutorial), a Gatsby advanced tutorial
+- [Making a site with user authentication](/tutorial/authentication-tutorial), a Gatsby advanced tutorial
 - [Gatsby repo simple auth example](https://github.com/gatsbyjs/gatsby/tree/master/examples/simple-auth)
 - [A Gatsby email _application_](https://github.com/DSchau/gatsby-mail), using React Context API to handle authentication
 - [The Gatsby store for swag and other Gatsby goodies](https://github.com/gatsbyjs/store.gatsbyjs.org)

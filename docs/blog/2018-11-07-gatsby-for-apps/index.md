@@ -233,7 +233,7 @@ We can't wait to see what you build.
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
 [gatsby-graphql]: /docs/querying-with-graphql/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
-[authentication-data]: /docs/authentication-tutorial/
+[authentication-data]: /tutorial/authentication-tutorial/
 [client-only-routes]: /docs/building-apps-with-gatsby/#client-only-routes--user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
@@ -242,7 +242,7 @@ We can't wait to see what you build.
 [react-context]: https://reactjs.org/docs/context.html
 [react-lifecycle-methods]: https://reactjs.org/docs/state-and-lifecycle.html
 [gatsby-unstructured]: /blog/2018-10-25-unstructured-data/
-[authentication-tutorial]: /docs/authentication-tutorial/
+[authentication-tutorial]: /tutorial/authentication-tutorial/
 [using-gatsby-image]: https://using-gatsby-image.gatsbyjs.org/
 [traced-svg]: https://using-gatsby-image.gatsbyjs.org/traced-svg/
 [gatsby-plugin-offline]: /packages/gatsby-plugin-offline/

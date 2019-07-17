@@ -5,33 +5,31 @@ const webpackConfig = require(`../utils/webpack.config`)
 module.exports = async program => {
   const { directory } = program
 
-  const legacyConfig = await webpackConfig(
-    program,
-    directory,
-    `build-javascript`
-  )
+  const webpackConfigs = [
+    await webpackConfig(program, directory, `build-javascript`),
+  ]
 
-  const modernConfig = await webpackConfig(
-    program,
-    directory,
-    `build-javascript`,
-    { modern: true }
-  )
+  if (process.env.ENABLE_MODERN_BUILDS) {
+    webpackConfigs.push(
+      await webpackConfig(program, directory, `build-javascript`, {
+        modern: true,
+      })
+    )
+  }
 
   return new Promise((resolve, reject) => {
-    webpack([legacyConfig, modernConfig]).run((err, stats) => {
+    webpack(webpackConfigs).run((err, stats) => {
       if (err) {
         reject(err)
         return
       }
 
-      const jsonStats = stats.toJson()
-      if (jsonStats.errors && jsonStats.errors.length > 0) {
-        reject(jsonStats.errors)
+      if (stats.hasErrors()) {
+        reject(stats.compilation.errors)
         return
       }
 
-      resolve()
+      resolve(stats)
     })
   })
 }

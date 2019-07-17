@@ -1,6 +1,7 @@
 const visit = require(`unist-util-visit`)
 
 const parseLineNumberRange = require(`./parse-line-number-range`)
+const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
 
@@ -12,12 +13,16 @@ module.exports = (
     aliases = {},
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
+    languageExtensions = [],
   } = {}
 ) => {
   const normalizeLanguage = lang => {
     const lower = lang.toLowerCase()
     return aliases[lower] || lower
   }
+
+  //Load language extension if defined
+  loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
     let language = node.lang

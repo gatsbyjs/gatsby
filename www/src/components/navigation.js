@@ -14,7 +14,9 @@ import {
   mediaQueries,
   sizes,
   fonts,
+  zIndices,
 } from "../utils/presets"
+import { breakpointGutter } from "../utils/styles"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -66,7 +68,7 @@ const Navigation = ({ pathname }) => {
         left: 0,
         right: 0,
         top: sizes.bannerHeight,
-        zIndex: 2,
+        zIndex: zIndices.navigation,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {
@@ -80,9 +82,9 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [mediaQueries.md]: {
+        [breakpointGutter]: {
+          backgroundColor: isBlog ? colors.ui.background : false,
           position: isHomepage || isBlog ? `absolute` : `fixed`,
-          backgroundColor: isBlog ? colors.gray.whisper : false,
         },
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,
@@ -99,7 +101,7 @@ const Navigation = ({ pathname }) => {
             right: 0,
             height: 1,
             zIndex: -1,
-            background: isHomepage ? `transparent` : colors.gray.border,
+            background: isHomepage ? `transparent` : colors.ui.border.subtle,
           },
         }}
       >
@@ -122,7 +124,7 @@ const Navigation = ({ pathname }) => {
         >
           <ul css={styles.ulContainer}>
             <NavItem linkTo="/docs/">Docs</NavItem>
-            <NavItem linkTo="/tutorial/">Tutorial</NavItem>
+            <NavItem linkTo="/tutorial/">Tutorials</NavItem>
             <NavItem linkTo="/plugins/">Plugins</NavItem>
             <NavItem linkTo="/features/">Features</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
@@ -204,7 +206,7 @@ const styles = {
   navItem: {
     fontSize: fontSizes[3],
     borderBottom: `2px solid transparent`,
-    color: colors.gray.copy,
+    color: colors.text.primary,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,
@@ -217,8 +219,8 @@ const styles = {
       color: colors.gatsby,
     },
     active: {
-      borderBottomColor: colors.gatsby,
-      color: colors.gatsby,
+      borderBottomColor: colors.lilac,
+      color: colors.lilac,
     },
   },
   socialIconItem: {

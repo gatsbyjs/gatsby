@@ -300,6 +300,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         `since`,
         `lends`,
         `examples`,
+        `tags`,
       ])
 
       picked.optional = false

@@ -191,6 +191,20 @@ It's also possible to ask Gatsby to return excerpts formatted as HTML. You might
 }
 ```
 
+You can also get excerpts in Markdown format.
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        excerpt(format: MARKDOWN)
+      }
+    }
+  }
+}
+```
+
 ## gray-matter options
 
 `gatsby-transformer-remark` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse markdown frontmatter, so you can specify any of the options mentioned [here](https://github.com/jonschlinkert/gray-matter#options) in the `gatsby-config.js` file.

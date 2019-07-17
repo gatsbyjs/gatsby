@@ -62,6 +62,8 @@ They will be added to the following default list:
 ../**/dist/**
 ```
 
+To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
+
 ## How to query
 
 You can query file nodes like the following:
@@ -98,10 +100,11 @@ To filter by the `name` you specified in the config, use `sourceInstanceName`:
 
 ## Helper functions
 
-`gatsby-source-filesystem` exports two helper functions:
+`gatsby-source-filesystem` exports three helper functions:
 
 - `createFilePath`
 - `createRemoteFileNode`
+- `createFileNodeFromBuffer`
 
 ### createFilePath
 
@@ -255,4 +258,91 @@ createRemoteFileNode({
   ext: ".jpg",
   name: "image",
 })
+```
+
+### createFileNodeFromBuffer
+
+When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
+
+The `createFileNodeFromBuffer` helper accepts a `Buffer`, caches its contents to disk, and creates a file node that points to it.
+
+## Example usage
+
+The following example is adapted from the source of [`gatsby-source-mysql`](https://github.com/malcolm-kee/gatsby-source-mysql):
+
+```js
+// gatsby-node.js
+const createMySqlNodes = require(`./create-nodes`)
+
+exports.sourceNodes = async (
+  { actions, createNodeId, store, cache },
+  config
+) => {
+  const { createNode } = actions
+  const { conn, queries } = config
+  const { db, results } = await query(conn, queries)
+
+  try {
+    queries
+      .map((query, i) => ({ ...query, ___sql: results[i] }))
+      .forEach(result =>
+        createMySqlNodes(result, results, createNode, {
+          createNode,
+          createNodeId,
+          store,
+          cache,
+        })
+      )
+    db.end()
+  } catch (e) {
+    console.error(e)
+    db.end()
+  }
+}
+
+// create-nodes.js
+const { createFileNodeFromBuffer } = require(`gatsby-source-filesystem`)
+const createNodeHelpers = require(`gatsby-node-helpers`).default
+
+const { createNodeFactory } = createNodeHelpers({ typePrefix: `mysql` })
+
+function attach(node, key, value, ctx) {
+  if (Buffer.isBuffer(value)) {
+    ctx.linkChildren.push(parentNodeId =>
+      createFileNodeFromBuffer({
+        buffer: value,
+        store: ctx.store,
+        cache: ctx.cache,
+        createNode: ctx.createNode,
+        createNodeId: ctx.createNodeId,
+      })
+    )
+    value = `Buffer`
+  }
+
+  node[key] = value
+}
+
+function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
+  const MySqlNode = createNodeFactory(name)
+  ctx.linkChildren = []
+
+  return __sql.forEach(row => {
+    if (!keys) keys = Object.keys(row)
+
+    const node = { id: row[idField] }
+
+    for (const key of keys) {
+      attach(node, key, row[key], ctx)
+    }
+
+    node = ctx.createNode(node)
+
+    for (const link of ctx.linkChildren) {
+      link(node.id)
+    }
+  })
+}
+
+module.exports = createMySqlNodes
 ```

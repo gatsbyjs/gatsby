@@ -17,7 +17,7 @@ import {
   fonts,
 } from "../utils/presets"
 
-const legendBorderColor = colors.ui.light
+const legendBorderColor = colors.ui.border.subtle
 
 const LegendTable = () => {
   const legendBallStyle = {
@@ -245,8 +245,8 @@ class FeaturesPage extends Component {
             />
             <FeaturesFooter />
           </main>
-          <FooterLinks />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

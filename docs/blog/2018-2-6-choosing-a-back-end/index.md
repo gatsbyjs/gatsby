@@ -44,7 +44,7 @@ Firstly, though, why do we want a Headless CMS and a JAMstack for the project? T
 
 ---
 
-![Contenful](contentful.png)
+![Contentful](contentful.png)
 
 ### Contentful
 

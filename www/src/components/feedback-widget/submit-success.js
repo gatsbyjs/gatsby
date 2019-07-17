@@ -6,7 +6,7 @@ import { Title as BaseTitle } from "./styled-elements"
 import { fontSizes, space } from "../../utils/presets"
 
 const Title = styled(BaseTitle)`
-  font-size: ${fontSizes[6]};
+  font-size: ${fontSizes[5]};
   margin-bottom: ${space[6]};
   text-align: left;
 `

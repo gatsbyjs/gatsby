@@ -5,11 +5,30 @@ title: Recipes
 <!-- Basic template for a Gatsby recipe:
 
 ## Task to accomplish.
+1-2 sentences about it. The more concise and focused, the better!
 
-1-2 sentences about it.
-Relevant links out (tutorial, doc pages, plugin readmes, etc). -->
+### Prerequisites
+- System/version requirements
+- Everything necessary to set up the task
+- Including setting up accounts at other sites, like Netlify
+- See [docs templates](/docs/docs-templates/) for formatting tips
 
-Craving a happy medium between doing the [full tutorial](/tutorial/) and crawling the [full docs](/docs/)? Here's a quick guiding reference for how to build things, Gatsby style.
+### Step-by-step directions
+Each step should be repeatable and to-the-point. Anything not critical to the task should be omitted.
+
+#### Live example (optional)
+A live example may not be possible depending on the nature of the recipe, in which case it is fine to omit.
+
+### Additional resources
+- Tutorials
+- Docs pages
+- Plugin READMEs
+- etc.
+
+See [docs templates](/docs/docs-templates/) in the contributing docs for more help.
+-->
+
+Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
 ## Table of Contents
 
@@ -56,11 +75,11 @@ You can create pages in Gatsby explicitly by defining React components in `src/p
 
 Routing in Gatsby relies on the `<Link />` component.
 
-### Requirements
+### Prerequisites
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
 - The Gatsby `<Link />` component
-- `gatsby develop`
+- The [Gatsby CLI](/docs/gatsby-cli/) to run `gatsby develop`
 
 ### Directions
 
@@ -112,13 +131,92 @@ Showtime.
 
 ## Querying data
 
-In Gatsby, you access data through a query language called [GraphQL](https://graphql.org/).
+### The StaticQuery Component
 
-- Walk through an example of how Gatsby's data layer [pulls data into components using GraphQL](/tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components)
-- Walk through [using Gatsby's `graphql` tag for page queries](/tutorial/part-five/#build-a-page-with-a-graphql-query)
-- Read through a conceptual guide on [querying data with GraphQL in Gatsby](/docs/querying-with-graphql/)
-- Learn more about the `graphql` tag -- [querying data in a Gatsby page](/docs/page-query/)
-- Learn more about `<StaticQuery />` -- [querying data in (non-page) components](/docs/static-query/)
+`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/).
+
+#### Directions
+
+1. The `StaticQuery` Component requires two render props: `query` and `render`.
+
+```jsx:title=src/components/NonPageComponent.js
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+
+const NonPageComponent = () => (
+  <StaticQuery
+    query={graphql`
+      query NonPageQuery {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+    `}
+    render={data => (
+      <h1>
+        Querying title from NonPageComponent with StaticQuery:
+        {data.site.siteMetadata.title}
+      </h1>
+    )}
+  />
+)
+
+export default NonPageComponent
+```
+
+2. You can now use this component as you would [any other component](/docs/building-with-components#non-page-components).
+
+### Querying data with the useStaticQuery hook
+
+Since Gatsby v2.1.0, you can use the `useStaticQuery` hook to query data with a JavaScript function instead of a component.
+
+#### Prerequisites
+
+- You'll need React and ReactDOM 16.8.0 or later (keeping Gatsby updated handles this).
+- The [Rules of React Hooks](https://reactjs.org/docs/hooks-rules.html)
+
+#### Directions
+
+The `useStaticQuery` hook is a JavaScript function that takes a GraphQL query and returns the requested data.
+
+1. Import `useStaticQuery` and `graphql` from `gatsby` in order to use the hook query the data.
+
+2. In the start of a stateless functional component, assign a variable to the value of `useStaticQuery` with your `graphql` query passed as an argument.
+
+3. In the JSX code returned from your component, you can reference that variable to handle the returned data.
+
+```jsx:title=src/components/NonPageComponent.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+
+const NonPageComponent = () => {
+  const data = useStaticQuery(graphql`
+    query NonPageQuery {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+  return (
+    <h1>
+      Querying title from NonPageComponent: {data.site.siteMetadata.title}
+    </h1>
+  )
+}
+
+export default NonPageComponent
+```
+
+#### Additional resources
+
+- [More on Static Query for querying data in components](/docs/static-query/)
+- [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
+- [More on the useStaticQuery hook](/docs/use-static-query/)
+- [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
 ## Sourcing data
 

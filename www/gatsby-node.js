@@ -261,8 +261,43 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
-    fromPath: `/docs/gatsby-in-the-enterprise/`,
-    toPath: `/docs/building-in-the-enterprise/`,
+    fromPath: `/docs/advanced-tutorials/`,
+    toPath: `/tutorial/additional-tutorials/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/advanced-tutorials/`,
+    toPath: `/tutorial/additional-tutorials/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/authentication-tutorial/`,
+    toPath: `/tutorial/authentication-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/ecommerce-tutorial/`,
+    toPath: `/tutorial/ecommerce-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/wordpress-source-plugin-tutorial/`,
+    toPath: `/tutorial/wordpress-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/writing-documentation-with-docz/`,
+    toPath: `/tutorial/writing-documentation-with-docz/`,
     isPermanent: true,
   })
 
@@ -275,6 +310,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/behind-the-scenes-terminology/`,
     toPath: `/docs/gatsby-internals-terminology/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/getting-started`,
+    toPath: `/docs/themes/using-a-gatsby-theme`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/introduction`,
+    toPath: `/docs/themes/what-are-gatsby-themes`,
     isPermanent: true,
   })
 
@@ -371,6 +418,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                   slug
                   stub
                 }
+                hasScreenshot
               }
               url
               repo
@@ -489,6 +537,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
         if (!slug) {
+          return null
+        } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
+          reporter.warn(
+            `Starter showcase entry "${
+              edge.node.repo
+            }" seems offline. Skipping.`
+          )
           return null
         } else {
           return edge
@@ -721,6 +776,13 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       miscDependencies: [[`no data`, `0`]],
     }
 
+    // determine if screenshot is available
+    const screenshotNode = node.children
+      .map(childID => getNode(childID))
+      .find(node => node.internal.type === `Screenshot`)
+
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
+
     if (!process.env.GITHUB_API_TOKEN) {
       return createNodeField({
         node,
@@ -880,37 +942,63 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
       id: ID!
       data: AirtableData
     }
+
+    type AirtableData @dontInfer {
+      name: String @proxy(from: "Name_of_Event")
+      organizerFirstName: String @proxy(from: "Organizer_Name")
+      organizerLastName: String @proxy(from: "Organizer's_Last_Name")
+      date: Date @dateformat @proxy(from: "Date_of_Event")
+      location: String @proxy(from: "Location_of_Event")
+      url: String @proxy(from: "Event_URL_(if_applicable)")
+      type: String @proxy(from: "What_type_of_event_is_this?")
+      hasGatsbyTeamSpeaker: Boolean @proxy(from: "Gatsby_Speaker_Approved")
+      approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
+    }
   `
 
   createTypes(typeDefs)
+}
 
-  createTypes(
-    schema.buildObjectType({
-      name: `AirtableData`,
-      fields: {
-        Name_of_Event: `String`,
-        Organizer_Name: `String`,
-        Date_of_Event: `Date`,
-        Location_of_Event: `String`,
-        Gatsby_Speaker_Approved: `Boolean`,
-        Approved_for_posting_on_event_page: `Boolean`,
+exports.onCreateWebpackConfig = ({ actions, plugins }) => {
+  const currentCommitSHA = require(`child_process`)
+    .execSync(`git rev-parse HEAD`, {
+      encoding: `utf-8`,
+    })
+    .trim()
 
-        // below is handling of regressions (?)
-        // before 2.5.0 those were working without resolvers
-        // that use un-sanitized field names from source
-        Event_URL__if_applicable_: {
-          type: `String`,
-          resolve: source => source[`Event_URL_(if_applicable)`],
-        },
-        What_type_of_event_is_this_: {
-          type: `String`,
-          resolve: source => source[`What_type_of_event_is_this?`],
-        },
-        Organizer_s_Last_Name: {
-          type: `String`,
-          resolve: source => source[`Organizer's_Last_Name`],
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
+      }),
+    ],
+  })
+}
+
+// Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    DocumentationJs: {
+      availableIn: {
+        type: `[String]`,
+        resolve(source) {
+          const { tags } = source
+          if (!tags || !tags.length) {
+            return []
+          }
+
+          const availableIn = tags.find(tag => tag.title === `availableIn`)
+          if (availableIn) {
+            return availableIn.description
+              .split(`\n`)[0]
+              .replace(/[[\]]/g, ``)
+              .split(`,`)
+              .map(api => api.trim())
+          }
+
+          return []
         },
       },
-    })
-  )
+    },
+  })
 }

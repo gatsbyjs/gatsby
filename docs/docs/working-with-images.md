@@ -90,3 +90,10 @@ export const query = graphql`
   }
 `
 ```
+
+### Additional resources
+
+- [Gatsby Image API docs](/docs/gatsby-image/)
+- [gatsby-image plugin README file](/packages/gatsby-image/)
+- [gatsby-plugin-sharp README file](/packages/gatsby-plugin-sharp/)
+- [gatsby-transformer-sharp README file](/packages/gatsby-transformer-sharp/)

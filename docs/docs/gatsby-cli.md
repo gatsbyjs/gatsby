@@ -111,6 +111,16 @@ This is useful as a last resort when your local project seems to have issues or 
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 - Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
 
+### `plugin`
+
+Run commands pertaining to gatsby plugins.
+
+#### `docs`
+
+`gatsby plugin docs`
+
+Directs you to documentation about using and creating plugins.
+
 ### Repl
 
 Get a Node.js REPL (interactive shell) with context of your Gatsby environment:
@@ -141,4 +151,4 @@ You can type in a command, such as one of these:
 
 When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
-<!-- TODO: add repl documentation link when ready -->
+See the Gatsby REPL documentation [here](/docs/gatsby-repl/).
