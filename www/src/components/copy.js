@@ -34,7 +34,7 @@ function Copy({ className, content, duration, fileName, trim = false }) {
 
   return (
     <button
-      aria-label={label}
+      name={label}
       className={className}
       disabled={copied}
       css={{
