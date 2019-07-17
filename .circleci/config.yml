@@ -225,7 +225,7 @@ jobs:
       - restore_cache:
           key: www_public_dir_1
       - restore_cache:
-          key: www-cache_dir_1
+          key: www_cache_dir_1
       - run:
           command: yarn
           working_directory: ~/project/www
