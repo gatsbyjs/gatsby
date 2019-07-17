@@ -89,13 +89,13 @@ const _options = {
         position: `relative`,
         WebkitOverflowScrolling: `touch`,
       },
-      ".gatsby-highlight pre[class*='language-']": {
+      ".gatsby-highlight pre[class^='language-']": {
         backgroundColor: `transparent`,
         border: 0,
         padding: `${space[6]} 0`,
         WebkitOverflowScrolling: `touch`,
       },
-      ".gatsby-highlight pre[class*='language-']::before": {
+      ".gatsby-highlight pre[class^='language-']::before": {
         background: `#ddd`,
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.text.header,
@@ -261,7 +261,7 @@ const _options = {
         marginTop: space[9],
         marginBottom: 0,
       },
-      ".gatsby-highlight, .gatsby-code-title, .post-body .gatsby-resp-image-link": {
+      ".gatsby-highlight, .post-body .gatsby-resp-image-link": {
         marginLeft: `-${space[6]}`,
         marginRight: `-${space[6]}`,
       },
@@ -302,7 +302,7 @@ const _options = {
         border: `none`,
       },
       [mediaQueries.lg]: {
-        ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
+        ".gatsby-highlight, .post-body .gatsby-resp-image-link": {
           marginLeft: `-${space[6]}`,
           marginRight: `-${space[6]}`,
         },

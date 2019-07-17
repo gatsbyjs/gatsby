@@ -19,15 +19,13 @@ export default props => {
   const content = props.children.props.children
   return (
     <div className="gatsby-highlight">
-      <div className="gatsby-highlight-header">
-        {title && (
-          <div css={{ fontFamily: fonts.monospace, paddingTop: space[4] }}>
-            {title}
-          </div>
-        )}
+      {title && (
+        <div className="gatsby-highlight-header gatsby-code-title">
+          {title}
+        </div>
+      )}
+      <pre css={{ position: `relative` }} className={`language-${language}`} data-language={language}>
         <Copy content={content} />
-      </div>
-      <pre className={`language-${language}`} data-language={language}>
         <code>{content}</code>
       </pre>
     </div>
