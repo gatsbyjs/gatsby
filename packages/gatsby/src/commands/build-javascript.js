@@ -18,18 +18,32 @@ module.exports = async program => {
   }
 
   return new Promise((resolve, reject) => {
-    webpack(webpackConfigs).run((err, stats) => {
+    webpack(webpackConfigs).run((err, webpackStats) => {
       if (err) {
         reject(err)
         return
       }
 
-      if (stats.hasErrors()) {
-        reject(stats.compilation.errors)
-        return
+      if (process.env.ENABLE_MODERN_BUILDS) {
+        const [legacyStats, modernStats] = webpackStats.stats
+
+        if (legacyStats.hasErrors()) {
+          reject(legacyStats.compilation.errors)
+          return
+        }
+
+        if (modernStats.hasErrors()) {
+          reject(modernStats.compilation.errors)
+          return
+        }
+      } else {
+        if (webpackStats.hasErrors()) {
+          reject(webpackStats.compilation.errors)
+          return
+        }
       }
 
-      resolve(stats)
+      resolve(webpackStats)
     })
   })
 }

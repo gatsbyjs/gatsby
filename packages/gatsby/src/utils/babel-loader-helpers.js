@@ -18,6 +18,8 @@ const loadCachedConfig = () => {
 
 const getCustomOptions = stage => {
   const pluginBabelConfig = loadCachedConfig()
+  console.log('babel stage', stage)
+  console.log(pluginBabelConfig.stages)
   return pluginBabelConfig.stages[stage].options
 }
 

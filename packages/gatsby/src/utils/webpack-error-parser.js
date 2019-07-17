@@ -4,6 +4,7 @@ const stageCodeToReadableLabel = {
 }
 
 const transformWebpackError = (stage, webpackError) => {
+  debugger;
   return {
     id: `98123`,
     filePath: webpackError?.module?.resource,
