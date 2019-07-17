@@ -6,7 +6,6 @@ import {
   fonts,
   fontSizes,
   colors,
-  radii,
   lineHeights,
   letterSpacings,
 } from "../utils/presets"
@@ -25,27 +24,27 @@ const copyToClipboard = content => {
 
 const delay = duration => new Promise(resolve => setTimeout(resolve, duration))
 
-function Copy({ content, duration = 2500, trim = false }) {
-  const [text, setText] = useState(`Copy`)
+function Copy({ className, content, duration, fileName, trim = false }) {
+  const [copied, setCopied] = useState(false)
 
   return (
     <button
       aria-label={
-        text === `Copy`
-          ? `Copy text to clipboard`
-          : `Text has been copied to clipboard`
+        copied
+          ? `${fileName ? fileName + ` ` : ``}copied to clipboard`
+          : `${fileName ? fileName + `: ` : ``}copy code to clipboard`
       }
+      className={className}
+      disabled={copied}
       css={{
         background: colors.text.header,
-        borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
+        border: `none`,
         color: `#ddd`,
         fontSize: fontSizes[0],
         fontFamily: fonts.monospace,
         letterSpacing: letterSpacings.tracked,
         lineHeight: lineHeights.solid,
         padding: `${space[1]} ${space[2]}`,
-        position: `absolute`,
-        right: space[6],
         textAlign: `right`,
         textTransform: `uppercase`,
         top: `0`,
@@ -53,14 +52,14 @@ function Copy({ content, duration = 2500, trim = false }) {
       onClick={async () => {
         copyToClipboard(trim ? content.trim() : content)
 
-        setText(`Copied`)
+        setCopied(true)
 
         await delay(duration)
 
-        setText(`Copy`)
+        setCopied(false)
       }}
     >
-      {text}
+      {copied ? `Copied` : `Copy`}
     </button>
   )
 }
@@ -72,7 +71,8 @@ Copy.propTypes = {
 }
 
 Copy.defaultProps = {
-  duration: 2500,
+  duration: 5000,
+  fileName: ``,
 }
 
 export default Copy

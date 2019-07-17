@@ -2,7 +2,7 @@ import React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer"
 
 import Copy from "./copy"
-import { space } from "../utils/presets"
+import { radii, space } from "../utils/presets"
 
 const getParams = (name = ``) => {
   const [lang, params = ``] = name.split(`:`)
@@ -33,7 +33,15 @@ export default ({ children }) => {
                 {title}
               </div>
             )}
-            <Copy content={content} />
+            <Copy
+              fileName={title}
+              css={{
+                position: `absolute`,
+                right: space[6],
+                borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
+              }}
+              content={content}
+            />
           </div>
           <pre className={`language-${language}`}>
             {tokens.map((line, i) => (
