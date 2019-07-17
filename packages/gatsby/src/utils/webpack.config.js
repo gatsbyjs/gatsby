@@ -310,6 +310,8 @@ module.exports = async (
       configRules.push(
         rules.dependencies({
           modulesThatUseGatsby,
+          stage,
+          modern: options.modern,
         })
       )
     }

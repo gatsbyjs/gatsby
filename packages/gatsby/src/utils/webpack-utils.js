@@ -326,14 +326,19 @@ module.exports = async ({
    */
   {
     let dependencies = (
-      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
+      { modulesThatUseGatsby, stage, modern } = { modulesThatUseGatsby: [] }
     ) => {
       const jsOptions = {
+        stage,
+        modern,
         babelrc: false,
         configFile: false,
         compact: false,
         presets: [
-          [require.resolve(`babel-preset-gatsby/dependencies`), { stage }],
+          [
+            require.resolve(`babel-preset-gatsby/dependencies`),
+            { stage, modern },
+          ],
         ],
         // If an error happens in a package, it's possible to be
         // because it was compiled. Thus, we don't want the browser

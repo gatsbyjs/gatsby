@@ -11,6 +11,7 @@ const loadCachedConfig = () => {
   if (process.env.NODE_ENV !== `test`) {
     babelState = require(path.join(process.cwd(), `./.cache/babelState.json`))
   }
+
   return _.merge(testConfig, babelState)
 }
 
