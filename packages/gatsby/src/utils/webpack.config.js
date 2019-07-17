@@ -88,7 +88,9 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
-    envObject.MODERN_BUILD = !!options.modern
+    envObject.MODERN_BUILD =
+      !!options.modern ||
+      (stage === `build-html` && process.env.ENABLE_MODERN_BUILDS)
 
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 

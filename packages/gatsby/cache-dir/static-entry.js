@@ -12,16 +12,23 @@ const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const statsLegacy = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
 )
-const statsModern = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/webpack.stats.modern.json`, `utf-8`)
-)
+const statsModern = process.env.MODERN_BUILD
+  ? JSON.parse(
+      fs.readFileSync(
+        `${process.cwd()}/public/webpack.stats.modern.json`,
+        `utf-8`
+      )
+    )
+  : {}
 
 const chunkMappingLegacy = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
 )
-const chunkMappingModern = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/chunk-map.modern.json`, `utf-8`)
-)
+const chunkMappingModern = process.env.MODERN_BUILD
+  ? JSON.parse(
+      fs.readFileSync(`${process.cwd()}/public/chunk-map.modern.json`, `utf-8`)
+    )
+  : null
 
 // eslint-disable-next-line consistent-return
 const mergeWithArrayConcatenator = (objValue, srcValue) => {
@@ -30,11 +37,6 @@ const mergeWithArrayConcatenator = (objValue, srcValue) => {
   }
 }
 const stats = mergeWith(statsLegacy, statsModern, mergeWithArrayConcatenator)
-const chunkMapping = mergeWith(
-  chunkMappingLegacy,
-  chunkMappingModern,
-  mergeWithArrayConcatenator
-)
 
 // const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
@@ -366,6 +368,23 @@ export default (pagePath, callback) => {
       }
     })
 
+  if (process.env.MODERN_BUILD) {
+    // Patches browsers who have a flawed noModule - module system
+    // Sadly we lose the benefit of the preload scanner for legacy browsers
+    // because the the sources are hidden in javascript.
+    // @see https://caniuse.com/#feat=es6-module
+    postBodyComponents.push(
+      <script
+        key="moderncheck"
+        id="gatsby-modern-script"
+        type="module"
+        dangerouslySetInnerHTML={{
+          __html: `window.__gatsbyModern=true`,
+        }}
+      />
+    )
+  }
+
   const webpackCompilationHash = pageData.webpackCompilationHash
 
   // Add page metadata for the current page
@@ -382,14 +401,21 @@ export default (pagePath, callback) => {
   )
 
   // Add chunk mapping metadata
-  const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
-    chunkMapping
-  )};/*]]>*/`
+  let scriptChunkMapping = ``
+  if (process.env.MODERN_BUILD) {
+    scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=window.__gatsbyModern?${JSON.stringify(
+      chunkMappingModern
+    )}:${JSON.stringify(chunkMappingLegacy)};/*]]>*/`
+  } else {
+    scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+      chunkMappingLegacy
+    )};/*]]>*/`
+  }
 
   postBodyComponents.push(
     <script
-      key={`chunk-mapping`}
-      id={`gatsby-chunk-mapping`}
+      key="chunk - mapping"
+      id="gatsby-chunk-mapping"
       dangerouslySetInnerHTML={{
         __html: scriptChunkMapping,
       }}
@@ -408,35 +434,54 @@ export default (pagePath, callback) => {
       return <script key={scriptPath} src={scriptPath} type="module" async />
     })
 
-  // Patches browsers who have a flawed noModule - module system
-  // Sadly we lose preload for legacy browsers
-  // @see https://caniuse.com/#feat=es6-module
-  // 1. Safari 10.1 supports modules, but does not support the `nomodule` attribute - it will load <script nomodule> anyway.
-  // 2. Edge does not executes noModule but still fetches it
-  const noModuleBugFixScripts = `(function(b){function c(e){var d=b.createElement("script");d.src=e;b.body.appendChild(d)}"noModule"in b.createElement("script")||/Version\\/10\\.1(\\.\\d+)* Safari|Version\\/10\\.\\d(\\.\\d+)*.*Safari|Edge\\/1[6-8]\\.\\d/i.test(navigator.userAgent)||(%scripts%)})(document)`
+  if (process.env.MODERN_BUILD) {
+    const legacyScripts = scripts
+      .filter(s => s.rel !== `prefetch` && s.rel !== `modulepreload`)
+      .map(s => {
+        const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+          1,
+          -1
+        )}`
 
-  const legacyScrips = scripts
-    .filter(s => s.rel !== `prefetch` && s.rel !== `modulepreload`)
-    .map(s => {
-      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-        1,
-        -1
-      )}`
+        return scriptPath
+      })
 
-      return `c('${scriptPath}')`
-    })
-  bodyScripts.push(
-    <script
-      key="noModuleFix"
-      dangerouslySetInnerHTML={{
-        __html: noModuleBugFixScripts.replace(
-          `%scripts%`,
-          legacyScrips.join(`,`)
-        ),
-      }}
-      noModule={true}
-    />
-  )
+    // uncompiled code
+    // !window.__gatsbyModern && (function(d){
+    //   function load(url) {
+    //     var s=d.createElement('script');
+    //     s.src = url;
+    //     s.defer=true;
+    //     s.noModule=true;
+    //     d.body.appendChild(s);
+    //   }
+
+    //   %%__scripts__%%.forEach(load)
+    // })(document)
+    bodyScripts.push(
+      <script
+        key="legacy-bundles"
+        id="gatsby-legacy-script"
+        noModule={true}
+        dangerouslySetInnerHTML={{
+          __html: `!window.__gatsbyModern&&function(b){${JSON.stringify(
+            legacyScripts
+          )}.forEach(function(c){var a=b.createElement("script");a.src=c;a.defer=!0;a.noModule=!0;b.body.appendChild(a)})}(document)`,
+        }}
+      />
+    )
+  } else {
+    scripts
+      .filter(s => s.rel !== `prefetch` && s.rel !== `modulepreload`)
+      .forEach(s => {
+        const scriptPath = `${__PATH_PREFIX__} /${JSON.stringify(s.name).slice(
+          1,
+          -1
+        )}`
+
+        bodyScripts.push(<script key={scriptPath} src={scriptPath} defer />)
+      })
+  }
 
   postBodyComponents.push(...bodyScripts)
 
@@ -451,7 +496,7 @@ export default (pagePath, callback) => {
     pathPrefix: __PATH_PREFIX__,
   })
 
-  const html = `<!DOCTYPE html>${renderToStaticMarkup(
+  const html = `<!DOCTYPE html > ${renderToStaticMarkup(
     <Html
       {...bodyProps}
       headComponents={headComponents}
@@ -462,7 +507,7 @@ export default (pagePath, callback) => {
       body={bodyHtml}
       path={pagePath}
     />
-  )}`
+  )} `
 
   callback(null, html)
 }
