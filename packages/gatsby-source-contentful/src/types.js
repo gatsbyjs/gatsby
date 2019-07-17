@@ -1,4 +1,6 @@
 const _ = require(`lodash`)
+const util = require(`util`)
+const chalk = require(`chalk`)
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
@@ -95,18 +97,49 @@ const fieldTypeToGraphQLTypeLookup = {
         })
       }
 
+      if (
+        !contentTypes &&
+        context.configReferenceTypes &&
+        context.configReferenceTypes[context.typeName] &&
+        context.configReferenceTypes[context.typeName][context.fieldName]
+      ) {
+        // see if there is information from Contentful API, but there is in plugin options
+        let possibleTypes =
+          context.configReferenceTypes[context.typeName][context.fieldName]
+
+        // convert possible types to array if it's single string
+        if (!Array.isArray(possibleTypes)) {
+          possibleTypes = [possibleTypes]
+        }
+
+        // map type names to Contentful type objects
+        contentTypes = context.contentTypeItems.filter(contentType =>
+          possibleTypes.includes(contentType.name)
+        )
+      }
+
+      let hasLinkedTypesInformation = true
       if (!contentTypes) {
+        hasLinkedTypesInformation = false
         contentTypes = context.contentTypeItems
       }
 
-      // add backreferences
-      contentTypes.forEach(contentType => {
-        context.addBackReference({
-          referencingType: context.typeName,
-          referencedType: contentType.name,
-          referencingFieldName: context.fieldName,
+      // add backreferences if we have information about types
+      if (hasLinkedTypesInformation) {
+        contentTypes.forEach(contentType => {
+          context.addBackReference({
+            referencingType: context.typeName,
+            referencedType: contentType.name,
+            referencingFieldName: context.fieldName,
+          })
         })
-      })
+      } else {
+        context.addMissingTypesInReferenceWarning({
+          typeName: context.typeName,
+          fieldName: context.fieldName,
+          isArray: !!context.isArray,
+        })
+      }
 
       if (contentTypes.length > 0) {
         // this is union field
@@ -218,16 +251,70 @@ const fieldTypeToGraphQLType = (field, context) => {
   return null
 }
 
+const MissingReferenceFieldTypeSingle = {
+  [util.inspect.custom]: () =>
+    chalk.yellow(`<Missing type information for single reference>`),
+}
+
+const MissingReferenceFieldTypeArray = {
+  [util.inspect.custom]: () =>
+    chalk.yellow(`<Missing type information for array reference>`),
+}
+
 /**
  * @param {object} Context
  * @param {Array<import("contentful").ContentType>} Context.contentTypeItems
  * @param {any} Context.actions
  * @param {any} Context.schema
  */
-exports.createTypes = ({ actions, schema, contentTypeItems, reporter }) => {
+exports.createTypes = ({
+  actions,
+  schema,
+  contentTypeItems,
+  reporter,
+  configReferenceTypes,
+}) => {
+  let missingFieldInformationMap = null
+  let missingFieldInformationHaveSingleReference = false
+  const addMissingTypesInReferenceWarning = ({
+    typeName,
+    fieldName,
+    isArray,
+  }) => {
+    // first check if user opted out of displaying warning
+    // for this type or type.field
+    if (
+      _.get(configReferenceTypes, [typeName]) === false ||
+      _.get(configReferenceTypes, [typeName, fieldName]) === false
+    ) {
+      return
+    }
+
+    if (!missingFieldInformationMap) {
+      missingFieldInformationMap = {}
+    }
+
+    if (!missingFieldInformationMap[typeName]) {
+      missingFieldInformationMap[typeName] = {
+        // merge partial user configuration if it already exists
+        ..._.omitBy(configReferenceTypes[typeName], value => value === false),
+      }
+    }
+
+    missingFieldInformationMap[typeName][fieldName] = isArray
+      ? MissingReferenceFieldTypeArray
+      : MissingReferenceFieldTypeSingle
+
+    if (!isArray) {
+      missingFieldInformationHaveSingleReference = true
+    }
+  }
+
   const context = {
     contentTypeItems,
     schema,
+    configReferenceTypes,
+    addMissingTypesInReferenceWarning,
   }
 
   const defaultFields = {
@@ -388,4 +475,25 @@ exports.createTypes = ({ actions, schema, contentTypeItems, reporter }) => {
       return schema.buildObjectType(typeConfig)
     }),
   ])
+
+  if (missingFieldInformationMap) {
+    let warningBlocks = [
+      `gatsby-source-contentful couldn't determine types for some reference fields. Reverse references will not be created for them.`,
+      `You can configure possible types that reference field can link to in Your Contentful space by editing field definition and adding validation that restricts possible types. See https://www.contentful.com/r/knowledgebase/validations/ for details (particularly for Type validation).`,
+      `Alternatively, you can configure possible types in gatsby-source-contentful plugin options by copying object below and specifying types for reference fields.`,
+      `referenceTypes: ${util.inspect(missingFieldInformationMap, {
+        colors: process.env.FORCE_COLOR != 0,
+      })}`,
+      `Possible values are:\n - "${chalk.yellow(
+        `false`
+      )}" (to disable creating reverse reference for given field and this warning)\n - Name of type [string]\n - Array of types [Array<string>]`,
+      `Available types are:\n${contentTypeItems
+        .map(contentType => ` - ${chalk.yellow(`"${contentType.name}"`)}`)
+        .join(`\n`)}`,
+      missingFieldInformationHaveSingleReference &&
+        `Note: Because of limitation in Contentful content API, gatsby-source-contentful is unable to pull information about possible type for single reference fields. `,
+    ].filter(Boolean)
+
+    reporter.warn(warningBlocks.join(`\n\n`))
+  }
 }

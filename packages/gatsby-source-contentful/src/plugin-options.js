@@ -9,6 +9,7 @@ const defaultOptions = {
   downloadLocal: false,
   localeFilter: () => true,
   forceFullSync: false,
+  referenceTypes: {},
 }
 
 const createPluginConfig = pluginOptions => {
@@ -32,6 +33,20 @@ const optionsSchema = Joi.object().keys({
   downloadLocal: Joi.boolean(),
   localeFilter: Joi.func(),
   forceFullSync: Joi.boolean(),
+  referenceTypes: Joi.object().pattern(
+    Joi.string(),
+    Joi.alternatives().try([
+      Joi.boolean().allow(false),
+      Joi.object().pattern(
+        Joi.string(),
+        Joi.alternatives().try([
+          Joi.boolean().allow(false),
+          Joi.string(),
+          Joi.array().items(Joi.string()),
+        ])
+      ),
+    ])
+  ),
   // default plugins passed by gatsby
   plugins: Joi.array(),
 })

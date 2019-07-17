@@ -95,7 +95,13 @@ exports.sourceNodes = async (
     pluginConfig,
   })
 
-  createTypes({ schema, actions, contentTypeItems, reporter })
+  createTypes({
+    schema,
+    actions,
+    contentTypeItems,
+    reporter,
+    configReferenceTypes: pluginConfig.get(`referenceTypes`),
+  })
 
   const entryList = normalize.buildEntryList({
     currentSyncData,
