@@ -61,7 +61,7 @@ function Copy({ className, content, duration, fileName, trim = false }) {
       }}
     >
       {copied ? `Copied` : `Copy`}
-      <ScreenReaderText>{label}</ScreenReaderText>
+      <ScreenReaderText aria-role="status">{label}</ScreenReaderText>
     </button>
   )
 }
