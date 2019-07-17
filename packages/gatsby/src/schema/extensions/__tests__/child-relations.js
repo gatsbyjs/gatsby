@@ -11,9 +11,11 @@ require(`../../../db/__tests__/fixtures/ensure-loki`)()
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()
 report.panic = jest.fn()
+report.warn = jest.fn()
 afterEach(() => {
   report.error.mockClear()
   report.panic.mockClear()
+  report.warn.mockClear()
 })
 
 describe(`Define parent-child relationships with field extensions`, () => {
@@ -123,7 +125,9 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(parentFields.childChildWithoutNodes.resolve).toBeDefined()
   })
 
-  it(`does not implicitly add child fields to parent type when parent type is @dontInfer`, async () => {
+  // NOTE: This will be default behavior in Gatsby v3. In v2 implicitly adding
+  // children fields to types with `@dontInfer` is deprecated
+  it.skip(`does not implicitly add child fields to parent type when parent type is @dontInfer`, async () => {
     dispatch(
       createTypes(`
         type Parent implements Node @dontInfer {
@@ -147,6 +151,28 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(parentFields.childChildWithoutNodes).toBeUndefined()
   })
 
+  it(`shows deprecation warning when implicitly adding child fields to parent type when parent type is @dontInfer`, async () => {
+    dispatch(
+      createTypes(`
+        type Parent implements Node @dontInfer {
+          id: ID!
+        }
+        type Child implements Node {
+          id: ID!
+        }
+      `)
+    )
+    await buildSchema()
+    expect(report.warn).toBeCalledWith(
+      `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+        `extension set to \`false\`, automatically adding fields for ` +
+        `children types is deprecated.\n` +
+        `In Gatsby v3, only children fields explicitly set with the ` +
+        `\`childOf\` extension will be added.\n` +
+        `For example, in Gatsby v3, \`Parent\` will not get a \`childChild\` field.`
+    )
+  })
+
   it(`adds child fields to parent type with childOf(many: true) extension`, async () => {
     dispatch(
       createTypes(`
@@ -168,7 +194,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childrenChild).toBeDefined()
     expect(parentFields.childrenChild.resolve).toBeDefined()
-    expect(parentFields.childChild).toBeUndefined()
+    // expect(parentFields.childChild).toBeUndefined() // Deprecated, see above
     expect(parentFields.childrenAnotherChild).toBeDefined()
     expect(parentFields.childrenAnotherChild.resolve).toBeDefined()
     expect(parentFields.childAnotherChild).toBeUndefined()

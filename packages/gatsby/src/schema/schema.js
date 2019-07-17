@@ -783,12 +783,12 @@ const addImplicitConvenienceChildrenFields = ({
   typeComposer,
   nodeStore,
 }) => {
-  // When `@dontInfer` is set, do not create children fields for
-  // parent-child relations set by plugins with `createParentChildLink`.
-  // In this case, only parent-child relations explicitly added with
-  // the `childOf` extension are added.
   const shouldInfer = typeComposer.getExtension(`infer`)
-  if (shouldInfer === false) return
+  // In Gatsby v3, when `@dontInfer` is set, children fields will not be
+  // created for parent-child relations set by plugins with
+  // `createParentChildLink`. With `@dontInfer`, only parent-child
+  // relations explicitly set with the `childOf` extension will be added.
+  // if (shouldInfer === false) return
 
   const nodes = nodeStore.getNodesByType(typeComposer.getTypeName())
 
@@ -800,6 +800,24 @@ const addImplicitConvenienceChildrenFields = ({
       _.values(_.groupBy(typeChildren, c => c.parent)),
       g => g.length
     ).length
+
+    // Adding children fields to types with the `@dontInfer` extension is deprecated
+    if (shouldInfer === false) {
+      const fieldName = _.camelCase(
+        `${maxChildCount > 1 ? `children` : `child`} ${typeName}`
+      )
+      if (!typeComposer.hasField(fieldName)) {
+        report.warn(
+          `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+            `extension set to \`false\`, automatically adding fields for ` +
+            `children types is deprecated.\n` +
+            `In Gatsby v3, only children fields explicitly set with the ` +
+            `\`childOf\` extension will be added.\n` +
+            `For example, in Gatsby v3, \`${typeComposer.getTypeName()}\` will ` +
+            `not get a \`${fieldName}\` field.`
+        )
+      }
+    }
 
     if (maxChildCount > 1) {
       typeComposer.addFields(createChildrenField(typeName))
