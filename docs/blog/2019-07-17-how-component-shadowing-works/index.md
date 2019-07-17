@@ -1,9 +1,7 @@
 ---
 title: How Shadowing Works
 path: /how-shadowing-works
-authors:
-  - Chris Biscardi
-  - John Otander
+author: Chris Biscardi and John Otander
 date: 2019-07-17
 tags:
   - open source
