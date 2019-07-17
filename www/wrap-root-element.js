@@ -4,12 +4,14 @@ import GuideList from "./src/components/guide-list.js"
 import HubspotForm from "./src/components/hubspot-form"
 import Pullquote from "./src/components/shared/pullquote"
 import DateChart from "./src/components/chart"
+import Pre from "./src/components/pre"
 
 const components = {
   GuideList,
   HubspotForm,
   DateChart,
   Pullquote,
+  pre: Pre,
 }
 
 export default ({ element }) => (
