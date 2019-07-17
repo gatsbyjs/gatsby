@@ -61,7 +61,7 @@ While using the usual object export (`module.exports = {}`) in your theme means 
 
 ### Accessing Options elsewhere
 
-Note that because themes are also plugins you can also access the options in any of the lifecycle methods taht you're used to. For example, in your theme's `gatsby-node.js` you can access the options as the second argument to `createPages`:
+Note that because themes are plugins you can also access the options in any of the lifecycle methods that you're used to. For example, in your theme's `gatsby-node.js` you can access the options as the second argument to `createPages`:
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }, themeOptions) => {
