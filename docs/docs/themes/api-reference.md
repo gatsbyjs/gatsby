@@ -71,7 +71,9 @@ exports.createPages = async ({ graphql, actions }, themeOptions) => {
 
 ## Shadowing
 
-Since themes are usually deployed as NPM packages that other people use in their sites, we need a way to modify certain files, such as React components, without making changes to the source code of the theme. This is called Shadowing. Shadowing is a filesystem-based API that allows us to replace one file with another at build time. For example, if we had a theme with a `Header` component we could replace that `Header` with our own by creating a single file using Shadowing.
+Since themes are usually deployed as npm packages that other people use in their sites, we need a way to modify certain files, such as React components, without making changes to the source code of the theme. This is called _Shadowing_.
+
+Shadowing is a filesystem-based API that allows us to replace one file with another at build time. For example, if we had a theme with a `Header` component we could replace that `Header` with our own by creating a new file in our site and placing it in the correct location for Shadowing to find it.
 
 ### Overriding
 
