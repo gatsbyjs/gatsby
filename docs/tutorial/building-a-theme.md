@@ -1546,5 +1546,5 @@ Congratulations! You've set up, built, and customized your first Gatsby theme!
 - Check out the [Gatsby themes docs](/docs/themes/) to keep learning.
 - Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace).
 - Have you built a Gatsby starter before? Perhaps [convert that starter to a theme](/docs/themes/converting-a-starter).
-- All through the month of July 2019, Jason Lengstorf will be live-streaming building themes with community members. Follow his Twitch channel for updates, or check out recordings from previous streams:
+- All through the month of July 2019, Jason Lengstorf will be live-streaming building themes with community members. Follow [his Twitch channel](https://twitch.tv/jlengstorf) for updates, or check out [recordings from previous streams](https://jason.af/lwj-youtube).
   - [Building your first Gatsby theme (with Emma Wedekind)](https://youtu.be/W2uTfay3doo)
