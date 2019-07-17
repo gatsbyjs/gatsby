@@ -14,6 +14,8 @@ const {
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
+  buildEnumType,
+  buildScalarType,
 } = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
@@ -188,6 +190,8 @@ const runAPI = (plugin, api, args) => {
           buildUnionType,
           buildInterfaceType,
           buildInputObjectType,
+          buildEnumType,
+          buildScalarType,
         },
       },
       plugin.pluginOptions,

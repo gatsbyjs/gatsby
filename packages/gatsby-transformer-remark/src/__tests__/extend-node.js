@@ -1,6 +1,7 @@
 const { graphql } = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
 const extendNodeType = require(`../extend-node-type`)
+const { typeDefs } = require(`../create-schema-customization`)
 const { createContentDigest } = require(`gatsby/utils`)
 
 // given a set of nodes and a query, return the result of the query
@@ -39,6 +40,7 @@ async function queryResult(
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()
   const tc = sc.createObjectTC(typeName)
+  sc.addTypeDefs(typeDefs)
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
@@ -53,11 +55,11 @@ async function queryResult(
   const result = await graphql(
     schema,
     `query {
-            listNode {
-                ${fragment}
-            }
-          }
-        `
+        listNode {
+            ${fragment}
+        }
+      }
+    `
   )
   return result
 }
