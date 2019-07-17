@@ -3,7 +3,7 @@ describe(`Hot Reloading`, () => {
     cy.visit(`/hot-reloading`).waitForRouteChange()
   })
 
-  it(`works for changes in queries in themes`, () => {
+  it.skip(`works for changes in queries in themes`, () => {
     cy.exec(
       `npm run update -- --file ../gatsby-theme-about/src/pages/hot-reloading.js --new-file scripts/new-file.js`
     )

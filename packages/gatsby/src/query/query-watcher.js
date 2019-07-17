@@ -9,8 +9,7 @@
  ***/
 
 const _ = require(`lodash`)
-// const chokidar = require(`chokidar`)
-const Watchpack = require(`watchpack`)
+const chokidar = require(`chokidar`)
 
 const path = require(`path`)
 const slash = require(`slash`)
@@ -228,45 +227,22 @@ const watch = async rootDir => {
 
   const modulesThatUseGatsby = await getGatsbyDependents()
 
-  const packagePaths = modulesThatUseGatsby.map(module =>
-    // const filesRegex = `*.+(t|j)s?(x)`
-    // const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
-    slash(module.path)
-  )
-
-  var wp = new Watchpack({
-    aggregateTimeout: 1000,
-
-    poll: true,
-
-    followSymlinks: true,
+  const packagePaths = modulesThatUseGatsby.map(module => {
+    const filesRegex = `*.+(t|j)s?(x)`
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
+    return slash(path.join(module.path, pathRegex))
   })
 
-  wp.watch(
-    [...filesToWatch],
-    [slash(path.join(rootDir, `/src`)), ...packagePaths],
-    Date.now() - 10000
-  )
+  watcher = chokidar
+    .watch([
+      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
+      ...packagePaths,
+    ])
+    .on(`change`, path => {
+      debounceCompile()
+    })
 
-  wp.on(`change`, function(filePath, mtime) {
-    debounceCompile()
-  })
-
-  // watcher = chokidar
-  //   .watch([
-  //     slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
-  //     ...packagePaths,
-  //   ])
-  //   .on(`add`, path => {
-  //     console.log(`add`, path)
-  //     debounceCompile()
-  //   })
-  //   .on(`change`, path => {
-  //     console.log(`change`, path)
-  //     debounceCompile()
-  //   })
-
-  // filesToWatch.forEach(filePath => watcher.add(filePath))
+  filesToWatch.forEach(filePath => watcher.add(filePath))
 }
 
 exports.startWatchDeletePage = () => {

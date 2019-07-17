@@ -144,7 +144,6 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "rimraf": "^2.6.1",
-    "watchpack": "^1.6.0",
     "xhr-mock": "^2.4.1"
   },
   "engines": {
