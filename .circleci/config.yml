@@ -306,7 +306,7 @@ workflows:
   www_deploy:
     triggers:
       - schedule:
-          cron: "0 */6 * * *"
+          cron: "0 */4 * * *"
           filters:
             branches:
               only:
