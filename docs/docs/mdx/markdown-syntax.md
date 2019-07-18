@@ -1,23 +1,6 @@
 ---
-title: Markdown
+title: Markdown Syntax
 ---
-
-## Frontmatter
-
-- Fancy word for metadata for your markdown
-- Variables that can later be injected into your components
-- Must be:
-  - At the top of the file
-  - Valid YAML
-  - Between triple dashed lines
-  ```
-  ---
-  title: My Frontmatter Title
-  example_boolean: true
-  ---
-  ```
-
-## Syntax
 
 ### Headings
 
@@ -163,6 +146,21 @@ title: Markdown
 
 - In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](https://www.gatsbyjs.org/docs/sourcing-from-the-filesystem) plugin
 - You can check out the package [here](https://www.gatsbyjs.org/packages/gatsby-source-filesystem) for more information on how it works!
+
+## Frontmatter
+
+- Metadata for your markdown
+- Variables that can later be injected into your components
+- Must be:
+  - At the top of the file
+  - Valid YAML
+  - Between triple dashed lines
+  ```
+  ---
+  title: My Frontmatter Title
+  example_boolean: true
+  ---
+  ```
 
 ## Frontmatter + MDX Example
 
