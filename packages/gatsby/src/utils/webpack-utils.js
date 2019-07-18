@@ -62,6 +62,7 @@ export type LoaderUtils = {
   file: LoaderResolver<*>,
   url: LoaderResolver<*>,
   js: LoaderResolver<*>,
+  dependencies: LoaderResovler<*>,
 
   miniCssExtract: LoaderResolver<*>,
   imports: LoaderResolver<*>,
@@ -260,6 +261,13 @@ module.exports = async ({
       }
     },
 
+    dependencies: options => {
+      return {
+        options,
+        loader: require.resolve(`babel-loader`),
+      }
+    },
+
     eslint: (schema = ``) => {
       const options = eslintConfig(schema)
 
@@ -312,7 +320,14 @@ module.exports = async ({
           )
         },
         type: `javascript/auto`,
-        use: [loaders.js(options)],
+        use: [
+          loaders.js({
+            stage,
+            ...options,
+            configFile: false,
+            compact: true,
+          }),
+        ],
       }
     }
 
@@ -326,20 +341,20 @@ module.exports = async ({
    */
   {
     let dependencies = (
-      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
+      { modulesThatUseGatsby } = { modulesThatUseGatsby: [] }
     ) => {
       const jsOptions = {
         babelrc: false,
         configFile: false,
-        compact: false,
-        presets: [
-          [require.resolve(`babel-preset-gatsby/dependencies`), { stage }],
-        ],
+        presets: [require.resolve(`babel-preset-gatsby/dependencies`)],
         // If an error happens in a package, it's possible to be
         // because it was compiled. Thus, we don't want the browser
         // debugger to show the original code. Instead, the code
         // being evaluated would be much more helpful.
         sourceMaps: false,
+        cacheIdentifier: `gatsby-dependencies@${
+          require(`babel-preset-gatsby/package.json`).version
+        }`,
       }
 
       return {
@@ -367,7 +382,7 @@ module.exports = async ({
           return true
         },
         type: `javascript/auto`,
-        use: [loaders.js(jsOptions)],
+        use: [loaders.dependencies(jsOptions)],
       }
     }
 
