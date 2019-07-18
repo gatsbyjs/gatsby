@@ -113,7 +113,6 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
 - Use [CSS Modules](/tutorial/part-two/#css-modules)
 
-
 ### Adding a Local Font
 
 #### Prerequisites
@@ -150,8 +149,8 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 #### Additional resources
 
-* More on [importing assets into files](/docs/importing-assets-into-files/]
-* [Using Typography.js for Google fonts](/docs/typography-js/)
+- More on [importing assets into files](/docs/importing-assets-into-files/]
+- [Using Typography.js for Google fonts](/docs/typography-js/)
 
 ## Creating layouts
 
@@ -272,5 +271,3 @@ Transforming data in Gatsby is also plugin-driven; Transformer plugins take data
 
 - Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
 - Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
-
-
