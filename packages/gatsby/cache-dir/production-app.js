@@ -75,7 +75,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   <RouteHandler
                     path={encodeURI(
                       pageResources.page.path === `/404.html`
-                        ? location.pathname
+                        ? stripPrefix(location.pathname, __BASE_PATH__)
                         : pageResources.page.matchPath ||
                             pageResources.page.path
                     )}
