@@ -29,8 +29,8 @@ const loadCachedConfig = () => {
 module.exports = function preset(_, options = {}) {
   let { targets = null } = options
 
+  const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
   const pluginBabelConfig = loadCachedConfig()
-  const stage = process.env.GATSBY_BUILD_STAGE || `test`
   const absoluteRuntimePath = path.dirname(
     require.resolve(`@babel/runtime/package.json`)
   )
