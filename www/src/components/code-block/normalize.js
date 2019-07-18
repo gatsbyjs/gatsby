@@ -6,6 +6,7 @@ const createDirectiveRegExp = featureSelector =>
 const COMMENT_END = new RegExp(`(-->|\\*\\/\\}|\\*\\/)?`)
 const DIRECTIVE = createDirectiveRegExp(`(highlight|hide)`)
 const HIGHLIGHT_DIRECTIVE = createDirectiveRegExp(`highlight`)
+const HIDE_DIRECTIVE = createDirectiveRegExp(`hide`)
 
 const END_DIRECTIVE = {
   highlight: /highlight-end/,
@@ -28,6 +29,9 @@ const stripComment = line =>
     ``
   )
 
+const containsDirective = line =>
+  [HIDE_DIRECTIVE, HIGHLIGHT_DIRECTIVE].some(expr => expr.test(line))
+
 /*
  * This function will output the normalized content (stripped of comment directives)
  * alongside a lookup of filtered lines
@@ -40,28 +44,40 @@ export default content => {
 
   for (let i = 0; i < split.length; i++) {
     const line = split[i]
-    if (HIGHLIGHT_DIRECTIVE.test(line)) {
-      const [, , directive] = line.match(DIRECTIVE)
+    if (containsDirective(line)) {
+      const [, keyword, directive] = line.match(DIRECTIVE)
       switch (directive) {
         case `start`: {
           const endIndex = split
             .slice(i + 1)
-            .findIndex(line => END_DIRECTIVE.highlight.test(line))
+            .findIndex(line => END_DIRECTIVE[keyword].test(line))
 
           const end = endIndex === -1 ? split.length : endIndex + i
 
-          for (let j = i + 1; j < end + 1; j++) {
-            highlights[j - 1] = true
+          if (keyword === `highlight`) {
+            for (let j = i + 1; j < end + 1; j++) {
+              highlights[j - 1] = true
+            }
+          } else if (keyword === `hide`) {
+            i = end
           }
           break
         }
         case `line`: {
-          highlights[i] = true
-          filtered.push(stripComment(line))
+          if (keyword === `highlight`) {
+            highlights[i] = true
+            filtered.push(stripComment(line))
+          } else if (keyword === `hide`) {
+            i += 1
+          }
           break
         }
         case `next-line`: {
-          highlights[i] = true
+          if (keyword === `highlight`) {
+            highlights[i] = true
+          } else if (keyword === `hide`) {
+            i += 1
+          }
           break
         }
         default: {
