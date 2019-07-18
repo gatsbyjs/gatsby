@@ -131,6 +131,9 @@ module.exports = {
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["**/posts/1456"],
+        // Set whether or not thumbnail URLS are sourced.
+        // Defaults to false.
+        sourceThumbnails: false,
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
