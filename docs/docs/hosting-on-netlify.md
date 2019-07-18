@@ -33,7 +33,7 @@ npm run build
 
 Once the build is complete, you are ready to upload your site to Netlify. Go to [Netlify](https://app.netlify.com/) and login / sign up using any method. After a successful login, you will see the message shown below.
 
-```shell
+```text
     Want to deploy a new site without connecting to Git?
           Drag and drop your site folder here
 ```
