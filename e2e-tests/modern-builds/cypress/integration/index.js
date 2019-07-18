@@ -6,6 +6,7 @@ describe(`Preload`, () => {
 
     // module preloads should only contain mjs
     cy.get(`link[rel="modulepreload"]`).each($el => {
+      // eslint-disable-next-line no-unused-expressions
       expect($el.attr(`href`).endsWith(`.mjs`)).to.be.true
     })
 
@@ -38,6 +39,7 @@ describe(`Runtime`, () => {
     })
 
     cy.get(`script[src]`).each($el => {
+      // eslint-disable-next-line no-unused-expressions
       expect($el.attr(`src`).endsWith(`.mjs`)).to.be.true
     })
   })
