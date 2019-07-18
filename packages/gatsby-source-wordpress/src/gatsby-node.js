@@ -1,49 +1,49 @@
-"use strict";
+"use strict"
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+var _interopRequireDefault = require(`@babel/runtime/helpers/interopRequireDefault`)
 
 var _asyncToGenerator2 = _interopRequireDefault(
-  require("@babel/runtime/helpers/asyncToGenerator")
-);
+  require(`@babel/runtime/helpers/asyncToGenerator`)
+)
 
-const fetch = require(`./fetch`);
+const fetch = require(`./fetch`)
 
-const normalize = require(`./normalize`);
+const normalize = require(`./normalize`)
 
-const normalizeBaseUrl = require(`./normalize-base-url`);
+const normalizeBaseUrl = require(`./normalize-base-url`)
 
-const typePrefix = `wordpress__`;
+const typePrefix = `wordpress__`
 const refactoredEntityTypes = {
   post: `${typePrefix}POST`,
   page: `${typePrefix}PAGE`,
   tag: `${typePrefix}TAG`,
-  category: `${typePrefix}CATEGORY`
+  category: `${typePrefix}CATEGORY`,
   /* If true, will output many console logs. */
-};
+}
 
-let _verbose;
+let _verbose
 
-let _siteURL;
+let _siteURL
 
-let _useACF = true;
+let _useACF = true
 
-let _acfOptionPageIds;
+let _acfOptionPageIds
 
-let _hostingWPCOM;
+let _hostingWPCOM
 
-let _auth;
+let _auth
 
-let _perPage;
+let _perPage
 
-let _concurrentRequests;
+let _concurrentRequests
 
-let _includedRoutes;
+let _includedRoutes
 
-let _excludedRoutes;
+let _excludedRoutes
 
-let _normalizer;
+let _normalizer
 
-let _sourceThumbnails;
+let _sourceThumbnails
 
 exports.sourceNodes =
   /*#__PURE__*/
@@ -64,24 +64,24 @@ exports.sourceNodes =
         includedRoutes = [`**`],
         excludedRoutes = [],
         normalizer,
-        sourceThumbnails = false
+        sourceThumbnails = false,
       }
     ) {
       const createNode = actions.createNode,
-        touchNode = actions.touchNode;
-      const normalizedBaseUrl = normalizeBaseUrl(baseUrl);
-      _verbose = verboseOutput;
-      _siteURL = `${protocol}://${normalizedBaseUrl}`;
-      _useACF = useACF;
-      _acfOptionPageIds = acfOptionPageIds;
-      _hostingWPCOM = hostingWPCOM;
-      _auth = auth;
-      _perPage = perPage;
-      _concurrentRequests = concurrentRequests;
-      _includedRoutes = includedRoutes;
-      _excludedRoutes = excludedRoutes;
-      _sourceThumbnails = sourceThumbnails;
-      _normalizer = normalizer;
+        touchNode = actions.touchNode
+      const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
+      _verbose = verboseOutput
+      _siteURL = `${protocol}://${normalizedBaseUrl}`
+      _useACF = useACF
+      _acfOptionPageIds = acfOptionPageIds
+      _hostingWPCOM = hostingWPCOM
+      _auth = auth
+      _perPage = perPage
+      _concurrentRequests = concurrentRequests
+      _includedRoutes = includedRoutes
+      _excludedRoutes = excludedRoutes
+      _sourceThumbnails = sourceThumbnails
+      _normalizer = normalizer
       let entities = yield fetch({
         baseUrl,
         _verbose,
@@ -96,35 +96,35 @@ exports.sourceNodes =
         _excludedRoutes,
         _sourceThumbnails,
         typePrefix,
-        refactoredEntityTypes
-      }); // Normalize data & create nodes
+        refactoredEntityTypes,
+      }) // Normalize data & create nodes
       // Create fake wordpressId form element who done have any in the database
 
-      entities = normalize.generateFakeWordpressId(entities); // Remove ACF key if it's not an object, combine ACF Options
+      entities = normalize.generateFakeWordpressId(entities) // Remove ACF key if it's not an object, combine ACF Options
 
-      entities = normalize.normalizeACF(entities); // Combine ACF Option Data entities into one but split by IDs + options
+      entities = normalize.normalizeACF(entities) // Combine ACF Option Data entities into one but split by IDs + options
 
-      entities = normalize.combineACF(entities); // Creates entities from object collections of entities
+      entities = normalize.combineACF(entities) // Creates entities from object collections of entities
 
-      entities = normalize.normalizeEntities(entities); // Standardizes ids & cleans keys
+      entities = normalize.normalizeEntities(entities) // Standardizes ids & cleans keys
 
-      entities = normalize.standardizeKeys(entities); // Converts to use only GMT dates
+      entities = normalize.standardizeKeys(entities) // Converts to use only GMT dates
 
-      entities = normalize.standardizeDates(entities); // Lifts all "rendered" fields to top-level.
+      entities = normalize.standardizeDates(entities) // Lifts all "rendered" fields to top-level.
 
-      entities = normalize.liftRenderedField(entities); // Exclude entities of unknown shape
+      entities = normalize.liftRenderedField(entities) // Exclude entities of unknown shape
 
-      entities = normalize.excludeUnknownEntities(entities); // Creates Gatsby IDs for each entity
+      entities = normalize.excludeUnknownEntities(entities) // Creates Gatsby IDs for each entity
 
-      entities = normalize.createGatsbyIds(createNodeId, entities, _siteURL); // Creates links between authors and user entities
+      entities = normalize.createGatsbyIds(createNodeId, entities, _siteURL) // Creates links between authors and user entities
 
-      entities = normalize.mapAuthorsToUsers(entities); // Creates links between posts and tags/categories.
+      entities = normalize.mapAuthorsToUsers(entities) // Creates links between posts and tags/categories.
 
-      entities = normalize.mapPostsToTagsCategories(entities); // Creates links between tags/categories and taxonomies.
+      entities = normalize.mapPostsToTagsCategories(entities) // Creates links between tags/categories and taxonomies.
 
-      entities = normalize.mapTagsCategoriesToTaxonomies(entities); // Creates links from entities to media nodes
+      entities = normalize.mapTagsCategoriesToTaxonomies(entities) // Creates links from entities to media nodes
 
-      entities = normalize.mapEntitiesToMedia(entities); // Downloads media files and removes "sizes" data as useless in Gatsby context.
+      entities = normalize.mapEntitiesToMedia(entities) // Downloads media files and removes "sizes" data as useless in Gatsby context.
 
       entities = yield normalize.downloadMediaFiles({
         entities,
@@ -135,17 +135,17 @@ exports.sourceNodes =
         touchNode,
         getNode,
         _auth,
-        sourceThumbnails
-      }); // Creates links between elements and parent element.
+        sourceThumbnails,
+      }) // Creates links between elements and parent element.
 
-      entities = normalize.mapElementsToParent(entities); // Search and replace Content Urls
+      entities = normalize.mapElementsToParent(entities) // Search and replace Content Urls
 
       entities = normalize.searchReplaceContentUrls({
         entities,
-        searchAndReplaceContentUrls
-      });
-      entities = normalize.mapPolylangTranslations(entities);
-      entities = normalize.createUrlPathsFromLinks(entities); // apply custom normalizer
+        searchAndReplaceContentUrls,
+      })
+      entities = normalize.mapPolylangTranslations(entities)
+      entities = normalize.createUrlPathsFromLinks(entities) // apply custom normalizer
 
       if (typeof _normalizer === `function`) {
         entities = _normalizer({
@@ -170,19 +170,19 @@ exports.sourceNodes =
           searchAndReplaceContentUrls,
           concurrentRequests,
           excludedRoutes,
-          sourceThumbnails
-        });
+          sourceThumbnails,
+        })
       } // creates nodes for each entry
 
       normalize.createNodesFromEntities({
         entities,
         createNode,
-        createContentDigest
-      });
-      return;
-    });
+        createContentDigest,
+      })
+      return
+    })
 
     return function(_x, _x2) {
-      return _ref.apply(this, arguments);
-    };
-  })();
+      return _ref.apply(this, arguments)
+    }
+  })()
