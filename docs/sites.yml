@@ -6562,3 +6562,14 @@
     - Consulting
     - Community
   featured: false
+- title: LaunchDarkly
+  url: https://launchdarkly.com/
+  main_url: https://launchdarkly.com/
+  description: >
+    LaunchDarkly is the feature management platform that software teams use to build better software, faster.
+  categories:
+    - Technology
+    - Marketing
+  built_by: LaunchDarkly
+  built_by_url: https://launchdarkly.com/
+  featured: false
