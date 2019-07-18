@@ -135,9 +135,9 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 #### Prerequisites
 
-- A Gatsby site with a single component `index.js`.
-- [netlify-cli](https://www.npmjs.com/package/netlify-cli) npm package
-- The Gatsby CLI method `gatsby build`
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
+- The [Gatsby CLI](/docs/gatsby-cli) installed
 
 #### Directions
 
