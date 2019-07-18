@@ -1,8 +1,9 @@
 import React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer"
 
-import Copy from "./copy"
-import { radii, space } from "../utils/presets"
+import Copy from "../copy"
+import normalize from "./normalize"
+import { fontSizes, radii, space } from "../../utils/presets"
 
 const getParams = (name = ``) => {
   const [lang, params = ``] = name.split(`:`)
@@ -17,7 +18,11 @@ const getParams = (name = ``) => {
 
 export default ({ children }) => {
   const [language, { title = `` }] = getParams(children.props.className)
-  const content = children.props.children
+  const [content, highlights] = normalize(
+    children.props.children,
+    children.props.className
+  )
+
   return (
     <Highlight
       {...defaultProps}
@@ -29,7 +34,10 @@ export default ({ children }) => {
         <div className="gatsby-highlight">
           <div className="gatsby-highlight-header">
             {title && (
-              <div className="gatsby-code-title" css={{ paddingTop: space[4] }}>
+              <div
+                className="gatsby-code-title"
+                css={{ fontSize: fontSizes[0], paddingTop: space[4] }}
+              >
                 {title}
               </div>
             )}
@@ -44,13 +52,23 @@ export default ({ children }) => {
             />
           </div>
           <pre className={`language-${language}`}>
-            {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line, key: i })}>
-                {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token, key })} />
-                ))}
-              </div>
-            ))}
+            {tokens.map((line, i) => {
+              const lineProps = getLineProps({ line, key: i })
+              return (
+                <div
+                  key={i}
+                  {...Object.assign({}, lineProps, {
+                    className:
+                      lineProps.className +
+                      (highlights[i] ? ` gatsby-highlight-code-line` : ``),
+                  })}
+                >
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
+              )
+            })}
           </pre>
         </div>
       )}
