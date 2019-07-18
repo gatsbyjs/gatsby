@@ -68,8 +68,6 @@ export default content => {
             const stripped = stripComment(line)
             highlights[stripped] = true
             filtered.push(stripped)
-          } else if (keyword === `hide`) {
-            i += 1
           }
           break
         }
@@ -77,6 +75,7 @@ export default content => {
           if (keyword === `highlight`) {
             highlights[split[i + 1]] = true
           } else if (keyword === `hide`) {
+            filtered.push(stripComment(line))
             i += 1
           }
           break
