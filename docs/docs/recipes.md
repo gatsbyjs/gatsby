@@ -230,7 +230,7 @@ The number of results returned from a query can be limited to a number you speci
 
 1. Run `gatsby develop` to start the development server.
 2. Open a tab in your browser at: `http://localhost:8000/___graphql`.
-3. Start with a query in the editor with the following fields on `allSitePage`:
+3. Add a query in the editor with the following fields on `allSitePage` to start off:
 
 ```graphql
 {
@@ -245,7 +245,7 @@ The number of results returned from a query can be limited to a number you speci
 }
 ```
 
-4. Add an argument to the `allSitePage` field and specify you are using the `limit` argument and give it an integer value `3`.
+4. Add a `limit` argument to the `allSitePage` field and give it an integer value `3`.
 
 ```graphql
 {
@@ -267,7 +267,67 @@ The number of results returned from a query can be limited to a number you speci
 - [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
 - Live example:
 
-<iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe title="Limiting returned data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+
+### Sorting
+
+The ordering of your results can be specified with the `sort` argument. You can specify which fields to sort by and the order to sort in.
+
+#### Prerequisites
+
+- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSite` and `site` created automatically)
+
+#### Directions
+
+1. Run `gatsby develop` to start the development server.
+2. Open a tab in your browser at: `http://localhost:8000/___graphql`
+3. Add a query in the editor with the following fields on `allSitePage` to start off:
+
+```graphql
+{
+  allSitePage {
+    edges {
+      node {
+        id
+        path
+      }
+    }
+  }
+}
+```
+
+4. Add a `sort` argument to the `allSitePage` field and give it an object with the a `fields` and `order` attribute. The value for `fields` can be a field or an array of fields to sort by (this example uses the `path` field), the `order` can be either `ASC` or `DESC` for ascending and descending respectively.
+
+```graphql
+{
+  allSitePage(sort: {fields: path, order: ASC}) { // highlight-line
+    edges {
+      node {
+        id
+        path
+      }
+    }
+  }
+}
+
+```
+
+5. Click the play button in the GraphiQL page and the data returned will be sorted ascending by the `path` field.
+
+#### Additional resources
+
+- [Gatsby GraphQL reference for sorting](/docs/graphql-reference/#sort)
+- Live example:
+
+<iframe title="Sorting data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(sort%3A%20%7Bfields%3A%20path%2C%20order%3A%20ASC%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+
+### Filtering
+
+#### Prerequisites
+
+#### Directions
+
+#### Additional resources
 
 ### Aliases
 
@@ -320,7 +380,7 @@ If you would like to run two queries on the same datasource, you can use an alia
 - [Gatsby GraphQL reference for aliasing](/docs/graphql-reference/#aliasing)
 - Live example:
 
-<iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
+<iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
 
 ## Sourcing data
 
