@@ -430,7 +430,7 @@ from a GraphQL page query or `StaticQuery`.
 just like a normal React component.
 
 ```js
-<MDXRenderer title="My Stuff!">{mdx.code.body}</MDXRenderer>
+<MDXRenderer title="My Stuff!">{mdx.body}</MDXRenderer>
 ```
 
 Using a page query:
@@ -440,7 +440,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default class MyPageLayout {
   render() {
-    ;<MDXRenderer>{this.props.data.mdx.code.body}</MDXRenderer>
+    ;<MDXRenderer>{this.props.data.mdx.body}</MDXRenderer>
   }
 }
 
@@ -448,9 +448,7 @@ export const pageQuery = graphql`
   query MDXQuery($id: String!) {
     mdx(id: { eq: $id }) {
       id
-      code {
-        body
-      }
+      body
     }
   }
 `
