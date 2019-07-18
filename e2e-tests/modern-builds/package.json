@@ -1,8 +1,8 @@
 {
-  "name": "production-runtime",
-  "description": "Gatsby default starter",
+  "name": "modern-builds",
+  "description": "Tesing modern builds logic",
   "version": "1.0.0",
-  "author": "Sidhartha Chatterjee <sid@gatsbyjs.com>",
+  "author": "Ward Peeters <ward@gatsbyjs.com>",
   "dependencies": {
     "gatsby": "^2.13.14",
     "react": "^16.8.0",
@@ -26,9 +26,5 @@
     "gatsby-cypress": "^0.1.7",
     "prettier": "^1.15.2",
     "start-server-and-test": "^1.7.11"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
   }
 }
