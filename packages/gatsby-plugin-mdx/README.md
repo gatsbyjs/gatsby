@@ -26,7 +26,7 @@ components.
     - [Default layouts](#default-layouts)
     - [Imports](#imports)
     - [Shortcodes](#shortcodes)
-    - [Gatbsy remark plugins](#gatsby-remark-plugins)
+    - [Gatsby remark plugins](#gatsby-remark-plugins)
     - [Markdown plugins](#remark-plugins)
     - [HAST plugins](#rehype-plugins)
     - [Media types](#media-types)
