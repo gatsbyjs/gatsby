@@ -218,6 +218,57 @@ export default NonPageComponent
 - [More on the useStaticQuery hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
+### Limiting
+
+The number of results returned from a query can be limited to a number you specify. Helpful if you only need a few pieces of data or need to [paginate data](/docs/adding-pagination/).
+
+#### Prerequisites
+
+- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSite` and `site` created automatically)
+
+#### Directions
+
+1. Run `gatsby develop` to start the development server.
+2. Open a tab in your browser at: `http://localhost:8000/___graphql`.
+3. Start with a query in the editor with the following fields on `allSitePage`:
+
+```graphql
+{
+  allSitePage {
+    edges {
+      node {
+        id
+        path
+      }
+    }
+  }
+}
+```
+
+4. Add an argument to the `allSitePage` field and specify you are using the `limit` argument and give it an integer value `3`.
+
+```graphql
+{
+  allSitePage(limit: 3) { // highlight-line
+    edges {
+      node {
+        id
+        path
+      }
+    }
+  }
+}
+```
+
+5. Click the play button in the GraphiQL page and the data in the `edges` field will be limited to the number specified.
+
+#### Additional resources
+
+- [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
+- Live example:
+
+<iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+
 ### Aliases
 
 You can rename any field in a GraphQL query with an alias.
