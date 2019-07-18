@@ -224,7 +224,7 @@ The number of results returned from a query can be limited to a number you speci
 
 #### Prerequisites
 
-- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSite` and `site` created automatically)
+- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSitePage` and `sitePage` created automatically)
 
 #### Directions
 
@@ -275,7 +275,8 @@ The ordering of your results can be specified with the `sort` argument. You can 
 
 #### Prerequisites
 
-- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSite` and `site` created automatically)
+- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSitePage` and `sitePage` created automatically)
+- Queryable fields that are prefixed with 'all' (individual nodes that are queried don't need to be sorted)
 
 #### Directions
 
@@ -323,11 +324,60 @@ The ordering of your results can be specified with the `sort` argument. You can 
 
 ### Filtering
 
+Queried results can be filtered down with operators like `eq` (equals), `ne` (not equals), `in`, and `regex` on specified fields.
+
 #### Prerequisites
+
+- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSitePage` and `sitePage` created automatically)
+- Queryable fields that are prefixed with 'all', like `allSitePage` (individual nodes that are queried don't need to be sorted
 
 #### Directions
 
+1. Run `gatsby develop` to start the development server.
+2. Open a tab in your browser at: `http://localhost:8000/___graphql`
+3. Add a query in the editor using the a field like `allMarkdownRemark` that is prefixed by 'all' (meaning that it will return a list of nodes)
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        frontmatter {
+          title
+          categories
+        }
+      }
+    }
+  }
+}
+```
+
+4. Add a `filter` argument to the `allMarkdownRemark` field and give it an object with the fields you'd like to filter by. In this case filtering is being applied to the frontmatter's categories attribute. The next value after the field to filter by is the operator (in this case `eq` or equals) with a value of 'magical creatures'.
+
+```graphql
+{
+  allMarkdownRemark(filter: {frontmatter: {categories: {eq: "magical creatures"}}}) { // highlight-line
+    edges {
+      node {
+        frontmatter {
+          title
+          categories
+        }
+      }
+    }
+  }
+}
+```
+
+5. Click the play button in the GraphiQL page and only that data that matches the filter parameters will be returned, in this case only nodes with a frontmatter category of 'magical creatures'.
+
 #### Additional resources
+
+- [Gatsby GraphQL reference for filtering](/docs/graphql-reference/#filter)
+- [Complete list of possible operators](/docs/graphql-reference/#complete-list-of-possible-operators)
+- Live example:
+
+<iframe title="Filtering data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Bcategories%3A%20%7Beq%3A%20%22magical%20creatures%22%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20categories%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
 
 ### Aliases
 
@@ -337,7 +387,7 @@ If you would like to run two queries on the same datasource, you can use an alia
 
 #### Prerequisites
 
-- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSite` and `site` created automatically)
+- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSitePage` and `sitePage` created automatically)
 
 #### Directions
 
