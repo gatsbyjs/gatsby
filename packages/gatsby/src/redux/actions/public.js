@@ -258,7 +258,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
-      const trueComponentPath = slash(truePath(page.component))
+      let trueComponentPath = slash(truePath(page.component))
+      try {
+        trueComponentPath = slash(truePath(page.component));
+      } catch (e) {}
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
           const markers = page.component
