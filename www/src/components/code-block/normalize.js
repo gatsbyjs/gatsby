@@ -1,4 +1,4 @@
-const COMMENT_START = new RegExp(`(#|\\/\\/|\\{\\/\\*|\\/\\*+)`)
+const COMMENT_START = new RegExp(`(#|\\/\\/|\\{\\/\\*|\\/\\*+|<!--)`)
 
 const createDirectiveRegExp = featureSelector =>
   new RegExp(`${featureSelector}-(next-line|line|start|end|range)({([^}]+)})?`)
@@ -33,14 +33,33 @@ const containsDirective = line =>
   [HIDE_DIRECTIVE, HIGHLIGHT_DIRECTIVE].some(expr => expr.test(line))
 
 /*
+ * This parses the {1-3} syntax range that is sometimes used
+ */
+const getInitialHighlights = (className, split) => {
+  const lineNumberExpr = /{([^}]+)/
+  const [, match] = className.match(lineNumberExpr) || []
+  if (match) {
+    return match.split(/,\s*/).reduce((merged, range) => {
+      const [start, end = start] = range
+        .split(`-`)
+        .map(num => parseInt(num, 10))
+      for (let i = start; i <= end; i++) {
+        merged[split[i - 1]] = true
+      }
+      return merged
+    }, {})
+  }
+  return {}
+}
+
+/*
  * This function will output the normalized content (stripped of comment directives)
  * alongside a lookup of filtered lines
- * Note: this does not as of yet handle the hide directive
  */
-export default content => {
+export default (content, className) => {
   const split = content.split(`\n`)
   let filtered = []
-  let highlights = {}
+  let highlights = getInitialHighlights(className, split)
 
   for (let i = 0; i < split.length; i++) {
     const line = split[i]
@@ -55,11 +74,22 @@ export default content => {
           const end = endIndex === -1 ? split.length : endIndex + i
 
           if (keyword === `highlight`) {
-            for (let j = i + 1; j < end + 1; j++) {
-              highlights[split[j]] = true
+            const stripped = stripComment(line)
+            if (stripped !== ``) {
+              filtered.push(stripped)
+            }
+            for (let j = i; j <= end + 1; j++) {
+              highlights[stripComment(split[j])] = true
             }
           } else if (keyword === `hide`) {
             i = end
+          }
+          break
+        }
+        case `end`: {
+          const stripped = stripComment(line)
+          if (stripped !== ``) {
+            filtered.push(stripped)
           }
           break
         }
