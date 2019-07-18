@@ -54,13 +54,15 @@ export default ({ children }) => {
           <pre className={`language-${language}`}>
             {tokens.map((line, i) => {
               const lineProps = getLineProps({ line, key: i })
+              const className = [lineProps.className]
+                .concat(highlights[i] && `gatsby-highlight-code-line`)
+                .filter(Boolean)
+                .join(` `)
               return (
                 <div
                   key={i}
                   {...Object.assign({}, lineProps, {
-                    className:
-                      lineProps.className +
-                      (highlights[i] ? ` gatsby-highlight-code-line` : ``),
+                    className,
                   })}
                 >
                   {line.map((token, key) => (

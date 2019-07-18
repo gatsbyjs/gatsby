@@ -56,7 +56,7 @@ export default content => {
 
           if (keyword === `highlight`) {
             for (let j = i + 1; j < end + 1; j++) {
-              highlights[j - 1] = true
+              highlights[split[j]] = true
             }
           } else if (keyword === `hide`) {
             i = end
@@ -65,8 +65,9 @@ export default content => {
         }
         case `line`: {
           if (keyword === `highlight`) {
-            highlights[i] = true
-            filtered.push(stripComment(line))
+            const stripped = stripComment(line)
+            highlights[stripped] = true
+            filtered.push(stripped)
           } else if (keyword === `hide`) {
             i += 1
           }
@@ -74,7 +75,7 @@ export default content => {
         }
         case `next-line`: {
           if (keyword === `highlight`) {
-            highlights[i] = true
+            highlights[split[i + 1]] = true
           } else if (keyword === `hide`) {
             i += 1
           }
@@ -89,5 +90,13 @@ export default content => {
     }
   }
 
-  return [filtered.join(`\n`), highlights]
+  return [
+    filtered.join(`\n`),
+    filtered.reduce((merged, line, index) => {
+      if (highlights[line]) {
+        merged[index] = true
+      }
+      return merged
+    }, {}),
+  ]
 }
