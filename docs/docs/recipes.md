@@ -218,6 +218,59 @@ export default NonPageComponent
 - [More on the useStaticQuery hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
+### Aliases
+
+You can rename any field in a GraphQL query with an alias.
+
+If you would like to run two queries on the same datasource, you can use an alias to avoid a naming collision with two queries of the same name.
+
+#### Prerequisites
+
+- A Gatsby site with [nodes in the GraphQL data layer](/docs/node-interface/) (all sites have some nodes like `allSite` and `site` created automatically)
+
+#### Directions
+
+1. Run `gatsby develop` to start the development server.
+2. Open a tab in your browser at: `http://localhost:8000/___graphql`
+3. Add a query in the editor using two fields of the same name like `allFile`
+
+```graphql
+{
+  allFile {
+    totalCount
+  }
+  allFile {
+    pageInfo {
+      currentPage
+    }
+  }
+}
+```
+
+4. Add the name you would like to use for any field before the name of the field in your schema, separated by a colon. (E.g. [alias-name]: [original-name])
+
+```graphql
+{
+  fileCount: allFile { // highlight-line
+    totalCount
+  }
+  filePageInfo: allFile { // highlight-line
+    pageInfo {
+      currentPage
+    }
+  }
+}
+```
+
+5. Click the play button in the GraphiQL page and 2 objects with alias names you provided will be output.
+
+#### Additional resources
+
+- [Gatsby GraphQL reference for aliasing](/docs/graphql-reference/#aliasing)
+- Live example:
+
+<iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
+
 ## Sourcing data
 
 Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
