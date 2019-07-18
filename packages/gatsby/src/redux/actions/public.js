@@ -258,35 +258,36 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
-      let trueComponentPath = slash(truePath(page.component))
-      try {
-        trueComponentPath = slash(truePath(page.component));
-      } catch (e) {}
-      if (trueComponentPath !== page.component) {
-        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-          const markers = page.component
-            .split(``)
-            .map((letter, index) => {
-              if (letter !== trueComponentPath[index]) {
-                return `^`
-              }
-              return ` `
-            })
-            .join(``)
 
-          report.warn(
-            stripIndent`
+      try {
+        let trueComponentPath = slash(truePath(page.component))
+        if (trueComponentPath !== page.component) {
+          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+            const markers = page.component
+              .split(``)
+              .map((letter, index) => {
+                if (letter !== trueComponentPath[index]) {
+                  return `^`
+                }
+                return ` `
+              })
+              .join(``)
+
+            report.warn(
+              stripIndent`
             ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
             page.component:     "${page.component}"
             path in filesystem: "${trueComponentPath}"
                                  ${markers}
           `
-          )
-          hasWarnedForPageComponentInvalidCasing.add(page.component)
+            )
+            hasWarnedForPageComponentInvalidCasing.add(page.component)
+          }
         }
-
         page.component = trueComponentPath
+      } catch (e) {
+        console.log(e)
       }
       pageComponentCache[originalPageComponent] = page.component
     }
