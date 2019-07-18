@@ -298,18 +298,6 @@ export class BaseLoader {
     this.loadPage(rawPath)
   }
 
-  // if (resourceName.slice(0, 12) === `component---`) {
-  //   let componentUrls = createComponentUrls(resourceName)
-  //   if (process.env.MODERN_BUILD) {
-  //     componentUrls = componentUrls.filter(resource =>
-  //       resource.endsWith(`.mjs`)
-  //     )
-  //   }
-  //   return Promise.all(componentUrls.map(url => prefetchHelper(url)))
-  // } else {
-  //   const url = createJsonURL(jsonDataPaths[resourceName])
-  //   return prefetchHelper(url)
-
   getResourceURLsForPathname(rawPath) {
     const pagePath = cleanPath(rawPath)
     const page = this.pageDataDb.get(pagePath)
@@ -336,10 +324,6 @@ const createComponentUrls = componentChunkName => {
   let componentUrls = window.___chunkMapping[componentChunkName].map(
     chunk => __PATH_PREFIX__ + chunk
   )
-
-  if (process.env.MODERN_BUILD) {
-    componentUrls = componentUrls.filter(resource => resource.endsWith(`.mjs`))
-  }
 
   return componentUrls
 }

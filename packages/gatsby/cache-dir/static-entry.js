@@ -377,9 +377,8 @@ export default (pagePath, callback) => {
       <script
         key="moderncheck"
         id="gatsby-modern-script"
-        type="module"
         dangerouslySetInnerHTML={{
-          __html: `window.__gatsbyModern=true`,
+          __html: `window.___gatsbyModern="noModule" in document.createElement('script')`,
         }}
       />
     )
@@ -403,7 +402,7 @@ export default (pagePath, callback) => {
   // Add chunk mapping metadata
   let scriptChunkMapping = ``
   if (process.env.MODERN_BUILD) {
-    scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=window.__gatsbyModern?${JSON.stringify(
+    scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=window.___gatsbyModern?${JSON.stringify(
       chunkMappingModern
     )}:${JSON.stringify(chunkMappingLegacy)};/*]]>*/`
   } else {
@@ -416,6 +415,7 @@ export default (pagePath, callback) => {
     <script
       key="chunk - mapping"
       id="gatsby-chunk-mapping"
+      defer={true}
       dangerouslySetInnerHTML={{
         __html: scriptChunkMapping,
       }}
@@ -447,7 +447,7 @@ export default (pagePath, callback) => {
       })
 
     // uncompiled code
-    // !window.__gatsbyModern && (function(d){
+    // !window.___gatsbyModern && (function(d){
     //   function load(url) {
     //     var s=d.createElement('script');
     //     s.src = url;
@@ -462,9 +462,10 @@ export default (pagePath, callback) => {
       <script
         key="legacy-bundles"
         id="gatsby-legacy-script"
+        defer={true}
         noModule={true}
         dangerouslySetInnerHTML={{
-          __html: `!window.__gatsbyModern&&function(b){${JSON.stringify(
+          __html: `!window.___gatsbyModern&&function(b){${JSON.stringify(
             legacyScripts
           )}.forEach(function(c){var a=b.createElement("script");a.src=c;a.defer=!0;a.noModule=!0;b.body.appendChild(a)})}(document)`,
         }}
@@ -474,7 +475,7 @@ export default (pagePath, callback) => {
     scripts
       .filter(s => s.rel !== `prefetch` && s.rel !== `modulepreload`)
       .forEach(s => {
-        const scriptPath = `${__PATH_PREFIX__} /${JSON.stringify(s.name).slice(
+        const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
           1,
           -1
         )}`
@@ -496,7 +497,7 @@ export default (pagePath, callback) => {
     pathPrefix: __PATH_PREFIX__,
   })
 
-  const html = `<!DOCTYPE html > ${renderToStaticMarkup(
+  const html = `<!DOCTYPE html> ${renderToStaticMarkup(
     <Html
       {...bodyProps}
       headComponents={headComponents}
