@@ -1870,18 +1870,6 @@
     - Blog
   built_by: Linton Ye
   built_by_url: "https://twitter.com/lintonye"
-- title: Devol’s Dance
-  main_url: "https://www.devolsdance.com/"
-  url: "https://www.devolsdance.com/"
-  description: >
-    Devol’s Dance is an invite-only, one-day event celebrating industrial
-    robotics, AI, and automation.
-  categories:
-    - Marketing
-    - Technology
-  built_by: Corey Ward
-  built_by_url: "http://www.coreyward.me/"
-  featured: false
 - title: Mega House Creative
   main_url: "https://www.megahousecreative.com/"
   url: "https://www.megahousecreative.com/"
