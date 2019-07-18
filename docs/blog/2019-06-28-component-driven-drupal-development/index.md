@@ -21,7 +21,7 @@ In our recent webinar, [Gatsby for Agencies and Teams: Better, Faster, Smarter](
 One of the things that excited Ben about working at Mediacurrent was their component-driven approach to building client sites. Rather than creating libraries of page templates, web page designs were broken down into their component parts which were then built completely outside of Drupal in HTML, CSS, and JavaScript. Meanwhile, the client’s style guide would be generated using [KSS-node](https://github.com/kss-node/kss-node) which could then be incorporated into a basic Drupal structure. Once that structure was in place, individual component files were imported wherever they were needed.
 
 <Pullquote>
-“I thought this was an awesome workflow. It gave us a single source of truth for each component. The same template was used by both front-end and back-end developers. We could reuse that same component anywhere it was needed, and it let the front-ender's focus more on front-end specific concerns like semantics and richer interactivity and accessibility.”
+“I thought this was an awesome workflow. It gave us a single source of truth for each component. The same template was used by both front-end and back-end developers. We could reuse that same component anywhere it was needed, and it let the front-enders focus more on front-end specific concerns like semantics and richer interactivity and accessibility.”
 </Pullquote>
 
 Or at least, that’s what the component-driven workflows were supposed to do…
