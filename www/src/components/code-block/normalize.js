@@ -122,9 +122,9 @@ export default (content, className = ``) => {
                   },
                 ].filter(line => line.code)
               )
-            } else if (keyword === `hide`) {
+            } else if (keyword === `hide` && code) {
               filtered.push({
-                code: stripComment(line),
+                code,
               })
             }
             i += 1
