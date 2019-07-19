@@ -1630,7 +1630,7 @@
     - Web App Manifest
 - url: https://gatsby.ghost.org/
   repo: https://github.com/TryGhost/gatsby-starter-ghost
-  description: Build lightning-fast, modern publications with Ghost and Gatbsy
+  description: Build lightning-fast, modern publications with Ghost and Gatsby
   tags:
     - CMS:Headless
     - Blog
