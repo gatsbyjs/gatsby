@@ -256,7 +256,10 @@ module.exports = async ({
 
     js: options => {
       return {
-        options,
+        options: {
+          stage,
+          ...options,
+        },
         loader: require.resolve(`./babel-loader`),
       }
     },
@@ -322,7 +325,6 @@ module.exports = async ({
         type: `javascript/auto`,
         use: [
           loaders.js({
-            stage,
             ...options,
             configFile: false,
             compact: true,
@@ -346,6 +348,7 @@ module.exports = async ({
       const jsOptions = {
         babelrc: false,
         configFile: false,
+        compact: false,
         presets: [require.resolve(`babel-preset-gatsby/dependencies`)],
         // If an error happens in a package, it's possible to be
         // because it was compiled. Thus, we don't want the browser
