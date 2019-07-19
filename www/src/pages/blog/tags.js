@@ -7,94 +7,11 @@ import { kebabCase } from "lodash-es"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
+import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import styles from "../../views/shared/styles"
 import { colors, space } from "../../utils/presets"
 
 let currentLetter = ``
-
-const POSSIBLE_TAGS = new Set([
-  "accessibility",
-  "agencies",
-  "algolia",
-  "apis",
-  "authentication",
-  "aws",
-  "azure",
-  "building-sites-faster",
-  "case-studies",
-  "cdn",
-  "cli",
-  "client-side-routing",
-  "cms",
-  "code-editor",
-  "community",
-  "content-mesh",
-  "contentful",
-  "contest",
-  "core-concepts",
-  "cutting-edge-experiences",
-  "data-visualization",
-  "deployment",
-  "documentation-sites",
-  "drupal",
-  "ecommerce",
-  "enterprise",
-  "gatsby-apis",
-  "gatsby-cloud",
-  "gatsby-days",
-  "gatsby-docs",
-  "gatsby-for-apps",
-  "gatsby-for-blogs",
-  "gatsby-for-homepages",
-  "gatsby-for-marketers",
-  "gatsby-for-teams",
-  "gatsby-image",
-  "gatsby-inc",
-  "gatsby-preview",
-  "gatsby-user-testing",
-  "getting-started",
-  "ghost",
-  "graphql",
-  "hacktoberfest",
-  "headless-cms",
-  "hosting",
-  "hugo",
-  "i18n",
-  "jamstack",
-  "jekyll",
-  "large-sites",
-  "lead-conversion",
-  "learning-to-code",
-  "lighthouse",
-  "livestream",
-  "markdown",
-  "mdx",
-  "migration",
-  "mobile",
-  "netlify",
-  "netlify-cms",
-  "partner-program",
-  "performance",
-  "plugins",
-  "portfolio-site",
-  "pwa",
-  "react",
-  "releases",
-  "sanity",
-  "security",
-  "seo",
-  "serverless",
-  "source",
-  "ssr",
-  "static",
-  "testing",
-  "theme-ui",
-  "themes",
-  "v1",
-  "v2",
-  "web-building-blocks",
-  "wordpress"
-])
 
 class TagsPage extends React.Component {
   static propTypes = {
@@ -130,7 +47,7 @@ class TagsPage extends React.Component {
       location,
     } = this.props
     const { filterQuery } = this.state
-    const uniqGroup = group.filter(x => POSSIBLE_TAGS.has(x.fieldValue)).reduce((lookup, tag) => {
+    const uniqGroup = group.filter(x => TAGS_AND_DOCS.has(x.fieldValue)).reduce((lookup, tag) => {
       const key = kebabCase(tag.fieldValue.toLowerCase())
       if (!lookup[key]) {
         lookup[key] = Object.assign(tag, {
