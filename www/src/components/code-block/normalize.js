@@ -61,6 +61,7 @@ const getInitialFilter = (className, split) => {
 /*
  * This function will output the normalized content (stripped of comment directives)
  * alongside a lookup of filtered lines
+ * https://github.com/gatsbyjs/gatsby/blob/dad0628f274f1c61853f3177573bb17a79e4a540/packages/gatsby-remark-prismjs/src/directives.js
  */
 export default (content, className = ``) => {
   const split = content.split(`\n`)
@@ -99,8 +100,6 @@ export default (content, className = ``) => {
                 code: stripComment(line),
                 highlighted: true,
               })
-            } else if (keyword === `hide`) {
-              i += 1
             }
             break
           }
@@ -116,9 +115,10 @@ export default (content, className = ``) => {
                   highlighted: true,
                 },
               ])
+            } else if (keyword === `hide`) {
+              filtered.push(stripComment(line))
+              i += 1
             }
-
-            i += 1
             break
           }
           default: {
