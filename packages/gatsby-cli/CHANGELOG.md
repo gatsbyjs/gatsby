@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.15...gatsby-cli@2.7.16) (2019-07-19)
+
+### Bug Fixes
+
+- **gatsby-cli:** convert hooks into class component ([#15903](https://github.com/gatsbyjs/gatsby/issues/15903)) ([0ab03f5](https://github.com/gatsbyjs/gatsby/commit/0ab03f5))
+
 ## [2.7.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.14...gatsby-cli@2.7.15) (2019-07-15)
 
 **Note:** Version bump only for package gatsby-cli
