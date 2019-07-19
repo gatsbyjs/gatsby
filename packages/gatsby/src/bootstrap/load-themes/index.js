@@ -18,7 +18,7 @@ const resolveTheme = async themeSpec => {
     try {
       console.log(path.resolve(`.`))
       themeDir = path.dirname(
-        require.resolve(path.join(`.`, `plugins`, themeName))
+        require.resolve(path.join(path.resolve(`.`), `plugins`, themeName))
       )
     } catch (localErr) {
       console.log(localErr)
