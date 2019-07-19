@@ -118,8 +118,8 @@ export default (content, className = ``) => {
               filtered.push({
                 code: stripComment(line),
               })
-              i += 1
             }
+            i += 1
             break
           }
           default: {
