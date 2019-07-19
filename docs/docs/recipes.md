@@ -152,6 +152,33 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 - More on [importing assets into files](/docs/importing-assets-into-files/]
 - [Using Typography.js for Google fonts](/docs/typography-js/)
 
+### Using Google Fonts
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- Choose a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
+
+#### Directions
+
+1. Visit [the typefaces project](https://github.com/KyleAMathews/typefaces) and choose the font you'd like.
+2. Run `npm install --save yourchosenfont`, replacing `yourchosenfont` with the name of the font you want to install.
+3. Add `require("yourchosenfont")` to your site's entry file.
+4. Once installed, you can add the font either in your CSS stylesheet or inline using `font-family: yourchosenfont`. An inline implementation might look something like this:
+
+```js:title=src/pages/index.js
+<MyComponent style={{font-family: yourchosenfont}} />
+```
+
+Since you are now hosting your own Google font within your project, there is no need to pull it in when your site loads, increasing your site's speedindex by up to ~300 miliseconds on desktop and 1+ seconds on 3g!
+
+#### Additional Resources
+
+- [Typography.js](https://www.gatsbyjs.org/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
+- [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
+- [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
+
 ## Creating layouts
 
 To wrap pages with layouts, use normal React components.
