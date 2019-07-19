@@ -6030,6 +6030,14 @@ cli-truncate@^0.2.1:
     slice-ansi "0.0.4"
     string-width "^1.0.1"
 
+cli-truncate@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/cli-truncate/-/cli-truncate-1.1.0.tgz#2b2dfd83c53cfd3572b87fc4d430a808afb04086"
+  integrity sha512-bAtZo0u82gCfaAGfSNxUdTI9mNyza7D8w4CVCcaOsy7sgwDzvx6ekr6cuWJqY3UGzgnQ1+4wgENup5eIhgxEYA==
+  dependencies:
+    slice-ansi "^1.0.0"
+    string-width "^2.0.0"
+
 cli-width@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/cli-width/-/cli-width-2.2.0.tgz#ff19ede8a9a5e579324147b0c11f0fbcbabed639"
@@ -11162,23 +11170,28 @@ ink-spinner@^3.0.1:
     cli-spinners "^1.0.0"
     prop-types "^15.5.10"
 
-ink@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/ink/-/ink-2.0.5.tgz#a7fcd79372f57bef0e436d087cbef9e545ee1051"
+ink@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/ink/-/ink-2.3.0.tgz#222136be17bb72fc742e19090483e7e0e7dc3690"
+  integrity sha512-931rgXHAS3hM++8ygWPOBeHOFwTzHh3pDAVZtiBVOUH6tVvJijym43ODUy22ySo2NwYUFeR/Zj3xuWzBEKMiHw==
   dependencies:
     "@types/react" "^16.8.6"
     arrify "^1.0.1"
     auto-bind "^2.0.0"
     chalk "^2.4.1"
     cli-cursor "^2.1.0"
+    cli-truncate "^1.1.0"
+    is-ci "^2.0.0"
     lodash.throttle "^4.1.1"
     log-update "^3.0.0"
     prop-types "^15.6.2"
     react-reconciler "^0.20.0"
     scheduler "^0.13.2"
+    signal-exit "^3.0.2"
     slice-ansi "^1.0.0"
     string-length "^2.0.0"
     widest-line "^2.0.0"
+    wrap-ansi "^5.0.0"
     yoga-layout-prebuilt "^1.9.3"
 
 inline-style-prefixer@^4.0.0:

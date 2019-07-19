@@ -677,8 +677,8 @@ with [`getNodeById`](/docs/node-model/#getNodeById) and
 [`getNodesByIds`](/docs/node-model/#getNodesByIds). To get all nodes, or all
 nodes of a certain type, use [`getAllNodes`](/docs/node-model/#getAllNodes).
 And running a query from inside your resolver functions can be accomplished
-with [`runQuery`](/docs/node-model/#runQuery), which accepts `filter`, `sort`,
-`limit` and `skip` query arguments.
+with [`runQuery`](/docs/node-model/#runQuery), which accepts `filter` and `sort`
+query arguments.
 
 We could for example add a field to the `AuthorJson` type that lists all recent
 posts by an author:

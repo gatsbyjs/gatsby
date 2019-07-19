@@ -880,6 +880,7 @@ actions.createNodeField = (
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
+  node = trackInlineObjectsInRootNode(node, true)
 
   return {
     type: `ADD_FIELD_TO_NODE`,
