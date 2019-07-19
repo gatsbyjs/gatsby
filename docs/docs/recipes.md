@@ -127,7 +127,7 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
--The [Gatsby CLI](/docs/gatsby-cli)
+- The [Gatsby CLI](/docs/gatsby-cli) installed
 
 #### Directions
 
