@@ -135,7 +135,10 @@ export default (content, className = ``) => {
   }
 
   return [
-    filtered.map(({ code }) => code).join(`\n`),
+    filtered
+      .map(({ code }) => code)
+      .join(`\n`)
+      .trim(),
     filtered.reduce((lookup, { highlighted }, index) => {
       if (highlighted) {
         lookup[index] = true
