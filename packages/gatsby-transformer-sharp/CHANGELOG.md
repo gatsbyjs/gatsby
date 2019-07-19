@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.3...gatsby-transformer-sharp@2.2.4) (2019-07-17)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** mark highlight/shadow duotone args as required ([#15829](https://github.com/gatsbyjs/gatsby/issues/15829)) ([f838d00](https://github.com/gatsbyjs/gatsby/commit/f838d00))
+
 ## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.2...gatsby-transformer-sharp@2.2.3) (2019-07-12)
 
 ### Bug Fixes
