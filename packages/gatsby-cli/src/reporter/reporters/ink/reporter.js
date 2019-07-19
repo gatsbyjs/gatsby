@@ -1,5 +1,5 @@
 import React from "react"
-import { Static, Box } from "ink"
+import { Static, Box, Text } from "ink"
 import chalk from "chalk"
 import { trackBuildError } from "gatsby-telemetry"
 import Spinner from "./components/spinner"
@@ -179,17 +179,15 @@ export default class GatsbyReporter extends React.Component {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static>
-            {messages.map((msg, index) => (
-              <Box textWrap="wrap" key={index}>
-                {msg.type === `error` ? (
-                  <Error type={msg.type} details={msg.details} />
-                ) : (
-                  <Message type={msg.type} hideColors={disableColors}>
-                    {msg.details}
-                  </Message>
-                )}
-              </Box>
-            ))}
+            {messages.map((msg, index) =>
+              msg.type === `error` ? (
+                <Error type={msg.type} details={msg.details} key={index} />
+              ) : (
+                <Message type={msg.type} hideColors={disableColors} key={index}>
+                  <Text>{msg.details}</Text>
+                </Message>
+              )
+            )}
           </Static>
 
           {spinners.map(activity => (
