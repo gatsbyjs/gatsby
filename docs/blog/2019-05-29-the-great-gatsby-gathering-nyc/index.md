@@ -4,7 +4,6 @@ date: 2019-05-29
 author: Linda Watkins
 excerpt: "Read a summary of Gatsby Days and the Gatsby Gathering in NYC, including links to talks by Gatsby co-founder Kyle Mathews and other team members"
 tags:
-  - gathering
   - gatsby-inc
 ---
 

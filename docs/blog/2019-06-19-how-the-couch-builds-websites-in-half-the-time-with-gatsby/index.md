@@ -6,7 +6,7 @@ tags:
   - case-studies
   - ecommerce
   - content-mesh
-  - building-websites-faster
+  - building-sites-faster
   - hosting
   - performance
 ---

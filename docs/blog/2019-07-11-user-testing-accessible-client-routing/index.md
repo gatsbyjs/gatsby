@@ -6,7 +6,7 @@ excerpt: "We conducted 5 user testing sessions with Fable Tech Labs to determine
 tags:
   - accessibility
   - gatsby-user-testing
-  - client-side routing
+  - client-side-routing
   - react
   - cutting-edge-experiences
 ---

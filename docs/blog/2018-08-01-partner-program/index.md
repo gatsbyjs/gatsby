@@ -2,7 +2,7 @@
 title: Grow with Gatsby- Announcing the new Gatsby Partner Program!
 date: 2018-08-01
 author: Linda Watkins
-tags: ["partner program", "agencies"]
+tags: ["partner-program", "agencies"]
 ---
 
 In the business of building websites or web apps for clients? Get the support you need and the visibility you deserve. Gatsby’s Partner Program is here!
