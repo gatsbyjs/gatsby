@@ -3,6 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.30...gatsby@2.13.31) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.29...gatsby@2.13.30) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.28...gatsby@2.13.29) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.27...gatsby@2.13.28) (2019-07-18)
+
+### Bug Fixes
+
+- **gatsby:** 404 page when using path-prefix ([#15858](https://github.com/gatsbyjs/gatsby/issues/15858)) ([51886a3](https://github.com/gatsbyjs/gatsby/commit/51886a3))
+- **gatsby:** Make intermediate schema available to createResolvers API ([#15838](https://github.com/gatsbyjs/gatsby/issues/15838)) ([055a1b0](https://github.com/gatsbyjs/gatsby/commit/055a1b0))
+
+### Features
+
+- **gatsby:** Allow explicitly defining parent-child relations with type extensions ([#15715](https://github.com/gatsbyjs/gatsby/issues/15715)) ([696106d](https://github.com/gatsbyjs/gatsby/commit/696106d))
+
+## [2.13.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.26...gatsby@2.13.27) (2019-07-17)
+
+### Bug Fixes
+
+- **gatsby:** Hot reload package and theme queries ([#15739](https://github.com/gatsbyjs/gatsby/issues/15739)) ([1685a2b](https://github.com/gatsbyjs/gatsby/commit/1685a2b))
+- **gatsby:** Track nodes when mutated ([#15720](https://github.com/gatsbyjs/gatsby/issues/15720)) ([f939f6c](https://github.com/gatsbyjs/gatsby/commit/f939f6c))
+
+## [2.13.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.25...gatsby@2.13.26) (2019-07-17)
+
+### Bug Fixes
+
+- **docs:** Don’t include example code in API docs that doesn’t work ([#15803](https://github.com/gatsbyjs/gatsby/issues/15803)) ([044eea5](https://github.com/gatsbyjs/gatsby/commit/044eea5))
+
+### Features
+
+- **gatsby:** pass webhook data to sourceNodes functions ([#15564](https://github.com/gatsbyjs/gatsby/issues/15564)) ([dd130f1](https://github.com/gatsbyjs/gatsby/commit/dd130f1))
+
+## [2.13.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.24...gatsby@2.13.25) (2019-07-16)
+
+### Bug Fixes
+
+- **gatsby:** fix matchpath prioritisation ([#15762](https://github.com/gatsbyjs/gatsby/issues/15762)) ([a1ab8bc](https://github.com/gatsbyjs/gatsby/commit/a1ab8bc))
+
+## [2.13.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.23...gatsby@2.13.24) (2019-07-16)
+
+### Bug Fixes
+
+- **gatsby:** Fix import on cache-dir/gatsby-browser-entry.js ([#15735](https://github.com/gatsbyjs/gatsby/issues/15735)) ([4b206c3](https://github.com/gatsbyjs/gatsby/commit/4b206c3)), closes [/github.com/gatsbyjs/gatsby/blob/2d27d7d42112fcbeb13cd52fa9fe0d46b1764d13/packages/gatsby/cache-dir/loader.js#L355](https://github.com//github.com/gatsbyjs/gatsby/blob/2d27d7d42112fcbeb13cd52fa9fe0d46b1764d13/packages/gatsby/cache-dir/loader.js/issues/L355)
+
+## [2.13.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.22...gatsby@2.13.23) (2019-07-15)
+
+### Features
+
+- **gatsby:** Refine typing on createPage ([#15723](https://github.com/gatsbyjs/gatsby/issues/15723)) ([65d5181](https://github.com/gatsbyjs/gatsby/commit/65d5181))
+
+## [2.13.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.21...gatsby@2.13.22) (2019-07-15)
+
+### Bug Fixes
+
+- **gatsby:** Add NodeInput for createNode function types ([#14537](https://github.com/gatsbyjs/gatsby/issues/14537)) ([1b549e8](https://github.com/gatsbyjs/gatsby/commit/1b549e8))
+
+### Features
+
+- **gatsby:** Add nodeInterface extension ([#15545](https://github.com/gatsbyjs/gatsby/issues/15545)) ([8c46237](https://github.com/gatsbyjs/gatsby/commit/8c46237))
+- **gatsby:** add prefetchPathname the public api ([#13985](https://github.com/gatsbyjs/gatsby/issues/13985)) ([7173f96](https://github.com/gatsbyjs/gatsby/commit/7173f96))
+
+## [2.13.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.20...gatsby@2.13.21) (2019-07-14)
+
+### Features
+
+- **gatsby:** Add enum and scalar type builders ([#15689](https://github.com/gatsbyjs/gatsby/issues/15689)) ([e12d79d](https://github.com/gatsbyjs/gatsby/commit/e12d79d))
+
 ## [2.13.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.19...gatsby@2.13.20) (2019-07-13)
 
 **Note:** Version bump only for package gatsby

@@ -2,6 +2,7 @@
   "private": true,
   "workspaces": [
     "gatsby-theme-about",
-    "production-runtime"
+    "production-runtime",
+    "development-runtime"
   ]
 }
