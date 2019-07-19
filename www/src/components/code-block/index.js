@@ -38,26 +38,27 @@ export default ({ children }) => {
     >
       {({ tokens, getLineProps, getTokenProps }) => (
         <div className="gatsby-highlight">
-          <div className="gatsby-highlight-header">
-            {title && (
+          {title && (
+            <div className="gatsby-highlight-header">
               <div
                 className="gatsby-code-title"
-                css={{ fontSize: fontSizes[0], paddingTop: space[4] }}
+                css={{ fontSize: fontSizes[0] }}
               >
                 {title}
               </div>
-            )}
+            </div>
+          )}
+          <pre className={`language-${language}`}>
             <Copy
               fileName={title}
               css={{
                 position: `absolute`,
-                right: space[6],
-                borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
+                right: space[1],
+                top: space[1],
+                borderRadius: `${radii[2]}px ${radii[2]}px`,
               }}
               content={content}
             />
-          </div>
-          <pre className={`language-${language}`}>
             {tokens.map((line, i) => {
               const lineProps = getLineProps({ line, key: i })
               const className = [lineProps.className]

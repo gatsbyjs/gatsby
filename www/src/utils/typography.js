@@ -86,16 +86,16 @@ const _options = {
       // gatsby-remark-prismjs styles
       ".gatsby-highlight": {
         background: colors.code.bg,
-        position: `relative`,
         WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class^='language-']": {
         backgroundColor: `transparent`,
         border: 0,
+        position: `relative`,
         WebkitOverflowScrolling: `touch`,
       },
       ".gatsby-highlight pre[class^='language-']::before": {
-        background: `#ddd`,
+        background: colors.grey[20],
         borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
         color: colors.text.header,
         fontSize: fontSizes[0],
@@ -111,36 +111,24 @@ const _options = {
       },
       ".gatsby-highlight pre[class='language-javascript']::before": {
         content: `'js'`,
-        background: `#f7df1e`,
       },
       ".gatsby-highlight pre[class='language-js']::before": {
         content: `'js'`,
-        background: `#f7df1e`,
       },
       ".gatsby-highlight pre[class='language-jsx']::before": {
         content: `'jsx'`,
-        background: `#61dafb`,
       },
       ".gatsby-highlight pre[class='language-graphql']::before": {
         content: `'GraphQL'`,
-        background: `#E10098`,
-        color: colors.white,
       },
       ".gatsby-highlight pre[class='language-html']::before": {
         content: `'html'`,
-        background: `#005A9C`,
-        color: colors.white,
       },
       ".gatsby-highlight pre[class='language-css']::before": {
         content: `'css'`,
-        background: `#ff9800`,
-        color: colors.white,
       },
       ".gatsby-highlight pre[class='language-mdx']::before": {
         content: `'mdx'`,
-        background: `#f9ac00`,
-        color: colors.white,
-        fontWeight: `400`,
       },
       ".gatsby-highlight pre[class='language-shell']::before": {
         content: `'shell'`,
@@ -153,26 +141,21 @@ const _options = {
       },
       ".gatsby-highlight pre[class='language-yaml']::before": {
         content: `'yaml'`,
-        background: `#ffa8df`,
       },
       ".gatsby-highlight pre[class='language-markdown']::before": {
         content: `'md'`,
       },
       ".gatsby-highlight pre[class='language-json']::before, .gatsby-highlight pre[class='language-json5']::before": {
         content: `'json'`,
-        background: `linen`,
       },
       ".gatsby-highlight pre[class='language-diff']::before": {
         content: `'diff'`,
-        background: `#e6ffed`,
       },
       ".gatsby-highlight pre[class='language-text']::before": {
         content: `'text'`,
-        background: colors.white,
       },
       ".gatsby-highlight pre[class='language-flow']::before": {
         content: `'flow'`,
-        background: `#E8BD36`,
       },
       ".gatsby-highlight pre code": {
         display: `block`,
@@ -182,6 +165,10 @@ const _options = {
         minWidth: `100%`,
         // reset code vertical padding declared earlier
         padding: `0 ${space[6]}`,
+      },
+      ".gatsby-highlight pre": {
+        padding: space[6],
+        paddingTop: space[8],
       },
       ".gatsby-highlight-code-line": {
         background: colors.code.border,
@@ -274,7 +261,7 @@ const _options = {
         background: colors.code.bg,
         borderBottom: `1px solid ${colors.code.border}`,
         color: colors.code.text,
-        padding: `${space[5]} ${space[6]} ${space[4]}`,
+        padding: `${space[4]} ${space[6]}`,
         fontSize: fontSizes[0],
       },
       [mediaQueries.md]: {

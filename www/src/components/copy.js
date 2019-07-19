@@ -8,7 +8,8 @@ import {
   fontSizes,
   colors,
   lineHeights,
-  letterSpacings,
+  shadows,
+  transition,
 } from "../utils/presets"
 
 const copyToClipboard = content => {
@@ -38,17 +39,26 @@ function Copy({ className, content, duration, fileName, trim = false }) {
       className={className}
       disabled={copied}
       css={{
-        background: colors.text.header,
+        backgroundColor: `transparent`,
         border: `none`,
-        color: `#ddd`,
-        fontSize: fontSizes[0],
-        fontFamily: fonts.monospace,
-        letterSpacing: letterSpacings.tracked,
+        color: colors.grey[60],
+        cursor: `pointer`,
+        fontSize: fontSizes[2],
+        fontFamily: fonts.header,
         lineHeight: lineHeights.solid,
-        padding: `${space[1]} ${space[2]}`,
-        textAlign: `right`,
-        textTransform: `uppercase`,
-        top: `0`,
+        padding: `${space[2]} ${space[2]}`,
+        transition: `${transition.speed.default} ${transition.curve.default}`,
+        "&[disabled]": {
+          cursor: `not-allowed`,
+        },
+        ":not([disabled]):hover": {
+          backgroundColor: colors.purple[60],
+          boxShadow: shadows.raised,
+          color: colors.white,
+        },
+        ":active": {
+          boxShadow: shadows.floating,
+        },
       }}
       onClick={async () => {
         copyToClipboard(trim ? content.trim() : content)
