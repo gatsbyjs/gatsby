@@ -167,6 +167,7 @@ const _options = {
         padding: `0 ${space[6]}`,
       },
       ".gatsby-highlight pre": {
+        fontFamily: fonts.monospace.join(`,`),
         padding: space[6],
         paddingTop: space[8],
       },
