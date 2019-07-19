@@ -35,21 +35,27 @@ const containsDirective = line =>
 /*
  * This parses the {1-3} syntax range that is sometimes used
  */
-const getInitialHighlights = (className, split) => {
+const getInitialFilter = (className, split) => {
   const lineNumberExpr = /{([^}]+)/
   const [, match] = className.match(lineNumberExpr) || []
   if (match) {
-    return match.split(/,\s*/).reduce((merged, range) => {
+    const lookup = match.split(/,\s*/).reduce((merged, range) => {
       const [start, end = start] = range
         .split(`-`)
         .map(num => parseInt(num, 10))
       for (let i = start; i <= end; i++) {
-        merged[split[i - 1]] = true
+        merged[i - 1] = true
       }
       return merged
     }, {})
+    return split.map((line, index) => {
+      return {
+        code: line,
+        highlighted: !!lookup[index],
+      }
+    })
   }
-  return {}
+  return []
 }
 
 /*
@@ -58,74 +64,83 @@ const getInitialHighlights = (className, split) => {
  */
 export default (content, className = ``) => {
   const split = content.split(`\n`)
-  let filtered = []
-  let highlights = getInitialHighlights(className, split)
+  let filtered = getInitialFilter(className, split)
 
-  for (let i = 0; i < split.length; i++) {
-    const line = split[i]
-    if (containsDirective(line)) {
-      const [, keyword, directive] = line.match(DIRECTIVE)
-      switch (directive) {
-        case `start`: {
-          const endIndex = split
-            .slice(i + 1)
-            .findIndex(line => END_DIRECTIVE[keyword].test(line))
+  if (filtered.length === 0) {
+    for (let i = 0; i < split.length; i++) {
+      const line = split[i]
+      if (containsDirective(line)) {
+        const [, keyword, directive] = line.match(DIRECTIVE)
+        switch (directive) {
+          case `start`: {
+            const endIndex = split
+              .slice(i + 1)
+              .findIndex(line => END_DIRECTIVE[keyword].test(line))
 
-          const end = endIndex === -1 ? split.length : endIndex + i
+            const end = endIndex === -1 ? split.length : endIndex + i
 
-          if (keyword === `highlight`) {
-            const stripped = stripComment(line)
-            if (stripped !== ``) {
-              filtered.push(stripped)
+            if (keyword === `highlight`) {
+              filtered = filtered.concat(
+                split.slice(i, end + 1).map(line => {
+                  return {
+                    code: stripComment(line),
+                    highlighted: true,
+                  }
+                })
+              )
             }
-            for (let j = i; j <= end + 1; j++) {
-              highlights[stripComment(split[j])] = true
-            }
-          } else if (keyword === `hide`) {
+
             i = end
+            break
           }
-          break
-        }
-        case `end`: {
-          const stripped = stripComment(line)
-          if (stripped !== ``) {
-            filtered.push(stripped)
+          case `line`: {
+            if (keyword === `highlight`) {
+              filtered.push({
+                code: stripComment(line),
+                highlighted: true,
+              })
+            } else if (keyword === `hide`) {
+              i += 1
+            }
+            break
           }
-          break
-        }
-        case `line`: {
-          if (keyword === `highlight`) {
-            const stripped = stripComment(line)
-            highlights[stripped] = true
-            filtered.push(stripped)
-          }
-          break
-        }
-        case `next-line`: {
-          if (keyword === `highlight`) {
-            highlights[split[i + 1]] = true
-          } else if (keyword === `hide`) {
-            filtered.push(stripComment(line))
+          case `next-line`: {
+            if (keyword === `highlight`) {
+              filtered = filtered.concat([
+                {
+                  code: stripComment(line),
+                  highlighted: false,
+                },
+                {
+                  code: stripComment(split[i + 1]),
+                  highlighted: true,
+                },
+              ])
+            }
+
             i += 1
+            break
           }
-          break
+          default: {
+            break
+          }
         }
-        default: {
-          break
-        }
+      } else {
+        filtered.push({
+          code: line,
+          highlighted: false,
+        })
       }
-    } else {
-      filtered.push(line)
     }
   }
 
   return [
-    filtered.join(`\n`),
-    filtered.reduce((merged, line, index) => {
-      if (highlights[line]) {
-        merged[index] = true
+    filtered.map(({ code }) => code).join(`\n`),
+    filtered.reduce((lookup, { highlighted }, index) => {
+      if (highlighted) {
+        lookup[index] = true
       }
-      return merged
+      return lookup
     }, {}),
   ]
 }
