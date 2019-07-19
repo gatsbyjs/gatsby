@@ -225,19 +225,20 @@ jobs:
       - restore_cache:
           key: www_public_dir_1
       - restore_cache:
-          key: www-cache_dir_1
+          key: www_cache_dir_1
       - run:
           command: yarn
           working_directory: ~/project/www
       - run:
-          command: yarn build
+          # manually match cpu_count to vcpus available in resource_class
+          command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: www_public_dir_1
+          key: www_public_dir_1_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: www_cache_dir_1
+          key: www_cache_dir_1_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
@@ -249,10 +250,11 @@ jobs:
       - restore_cache:
           key: www_public_dir_1
       - run:
-          command: yarn global add netlify-cli
+          command: yarn add netlify-cli
           working_directory: ~/project/www
       - run:
-          command: netlify deploy --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Nightly build deployed from job $CIRCLE_BUILD_URL" # --prod
+          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
+          no_output_timeout: 2h
           working_directory: ~/project/www
 
 workflows:
@@ -301,10 +303,10 @@ workflows:
             branches:
               only:
                 - master
-  nightly:
+  www_deploy:
     triggers:
       - schedule:
-          cron: "0 * * * *"
+          cron: "0 2,6,10,14,18,22 * * *"
           filters:
             branches:
               only:
@@ -314,4 +316,6 @@ workflows:
           # Check CircleCI web ui for context details (env vars)
           context: build_www
       - deploy_www:
+          requires:
+            - build_www
           context: build_www

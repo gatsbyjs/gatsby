@@ -20,7 +20,7 @@ try {
   // Handle Sharp's concurrency based on the Gatsby CPU count
   // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
   // See: https://www.gatsbyjs.org/docs/multi-core-builds/
-  const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
+  const cpuCoreCount = require(`gatsby/dist/utils/worker/cpu-core-count`)
   sharp.concurrency(cpuCoreCount())
 } catch {
   // if above throws error this probably means that used Gatsby version
