@@ -12,7 +12,7 @@ describe(`highlighting`, () => {
     `.trim(),
         `jsx`
       )
-    ).toEqual([expect.any(String), { 0: true, 1: true, 2: true }])
+    ).toEqual([expect.any(String), { 0: true, 1: true }])
   })
 
   it(`highlight-start, without end`, () => {
@@ -26,7 +26,7 @@ describe(`highlighting`, () => {
     `.trim(),
         `jsx`
       )
-    ).toEqual([expect.any(String), { 1: true, 2: true, 3: true }])
+    ).toEqual([expect.any(String), { 1: true, 2: true }])
   })
 
   it(`highlight-line`, () => {

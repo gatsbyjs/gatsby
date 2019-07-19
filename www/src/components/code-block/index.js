@@ -22,11 +22,21 @@ const getParams = (name = ``) => {
   )
 }
 
-export default ({ children }) => {
-  const [language, { title = `` }] = getParams(children.props.className)
+/*
+ * MDX passes the code block as JSX
+ * we un-wind it a bit to get the string content
+ * but keep it extensible so it can be used with just children (string) and className
+ */
+export default ({
+  children,
+  className = children.props ? children.props.className : ``,
+}) => {
+  const [language, { title = `` }] = getParams(className)
   const [content, highlights] = normalize(
-    children.props.children,
-    children.props.className
+    children.props && children.props.children
+      ? children.props.children
+      : children,
+    className
   )
 
   return (

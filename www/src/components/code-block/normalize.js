@@ -82,12 +82,16 @@ export default (content, className = ``) => {
 
             if (keyword === `highlight`) {
               filtered = filtered.concat(
-                split.slice(i, end + 1).map(line => {
-                  return {
-                    code: stripComment(line),
-                    highlighted: true,
+                split.slice(i, end + 1).reduce((merged, line) => {
+                  const code = stripComment(line)
+                  if (code) {
+                    merged.push({
+                      code,
+                      highlighted: true,
+                    })
                   }
-                })
+                  return merged
+                }, [])
               )
             }
 
@@ -95,25 +99,29 @@ export default (content, className = ``) => {
             break
           }
           case `line`: {
-            if (keyword === `highlight`) {
+            const code = stripComment(line)
+            if (keyword === `highlight` && code) {
               filtered.push({
-                code: stripComment(line),
+                code,
                 highlighted: true,
               })
             }
             break
           }
           case `next-line`: {
+            const code = stripComment(line)
             if (keyword === `highlight`) {
-              filtered = filtered.concat([
-                {
-                  code: stripComment(line),
-                },
-                {
-                  code: stripComment(split[i + 1]),
-                  highlighted: true,
-                },
-              ])
+              filtered = filtered.concat(
+                [
+                  {
+                    code,
+                  },
+                  {
+                    code: stripComment(split[i + 1]),
+                    highlighted: true,
+                  },
+                ].filter(line => line.code)
+              )
             } else if (keyword === `hide`) {
               filtered.push({
                 code: stripComment(line),
