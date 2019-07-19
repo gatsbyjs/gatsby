@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.16...gatsby-cli@2.7.17) (2019-07-19)
+
+### Bug Fixes
+
+- **gatsby-cli:** fix cut off text ([#15907](https://github.com/gatsbyjs/gatsby/issues/15907)) ([11322d8](https://github.com/gatsbyjs/gatsby/commit/11322d8))
+
 ## [2.7.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.15...gatsby-cli@2.7.16) (2019-07-19)
 
 ### Bug Fixes
