@@ -16,8 +16,12 @@ const resolveTheme = async themeSpec => {
   } catch (e) {
     // is a local plugin OR it doesn't exist
     try {
-      themeDir = path.dirname(require.resolve(`./plugins` + themeName))
+      console.log(path.resolve(`.`))
+      themeDir = path.dirname(
+        require.resolve(path.join(`.`, `plugins`, themeName))
+      )
     } catch (localErr) {
+      console.log(localErr)
       throw e
     }
   }
