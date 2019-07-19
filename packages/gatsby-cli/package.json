@@ -55,7 +55,7 @@
     "cross-env": "^5.1.4"
   },
   "optionalDependencies": {
-    "ink": "^2.0.5",
+    "ink": "^2.3.0",
     "ink-spinner": "^3.0.1"
   },
   "files": [
