@@ -56,7 +56,7 @@ const getInitialHighlights = (className, split) => {
  * This function will output the normalized content (stripped of comment directives)
  * alongside a lookup of filtered lines
  */
-export default (content, className) => {
+export default (content, className = ``) => {
   const split = content.split(`\n`)
   let filtered = []
   let highlights = getInitialHighlights(className, split)
