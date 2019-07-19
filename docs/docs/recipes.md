@@ -141,9 +141,9 @@ You can use the `graphql`-tag to query data in your pages.
 
 2. Export a constant named `query` and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks.
 
-3. Destruct `data` from props.
+3. Pass in `data` as a prop to the component.
 
-4. The `data` variable now holds the queried data with the expected shape.
+4. The `data` variable which holds the queried data with the expected shape can be referenced in JSX to output HTML.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
