@@ -7,18 +7,13 @@ Object {
   "type": "javascript/auto",
   "use": Array [
     Object {
-      "loader": "<PROJECT_ROOT>/packages/gatsby/src/utils/babel-loader.js",
+      "loader": "<PROJECT_ROOT>/node_modules/babel-loader/lib/index.js",
       "options": Object {
         "babelrc": false,
-        "compact": false,
+        "cacheIdentifier": "gatsby-dependencies@1.0.0",
         "configFile": false,
         "presets": Array [
-          Array [
-            "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
-            Object {
-              "stage": "develop",
-            },
-          ],
+          "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
         ],
         "sourceMaps": false,
       },
@@ -35,7 +30,11 @@ Object {
   "use": Array [
     Object {
       "loader": "<PROJECT_ROOT>/packages/gatsby/src/utils/babel-loader.js",
-      "options": Object {},
+      "options": Object {
+        "compact": true,
+        "configFile": false,
+        "stage": "develop",
+      },
     },
   ],
 }
