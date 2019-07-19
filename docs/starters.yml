@@ -1,3 +1,69 @@
+- url: https://gatsby-starter-blog-demo.netlify.com/
+  repo: https://github.com/gatsbyjs/gatsby-starter-blog
+  description: official blog
+  tags:
+    - Official
+    - Blog
+  features:
+    - Basic setup for a full-featured blog
+    - Support for an RSS feed
+    - Google Analytics support
+    - Automatic optimization of images in Markdown posts
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-default-demo.netlify.com/
+  repo: https://github.com/gatsbyjs/gatsby-starter-default
+  description: official default
+  tags:
+    - Official
+  features:
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://gatsby-netlify-cms.netlify.com/
+  repo: https://github.com/netlify-templates/gatsby-starter-netlify-cms
+  description: n/a
+  tags:
+    - Blog
+    - Styling:Bulma
+    - CMS:Netlify
+  features:
+    - A simple blog built with Netlify CMS
+    - Basic directory organization
+    - Uses Bulma for styling
+    - Visit the repo to learn how to set up authentication, and begin modeling your content.
+- url: https://vagr9k.github.io/gatsby-advanced-starter/
+  repo: https://github.com/Vagr9K/gatsby-advanced-starter
+  description: Great for learning about advanced features and their implementations
+  tags:
+    - Blog
+    - Styling:None
+  features:
+    - Does not contain any UI frameworks
+    - Provides only a skeleton
+    - Tags
+    - Categories
+    - Google Analytics
+    - Disqus
+    - Offline support
+    - Web App Manifest
+    - SEO
+- url: https://vagr9k.github.io/gatsby-material-starter/
+  repo: https://github.com/Vagr9K/gatsby-material-starter
+  description: n/a
+  tags:
+    - Styling:Material
+  features:
+    - React-MD for Material design
+    - Sass/SCSS
+    - Tags
+    - Categories
+    - Google Analytics
+    - Disqus
+    - Offline support
+    - Web App Manifest
+    - SEO
 - url: https://gatsby-advanced-blog-system.danilowoz.now.sh/blog
   repo: https://github.com/danilowoz/gatsby-advanced-blog-system
   description: Create a complete blog from scratch with pagination, categories, featured posts, author, SEO and navigation.
@@ -38,22 +104,7 @@
     - Portfolio
     - Resume
     - Redux for managing statement (with redux-saga / reselect)
-- url: https://vagr9k.github.io/gatsby-advanced-starter/
-  repo: https://github.com/Vagr9K/gatsby-advanced-starter
-  description: Great for learning about advanced features and their implementations
-  tags:
-    - Blog
-    - Styling:None
-  features:
-    - Does not contain any UI frameworks
-    - Provides only a skeleton
-    - Tags
-    - Categories
-    - Google Analytics
-    - Disqus
-    - Offline support
-    - Web App Manifest
-    - SEO
+
 - url: https://gatsby-tailwind-emotion-starter.netlify.com/
   repo: https://github.com/muhajirdev/gatsby-tailwind-emotion-starter
   description: A Gatsby Starter with Tailwind CSS + Emotion JS
@@ -116,21 +167,6 @@
     - A basic blog, with posts under src/pages/blog
     - A few basic components (Navigation, Layout, Link wrapper around gatsby-link))
     - Based on gatsby-starter-gatsbytheme
-- url: https://vagr9k.github.io/gatsby-material-starter/
-  repo: https://github.com/Vagr9K/gatsby-material-starter
-  description: n/a
-  tags:
-    - Styling:Material
-  features:
-    - React-MD for Material design
-    - Sass/SCSS
-    - Tags
-    - Categories
-    - Google Analytics
-    - Disqus
-    - Offline support
-    - Web App Manifest
-    - SEO
 - url: https://xiaoxinghu.github.io/gatsby-orga/
   repo: https://github.com/xiaoxinghu/gatsby-orga
   description: n/a
@@ -182,21 +218,7 @@
     - Use your GitHub as your own portfolio site
     - List your GitHub repositories
     - GitHub GraphQL API v4
-- url: https://gatsby-starter-blog-demo.netlify.com/
-  repo: https://github.com/gatsbyjs/gatsby-starter-blog
-  description: official blog
-  tags:
-    - Official
-    - Blog
-  features:
-    - Basic setup for a full-featured blog
-    - Support for an RSS feed
-    - Google Analytics support
-    - Automatic optimization of images in Markdown posts
-    - Support for code syntax highlighting
-    - Includes plugins for easy, beautiful typography
-    - Includes React Helmet to allow editing site meta tags
-    - Includes plugins for offline support out of the box
+
 - url: https://gatsby-starter-bloomer.netlify.com/
   repo: https://github.com/Cethy/gatsby-starter-bloomer
   description: n/a
@@ -321,14 +343,6 @@
     - i18n
   features:
     - localization (Multilanguage)
-- url: https://gatsby-starter-default-demo.netlify.com/
-  repo: https://github.com/gatsbyjs/gatsby-starter-default
-  description: official default
-  tags:
-    - Official
-  features:
-    - Comes with React Helmet for adding site meta tags
-    - Includes plugins for offline support out of the box
 - url: http://gatsby-dimension.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-dimension
   description: Single page starter based on the Dimension site template
@@ -542,18 +556,6 @@
     - Use EditorConfig to maintain consistent coding styles between different editors and IDEs
     - Integration with Visual Studio Code
     - Based on gatsby-starter-default
-- url: https://gatsby-netlify-cms.netlify.com/
-  repo: https://github.com/netlify-templates/gatsby-starter-netlify-cms
-  description: n/a
-  tags:
-    - Blog
-    - Styling:Bulma
-    - CMS:Netlify
-  features:
-    - A simple blog built with Netlify CMS
-    - Basic directory organization
-    - Uses Bulma for styling
-    - Visit the repo to learn how to set up authentication, and begin modeling your content.
 - url: https://gatsby-starter-personal-blog.greglobinski.com/
   repo: https://github.com/greglobinski/gatsby-starter-personal-blog
   description: n/a
