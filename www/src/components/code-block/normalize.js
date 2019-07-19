@@ -108,7 +108,6 @@ export default (content, className = ``) => {
               filtered = filtered.concat([
                 {
                   code: stripComment(line),
-                  highlighted: false,
                 },
                 {
                   code: stripComment(split[i + 1]),
@@ -116,7 +115,9 @@ export default (content, className = ``) => {
                 },
               ])
             } else if (keyword === `hide`) {
-              filtered.push(stripComment(line))
+              filtered.push({
+                code: stripComment(line),
+              })
               i += 1
             }
             break
@@ -128,7 +129,6 @@ export default (content, className = ``) => {
       } else {
         filtered.push({
           code: line,
-          highlighted: false,
         })
       }
     }

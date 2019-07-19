@@ -66,15 +66,44 @@ describe(`hiding`, () => {
     ).toEqual([`var b = 'c'`, expect.any(Object)])
   })
 
-  it.skip(`hide-next-line`, () => {
+  it(`hide-start`, () => {
     expect(
       normalize(
         `
-    var a = 'b' // hide-next-line
+    // hide-start
+    var a = 'b'
     var b = 'c'
+    // hide-end
     `.trim(),
         `jsx`
       )
-    ).toEqual([`var a = 'b'`, expect.any(Object)])
+    ).toEqual([``, expect.any(Object)])
+  })
+
+  describe(`next-line`, () => {
+    it(`on same line`, () => {
+      expect(
+        normalize(
+          `
+      var a = 'b' // hide-next-line
+      var b = 'c'
+      `.trim(),
+          `jsx`
+        )
+      ).toEqual([`var a = 'b'`, expect.any(Object)])
+    })
+
+    it(`on next line`, () => {
+      expect(
+        normalize(
+          `
+      var a = 'b'
+      // hide-next-line
+      var b = 'c'
+      `.trim(),
+          `jsx`
+        )
+      ).toEqual([`var a = 'b'`, expect.any(Object)])
+    })
   })
 })
