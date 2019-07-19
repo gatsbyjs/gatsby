@@ -1,6 +1,7 @@
 import React from "react"
 import { Static, Box } from "ink"
 import chalk from "chalk"
+import { trackBuildError } from "gatsby-telemetry"
 import Spinner from "./components/spinner"
 import ProgressBar from "./components/progress-bar"
 import Develop from "./components/develop"
@@ -126,8 +127,39 @@ export default class GatsbyReporter extends React.Component {
     this._addMessage(`verbose`, str)
   }
 
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error: error.name }
+  }
+
+  componentDidCatch(error, info) {
+    trackBuildError(`INK`, {
+      error: {
+        message: error.name,
+        stack: info.componentStack,
+      },
+    })
+  }
+
   render() {
-    const { activities, messages, disableColors, stage } = this.state
+    const {
+      activities,
+      messages,
+      disableColors,
+      stage,
+      hasError,
+      error,
+    } = this.state
+
+    if (hasError) {
+      // You can render any custom fallback UI
+      return (
+        <Box flexDirection="row">
+          <Message type="error" hideColors={disableColors}>
+            We've encountered an error: {error}
+          </Message>
+        </Box>
+      )
+    }
 
     const spinners = []
     const progressBars = []
