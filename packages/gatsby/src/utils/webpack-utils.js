@@ -355,7 +355,7 @@ module.exports = async ({
         // debugger to show the original code. Instead, the code
         // being evaluated would be much more helpful.
         sourceMaps: false,
-        cacheIdentifier: `gatsby-dependencies@${
+        cacheIdentifier: `${stage}---gatsby-dependencies@${
           require(`babel-preset-gatsby/package.json`).version
         }`,
       }
