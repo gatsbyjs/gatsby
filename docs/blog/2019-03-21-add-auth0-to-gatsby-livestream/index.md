@@ -5,10 +5,10 @@ author: Jason Lengstorf
 excerpt: >
   A common challenge while building apps is setting up authentication. In this video, Jason Lengstorf and Ado Kukic build a Gatsby app using Auth0 to create a login-protected dashboard.
 tags:
-  - apps
   - authentication
   - livestream
   - getting-started
+  - gatsby-for-apps
 ---
 
 A common challenge when building apps is setting up authentication. If our apps have user-specific data, we need a way to secure that data and identify our users so they can access their own information.

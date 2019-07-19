@@ -4,7 +4,6 @@ date: 2019-01-09T08:00:00+00:00
 author: Linda Watkins
 tags:
   - gatsby-days
-  - Talks
 image: "./images/Gatsby-Days copy.png"
 showImageInArticle: true
 ---
