@@ -123,7 +123,7 @@ To wrap pages with layouts, use normal React components.
 ## Deploying
 
 Showtime. Once you are happy with your site, you are ready to go live with it!
-
+### Preparing for deployment
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
