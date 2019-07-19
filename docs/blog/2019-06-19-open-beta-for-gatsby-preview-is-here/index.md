@@ -4,7 +4,6 @@ date: 2019-06-19
 author: Marisa Morby
 excerpt: "Open Beta for Gatsby Preview is here, with more CMS integrations!"
 tags:
-  - commercial
   - Gatsby Preview
 ---
 

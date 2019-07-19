@@ -3,8 +3,8 @@ title: "Delicious Simplicity ❤️ Gatsby: Building Happily Ever After"
 date: 2019-06-08
 author: Michelle Gienow
 tags:
-  - case study
-  - developer experience
+  - case-studies
+  - building-websites-faster
   - enterprise
 ---
 

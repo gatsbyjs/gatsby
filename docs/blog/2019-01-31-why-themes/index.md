@@ -45,7 +45,7 @@ Plugins have been a very successful lower-level abstraction for Gatsby. Themes i
 
 - OSS/Commercial entrepreneurs who want to create web products. Themes will enable them to assemble a product they can share or sell with others.
 
-- Designers who want to create unique/beautiful website designs to share with others
+- designers who want to create unique/beautiful website designs to share with others
 
 ## Why build themes?
 

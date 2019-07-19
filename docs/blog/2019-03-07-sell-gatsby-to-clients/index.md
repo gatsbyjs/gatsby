@@ -5,7 +5,7 @@ author: Linda Watkins
 tags:
   - agencies
   - lead-conversion
-  - clients
+  - gatsby-for-marketers
 ---
 
 At the last Gatsby Days conference a couple months ago, I gave a talk about how to talk about Gatsby to your clients or team. See [a recording of that talk here.](https://www.gatsbyjs.com/gatsby-days-positioning-linda "The Power of Positioning: Selling Gatsby to Your Clients") This post is a compliment to that talk and goes into a bit more detail on how to talk about Gatsby to a less-technical audience.

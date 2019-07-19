@@ -3,10 +3,7 @@ title: Gatsby for Apps
 date: 2018-11-07
 author: Dustin Schau
 tags:
-  - apps
-  - web apps
-  - applications
-  - beyond static
+  - gatsby-for-apps
 excerpt: Gatsby is great for not only static sites but also traditional web applications. Using Gatsby enables the benefits of both static and web applications so you don't have to sacrifice the advantages of one approach to reap the benefits of the other.
 cover: images/what-if-i-told-you.jpg
 ---

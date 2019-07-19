@@ -4,7 +4,6 @@ date: 2019-06-10
 author: Justin Emond
 excerpt: "If a client is ready to replace their tech stack, addressing their needs and using a use case is key to determining if Gatsby is a good fit as a replacement."
 tags:
-  - developers
   - migration
   - wordpress
 ---

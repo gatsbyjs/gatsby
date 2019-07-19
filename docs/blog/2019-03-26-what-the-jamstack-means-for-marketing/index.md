@@ -5,8 +5,8 @@ author: Kym Ellis
 excerpt: "Learn what JAMstack is and the pros and cons JAMstack websites have from a marketing perspective!"
 tags:
   - jamstack
-  - marketing
-  - headless cms
+  - gatsby-for-marketers
+  - headless-cms
 canonicalLink: https://kymellis.co/jamstack-marketing-headless-cms/
 ---
 

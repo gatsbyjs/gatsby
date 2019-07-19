@@ -4,7 +4,6 @@ date: 2019-07-03
 author: Brent Jackson
 tags:
   - themes
-  - css
   - cutting-edge-experiences
   - theme-ui
 ---

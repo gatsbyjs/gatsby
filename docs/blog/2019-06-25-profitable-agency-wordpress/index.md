@@ -4,11 +4,7 @@ date: 2019-06-25
 author: Hashim Warren
 tags:
   - agencies
-  - agency
-  - clients
-  - developers
-  - gatsby
-  - marketing
+  - gatsby-for-marketers
   - wordpress
   - aws
 ---

@@ -5,7 +5,7 @@ author: Alex Moon
 excerpt: "While more secure than their server-side counterparts, modern web frameworks provide new and unique security concerns."
 tags:
   - security
-  - api
+  - apis
   - JAMstack
 ---
 

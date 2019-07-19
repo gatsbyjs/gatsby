@@ -5,7 +5,6 @@ author: Brent Jackson
 excerpt: ""
 tags:
   - themes
-  - yarn
   - getting-started
 ---
 

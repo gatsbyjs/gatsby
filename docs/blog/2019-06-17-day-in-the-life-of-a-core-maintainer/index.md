@@ -5,7 +5,6 @@ author: Dustin Schau
 excerpt: "In this post, I outline the tasks, responsibilities, and day-to-day happenings of a Core contributor"
 tags:
   - community
-  - contributor
   - gatsby-inc
 ---
 

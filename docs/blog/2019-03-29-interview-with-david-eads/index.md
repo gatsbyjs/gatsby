@@ -5,7 +5,7 @@ author: Sam Bhagwat
 excerpt: "Discover what David Eads has used Gatsby for and why he’s used it for ProPublica's Ticket Trap data visualization."
 tags:
   - react
-  - visualization
+  - data-visualization
 ---
 
 I recently sat down with David Eads, who recently wrote a [fascinating deep dive](https://www.propublica.org/nerds/the-ticket-trap-news-app-front-to-back-david-eads-propublica-illinois) about how he used Gatsby for ProPublica's Ticket Trap data visualization. David and I talked about what he's used Gatsby for and why.

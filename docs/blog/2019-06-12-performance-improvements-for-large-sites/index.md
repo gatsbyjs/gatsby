@@ -3,8 +3,8 @@ title: Performance improvements for large sites
 date: 2019-06-12
 author: Anthony Marcar
 tags:
-  - architecture
   - performance
+  - large-sites
 ---
 
 Gatsby has always been, and will always be, focused on performance. All of the best practices and patterns relating to performance are internalized and we enable these performance optimizations _by default_ for every Gatsby application. However, there is always more we can do and we are always striving to make incremental improvements that impact _every_ Gatsby user. From this basis, we're happy to announce a new performance improvement: splitting the page manifest into individual files for each page. Prior to this change, for large Gatsby applications (e.g. more than 5,000 pages), the page manifest could grow to 200Kb or more, and loading this manifest could take several seconds on 3g connections, which is certainly non-ideal!
