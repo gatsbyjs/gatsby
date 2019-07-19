@@ -3,7 +3,7 @@ title: How Gatsby does high-impact, low-effort UX research (and you can too!)
 author: Shannon Soper
 date: 2018-12-31
 tags:
-  - ux
+  - gatsby-user-testing
 ---
 
 ## What this article is about:

@@ -5,7 +5,7 @@ author: Brent Jackson
 tags:
   - themes
   - css
-  - styles
+  - cutting-edge-experiences
   - theme-ui
 ---
 

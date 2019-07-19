@@ -2,7 +2,7 @@
 title: Why we created the Gatsby plugin library
 date: 2018-03-07
 author: Shannon Soper
-tags: ["plugins", "documentation"]
+tags: ["plugins", "gatsby-docs"]
 ---
 
 Earlier this week, we launched a [Plugin Library](/packages/) on Gatsbyjs.org and are excited for you to use it! This article explains how UX research drove the design of this library and the accompanying [Plugin Authoring](/docs/creating-plugins/) doc.
@@ -67,7 +67,7 @@ We _didn't_ like these things in some of the above libraries:
 Here’s a sampling of screenshots that many community members contributed to and gave feedback about. It’s rewarding to see how much the design has progressed (and will keep progressing).
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/images/gatsby-plugin-library-compressed.mp4"></source>
+  <source type="video/mp4" src="/images/gatsby-plugin-library-compressed.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 

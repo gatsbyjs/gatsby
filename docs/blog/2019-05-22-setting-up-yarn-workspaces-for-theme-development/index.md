@@ -6,7 +6,7 @@ excerpt: ""
 tags:
   - themes
   - yarn
-  - tutorials
+  - getting-started
 ---
 
 Gatsby [themes][themes-tag] are a new way to share functionality across multiple Gatsby sites.

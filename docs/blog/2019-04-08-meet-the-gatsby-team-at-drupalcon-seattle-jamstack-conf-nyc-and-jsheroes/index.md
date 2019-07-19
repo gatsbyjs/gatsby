@@ -6,7 +6,7 @@ excerpt: "Members of the Gatsby team will be in attendance at DrupalCon Seattle,
 tags:
   - drupal
   - events
-  - open source
+  - gatsby-inc
 ---
 
 It’s a packed week for the Gatsby team this week, with triple duty at conferences on both sides of the United States and in Europe! This year, members of the Gatsby team will be in attendance at [DrupalCon Seattle](https://events.drupal.org/seattle2019), [JAMstack Conf NYC](https://jamstackconf.com/nyc/), and [JSHeroes](https://jsheroes.io/), ready to answer your questions in workshops and sessions throughout the week, as well as in the exhibit hall at DrupalCon.

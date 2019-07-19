@@ -4,7 +4,7 @@ date: 2019-04-12
 author: Jim Ettig
 excerpt: "Are your sales dropping despite your sales and marketing teams doing all they can? See why your developer organization might have the answers you’re looking for."
 tags:
-  - sales
+  - lead-conversion
   - application performance
   - developer experience
 ---

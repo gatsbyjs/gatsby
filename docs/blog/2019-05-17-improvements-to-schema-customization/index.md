@@ -3,7 +3,6 @@ title: Improvements to Schema Customization API - Available in Gatsby 2.5.0
 date: 2019-05-17
 author: Mikhail Novikov
 tags:
-  - schema
   - graphql
 ---
 

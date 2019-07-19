@@ -7,11 +7,7 @@ tags:
   - gatsby-plugin
   - plugins
   - animation
-  - page transitions
-  - gsap
-  - anime.js
-  - react-spring
-  - react-pose
+  - cutting-edge-experiences
   - css
 ---
 

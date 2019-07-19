@@ -2,7 +2,7 @@
 title: Uptick in docs contributions for Gatsby Hacktoberfest
 date: 2018-10-12
 author: Shannon Soper
-tags: ["documentation", "hacktoberfest"]
+tags: ["gatsby-docs", "hacktoberfest"]
 ---
 
 ## Hacktoberfest docs explosion!

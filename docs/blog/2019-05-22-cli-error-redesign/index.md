@@ -4,7 +4,7 @@ date: 2019-05-22
 author: Shannon Soper
 tags:
   - cli
-  - ux
+  - gatsby-user-testing
 ---
 
 ## Why did we do this study?
