@@ -240,7 +240,7 @@ export default {
     },
     a: {
       color: "primary",
-      ":hover": {
+      ":hover, :focus": {
         color: "secondary",
       },
     },
