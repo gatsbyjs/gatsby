@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.6...gatsby-transformer-remark@2.6.7) (2019-07-19)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Restore pathPrefix option in r… ([#15889](https://github.com/gatsbyjs/gatsby/issues/15889)) ([81b6cf1](https://github.com/gatsbyjs/gatsby/commit/81b6cf1))
+
 ## [2.6.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.5...gatsby-transformer-remark@2.6.6) (2019-07-15)
 
 ### Features
