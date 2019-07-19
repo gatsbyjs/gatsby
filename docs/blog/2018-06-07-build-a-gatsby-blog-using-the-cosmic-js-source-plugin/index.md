@@ -398,7 +398,7 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   // Create blog posts pages.
   const posts = result.data.allCosmicjsPosts.edges
 
-  _.each(posts, (post, index) => {
+  posts.forEach((post, index) => {
     const next = index === posts.length - 1 ? null : posts[index + 1].node
     const previous = index === 0 ? null : posts[index - 1].node
 
