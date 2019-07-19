@@ -137,3 +137,85 @@ describe(`Processing YAML nodes with internal type 'File'`, () => {
     })
   })
 })
+
+describe(`Processing YAML nodes with internal type other than 'File'`, () => {
+  beforeEach(() => {
+    node.internal.type = `Other`
+  })
+
+  describe(`from a single YAML dictionary,`, () => {
+    beforeEach(() => {
+      node.content = `
+            id: some
+            blue: true
+            funny: yup
+      `
+    })
+
+    it(`when no target type name is specified, the type name is based on the original node's internal type`, async () => {
+      await onCreateNode(createNodeSpec)
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`OtherYaml`)
+    })
+
+    it(`with the specified target type name`, async () => {
+      await onCreateNode(createNodeSpec, {
+        typeName: `fixed`,
+      })
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`fixed`)
+    })
+
+    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+      // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
+      await onCreateNode(createNodeSpec, {
+        typeName: ({ node, object, isArray }) => object.funny,
+      })
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`yup`)
+    })
+  })
+
+  describe(`from a YAML array of dictionaries,`, () => {
+    beforeEach(() => {
+      node.content = `
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      `
+    })
+
+    it(`when no target type name is specified, all nodes have a type name based on the original node's internal type`, async () => {
+      await onCreateNode(createNodeSpec)
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`OtherYaml`)
+      expectCreatedNodeTypeName(`OtherYaml`)
+    })
+
+    it(`with the specified target type name`, async () => {
+      await onCreateNode(createNodeSpec, {
+        typeName: `fixed`,
+      })
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`fixed`)
+      expectCreatedNodeTypeName(`fixed`)
+    })
+
+    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+      // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
+      await onCreateNode(createNodeSpec, {
+        typeName: ({ node, object, isArray }) => object.funny,
+      })
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`yup`)
+      expectCreatedNodeTypeName(`nope`)
+    })
+  })
+})
