@@ -77,14 +77,18 @@ exports.createPages = async function createPages({
       },
     })
   })
+
+  createPage({
+    path: `/안녕`,
+    component: path.resolve(`src/pages/page-2.js`),
+  })
 }
 
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions
 
-  if (page.path.match(/^\/paths/)) {
-    page.matchPath = `/paths/*`
+  if (page.path.match(/^\/client-only-paths/)) {
+    page.matchPath = `/client-only-paths/*`
+    createPage(page)
   }
-
-  createPage(page)
 }

@@ -5,7 +5,7 @@
 - title: GitHub Pages
   url: /docs/how-gatsby-works-with-github-pages/
 - title: Surge.sh
-  url: /tutorial/part-one/#deploying-a-gatsby-site
+  url: /docs/deploying-to-surge/
 - title: Aerobatic
   url: /docs/deploying-to-aerobatic/
 - title: Now.sh

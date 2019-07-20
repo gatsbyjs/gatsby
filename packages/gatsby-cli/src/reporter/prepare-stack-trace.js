@@ -14,8 +14,11 @@ module.exports = function prepareStackTrace(error, source) {
     .map(frame => wrapCallSite(map, frame))
     .filter(
       frame =>
-        !frame.getFileName() ||
-        !frame.getFileName().match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/)
+        frame.wasConverted &&
+        (!frame.getFileName() ||
+          !frame
+            .getFileName()
+            .match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/))
     )
 
   error.codeFrame = getErrorSource(map, stack[0])
@@ -55,6 +58,7 @@ function wrapCallSite(map, frame) {
   frame.getColumnNumber = () => position.column + 1
   frame.getScriptNameOrSourceURL = () => position.source
   frame.toString = CallSiteToString
+  frame.wasConverted = true
   return frame
 }
 
