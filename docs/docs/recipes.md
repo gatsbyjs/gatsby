@@ -172,24 +172,6 @@ body {
 } 
 ```
 
-Alternatively, you could use similar code inline on an element within your component as well:
-
-```js:title=src/components/MyComponent.js
-import React, { Component } from 'react'
-
-class MyComponent extends Component {
-  const googleFontStyle = {
-    font-family: yourchosenfont
-  }
-
-  render() {
-    return <div>
-      <h1 style={googleFontStyle}>This is a header using Google Fonts!</h1>
-    </div>
-  }
-}
-```
-
 Since you are now hosting your own Google font within your project, there is no need to pull it in when your site loads, increasing your site's speedindex by up to ~300 miliseconds on desktop and 1+ seconds on 3g!
 
 #### Additional Resources
