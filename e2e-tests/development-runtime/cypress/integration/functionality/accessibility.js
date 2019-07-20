@@ -1,4 +1,4 @@
-describe(`focus managment`, () => {
+describe(`focus management`, () => {
   it(`Focus router wrapper after navigation to regular page (from index)`, () => {
     cy.visit(`/`).waitForRouteChange()
 
