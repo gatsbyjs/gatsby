@@ -649,3 +649,14 @@ exports.createUrlPathsFromLinks = entities =>
     }
     return e
   })
+
+exports.normalizeMenuItems = entities =>
+  entities.map(e => {
+    if (e.__type === `wordpress__menus_menus_items`) {
+      // in case of nested menus items might be object
+      // this converts it into array so it's consistent
+      // and queried in simple manner
+      e.items = _.values(e.items)
+    }
+    return e
+  })
