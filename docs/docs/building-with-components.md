@@ -169,6 +169,6 @@ sites. To see full working examples, check out the
 the Gatsby repo.
 
 ### Non-page components
+
 A Non-page component is one that's embedded inside some other component, forming a component hierarchy. An example would be a Header component that's included in multiple page components.
 Gatsby uses GraphQL to enable components to declare the data they need. Using the [StaticQuery](/docs/static-query/) component or [useStaticQuery hook](/docs/use-static-query/), you can colocate a non-page component with its data.
-
