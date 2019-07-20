@@ -46,7 +46,7 @@ backend:
 +  repo: your-username/your-repo-name
 ```
 
-## Customizing your site
+#### Customizing your site
 
 You'll likely also want to edit the `README.md` and `package.json` files to include your own project details.
 
