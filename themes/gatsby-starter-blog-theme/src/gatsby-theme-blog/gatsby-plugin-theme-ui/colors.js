@@ -1,4 +1,4 @@
-import merge from "lodash.merge"
+import merge from "deepmerge"
 import defaultThemeColors from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors"
 
 /*
@@ -11,7 +11,7 @@ import defaultThemeColors from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/col
 // const darkBlue = `#66E0FF`
 // const blueGray = `#282c35`
 
-export default merge({}, defaultThemeColors, {
+export default merge(defaultThemeColors, {
   // text: blueGray,
   // primary: lightBlue,
   // heading: blueGray,
