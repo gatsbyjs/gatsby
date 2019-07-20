@@ -168,7 +168,9 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 4. Once installed, you can add the font either in your CSS stylesheet or inline using `font-family: yourchosenfont`. An inline implementation might look something like this:
 
 ```js:title=src/pages/index.js
-<MyComponent style={{font-family: yourchosenfont}} />
+body {
+    font-family: yourchosenfont;
+} 
 ```
 
 Alternatively, you could use similar code inline on an element within your component as well:
