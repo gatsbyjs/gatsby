@@ -165,7 +165,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 1. Visit [the typefaces project](https://github.com/KyleAMathews/typefaces) and choose the font you'd like.
 2. Run `npm install --save yourchosenfont`, replacing `yourchosenfont` with the name of the font you want to install.
 3. Add `require("yourchosenfont")` to your site's entry file.
-4. Once installed, you can add the font either in your CSS stylesheet or inline using `font-family: yourchosenfont`. An inline implementation might look something like this:
+3. Once it's imported, you can reference the font in a CSS stylesheet.
 
 ```css:title=src/components/layout.css
 body {
