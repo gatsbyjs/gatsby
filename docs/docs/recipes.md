@@ -162,7 +162,9 @@ To wrap pages with layouts, use normal React components.
 ## Deploying
 
 Showtime. Once you are happy with your site, you are ready to go live with it!
+
 ### Preparing for deployment
+
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
@@ -194,13 +196,11 @@ There are a few reasons to do this--for instance, hosting a blog built with Gats
 gatsby build --prefix-paths
 ```
 
-
 5. Make sure that your site looks the same when running `gatsby build` as with `gatsby develop`. By running `gatsby serve` when you build your site, you can test out (and debug if necessary) the finished product before deploying it live.
 
 ```shell
 gatsby build && gatsby serve
 ```
-
 
 #### Additional Resources
 
@@ -208,6 +208,7 @@ gatsby build && gatsby serve
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/preparing-for-deployment/)
 - Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
+
 ## Querying data
 
 ### The StaticQuery Component
