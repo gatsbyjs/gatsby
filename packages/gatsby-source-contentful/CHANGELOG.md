@@ -303,7 +303,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-source-contentful:** Fix check for fluid and fixed size fliters ([#11009](https://github.com/gatsbyjs/gatsby/issues/11009)) ([aeb2bbd](https://github.com/gatsbyjs/gatsby/commit/aeb2bbd))
+- **gatsby-source-contentful:** Fix check for fluid and fixed size filters ([#11009](https://github.com/gatsbyjs/gatsby/issues/11009)) ([aeb2bbd](https://github.com/gatsbyjs/gatsby/commit/aeb2bbd))
 
 <a name="2.0.23"></a>
 
