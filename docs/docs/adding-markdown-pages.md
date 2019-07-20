@@ -146,7 +146,7 @@ Use the `graphql` to query Markdown file data as below. Next, use the `createPag
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
 
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blogTemplate.js`)
@@ -169,7 +169,10 @@ exports.createPages = async ({ actions, graphql }) => {
   `)
 
   // Handle errors
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
     createPage({

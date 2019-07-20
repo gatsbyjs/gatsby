@@ -363,8 +363,8 @@ Path: `gatsby-node.js`
 ```javascript
 const path = require("path")
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions
   const indexPage = path.resolve("./src/pages/index.js")
   createPage({
     path: `posts`,
@@ -391,7 +391,10 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
     `
   )
 
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   // Create blog posts pages.
   const posts = result.data.allCosmicjsPosts.edges

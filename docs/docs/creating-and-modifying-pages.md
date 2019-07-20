@@ -56,7 +56,7 @@ of the markdown file.
 ```javascript:title=gatsby-node.js
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   // Query for markdown nodes to use in creating pages.
@@ -77,7 +77,10 @@ exports.createPages = async ({ graphql, actions }) => {
   )
 
   // Handle errors
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   // Create pages for each markdown file.
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)

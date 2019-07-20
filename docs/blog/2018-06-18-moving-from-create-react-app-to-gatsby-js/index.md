@@ -146,8 +146,8 @@ Your `gatsby-node.js` file will look like this:
 ```js
 const path = require("path")
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
@@ -166,7 +166,10 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
     `
   )
 
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   // Create blog post pages.
   result.data.allContentfulBlogPost.edges.forEach(edge => {

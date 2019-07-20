@@ -406,7 +406,7 @@ query, which will fetch all of our Markdown posts.
 ```javascript:title=gatsby-node.js
 const path = require("path")
 
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
@@ -429,7 +429,10 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `)
 
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 }
 // highlight-end
 ```
@@ -455,7 +458,7 @@ pages (with the `createPage` action creator). Let's do that!
 ```javascript:title=gatsby-node.js
 const path = require("path")
 
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
@@ -477,7 +480,10 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `)
 
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   // highlight-start
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {

@@ -179,7 +179,7 @@ slugs instead of the generated field, replace `fields` with `frontmatter`.
 ```javascript=gatsby-node.js
 const path = require("path")
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   // Destructure the createPage function from the actions object
   const { createPage } = actions
 
@@ -202,8 +202,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Handle errors
   if (result.errors) {
-    console.error(result.errors)
-    throw new Error(result.errors)
+    reporter.panic(`Error while running GraphQL query.`)
+    return
   }
 
   // We'll call `createPage` for each result

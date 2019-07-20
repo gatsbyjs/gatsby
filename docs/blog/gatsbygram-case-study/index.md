@@ -149,7 +149,6 @@ the site's
 [`gatsby-node.js` file](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/gatsby-node.js):
 
 ```javascript
-const _ = require(`lodash`)
 const path = require(`path`)
 const slug = require(`slug`)
 const slash = require(`slash`)
@@ -158,7 +157,7 @@ const slash = require(`slash`)
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
 // create pages.
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   // The “graphql” function allows us to run arbitrary
@@ -186,7 +185,8 @@ exports.createPages = async ({ graphql, actions }) => {
   )
 
   if (result.errors) {
-    throw new Error(result.errors)
+    reporter.panic(`Error while running GraphQL query.`)
+    return
   }
 
   // Create image post pages.

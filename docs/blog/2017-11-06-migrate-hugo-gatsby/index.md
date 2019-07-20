@@ -98,8 +98,8 @@ gives examples. In sum, I created a `gatsby-node.js` file which exports
 This might sound way more complicated than what it is:
 
 ```jsx
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
 
   const result = await graphql(`
     {
@@ -239,8 +239,8 @@ const createPostPages = require(`./gatsby-actions/createPostPages`)
 const createPaginatedPostsPages = require(`./gatsby-actions/createPaginatedPostsPages`)
 const createTagPages = require(`./gatsby-actions/createTagPages`)
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
   const result = await graphql(`
     {
       allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {

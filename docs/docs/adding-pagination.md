@@ -60,7 +60,7 @@ export const blogListQuery = graphql`
 const path = require("path")
 const { createFilePath } = require("gatsby-source-filesystem")
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   const result = await graphql(
@@ -82,7 +82,10 @@ exports.createPages = async ({ graphql, actions }) => {
     `
   )
 
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   // ...
 

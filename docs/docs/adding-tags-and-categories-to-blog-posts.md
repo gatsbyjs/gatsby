@@ -169,7 +169,7 @@ Now we've got a template. Great! I'll assume you followed the tutorial for [Addi
 const path = require("path")
 const _ = require("lodash")
 
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve("src/templates/blog.js")
@@ -196,7 +196,10 @@ exports.createPages = async ({ actions, graphql }) => {
   `)
 
   // handle errors
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   const posts = result.data.allMarkdownRemark.edges
 

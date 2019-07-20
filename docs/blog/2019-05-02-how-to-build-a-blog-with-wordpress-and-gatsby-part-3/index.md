@@ -59,9 +59,8 @@ Awesome! Now that you have your page template created, you can add pages to the 
 
 // You can delete this file if you're not using it
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const BlogPostTemplate = path.resolve("./src/templates/BlogPost.js")
   const PageTemplate = path.resolve("./src/templates/Page.js")
@@ -87,7 +86,10 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   const BlogPosts = result.data.allWordpressPost.edges
   BlogPosts.forEach(post => {

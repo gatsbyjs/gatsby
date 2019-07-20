@@ -64,7 +64,7 @@ There are several ways to structure queries depending on how you prefer to work,
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const postTemplate = path.resolve(`./src/templates/post.js`)
 
@@ -82,7 +82,10 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   // Handle errors
-  if (result.errors) throw new Error(result.errors)
+  if (result.errors) {
+    reporter.panic(`Error while running GraphQL query.`)
+    return
+  }
 
   if (!result.data.allGhostPost) {
     return
