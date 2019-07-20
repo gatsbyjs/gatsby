@@ -1259,7 +1259,7 @@
     - Minimal UI and Styling
 - url: https://gatsby-tutorial-starter.netlify.com/
   repo: https://github.com/justinformentin/gatsby-v2-tutorial-starter
-  description: Simple, modern desgined blog with post lists, tags, and easily customizable code.
+  description: Simple, modern designed blog with post lists, tags, and easily customizable code.
   tags:
     - Blog
     - Linting
@@ -1964,7 +1964,7 @@
     - Pagination logic
 - url: https://gatsby-blogger.netlify.com/
   repo: https://github.com/aslammultidots/blogger
-  description: A Simple, clean and modern desgined blog with firebase authentication feature and easily customizable code.
+  description: A Simple, clean and modern designed blog with firebase authentication feature and easily customizable code.
   tags:
     - Blog
     - Redux
@@ -2745,7 +2745,7 @@
     - SEO (including robots.txt, sitemap generation, automated yet customisable metadata, and social sharing data)
     - Google Analytics
     - PostCSS support
-    - Developer enviornment variables
+    - Developer environment variables
     - Accessibility support
     - Based on Gatsby Starter Default
 - url: https://material-ui-starter.netlify.com/
@@ -2962,7 +2962,7 @@
     - Web App Manifest
 - url: https://yellowcake.netlify.com/
   repo: https://github.com/thriveweb/yellowcake
-  description: A starter project for creating lightning-fast websites with Gatsby v2 and Netlify-CMS v2 + Uploadcare intergration.
+  description: A starter project for creating lightning-fast websites with Gatsby v2 and Netlify-CMS v2 + Uploadcare integration.
   tags:
     - CMS:Netlify
     - Netlify

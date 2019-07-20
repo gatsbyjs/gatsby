@@ -1176,7 +1176,7 @@
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
   source_url: "https://github.com/mottox2/website"
-  description: Web developer / UI Desinger in Tokyo Japan.
+  description: Web developer / UI Designer in Tokyo Japan.
   featured: false
   categories:
     - Blog
@@ -2905,7 +2905,7 @@
   url: https://www.dekema.com/
   main_url: https://www.dekema.com/
   description: >
-    Worldclass crafting: Furnace, fervor, fullfilment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
+    Worldclass crafting: Furnace, fervor, fulfillment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
   categories:
     - Healthcare
     - Science
@@ -3634,7 +3634,7 @@
 - title: Gábor Fűzy pianist
   main_url: "https://pianobar.hu"
   url: "https://pianobar.hu"
-  description: Gábor Fűzy pianist's offical website built with Gatsby v2.
+  description: Gábor Fűzy pianist's official website built with Gatsby v2.
   categories:
     - Music
   built_by: Zoltán Bedi
@@ -4609,7 +4609,7 @@
   url: https://our-academy.org/
   source_url: "https://github.com/ouracademy/website"
   description: >
-    Ouracademy is an organization that promoves the education in software development throught blog posts & videos smiley.
+    Ouracademy is an organization that promoves the education in software development through blog posts & videos smiley.
   categories:
     - Open Source
     - Blog
@@ -5518,7 +5518,7 @@
   url: https://lendo.at
   main_url: https://lendo.at
   description: >
-    A Comparsion site for best private loan offer from banks in Austria.
+    A Comparison site for best private loan offer from banks in Austria.
   categories:
     - Business
     - Finance

@@ -195,7 +195,7 @@ class Runner {
       // The way we currently export fragments requires duplicated ones
       // to be filtered out since there is a global Fragment namespace
       // We maintain a top level fragment Map to keep track of all definitions
-      // of thge fragment type and to filter them out if theythey've already been
+      // of the fragment type and to filter them out if theythey've already been
       // declared before
       doc.definitions = doc.definitions.filter(definition => {
         if (definition.kind === Kind.FRAGMENT_DEFINITION) {

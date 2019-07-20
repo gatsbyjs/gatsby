@@ -35,7 +35,7 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
-  describe(`non-existant route`, () => {
+  describe(`non-existent route`, () => {
     beforeEach(() => {
       cy.getTestElement(`broken-link`)
         .click()
