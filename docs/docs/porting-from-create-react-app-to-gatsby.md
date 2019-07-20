@@ -187,7 +187,7 @@ const App = () => (
 export default App
 ```
 
-Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/gatsby-link/).
+Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each of them in the [`gatsby-link` doc](/docs/gatsby-link/).
 
 ### Handling state
 
@@ -207,7 +207,7 @@ GATSBY_API_URL=http://someapi.com
 
 ### Advanced customizations
 
-Part of Gatsby's philosophy around tooling is [progressively disclosing complexity](/docs/gatsby-core-philosophy/#progressively-disclose-complexity); this simplifies the experience for a wider audience while still allowing the option to configure more advanced features for those that feel inclined. You won't have to "eject" your Gatsby app to edit more complex configurations.
+Part of Gatsby's philosophy around tooling is [progressively disclosing complexity](/docs/gatsby-core-philosophy/#progressively-disclose-complexity); this simplifies the experience for a wider audience while still allowing the option to configure more advanced features for those who feel inclined. You won't have to "eject" your Gatsby app to edit more complex configurations.
 
 In terms of levels of abstraction, Gatsby allows you to move up or down to tap into more sophisticated, lower-level APIs without needing to eject like you would in Create React App.
 
