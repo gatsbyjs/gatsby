@@ -91,7 +91,6 @@ module.exports = (
   {
     type,
     basePath,
-    pathPrefix,
     getNode,
     getNodesByType,
     cache,
