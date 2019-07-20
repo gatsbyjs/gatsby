@@ -1,25 +1,22 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { navigate, PageRenderer } from "gatsby"
 import mousetrap from "mousetrap"
 import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
+import { Global } from "@emotion/core"
+import { global } from "../utils/styles"
 
-import {
-  colors,
-  radii,
-  space,
-  shadows,
-  sizes,
-  fontSizes,
-  zIndices,
-} from "../utils/presets"
+import { space, sizes, zIndices } from "../utils/presets"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
+import DarkThemeStyles from "../components/dark-theme-styles"
 
 // Import Futura PT typeface
 import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -79,6 +76,8 @@ class DefaultLayout extends React.Component {
     if (isModal && window.innerWidth > 750) {
       return (
         <>
+          <Global styles={global} />
+          <DarkThemeStyles />
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
@@ -114,34 +113,35 @@ class DefaultLayout extends React.Component {
             contentLabel="Site Details Modal"
           >
             <div
-              css={{
-                backgroundColor: colors.white,
-                borderRadius: radii[2],
-                boxShadow: shadows.dialog,
+              sx={{
+                backgroundColor: `white`,
+                borderRadius: 2,
+                boxShadow: `dialog`,
                 position: `relative`,
               }}
             >
               <button
                 onClick={this.handleCloseModal}
-                css={{
-                  background: colors.white,
+                sx={{
+                  bg: `white`,
                   border: 0,
-                  borderRadius: radii[6],
-                  color: colors.text.secondary,
+                  borderRadius: 6,
+                  color: `text.secondary`,
                   cursor: `pointer`,
                   position: `absolute`,
                   left: `auto`,
-                  right: space[7],
-                  top: space[8],
+                  right: t => t.space[7],
+                  top: t => t.space[8],
                   height: 40,
                   width: 40,
-                  fontSize: fontSizes[4],
+                  fontSize: 4,
                   "&:hover": {
-                    background: colors.ui.hover,
-                    color: colors.gatsby,
+                    bg: `ui.hover`,
+                    color: `gatsby`,
                   },
                 }}
               >
+                s
                 <MdClose />
               </button>
               {this.props.children}
@@ -155,6 +155,8 @@ class DefaultLayout extends React.Component {
 
     return (
       <>
+        <Global styles={global} />
+        <DarkThemeStyles />
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
         <Banner />

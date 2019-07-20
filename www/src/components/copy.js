@@ -1,16 +1,9 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 
 import { ScreenReaderText } from "./feedback-widget/styled-elements"
-import {
-  space,
-  fonts,
-  fontSizes,
-  colors,
-  lineHeights,
-  shadows,
-  transition,
-} from "../utils/presets"
 
 const copyToClipboard = content => {
   const el = document.createElement(`textarea`)
@@ -38,26 +31,27 @@ function Copy({ className, content, duration, fileName, trim = false }) {
       name={label}
       className={className}
       disabled={copied}
-      css={{
+      sx={{
         backgroundColor: `transparent`,
         border: `none`,
-        color: colors.grey[60],
+        color: `grey.60`,
         cursor: `pointer`,
-        fontSize: fontSizes[2],
-        fontFamily: fonts.header,
-        lineHeight: lineHeights.solid,
-        padding: `${space[2]} ${space[2]}`,
-        transition: `${transition.speed.default} ${transition.curve.default}`,
+        fontSize: 2,
+        fontFamily: `header`,
+        lineHeight: `solid`,
+        p: 2,
+        transition: t =>
+          `${t.transition.speed.default} ${t.transition.curve.default}`,
         "&[disabled]": {
           cursor: `not-allowed`,
         },
         ":not([disabled]):hover": {
-          backgroundColor: colors.purple[60],
-          boxShadow: shadows.raised,
-          color: colors.white,
+          bg: `purple.60`,
+          boxShadow: `raised`,
+          color: `white`,
         },
         ":active": {
-          boxShadow: shadows.floating,
+          boxShadow: `floating`,
         },
       }}
       onClick={async () => {

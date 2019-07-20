@@ -206,13 +206,13 @@ class SidebarBody extends Component {
         {!this.props.disableExpandAll && (
           <header
             sx={{
-              borderRightWidth: `1px`,
-              borderRightStyle: `solid`,
-              borderColor: `ui.border.subtle`,
-              display: `flex`,
               alignItems: `center`,
-              height: `sidebarUtilityHeight`,
               bg: `background`,
+              borderColor: `ui.border.subtle`,
+              borderRightStyle: `solid`,
+              borderRightWidth: `1px`,
+              display: `flex`,
+              height: `sidebarUtilityHeight`,
               pl: 4,
               pr: 6,
             }}
@@ -275,6 +275,7 @@ class SidebarBody extends Component {
               m: 0,
               py: 4,
               fontSize: 1,
+              bg: `background`,
               "& li": {
                 m: 0,
                 listStyle: `none`,

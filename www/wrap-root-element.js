@@ -15,6 +15,8 @@ const components = {
   pre: CodeBlock,
 }
 
+console.log(theme)
+
 export default ({ element }) => (
   <ThemeProvider theme={theme} components={components}>
     <ColorMode />

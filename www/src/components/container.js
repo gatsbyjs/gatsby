@@ -9,7 +9,7 @@ const Container = ({ children, hasSideBar = true, overrideCSS }) => (
   <div
     sx={{
       maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
-      margin: `0 auto`,
+      mx: `auto`,
       p: 6,
       position: `relative`,
       [mediaQueries.lg]: {

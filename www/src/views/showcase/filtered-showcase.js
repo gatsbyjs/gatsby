@@ -8,7 +8,6 @@ import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import Button from "../../components/button"
 import FooterLinks from "../../components/shared/footer-links"
-import { colors, space } from "../../utils/presets"
 import {
   ContentHeader,
   ContentTitle,
@@ -127,12 +126,9 @@ class FilteredShowcase extends Component {
                 />
                 <SearchIcon
                   overrideCSS={{
-                    fill: colors.lilac,
                     position: `absolute`,
                     left: `5px`,
                     top: `50%`,
-                    width: space[4],
-                    height: space[4],
                     pointerEvents: `none`,
                     transform: `translateY(-50%)`,
                   }}

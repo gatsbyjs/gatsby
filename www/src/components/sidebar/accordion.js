@@ -4,7 +4,6 @@ import React, { Fragment } from "react"
 
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
-import { space, transition } from "../../utils/presets"
 
 const ItemWithSubitems = ({
   activeItemLink,
@@ -97,12 +96,11 @@ class Accordion extends React.Component {
               ? `sidebar.activeSectionBackground`
               : false,
           position: `relative`,
-          transition: `all ${transition.speed.fast} ${
-            transition.curve.default
-          }`,
-          mt:
+          transition: t =>
+            `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
+          mt: t =>
             item.level === 0 && disableAccordions && !isSingle
-              ? `${space[4]} !important`
+              ? `${t.space[4]} !important`
               : false,
           ...(item.level === 0 &&
             !isSingle && {
@@ -115,11 +113,11 @@ class Accordion extends React.Component {
                   !isExpanded && !isSingle && !isActive
                     ? `ui.border.subtle`
                     : `sidebar.itemBorderActive`,
-                left:
+                left: t =>
                   (isParentOfActiveItem && isExpanded) ||
                   (isActive && isExpanded)
                     ? 0
-                    : space[6],
+                    : t.space[6],
                 right: 0,
                 top: 0,
               },

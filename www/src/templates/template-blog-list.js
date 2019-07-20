@@ -13,7 +13,7 @@ import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
 import FooterLinks from "../components/shared/footer-links"
 
-import { space, mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../utils/presets"
 import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 class BlogPostsIndex extends React.Component {
@@ -60,7 +60,7 @@ class BlogPostsIndex extends React.Component {
                   [breakpointGutter]: {
                     p: 9,
                     boxShadow: `raised`,
-                    bg: `white`,
+                    bg: `card.background`,
                     borderRadius: 2,
                     border: 0,
                     mb: 6,
@@ -83,8 +83,8 @@ class BlogPostsIndex extends React.Component {
                     },
                   },
                   [mediaQueries.md]: {
-                    marginLeft: `-${space[9]}`,
-                    marginRight: `-${space[9]}`,
+                    marginLeft: t => `-${t.space[9]}`,
+                    marginRight: t => `-${t.space[9]}`,
                   },
                 }}
               />

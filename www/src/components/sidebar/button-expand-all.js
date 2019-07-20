@@ -4,8 +4,6 @@ import React from "react"
 import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
-import { transition } from "../../utils/presets"
-
 const iconStyles = {
   display: `inline-block`,
   mr: 2,
@@ -27,7 +25,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       lineHeight: `solid`,
       py: 2,
       textAlign: `left`,
-      transition: `all ${transition.speed.fast}`,
+      transition: t => `all ${t.transition.speed.fast}`,
       "&:hover": {
         bg: `purple.10`,
         color: `gatsby`,

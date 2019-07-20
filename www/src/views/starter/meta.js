@@ -1,40 +1,41 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import { colors, space, radii, mediaQueries, fonts } from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
 
 const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
-    css={{
-      fontFamily: fonts.header,
+    sx={{
       display: `flex`,
-      flexWrap: `wrap`,
-      width: `100%`,
-      minWidth: `320px`,
       flexDirection: `column-reverse`,
-      padding: space[6],
-      paddingTop: 0,
+      flexWrap: `wrap`,
+      fontFamily: `header`,
+      minWidth: `320px`,
+      p: 6,
+      pt: 0,
+      width: `100%`,
       [mediaQueries.sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
-        paddingBottom: 0,
+        pb: 0,
       },
       [mediaQueries.lg]: {
-        padding: space[8],
-        paddingTop: 0,
-        paddingBottom: 0,
+        px: 8,
+        py: 0,
       },
     }}
   >
     <div
-      css={{
-        marginTop: space[6],
-        paddingRight: 15,
+      sx={{
         display: `flex`,
+        flexShrink: 0,
         flexWrap: `wrap`,
         justifyContent: `space-between`,
-        flexShrink: 0,
+        mt: 6,
+        pr: 4,
         [mediaQueries.sm]: {
           justifyContent: `flex-start`,
         },
@@ -42,60 +43,58 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
     >
       <div>
         <span
-          css={{
+          sx={{
             alignItems: `center`,
-            color: colors.accent,
+            color: `accent`,
             display: `inline-flex`,
-            paddingRight: space[5],
+            pr: 5,
           }}
         >
           <MdStar />
           {` `}
-          <span css={{ color: colors.text.primary, paddingLeft: space[1] }}>
-            {starter.stars}
-          </span>
+          <span sx={{ color: `text.primary`, pl: 1 }}>{starter.stars}</span>
         </span>
       </div>
 
       <div>
-        <span css={{ paddingRight: 8 }}>Updated</span>
+        <span sx={{ pr: 2 }}>Updated</span>
         {showDate(starter.lastUpdated)}
       </div>
     </div>
 
     <div
-      css={{
-        marginTop: space[6],
-        marginRight: 15,
+      sx={{
+        borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
         display: `flex`,
-        flexWrap: `nowrap`,
         flexGrow: 1,
-        borderBottom: `1px solid ${colors.ui.border.subtle}`,
-        paddingBottom: space[3],
+        flexWrap: `nowrap`,
+        mr: 4,
+        mt: 6,
+        pb: 3,
         [mediaQueries.sm]: {
           borderBottom: 0,
         },
       }}
     >
       <div
-        css={{
-          paddingRight: 15,
-          paddingBottom: 15,
+        sx={{
+          pr: 4,
+          pb: 4,
           whiteSpace: `nowrap`,
           overflow: `hidden`,
           textOverflow: `ellipsis`,
         }}
       >
-        <span css={{ color: colors.text.secondary }}>{`By `}</span>
+        <span sx={{ color: `text.secondary` }}>{`By `}</span>
         <a
-          css={{
+          sx={{
             "&&": {
               borderBottom: 0,
-              color: colors.lilac,
+              color: `lilac`,
               cursor: `pointer`,
-              fontFamily: fonts.header,
+              fontFamily: `header`,
               "&:hover": {
-                color: colors.gatsby,
+                color: `gatsby`,
               },
             },
           }}
@@ -113,9 +112,9 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         }}
       >
         <div
-          css={{
+          sx={{
             position: `absolute`,
-            right: space[6],
+            right: t => t.space[6],
             top: 0,
             left: `auto`,
             zIndex: 1,
@@ -124,26 +123,23 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         >
           <a
             href={demo}
-            css={{
+            sx={{
               border: 0,
-              borderRadius: radii[1],
-              fontFamily: fonts.header,
+              borderRadius: 1,
+              fontFamily: `header`,
               fontWeight: `bold`,
-              marginRight: space[2],
-              padding: `${space[1]} ${space[4]}`,
+              mr: 2,
+              py: 1,
+              px: 4,
               WebkitFontSmoothing: `antialiased`,
               "&&": {
-                backgroundColor: colors.accent,
+                backgroundColor: `accent`,
                 borderBottom: `none`,
-                color: colors.gatsby,
+                color: `gatsby`,
               },
             }}
           >
-            <MdLink
-              style={{
-                verticalAlign: `sub`,
-              }}
-            />
+            <MdLink style={{ verticalAlign: `sub` }} />
             {` Visit demo `}
           </a>
           <ShareMenu

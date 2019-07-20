@@ -10,7 +10,6 @@ import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import styles from "../../views/shared/styles"
-import { colors, space } from "../../utils/presets"
 
 let currentLetter = ``
 
@@ -105,12 +104,9 @@ class TagsPage extends React.Component {
                   />
                   <SearchIcon
                     overrideCSS={{
-                      fill: colors.lilac,
                       position: `absolute`,
-                      left: space[1],
+                      left: 1,
                       top: `50%`,
-                      width: space[4],
-                      height: space[4],
                       pointerEvents: `none`,
                       transform: `translateY(-50%)`,
                     }}

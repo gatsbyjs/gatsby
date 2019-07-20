@@ -3,20 +3,13 @@ import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import { Link } from "gatsby"
 
-import styles from "../shared/styles"
+import styles, { showcaseList, showcaseItem } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
-import {
-  space,
-  lineHeights,
-  transition,
-  mediaQueries,
-  colors,
-  radii,
-} from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
@@ -26,17 +19,12 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)
 
   return (
-    <main id={`reach-skip-nav`} css={{ ...styles.showcaseList }}>
+    <main id={`reach-skip-nav`} sx={showcaseList}>
       {items.map(
         ({ node }) =>
           node.fields &&
           node.fields.slug && ( // have to filter out null fields from bad data
-            <div
-              key={node.id}
-              css={{
-                ...styles.showcaseItem,
-              }}
-            >
+            <div key={node.id} sx={showcaseItem}>
               <ThumbnailLink
                 slug={node.fields.slug}
                 image={node.childScreenshot}
@@ -54,9 +42,9 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 className="meta"
               >
                 <div
-                  css={{
-                    paddingRight: space[5],
-                    lineHeight: lineHeights.dense,
+                  sx={{
+                    pr: 5,
+                    lineHeight: `dense`,
                   }}
                 >
                   <ShowcaseItemCategories
@@ -68,7 +56,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                   {node.source_url && (
                     <Fragment>
                       <a
-                        css={{ ...styles.shortcutIcon }}
+                        css={styles.shortcutIcon}
                         href={node.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -79,7 +67,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     </Fragment>
                   )}
                   <a
-                    css={{ ...styles.shortcutIcon }}
+                    css={styles.shortcutIcon}
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -92,11 +80,12 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     sx={{
                       "&&": {
                         display: `none`,
-                        transition: `background ${transition.speed.slow} ${
-                          transition.curve.default
-                        }, transform ${transition.speed.slow} ${
-                          transition.curve.default
-                        }`,
+                        transition: t =>
+                          `background ${t.transition.speed.slow} ${
+                            t.transition.curve.default
+                          }, transform ${t.transition.speed.slow} ${
+                            t.transition.curve.default
+                          }`,
                         [mediaQueries.lg]: {
                           alignItems: `center`,
                           background: `accent`,
@@ -114,7 +103,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                           right: 0,
                           width: 24,
                           "&:hover": {
-                            background: colors.gatsby,
+                            background: `gatsby`,
                           },
                         },
                       },
@@ -127,7 +116,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     <img
                       src={FeaturedIcon}
                       alt="icon"
-                      css={{ margin: `0 auto`, display: `block` }}
+                      xs={{ my: 0, mx: `auto`, display: `block` }}
                     />
                   </Link>
                 )}
@@ -135,7 +124,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
             </div>
           )
       )}
-      {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
+      {items.length && <EmptyGridItems styles={showcaseItem} />}
     </main>
   )
 }

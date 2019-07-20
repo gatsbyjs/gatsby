@@ -1,18 +1,12 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import {
-  colors,
-  space,
-  fontSizes,
-  radii,
-  shadows,
-  mediaQueries,
-  fonts,
-} from "../utils/presets"
+import { space, mediaQueries } from "../utils/presets"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -24,41 +18,41 @@ import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
 import FeatherIcon from "../assets/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
-const gutter = space[6]
-const gutterDesktop = space[8]
+const gutter = 6
+const gutterDesktop = 8
 
 const styles = {
   link: {
-    color: colors.gatsby,
+    color: `gattsby`,
     textDecoration: `none`,
   },
   prevNextLink: {
-    color: colors.lilac,
-    fontFamily: fonts.header,
+    color: `lilac`,
+    fontFamily: `header`,
     position: `absolute`,
     top: 280,
     width: 300,
     transform: `translateX(-75px) rotate(90deg)`,
   },
   prevNextLinkSiteTitle: {
-    color: colors.gatsby,
+    color: `gatsby`,
     fontWeight: `bold`,
   },
   prevNextImage: {
-    borderRadius: radii[1],
-    boxShadow: shadows.overlay,
+    borderRadius: 1,
+    boxShadow: `overlay`,
   },
   prevNextPermalinkLabel: {
-    color: colors.text.secondary,
-    fontFamily: fonts.header,
+    color: `text.secondary`,
+    fontFamily: `header`,
     fontWeight: `normal`,
   },
   prevNextPermalinkImage: {
-    marginBottom: 0,
-    marginTop: space[6],
+    mb: 0,
+    mt: 6,
   },
   prevNextPermalinkTitle: {
-    color: colors.gatsby,
+    color: `gatsby`,
     display: `block`,
     position: `relative`,
   },
@@ -73,8 +67,8 @@ const styles = {
     width: `100%`,
   },
   prevNextPermalinkArrow: {
-    color: colors.lilac,
-    marginRight: 4,
+    color: `lilac`,
+    mr: 4,
     verticalAlign: `sub`,
     position: `absolute`,
     left: `-${space[6]}`,
@@ -82,7 +76,7 @@ const styles = {
     transform: `translateY(-50%)`,
   },
   prevNextPermalinkMeta: {
-    marginLeft: space[8],
+    mr: 8,
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `flex-end`,
@@ -166,9 +160,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div css={{ margin: `25px` }}>
                 <Img
                   key={nextSite.id}
-                  css={{
-                    ...styles.prevNextImage,
-                  }}
+                  sx={styles.prevNextImage}
                   backgroundColor
                   fixed={{
                     srcSet: ``,
@@ -221,7 +213,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 />
               </div>
               <div
-                css={{
+                sx={{
                   ...styles.prevNextLink,
                   transform: `translateX(-75px) rotate(-90deg)`,
                   textAlign: `right`,
@@ -229,7 +221,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               >
                 <MdArrowUpward />
                 <div> Previous Site in Showcase </div>
-                <div css={styles.prevNextLinkSiteTitle}>
+                <div sx={styles.prevNextLinkSiteTitle}>
                   {previousSite.title}
                 </div>
               </div>
@@ -237,7 +229,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
           }
         >
           <div
-            css={{
+            sx={{
               alignItems: `center`,
               display: `flex`,
               flexDirection: `column`,
@@ -245,11 +237,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               margin: isModal ? false : `0 auto`,
             }}
           >
-            <div
-              css={{
-                width: `100%`,
-              }}
-            >
+            <div css={{ width: `100%` }}>
               <Helmet>
                 <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
                 <meta
@@ -299,42 +287,29 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 />
               </Helmet>
               <div
-                css={{
-                  padding: gutter,
+                sx={{
+                  p: gutter,
                   [mediaQueries.lg]: {
-                    padding: gutterDesktop,
-                    paddingRight: isModal ? 96 : false,
+                    p: gutterDesktop,
+                    pr: isModal ? 96 : false,
                   },
                 }}
               >
-                <h1 css={{ margin: 0 }}>{data.sitesYaml.title}</h1>
+                <h1 sx={{ m: 0 }}>{data.sitesYaml.title}</h1>
                 <a
                   href={data.sitesYaml.main_url}
-                  css={{
-                    ...styles.link,
-                    fontWeight: `bold`,
-                  }}
+                  sx={{ ...styles.link, fontWeight: `bold` }}
                 >
                   {cleanUrl(data.sitesYaml.main_url)}
                 </a>
                 {data.sitesYaml.built_by && (
-                  <span css={{ color: colors.text.secondary }}>
-                    <span
-                      css={{
-                        paddingRight: 8,
-                        paddingLeft: 8,
-                      }}
-                    >
-                      /
-                    </span>
+                  <span sx={{ color: `text.secondary` }}>
+                    <span sx={{ px: 2 }}>/</span>
                     Built by {` `}
                     {data.sitesYaml.built_by_url ? (
                       <a
                         href={data.sitesYaml.built_by_url}
-                        css={{
-                          ...styles.link,
-                          fontWeight: `bold`,
-                        }}
+                        sx={{ ...styles.link, fontWeight: `bold` }}
                       >
                         {data.sitesYaml.built_by}
                       </a>
@@ -345,10 +320,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 )}
               </div>
               <div
-                css={{
+                sx={{
                   display: `flex`,
-                  borderTop: `1px solid ${colors.ui.border.subtle}`,
-                  fontFamily: fonts.header,
+                  borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
+                  fontFamily: `headerr`,
                   margin: `0 ${gutter}`,
                   [mediaQueries.lg]: {
                     margin: `0 ${gutterDesktop}`,
@@ -357,9 +332,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               >
                 {data.sitesYaml.featured && (
                   <div
-                    css={{
-                      borderRight: `1px solid ${colors.ui.border.subtle}`,
-                      color: colors.gatsby,
+                    sx={{
+                      borderRight: t =>
+                        `1px solid ${t.colors.ui.border.subtle}`,
+                      color: `gatsby`,
                       display: `flex`,
                       fontWeight: `bold`,
                       padding: 20,
@@ -379,23 +355,19 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 )}
                 {data.sitesYaml.source_url && (
                   <div
-                    css={{
+                    sx={{
                       padding: 20,
                       paddingLeft: data.sitesYaml.featured ? false : 0,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.border.subtle}`,
+                      borderRight: t =>
+                        `1px solid ${t.colors.ui.border.subtle}`,
                     }}
                   >
-                    <a
-                      href={data.sitesYaml.source_url}
-                      css={{
-                        ...styles.link,
-                      }}
-                    >
+                    <a href={data.sitesYaml.source_url} sx={styles.link}>
                       <GithubIcon
-                        style={{
-                          fontSize: fontSizes[4],
-                          marginRight: 10,
+                        sx={{
+                          fontSize: 4,
+                          mr: 3,
                           verticalAlign: `text-bottom`,
                         }}
                       />
@@ -405,10 +377,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 )}
                 {false && ( // TODO: NOT IMPLEMENTED YET!!!
                   <div
-                    css={{
+                    sx={{
                       padding: 20,
                       display: `flex`,
-                      borderRight: `1px solid ${colors.ui.border.subtle}`,
+                      borderRight: t =>
+                        `1px solid ${t.colors.ui.border.subtle}`,
                     }}
                   >
                     <img
@@ -437,19 +410,20 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   >
                     <a
                       href={data.sitesYaml.main_url}
-                      css={{
-                        backgroundColor: colors.gatsby,
+                      sx={{
+                        backgroundColor: `gatsby`,
                         border: 0,
-                        borderRadius: radii[1],
+                        borderRadius: 1,
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
-                        fontFamily: fonts.header,
+                        fontFamily: `header`,
                         fontWeight: `bold`,
-                        marginRight: space[2],
-                        padding: `${space[1]} ${space[4]}`,
+                        mr: 2,
+                        py: 1,
+                        px: 4,
                         textDecoration: `none`,
                         WebkitFontSmoothing: `antialiased`,
                         "&&": {
-                          color: colors.white,
+                          color: `white`,
                           borderBottom: `none`,
                         },
                         [shouldShowVisitButtonOnMobile && mediaQueries.sm]: {
@@ -457,11 +431,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         },
                       }}
                     >
-                      <MdLink
-                        style={{
-                          verticalAlign: `sub`,
-                        }}
-                      />
+                      <MdLink style={{ verticalAlign: `sub` }} />
                       Visit site
                       {` `}
                     </a>
@@ -505,14 +475,14 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               >
                 <p>{data.sitesYaml.description}</p>
                 <div
-                  css={{
+                  sx={{
                     display: `flex`,
-                    fontFamily: fonts.header,
+                    fontFamily: `header`,
                   }}
                 >
                   <div
-                    css={{
-                      color: colors.text.secondary,
+                    sx={{
+                      color: `text.secondary`,
                       paddingRight: 20,
                     }}
                   >

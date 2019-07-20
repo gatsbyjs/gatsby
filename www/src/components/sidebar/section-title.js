@@ -3,20 +3,12 @@ import { jsx } from "theme-ui"
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import {
-  colors,
-  transition,
-  fontSizes,
-  letterSpacings,
-  space,
-  fonts,
-} from "../../utils/presets"
+import { transition } from "../../utils/presets"
 import indention from "../../utils/sidebar/indention"
-import presets from "../../utils/sidebar/presets"
 
 const Chevron = ({ isExpanded }) => (
   <span
-    css={{
+    sx={{
       display: `flex`,
       flexShrink: 0,
       marginLeft: `auto`,
@@ -32,9 +24,8 @@ const Chevron = ({ isExpanded }) => (
   >
     <ChevronSvg
       cssProps={{
-        color: colors.text.secondary,
-        marginLeft: `auto`,
-        marginRight: `auto`,
+        color: `text.secondary`,
+        mx: `auto`,
         transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,
         transition: `transform ${transition.speed.fast} ${
           transition.curve.default
@@ -57,13 +48,17 @@ const TitleButton = ({
     sx={{
       ...styles.resetButton,
       ...styles.button,
-      paddingLeft: item.level === 0 ? space[6] : 0,
-      paddingRight: `0 !important`,
+      pl: item.level === 0 ? 6 : 0,
+      pr: `0 !important`,
       minHeight: 40,
       "&:before": {
-        ...styles.ulHorizontalDivider,
+        bg: `itemBorderColor`,
+        content: `''`,
+        height: 1,
+        position: `absolute`,
+        right: 0,
         bottom: 0,
-        left: item.level === 0 ? space[6] : 0,
+        left: t => (item.level === 0 ? t.space[6] : 0),
         top: `auto`,
       },
     }}
@@ -72,7 +67,7 @@ const TitleButton = ({
     <SectionTitle isExpanded={isExpanded} isActive={isActive} item={item}>
       {item.title}
       <span
-        css={{
+        sx={{
           position: `absolute`,
           top: 0,
           bottom: 0,
@@ -107,11 +102,11 @@ const SplitButton = ({
     }}
   >
     <span
-      css={{
-        flexGrow: 1,
+      sx={{
         // borderRightWidth: "1px",
         // borderRightStyle: "solid",
         // borderRightColor: "sidebar.itemBorderColor"
+        flexGrow: 1,
       }}
     >
       {createLink({
@@ -129,11 +124,11 @@ const SplitButton = ({
                 ...styles.level0,
                 color:
                   (isParentOfActiveItem && isExpanded) || isActive
-                    ? colors.link.color
-                    : colors.text.primary,
+                    ? `link.color`
+                    : `navigation.linkDefault`,
               },
             }),
-          paddingRight: presets.itemMinHeight,
+          pr: `sidebarItemMinHeight`,
         },
       })}
     </span>
@@ -141,15 +136,15 @@ const SplitButton = ({
       aria-controls={uid}
       aria-expanded={isExpanded}
       aria-label={item.title + (isExpanded ? ` collapse` : ` expand`)}
-      css={{
+      sx={{
         ...styles.resetButton,
         bottom: 0,
-        marginLeft: `auto`,
-        minHeight: presets.itemMinHeight,
+        ml: `auto`,
+        minHeight: `sidebarItemMinHeight`,
         position: `absolute`,
         right: 0,
         top: 0,
-        width: presets.itemMinHeight,
+        width: `sidebarItemMinHeight`,
         zIndex: 1,
       }}
       onClick={() => onSectionTitleClick(item)}
@@ -196,7 +191,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
         isExpanded && !disabled
           ? `gatsby`
           : disabled
-          ? `text.secondary`
+          ? `navigation.linkDefault`
           : false,
       "&:hover": {
         color: disabled ? false : `gatsby`,
@@ -220,15 +215,6 @@ const styles = {
     position: `relative`,
     textAlign: `left`,
     width: `100%`,
-  },
-  ulHorizontalDivider: {
-    background: presets.itemBorderColor,
-    top: 0,
-    content: `''`,
-    height: 1,
-    position: `absolute`,
-    right: 0,
-    left: 6,
   },
   level0: {
     fontFamily: `header`,

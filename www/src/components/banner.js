@@ -1,21 +1,13 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import { colors, space, sizes, fonts, zIndices } from "../utils/presets"
+import { colors, space, sizes, fonts } from "../utils/presets"
 
 const horizontalPadding = space[6]
-const backgroundColor = colors.gatsby
-
-const BannerContainer = styled(`aside`)`
-  background-color: ${backgroundColor};
-  height: ${sizes.bannerHeight};
-  position: fixed;
-  width: 100%;
-  z-index: ${zIndices.banner};
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-`
+const backgroundColor = colors.purple[90]
 
 const InnerContainer = styled(`div`)`
   align-items: center;
@@ -26,7 +18,7 @@ const InnerContainer = styled(`div`)`
 `
 
 const Content = styled(`div`)`
-  color: ${colors.purple[20]};
+  color: ${colors.whiteFade[80]};
   font-family: ${fonts.header};
   padding-left: ${horizontalPadding};
   padding-right: ${horizontalPadding};
@@ -45,7 +37,17 @@ const Content = styled(`div`)`
 `
 
 const Banner = () => (
-  <BannerContainer className="banner">
+  <aside
+    className="banner"
+    sx={{
+      backgroundColor: `banner`,
+      height: `bannerHeight`,
+      position: `fixed`,
+      width: `100%`,
+      zIndex: `banner`,
+      px: `env(safe-area-inset-left)`,
+    }}
+  >
     <InnerContainer>
       <Content>
         {`Using Gatsby for your clients or team? Start 14-day free trial of `}
@@ -54,7 +56,7 @@ const Banner = () => (
         </OutboundLink>
       </Content>
     </InnerContainer>
-  </BannerContainer>
+  </aside>
 )
 
 export default Banner

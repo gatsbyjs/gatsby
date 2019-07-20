@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
@@ -9,7 +11,7 @@ import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import { mediaQueries, sizes, fontSizes } from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
@@ -17,17 +19,6 @@ import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-
-const Content = styled(`div`)`
-  padding-top: ${sizes.bannerHeight};
-  padding-bottom: ${fontSizes[10]};
-
-  ${mediaQueries.md} {
-    margin-left: ${sizes.pageHeadingDesktopWidth};
-    padding-top: calc(${sizes.bannerHeight} + ${sizes.headerHeight});
-    padding-bottom: 0;
-  }
-`
 
 const StyledSkipNavLink = styled(SkipNavLink)({
   ...skipLink,
@@ -60,10 +51,21 @@ const LayoutWithHeading = props => {
 
       <Navigation pathname={props.location.pathname} />
 
-      <Content>
+      <div
+        sx={{
+          pt: t => t.sizes.bannerHeight,
+          pb: t => t.fontSizes[10],
+
+          [mediaQueries.md]: {
+            ml: t => t.sizes.pageHeadingDesktopWidth,
+            pt: t => `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+            pb: 0,
+          },
+        }}
+      >
         {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
         {children}
-      </Content>
+      </div>
 
       <MobileNavigation />
     </div>

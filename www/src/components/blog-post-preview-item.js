@@ -1,8 +1,9 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link, graphql } from "gatsby"
 
 import Avatar from "./avatar"
-import { colors, fonts } from "../utils/presets"
 
 const formatDate = dateString =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
@@ -14,8 +15,8 @@ const formatDate = dateString =>
 
 const BlogPostPreviewItem = ({ post, className }) => (
   <article css={{ position: `relative` }} className={className}>
-    <Link to={post.fields.slug} css={{ "&&": { color: colors.text.primary } }}>
-      <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
+    <Link to={post.fields.slug} sx={{ "&&": { color: `card.color` } }}>
+      <h2 sx={{ color: `card.header`, mt: 0 }}>{post.frontmatter.title}</h2>
       <p>
         {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
       </p>
@@ -40,10 +41,10 @@ const BlogPostPreviewItem = ({ post, className }) => (
         />
       </Link>
       <div
-        css={{
+        sx={{
           display: `inline-block`,
-          fontFamily: fonts.header,
-          color: colors.text.secondary,
+          fontFamily: `header`,
+          color: `card.color`,
         }}
       >
         <div>

@@ -1,7 +1,9 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
-import { mediaQueries, sizes } from "../utils/presets"
+import { mediaQueries } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 export default props => {
@@ -11,12 +13,12 @@ export default props => {
     return (
       <Fragment>
         <div
-          css={{
+          sx={{
             [mediaQueries.md]: {
-              paddingLeft: rhythm(sizes.sidebarWidth.default),
+              pl: t => rhythm(t.sizes.sidebarWidth.default),
             },
             [mediaQueries.lg]: {
-              paddingLeft: rhythm(sizes.sidebarWidth.large),
+              pl: t => rhythm(t.sizes.sidebarWidth.large),
             },
           }}
         >

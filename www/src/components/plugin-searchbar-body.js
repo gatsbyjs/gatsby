@@ -20,11 +20,9 @@ import { debounce, unescape } from "lodash-es"
 import {
   space,
   colors,
-  fontSizes,
   transition,
   radii,
   mediaQueries,
-  sizes,
   fonts,
 } from "../utils/presets"
 import { rhythm } from "../utils/typography"
@@ -252,14 +250,13 @@ class Search extends Component {
           </div>
 
           <div
-            css={{
+            sx={{
               alignItems: `center`,
-              color: colors.text.secondary,
+              color: `text.secondary`,
               display: `flex`,
               height: searchMetaHeight,
-              paddingLeft: space[6],
-              paddingRight: space[6],
-              fontSize: fontSizes[0],
+              px: 6,
+              fontSize: 0,
             }}
           >
             <Stats
@@ -275,11 +272,12 @@ class Search extends Component {
 
         <div>
           <div
-            css={{
+            sx={{
               [mediaQueries.md]: {
-                height: `calc(100vh - ${sizes.headerHeight} - ${
-                  sizes.bannerHeight
-                } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+                height: t =>
+                  `calc(100vh - ${t.sizes.headerHeight} - ${
+                    t.sizes.bannerHeight
+                  } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
               },
             }}
@@ -297,17 +295,17 @@ class Search extends Component {
         </div>
 
         <div
-          css={{
+          sx={{
             fontSize: 0,
             lineHeight: 0,
             height: 20,
-            marginTop: space[6],
+            mt: 6,
             display: `none`,
           }}
         >
           <a
             href={`https://www.algolia.com/`}
-            css={{
+            sx={{
               "&&": {
                 background: `url(${AlgoliaLogo})`,
                 border: `none`,
@@ -321,7 +319,7 @@ class Search extends Component {
                 width: 110,
                 height: `100%`,
                 display: `block`,
-                marginLeft: `auto`,
+                ml: `auto`,
                 "&:hover": {
                   background: `url(${AlgoliaLogo})`,
                   backgroundRepeat: `no-repeat`,
@@ -349,23 +347,23 @@ const Result = ({ hit, pathname, query }) => {
     <Link
       to={`/packages/${hit.name}/?=${query}`}
       aria-current={selected ? `true` : undefined}
-      css={{
+      sx={{
         "&&": {
-          background: selected ? colors.ui.hover : false,
+          background: selected ? `ui.hover` : false,
           borderBottom: 0,
           display: `block`,
           fontWeight: `400`,
-          padding: `${space[5]} ${space[6]}`,
+          py: 5,
+          px: 6,
           position: `relative`,
-          transition: `all ${transition.speed.default} ${
-            transition.curve.default
-          }`,
+          transition: t =>
+            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
           zIndex: selected ? 1 : false,
           "&:hover": {
-            background: selected ? colors.ui.hover : colors.white,
+            background: selected ? `ui.hover` : `white`,
           },
           "&:before": {
-            background: colors.ui.border.subtle,
+            background: `ui.border.subtle`,
             bottom: 0,
             content: `''`,
             height: 1,
@@ -378,7 +376,7 @@ const Result = ({ hit, pathname, query }) => {
             },
           },
           "&:after": {
-            background: selected ? colors.gatsby : false,
+            background: selected ? `gatsby` : false,
             bottom: 0,
             content: `''`,
             position: `absolute`,
@@ -390,23 +388,22 @@ const Result = ({ hit, pathname, query }) => {
       }}
     >
       <div
-        css={{
+        sx={{
           alignItems: `baseline`,
           display: `flex`,
           justifyContent: `space-between`,
-          marginBottom: space[3],
+          mb: 3,
         }}
       >
         <h2
-          css={{
+          sx={{
             alignItems: `center`,
-            color: selected ? colors.gatsby : false,
+            color: selected ? `gatsby` : false,
             display: `flex`,
-            fontFamily: fonts.system,
-            fontSize: fontSizes[1],
+            fontFamily: `system`,
+            fontSize: 1,
             fontWeight: `bold`,
-            marginBottom: 0,
-            marginTop: 0,
+            my: 0,
           }}
         >
           {hit.name}
@@ -418,11 +415,11 @@ const Result = ({ hit, pathname, query }) => {
         </div>
         <div
           aria-hidden
-          css={{
+          sx={{
             alignItems: `center`,
-            color: selected ? colors.lilac : colors.text.secondary,
+            color: selected ? `lilac` : `text.secondary`,
             display: `flex`,
-            fontSize: fontSizes[0],
+            fontSize: 0,
           }}
         >
           {hit.repository &&
@@ -454,9 +451,9 @@ const Result = ({ hit, pathname, query }) => {
         </div>
       </div>
       <div
-        css={{
-          color: selected ? `inherit` : colors.text.secondary,
-          fontSize: fontSizes[1],
+        sx={{
+          color: selected ? `inherit` : `text.secondary`,
+          fontSize: 1,
         }}
       >
         {removeMD(unescape(hit.description))}

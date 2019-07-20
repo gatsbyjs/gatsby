@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import MdStar from "react-icons/lib/md/star"
-import { colors, space, fontSizes } from "../../utils/presets"
-import styles from "../shared/styles"
+import styles, { showcaseList, showcaseItem } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "../../assets/v2icon.svg"
@@ -31,7 +32,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       >
         <h1>
           No {`${emptyStateReason}`} starters found!
-          <div css={{ color: colors.gatsby }}>
+          <div sx={{ color: `gatsby` }}>
             <small>
               Why not write one and
               {` `}
@@ -50,7 +51,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (count) {
     starters = starters.sort(sortingFunction(sortRecent)).slice(0, count)
     return (
-      <div css={{ ...styles.showcaseList }}>
+      <div sx={showcaseList}>
         {starters.map(({ node: starter }) => {
           const {
             description,
@@ -68,8 +69,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             starter.fields && ( // have to filter out null fields from bad data
               <div
                 key={starter.id}
-                css={{
-                  ...styles.showcaseItem,
+                sx={{
+                  ...showcaseItem,
                   ...styles.withTitleHover,
                 }}
               >
@@ -82,23 +83,23 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <span css={{ color: colors.text.header }}>{owner} /</span>
+                    <span sx={{ color: `text.header` }}>{owner} /</span>
                     <span css={{ display: `flex` }}>
                       {gatsbyMajorVersion[0][1] === `2` && (
                         <img
                           src={V2Icon}
                           alt="Gatsby v2"
-                          css={{
-                            marginBottom: 0,
-                            marginRight: space[2],
+                          sx={{
+                            mb: 0,
+                            mr: 2,
                           }}
                         />
                       )}
                       <div
-                        css={{
+                        xs={{
                           alignItems: `center`,
                           display: `inline-flex`,
-                          fontSize: fontSizes[0],
+                          fontSize: 0,
                         }}
                       >
                         <MdStar /> {stars}
@@ -107,17 +108,17 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   </div>
                   <div>
                     <Link to={`/starters${slug}`}>
-                      <h5 css={{ margin: 0, fontSize: fontSizes[2] }}>
+                      <h5 sx={{ m: 0, fontSize: 2 }}>
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
                   </div>
                   <div
-                    css={{
+                    sx={{
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
-                      marginBottom: space[1],
+                      marginBottom: 1,
                     }}
                   >
                     {description || `No description`}
@@ -159,7 +160,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             )
           )
         })}
-        {starters.length && <EmptyGridItems styles={styles.showcaseItem} />}
+        {starters.length && <EmptyGridItems styles={showcaseItem} />}
       </div>
     )
   }

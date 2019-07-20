@@ -1,5 +1,7 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import { colors, space } from "../utils/presets"
+import { colors } from "../utils/presets"
 
 const bgDefault = colors.orange[20]
 const bgFeatureAvailability = colors.accent
@@ -22,17 +24,15 @@ const getBackground = num => {
   }
 }
 
-const basicStyling = {
-  height: space[5],
-  width: space[5],
-  borderRadius: `50%`,
-  margin: `0 auto`,
-}
+const basicStyling = {}
 
 const EvaluationCell = ({ num, style }) => (
   <div
-    css={{
-      ...basicStyling,
+    sx={{
+      height: t => t.space[5],
+      width: t => t.space[5],
+      borderRadius: `50%`,
+      margin: `0 auto`,
       backgroundColor:
         [`N/A`, `0`, ``].indexOf(num) !== -1
           ? bgDefault

@@ -1,13 +1,15 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import ChevronRight from "react-icons/lib/md/chevron-right"
 import ChevronLeft from "react-icons/lib/md/chevron-left"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
-import { mediaQueries, space, fontSizes } from "../utils/presets"
+import { mediaQueries } from "../utils/presets"
 
 const Separator = ({ character = <ChevronRight /> }) => (
-  <span style={{ margin: `0px ${space[1]}` }} role="presentation">
+  <span sx={{ my: 0, mx: 1 }} role="presentation">
     {character}
   </span>
 )
@@ -15,13 +17,14 @@ const Separator = ({ character = <ChevronRight /> }) => (
 const BreadcrumbNav = ({ children, mobile = false }) => (
   <nav
     aria-label="breadcrumb"
-    css={{
-      fontSize: fontSizes[1],
+    sx={{
+      color: `text.secondary`,
       display: `${mobile ? `inherit` : `none`}`,
+      fontSize: 1,
+      mb: 7,
       [mediaQueries.md]: {
         display: `${mobile ? `none` : `inherit`}`,
       },
-      marginBottom: space[2],
     }}
   >
     {children}

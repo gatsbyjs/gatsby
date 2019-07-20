@@ -5,7 +5,7 @@ import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-import { colors, space, mediaQueries } from "../utils/presets"
+import { colors, mediaQueries } from "../utils/presets"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -41,7 +41,7 @@ const SegmentTitle = ({ children }) => (
     sx={{
       bg: `accent`,
       borderRadius: 1,
-      bottom: `-${space[2]}`,
+      bottom: t => `-${t.space[2]}`,
       display: `inline`,
       fontSize: 1,
       fontWeight: `normal`,
@@ -110,7 +110,7 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${space[3]} ${space[4]}` }
+const boxPadding = { py: 3, px: 4 }
 
 const SourceItem = ({ children }) => (
   <div
@@ -146,6 +146,7 @@ const ItemTitle = ({ children }) => (
     sx={{
       fontSize: 2,
       margin: 0,
+      color: `card.color`,
     }}
   >
     {children}
@@ -188,14 +189,14 @@ const Gatsby = () => (
   >
     <img
       src={logo}
-      css={{
+      sx={{
         display: `inline-block`,
-        height: space[8],
+        height: t => t.space[8],
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
         [mediaQueries.lg]: {
-          height: space[9],
+          height: t => t.space[9],
         },
       }}
       alt="Gatsby"
@@ -234,17 +235,17 @@ const Diagram = () => (
       <section
         className="Diagram"
         sx={{
+          flex: `1 1 100%`,
           fontFamily: `header`,
           p: 6,
           textAlign: `center`,
-          flex: `1 1 100%`,
         }}
       >
         <h1
           sx={{
             fontWeight: 1,
-            mt: 0,
             mb: 6,
+            mt: 0,
             [mediaQueries.md]: {
               mt: 6,
             },

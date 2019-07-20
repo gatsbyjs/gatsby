@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
@@ -5,8 +7,7 @@ import Container from "../components/container"
 import Rotator from "../components/rotator"
 import { Link } from "gatsby"
 import logo from "../monogram.svg"
-import { rhythm } from "../utils/typography"
-import { colors, space, sizes, fontSizes } from "../utils/presets"
+import { sizes } from "../utils/presets"
 import FooterLinks from "../components/shared/footer-links"
 
 class Plugins extends Component {
@@ -38,22 +39,20 @@ class Plugins extends Component {
           >
             <img
               src={logo}
-              css={{
+              sx={{
                 display: `inline-block`,
-                height: rhythm(3),
-                width: rhythm(3),
-                marginLeft: `auto`,
-                marginRight: `auto`,
+                height: t => t.space[12],
+                width: t => t.space[12],
+                mx: `auto`,
               }}
               alt=""
             />
             <h1
-              css={{
-                fontSize: fontSizes[6],
+              sx={{
+                fontSize: 6,
                 fontWeight: `700`,
-                marginLeft: space[5],
-                marginRight: space[5],
-                marginBottom: 0,
+                mx: 5,
+                mb: 0,
                 textAlign: `center`,
               }}
             >
@@ -105,13 +104,13 @@ class Plugins extends Component {
                   text: `anything?`,
                 },
               ]}
-              color={colors.lilac}
+              color="lilac"
             />
 
             <p
-              css={{
-                color: colors.text.secondary,
-                fontSize: fontSizes[2],
+              sx={{
+                color: `text.secondary`,
+                fontSize: 2,
                 textAlign: `center`,
               }}
             >

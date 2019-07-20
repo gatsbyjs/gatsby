@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
@@ -8,14 +10,7 @@ import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  letterSpacings,
-  fonts,
-} from "../utils/presets"
+import { colors, mediaQueries, fonts } from "../utils/presets"
 
 const legendBorderColor = colors.ui.border.subtle
 
@@ -174,10 +169,10 @@ const FeaturesHeader = () => (
     </p>
     <h6
       id="legend"
-      css={{
+      sx={{
         fontWeight: `normal`,
         textTransform: `uppercase`,
-        letterSpacing: letterSpacings.tracked,
+        letterSpacing: `tracked`,
       }}
     >
       Legend
@@ -210,7 +205,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
+  <p sx={{ fontSize: 1, mt: 8 }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}

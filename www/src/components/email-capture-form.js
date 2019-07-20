@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import styled from "@emotion/styled"
 
@@ -11,7 +13,6 @@ import {
   fonts,
   radii,
   shadows,
-  lineHeights,
 } from "../utils/presets"
 import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
@@ -298,12 +299,12 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <Container>
             <p
-              css={{
-                color: colors.gatsby,
+              sx={{
+                color: `gatsby`,
                 fontWeight: `bold`,
-                fontSize: fontSizes[3],
-                fontFamily: fonts.header,
-                lineHeight: lineHeights.dense,
+                fontSize: 3,
+                fontFamily: `header`,
+                lineHeight: `dense`,
               }}
             >
               {signupMessage}

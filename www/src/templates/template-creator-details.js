@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
@@ -13,7 +15,6 @@ import {
   transition,
   radii,
   mediaQueries,
-  fontSizes,
   lineHeights,
 } from "../utils/presets"
 import GithubIcon from "react-icons/lib/go/mark-github"
@@ -164,10 +165,10 @@ class CreatorTemplate extends Component {
 
               {creator.for_hire || creator.hiring ? (
                 <div
-                  css={{
+                  sx={{
                     alignSelf: `flex-start`,
-                    fontSize: fontSizes[1],
-                    marginRight: space[2],
+                    fontSize: 1,
+                    mr: 2,
                   }}
                 >
                   <Badge

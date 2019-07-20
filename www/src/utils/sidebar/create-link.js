@@ -48,8 +48,10 @@ const createLink = ({
         sx={{
           minHeight: `sidebarItemMinHeight`,
           position: `relative`,
+          pl: indent,
           pr: 4,
           py: 3,
+          textDecoration: `none`,
           width: `100%`,
           zIndex: 1,
           "&&": {
@@ -71,15 +73,13 @@ const createLink = ({
             "&:hover": {
               bg: `sidebar.itemHoverBackground`,
               color: `navigation.linkHover`,
-
               "&:before": {
                 bg: `link.color`,
                 transform: `scale(1)`,
               },
             },
+            ...customCSS,
           },
-          ...customCSS,
-          pl: indent,
           "&:before, &:after": {
             content: `''`,
             left: t =>
@@ -112,18 +112,18 @@ const createLink = ({
         {ui === `steps` && (
           <span
             sx={{
-              left: 6,
               bg: `white`,
-              borderWidth: `1px`,
-              borderStyle: `solid`,
               borderColor: `ui.border.subtle`,
               borderRadius: 6,
+              borderStyle: `solid`,
+              borderWidth: `1px`,
               display: `block`,
               fontWeight: `normal`,
               height: bulletSize,
+              left: 6,
               position: `absolute`,
-              width: bulletSize,
               top: bulletOffsetTop,
+              width: bulletSize,
               zIndex: -1,
             }}
           />

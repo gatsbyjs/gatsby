@@ -1,7 +1,8 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
-import { colors } from "../../utils/presets"
 
 import Collapsible from "../shared/collapsible"
 import styles from "../shared/styles"
@@ -27,7 +28,7 @@ export default function LHSFilter({
           }
         })
         .map(([c, count]) => (
-          <ul key={c} css={{ margin: 0 }}>
+          <ul key={c} sx={{ m: 0 }}>
             <button
               className={filters.has(c) ? `selected` : ``}
               onClick={() => {
@@ -41,8 +42,8 @@ export default function LHSFilter({
               css={styles.filterButton}
             >
               <div
-                css={{
-                  color: filters.has(c) ? colors.gatsby : colors.input.border,
+                sx={{
+                  color: filters.has(c) ? `gatsby` : `input.border`,
                   ...styles.filterCheckbox,
                 }}
               >
@@ -53,14 +54,14 @@ export default function LHSFilter({
                 )}
               </div>
               <div
-                css={{
-                  color: filters.has(c) ? colors.gatsby : false,
-                  marginRight: `auto`,
+                sx={{
+                  color: filters.has(c) ? `gatsby` : false,
+                  mr: `auto`,
                 }}
               >
                 {c.replace(/^gatsby-/, `*-`)}
               </div>
-              <div css={styles.filterCount}>{count}</div>
+              <div sx={styles.filterCount}>{count}</div>
             </button>
           </ul>
         ))}

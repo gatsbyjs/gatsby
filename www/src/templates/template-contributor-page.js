@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
@@ -7,7 +9,6 @@ import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import { rhythm } from "../utils/typography"
-import { space, radii, fonts } from "../utils/presets"
 import FooterLinks from "../components/shared/footer-links"
 
 class ContributorPageTemplate extends React.Component {
@@ -47,35 +48,29 @@ class ContributorPageTemplate extends React.Component {
         <main>
           <Container>
             <div
-              css={{
+              sx={{
                 textAlign: `center`,
-                padding: `${space[7]} ${space[6]}`,
+                py: 7,
+                px: 6,
               }}
             >
               <div>
                 <Img
                   fixed={contributor.avatar.childImageSharp.fixed}
-                  css={{
+                  sx={{
                     height: rhythm(2.3),
                     width: rhythm(2.3),
-                    borderRadius: radii[6],
+                    borderRadius: 6,
                     display: `inline-block`,
                     verticalAlign: `middle`,
                   }}
                 />
-                <h1
-                  css={{
-                    marginTop: 0,
-                  }}
-                >
-                  {contributor.id}
-                </h1>
+                <h1 sx={{ mt: 0 }}>{contributor.id}</h1>
                 <p
-                  css={{
-                    fontFamily: fonts.header,
+                  sx={{
+                    fontFamily: `header`,
                     maxWidth: rhythm(18),
-                    marginLeft: `auto`,
-                    marginRight: `auto`,
+                    mx: `auto`,
                   }}
                 >
                   {contributor.bio}
@@ -86,12 +81,12 @@ class ContributorPageTemplate extends React.Component {
                 </a>
               </div>
             </div>
-            <div css={{ padding: `${space[7]} ${space[6]}` }}>
+            <div sx={{ py: 7, px: 6 }}>
               {posts.map(node => (
                 <BlogPostPreviewItem
                   post={node}
                   key={node.fields.slug}
-                  css={{ marginBottom: space[9] }}
+                  sx={{ mb: 9 }}
                 />
               ))}
             </div>

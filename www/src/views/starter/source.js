@@ -1,52 +1,50 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import { colors, space, mediaQueries, fonts } from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
 import { NetlifyIcon } from "../../assets/logos"
 
 const Source = ({ startersYaml, repoUrl }) => (
   <div
-    css={{
+    sx={{
       display: `flex`,
-      borderTop: `1px solid ${colors.ui.border.subtle}`,
-      fontFamily: fonts.header,
-      margin: `0 ${space[6]}`,
-      [mediaQueries.sm]: {
-        borderTop: 0,
-      },
-      [mediaQueries.lg]: {
-        margin: `0 ${space[8]}`,
-      },
+      borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
+      fontFamily: `header`,
+      mx: 6,
+      [mediaQueries.sm]: { borderTop: 0 },
+      [mediaQueries.lg]: { mx: 8 },
     }}
   >
     {repoUrl && (
       <div
-        css={{
+        csx={{
           padding: 20,
-          paddingLeft: startersYaml.featured ? false : 0,
+          pl: startersYaml.featured ? false : 0,
           display: `flex`,
           alignItems: `center`,
         }}
       >
         <GithubIcon
-          css={{
-            marginBottom: 0,
-            marginRight: 10,
+          sx={{
+            mb: 0,
+            mr: 2,
             height: 26,
             width: 20,
-            color: colors.gatsby,
+            color: `gatsby`,
           }}
         />
         <a
           href={repoUrl}
-          css={{
+          sx={{
             "&&": {
               borderBottom: 0,
-              color: colors.gatsby,
+              color: `gatsby`,
               cursor: `pointer`,
               fontWeight: `normal`,
               "&:hover": {
-                color: colors.lilac,
+                color: `lilac`,
               },
             },
           }}
@@ -55,38 +53,37 @@ const Source = ({ startersYaml, repoUrl }) => (
         </a>
       </div>
     )}
-
     <div
-      css={{
+      sx={{
         display: `none`,
         [mediaQueries.lg]: {
-          padding: 20,
-          paddingLeft: 0,
+          alignItems: `center`,
+          display: `flex`,
           flex: 1,
           justifyContent: `flex-end`,
-          display: `flex`,
-          alignItems: `center`,
+          p: 20,
+          pl: 0,
         },
       }}
     >
       <span
-        css={{
+        sx={{
           marginRight: 20,
-          color: colors.text.secondary,
+          color: `text.secondary`,
         }}
       >
         Try this starter
       </span>
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
-        css={{
+        sx={{
           "&&": {
             borderBottom: 0,
-            color: colors.gatsby,
+            color: `gatsby`,
             cursor: `pointer`,
             fontWeight: `normal`,
             "&:hover": {
-              color: colors.lilac,
+              color: `lilac`,
             },
           },
         }}

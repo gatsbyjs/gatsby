@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import { Helmet } from "react-helmet"
@@ -10,7 +12,6 @@ import {
 import Container from "../../components/container"
 import DocsearchContent from "../../components/docsearch-content"
 import FooterLinks from "../../components/shared/footer-links"
-import { fontSizes, space } from "../../utils/presets"
 
 const findStubs = pages =>
   pages.filter(
@@ -66,7 +67,7 @@ class StubListRoute extends React.Component {
                 content="Find places in the documentation that are still a work in progress, in need of community help"
               />
             </Helmet>
-            <h1 id="stublist" css={{ marginTop: 0 }}>
+            <h1 id="stublist" sx={{ mt: 0 }}>
               Stub List
             </h1>
             <p>
@@ -85,11 +86,7 @@ class StubListRoute extends React.Component {
                   category.slice(-1) === `*` ? category.slice(0, -1) : category
                 return (
                   <React.Fragment key={category}>
-                    <h2
-                      css={{ fontSize: fontSizes[4], marginBottom: space[3] }}
-                    >
-                      {categoryTitle}
-                    </h2>
+                    <h2 sx={{ fontSize: 4, mb: 3 }}>{categoryTitle}</h2>
                     <ul>
                       {groupedStubs[category].map(stub => (
                         <li key={stub.title}>

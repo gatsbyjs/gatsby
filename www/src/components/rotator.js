@@ -1,7 +1,8 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+
 import React, { Component } from "react"
 import Slider from "./slider"
-import { options } from "../utils/typography"
-import { fontSizes, colors, space } from "../utils/presets"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
@@ -9,7 +10,7 @@ import { srOnly } from "../utils/styles"
 
 const controlButtonStyles = {
   WebkitAppearance: `none`,
-  color: colors.text.secondary,
+  color: `text.secondary`,
   fontWeight: 700,
   border: 0,
   background: `transparent`,
@@ -18,15 +19,15 @@ const controlButtonStyles = {
   bottom: 0,
   left: 0,
   padding: 0,
-  fontSize: fontSizes[5],
-  width: space[8],
+  fontSize: 5,
+  width: t => t.space[8],
   textAlign: `center`,
   "&:hover": {
     cursor: `pointer`,
-    color: colors.gatsby,
-    background: colors.ui.hover,
+    color: `gatsby`,
+    bg: `ui.hover`,
   },
-  "&:active": { background: colors.ui.hover },
+  "&:active": { bg: `ui.hover` },
 }
 
 class Rotator extends Component {
@@ -112,11 +113,12 @@ class Rotator extends Component {
 
     return (
       <div
-        css={{
-          borderTop: `1px solid ${colors.ui.border.subtle}`,
-          borderBottom: `1px solid ${colors.ui.border.subtle}`,
-          padding: `${space[4]} ${space[9]}`,
-          margin: `${space[6]} 0`,
+        sx={{
+          borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
+          borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+          py: 4,
+          px: 9,
+          my: 6,
           position: `relative`,
         }}
       >
@@ -126,11 +128,11 @@ class Rotator extends Component {
           aria-relevant="all"
         >
           <p
-            css={{
-              fontSize: fontSizes[4],
-              fontFamily: options.headerFontFamily.join(`,`),
+            sx={{
+              fontSize: 4,
+              fontFamily: `header`,
               textAlign: `center`,
-              marginBottom: 0,
+              mb: 0,
             }}
           >
             <span>Need&nbsp;</span>
@@ -153,17 +155,17 @@ class Rotator extends Component {
                 {!enableSlider ? (
                   <>{text}</>
                 ) : (
-                  <Slider items={[text]} color={colors.black} />
+                  <Slider items={[text]} color="black" />
                 )}
               </span>
             </span>
           </p>
 
           <p
-            css={{
-              color: colors.text.secondary,
+            sx={{
+              color: `text.secondary`,
               margin: 0,
-              fontSize: fontSizes[3],
+              fontSize: 3,
               textAlign: `center`,
             }}
           >
@@ -178,7 +180,7 @@ class Rotator extends Component {
           </p>
         </div>
         <button
-          css={{ ...controlButtonStyles }}
+          sx={controlButtonStyles}
           onClick={this.decrementItem}
           aria-controls="headline-slider"
         >
@@ -186,7 +188,7 @@ class Rotator extends Component {
           <span css={srOnly}>Previous plugin category</span>
         </button>
         <button
-          css={{ ...controlButtonStyles, left: `auto`, right: 0 }}
+          sx={{ ...controlButtonStyles, left: `auto`, right: 0 }}
           onClick={this.incrementItemAndClearInterval}
           aria-controls="headline-slider"
         >

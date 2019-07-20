@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
@@ -16,21 +18,6 @@ import {
 
 const ICON_SIZE = space[7]
 
-const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.purple[80] : colors.white)};
-  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
-  padding: ${space[5]} ${space[6]};
-  width: 100%;
-
-  ${mediaQueries.xl} {
-    margin: -1px 0;
-    padding: ${space[5]} 5%;
-  }
-
-  ${mediaQueries.xxl} {
-    padding: ${space[7]} 8%;
-  }
-`
 export const Header = styled(`header`)`
   ${mediaQueries.md} {
     max-width: 30rem;
@@ -108,9 +95,30 @@ const HomepageSection = ({
   introduction,
   inverseStyle,
   links,
+  inverse,
   className,
 }) => (
-  <HomepageSectionRoot inverse={inverseStyle} className={className}>
+  <section
+    sx={{
+      bg: inverse ? `purple.80` : `background`,
+      color: inverse ? `purple.10` : `purple.80`,
+      px: 6,
+      py: 5,
+      width: `100%`,
+      [mediaQueries.xl]: {
+        my: `-1px`,
+        mx: 0,
+        py: 5,
+        px: `5%`,
+      },
+      [mediaQueries.xxl]: {
+        py: 7,
+        px: `8%`,
+      },
+    }}
+    inverse={inverseStyle}
+    className={className}
+  >
     {sectionName && (
       <Header>
         <Name inverse={inverseStyle}>
@@ -149,7 +157,7 @@ const HomepageSection = ({
       </Header>
     )}
     {children}
-  </HomepageSectionRoot>
+  </section>
 )
 
 HomepageSection.propTypes = {

@@ -1,24 +1,19 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { rhythm } from "../utils/typography"
-import {
-  space,
-  fontSizes,
-  transition,
-  colors,
-  mediaQueries,
-  fonts,
-} from "../utils/presets"
+import { mediaQueries } from "../utils/presets"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (
   <li
-    css={{
-      marginRight: space[6],
+    sx={{
+      mr: 6,
       display: `inline-block`,
-      padding: 0,
+      p: 0,
       height: `calc(14px + 1vw)`,
       [mediaQueries.sm]: {
-        marginBottom: 0,
+        mb: 0,
         height: `calc(9px + 1vw)`,
         ":last-child": {
           marginRight: 0,
@@ -33,10 +28,9 @@ const Icon = ({ icon, alt, href }) => (
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      css={{
-        transition: `opacity ${transition.speed.fast} ${
-          transition.curve.default
-        }`,
+      sx={{
+        transition: t =>
+          `opacity ${t.transition.speed.fast} ${t.transition.curve.default}`,
         opacity: 0.9,
         "&&": {
           borderBottom: 0,
@@ -52,8 +46,8 @@ const Icon = ({ icon, alt, href }) => (
       <img
         src={icon}
         alt={alt}
-        css={{
-          margin: 0,
+        sx={{
+          m: 0,
           height: `100%`,
         }}
       />
@@ -64,15 +58,13 @@ const Icon = ({ icon, alt, href }) => (
 const UsedBy = () => (
   <div
     className="Masthead-usedBy"
-    css={{
+    sx={{
       display: `flex`,
-      padding: space[8],
-      paddingTop: space[5],
-      paddingBottom: space[5],
-      marginBottom: rhythm(3),
-      transition: `padding-top ${transition.speed.fast} ${
-        transition.curve.default
-      }`,
+      p: 8,
+      py: 5,
+      marginBottom: 12,
+      transition: t =>
+        `padding-top ${t.transition.speed.fast} ${t.transition.curve.default}`,
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,
@@ -100,13 +92,13 @@ const UsedBy = () => (
       }}
     >
       <p
-        css={{
-          color: colors.lilac,
-          fontFamily: fonts.header,
-          fontSize: fontSizes[1],
-          marginBottom: 0,
+        sx={{
+          color: `lilac`,
+          fontFamily: `header`,
+          fontSize: 1,
+          mb: 0,
           [mediaQueries.sm]: {
-            fontSize: fontSizes[2],
+            fontSize: 2,
             textAlign: `right`,
           },
         }}

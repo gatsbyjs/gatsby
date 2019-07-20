@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
-import { space, mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
 import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
@@ -155,7 +155,7 @@ class EvaluationTable extends Component {
                       >
                         <td
                           sx={{
-                            paddingBottom: `calc(${space[5]} - 1px)`,
+                            paddingBottom: t => `calc(${t.space[5]} - 1px)`,
                             "&&": {
                               [mediaQueries.xs]: {
                                 px: 3,

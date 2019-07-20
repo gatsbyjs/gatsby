@@ -1,6 +1,8 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
-import { colors, space, radii, mediaQueries, fonts } from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
@@ -13,26 +15,26 @@ const Details = ({
   startersYaml,
 }) => (
   <div
-    css={{
-      padding: space[6],
+    sx={{
+      p: 6,
       [mediaQueries.lg]: {
-        padding: space[8],
         display: `grid`,
+        gridRowGap: 5,
         gridTemplateColumns: `auto 1fr`,
-        gridRowGap: space[5],
+        p: 8,
       },
     }}
   >
-    <div css={styles.headline}>Tags</div>
+    <div sx={styles.headline}>Tags</div>
     <div>{startersYaml.tags.join(`, `)}</div>
 
-    <div css={styles.headline}>Description</div>
+    <div sx={styles.headline}>Description</div>
     <div>{startersYaml.description}</div>
 
-    <div css={styles.headline}>Features</div>
+    <div sx={styles.headline}>Features</div>
     <div>
       {startersYaml.features ? (
-        <ul css={{ marginTop: 0 }}>
+        <ul sx={{ mt: 0 }}>
           {startersYaml.features.map((f, i) => (
             <li key={i}>{f}</li>
           ))}
@@ -42,16 +44,16 @@ const Details = ({
       )}
     </div>
 
-    <div css={styles.headline}>Dependencies</div>
+    <div sx={styles.headline}>Dependencies</div>
 
     <div>
       <div
-        css={{
+        sx={{
           display: `grid`,
           marginBottom: rhythm(options.blockMarginBottom * 5),
           [mediaQueries.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridGap: space[5],
+            gridGap: 5,
           },
         }}
       >
@@ -71,7 +73,7 @@ const Details = ({
             )
           )}
         {showMore && (
-          <button css={{ ...styles.showMoreButton }} onClick={showAllDeps}>
+          <button sx={styles.showMoreButton} onClick={showAllDeps}>
             {`Show ${allDeps.length - shownDeps.length} more`}
           </button>
         )}
@@ -84,22 +86,23 @@ export default Details
 
 const styles = {
   headline: {
-    color: colors.text.secondary,
-    fontFamily: fonts.header,
-    paddingRight: space[5],
+    color: `text.secondary`,
+    fontFamily: `header`,
+    pr: 5,
   },
   showMoreButton: {
-    backgroundColor: colors.gatsby,
+    backgroundColor: `gatsby`,
     border: 0,
-    borderRadius: radii[1],
+    borderRadius: 1,
     cursor: `pointer`,
-    fontFamily: fonts.header,
+    fontFamily: `header`,
     fontWeight: `bold`,
-    padding: `${space[1]} ${space[4]}`,
+    py: 1,
+    px: 4,
     WebkitFontSmoothing: `antialiased`,
     "&&": {
       borderBottom: `none`,
-      color: colors.white,
+      color: `white`,
     },
   },
 }

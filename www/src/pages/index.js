@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { space, mediaQueries, fontWeights } from "../utils/presets"
+import { space, mediaQueries } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -106,8 +106,6 @@ class IndexRoute extends React.Component {
           <MastheadContent />
           <div
             sx={{
-              p: 6,
-              pt: 0,
               width: `100%`,
               borderColor: `ui.border.subtle`,
               borderBottomWidth: `1px`,
@@ -125,9 +123,7 @@ class IndexRoute extends React.Component {
           <div css={{ flex: `1 1 100%` }}>
             <Container hasSideBar={false}>
               <section css={{ textAlign: `center` }}>
-                <h1 css={{ fontWeight: fontWeights[1], marginTop: 0 }}>
-                  Curious yet?
-                </h1>
+                <h1 sx={{ fontWeight: 1, mt: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
                 </FuturaParagraph>

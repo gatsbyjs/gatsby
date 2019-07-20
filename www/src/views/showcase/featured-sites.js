@@ -1,22 +1,16 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
+import hex2rgba from "hex2rgba"
 
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import {
-  colors,
-  space,
-  transition,
-  radii,
-  shadows,
-  mediaQueries,
-  fontSizes,
-  fonts,
-} from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -27,11 +21,11 @@ const featuredSitesCard = {
   flexGrow: 0,
   flexShrink: 0,
   width: 320,
-  marginBottom: space[9],
-  marginRight: space[6],
+  marginBottom: 9,
+  marginRight: 6,
   [mediaQueries.xl]: {
     width: 360,
-    marginRight: space[8],
+    marginRight: 8,
   },
   [mediaQueries.xxl]: {
     width: 400,
@@ -51,8 +45,9 @@ class FeaturedSites extends Component {
     return (
       <section
         className="featured-sites"
-        css={{
-          margin: `${space[6]} ${space[6]} 0`,
+        sx={{
+          mt: 6,
+          mx: 6,
           position: `relative`,
           display: `none`,
           [mediaQueries.lg]: {
@@ -61,7 +56,7 @@ class FeaturedSites extends Component {
         }}
       >
         <div
-          css={{
+          sx={{
             background: `url(${FeaturedSitesIcon})`,
             backgroundRepeat: `no-repeat`,
             backgroundSize: `contain`,
@@ -75,37 +70,31 @@ class FeaturedSites extends Component {
           }}
         />
         <div
-          css={{
-            marginBottom: space[9],
+          sx={{
+            mb: 9,
             display: `flex`,
             alignItems: `center`,
             flexWrap: `wrap`,
           }}
         >
-          <img
-            src={FeaturedSitesIcon}
-            alt="icon"
-            css={{ marginBottom: 0, height: space[4] }}
-          />
           <h1
-            css={{
-              fontSize: fontSizes[4],
-              fontFamily: fonts.header,
+            sx={{
+              fontFamily: `header`,
+              fontSize: 4,
               fontWeight: `bold`,
-              marginRight: 30,
-              marginLeft: 4,
-              marginTop: 0,
-              marginBottom: 0,
+              ml: 1,
+              mr: 30,
+              my: 0,
             }}
           >
             Featured Sites
           </h1>
           <a
             href="#showcase"
-            css={{
+            sx={{
               ...styles.withTitleHover,
               display: `none`,
-              fontSize: fontSizes[1],
+              fontSize: 1,
               [mediaQueries.sm]: {
                 display: `block`,
               },
@@ -113,7 +102,7 @@ class FeaturedSites extends Component {
                 borderBottom: 0,
                 cursor: `pointer`,
                 "&:hover": {
-                  color: colors.gatsby,
+                  color: `gatsby`,
                 },
               },
             }}
@@ -125,17 +114,17 @@ class FeaturedSites extends Component {
           </a>
           <div
             css={{
-              display: `flex`,
               alignItems: `center`,
+              display: `flex`,
               marginLeft: `auto`,
             }}
           >
             <div
-              css={{
-                color: colors.text.secondary,
-                fontSize: fontSizes[1],
-                marginRight: 15,
+              sx={{
+                color: `text.secondary`,
                 display: `none`,
+                fontSize: 1,
+                mr: 4,
                 [mediaQueries.md]: {
                   display: `block`,
                 },
@@ -155,40 +144,37 @@ class FeaturedSites extends Component {
             </Button>
           </div>
         </div>
-        <div
-          css={{
-            position: `relative`,
-          }}
-        >
+        <div css={{ position: `relative` }}>
           <div
-            css={{
+            sx={{
+              borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
               display: `flex`,
-              overflowX: `scroll`,
               flexShrink: 0,
-              margin: `0 -${space[6]}`,
-              padding: `3px ${space[6]} 0`,
-              borderBottom: `1px solid ${colors.ui.border.subtle}`,
+              margin: t => `0 -${t.space[6]}`,
+              overflowX: `scroll`,
+              padding: t => `3px ${t.space[6]} 0`,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
-                css={{
+                sx={{
                   ...featuredSitesCard,
                   ...styles.withTitleHover,
                 }}
               >
                 <Link
-                  css={{
+                  sx={{
                     "&&": {
                       borderBottom: `none`,
-                      fontSize: fontSizes[3],
+                      color: `text.header`,
+                      fontFamily: `header`,
+                      fontSize: 3,
                       fontWeight: `bold`,
-                      color: colors.text.header,
-                      fontFamily: fonts.header,
-                      transition: `box-shadow ${transition.speed.slow} ${
-                        transition.curve.default
-                      }, transform .3s ${transition.curve.default}`,
+                      transition: t =>
+                        `box-shadow ${t.transition.speed.slow} ${
+                          t.transition.curve.default
+                        }, transform .3s ${t.transition.curve.default}`,
                       "&:hover": { ...styles.screenshotHover },
                     },
                   }}
@@ -210,9 +196,9 @@ class FeaturedSites extends Component {
                   </div>
                 </Link>
                 <div
-                  css={{
-                    fontSize: fontSizes[1],
-                    color: colors.text.secondary,
+                  sx={{
+                    color: `text.secondary`,
+                    fontSize: 1,
                     fontWeight: `normal`,
                     [mediaQueries.lg]: {
                       marginTop: `auto`,
@@ -220,11 +206,7 @@ class FeaturedSites extends Component {
                   }}
                 >
                   {node.built_by && (
-                    <div
-                      css={{
-                        fontFamily: fonts.header,
-                      }}
-                    >
+                    <div sx={{ fontFamily: `header` }}>
                       Built by {node.built_by}
                     </div>
                   )}
@@ -235,27 +217,24 @@ class FeaturedSites extends Component {
                 </div>
               </div>
             ))}
-            <div
-              css={{
-                display: `flex`,
-              }}
-            >
+            <div sx={{ display: `flex` }}>
               <a
                 href="#showcase"
-                css={{
-                  marginRight: `${space[6]} !important`,
-                  backgroundColor: colors.purple[5],
-                  borderRadius: radii[1],
+                sx={{
+                  backgroundColor: `purple.5`,
+                  borderRadius: 1,
+                  marginRight: t => `${t.space[6]} !important`,
                   textAlign: `center`,
                   "&&": {
                     border: 0,
-                    transition: `all ${transition.speed.default} ${
-                      transition.curve.default
-                    }`,
+                    transition: t =>
+                      `all ${t.transition.speed.default} ${
+                        t.transition.curve.default
+                      }`,
                     "&:hover": {
-                      background: colors.white,
-                      transform: `translateY(-${space[1]})`,
-                      boxShadow: shadows.overlay,
+                      bg: `white`,
+                      transform: t => `translateY(-${t.space[1]})`,
+                      boxShadow: `overlay`,
                     },
                   },
                   ...featuredSitesCard,
@@ -263,26 +242,27 @@ class FeaturedSites extends Component {
                 onClick={this.setFilterToFeatured}
               >
                 <div
-                  css={{
-                    borderRadius: radii[1],
-                    display: `flex`,
+                  sx={{
                     alignItems: `center`,
-                    position: `relative`,
+                    borderRadius: 1,
+                    display: `flex`,
                     flexBasis: `100%`,
+                    position: `relative`,
                   }}
                 >
                   <span
-                    css={{
-                      margin: `0 auto`,
-                      color: colors.gatsby,
+                    sx={{
+                      color: `gatsby`,
+                      mx: `auto`,
                     }}
                   >
                     <span
-                      css={{
-                        height: 44,
-                        width: `auto`,
+                      sx={{
                         display: `block`,
-                        margin: `0 auto ${space[6]}`,
+                        height: 44,
+                        mx: `auto`,
+                        mb: 6,
+                        width: `auto`,
                         [mediaQueries.md]: {
                           height: 64,
                         },
@@ -307,14 +287,18 @@ class FeaturedSites extends Component {
             </div>
           </div>
           <div
-            css={{
-              position: `absolute`,
-              top: `0`,
-              bottom: space[6],
-              right: `-${space[6]}`,
-              width: 60,
+            sx={{
+              background: t =>
+                `linear-gradient(90deg, ${hex2rgba(
+                  t.colors.background,
+                  0
+                )} 0%, ${hex2rgba(t.colors.background, 1)} 100%)`,
+              bottom: t => t.space[6],
               pointerEvents: `none`,
-              background: `linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)`,
+              position: `absolute`,
+              right: t => `-${t.space[6]}`,
+              top: 0,
+              width: 60,
             }}
           />
         </div>

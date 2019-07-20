@@ -3,13 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import MdFilterList from "react-icons/lib/md/filter-list"
 
-import {
-  colors,
-  fontSizes,
-  lineHeights,
-  sizes,
-  mediaQueries,
-} from "../../utils/presets"
+import { sizes, mediaQueries } from "../../utils/presets"
 
 const sticky = {
   position: `sticky`,
@@ -19,22 +13,25 @@ const sticky = {
   },
 }
 
-const sidebarContainer = {
-  display: `none`,
-  [mediaQueries.lg]: {
-    borderColor: `ui.border.subtle`,
-    borderRightStyle: `solid`,
-    borderRightWidth: `1px`,
-    display: `block`,
-    flexBasis: `15rem`,
-    height: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
-    minWidth: `15rem`,
-    paddingTop: 0,
-  },
-}
-
 export const SidebarContainer = ({ children, className }) => (
-  <div className={className} css={[sidebarContainer, sticky]}>
+  <div
+    className={className}
+    sx={{
+      display: `none`,
+      [mediaQueries.lg]: {
+        borderColor: `ui.border.subtle`,
+        borderRightStyle: `solid`,
+        borderRightWidth: `1px`,
+        display: `block`,
+        flexBasis: `15rem`,
+        height: t =>
+          `calc(100vh - (${t.sizes.headerHeight} + ${t.sizes.bannerHeight}))`,
+        minWidth: `15rem`,
+        paddingTop: 0,
+      },
+    }}
+    css={sticky}
+  >
     {children}
   </div>
 )
@@ -44,7 +41,8 @@ export const SidebarBody = ({ children }) => (
     sx={{
       display: `flex`,
       flexDirection: `column`,
-      height: `calc(100vh - ((${sizes.headerHeight}) + ${sizes.bannerHeight}))`,
+      height: t =>
+        `calc(100vh - ((${t.sizes.headerHeight}) + ${t.sizes.bannerHeight}))`,
       paddingLeft: 6,
     }}
   >
@@ -77,7 +75,7 @@ export const SidebarHeader = () => (
   >
     Filter & Refine
     {` `}
-    <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
+    <span sx={{ ml: `auto`, opacity: 0.5 }}>
       <MdFilterList />
     </span>
   </h3>
@@ -113,9 +111,9 @@ export const ContentHeader = ({ children, cssOverrides = {} }) => (
 
 const ResultCount = ({ children }) => (
   <small
-    css={{
-      color: colors.text.secondary,
-      fontSize: fontSizes[2],
+    sx={{
+      color: `text.secondary`,
+      fontSize: 2,
       fontWeight: `normal`,
     }}
   >

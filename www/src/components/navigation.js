@@ -6,8 +6,8 @@ import React from "react"
 import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
-import MdBrightness1 from "react-icons/lib/md/brightness-low"
-import MdBrightness2 from "react-icons/lib/md/brightness-high"
+import MdBrightness1 from "react-icons/lib/md/brightness-2"
+import MdBrightness2 from "react-icons/lib/md/brightness-1"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
@@ -20,7 +20,6 @@ import { breakpointGutter } from "../utils/styles"
 const navItemTopOffset = `0.4rem`
 // theme-ui values
 const navItemHorizontalSpacing = 2
-const iconColor = `lilac`
 
 const navItemStyles = {
   borderBottom: `2px solid transparent`,
@@ -33,7 +32,7 @@ const navItemStyles = {
   top: 0,
   WebkitFontSmoothing: `antialiased`,
   zIndex: 1,
-  "&:hover": { color: `gatsby` },
+  "&:hover": { color: `navigation.linkHover` },
 }
 
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
@@ -66,8 +65,7 @@ const SocialNavItem = ({ href, title, children }) => (
     title={title}
     sx={{
       ...navItemStyles,
-      color: iconColor,
-      fontSize: 2,
+      color: `navigation.socialLink`,
       px: navItemHorizontalSpacing,
     }}
   >
@@ -160,7 +158,12 @@ const Navigation = ({ pathname }) => {
             [mediaQueries.md]: {
               alignSelf: `flex-end`,
               display: `flex`,
-              ml: 6,
+              ml: 4,
+              flexGrow: 0,
+              // flexShrink: 1,
+              minWidth: 0,
+              m: 0,
+              mr: `auto`,
             },
           }}
         >
@@ -170,9 +173,8 @@ const Navigation = ({ pathname }) => {
               [mediaQueries.md]: {
                 alignSelf: `flex-end`,
                 display: `flex`,
-                flexGrow: 1,
-                m: 0,
                 listStyle: `none`,
+                m: 0,
                 maskImage: t =>
                   `linear-gradient(to right, transparent, white ${
                     t.space[1]
@@ -188,8 +190,10 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
             <NavItem linkTo="/contributing/">Contributing</NavItem>
+            <NavItem linkTo="/starters/">Starters</NavItem>
           </ul>
         </nav>
+        <SearchForm key="SearchForm" offsetVertical={navItemTopOffset} />
         <div
           sx={{
             alignSelf: `flex-end`,
@@ -197,12 +201,11 @@ const Navigation = ({ pathname }) => {
             ml: `auto`,
           }}
         >
-          <SearchForm key="SearchForm" offsetVertical="-0.2175rem" />
           <SocialNavItem
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
           >
-            <GithubIcon style={{ verticalAlign: `text-top` }} />
+            <GithubIcon style={{ verticalAlign: `middle` }} />
           </SocialNavItem>
           <div
             sx={{
@@ -211,26 +214,33 @@ const Navigation = ({ pathname }) => {
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
+              <DiscordIcon overrideCSS={{ verticalAlign: `middle` }} />
             </SocialNavItem>
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
-              <TwitterIcon style={{ verticalAlign: `text-top` }} />
+              <TwitterIcon style={{ verticalAlign: `middle` }} />
             </SocialNavItem>
           </div>
           <button
             sx={{
+              ...navItemStyles,
               background: `transparent`,
               border: 0,
-              color: `navigation.linkDefault`,
+              color: `navigation.socialLink`,
+              cursor: `pointer`,
+              outline: 0,
+              ml: 4,
+              "&:hover": {
+                color: `navigation.linkHover`,
+              },
             }}
             onClick={e => {
               setColorMode(colorMode === `light` ? `dark` : `light`)
             }}
           >
             {colorMode === `light` ? (
-              <MdBrightness2 style={{ verticalAlign: `text-top` }} />
+              <MdBrightness1 style={{ verticalAlign: `middle` }} />
             ) : (
-              <MdBrightness1 style={{ verticalAlign: `text-top` }} />
+              <MdBrightness2 style={{ verticalAlign: `middle` }} />
             )}
           </button>
         </div>

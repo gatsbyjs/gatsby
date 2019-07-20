@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
 import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
-import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -82,14 +83,14 @@ exports<span class="token punctuation">.</span><span class="token function-varia
             If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
-          <h2 css={{ marginBottom: space[3] }}>Usage</h2>
-          <p css={{ marginBottom: space[5] }}>
+          <h2 sx={{ mb: 3 }}>Usage</h2>
+          <p sx={{ mb: 5 }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: space[3] }}>APIs</h2>
+          <h2 sx={{ mb: 3 }}>APIs</h2>
           <ul>
             {funcs.map(node => (
               <li key={`function list ${node.name}`}>

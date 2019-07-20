@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
@@ -5,7 +7,7 @@ import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import { colors, space, mediaQueries, fontSizes } from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -112,10 +114,10 @@ class CreatorsView extends Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            padding: space[6],
+            p: 6,
             paddingBottom: `10vh`,
             [mediaQueries.md]: {
-              paddingBottom: space[6],
+              pb: 6,
             },
           }}
         >
@@ -130,7 +132,7 @@ class CreatorsView extends Component {
             }}
           >
             {creators.length < 1 ? (
-              <p css={{ color: colors.gatsby }}>No results</p>
+              <p sx={{ color: `gatsby` }}>No results</p>
             ) : (
               creators.map(item => (
                 <div key={item.node.name} css={styles.creatorCard}>
@@ -143,18 +145,18 @@ class CreatorsView extends Component {
                   </ThumbnailLink>
                   <div css={{ display: `flex`, ...sharedStyles.meta }}>
                     <div
-                      css={{
-                        margin: `0 0 ${space[1]}`,
-                        color: colors.text.secondary,
+                      sx={{
+                        mb: 1,
+                        color: `text.secondary`,
                       }}
                     >
                       {item.node.location}
                     </div>
                     {item.node.github && (
                       <a
-                        css={{
+                        sx={{
                           ...sharedStyles.shortcutIcon,
-                          marginLeft: `auto`,
+                          ml: `auto`,
                         }}
                         href={item.node.github}
                       >
@@ -164,9 +166,9 @@ class CreatorsView extends Component {
                   </div>
                   {item.node.for_hire || item.node.hiring ? (
                     <div
-                      css={{
+                      sx={{
                         alignSelf: `flex-start`,
-                        fontSize: fontSizes[0],
+                        fontSize: 0,
                       }}
                     >
                       <Badge forHire={item.node.for_hire}>
@@ -191,7 +193,7 @@ const styles = {
   creatorCard: {
     display: `flex`,
     flexDirection: `column`,
-    margin: space[6],
+    m: 6,
     minWidth: 200,
     maxWidth: 240,
     flex: `1 0 0`,

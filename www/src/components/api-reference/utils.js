@@ -1,5 +1,6 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import { css } from "@emotion/core"
 
 import { colors, space, fontSizes, radii } from "../../utils/presets"
 import styled from "@emotion/styled"
@@ -23,33 +24,10 @@ export const LinkBox = styled(`a`)`
 
 export const Header = ({ children, level }) => {
   const Tag = `h${Math.min(3 + level * 2, 6)}`
-
-  return (
-    <Tag
-      css={{
-        margin: 0,
-        ...(level > 0
-          ? {
-              marginTop: space[2],
-            }
-          : {}),
-      }}
-    >
-      {children}
-    </Tag>
-  )
+  return <Tag sx={{ m: 0, ...(level > 0 ? { mt: 2 } : {}) }}>{children}</Tag>
 }
 
 export const SubHeader = ({ children, level }) => {
   const Tag = `h${Math.min(4 + level * 2, 6)}`
-  return (
-    <Tag
-      css={css`
-        margin: 0;
-        margin-top: ${space[2]};
-      `}
-    >
-      {children}
-    </Tag>
-  )
+  return <Tag sx={{ m: 0, mt: 2 }}>{children}</Tag>
 }

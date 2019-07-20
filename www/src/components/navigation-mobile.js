@@ -10,15 +10,7 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import {
-  colors,
-  transition,
-  radii,
-  space,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-} from "../utils/presets"
+import { mediaQueries } from "../utils/presets"
 import { svgStyles } from "../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {
@@ -33,7 +25,7 @@ const getProps = ({ isPartiallyCurrent }) => {
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
   <Link
-    css={{
+    sx={{
       ...styles.link.default,
       ...styles.svg.default,
       "&[data-active]": {
@@ -52,7 +44,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
 const MobileNavigation = () => (
   <>
     <span
-      css={{
+      sx={{
         // refactor: we have this in a couple places
         position: `absolute`,
         width: 1,
@@ -80,7 +72,7 @@ const MobileNavigation = () => (
         borderTopWidth: `1px`,
         borderTopStyle: `solid`,
         borderColor: `ui.border.subtle`,
-        bg: `white`,
+        bg: `navigation.background`,
         height: `headerHeight`,
         fontFamily: `header`,
         paddingBottom: `env(safe-area-inset-bottom)`,
@@ -115,13 +107,13 @@ const styles = {
   },
   link: {
     default: {
-      color: colors.lilac,
-      borderRadius: radii[1],
-      fontSize: fontSizes[0],
+      color: `lilac`,
+      borderRadius: 1,
+      fontSize: 0,
       flexShrink: 0,
-      lineHeight: lineHeights.solid,
+      lineHeight: `solid`,
       width: 64,
-      padding: space[1],
+      padding: 1,
       textDecoration: `none`,
       textAlign: `center`,
       WebkitFontSmoothing: `antialiased`,
@@ -130,14 +122,13 @@ const styles = {
         height: 32,
         margin: `0 auto`,
         "& path, & line, & polygon": {
-          transition: `all ${transition.speed.default} ${
-            transition.curve.default
-          }`,
+          transition: t =>
+            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
         },
       },
     },
     active: {
-      color: colors.gatsby,
+      color: `gatsby`,
       fontWeight: `bold`,
     },
   },

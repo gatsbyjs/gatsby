@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
@@ -6,12 +8,11 @@ import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
-  radii,
-  transition,
   shadows,
   mediaQueries,
   sizes,
   fontSizes,
+  fonts,
 } from "../utils/presets"
 import SearchIcon from "./search-icon"
 
@@ -25,6 +26,7 @@ const searchDropdownOffsetTop = space[9]
 
 const algoliaStyles = css`
   .algolia-autocomplete .ds-dropdown-menu {
+    font-family: ${fonts.system};
     position: fixed !important;
     top: calc(${searchDropdownOffsetTop} + ${sizes.bannerHeight}) !important;
     left: ${space[3]} !important;
@@ -259,7 +261,7 @@ const algoliaStyles = css`
     .searchWrap
       .algolia-autocomplete.algolia-autocomplete-right
       .ds-dropdown-menu::before {
-      right: ${rhythm(3)} !important;
+      right: ${space[12]} !important;
     }
   }
 
@@ -368,14 +370,18 @@ class SearchForm extends Component {
     const { offsetVertical } = this.props
     return (
       <form
-        css={{
-          display: `flex`,
-          flex: `0 0 auto`,
-          flexDirection: `row`,
+        sx={{
           alignItems: `center`,
-          marginLeft: space[3],
-          marginBottom: 0,
-          marginTop: offsetVertical ? offsetVertical : false,
+          display: `flex`,
+          flex: `1 1 auto`,
+          flexDirection: `row`,
+          mb: 0,
+          ml: `auto`,
+          mr: 4,
+          mt: offsetVertical ? offsetVertical : false,
+          [mediaQueries.lg]: {
+            minWidth: `12rem`,
+          },
         }}
         className="searchWrap"
         onMouseOver={() => this.loadAlgoliaJS()}
@@ -384,45 +390,53 @@ class SearchForm extends Component {
       >
         <Global styles={algoliaStyles} />
         <label
-          css={{
+          sx={{
             position: `relative`,
+            width: `100%`,
+            ml: 4,
+            "& .algolia-autocomplete": {
+              width: `100%`,
+              display: `block !important`,
+            },
           }}
         >
           <input
             id="doc-search"
-            css={{
+            sx={{
               appearance: `none`,
-              backgroundColor: `transparent`,
+              bg: `navigation.searchBackground`,
               border: 0,
-              borderRadius: radii[1],
-              color: colors.lilac,
-              padding: space[1],
-              paddingRight: space[3],
-              paddingLeft: space[7],
+              borderRadius: 2,
+              color: `text.primary`,
+              fontSize: 3,
+              p: 1,
+              pr: 3,
+              pl: 7,
               overflow: `hidden`,
-              width: space[5],
-              transition: `width ${transition.speed.default} ${
-                transition.curve.default
-              }, background-color ${transition.speed.default} ${
-                transition.curve.default
-              }`,
+              width: `100%`,
+              [mediaQueries.md]: {
+                width: 5,
+              },
+              transition: t =>
+                `width ${t.transition.speed.default} ${
+                  t.transition.curve.default
+                }`,
               ":focus": {
-                backgroundColor: colors.purple[10],
-                color: colors.gatsby,
+                bg: `navigation.searchBackgroundFocus`,
+                color: `text.primary`,
                 outline: 0,
-                width: rhythm(5),
+                width: `100%`,
               },
               [mediaQueries.lg]: {
-                backgroundColor: colors.white,
-                width: rhythm(3.75),
-                ":focus": {
-                  backgroundColor: colors.purple[10],
-                },
+                width: `100%`,
+              },
+              "::placeholder": {
+                color: `navigation.searchPlaceholder`,
               },
             }}
             type="search"
-            placeholder="Search"
-            aria-label="Search"
+            placeholder={`Search gatsbyjs.org`}
+            aria-label="Search gatsbyjs.org"
             title="Hit 's' to search docs"
             onFocus={() => this.setState({ focussed: true })}
             onBlur={() => this.setState({ focussed: false })}
@@ -431,21 +445,13 @@ class SearchForm extends Component {
             }}
           />
           <SearchIcon
+            focussed={focussed}
             overrideCSS={{
-              fill: focussed ? colors.gatsby : colors.lilac,
               position: `absolute`,
-              left: space[2],
+              left: `0.5rem`,
               top: `50%`,
-              width: space[4],
-              height: space[4],
               pointerEvents: `none`,
-              transition: `fill ${transition.speed.default} ${
-                transition.curve.default
-              }`,
-              transform: `translateY(-55%)`,
-              [mediaQueries.sm]: {
-                fill: focussed ? colors.gatsby : false,
-              },
+              transform: `translateY(-50%)`,
             }}
           />
         </label>

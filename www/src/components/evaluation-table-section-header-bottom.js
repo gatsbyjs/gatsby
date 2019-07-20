@@ -1,16 +1,12 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 
 import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
-import {
-  colors,
-  space,
-  mediaQueries,
-  lineHeights,
-  fonts,
-} from "../utils/presets"
+import { space, mediaQueries } from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const subHeaderTitleStyles = {
@@ -51,16 +47,16 @@ const renderSubHeader = props => (
     {subHeaderTitles.map((header, i) => (
       <td
         key={i}
-        css={{
+        sx={{
+          background: `ui.background`,
+          borderColor: `ui.border.subtle`,
           display: `table-cell`,
-          background: colors.ui.background,
+          fontFamily: `header`,
           fontWeight: 600,
-          lineHeight: lineHeights.dense,
+          lineHeight: `dense`,
+          p: 3,
           textAlign: `left`,
           verticalAlign: `middle`,
-          fontFamily: fonts.header,
-          borderColor: colors.ui.border.subtle,
-          padding: space[3],
         }}
       >
         {header || props.category || `Feature`}
