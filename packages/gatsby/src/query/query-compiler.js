@@ -10,6 +10,7 @@ import RelayParser from "@gatsbyjs/relay-compiler/lib/RelayParser"
 import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
 import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
 import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
+import getGatsbyDependents from "../utils/gatsby-dependents"
 const _ = require(`lodash`)
 
 import { store } from "../redux"
@@ -38,6 +39,8 @@ const {
   ScalarLeafsRule,
   VariablesAreInputTypesRule,
   VariablesInAllowedPositionRule,
+  Kind,
+  print,
 } = require(`graphql`)
 
 type RootQuery = {
@@ -98,33 +101,49 @@ class Runner {
   }
 
   async parseEverything() {
-    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+    const filesRegex = `*.+(t|j)s?(x)`
+    // Pattern that will be appended to searched directories.
+    // It will match any .js, .jsx, .ts, and .tsx files, that are not
+    // inside <searched_directory>/node_modules.
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
+
+    const modulesThatUseGatsby = await getGatsbyDependents()
+
     let files = [
       path.join(this.base, `src`),
       path.join(this.base, `.cache`, `fragments`),
     ]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
+      .concat(modulesThatUseGatsby.map(module => module.path))
       .reduce(
         (merged, folderPath) =>
           merged.concat(
-            glob.sync(path.join(folderPath, filesRegex), {
+            glob.sync(path.join(folderPath, pathRegex), {
               nodir: true,
             })
           ),
         []
       )
+
     files = files.filter(d => !d.match(/\.d\.ts$/))
+
     files = files.map(normalize)
 
+    // We should be able to remove the following and preliminary tests do suggest
+    // that they aren't needed anymore since we transpile node_modules now
+    // However, there could be some cases (where a page is outside of src for example)
+    // that warrant keeping this and removing later once we have more confidence (and tests)
+
     // Ensure all page components added as they're not necessarily in the
-    // pages directory e.g. a plugin could add a page component.  Plugins
+    // pages directory e.g. a plugin could add a page component. Plugins
     // *should* copy their components (if they add a query) to .cache so that
-    // our babel plugin to remove the query on building is active (we don't
-    // run babel on code in node_modules). Otherwise the component will throw
-    // an error in the browser of "graphql is not defined".
+    // our babel plugin to remove the query on building is active.
+    // Otherwise the component will throw an error in the browser of
+    // "graphql is not defined".
     files = files.concat(
       Array.from(store.getState().components.keys(), c => normalize(c))
     )
+
     files = _.uniq(files)
 
     let parser = new FileParser()
@@ -138,6 +157,7 @@ class Runner {
     const nameDefMap = new Map()
     const nameErrorMap = new Map()
     const documents = []
+    const fragmentMap = new Map()
 
     for (let [filePath, doc] of nodes.entries()) {
       let errors = validate(this.schema, doc, validationRules)
@@ -171,6 +191,25 @@ class Runner {
         })
         return compiledNodes
       }
+
+      // The way we currently export fragments requires duplicated ones
+      // to be filtered out since there is a global Fragment namespace
+      // We maintain a top level fragment Map to keep track of all definitions
+      // of thge fragment type and to filter them out if theythey've already been
+      // declared before
+      doc.definitions = doc.definitions.filter(definition => {
+        if (definition.kind === Kind.FRAGMENT_DEFINITION) {
+          const fragmentName = definition.name.value
+          if (fragmentMap.has(fragmentName)) {
+            if (print(definition) === fragmentMap.get(fragmentName)) {
+              return false
+            }
+          } else {
+            fragmentMap.set(fragmentName, print(definition))
+          }
+        }
+        return true
+      })
 
       documents.push(doc)
       doc.definitions.forEach((def: any) => {
@@ -327,11 +366,19 @@ export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
-  const { program, schema, themes } = store.getState()
+  const { program, schema, themes, flattenedPlugins } = store.getState()
 
   const runner = new Runner(
     program.directory,
-    resolveThemes(themes.themes),
+    resolveThemes(
+      themes.themes
+        ? themes.themes
+        : flattenedPlugins.map(plugin => {
+            return {
+              themeDir: plugin.pluginFilepath,
+            }
+          })
+    ),
     schema
   )
 

@@ -105,8 +105,8 @@ module.exports = Machine(
                 queryUtil.runQueuedQueries(event.path)
               }
             }, 0)
-
-            return ctx.pages.concat(event.path)
+            ctx.pages.push(event.path)
+            return ctx.pages
           } else {
             return ctx.pages
           }
