@@ -103,14 +103,14 @@ yarn workspace site add gatsby react react-dom gatsby-theme-events@*
 You should now see the following dependencies in your `site/package.json`:
 
 ```json:title=site/package.json
-  {
-      "dependencies": {
-          "gatsby": "^2.9.11",
-          "gatsby-theme-events": "*",
-          "react": "^16.8.6",
-          "react-dom": "^16.8.6",
-      }
+{
+  "dependencies": {
+    "gatsby": "^2.9.11",
+    "gatsby-theme-events": "*",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
+}
 ```
 
 If you run `yarn workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
