@@ -153,7 +153,6 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // Create pages
   result.data.allKenticoCloudItemArticle.edges.forEach(({ node }) => {
-    console.log(node.fields.slug)
     createPage({
       path: node.fields.slug,
       component: path.resolve(`src/templates/article.js`),
