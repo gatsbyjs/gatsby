@@ -453,7 +453,7 @@ exports.mapEntitiesToMedia = entities => {
       })
 
       // Deleting fields and replacing them with links to different nodes
-      // can cause build errors if object will have only linked properites:
+      // can cause build errors if object will have only linked properties:
       // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L205
       // Hacky workaround:
       // Adding dummy field with concrete value (not link) fixes build

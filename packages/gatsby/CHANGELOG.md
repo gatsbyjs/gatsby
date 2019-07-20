@@ -1406,7 +1406,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby:** avoid full page refresh when navigating to non-existant page ([#10684](https://github.com/gatsbyjs/gatsby/issues/10684)) ([88866c7](https://github.com/gatsbyjs/gatsby/commit/88866c7))
+- **gatsby:** avoid full page refresh when navigating to non-existent page ([#10684](https://github.com/gatsbyjs/gatsby/issues/10684)) ([88866c7](https://github.com/gatsbyjs/gatsby/commit/88866c7))
 
 <a name="2.0.77"></a>
 
@@ -2944,7 +2944,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - [www] Blog post meta styles #1561 @fk
 - Fix unsupported method in IE #1573 @variadicintegrity
-- Don't set a default title in html.js as not overriden by react-helmet #1578
+- Don't set a default title in html.js as not overridden by react-helmet #1578
   @KyleAMathews
 - Downgrade Glamor to v2 as v3 unstable #1580 @KyleAMathews
 - Remove the slash between the pathPrefix and pathname when navigating #1574
@@ -3153,7 +3153,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Added
 
 - Add using-remark example site #1230 @fk
-- Add friendly webpack ouput #1240 @craig-mulligan
+- Add friendly webpack output #1240 @craig-mulligan
 - Add documentation on how to use custom webpack-config #1242 @bananenmannfrau
 - Add graphql fields for creating responsive images using Contentful image API
   #1228 @kyleamathews
