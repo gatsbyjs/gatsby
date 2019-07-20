@@ -170,6 +170,54 @@ Showtime.
 
 ## Querying data
 
+### Using PageQuery
+
+You can use the `graphql`-tag to query data in your pages.
+
+#### Directions
+
+1. Import `graphql` from `gatsby`.
+
+2. Export a constant named `query` and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks.
+
+3. Pass in `data` as a prop to the component.
+
+4. The `data` variable which holds the queried data with the expected shape can be referenced in JSX to output HTML.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+// highlight-next-line
+import { graphql } from "gatsby"
+
+import Layout from "../components/layout"
+
+// highlight-next-line
+const IndexPage = ({ data }) => (
+  <Layout>
+    // highlight-next-line
+    <h1>{data.site.siteMetadata.title}</h1>
+  </Layout>
+)
+
+// highlight-start
+export const query = graphql`
+  query HomePageQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+// highlight-end
+
+export default IndexPage
+```
+
+#### Additional resources
+
+- [More on querying data in pages with GraphQL](/docs/page-query/)
+
 ### The StaticQuery Component
 
 `StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/).
