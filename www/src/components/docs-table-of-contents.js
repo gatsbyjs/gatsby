@@ -1,15 +1,50 @@
 import React from "react"
 import { Link } from "gatsby"
-import { fontSizes, colors, space, mediaQueries } from "../utils/presets"
+import {
+  fontSizes,
+  colors,
+  space,
+  mediaQueries,
+  letterSpacings,
+  transition,
+} from "../utils/presets"
 
 function createItems(items, location) {
   return (
     items &&
     items.map(item => (
-      <li>
-        <Link to={location.pathname + item.url}>{item.title}</Link>
+      <li
+        css={{
+          [mediaQueries.xl]: {
+            fontSize: fontSizes[1],
+          },
+        }}
+        key={location.pathname + item.url}
+      >
+        <Link
+          css={{
+            "&&": {
+              color: colors.grey[60],
+              border: 0,
+              transition: `all ${transition.speed.fast} ${
+                transition.curve.default
+              }`,
+              ":hover": {
+                color: colors.link.color,
+                borderBottom: `1px solid ${colors.link.hoverBorder}`,
+              },
+            },
+          }}
+          to={location.pathname + item.url}
+        >
+          {item.title}
+        </Link>
         {item.items && (
-          <ul css={{ marginLeft: space[6] }}>
+          <ul
+            css={{
+              marginLeft: space[6],
+            }}
+          >
             {createItems(item.items, location)}
           </ul>
         )}
@@ -20,32 +55,31 @@ function createItems(items, location) {
 
 function TableOfContents({ page, location }) {
   return page.tableOfContents.items ? (
-    <div
-      css={{
-        background: colors.white,
-
-        [mediaQueries.xxl]: {
-          padding: space[6],
-          float: `right`,
-          marginLeft: space[10],
-          position: `sticky`,
-          top: 130,
-        },
-      }}
-    >
+    <>
       <h2
         css={{
           textTransform: `uppercase`,
-          fontSize: fontSizes[2],
-          color: colors.grey[60],
+          fontSize: fontSizes[1],
+          color: colors.grey[80],
+          letterSpacing: letterSpacings.tracked,
+          marginTop: 0,
         }}
       >
         Table of Contents
       </h2>
       <nav>
-        <ul>{createItems(page.tableOfContents.items, location)}</ul>
+        <ul
+          css={{
+            [mediaQueries.xl]: {
+              listStyle: `none`,
+              margin: 0,
+            },
+          }}
+        >
+          {createItems(page.tableOfContents.items, location)}
+        </ul>
       </nav>
-    </div>
+    </>
   ) : null
 }
 

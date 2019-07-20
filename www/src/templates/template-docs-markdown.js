@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries, space, sizes } from "../utils/presets"
 
 import Layout from "../components/layout"
 import {
@@ -16,6 +16,19 @@ import TableOfContents from "../components/docs-table-of-contents"
 import FooterLinks from "../components/shared/footer-links"
 
 import Container from "../components/container"
+
+const containerStyles = {
+  // we need to account for <Container>'s horizontal padding of
+  // `space[6]` each (1.5rem), plus add a fluffy `space[9]`
+  // of whitespace in between main content and TOC
+  //
+  // could be much cleaner/clearer, please feel free to improve 🙏
+  maxWidth: `calc(${sizes.mainContentWidth.withSidebar} + ${sizes.tocWidth} + ${
+    space[9]
+  } + ${space[9]} + ${space[9]})`,
+  paddingLeft: space[9],
+  paddingRight: space[9],
+}
 
 const getDocsData = location => {
   const [urlSegment] = location.pathname.split(`/`).slice(1)
@@ -53,34 +66,74 @@ function DocsTemplate({ data, location }) {
         <DocSearchContent>
           <Container
             overrideCSS={{
-              [page.tableOfContents.items && mediaQueries.xxl]: {
-                maxWidth: `80rem`,
+              paddingBottom: 0,
+              [mediaQueries.lg]: {
+                paddingTop: space[9],
+              },
+              [page.tableOfContents.items && mediaQueries.xl]: {
+                ...containerStyles,
               },
             }}
           >
             <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
               {page.frontmatter.title}
             </h1>
-            <TableOfContents location={location} page={page} />
+          </Container>
+          <Container
+            overrideCSS={{
+              paddingTop: 0,
+              position: `static`,
+              [mediaQueries.lg]: {
+                paddingBottom: space[9],
+              },
+              [page.tableOfContents.items && mediaQueries.xl]: {
+                ...containerStyles,
+                display: `flex`,
+                alignItems: `flex-start`,
+              },
+            }}
+          >
+            {console.log(page.frontmatter)}
+            {!page.frontmatter.disableTableOfContents &&
+              page.tableOfContents.items && (
+                <div
+                  css={{
+                    order: 2,
+                    [mediaQueries.xl]: {
+                      marginLeft: space[9],
+                      maxWidth: sizes.tocWidth,
+                      position: `sticky`,
+                      top: `calc(${sizes.headerHeight} + ${
+                        sizes.bannerHeight
+                      } + ${space[9]})`,
+                    },
+                  }}
+                >
+                  <TableOfContents location={location} page={page} />
+                </div>
+              )}
             <div
               css={{
-                [page.tableOfContents.items && mediaQueries.xxl]: {
-                  paddingRight: `40rem`,
+                [page.tableOfContents.items && mediaQueries.xl]: {
+                  maxWidth: sizes.mainContentWidth.withSidebar,
+                  minWidth: 0,
                 },
               }}
             >
-              <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+              <div>
+                <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+                {page.frontmatter.issue && (
+                  <a
+                    href={page.frontmatter.issue}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    See the issue relating to this stub on GitHub
+                  </a>
+                )}
+                <MarkdownPageFooter page={page} />
+              </div>
             </div>
-            {page.frontmatter.issue && (
-              <a
-                href={page.frontmatter.issue}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                See the issue relating to this stub on GitHub
-              </a>
-            )}
-            <MarkdownPageFooter page={page} />
           </Container>
         </DocSearchContent>
         <FooterLinks />
@@ -106,6 +159,7 @@ export const pageQuery = graphql`
         title
         overview
         issue
+        disableTableOfContents
       }
       ...MarkdownPageFooterMdx
     }
