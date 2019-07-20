@@ -21,8 +21,8 @@ module.exports = options => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          path: options.notes || `content/notes`,
-          name: options.notes || `content/notes`,
+          path: options.contentPath || `content/notes`,
+          name: options.contentPath || `content/notes`,
         },
       },
       `gatsby-plugin-redirects`,
