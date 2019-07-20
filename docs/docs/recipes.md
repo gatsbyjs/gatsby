@@ -158,7 +158,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 - A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli/) installed
-- Choose a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
+- Choosing a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
 
 #### Directions
 
