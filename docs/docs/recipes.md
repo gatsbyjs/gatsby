@@ -193,7 +193,7 @@ Since you are now hosting your own Google font within your project, there is no 
 
 #### Additional Resources
 
-- [Typography.js](https://www.gatsbyjs.org/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
+- [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
 - [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
 - [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
 
