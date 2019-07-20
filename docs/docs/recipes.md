@@ -154,6 +154,8 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 ### Using Google Fonts
 
+Hosting your own [Google fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
+
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
@@ -163,16 +165,20 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 #### Directions
 
 1. Run `npm install --save yourchosenfont`, replacing `yourchosenfont` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+
 2. Add `import "yourchosenfont"` to a layout template, page component, or `gatsby-browser.js`.
-3. Once it's imported, you can reference the font in a CSS stylesheet.
+
+```jsx:title=src/components/layout.js
+import "yourchosenfont"
+```
+
+3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-    font-family: yourchosenfont;
-} 
+  font-family: yourchosenfont;
+}
 ```
-
-Since you are now hosting your own Google font within your project, there is no need to pull it in when your site loads, increasing your site's speedindex by up to ~300 miliseconds on desktop and 1+ seconds on 3g!
 
 #### Additional Resources
 
