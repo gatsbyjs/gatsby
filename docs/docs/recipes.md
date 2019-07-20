@@ -162,7 +162,6 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 #### Directions
 
-1. Visit [the typefaces project](https://github.com/KyleAMathews/typefaces) and choose the font you'd like.
 1. Run `npm install --save yourchosenfont`, replacing `yourchosenfont` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
 2. Add `import "yourchosenfont"` to a layout template, page component, or `gatsby-browser.js`.
 3. Once it's imported, you can reference the font in a CSS stylesheet.
