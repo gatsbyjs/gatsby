@@ -361,8 +361,6 @@ That looks fine, but at this point, Gatsby does not know when this template shou
 Path: `gatsby-node.js`
 
 ```javascript
-const _ = require("lodash")
-const Promise = require("bluebird")
 const path = require("path")
 
 exports.createPages = async ({ graphql, boundActionCreators }) => {
