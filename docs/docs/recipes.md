@@ -167,7 +167,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 3. Add `require("yourchosenfont")` to your site's entry file.
 4. Once installed, you can add the font either in your CSS stylesheet or inline using `font-family: yourchosenfont`. An inline implementation might look something like this:
 
-```js:title=src/pages/index.js
+```css:title=src/components/layout.css
 body {
     font-family: yourchosenfont;
 } 
