@@ -128,7 +128,6 @@ module.exports = {
         gatsbyRemarkPlugins: [
           `gatsby-remark-graphviz`,
           `gatsby-remark-embed-video`,
-          `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -143,7 +142,6 @@ module.exports = {
             },
           },
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
