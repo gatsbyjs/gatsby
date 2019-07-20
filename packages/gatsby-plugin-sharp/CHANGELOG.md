@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.7...gatsby-plugin-sharp@2.2.8) (2019-07-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Updates cpu core count path to corre… ([#15833](https://github.com/gatsbyjs/gatsby/issues/15833)) ([8f44086](https://github.com/gatsbyjs/gatsby/commit/8f44086))
+
 ## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.6...gatsby-plugin-sharp@2.2.7) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

@@ -1,4 +1,4 @@
-import { space } from "../../utils/tokens"
+import { space } from "gatsby-design-tokens"
 
 const pxToRem = pixels => `${pixels / 16}rem`
 

@@ -12,6 +12,7 @@ const filter = (queues, team) => {
       return pr.reviewRequests.nodes
         .map(node => {
           if (node.requestedReviewer) {
+            tools.log.info(`Review request for team ${node.requestedReviewer.name} on PR: ${pr.title}`)
             return node.requestedReviewer.id
           }
         })

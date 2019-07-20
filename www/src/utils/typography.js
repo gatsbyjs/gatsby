@@ -12,7 +12,7 @@ import {
   fontWeights,
 } from "./presets"
 // typography.js expects an array, so grab font stacks directly from tokens
-import { fonts } from "./tokens"
+import { fonts } from "gatsby-design-tokens"
 
 const _options = {
   bodyFontFamily: fonts.system,
@@ -105,7 +105,7 @@ const _options = {
         lineHeight: lineHeights.solid,
         padding: `${space[1]} ${space[2]}`,
         position: `absolute`,
-        right: space[6],
+        left: space[6],
         textAlign: `right`,
         textTransform: `uppercase`,
         top: `0`,
@@ -314,6 +314,9 @@ const _options = {
       },
       // PrismJS syntax highlighting token styles
       // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
+      ".token": {
+        display: `inline-block`,
+      },
       ".token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata": {
         color: colors.code.comment,
       },
