@@ -55,7 +55,7 @@ function createItems(items, location) {
 
 function TableOfContents({ page, location }) {
   return page.tableOfContents.items ? (
-    <>
+    <nav>
       <h2
         css={{
           textTransform: `uppercase`,
@@ -67,19 +67,17 @@ function TableOfContents({ page, location }) {
       >
         Table of Contents
       </h2>
-      <nav>
-        <ul
-          css={{
-            [mediaQueries.xl]: {
-              listStyle: `none`,
-              margin: 0,
-            },
-          }}
-        >
-          {createItems(page.tableOfContents.items, location)}
-        </ul>
-      </nav>
-    </>
+      <ul
+        css={{
+          [mediaQueries.xl]: {
+            listStyle: `none`,
+            margin: 0,
+          },
+        }}
+      >
+        {createItems(page.tableOfContents.items, location)}
+      </ul>
+    </nav>
   ) : null
 }
 
