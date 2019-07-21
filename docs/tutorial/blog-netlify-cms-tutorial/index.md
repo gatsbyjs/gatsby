@@ -75,3 +75,6 @@ To make sure that Netlify CMS has access to your GitHub repo, you need to set up
 Once you've configured an authentication provider then you'll be able to use Netlify CMS at your deployed site to add new posts.
 
 ![Netlify and GitHub Authorization](https://cdn.netlify.com/67edd5b656c432888d736cd40125cb61376905bb/c1cba/img/docs/github-oauth-config.png)
+
+#### Benefits of Netlify CMS
+Congrats! Now that Netlify CMS is successfully installed, every time you add a new post, it will be versioned on GitHub because Netlify CMS is Git-based and thanks to [Netlify's Continuous Deployment](https://www.netlify.com/docs/continuous-deployment/). You can learn more about Netlify CMS and how to configure it in the [Netlify CMS documentation](https://www.netlifycms.org/docs/intro/).
