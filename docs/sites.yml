@@ -6562,14 +6562,13 @@
     - Consulting
     - Community
   featured: false
-- title: LaunchDarkly
-  url: https://launchdarkly.com/
-  main_url: https://launchdarkly.com/
+- title: Jana Desomer
+  url: https://www.janadesomer.be/
+  main_url: https://www.janadesomer.be/
   description: >
-    LaunchDarkly is the feature management platform that software teams use to build better software, faster.
+    I'm Jana, a digital product designer with coding skills, based in Belgium
   categories:
-    - Technology
-    - Marketing
-  built_by: LaunchDarkly
-  built_by_url: https://launchdarkly.com/
+    - Portfolio
+  built_by: Jana Desomer Designer/Developer
+  built_by_url: https://www.janadesomer.be/
   featured: false
