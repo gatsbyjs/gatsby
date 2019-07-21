@@ -3406,3 +3406,15 @@
     - Ready made Components
     - Responsive Design
     - Deployed with netlify
+- url: https://mygatsby-portfolio.netlify.com/
+  repo: https://github.com/Mr404Found/portfolio-using-gatsby
+  description: An Awesome Starter to make your portfolio site
+  tags:
+    - SEO
+    - Portfolio
+    - Netlify
+  features:
+    - Bare-bones starter
+    - Ready made Components
+    - Responsive Design
+    - Deployed with netlify
