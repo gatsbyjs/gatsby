@@ -59,7 +59,7 @@ describe(`GraphQL field extensions`, () => {
     })
   })
 
-  it(`allows creating a cutom field extension`, async () => {
+  it(`allows creating a custom field extension`, async () => {
     dispatch(
       createFieldExtension({
         name: `birthday`,
