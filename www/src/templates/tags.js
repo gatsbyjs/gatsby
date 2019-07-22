@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
-import TiArrowRight from "react-icons/lib/ti/arrow-right";
+import TiArrowRight from "react-icons/lib/ti/arrow-right"
 
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
@@ -47,16 +47,14 @@ const Tags = ({ pageContext, data, location }) => {
         <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
           View all tags <TagsIcon />
         </Button>
-        {
-          doc ?
-            <>
-              <span css={{margin: 5}}/>
-              <Button small secondary key="blog-post-view-all-tags-button" to={doc}>
-                Read the documentation <TiArrowRight/>
-              </Button>
-            </> :
-            null
-        }
+        {doc ? (
+          <>
+            <span css={{ margin: 5 }} />
+            <Button small secondary key={`view-tag-docs-button`} to={doc}>
+              Read the documentation <TiArrowRight />
+            </Button>
+          </>
+        ) : null}
         {edges.map(({ node }) => (
           <BlogPostPreviewItem
             post={node}
