@@ -171,8 +171,188 @@ Save these changes and look at localhost:8000 to see your new homepage with list
 
 > **NOTE:** to future editors: it would be useful to also have examples of how to load blog posts to their own individual pages. And helpful to insert a screenshot of the final result here
 
-## Create slugs and pages for each blogpost
+## Create pages for each blog post and link to them
 
+An index page with a post title and excerpt is great, but we should also build pages out for each of the blog posts, and link to them from our `index.js` file.
 
+To do this, we need to:
 
-[Part 7](/tutorial/part-seven/) of the foundational tutorial goes through this process.
+1. Create pages for each blog post
+2. Link up the title on the index page with the post page.
+
+If you haven't already, please read through [Part 7](/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process.
+
+### Creating pages for each blog post.
+
+In Part 7 of the tutorial, the first step in creating pages in creating slugs for the markdown files. Since we are using WordPress and not Markdown files, we can grab the slugs that get returned from our API call to the WordPress source. We can skip creating slugs, since we already have them.
+
+Open up your `gatsby-node.js` file in the root of your project (it should be blank except for some comments) and add the following:
+
+```js:title=gatsby-node.js
+const path = require(`path`);
+
+exports.createPages = ({ graphql, actions }) => {
+    const { createPage } = actions
+    return graphql(`
+      {
+        allWordpressPost(sort: { fields: [date] }) {
+            edges {
+                node {
+                    title
+                    excerpt
+                    content
+                    slug
+                }
+            }
+        }
+      }
+    `
+    ).then(result => {
+        console.log(JSON.stringify(result, null, 4))
+    })
+}
+```
+
+Next, stop and restart the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
+
+![Two posts logged to the terminal](/images/wordpress-source-plugin-log.jpg)
+
+Excellent! As explained in Part 7 of the tutorial, this `createPages` export is one of the Gatsby "workhorses" and allows us to create our blog posts (or pages, or custom post types, etc.) from our WordPress install.
+
+Before we can create the blog posts, however, we need to specify a template to build the pages.
+
+In your `src` directory, create a directory called `templates` and in the newly created `templates` folder, create a filed named `blog-posts.js`. In that new file, paste the following:
+
+```jsx:title=src/tempates/blog-posts.js
+import React from "react"
+import Layout from "../components/layout"
+import {graphql} from 'gatsby'
+
+export default ({ data }) => {
+  const post = data.allWordpressPost.edges[0].node
+  console.log(post);
+  return (
+    <Layout>
+      <div>
+        <h1>{post.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+      </div>
+    </Layout>
+  )
+}
+export const query = graphql`
+  query($slug: String!) {
+    allWordpressPost(filter: { slug: { eq: $slug } }) {
+			edges{
+        node{
+          title
+          content
+        }
+      }
+    }
+  }
+`
+```
+
+What is this file doing? After importing our dependencies, we construct the layout of the post with JSX. We wrap everything in the `Layout` component, so our style is the same throughout the site. Then, we simply add the post title and the pot content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
+
+Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-posts.js` template when the page is created in `gatsby-node.js`, when we add the following code to the `gatsby-node.js` file:
+
+```js:title=gatsby-node.js
+const path = require(`path`);
+
+exports.createPages = ({ graphql, actions }) => {
+    const { createPage } = actions
+    return graphql(`
+      {
+        allWordpressPost(sort: { fields: [date] }) {
+            edges {
+                node {
+                    title
+                    excerpt
+                    content
+                    slug
+                }
+            }
+        }
+      }
+    `
+    ).then(result => {
+      //highlight-start
+      result.data.allWordpressPost.edges.forEach(({ node }) => {
+          createPage({
+              path: node.slug,
+              component: path.resolve(`./src/templates/blog-post.js`),
+              context: {
+              // This is the $slug variable
+              // passed to blog-post.js
+              slug: node.slug,
+              },
+          })
+      })
+      //highlight-end
+    })
+}
+```
+
+You will need to stop and start your environment again using `gatsby develop`. When you do, you will not see a change on the index page of the site, but if you navigate to a 404 page, like [http://localhost:8000/asdf](http://localhost:8001/asdf), you should see the two sample posts created and be able to click on them to go to the sample posts:
+
+![Sample post links](/images/wordpress-source-plugin-sample-post-links.gif)
+
+But nobody likes to go to a 404 page to find a blog post! So, let's link these up from the home page.
+
+### Linking to posts from the homepage.
+
+Since we already have our structure and query done for the `index.js` page, all we need to do is use the `Link` component to wrap our titles and we should be good to go.
+
+Open up your `index.js` file and add the following:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import { Link, graphql } from "gatsby" //highlight-line
+import Layout from "../components/layout"
+import SEO from "../components/seo"
+
+export default ({ data }) => {
+  return (
+    <Layout>
+      <SEO title="home"/>
+      <h1>My WordPress Blog</h1>
+      <h4>Posts</h4>
+      {data.allWordpressPost.edges.map(({ node }) => (
+        <div>
+          //highlight-start
+          <Link to={node.slug}>
+            <p>{node.title}</p>
+          </Link>
+          //highlight-end
+          <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+        </div>
+      ))}
+    </Layout>
+  )
+}
+
+export const pageQuery = graphql`
+  query {
+    allWordpressPost(sort: { fields: [date] }) {
+      edges {
+        node {
+          title
+          excerpt
+          slug
+        }
+      }
+    }
+  }
+`
+
+```
+And that's it! When you wrap the title in the `Link` component and reference the slug of the post, Gatsby will add some magic to the link, preload it, and make the transition between pages incredibly fast:
+
+![Final product with links from the home page to the blog posts](/images/wordpress-source-plugin-home-to-post-links.gif)
+
+### Wrapping up.
+
+You can apply the same procedure to calling and creating pages, custom post types, custom fields, taxonomies, and all the fun and flexible content WordPress is known for. This can be as simple or as complex as you would like it to be, so explore and have fun with it!
+
