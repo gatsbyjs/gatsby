@@ -36,6 +36,8 @@ module.exports = {
       options: {
         // Find the view id in the GA admin in a section labeled "views"
         GAViewID: `VIEW_ID`,
+        // Add JWT token to perform authentication on deployment builds
+        jwt: GA_JWT
         minimumThreshold: 0.03,
         // The "period" for fetching analytic data.
         period: {
@@ -47,3 +49,15 @@ module.exports = {
   ],
 }
 ```
+
+### Local development
+
+Using the plugin locally you'll need to authenticate the plugin with GA to gain access to your data. When building you'll be required to sign in to the organisation you'll be feeding the data from.
+
+### Production
+
+If deploying with a service such as netlify or heroku etc, you wont be able to grant access via Google Sign On. To get around this you'll need to generate a JWT for your GA account to pass to the plugin, this will enable the plugin to work in prod without any human interaction to authenticate permissions.
+
+## How to get a JWT token?
+
+[Here](https://2ality.com/2015/10/google-analytics-api.html)
