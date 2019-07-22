@@ -48,9 +48,9 @@ backend:
 
 #### Customizing your site
 
-You'll likely also want to edit the `README.md` and `package.json` files to include your own project details.
-
 Head into `gatsby-config.js` and you can edit your siteMedata, add a Google Analytics tracking ID, and your app icon/favicon. Test out the edits for the deployed build by quitting the development server and running `gatsby build && gatsby serve`.
+
+You'll likely also want to edit the `README.md` and `package.json` files to include your own project details.
 
 ### Step 4
 
@@ -64,13 +64,17 @@ git remote add origin https://github.com/[your-username]/[your-repo-name].git
 git push -u origin master
 ```
 
-Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site".
+Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site" with the default deployment settings.
+
+> _Note: if you don't see the correct repo listed, you may need to install or reconfigure the Netlify app on GitHub._
 
 ![Netlify Dashboard for Creating a new site](netlify-dashboard.png)
 
 ### Step 5
 
-To make sure that Netlify CMS has access to your GitHub repo, you need to set up an OAuth application on GitHub. The instructions for that are here: [Netlify's Using an Authorization Provider](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider). For the "Homepage URL" – you can use your Netlify subdomain, `[name-of-your-site].netlify.com`, or you can use a custom domain. To connect your Netlify site to your custom domain, see [Netlify’s instructions on custom domains](https://www.netlify.com/docs/custom-domains/).
+To make sure that Netlify CMS has access to your GitHub repo, you need to set up an OAuth application on GitHub. The instructions for that are here: [Netlify's Using an Authorization Provider](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider).
+
+For the "Homepage URL" – you can use your Netlify subdomain, `[name-of-your-site].netlify.com`, or you can use a custom domain. To customize the subdomain, look for the "Edit site name" field under "Domain Management". To connect your Netlify site to your custom domain instead, see [Netlify’s instructions on custom domains](https://www.netlify.com/docs/custom-domains/).
 
 Once you've configured an authentication provider then you'll be able to use Netlify CMS at your deployed site to add new posts.
 
