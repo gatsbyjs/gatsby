@@ -9617,11 +9617,6 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
-gatsby-core-utils@1.0.0, gatsby-core-utils@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-1.0.0.tgz#af718c0ea0b5048c2e31eb50aaa51986900938e3"
-  integrity sha512-a30vsrrJ+SeaIt46lcTQSfW0FrLJhjGBKV3ksVdOW2ajJxsGZVzIdk/QGfkQ//BUu0sHZ59ECAZu4djxBhg72A==
-
 gatsby-node-helpers@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/gatsby-node-helpers/-/gatsby-node-helpers-0.3.0.tgz#3bdca3b7902a702a5834fef280ad66d51099d57c"
