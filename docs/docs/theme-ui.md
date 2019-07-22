@@ -121,7 +121,7 @@ Read more about theming in the [Theme UI documentation](https://theme-ui.com/the
 
 ## Adding styles to elements
 
-Theme UI uses a custom [JSX pragma][] comment to add support for Emotion's `css` prop,
+Theme UI uses a custom [JSX pragma][], a per-file or per-function comment to tell [Babel](/docs/glossary#babel) the name of Emotion's `css` prop,
 which can be used to style elements.
 By default JSX compiles to the `React.createElement` function.
 When you add the `/** @jsx jsx */` comment to the top of a file, JSX will compile to the function name in the comment instead.
