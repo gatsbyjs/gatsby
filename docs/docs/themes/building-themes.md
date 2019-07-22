@@ -77,7 +77,7 @@ The `/example` directory is an example Gatsby site that installs and uses the lo
 Inside it you'll find:
 
 - `gatsby-config.js`: Specifies which theme to use and any other one-off configuration a site might need.
-- `/src`: Contains source code such as one-off pages or components that might live in a user's site.
+- `/src`: Contains source code such as custom pages or components that might live in a user's site.
 
 ## Further resources
 
