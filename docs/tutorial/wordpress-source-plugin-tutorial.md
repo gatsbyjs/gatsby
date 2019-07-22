@@ -130,10 +130,11 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-export default ({ data }) => { //highlight-line
+export default ({ data }) => {
+  //highlight-line
   return (
     <Layout>
-      <SEO title="home"/>
+      <SEO title="home" />
       //highlight-start
       <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
@@ -189,27 +190,26 @@ In Part 7 of the tutorial, the first step in creating pages in creating slugs fo
 Open up your `gatsby-node.js` file in the root of your project (it should be blank except for some comments) and add the following:
 
 ```js:title=gatsby-node.js
-const path = require(`path`);
+const path = require(`path`)
 
 exports.createPages = ({ graphql, actions }) => {
-    const { createPage } = actions
-    return graphql(`
-      {
-        allWordpressPost(sort: { fields: [date] }) {
-            edges {
-                node {
-                    title
-                    excerpt
-                    content
-                    slug
-                }
-            }
+  const { createPage } = actions
+  return graphql(`
+    {
+      allWordpressPost(sort: { fields: [date] }) {
+        edges {
+          node {
+            title
+            excerpt
+            content
+            slug
+          }
         }
       }
-    `
-    ).then(result => {
-        console.log(JSON.stringify(result, null, 4))
-    })
+    }
+  `).then(result => {
+    console.log(JSON.stringify(result, null, 4))
+  })
 }
 ```
 
@@ -226,11 +226,11 @@ In your `src` directory, create a directory called `templates` and in the newly 
 ```jsx:title=src/tempates/blog-posts.js
 import React from "react"
 import Layout from "../components/layout"
-import {graphql} from 'gatsby'
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   const post = data.allWordpressPost.edges[0].node
-  console.log(post);
+  console.log(post)
   return (
     <Layout>
       <div>
@@ -243,8 +243,8 @@ export default ({ data }) => {
 export const query = graphql`
   query($slug: String!) {
     allWordpressPost(filter: { slug: { eq: $slug } }) {
-			edges{
-        node{
+      edges {
+        node {
           title
           content
         }
@@ -259,39 +259,38 @@ What is this file doing? After importing our dependencies, we construct the layo
 Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-posts.js` template when the page is created in `gatsby-node.js`, when we add the following code to the `gatsby-node.js` file:
 
 ```js:title=gatsby-node.js
-const path = require(`path`);
+const path = require(`path`)
 
 exports.createPages = ({ graphql, actions }) => {
-    const { createPage } = actions
-    return graphql(`
-      {
-        allWordpressPost(sort: { fields: [date] }) {
-            edges {
-                node {
-                    title
-                    excerpt
-                    content
-                    slug
-                }
-            }
+  const { createPage } = actions
+  return graphql(`
+    {
+      allWordpressPost(sort: { fields: [date] }) {
+        edges {
+          node {
+            title
+            excerpt
+            content
+            slug
+          }
         }
       }
-    `
-    ).then(result => {
-      //highlight-start
-      result.data.allWordpressPost.edges.forEach(({ node }) => {
-          createPage({
-              path: node.slug,
-              component: path.resolve(`./src/templates/blog-post.js`),
-              context: {
-              // This is the $slug variable
-              // passed to blog-post.js
-              slug: node.slug,
-              },
-          })
+    }
+  `).then(result => {
+    //highlight-start
+    result.data.allWordpressPost.edges.forEach(({ node }) => {
+      createPage({
+        path: node.slug,
+        component: path.resolve(`./src/templates/blog-post.js`),
+        context: {
+          // This is the $slug variable
+          // passed to blog-post.js
+          slug: node.slug,
+        },
       })
-      //highlight-end
     })
+    //highlight-end
+  })
 }
 ```
 
@@ -316,7 +315,7 @@ import SEO from "../components/seo"
 export default ({ data }) => {
   return (
     <Layout>
-      <SEO title="home"/>
+      <SEO title="home" />
       <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
       {data.allWordpressPost.edges.map(({ node }) => (
@@ -346,8 +345,8 @@ export const pageQuery = graphql`
     }
   }
 `
-
 ```
+
 And that's it! When you wrap the title in the `Link` component and reference the slug of the post, Gatsby will add some magic to the link, preload it, and make the transition between pages incredibly fast:
 
 ![Final product with links from the home page to the blog posts](/images/wordpress-source-plugin-home-to-post-links.gif)
@@ -355,4 +354,3 @@ And that's it! When you wrap the title in the `Link` component and reference the
 ### Wrapping up.
 
 You can apply the same procedure to calling and creating pages, custom post types, custom fields, taxonomies, and all the fun and flexible content WordPress is known for. This can be as simple or as complex as you would like it to be, so explore and have fun with it!
-
