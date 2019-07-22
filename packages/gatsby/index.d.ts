@@ -1,6 +1,7 @@
 import * as React from "react"
 import { EventEmitter } from "events"
 import { WindowLocation } from "@reach/router"
+import { createContentDigest } from "gatsby-core-utils"
 
 export {
   default as Link,
@@ -735,7 +736,7 @@ export interface NodePluginArgs {
   getNodeAndSavePathDependency: Function
   cache: Cache["cache"]
   createNodeId: Function
-  createContentDigest: Function
+  createContentDigest: typeof createContentDigest
   tracing: Tracing
   [key: string]: unknown
 }

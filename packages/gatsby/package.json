@@ -17,6 +17,7 @@
     "@babel/runtime": "^7.0.0",
     "@babel/traverse": "^7.0.0",
     "@gatsbyjs/relay-compiler": "2.0.0-printer-fix.2",
+    "gatsby-core-utils": "^1.0.3",
     "@hapi/joi": "^15.0.0",
     "@mikaelkristiansson/domready": "^1.0.9",
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
