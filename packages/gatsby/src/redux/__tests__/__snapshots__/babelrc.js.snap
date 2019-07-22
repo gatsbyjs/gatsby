@@ -159,7 +159,7 @@ exports[`Babelrc actions/reducer sets default presets/plugins if there's no user
 Array [
   Array [
     Array [
-      "<PROJECT_ROOT>/packages/babel-plugin-remove-graphql-queries/index.js",
+      "/path/to/module/babel-plugin-remove-graphql-queries",
     ],
     Object {
       "type": "plugin",
@@ -167,7 +167,7 @@ Array [
   ],
   Array [
     Array [
-      "<PROJECT_ROOT>/packages/babel-preset-gatsby/index.js",
+      "/path/to/module/babel-preset-gatsby",
       Object {
         "stage": "test",
       },
