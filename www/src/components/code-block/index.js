@@ -101,7 +101,7 @@ const CodeBlock = ({
 CodeBlock.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   className: PropTypes.string,
-  disableCopy: PropTypes.bool,
+  copy: PropTypes.bool,
 }
 
 CodeBlock.defaultProps = {
