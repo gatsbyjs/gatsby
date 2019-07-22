@@ -259,6 +259,18 @@ module.exports = async (program, directory, suppliedStage) => {
       rules.images(),
       rules.media(),
       rules.miscAssets(),
+
+      // This is a hack that exports one of @reach/router internals (BaseContext)
+      // to export list. We need it to reset basepath and baseuri context after
+      // Gatsby main router changes it, to keep v2 behaviour.
+      // We will need to most likely remove this for v3.
+      {
+        test: require.resolve(`@reach/router/es/index`),
+        type: `javascript/auto`,
+        use: [{
+          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
+        }],
+      }
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds

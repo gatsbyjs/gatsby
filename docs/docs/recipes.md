@@ -113,6 +113,45 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
 - Use [CSS Modules](/tutorial/part-two/#css-modules)
 
+### Adding a Local Font
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/)
+- A font file: `.woff2`, `.ttf`, etc.
+
+#### Directions
+
+1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
+
+```
+src/fonts/fontname.woff2
+```
+
+2. Import the font asset into a CSS file to bundle it into your Gatsby site:
+
+```css:title=src/css/typography.css
+@font-face {
+  font-family: "Font Name";
+  src: url("../fonts/fontname.woff2");
+}
+```
+
+**Note:** Make sure the font name is referenced from the relevant CSS, e.g.:
+
+```css:title=src/components/layout.css
+body {
+  font-family: "Font Name", sans-serif;
+}
+```
+
+By targeting the HTML `body` element, your font will apply to most text on the page. Additional CSS can target other elements, such as `button` or `textarea`.
+
+#### Additional resources
+
+- More on [importing assets into files](/docs/importing-assets-into-files/]
+- [Using Typography.js for Google fonts](/docs/typography-js/)
+
 ## Creating layouts
 
 To wrap pages with layouts, use normal React components.
@@ -122,22 +161,190 @@ To wrap pages with layouts, use normal React components.
 
 ## Deploying
 
-Showtime.
+Showtime. Once you are happy with your site, you are ready to go live with it!
+
+### Preparing for deployment
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Stop your development server if it is running (`Ctrl + C` on your command line in most cases)
+
+2. For the standard site path at the root directory (`/`), run `gatsby build` using the Gatsby CLI on the command line. The built files will now be in the `public` folder.
+
+```shell
+gatsby build
+```
+
+3. To include a site path other than `/` (such as `/site-name/`), set a path prefix by adding the following to your `gatsby-config.js` and replacing `yourpathprefix` with your desired path prefix:
+
+```js:title=gatsby-config.js
+module.exports = {
+  pathPrefix: `/yourpathprefix`,
+}
+```
+
+There are a few reasons to do this--for instance, hosting a blog built with Gatsby on a domain with another site not built on Gatsby. The main site would direct to `example.com`, and the Gatsby site with a path prefix could live at `example.com/blog`.
+
+4. With a path prefix set in `gatsby-config.js`, run `gatsby build` with the `--prefix-paths` flag to automatically add the prefix to the beginning of all Gatsby site URLs and `<Link>` tags.
+
+```shell
+gatsby build --prefix-paths
+```
+
+5. Make sure that your site looks the same when running `gatsby build` as with `gatsby develop`. By running `gatsby serve` when you build your site, you can test out (and debug if necessary) the finished product before deploying it live.
+
+```shell
+gatsby build && gatsby serve
+```
+
+#### Additional Resources
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
 - Learn about [performance optimization](/docs/performance/)
-- Read about [other deployment related topics](/docs/deploying-and-hosting/)
+- Read about [other deployment related topics](/docs/preparing-for-deployment/)
+- Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
 
 ## Querying data
 
-In Gatsby, you access data through a query language called [GraphQL](https://graphql.org/).
+### Using PageQuery
 
-- Walk through an example of how Gatsby's data layer [pulls data into components using GraphQL](/tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components)
-- Walk through [using Gatsby's `graphql` tag for page queries](/tutorial/part-five/#build-a-page-with-a-graphql-query)
-- Read through a conceptual guide on [querying data with GraphQL in Gatsby](/docs/querying-with-graphql/)
-- Learn more about the `graphql` tag -- [querying data in a Gatsby page](/docs/page-query/)
-- Learn more about `<StaticQuery />` -- [querying data in (non-page) components](/docs/static-query/)
+You can use the `graphql`-tag to query data in your pages.
+
+#### Directions
+
+1. Import `graphql` from `gatsby`.
+
+2. Export a constant named `query` and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks.
+
+3. Pass in `data` as a prop to the component.
+
+4. The `data` variable which holds the queried data with the expected shape can be referenced in JSX to output HTML.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+// highlight-next-line
+import { graphql } from "gatsby"
+
+import Layout from "../components/layout"
+
+// highlight-next-line
+const IndexPage = ({ data }) => (
+  <Layout>
+    // highlight-next-line
+    <h1>{data.site.siteMetadata.title}</h1>
+  </Layout>
+)
+
+// highlight-start
+export const query = graphql`
+  query HomePageQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+// highlight-end
+
+export default IndexPage
+```
+
+#### Additional resources
+
+- [More on querying data in pages with GraphQL](/docs/page-query/)
+
+### The StaticQuery Component
+
+`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/).
+
+#### Directions
+
+1. The `StaticQuery` Component requires two render props: `query` and `render`.
+
+```jsx:title=src/components/NonPageComponent.js
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+
+const NonPageComponent = () => (
+  <StaticQuery
+    query={graphql`
+      query NonPageQuery {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+    `}
+    render={data => (
+      <h1>
+        Querying title from NonPageComponent with StaticQuery:
+        {data.site.siteMetadata.title}
+      </h1>
+    )}
+  />
+)
+
+export default NonPageComponent
+```
+
+2. You can now use this component as you would [any other component](/docs/building-with-components#non-page-components).
+
+### Querying data with the useStaticQuery hook
+
+Since Gatsby v2.1.0, you can use the `useStaticQuery` hook to query data with a JavaScript function instead of a component.
+
+#### Prerequisites
+
+- You'll need React and ReactDOM 16.8.0 or later (keeping Gatsby updated handles this).
+- The [Rules of React Hooks](https://reactjs.org/docs/hooks-rules.html)
+
+#### Directions
+
+The `useStaticQuery` hook is a JavaScript function that takes a GraphQL query and returns the requested data.
+
+1. Import `useStaticQuery` and `graphql` from `gatsby` in order to use the hook query the data.
+
+2. In the start of a stateless functional component, assign a variable to the value of `useStaticQuery` with your `graphql` query passed as an argument.
+
+3. In the JSX code returned from your component, you can reference that variable to handle the returned data.
+
+```jsx:title=src/components/NonPageComponent.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+
+const NonPageComponent = () => {
+  const data = useStaticQuery(graphql`
+    query NonPageQuery {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+  return (
+    <h1>
+      Querying title from NonPageComponent: {data.site.siteMetadata.title}
+    </h1>
+  )
+}
+
+export default NonPageComponent
+```
+
+#### Additional resources
+
+- [More on Static Query for querying data in components](/docs/static-query/)
+- [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
+- [More on the useStaticQuery hook](/docs/use-static-query/)
+- [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
 ## Sourcing data
 
