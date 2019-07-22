@@ -18,20 +18,14 @@ module.exports = (state = { active: [], done: [] }, action) => {
         })
 
         state.active[index] = mergedJob
-        return {
-          done: state.done,
-          active: state.active,
-        }
+        return state
       } else {
         state.active.push({
           ...action.payload,
           createdAt: Date.now(),
           plugin: action.plugin,
         })
-        return {
-          done: state.done,
-          active: state.active,
-        }
+        return state
       }
     }
     case `END_JOB`: {
@@ -53,10 +47,7 @@ module.exports = (state = { active: [], done: [] }, action) => {
         runTime: moment(completedAt).diff(moment(job.createdAt)),
       })
 
-      return {
-        done: state.done,
-        active: state.active,
-      }
+      return state
     }
   }
 
