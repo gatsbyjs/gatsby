@@ -169,7 +169,10 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
 
   const toPostPath = node => {
     const { dir } = path.parse(node.relativePath)
-    return urlResolve(basePath, dir, node.name)
+    const isIndex = node.name === `index`
+    return isIndex
+      ? urlResolve(basePath, dir)
+      : urlResolve(basePath, dir, node.name)
   }
 
   // Make sure it's an MDX node
