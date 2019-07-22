@@ -68,7 +68,7 @@ Inside it you'll find:
 
 - `gatsby-config.js`: An empty gatsby-config that you can use as a starting point for building functionality into your theme.
 - `index.js`: Since themes also function as plugins, this is an empty file that Gatsby requires in order to use this theme as a plugin.
-- `package.json`: The dependencies that your theme will pull in when people install it. Gatsby should be a peer dependency.
+- `package.json`: A file listing the dependencies that your theme will pull in when people install it. Gatsby should be a peer dependency.
 
 ### `/example`
 
