@@ -6579,7 +6579,7 @@
   description: >
     Website and blog for TriActive USA. Built with Gatsby.
   categories:
-    - Landing Pages
+    - Landing Page
     - Business
   built_by: Chase Ohlson
   built_by_url: https://chaseohlson.com
@@ -6593,6 +6593,20 @@
     - Marketing
   built_by: LaunchDarkly
   built_by_url: https://launchdarkly.com/
+  featured: false
+- title: Arpit Goyal
+  url: https://arpitgoyal.com
+  main_url: https://arpitgoyal.com
+  source_url: https://github.com/92arpitgoyal/ag-blog
+  description: >
+    Blog and portfolio website of a Front-end Developer turned Product Manager.
+  categories:
+    - Blog
+    - Portfolio
+    - Technology
+    - User Experience
+  built_by: Arpit Goyal
+  built_by_url: https://twitter.com/_arpitgoyal
   featured: false
 - title: Portfolio of Cole Townsend
   url: https://twnsnd.co
