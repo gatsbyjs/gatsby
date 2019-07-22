@@ -3,7 +3,7 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
-const { urlResolve } = require(`gatsby-core-utils`)
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 const debug = Debug(`gatsby-theme-blog`)
 
@@ -167,14 +167,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
   const { createNode, createParentChildLink } = actions
 
-  const toPostPath = node => {
-    const { dir } = path.parse(node.relativePath)
-    const isIndex = node.name === `index`
-    return isIndex
-      ? urlResolve(basePath, dir)
-      : urlResolve(basePath, dir, node.name)
-  }
-
   // Make sure it's an MDX node
   if (node.internal.type !== `Mdx`) {
     return
@@ -185,7 +177,11 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
   const source = fileNode.sourceInstanceName
 
   if (node.internal.type === `Mdx` && source === contentPath) {
-    const slug = toPostPath(fileNode)
+    const slug = createFilePath({
+      node: fileNode,
+      getNode,
+      basePath: contentPath,
+    })
 
     const fieldData = {
       title: node.frontmatter.title,
