@@ -1,17 +1,17 @@
 {
   "name": "gatsby-plugin-sharp",
   "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
-  "version": "2.2.8",
+  "version": "2.2.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "gatsby-core-utils": "^1.0.0",
     "async": "^2.1.2",
     "bluebird": "^3.5.0",
     "fs-extra": "^7.0.0",
+    "gatsby-core-utils": "^1.0.0",
     "got": "^8.3.2",
     "imagemin": "^6.0.0",
     "imagemin-mozjpeg": "^8.0.0",
