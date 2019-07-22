@@ -121,59 +121,17 @@ Read more about theming in the [Theme UI documentation](https://theme-ui.com/the
 
 ## Adding styles to elements
 
-Theme UI uses a custom [JSX pragma][], a per-file or per-function comment to tell [Babel](/docs/glossary#babel) the name of Emotion's `css` prop,
-which can be used to style elements.
-By default JSX compiles to the `React.createElement` function.
-When you add the `/** @jsx jsx */` comment to the top of a file, JSX will compile to the function name in the comment instead.
-For example, `<button />` would compile to `jsx('button')`.
-Theme UI's `jsx` function still renders React elements but lets you use the `css` prop for styling.
+Theme UI uses a custom function to add support for the Theme UI `sx` prop in JSX.
+This custom function is enabled by including a comment on the top of the file:
 
-[jsx pragma]: https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#pragma
-
-The following example uses the `css` prop to add styles to an element.
-
-```js:title=src/components/header.js
+```js
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-
-export default props => (
-  <header
-    css={{
-      padding: 32,
-      color: "#fff",
-      backgroundColor: "#639",
-    }}
-  >
-    {props.children}
-  </header>
-)
 ```
 
-With Emotion's API, values from the theming context can be referenced by passing a function to the `css` prop.
-
-```js:title=src/components/header.js
-/** @jsx jsx */
-import { jsx } from "theme-ui"
-
-export default props => (
-  <header
-    css={theme => ({
-      padding: theme.space[4],
-      color: theme.colors.background,
-      backgroundColor: theme.colors.primary,
-    })}
-  >
-    {props.children}
-  </header>
-)
-```
-
-Theme UI includes the [`sx` prop][], which can be used as a replacement for the `css` prop.
-The `sx` prop allows values from the theming context to be referenced with a terser syntax.
+The [`sx` prop][] is used to style elements by referencing values from the theme object.
 
 [`sx` prop]: https://theme-ui.com/sx-prop
-
-The example from above can be rewritten like this:
 
 ```js:title=src/components/header.js
 /** @jsx jsx */
@@ -182,7 +140,9 @@ import { jsx } from "theme-ui"
 export default props => (
   <header
     sx={{
+      // this uses the value from `theme.space[4]`
       padding: 4,
+      // these use values from `theme.colors`
       color: "background",
       backgroundColor: "primary",
     }}
@@ -258,7 +218,4 @@ To learn more about using Theme UI in your project, see the official [Theme UI][
 [mdx]: /docs/mdx
 [typography.js]: /docs/typography-js
 [react context]: https://reactjs.org/docs/context.html
-
-<!-- TODO -->
-
 [component shadowing api]: /docs/themes/api-reference#component-shadowing
