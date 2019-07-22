@@ -449,6 +449,64 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             }
           }
         }
+        allDocLinksYaml {
+          edges {
+            node {
+              id
+              title
+              items {
+                title
+                link
+                items {
+                  title
+                  link
+                  items {
+                    title
+                    link
+                    items {
+                      title
+                      link
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        allTutorialLinksYaml {
+          edges {
+            node {
+              id
+              items {
+                link
+                title
+                items {
+                  link
+                  title
+                }
+              }
+            }
+          }
+        }
+        allContributingLinksYaml {
+          edges {
+            node {
+              id
+              items {
+                link
+                title
+                items {
+                  link
+                  title
+                  items {
+                    link
+                    title
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     `).then(result => {
       if (result.errors) {
@@ -609,18 +667,109 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create docs pages.
-      result.data.allMdx.edges.forEach(edge => {
-        const slug = _.get(edge, `node.fields.slug`)
+      const docPages = result.data.allMdx.edges
+      const docLinks = result.data.allDocLinksYaml.edges[0].node.items
+      const tutorialLinks = result.data.allTutorialLinksYaml.edges[0].node.items
+      const contributingLinks =
+        result.data.allContributingLinksYaml.edges[0].node.items
+
+      // flatten docs-links tree for easy next/prev links
+      const flattenList = itemList =>
+        itemList.reduce((reducer, { items, ...rest }) => {
+          reducer.push(rest)
+          if (items) reducer.push(...flattenList(items))
+          return reducer
+        }, [])
+      const flattenedDocs = flattenList(docLinks)
+      const flattenedTutorials = flattenList(tutorialLinks)
+      const flattenedContributing = flattenList(contributingLinks)
+      console.log(flattenedContributing)
+
+      // with flattened tree object finding next and prev is just getting the next index
+      const getSibling = (index, list, direction) => {
+        if (direction === `next`) {
+          const next = index === list.length - 1 ? null : list[index + 1]
+          // for tutorial links and subheadings skip the link and try the next item
+          if (next && next.link.includes(`#`)) {
+            return getSibling(index + 1, list, `next`)
+          }
+          return next
+        } else if (direction === `prev`) {
+          const prev = index === 0 ? null : list[index - 1]
+          if (prev && prev.link.includes(`#`)) {
+            return getSibling(index - 1, list, `prev`)
+          }
+          return prev
+        } else {
+          reporter.warn(
+            `Did not provide direction to sibling function for building next and prev links`
+          )
+          return null
+        }
+      }
+
+      function findDoc(doc) {
+        if (!doc.link) return null
+        return (
+          doc.link === this.link ||
+          doc.link.substring(0, doc.link.length - 1) === this.link
+        )
+      }
+
+      docPages.forEach(({ node }) => {
+        const slug = _.get(node, `fields.slug`)
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
+          const docIndex = flattenedDocs.findIndex(findDoc, { link: slug })
+          const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
+            link: slug,
+          })
+          const contributingIndex = flattenedContributing.findIndex(findDoc, {
+            link: slug,
+          })
+
+          // add values to page context for next and prev page
+          let nextAndPrev = {}
+          if (docIndex > -1) {
+            nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
+            nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
+          } else if (tutorialIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `next`
+            )
+          } else if (contributingIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `next`
+            )
+          } else {
+            // noop
+          }
+
+          // TODO pop item from flattened lists for speeding up search and preventing duplicate link collisions
+
           createPage({
-            path: `${edge.node.fields.slug}`, // required
+            path: `${node.fields.slug}`, // required
             component: slash(
-              edge.node.fields.package ? localPackageTemplate : docsTemplate
+              node.fields.package ? localPackageTemplate : docsTemplate
             ),
             context: {
-              slug: edge.node.fields.slug,
+              slug: node.fields.slug,
+              ...nextAndPrev,
             },
           })
         }

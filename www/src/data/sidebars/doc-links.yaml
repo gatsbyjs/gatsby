@@ -5,11 +5,11 @@
     - title: Introduction
       link: /docs/
     - title: Quick Start
-      link: /docs/quick-start
+      link: /docs/quick-start/
     - title: Recipes
       link: /docs/recipes/
     - title: Plugin Library
-      link: /plugins
+      link: /plugins/
     - title: Starter Library
       link: /starters/
     - title: Awesome Gatsby Resources
