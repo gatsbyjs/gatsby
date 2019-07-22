@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import styled from "@emotion/styled"
-import { css } from "@emotion/core"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
