@@ -31,7 +31,7 @@ const getParams = (name = ``) => {
 const CodeBlock = ({
   children,
   className = children.props ? children.props.className : ``,
-  disableCopy,
+  copy,
 }) => {
   const [language, { title = `` }] = getParams(className)
   const [content, highlights] = normalize(
@@ -57,7 +57,7 @@ const CodeBlock = ({
           )}
           <div className="gatsby-highlight">
             <pre className={`language-${language}`}>
-              {disableCopy !== false && (
+              {copy && (
                 <Copy
                   fileName={title}
                   css={{
@@ -105,7 +105,7 @@ CodeBlock.propTypes = {
 }
 
 CodeBlock.defaultProps = {
-  disableCopy: false,
+  copy: true,
 }
 
 export default CodeBlock
