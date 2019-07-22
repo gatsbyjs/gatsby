@@ -6605,3 +6605,14 @@
   built_by: Little & Big
   built_by_url: "https://www.littleandbig.com.au/"
   featured: false
+- title: City Springs
+  url: https://publish.mediacurrent.com/sites/default/files/styles/16_9_1700x956/public/2019-05/Anastasia%20-%20CitySprings.com_.jpg
+  main_url: https://citysprings.com/
+  description: >
+    Sandy Springs is a city built on creative thinking and determination. They captured a bold vision for a unified platform to bring together new and existing information systems. To get there, the Sandy Springs communications team partnered with Mediacurrent on a new Drupal 8 decoupled platform architecture with a Gatsbyjs front end to power both the City Springs website and its digital signage network. Now, the Sandy Springs team can create content once and publish it everywhere.
+  categories:
+    - Community
+    - Government
+  built_by: Mediacurrent
+  built_by_url: https://www.mediacurrent.com
+  featured: false
