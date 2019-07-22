@@ -23,7 +23,7 @@ describe(`basic functionality`, () => {
       expect(queryByText(`copy`)).toBeDefined()
     })
 
-    it.only(`copies text to clipboard`, () => {
+    it(`copies text to clipboard`, () => {
       const text = `alert('hello world')`
       const { queryByText } = render(
         <CodeBlock language="jsx">{text}</CodeBlock>
