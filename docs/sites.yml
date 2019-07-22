@@ -1176,7 +1176,7 @@
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
   source_url: "https://github.com/mottox2/website"
-  description: Web developer / UI Desinger in Tokyo Japan.
+  description: Web developer / UI Designer in Tokyo Japan.
   featured: false
   categories:
     - Blog
@@ -1870,18 +1870,6 @@
     - Blog
   built_by: Linton Ye
   built_by_url: "https://twitter.com/lintonye"
-- title: Devol’s Dance
-  main_url: "https://www.devolsdance.com/"
-  url: "https://www.devolsdance.com/"
-  description: >
-    Devol’s Dance is an invite-only, one-day event celebrating industrial
-    robotics, AI, and automation.
-  categories:
-    - Marketing
-    - Technology
-  built_by: Corey Ward
-  built_by_url: "http://www.coreyward.me/"
-  featured: false
 - title: Mega House Creative
   main_url: "https://www.megahousecreative.com/"
   url: "https://www.megahousecreative.com/"
@@ -2917,7 +2905,7 @@
   url: https://www.dekema.com/
   main_url: https://www.dekema.com/
   description: >
-    Worldclass crafting: Furnace, fervor, fullfilment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
+    Worldclass crafting: Furnace, fervor, fulfillment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
   categories:
     - Healthcare
     - Science
@@ -3646,7 +3634,7 @@
 - title: Gábor Fűzy pianist
   main_url: "https://pianobar.hu"
   url: "https://pianobar.hu"
-  description: Gábor Fűzy pianist's offical website built with Gatsby v2.
+  description: Gábor Fűzy pianist's official website built with Gatsby v2.
   categories:
     - Music
   built_by: Zoltán Bedi
@@ -4621,7 +4609,7 @@
   url: https://our-academy.org/
   source_url: "https://github.com/ouracademy/website"
   description: >
-    Ouracademy is an organization that promoves the education in software development throught blog posts & videos smiley.
+    Ouracademy is an organization that promoves the education in software development through blog posts & videos smiley.
   categories:
     - Open Source
     - Blog
@@ -5530,7 +5518,7 @@
   url: https://lendo.at
   main_url: https://lendo.at
   description: >
-    A Comparsion site for best private loan offer from banks in Austria.
+    A Comparison site for best private loan offer from banks in Austria.
   categories:
     - Business
     - Finance
@@ -6376,8 +6364,8 @@
   url: https://homealarmreport.com/
   main_url: https://homealarmreport.com/
   description: >
-    Home Alarm Report is dedicated to helping consumers make informed decisions 
-    about home security solutions. The site was easily migrated from a legacy WordPress 
+    Home Alarm Report is dedicated to helping consumers make informed decisions
+    about home security solutions. The site was easily migrated from a legacy WordPress
     installation and the dev team chose Gatsby for its site speed and SEO capabilities.
   categories:
     - Blog
@@ -6595,4 +6583,46 @@
     - Business
   built_by: Chase Ohlson
   built_by_url: https://chaseohlson.com
+- title: LaunchDarkly
+  url: https://launchdarkly.com/
+  main_url: https://launchdarkly.com/
+  description: >
+    LaunchDarkly is the feature management platform that software teams use to build better software, faster.
+  categories:
+    - Technology
+    - Marketing
+  built_by: LaunchDarkly
+  built_by_url: https://launchdarkly.com/
+  featured: false
+- title: Portfolio of Cole Townsend
+  url: https://twnsnd.co
+  main_url: https://twnsnd.co
+  description: Portfolio of Cole Townsend, Product Designer
+  categories:
+    - Portfolio
+    - User Experience
+    - Web Development
+    - Design
+  built_by: Cole Townsend
+  built_by_url: https://twitter.com/twnsndco
+- title: Jana Desomer
+  url: https://www.janadesomer.be/
+  main_url: https://www.janadesomer.be/
+  description: >
+    I'm Jana, a digital product designer with coding skills, based in Belgium
+  categories:
+    - Portfolio
+  built_by: Jana Desomer Designer/Developer
+  built_by_url: https://www.janadesomer.be/
+  featured: false
+- title: Carbon8 Regenerative Agriculture
+  url: https://www.carbon8.org.au/
+  main_url: https://www.carbon8.org.au/
+  description: >
+    Carbon8 is a Not for Profit charity that supports Aussie farmers to transition to regenerative agriculture practices and rebuild the carbon (organic matter) in their soil from 1% to 8%.
+  categories:
+    - Nonprofit
+    - eCommerce
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
   featured: false
