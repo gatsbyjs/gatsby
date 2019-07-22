@@ -5,7 +5,7 @@ author: "Amberley Romo"
 tags: ["hacktoberfest", "open source"]
 ---
 
-Just like that, Gatsby Hacktoberfest is over! Or, "Hacktoberfest"? 😂 (Thanks for the pun, [@m-allanson](https://github.com/m-allanson)). We had a great time Hacktoberfesting with y'all and wanted to share a bit of our planning process and lessons learned in review!
+Just like that, Gatsby Hacktoberfest is over! Or, "Hacktoverfest"? 😂 (Thanks for the pun, [@m-allanson](https://github.com/m-allanson)). We had a great time Hacktoberfesting with y'all and wanted to share a bit of our planning process and lessons learned in review!
 
 ## Planning for Hacktoberfest
 
