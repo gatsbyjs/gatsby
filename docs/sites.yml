@@ -6573,6 +6573,16 @@
   built_by: LaunchDarkly
   built_by_url: https://launchdarkly.com/
   featured: false
+- title: Jana Desomer
+  url: https://www.janadesomer.be/
+  main_url: https://www.janadesomer.be/
+  description: >
+    I'm Jana, a digital product designer with coding skills, based in Belgium
+  categories:
+    - Portfolio
+  built_by: Jana Desomer Designer/Developer
+  built_by_url: https://www.janadesomer.be/
+  featured: false
 - title: Carbon8 Regenerative Agriculture
   url: https://www.carbon8.org.au/
   main_url: https://www.carbon8.org.au/
