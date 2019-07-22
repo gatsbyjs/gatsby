@@ -36,7 +36,7 @@ const WrapperDiv = styled(`div`)`
   opacity: 0.5;
   padding: ${space[6]} 0;
   width: 100%;
-  z-index: ${zIndices.feedbackWidget};
+  z-index: ${zIndices.widget};
 
   [tabindex="-1"]:focus {
     outline: none;
