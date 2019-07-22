@@ -6562,6 +6562,27 @@
     - Consulting
     - Community
   featured: false
+- title: Zoe Rodriguez
+  url: https://zoerodrgz.com
+  main_url: https://zoerodrgz.com
+  description: >
+    Portfolio for Los Angeles-based designer Zoe Rodriguez. Built with Gatsby.
+  categories:
+    - Portfolio
+    - Design
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
+  featured: false
+- title: TriActive USA
+  url: https://triactiveusa.com
+  main_url: https://triactiveusa.com
+  description: >
+    Website and blog for TriActive USA. Built with Gatsby.
+  categories:
+    - Landing Pages
+    - Business
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
 - title: LaunchDarkly
   url: https://launchdarkly.com/
   main_url: https://launchdarkly.com/
