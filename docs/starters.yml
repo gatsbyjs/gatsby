@@ -3389,3 +3389,16 @@
     - Syntax highlighting in code blocks using PrismJS(Dracula).
     - Google Analytics.
     - Deploy AWS S3.
+- url: https://gatsby-starter-krisp.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby-starter-krisp
+  description: A minimal, clean and responsive starter built with gatsby
+  tags:
+    - Styling:Bootstrap
+    - Onepage
+    - Portfolio
+    - Netlify
+    - Markdown
+  features:
+    - Styled-Components.
+    - Mobile-First CSS.
+    - Responsive Design, optimized for Mobile devices
