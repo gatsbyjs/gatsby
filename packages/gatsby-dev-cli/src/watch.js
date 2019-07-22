@@ -29,11 +29,10 @@ async function watch(
   packages,
   { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
 ) {
-  // const packagesToInstall = [`gatsby`]
   // determine if in yarn workspace - if in workspace, force using verdaccio
   // as current logic of copying files will not work correctly.
   const yarnWorkspaceRoot = findWorkspaceRoot()
-  if (yarnWorkspaceRoot) {
+  if (yarnWorkspaceRoot && process.env.NODE_ENV !== `test`) {
     console.log(`Yarn workspace found.`)
     forceInstall = true
   }
