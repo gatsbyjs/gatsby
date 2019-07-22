@@ -101,8 +101,6 @@ describe(`watching`, () => {
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
 
-      // console.log(`checking`)
-
       expect(fs.copy).toHaveBeenCalledTimes(1)
       expect(fs.copy).toHaveBeenCalledWith(
         filePath,
