@@ -54,7 +54,7 @@ page, the `component` template used to render that page, and any `context`
 we need in the component for rendering. The `context` parameter is
 _optional_ though often times it will include a unique identifier that can
 be used to query for associated data that will be rendered to the page. All
-`context` values are made available to a template's GraphQL queries as 
+`context` values are made available to a template's GraphQL queries as
 arguments prefaced with `$` (ex. `slug` -> `$slug`).
 
 ### Specifying A Template
