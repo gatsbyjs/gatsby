@@ -6364,8 +6364,8 @@
   url: https://homealarmreport.com/
   main_url: https://homealarmreport.com/
   description: >
-    Home Alarm Report is dedicated to helping consumers make informed decisions 
-    about home security solutions. The site was easily migrated from a legacy WordPress 
+    Home Alarm Report is dedicated to helping consumers make informed decisions
+    about home security solutions. The site was easily migrated from a legacy WordPress
     installation and the dev team chose Gatsby for its site speed and SEO capabilities.
   categories:
     - Blog
@@ -6572,4 +6572,15 @@
     - Marketing
   built_by: LaunchDarkly
   built_by_url: https://launchdarkly.com/
+  featured: false
+- title: Carbon8 Regenerative Agriculture
+  url: https://www.carbon8.org.au/
+  main_url: https://www.carbon8.org.au/
+  description: >
+    Carbon8 is a Not for Profit charity that supports Aussie farmers to transition to regenerative agriculture practices and rebuild the carbon (organic matter) in their soil from 1% to 8%.
+  categories:
+    - Nonprofit
+    - eCommerce
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
   featured: false
