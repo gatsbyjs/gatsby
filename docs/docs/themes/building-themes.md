@@ -87,7 +87,7 @@ Watch the new [Egghead course on Authoring Gatsby Themes](https://egghead.io/cou
 
 ### Building a Gatsby Theme (Tutorial)
 
-Check out the [tutorial for building a Gatsby theme](/tutorial/building-a-theme). The tutorial goes into much more detail than this g This is written as a companion to the [Egghead theme authoring course](https://egghead.io/courses/gatsby-theme-authoring), so they can be used together!
+Check out the [tutorial for building a Gatsby theme](/tutorial/building-a-theme). The step-by-step tutorial goes into much more detail than this docs guide. It was written as a companion to the [Egghead theme authoring course](https://egghead.io/courses/gatsby-theme-authoring), so they can be used together!
 
 ### Read through source code
 
