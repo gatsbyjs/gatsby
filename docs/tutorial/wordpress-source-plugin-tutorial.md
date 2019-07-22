@@ -127,11 +127,14 @@ Now that you've created GraphQL queries that pull in the data you want, we'll us
 ```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
 
-export default ({ data }) => {
-  console.log(data)
+export default ({ data }) => { //highlight-line
   return (
-    <div>
+    <Layout>
+      <SEO title="home"/>
+      //highlight-start
       <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
       {data.allWordpressPost.edges.map(({ node }) => (
@@ -140,10 +143,12 @@ export default ({ data }) => {
           <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
         </div>
       ))}
-    </div>
+      //highlight-end
+    </Layout>
   )
 }
 
+//highlight-start
 export const pageQuery = graphql`
   query {
     allWordpressPost(sort: { fields: [date] }) {
@@ -157,12 +162,17 @@ export const pageQuery = graphql`
     }
   }
 `
+//highlight-end
 ```
 
 Save these changes and look at localhost:8000 to see your new homepage with list of sorted blog posts!
 
+![WordPress home after query](/images/wordpress-source-plugin-home.jpg)
+
 > **NOTE:** to future editors: it would be useful to also have examples of how to load blog posts to their own individual pages. And helpful to insert a screenshot of the final result here
 
-### Create slugs for each blogpost
+## Create slugs and pages for each blogpost
+
+
 
 [Part 7](/tutorial/part-seven/) of the foundational tutorial goes through this process.
