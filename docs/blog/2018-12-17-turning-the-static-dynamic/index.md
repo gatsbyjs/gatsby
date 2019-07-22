@@ -374,7 +374,7 @@ export function handler(event, context, callback) {
       statusCode: 200,
       body: JSON.stringify({
         msg:
-          "auth-hello - no authentication detected. Note that netlify-lambda doesnt locally emulate Netlify Identity.",
+          "auth-hello - no authentication detected. Note that netlify-lambda doesn't locally emulate Netlify Identity.",
       }),
     })
   }
