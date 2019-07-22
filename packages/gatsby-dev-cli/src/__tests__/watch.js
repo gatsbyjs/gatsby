@@ -129,7 +129,7 @@ describe(`watching`, () => {
       )
     })
 
-    it(`filters non-existant files/directories`, () => {
+    it(`filters non-existent files/directories`, () => {
       fs.existsSync.mockReset().mockImplementation(file => false)
 
       watch(...args)

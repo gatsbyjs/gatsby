@@ -21,7 +21,7 @@ const quit = () => {
 const MAX_COPY_RETRIES = 3
 
 /*
- * non-existant packages break on('ready')
+ * non-existent packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
  */
 async function watch(
