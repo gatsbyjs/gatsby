@@ -55,8 +55,8 @@ aliases:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: yarn jest -w 1
-      - run: GATSBY_DB_NODES=loki yarn jest -w 1
+      - run: yarn jest -w 1 --ci
+      - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:

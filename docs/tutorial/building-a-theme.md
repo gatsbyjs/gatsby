@@ -98,19 +98,19 @@ yarn workspace site add gatsby react react-dom gatsby-theme-events@*
 - When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
 - You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
 
-> 💡 For more detail on using yarn workspaces, you might be interested to check out Gatsby's [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
+> 💡 For more details on using yarn workspaces, you might be interested to check out Gatsby's [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
 
 You should now see the following dependencies in your `site/package.json`:
 
 ```json:title=site/package.json
-  {
-      "dependencies": {
-          "gatsby": "^2.9.11",
-          "gatsby-theme-events: "*",
-          "react": "^16.8.6",
-          "react-dom": "^16.8.6",
-      }
+{
+  "dependencies": {
+    "gatsby": "^2.9.11",
+    "gatsby-theme-events": "*",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
+}
 ```
 
 If you run `yarn workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
@@ -334,7 +334,7 @@ exports.sourceNodes = ({ actions }) => {
 1. You'll use the `createTypes` to create the new `Event` type
 2. The `Event` type will implement the typical Gatsby `Node` interface.
 3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
-4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](g/docs/actions/#createTypes)_.
+4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
 5. You'll also create a `slug` field. You'll notice your event data doesn't include "slug" data. You'll define this in the next step.
 
 ### Define resolvers for any custom fields (slug)

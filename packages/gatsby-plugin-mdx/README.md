@@ -440,7 +440,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default class MyPageLayout {
   render() {
-    ;<MDXRenderer>{this.props.data.mdx.body}</MDXRenderer>
+    return <MDXRenderer>{this.props.data.mdx.body}</MDXRenderer>
   }
 }
 

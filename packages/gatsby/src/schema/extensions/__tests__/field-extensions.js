@@ -79,7 +79,7 @@ describe(`GraphQL field extensions`, () => {
             resolve(source, args, context, info) {
               const fieldValue = source[info.fieldName]
               const date = new Date(fieldValue)
-              if (date.getMonth() === 8 && date.getDate() === 26) {
+              if (date.getUTCMonth() === 8 && date.getUTCDate() === 26) {
                 return args.emoji
                   ? `:cake:`
                   : options.greeting || `Happy birthday!`
@@ -138,7 +138,7 @@ describe(`GraphQL field extensions`, () => {
             resolve(source, args, context, info) {
               const fieldValue = source[info.fieldName]
               const date = new Date(fieldValue)
-              if (date.getMonth() === 8 && date.getDate() === 26) {
+              if (date.getUTCMonth() === 8 && date.getUTCDate() === 26) {
                 return args.emoji
                   ? `:cake:`
                   : options.greeting || `Happy birthday!`
