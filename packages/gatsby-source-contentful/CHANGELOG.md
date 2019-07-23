@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.14...gatsby-source-contentful@2.1.15) (2019-07-22)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.13...gatsby-source-contentful@2.1.14) (2019-07-17)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.12...gatsby-source-contentful@2.1.13) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-source-contentful
@@ -299,7 +307,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-source-contentful:** Fix check for fluid and fixed size fliters ([#11009](https://github.com/gatsbyjs/gatsby/issues/11009)) ([aeb2bbd](https://github.com/gatsbyjs/gatsby/commit/aeb2bbd))
+- **gatsby-source-contentful:** Fix check for fluid and fixed size filters ([#11009](https://github.com/gatsbyjs/gatsby/issues/11009)) ([aeb2bbd](https://github.com/gatsbyjs/gatsby/commit/aeb2bbd))
 
 <a name="2.0.23"></a>
 

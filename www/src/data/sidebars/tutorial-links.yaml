@@ -117,6 +117,8 @@
           link: /tutorial/using-a-theme
         - title: Using Multiple Themes Together
           link: /tutorial/using-multiple-themes-together/
+        - title: Building a Theme
+          link: /tutorial/building-a-theme
     - title: Additional Tutorials
       link: /tutorial/additional-tutorials/
       items:

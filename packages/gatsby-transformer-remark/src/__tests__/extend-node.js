@@ -1,8 +1,8 @@
 const { graphql } = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
 const extendNodeType = require(`../extend-node-type`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
-const { createContentDigest } = require(`gatsby/utils`)
 
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
