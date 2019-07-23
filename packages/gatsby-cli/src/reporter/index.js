@@ -8,6 +8,8 @@ const { getErrorFormatter } = require(`./errors`)
 const reporterInstance = require(`./reporters`)
 const constructError = require(`../structured-errors/construct-error`)
 const errorFormatter = getErrorFormatter()
+const { trackCli } = require(`gatsby-telemetry`)
+const convertHrtime = require(`convert-hrtime`)
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
@@ -59,6 +61,9 @@ const reporter: Reporter = {
     let details = {}
     // Many paths to retain backcompat :scream:
     if (arguments.length === 2) {
+      if (Array.isArray(error)) {
+        return error.map(errorItem => this.error(errorMeta, errorItem))
+      }
       details.error = error
       details.context = {
         sourceMessage: errorMeta + ` ` + error.message,
@@ -117,6 +122,7 @@ const reporter: Reporter = {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
+    let startTime = 0
 
     const activity = reporterInstance.createActivity({
       type: `spinner`,
@@ -126,8 +132,9 @@ const reporter: Reporter = {
 
     return {
       start() {
+        startTime = process.hrtime()
         activity.update({
-          startTime: process.hrtime(),
+          startTime: startTime,
         })
       },
       setStatus(status) {
@@ -136,6 +143,13 @@ const reporter: Reporter = {
         })
       },
       end() {
+        trackCli(`ACTIVITY_DURATION`, {
+          name: name,
+          duration: Math.round(
+            convertHrtime(process.hrtime(startTime))[`milliseconds`]
+          ),
+        })
+
         span.finish()
         activity.done()
       },

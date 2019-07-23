@@ -151,4 +151,4 @@ You can type in a command, such as one of these:
 
 When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
-<!-- TODO: add repl documentation link when ready -->
+See the Gatsby REPL documentation [here](/docs/gatsby-repl/).
