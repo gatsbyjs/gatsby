@@ -36,7 +36,7 @@ A CMS, or content management system, is useful because you can add content like 
 
 ### Step 3
 
-Open the project in your code editor and open `static/admin/config.yml`. Replace `your-username/your-repo-name` with your GitHub username and project name.
+Open the project in your code editor and open `static/admin/config.yml`. Replace `your-username/your-repo-name` with your GitHub username and project name. This step is important for managing and deploying the Netlify CMS interface.
 
 ```diff
 backend:
