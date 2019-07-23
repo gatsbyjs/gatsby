@@ -88,28 +88,25 @@ const hasIOSupport = isBrowser && window.IntersectionObserver
 let io
 const listeners = new WeakMap()
 
-function getIO() {
+function getIO(properties) {
   if (
     typeof io === `undefined` &&
     typeof window !== `undefined` &&
     window.IntersectionObserver
   ) {
-    io = new window.IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (listeners.has(entry.target)) {
-            const cb = listeners.get(entry.target)
-            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-            if (entry.isIntersecting || entry.intersectionRatio > 0) {
-              io.unobserve(entry.target)
-              listeners.delete(entry.target)
-              cb()
-            }
+    io = new window.IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (listeners.has(entry.target)) {
+          const cb = listeners.get(entry.target)
+          // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+          if (entry.isIntersecting || entry.intersectionRatio > 0) {
+            io.unobserve(entry.target)
+            listeners.delete(entry.target)
+            cb()
           }
-        })
-      },
-      { rootMargin: `200px` }
-    )
+        }
+      })
+    }, properties)
   }
 
   return io
@@ -182,8 +179,8 @@ function generateNoscriptSources(imageVariants) {
     .join(``)
 }
 
-const listenToIntersections = (el, cb) => {
-  const observer = getIO()
+const listenToIntersections = (el, ioProperties, cb) => {
+  const observer = getIO(ioProperties)
 
   if (observer) {
     observer.observe(el)
@@ -329,7 +326,9 @@ class Image extends React.Component {
   // Specific to IntersectionObserver based lazy-load support
   handleRef(ref) {
     if (this.useIOSupport && ref) {
-      this.cleanUpListeners = listenToIntersections(ref, () => {
+      const ioProperties = { rootMargin: this.props.lazyOffset }
+
+      this.cleanUpListeners = listenToIntersections(ref, ioProperties, () => {
         const imageInCache = inImageCache(this.props)
         if (
           !this.state.isVisible &&
@@ -625,6 +624,7 @@ Image.defaultProps = {
   // We set it to `lazy` by default because it's best to default to a performant
   // setting and let the user "opt out" to `eager`
   loading: `lazy`,
+  lazyOffset: `200px`,
 }
 
 const fixedObject = PropTypes.shape({
@@ -675,6 +675,7 @@ Image.propTypes = {
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
   draggable: PropTypes.bool,
+  lazyOffset: PropTypes.string,
 }
 
 export default Image

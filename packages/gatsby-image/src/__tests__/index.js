@@ -85,6 +85,7 @@ const setup = (
       itemProp={`item-prop-for-the-image`}
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
+      lazyOffset={`200px`}
       {...props}
     />
   )

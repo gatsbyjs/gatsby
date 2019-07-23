@@ -370,6 +370,8 @@ After you've made a query, you can pass additional options to the gatsby-image c
 | `objectPosition`       | `string`            | Passed to the `object-fit-images` polyfill when importing from `gatsby-image/withIEPolyfill`. Defaults to `50% 50%`.          |
 | `loading`              | `string`            | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`. Defaults to `lazy`.                        |
 | `critical`             | `bool`              | Opt-out of lazy-loading behavior. Defaults to `false`. Deprecated, use `loading` instead.                                     |
+| `draggable`            | `string`            | Passed to the rendered HTML `img` element                                                                                     |
+| `lazyOffset`           | `string`            | An offset for lazy-loading. The same as `IntersectionObserver.rootMargin`, Defaults to `200px`.                               |
 
 Here are some usage examples:
 
