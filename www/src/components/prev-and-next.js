@@ -37,12 +37,12 @@ const PrevAndNext = ({ prev = null, next = null }) => {
       `}
     >
       {prev && (
-        <NavButton left to={prev.link}>
+        <NavButton left to={prev.link} aria-label="Previous button">
           {prev.title}
         </NavButton>
       )}
       {next && (
-        <NavButton right to={next.link}>
+        <NavButton right to={next.link} aria-label="Next button">
           {next.title}
         </NavButton>
       )}

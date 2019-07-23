@@ -10,6 +10,16 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const yaml = require(`js-yaml`)
+const docLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
+)
+const tutorialLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
+)
+const contributingLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
+)
 
 let ecosystemFeaturedItems
 
@@ -449,64 +459,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             }
           }
         }
-        allDocLinksYaml {
-          edges {
-            node {
-              id
-              title
-              items {
-                title
-                link
-                items {
-                  title
-                  link
-                  items {
-                    title
-                    link
-                    items {
-                      title
-                      link
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        allTutorialLinksYaml {
-          edges {
-            node {
-              id
-              items {
-                link
-                title
-                items {
-                  link
-                  title
-                }
-              }
-            }
-          }
-        }
-        allContributingLinksYaml {
-          edges {
-            node {
-              id
-              items {
-                link
-                title
-                items {
-                  link
-                  title
-                  items {
-                    link
-                    title
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     `).then(result => {
       if (result.errors) {
@@ -668,35 +620,35 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
       // Create docs pages.
       const docPages = result.data.allMdx.edges
-      const docLinks = result.data.allDocLinksYaml.edges[0].node.items
-      const tutorialLinks = result.data.allTutorialLinksYaml.edges[0].node.items
-      const contributingLinks =
-        result.data.allContributingLinksYaml.edges[0].node.items
+      const docLinks = docLinksData[0].items
+      const tutorialLinks = tutorialLinksData[0].items
+      const contributingLinks = contributingLinksData[0].items
 
-      // flatten docs-links tree for easy next/prev links
-      const flattenList = itemList =>
+      // flatten sidebar links trees for easier next/prev link calculation
+      function flattenList(itemList) {
         itemList.reduce((reducer, { items, ...rest }) => {
           reducer.push(rest)
           if (items) reducer.push(...flattenList(items))
           return reducer
         }, [])
+      }
+
       const flattenedDocs = flattenList(docLinks)
       const flattenedTutorials = flattenList(tutorialLinks)
       const flattenedContributing = flattenList(contributingLinks)
-      console.log(flattenedContributing)
 
       // with flattened tree object finding next and prev is just getting the next index
-      const getSibling = (index, list, direction) => {
+      function getSibling(index, list, direction) {
         if (direction === `next`) {
           const next = index === list.length - 1 ? null : list[index + 1]
-          // for tutorial links and subheadings skip the link and try the next item
-          if (next && next.link.includes(`#`)) {
+          // for tutorial links that use subheadings on the same page skip the link and try the next item
+          if (next && next.link && next.link.includes(`#`)) {
             return getSibling(index + 1, list, `next`)
           }
           return next
         } else if (direction === `prev`) {
           const prev = index === 0 ? null : list[index - 1]
-          if (prev && prev.link.includes(`#`)) {
+          if (prev && prev.link && prev.link.includes(`#`)) {
             return getSibling(index - 1, list, `prev`)
           }
           return prev
@@ -721,7 +673,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
-          const docIndex = flattenedDocs.findIndex(findDoc, { link: slug })
+          const docIndex = flattenedDocs.findIndex(findDoc, {
+            link: slug,
+          })
           const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
             link: slug,
           })
@@ -734,7 +688,8 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           if (docIndex > -1) {
             nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
             nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
-          } else if (tutorialIndex > -1) {
+          }
+          if (tutorialIndex > -1) {
             nextAndPrev.prev = getSibling(
               tutorialIndex,
               flattenedTutorials,
@@ -745,7 +700,8 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               flattenedTutorials,
               `next`
             )
-          } else if (contributingIndex > -1) {
+          }
+          if (contributingIndex > -1) {
             nextAndPrev.prev = getSibling(
               contributingIndex,
               flattenedContributing,
@@ -756,8 +712,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               flattenedContributing,
               `next`
             )
-          } else {
-            // noop
           }
 
           // TODO pop item from flattened lists for speeding up search and preventing duplicate link collisions
