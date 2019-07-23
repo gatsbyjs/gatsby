@@ -42,9 +42,9 @@ Craving a happy medium between [full-length tutorials](/tutorial/) and crawling 
 8. [Transforming data](#transforming-data)
 9. [Deploying your site](#deploying-your-site)
 
-## 1. Pages and Layouts
+## Pages and Layouts
 
-### 1.1 Project structure
+### Project structure
 
 Inside a Gatsby project, you may see some or all of the following folders and files:
 
@@ -76,7 +76,7 @@ Some notable files and their definitions:
 - For common commands, check out the [Gatsby CLI docs](/docs/gatsby-cli)
 - Check out the [Gatsby Cheat Sheet](/docs/cheat-sheet/) for downloadable info at a glance
 
-### 1.2 Creating pages automatically
+### Creating pages automatically
 
 Gatsby core automatically turns React components in `src/pages` into pages with URLs.
 For example, components at `src/pages/index.js` and `src/pages/about.js` would automatically create pages from those filenames for the site's index page (`/`) and `/about`.
@@ -111,7 +111,7 @@ export default AboutPage
 
 - [Creating and modifying pages](/docs/creating-and-modifying-pages/)
 
-### 1.3 Linking between pages
+### Linking between pages
 
 Routing in Gatsby relies on the `<Link />` component.
 
@@ -141,7 +141,7 @@ export default () => (
 
 > **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
 
-### 1.4 Creating pages with `createPage`
+### Creating pages with `createPage`
 
 Using Gatsby's [`createPages` API](/docs/actions/#createPage), you can create pages dynamically from a variety of data sources, including Markdown or Wordpress content.
 
@@ -271,7 +271,7 @@ export const pageQuery = graphql`
 - [Adding a list of Markdown blog posts](/docs/adding-a-list-of-markdown-blog-posts/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
 
-### 1.5 Creating pages without GraphQL
+### Creating pages without GraphQL
 
 You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/).
 
@@ -341,7 +341,7 @@ export default ({ pageContext: { allPokemon } }) => (
 - More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 - When and how to [Query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
 
-### 1.6 Creating a layout component
+### Creating a layout component
 
 It's common to wrap pages with a React layout component, which makes it possible to share markup, styles, and functionality across multiple pages.
 
@@ -382,7 +382,7 @@ export default () => (
 - Create a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
 - Styling with [Layout Components](/docs/layout-components/)
 
-## 2. Styling with CSS
+## Styling with CSS
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
@@ -394,7 +394,46 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
 - Use [CSS Modules](/tutorial/part-two/#css-modules)
 
-## 3. Working with starters
+### Adding a Local Font
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/)
+- A font file: `.woff2`, `.ttf`, etc.
+
+#### Directions
+
+1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
+
+```
+src/fonts/fontname.woff2
+```
+
+2. Import the font asset into a CSS file to bundle it into your Gatsby site:
+
+```css:title=src/css/typography.css
+@font-face {
+  font-family: "Font Name";
+  src: url("../fonts/fontname.woff2");
+}
+```
+
+**Note:** Make sure the font name is referenced from the relevant CSS, e.g.:
+
+```css:title=src/components/layout.css
+body {
+  font-family: "Font Name", sans-serif;
+}
+```
+
+By targeting the HTML `body` element, your font will apply to most text on the page. Additional CSS can target other elements, such as `button` or `textarea`.
+
+#### Additional resources
+
+- More on [importing assets into files](/docs/importing-assets-into-files/]
+- [Using Typography.js for Google fonts](/docs/typography-js/)
+
+## Creating layouts
 
 Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
@@ -402,11 +441,13 @@ Starters are boilerplate Gatsby sites maintained officially, or by the community
 - Browse the [Starter Library](/starters/)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
-## 4. Working with themes
+## Working with starters
+
+## Working with themes
 
 Coming soon!
 
-## 5. Sourcing data
+## Sourcing data
 
 Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
 
@@ -416,7 +457,55 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ## 6. Querying data
 
-### 6.1 The StaticQuery Component
+### Using PageQuery
+
+You can use the `graphql`-tag to query data in your pages.
+
+#### Directions
+
+1. Import `graphql` from `gatsby`.
+
+2. Export a constant named `query` and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks.
+
+3. Pass in `data` as a prop to the component.
+
+4. The `data` variable which holds the queried data with the expected shape can be referenced in JSX to output HTML.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+// highlight-next-line
+import { graphql } from "gatsby"
+
+import Layout from "../components/layout"
+
+// highlight-next-line
+const IndexPage = ({ data }) => (
+  <Layout>
+    // highlight-next-line
+    <h1>{data.site.siteMetadata.title}</h1>
+  </Layout>
+)
+
+// highlight-start
+export const query = graphql`
+  query HomePageQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+// highlight-end
+
+export default IndexPage
+```
+
+#### Additional resources
+
+- [More on querying data in pages with GraphQL](/docs/page-query/)
+
+### The StaticQuery Component
 
 `StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/).
 
@@ -453,7 +542,7 @@ export default NonPageComponent
 
 2. You can now use this component as you would [any other component](/docs/building-with-components#non-page-components).
 
-### 6.2 Querying data with the useStaticQuery hook
+### Querying data with the useStaticQuery hook
 
 Since Gatsby v2.1.0, you can use the `useStaticQuery` hook to query data with a JavaScript function instead of a component.
 
@@ -503,22 +592,107 @@ export default NonPageComponent
 - [More on the useStaticQuery hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
-## 7. Working with images
+## Working with images
 
 Coming soon!
 
-## 8. Transforming data
+## Transforming data
 
-Transforming data in Gatsby is also plugin-driven; Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more).
+Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more). `gatsby-transformer-plugin` can transform Markdown files to HTML.
 
-- Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
-- Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
+### Prerequisites
+
+- A Gatsby site with `gatsby-config.js` and an `index.js` page
+- A Markdown file saved in your Gatsby site `src` directory
+- A source plugin installed, such as `gatsby-source-filesystem`
+- The `gatsby-transformer-remark` plugin installed
+
+### Directions
+
+1. Add the transformer plugin in your `gatsby-config.js`:
+
+```js:title=gatsby-config.js
+plugins: [
+  // not shown: gatsby-source-filesystem for creating nodes to transform
+  `gatsby-transformer-remark`
+],
+```
+
+2. Add a GraphQL query to the `index.js` file of your Gatsby site to fetch `MarkdownRemark` nodes:
+
+```jsx:title=src/pages/index.js
+export const query = graphql`
+  query {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+          excerpt
+        }
+      }
+    }
+  }
+`
+```
+
+3. Restart the development server and open GraphiQL at `http://localhost:8000/___graphql`. Explore the fields available on the `MarkdownRemark` node.
+
+### Additional resources
+
+- [Tutorial on transforming Markdown to HTML](/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
+- Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)
 
 ## 9. Deploying your site
 
-Showtime.
+Showtime. Once you are happy with your site, you are ready to go live with it!
+
+### Preparing for deployment
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Stop your development server if it is running (`Ctrl + C` on your command line in most cases)
+
+2. For the standard site path at the root directory (`/`), run `gatsby build` using the Gatsby CLI on the command line. The built files will now be in the `public` folder.
+
+```shell
+gatsby build
+```
+
+3. To include a site path other than `/` (such as `/site-name/`), set a path prefix by adding the following to your `gatsby-config.js` and replacing `yourpathprefix` with your desired path prefix:
+
+```js:title=gatsby-config.js
+module.exports = {
+  pathPrefix: `/yourpathprefix`,
+}
+```
+
+There are a few reasons to do this--for instance, hosting a blog built with Gatsby on a domain with another site not built on Gatsby. The main site would direct to `example.com`, and the Gatsby site with a path prefix could live at `example.com/blog`.
+
+4. With a path prefix set in `gatsby-config.js`, run `gatsby build` with the `--prefix-paths` flag to automatically add the prefix to the beginning of all Gatsby site URLs and `<Link>` tags.
+
+```shell
+gatsby build --prefix-paths
+```
+
+5. Make sure that your site looks the same when running `gatsby build` as with `gatsby develop`. By running `gatsby serve` when you build your site, you can test out (and debug if necessary) the finished product before deploying it live.
+
+```shell
+gatsby build && gatsby serve
+```
+
+#### Additional Resources
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
 - Learn about [performance optimization](/docs/performance/)
-- Read about [other deployment related topics](/docs/deploying-and-hosting/)
+- Read about [other deployment related topics](/docs/preparing-for-deployment/)
+- Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them

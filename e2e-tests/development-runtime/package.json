@@ -35,6 +35,7 @@
     "reset": "node scripts/reset.js",
     "reset:preview": "node plugins/gatsby-source-fake-data/reset.js && npm run update:preview",
     "update": "node scripts/update.js",
+    "update:webhook": "node scripts/webhook.js",
     "update:preview": "curl -X POST http://localhost:8000/__refresh",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "cy:open": "cypress open",
