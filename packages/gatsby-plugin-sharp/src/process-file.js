@@ -10,7 +10,6 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const { cpuCoreCount } = require(`gatsby-core-utils`)
 const got = require(`got`)
-const md5File = require(`md5-file/promise`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -69,7 +68,7 @@ const argsWhitelist = [
  * @param {String} file
  * @param {Transform[]} transforms
  */
-exports.processFile = (file, transforms, options = {}) => {
+exports.processFile = (file, contentDigest, transforms, options = {}) => {
   let pipeline
   try {
     // adds gatsby cloud image service to gatsby-sharp
@@ -79,18 +78,16 @@ exports.processFile = (file, transforms, options = {}) => {
 
       return transforms.map(transform => {
         if (!cloudPromise) {
-          cloudPromise = md5File(file)
-            .then(hash =>
-              got.post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
-                body: {
-                  file,
-                  hash,
-                  transforms,
-                  options,
-                },
-                json: true,
-              })
-            )
+          cloudPromise = got
+            .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
+              body: {
+                file,
+                hash: contentDigest,
+                transforms,
+                options,
+              },
+              json: true,
+            })
             .then(() => transform)
 
           return cloudPromise

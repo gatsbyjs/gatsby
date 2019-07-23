@@ -1,5 +1,4 @@
 jest.mock(`got`)
-jest.mock(`md5-file/promise`)
 jest.mock(`../safe-sharp`, () => {
   return {
     simd: jest.fn(),
@@ -8,7 +7,6 @@ jest.mock(`../safe-sharp`, () => {
 })
 const { createArgsDigest, processFile, sortKeys } = require(`../process-file`)
 const got = require(`got`)
-const md5File = require(`md5-file/promise`)
 
 describe(`createArgsDigest`, () => {
   const defaultArgsBaseline = {
@@ -147,9 +145,7 @@ describe(`processFile`, () => {
       },
     }
 
-    md5File.mockResolvedValueOnce(hash)
-
-    const res = await processFile(`mypath/file.jpg`, [transforms], {
+    const res = await processFile(`mypath/file.jpg`, hash, [transforms], {
       stripMetadata: true,
     })
 
