@@ -1,17 +1,7 @@
 import React from "react"
-import CodeBlock from ".."
-import { fireEvent, render } from "react-testing-library"
+import { render } from "react-testing-library"
 
-beforeEach(() => {
-  document.createRange = jest.fn()
-  document.execCommand = jest.fn()
-  window.getSelection = jest.fn().mockImplementation(() => {
-    return {
-      addRange: jest.fn(),
-      removeAllRanges: jest.fn(),
-    }
-  })
-})
+import CodeBlock from ".."
 
 describe(`basic functionality`, () => {
   describe(`copy`, () => {
@@ -21,19 +11,6 @@ describe(`basic functionality`, () => {
       )
 
       expect(queryByText(`copy`)).toBeDefined()
-    })
-
-    it(`copies text to clipboard`, () => {
-      const text = `alert('hello world')`
-      const { queryByText } = render(
-        <CodeBlock language="jsx">{text}</CodeBlock>
-      )
-
-      const copyButton = queryByText(`Copy`)
-
-      fireEvent.click(copyButton)
-
-      expect(document.execCommand).toHaveBeenCalledWith(`copy`)
     })
   })
 
