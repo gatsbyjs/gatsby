@@ -58,17 +58,18 @@ const CodeBlock = ({
           )}
           <div className="gatsby-highlight">
             <pre className={`language-${language}`}>
-  {copy && (
-              <Copy
-                fileName={title}
-                sx={{
-                  position: `absolute`,
-                  right: t => t.space[1],
-                  top: t => t.space[1],
-                  borderRadius: t => `${t.radii[2]}px ${t.radii[2]}px`,
-                }}
-                content={content}
-              />)}
+              {copy && (
+                <Copy
+                  fileName={title}
+                  sx={{
+                    position: `absolute`,
+                    right: t => t.space[1],
+                    top: t => t.space[1],
+                    borderRadius: t => `${t.radii[2]}px ${t.radii[2]}px`,
+                  }}
+                  content={content}
+                />
+              )}
               <code className={`language-${language}`}>
                 {tokens.map((line, i) => {
                   const lineProps = getLineProps({ line, key: i })
