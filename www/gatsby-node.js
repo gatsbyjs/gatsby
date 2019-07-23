@@ -714,8 +714,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             )
           }
 
-          // TODO pop item from flattened lists for speeding up search and preventing duplicate link collisions
-
           createPage({
             path: `${node.fields.slug}`, // required
             component: slash(
