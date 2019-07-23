@@ -195,10 +195,13 @@ jobs:
 
   e2e_tests_production_runtime:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: is8aoq
+      CYPRESS_RECORD_KEY: cb4708d2-1578-4665-9a07-c59f8db28d91
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+          test_command: yarn test && yarn test:offline
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
