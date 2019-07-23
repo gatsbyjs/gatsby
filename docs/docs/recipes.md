@@ -161,14 +161,103 @@ To wrap pages with layouts, use normal React components.
 
 ## Deploying
 
-Showtime.
+Showtime. Once you are happy with your site, you are ready to go live with it!
+
+### Preparing for deployment
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Stop your development server if it is running (`Ctrl + C` on your command line in most cases)
+
+2. For the standard site path at the root directory (`/`), run `gatsby build` using the Gatsby CLI on the command line. The built files will now be in the `public` folder.
+
+```shell
+gatsby build
+```
+
+3. To include a site path other than `/` (such as `/site-name/`), set a path prefix by adding the following to your `gatsby-config.js` and replacing `yourpathprefix` with your desired path prefix:
+
+```js:title=gatsby-config.js
+module.exports = {
+  pathPrefix: `/yourpathprefix`,
+}
+```
+
+There are a few reasons to do this--for instance, hosting a blog built with Gatsby on a domain with another site not built on Gatsby. The main site would direct to `example.com`, and the Gatsby site with a path prefix could live at `example.com/blog`.
+
+4. With a path prefix set in `gatsby-config.js`, run `gatsby build` with the `--prefix-paths` flag to automatically add the prefix to the beginning of all Gatsby site URLs and `<Link>` tags.
+
+```shell
+gatsby build --prefix-paths
+```
+
+5. Make sure that your site looks the same when running `gatsby build` as with `gatsby develop`. By running `gatsby serve` when you build your site, you can test out (and debug if necessary) the finished product before deploying it live.
+
+```shell
+gatsby build && gatsby serve
+```
+
+#### Additional Resources
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn how to make sure your site is configured properly to be [searchable, shareable, and properly navigable](/docs/preparing-for-site-launch/)
 - Learn about [performance optimization](/docs/performance/)
-- Read about [other deployment related topics](/docs/deploying-and-hosting/)
+- Read about [other deployment related topics](/docs/preparing-for-deployment/)
+- Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
 
 ## Querying data
+
+### Using PageQuery
+
+You can use the `graphql`-tag to query data in your pages.
+
+#### Directions
+
+1. Import `graphql` from `gatsby`.
+
+2. Export a constant named `query` and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks.
+
+3. Pass in `data` as a prop to the component.
+
+4. The `data` variable which holds the queried data with the expected shape can be referenced in JSX to output HTML.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+// highlight-next-line
+import { graphql } from "gatsby"
+
+import Layout from "../components/layout"
+
+// highlight-next-line
+const IndexPage = ({ data }) => (
+  <Layout>
+    // highlight-next-line
+    <h1>{data.site.siteMetadata.title}</h1>
+  </Layout>
+)
+
+// highlight-start
+export const query = graphql`
+  query HomePageQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+// highlight-end
+
+export default IndexPage
+```
+
+#### Additional resources
+
+- [More on querying data in pages with GraphQL](/docs/page-query/)
 
 ### The StaticQuery Component
 
@@ -267,7 +356,51 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ## Transforming data
 
-Transforming data in Gatsby is also plugin-driven; Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, markdown to HTML, and more).
+Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more). `gatsby-transformer-plugin` can transform Markdown files to HTML.
 
-- Walk through an example using the `gatsby-transformer-remark` plugin to transform markdown files [tutorial part six](/tutorial/part-six/#transformer-plugins)
-- Search available transformer plugins in the [Gatsby library](/plugins/?=transformer)
+### Prerequisites
+
+- A Gatsby site with `gatsby-config.js` and an `index.js` page
+- A Markdown file saved in your Gatsby site `src` directory
+- A source plugin installed, such as `gatsby-source-filesystem`
+- The `gatsby-transformer-remark` plugin installed
+
+### Directions
+
+1. Add the transformer plugin in your `gatsby-config.js`:
+
+```js:title=gatsby-config.js
+plugins: [
+  // not shown: gatsby-source-filesystem for creating nodes to transform
+  `gatsby-transformer-remark`
+],
+```
+
+2. Add a GraphQL query to the `index.js` file of your Gatsby site to fetch `MarkdownRemark` nodes:
+
+```jsx:title=src/pages/index.js
+export const query = graphql`
+  query {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+          excerpt
+        }
+      }
+    }
+  }
+`
+```
+
+3. Restart the development server and open GraphiQL at `http://localhost:8000/___graphql`. Explore the fields available on the `MarkdownRemark` node.
+
+### Additional resources
+
+- [Tutorial on transforming Markdown to HTML](/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
+- Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)

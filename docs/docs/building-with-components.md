@@ -167,3 +167,8 @@ These are examples of the different ways React components are used in Gatsby
 sites. To see full working examples, check out the
 [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in
 the Gatsby repo.
+
+### Non-page components
+
+A Non-page component is one that's embedded inside some other component, forming a component hierarchy. An example would be a Header component that's included in multiple page components.
+Gatsby uses GraphQL to enable components to declare the data they need. Using the [StaticQuery](/docs/static-query/) component or [useStaticQuery hook](/docs/use-static-query/), you can colocate a non-page component with its data.

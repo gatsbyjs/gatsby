@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
+import PropTypes from "prop-types"
 import Highlight, { defaultProps } from "prism-react-renderer"
 
 import Copy from "../copy"
@@ -28,9 +29,10 @@ const getParams = (name = ``) => {
  * we un-wind it a bit to get the string content
  * but keep it extensible so it can be used with just children (string) and className
  */
-export default ({
+const CodeBlock = ({
   children,
   className = children.props ? children.props.className : ``,
+  copy,
 }) => {
   const [language, { title = `` }] = getParams(className)
   const [content, highlights] = normalize(
@@ -56,6 +58,7 @@ export default ({
           )}
           <div className="gatsby-highlight">
             <pre className={`language-${language}`}>
+  {copy && (
               <Copy
                 fileName={title}
                 sx={{
@@ -65,7 +68,7 @@ export default ({
                   borderRadius: t => `${t.radii[2]}px ${t.radii[2]}px`,
                 }}
                 content={content}
-              />
+              />)}
               <code className={`language-${language}`}>
                 {tokens.map((line, i) => {
                   const lineProps = getLineProps({ line, key: i })
@@ -94,3 +97,15 @@ export default ({
     </Highlight>
   )
 }
+
+CodeBlock.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  className: PropTypes.string,
+  copy: PropTypes.bool,
+}
+
+CodeBlock.defaultProps = {
+  copy: true,
+}
+
+export default CodeBlock
