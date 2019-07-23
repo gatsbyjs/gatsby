@@ -72,7 +72,7 @@ class Develop extends Component {
         <Box height={1} flexDirection="row">
           <Color>{this.state.pagesCount} pages</Color>
           <Box flexGrow={1} />
-          <Color>{this.props.stage.context.appName}</Color>
+          <Color>{this.props.stage.context.appName || ``}</Color>
         </Box>
       </Box>
     )

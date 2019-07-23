@@ -70,11 +70,11 @@ module.exports = {
     // Used for social links in the root footer
     social: [
       {
-        name: `twitter`,
+        name: `Twitter`,
         url: `https://twitter.com/gatsbyjs`,
       },
       {
-        name: `github`,
+        name: `GitHub`,
         url: `https://github.com/gatsbyjs`,
       },
     ],

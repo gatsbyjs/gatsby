@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import Highlight, { defaultProps } from "prism-react-renderer"
 
 import Copy from "../copy"
@@ -27,9 +28,10 @@ const getParams = (name = ``) => {
  * we un-wind it a bit to get the string content
  * but keep it extensible so it can be used with just children (string) and className
  */
-export default ({
+const CodeBlock = ({
   children,
   className = children.props ? children.props.className : ``,
+  copy,
 }) => {
   const [language, { title = `` }] = getParams(className)
   const [content, highlights] = normalize(
@@ -47,50 +49,63 @@ export default ({
       theme={undefined}
     >
       {({ tokens, getLineProps, getTokenProps }) => (
-        <div className="gatsby-highlight">
+        <React.Fragment>
           {title && (
-            <div className="gatsby-highlight-header">
-              <div
-                className="gatsby-code-title"
-                css={{ fontSize: fontSizes[0] }}
-              >
-                {title}
-              </div>
+            <div className="gatsby-code-title">
+              <div css={{ fontSize: fontSizes[0] }}>{title}</div>
             </div>
           )}
-          <pre className={`language-${language}`}>
-            <Copy
-              fileName={title}
-              css={{
-                position: `absolute`,
-                right: space[1],
-                top: space[1],
-                borderRadius: `${radii[2]}px ${radii[2]}px`,
-              }}
-              content={content}
-            />
-            {tokens.map((line, i) => {
-              const lineProps = getLineProps({ line, key: i })
-              const className = [lineProps.className]
-                .concat(highlights[i] && `gatsby-highlight-code-line`)
-                .filter(Boolean)
-                .join(` `)
-              return (
-                <div
-                  key={i}
-                  {...Object.assign({}, lineProps, {
-                    className,
-                  })}
-                >
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              )
-            })}
-          </pre>
-        </div>
+          <div className="gatsby-highlight">
+            <pre className={`language-${language}`}>
+              {copy && (
+                <Copy
+                  fileName={title}
+                  css={{
+                    position: `absolute`,
+                    right: space[1],
+                    top: space[1],
+                    borderRadius: `${radii[2]}px ${radii[2]}px`,
+                  }}
+                  content={content}
+                />
+              )}
+              <code className={`language-${language}`}>
+                {tokens.map((line, i) => {
+                  const lineProps = getLineProps({ line, key: i })
+                  const className = [lineProps.className]
+                    .concat(highlights[i] && `gatsby-highlight-code-line`)
+                    .filter(Boolean)
+                    .join(` `)
+                  return (
+                    <div
+                      key={i}
+                      {...Object.assign({}, lineProps, {
+                        className,
+                      })}
+                    >
+                      {line.map((token, key) => (
+                        <span key={key} {...getTokenProps({ token, key })} />
+                      ))}
+                    </div>
+                  )
+                })}
+              </code>
+            </pre>
+          </div>
+        </React.Fragment>
       )}
     </Highlight>
   )
 }
+
+CodeBlock.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  className: PropTypes.string,
+  copy: PropTypes.bool,
+}
+
+CodeBlock.defaultProps = {
+  copy: true,
+}
+
+export default CodeBlock
