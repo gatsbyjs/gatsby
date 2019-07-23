@@ -1,117 +1,51 @@
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
-const { getDb, colls } = require(`./index`)
+const { getNodesCollection, getNodeTypesCollection } = require(`./index`)
 
 /////////////////////////////////////////////////////////////////////
 // Node collection metadata
 /////////////////////////////////////////////////////////////////////
 
-function makeTypeCollName(type) {
-  return `gatsby:nodeType:${type}`
-}
-
 function makeTypesViewName(types) {
-  return `gatsby.nodeTypesView:${types.sort().join(`:`)}`
-}
-
-/**
- * Creates a collection that will contain nodes of a certain type. The
- * name of the collection for type `MyType` will be something like
- * `gatsby:nodeType:MyType` (see `makeTypeCollName`)
- */
-function createNodeTypeCollection(type) {
-  const collName = makeTypeCollName(type)
-  const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
-  invariant(nodeTypesColl, `Collection ${colls.nodeTypes.name} should exist`)
-  nodeTypesColl.insert({ type, collName })
-  // TODO what if `addCollection` fails? We will have inserted into
-  // nodeTypesColl but no collection will exist. Need to make this
-  // into a transaction
-  const options = {
-    unique: [`id`],
-    indices: [`id`],
-    disableMeta: true,
-  }
-  const coll = getDb().addCollection(collName, options)
-  return coll
-}
-
-/**
- * Returns the name of the collection that contains nodes of the
- * specified type, where type is the node's `node.internal.type`
- */
-function getTypeCollName(type) {
-  const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
-  invariant(nodeTypesColl, `Collection ${colls.nodeTypes.name} should exist`)
-  let nodeTypeInfo = nodeTypesColl.by(`type`, type)
-  return nodeTypeInfo ? nodeTypeInfo.collName : undefined
+  return `gatsby.nodesTypeView.${types.sort().join(`.`)}`
 }
 
 /**
  * Returns a reference to the collection that contains nodes of the
  * specified type, where type is the node's `node.internal.type`
  */
-function getNodeTypeCollection(type) {
-  const typeCollName = getTypeCollName(type)
-  let coll
-  if (typeCollName) {
-    coll = getDb().getCollection(typeCollName)
-    invariant(
-      coll,
-      `Type [${type}] Collection doesn't exist for nodeTypeInfo: [${typeCollName}]`
-    )
-    return coll
+function getNodeTypeCollection(typeOrTypes) {
+  let types
+  if (Array.isArray(typeOrTypes)) {
+    types = typeOrTypes
   } else {
-    return undefined
+    types = [typeOrTypes]
   }
-}
-
-/**
- * Returns a view for multiple node type collection
- */
-function getNodeTypesView(types) {
   const typesViewName = makeTypesViewName(types)
-  const coll = getDb().getCollection(colls.nodeMeta.name)
+  const coll = getNodesCollection()
   let view = coll.getDynamicView(typesViewName)
   if (!view) {
-    view = coll.addDynamicView(typesViewName, {
-      persistent: true,
-    })
+    view = coll.addDynamicView(typesViewName)
+    view.applySimpleSort(`id`)
     view.applyFind({
       "internal.type": { $in: types },
     })
   }
   return view
 }
-
-/**
- * Deletes all empty node type collections, unless `force` is true, in
- * which case it deletes the collections even if they have nodes in
- * them
- */
-function deleteNodeTypeCollections(force = false) {
-  const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
-  // find() returns all objects in collection
-  const nodeTypes = nodeTypesColl.find()
-  for (const nodeType of nodeTypes) {
-    let coll = getDb().getCollection(nodeType.collName)
-    if (coll.count() === 0 || force) {
-      getDb().removeCollection(coll.name)
-      nodeTypesColl.remove(nodeType)
-    }
-  }
-}
-
 /**
  * Deletes all nodes from all the node type collections, including the
  * id -> type metadata. There will be no nodes related data in loki
  * after this is called
  */
 function deleteAll() {
-  const db = getDb()
-  if (db) {
-    deleteNodeTypeCollections(true)
-    db.getCollection(colls.nodeMeta.name).clear()
+  const nodeColl = getNodesCollection()
+  if (nodeColl) {
+    nodeColl.clear()
+  }
+  const nodeTypesColl = getNodeTypesCollection()
+  if (nodeTypesColl) {
+    nodeTypesColl.clear()
   }
 }
 
@@ -126,23 +60,8 @@ function getNode(id) {
   if (!id) {
     return null
   }
-  // First, find out which collection the node is in
-  const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
-  invariant(nodeMetaColl, `nodeMeta collection should exist`)
-  const nodeMeta = nodeMetaColl.by(`id`, id)
-  if (nodeMeta) {
-    // Now get the collection and query it by the `id` field, which
-    // has an index on it
-    const { typeCollName } = nodeMeta
-    const typeColl = getDb().getCollection(typeCollName)
-    invariant(
-      typeColl,
-      `type collection ${typeCollName} referenced by nodeMeta but doesn't exist`
-    )
-    return typeColl.by(`id`, id)
-  } else {
-    return undefined
-  }
+  const nodeColl = getNodesCollection()
+  return nodeColl.by(`id`, id)
 }
 
 /**
@@ -152,10 +71,8 @@ function getNode(id) {
  */
 function getNodesByType(typeName) {
   invariant(typeName, `typeName is null`)
-  const collName = getTypeCollName(typeName)
-  const coll = getDb().getCollection(collName)
-  if (!coll) return []
-  return coll.data
+  const nodeColl = getNodeTypeCollection(typeName)
+  return nodeColl.data()
 }
 
 /**
@@ -163,15 +80,14 @@ function getNodesByType(typeName) {
  * `getNodesByType` should be used instead. Or at least where possible
  */
 function getNodes() {
-  const nodeTypes = getTypes()
-  return _.flatMap(nodeTypes, nodeType => getNodesByType(nodeType))
+  return getNodesCollection().data
 }
 
 /**
  * Returns the unique collection of all node types
  */
 function getTypes() {
-  const nodeTypes = getDb().getCollection(colls.nodeTypes.name).data
+  const nodeTypes = getNodeTypesCollection().data
   return nodeTypes.map(nodeType => nodeType.type)
 }
 
@@ -226,26 +142,19 @@ function createNode(node, oldNode) {
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
 
-  const type = node.internal.type
-
   // Loki doesn't provide "upsert", so if the node already exists, we
   // delete and then create it
   if (oldNode) {
     deleteNode(oldNode)
   }
 
-  let nodeTypeColl = getNodeTypeCollection(type)
-  if (!nodeTypeColl) {
-    nodeTypeColl = createNodeTypeCollection(type)
+  const nodeTypeColl = getNodeTypesCollection()
+  if (!nodeTypeColl.by(`type`, node.internal.type)) {
+    nodeTypeColl.insert({ type: node.internal.type })
   }
 
-  const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
-  invariant(nodeMetaColl, `Collection ${colls.nodeMeta.name} should exist`)
-  nodeMetaColl.insert({ id: node.id, typeCollName: nodeTypeColl.name })
-  // TODO what if this insert fails? We will have inserted the id ->
-  // collName mapping, but there won't be any nodes in the type
-  // collection. Need to create a transaction around this
-  return nodeTypeColl.insert(node)
+  const nodeColl = getNodesCollection()
+  return nodeColl.insert(node)
 }
 
 /**
@@ -261,11 +170,8 @@ function updateNode(node) {
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
 
-  const type = node.internal.type
-
-  let coll = getNodeTypeCollection(type)
-  invariant(coll, `${type} collection doesn't exist. When trying to update`)
-  coll.update(node)
+  const nodeColl = getNodesCollection()
+  nodeColl.update(node)
 }
 
 /**
@@ -281,24 +187,10 @@ function deleteNode(node) {
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
 
-  const type = node.internal.type
+  const nodeColl = getNodesCollection()
 
-  let nodeTypeColl = getNodeTypeCollection(type)
-  if (!nodeTypeColl) {
-    invariant(
-      nodeTypeColl,
-      `${type} collection doesn't exist. When trying to delete`
-    )
-  }
-
-  if (nodeTypeColl.by(`id`, node.id)) {
-    const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
-    invariant(nodeMetaColl, `Collection ${colls.nodeMeta.name} should exist`)
-    nodeMetaColl.findAndRemove({ id: node.id })
-    // TODO What if this `remove()` fails? We will have removed the id
-    // -> collName mapping, but not the actual node in the
-    // collection. Need to make this into a transaction
-    nodeTypeColl.remove(node)
+  if (nodeColl.by(`id`, node.id)) {
+    nodeColl.remove(node)
   }
   // idempotent. Do nothing if node wasn't already in DB
 }
@@ -314,10 +206,44 @@ function deleteNodes(nodes) {
 
 const updateNodesByType = async (typeName, updater) => {
   const nodes = getNodesByType(typeName)
-  const collName = getTypeCollName(typeName)
-  const coll = getDb().getCollection(collName)
   const updated = await Promise.all(nodes.map(node => updater(node)))
-  coll.update(updated)
+  const nodeColl = getNodesCollection()
+  nodeColl.update(updated)
+}
+
+// Cleared on DELETE_CACHE
+let fieldUsages = null
+const FIELD_INDEX_THRESHOLD = 5
+
+// Every time we run a query, we increment a counter for each of its
+// fields, so that we can determine which fields are used the
+// most. Any time a field is seen more than `FIELD_INDEX_THRESHOLD`
+// times, we create a loki index so that future queries with that
+// field will execute faster.
+function ensureFieldIndexes(lokiArgs, sortArgs) {
+  if (fieldUsages == null) {
+    const { emitter } = require(`../../redux`)
+
+    emitter.on(`DELETE_CACHE`, () => {
+      fieldUsages = {}
+      for (var field in fieldUsages) {
+        delete fieldUsages[field]
+      }
+    })
+  }
+
+  const nodeColl = getNodesCollection()
+
+  _.forEach(lokiArgs, (v, fieldName) => {
+    // Increment the usages of the field
+    _.update(fieldUsages, fieldName, n => (n ? n + 1 : 1))
+    // If we have crossed the threshold, then create the index
+    if (_.get(fieldUsages, fieldName) === FIELD_INDEX_THRESHOLD) {
+      // Loki ensures that this is a noop if index already exists. E.g
+      // if it was previously added via a sort field
+      nodeColl.ensureIndex(fieldName)
+    }
+  })
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -363,7 +289,6 @@ function reducer(state = new Map(), action) {
 
 module.exports = {
   getNodeTypeCollection,
-  getNodeTypesView,
 
   getNodes,
   getNode,
@@ -376,10 +301,11 @@ module.exports = {
   updateNode,
   deleteNode,
 
-  deleteNodeTypeCollections,
   deleteAll,
 
   reducer,
 
   updateNodesByType,
+
+  ensureFieldIndexes,
 }

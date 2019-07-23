@@ -7,19 +7,8 @@ const {
   getNamedType,
 } = require(`graphql`)
 const prepareRegex = require(`../../utils/prepare-regex`)
-const { getNodeTypeCollection, getNodeTypesView } = require(`./nodes`)
-const { emitter } = require(`../../redux`)
+const { getNodeTypeCollection, ensureFieldIndexes } = require(`./nodes`)
 const { getValueAt } = require(`../../utils/get-value-at`)
-
-// Cleared on DELETE_CACHE
-const fieldUsages = {}
-const FIELD_INDEX_THRESHOLD = 5
-
-emitter.on(`DELETE_CACHE`, () => {
-  for (var field in fieldUsages) {
-    delete fieldUsages[field]
-  }
-})
 
 // Takes a raw graphql filter and converts it into a mongo-like args
 // object that can be understood by loki. E.g `eq` becomes
@@ -263,24 +252,6 @@ function toSortFields(sortArgs) {
   return lokiSortFields
 }
 
-// Every time we run a query, we increment a counter for each of its
-// fields, so that we can determine which fields are used the
-// most. Any time a field is seen more than `FIELD_INDEX_THRESHOLD`
-// times, we create a loki index so that future queries with that
-// field will execute faster.
-function ensureFieldIndexes(coll, lokiArgs) {
-  _.forEach(lokiArgs, (v, fieldName) => {
-    // Increment the usages of the field
-    _.update(fieldUsages, fieldName, n => (n ? n + 1 : 1))
-    // If we have crossed the threshold, then create the index
-    if (_.get(fieldUsages, fieldName) === FIELD_INDEX_THRESHOLD) {
-      // Loki ensures that this is a noop if index already exists. E.g
-      // if it was previously added via a sort field
-      coll.ensureIndex(fieldName)
-    }
-  })
-}
-
 /**
  * Runs the graphql query over the loki nodes db.
  *
@@ -322,26 +293,14 @@ async function runQuery(
 
   let chain
   let sortFields
-  if (possibleTypeNames.length > 1) {
-    const view = getNodeTypesView(possibleTypeNames)
-    chain = view.branchResultset()
-  } else {
-    const coll = getNodeTypeCollection(possibleTypeNames[0])
-    ensureFieldIndexes(coll, lokiArgs)
-    if (queryArgs.sort) {
-      sortFields = toSortFields(queryArgs.sort)
-
-      // Create an index for each sort field. Indexing requires sorting
-      // so we lose nothing by ensuring an index is added for each sort
-      // field. Loki ensures this is a noop if the index already exists
-      for (const sortField of sortFields) {
-        coll.ensureIndex(sortField[0])
-      }
-    }
-    chain = coll.chain()
+  if (queryArgs.sort) {
+    sortFields = toSortFields(queryArgs.sort)
   }
+  const view = getNodeTypeCollection(possibleTypeNames)
+  chain = view.branchResultset()
+  chain.simplesort(`id`)
+  ensureFieldIndexes(lokiArgs, sortFields || [])
 
-  // console.log(lokiArgs, chain.data())
   chain.find(lokiArgs, firstOnly)
 
   if (sortFields) {

@@ -1,12 +1,17 @@
-const { colls, getDb, start } = require(`../index`)
+const {
+  getNodesCollection,
+  getNodeTypesCollection,
+  start,
+} = require(`../index`)
 
 describe(`db`, () => {
-  start()
+  beforeAll(() => {
+    start()
+  })
   it(`should create system collections`, () => {
-    const db = getDb()
-    const nodeMetaColl = db.getCollection(colls.nodeMeta.name)
-    const nodeTypesColl = db.getCollection(colls.nodeTypes.name)
-    expect(nodeMetaColl).toBeDefined()
+    const nodesColl = getNodesCollection()
+    const nodeTypesColl = getNodeTypesCollection()
+    expect(nodesColl).toBeDefined()
     expect(nodeTypesColl).toBeDefined()
   })
 })

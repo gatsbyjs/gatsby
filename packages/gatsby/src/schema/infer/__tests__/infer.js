@@ -15,7 +15,7 @@ require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const makeNodes = () => [
   {
-    id: `foo`,
+    id: `1`,
     internal: { type: `Test` },
     name: `The Mad Max`,
     type: `Test`,
@@ -56,7 +56,7 @@ const makeNodes = () => [
     },
   },
   {
-    id: `boo`,
+    id: `2`,
     internal: { type: `Test` },
     name: `The Mad Wax`,
     type: `Test`,

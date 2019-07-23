@@ -29,16 +29,7 @@ const colls = {
     options: {
       unique: [`id`],
       indices: [`id`, `internal.type`],
-    },
-  },
-  // Each object has keys `id` and `typeCollName`. It's a way of
-  // quickly looking up the collection that a node is contained in.
-  // E.g { id: `someNodeId`, typeCollName: `gatsby:nodeType:myType` }
-  nodeMeta: {
-    name: `gatsby:nodeMeta`,
-    options: {
-      unique: [`id`],
-      indices: [`id`, `internal.type`],
+      disableMeta: true,
     },
   },
   // The list of all node type collections. Each object has keys
@@ -48,8 +39,8 @@ const colls = {
   nodeTypes: {
     name: `gatsby:nodeTypes`,
     options: {
-      unique: [`type`, `collName`],
-      indices: [`type`],
+      unique: [`id`, `type`],
+      indices: [`id`, `type`],
     },
   },
 }
@@ -62,8 +53,8 @@ let db
  * created. See `colls` var in this file
  */
 function ensureNodeCollections(db) {
-  _.forEach(colls, collInfo => {
-    const { name, options } = collInfo
+  Object.keys(colls).forEach(collName => {
+    const { name, options } = colls[collName]
     db.addCollection(name, options)
   })
 }
@@ -143,9 +134,26 @@ function getDb() {
   return db
 }
 
+function getNodesCollection() {
+  if (db) {
+    return getDb().getCollection(colls.nodes.name)
+  } else {
+    return null
+  }
+}
+
+function getNodeTypesCollection() {
+  if (db) {
+    return getDb().getCollection(colls.nodeTypes.name)
+  } else {
+    return null
+  }
+}
+
 module.exports = {
   start,
   getDb,
-  colls,
+  getNodesCollection,
+  getNodeTypesCollection,
   saveState,
 }

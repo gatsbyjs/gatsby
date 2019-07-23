@@ -10,7 +10,8 @@ const node = {
 
 beforeAll(start)
 
-describe(`node`, () => {
+// no longer valid
+describe.skip(`node`, () => {
   it(`should create node ID index`, () => {
     createNode(node)
     const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)

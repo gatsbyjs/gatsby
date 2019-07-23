@@ -308,11 +308,24 @@ const mockCreateResolvers = ({ createResolvers }) => {
     Query: {
       likedEnough: {
         type: `[PostsJson]`,
-        resolve(parent, args, context) {
-          return context.nodeModel
-            .getAllNodes({ type: `PostsJson` })
-            .filter(post => post.likes != null && post.likes > 5)
-            .slice(0, 2)
+        async resolve(parent, args, context) {
+          const result = await context.nodeModel.runQuery({
+            type: `PostsJson`,
+            query: {
+              filter: {
+                likes: {
+                  ne: null,
+                  gt: 5,
+                },
+              },
+              sort: {
+                fields: [`likes`],
+                order: [`DESC`],
+              },
+            },
+            firstOnly: false,
+          })
+          return result.slice(0, 2)
         },
       },
     },
