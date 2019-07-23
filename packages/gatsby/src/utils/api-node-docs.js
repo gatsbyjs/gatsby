@@ -409,3 +409,20 @@ exports.onPreExtractQueries = true
  * }
  */
 exports.onCreateDevServer = true
+
+/**
+ * Run before sourcing plugins from gatsby-config.js. Useful for
+ * failing quickly with a helpful error message for in invalid options shape.
+ * Note: we provide an instance of "Joi" for validation, but can also do any kind of async validation necessary here.
+ * @param {object} $0
+ * @param {Joi} $0.validator A [Joi instance](https://github.com/hapijs/joi/blob/master/API.md) used to validate options
+ * @example
+ * exports.validatePluginOptions = ({ validator }, options) => {
+ *   return validator.object().keys({
+ *     accessToken: validator.string().required(),
+ *     spaceId: validator.string().required(),
+ *     host: validator.string().required()
+ *   }).validate(options)
+ * }
+ */
+exports.validatePluginOptions = true

@@ -1,3 +1,5 @@
+const { stripIndent } = require(`common-tags`)
+
 const errorMap = {
   "": {
     text: context => {
@@ -158,6 +160,17 @@ const errorMap = {
       `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${
         context.fileName
       }`,
+    level: `ERROR`,
+  },
+  "11329": {
+    text: context =>
+      stripIndent(`
+      The plugin ${context.name} has invalid plugin options.
+
+${context.errors.map(message => ` - ${message} `).join(`\n`)}
+    `),
+    type: `PLUGIN`,
+    docsUrl: context => `https://gatsbyjs.org/plugins/${context.name}`,
     level: `ERROR`,
   },
 }

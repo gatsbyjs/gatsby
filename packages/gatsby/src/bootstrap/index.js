@@ -20,6 +20,7 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
+const Joi = require(`@hapi/joi`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -107,6 +108,10 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
+
+  await apiRunnerNode(`validatePluginOptions`, {
+    validator: Joi,
+  })
 
   telemetry.decorateEvent(`BUILD_END`, {
     plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),

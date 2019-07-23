@@ -29,7 +29,7 @@ const DocsLink = ({ docsUrl }) => {
   if (docsUrl === `https://gatsby.dev/issue-how-to`) return null
   return (
     <Box marginTop={1}>
-      See our docs page for more info on this error: {docsUrl}
+      See this docs page for more info on this error: {docsUrl}
     </Box>
   )
 }

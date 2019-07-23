@@ -291,6 +291,8 @@ module.exports = async (api, args = {}, pluginSource) =>
       id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
     } else if (api === `onCreatePage`) {
       id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
+    } else if (api === `validatePluginOptions`) {
+      id = `${api}${apiRunInstance.startTime}${args.traceId}`
     } else {
       // When tracing is turned on, the `args` object will have a
       // `parentSpan` field that can be quite large. So we omit it
@@ -344,7 +346,22 @@ module.exports = async (api, args = {}, pluginSource) =>
           pluginName: `${plugin.name}@${plugin.version}`,
         })
 
-        reporter.panicOnBuild({
+        if (api === `validatePluginOptions`) {
+          reporter.panic({
+            id: `11329`,
+            context: Object.assign({}, plugin, {
+              errors: [].concat(
+                err.details
+                  ? err.details.map(detail => detail.message)
+                  : err.message || err
+              ),
+            }),
+          })
+
+          return null
+        }
+
+        return reporter.panicOnBuild({
           id: `11321`,
           context: {
             pluginName,
@@ -353,8 +370,6 @@ module.exports = async (api, args = {}, pluginSource) =>
           },
           error: err instanceof Error ? err : undefined,
         })
-
-        return null
       })
     }).then(results => {
       if (onAPIRunComplete) {
