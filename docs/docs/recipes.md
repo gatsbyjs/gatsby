@@ -370,7 +370,10 @@ Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetc
 1. Add the transformer plugin in your `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
-plugins: [`gatsby-transformer-remark`],
+plugins: [
+  // not shown: gatsby-source-filesystem for creating nodes to transform
+  `gatsby-transformer-remark`
+],
 ```
 
 2. Add a GraphQL query to the `index.js` file of your Gatsby site to fetch `MarkdownRemark` nodes:
