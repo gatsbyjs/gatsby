@@ -64,7 +64,7 @@ const themesArray = [
 ```
 
 This means that `gatsby-theme-tomato-portfolio` receives priority for
-component resolution.
+component resolution, because it is last in the array.
 
 ## Modifying the webpack Config
 
