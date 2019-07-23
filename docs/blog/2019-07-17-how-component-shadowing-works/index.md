@@ -68,7 +68,7 @@ component resolution, because it is last in the array.
 
 ## Modifying the webpack Config
 
-It's a bit meta because component shadowing is implemented as an internal
+Component shadowing is a bit meta because it is implemented as an internal
 Gatsby plugin that applies a webpack plugin which modifies how module
 resolution happens for files that are shadowed.
 
