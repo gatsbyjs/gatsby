@@ -6,7 +6,7 @@ import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import { transition, mediaQueries, sizes } from "../../utils/presets"
+import { mediaQueries } from "../../utils/presets"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -241,18 +241,21 @@ class SidebarBody extends Component {
             border: 0,
             display: `block`,
             overflowY: `auto`,
-            transition: `opacity ${transition.speed.slow} ${
-              transition.curve.default
-            }`,
+            transition: t =>
+              `opacity ${t.transition.speed.slow} ${
+                t.transition.curve.default
+              }`,
             zIndex: 10,
             borderRightWidth: `1px`,
             borderRightStyle: `solid`,
             borderColor: `ui.border.subtle`,
-            height: this.props.disableExpandAll
-              ? `100%`
-              : `calc(100% - ${sizes.sidebarUtilityHeight})`,
+            height: t =>
+              this.props.disableExpandAll
+                ? `100%`
+                : `calc(100% - ${t.sizes.sidebarUtilityHeight})`,
             [mediaQueries.md]: {
-              top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
+              top: t =>
+                `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
             },
           }}
         >

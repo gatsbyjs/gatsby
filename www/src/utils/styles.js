@@ -533,6 +533,22 @@ export const global = {
     padding: `${space[5]} ${space[6]} ${space[4]}`,
     fontSize: fontSizes[0],
   },
+  video: {
+    width: `100%`,
+    marginBottom: space[6],
+  },
+  ".twitter-tweet-rendered": {
+    margin: `${space[9]} auto !important`,
+  },
+  ".egghead-video": {
+    border: `none`,
+  },
+  // Fancy external links in posts, borrowed from
+  // https://github.com/comfusion/after-dark/
+  // @see https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
+  ".gatsby-resp-image-link + em a[href*='//']:after": {
+    content: `" " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23744C9E'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E")`,
+  },
   [mediaQueries.md]: {
     ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {
       marginLeft: 0,
@@ -546,31 +562,10 @@ export const global = {
       borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
     },
   },
-  video: {
-    width: `100%`,
-    marginBottom: space[6],
-  },
-  ".twitter-tweet-rendered": {
-    margin: `${space[9]} auto !important`,
-  },
-  ".egghead-video": {
-    border: `none`,
-  },
   [mediaQueries.lg]: {
     ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
       marginLeft: `-${space[6]}`,
       marginRight: `-${space[6]}`,
     },
-  },
-  [mediaQueries.xxl]: {
-    html: {
-      fontSize: `${(18 / 16) * 100}%`,
-    },
-  },
-  // Fancy external links in posts, borrowed from
-  // https://github.com/comfusion/after-dark/
-  // @see https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
-  ".gatsby-resp-image-link + em a[href*='//']:after": {
-    content: `" " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23744C9E'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E")`,
   },
 }

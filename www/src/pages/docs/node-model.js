@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
@@ -59,7 +61,7 @@ class NodeModelDocs extends React.Component {
             />
           </div>
           <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>Methods</h2>
+          <h2 sx={{ marginBottom: rhythm(space[3]) }}>Methods</h2>
           <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>

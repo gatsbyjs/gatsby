@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
@@ -24,7 +26,7 @@ const CollapsibleFilterList = ({
             setFilters([...filters, c])
           }
         }}
-        css={styles.filterButton}
+        sx={styles.filterButton}
       >
         <div
           sx={{

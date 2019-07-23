@@ -39,7 +39,7 @@ export default function LHSFilter({
                   setFilters(filters.add(c))
                 }
               }}
-              css={styles.filterButton}
+              sx={styles.filterButton}
             >
               <div
                 sx={{

@@ -109,10 +109,7 @@ class Accordion extends React.Component {
                 position: `absolute`,
                 borderTopWidth: `1px`,
                 borderTopStyle: `solid`,
-                borderColor:
-                  !isExpanded && !isSingle && !isActive
-                    ? `ui.border.subtle`
-                    : `sidebar.itemBorderActive`,
+                borderColor: `ui.border.subtle`,
                 left: t =>
                   (isParentOfActiveItem && isExpanded) ||
                   (isActive && isExpanded)
