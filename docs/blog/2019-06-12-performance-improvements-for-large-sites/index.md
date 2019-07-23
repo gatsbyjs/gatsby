@@ -29,7 +29,7 @@ The central problem was that Gatsby generates a file for each build called `page
 
 When a user clicks a link to another page, Gatsby first looks up the manifest for the page's component and query result file. Gatsby then downloads them (if they haven't already been prefetched), and then passes the loaded query results to the page's component and renders it. Since `pages-manifest` contains the list of all pages on the site, Gatsby can also immediately show a 404 if necessary if the page is not able to be located.
 
-This works great for small sites, but as a Gatsby application grows, so too does the size of the page manfiest. The bigger the manifest gets the more data the browser has to download before any UI navigation can occur leading to slowdowns in important metrics like Time to Interactive (TTI).
+This works great for small sites, but as a Gatsby application grows, so too does the size of the page manifest. The bigger the manifest gets the more data the browser has to download before any UI navigation can occur leading to slowdowns in important metrics like Time to Interactive (TTI).
 
 Even after the manifest had been loaded, the manifest had to be searched for the matching path. This was necessary since pages can be declared with a [matchPath](https://www.gatsbyjs.org/docs/gatsby-internals-terminology/#matchpath) (a Regular Expression used to match client-only paths). Huge manifest files resulted in perceptable lag when clicking links too!
 
