@@ -626,7 +626,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
       // flatten sidebar links trees for easier next/prev link calculation
       function flattenList(itemList) {
-        itemList.reduce((reducer, { items, ...rest }) => {
+        return itemList.reduce((reducer, { items, ...rest }) => {
           reducer.push(rest)
           if (items) reducer.push(...flattenList(items))
           return reducer
