@@ -58,12 +58,14 @@ describe(`Component Shadowing`, () => {
 
   it(`can determine if the request path is in the shadow chain for the issuer`, () => {
     const plugin = new ShadowingPlugin({
-      themes: [`a-theme`, `theme-b`, `gatsby-theme-c`].map(name => {
-        return {
-          themeName: name,
-          themeDir: path.join(path.sep, `some`, `node_modules`, name),
+      themes: [`a-theme`, `theme-b`, `gatsby-theme-c`, `@orgname/theme-d`].map(
+        name => {
+          return {
+            themeName: name,
+            themeDir: path.join(path.sep, `some`, `node_modules`, name),
+          }
         }
-      }),
+      ),
     })
     expect(
       plugin.requestPathIsIssuerShadowPath({
