@@ -794,6 +794,11 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
     nodeId = options
   }
 
+  const node = getNode(nodeId)
+  if (node && !typeOwners[node.internal.type]) {
+    typeOwners[node.internal.type] = node.internal.owner
+  }
+
   return {
     type: `TOUCH_NODE`,
     plugin,
