@@ -6364,8 +6364,8 @@
   url: https://homealarmreport.com/
   main_url: https://homealarmreport.com/
   description: >
-    Home Alarm Report is dedicated to helping consumers make informed decisions 
-    about home security solutions. The site was easily migrated from a legacy WordPress 
+    Home Alarm Report is dedicated to helping consumers make informed decisions
+    about home security solutions. The site was easily migrated from a legacy WordPress
     installation and the dev team chose Gatsby for its site speed and SEO capabilities.
   categories:
     - Blog
@@ -6562,6 +6562,27 @@
     - Consulting
     - Community
   featured: false
+- title: Zoe Rodriguez
+  url: https://zoerodrgz.com
+  main_url: https://zoerodrgz.com
+  description: >
+    Portfolio for Los Angeles-based designer Zoe Rodriguez. Built with Gatsby.
+  categories:
+    - Portfolio
+    - Design
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
+  featured: false
+- title: TriActive USA
+  url: https://triactiveusa.com
+  main_url: https://triactiveusa.com
+  description: >
+    Website and blog for TriActive USA. Built with Gatsby.
+  categories:
+    - Landing Page
+    - Business
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
 - title: LaunchDarkly
   url: https://launchdarkly.com/
   main_url: https://launchdarkly.com/
@@ -6572,4 +6593,63 @@
     - Marketing
   built_by: LaunchDarkly
   built_by_url: https://launchdarkly.com/
+  featured: false
+- title: Arpit Goyal
+  url: https://arpitgoyal.com
+  main_url: https://arpitgoyal.com
+  source_url: https://github.com/92arpitgoyal/ag-blog
+  description: >
+    Blog and portfolio website of a Front-end Developer turned Product Manager.
+  categories:
+    - Blog
+    - Portfolio
+    - Technology
+    - User Experience
+  built_by: Arpit Goyal
+  built_by_url: https://twitter.com/_arpitgoyal
+  featured: false
+- title: Portfolio of Cole Townsend
+  url: https://twnsnd.co
+  main_url: https://twnsnd.co
+  description: Portfolio of Cole Townsend, Product Designer
+  categories:
+    - Portfolio
+    - User Experience
+    - Web Development
+    - Design
+  built_by: Cole Townsend
+  built_by_url: https://twitter.com/twnsndco
+- title: Jana Desomer
+  url: https://www.janadesomer.be/
+  main_url: https://www.janadesomer.be/
+  description: >
+    I'm Jana, a digital product designer with coding skills, based in Belgium
+  categories:
+    - Portfolio
+  built_by: Jana Desomer Designer/Developer
+  built_by_url: https://www.janadesomer.be/
+  featured: false
+- title: Carbon8 Regenerative Agriculture
+  url: https://www.carbon8.org.au/
+  main_url: https://www.carbon8.org.au/
+  description: >
+    Carbon8 is a Not for Profit charity that supports Aussie farmers to transition to regenerative agriculture practices and rebuild the carbon (organic matter) in their soil from 1% to 8%.
+  categories:
+    - Nonprofit
+    - eCommerce
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
+- title: Reactgo blog
+  url: https://reactgo.com/
+  main_url: https://reactgo.com/
+  description: >
+    It provides tutorials & articles about modern open source web technologies such as react,vuejs and gatsby.
+  categories:
+    - Blog
+    - Education
+    - Programming
+    - Web Development
+  built_by: Sai gowtham
+  built_by_url: "https://twitter.com/saigowthamr"
   featured: false
