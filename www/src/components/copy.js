@@ -13,15 +13,21 @@ import {
 } from "../utils/presets"
 
 const copyToClipboard = content => {
-  const el = document.createElement(`textarea`)
-  el.value = content
-  el.setAttribute(`readonly`, ``)
-  el.style.position = `absolute`
-  el.style.left = `-9999px`
-  document.body.appendChild(el)
-  el.select()
+  const textarea = document.createElement(`textarea`)
+  textarea.value = content
+  textarea.setAttribute(`readonly`, true)
+  textarea.setAttribute(`contenteditable`, true)
+  textarea.style.position = `absolute`
+  textarea.style.left = `-9999px`
+  document.body.appendChild(textarea)
+  textarea.select()
+  const range = document.createRange()
+  const sel = window.getSelection()
+  sel.removeAllRanges()
+  sel.addRange(range)
+  textarea.setSelectionRange(0, textarea.value.length)
   document.execCommand(`copy`)
-  document.body.removeChild(el)
+  document.body.removeChild(textarea)
 }
 
 const delay = duration => new Promise(resolve => setTimeout(resolve, duration))
