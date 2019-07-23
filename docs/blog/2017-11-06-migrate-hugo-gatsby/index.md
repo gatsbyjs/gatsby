@@ -77,7 +77,7 @@ The only work I had to do on the content migration was to reformat the
 [frontmatter](https://gohugo.io/content-management/front-matter/). In Hugo, I
 used TOML, whereas `gatsby-transformer-remark` works only with YAML for the
 moment. Luckily, I still had the Hugo CLI on my system so could make use of its
-[build-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
+[built-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
 only issue I had was that sometimes titles were longer than 1 line and were not
 parse-able, so I just had to cut some words out where problematic.
 

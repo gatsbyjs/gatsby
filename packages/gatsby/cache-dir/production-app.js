@@ -1,7 +1,7 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate, Location } from "@reach/router"
+import { Router, navigate, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import {
@@ -37,6 +37,25 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
+  // In gatsby v2 if Router is used in page using matchPaths
+  // paths need to contain full path.
+  // For example:
+  //   - page have `/app/*` matchPath
+  //   - inside template user needs to use `/app/xyz` as path
+  // Resetting `basepath`/`baseuri` keeps current behaviour
+  // to not introduce breaking change.
+  // Remove this in v3
+  const RouteHandler = props => (
+    <BaseContext.Provider
+      value={{
+        baseuri: `/`,
+        basepath: `/`,
+      }}
+    >
+      <PageRenderer {...props} />
+    </BaseContext.Provider>
+  )
+
   class LocationHandler extends React.Component {
     render() {
       let { location } = this.props
@@ -53,13 +72,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   location={location}
                   id="gatsby-focus-wrapper"
                 >
-                  <PageRenderer
-                    path={
+                  <RouteHandler
+                    path={encodeURI(
                       pageResources.page.path === `/404.html`
-                        ? location.pathname
+                        ? stripPrefix(location.pathname, __BASE_PATH__)
                         : pageResources.page.matchPath ||
-                          pageResources.page.path
-                    }
+                            pageResources.page.path
+                    )}
                     {...this.props}
                     location={location}
                     pageResources={pageResources}
@@ -87,9 +106,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
-      loader.pathFinder.findMatchPath(
-        stripPrefix(browserLoc.pathname, __BASE_PATH__)
-      ) ||
+      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
       pagePath === `/404.html` ||
       pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
