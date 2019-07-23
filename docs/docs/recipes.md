@@ -152,15 +152,17 @@ This recipe shows how to create pages from Markdown files on your local filesyst
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 - The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
+- The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
 - A `gatsby-node.js` file
 
 #### Directions
 
-1. In `gatsby-config.js`, configure `gatsby-source-filesystem` to pull in Markdown files from a source folder:
+1. In `gatsby-config.js`, configure `gatsby-transformer-remark` along with `gatsby-source-filesystem` to pull in Markdown files from a source folder. This would be in addition to any previous `gatsby-source-filesystem` entries, such as for images:
 
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -188,12 +190,12 @@ This is my first Gatsby post written in Markdown!
 ```js:title=gatsby-node.js
 const path = require(`path`)
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve(`src/templates/post.js`)
 
-  return graphql(`
+  const result = await graphql(`
     {
       allMarkdownRemark(
         sort: { order: DESC, fields: [frontmatter___date] }
@@ -208,17 +210,17 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors)
-    }
+  `)
+  if (result.errors) {
+    console.log(result.errors)
+    throw new Error("Things broke, see console output above")
+  }
 
-    return result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-      createPage({
-        path: node.frontmatter.path,
-        component: blogPostTemplate,
-        context: {}, // additional data can be passed via context
-      })
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    createPage({
+      path: node.frontmatter.path,
+      component: blogPostTemplate,
+      context: {}, // additional data can be passed via context
     })
   })
 }
@@ -271,9 +273,9 @@ export const pageQuery = graphql`
 - [Adding a list of Markdown blog posts](/docs/adding-a-list-of-markdown-blog-posts/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
 
-### Creating pages without GraphQL
+### Creating pages from data without GraphQL
 
-You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/).
+You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data/) can be found on GitHub.
 
 #### Prerequisites
 
