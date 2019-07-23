@@ -2,6 +2,7 @@ jest.mock(`got`)
 jest.mock(`../safe-sharp`, () => {
   return {
     simd: jest.fn(),
+    concurrency: jest.fn(),
   }
 })
 const { createArgsDigest, processFile, sortKeys } = require(`../process-file`)

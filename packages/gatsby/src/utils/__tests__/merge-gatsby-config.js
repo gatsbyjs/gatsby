@@ -88,7 +88,7 @@ describe(`Merge gatsby config`, () => {
     })
   })
 
-  it(`Merging proxy is overriden`, () => {
+  it(`Merging proxy is overridden`, () => {
     const a = {
       proxy: {
         prefix: `/something-not/api`,

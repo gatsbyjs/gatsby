@@ -943,6 +943,28 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
       data: AirtableData
     }
 
+    type SitesYaml implements Node {
+      title: String!
+      main_url: String!
+      url: String!
+      source_url: String
+      featured: Boolean
+      categories: [String]!
+      built_by: String
+      built_by_url: String
+      description: String
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
+    type StartersYaml implements Node {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
     type AirtableData @dontInfer {
       name: String @proxy(from: "Name_of_Event")
       organizerFirstName: String @proxy(from: "Organizer_Name")

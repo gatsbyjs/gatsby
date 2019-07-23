@@ -60,7 +60,7 @@ describe(`<Events />`, () => {
 
     it(`display's today's events as upcoming`, () => {
       const { getByText } = render(
-        <Events events={mockEvents([`1990-10-18`].map(toEvent))} />
+        <Events events={mockEvents([`2100-10-08`].map(toEvent))} />
       )
 
       const upcoming = getByText(`Upcoming Events`)
