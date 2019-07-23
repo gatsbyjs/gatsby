@@ -211,6 +211,7 @@ const noscriptImg = props => {
     : ``
   const loading = props.loading ? `loading="${props.loading}" ` : ``
   const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
+  const decoding = props.decoding ? `decoding="${props.decoding}" ` : ``
 
   const sources = generateNoscriptSources(props.imageVariants)
 
@@ -243,6 +244,7 @@ const Img = React.forwardRef((props, ref) => {
     onError,
     loading,
     draggable,
+    decoding,
     ...otherProps
   } = props
 
@@ -257,6 +259,7 @@ const Img = React.forwardRef((props, ref) => {
       ref={ref}
       loading={loading}
       draggable={draggable}
+      decoding={decoding}
       style={{
         position: `absolute`,
         top: 0,
@@ -381,6 +384,7 @@ class Image extends React.Component {
       itemProp,
       loading,
       draggable,
+      decoding,
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -491,6 +495,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                decoding={decoding}
               />
             </picture>
           )}
@@ -591,6 +596,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                decoding={decoding}
               />
             </picture>
           )}
@@ -675,6 +681,7 @@ Image.propTypes = {
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
   draggable: PropTypes.bool,
+  decoding: PropTypes.oneOf([`auto`, `sync`, `async`]),
 }
 
 export default Image
