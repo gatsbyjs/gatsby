@@ -127,7 +127,7 @@ function saveState() {
 
 /**
  * Returns a reference to the database. If undefined, the db has not been
- * initalized yet. Call `start()`
+ * initialized yet. Call `start()`
  *
  * @returns {Object} database, or undefined
  */

@@ -282,7 +282,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
   createRedirect({
     fromPath: `/docs/image-tutorial/`,
-    toPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
     isPermanent: true,
   })
   createRedirect({
@@ -936,6 +941,28 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
     type Airtable implements Node {
       id: ID!
       data: AirtableData
+    }
+
+    type SitesYaml implements Node {
+      title: String!
+      main_url: String!
+      url: String!
+      source_url: String
+      featured: Boolean
+      categories: [String]!
+      built_by: String
+      built_by_url: String
+      description: String
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
+    type StartersYaml implements Node {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
     }
 
     type AirtableData @dontInfer {

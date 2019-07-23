@@ -55,8 +55,8 @@ aliases:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: yarn jest -w 1
-      - run: GATSBY_DB_NODES=loki yarn jest -w 1
+      - run: yarn jest -w 1 --ci
+      - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -157,12 +157,6 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
 
-  e2e_tests_gatsbygram:
-    <<: *e2e-executor
-    steps:
-      - e2e-test:
-          test_path: examples/gatsbygram
-
   e2e_tests_path-prefix:
     <<: *e2e-executor
     steps:
@@ -188,7 +182,14 @@ jobs:
           test_path: e2e-tests/production-runtime
           test_command: yarn test && yarn test:offline
 
-  e2e_tests_themes:
+  themes_e2e_tests_development_runtime:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/development-runtime
+          test_command: yarn test
+
+  themes_e2e_tests_production_runtime:
     <<: *e2e-executor
     steps:
       - e2e-test:
@@ -214,6 +215,47 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
+
+  build_www:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge # ++ RAM and CPU
+    steps:
+      - checkout
+      - restore_cache:
+          key: www_public_dir_1
+      - restore_cache:
+          key: www_cache_dir_1
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          # manually match cpu_count to vcpus available in resource_class
+          command: GATSBY_CPU_COUNT=8 yarn build
+          working_directory: ~/project/www
+      - save_cache:
+          key: www_public_dir_1_{{ epoch }}
+          paths:
+            - ~/project/www/public
+      - save_cache:
+          key: www_cache_dir_1_{{ epoch }}
+          paths:
+            - ~/project/www/.cache
+
+  deploy_www:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          key: www_public_dir_1
+      - run:
+          command: yarn add netlify-cli
+          working_directory: ~/project/www
+      - run:
+          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
+          no_output_timeout: 2h
+          working_directory: ~/project/www
 
 workflows:
   version: 2
@@ -242,8 +284,6 @@ workflows:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
-      - e2e_tests_gatsbygram:
-          <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
@@ -252,7 +292,9 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
-      - e2e_tests_themes:
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
@@ -261,3 +303,19 @@ workflows:
             branches:
               only:
                 - master
+  www_deploy:
+    triggers:
+      - schedule:
+          cron: "0 2,6,10,14,18,22 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build_www:
+          # Check CircleCI web ui for context details (env vars)
+          context: build_www
+      - deploy_www:
+          requires:
+            - build_www
+          context: build_www
