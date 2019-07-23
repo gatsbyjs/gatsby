@@ -6,6 +6,7 @@ excerpt: "Introducing the Gatsby Preview Beta: learn more and sign up today for 
 tags:
   - gatsby-preview
   - gatsby-cloud
+  - gatsby-inc
 ---
 
 ## What we’ve been up to
