@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.17...gatsby-cli@2.7.18) (2019-07-23)
+
+### Bug Fixes
+
+- **gatsby-cli:** fallback to empty string when `appName` is em… ([#15943](https://github.com/gatsbyjs/gatsby/issues/15943)) ([59fdbc1](https://github.com/gatsbyjs/gatsby/commit/59fdbc1))
+
 ## [2.7.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.16...gatsby-cli@2.7.17) (2019-07-19)
 
 ### Bug Fixes
