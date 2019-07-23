@@ -447,7 +447,11 @@ Starters are boilerplate Gatsby sites maintained officially, or by the community
 
 ## Working with themes
 
-Coming soon!
+A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
+
+- Read more on [What is a Gatsby Theme?](/docs/themes/what-are-gatsby-themes)
+- Learn how to use an existing Gatsby theme in the [shorter conceptual guide](/docs/themes/using-a-gatsby-theme) or the [step-by-step tutorial](/tutorial/using-a-theme).
+- Learn how to build your own theme in the [Gatsby Theme Authoring video course on Egghead](https://egghead.io/courses/gatsby-theme-authoring), or in the [video course's complementary written tutorial companion](/tutorial/building-a-theme).
 
 ## Sourcing data
 
