@@ -3416,3 +3416,16 @@
     - Styled-Components.
     - Mobile-First CSS.
     - Responsive Design, optimized for Mobile devices
+- url: https://gatsby-datocms-starter.netlify.com/
+  repo: https://github.com/brohlson/gatsby-datocms-starter
+  description: An SEO-friendly DatoCMS starter with styled-components, page transitions, and out-of-the-box blog post support.
+  tags:
+    - DatoCMS
+    - Styled-Components
+    - Blog
+    - Portfolio
+    - SEO
+  features:
+    - Page Transitions
+    - Blog Post Template
+    - Sitemap & Robots.txt generation
