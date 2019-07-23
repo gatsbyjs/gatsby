@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.15...gatsby-plugin-mdx@1.0.16) (2019-07-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** pass maxDepth correctly to mdast-util-toc ([#15994](https://github.com/gatsbyjs/gatsby/issues/15994)) ([129b141](https://github.com/gatsbyjs/gatsby/commit/129b141)), closes [/github.com/syntax-tree/mdast-util-toc/blob/beca120e03db0a715b8517248968bf34290ebd1a/lib/search.js#L18](https://github.com//github.com/syntax-tree/mdast-util-toc/blob/beca120e03db0a715b8517248968bf34290ebd1a/lib/search.js/issues/L18)
+
 ## [1.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.14...gatsby-plugin-mdx@1.0.15) (2019-07-20)
 
 ### Bug Fixes
