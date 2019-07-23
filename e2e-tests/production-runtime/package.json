@@ -36,7 +36,7 @@
     "cy:run": "npm run cy:run:normal -- --group Baseline/Full-network && npm run cy:run:slow -- --group Baseline/2g-network",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y --group Offline/Full-network && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y --group Offline/2g-network",
     "cy:run:normal": "cypress run --browser chrome --record",
-    "cy:run:slow": "CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
+    "cy:run:slow": "CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --record --config testFiles=prefetching.js"
   },
   "devDependencies": {
     "fs-extra": "^7.0.1",
