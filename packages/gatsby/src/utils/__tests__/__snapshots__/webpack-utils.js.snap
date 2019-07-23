@@ -10,7 +10,8 @@ Object {
       "loader": "<PROJECT_ROOT>/node_modules/babel-loader/lib/index.js",
       "options": Object {
         "babelrc": false,
-        "cacheIdentifier": "gatsby-dependencies@1.0.0",
+        "cacheIdentifier": "develop---gatsby-dependencies@1.0.0",
+        "compact": false,
         "configFile": false,
         "presets": Array [
           "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
