@@ -49,6 +49,7 @@ module.exports = {
 ```
 
 ## Integrating with CI
+
 Integrating this plugin within a CI pipeline may cause errors because the plugin will prompt the user/machine to log into the Google Analytics account - you need to send a jwt to authenticate properly
 
 ```javascript
