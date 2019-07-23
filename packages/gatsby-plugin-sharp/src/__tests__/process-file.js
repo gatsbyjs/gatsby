@@ -1,4 +1,5 @@
 jest.mock(`got`)
+jest.mock(`md5-file/promise`)
 jest.mock(`../safe-sharp`, () => {
   return {
     simd: jest.fn(),
@@ -7,6 +8,7 @@ jest.mock(`../safe-sharp`, () => {
 })
 const { createArgsDigest, processFile, sortKeys } = require(`../process-file`)
 const got = require(`got`)
+const md5File = require(`md5-file/promise`)
 
 describe(`createArgsDigest`, () => {
   const defaultArgsBaseline = {
@@ -126,8 +128,17 @@ describe(`createArgsDigest`, () => {
 })
 
 describe(`processFile`, () => {
-  it(`should offload sharp transforms to the cloud`, async () => {
+  beforeEach(() => {
     process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL = `https://example.com/image-service`
+    got.post.mockReset()
+    got.post.mockResolvedValueOnce({})
+  })
+
+  afterAll(() => {
+    delete process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL
+  })
+
+  const mockProcessFile = async ({ hash = `1234lol` } = {}) => {
     const transforms = {
       outputPath: `myoutputpath/1234/file.jpg`,
       args: {
@@ -136,16 +147,41 @@ describe(`processFile`, () => {
       },
     }
 
-    got.post.mockImplementation(jest.fn(() => Promise.resolve()))
+    md5File.mockResolvedValueOnce(hash)
 
-    expect(
-      await processFile(`mypath/file.jpg`, [transforms], {
-        stripMetadata: true,
+    const res = await processFile(`mypath/file.jpg`, [transforms], {
+      stripMetadata: true,
+    })
+
+    return [
+      res,
+      {
+        transforms,
+        hash,
+      },
+    ]
+  }
+
+  it(`should offload sharp transforms to the cloud`, async () => {
+    const [res] = await mockProcessFile()
+
+    expect(res).toMatchSnapshot()
+  })
+
+  it(`passes hash and transforms to cloud service`, async () => {
+    const hash = `8675309jenny`
+
+    const [, args] = await mockProcessFile(hash)
+
+    expect(got.post).toHaveBeenCalledTimes(1)
+    expect(got.post).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: expect.objectContaining({
+          hash: args.hash,
+          transforms: [args.transforms],
+        }),
       })
-    ).toMatchSnapshot()
-    expect(got.post).toHaveBeenCalled()
-    expect(got.post).toMatchSnapshot()
-
-    delete process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL
+    )
   })
 })
