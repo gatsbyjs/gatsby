@@ -3,7 +3,14 @@ import CodeBlock from ".."
 import { fireEvent, render } from "react-testing-library"
 
 beforeEach(() => {
+  document.createRange = jest.fn()
   document.execCommand = jest.fn()
+  window.getSelection = jest.fn().mockImplementation(() => {
+    return {
+      addRange: jest.fn(),
+      removeAllRanges: jest.fn(),
+    }
+  })
 })
 
 describe(`basic functionality`, () => {
