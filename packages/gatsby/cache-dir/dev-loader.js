@@ -1,4 +1,5 @@
 import { BaseLoader } from "./loader"
+import { cleanPath } from "./find-path"
 
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
@@ -8,7 +9,7 @@ class DevLoader extends BaseLoader {
   }
 
   loadPage(pagePath) {
-    const realPath = this.pathFinder.find(pagePath)
+    const realPath = cleanPath(pagePath)
     return super.loadPage(realPath).then(result => {
       require(`./socketIo`).getPageData(realPath)
       return result
