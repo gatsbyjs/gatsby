@@ -437,13 +437,13 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 ## Creating layouts
 
+## Working with starters
+
 Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
 - Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
 - Browse the [Starter Library](/starters/)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
-
-## Working with starters
 
 ## Working with themes
 
