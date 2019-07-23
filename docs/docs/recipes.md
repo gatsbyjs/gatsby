@@ -32,17 +32,17 @@ Craving a happy medium between [full-length tutorials](/tutorial/) and crawling 
 
 ## Table of Contents
 
-1. [Pages and Layouts](#pages-and-layouts)
-2. [Styling with CSS](#styling-with-css)
-3. [Working with starters](#working-with-starters)
-4. [Working with themes](#working-with-themes)
-5. [Sourcing data](#sourcing-data)
-6. [Querying data](#querying-data)
-7. [Working with images](#working-with-images)
-8. [Transforming data](#transforming-data)
-9. [Deploying your site](#deploying-your-site)
+1. [Pages and Layouts](#1-pages-and-layouts)
+2. [Styling with CSS](#2-styling-with-css)
+3. [Working with starters](#3-working-with-starters)
+4. [Working with themes](#4-working-with-themes)
+5. [Sourcing data](#5-sourcing-data)
+6. [Querying data](#6-querying-data)
+7. [Working with images](#7-working-with-images)
+8. [Transforming data](#8-transforming-data)
+9. [Deploying your site](#9-deploying-your-site)
 
-## Pages and Layouts
+## 1. Pages and Layouts
 
 ### Project structure
 
@@ -185,7 +185,7 @@ path: /my-first-post
 This is my first Gatsby post written in Markdown!
 ```
 
-2. Add the JavaScript code to generate pages from Markdown posts at build time with a GraphQL query in `gatsby-node.js`:
+3. Add the JavaScript code to generate pages from Markdown posts at build time with a GraphQL query in `gatsby-node.js`:
 
 ```js:title=gatsby-node.js
 const path = require(`path`)
@@ -226,7 +226,7 @@ exports.createPages = async ({ actions, graphql }) => {
 }
 ```
 
-3. Add a post template in `src/templates`, including a GraphQL query for generating pages dynamically from Markdown content at build time:
+4. Add a post template in `src/templates`, including a GraphQL query for generating pages dynamically from Markdown content at build time:
 
 ```jsx:title=src/templates/post.js
 import React from "react"
@@ -261,8 +261,7 @@ export const pageQuery = graphql`
 `
 ```
 
-4. Run `gatsby develop` to start the development server.
-5. View your post in the browser: `http://localhost:8000/my-first-post`
+5. Run `gatsby develop` to start the development server. View your post in the browser: `http://localhost:8000/my-first-post`
 
 #### Additional resources
 
@@ -384,7 +383,7 @@ export default () => (
 - Create a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
 - Styling with [Layout Components](/docs/layout-components/)
 
-## Styling with CSS
+## 2. Styling with CSS
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
@@ -435,9 +434,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 - More on [importing assets into files](/docs/importing-assets-into-files/]
 - [Using Typography.js for Google fonts](/docs/typography-js/)
 
-## Creating layouts
-
-## Working with starters
+## 3. Working with starters
 
 Starters are boilerplate Gatsby sites maintained officially, or by the community.
 
@@ -445,7 +442,7 @@ Starters are boilerplate Gatsby sites maintained officially, or by the community
 - Browse the [Starter Library](/starters/)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
-## Working with themes
+## 4. Working with themes
 
 A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
@@ -453,7 +450,7 @@ A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourci
 - Learn how to use an existing Gatsby theme in the [shorter conceptual guide](/docs/themes/using-a-gatsby-theme) or the [step-by-step tutorial](/tutorial/using-a-theme).
 - Learn how to build your own theme in the [Gatsby Theme Authoring video course on Egghead](https://egghead.io/courses/gatsby-theme-authoring), or in the [video course's complementary written tutorial companion](/tutorial/building-a-theme).
 
-## Sourcing data
+## 5. Sourcing data
 
 Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
 
@@ -598,11 +595,11 @@ export default NonPageComponent
 - [More on the useStaticQuery hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
-## Working with images
+## 7. Working with images
 
 Coming soon!
 
-## Transforming data
+## 8. Transforming data
 
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more). `gatsby-transformer-plugin` can transform Markdown files to HTML.
 
