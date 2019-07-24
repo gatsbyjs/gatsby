@@ -208,16 +208,8 @@ exports.createPages = ({ actions, graphql }) => {
       })
     })
 
-    // Tag pages:
-    let tags = []
-    // Iterate through each post, putting all found tags into `tags`
-    _.each(posts, edge => {
-      if (_.get(edge, "node.frontmatter.tags")) {
-        tags = tags.concat(edge.node.frontmatter.tags)
-      }
-    })
-    // Eliminate duplicate tags
-    tags = _.uniq(tags)
+    // Iterate through each post, putting all found tags into `tags` and eliminate duplicate tags
+    const tags = [...new Set(posts.flatMap(post => post.node.frontmatter.tags))];
 
     // Make tag pages
     tags.forEach(tag => {
