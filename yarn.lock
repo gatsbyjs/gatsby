@@ -7831,14 +7831,6 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
-dom-testing-library@^3.9.0:
-  version "3.11.2"
-  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.11.2.tgz#11ecb840641f89fbbdcf8cc625009c24e7779615"
-  dependencies:
-    "@sheerun/mutationobserver-shim" "^0.3.2"
-    pretty-format "^23.6.0"
-    wait-for-expect "^1.0.0"
-
 dom-urls@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/dom-urls/-/dom-urls-1.1.0.tgz#001ddf81628cd1e706125c7176f53ccec55d918e"
@@ -17160,12 +17152,6 @@ react-test-renderer@^16.8.0:
     react-is "^16.8.6"
     scheduler "^0.13.6"
 
-react-testing-library@^5.0.0:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-5.2.1.tgz#31f163e900457e5c0dcff7669ae06b502f8a9a7a"
-  dependencies:
-    dom-testing-library "^3.9.0"
-
 react-typography@^0.16.18:
   version "0.16.18"
   resolved "https://registry.yarnpkg.com/react-typography/-/react-typography-0.16.18.tgz#89341b63d615f1dfcf5e471797df5acce5bde1f3"
@@ -21053,10 +21039,6 @@ w3c-xmlserializer@^1.0.1:
     domexception "^1.0.1"
     webidl-conversions "^4.0.2"
     xml-name-validator "^3.0.0"
-
-wait-for-expect@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-1.0.0.tgz#edf2d5790c36dc67c4e21ac6ccedd7d4b79dc6ac"
 
 wait-for-expect@^1.2.0:
   version "1.2.0"
