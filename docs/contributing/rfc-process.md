@@ -17,7 +17,7 @@ and controlled path for new features to enter the project.
 
 Gatsby is still **actively developing** this process, and it will still change
 as more features are implemented and the community settles on specific
-approaches to feature development.
+approaches to future development.
 
 ## When to follow this process
 
