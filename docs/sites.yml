@@ -6664,3 +6664,15 @@
   built_by: Mediacurrent
   built_by_url: https://www.mediacurrent.com
   featured: false
+- title: Saxenhammer & Co.
+  url: https://saxenhammer-co.com/
+  main_url: https://saxenhammer-co.com/
+  description: >
+    Saxenhammer & Co. is a leading boutique investment bank in Continental Europe. The firm’s strong track record is comprised of the execution of 200 successful transactions across all major industries.
+  categories:
+    - Consulting
+    - Finance
+    - Business
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
