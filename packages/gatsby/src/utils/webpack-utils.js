@@ -396,7 +396,7 @@ module.exports = async ({
     let eslint = schema => {
       return {
         enforce: `pre`,
-        test: /\.(jsx?|tsx?)$/,
+        test: /\.jsx?$/,
         exclude: vendorRegex,
         use: [loaders.eslint(schema)],
       }
