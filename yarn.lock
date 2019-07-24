@@ -11213,6 +11213,11 @@ ink@^2.3.0:
     wrap-ansi "^5.0.0"
     yoga-layout-prebuilt "^1.9.3"
 
+inline-style-parser@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/inline-style-parser/-/inline-style-parser-0.1.1.tgz#ec8a3b429274e9c0a1f1c4ffa9453a7fef72cea1"
+  integrity sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==
+
 inline-style-prefixer@^4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-4.0.2.tgz#d390957d26f281255fe101da863158ac6eb60911"
@@ -16263,14 +16268,6 @@ postcss-flexbugs-fixes@^3.0.0:
   dependencies:
     postcss "^6.0.1"
 
-postcss-js@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/postcss-js/-/postcss-js-2.0.2.tgz#a5e75d3fb9d85b28e1d2bd57956c115665ea8542"
-  integrity sha512-HxXLw1lrczsbVXxyC+t/VIfje9ZeZhkkXE8KpFa3MEKfp2FyHDv29JShYY9eLhYrhLyWWHNIuwkktTfLXu2otw==
-  dependencies:
-    camelcase-css "^2.0.1"
-    postcss "^7.0.17"
-
 postcss-load-config@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/postcss-load-config/-/postcss-load-config-2.0.0.tgz#f1312ddbf5912cd747177083c5ef7a19d62ee484"
@@ -16590,15 +16587,6 @@ postcss@^7.0.0, postcss@^7.0.1:
 postcss@^7.0.16:
   version "7.0.16"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.16.tgz#48f64f1b4b558cb8b52c88987724359acb010da2"
-  dependencies:
-    chalk "^2.4.2"
-    source-map "^0.6.1"
-    supports-color "^6.1.0"
-
-postcss@^7.0.17:
-  version "7.0.17"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.17.tgz#4da1bdff5322d4a0acaab4d87f3e782436bad31f"
-  integrity sha512-546ZowA+KZ3OasvQZHsbuEpysvwTZNGJv9EfyCQdsIDltPSWHAeTQ5fQy/Npi2ZDtLI3zs7Ps/p6wThErhm9fQ==
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
@@ -19487,6 +19475,13 @@ style-to-object@^0.2.1:
   resolved "https://registry.yarnpkg.com/style-to-object/-/style-to-object-0.2.2.tgz#3ea3b276bd3fa9da1195fcdcdd03bc52aa2aae01"
   dependencies:
     css "2.2.4"
+
+style-to-object@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/style-to-object/-/style-to-object-0.2.3.tgz#afcf42bc03846b1e311880c55632a26ad2780bcb"
+  integrity sha512-1d/k4EY2N7jVLOqf2j04dTc37TPOv/hHxZmvpg8Pdh8UYydxeu/C1W1U4vD8alzf5V2Gt7rLsmkr4dxAlDm9ng==
+  dependencies:
+    inline-style-parser "0.1.1"
 
 stylehacks@^4.0.0:
   version "4.0.0"
