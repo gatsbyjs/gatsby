@@ -188,6 +188,7 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
       tags: node.frontmatter.tags || [],
       slug,
       date: node.frontmatter.date,
+      keywords: node.frontmatter.keywords || [],
     }
     createNode({
       ...fieldData,
