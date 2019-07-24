@@ -120,6 +120,7 @@
     "postinstall": "cd plugins/gatsby-transformer-gatsby-api-calls && npm install"
   },
   "devDependencies": {
+    "@testing-library/react": "^8.0.6",
     "babel-jest": "^24.3.1",
     "babel-preset-gatsby": "^0.1.8",
     "cross-env": "^5.2.0",
@@ -128,7 +129,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.3.1",
     "jest-dom": "^3.1.3",
-    "react-testing-library": "^6.0.0",
     "stylelint": "^9.6.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-config-styled-components": "^0.1.1",
