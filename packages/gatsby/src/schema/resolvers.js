@@ -5,7 +5,7 @@ const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
 const { getProjectionFromAST } = require(`graphql-compose`)
 const { getValueAt } = require(`../utils/get-value-at`)
 
-const findMany = typeName => (parent, args, context, info) =>
+const findMany = typeName => (source, args, context, info) =>
   context.nodeModel.runQuery(
     {
       query: args,
@@ -15,7 +15,7 @@ const findMany = typeName => (parent, args, context, info) =>
     { path: context.path, connectionType: typeName }
   )
 
-const findOne = typeName => (parent, args, context, info) =>
+const findOne = typeName => (source, args, context, info) =>
   context.nodeModel.runQuery(
     {
       query: { filter: args },
@@ -25,15 +25,14 @@ const findOne = typeName => (parent, args, context, info) =>
     { path: context.path }
   )
 
-const findManyPaginated = typeName => async (parent, args, context, info) => {
+const findManyPaginated = typeName => async (source, args, context, info) => {
   // Peek into selection set and pass on the `field` arg of `group` and
-  // `distinct` which might need to be resolved. The easiest wayF to check if
-  // `group` or `distinct` are in the selection set is with the `projection`
-  const projection = getProjectionFromAST(info)
-  const group = projection.group && getProjectedField(info, `group`)
-  const distinct = projection.distinct && getProjectedField(info, `distinct`)
-  const filteredArgs = { ...args, group, distinct }
-  const result = await findMany(typeName)(parent, filteredArgs, context, info)
+  // `distinct` which might need to be resolved.
+  const group = getProjectedField(info, `group`)
+  const distinct = getProjectedField(info, `distinct`)
+  const extendedArgs = { ...args, group: group || [], distinct: distinct || [] }
+
+  const result = await findMany(typeName)(source, extendedArgs, context, info)
   return paginate(result, { skip: args.skip, limit: args.limit })
 }
 

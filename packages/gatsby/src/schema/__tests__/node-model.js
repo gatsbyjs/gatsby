@@ -40,10 +40,11 @@ describe(`NodeModel`, () => {
       })
 
       await build({})
-      const {
+      let schemaComposer
+      ;({
         schemaCustomization: { composer: schemaComposer },
-      } = store.getState()
-      schema = store.getState().schema
+        schema,
+      } = store.getState())
 
       nodeModel = new LocalNodeModel({
         schema,

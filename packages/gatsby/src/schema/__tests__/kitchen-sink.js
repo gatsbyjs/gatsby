@@ -66,7 +66,6 @@ describe(`Kitchen sink schema test`, () => {
           id: ID!
           code: String
         }
-
         type PostsJson implements Node & Post @infer {
           id: ID!
           time: Date @dateformat(locale: "fi", formatString: "DD MMMM")

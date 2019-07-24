@@ -4,12 +4,14 @@ import ShadowingPlugin from "../"
 describe(`Component Shadowing`, () => {
   it(`gets matching themes`, () => {
     const plugin = new ShadowingPlugin({
-      themes: [`a-theme`, `theme-b`, `gatsby-theme-c`].map(name => {
-        return {
-          themeName: name,
-          themeDir: path.join(path.sep, `some`, `place`, name),
+      themes: [`a-theme`, `theme-b`, `gatsby-theme-c`, `@orgname/theme-d`].map(
+        name => {
+          return {
+            themeName: name,
+            themeDir: path.join(path.sep, `some`, `place`, name),
+          }
         }
-      }),
+      ),
     })
     expect(
       // simple request path to a theme's component
@@ -56,12 +58,14 @@ describe(`Component Shadowing`, () => {
 
   it(`can determine if the request path is in the shadow chain for the issuer`, () => {
     const plugin = new ShadowingPlugin({
-      themes: [`a-theme`, `theme-b`, `gatsby-theme-c`].map(name => {
-        return {
-          themeName: name,
-          themeDir: path.join(path.sep, `some`, `node_modules`, name),
+      themes: [`a-theme`, `theme-b`, `gatsby-theme-c`, `@orgname/theme-d`].map(
+        name => {
+          return {
+            themeName: name,
+            themeDir: path.join(path.sep, `some`, `node_modules`, name),
+          }
         }
-      }),
+      ),
     })
     expect(
       plugin.requestPathIsIssuerShadowPath({
@@ -135,6 +139,33 @@ describe(`Component Shadowing`, () => {
           `some`,
           `node_modules`,
           `theme-b`,
+          `src`,
+          `components`,
+          `a-component`
+        ),
+        userSiteDir: path.join(path.sep, `some`),
+      })
+    ).toEqual(true)
+
+    expect(
+      plugin.requestPathIsIssuerShadowPath({
+        // issuer is in the user's site
+        issuerPath: path.join(
+          path.sep,
+          `some`,
+          `src`,
+          `@orgname`,
+          `theme-d`,
+          `components`,
+          `a-component`
+        ),
+        // require'ing a file it is a "shadow child" of
+        requestPath: path.join(
+          path.sep,
+          `some`,
+          `node_modules`,
+          `@orgname`,
+          `theme-d`,
           `src`,
           `components`,
           `a-component`
