@@ -254,7 +254,7 @@ export const query = graphql`
 `
 ```
 
-What is this file doing? After importing our dependencies, we construct the layout of the post with JSX. We wrap everything in the `Layout` component, so our style is the same throughout the site. Then, we simply add the post title and the pot content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
+What is this file doing? After importing our dependencies, we construct the layout of the post with JSX. We wrap everything in the `Layout` component, so our style is the same throughout the site. Then, we simply add the post title and the post content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
 
 Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-posts.js` template when the page is created in `gatsby-node.js`, when we add the following code to the `gatsby-node.js` file:
 
