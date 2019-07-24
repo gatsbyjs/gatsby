@@ -32,9 +32,10 @@ async function outputFile() {
           mergedTags[tag.title] = tag.description
           return mergedTags
         }, {})
-        mergedOutput[doc.name] = Object.assign({
+        mergedOutput[doc.name] = {
+          deprecated: !!tags.deprecated || undefined,
           version: tags.gatsbyVersion
-        }, !!tags.deprecated && { deprecated: true })
+        }
       }
       return mergedOutput
     }, {})
