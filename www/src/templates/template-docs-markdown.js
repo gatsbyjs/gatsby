@@ -15,6 +15,7 @@ import FooterLinks from "../components/shared/footer-links"
 import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
+import { space } from "../utils/presets"
 
 const getDocsData = location => {
   const [urlSegment] = location.pathname.split(`/`).slice(1)
@@ -65,7 +66,11 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                 See the issue relating to this stub on GitHub
               </a>
             )}
-            <PrevAndNext prev={prev} next={next} />
+            <PrevAndNext
+              css={{ marginTop: space[9] }}
+              prev={prev}
+              next={next}
+            />
             <MarkdownPageFooter page={page} />
           </Container>
         </DocSearchContent>

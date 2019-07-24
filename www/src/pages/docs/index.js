@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet"
 
 import Layout from "../../components/layout"
 import { itemListDocs } from "../../utils/sidebar/item-list"
+import { space } from "../../utils/presets"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
@@ -102,6 +103,7 @@ class IndexRoute extends React.Component {
             </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
             <PrevAndNext
+              css={{ marginTop: space[9] }}
               next={{ title: `Quick Start`, link: `/docs/quick-start/` }}
             />
           </Container>
