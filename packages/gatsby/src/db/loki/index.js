@@ -7,6 +7,7 @@ const customComparators = require(`./custom-comparators`)
 
 // Ensure sorting behavior matches old lodash `orderBy`
 // implementation. See `custom-comparators.js` for why.
+loki.Comparators.aeq = customComparators.aeqHelper
 loki.Comparators.lt = customComparators.ltHelper
 loki.Comparators.gt = customComparators.gtHelper
 

@@ -5,6 +5,7 @@ const {
   GraphQLList,
   getNullableType,
   getNamedType,
+  isCompositeType,
 } = require(`graphql`)
 const prepareRegex = require(`../../utils/prepare-regex`)
 const { getNodeTypeCollection, ensureFieldIndexes } = require(`./nodes`)
@@ -252,6 +253,25 @@ function toSortFields(sortArgs) {
   return lokiSortFields
 }
 
+function doesSortFieldsHaveArray(type, sortArgs) {
+  return sortArgs.some(([fields, _]) => {
+    const [field, ...rest] = fields.split(`.`)
+    const gqlField = type.getFields()[field]
+    if (gqlField) {
+      const type = getNullableType(gqlField.type)
+      if (type instanceof GraphQLList) {
+        return true
+      } else {
+        const namedType = getNamedType(type)
+        if (isCompositeType(namedType) && rest.length > 0) {
+          return doesSortFieldsHaveArray(namedType, [[rest.join(`.`), false]])
+        }
+      }
+    }
+    return false
+  })
+}
+
 /**
  * Runs the graphql query over the loki nodes db.
  *
@@ -306,6 +326,8 @@ async function runQuery(
   chain.find(lokiArgs, firstOnly)
 
   if (sortFields) {
+    // Loki is unable to sort arrays, so we fall back to lodash for that
+    const sortFieldsHaveArray = doesSortFieldsHaveArray(gqlType, sortFields)
     const dottedFields = objectToDottedField(resolvedFields)
     const dottedFieldKeys = Object.keys(dottedFields)
     sortFields = sortFields.map(([field, order]) => {
@@ -318,15 +340,18 @@ async function runQuery(
         return [field, order]
       }
     })
-    // TODO make it only use orderBy sorting in worst case
-    // chain = chain.compoundsort(sortFields)
-    const sortFieldAccessors = sortFields.map(([field, _]) => v =>
-      getValueAt(v, field)
-    )
-    const sortFieldOrder = sortFields.map(([_, order]) =>
-      order ? `desc` : `asc`
-    )
-    return _.orderBy(chain.data(), sortFieldAccessors, sortFieldOrder)
+
+    if (sortFieldsHaveArray) {
+      const sortFieldAccessors = sortFields.map(([field, _]) => v =>
+        getValueAt(v, field)
+      )
+      const sortFieldOrder = sortFields.map(([_, order]) =>
+        order ? `desc` : `asc`
+      )
+      return _.orderBy(chain.data(), sortFieldAccessors, sortFieldOrder)
+    } else {
+      return chain.compoundsort(sortFields).data()
+    }
   } else {
     return chain.data()
   }

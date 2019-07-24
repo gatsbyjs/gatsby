@@ -4,7 +4,7 @@ const {
   start,
 } = require(`../index`)
 
-describe(`db`, () => {
+describe(`Loki Db`, () => {
   beforeAll(() => {
     start()
   })

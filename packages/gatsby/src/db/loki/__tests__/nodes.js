@@ -1,31 +1,22 @@
-const { start, getDb, colls } = require(`../index`)
-const { createNode, deleteNode } = require(`../nodes`)
+const { getNodesCollection, start } = require(`../index`)
+const { getNodeTypeCollection } = require(`../nodes`)
 
-const type = `Test`
-const node = {
-  id: `1`,
-  foo: `bar`,
-  internal: { type: type },
-}
-
-beforeAll(start)
-
-// no longer valid
-describe.skip(`node`, () => {
-  it(`should create node ID index`, () => {
-    createNode(node)
-    const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
-    expect(nodeMetaColl).toBeDefined()
-    const nodeMeta = nodeMetaColl.by(`id`, node.id)
-    const nodeTypeColl = getDb().getCollection(nodeMeta.typeCollName)
-    expect(nodeTypeColl).toBeDefined()
-    expect(nodeTypeColl.name).toEqual(`gatsby:nodeType:${type}`)
+describe(`Loki Nodes Collections`, () => {
+  beforeAll(() => {
+    start()
   })
 
-  it(`should delete node ID index`, () => {
-    deleteNode(node)
-    const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
-    const nodeMeta = nodeMetaColl.by(`id`, node.id)
-    expect(nodeMeta).toBeUndefined()
+  it(`should create view for single type types`, () => {
+    const nodesColl = getNodesCollection()
+    const view = getNodeTypeCollection(`MyType`)
+    expect(view).toBe(getNodeTypeCollection(`MyType`))
+    expect(view).toBe(nodesColl.getDynamicView(view.name))
+  })
+
+  it(`should create view for multi-type types`, () => {
+    const nodesColl = getNodesCollection()
+    const view = getNodeTypeCollection([`MyType`, `MySecondType`])
+    expect(view).toBe(getNodeTypeCollection([`MySecondType`, `MyType`]))
+    expect(view).toBe(nodesColl.getDynamicView(view.name))
   })
 })

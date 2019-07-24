@@ -31,7 +31,7 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
     return await Promise.all(_.map(new Array(n), () => runQuery(args)))
   }
 
-  describe(`query indexing`, () => {
+  describe(`Loki Queries query indexing`, () => {
     beforeEach(async () => {
       await lokiDb.start()
       store.dispatch({ type: `DELETE_CACHE` })
@@ -49,7 +49,7 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
     })
   })
 } else {
-  it(`skipping loki nodes-query-test`, () => {
+  it(`Loki Queries skipping loki nodes-query-test`, () => {
     expect(true).toEqual(true)
   })
 }
