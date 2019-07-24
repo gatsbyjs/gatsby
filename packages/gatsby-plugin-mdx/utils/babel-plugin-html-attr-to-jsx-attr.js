@@ -1,5 +1,6 @@
 const { camelCase } = require("change-case");
-const toStyleObject = require("to-style").object;
+const postcss = require('postcss');
+const postcssJs = require('postcss-js');
 const t = require("@babel/types");
 
 // object retrieved from https://github.com/facebook/react/blob/master/packages/react-dom/src/shared/possibleStandardNames.js
@@ -529,9 +530,8 @@ var jsxAttributeFromHTMLAttributeVisitor = {
       node.node.value.type === "StringLiteral"
       //      node.node.value.type !== "JSXExpressionContainer"
     ) {
-      const styleObject = toStyleObject(node.node.value.extra.rawValue, {
-        camelize: true
-      });
+      const cssTree = postcss.parse(node.node.value.extra.rawValue);
+      const styleObject = postcssJs.objectify(cssTree);
       //      node.node.value.value = `{${JSON.stringify(styleObject)}}`;
       node.node.value = t.jSXExpressionContainer(
         t.objectExpression(
