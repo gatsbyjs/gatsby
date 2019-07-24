@@ -1,11 +1,12 @@
 const nodesQuery = require(`../../db/nodes-query`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const makeNodes = () => [
   {
     id: `0`,
-    internal: { type: `Test` },
+    internal: { type: `Test`, contentDigest: `0` },
     index: 0,
     name: `The Mad Max`,
     string: `a`,
@@ -40,7 +41,7 @@ const makeNodes = () => [
   },
   {
     id: `1`,
-    internal: { type: `Test` },
+    internal: { type: `Test`, contentDigest: `0` },
     index: 1,
     name: `The Mad Wax`,
     string: `b`,
@@ -85,7 +86,7 @@ const makeNodes = () => [
   },
   {
     id: `2`,
-    internal: { type: `Test` },
+    internal: { type: `Test`, contentDigest: `0` },
     index: 2,
     name: `The Mad Wax`,
     string: `c`,
@@ -152,9 +153,9 @@ function makeGqlType(nodes) {
 
 function resetDb(nodes) {
   store.dispatch({ type: `DELETE_CACHE` })
-  for (const node of nodes) {
-    store.dispatch({ type: `CREATE_NODE`, payload: node })
-  }
+  nodes.forEach(node =>
+    actions.createNode(node, { name: `test` })(store.dispatch)
+  )
 }
 
 async function runQuery(queryArgs) {

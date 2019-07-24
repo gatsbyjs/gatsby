@@ -470,6 +470,8 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   return deleteNodesAction
 }
 
+let NODE_COUNTER = 0
+
 const typeOwners = {}
 /**
  * Create a new node.
@@ -563,6 +565,9 @@ const createNode = (
   if (!node.internal) {
     node.internal = {}
   }
+
+  NODE_COUNTER++
+  node.internal.$counter = NODE_COUNTER
 
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {

@@ -19,14 +19,14 @@ Object {
       "edges": Array [
         Object {
           "node": Object {
-            "comment": 0,
-            "id": "354333585801731194",
+            "comment": 1,
+            "id": "1270677182602272387",
           },
         },
         Object {
           "node": Object {
-            "comment": 1,
-            "id": "358258295744749374",
+            "comment": 0,
+            "id": "1256134251849702933",
           },
         },
       ],

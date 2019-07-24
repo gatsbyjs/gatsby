@@ -10,6 +10,7 @@ const {
   getNamedType,
 } = require(`graphql`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`../index`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -55,8 +56,9 @@ describe(`Kitchen sink schema test`, () => {
 
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
+
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `

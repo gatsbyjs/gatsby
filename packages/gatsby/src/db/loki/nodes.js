@@ -26,7 +26,7 @@ function getNodeTypeCollection(typeOrTypes) {
   let view = coll.getDynamicView(typesViewName)
   if (!view) {
     view = coll.addDynamicView(typesViewName)
-    view.applySimpleSort(`id`)
+    view.applySimpleSort(`internal.$counter`)
     view.applyFind({
       "internal.type": { $in: types },
     })

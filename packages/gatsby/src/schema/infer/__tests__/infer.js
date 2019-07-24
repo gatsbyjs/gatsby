@@ -6,6 +6,7 @@ const { LocalNodeModel } = require(`../../node-model`)
 const path = require(`path`)
 const slash = require(`slash`)
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
@@ -82,9 +83,12 @@ describe(`GraphQL type inference`, () => {
 
   const buildTestSchema = async (nodes, buildSchemaArgs, typeDefs) => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
-    )
+    nodes.forEach(node => {
+      if (!node.internal.contentDigest) {
+        node.internal.contentDigest = `0`
+      }
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    })
 
     const { builtInFieldExtensions } = require(`../../extensions`)
     Object.keys(builtInFieldExtensions).forEach(name => {

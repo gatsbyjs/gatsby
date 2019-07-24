@@ -3,8 +3,8 @@ const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
-const { actions } = require(`../../../redux/actions/restricted`)
 const { createFieldExtension, createTypes } = actions
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -22,41 +22,41 @@ describe(`GraphQL field extensions`, () => {
     const nodes = [
       {
         id: `test1`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-01`,
         otherdate: `2019-09-01`,
       },
       {
         id: `test2`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-13`,
         otherdate: `2019-09-13`,
       },
       {
         id: `test3`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-26`,
         otherdate: `2019-09-26`,
       },
       {
         id: `test4`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         olleh: `world`,
       },
       {
         id: `test5`,
-        internal: { type: `AnotherTest` },
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         date: `2019-01-01`,
       },
       {
         id: `test6`,
-        internal: { type: `AnotherTest` },
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         date: 0,
       },
     ]
-    nodes.forEach(node => {
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    })
+    nodes.forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
   })
 
   it(`allows creating a cutom field extension`, async () => {

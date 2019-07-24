@@ -1,5 +1,6 @@
 const { graphql } = require(`graphql`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
@@ -124,7 +125,7 @@ describe(`Query schema`, () => {
 
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
 
     const typeDefs = [

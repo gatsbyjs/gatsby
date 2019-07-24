@@ -298,7 +298,7 @@ async function runQuery(
   }
   const view = getNodeTypeCollection(possibleTypeNames)
   chain = view.branchResultset()
-  chain.simplesort(`id`)
+  chain.simplesort(`internal.$counter`)
   ensureFieldIndexes(lokiArgs, sortFields || [])
 
   chain.find(lokiArgs, firstOnly)

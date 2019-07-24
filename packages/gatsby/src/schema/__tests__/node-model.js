@@ -1,4 +1,5 @@
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const nodeStore = require(`../../db/nodes`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 const { LocalNodeModel } = require(`../node-model`)
@@ -15,7 +16,7 @@ describe(`NodeModel`, () => {
     beforeAll(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
-        store.dispatch({ type: `CREATE_NODE`, payload: node })
+        actions.createNode(node, { name: `test` })(store.dispatch)
       )
 
       const types = `
@@ -384,7 +385,6 @@ describe(`NodeModel`, () => {
           internal: {
             type: `Test`,
             contentDigest: `digest1`,
-            owner: `test`,
           },
         },
         {
@@ -402,9 +402,9 @@ describe(`NodeModel`, () => {
         },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
-      for (const node of nodes) {
-        store.dispatch({ type: `CREATE_NODE`, payload: node })
-      }
+      nodes.forEach(node =>
+        actions.createNode(node, { name: `test` })(store.dispatch)
+      )
 
       await build({})
       const {
