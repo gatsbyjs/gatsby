@@ -72,7 +72,7 @@ By default, this configuration will allow you to create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
-Note that gatsby-mdx requires gatsby-source-filesystem to be present
+Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
 and configured to process your markdown files to correctly
 generate the resulting Gatsby nodes.
 
