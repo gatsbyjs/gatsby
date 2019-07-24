@@ -199,21 +199,21 @@ const fixNeTrue = filter =>
     return acc
   }, {})
 
-const liftResolvedFields = (args, gqlType, resolvedFields) => {
+const liftResolvedFields = (args, resolvedFields) => {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)
   const finalArgs = {}
   Object.keys(args).forEach(key => {
     const value = args[key]
     if (dottedFields[key]) {
-      finalArgs[`$resolved.${key}`] = value
+      finalArgs[`_$resolved.${key}`] = value
     } else if (
       dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
       value.$elemMatch
     ) {
-      finalArgs[`$resolved.${key}`] = value
+      finalArgs[`_$resolved.${key}`] = value
     } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
-      finalArgs[`$resolved.${key}`] = value
+      finalArgs[`_$resolved.${key}`] = value
     } else {
       finalArgs[key] = value
     }
@@ -225,7 +225,6 @@ const liftResolvedFields = (args, gqlType, resolvedFields) => {
 const convertArgs = (gqlArgs, gqlType, resolvedFields) =>
   liftResolvedFields(
     fixNeTrue(toDottedFields(toMongoArgs(gqlArgs.filter, gqlType))),
-    gqlType,
     resolvedFields
   )
 
@@ -290,10 +289,13 @@ function doesSortFieldsHaveArray(type, sortArgs) {
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
  */
-async function runQuery(
-  { gqlSchema, gqlType, queryArgs, firstOnly },
-  resolvedFields = {}
-) {
+async function runQuery({
+  gqlSchema,
+  gqlType,
+  queryArgs,
+  firstOnly,
+  resolvedFields = {},
+}) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
@@ -335,7 +337,7 @@ async function runQuery(
         dottedFields[field] ||
         dottedFieldKeys.some(key => field.startsWith(key))
       ) {
-        return [`$resolved.${field}`, order]
+        return [`_$resolved.${field}`, order]
       } else {
         return [field, order]
       }

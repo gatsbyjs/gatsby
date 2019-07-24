@@ -3,9 +3,7 @@ const { default: sift } = require(`sift`)
 const _ = require(`lodash`)
 const { GraphQLUnionType, GraphQLInterfaceType } = require(`graphql`)
 const prepareRegex = require(`../utils/prepare-regex`)
-const { resolveNodes, resolveRecursive } = require(`./prepare-nodes`)
 const { makeRe } = require(`micromatch`)
-const { getQueryFields } = require(`../db/common/query`)
 const { getValueAt } = require(`../utils/get-value-at`)
 
 /////////////////////////////////////////////////////////////////////
@@ -42,11 +40,11 @@ const getFilters = filters =>
 // Run Sift
 /////////////////////////////////////////////////////////////////////
 
-function isEqId(firstOnly, fieldsToSift, siftArgs) {
+function isEqId(firstOnly, siftArgs) {
   return (
     firstOnly &&
-    Object.keys(fieldsToSift).length === 1 &&
-    Object.keys(fieldsToSift)[0] === `id` &&
+    siftArgs.length > 0 &&
+    siftArgs[0].id &&
     Object.keys(siftArgs[0].id).length === 1 &&
     Object.keys(siftArgs[0].id)[0] === `$eq`
   )
@@ -68,7 +66,7 @@ function handleFirst(siftArgs, nodes) {
   }
 }
 
-function handleMany(siftArgs, nodes, sort) {
+function handleMany(siftArgs, nodes, sort, resolvedFields) {
   let result = _.isEmpty(siftArgs)
     ? nodes
     : nodes.filter(
@@ -82,12 +80,80 @@ function handleMany(siftArgs, nodes, sort) {
   // Sort results.
   if (sort) {
     // create functions that return the item to compare on
-    const sortFields = sort.fields.map(field => v => getValueAt(v, field))
+    const dottedFields = objectToDottedField(resolvedFields)
+    const dottedFieldKeys = Object.keys(dottedFields)
+    const sortFields = sort.fields
+      .map(field => {
+        if (
+          dottedFields[field] ||
+          dottedFieldKeys.some(key => field.startsWith(key))
+        ) {
+          return `_$resolved.${field}`
+        } else {
+          return field
+        }
+      })
+      .map(field => v => getValueAt(v, field))
     const sortOrder = sort.order.map(order => order.toLowerCase())
 
     result = _.orderBy(result, sortFields, sortOrder)
   }
   return result
+}
+
+const toDottedFields = (filter, acc = {}, path = []) => {
+  Object.keys(filter).forEach(key => {
+    const value = filter[key]
+    const nextValue = _.isPlainObject(value) && value[Object.keys(value)[0]]
+    if (key === `$elemMatch`) {
+      acc[path.join(`.`)] = { [`$elemMatch`]: value }
+    } else if (_.isPlainObject(nextValue)) {
+      toDottedFields(value, acc, path.concat(key))
+    } else {
+      acc[path.concat(key).join(`.`)] = value
+    }
+  })
+  return acc
+}
+
+const objectToDottedField = (obj, path = []) => {
+  let result = {}
+  Object.keys(obj).forEach(key => {
+    const value = obj[key]
+    if (_.isPlainObject(value)) {
+      const pathResult = objectToDottedField(value, path.concat(key))
+      result = {
+        ...result,
+        ...pathResult,
+      }
+    } else {
+      result[path.concat(key).join(`.`)] = value
+    }
+  })
+  return result
+}
+
+const liftResolvedFields = (args, resolvedFields) => {
+  args = toDottedFields(args)
+  const dottedFields = objectToDottedField(resolvedFields)
+  const dottedFieldKeys = Object.keys(dottedFields)
+  const finalArgs = {}
+  Object.keys(args).forEach(key => {
+    const value = args[key]
+    if (dottedFields[key]) {
+      finalArgs[`_$resolved.${key}`] = value
+    } else if (
+      dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
+      value.$elemMatch
+    ) {
+      finalArgs[`_$resolved.${key}`] = value
+    } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
+      finalArgs[`_$resolved.${key}`] = value
+    } else {
+      finalArgs[key] = value
+    }
+  })
+  return finalArgs
 }
 
 /**
@@ -104,9 +170,15 @@ function handleMany(siftArgs, nodes, sort) {
  *   if `firstOnly` is true
  */
 module.exports = (args: Object) => {
-  const { getNode, getNodesByType } = require(`../db/nodes`)
+  const { getNode, getNodesAndResolvedNodes } = require(`./nodes`)
 
-  const { queryArgs, gqlSchema, gqlType, firstOnly = false } = args
+  const {
+    queryArgs = { filter: {}, sort: {} },
+    gqlSchema,
+    gqlType,
+    firstOnly = false,
+    resolvedFields = {},
+  } = args
 
   let possibleTypeNames
   if (
@@ -122,46 +194,34 @@ module.exports = (args: Object) => {
 
   let nodes
 
-  if (args.nodes) {
-    nodes = args.nodes
-  } else if (possibleTypeNames.length > 1) {
+  if (possibleTypeNames.length > 1) {
     nodes = possibleTypeNames.reduce(
-      (typeName, acc) => acc.concat(getNodesByType(typeName)),
+      (acc, typeName) => acc.concat(getNodesAndResolvedNodes(typeName)),
       []
     )
   } else {
-    nodes = getNodesByType(possibleTypeNames[0])
+    nodes = getNodesAndResolvedNodes(possibleTypeNames[0])
   }
 
-  const { filter, sort, group, distinct } = queryArgs
-  const siftFilter = getFilters(prepareQueryArgs(filter))
-  const fieldsToSift = getQueryFields({ filter, sort, group, distinct })
+  let siftFilter = getFilters(
+    liftResolvedFields(prepareQueryArgs(queryArgs.filter), resolvedFields)
+  )
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(firstOnly, fieldsToSift, siftFilter)) {
+  if (isEqId(firstOnly, siftFilter)) {
     const node = getNode(siftFilter[0].id[`$eq`])
 
     if (!node || (node.internal && node.internal.type !== gqlType.name)) {
       return []
     }
 
-    return resolveRecursive(node, fieldsToSift, gqlType.getFields()).then(
-      node => (node ? [node] : [])
-    )
+    return [node]
   }
 
-  return resolveNodes(
-    nodes,
-    gqlType.name,
-    firstOnly,
-    fieldsToSift,
-    gqlType.getFields()
-  ).then(resolvedNodes => {
-    if (firstOnly) {
-      return handleFirst(siftFilter, resolvedNodes)
-    } else {
-      return handleMany(siftFilter, resolvedNodes, queryArgs.sort)
-    }
-  })
+  if (firstOnly) {
+    return handleFirst(siftFilter, nodes)
+  } else {
+    return handleMany(siftFilter, nodes, queryArgs.sort, resolvedFields)
+  }
 }

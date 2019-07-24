@@ -2,7 +2,6 @@ const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
-const { getProjectionFromAST } = require(`graphql-compose`)
 const { getValueAt } = require(`../utils/get-value-at`)
 
 const findMany = typeName => (source, args, context, info) =>
@@ -41,7 +40,7 @@ const distinct = (source, args, context, info) => {
   const { edges } = source
   const values = edges.reduce((acc, { node }) => {
     const value =
-      getValueAt(node, `$resolved.${field}`) || getValueAt(node, field)
+      getValueAt(node, `_$resolved.${field}`) || getValueAt(node, field)
     return value != null
       ? acc.concat(value instanceof Date ? value.toISOString() : value)
       : acc
@@ -54,7 +53,7 @@ const group = (source, args, context, info) => {
   const { edges } = source
   const groupedResults = edges.reduce((acc, { node }) => {
     const value =
-      getValueAt(node, `$resolved.${field}`) || getValueAt(node, field)
+      getValueAt(node, `_$resolved.${field}`) || getValueAt(node, field)
     const values = Array.isArray(value) ? value : [value]
     values
       .filter(value => value != null)

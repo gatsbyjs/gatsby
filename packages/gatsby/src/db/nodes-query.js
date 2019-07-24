@@ -1,5 +1,3 @@
-const { isAbstractType } = require(`graphql`)
-
 const lokiRunQuery = require(`./loki/nodes-query`)
 const siftRunQuery = require(`../redux/run-sift`)
 
@@ -37,42 +35,12 @@ const siftRunQuery = require(`../redux/run-sift`)
  */
 async function run(args) {
   const { backend } = require(`./nodes`)
-  const { gqlType } = args
 
   if (backend === `redux`) {
-    const nodeStore = require(`./nodes`)
-    // We provide nodes in case of abstract types, because `run-sift` should
-    // only need to know about node types in the store.
-    let nodes
-    const nodeTypeNames = toNodeTypeNames(args.gqlSchema, gqlType)
-    if (nodeTypeNames.length > 1) {
-      nodes = nodeTypeNames.reduce(
-        (acc, typeName) => acc.concat(nodeStore.getNodesByType(typeName)),
-        []
-      )
-    }
-    return siftRunQuery({
-      ...args,
-      nodes,
-    })
+    return siftRunQuery(args)
   } else {
-    return lokiRunQuery(args, args.resolvedFields)
+    return lokiRunQuery(args)
   }
-}
-
-const toNodeTypeNames = (schema, gqlTypeName) => {
-  const gqlType =
-    typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
-
-  if (!gqlType) return []
-
-  const possibleTypes = isAbstractType(gqlType)
-    ? schema.getPossibleTypes(gqlType)
-    : [gqlType]
-
-  return possibleTypes
-    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
-    .map(type => type.name)
 }
 
 module.exports.run = run

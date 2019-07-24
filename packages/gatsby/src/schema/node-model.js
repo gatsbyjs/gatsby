@@ -210,6 +210,7 @@ class LocalNodeModel {
       gqlType,
       fields
     )
+
     await this.prepareNodes(gqlType, fields, fieldsToResolve)
 
     const queryResult = await this.nodeStore.runQuery({
@@ -281,8 +282,6 @@ class LocalNodeModel {
       }
     )
 
-    // console.log(type, queryFields, fieldsToResolve)
-
     if (!_.isEmpty(fieldsToResolve)) {
       await this.nodeStore.updateNodesByType(type.name, async node => {
         this.trackInlineObjectsInRootNode(node)
@@ -297,7 +296,7 @@ class LocalNodeModel {
         )
         const newNode = {
           ...node,
-          $resolved: _.merge(node.$resolved || {}, resolvedFields),
+          _$resolved: _.merge(node._$resolved || {}, resolvedFields),
         }
         return newNode
       })
