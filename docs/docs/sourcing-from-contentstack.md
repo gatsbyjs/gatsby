@@ -8,7 +8,7 @@ This guide walks you through the steps involved in setting up a Gatsby site that
 
 Contentstack is a [headless CMS](https://www.contentstack.com/) that offers developers turnkey Content-as-a-Service (CaaS). It lets you create flexible content components and deliver them to any destination platform via CDN-backed Content Delivery APIs. Instead of having to create separate content for all your sites and apps, Contentstack lets you reuse content across different digital channels (web, mobile, IoT, voice, etc.) and present it optimized for its digital endpoint, be it a browser on a laptop, a smartphone, a smartwatch, a kiosk, or a jumbotron.
 
-Gatsby, with its powerful UI toolset, serves as the “head” for your websites while Contentstack – being the headless CMS – acts as the “body”. Combining these the two best-in-class tools provide a powerful solution to create modern, enterprise-grade sites and apps.
+Gatsby, with its powerful UI toolset, serves as the “head” for your websites while Contentstack – being the headless CMS – acts as the “body”. Combining these two best-in-class tools provide a powerful solution to create modern, enterprise-grade sites and apps.
 
 _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a Gatsby-powered site._
 
