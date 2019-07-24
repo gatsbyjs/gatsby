@@ -185,7 +185,7 @@ If you haven't already, please read through [Part 7](/tutorial/part-seven/) of t
 
 ### Creating pages for each blog post.
 
-In Part 7 of the tutorial, the first step in creating pages in creating slugs for the markdown files. Since we are using WordPress and not Markdown files, we can grab the slugs that get returned from our API call to the WordPress source. We can skip creating slugs, since we already have them.
+In Part 7 of the tutorial, the first step in creating pages is creating slugs for the markdown files. Since we are using WordPress and not Markdown files, you can grab the slugs that get returned from your API call to the WordPress source. You can skip creating slugs, since you already have them.
 
 Open up your `gatsby-node.js` file in the root of your project (it should be blank except for some comments) and add the following:
 
