@@ -7,6 +7,7 @@ const isBefore = require("date-fns/is_before")
 const differenceInDays = require("date-fns/difference_in_days")
 const tools = new Toolkit({
   secrets: [
+    "PERSONAL_GITHUB_TOKEN",
     "SLACK_TOKEN",
     "SLACK_CORE_CHANNEL_ID",
     "SLACK_LEARNING_CHANNEL_ID",
@@ -88,6 +89,10 @@ const maintainers = {
   "https://github.com/gillkyle": {
     name: "Kyle Gill",
     slackUsername: "@kylegill",
+  },
+  "https://github.com/amberleyromo": {
+    name: "Amberley Romo",
+    slackUsername: "@amberley",
   },
 }
 

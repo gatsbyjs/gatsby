@@ -10,7 +10,12 @@ const filter = (queues, team) => {
   Object.keys(queues).forEach(key => {
     filteredQueues[key] = queues[key].filter(pr => {
       return pr.reviewRequests.nodes
-        .map(node => node.requestedReviewer.id)
+        .map(node => {
+          if (node.requestedReviewer) {
+            tools.log.info(`Review request for team ${node.requestedReviewer.name} on PR: ${pr.title}`)
+            return node.requestedReviewer.id
+          }
+        })
         .includes(team.id)
     })
   })

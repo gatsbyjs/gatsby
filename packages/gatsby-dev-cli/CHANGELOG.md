@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.6...gatsby-dev-cli@2.5.7) (2019-07-22)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.5...gatsby-dev-cli@2.5.6) (2019-07-20)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.4...gatsby-dev-cli@2.5.5) (2019-07-13)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.3...gatsby-dev-cli@2.5.4) (2019-07-12)
+
+### Features
+
+- **gatsby-dev-cli:** add initial support for handling yarn workspaces ([#15649](https://github.com/gatsbyjs/gatsby/issues/15649)) ([28aeffe](https://github.com/gatsbyjs/gatsby/commit/28aeffe))
+
 ## [2.5.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.2...gatsby-dev-cli@2.5.3) (2019-07-12)
 
 ### Bug Fixes
