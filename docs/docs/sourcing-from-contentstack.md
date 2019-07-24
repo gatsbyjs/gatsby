@@ -100,7 +100,7 @@ export const pageQuery = graphql`
     }`
 ```
 
-This will display the title of your home page on `http://localhost:8000/home` :tada:. Likewise, you can query additional fields in your entry.
+This will display the title of your home page on `http://localhost:8000/home`. Likewise, you can query additional fields in your entry.
 
 ## Closing Note
 
