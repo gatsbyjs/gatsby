@@ -54,6 +54,8 @@
           link: /contributing/code-contributions/
         - title: Setting Up Your Local Dev Environment
           link: /contributing/setting-up-your-local-dev-environment/
+        - title: Using an Online Dev Environment
+          link: /contributing/using-an-online-dev-environment/
         - title: Community Contributions
           link: /contributing/community-contributions/
           items:
