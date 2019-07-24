@@ -3,10 +3,50 @@ const toStyleObject = require("to-style").object;
 const t = require("@babel/types");
 
 var TRANSLATIONS = {
+  acceptcharset: "acceptCharset",
+  allowfullscreen: "allowFullScreen",
+  allowtransparency: "allowTransparency",
+  autocomplete: "autoComplete",
+  autofocus: "autoFocus",
+  autoplay: "autoPlay",
+  cellpadding: "cellPadding",
+  cellspacing: "cellSpacing",
+  charset: "charSet",
   class: "className",
+  classid: "classID",
+  colspan: "colSpan",
+  crossorigin: "crossOrigin",
+  datetime: "dateTime",
+  enctype: "encType",
   for: "htmlFor",
-  srcset: "srcSet"
-};
+  formaction: "formAction",
+  formenctype: "formEncType",
+  formmethod: "formMethod",
+  formnovalidate: "formNoValidate",
+  formtarget: "formTarget",
+  frameborder: "frameBorder",
+  hreflang: "hrefLang",
+  htmlfor: "htmlFor",
+  httpequiv: "httpEquiv",
+  keyparams: "keyParams",
+  keytype: "keyType",
+  marginheight: "marginHeight",
+  marginwidth: "marginWidth",
+  maxlength: "maxLength",
+  mediagroup: "mediaGroup",
+  minlength: "minLength",
+  nomodule: "noModule",
+  novalidate: "noValidate",
+  playsinline: "playsInline",
+  readonly: "readOnly",
+  referrerpolicy: "referrerPolicy",
+  rowspan: "rowSpan",
+  srcdoc: "srcDoc",
+  srclang: "srcLang",
+  srcset: "srcSet",
+  tabindex: "tabIndex",
+  usemap: "useMap",
+}
 
 const valueFromType = value => {
   switch (typeof value) {
