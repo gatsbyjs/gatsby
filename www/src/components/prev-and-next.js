@@ -1,12 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
-import { css } from "@emotion/core"
-import ChevronRight from "react-icons/lib/md/chevron-right"
-import ChevronLeft from "react-icons/lib/md/chevron-left"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 
-import Button from "../components/button"
 import {
   colors,
   space,
@@ -15,21 +11,6 @@ import {
   fontSizes,
   fonts,
 } from "../utils/presets"
-
-const NavButton = ({ children, left = false, right = false, to }) => (
-  <Button
-    to={to}
-    secondary
-    css={css`
-      border: 1px solid ${colors.ui.border.subtle} !important;
-      justify-content: ${left ? `flex-start` : `flex-end`};
-    `}
-  >
-    {left && <ChevronLeft />}
-    {children}
-    {right && <ChevronRight />}
-  </Button>
-)
 
 const prevNextLinkStyles = {
   "&&": {
