@@ -298,6 +298,8 @@ async function runQuery(
   }
   const view = getNodeTypeCollection(possibleTypeNames)
   chain = view.branchResultset()
+  // Somehow the simplesort in dynamic view can get reset, so we are doing it
+  // here again
   chain.simplesort(`internal.$counter`)
   ensureFieldIndexes(lokiArgs, sortFields || [])
 
