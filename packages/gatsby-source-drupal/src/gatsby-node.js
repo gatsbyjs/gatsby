@@ -141,7 +141,7 @@ exports.sourceNodes = async (
 
   // Download all files (await for each pool to complete to fix concurrency issues)
   const fileNodes = [...nodes.values()].filter(isFileNode)
-  if(fileNodes) {
+  if(fileNodes.length) {
     await asyncPool(
       concurrentFileRequests,
       fileNodes,
