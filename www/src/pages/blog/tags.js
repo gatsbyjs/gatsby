@@ -12,7 +12,7 @@ import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import styles from "../../views/shared/styles"
-import { colors, space } from "../../utils/presets"
+import { colors, space, mediaQueries } from "../../utils/presets"
 
 const POPULAR_TAGS = [
   `themes`,
@@ -32,8 +32,11 @@ const POPULAR_TAGS = [
 const PopularTagGrid = styled.div`
   display: grid;
   grid-auto-rows: 1fr;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: ${space[2]};
+  ${mediaQueries.md} {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `
 
 const PopularTagButton = ({ children, tag }) => (

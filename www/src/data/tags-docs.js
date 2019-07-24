@@ -1,3 +1,10 @@
+/* 
+  this is a whitelist of tags that can be displayed 
+  on the blog, the first value being the tag name, 
+  and the second value a link to an existing doc on
+  the topic, adding a new entry to this Map makes it
+  a new possible tag for blog posts
+*/
 export const TAGS_AND_DOCS = new Map([
   [`accessibility`, `/docs/making-your-site-accessible/`],
   [`agencies`, `/docs/gatsby-for-agencies/`],
