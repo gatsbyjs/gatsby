@@ -106,29 +106,6 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       </div>
     </div>
   )
-
-  return (
-    <div
-      css={css`
-        margin-top: ${space[12]};
-        display: grid;
-        grid-template-columns: ${prev && next ? `1fr 1fr` : `1fr`};
-        grid-template-rows: 1fr;
-        grid-gap: ${space[2]};
-      `}
-    >
-      {prev && (
-        <NavButton left to={prev.link} aria-label="Previous button">
-          {prev.title}
-        </NavButton>
-      )}
-      {next && (
-        <NavButton right to={next.link} aria-label="Next button">
-          {next.title}
-        </NavButton>
-      )}
-    </div>
-  )
 }
 
 export default PrevAndNext
