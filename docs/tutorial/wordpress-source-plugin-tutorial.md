@@ -122,7 +122,7 @@ This next query will pull in a sorted list of the blog posts:
 
 ## Rendering the blog posts to `index.js`
 
-Now that you've created GraphQL queries that pull in the data you want, we'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
+Now that you've created GraphQL queries that pull in the data you want, you'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -174,9 +174,9 @@ Save these changes and look at localhost:8000 to see your new homepage with list
 
 ## Create pages for each blog post and link to them
 
-An index page with a post title and excerpt is great, but we should also build pages out for each of the blog posts, and link to them from our `index.js` file.
+An index page with a post title and excerpt is great, but you should also build pages out for each of the blog posts, and link to them from your `index.js` file.
 
-To do this, we need to:
+To do this, you need to:
 
 1. Create pages for each blog post
 2. Link up the title on the index page with the post page.
@@ -185,7 +185,7 @@ If you haven't already, please read through [Part 7](/tutorial/part-seven/) of t
 
 ### Creating pages for each blog post.
 
-In Part 7 of the tutorial, the first step in creating pages is creating slugs for the markdown files. Since we are using WordPress and not Markdown files, you can grab the slugs that get returned from your API call to the WordPress source. You can skip creating slugs, since you already have them.
+In Part 7 of the tutorial, the first step in creating pages is creating slugs for the markdown files. Since you are using WordPress and not Markdown files, you can grab the slugs that get returned from your API call to the WordPress source. You can skip creating slugs, since you already have them.
 
 Open up your `gatsby-node.js` file in the root of your project (it should be blank except for some comments) and add the following:
 
@@ -217,9 +217,9 @@ Next, stop and restart the `gatsby develop` environment. As you watch the termin
 
 ![Two posts logged to the terminal](/images/wordpress-source-plugin-log.jpg)
 
-Excellent! As explained in Part 7 of the tutorial, this `createPages` export is one of the Gatsby "workhorses" and allows us to create our blog posts (or pages, or custom post types, etc.) from our WordPress install.
+Excellent! As explained in Part 7 of the tutorial, this `createPages` export is one of the Gatsby "workhorses" and allows us to create your blog posts (or pages, or custom post types, etc.) from your WordPress install.
 
-Before we can create the blog posts, however, we need to specify a template to build the pages.
+Before you can create the blog posts, however, you need to specify a template to build the pages.
 
 In your `src` directory, create a directory called `templates` and in the newly created `templates` folder, create a filed named `blog-posts.js`. In that new file, paste the following:
 
@@ -254,9 +254,9 @@ export const query = graphql`
 `
 ```
 
-What is this file doing? After importing our dependencies, we construct the layout of the post with JSX. We wrap everything in the `Layout` component, so our style is the same throughout the site. Then, we simply add the post title and the post content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
+What is this file doing? After importing your dependencies, it constructs the layout of the post with JSX. It wraps everything in the `Layout` component, so the style is the same throughout the site. Then, it simply adds the post title and the post content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
 
-Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-posts.js` template when the page is created in `gatsby-node.js`, when we add the following code to the `gatsby-node.js` file:
+Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-posts.js` template when the page is created in `gatsby-node.js`. To accomplish this, add the following code to the `gatsby-node.js` file:
 
 ```js:title=gatsby-node.js
 const path = require(`path`)
@@ -302,7 +302,7 @@ But nobody likes to go to a 404 page to find a blog post! So, let's link these u
 
 ### Linking to posts from the homepage.
 
-Since we already have our structure and query done for the `index.js` page, all we need to do is use the `Link` component to wrap our titles and we should be good to go.
+Since you already have your structure and query done for the `index.js` page, all you need to do is use the `Link` component to wrap your titles and you should be good to go.
 
 Open up your `index.js` file and add the following:
 
