@@ -25,6 +25,9 @@ describe(`GraphQL field extensions`, () => {
         internal: { type: `Test` },
         somedate: `2019-09-01`,
         otherdate: `2019-09-01`,
+        nested: {
+          onemoredate: `2019-07-30`,
+        },
       },
       {
         id: `test2`,
@@ -52,6 +55,40 @@ describe(`GraphQL field extensions`, () => {
         id: `test6`,
         internal: { type: `AnotherTest` },
         date: 0,
+      },
+      {
+        id: `test7`,
+        internal: { type: `NestedTest` },
+        top: 78,
+        first: {
+          next: 26,
+          second: [
+            {
+              third: {
+                fourth: [
+                  {
+                    fifth: `lorem`,
+                  },
+                  {
+                    fifth: `ipsum`,
+                  },
+                ],
+              },
+            },
+            {
+              third: {
+                fourth: [
+                  {
+                    fifth: `dolor`,
+                  },
+                  {
+                    fifth: `sit`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
       },
     ]
     nodes.forEach(node => {
@@ -708,7 +745,7 @@ describe(`GraphQL field extensions`, () => {
         }`
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
@@ -752,7 +789,7 @@ describe(`GraphQL field extensions`, () => {
         })
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`hello\` on \`Test.hi\` has argument \`planet\` with ` +
         `invalid value "2". String cannot represent a non string value: 2`
@@ -796,7 +833,7 @@ describe(`GraphQL field extensions`, () => {
         }`,
       ])
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
@@ -927,7 +964,7 @@ describe(`GraphQL field extensions`, () => {
         }),
       ])
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`test\` on \`Test.second\` has argument \`one\` with ` +
         `invalid value "1". Int cannot represent non-integer value: "1"`
@@ -967,7 +1004,7 @@ describe(`GraphQL field extensions`, () => {
         }`
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(`Some error message`)
   })
 
@@ -1006,7 +1043,7 @@ describe(`GraphQL field extensions`, () => {
         })
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`hello\` on \`Test.hi\` has invalid argument \`what\`.`
     )
@@ -1021,7 +1058,7 @@ describe(`GraphQL field extensions`, () => {
         }`
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`what\` on \`Test.hi\` is not available.`
     )
@@ -1047,7 +1084,7 @@ describe(`GraphQL field extensions`, () => {
         })
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`what\` on \`Test.hi\` is not available.`
     )
@@ -1223,6 +1260,216 @@ describe(`GraphQL field extensions`, () => {
       },
     }
     expect(results).toEqual(expected)
+  })
+
+  describe(`nested-fields-aware default field resolver`, () => {
+    it(`reserved args.from and args.fromNode for internal use`, async () => {
+      dispatch(
+        createFieldExtension({
+          name: `faulty`,
+          args: {
+            from: `String`,
+          },
+          extend() {
+            return {
+              resolve() {
+                return `WRONG!`
+              },
+            }
+          },
+        })
+      )
+      await buildSchema()
+      expect(report.error).toBeCalledWith(
+        `The arguments \`from\` and \`fromNode\` are reserved for the default ` +
+          `field resolver. Please adjust the field extension definition of \`faulty\`.`
+      )
+    })
+
+    it(`@proxy extension works with nested fields`, async () => {
+      dispatch(
+        createTypes(`
+          type Fourth {
+            fifth: String
+          }
+          type Third {
+            fourth: [Fourth]
+          }
+          type Second {
+            third: Third
+          }
+          type First {
+            next: Int
+            second: [Second]
+          }
+          type NestedTest implements Node {
+            first: First
+            fromNextLevel: Int @proxy(from: "first.next")
+            fromBottomLevel: [[String]] @proxy(from: "first.second.third.fourth.fifth")
+          }
+        `)
+      )
+      const query = `
+        {
+          nestedTest {
+            fromNextLevel
+            fromBottomLevel
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        nestedTest: {
+          fromNextLevel: 26,
+          fromBottomLevel: [[`lorem`, `ipsum`], [`dolor`, `sit`]],
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`@proxy extension works with parent node fields`, async () => {
+      dispatch(
+        createTypes(`
+          type Fourth {
+            fifth: String
+            fromTopLevel: Int @proxy(from: "top", fromNode: true)
+            fromNextLevel: Int @proxy(from: "first.next", fromNode: true)
+          }
+          type Third {
+            fourth: [Fourth]
+          }
+          type Second {
+            third: Third
+          }
+          type First {
+            next: Int
+            second: [Second]
+          }
+          type NestedTest implements Node {
+            first: First
+            top: Int
+          }
+        `)
+      )
+      const query = `
+        {
+          nestedTest {
+            first {
+              second {
+                third {
+                  fourth {
+                    fromTopLevel
+                    fromNextLevel
+                  }
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        nestedTest: {
+          first: {
+            second: [
+              {
+                third: {
+                  fourth: [
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                  ],
+                },
+              },
+              {
+                third: {
+                  fourth: [
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`works with multiple field extensions`, async () => {
+      dispatch(
+        createTypes(`
+          type Nested {
+            onemoredate: Date
+          }
+          type Test implements Node @dontInfer {
+            nested: Nested
+            proxied: Date @dateformat(formatString: "YYYY") @proxy(from: "nested.onemoredate")
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            proxied
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          proxied: `2019`,
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`allows linking from nested fields`, async () => {
+      dispatch(
+        createTypes(`
+          type Nested {
+            onemoredate: Date @dateformat
+          }
+          type Test implements Node @dontInfer {
+            linked: Test @link(by: "nested.onemoredate", from: "nested.onemoredate")
+            nested: Nested
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            linked {
+              nested {
+                onemoredate(formatString: "MM/DD/YYYY")
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          linked: {
+            nested: {
+              onemoredate: `07/30/2019`,
+            },
+          },
+        },
+      }
+      expect(results).toEqual(expected)
+    })
   })
 })
 

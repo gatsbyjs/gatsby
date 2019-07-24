@@ -216,12 +216,11 @@ const formatDate = ({
   return normalizedDate
 }
 
-const getDateResolver = (defaults, prevFieldConfig) => {
-  const resolver = prevFieldConfig.resolve || defaultFieldResolver
-  const { locale, formatString } = defaults
+const getDateResolver = (options, fieldConfig) => {
+  const { locale, formatString } = options
   return {
     args: {
-      ...prevFieldConfig.args,
+      ...fieldConfig.args,
       formatString: {
         type: GraphQLString,
         description: oneLine`
@@ -252,7 +251,13 @@ const getDateResolver = (defaults, prevFieldConfig) => {
       },
     },
     async resolve(source, args, context, info) {
-      const date = await resolver(source, args, context, info)
+      const resolver = fieldConfig.resolve || context.defaultFieldResolver
+      const date = await resolver(
+        source,
+        { ...options, ...args },
+        context,
+        info
+      )
       if (date == null) return null
 
       return Array.isArray(date)

@@ -1,9 +1,5 @@
 // @flow
-const {
-  GraphQLDirective,
-  DirectiveLocation,
-  defaultFieldResolver,
-} = require(`graphql`)
+const { GraphQLDirective, DirectiveLocation } = require(`graphql`)
 
 const { link, fileByPath } = require(`../resolvers`)
 const { getDateResolver } = require(`../types/date`)
@@ -109,9 +105,8 @@ const builtInFieldExtensions = {
       from: `String`,
     },
     extend(args, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: link(args, originalResolver),
+        resolve: link(args, fieldConfig),
       }
     },
   },
@@ -123,9 +118,8 @@ const builtInFieldExtensions = {
       from: `String`,
     },
     extend(args, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: fileByPath(args, originalResolver),
+        resolve: fileByPath(args, fieldConfig),
       }
     },
   },
@@ -135,15 +129,22 @@ const builtInFieldExtensions = {
     description: `Proxy resolver from another field.`,
     args: {
       from: `String!`,
+      fromNode: {
+        type: `Boolean!`,
+        defaultValue: false,
+      },
     },
-    extend({ from }, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
+    extend(options, fieldConfig) {
       return {
         resolve(source, args, context, info) {
-          return originalResolver(source, args, context, {
-            ...info,
-            fieldName: from,
-          })
+          const originalResolver =
+            fieldConfig.resolve || context.defaultFieldResolver
+          return originalResolver(
+            source,
+            { ...options, ...args },
+            context,
+            info
+          )
         },
       }
     },
