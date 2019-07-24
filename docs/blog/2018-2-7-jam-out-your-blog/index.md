@@ -73,7 +73,7 @@ Prose was originally created for editing markdown files on GitHub by the people 
 ### Here is a summary:
 
 - Simple Content Authoring Environment
-- designed for CMS-Free Websites
+- Designed for CMS-Free Websites
 - Web-based Interface for Managing Content Directly on GitHub
 - Advanced Support for Markdown Content - Including Syntax Highlighting & Formatting Toolbar
 

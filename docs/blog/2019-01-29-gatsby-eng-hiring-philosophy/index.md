@@ -131,7 +131,7 @@ In general, it’s a huge bonus when engineers have skills or experience such as
 
 - Product thinking
 
-- design skills
+- Design skills
 
 - A high-quality network to recruit
 
