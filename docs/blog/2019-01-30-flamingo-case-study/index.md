@@ -5,7 +5,7 @@ author: Linda Watkins
 tags:
   - ecommerce
   - case-studies
-  - gatsby-for-marketers
+  - marketing
 image: "./images/flamingo.png"
 showImageInArticle: true
 ---

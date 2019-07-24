@@ -2,7 +2,7 @@
 title: Introducing the Gatsby UX Research Program
 date: 2017-12-20
 author: "Shannon Soper"
-tags: ["gatsby-user-testing"]
+tags: ["ux", "user-testing"]
 ---
 
 ## How this all started

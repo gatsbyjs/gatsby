@@ -8,7 +8,7 @@ tags:
   - authentication
   - livestream
   - getting-started
-  - gatsby-for-apps
+  - apps
 ---
 
 A common challenge when building apps is setting up authentication. If our apps have user-specific data, we need a way to secure that data and identify our users so they can access their own information.

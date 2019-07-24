@@ -6,6 +6,7 @@ excerpt: "Build a full-featured Gatsby website one time, and apply it to multipl
 tags:
   - themes
   - mdx
+  - developer-experience
 ---
 
 Gatsby is a great tool for building static websites, and offers a lot of value when building pages based on a set of Markdown files. This makes it an ideal partner for building documentation websites, which are typically built statically, and updated by writing Markdown.

@@ -4,7 +4,7 @@ date: 2018-11-16
 author: Linda Watkins
 tags:
   - case-studies
-  - gatsby-for-marketers
+  - marketing
 ---
 
 We talked with Zach Muha, Director of Digital Marketing at [Youfit Health Clubs][youfit-health-clubs], about his experience with Gatsby and why he decided to use it for a website rebuild. Zach is in charge of managing SEO, UX, SEM, display ads, social channels, email marketing, CRM and the Youfit app- not a small job!

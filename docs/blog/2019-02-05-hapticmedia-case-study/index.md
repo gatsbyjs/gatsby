@@ -4,7 +4,7 @@ date: 2019-02-05
 author: Linda Watkins
 tags:
   - case-studies
-  - gatsby-for-apps
+  - apps
   - ecommerce
 image: "images/hapticmedia.jpg"
 showImageInArticle: true

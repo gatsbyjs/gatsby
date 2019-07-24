@@ -221,7 +221,7 @@ Plugins also drive the new GraphQL data processing layer.
 
 The final pieces for theme support are coming soon. Gatsby's theme system will
 have some unique properties. You'll be able to add multiple themes to a site. So
-you could start a site with a "gatsby-for-blogs" theme and later add on a "portfolio" theme.
+you could start a site with a "blog" theme and later add on a "portfolio" theme.
 Themes will also be able to _compose_ other themes. So a large organization
 could have a standard "base" theme and then individual departments could extend
 the base theme to meet their specific requirements.

@@ -6,6 +6,9 @@ excerpt: "See how health brand Ritual used Gatsby to improve their SEO, page loa
 tags:
   - react
   - graphql
+  - case-studies
+  - marketing
+  - performance
 ---
 
 [Ritual](https://ritual.com/) is a health brand led by the belief that women should know exactly what’s in their vitamins. Ritual’s vitamins work smarter to fill the gaps in women’s diets with high quality nutrients. They’re on a mission to inspire women to feel their best, every day. Ritual’s clean, modern stack website, leads customers speedily through an educational purchase experience to learn more about the products, the ingredients, and overall benefits they can find by investing in their vitamin habits every day.

@@ -2,7 +2,7 @@
 title: Presenting the Docs Redesign Card Sort Results
 date: 2018-06-26
 author: Shannon Soper
-tags: ["gatsby-docs"]
+tags: ["documentation"]
 ---
 
 ## What is a card sort?

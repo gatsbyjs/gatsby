@@ -2,7 +2,7 @@
 title: "Gatsby Hacktoberfest Wrap-up"
 date: 2018-11-01
 author: "Amberley Romo"
-tags: ["hacktoberfest", "gatsby-inc"]
+tags: ["hacktoberfest", "open-source"]
 ---
 
 Just like that, Gatsby Hacktoberfest is over! Or, "Hacktoverfest"? 😂 (Thanks for the pun, [@m-allanson](https://github.com/m-allanson)). We had a great time Hacktoberfesting with y'all and wanted to share a bit of our planning process and lessons learned in review!
@@ -49,10 +49,7 @@ Of the 250 different authors who contributed to this month, over 170 were first-
       #Hacktoberfest
     </a>
   </p>
-  &mdash; Gatsby (@gatsbyjs){" "}
-  <a href="https://twitter.com/gatsbyjs/status/1056235954824871936?ref_src=twsrc%5Etfw">
-    October 27, 2018
-  </a>
+  &mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/1056235954824871936?ref_src=twsrc%5Etfw">October 27, 2018</a>
 </blockquote>
 
 (We celebrated a bit early).

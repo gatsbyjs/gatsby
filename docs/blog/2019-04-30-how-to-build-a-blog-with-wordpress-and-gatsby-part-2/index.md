@@ -6,7 +6,7 @@ excerpt: "In the last post, you covered setting up WordPress for use with Gatsby
 tags:
   - wordpress
   - apis
-  - gatsby-for-blogs
+  - blogs
   - headless-cms
   - react
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-2/

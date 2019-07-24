@@ -6,7 +6,7 @@ excerpt: "Ever wondered how to use Gatsby.js with WordPress? This post will cove
 tags:
   - wordpress
   - apis
-  - gatsby-for-blogs
+  - blogs
   - headless-cms
   - react
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-1/

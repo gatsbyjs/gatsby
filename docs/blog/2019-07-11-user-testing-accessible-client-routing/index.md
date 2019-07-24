@@ -5,7 +5,7 @@ date: 2019-07-11
 excerpt: "We conducted 5 user testing sessions with Fable Tech Labs to determine which client-side routing techniques are the most accessible to people with disabilities. With this research, we can make more informed decisions for accessible page changes in sites built with Gatsby, React, and beyond."
 tags:
   - accessibility
-  - gatsby-user-testing
+  - user-testing
   - client-side-routing
   - react
   - cutting-edge-experiences

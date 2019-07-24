@@ -3,7 +3,7 @@ title: Free Swag for Gatsby Contributors
 date: 2018-08-09
 image: images/gatsby-swag.jpg
 author: Jason Lengstorf
-tags: ["gatsby-for-teams", "community"]
+tags: ["open-source", "community"]
 ---
 
 Today, we’re _so excited_ to announce the launch of the [Gatsby Swag Store][store]! If you’ve been following along [on Twitter][twitter], you may have seen the news a little while back.
@@ -24,10 +24,7 @@ Today, we’re _so excited_ to announce the launch of the [Gatsby Swag Store][st
       #buildwithgatsby
     </a>? All contributors get FREE SWAG. Sign in to claim your discount code!
   </p>
-  &mdash; Marisa Morby (@marisamorby){" "}
-  <a href="https://twitter.com/marisamorby/status/1019256499799912449?ref_src=twsrc%5Etfw">
-    July 17, 2018
-  </a>
+  &mdash; Marisa Morby (@marisamorby) <a href="https://twitter.com/marisamorby/status/1019256499799912449?ref_src=twsrc%5Etfw">July 17, 2018</a>
 </blockquote>
 
 We’ve spent the last couple weeks working the kinks out, and we couldn’t be happier with the response we’ve seen.
@@ -39,20 +36,16 @@ We’ve spent the last couple weeks working the kinks out, and we couldn’t be 
   />
   <figcaption>
     Tweets from{" "}
-    <a href="https://twitter.com/DeaNHtiD99/status/1023204484183416832">Dean</a>
-    ,{" "}
+    <a href="https://twitter.com/DeaNHtiD99/status/1023204484183416832">Dean</a>,{" "}
     <a href="https://twitter.com/ARebelBelle/status/1020044426712735744">
       Elle
-    </a>
-    ,{" "}
+    </a>,{" "}
     <a href="https://twitter.com/chaseadamsio/status/1021896138503245824">
       Chase
     </a>
-    , and{" "}
-    <a href="https://twitter.com/kato_katherine/status/1021967765400211456">
+    , and <a href="https://twitter.com/kato_katherine/status/1021967765400211456">
       Katherine
-    </a>{" "}
-    showing off their new Gatsby swag.
+    </a> showing off their new Gatsby swag.
   </figcaption>
 </figure>
 
@@ -67,13 +60,9 @@ Going forward, all contributors to the [Gatsby organization on GitHub][org] will
     Oh hello{" "}
     <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>{" "}
     swag 😍 Really cool getting these for contributing 🎉
-    <a href="https://t.co/2HjDgBJT3B">https://t.co/2HjDgBJT3B</a>{" "}
-    <a href="https://t.co/YGnuD4CPNi">pic.twitter.com/YGnuD4CPNi</a>
+    <a href="https://t.co/2HjDgBJT3B">https://t.co/2HjDgBJT3B</a> <a href="https://t.co/YGnuD4CPNi">pic.twitter.com/YGnuD4CPNi</a>
   </p>
-  &mdash; LekoArts (@lekoarts_de){" "}
-  <a href="https://twitter.com/lekoarts_de/status/1023823370620727296?ref_src=twsrc%5Etfw">
-    July 30, 2018
-  </a>
+  &mdash; LekoArts (@lekoarts_de) <a href="https://twitter.com/lekoarts_de/status/1023823370620727296?ref_src=twsrc%5Etfw">July 30, 2018</a>
 </blockquote>
 
 For more details and instructions on how to claim your free swag, see [the “swag for contributors” section of the docs][swag].
@@ -117,10 +106,7 @@ We love seeing how great the community looks in purple, so please post your Gats
     </a>{" "}
     <a href="https://t.co/B7jHQi6e8Y">pic.twitter.com/B7jHQi6e8Y</a>
   </p>
-  &mdash; Aman Mittal 🖖⚛️☕ (@amanhimself){" "}
-  <a href="https://twitter.com/amanhimself/status/1023124667446509570?ref_src=twsrc%5Etfw">
-    July 28, 2018
-  </a>
+  &mdash; Aman Mittal 🖖⚛️☕ (@amanhimself) <a href="https://twitter.com/amanhimself/status/1023124667446509570?ref_src=twsrc%5Etfw">July 28, 2018</a>
 </blockquote>
 
 ## How the store works
@@ -135,10 +121,7 @@ We also use [Peril][peril] to [automatically invite contributors][invite] to the
     killing it in open source. This is how you treat contributors. Take notes
     📝😊 <a href="https://t.co/9ta3IvfiZF">pic.twitter.com/9ta3IvfiZF</a>
   </p>
-  &mdash; Payton Burdette (@beardedpayton){" "}
-  <a href="https://twitter.com/beardedpayton/status/1020339698332512256?ref_src=twsrc%5Etfw">
-    July 20, 2018
-  </a>
+  &mdash; Payton Burdette (@beardedpayton) <a href="https://twitter.com/beardedpayton/status/1020339698332512256?ref_src=twsrc%5Etfw">July 20, 2018</a>
 </blockquote>
 
 ## What’s next?
@@ -155,10 +138,7 @@ For now, that’s it! We’ll leave you with our favorite genre of tweet: “dog
     Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s
     awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a>
   </p>
-  &mdash; Ryan Wiemer (@ryanwiemer){" "}
-  <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">
-    July 25, 2018
-  </a>
+  &mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a>
 </blockquote>
 
 Thanks for being part of the open source community! 💪💜
