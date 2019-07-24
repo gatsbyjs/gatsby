@@ -73,7 +73,7 @@ with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
 Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
-and configured to process your markdown files to correctly
+and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
 
 ### Configuration
