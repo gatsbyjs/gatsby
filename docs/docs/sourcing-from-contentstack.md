@@ -19,23 +19,13 @@ _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a G
 - [ ] Install Node.js on your system
 - [ ] Install Gatsby CLI: `npm install -g gatsby-cli`
 
-### Step 1: Clone the repo
+### Step 1: Clone the starter repo and install dependencies
 
-Clone the repo from GitHub. This contains all the required dependencies.
-
-`git clone https://github.com/contentstack/gatsby-starter-contentstack.git`
-
-### Step 2: Install npm
-
-Go to the ‘gatsby-starter-contentstack’ folder, and run the following:
-
-```cd gatsby-starter-contentstack
-npm install
-```
+`gatsby new gatsby-starter-contentstack`
 
 This downloads the required files and initializes the site.
 
-### Step 3: Update the config file
+### Step 2: Update the config file
 
 Add the `api_key`, `delivery_token` and `environment` stack details to the existing `gatsby-source-contentstack` object within the gatsby-config.js file:
 
@@ -52,7 +42,7 @@ Add the `api_key`, `delivery_token` and `environment` stack details to the exist
 
 _**Note:** if you wish to preview the pages of your gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
 
-### Step 4: Create and publish content
+### Step 3: Create and publish content
 
 To build a sample home page, perform the following steps in Contentstack:
 
@@ -61,7 +51,7 @@ To build a sample home page, perform the following steps in Contentstack:
 1. Create a development environment
 1. Publish the ‘Home’ entry to the development environment
 
-### Step 5: Run Gatsby
+### Step 4: Run Gatsby
 
 Navigate to your root directory and run the following command:
 
@@ -79,7 +69,7 @@ Now, you will able to query Contentstack data. Try the query below to get the 'H
 }
 ```
 
-### Step 6: Create a page in Gatsby
+### Step 5: Create a page in Gatsby
 
 Go to the pages folder inside the src folder, and create a home.js file. Add the code below to it.
 
