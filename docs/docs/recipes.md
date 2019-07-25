@@ -32,6 +32,20 @@ Craving a happy medium between [full-length tutorials](/tutorial/) and crawling 
 
 ## Table of Contents
 
+1. [Pages and Layouts](#1-pages-and-layouts)
+2. [Styling with CSS](#2-styling-with-css)
+3. [Working with starters](#3-working-with-starters)
+4. [Working with themes](#4-working-with-themes)
+5. [Sourcing data](#5-sourcing-data)
+6. [Querying data](#6-querying-data)
+7. [Working with images](#7-working-with-images)
+8. [Transforming data](#8-transforming-data)
+9. [Deploying your site](#9-deploying-your-site)
+
+## 1. Pages and Layouts
+
+### Project structure
+
 Inside a Gatsby project, you may see some or all of the following folders and files:
 
 ```
@@ -41,6 +55,7 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 |-- /src
     |-- /pages
     |-- /templates
+    |-- html.js
 |-- /static
 |-- gatsby-config.js
 |-- gatsby-node.js
@@ -584,12 +599,12 @@ export default NonPageComponent
 
 ### Import an image into a component with webpack
 
-Images can be imported right into a JavaScript module with webpack. The imported image will give you the URL of the file once it is minified and put in the public folder, which can then be passed to an `<img>` like a regular path.
+Images can be imported right into a JavaScript module with webpack. This process automatically minifies and copies the image to your site's `public` folder, providing a dynamic image URL for you to pass to an HTML `<img>` element like a regular file path.
 
 #### Prerequisites
 
-- A Gatsby Site with a `.js` file exporting a React component
-- an image (`.jpg`, `.png`, `.gif`, etc.) in the `src` folder
+- A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
+- an image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src` folder
 
 #### Directions
 
@@ -599,8 +614,6 @@ Images can be imported right into a JavaScript module with webpack. The imported
 import React from "react"
 // Tell webpack this JS file uses this image
 import FiestaImg from "../assets/fiesta.jpg" // highlight-line
-
-export default () => ()
 ```
 
 2. In `index.js`, add an `<img>` tag with the `src` as the name of the import you used from webpack (in this case `FiestaImg`), and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
@@ -625,18 +638,18 @@ export default () => (
 
 ### Reference an image from the `static` folder
 
-As an alternative to importing assets with webpack, the `static` folder allows access to content that gets copied into the `public` folder when built.
+As an alternative to importing assets with webpack, the `static` folder allows access to content that gets automatically copied into the `public` folder when built.
 
-This is an **escape route** for [specific use cases](/docs/static-folder/#when-to-use-the-static-folder), and other methods like [importing with webpack](#import-an-image-into-a-component-with-webpack) are recommended to leverage optimizations made by Gatsby
+This is an **escape route** for [specific use cases](/docs/static-folder/#when-to-use-the-static-folder), and other methods like [importing with webpack](#import-an-image-into-a-component-with-webpack) are recommended to leverage optimizations made by Gatsby.
 
 #### Prerequisites
 
-- A Gatsby Site with a `.js` file exporting a React component
-- An image (`.jpg`, `.png`, `.gif`, etc.) in the `static` folder
+- A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
+- An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `static` folder
 
 #### Directions
 
-1. Ensure that your image is in your `static` folder at the root of the project, your project structure might look something like this:
+1. Ensure that the image is in your `static` folder at the root of the project. Your project structure might look something like this:
 
 ```
 ├── gatsby-config.js
