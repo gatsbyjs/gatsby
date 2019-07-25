@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.19...gatsby-cli@2.7.20) (2019-07-25)
+
+### Bug Fixes
+
+- **gatsby-cli:** don't try to use local binaries ([#16082](https://github.com/gatsbyjs/gatsby/issues/16082)) ([f437943](https://github.com/gatsbyjs/gatsby/commit/f437943))
+
+## [2.7.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.18...gatsby-cli@2.7.19) (2019-07-23)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.17...gatsby-cli@2.7.18) (2019-07-23)
+
+### Bug Fixes
+
+- **gatsby-cli:** fallback to empty string when `appName` is em… ([#15943](https://github.com/gatsbyjs/gatsby/issues/15943)) ([59fdbc1](https://github.com/gatsbyjs/gatsby/commit/59fdbc1))
+
+## [2.7.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.16...gatsby-cli@2.7.17) (2019-07-19)
+
+### Bug Fixes
+
+- **gatsby-cli:** fix cut off text ([#15907](https://github.com/gatsbyjs/gatsby/issues/15907)) ([11322d8](https://github.com/gatsbyjs/gatsby/commit/11322d8))
+
+## [2.7.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.15...gatsby-cli@2.7.16) (2019-07-19)
+
+### Bug Fixes
+
+- **gatsby-cli:** convert hooks into class component ([#15903](https://github.com/gatsbyjs/gatsby/issues/15903)) ([0ab03f5](https://github.com/gatsbyjs/gatsby/commit/0ab03f5))
+
 ## [2.7.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.14...gatsby-cli@2.7.15) (2019-07-15)
 
 **Note:** Version bump only for package gatsby-cli

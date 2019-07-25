@@ -22,7 +22,7 @@ const spawn = (cmd: string, options: any) => {
   return spawnWithArgs(file, args, options)
 }
 const spawnWithArgs = (file: string, args: string[], options: any) =>
-  execa(file, args, { stdio: `inherit`, ...options })
+  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
 
 // Checks the existence of yarn package and user preference if it exists
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn

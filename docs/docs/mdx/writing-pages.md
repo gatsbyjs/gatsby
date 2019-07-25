@@ -228,9 +228,12 @@ Here's a paragraph, followed by a paragraph with data!
 <p>{props.data.site.siteMetadata.description}</p>
 
 export const pageQuery = graphql`
-  site {
-    siteMetadata {
-      description
+  query {
+    site {
+      siteMetadata {
+        description
+        title
+      }
     }
   }
 `
