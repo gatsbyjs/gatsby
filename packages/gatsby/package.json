@@ -142,6 +142,7 @@
     "@babel/runtime": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.1.4",
+    "documentation": "^10.1.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "rimraf": "^2.6.1",
@@ -151,6 +152,7 @@
     "node": ">=8.0.0"
   },
   "files": [
+    "apis.json",
     "cache-dir",
     "dist",
     "graphql.js",
@@ -183,6 +185,7 @@
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
+    "postbuild": "node scripts/output-api-file.js",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore **/__tests__",
