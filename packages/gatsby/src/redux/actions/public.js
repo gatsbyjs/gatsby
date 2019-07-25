@@ -261,39 +261,35 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
 
-      try {
-        const relativePath = page.component.replace(cwd, ``).replace(/^\//, ``)
-        console.log(trueCasePathSync(relativePath, cwd))
-        let trueComponentPath = slash(trueCasePathSync(relativePath, cwd))
+      const relativePath = page.component.replace(cwd, ``).replace(/^\//, ``)
+      let trueComponentPath = slash(trueCasePathSync(relativePath, cwd))
 
-        if (trueComponentPath !== page.component) {
-          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-            const markers = page.component
-              .split(``)
-              .map((letter, index) => {
-                if (letter !== trueComponentPath[index]) {
-                  return `^`
-                }
-                return ` `
-              })
-              .join(``)
+      if (trueComponentPath !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== trueComponentPath[index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
 
-            report.warn(
-              stripIndent`
-            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+          report.warn(
+            stripIndent`
+          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
-            page.component:     "${page.component}"
-            path in filesystem: "${trueComponentPath}"
-                                 ${markers}
-          `
-            )
-            hasWarnedForPageComponentInvalidCasing.add(page.component)
-          }
+          page.component:     "${page.component}"
+          path in filesystem: "${trueComponentPath}"
+                                ${markers}
+        `
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
-        page.component = trueComponentPath
-      } catch (e) {
-        console.log(e)
       }
+      page.component = trueComponentPath
+
       pageComponentCache[originalPageComponent] = page.component
     }
   }
