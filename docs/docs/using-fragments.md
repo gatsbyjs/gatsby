@@ -66,7 +66,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  qurty {
+  query {
     site {
       ...SiteInformation
     }
