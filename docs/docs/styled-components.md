@@ -115,7 +115,7 @@ export default () => (
 
 Adding a persistent CSS `className` to your styled components can make it easier for users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 
-Here's an example where the class name `container` is added to the DOM along with the Styled Components' dynamically-created class names:
+Here's an example where the class name `container` is added to the DOM along with the Styled Components dynamically-created class names:
 
 ```jsx:title=src/components/container.js
 import React from "react"
