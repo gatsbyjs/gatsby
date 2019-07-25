@@ -3429,3 +3429,16 @@
     - Page Transitions
     - Blog Post Template
     - Sitemap & Robots.txt generation
+- url: https://elemental.netlify.com/
+  repo: https://github.com/akzhy/gatsby-starter-elemental
+  description: A highly customizable portfolio starter with grid support.
+  tags:
+    - Blog
+    - Portfolio
+    - SEO
+  features:
+    - Highly Customizable
+    - Portfolio Template
+    - Blog Post Template
+    - SEO Friendly
+    
