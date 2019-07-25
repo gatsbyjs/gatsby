@@ -287,8 +287,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           )
           hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
+
+        page.component = trueComponentPath
       }
-      page.component = trueComponentPath
 
       pageComponentCache[originalPageComponent] = page.component
     }
