@@ -27,18 +27,16 @@ This downloads the required files and initializes the site.
 
 ### Step 2: Update the config file
 
-Add the `api_key`, `delivery_token` and `environment` stack details to the existing `gatsby-source-contentstack` object within the gatsby-config.js file:
+Create copies of the `env.sample` file for `.env.development`, `.env.production` and any other environment, then add the following stack details to each respective file:
 
-```plugins: [{
-    resolve: `gatsby-source-contentstack`,
-    options: {
-      api_key: `api_key`,
-      access_token: `delivery_token`,
-      environment: `environment`
-    },
-  }'
-]
 ```
+   api_key: `api_key`,
+   access_token: `delivery_token`,
+   environment: `environment`
+
+```
+
+These will be pulled into the `gatsby-config.js` file under the `gatsby-source-contentstack` plugin.
 
 _**Note:** if you wish to preview the pages of your gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
 
