@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.7...babel-preset-gatsby@0.2.8) (2019-07-25)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** Adds a missing `resolve` call ([#16084](https://github.com/gatsbyjs/gatsby/issues/16084)) ([c37f2be](https://github.com/gatsbyjs/gatsby/commit/c37f2be))
+
 ## [0.2.7](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.6...babel-preset-gatsby@0.2.7) (2019-07-19)
 
 **Note:** Version bump only for package babel-preset-gatsby
