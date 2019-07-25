@@ -10,9 +10,14 @@ markdown. It’s a great combination because it allows you to use markdown’s o
 terse syntax (such as `# heading`) for the little things and JSX for more advanced
 components.
 
+## Why MDX?
+
+Before MDX, some of the benefits of writing Markdown were lost when integrating with JSX. Implementations were often template string-based which required lots of escaping and cumbersome syntax.
+
+MDX seeks to make writing with Markdown and JSX simpler while being more expressive. Writing is fun again when you combine components, that can even be dynamic or load data, with the simplicity of Markdown for long-form content.
+
 ### Read more about MDX
 
-- [❔ Why MDX?](https://www.gatsbyjs.org/docs/mdx/why/)
 - [📚 Gatsby guide](https://www.gatsbyjs.org/docs/mdx/)
 - [📣 Language](https://mdxjs.com)
 - [👩‍🔬 Specification](https://github.com/mdx-js/specification)
