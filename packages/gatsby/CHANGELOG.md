@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.41](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.40...gatsby@2.13.41) (2019-07-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.39...gatsby@2.13.40) (2019-07-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.38...gatsby@2.13.39) (2019-07-24)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.37...gatsby@2.13.38) (2019-07-23)
+
+### Bug Fixes
+
+- **gatsby:** use joi validation result instead of payload ([#15379](https://github.com/gatsbyjs/gatsby/issues/15379)) ([5856fb7](https://github.com/gatsbyjs/gatsby/commit/5856fb7))
+
+## [2.13.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.36...gatsby@2.13.37) (2019-07-23)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.35...gatsby@2.13.36) (2019-07-23)
+
+### Features
+
+- **gatsby:** Includes ts/tsx files to eslint rules ([#15976](https://github.com/gatsbyjs/gatsby/issues/15976)) ([6adcb9a](https://github.com/gatsbyjs/gatsby/commit/6adcb9a))
+
+## [2.13.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.34...gatsby@2.13.35) (2019-07-23)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.33...gatsby@2.13.34) (2019-07-23)
+
+### Bug Fixes
+
+- **gatsby:** add jsdoc for matchPath on page Object ([#15749](https://github.com/gatsbyjs/gatsby/issues/15749)) ([5633fdb](https://github.com/gatsbyjs/gatsby/commit/5633fdb))
+- **gatsby:** Add touchNode to populate typeOwners ([#15919](https://github.com/gatsbyjs/gatsby/issues/15919)) ([9d5026f](https://github.com/gatsbyjs/gatsby/commit/9d5026f))
+
+## [2.13.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.32...gatsby@2.13.33) (2019-07-22)
+
+### Bug Fixes
+
+- **gatsby:** Use UTC dates in test ([#15895](https://github.com/gatsbyjs/gatsby/issues/15895)) ([6eb1b76](https://github.com/gatsbyjs/gatsby/commit/6eb1b76))
+
+## [2.13.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.31...gatsby@2.13.32) (2019-07-20)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.30...gatsby@2.13.31) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.29...gatsby@2.13.30) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.28...gatsby@2.13.29) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.27...gatsby@2.13.28) (2019-07-18)
+
+### Bug Fixes
+
+- **gatsby:** 404 page when using path-prefix ([#15858](https://github.com/gatsbyjs/gatsby/issues/15858)) ([51886a3](https://github.com/gatsbyjs/gatsby/commit/51886a3))
+- **gatsby:** Make intermediate schema available to createResolvers API ([#15838](https://github.com/gatsbyjs/gatsby/issues/15838)) ([055a1b0](https://github.com/gatsbyjs/gatsby/commit/055a1b0))
+
+### Features
+
+- **gatsby:** Allow explicitly defining parent-child relations with type extensions ([#15715](https://github.com/gatsbyjs/gatsby/issues/15715)) ([696106d](https://github.com/gatsbyjs/gatsby/commit/696106d))
+
 ## [2.13.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.26...gatsby@2.13.27) (2019-07-17)
 
 ### Bug Fixes
@@ -1383,7 +1455,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby:** avoid full page refresh when navigating to non-existant page ([#10684](https://github.com/gatsbyjs/gatsby/issues/10684)) ([88866c7](https://github.com/gatsbyjs/gatsby/commit/88866c7))
+- **gatsby:** avoid full page refresh when navigating to non-existent page ([#10684](https://github.com/gatsbyjs/gatsby/issues/10684)) ([88866c7](https://github.com/gatsbyjs/gatsby/commit/88866c7))
 
 <a name="2.0.77"></a>
 
@@ -2921,7 +2993,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - [www] Blog post meta styles #1561 @fk
 - Fix unsupported method in IE #1573 @variadicintegrity
-- Don't set a default title in html.js as not overriden by react-helmet #1578
+- Don't set a default title in html.js as not overridden by react-helmet #1578
   @KyleAMathews
 - Downgrade Glamor to v2 as v3 unstable #1580 @KyleAMathews
 - Remove the slash between the pathPrefix and pathname when navigating #1574
@@ -3130,7 +3202,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Added
 
 - Add using-remark example site #1230 @fk
-- Add friendly webpack ouput #1240 @craig-mulligan
+- Add friendly webpack output #1240 @craig-mulligan
 - Add documentation on how to use custom webpack-config #1242 @bananenmannfrau
 - Add graphql fields for creating responsive images using Contentful image API
   #1228 @kyleamathews
