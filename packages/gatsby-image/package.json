@@ -14,9 +14,9 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "@testing-library/react": "^8.0.6",
     "babel-preset-gatsby-package": "^0.2.2",
-    "cross-env": "^5.1.4",
-    "react-testing-library": "^5.0.0"
+    "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image#readme",
   "keywords": [

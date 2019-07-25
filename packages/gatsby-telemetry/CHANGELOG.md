@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.6...gatsby-telemetry@1.1.7) (2019-07-23)
+
+**Note:** Version bump only for package gatsby-telemetry
+
 ## [1.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.5...gatsby-telemetry@1.1.6) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-telemetry
