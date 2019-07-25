@@ -82,13 +82,18 @@ exports.onPostBuild = (args, pluginOptions) => {
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory,
     // since these files have unique URLs and their contents will never change
-    dontCacheBustUrlsMatching: /(\.js$|\.css$|\/static\/)/,
+    dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
     runtimeCaching: [
       {
         // Use cacheFirst since these don't need to be revalidated (same RegExp
         // and same reason as above)
-        urlPattern: /(\.js$|\.css$|\/static\/)/,
+        urlPattern: /(\.js$|\.css$|static\/)/,
         handler: `cacheFirst`,
+      },
+      {
+        // page-data.json files are not content hashed
+        urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+        handler: `networkFirst`,
       },
       {
         // Add runtime caching of various other page resources
@@ -126,7 +131,7 @@ exports.onPostBuild = (args, pluginOptions) => {
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
         .replace(/%pathPrefix%/g, pathPrefix)
 
-      fs.appendFileSync(`public/sw.js`, swAppend)
+      fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
       console.log(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
       )

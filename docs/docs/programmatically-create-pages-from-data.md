@@ -1,5 +1,5 @@
 ---
-title: Programmatically create pages from data
+title: Creating Pages from Data Programatically
 ---
 
 Gatsby and its ecosystem of plugins provide all kinds of data through a
@@ -10,46 +10,42 @@ programmatically create pages.
 
 Though you can use any data source you'd like, this guide will show how to
 create pages from markdown files (following after the example introduced in
-[earlier guides](https://www.gatsbyjs.org/docs/adding-markdown-pages/)).
+[earlier guides](/docs/adding-markdown-pages/)).
 
 ### Creating Pages
 
 The Gatsby Node API provides the
-[`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+[`createPages`](/docs/node-apis/#createPages)
 extension point which we'll use to add pages. This function will give us
 access to the
-[`createPage`](https://www.gatsbyjs.org/docs/actions/#createPage) action
+[`createPage`](/docs/actions/#createPage) action
 which is at the core of programmatically creating a page.
 
-```javascript{17-25}:title=gatsby-node.js
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
-  return new Promise((resolve, reject) => {
-    graphql(`
-      {
-        allMarkdownRemark {
-          edges {
-            node {
-              fields {
-                slug
-              }
+```js:title=gatsby-node.js
+exports.createPages = async function({ actions, graphql }) {
+  const { data } = await graphql(`
+    query {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-    `).then(result => {
-      result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-        createPage({
-          path: node.fields.slug,
-          component: path.resolve(`./src/templates/blog-post.js`),
-          context: {
-            slug: node.fields.slug,
-          },
-        })
-      })
-      resolve()
+    }
+  `)
+  // highlight-start
+  data.allMarkdownRemark.edges.forEach(edge => {
+    const slug = edge.node.fields.slug
+    actions.createPage({
+      path: slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: { slug: slug },
     })
   })
+  // highlight-end
 }
 ```
 
@@ -103,7 +99,7 @@ component itself.
 ### Not Just Markdown
 
 The
-[`gatsby-transformer-remark`](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/)
+[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
 plugin is just one of a multitude of Gatsby plugins that can provide data
 through the GraphQL interface. Any of that data can be used to
 programmatically create pages.
@@ -111,4 +107,4 @@ programmatically create pages.
 ### Other Resources
 
 - [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
-- [Using Unstructured Data](https://www.gatsbyjs.org/docs/using-unstructured-data/)
+- [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)

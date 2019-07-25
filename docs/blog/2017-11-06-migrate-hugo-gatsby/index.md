@@ -77,7 +77,7 @@ The only work I had to do on the content migration was to reformat the
 [frontmatter](https://gohugo.io/content-management/front-matter/). In Hugo, I
 used TOML, whereas `gatsby-transformer-remark` works only with YAML for the
 moment. Luckily, I still had the Hugo CLI on my system so could make use of its
-[build-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
+[built-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
 only issue I had was that sometimes titles were longer than 1 line and were not
 parse-able, so I just had to cut some words out where problematic.
 
@@ -93,7 +93,7 @@ plus there is a
 [tutorial](/tutorial/part-four/#data-in-gatsby), which
 gives examples. In sum, I created a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
-[`boundActionCreators`](/docs/bound-action-creators/).
+[`boundActionCreators`](/docs/actions/).
 
 This might sound way more complicated than what it is:
 
@@ -432,7 +432,7 @@ that Gatsby delivers the HTML page at `/admin`.
 
 ```jsx
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 const AdminPage = () => (
   <div className="admin">

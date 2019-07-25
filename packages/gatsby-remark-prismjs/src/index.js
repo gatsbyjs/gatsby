@@ -1,6 +1,7 @@
 const visit = require(`unist-util-visit`)
 
 const parseLineNumberRange = require(`./parse-line-number-range`)
+const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
 
@@ -11,6 +12,8 @@ module.exports = (
     inlineCodeMarker = null,
     aliases = {},
     noInlineHighlight = false,
+    showLineNumbers: showLineNumbersGlobal = false,
+    languageExtensions = [],
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -18,14 +21,18 @@ module.exports = (
     return aliases[lower] || lower
   }
 
+  //Load language extension if defined
+  loadLanguageExtension(languageExtensions)
+
   visit(markdownAST, `code`, node => {
     let language = node.lang
     let {
       splitLanguage,
       highlightLines,
-      numberLines,
+      showLineNumbersLocal,
       numberLinesStartAt,
     } = parseLineNumberRange(language)
+    const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     language = splitLanguage
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
@@ -48,7 +55,7 @@ module.exports = (
 
     let numLinesStyle, numLinesClass, numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
-    if (numberLines) {
+    if (showLineNumbers) {
       numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
         1}"`
       numLinesClass = ` line-numbers`
@@ -58,12 +65,17 @@ module.exports = (
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
+
+    let highlightClassName = `gatsby-highlight`
+    if (highlightLines && highlightLines.length > 0)
+      highlightClassName += ` has-highlighted-lines`
+
     // prettier-ignore
     node.value = ``
-    + `<div class="gatsby-highlight" data-language="${languageName}">`
+    + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
-    +       `${highlightCode(language, node.value, highlightLines)}`
+    +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`

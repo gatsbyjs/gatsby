@@ -1,6 +1,6 @@
 ---
 title: "Migrating My Blog From Hexo To Gatsby"
-date: "2017-10-01"
+date: 2017-10-01
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."
@@ -42,7 +42,7 @@ there's a
 Let's move some files around. Gatsby gives you a good amount of flexibility when
 it comes to file structure, but for consistency with the docs I'm going to use
 the suggested file structure for migrating my blog. How you handle this step
-will depend on what you're migrating from. I am migrating form Hexo, which is
+will depend on what you're migrating from. I am migrating from Hexo, which is
 very similar to Jekyll in how it structures files.
 
 ### Clean up your source repo
@@ -55,7 +55,7 @@ doesn't interfere with anything. I chose to create `hexo.bak/` where all my old
 blog files would live (except for the content).
 
 You could also simply delete everything other than your raw content. It's up to
-you. But once your done with this cleanup you should have made a decision on
+you. But once you're done with this cleanup you should have made a decision on
 where to hold your content, and moved everything else away or removed it.
 
 Here's what that looks like for me:
@@ -82,7 +82,6 @@ are many ways you could do this but I'll go over what I did.
 To get all the Gatsby files you can use the Gatsby CLI.
 
 ```yaml
-npm install -g gatsby-cli   # Install gatsby CLI
 gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
 cp -R temp-gatsby-files/* ./ # Copy all the files into your root directory
 rm -rf temp-gatsby-files     # Remove the temp directory

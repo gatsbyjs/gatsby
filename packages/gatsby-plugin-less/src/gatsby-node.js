@@ -13,6 +13,7 @@ exports.onCreateWebpackConfig = (
     options: {
       sourceMap: !PRODUCTION,
       ...lessOptions,
+      plugins: lessOptions.lessPlugins || [], // for #4645
     },
   }
 
@@ -30,7 +31,7 @@ exports.onCreateWebpackConfig = (
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [
-      !isSSR && loaders.miniCssExtract(),
+      !isSSR && loaders.miniCssExtract({ hmr: false }),
       loaders.css({ ...cssLoaderOptions, modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,

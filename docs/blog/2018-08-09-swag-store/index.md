@@ -1,6 +1,6 @@
 ---
 title: Free Swag for Gatsby Contributors
-date: "2018-08-09"
+date: 2018-08-09
 image: images/gatsby-swag.jpg
 author: Jason Lengstorf
 tags: ["collaboration", "community"]
@@ -8,7 +8,7 @@ tags: ["collaboration", "community"]
 
 Today, we’re _so excited_ to announce the launch of the [Gatsby Swag Store][store]! If you’ve been following along [on Twitter][twitter], you may have seen the news a little while back.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">🎉The Gatsby Store is officially open! 🎉<br><br>We’ve got snuggly socks, soft t-shirts, and enough stickers to wallpaper your house. 🧦👕🏡<br><br>Get ’em at <a href="https://t.co/e7xq9qTaP7">https://t.co/e7xq9qTaP7</a><br><br>P.S. Do you <a href="https://twitter.com/hashtag/buildwithgatsby?src=hash&amp;ref_src=twsrc%5Etfw">#buildwithgatsby</a>? All contributors get FREE SWAG. Sign in to claim your discount code!</p>&mdash; Marisa Morby (@marisamorby) <a href="https://twitter.com/marisamorby/status/1019256499799912449?ref_src=twsrc%5Etfw">July 17, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">🎉The Gatsby Store is officially open! 🎉<br/><br/>We’ve got snuggly socks, soft t-shirts, and enough stickers to wallpaper your house. 🧦👕🏡<br/><br/>Get ’em at <a href="https://t.co/e7xq9qTaP7">https://t.co/e7xq9qTaP7</a><br/><br/>P.S. Do you <a href="https://twitter.com/hashtag/buildwithgatsby?src=hash&amp;ref_src=twsrc%5Etfw">#buildwithgatsby</a>? All contributors get FREE SWAG. Sign in to claim your discount code!</p>&mdash; Marisa Morby (@marisamorby) <a href="https://twitter.com/marisamorby/status/1019256499799912449?ref_src=twsrc%5Etfw">July 17, 2018</a></blockquote>
 
 We’ve spent the last couple weeks working the kinks out, and we couldn’t be happier with the response we’ve seen.
 
@@ -46,11 +46,11 @@ We know how much it sucks when things aren’t available in your country, so —
 
 We love seeing how great the community looks in purple, so please post your Gatsby swag photos with the hashtag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby).
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">What a Saturday afternoon 😁<br><br>Received them <a href="https://twitter.com/hashtag/Gatsbyjs?src=hash&amp;ref_src=twsrc%5Etfw">#Gatsbyjs</a> <a href="https://twitter.com/hashtag/swag?src=hash&amp;ref_src=twsrc%5Etfw">#swag</a>😍🤩<br><br>Thank you <a href="https://twitter.com/jlengstorf?ref_src=twsrc%5Etfw">@jlengstorf</a> and the team behind it for making it happen. <a href="https://twitter.com/hashtag/buildwithgatsby?src=hash&amp;ref_src=twsrc%5Etfw">#buildwithgatsby</a> <a href="https://t.co/B7jHQi6e8Y">pic.twitter.com/B7jHQi6e8Y</a></p>&mdash; Aman Mittal 🖖⚛️☕ (@amanhimself) <a href="https://twitter.com/amanhimself/status/1023124667446509570?ref_src=twsrc%5Etfw">July 28, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">What a Saturday afternoon 😁<br/><br/>Received them <a href="https://twitter.com/hashtag/Gatsbyjs?src=hash&amp;ref_src=twsrc%5Etfw">#Gatsbyjs</a> <a href="https://twitter.com/hashtag/swag?src=hash&amp;ref_src=twsrc%5Etfw">#swag</a>😍🤩<br/><br/>Thank you <a href="https://twitter.com/jlengstorf?ref_src=twsrc%5Etfw">@jlengstorf</a> and the team behind it for making it happen. <a href="https://twitter.com/hashtag/buildwithgatsby?src=hash&amp;ref_src=twsrc%5Etfw">#buildwithgatsby</a> <a href="https://t.co/B7jHQi6e8Y">pic.twitter.com/B7jHQi6e8Y</a></p>&mdash; Aman Mittal 🖖⚛️☕ (@amanhimself) <a href="https://twitter.com/amanhimself/status/1023124667446509570?ref_src=twsrc%5Etfw">July 28, 2018</a></blockquote>
 
 ## How the store works
 
-All of the source code for the swag store [has been open sourced][swag-source]. The front-end is a [Gatsby v2][v2] site (naturally) using [Shopify][shopify] (and their [JS Buy SDK][js-buy-sdk]) to display products and manage carts, [Auth0][auth0] to handle authentication, and a [custom Express API][swag-api] to manage discount code requests.
+All of the source code for the swag store [has been open sourced][swag-source]. The frontend is a [Gatsby v2][v2] site (naturally) using [Shopify][shopify] (and their [JS Buy SDK][js-buy-sdk]) to display products and manage carts, [Auth0][auth0] to handle authentication, and a [custom Express API][swag-api] to manage discount code requests.
 
 We also use [Peril][peril] to [automatically invite contributors][invite] to the Gatsby organization on GitHub and post details about claiming swag. Here’s an example (and some kind words from Gatsby contributor [Payton Burdette](https://twitter.com/beardedpayton)) showing what the automated response looks like:
 
@@ -69,7 +69,7 @@ Thanks for being part of the open source community! 💪💜
 [twitter]: https://twitter.com/gatsbyjs
 [org]: https://github.com/gatsbyjs
 [store]: https://store.gatsbyjs.org/
-[swag]: /docs/contributor-swag/
+[swag]: /contributing/contributor-swag/
 [swag-source]: https://github.com/gatsbyjs/store.gatsbyjs.org
 [swag-api]: https://github.com/gatsbyjs/api.gatsbyjs.org
 [v2]: /blog/2018-06-16-announcing-gatsby-v2-beta-launch/
@@ -78,4 +78,4 @@ Thanks for being part of the open source community! 💪💜
 [auth0]: https://auth0.com/
 [invite]: https://github.com/gatsbyjs/peril-gatsbyjs/blob/master/rules/invite-collaborator.ts
 [peril]: https://github.com/danger/peril
-[contribute]: /docs/how-to-contribute/
+[contribute]: /contributing/how-to-contribute/

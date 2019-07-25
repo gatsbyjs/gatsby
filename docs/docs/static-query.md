@@ -8,7 +8,7 @@ In this guide, we'll walk through an example using `StaticQuery`, and discuss [t
 
 ## How to use `StaticQuery` in components
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery/embed" />
+<iframe class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery/embed" />
 
 Video hosted on [egghead.io][egghead].
 
@@ -43,6 +43,10 @@ export default () => (
 ```
 
 Using `StaticQuery`, you can colocate a component with its data. No longer is it required to, say, pass data down from `Layout` to `Header`.
+
+### useStaticQuery
+
+There's also a hooks version of StaticQuery called `useStaticQuery`. Check out its documentation [here!](/docs/use-static-query/)
 
 ### Typechecking
 

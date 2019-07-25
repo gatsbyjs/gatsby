@@ -6,7 +6,7 @@ typora-copy-images-to: ./
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
 to feel pretty comfortable 😀
 
-## Recap of first half of the tutorial
+## Recap of the first half of the tutorial
 
 So far, you've been learning how to use React.js—how powerful it is to be able to
 create your _own_ components to act as custom building blocks for websites.
@@ -22,11 +22,11 @@ GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 
 ## Data in Gatsby
 
-A website has four parts, HTML, CSS, JS, and data. The first half of the
-tutorial focused on the first three. Let's learn now how to use data in Gatsby
+A website has four parts: HTML, CSS, JS, and data. The first half of the
+tutorial focused on the first three. Now let’s learn how to use data in Gatsby
 sites.
 
-What is data?
+**What is data?**
 
 A very computer science-y answer would be: data is things like `"strings"`,
 integers (`42`), objects (`{ pizza: true }`), etc.
@@ -54,16 +54,16 @@ directly into your components**—in the shape and form you want.
 
 ### Do I have to use GraphQL and source plugins to pull data into Gatsby sites?
 
-Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby sites rather than GraphQL and source plugins. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
+Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby pages directly, rather than through the GraphQL data layer. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-See the [Using Unstructured Data](/docs/using-unstructured-data/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
 
 ### When do I use unstructured data vs GraphQL?
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/packages/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/plugin-authoring/) guide and consider building your own!
+1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
@@ -83,9 +83,9 @@ Gatsby uses GraphQL to enable components to declare the data they need.
 
 ## Create a new example site
 
-Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
+Create another new site for this part of the tutorial. You're going to build a Markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures and videos of pandas eating lots of food. Along the way, you'll be dipping your toes into GraphQL and Gatsby's Markdown support.
 
-Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`, and navigate to the new directory:
+Open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-four`. Then navigate to the new directory:
 
 ```shell
 gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -96,21 +96,21 @@ Then install some other needed dependencies at the root of the project. You'll u
 "Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
 
 ```shell
-npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion emotion react-emotion emotion-server
+npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion @emotion/core
 ```
 
 Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import { Link } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
 export default ({ children }) => (
   <div
-    className={css`
+    css={css`
       margin: 0 auto;
       max-width: 700px;
       padding: ${rhythm(2)};
@@ -119,7 +119,7 @@ export default ({ children }) => (
   >
     <Link to={`/`}>
       <h3
-        className={css`
+        css={css`
           margin-bottom: ${rhythm(2)};
           display: inline-block;
           font-style: normal;
@@ -130,7 +130,7 @@ export default ({ children }) => (
     </Link>
     <Link
       to={`/about/`}
-      className={css`
+      css={css`
         float: right;
       `}
     >
@@ -215,11 +215,13 @@ But what if you want to change the site title in the future? You'd have to searc
 
 The place for these common bits of data is the `siteMetadata` object in the `gatsby-config.js` file. Add your site title to the `gatsby-config.js` file:
 
-```javascript{2-4}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
+  // highlight-start
   siteMetadata: {
     title: `Title from siteMetadata`,
   },
+  // highlight-end
   plugins: [
     `gatsby-plugin-emotion`,
     {
@@ -238,14 +240,15 @@ Restart the development server.
 
 Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/page-query):
 
-```jsx{2,5,7,14-23}:title=src/pages/about.js
+```jsx:title=src/pages/about.js
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
+// highlight-next-line
 export default ({ data }) => (
   <Layout>
-    <h1>About {data.site.siteMetadata.title}</h1>
+    <h1>About {data.site.siteMetadata.title}</h1> {/* highlight-line */}
     <p>
       We're the only site running on your computer dedicated to showing the best
       photos and videos of pandas eating lots of food.
@@ -253,6 +256,7 @@ export default ({ data }) => (
   </Layout>
 )
 
+// highlight-start
 export const query = graphql`
   query {
     site {
@@ -262,6 +266,7 @@ export const query = graphql`
     }
   }
 `
+// highlight-end
 ```
 
 It worked! 🎉
@@ -270,7 +275,7 @@ It worked! 🎉
 
 The basic GraphQL query that retrieves the `title` in our `about.js` changes above is:
 
-```
+```graphql:title=src/pages/about.js
 {
   site {
     siteMetadata {
@@ -287,19 +292,20 @@ Page queries live outside of the component definition -- by convention at the en
 ### Use a StaticQuery
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
+Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/)
+Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
-Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file, and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
-
-```jsx{3,8-18,35,48-49}:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
-import { css } from "react-emotion"
-import { StaticQuery, Link, graphql } from "gatsby"
+import { css } from "@emotion/core"
+// highlight-next-line
+import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-
-export default ({ children }) => (
-  <StaticQuery
-    query={graphql`
+// highlight-start
+export default ({ children }) => {
+  const data = useStaticQuery(
+    graphql`
       query {
         site {
           siteMetadata {
@@ -307,40 +313,43 @@ export default ({ children }) => (
           }
         }
       }
-    `}
-    render={data => (
-      <div
-        className={css`
-          margin: 0 auto;
-          max-width: 700px;
-          padding: ${rhythm(2)};
-          padding-top: ${rhythm(1.5)};
-        `}
-      >
-        <Link to={`/`}>
-          <h3
-            className={css`
-              margin-bottom: ${rhythm(2)};
-              display: inline-block;
-              font-style: normal;
-            `}
-          >
-            {data.site.siteMetadata.title}
-          </h3>
-        </Link>
-        <Link
-          to={`/about/`}
-          className={css`
-            float: right;
+    `
+  )
+  return (
+    // highlight-end
+    <div
+      css={css`
+        margin: 0 auto;
+        max-width: 700px;
+        padding: ${rhythm(2)};
+        padding-top: ${rhythm(1.5)};
+      `}
+    >
+      <Link to={`/`}>
+        <h3
+          css={css`
+            margin-bottom: ${rhythm(2)};
+            display: inline-block;
+            font-style: normal;
           `}
         >
-          About
-        </Link>
-        {children}
-      </div>
-    )}
-  />
-)
+          {data.site.siteMetadata.title} {/* highlight-line */}
+        </h3>
+      </Link>
+      <Link
+        to={`/about/`}
+        css={css`
+          float: right;
+        `}
+      >
+        About
+      </Link>
+      {children}
+    </div>
+    // highlight-start
+  )
+}
+// highlight-end
 ```
 
 Another success! 🎉

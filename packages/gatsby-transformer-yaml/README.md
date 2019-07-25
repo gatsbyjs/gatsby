@@ -164,3 +164,77 @@ Which would return:
 ```
 
 Please do **note** that `allLettersYaml` **will not** show up if you do not have any `.yaml` files.
+
+## Configuration options
+
+**`typeName`** [string|function][optional]
+
+The default naming convention documented above can be changed with
+either a static string value (e.g. to be able to query all yaml with a
+simple query):
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-yaml`,
+      options: {
+        typeName: `Yaml`, // a fixed string
+      },
+    },
+  ],
+}
+```
+
+```graphql
+{
+  allYaml {
+    edges {
+      node {
+        value
+      }
+    }
+  }
+}
+```
+
+or a function that receives the following arguments:
+
+- `node`: the graphql node that is being processed, e.g. a File node with
+  yaml content
+- `object`: a single object (either an item from an array or the whole yaml content)
+- `isArray`: boolean, true if `object` is part of an array
+
+```yaml
+- level: info
+  message: hurray
+- level: info
+  message: it works
+- level: warning
+  message: look out
+```
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-yaml`,
+      options: {
+        typeName: ({ node, object, isArray }) => object.level,
+      },
+    },
+  ],
+}
+```
+
+```graphql
+{
+  allInfo {
+    edges {
+      node {
+        message
+      }
+    }
+  }
+}
+```

@@ -30,7 +30,7 @@ Create a new component with this initial boilerplate:
 
 ```jsx:title=src/components/SEO.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 
@@ -124,7 +124,7 @@ The last step is to return this data with the help of `Helmet`. Your complete SE
 
 ```jsx:title=src/components/SEO.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 

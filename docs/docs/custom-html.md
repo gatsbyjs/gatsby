@@ -3,7 +3,7 @@ title: Customizing html.js
 ---
 
 Gatsby uses a React component to server render the `<head>` and other parts of
-the HTML outside of the core Gatsby application.
+the HTML outside of the core Gatsby application. Gatsby also sets a default value for the `<noscript>` tag there.
 
 Most sites should use the default `html.js` shipped with Gatsby. But if you need
 to customize your site's html.js, copy the default one into your source
@@ -15,17 +15,23 @@ cp .cache/default-html.js src/html.js
 
 And then make modifications as needed.
 
+If you need to insert custom html into the `<head>` or `<footer>` of each page on your site, you can use `html.js`.
+
 ### Required props
 
 Note: the various props that are rendered into pages _are_ required e.g.
 `headComponents`, `preBodyComponents`, `body`, and `postBodyComponents`.
 
-### React Helmet
+### Inserting html into the `<head>`
 
-Also, anything you render in the `html.js` component will _not_ be made "live" in
+Anything you render in the `html.js` component will _not_ be made "live" in
 the client like other components. If you want to dynamically update your
 `<head>` we recommend using
 [React Helmet](/packages/gatsby-plugin-react-helmet/)
+
+### Inserting html into the `<footer>`
+
+If you want to insert custom html into the footer, html.js is the preferred way of doing this. If you're writing a plugin, consider using the `setPostBodyComponents` prop in the [Gatsby SSR API](/docs/ssr-apis/).
 
 ### Target container
 
@@ -33,7 +39,7 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
 "target container". Inside your `<body>` you must have a div with an id of
 `___gatsby` like:
 
-```jsx
+```jsx:title=src/html.js
 <div
   key={`body`}
   id="___gatsby"
@@ -45,7 +51,7 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
 
 You can add custom JavaScript to your HTML document by using React's [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) attribute.
 
-```jsx
+```jsx:title=src/html.js
 <script
   dangerouslySetInnerHTML={{
     __html: `

@@ -1,120 +1,79 @@
 const Redux = require(`redux`)
 const _ = require(`lodash`)
-const fs = require(`fs`)
+
 const mitt = require(`mitt`)
-const stringify = require(`json-stringify-safe`)
+const thunk = require(`redux-thunk`).default
+const reducers = require(`./reducers`)
+const { writeToCache, readFromCache } = require(`./persist`)
 
 // Create event emitter for actions
 const emitter = mitt()
 
-// Reducers
-const reducers = require(`./reducers`)
-
-const objectToMap = obj => {
-  let map = new Map()
-  Object.keys(obj).forEach(key => {
-    map.set(key, obj[key])
-  })
-  return map
+// Read old node data from cache.
+const readState = () => {
+  try {
+    const state = readFromCache()
+    if (state.nodes) {
+      // re-create nodesByType
+      state.nodesByType = new Map()
+      state.nodes.forEach(node => {
+        const { type } = node.internal
+        if (!state.nodesByType.has(type)) {
+          state.nodesByType.set(type, new Map())
+        }
+        state.nodesByType.get(type).set(node.id, node)
+      })
+    }
+    // jsonDataPaths was removed in the per-page-manifest
+    // changes. Explicitly delete it here to cover case where user
+    // runs gatsby the first time after upgrading.
+    delete state[`jsonDataPaths`]
+    return state
+  } catch (e) {
+    // ignore errors.
+  }
+  return {}
 }
 
-const mapToObject = map => {
-  const obj = {}
-  for (let [key, value] of map) {
-    obj[key] = value
-  }
-  return obj
-}
+/**
+ * Redux middleware handling array of actions
+ */
+const multi = ({ dispatch }) => next => action =>
+  Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-// Read from cache the old node data.
-let initialState = {}
-try {
-  const file = fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
-  // Apparently the file mocking in node-tracking-test.js
-  // can override the file reading replacing the mocked string with
-  // an already parsed object.
-  if (Buffer.isBuffer(file) || typeof file === `string`) {
-    initialState = JSON.parse(file)
-  }
-  if (initialState.staticQueryComponents) {
-    initialState.staticQueryComponents = objectToMap(
-      initialState.staticQueryComponents
-    )
-  }
-  if (initialState.components) {
-    initialState.components = objectToMap(initialState.components)
-  }
-  if (initialState.nodes) {
-    initialState.nodes = objectToMap(initialState.nodes)
-  }
-} catch (e) {
-  // ignore errors.
-}
+const configureStore = initialState =>
+  Redux.createStore(
+    Redux.combineReducers({ ...reducers }),
+    initialState,
+    Redux.applyMiddleware(thunk, multi)
+  )
 
-const store = Redux.createStore(
-  Redux.combineReducers({ ...reducers }),
-  initialState,
-  Redux.applyMiddleware(function multi({ dispatch }) {
-    return next => action =>
-      Array.isArray(action)
-        ? action.filter(Boolean).map(dispatch)
-        : next(action)
-  })
-)
+const store = configureStore(readState())
 
 // Persist state.
-const saveState = state => {
+const saveState = () => {
+  const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
     `componentDataDependencies`,
-    `jsonDataPaths`,
     `components`,
     `staticQueryComponents`,
+    `webpackCompilationHash`,
   ])
 
-  pickedState.staticQueryComponents = mapToObject(
-    pickedState.staticQueryComponents
-  )
-  pickedState.components = mapToObject(pickedState.components)
-  pickedState.nodes = mapToObject(pickedState.nodes)
-  const stringified = stringify(pickedState, null, 2)
-  fs.writeFile(
-    `${process.cwd()}/.cache/redux-state.json`,
-    stringified,
-    () => {}
-  )
+  return writeToCache(pickedState)
 }
-const saveStateDebounced = _.debounce(saveState, 1000)
 
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
 
-// During development, once bootstrap is finished, persist state on changes.
-let bootstrapFinished = false
-if (process.env.gatsby_executing_command === `develop`) {
-  emitter.on(`BOOTSTRAP_FINISHED`, () => {
-    bootstrapFinished = true
-    saveState(store.getState())
-  })
-  emitter.on(`*`, () => {
-    if (bootstrapFinished) {
-      saveStateDebounced(store.getState())
-    }
-  })
+module.exports = {
+  emitter,
+  store,
+  configureStore,
+  readState,
+  saveState,
 }
-
-// During builds, persist state once bootstrap has finished.
-if (process.env.gatsby_executing_command === `build`) {
-  emitter.on(`BOOTSTRAP_FINISHED`, () => {
-    saveState(store.getState())
-  })
-}
-
-/** Event emitter */
-exports.emitter = emitter
-
-/** Redux store */
-exports.store = store

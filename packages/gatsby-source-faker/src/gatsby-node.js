@@ -1,7 +1,9 @@
 const faker = require(`faker`)
-const crypto = require(`crypto`)
 
-exports.sourceNodes = ({ actions, createNodeId }, pluginOptions) => {
+exports.sourceNodes = (
+  { actions, createNodeId, createContentDigest },
+  pluginOptions
+) => {
   const { createNode } = actions
   const { schema, count, type } = pluginOptions
   for (let i = 0; i < count; i++) {
@@ -14,10 +16,6 @@ exports.sourceNodes = ({ actions, createNodeId }, pluginOptions) => {
         item[schemaKey][schemaItem] = faker[schemaKey][schemaItem]()
       })
     })
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(item))
-      .digest(`hex`)
 
     const nodeBase = {
       id: createNodeId(JSON.stringify(faker.random.number())),
@@ -25,7 +23,7 @@ exports.sourceNodes = ({ actions, createNodeId }, pluginOptions) => {
       children: [],
       internal: {
         type,
-        contentDigest,
+        contentDigest: createContentDigest(item),
       },
     }
     createNode(Object.assign({}, nodeBase, item))

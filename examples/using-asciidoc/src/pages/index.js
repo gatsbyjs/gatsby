@@ -9,8 +9,8 @@ class IndexPage extends React.Component {
       <Layout>
         <ul>
           {this.props.data.allAsciidoc.edges.map(({ node }) => (
-            <li>
-              <Link to={node.slug}>{node.slug}</Link>
+            <li key={node.id}>
+              <Link to={node.fields.slug}>{node.document.title}</Link>
             </li>
           ))}
         </ul>
@@ -28,7 +28,12 @@ export const pageQuery = graphql`
         node {
           id
           html
-          slug
+          document {
+            title
+          }
+          fields {
+            slug
+          }
         }
       }
     }

@@ -7,11 +7,11 @@ typora-copy-images-to: ./
 
 ## What's in this tutorial?
 
-In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called Graph_i_QL, a tool that helps you structure your queries correctly.
+In this tutorial, you'll be learning about how to pull data into your Gatsby site using GraphQL and source plugins. Before you learn about these plugins, however, you'll want to know how to use something called GraphiQL, a tool that helps you structure your queries correctly.
 
-## Introducing Graph_i_QL
+## Introducing GraphiQL
 
-Graph_i_QL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool
+GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool
 you'll use often while building Gatsby websites.
 
 You can access it when your site's development server is running—normally at
@@ -24,9 +24,9 @@ You can access it when your site's development server is running—normally at
 
 Here you poke around the built-in `Site` "type" and see what fields are available
 on it—including the `siteMetadata` object you queried earlier. Try opening
-Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
+GraphiQL and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up
 the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query. You'll be
-using Graph_i_QL a lot more through the remainder of the tutorial.
+using GraphiQL a lot more through the remainder of the tutorial.
 
 ## Source plugins
 
@@ -40,20 +40,21 @@ fetch data from the WordPress API.
 Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
 explore how it works.
 
-First install the plugin at the root of the project:
+First, install the plugin at the root of the project:
 
-```sh
+```shell
 npm install --save gatsby-source-filesystem
 ```
 
 Then add it to your `gatsby-config.js`:
 
-```javascript{6-12}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
   },
   plugins: [
+    // highlight-start
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -61,6 +62,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
+    // highlight-end
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -72,7 +74,7 @@ module.exports = {
 }
 ```
 
-Save that and restart the gatsby development server. Then open up Graph_i_QL
+Save that and restart the gatsby development server. Then open up GraphiQL
 again.
 
 If you bring up the autocomplete window, you'll see:
@@ -99,8 +101,8 @@ The result is an array of File "nodes" (node is a fancy name for an object in a
 
 ## Build a page with a GraphQL query
 
-Building new pages with Gatsby often starts in Graph_i_QL. You first sketch out
-the data query by playing in Graph_i_QL then copy this to a React page component
+Building new pages with Gatsby often starts in GraphiQL. You first sketch out
+the data query by playing in GraphiQL then copy this to a React page component
 to start building the UI.
 
 Let's try this.
@@ -108,13 +110,13 @@ Let's try this.
 Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
 created:
 
-```jsx{6}:title=src/pages/my-files.js
+```jsx:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
-  console.log(data)
+  console.log(data) // highlight-line
   return (
     <Layout>
       <div>Hello world</div>
@@ -151,7 +153,7 @@ The shape of the data matches the shape of the GraphQL query.
 
 Add some code to your component to print out the File data.
 
-```jsx{9-31}:title=src/pages/my-files.js
+```jsx:title=src/pages/my-files.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -160,6 +162,7 @@ export default ({ data }) => {
   console.log(data)
   return (
     <Layout>
+      {/* highlight-start */}
       <div>
         <h1>My Site's Files</h1>
         <table>
@@ -183,6 +186,7 @@ export default ({ data }) => {
           </tbody>
         </table>
       </div>
+      {/* highlight-end */}
     </Layout>
   )
 }
@@ -209,4 +213,4 @@ And… 😲
 
 ## What's coming next?
 
-Now you've learned how source plugins bring data _into_ Gatsby’s data system. In the next tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site. Click here for the [next tutorial to learn about transformer plugins](/tutorial/part-six/).
+Now you've learned how source plugins bring data _into_ Gatsby’s data system. In the next tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site. Learn about transformer plugins in [part six of the tutorial](/tutorial/part-six/).

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-codemods",
-  "version": "1.0.7",
+  "version": "1.1.2",
   "description": "A collection of codemod scripts for use with JSCodeshift that help migrate to newer versions of Gatsby.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,8 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-codemods#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-codemods"
   },
   "license": "MIT",
   "dependencies": {
@@ -28,9 +29,11 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.1.2",
+    "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.0.5",
     "jscodeshift": "^0.5.1"
   },
-  "gitHead": "5bd5aebe066b9875354a81a4b9ed98722731c465"
+  "engines": {
+    "node": ">=8.0.0"
+  }
 }

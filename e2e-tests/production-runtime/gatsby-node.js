@@ -1,7 +1,39 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
+const path = require(`path`)
 
-// You can delete this file if you're not using it
+exports.createPages = ({ actions: { createPage } }) => {
+  createPage({
+    path: `/안녕`,
+    component: path.resolve(`src/pages/page-2.js`),
+  })
+}
+
+exports.onCreatePage = ({ page, actions }) => {
+  switch (page.path) {
+    case `/client-only-paths/`:
+      // create client-only-paths
+      page.matchPath = `/client-only-paths/*`
+      actions.createPage(page)
+      break
+
+    case `/path-context/`:
+      actions.createPage({
+        ...page,
+        context: {
+          foo: `bar`,
+        },
+      })
+      break
+
+    case `/`:
+      // use index page as template
+      // (mimics)
+      actions.createPage({
+        ...page,
+        path: `/duplicated`,
+        context: {
+          DOMMarker: `duplicated`,
+        },
+      })
+      break
+  }
+}

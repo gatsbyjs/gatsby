@@ -7,36 +7,31 @@ const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
 const path = require(`path`)
-const convertHrtime = require(`convert-hrtime`)
 const Promise = require(`bluebird`)
+const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const mergeGatsbyConfig = require(`../utils/merge-gatsby-config`)
 const getBrowserslist = require(`../utils/browserslist`)
-const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
+const loadThemes = require(`./load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const nodeTracking = require(`../db/node-tracking`)
+// Add `util.promisify` polyfill for old node versions
+require(`util.promisify/shim`)()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
-const {
-  extractQueries,
-} = require(`../internal-plugins/query-runner/query-watcher`)
-const {
-  runInitialQueries,
-} = require(`../internal-plugins/query-runner/page-query-runner`)
-const queryQueue = require(`../internal-plugins/query-runner/query-queue`)
-const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
-const {
-  writeRedirects,
-} = require(`../internal-plugins/query-runner/redirects-writer`)
+const createGraphqlRunner = require(`./graphql-runner`)
+const { extractQueries } = require(`../query/query-watcher`)
+const requiresWriter = require(`./requires-writer`)
+const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -82,32 +77,17 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    const themesConfig = await Promise.mapSeries(
-      config.__experimentalThemes,
-      async plugin => {
-        const themeName = plugin.resolve || plugin
-        const themeConfig = plugin.options || {}
-        const theme = await preferDefault(
-          getConfigFile(themeName, `gatsby-config`)
-        )
-        // if theme is a function, call it with the themeConfig
-        let themeConfigObj = theme
-        if (_.isFunction(theme)) {
-          themeConfigObj = theme(themeConfig)
-        }
-        // themes function as plugins too (gatsby-node, etc)
-        return {
-          ...themeConfigObj,
-          plugins: [
-            ...(themeConfigObj.plugins || []),
-            // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-            { resolve: themeName, options: themeConfig },
-          ],
-        }
-      }
-    ).reduce(mergeGatsbyConfig, {})
+    // TODO: deprecation message for old __experimentalThemes
+    const themes = await loadThemes(config, { useLegacyThemes: true })
+    config = themes.config
 
-    config = mergeGatsbyConfig(themesConfig, config)
+    store.dispatch({
+      type: `SET_RESOLVED_THEMES`,
+      payload: themes.themes,
+    })
+  } else if (config) {
+    const plugins = await loadThemes(config, { useLegacyThemes: false })
+    config = plugins.config
   }
 
   if (config && config.polyfill) {
@@ -125,8 +105,12 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity = report.activityTimer(`load plugins`)
   activity.start()
-  const flattenedPlugins = await loadPlugins(config)
+  const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
+
+  telemetry.decorateEvent(`BUILD_END`, {
+    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+  })
 
   // onPreInit
   activity = report.activityTimer(`onPreInit`, {
@@ -136,22 +120,24 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // Delete html and css files from the public directory as we don't want
+  // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  activity = report.activityTimer(
-    `delete html and css files from previous builds`,
-    {
-      parentSpan: bootstrapSpan,
-    }
-  )
-  activity.start()
-  await del([
-    `public/*.{html,css}`,
-    `public/**/*.{html,css}`,
-    `!public/static`,
-    `!public/static/**/*.{html,css}`,
-  ])
-  activity.end()
+  if (process.env.NODE_ENV === `production`) {
+    activity = report.activityTimer(
+      `delete html and css files from previous builds`,
+      {
+        parentSpan: bootstrapSpan,
+      }
+    )
+    activity.start()
+    await del([
+      `public/*.{html,css}`,
+      `public/**/*.{html,css}`,
+      `!public/static`,
+      `!public/static/**/*.{html,css}`,
+    ])
+    activity.end()
+  }
 
   activity = report.activityTimer(`initialize cache`)
   activity.start()
@@ -192,10 +178,12 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-
+  const cacheDirectory = `${program.directory}/.cache`
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
-      await fs.remove(`${program.directory}/.cache`)
+      // Attempt to empty dir if remove fails,
+      // like when directory is mount point
+      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
     }
@@ -214,12 +202,38 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
-  await fs.ensureDir(`${program.directory}/.cache`)
+  await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
 
   activity.end()
+
+  if (process.env.GATSBY_DB_NODES === `loki`) {
+    const loki = require(`../db/loki`)
+    // Start the nodes database (in memory loki js with interval disk
+    // saves). If data was saved from a previous build, it will be
+    // loaded here
+    activity = report.activityTimer(`start nodes db`, {
+      parentSpan: bootstrapSpan,
+    })
+    activity.start()
+    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
+    try {
+      await loki.start({
+        saveFile: dbSaveFile,
+      })
+    } catch (e) {
+      report.error(
+        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
+      )
+    }
+    activity.end()
+  }
+
+  // By now, our nodes database has been loaded, so ensure that we
+  // have tracked all inline objects
+  nodeTracking.trackDbNodes()
 
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`, {
@@ -227,7 +241,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
-  const siteDir = `${program.directory}/.cache`
+  const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, {
@@ -236,12 +250,12 @@ module.exports = async (args: BootstrapArgs) => {
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
       clobber: true,
     })
-    await fs.ensureDirSync(`${program.directory}/.cache/json`)
+    await fs.ensureDirSync(`${cacheDirectory}/json`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
     // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${program.directory}/.cache/fragments`)
+    await fs.emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
@@ -255,10 +269,10 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include the site's gatsby-browser.js if it exists as it's
+    // Always include gatsby-browser.js files if they exists as they're
     // a handy place to include global styles and other global imports.
     try {
-      if (env === `browser` && plugin.name === `default-site-plugin`) {
+      if (env === `browser`) {
         return slash(
           require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
         )
@@ -372,10 +386,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = (query, context = {}) => {
-    const schema = store.getState().schema
-    return graphql(schema, query, context, context, context)
-  }
+  const graphqlRunner = createGraphqlRunner(store, report)
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
@@ -418,10 +429,8 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../schema`).build({ parentSpan: activity.span })
+  await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
   activity.end()
-
-  require(`../schema/type-conflict-reporter`).printConflicts()
 
   // Extract queries
   activity = report.activityTimer(`extract queries from components`, {
@@ -431,37 +440,15 @@ module.exports = async (args: BootstrapArgs) => {
   await extractQueries()
   activity.end()
 
-  // Start the createPages hot reloader.
-  if (process.env.NODE_ENV !== `production`) {
-    require(`./page-hot-reloader`)(graphqlRunner)
-  }
-
-  // Run queries
-  activity = report.activityTimer(`run graphql queries`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  const startQueries = process.hrtime()
-  queryQueue.on(`task_finish`, () => {
-    const stats = queryQueue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
-  })
-  await runInitialQueries(activity)
-  activity.end()
-
   // Write out files.
-  activity = report.activityTimer(`write out page data`, {
+  activity = report.activityTimer(`write out requires`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
   try {
-    await writePages()
+    await requiresWriter.writeAll(store.getState())
   } catch (err) {
-    report.panic(`Failed to write out page data`, err)
+    report.panic(`Failed to write out requires`, err)
   }
   activity.end()
 
@@ -473,50 +460,22 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
-  const checkJobsDone = _.debounce(resolve => {
-    const state = store.getState()
-    if (state.jobs.active.length === 0) {
-      report.log(``)
-      report.info(`bootstrap finished - ${process.uptime()} s`)
-      report.log(``)
+  activity = report.activityTimer(`onPostBootstrap`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
+  activity.end()
 
-      // onPostBootstrap
-      activity = report.activityTimer(`onPostBootstrap`, {
-        parentSpan: bootstrapSpan,
-      })
-      activity.start()
-      apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span }).then(
-        () => {
-          activity.end()
-          bootstrapSpan.finish()
-          resolve({ graphqlRunner })
-        }
-      )
-    }
-  }, 100)
+  report.log(``)
+  report.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
+  report.log(``)
+  emitter.emit(`BOOTSTRAP_FINISHED`)
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_FINISHED`
+  )
 
-  if (store.getState().jobs.active.length === 0) {
-    // onPostBootstrap
-    activity = report.activityTimer(`onPostBootstrap`, {
-      parentSpan: bootstrapSpan,
-    })
-    activity.start()
-    await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
-    activity.end()
+  bootstrapSpan.finish()
 
-    bootstrapSpan.finish()
-
-    report.log(``)
-    report.info(`bootstrap finished - ${process.uptime()} s`)
-    report.log(``)
-    emitter.emit(`BOOTSTRAP_FINISHED`)
-    return {
-      graphqlRunner,
-    }
-  } else {
-    return new Promise(resolve => {
-      // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
-    })
-  }
+  return { graphqlRunner }
 }

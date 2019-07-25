@@ -1,138 +1,72 @@
 const preset = require(`../`)
-const path = require(`path`)
 
-it(`Specifies proper presets and plugins in Node mode`, () => {
-  const { presets, plugins } = preset()
+jest.mock(`../resolver`, () => jest.fn(moduleName => moduleName))
 
-  expect(presets).toEqual([
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-env`)),
-      {
-        debug: false,
-        loose: true,
-        modules: `commonjs`,
-        shippedProposals: true,
-        targets: {
-          node: `current`,
-        },
-        useBuiltIns: `entry`,
-      },
-    ],
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-react`)),
-      { development: true },
-    ],
-    expect.stringContaining(path.join(`@babel`, `preset-flow`)),
-  ])
-  expect(plugins).toEqual([
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-class-properties`)
-    ),
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-optional-chaining`)
-    ),
-    expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
-  ])
+beforeEach(() => {
+  delete process.env.BABEL_ENV
 })
 
-it(`Specifies proper presets and plugins in debug Node mode`, () => {
-  const { presets, plugins } = preset(null, { debug: true })
+describe(`babel-preset-gatsby-package`, () => {
+  describe(`in node mode`, () => {
+    it(`specifies the proper plugins`, () => {
+      const { plugins } = preset()
+      expect(plugins).toMatchSnapshot()
+    })
 
-  expect(presets).toEqual([
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-env`)),
-      {
-        debug: true,
-        loose: true,
-        modules: `commonjs`,
-        shippedProposals: true,
-        targets: {
-          node: `current`,
-        },
-        useBuiltIns: `entry`,
-      },
-    ],
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-react`)),
-      { development: true },
-    ],
-    expect.stringContaining(path.join(`@babel`, `preset-flow`)),
-  ])
-  expect(plugins).toEqual([
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-class-properties`)
-    ),
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-optional-chaining`)
-    ),
-    expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
-  ])
-})
+    it(`specifies proper presets`, () => {
+      const { presets } = preset()
+      expect(presets).toMatchSnapshot()
+    })
 
-it(`Specifies proper presets and plugins in browser mode`, () => {
-  const { presets, plugins } = preset(null, { browser: true })
+    it(`specifies proper presets for debugging`, () => {
+      const { presets } = preset(null, { debug: true })
+      expect(presets).toMatchSnapshot()
+    })
 
-  expect(presets).toEqual([
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-env`)),
-      {
-        debug: false,
-        loose: true,
-        modules: `commonjs`,
-        shippedProposals: true,
-        targets: {
-          browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
-        },
-        useBuiltIns: false,
-      },
-    ],
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-react`)),
-      { development: true },
-    ],
-    expect.stringContaining(path.join(`@babel`, `preset-flow`)),
-  ])
-  expect(plugins).toEqual([
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-class-properties`)
-    ),
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-optional-chaining`)
-    ),
-    expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
-  ])
-})
+    it(`can pass custom nodeVersion target`, () => {
+      process.env.BABEL_ENV = `production`
+    
+      const nodeVersion = `6.0`
+      const { presets } = preset(null, {
+        nodeVersion
+      })
 
-it(`Specifies proper presets and plugins in debug browser mode`, () => {
-  const { presets, plugins } = preset(null, { browser: true, debug: true })
+      const [_, opts] = presets.find(preset => [].concat(preset).includes('@babel/preset-env'))
+      
+      expect(opts.targets.node).toBe(nodeVersion)
+    })
+  })
 
-  expect(presets).toEqual([
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-env`)),
-      {
-        debug: true,
-        loose: true,
-        modules: `commonjs`,
-        shippedProposals: true,
-        targets: {
-          browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
-        },
-        useBuiltIns: false,
-      },
-    ],
-    [
-      expect.stringContaining(path.join(`@babel`, `preset-react`)),
-      { development: true },
-    ],
-    expect.stringContaining(path.join(`@babel`, `preset-flow`)),
-  ])
-  expect(plugins).toEqual([
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-class-properties`)
-    ),
-    expect.stringContaining(
-      path.join(`@babel`, `plugin-proposal-optional-chaining`)
-    ),
-    expect.stringContaining(path.join(`@babel`, `plugin-transform-runtime`)),
-  ])
+  describe(`in browser mode`, () => {
+    it(`specifies the proper plugins`, () => {
+      const { plugins } = preset(null, { browser: true })
+      expect(plugins).toMatchSnapshot()
+    })
+
+    it(`specifies proper presets`, () => {
+      const { presets } = preset(null, { browser: true })
+      expect(presets).toMatchSnapshot()
+    })
+
+    it(`specifies proper presets for debugging`, () => {
+      const { presets } = preset(null, { browser: true, debug: true })
+      expect(presets).toMatchSnapshot()
+    })
+  })
+
+  describe(`in production mode`, () => {
+    beforeEach(() => {
+      process.env.BABEL_ENV = `production`
+    })
+
+    it(`specifies proper presets for node mode`, () => {
+      const { presets } = preset(null)
+      expect(presets).toMatchSnapshot()
+    })
+
+    it(`specifies proper presets for browser mode`, () => {
+      const { presets } = preset(null, { browser: true })
+      expect(presets).toMatchSnapshot()
+    })
+  })
 })

@@ -9,7 +9,8 @@ class IndexComponent extends React.Component {
       <div className={indexStyles.index}>
         <h1>Hello world</h1>
         <h2 className={indexStyles.subheader}>
-          You've arrived at the world renowned css modules & gatsby example site
+          {`You've`} arrived at the world renowned css modules & gatsby example
+          site
         </h2>
         <p>
           <Link className={indexStyles.link} to="/another-page/">

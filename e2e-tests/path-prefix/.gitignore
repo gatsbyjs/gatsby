@@ -3,9 +3,10 @@
 node_modules
 yarn-error.log
 
-# Build directory
+# Build assets
 /public
 .DS_Store
+/assets
 
 # Cypress output
 cypress/videos/

@@ -12,8 +12,7 @@
       format("embedded-opentype"),
     url("./fontawesome-webfont.woff2?v=4.5.0") format("woff2"),
     url("./fontawesome-webfont.woff?v=4.5.0") format("woff"),
-    url("./fontawesome-webfont.ttf?v=4.5.0") format("truetype"),
-    url("./fontawesome-webfont.svg?v=4.5.0") format("svg");
+    url("./fontawesome-webfont.ttf?v=4.5.0") format("truetype");
   font-weight: normal;
   font-style: normal;
 }

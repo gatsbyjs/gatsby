@@ -25,7 +25,8 @@ packages/gatsby/cache-dir/commonjs/**/*.js
 **/__testfixtures__/**
 **/__tests__/fixtures/**
 
-infrastructure
-
 # coverage
 coverage
+
+# forestry files
+.forestry/**/*

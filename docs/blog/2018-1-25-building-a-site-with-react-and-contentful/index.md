@@ -1,6 +1,6 @@
 ---
 title: Building a Site with React and Contentful
-date: "2018-01-25"
+date: 2018-01-25
 author: "Shannon Soper"
 tags: ["react", "contentful", "graphql"]
 ---

@@ -1,0 +1,12 @@
+.container {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    grid-template-columns: 50% 50%;
+  }
+}

@@ -2,15 +2,13 @@ import React from "react"
 import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
-import CopyToClipboardIcon from "react-icons/lib/go/clippy"
 import MdStar from "react-icons/lib/md/star"
-import { options } from "../../utils/typography"
-import { colors } from "../../utils/presets"
-import copyToClipboard from "../../utils/copy-to-clipboard"
+import { colors, space, fontSizes } from "../../utils/presets"
 import styles from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import get from "lodash/get"
+import V2Icon from "../../assets/v2icon.svg"
+import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (!starters.length) {
@@ -19,8 +17,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       urlState.s !== ``
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `matching` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `matching` // if no search term or single dependency
     return (
       <div
         css={{
@@ -35,9 +33,14 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           No {`${emptyStateReason}`} starters found!
           <div css={{ color: colors.gatsby }}>
             <small>
-              Maybe you should write one and
+              Why not write one and
               {` `}
-              <Link to="/docs/submit-to-starter-library/">submit it</Link>?
+              <Link to="/contributing/submit-to-starter-library/">
+                submit it
+              </Link>
+              ? Or learn more
+              {` `}
+              <Link to="/docs/starters">about starters</Link>.
             </small>
           </div>
         </h1>
@@ -47,12 +50,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (count) {
     starters = starters.sort(sortingFunction(sortRecent)).slice(0, count)
     return (
-      <div
-        css={{
-          fontFamily: options.headerFontFamily.join(`,`),
-          ...styles.showcaseList,
-        }}
-      >
+      <div css={{ ...styles.showcaseList }}>
         {starters.map(({ node: starter }) => {
           const {
             description,
@@ -61,8 +59,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             githubFullName,
             lastUpdated,
             owner,
+            slug,
             stars,
-            stub,
           } = starter.fields.starterShowcase
           const { url: demoUrl } = starter
 
@@ -76,68 +74,50 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 }}
               >
                 <ThumbnailLink
-                  slug={`/starters/${stub}`}
+                  slug={`/starters${slug}`}
                   image={starter.childScreenshot}
-                  title={starter.name}
+                  title={`${owner}/${name}`}
                 />
-                <div
-                  css={{
-                    ...styles.meta,
-                  }}
-                >
+                <div css={{ ...styles.meta }}>
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <span css={{ color: colors.gray.dark }}>{owner} /</span>
-                    <span>
-                      <a
-                        href="#copy-to-clipboard"
-                        onClick={() =>
-                          copyToClipboard(
-                            `https://github.com/${githubFullName}`
-                          )
-                        }
-                        css={{ ...styles.shortcutIcon }}
+                    <span css={{ color: colors.text.header }}>{owner} /</span>
+                    <span css={{ display: `flex` }}>
+                      {gatsbyMajorVersion[0][1] === `2` && (
+                        <img
+                          src={V2Icon}
+                          alt="Gatsby v2"
+                          css={{
+                            marginBottom: 0,
+                            marginRight: space[2],
+                          }}
+                        />
+                      )}
+                      <div
+                        css={{
+                          alignItems: `center`,
+                          display: `inline-flex`,
+                          fontSize: fontSizes[0],
+                        }}
                       >
-                        <CopyToClipboardIcon />
-                      </a>
-                      {` `}
-                      <a
-                        href={demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        css={{ ...styles.shortcutIcon }}
-                      >
-                        <LaunchDemoIcon />
-                      </a>
-                      {` `}
-                      <a
-                        href={`https://github.com/${githubFullName}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        css={{ ...styles.shortcutIcon }}
-                      >
-                        <GithubIcon />
-                        {` `}
-                      </a>
+                        <MdStar /> {stars}
+                      </div>
                     </span>
                   </div>
                   <div>
-                    <span className="title">
-                      <h5 css={{ margin: 0 }}>
-                        <strong>{name}</strong>
+                    <Link to={`/starters${slug}`}>
+                      <h5 css={{ margin: 0, fontSize: fontSizes[2] }}>
+                        <strong className="title">{name}</strong>
                       </h5>
-                    </span>
-                    {/* {isGatsbyVersionWarning ?
-                        <span css={{ fontStyle: `italic`, color: `red` }}>Outdated Version: {minorVersion}</span> :
-                        <span css={{ fontStyle: `italic`, color: `green` }}>Gatsby Version: {minorVersion}</span>
-                      } */}
+                    </Link>
                   </div>
                   <div
                     css={{
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
+                      marginBottom: space[1],
                     }}
                   >
                     {description || `No description`}
@@ -146,20 +126,33 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
                     <div css={{ display: `inline-block` }}>
-                      <MdStar
-                        style={{
-                          color: colors.accent,
-                          verticalAlign: `text-top`,
-                        }}
-                      />
-                      {stars}
-                    </div>
-                    <div css={{ display: `inline-block` }}>
-                      {`Gatsby v${gatsbyMajorVersion[0][1]}`}
-                    </div>
-                    <div css={{ display: `inline-block` }}>
                       Updated {new Date(lastUpdated).toLocaleDateString()}
                     </div>
+                    <span>
+                      <a
+                        href={`https://github.com/${githubFullName}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        css={{
+                          ...styles.shortcutIcon,
+                          svg: { verticalAlign: `text-top !important` },
+                        }}
+                      >
+                        <GithubIcon />
+                      </a>
+                      {` `}
+                      <a
+                        href={demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        css={{
+                          ...styles.shortcutIcon,
+                          svg: { verticalAlign: `text-top !important` },
+                        }}
+                      >
+                        <LaunchDemoIcon />
+                      </a>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -175,7 +168,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
 
 export default StartersList
 
-function sortingFunction(sortRecent) {
+function sortingFunction() {
   return function({ node: nodeA }, { node: nodeB }) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)

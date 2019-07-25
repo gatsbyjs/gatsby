@@ -1,6 +1,6 @@
 ---
 title: JAM Out Your Blog - Gatsby + Prose + Netlify
-date: "2018-02-07"
+date: 2018-02-07
 author: "Vlad Pasculescu"
 tags: ["prose-io", "netlify", "ci", "jamstack"]
 ---
@@ -17,7 +17,7 @@ I’m willing to assume that many readers have been here before and are currentl
 
 My goal here is to share a tool set helps bring order to my freelance chaos. I'll be walking through a workflow that's ideal for personal blogs and hand-off projects where some sort of a CMS is in scope.
 
-I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
+I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
 
 _**Let’s get into it.**_
 
@@ -37,7 +37,7 @@ _**Let’s get into it.**_
 - **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
 - **Continuous Deployment** - the site needs to always be up and running and current
 
-For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/. ](http://jamstack.org/)
+For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org/).
 
 ## CMS-Induced Headaches
 
@@ -51,12 +51,12 @@ Josh’s article provides a solution by way of using Contentful to manage conten
 - Free Tier
 - User Roles (admins, editors, content authors)
 - Comprehensive tutorials
-- Fully-customizable front end
+- Fully-customizable frontend
 - Article search and filters
 
 With such a robust set of features, it is easy to see why Contentful is a popular service. However, between a combination of having no prior experience with the platform, and wanting to keep things simple, I ran into issues, and felt that it was _too_ robust for my project goals.
 
-While, a fully-customizable front end may seem really flexible, _**there is NOTHING set up when you create a new project.**_ You will have to create your own content models for blog posts and use GraphQL to query for each blog post type you set up.
+While, a fully-customizable frontend may seem really flexible, _**there is NOTHING set up when you create a new project.**_ You will have to create your own content models for blog posts and use GraphQL to query for each blog post type you set up.
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/16e1J9ztaZ3na"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/bored-kanye-west-16e1J9ztaZ3na">via GIPHY</a></p>
 

@@ -4,7 +4,14 @@ title: Deploying to Heroku
 
 You can use the [heroku buildpack static](https://github.com/heroku/heroku-buildpack-static) to handle the static files of your site.
 
-Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
+Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application.
+
+```shell
+$ heroku buildpacks:set heroku/nodejs
+$ heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
+```
+
+You can optionally add the buildpacks to `app.json` if you want to take advantage of the [heroku platform api](https://devcenter.heroku.com/articles/setting-up-apps-using-the-heroku-platform-api)
 
 ```json:title=app.json
 {
@@ -19,45 +26,41 @@ Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your applic
 }
 ```
 
-Sometimes specifying buildpacks via the `app.json` file doesn’t work. If this is your case try to add them in the Heroku dashboard or via the CLI.
-
-Add a `heroku-postbuild` script in your `package.json`:
+Heroku will automatically detect and run the `build` script from your `package.json` which should already look like this:
 
 ```json:title=package.json
 {
   "scripts": {
-    "heroku-postbuild": "gatsby build"
+    "build": "gatsby build"
   }
 }
 ```
-
-It is worth noting that, by default, creating a new project with `gatsby new <your-project-name>` creates a `package.json` with a `start` script as `npm run develop`. Without creating a Procfile to specify your commands to run for your process types, Heroku will run the web process via the `npm start` command by default. Since we've compiled our production-optimized build with `gatsby build`, the command we want to run is actually `gatsby serve`. To do this, either add the following script to your `package.json`:
-
-```json:package.json
-{
-  "scripts": {
-    "start": "gatsby serve --port ${PORT}"
-  }
-}
-```
-
-Or, create a `Procfile`:
-
-```title=Procfile
-web: gatsby serve --port ${PORT}
-```
-
-The port needs to be specified to use the Heroku dyno's runtime environment variable in order to bind to the port correctly.
 
 Finally, add a `static.json` file in the root of your project to define the directory where your static assets will be. You can check all the options for this file in the [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static#configuration) configuration.
+
+The following configuration will give you a good start point in line with Gatsby's [suggested approach to caching](/docs/caching/).
 
 ```json:title=static.json
 {
   "root": "public/",
   "headers": {
-    "/**.js": {
+    "/**/": {
       "Cache-Control": "public, max-age=0, must-revalidate"
+    },
+    "/**.css": {
+      "Cache-Control": "public, max-age=31536000, immutable"
+    },
+    "/**.js": {
+      "Cache-Control": "public, max-age=31536000, immutable"
+    },
+    "/static/**": {
+      "Cache-Control": "public, max-age=31536000, immutable"
+    },
+    "/icons/*.png": {
+      "Cache-Control": "public, max-age=31536000, immutable"
     }
-  }
+  },
+  "https_only": true,
+  "error_page": "404.html"
 }
 ```
