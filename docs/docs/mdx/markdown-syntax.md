@@ -2,7 +2,9 @@
 title: Markdown Syntax
 ---
 
-### Headings
+Markdown is a very common way to write content in Gatsby posts and pages. This guide contains tips for Markdown syntax and formatting that might come in handy!
+
+## Headings
 
 ```
 # heading 1
@@ -12,6 +14,8 @@ title: Markdown Syntax
 ##### heading 5
 ###### heading 6
 ```
+
+Here's how those tags render in HTML:
 
 # heading 1
 
@@ -29,8 +33,10 @@ title: Markdown Syntax
   - i.e. `# heading 1` is `<h1>heading 1</h1>`
 - Correct usage of each heading should follow the
   [accessibility guidelines](https://www.w3.org/WAI/tutorials/page-structure/headings/) set by the World Wide Web Consortium (W3C)
+_Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are already included from `title` entries in frontmatter metadata, and contributions in Markdown should begin with h2._
 
-### Emphasized text
+
+## Emphasized text
 
 - Italic
   - one asterisk or one underscore
@@ -46,69 +52,77 @@ title: Markdown Syntax
     - `***italic and bold***` or `___italic and bold___`
     - **_italic and bold!!_**
 
-### Lists
+## Lists
 
-- Unordered
+### Unordered
+  - can use `*`, `-`, or `+` for each list item
 
-  - can use `*, -, +`
+```
+* Gatsby
+  * docs
+- Gatsby
+  - docs
++ Gatsby
+  + docs
+```
 
-  ```
+How unordered lists are rendered in HTML:
+
+  - Gatsby
+    - docs
+
   * Gatsby
-    * docs
-  - Gatsby
-    - docs
-  + Gatsby
-    + docs
-  ```
-
-  - Gatsby
-    - docs
-
-  * Gatsby
     - docs
 
   - Gatsby
     - docs
 
-- Ordered
-  - use number and period
+### Ordered
+  - number and period for each list item
+  - using `1.` for each item can automatically increment depending on the content
   ```
     1. One
-    2. Two
-    3. Three
+    1. Two
+    1. Three
   ```
   1. One
-  2. Two
-  3. Three
+  1. Two
+  1. Three
 
-### Links and Images
+## Links and Images
 
-- Link
+### Link
+
+Links in Markdown use this format. URLs can be relative or remote:
 
 ```
 [Text](url)
 ```
 
+Example of a link rendering in HTML:
+
 [Gatsby site](https://www.gatsbyjs.org/)
 
-- Image with alt text
+### Image with alt text
 
 ```
 ![alt text](path-to-image)
 ```
 
-- Image without alt text
+### Image without alt text
+
+This pattern is appropriate for [decorative or repetitive images](https://www.w3.org/WAI/tutorials/images/decision-tree/):
 
 ```
 ![](path-to-image)
 ```
 
-### Blockquote
+## Blockquote
 
 - Use `>` to declare a blockquote
 - Adding multiple `>` with create nested blockquotes
 - It is recommended to place `>` before each line
-- You can use other markdown syntax inside blockquotes
+- You can use other Markdown syntax inside blockquotes
 
 ```
 > blockquote
@@ -130,13 +144,12 @@ title: Markdown Syntax
 
 ## Code Comments
 
-- Inline:
+### Inline
   - Enclose the text in backticks \`code\`
-  - Your `code` will look like this
+  - Inline `code` looks like this sentence
 
-* Code Blocks:
+### Code Blocks
   - Indent a block by four spaces
-  -     Your code will look like this
 
 ## MD vs MDX
 
@@ -144,12 +157,12 @@ title: Markdown Syntax
 
 ## Processing Markdown and MDX in Gatsby:
 
-- In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](https://www.gatsbyjs.org/docs/sourcing-from-the-filesystem) plugin
-- You can check out the package [here](https://www.gatsbyjs.org/packages/gatsby-source-filesystem) for more information on how it works!
+- In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](/docs/sourcing-from-the-filesystem) plugin
+- You can check out the package [README](/packages/gatsby-source-filesystem) for more information on how it works!
 
 ## Frontmatter
 
-- Metadata for your markdown
+- Metadata for your Markdown
 - Variables that can later be injected into your components
 - Must be:
   - At the top of the file
