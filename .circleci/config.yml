@@ -159,18 +159,27 @@ jobs:
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: pzj19c
+      CYPRESS_RECORD_KEY: c9ea1b91-eed6-4bac-be41-eccd75a48969
     steps:
       - e2e-test:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_gatsby-image:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: ave32k
+      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
     steps:
       - e2e-test:
           test_path: e2e-tests/gatsby-image
 
   e2e_tests_development_runtime:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: s3j3qj
+      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -180,10 +189,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: yarn test && yarn test:offline
+          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: 9parq5
+      CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
       - e2e-test:
           test_path: e2e-tests/themes/development-runtime
@@ -191,6 +203,9 @@ jobs:
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: c9rs27
+      CYPRESS_RECORD_KEY: e4e7b3b8-e1e7-4a74-a0c9-9ac76585236b
     steps:
       - e2e-test:
           test_path: e2e-tests/themes/production-runtime
