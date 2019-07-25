@@ -89,6 +89,10 @@ Watch the new [Egghead course on Authoring Gatsby Themes](https://egghead.io/cou
 
 Check out the [tutorial for building a Gatsby theme](/tutorial/building-a-theme). The step-by-step tutorial goes into much more detail than this docs guide. It was written as a companion to the [Egghead theme authoring course](https://egghead.io/courses/gatsby-theme-authoring), so they can be used together!
 
+### Accessibility
+
+A Gatsby theme is a Gatsby site, therefore building with accessibility in mind is critical. Check out these [tips on making your sites (and themes!) accessible](/docs/making-your-site-accessible/).
+
 ### Read through source code
 
 Check out how some existing themes are built:
