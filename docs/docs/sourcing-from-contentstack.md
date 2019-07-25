@@ -25,7 +25,7 @@ _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a G
 
 This downloads the required files and initializes the site.
 
-### Step 2: Update the config file
+### Step 2: Create .env file(s) with stack configuration
 
 Create copies of the `env.sample` file for `.env.development`, `.env.production` and any other environment, then add the following stack details to each respective file:
 
