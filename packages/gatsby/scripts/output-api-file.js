@@ -27,7 +27,8 @@ async function outputFile() {
 
   const output = apis.reduce((merged, [output, api]) => {
     merged[api] = output.reduce((mergedOutput, doc) => {
-      if (doc.namespace.startsWith('.')) {
+      const isAPI = doc.namespace.startsWith('.')
+      if (isAPI) {
         const tags = doc.tags.reduce((mergedTags, tag) => {
           mergedTags[tag.title] = tag.description
           return mergedTags
