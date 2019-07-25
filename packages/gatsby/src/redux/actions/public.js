@@ -6,7 +6,7 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
-const truePath = require(`true-case-path`)
+const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
@@ -17,6 +17,8 @@ const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
+const process = require(`process`)
+const cwd = process.cwd()
 
 const actions = {}
 
@@ -242,7 +244,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   // check if we've processed this component path
-  // before, before running the expensive "truePath"
+  // before, before running the expensive "trueCasePath"
   // operation
   //
   // Skip during testing as the paths don't exist on disk.
@@ -260,7 +262,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // linux CI/CD pipeline
 
       try {
-        let trueComponentPath = slash(truePath(page.component))
+        const relativePath = page.component.replace(cwd, ``).replace(/^\//, ``)
+        console.log(trueCasePathSync(relativePath, cwd))
+        let trueComponentPath = slash(trueCasePathSync(relativePath, cwd))
+
         if (trueComponentPath !== page.component) {
           if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
             const markers = page.component
