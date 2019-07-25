@@ -29,7 +29,7 @@ const findManyPaginated = typeName => async (source, args, context, info) => {
   // `distinct` which might need to be resolved.
   const group = getProjectedField(info, `group`)
   const distinct = getProjectedField(info, `distinct`)
-  const extendedArgs = { ...args, group: group || [], distinct: distinct || [] }
+  const extendedArgs = { ...args, group, distinct }
 
   const result = await findMany(typeName)(source, extendedArgs, context, info)
   return paginate(result, { skip: args.skip, limit: args.limit })
@@ -234,10 +234,11 @@ const getProjectedField = (info, fieldName) => {
     info
   )
 
+  const fields = getNullableType(info.returnType).getFields()
+  if (!fields[fieldName]) return []
+
   const fieldEnum = getNullableType(
-    getNullableType(info.returnType)
-      .getFields()
-      [fieldName].args.find(arg => arg.name === `field`).type
+    fields[fieldName].args.find(arg => arg.name === `field`).type
   )
 
   return fieldNodes.reduce((acc, fieldNode) => {
