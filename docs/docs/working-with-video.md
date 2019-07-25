@@ -150,6 +150,8 @@ export default () => (
 
 ```
 
+The `controls` attribute on the `<video>` will provide buttons overlaid on the video to play/pause, adjust volume, and go full screen. Other attributes like `muted` can set audio to silent, or `poster` can display an image when the video isn't playing. Common attributes that you'd want to apply to multiple videos could be extracted into a custom React video component. A full list of `<video>` attributes can be found on [the MDN docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#Attributes).
+
 Adding more source tags for additional formats will allow the browser to find a source type that it supports, if there are no matching source types the video will fail to load. You can see what formats are supported in different browsers on [MDN's docs about supported media formats](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats#Browser_compatibility).
 
 <!-- prettier-ignore -->
