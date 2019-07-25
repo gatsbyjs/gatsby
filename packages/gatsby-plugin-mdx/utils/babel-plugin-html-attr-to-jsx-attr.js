@@ -491,19 +491,6 @@ var TRANSLATIONS = {
   zoomandpan: "zoomAndPan",
 }
 
-const valueFromType = value => {
-  switch (typeof value) {
-    case "string":
-      return t.stringLiteral(value);
-    case "number":
-      return t.numericLiteral(value);
-    case "boolean":
-      return t.booleanLiteral(value);
-    default:
-      throw new Error("gatsby-plugin-mdx needs to include a new type");
-  }
-};
-
 const propsKeysVisitor = {
   ObjectProperty(node) {
     if (node.node.key.extra.rawValue in TRANSLATIONS) {
@@ -537,7 +524,7 @@ var jsxAttributeFromHTMLAttributeVisitor = {
       node.node.value = t.jSXExpressionContainer(
         t.objectExpression(
           styleArray.map(([key, value]) =>
-            t.objectProperty(t.StringLiteral(key), valueFromType(value))
+            t.objectProperty(t.StringLiteral(key), t.stringLiteral(value))
           )
         )
       );
