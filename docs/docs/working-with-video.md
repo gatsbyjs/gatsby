@@ -15,7 +15,7 @@ The easiest method for including video on a Gatsby site is to source an uploaded
 
 ## Embedding hosted videos in Markdown
 
-There are numerous Gatsby plugins for working with hosted video in your Markdown posts and pages. We recommend checking out the [gatsby-remark-embed-video](/packages/gatsby-remark-embed-video/?=video) plugin for sourcing from a variety of hosts.
+There are numerous Gatsby plugins for working with hosted video in your Markdown posts and pages. We recommend checking out the [gatsby-remark-embed-video](/packages/gatsby-remark-embed-video/?=video) plugin for sourcing from a variety of hosts like YouTube or vimeo.
 
 ### Writing custom components for hosted video
 
@@ -131,9 +131,47 @@ export const pageQuery = graphql`
 
 It's super common to source video from YouTube, Twitch or Vimeo. But what if you want to host your own video and include it as HTML5 video?
 
-> This discussion is ongoing on GitHub, chime in with your ideas in the Gatsby issue [#3346 Create a special component for HTML5 videos](https://github.com/gatsbyjs/gatsby/issues/3346)
+To include your own video files that will work in multiple web browsers and platforms, you'll need to read up a bit on video extensions and codecs. We recommend MDN as a resource: [Media formats for HTML audio and video](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats). You may need video converter software to produce the necessary formats -- such as `.webm` and `.mp4` -- to support a range of devices and environments.
 
-To include your own video files that will work in multiple web browsers and platforms, you'll need to read up a bit on video extensions and codecs. We recommend MDN as a resource: [Media formats for HTML audio and video](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats). You may need video converter software to produce the necessary formats to support a range of devices and environments, such as `.webm` and `.mp4`.
+HTML5 provides the `<video>` media element for working with videos. Inside the `<video>` element, you can provide multiple `<source>` elements that serve as different file formats the video player can use, with each browser electing to use a format it supports.
+
+If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, you can [include that video in your page with webpack](/docs/importing-assets-into-files) like you would other assets. Then reference it in a `<source>` element, which is wrapped by a `<video>` element:
+
+<!-- prettier-ignore -->
+```javascript:title=src/pages/index.js
+import React from "react"
+import DogVideo from "../assets/dog.mp4"
+
+export default () => (
+  <video controls style={{ width: "100%" }}>
+    <source src={DogVideo} type="video/mp4" /> // highlight-line
+  </video>
+)
+
+```
+
+Adding more source tags for additional formats will allow the browser to find a source type that it supports, if there are no matching source types the video will fail to load. You can see what formats are supported in different browsers on [MDN's docs about supported media formats](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats#Browser_compatibility).
+
+<!-- prettier-ignore -->
+```javascript:title=src/pages/index.js
+import React from "react"
+import DogMp4 from "../assets/dog.mp4"
+import DogOgg from "../assets/dog.ogg" // highlight-line
+
+export default () => (
+  <video controls style={{ width: "100%" }}>
+    <source src={DogMp4} type="video/mp4" />
+    <source src={DogOgg} type="video/ogg" /> // highlight-line
+  </video>
+)
+
+```
+
+Even though there are two `<source>` elements, only one video will be displayed, first `mp4` if it is supported, then `.ogg`.
+
+**Note**: this requires adding the link to a video in the format of the type specified, i.e. adding `type=ogg` would also need an associated file at `src/assets/dog.ogg` or a link to where that video is hosted elsewhere.
+
+[See an example repository using `<video>` elements](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-video/)
 
 ## Using custom video players
 
