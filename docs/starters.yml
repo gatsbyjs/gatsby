@@ -3419,8 +3419,8 @@
   repo: https://github.com/brohlson/gatsby-datocms-starter
   description: An SEO-friendly DatoCMS starter with styled-components, page transitions, and out-of-the-box blog post support.
   tags:
-    - DatoCMS
-    - Styled-Components
+    - CMS:DatoCMS
+    - Styling:CSS-in-JS
     - Blog
     - Portfolio
     - SEO
