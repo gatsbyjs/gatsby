@@ -95,6 +95,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const { pagePath, location: browserLoc } = window
 
+  const globalLoader = window.__loader
+
   // Explicitly call navigate if the canonical path (window.pagePath)
   // is different to the browser path (window.location.pathname). But
   // only if NONE of the following conditions hold:
@@ -106,7 +108,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
-      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
+      globalLoader.findMatchPath(
+        stripPrefix(browserLoc.pathname, __BASE_PATH__)
+      ) ||
       pagePath === `/404.html` ||
       pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
@@ -117,7 +121,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  loader.loadPage(browserLoc.pathname).then(page => {
+  globalLoader.loadPage(browserLoc.pathname).then(page => {
     if (!page || page.status === `error`) {
       throw new Error(
         `page resources for ${
