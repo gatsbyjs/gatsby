@@ -659,23 +659,22 @@
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 - url: https://emma.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-emma
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images in a full-width grid-layout. Choose color overlays for card items and your projects. The website has three pages (Index, About, Contact) and programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
+  description: Minimalistic portfolio with full-width grid, page transitions, support for additional MDX pages, and a focus on large images. Especially designers and/or photographers will love this theme! Built with MDX and Theme UI. Using the Gatsby Theme "@lekoarts/gatsby-theme-emma".
   tags:
     - Portfolio
     - MDX
     - Transitions
     - Styling:CSS-in-JS
     - PWA
-    - Linting
-    - Testing
   features:
-    - Full-width photo grid-layout (with gatsby-image)
-    - Minimalistic light theme with large images
-    - Create your projects in MDX
-    - Styling with styled-components
-    - react-spring animations
-    - Easily configurable
-    - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+    - MDX
+    - react-spring page animations
+    - Optional MDX pages which automatically get added to the navigation
+    - Fully customizable through the usage of Gatsby Themes (and Theme UI)
+    - Light Mode / Dark Mode
+    - Google Analytics Support
+    - SEO (Sitemap, OpenGraph tags, Twitter tags)
+    - Offline Support & WebApp Manifest
 - url: https://gatsby-starter-procyon.netlify.com/
   repo: https://github.com/danielmahon/gatsby-starter-procyon
   description: n/a
@@ -3420,8 +3419,8 @@
   repo: https://github.com/brohlson/gatsby-datocms-starter
   description: An SEO-friendly DatoCMS starter with styled-components, page transitions, and out-of-the-box blog post support.
   tags:
-    - DatoCMS
-    - Styled-Components
+    - CMS:DatoCMS
+    - Styling:CSS-in-JS
     - Blog
     - Portfolio
     - SEO
