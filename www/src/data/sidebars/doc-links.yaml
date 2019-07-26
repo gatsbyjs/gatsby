@@ -288,6 +288,8 @@
               link: /docs/mdx/programmatically-creating-pages/
             - title: Using MDX Plugins
               link: /docs/mdx/plugins/
+            - title: Markdown Syntax
+              link: /docs/mdx/markdown-syntax/
         - title: Adding Testing
           link: /docs/testing/
           items:
