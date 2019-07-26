@@ -22,7 +22,7 @@
     "update": "node scripts/update.js",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --browser chrome"
+    "cy:run": "cypress run --browser chrome --record"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

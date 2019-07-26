@@ -93,6 +93,8 @@ const fileOkCache = {}
  * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
+ * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -796,6 +798,11 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
     }
 
     nodeId = options
+  }
+
+  const node = getNode(nodeId)
+  if (node && !typeOwners[node.internal.type]) {
+    typeOwners[node.internal.type] = node.internal.owner
   }
 
   return {

@@ -6,8 +6,8 @@ title: Themes API Reference
 
 - [Core Gatsby APIs](#core-gatsby-apis)
 - [Configuration](#configuration)
-- [Component shadowing](#component-shadowing)
 - [Theme composition](#theme-composition)
+- [Shadowing](#shadowing)
 
 ## Core Gatsby APIs
 
@@ -22,9 +22,7 @@ If you're new to Gatsby you can get started by following along with the guides f
 
 ## Configuration
 
-Plugins can now include a `gatsby-config` in addition to the other `gatsby-*` files.
-
-You can access options that are passed to your theme in your theme's `gatsby-config`. You can use this to make filesystem sourcing configurable, accept different nav menu items, or change branding colors from the default.
+Plugins can now include a `gatsby-config` in addition to the other `gatsby-*` files. We typically refer to plugins that include a `gatsby-config.js` as a theme (more on that in [theme composition](#theme-composition)). A typical `gatsby-config.js` in a user's site that uses your theme could look like this. In this example we pass in two options to `gatsby-theme-name`: `postsPath` and `colors`.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -42,11 +40,14 @@ module.exports = {
 }
 ```
 
-In your theme's `gatsby-config.js` you can return a function: the argument it receives are the options:
+You can access options that are passed to your theme in your theme's `gatsby-config`. You can use options to make filesystem sourcing configurable, accept different nav menu items, change branding colors from the default, and anything else you want to make configurable.
+
+To take advantage of the options that are passed in when configuring your theme in a user's site, return a function in your theme's `gatsby-config.js`. The argument the function receives is the options the user passed in.
 
 ```js:title=gatsby-config.js
 module.exports = themeOptions => {
   console.log(themeOptions)
+  // logs `postsPath` and `colors`
 
   return {
     plugins: [
@@ -56,7 +57,11 @@ module.exports = themeOptions => {
 }
 ```
 
-Then, in your theme's `gatsby-node.js` you can access them as the second argument to `createPages`:
+While using the usual object export (`module.exports = {}`) in your theme means that you can run the theme standalone as its own site, when using a function in your theme to accept options you will need to run the theme as part of an example site. See how the [theme authoring starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace) handles this using Yarn Workspaces.
+
+### Accessing Options elsewhere
+
+Note that because themes are plugins you can also access the options in any of the lifecycle methods that you're used to. For example, in your theme's `gatsby-node.js` you can access the options as the second argument to `createPages`:
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }, themeOptions) => {
@@ -64,31 +69,78 @@ exports.createPages = async ({ graphql, actions }, themeOptions) => {
 }
 ```
 
-## Component Shadowing
+## Shadowing
 
-You can import files from a Gatsby Theme into your project. For example, if you're using `gatsby-theme-tomato`, which has a `Layout` component located at `src/components/layout.js`, you can import it into your project like this:
+Since themes are usually deployed as npm packages that other people use in their sites, we need a way to modify certain files, such as React components, without making changes to the source code of the theme. This is called _Shadowing_.
+
+Shadowing is a filesystem-based API that allows us to replace one file with another at build time. For example, if we had a theme with a `Header` component we could replace that `Header` with our own by creating a new file in our site and placing it in the correct location for Shadowing to find it.
+
+### Overriding
+
+Taking a closer look at our `Header` example, let's say we have a theme called `gatsby-theme-amazing`. That theme uses a `Header` component to render navigation and other miscellaneous items. The path to the component from the root of the npm package is `gatsby-theme-amazing/src/components/header.js`.
+
+We'd like the `Header` component to do something different (maybe change colors, maybe add additional navigation items, really anything you can think of). To do that, we create a file in our site at `src/gatsby-theme-amazing/components/header.js`. We can now export any React component we want from this file and Gatsby will use it instead of the theme's component.
+
+> 💡 Note: you can shadow components from other themes using the same method. Read more about advanced applications in [latent shadowing](https://johno.com/latent-component-shadowing).
+
+### Extending
+
+In the last section we talked about completely replacing one component with another. What if we want to make a smaller change that doesn't require copy/pasting the entire theme component into our own? We can take advantage of the ability to extend components.
+
+Taking the `Header` example from before, when we write our shadowing file at `src/gatsby-theme-amazing/components/header.js`, we can import the original component and re-export it as such, adding our own overridden prop to the component.
 
 ```js
-import Layout from "gatsby-theme-tomato/src/components/Layout"
+import Header from "gatsby-theme-amazing/src/components/header"
+
+// these props are the same as the original component would get
+export default props => <Header {...props} myProp="true" />
 ```
 
-Gatsby Themes also allow you to customize any file in a theme's `src` directory by following a file naming convention.
-If you're using `gatsby-theme-tomato` which uses a `ProfileCard` component located at `src/components/profile-card.js` you can override the component by creating `src/gatsby-theme-tomato/components/profile-card.js`. If you want to see what props are passed you can do so by putting the props into a `pre` tag:
+Taking this approach means that when we upgrade our theme later we can also take advantage of all the updates to the `Header` component because we haven't fully replaced it, just modified it.
 
-```js:title=src/gatsby-theme-tomato/components/profile-card.js
-import React from "react"
+### What path should be used to shadow a file?
 
-export default props => <pre>{JSON.stringify(props, null, 2)}</pre>
+Until we build tooling to support automatically handling shadowing, you will have to manually locate paths in a theme and create the correct shadowing paths in your site.
+
+Luckily, the way to do that is only a few steps. Take the `src` directory from the theme, and move it to the front of the path, then write a file at that location in your site. Looking back on our `Header` example, this is the path to the component in our theme:
+
 ```
+gatsby-theme-amazing/src/components/header.js
+```
+
+and here is the path where we would shadow it in our site:
+
+```
+<our-site>/src/gatsby-theme-amazing/components/header.js
+```
+
+Shadowing only works on imported files in the `src` directory. This is because shadowing is built on top of Webpack, so the module graph needs to include the shadowable file.
+
+Since we can use multiple themes in a given site, there are many potential places to shadow a given file (one for each theme and one for the user's site). In the event that multiple themes are attempting to shadow `gatsby-theme-amazing/src/components/header.js`, the last theme included in the plugins array will win. The site itself takes the highest priority in shadowing.
 
 ## Theme composition
 
-A theme can declare another theme as a parent theme. This means that a theme can declare another theme in its
-own `gatsby-config.js`. So if you'd like to use `gatsby-theme-blog` to build off of you can and install the theme
-and then configure it:
+Gatsby themes can compose horizontally and vertically. Vertical composition refers to the classic "parent/child" relationship. A child theme declares a parent theme in the child theme's plugins array.
 
-```js:title=gatsby-config.js
+```js:title=gatsby-theme-child/gatsby-config.js
 module.exports = {
-  plugins: ["gatsby-theme-blog"],
+  plugins: [`gatsby-theme-parent`],
 }
 ```
+
+Horizontal composition is when two different themes are used together, such as `gatsby-theme-blog` and `gatsby-theme-notes`.
+
+```js:title=my-site/gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-theme-blog`, `gatsby-theme-notes`],
+}
+```
+
+Themes at their core are an algorithm that merges multiple `gatsby-config.js` files together into a single config your site can use to build with. To do that we need to define how to combine two `gatsby-config.js`s together. Before we can do that, we need to flatten the parent/child relationships into a single array. This results in the final ordering when considering which shadowing file to use if multiple are available.
+
+Our first example results in a final ordering of `['gatsby-theme-parent', 'gatsby-theme-child']` (parents always come before their children so that children can override functionality), while our second example results in `['gatsby-theme-blog', 'gatsby-theme-notes']`.
+
+Once we have the final ordering of themes we merge them together using a reduce function. [This reduce function](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/merge-gatsby-config.js) specifies the way each key in `gatsby-config.js` will merge together. Unless otherwise specified below, the last value wins.
+
+- `siteMetadata` and `mapping` both merge deeply using lodash's `merge` function. This means a theme can set default values in `siteMetadata` and the site can override them using the standard `siteMetadata` object in `gatsby-config.js`.
+- `plugins` are normalized to remove duplicates, then concatenated together.

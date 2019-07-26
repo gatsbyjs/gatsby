@@ -25,7 +25,7 @@ interface PageDependencies {
 
 interface QueryArguments {
   type: TypeOrTypeName;
-  query: { filter: Object, sort?: Object, skip?: number, limit?: number };
+  query: { filter: Object, sort?: Object };
   firstOnly?: boolean;
 }
 
@@ -151,7 +151,7 @@ class LocalNodeModel {
    * Get nodes of a type matching the specified query.
    *
    * @param {Object} args
-   * @param {Object} args.query Query arguments (`filter`, `sort`, `limit`, `skip`)
+   * @param {Object} args.query Query arguments (`filter` and `sort`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {boolean} [args.firstOnly] If true, return only first match
    * @param {PageDependencies} [pageDependencies]
