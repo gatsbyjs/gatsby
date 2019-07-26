@@ -68,7 +68,7 @@ describe("a new PR", () => {
     expect(mockedUtils.addErrorMsg).not.toBeCalled()
   })
 
-  it(`Check for required fields and disallow unkown fields`, async () => {
+  it(`Check for required fields and disallow unknown fields`, async () => {
     setStartersYmlContent(`
       - test: loem
     `)
@@ -195,7 +195,7 @@ describe("a new PR", () => {
     )
   })
 
-  it(`Doesn't allow non github repos`, async () => {
+  it(`Doesn't allow non GitHub repos`, async () => {
     setStartersYmlContent(`
     - url: http://gatsbyjs.github.io/gatsby-starter-default/
       repo: https://gitlab.com/gatsbyjs/gatsby-starter-default

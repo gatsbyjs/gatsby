@@ -1,6 +1,7 @@
 import * as React from "react"
 import { EventEmitter } from "events"
 import { WindowLocation } from "@reach/router"
+import { createContentDigest } from "gatsby-core-utils"
 
 export {
   default as Link,
@@ -22,6 +23,8 @@ export interface StaticQueryProps {
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
+
+export const prefetchPathname: (path: string) => void
 
 export interface PageRendererProps {
   location: WindowLocation
@@ -600,7 +603,13 @@ export interface PluginOptions {
 export type PluginCallback = (err: Error | null, result?: any) => void
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
-  graphql: Function
+  graphql<TData, TVariables = any>(
+    query: string,
+    variables?: TVariables
+  ): Promise<{
+    errors?: any
+    data?: TData
+  }>
   traceId: string
   waitForCascadingActions: boolean
 }
@@ -664,7 +673,7 @@ export interface SourceNodesArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
-  schema: object
+  intermediateSchema: object
   createResolvers: Function
   traceId: `initial-createResolvers`
 }
@@ -727,7 +736,7 @@ export interface NodePluginArgs {
   getNodeAndSavePathDependency: Function
   cache: Cache["cache"]
   createNodeId: Function
-  createContentDigest: Function
+  createContentDigest: typeof createContentDigest
   tracing: Tracing
   [key: string]: unknown
 }
@@ -769,8 +778,8 @@ export interface Actions {
   deletePage(args: { path: string; component: string }): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
-  createPage(
-    args: { path: string; component: string; context: Record<string, unknown> },
+  createPage<TContext = Record<string, unknown>>(
+    args: { path: string; component: string; context: TContext },
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
@@ -789,10 +798,14 @@ export interface Actions {
   deleteNodes(nodes: string[], plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
-  createNode(node: Node, plugin?: ActionPlugin, options?: ActionOptions): void
+  createNode(
+    node: NodeInput,
+    plugin?: ActionPlugin,
+    options?: ActionOptions
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string; plugin?: ActionPlugin }): void
+  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
@@ -856,11 +869,12 @@ export interface Actions {
   createRedirect(
     redirect: {
       fromPath: string
-      isPermanent: boolean
+      isPermanent?: boolean
       toPath: string
-      redirectInBrowser: boolean
-      force: boolean
-      statusCode: number
+      redirectInBrowser?: boolean
+      force?: boolean
+      statusCode?: number
+      [key: string]: unknown
     },
     plugin?: ActionPlugin
   ): void
@@ -868,13 +882,20 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#addThirdPartySchema */
   addThirdPartySchema(
     args: { schema: object },
-    plugin: ActionPlugin,
+    plugin?: ActionPlugin,
     traceId?: string
   ): void
 
-  /** TODO create jsdoc on gatsbyjs.org */
+  /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
   createTypes(
     types: string | object | Array<string | object>,
+    plugin?: ActionPlugin,
+    traceId?: string
+  ): void
+
+  /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
+  createFieldExtension(
+    extension: object,
     plugin: ActionPlugin,
     traceId?: string
   ): void
@@ -1100,42 +1121,25 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
   serviceWorker: ServiceWorkerRegistration
 }
 
-export interface Node {
-  path?: string
+export interface NodeInput {
   id: string
-  parent: string
-  children: Node[]
-  fields?: Record<string, string>
+  parent?: string
+  children?: string[]
   internal: {
     type: string
-    mediaType: string
-    content: string
+    mediaType?: string
+    content?: string
     contentDigest: string
-    owner: string
     description?: string
   }
-  resolve?: string
-  name?: string
-  version?: string
-  pluginOptions?: PluginOptions
-  nodeAPIs?: any[]
-  browserAPIs?: any[]
-  ssrAPIs?: any[]
-  pluginFilepath?: string
-  packageJson?: PackageJson
-  siteMetadata?: Record<string, any>
-  port?: string
-  host?: string
-  pathPrefix?: string
-  polyfill?: boolean
-  buildTime?: string
-  jsonName?: string
-  internalComponentName?: string
-  matchPath?: unknown
-  component?: string
-  componentChunkName?: string
-  context?: Record<string, any>
-  pluginCreatorId?: string
-  componentPath?: string
+  [key: string]: unknown
+}
+
+export interface Node extends NodeInput {
+  parent: string
+  children: string[]
+  internal: NodeInput["internal"] & {
+    owner: string
+  }
   [key: string]: unknown
 }

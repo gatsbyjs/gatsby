@@ -21,7 +21,7 @@ gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 
 If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero.
 
-### ✋ Open up the code.
+### ✋ Open up the code
 
 In your code editor, open up the code generated for your “Hello World” site and take a look at the different directories and files contained in the ‘hello-world’ directory. It should look something like this:
 
