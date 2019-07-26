@@ -188,7 +188,7 @@ const errorMap = {
             : []
         )
         .join(`\n`),
-    level: `WARNING`,
+    level: `ERROR`,
   },
 }
 
