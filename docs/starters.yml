@@ -3429,3 +3429,15 @@
     - Page Transitions
     - Blog Post Template
     - Sitemap & Robots.txt generation
+- url: https://gatsby-starter-apollo.netlify.com/
+  repo: https://github.com/piducancore/gatsby-starter-apollo-netlify
+  description: This project is an easy way to start developing fullstack apps with Gatsby and Apollo Server (using Netlify Lambda functions). For developing we use Netlify Dev to bring all of this magic to our local machine.
+  tags:
+    - Apollo
+    - GraphQL
+    - Netlify
+    - Lambda
+  features:
+    - Apollo Client
+    - Apollo Server running on Netlify functions
+    - Netlify Dev for local development
