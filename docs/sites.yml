@@ -6676,3 +6676,13 @@
   built_by: Axel Fuhrmann
   built_by_url: https://axelfuhrmann.com/
   featured: false
+- title: Nick Selvaggio
+  url: https://nickgs.com/
+  main_url: https://nickgs.com/
+  description: >
+    The personal website of Nick Selvaggio. Long Island based web developer, teacher, and technologist.
+  categories:
+    - Consulting
+    - Programming
+    - Web Development
+  featured: false
