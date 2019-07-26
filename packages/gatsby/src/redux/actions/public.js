@@ -264,9 +264,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // linux CI/CD pipeline
 
       const relativePath = page.component.replace(cwd, ``).replace(/^\//, ``)
-      console.log(relativePath)
-      console.log(cwd)
-      const trueComponentPath = slash(trueCasePathSync(relativePath, cwd))
+      const trueComponentPath = slash(
+        trueCasePathSync(relativePath, store.getState().program.directory)
+      )
 
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
