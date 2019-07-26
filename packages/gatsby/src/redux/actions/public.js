@@ -17,8 +17,6 @@ const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
-const process = require(`process`)
-const cwd = process.cwd()
 
 const actions = {}
 
@@ -154,7 +152,7 @@ actions.createPage = (
     if (invalidFields.length > 0) {
       const error = `${
         invalidFields.length === 1 ? singularMessage : pluralMessage
-      }
+        }
 
 ${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
 
@@ -262,13 +260,17 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
-
-      const relativePath = page.component.replace(cwd, ``).replace(/^\//, ``)
-      console.log(relativePath)
-      console.log(store.getState().program.directory)
-      const trueComponentPath = slash(
-        trueCasePathSync(relativePath, store.getState().program.directory)
-      )
+      let trueComponentPath;
+      try {
+        // most systems
+        trueComponentPath = slash(truePath(page.component))
+      } catch {
+        // systems where user doesn't have access to /
+        const relativePath = page.component.replace(store.getState().program.directory, ``).replace(/^\//, ``)
+        trueComponentPath = slash(
+          trueCasePathSync(relativePath, store.getState().program.directory)
+        )
+      }
 
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
@@ -393,7 +395,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
       `Attempting to create page "${
-        page.path
+      page.path
       }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
     )
   }
@@ -447,7 +449,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 
           The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]
-      }".
+        }".
 
           The node object passed to "deleteNode":
 
@@ -681,7 +683,7 @@ const createNode = (
 
         The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]
-      }".
+        }".
 
         If you copy and pasted code from elsewhere, you'll need to pick a new type name
         for your new node(s).
@@ -1159,7 +1161,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
   const isRelativeProtocol = path.startsWith(`//`)
   return `${
     parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
-  }${path}`
+    }${path}`
 }
 
 /**
