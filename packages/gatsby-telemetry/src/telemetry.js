@@ -1,14 +1,13 @@
-const { createHash } = require(`crypto`)
-const uuid = require(`uuid/v1`)
+const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
-const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
+const { cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
-const { basename, join, sep } = require(`path`)
-const { execSync } = require(`child_process`)
+const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
+const { getRepositoryId } = require(`./repository-id`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -18,7 +17,7 @@ module.exports = class AnalyticsTracker {
   osInfo // lazy
   trackingEnabled // lazy
   componentVersion
-  sessionId = uuid()
+  sessionId = this.getSessionId()
 
   constructor() {
     try {
@@ -29,6 +28,15 @@ module.exports = class AnalyticsTracker {
     } catch (e) {
       // ignore
     }
+  }
+
+  // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
+  // Hence we need to use process level globals that are not scoped to this module
+  getSessionId() {
+    return (
+      process.gatsbyTelemetrySessionId ||
+      (process.gatsbyTelemetrySessionId = uuidv4())
+    )
   }
 
   getTagsFromEnv() {
@@ -111,12 +119,30 @@ module.exports = class AnalyticsTracker {
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
 
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  captureBuildError(type, tags = {}) {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    const decoration = this.metadataCache[type]
+    delete this.metadataCache[type]
+    const eventType = `BUILD_ERROR_${type}`
+
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  formatErrorAndStoreEvent(eventType, tags) {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
         const { error, ...restOfTags } = tags
         error.forEach(err => {
-          this.captureError(type, { error: err, ...restOfTags })
+          this.formatErrorAndStoreEvent(eventType, {
+            error: err,
+            ...restOfTags,
+          })
         })
         return
       }
@@ -134,23 +160,7 @@ module.exports = class AnalyticsTracker {
       delete tags.error
     }
 
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
-  }
-
-  captureBuildError(type, tags = {}) {
-    if (!this.isTrackingEnabled()) {
-      return
-    }
-    const decoration = this.metadataCache[type]
-    delete this.metadataCache[type]
-    const eventType = `BUILD_ERROR_${type}`
-
-    if (tags.error) {
-      // `error` ought to have been `errors` but is `error` in the database
-      tags.error = sanitizeErrors(tags.error)
-    }
-
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+    this.buildAndStoreEvent(eventType, tags)
   }
 
   buildAndStoreEvent(eventType, tags) {
@@ -162,10 +172,10 @@ module.exports = class AnalyticsTracker {
       sessionId: this.sessionId,
       time: new Date(),
       machineId: this.getMachineId(),
-      repositoryId: this.getRepoId(),
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
+      ...getRepositoryId(),
     }
     this.store.addEvent(event)
   }
@@ -177,7 +187,7 @@ module.exports = class AnalyticsTracker {
     }
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (!machineId) {
-      machineId = uuid()
+      machineId = uuidv4()
       this.store.updateConfig(`telemetry.machineId`, machineId)
     }
     this.machineId = machineId
@@ -199,25 +209,6 @@ module.exports = class AnalyticsTracker {
     }
     this.trackingEnabled = enabled
     return enabled
-  }
-
-  getRepoId() {
-    // we may live multiple levels in git repo
-    let prefix = `pwd:`
-    let repo = basename(process.cwd())
-    try {
-      const originBuffer = execSync(
-        `git config --local --get remote.origin.url`,
-        { timeout: 1000, stdio: `pipe` }
-      )
-      repo = String(originBuffer).trim()
-      prefix = `git:`
-    } catch (e) {
-      // ignore
-    }
-    const hash = createHash(`sha256`)
-    hash.update(repo)
-    return prefix + hash.digest(`hex`)
   }
 
   getOsInfo() {

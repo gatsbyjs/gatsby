@@ -446,7 +446,7 @@ describe(`dateResolver`, () => {
     const schema = await buildTestSchema({})
     const fields = schema.getType(`Test`).getFields()
     expect(
-      fields[`testDate`].resolve(
+      await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
         {},
@@ -471,7 +471,7 @@ describe(`dateResolver`, () => {
     const schema = await buildTestSchema({})
     const fields = schema.getType(`Test`).getFields()
     expect(
-      fields[`testDate`].resolve(
+      await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
         {},
