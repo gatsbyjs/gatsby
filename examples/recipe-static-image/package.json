@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "recipe-static-image",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "A recipe example on using Gatsby's static folder for images",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
