@@ -597,7 +597,87 @@ export default NonPageComponent
 
 ## 7. Working with images
 
-Coming soon!
+### Import an image into a component with webpack
+
+Images can be imported right into a JavaScript module with webpack. This process automatically minifies and copies the image to your site's `public` folder, providing a dynamic image URL for you to pass to an HTML `<img>` element like a regular file path.
+
+#### Prerequisites
+
+- A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
+- an image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src` folder
+
+#### Directions
+
+1. Import your file from its path in the `src` folder:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+// Tell webpack this JS file uses this image
+import FiestaImg from "../assets/fiesta.jpg" // highlight-line
+```
+
+2. In `index.js`, add an `<img>` tag with the `src` as the name of the import you used from webpack (in this case `FiestaImg`), and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import FiestaImg from "../assets/fiesta.jpg"
+
+export default () => (
+  // The import result is the URL of your image
+  <img src={FiestaImg} alt="A dog smiling in a party hat" /> // highlight-line
+)
+```
+
+3. Run `gatsby develop` to start the development server.
+4. View your image in the browser: `http://localhost:8000/`
+
+#### Additional resources
+
+- [Example repo importing an image with webpack](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-webpack-image)
+- [More on all image techniques in Gatsby](/docs/images-and-files/)
+
+### Reference an image from the `static` folder
+
+As an alternative to importing assets with webpack, the `static` folder allows access to content that gets automatically copied into the `public` folder when built.
+
+This is an **escape route** for [specific use cases](/docs/static-folder/#when-to-use-the-static-folder), and other methods like [importing with webpack](#import-an-image-into-a-component-with-webpack) are recommended to leverage optimizations made by Gatsby.
+
+#### Prerequisites
+
+- A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
+- An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `static` folder
+
+#### Directions
+
+1. Ensure that the image is in your `static` folder at the root of the project. Your project structure might look something like this:
+
+```
+├── gatsby-config.js
+├── src
+│   └── pages
+│       └── index.js
+├── static
+│       └── fiesta.jpg
+```
+
+2. In `index.js`, add an `<img>` tag with the `src` as the relative path of the file from the `static` folder, and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
+
+```jsx:title=src/pages/index.js
+import React from "react"
+
+export default () => (
+  <img src={`fiesta.jpg`} alt="A dog smiling in a party hat" /> // highlight-line
+)
+```
+
+3. Run `gatsby develop` to start the development server.
+4. View your image in the browser: `http://localhost:8000/`
+
+#### Additional resources
+
+- [Example repo referencing an image from the static folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-static-image)
+- [Using the Static Folder](/docs/static-folder/)
+- [More on all image techniques in Gatsby](/docs/images-and-files/)
 
 ## 8. Transforming data
 
