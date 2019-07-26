@@ -47,6 +47,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
+    fromPath: `/docs/themes/api-reference`,
+    toPath: `/docs/theme-api/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/component-css/`, // Merged Component CSS and CSS Modules
     toPath: `/docs/css-modules/`,
     isPermanent: true,

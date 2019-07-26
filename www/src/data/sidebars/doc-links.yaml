@@ -236,15 +236,12 @@
               link: /docs/themes/using-multiple-gatsby-themes
             - title: Building Themes
               link: /docs/themes/building-themes
-              items:
-                - title: Themes API Reference
-                  link: /docs/themes/api-reference
-                - title: Converting a Starter
-                  link: /docs/themes/converting-a-starter
-                - title: Theme Composition
-                  link: /docs/themes/theme-composition
-                - title: Conventions
-                  link: /docs/themes/conventions
+            - title: Converting a Starter
+              link: /docs/themes/converting-a-starter
+            - title: Theme Composition
+              link: /docs/themes/theme-composition
+            - title: Conventions
+              link: /docs/themes/conventions
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -441,6 +438,8 @@
     - title: Gatsby API
       link: /docs/api-reference/
       items:
+        - title: Gatsby Themes
+          link: /docs/theme-api/
         - title: Gatsby Link
           link: /docs/gatsby-link/
         - title: Gatsby Image
