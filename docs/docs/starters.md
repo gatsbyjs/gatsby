@@ -44,6 +44,20 @@ If you don't specify a custom starter, your site will be created from the [defau
 
 > **Note:** If you work for an Enterprise-level company where you are unable to pull from public GitHub repositories, you can still set up Gatsby. Check out the [docs to learn more](/docs/setting-up-gatsby-without-gatsby-new/).
 
+### Using a local starter
+
+Another option is to supply a path (relative or absolute) to a local folder containing a starter:
+
+```shell
+gatsby new [SITE_DIRECTORY] [STARTER/LOCAL/PATH]
+```
+
+Here is an example assuming a local starter exists on the path `./my-local-starter`:
+
+```shell
+gatsby new blog ./my-local-starter
+```
+
 ## Official starters
 
 Official starters are maintained by Gatsby.
