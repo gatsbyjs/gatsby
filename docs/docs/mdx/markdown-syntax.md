@@ -33,8 +33,7 @@ Here's how those tags render in HTML:
   - i.e. `# heading 1` is `<h1>heading 1</h1>`
 - Correct usage of each heading should follow the
   [accessibility guidelines](https://www.w3.org/WAI/tutorials/page-structure/headings/) set by the World Wide Web Consortium (W3C)
-_Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are already included from `title` entries in frontmatter metadata, and contributions in Markdown should begin with h2._
-
+  _Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are already included from `title` entries in frontmatter metadata, and contributions in Markdown should begin with h2._
 
 ## Emphasized text
 
@@ -55,7 +54,8 @@ _Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are 
 ## Lists
 
 ### Unordered
-  - can use `*`, `-`, or `+` for each list item
+
+- can use `*`, `-`, or `+` for each list item
 
 ```
 * Gatsby
@@ -68,26 +68,29 @@ _Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are 
 
 How unordered lists are rendered in HTML:
 
-  - Gatsby
-    - docs
+- Gatsby
+  - docs
 
-  * Gatsby
-    - docs
+* Gatsby
+  - docs
 
-  - Gatsby
-    - docs
+- Gatsby
+  - docs
 
 ### Ordered
-  - number and period for each list item
-  - using `1.` for each item can automatically increment depending on the content
-  ```
-    1. One
-    1. Two
-    1. Three
-  ```
+
+- number and period for each list item
+- using `1.` for each item can automatically increment depending on the content
+
+```
   1. One
   1. Two
   1. Three
+```
+
+1. One
+1. Two
+1. Three
 
 ## Links and Images
 
@@ -145,11 +148,13 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 ## Code Comments
 
 ### Inline
-  - Enclose the text in backticks \`code\`
-  - Inline `code` looks like this sentence
+
+- Enclose the text in backticks \`code\`
+- Inline `code` looks like this sentence
 
 ### Code Blocks
-  - Indent a block by four spaces
+
+- Indent a block by four spaces
 
 ## MD vs MDX
 
