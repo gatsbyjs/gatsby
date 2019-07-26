@@ -264,6 +264,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // linux CI/CD pipeline
 
       const relativePath = page.component.replace(cwd, ``).replace(/^\//, ``)
+      console.log(relativePath)
+      console.log(store.getState().program.directory)
       const trueComponentPath = slash(
         trueCasePathSync(relativePath, store.getState().program.directory)
       )
