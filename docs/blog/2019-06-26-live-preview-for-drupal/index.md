@@ -1,6 +1,6 @@
 ---
 title: "Hot Off the Keyboard: Live Preview for Drupal + Gatsby (And 3 Steps to Get Started)"
-date: 2019-07-10
+date: 2019-07-29
 author: Grant Glidewell
 tags:
   - drupal
@@ -80,3 +80,5 @@ As you're testing out Gatsby Preview + Drupal and using it for company or client
 Drupal-based agencies and companies who want to improve client outcomes, site performance, and UI/UX, while modernizing their engineering stack and increasing engineering team satisfaction have a powerful new tool in their toolkit.
 
 We're excited to see what comes next!
+
+Got questions? Direct them to the [Drupal Gatsby Preview Umbrella issue in GitHub](https://github.com/gatsbyjs/gatsby/issues/14933) or the [Drupal module](https://www.drupal.org/project/gatsby) for Gatsby Live Preview.
