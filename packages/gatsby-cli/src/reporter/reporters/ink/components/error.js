@@ -3,6 +3,40 @@ import path from "path"
 import { Color, Box } from "ink"
 import { get } from "lodash"
 
+const colors = {
+  WARNING: {
+    bg: { bgYellow: true, black: true },
+    fg: { yellow: true },
+  },
+  ERROR: {
+    bg: {
+      bgRed: true,
+      black: true,
+    },
+    fg: {
+      red: true,
+    },
+  },
+  INFO: {
+    bg: {
+      bgBlue: true,
+      white: true,
+    },
+    fg: {
+      blue: true,
+    },
+  },
+  DEBUG: {
+    bg: {
+      bgCyan: true,
+      black: true,
+    },
+    fg: {
+      cyan: true,
+    },
+  },
+}
+
 const File = ({ filePath, location }) => {
   const lineNumber = get(location, `start.line`)
 
@@ -34,32 +68,34 @@ const DocsLink = ({ docsUrl }) => {
   )
 }
 
-const Error = ({ details }) => (
-  // const stackLength = get(details, `stack.length`, 0
-
-  <Box marginY={1} flexDirection="column">
-    <Box flexDirection="column">
+const Error = ({ details }) => {
+  const color = colors[details.level] || colors.error
+  return (
+    <Box marginY={1} flexDirection="column">
       <Box flexDirection="column">
-        <Box>
-          <Box marginRight={1}>
-            <Color black bgRed>
-              {` ${details.level} `}
-              {details.id ? `#${details.id} ` : ``}
-            </Color>
-            <Color red>{details.type ? ` ` + details.type : ``}</Color>
+        <Box flexDirection="column">
+          <Box>
+            <Box marginRight={1}>
+              <Color {...color.bg}>
+                {` ${details.level} `}
+                {details.id ? `#${details.id} ` : ``}
+              </Color>
+              <Color {...color.fg}>
+                {details.type ? ` ` + details.type : ``}
+              </Color>
+            </Box>
           </Box>
+          <Box marginTop={1}>{details.text}</Box>
+          {details.filePath && (
+            <Box marginTop={1}>
+              File:{` `}
+              <File filePath={details.filePath} location={details.location} />
+            </Box>
+          )}
         </Box>
-        <Box marginTop={1}>{details.text}</Box>
-        {details.filePath && (
-          <Box marginTop={1}>
-            File:{` `}
-            <File filePath={details.filePath} location={details.location} />
-          </Box>
-        )}
+        <DocsLink docsUrl={details.docsUrl} />
       </Box>
-      <DocsLink docsUrl={details.docsUrl} />
-    </Box>
-    {/* TODO: use this to replace errorFormatter.render in reporter.error func
+      {/* TODO: use this to replace errorFormatter.render in reporter.error func
       {stackLength > 0 && (
         <Box>
           <Color>
@@ -74,7 +110,8 @@ const Error = ({ details }) => (
           </Color>
         </Box>
       )} */}
-  </Box>
-)
+    </Box>
+  )
+}
 
 export default Error

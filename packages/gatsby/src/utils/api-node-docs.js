@@ -242,7 +242,7 @@ exports.setFieldsOnGraphQLNodeType = true
  *   createTypes(typeDefs)
  * }
  */
-exports.createSchemaCustomization = true
+// exports.createSchemaCustomization = true
 
 /**
  * Add custom field resolvers to the GraphQL schema.
