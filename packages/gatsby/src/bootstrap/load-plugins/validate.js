@@ -60,11 +60,11 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
       ? entry.api.version
         ? `was introduced in gatsby@${entry.api.version}`
         : `is not available in your version of Gatsby`
-      : `isn't an API`
+      : `is not a known API`
 
     if (isDefaultPlugin) {
       errors.push(
-        `- Your local gatsby-${exportType}.js is exporting a variable named "${
+        `- Your local gatsby-${exportType}.js is using the API "${
           entry.exportName
         }" which ${message}.`
       )
@@ -72,7 +72,7 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
       errors.push(
         `- The plugin "${entry.pluginName}@${
           entry.pluginVersion
-        } is exporting a variable "${entry.exportName}" which ${message}.`
+        } is using the API "${entry.exportName}" which ${message}.`
       )
     }
 
