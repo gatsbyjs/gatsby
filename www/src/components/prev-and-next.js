@@ -36,7 +36,8 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
   }
 
   return (
-    <div
+    <nav
+      aria-label="pagination"
       css={{
         [mediaQueries.sm]: {
           display: `flex`,
@@ -85,7 +86,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
           </Link>
         )}
       </div>
-    </div>
+    </nav>
   )
 }
 
