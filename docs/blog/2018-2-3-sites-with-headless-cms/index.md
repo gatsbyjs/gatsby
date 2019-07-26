@@ -77,10 +77,6 @@ Their sleek design impressed me: the left hand side bar and onboarding process w
 
 I've read that [ButterCMS](https://buttercms.com) is particularly good for blogs, and after seeing how easy it is to add metadata and SEO title / metadescription to blog posts, it makes sense why this might be the case. Sometimes there were more clicks than necessary when saving things. And sometimes the jargon in this environment threw me off. Like “object”? What is that? It’s basically a category of content. So, if I’m going to create a lot of event descriptions, the event titles will be one object, the event description, another object, etc. It's an unfamiliar and abstract word for someone new to headless CMSs.
 
-### Built.io (Contentstack)
-
-I filled out a form to get a free trial and heard back a while later with some questions about the purpose of my trial site, when I expect to go live, where I work, etc. It felt like a bit too much information to provide for a free trial, so I didn’t respond.
-
 ### Contentful
 
 I already built this site http://watson.surge.sh/ with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.

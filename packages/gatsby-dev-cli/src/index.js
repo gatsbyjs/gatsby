@@ -22,6 +22,11 @@ const argv = require(`yargs`)
     `Set path to Gatsby repository.
 You typically only need to configure this once.`
   )
+  .nargs(`force-install`, 0)
+  .describe(
+    `force-install`,
+    `Disables copying files into node_modules and forces usage of local npm repository.`
+  )
   .alias(`C`, `copy-all`)
   .nargs(`C`, 0)
   .describe(
@@ -99,5 +104,6 @@ watch(gatsbyLocation, argv.packages, {
   localPackages,
   quiet: argv.quiet,
   scanOnce: argv.scanOnce,
+  forceInstall: argv.forceInstall,
   monoRepoPackages,
 })

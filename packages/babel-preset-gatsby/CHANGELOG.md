@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.7...babel-preset-gatsby@0.2.8) (2019-07-25)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** Adds a missing `resolve` call ([#16084](https://github.com/gatsbyjs/gatsby/issues/16084)) ([c37f2be](https://github.com/gatsbyjs/gatsby/commit/c37f2be))
+
+## [0.2.7](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.6...babel-preset-gatsby@0.2.7) (2019-07-19)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.2.6](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.5...babel-preset-gatsby@0.2.6) (2019-07-15)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** add [@babel](https://github.com/babel)/plugin-transform-spread as dependencies ([#15714](https://github.com/gatsbyjs/gatsby/issues/15714)) ([dfde933](https://github.com/gatsbyjs/gatsby/commit/dfde933))
+
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.4...babel-preset-gatsby@0.2.5) (2019-07-12)
+
+### Features
+
+- **babel-preset-gatsby:** add babel-plugin-transform-react-remove-prop-types for production builds ([#14987](https://github.com/gatsbyjs/gatsby/issues/14987)) ([633e9ea](https://github.com/gatsbyjs/gatsby/commit/633e9ea)), closes [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814) [#14814](https://github.com/gatsbyjs/gatsby/issues/14814)
+
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.3...babel-preset-gatsby@0.2.4) (2019-07-12)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** Add babel-plugin-dynamic-import-node for tests ([#15657](https://github.com/gatsbyjs/gatsby/issues/15657)) ([ad5e8a0](https://github.com/gatsbyjs/gatsby/commit/ad5e8a0))
+
+## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.2...babel-preset-gatsby@0.2.3) (2019-07-12)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** Ensure the spread operator works ([#15172](https://github.com/gatsbyjs/gatsby/issues/15172)) ([bd07262](https://github.com/gatsbyjs/gatsby/commit/bd07262))
+
+## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.1...babel-preset-gatsby@0.2.2) (2019-07-11)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 ## [0.2.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.0...babel-preset-gatsby@0.2.1) (2019-07-02)
 
 ### Bug Fixes
