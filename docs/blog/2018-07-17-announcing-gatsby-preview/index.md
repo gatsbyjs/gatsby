@@ -2,7 +2,7 @@
 title: Announcing Gatsby Preview
 date: 2018-07-17
 author: "Sam Bhagwat"
-tags: ["contentful", "gatsby-preview", "gatsby-cloud"]
+tags: ["contentful", "gatsby-preview", "gatsby-cloud", "gatsby-inc"]
 ---
 
 Today we’re excited to announce our first commercial offering, a hosted Gatsby preview service for teams, with [Contentful](https://www.contentful.com/) as our initial integration.
