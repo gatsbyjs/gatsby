@@ -664,7 +664,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!doc.link) return null
         return (
           doc.link === this.link ||
-          doc.link.substring(0, doc.link.length - 1) === this.link
+          doc.link === this.link.substring(0, this.link.length - 1)
         )
       }
 

@@ -229,22 +229,22 @@
           link: /docs/themes/
           items:
             - title: What are Gatsby Themes?
-              link: /docs/themes/what-are-gatsby-themes
+              link: /docs/themes/what-are-gatsby-themes/
             - title: Using a Gatsby Theme
-              link: /docs/themes/using-a-gatsby-theme
+              link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
-              link: /docs/themes/using-multiple-gatsby-themes
+              link: /docs/themes/using-multiple-gatsby-themes/
             - title: Building Themes
-              link: /docs/themes/building-themes
+              link: /docs/themes/building-themes/
               items:
                 - title: Themes API Reference
-                  link: /docs/themes/api-reference
+                  link: /docs/themes/api-reference/
                 - title: Converting a Starter
-                  link: /docs/themes/converting-a-starter
+                  link: /docs/themes/converting-a-starter/
                 - title: Theme Composition
-                  link: /docs/themes/theme-composition
+                  link: /docs/themes/theme-composition/
                 - title: Conventions
-                  link: /docs/themes/conventions
+                  link: /docs/themes/conventions/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -350,7 +350,7 @@
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
             - title: Building a Contact Form
-              link: /docs/building-a-contact-form
+              link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
               link: /docs/add-404-page/
               breadcrumbTitle: 404 Page
@@ -382,7 +382,7 @@
                   link: /docs/adding-page-transitions-with-plugin-page-transitions/
                   breadcrumbTitle: gatsby-plugin-page-transitions
             - title: Making Your Site Accessible
-              link: /docs/making-your-site-accessible
+              link: /docs/making-your-site-accessible/
             - title: Routing
               link: /docs/routing/
               items:
