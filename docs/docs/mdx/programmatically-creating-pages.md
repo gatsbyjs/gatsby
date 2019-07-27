@@ -34,7 +34,7 @@ root.
 > recognize which files to use. You can also [use `.md` as a file
 > extension](/packages/gatsby-plugin-mdx#extensions) if you want.
 
-```javascript=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     // Add support for *.mdx files in gatsby
@@ -83,7 +83,7 @@ touch content/posts/blog-{1,2}.mdx
 
 Open up each of the files you just created and add some content.
 
-```md
+```md:title=blog-1.mdx
 ---
 title: "Blog Post 1"
 ---
@@ -91,7 +91,7 @@ title: "Blog Post 1"
 Trying out MDX
 ```
 
-```md
+```md:title=blog-2.mdx
 ---
 title: "Blog Post 2"
 ---
@@ -106,7 +106,7 @@ needs to be given a slug which tells Gatsby the URL to render to.
 
 If you want to set the URLs in your frontmatter, you can skip this step.
 
-```javascript=gatsby-node.js
+```javascript:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
