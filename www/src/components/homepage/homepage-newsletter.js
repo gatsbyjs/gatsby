@@ -7,41 +7,35 @@ import EmailCaptureForm from "../../components/email-capture-form"
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
 import { rhythm } from "../../utils/typography"
-import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  fontSizes,
-  letterSpacings,
-  lineHeights,
-  fonts,
-  fontWeights,
-} from "../../utils/presets"
+import { space, mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const stripedBorderHeight = space[1]
 
 const Container = styled(`div`)`
-  border: 1px solid ${colors.ui.border.subtle};
-  border-radius: ${radii[2]}px;
+  border: 1px solid ${props => props.theme.colors.ui.border.subtle};
+  border-radius: ${props => props.theme.radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${space[8]};
-  padding: calc(${space[8]} * 1.2);
-  padding-bottom: calc(${rhythm(space[8] * 1.2)} + ${stripedBorderHeight});
+  margin-bottom: ${props => props.theme.space[8]};
+  padding: calc(${props => props.theme.space[8]} * 1.2);
+  padding-bottom: calc(
+    ${props => rhythm(props.theme.space[8] * 1.2)} +
+      ${props => props.theme.stripedBorderHeight}
+  );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
-    background: ${colors.white}
+    border-radius: 0 0 ${props => props.theme.radii[2]}px
+      ${props => props.theme.radii[2]}px;
+    background: ${props => props.theme.colors.white}
       repeating-linear-gradient(
         135deg,
-        ${colors.yellow[40]},
-        ${colors.yellow[40]} 20px,
+        ${props => props.theme.colors.yellow[40]},
+        ${props => props.theme.colors.yellow[40]} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.teal[40]} 40px,
-        ${colors.teal[40]} 60px,
+        ${props => props.theme.colors.teal[40]} 40px,
+        ${props => props.theme.colors.teal[40]} 60px,
         transparent 60px,
         transparent 80px
       );
@@ -64,32 +58,32 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -${space[1]};
+  left: -${props => props.theme.space[1]};
   position: absolute;
-  top: -${space[2]};
+  top: -${props => props.theme.space[2]};
 `
 
 const Name = styled(`h3`)`
-  color: ${colors.lilac};
-  font-family: ${fonts.header};
-  font-size: ${fontSizes[1]};
-  font-weight: ${fontWeights[0]};
-  letter-spacing: ${letterSpacings.tracked};
+  color: ${props => props.theme.colors.lilac};
+  font-family: ${props => props.theme.fonts.header};
+  font-size: ${props => props.theme.fontSizes[1]};
+  font-weight: ${props => props.theme.fontWeights[0]};
+  letter-spacing: ${props => props.theme.letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
 
 const Title = styled(`h1`)`
-  color: ${colors.gatsby};
-  font-size: ${fontSizes[4]};
-  font-weight: ${fontWeights[1]};
-  line-height: ${lineHeights.dense};
+  color: ${props => props.theme.colors.gatsby};
+  font-size: ${props => props.theme.fontSizes[4]};
+  font-weight: ${props => props.theme.fontWeights[1]};
+  line-height: ${props => props.theme.lineHeights.dense};
   margin: 0;
-  margin-top: ${space[1]};
+  margin-top: ${props => props.theme.space[1]};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: ${space[5]};
+  margin-top: ${props => props.theme.space[5]};
 
   ${mediaQueries.lg} {
     margin-top: 0;

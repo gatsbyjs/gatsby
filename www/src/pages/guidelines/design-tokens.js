@@ -20,7 +20,7 @@ import Badge from "../../components/guidelines/badge"
 
 import theme from "../../utils/guidelines/theme"
 import { Box, Flex, Text } from "../../components/guidelines/system"
-import { mediaQueries } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const ColorExample = ({ hex, token }) => (
   <tr>

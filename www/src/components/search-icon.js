@@ -4,7 +4,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import MdSearch from "react-icons/lib/md/search"
 
-const SearchIcon = ({ overrideCSS, focussed }) => (
+const SearchIcon = ({ focussed }) => (
   <MdSearch
     fill={false}
     focusable="false"
@@ -12,7 +12,11 @@ const SearchIcon = ({ overrideCSS, focussed }) => (
     sx={{
       width: t => t.space[5],
       height: t => t.space[5],
-      ...overrideCSS,
+      position: `absolute`,
+      left: `0.5rem`,
+      top: `50%`,
+      pointerEvents: `none`,
+      transform: `translateY(-50%)`,
       fill: t =>
         focussed
           ? t.colors.navigation.searchIconFocus

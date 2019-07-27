@@ -1,6 +1,6 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import { colors, lineHeights } from "./presets"
+import { colors, lineHeights } from "../gatsby-plugin-theme-ui"
 // typography.js expects an array,
 // so grab font stacks directly from tokens
 import { fonts } from "gatsby-design-tokens"

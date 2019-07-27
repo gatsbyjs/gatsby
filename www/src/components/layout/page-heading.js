@@ -9,7 +9,7 @@ import {
   sizes,
   lineHeights,
   fontSizes,
-} from "../../utils/presets"
+} from "../../gatsby-plugin-theme-ui"
 import { svgStyles } from "../../utils/styles"
 
 const PageHeadingContainer = styled(`header`)`

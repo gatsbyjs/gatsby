@@ -1,30 +1,56 @@
 import hex2rgba from "hex2rgba"
+
 import {
-  borders,
-  breakpoints,
-  colors,
-  fonts,
-  fontSizes,
-  fontWeights,
-  letterSpacings,
-  lineHeights,
-  mediaQueries,
-  radii,
-  shadows,
-  sizes,
-  space,
-  transition,
-  zIndices,
-} from "../utils/presets"
+  borders as b,
+  breakpoints as bps,
+  colors as c,
+  fonts as f,
+  fontSizes as fs,
+  fontWeights as fw,
+  letterSpacings as ls,
+  lineHeights as lh,
+  mediaQueries as mq,
+  radii as r,
+  shadows as sh,
+  sizes as s,
+  space as sp,
+  transition as t,
+  zIndices as z,
+} from "gatsby-design-tokens"
+
+let breakps = []
+for (let bp in bps) {
+  breakps.push(bps[bp])
+}
+
+let fnts = {}
+for (let fontFamily in f) {
+  fnts[fontFamily] = f[fontFamily].join(`, `)
+}
+
+const fntsi = fs.map(token => `${token / 16}rem`)
+const spc = sp.map(token => `${token / 16}rem`)
 
 const darkBackground = `#0c0b0e` // meh
 const darkBorder = `#131217`
-
 const shadowDarkBase = `#131217`
-const shadowDarkFlares = colors.black
+const shadowDarkFlares = c.black
 
-// const darkBackground = `#131217`
-// const darkBorder = colors.grey[90]
+export const borders = b
+export const breakpoints = breakps
+export const colors = c
+export const fonts = fnts
+export const fontSizes = fntsi
+export const fontWeights = fw
+export const letterSpacings = ls
+export const lineHeights = lh
+export const mediaQueries = mq
+export const radii = r
+export const shadows = sh
+export const sizes = s
+export const space = spc
+export const transition = t
+export const zIndices = z
 
 export default {
   // this enables the color modes feature
@@ -34,75 +60,75 @@ export default {
   // useCustomProperties: true,
   borders: borders,
   colors: {
-    ...colors,
-    banner: colors.purple[70],
+    ...c,
+    banner: c.purple[70],
     // ref. e.g. https://github.com/system-ui/theme-ui/blob/702c43e804046a94389e7a12a8bba4c4f436b14e/packages/presets/src/tailwind.js#L6
     // transparent: `transparent`,
-    background: colors.white,
+    background: c.white,
     card: {
-      background: colors.white,
-      header: colors.black,
-      color: colors.grey[50],
+      background: c.white,
+      header: c.black,
+      color: c.grey[50],
     },
     widget: {
-      background: colors.white,
-      color: colors.text.primary,
+      background: c.white,
+      color: c.text.primary,
     },
     navigation: {
       background: `rgba(255,255,255,0.975)`,
-      linkDefault: colors.grey[50],
-      linkActive: colors.black,
-      linkHover: colors.gatsby,
-      socialLink: colors.grey[40],
-      searchBackground: colors.grey[10],
-      searchBackgroundFocus: colors.white,
-      searchIcon: colors.grey[50],
-      searchIconFocus: colors.purple[40],
-      searchPlaceholder: colors.grey[60],
+      linkDefault: c.grey[50],
+      linkActive: c.black,
+      linkHover: c.gatsby,
+      socialLink: c.grey[40],
+      searchBackground: c.grey[10],
+      searchBackgroundFocus: c.white,
+      searchIcon: c.grey[50],
+      searchIconFocus: c.purple[40],
+      searchPlaceholder: c.grey[60],
     },
     sidebar: {
-      itemHoverBackground: hex2rgba(colors.purple[20], 0.275),
+      itemHoverBackground: hex2rgba(c.purple[20], 0.275),
       activeItemBackground: `transparent`,
       itemBorderColor: `transparent`, // `rgba(0,0,0,0.05)`,
-      activeSectionBackground: hex2rgba(colors.purple[20], 0.15),
-      itemBorderActive: colors.purple[10],
+      activeSectionBackground: hex2rgba(c.purple[20], 0.15),
+      itemBorderActive: c.purple[10],
     },
     modes: {
       dark: {
         widget: {
-          background: colors.grey[90],
-          color: colors.white,
+          background: c.grey[90],
+          color: c.white,
         },
-        banner: colors.purple[90],
+        banner: c.purple[90],
         background: darkBackground,
         navigation: {
           background: hex2rgba(darkBackground, 0.975),
-          // background: colors.purple[90],
-          linkDefault: colors.whiteFade[50],
-          linkActive: colors.purple[40],
-          socialLink: colors.grey[60],
-          linkHover: colors.white,
+          // background: c.purple[90],
+          linkDefault: c.whiteFade[50],
+          linkActive: c.purple[40],
+          socialLink: c.grey[60],
+          linkHover: c.white,
           searchBackground: darkBorder,
           searchBackgroundFocus: darkBackground,
-          searchIcon: colors.grey[50],
-          searchIconFocus: colors.grey[40],
-          searchPlaceholder: colors.grey[50],
+          searchIcon: c.grey[50],
+          searchIconFocus: c.grey[40],
+          searchPlaceholder: c.grey[50],
         },
         card: {
-          background: colors.purple[90],
-          header: colors.white,
-          color: colors.purple[90],
+          background: c.purple[90],
+          header: c.white,
+          color: c.purple[90],
         },
         text: {
-          header: colors.white,
-          primary: colors.grey[30],
-          secondary: colors.grey[50],
+          header: c.white,
+          primary: c.grey[30],
+          secondary: c.grey[50],
         },
         link: {
-          color: colors.purple[40],
-          border: colors.purple[90],
-          hoverBorder: colors.purple[70],
-          hoverColor: colors.purple[30],
+          color: c.purple[40],
+          border: c.purple[90],
+          hoverBorder: c.purple[70],
+          hoverColor: c.purple[30],
         },
         ui: {
           border: {
@@ -111,11 +137,11 @@ export default {
           background: darkBackground,
         },
         sidebar: {
-          itemHoverBackground: hex2rgba(colors.purple[70], 0.275),
+          itemHoverBackground: hex2rgba(c.purple[70], 0.275),
           activeItemBackground: `transparent`,
           itemBorderColor: `transparent`,
-          activeSectionBackground: hex2rgba(colors.purple[70], 0.275),
-          itemBorderActive: colors.purple[80],
+          activeSectionBackground: hex2rgba(c.purple[70], 0.275),
+          itemBorderActive: c.purple[80],
         },
         shadows: {
           dialog: `0px 4px 16px rgba(${shadowDarkBase}, 0.08), 0px 8px 24px rgba(${shadowDarkFlares}, 0.16)`,
@@ -123,35 +149,49 @@ export default {
           overlay: `0px 4px 8px rgba(${shadowDarkBase}, 0.08), 0px 8px 16px rgba(${shadowDarkFlares}, 0.16)`,
           raised: `0px 1px 2px rgba(${shadowDarkBase}, 0.08), 0px 2px 4px rgba(${shadowDarkFlares}, 0.08)`,
         },
+        code: {
+          bg: darkBorder,
+          bgInline: darkBorder,
+          border: darkBackground,
+          lineHighlightBorder: c.purple[90],
+          lineHighlightBackground: hex2rgba(c.purple[90], 0.5),
+          punctuation: c.whiteFade[60],
+          add: c.green[50],
+          comment: c.grey[30],
+          cssString: `#a2466c`,
+          invisibles: `#e0d7d1`,
+          keyword: c.magenta[40],
+          regex: `#d88489`,
+          remove: `#e45c5c`,
+          scrollbarThumb: darkBackground,
+          selector: c.orange[30],
+          tag: c.teal[60],
+          text: c.grey[30],
+        },
       },
     },
   },
-  fonts: fonts,
-  fontSizes: fontSizes,
-  fontWeights: fontWeights,
-  letterSpacings: letterSpacings,
-  radii: radii,
+  fonts: fnts,
+  fontSizes: fntsi,
+  fontWeights: fw,
+  letterSpacings: ls,
+  radii: r,
   sizes: {
-    ...sizes,
-    logo: space[6],
-    sidebarItemMinHeight: space[8],
+    ...s,
+    logo: spc[6],
+    sidebarItemMinHeight: spc[8],
     pluginsSidebarWidthDefault: `21rem`,
     pluginsSidebarWidthLarge: `24rem`,
-  },
-  shadows: shadows,
-  space: space,
-  transition: transition,
-  zIndices: zIndices,
-  styles: {
-    h2: {
-      fontSize: 5,
-    },
-    root: {
-      html: {
-        color: `#ff9`,
-      },
+    mainContentWidth: {
+      default: `54rem`,
+      withSidebar: `42rem`,
     },
   },
-  lineHeights: lineHeights,
-  mediaQueries: mediaQueries,
+  shadows: sh,
+  space: spc,
+  transition: t,
+  zIndices: z,
+  lineHeights: lh,
+  mediaQueries: mq,
+  breakpoints: breakps,
 }

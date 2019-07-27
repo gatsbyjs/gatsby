@@ -12,7 +12,7 @@ class CreatorsHeader extends Component {
       <div
         sx={{
           alignItems: `center`,
-          backgroundColor: `rgba(255,255,255,0.975)`,
+          backgroundColor: `navigation.background`,
           borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
           display: `flex`,
           flexDirection: `row`,

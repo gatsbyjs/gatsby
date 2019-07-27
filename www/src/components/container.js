@@ -2,13 +2,14 @@
 import { jsx } from "theme-ui"
 import React from "react"
 
-import { mediaQueries } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const Container = ({ children, hasSideBar = true, overrideCSS }) => (
   <div
     sx={{
-      maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
+      maxWidth: hasSideBar
+        ? `mainContentWidth.withSidebar`
+        : `mainContentWidth.default`,
       mx: `auto`,
       p: 6,
       position: `relative`,

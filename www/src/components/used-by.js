@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { rhythm } from "../utils/typography"
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { FormidableIcon, FabricIcon } from "../assets/logos"
 
 const Icon = ({ icon, alt, href }) => (

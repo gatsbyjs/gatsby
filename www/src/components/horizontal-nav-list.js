@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import Link from "gatsby-link"
 
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const HorizontalNavList = ({ items = [], slug }) => (
   <nav>

@@ -9,7 +9,7 @@ import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"

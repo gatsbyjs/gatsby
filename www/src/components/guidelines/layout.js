@@ -12,8 +12,6 @@ import AnotherHeader from "../navigation"
 import Banner from "../banner"
 import Footer from "../shared/footer-links"
 
-import { sizes } from "../../utils/presets"
-
 // Import Futura PT typeface
 import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
 import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
@@ -56,8 +54,8 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
       bg="white"
       position="relative"
       pt={{
-        xxs: sizes.bannerHeight,
-        sm: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
+        xxs: t => t.sizes.bannerHeight,
+        sm: t => `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
       }}
     >
       {background && background}

@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import { transition } from "../../utils/presets"
+import { transition } from "../../gatsby-plugin-theme-ui"
 import indention from "../../utils/sidebar/indention"
 
 const Chevron = ({ isExpanded }) => (

@@ -12,7 +12,7 @@ import {
   lineHeights,
   fonts,
   zIndices,
-} from "./presets"
+} from "../gatsby-plugin-theme-ui"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -35,21 +35,52 @@ export const srOnly = {
   border: 0,
 }
 
+export const searchInputStyles = {
+  appearance: `none`,
+  bg: `navigation.searchBackground`,
+  border: 0,
+  borderRadius: 2,
+  color: `text.primary`,
+  fontSize: 3,
+  p: 1,
+  pr: 3,
+  pl: 7,
+  overflow: `hidden`,
+  width: `100%`,
+  ":focus": {
+    bg: `navigation.searchBackgroundFocus`,
+    color: `text.primary`,
+    outline: 0,
+    width: `100%`,
+  },
+  "::placeholder": {
+    color: `navigation.searchPlaceholder`,
+  },
+
+  fontFamily: `header`,
+  transition: t =>
+    `width ${t.transition.speed.default} ${
+      t.transition.curve.default
+    }, background-color ${t.transition.speed.default} ${
+      t.transition.curve.default
+    }`,
+}
+
 export const buttonStyles = {
   default: {
     alignItems: `center`,
-    backgroundColor: colors.gatsby,
-    borderRadius: radii[2],
+    backgroundColor: `gatsby`,
+    borderRadius: 2,
     borderWidth: 1,
     borderStyle: `solid`,
-    borderColor: colors.gatsby,
-    color: colors.white,
+    borderColor: `gatsby`,
+    color: `white`,
     cursor: `pointer`,
     display: `inline-flex`,
-    fontFamily: fonts.header,
+    fontFamily: `header`,
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: lineHeights.dense,
+    lineHeight: `dense`,
     textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
@@ -270,6 +301,12 @@ const prismToken = {
 }
 
 const gatsbyHighlightLanguageBadges = {
+  ".gatsby-highlight pre[class*='language-']": {
+    backgroundColor: `transparent`,
+    border: 0,
+    padding: `${space[6]} 0`,
+    WebkitOverflowScrolling: `touch`,
+  },
   ".gatsby-highlight pre[class*='language-']::before": {
     background: `#ddd`,
     borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
@@ -356,13 +393,8 @@ const gatsbyHighlight = {
   // gatsby-remark-prismjs styles
   ".gatsby-highlight": {
     background: colors.code.bg,
+    color: colors.text.primary,
     position: `relative`,
-    WebkitOverflowScrolling: `touch`,
-  },
-  ".gatsby-highlight pre[class*='language-']": {
-    backgroundColor: `transparent`,
-    border: 0,
-    padding: `${space[6]} 0`,
     WebkitOverflowScrolling: `touch`,
   },
   ".gatsby-highlight pre code": {

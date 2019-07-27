@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 
 import styled from "@emotion/styled"
 import propTypes from "@styled-system/prop-types"
 
 import { Box } from "./system"
-import { sizes } from "../../utils/presets"
 
 export const Container = styled(Box)()
 
@@ -58,11 +59,12 @@ export const CopyColumn = ({
     }}
   >
     <div
-      css={{
+      sx={{
         position: sticky ? `sticky` : `relative`,
-        top: sticky
-          ? `calc(${sizes.headerHeight} + ${sizes.bannerHeight} + 2.5rem)`
-          : false,
+        top: t =>
+          sticky
+            ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
+            : false,
       }}
     >
       {children}

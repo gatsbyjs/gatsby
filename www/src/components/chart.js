@@ -1,6 +1,6 @@
 import React from "react"
 import ReactHighcharts from "react-highcharts"
-import { radii } from "../utils/presets"
+import { radii } from "../gatsby-plugin-theme-ui"
 
 const dateToUTC = date => {
   const d = String(date)

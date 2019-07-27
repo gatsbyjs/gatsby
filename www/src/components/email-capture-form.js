@@ -5,46 +5,41 @@ import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  fonts,
-  radii,
-  shadows,
-} from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
-const stripedBorderHeight = space[1]
-
 const Container = styled(`div`)`
-  background: ${colors.purple[5]};
-  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[10]};
-  border-radius: ${radii[2]}px;
-  margin-top: ${space[8]};
-  padding: calc(${space[6]} * 1.2);
-  padding-bottom: calc(${rhythm(space[6] * 1.2)} + ${stripedBorderHeight});
+  background: ${props => props.theme.colors.purple[5]};
+  box-shadow: ${props => props.theme.shadows.raised},
+    inset 0 0 0 1px ${props => props.theme.colors.purple[10]};
+  border-radius: ${props => props.theme.radii[2]}px;
+  margin-top: ${props => props.theme.space[8]};
+  padding: calc(${props => props.theme.space[6]} * 1.2);
+  padding-bottom: calc(
+    ${props => rhythm(props.theme.space[6] * 1.2)} +
+      ${props => props.theme.space[1]}
+  );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
-    background: ${colors.white}
+    border-radius: 0 0 ${props => props.theme.radii[2]}px
+      ${props => props.theme.radii[2]}px;
+    background: ${props => props.theme.colors.white}
       repeating-linear-gradient(
         135deg,
-        ${colors.red[40]},
-        ${colors.red[40]} 20px,
+        ${props => props.theme.colors.red[40]},
+        ${props => props.theme.colors.red[40]} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.blue[40]} 40px,
-        ${colors.blue[40]} 60px,
+        ${props => props.theme.colors.blue[40]} 40px,
+        ${props => props.theme.colors.blue[40]} 60px,
         transparent 60px,
         transparent 80px
       );
     bottom: 0;
     content: "";
-    height: ${stripedBorderHeight};
+    height: ${props => props.theme.space[1]};
     left: 0;
     right: 0;
     position: absolute;
@@ -69,16 +64,16 @@ const StyledForm = styled(`form`)`
 `
 
 const Label = styled(`label`)`
-  font-size: ${fontSizes[1]};
+  font-size: ${props => props.theme.fontSizes[1]};
   :after {
     content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${colors.text.secondary};
+    color: ${props => props.theme.colors.text.secondary};
   }
 `
 
 const SingleLineInput = styled(`input`)`
   ${formInput};
-  border-color: ${colors.purple[20]};
+  border-color: ${props => props.theme.colors.purple[20]};
   width: 100%;
 
   :focus {
@@ -87,32 +82,32 @@ const SingleLineInput = styled(`input`)`
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${fonts.system};
-  font-size: ${fontSizes[2]};
-  padding: ${space[2]};
+  font-family: ${props => props.theme.fonts.system};
+  font-size: ${props => props.theme.fontSizes[2]};
+  padding: ${props => props.theme.space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
-  color: ${colors.warning};
-  font-family: ${fonts.system};
-  font-size: ${fontSizes[1]};
-  margin: ${space[2]} 0;
+  color: ${props => props.theme.colors.warning};
+  font-family: ${props => props.theme.fonts.system};
+  font-size: ${props => props.theme.fontSizes[1]};
+  margin: ${props => props.theme.space[2]} 0;
 `
 
 const SuccessMessage = styled(`div`)`
-  font-family: ${fonts.system};
+  font-family: ${props => props.theme.fonts.system};
 `
 
 const Submit = styled(`input`)`
   ${buttonStyles.default};
-  margin-top: ${space[3]};
+  margin-top: ${props => props.theme.space[3]};
 `
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
-  font-size: ${fontSizes[3]};
+  font-size: ${props => props.theme.fontSizes[3]};
   width: 100%;
-  margin-top: ${space[3]};
+  margin-top: ${props => props.theme.space[3]};
 
   span {
     align-items: center;
@@ -124,7 +119,7 @@ const SubmitOnHomepage = styled(`button`)`
   ${mediaQueries.lg} {
     width: auto;
     margin-top: 0;
-    margin-left: ${space[2]};
+    margin-left: ${props => props.theme.space[2]};
   }
 `
 

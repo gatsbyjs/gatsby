@@ -14,7 +14,7 @@ import {
   fontSizes,
   fonts,
   fontWeights,
-} from "../../utils/presets"
+} from "../../gatsby-plugin-theme-ui"
 
 const ICON_SIZE = space[7]
 

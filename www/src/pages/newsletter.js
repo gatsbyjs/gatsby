@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import { colors, space } from "../utils/presets"
+import { colors, space } from "../gatsby-plugin-theme-ui"
 
 import Layout from "../components/layout"
 import Container from "../components/container"

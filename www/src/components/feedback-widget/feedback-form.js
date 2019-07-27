@@ -11,30 +11,28 @@ import MdSentimentVerySatisfied from "react-icons/lib/md/sentiment-very-satisfie
 import MdSend from "react-icons/lib/md/send"
 import MdRefresh from "react-icons/lib/md/refresh"
 
-import { colors, fontSizes, radii, space } from "../../utils/presets"
-
 const Form = styled(`form`)`
   margin-bottom: 0;
 `
 
 const Fieldset = styled(`fieldset`)`
   border: 0;
-  margin: 0 0 ${space[4]};
+  margin: 0 0 ${props => props.theme.space[4]};
   padding: 0;
 `
 
 const Legend = styled(`legend`)`
   display: inline-block;
-  font-size: ${fontSizes[1]};
-  margin-bottom: ${space[4]};
-  padding: 0 ${space[2]};
+  font-size: ${props => props.theme.fontSizes[1]};
+  margin-bottom: ${props => props.theme.space[4]};
+  padding: 0 ${props => props.theme.space[2]};
   text-align: center;
 `
 
 const Rating = styled(`div`)`
   align-content: stretch;
-  border: 1px solid ${colors.input.border};
-  border-radius: ${radii[2]}px;
+  border: 1px solid ${props => props.theme.colors.input.border};
+  border-radius: ${props => props.theme.radii[2]}px;
   display: flex;
   flex: 1 1 auto;
   justify-content: stretch;
@@ -52,7 +50,7 @@ const Rating = styled(`div`)`
 `
 
 const TextareaLabel = styled(`label`)`
-  font-size: ${fontSizes[1]};
+  font-size: ${props => props.theme.fontSizes[1]};
   font-weight: bold;
 
   span {
@@ -61,13 +59,13 @@ const TextareaLabel = styled(`label`)`
 `
 
 const Textarea = styled(`textarea`)`
-  border: 1px solid ${colors.input.border};
-  border-radius: ${radii[2]}px;
+  border: 1px solid ${props => props.theme.colors.input.border};
+  border-radius: ${props => props.theme.radii[2]}px;
   display: block;
   font-weight: normal;
   height: 5.5rem;
-  margin: ${space[1]} 0 ${space[4]};
-  padding: ${space[1]} ${space[2]};
+  margin: ${props => props.theme.space[1]} 0 ${props => props.theme.space[4]};
+  padding: ${props => props.theme.space[1]} ${props => props.theme.space[2]};
   transition: 0.5s;
   width: 100%;
 

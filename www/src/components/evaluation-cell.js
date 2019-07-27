@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { colors } from "../utils/presets"
+import { colors } from "../gatsby-plugin-theme-ui"
 
 const bgDefault = colors.orange[20]
 const bgFeatureAvailability = colors.accent
@@ -23,8 +23,6 @@ const getBackground = num => {
     }
   }
 }
-
-const basicStyling = {}
 
 const EvaluationCell = ({ num, style }) => (
   <div

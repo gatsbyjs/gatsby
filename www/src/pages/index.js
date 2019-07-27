@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { space, mediaQueries } from "../utils/presets"
+import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"

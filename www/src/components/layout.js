@@ -9,7 +9,7 @@ import MdClose from "react-icons/lib/md/close"
 import { Global } from "@emotion/core"
 import { global } from "../utils/styles"
 
-import { space, sizes, zIndices } from "../utils/presets"
+import { space, sizes, zIndices } from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"

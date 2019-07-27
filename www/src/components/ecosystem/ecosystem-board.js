@@ -1,8 +1,10 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
 import EcosystemSection from "./ecosystem-section"
-import { mediaQueries } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import {
   setupScrollersObserver,
   unobserveScrollers,

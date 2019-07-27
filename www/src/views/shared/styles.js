@@ -67,32 +67,6 @@ const styles = {
       color: `text.secondary`,
     },
   },
-  searchInput: {
-    appearance: `none`,
-    border: 0,
-    borderRadius: 2,
-    color: `gatsby`,
-    padding: 1,
-    pr: 3,
-    pl: 6,
-    overflow: `hidden`,
-    fontFamily: `header`,
-    transition: t =>
-      `width ${t.transition.speed.default} ${
-        t.transition.curve.default
-      }, background-color ${t.transition.speed.default} ${
-        t.transition.curve.default
-      }`,
-    width: `6.8rem`,
-    "&::placeholder": {
-      color: `lilac`,
-    },
-    "&:focus": {
-      outline: `none`,
-      width: `9rem`,
-      background: `purple.10`,
-    },
-  },
   filterButton: {
     fontSize: 1,
     margin: 0,
@@ -107,7 +81,6 @@ const styles = {
     padding: 0,
     pr: 5,
     py: 1,
-    width: `100%`,
     textAlign: `left`,
     ":hover": {
       color: `gatsby`,

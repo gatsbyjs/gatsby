@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import MdLaunch from "react-icons/lib/md/launch"
 
@@ -5,7 +7,6 @@ import { Box, Flex, Link, Text } from "../system"
 import BoxWithBorder from "../box-with-border"
 import { getTextColor } from "../../../utils/guidelines/color"
 import { SrOnly } from "../typography"
-import { colors } from "../../../utils/presets"
 
 const ColorValue = ({ label, inverted, value, href }) => (
   <Box mt={4} px={2} css={{ flexShrink: 0, flexBase: `50%` }}>
@@ -28,11 +29,10 @@ const ColorValue = ({ label, inverted, value, href }) => (
             {` `}
             <Link
               href={href}
-              css={{
+              sx={{
                 "&&": {
-                  // couldn't get `themeGet` to work here
                   border: 0,
-                  color: inverted ? colors.whiteFade[80] : colors.blackFade[80],
+                  color: inverted ? `whiteFade.80` : `blackFade.80`,
                 },
               }}
             >

@@ -7,7 +7,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
 import { rhythm } from "../../utils/typography"
-import { mediaQueries } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 import styles from "../shared/styles"
 
@@ -25,6 +25,7 @@ import {
 import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
+import { searchInputStyles } from "../../utils/styles"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
@@ -212,7 +213,7 @@ export default class FilteredStarterLibrary extends Component {
                 <DebounceInput
                   sx={{
                     mt: 1,
-                    ...styles.searchInput,
+                    ...searchInputStyles,
                     width: rhythm(6),
                   }}
                   value={urlState.s}
@@ -220,15 +221,7 @@ export default class FilteredStarterLibrary extends Component {
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    left: `5px`,
-                    pointerEvents: `none`,
-                    position: `absolute`,
-                    top: `50%`,
-                    transform: `translateY(-50%)`,
-                  }}
-                />
+                <SearchIcon />
               </label>
               <Button
                 to="https://gatsbyjs.org/contributing/submit-to-starter-library/"

@@ -1,19 +1,17 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "@emotion/core"
 
 import DocBlock from "./doc-block"
 import { SubHeader } from "./utils"
-import { space } from "../../utils/presets"
 
 const List = ({ elements, level, ignoreParams }) => (
   <ul
-    css={css`
-      list-style-type: none;
-      margin-top: ${space[3]};
-      margin-left: ${space[4]};
-      margin-bottom: 0;
-    `}
+    sx={{
+      listStyleType: `none`,
+      mt: 3,
+      ml: 4,
+      mb: 0,
+    }}
   >
     {elements
       .filter(param => !ignoreParams.includes(param.name))

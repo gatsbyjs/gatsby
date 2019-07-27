@@ -4,7 +4,7 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
 import StarterScreenshot from "../views/starter/screenshot"

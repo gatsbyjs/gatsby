@@ -12,7 +12,7 @@ import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import logoInverted from "../logo-inverted.svg"
-import { colors, mediaQueries } from "../utils/presets"
+import { colors, mediaQueries } from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
 
 // what we need to nudge down the navItems to sit

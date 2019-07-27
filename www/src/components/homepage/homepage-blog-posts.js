@@ -20,7 +20,7 @@ import {
   fontSizes,
   lineHeights,
   fonts,
-} from "../../utils/presets"
+} from "../../gatsby-plugin-theme-ui"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`

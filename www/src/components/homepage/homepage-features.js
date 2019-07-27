@@ -58,11 +58,7 @@ const HomepageFeatures = () => (
       </FuturaParagraph>
     </Card>
     <Card>
-      <CardHeadline>
-        <em sx={{ color: `gatsby`, fontStyle: `normal` }}>Static</em>
-        {` `}
-        Progressive Web Apps
-      </CardHeadline>
+      <CardHeadline>Static Progressive Web Apps</CardHeadline>
       <FuturaParagraph>
         Gatsby.js is a static PWA (Progressive Web App) generator. You get code
         and data splitting out-of-the-box. Gatsby loads only the critical HTML,

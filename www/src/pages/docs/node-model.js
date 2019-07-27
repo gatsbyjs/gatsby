@@ -7,7 +7,7 @@ import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import { rhythm } from "../../utils/typography"
-import { space } from "../../utils/presets"
+import { space } from "../../gatsby-plugin-theme-ui"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"

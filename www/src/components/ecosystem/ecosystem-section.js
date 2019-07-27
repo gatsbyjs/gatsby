@@ -6,33 +6,23 @@ import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 
-import {
-  colors,
-  space,
-  letterSpacings,
-  lineHeights,
-  radii,
-  shadows,
-  mediaQueries,
-  fontSizes,
-  fontWeights,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const EcosystemSectionRoot = styled(`section`)`
-  background: ${colors.white};
-  padding: 0 ${space[6]};
-  margin-bottom: ${space[3]};
+  background: ${props => props.theme.colors.white};
+  padding: 0 ${props => props.theme.space[6]};
+  margin-bottom: ${props => props.theme.space[3]};
 
   ${mediaQueries.md} {
-    box-shadow: ${shadows.raised};
-    border-radius: ${radii[2]}px;
+    box-shadow: ${props => props.theme.shadows.raised};
+    border-radius: ${props => props.theme.radii[2]}px;
     display: flex;
-    flex-basis: calc(50% - ${space[5]});
+    flex-basis: calc(50% - ${props => props.theme.space[5]});
     flex-direction: column;
     flex-grow: 0;
-    margin: 0 ${space[2]} ${space[6]};
+    margin: 0 ${props => props.theme.space[2]} ${props => props.theme.space[6]};
     max-height: 60vh;
-    padding: ${space[6]};
+    padding: ${props => props.theme.space[6]};
     padding-bottom: 0;
 
     :last-child {
@@ -41,12 +31,12 @@ const EcosystemSectionRoot = styled(`section`)`
   }
 
   ${mediaQueries.lg} {
-    flex-basis: calc(33.33% - ${space[5]});
+    flex-basis: calc(33.33% - ${props => props.theme.space[5]});
     max-height: 100%;
 
     :last-child {
       align-self: flex-start;
-      padding-bottom: ${space[6]};
+      padding-bottom: ${props => props.theme.space[6]};
     }
   }
 
@@ -61,48 +51,49 @@ export const Header = styled(`header`)`
 
 const Title = styled(`h1`)`
   align-items: center;
-  color: ${colors.gatsby};
+  color: ${props => props.theme.colors.gatsby};
   display: flex;
-  font-size: ${fontSizes[4]};
-  font-weight: ${fontWeights[1]};
-  line-height: ${lineHeights.solid};
+  font-size: ${props => props.theme.fontSizes[4]};
+  font-weight: ${props => props.theme.fontWeights[1]};
+  line-height: ${props => props.theme.lineHeights.solid};
   margin: 0;
-  margin-bottom: ${space[1]};
-  min-height: ${space[7]};
+  margin-bottom: ${props => props.theme.space[1]};
+  min-height: ${props => props.theme.space[7]};
 
   span {
-    margin: 0 ${space[1]} 0 0;
+    margin: 0 ${props => props.theme.space[1]} 0 0;
   }
 `
 
 const Icon = styled(`span`)`
   display: block;
-  height: ${space[7]};
-  width: ${space[7]};
+  height: ${props => props.theme.space[7]};
+  width: ${props => props.theme.space[7]};
 `
 
 const SubTitle = styled(`h2`)`
-  color: ${colors.lilac};
-  font-size: ${fontSizes[1]};
+  color: ${props => props.theme.colors.lilac};
+  font-size: ${props => props.theme.fontSizes[1]};
   font-weight: normal;
-  letter-spacing: ${letterSpacings.tracked};
+  letter-spacing: ${props => props.theme.letterSpacings.tracked};
   margin: 0;
-  margin-top: ${space[5]};
+  margin-top: ${props => props.theme.space[5]};
   text-transform: uppercase;
 `
 
 const Description = styled(`p`)`
-  color: ${colors.text.primary};
-  font-size: ${fontSizes[2]};
+  color: ${props => props.theme.colors.text.primary};
+  font-size: ${props => props.theme.fontSizes[2]};
 `
 
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${space[1]};
+  margin-top: -${props => props.theme.space[1]};
 
   > a {
-    margin: ${space[1]} ${space[2]} ${space[1]} 0;
+    margin: ${props => props.theme.space[1]} ${props => props.theme.space[2]}
+      ${props => props.theme.space[1]} 0;
   }
 `
 

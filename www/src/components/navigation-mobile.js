@@ -10,7 +10,7 @@ import {
   PluginsIcon,
   ShowcaseIcon,
 } from "../assets/mobile-nav-icons"
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { svgStyles } from "../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {

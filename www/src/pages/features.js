@@ -10,7 +10,7 @@ import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
-import { colors, mediaQueries, fonts } from "../utils/presets"
+import { colors, mediaQueries, fonts } from "../gatsby-plugin-theme-ui"
 
 const legendBorderColor = colors.ui.border.subtle
 

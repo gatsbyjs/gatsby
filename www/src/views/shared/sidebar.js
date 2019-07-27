@@ -3,14 +3,16 @@ import { jsx } from "theme-ui"
 import React from "react"
 import MdFilterList from "react-icons/lib/md/filter-list"
 
-import { sizes, mediaQueries } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
-const sticky = {
-  position: `sticky`,
-  top: `calc(${sizes.bannerHeight})`,
-  [mediaQueries.lg]: {
-    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
-  },
+const sticky = t => {
+  return {
+    position: `sticky`,
+    top: `calc(${t.sizes.bannerHeight})`,
+    [mediaQueries.lg]: {
+      top: `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+    },
+  }
 }
 
 export const SidebarContainer = ({ children, className }) => (
@@ -82,7 +84,7 @@ export const SidebarHeader = () => (
 )
 
 export const ContentContainer = ({ children }) => (
-  <div css={{ width: `100%` }}>{children}</div>
+  <div sx={{ width: `100%` }}>{children}</div>
 )
 
 export const ContentHeader = ({ children, cssOverrides = {} }) => (

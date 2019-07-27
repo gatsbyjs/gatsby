@@ -2,23 +2,22 @@
 import { jsx } from "theme-ui"
 import React from "react"
 
-import { colors, space, fontSizes, radii } from "../../utils/presets"
 import styled from "@emotion/styled"
 
 export const LinkBox = styled(`a`)`
   border-bottom: none !important;
-  border-radius: ${radii[1]}px;
-  font-size: ${fontSizes[0]} !important;
-  color: ${colors.text.primary} !important;
+  border-radius: ${props => props.theme.radii[1]}px;
+  font-size: ${props => props.theme.fontSizes[0]} !important;
+  color: ${props => props.theme.colors.text.primary} !important;
   line-height: 22px;
-  background: ${colors.ui.background};
-  margin-left: ${space[1]};
+  background: ${props => props.theme.colors.ui.background};
+  margin-left: ${props => props.theme.space[1]};
   width: 22px;
   text-align: center;
   display: inline-block;
   &:hover {
-    background: ${colors.gatsby};
-    color: ${colors.white} !important;
+    background: ${props => props.theme.colors.gatsby};
+    color: ${props => props.theme.colors.white} !important;
   }
 `
 

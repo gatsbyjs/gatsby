@@ -9,7 +9,7 @@ import { kebabCase } from "lodash-es"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
-import styles from "../../views/shared/styles"
+import { searchInputStyles } from "../../utils/styles"
 
 let currentLetter = ``
 
@@ -92,7 +92,7 @@ class TagsPage extends React.Component {
               <div>
                 <label sx={{ position: `relative` }}>
                   <input
-                    css={styles.searchInput}
+                    sx={searchInputStyles}
                     id="tagsFilter"
                     name="filterQuery"
                     type="search"
@@ -102,15 +102,7 @@ class TagsPage extends React.Component {
                     value={filterQuery}
                     onChange={this.handleChange}
                   />
-                  <SearchIcon
-                    overrideCSS={{
-                      position: `absolute`,
-                      left: 1,
-                      top: `50%`,
-                      pointerEvents: `none`,
-                      transform: `translateY(-50%)`,
-                    }}
-                  />
+                  <SearchIcon />
                 </label>
               </div>
             </div>

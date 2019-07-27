@@ -24,7 +24,7 @@ import {
   radii,
   mediaQueries,
   fonts,
-} from "../utils/presets"
+} from "../gatsby-plugin-theme-ui"
 import { rhythm } from "../utils/typography"
 import { skipLink, formInput, formInputFocus } from "../utils/styles"
 import { Global, css } from "@emotion/core"

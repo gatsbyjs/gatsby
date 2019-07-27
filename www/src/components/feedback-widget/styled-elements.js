@@ -1,16 +1,10 @@
 import styled from "@emotion/styled"
-import {
-  mediaQueries,
-  fontSizes,
-  letterSpacings,
-  lineHeights,
-  space,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { rhythm } from "../../utils/typography"
 
 export const WidgetContainer = styled(`div`)`
-  margin: ${space[7]} auto;
-  padding: 0 ${space[6]} ${space[9]};
+  margin: ${props => props.theme.space[7]} auto;
+  padding: 0 ${props => props.theme.space[6]} ${props => props.theme.space[9]};
   max-width: ${rhythm(28)};
 
   ${mediaQueries.md} {
@@ -23,10 +17,10 @@ export const WidgetContainer = styled(`div`)`
       width: 20rem;
     }
 
-    bottom: ${space[6]};
+    bottom: ${props => props.theme.space[6]};
     padding: 0;
     position: fixed;
-    right: ${space[6]};
+    right: ${props => props.theme.space[6]};
     margin: 0;
     width: auto;
   }
@@ -34,11 +28,11 @@ export const WidgetContainer = styled(`div`)`
 
 export const Title = styled(`h2`)`
   display: block;
-  font-size: ${fontSizes[4]};
-  letter-spacing: ${letterSpacings.tight};
-  line-height: ${lineHeights.dense};
+  font-size: ${props => props.theme.fontSizes[4]};
+  letter-spacing: ${props => props.theme.letterSpacings.tight};
+  line-height: ${props => props.theme.lineHeights.dense};
   margin: 0;
-  margin-bottom: ${space[2]};
+  margin-bottom: ${props => props.theme.space[2]};
   text-align: center;
 `
 

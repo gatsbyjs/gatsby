@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import Fuse from "fuse.js"
@@ -13,6 +15,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import { searchInputStyles } from "../../utils/styles"
 
 const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, edge) => {
@@ -114,25 +117,17 @@ class FilteredShowcase extends Component {
               items={items}
               edges={data.allSitesYaml.edges}
             />
-            <div css={{ marginLeft: `auto` }}>
+            <div sx={{ ml: `auto` }}>
               <label css={{ position: `relative` }}>
                 <input
-                  css={{ ...styles.searchInput }}
+                  sx={searchInputStyles}
                   type="search"
                   value={this.state.search}
                   onChange={e => this.setState({ search: e.target.value })}
                   placeholder="Search sites"
                   aria-label="Search sites"
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    position: `absolute`,
-                    left: `5px`,
-                    top: `50%`,
-                    pointerEvents: `none`,
-                    transform: `translateY(-50%)`,
-                  }}
-                />
+                <SearchIcon />
               </label>
             </div>
           </ContentHeader>

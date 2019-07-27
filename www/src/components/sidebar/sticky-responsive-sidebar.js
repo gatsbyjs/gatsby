@@ -5,7 +5,7 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import { transition, shadows, mediaQueries } from "../../utils/presets"
+import { transition, mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { rhythm } from "../../utils/typography"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
@@ -77,7 +77,7 @@ class StickyResponsiveSidebar extends Component {
         >
           <div
             sx={{
-              boxShadow: shadows.dialog,
+              boxShadow: `dialog`,
               height: `100%`,
               transform: `translateX(-${menuOffset})`,
               transition: t =>

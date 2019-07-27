@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { rhythm } from "../utils/typography"
 
 export default props => {

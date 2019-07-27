@@ -1,5 +1,5 @@
 import React from "react"
-import { colors } from "../utils/presets"
+import { colors } from "../gatsby-plugin-theme-ui"
 
 const SvgDefs = props => (
   <svg

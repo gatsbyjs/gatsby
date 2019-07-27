@@ -13,8 +13,9 @@ import {
   sizes,
   fontSizes,
   fonts,
-} from "../utils/presets"
+} from "../gatsby-plugin-theme-ui"
 import SearchIcon from "./search-icon"
+import { searchInputStyles } from "../utils/styles"
 
 const loadJS = () => import(`./docsearch.min.js`)
 let loadedJs = false
@@ -378,10 +379,8 @@ class SearchForm extends Component {
           mb: 0,
           ml: `auto`,
           mr: 4,
+          minWidth: [null, null, null, null, null, `12rem`],
           mt: offsetVertical ? offsetVertical : false,
-          [mediaQueries.lg]: {
-            minWidth: `12rem`,
-          },
         }}
         className="searchWrap"
         onMouseOver={() => this.loadAlgoliaJS()}
@@ -403,36 +402,12 @@ class SearchForm extends Component {
           <input
             id="doc-search"
             sx={{
-              appearance: `none`,
-              bg: `navigation.searchBackground`,
-              border: 0,
-              borderRadius: 2,
-              color: `text.primary`,
-              fontSize: 3,
-              p: 1,
-              pr: 3,
-              pl: 7,
-              overflow: `hidden`,
-              width: `100%`,
-              [mediaQueries.md]: {
-                width: 5,
-              },
+              ...searchInputStyles,
+              width: [`100%`, null, null, null, 5, `100%`],
               transition: t =>
                 `width ${t.transition.speed.default} ${
                   t.transition.curve.default
                 }`,
-              ":focus": {
-                bg: `navigation.searchBackgroundFocus`,
-                color: `text.primary`,
-                outline: 0,
-                width: `100%`,
-              },
-              [mediaQueries.lg]: {
-                width: `100%`,
-              },
-              "::placeholder": {
-                color: `navigation.searchPlaceholder`,
-              },
             }}
             type="search"
             placeholder={`Search gatsbyjs.org`}
@@ -444,16 +419,7 @@ class SearchForm extends Component {
               this.searchInput = input
             }}
           />
-          <SearchIcon
-            focussed={focussed}
-            overrideCSS={{
-              position: `absolute`,
-              left: `0.5rem`,
-              top: `50%`,
-              pointerEvents: `none`,
-              transform: `translateY(-50%)`,
-            }}
-          />
+          <SearchIcon focussed={focussed} />
         </label>
       </form>
     )

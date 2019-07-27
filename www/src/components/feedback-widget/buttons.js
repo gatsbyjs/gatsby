@@ -6,9 +6,8 @@ import {
   colors,
   fontSizes,
   radii,
-  shadows,
   space,
-} from "../../utils/presets"
+} from "../../gatsby-plugin-theme-ui"
 import { formInputFocus, focusStyle } from "../../utils/styles"
 
 const rotation = keyframes`
@@ -70,9 +69,9 @@ export const SubmitButton = styled(`button`)`
 
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
-  background: ${colors.white};
-  border: 1px solid ${colors.input.border};
-  color: ${colors.text.secondary};
+  background: ${props => props.theme.colors.widget.background};
+  border: 1px solid ${props => props.theme.colors.input.border};
+  color: ${props => props.theme.colors.text.secondary};
 
   :focus {
     ${formInputFocus}
@@ -81,20 +80,20 @@ export const CloseButton = styled(`button`)`
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
-  border: 1px solid ${colors.blue[10]};
-  background: ${colors.blue[5]};
-  border-radius: ${radii[2]}px;
+  border: 1px solid ${props => props.theme.colors.blue[10]};
+  background: ${props => props.theme.colors.blue[5]};
+  border-radius: ${props => props.theme.radii[2]}px;
   display: flex;
   height: 2.5rem;
-  padding: 0 ${space[9]} 0 ${space[3]};
+  padding: 0 ${props => props.theme.space[9]} 0 ${props => props.theme.space[3]};
   transition: 0.5s;
   white-space: nowrap;
   width: 100%;
 
   ${mediaQueries.lg} {
-    background: ${colors.white};
+    background: ${props => props.theme.colors.white};
     border: 0;
-    box-shadow: ${shadows.floating};
+    box-shadow: ${props => props.theme.shadows.floating};
     width: auto;
     z-index: 1;
   }
@@ -102,24 +101,24 @@ export const ToggleButtonLabel = styled(`span`)`
 
 export const ToggleButtonIcon = styled(`span`)`
   align-items: center;
-  background: ${colors.accent};
-  border-radius: ${radii[6]};
-  color: ${colors.white};
+  background: ${props => props.theme.colors.accent};
+  border-radius: ${props => props.theme.radii[6]};
+  color: ${props => props.theme.colors.white};
   display: flex;
-  font-size: ${fontSizes[1]};
-  height: ${space[8]};
+  font-size: ${props => props.theme.fontSizes[1]};
+  height: ${props => props.theme.space[8]};
   justify-content: center;
   position: absolute;
-  right: ${space[1]};
+  right: ${props => props.theme.space[1]};
   transform: scale(0.6);
   transition: 0.5s;
-  width: ${space[8]};
+  width: ${props => props.theme.space[8]};
   z-index: 2;
 
   svg {
-    fill: ${colors.white};
-    height: ${space[6]};
-    width: ${space[6]};
+    fill: ${props => props.theme.colors.white};
+    height: ${props => props.theme.space[6]};
+    width: ${props => props.theme.space[6]};
     transition: 0.5s;
   }
 
@@ -129,14 +128,14 @@ export const ToggleButtonIcon = styled(`span`)`
     .success &,
     .submitting & {
       svg {
-        height: ${space[5]};
-        width: ${space[5]};
+        height: ${props => props.theme.space[5]};
+        width: ${props => props.theme.space[5]};
       }
 
       &:hover {
         svg {
           transform: rotate(90deg);
-          fill: ${colors.accent};
+          fill: ${props => props.theme.colors.accent};
         }
       }
     }
@@ -151,7 +150,7 @@ export const ToggleButton = styled(`button`)`
   align-items: center;
   background: none;
   border: none;
-  border-radius: ${radii[2]}px;
+  border-radius: ${props => props.theme.radii[2]}px;
   cursor: pointer;
   display: flex;
   padding: 0;
@@ -162,7 +161,7 @@ export const ToggleButton = styled(`button`)`
 
   &:hover {
     ${ToggleButtonLabel} {
-      box-shadow: 0 0 0 0.12rem ${colors.accent}88;
+      box-shadow: 0 0 0 0.12rem ${props => props.theme.colors.accent}88;
     }
   }
 
@@ -188,15 +187,15 @@ export const ToggleButton = styled(`button`)`
     .success &,
     .submitting & {
       display: flex;
-      transform: translate(-${space[2]}, -26rem);
+      transform: translate(-${props => props.theme.space[2]}, -26rem);
 
       ${ToggleButtonIcon} {
-        background: ${colors.white};
-        border: 1px solid ${colors.ui.border.subtle};
+        background: ${props => props.theme.colors.widget.background};
+        border: 1px solid ${props => props.theme.colors.ui.border.subtle};
         transform: scale(1);
 
         svg {
-          fill: ${colors.text.secondary};
+          fill: ${props => props.theme.colors.text.secondary};
         }
       }
 

@@ -5,19 +5,12 @@ import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-import { colors, mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = colors.purple[70]
-const stripeSize = 15
-const stripeBg = {
-  backgroundColor: colors.purple[80],
-  backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, ${stripeColor} 25%, transparent 25%, transparent 50%, ${stripeColor} 50%, ${stripeColor} 75%, transparent 75%, transparent)`,
-}
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
 })
@@ -69,8 +62,8 @@ const VerticalLine = () => (
   >
     <path
       d="M10 40 L10 -10"
-      css={{
-        stroke: colors.lilac,
+      sx={{
+        stroke: t => t.colors.lilac,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -288,7 +281,16 @@ const Diagram = () => (
           <div
             sx={{
               ...box,
-              ...stripeBg,
+              backgroundColor: `purple.70`,
+              backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
+              backgroundImage: t =>
+                `linear-gradient(45deg, ${
+                  t.colors.purple[80]
+                } 25%, transparent 25%, transparent 50%, ${
+                  t.colors.purple[80]
+                } 50%, ${
+                  t.colors.purple[80]
+                } 75%, transparent 75%, transparent)`,
               py: 0,
             }}
           >

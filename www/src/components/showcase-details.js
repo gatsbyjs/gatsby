@@ -6,7 +6,7 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import { space, mediaQueries } from "../utils/presets"
+import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
 import sharedStyles from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"

@@ -12,7 +12,7 @@ import {
   fontSizes,
   lineHeights,
   fonts,
-} from "../../utils/presets"
+} from "../../gatsby-plugin-theme-ui"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;

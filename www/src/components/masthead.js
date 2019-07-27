@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Button from "./button"
 
 const MastheadContent = () => (
