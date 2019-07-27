@@ -30,7 +30,7 @@
     "serve": "gatsby serve --prefix-paths & npm run serve:assets",
     "serve:assets": "node scripts/serve.js",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --browser chrome"
+    "cy:run": "cypress run --browser chrome --record"
   },
   "devDependencies": {
     "gatsby-cypress": "^0.1.7",

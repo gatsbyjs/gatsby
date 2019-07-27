@@ -285,6 +285,18 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       .childImageSharp.resize.height
                   }
                 />
+                <meta
+                  property="og:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
+                />
+                <meta
+                  name="twitter:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
+                />
               </Helmet>
               <div
                 css={{

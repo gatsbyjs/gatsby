@@ -9,7 +9,7 @@ title: MDX Plugins
 
 ## Gatsby remark plugins
 
-`gatsby-mdx` is compatible with all of the [gatsby-remark
+`gatsby-plugin-mdx` is compatible with all of the [gatsby-remark
 plugins](/packages/gatsby-remark-images/?=gatsby-remark),
 including
 [`gatsby-remark-images`](https://next.gatsbyjs.org/packages/gatsby-remark-images/?=gatsby-remark).
@@ -25,7 +25,7 @@ If you don't have `gatsby-source-filesystem` installed, also install that.
 
 Then configure the plugins. `gatsby-source-filesystem` needs to be
 pointed at wherever you have your images on disk,
-`gatsby-remark-images` needs to be a sub-plugin of `gatsby-mdx`, and
+`gatsby-remark-images` needs to be a sub-plugin of `gatsby-plugin-mdx`, and
 `gatsby-plugin-sharp` can be included on its own.
 
 ```javascript=gatsby-config.js
@@ -33,7 +33,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         gatsbyRemarkPlugins: [
           {
@@ -77,7 +77,7 @@ const emoji = require(`remark-emoji`)
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         mdPlugins: [capitalize, emoji],
       },

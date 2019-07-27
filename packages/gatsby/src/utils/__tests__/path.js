@@ -1,4 +1,5 @@
-const { joinPath, withBasePath } = require(`../path`)
+const { joinPath } = require(`gatsby-core-utils`)
+const { withBasePath } = require(`../path`)
 const os = require(`os`)
 
 describe(`paths`, () => {

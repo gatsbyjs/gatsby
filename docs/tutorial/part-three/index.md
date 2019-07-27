@@ -50,7 +50,7 @@ npm install --save gatsby-plugin-typography react-typography typography typograp
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
 
-2. Create a new file in the root of your project called `gatsby-config.js` and copy the following into the file:
+2. Edit the file `gatsby-config.js` at the root of your project to the following:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -215,7 +215,7 @@ But try navigating to `/about/`, or `/contact/`. The content on those pages stil
 
 The content of all three of your pages is centered thanks to this single shared layout component!
 
-### ✋ Add a site title.
+### ✋ Add a site title
 
 1. Add the following line to your new layout component:
 
@@ -234,7 +234,7 @@ If you go to any of your three pages, you'll see the same title added, e.g. the 
 
 ![with-title](with-title.png)
 
-### ✋ Add navigation links between pages.
+### ✋ Add navigation links between pages
 
 1. Copy the following into your layout component file:
 

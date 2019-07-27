@@ -47,6 +47,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
+    fromPath: `/docs/themes/api-reference`,
+    toPath: `/docs/theme-api/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/component-css/`, // Merged Component CSS and CSS Modules
     toPath: `/docs/css-modules/`,
     isPermanent: true,
@@ -261,12 +267,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
-    fromPath: `/docs/gatsby-in-the-enterprise/`,
-    toPath: `/docs/building-in-the-enterprise/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
     fromPath: `/docs/advanced-tutorials/`,
     toPath: `/tutorial/additional-tutorials/`,
     isPermanent: true,
@@ -288,7 +288,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
   createRedirect({
     fromPath: `/docs/image-tutorial/`,
-    toPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
     isPermanent: true,
   })
   createRedirect({
@@ -311,6 +316,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/behind-the-scenes-terminology/`,
     toPath: `/docs/gatsby-internals-terminology/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/getting-started`,
+    toPath: `/docs/themes/using-a-gatsby-theme`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/introduction`,
+    toPath: `/docs/themes/what-are-gatsby-themes`,
     isPermanent: true,
   })
 
@@ -407,6 +424,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                   slug
                   stub
                 }
+                hasScreenshot
               }
               url
               repo
@@ -525,6 +543,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       const starters = _.filter(result.data.allStartersYaml.edges, edge => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
         if (!slug) {
+          return null
+        } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
+          reporter.warn(
+            `Starter showcase entry "${
+              edge.node.repo
+            }" seems offline. Skipping.`
+          )
           return null
         } else {
           return edge
@@ -757,6 +782,13 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       miscDependencies: [[`no data`, `0`]],
     }
 
+    // determine if screenshot is available
+    const screenshotNode = node.children
+      .map(childID => getNode(childID))
+      .find(node => node.internal.type === `Screenshot`)
+
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
+
     if (!process.env.GITHUB_API_TOKEN) {
       return createNodeField({
         node,
@@ -915,6 +947,28 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
     type Airtable implements Node {
       id: ID!
       data: AirtableData
+    }
+
+    type SitesYaml implements Node {
+      title: String!
+      main_url: String!
+      url: String!
+      source_url: String
+      featured: Boolean
+      categories: [String]!
+      built_by: String
+      built_by_url: String
+      description: String
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
+    type StartersYaml implements Node {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
     }
 
     type AirtableData @dontInfer {
