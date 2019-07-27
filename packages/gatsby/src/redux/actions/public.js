@@ -42,7 +42,7 @@ const getCommonDir = (path1, path2) => {
       return path1.substring(0, iChar)
     }
   }
-  return ``
+  return path1
 }
 
 import type { Plugin } from "./types"
