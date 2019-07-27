@@ -10,9 +10,11 @@ const { trackInlineObjectsInRootNode } = require(`../../../db/node-tracking`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
+report.info = jest.fn()
 report.error = jest.fn()
 report.panic = jest.fn()
 afterEach(() => {
+  report.info.mockClear()
   report.error.mockClear()
   report.panic.mockClear()
 })
@@ -28,6 +30,7 @@ describe(`GraphQL field extensions`, () => {
         otherdate: `2019-09-01`,
         nested: {
           onemoredate: `2019-07-30`,
+          title: `Hello World`,
         },
       },
       {
@@ -1265,26 +1268,29 @@ describe(`GraphQL field extensions`, () => {
   })
 
   describe(`nested-fields-aware default field resolver`, () => {
-    it(`reserved args.from and args.fromNode for internal use`, async () => {
+    it(`informs that args.from and args.fromNode are for proxy use`, async () => {
       dispatch(
         createFieldExtension({
-          name: `faulty`,
+          name: `info`,
           args: {
             from: `String`,
           },
           extend() {
             return {
               resolve() {
-                return `WRONG!`
+                return `:+1:`
               },
             }
           },
         })
       )
       await buildSchema()
-      expect(report.error).toBeCalledWith(
+      expect(report.info).toBeCalledWith(
         `The arguments \`from\` and \`fromNode\` are reserved for the default ` +
-          `field resolver. Please adjust the field extension definition of \`faulty\`.`
+          `field resolver. If you intend to use the arguments to retrieve the` +
+          `fieldValue from a proxied field, then all is :+1:.\n` +
+          `If this is not what you are intending, please adjust the field ` +
+          `extension definition of \`info\`.`
       )
     })
 
@@ -1329,8 +1335,7 @@ describe(`GraphQL field extensions`, () => {
       expect(results).toEqual(expected)
     })
 
-    it.only(`@proxy extension works with parent node fields`, async () => {
-      debugger
+    it(`@proxy extension works with parent node fields`, async () => {
       dispatch(
         createTypes(`
           type Fourth {
@@ -1469,6 +1474,57 @@ describe(`GraphQL field extensions`, () => {
               onemoredate: `07/30/2019`,
             },
           },
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`allows using args.from in a custom field extension`, async () => {
+      dispatch(
+        createFieldExtension({
+          name: `slug`,
+          args: {
+            from: `String!`,
+          },
+          extend(options) {
+            return {
+              resolve(source, args, context, info) {
+                const fieldValue = context.defaultFieldResolver(
+                  source,
+                  { ...options, ...args },
+                  context,
+                  info
+                )
+                return String(fieldValue)
+                  .toLowerCase()
+                  .replace(/[^\w]+/g, `-`)
+              },
+            }
+          },
+        })
+      )
+      dispatch(
+        createTypes(`
+          type Test implements Node @dontInfer {
+            nested: Nested
+            slug: String @slug(from: "nested.title")
+          }
+          type Nested {
+            title: String
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            slug
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          slug: `hello-world`,
         },
       }
       expect(results).toEqual(expected)
