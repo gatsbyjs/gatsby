@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const loki = require(`@stefanprobst/lokijs`)
+const loki = require(`lokijs`)
 const uuidv4 = require(`uuid/v4`)
 const customComparators = require(`./custom-comparators`)
 

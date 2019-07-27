@@ -659,23 +659,22 @@
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 - url: https://emma.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-emma
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The light themed website shows your work with large images in a full-width grid-layout. Choose color overlays for card items and your projects. The website has three pages (Index, About, Contact) and programmatically created pages for your projects. General settings and colors can be changed in a config & theme file.
+  description: Minimalistic portfolio with full-width grid, page transitions, support for additional MDX pages, and a focus on large images. Especially designers and/or photographers will love this theme! Built with MDX and Theme UI. Using the Gatsby Theme "@lekoarts/gatsby-theme-emma".
   tags:
     - Portfolio
     - MDX
     - Transitions
     - Styling:CSS-in-JS
     - PWA
-    - Linting
-    - Testing
   features:
-    - Full-width photo grid-layout (with gatsby-image)
-    - Minimalistic light theme with large images
-    - Create your projects in MDX
-    - Styling with styled-components
-    - react-spring animations
-    - Easily configurable
-    - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+    - MDX
+    - react-spring page animations
+    - Optional MDX pages which automatically get added to the navigation
+    - Fully customizable through the usage of Gatsby Themes (and Theme UI)
+    - Light Mode / Dark Mode
+    - Google Analytics Support
+    - SEO (Sitemap, OpenGraph tags, Twitter tags)
+    - Offline Support & WebApp Manifest
 - url: https://gatsby-starter-procyon.netlify.com/
   repo: https://github.com/danielmahon/gatsby-starter-procyon
   description: n/a
@@ -3389,3 +3388,43 @@
     - Syntax highlighting in code blocks using PrismJS(Dracula).
     - Google Analytics.
     - Deploy AWS S3.
+- url: https://anubhavsrivastava.github.io/gatsby-starter-newage
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-newage
+  description: Single page starter based on the new age site template by startbootstrap for portfolio page/Mobile app launch
+  tags:
+    - Onepage
+    - Portfolio
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-starter-krisp.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby-starter-krisp
+  description: A minimal, clean and responsive starter built with gatsby
+  tags:
+    - Styling:Bootstrap
+    - Onepage
+    - Portfolio
+    - Netlify
+    - Markdown
+  features:
+    - Styled-Components.
+    - Mobile-First CSS.
+    - Responsive Design, optimized for Mobile devices
+- url: https://gatsby-datocms-starter.netlify.com/
+  repo: https://github.com/brohlson/gatsby-datocms-starter
+  description: An SEO-friendly DatoCMS starter with styled-components, page transitions, and out-of-the-box blog post support.
+  tags:
+    - CMS:DatoCMS
+    - Styling:CSS-in-JS
+    - Blog
+    - Portfolio
+    - SEO
+  features:
+    - Page Transitions
+    - Blog Post Template
+    - Sitemap & Robots.txt generation

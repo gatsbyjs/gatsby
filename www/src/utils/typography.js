@@ -315,7 +315,7 @@ const _options = {
       // PrismJS syntax highlighting token styles
       // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
       ".token": {
-        display: `inline-block`,
+        display: `inline`,
       },
       ".token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata": {
         color: colors.code.comment,

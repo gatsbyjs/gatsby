@@ -18,6 +18,7 @@ First, open a new terminal window and run the following to create a new site:
 
 ```shell
 gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd styled-components-tutorial
 ```
 
 Second, install the necessary dependencies for `styled-components`, including the Gatsby plugin.
