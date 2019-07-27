@@ -4,7 +4,6 @@ const {
   GraphQLBoolean,
   GraphQLScalarType,
   Kind,
-  defaultFieldResolver,
 } = require(`graphql`)
 const { oneLine } = require(`common-tags`)
 

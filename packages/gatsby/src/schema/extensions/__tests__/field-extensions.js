@@ -6,6 +6,7 @@ const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions/restricted`)
 const { createFieldExtension, createTypes } = actions
+const { trackInlineObjectsInRootNode } = require(`../../../db/node-tracking`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
@@ -94,6 +95,7 @@ describe(`GraphQL field extensions`, () => {
     nodes.forEach(node => {
       dispatch({ type: `CREATE_NODE`, payload: { ...node } })
     })
+    nodes.forEach(node => trackInlineObjectsInRootNode(node))
   })
 
   it(`allows creating a custom field extension`, async () => {
@@ -1327,7 +1329,8 @@ describe(`GraphQL field extensions`, () => {
       expect(results).toEqual(expected)
     })
 
-    it(`@proxy extension works with parent node fields`, async () => {
+    it.only(`@proxy extension works with parent node fields`, async () => {
+      debugger
       dispatch(
         createTypes(`
           type Fourth {

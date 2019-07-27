@@ -284,7 +284,6 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
   }, [])
 
 const defaultFieldResolver = (source, args, context, info) => {
-  debugger
   if (args.from) {
     if (args.fromNode) {
       const parentNode = context.nodeModel.findRootNodeAncestor(source)
