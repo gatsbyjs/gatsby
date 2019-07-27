@@ -1,11 +1,10 @@
 import styled from "@emotion/styled"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import { rhythm } from "../../utils/typography"
 
 export const WidgetContainer = styled(`div`)`
   margin: ${props => props.theme.space[7]} auto;
   padding: 0 ${props => props.theme.space[6]} ${props => props.theme.space[9]};
-  max-width: ${rhythm(28)};
+  max-width: 42rem;
 
   ${mediaQueries.md} {
     padding-bottom: 0;

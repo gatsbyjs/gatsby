@@ -109,8 +109,8 @@ class FeaturedSites extends Component {
             onClick={this.setFilterToFeatured}
           >
             <span className="title">View all</span>
-            &nbsp;
-            <MdArrowForward style={{ marginLeft: 4, verticalAlign: `sub` }} />
+            {` `}
+            <MdArrowForward sx={{ verticalAlign: `sub` }} />
           </a>
           <div
             css={{

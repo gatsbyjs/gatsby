@@ -12,19 +12,11 @@ import {
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
 
-import {
-  colors,
-  space,
-  breakpoints,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-  fonts,
-} from "../../gatsby-plugin-theme-ui"
+import { breakpoints, mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${space[6]};
+  margin: -6px -${props => props.theme.space[6]};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
@@ -40,7 +32,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${space[8]};
+  margin-right: ${props => props.theme.space[8]};
   position: relative;
 
   :last-child {
@@ -52,7 +44,7 @@ const PostsColumn = styled(`div`)`
 
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
-  font-family: ${fonts.header};
+  font-family: ${props => props.theme.fonts.header};
   overflow: hidden;
   width: auto;
 
@@ -62,10 +54,10 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${fontSizes[4]};
+    font-size: ${props => props.theme.fontSizes[4]};
     justify-content: center;
-    line-height: ${lineHeights.dense};
-    padding: ${space[7]};
+    line-height: ${props => props.theme.lineHeights.dense};
+    padding: ${props => props.theme.space[7]};
     width: 100%;
 
     span {
@@ -75,27 +67,27 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: ${space[1]};
+      margin-left: ${props => props.theme.space[1]};
       width: 18px;
     }
   }
 
   ${mediaQueries.lg} {
-    background: ${colors.gatsby};
-    color: ${colors.white};
+    background: ${props => props.theme.colors.gatsby};
+    color: ${props => props.theme.colors.white};
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${space[8]};
+    margin-left: ${props => props.theme.space[8]};
     width: 125px;
 
     a {
-      color: ${colors.white};
-      padding: ${space[5]};
+      color: ${props => props.theme.colors.white};
+      padding: ${props => props.theme.space[5]};
       justify-content: flex-start;
 
       &:hover {
-        background: ${colors.purple[80]};
+        background: ${props => props.theme.colors.purple[80]};
       }
     }
   }

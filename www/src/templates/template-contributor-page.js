@@ -8,7 +8,6 @@ import Img from "gatsby-image"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
-import { rhythm } from "../utils/typography"
 import FooterLinks from "../components/shared/footer-links"
 
 class ContributorPageTemplate extends React.Component {
@@ -58,18 +57,19 @@ class ContributorPageTemplate extends React.Component {
                 <Img
                   fixed={contributor.avatar.childImageSharp.fixed}
                   sx={{
-                    height: rhythm(2.3),
-                    width: rhythm(2.3),
+                    height: t => t.space[10],
+                    width: t => t.space[10],
                     borderRadius: 6,
                     display: `inline-block`,
                     verticalAlign: `middle`,
                   }}
                 />
-                <h1 sx={{ mt: 0 }}>{contributor.id}</h1>
+                <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
                 <p
                   sx={{
                     fontFamily: `header`,
-                    maxWidth: rhythm(18),
+                    fontSize: 3,
+                    maxWidth: `28rem`,
                     mx: `auto`,
                   }}
                 >

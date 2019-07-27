@@ -4,12 +4,11 @@ import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
-import { rhythm } from "../utils/typography"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
 import FooterLinks from "../components/shared/footer-links"
-import { colors, mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
@@ -159,8 +158,8 @@ class CreatorTemplate extends Component {
                   <Badge
                     forHire={creator.for_hire}
                     customCSS={{
-                      background: colors.green[50],
-                      color: colors.white,
+                      background: `green.50`,
+                      color: `white`,
                     }}
                   >
                     {creator.for_hire ? `Open for work` : `Hiring`}
@@ -185,13 +184,7 @@ class CreatorTemplate extends Component {
                 </a>
               )}
             </div>
-            <div
-              css={{
-                padding: `${rhythm()} 0`,
-              }}
-            >
-              {creator.description}
-            </div>
+            <div sx={{ py: 6 }}>{creator.description}</div>
             <MetaSection first>
               <MetaTitle>Get in touch</MetaTitle>
               <a

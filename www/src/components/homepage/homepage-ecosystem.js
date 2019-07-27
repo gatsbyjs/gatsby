@@ -18,16 +18,7 @@ import {
 import { EcosystemIcon } from "../../assets/mobile-nav-icons"
 import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
 
-import {
-  colors,
-  space,
-  radii,
-  shadows,
-  mediaQueries,
-  fontSizes,
-  letterSpacings,
-  fonts,
-} from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -37,19 +28,19 @@ const Sections = styled(`div`)`
 
   ${mediaQueries.md} {
     flex-direction: row;
-    margin: 0 -${space[2]};
+    margin: 0 -${props => props.theme.space[2]};
   }
 `
 
 const Section = styled(EcosystemSection)`
-  box-shadow: ${shadows.raised};
-  border-radius: ${radii[2]}px;
-  margin-bottom: ${space[6]};
-  padding: ${space[6]};
+  box-shadow: ${props => props.theme.shadows.raised};
+  border-radius: ${props => props.theme.radii[2]}px;
+  margin-bottom: ${props => props.theme.space[6]};
+  padding: ${props => props.theme.space[6]};
 
   ${mediaQueries.md} {
-    margin: 0 ${space[2]} 0;
-    padding: ${space[6]};
+    margin: 0 ${props => props.theme.space[2]} 0;
+    padding: ${props => props.theme.space[6]};
 
     :last-child {
       align-self: stretch;
@@ -58,18 +49,18 @@ const Section = styled(EcosystemSection)`
 `
 
 const SubTitle = styled(`h3`)`
-  font-size: ${fontSizes[3]};
-  margin-bottom: ${space[1]};
-  margin-top: ${space[7]};
+  font-size: ${props => props.theme.fontSizes[3]};
+  margin-bottom: ${props => props.theme.space[1]};
+  margin-top: ${props => props.theme.space[7]};
 
   ${mediaQueries.lg} {
-    margin-left: ${space[9]};
-    margin-bottom: ${space[4]};
+    margin-left: ${props => props.theme.space[9]};
+    margin-bottom: ${props => props.theme.space[4]};
   }
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${space[6]};
+  margin: 0 -${props => props.theme.space[6]};
 
   ${mediaQueries.lg} {
     margin: 0;
@@ -87,11 +78,11 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${space[6]};
+  margin-right: ${props => props.theme.space[6]};
 
   ${mediaQueries.md} {
     border-bottom: none;
-    margin: ${space[6]};
+    margin: ${props => props.theme.space[6]};
     margin-top: 0;
     margin-left: 0;
     width: 20rem;
@@ -106,42 +97,48 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${space[5]} + ${space[6]});
+    padding-left: calc(${props => props.theme.space[5]} + ${props =>
+  props.theme.space[6]});
     position: relative;
     border: 0;
-    box-shadow: ${shadows.raised};
+    box-shadow: ${props => props.theme.shadows.raised};
 
     ${mediaQueries.md} {
-      border-radius: ${radii[2]}px;
+      border-radius: ${props => props.theme.radii[2]}px;
     }
 
     ${mediaQueries.lg} {
       :hover {
-        background: ${colors.ui.hover};
+        background: ${props => props.theme.colors.ui.hover};
       }
     }
 
     :before {
       background: ${props =>
-        props.item.type === `Starter` ? colors.teal[10] : colors.orange[20]};
-      border-radius: ${radii[2]}px 0 0 ${radii[2]}px;
+        props.item.type === `Starter`
+          ? props.theme.colors.teal[10]
+          : props.theme.colors.orange[20]};
+      border-radius: ${props => props.theme.radii[2]}px 0 0 ${props =>
+  props.theme.radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;
       position: absolute;
       top: 0;
-      width: ${space[5]};
+      width: ${props => props.theme.space[5]};
     }
 
     :after {
       bottom: 0;
       content: "${props => props.item.type}";
       color: ${props =>
-        props.item.type === `Starter` ? colors.blue[70] : colors.orange[90]};
-      font-family: ${fonts.header};
-      font-size: ${fontSizes[1]};
+        props.item.type === `Starter`
+          ? props.theme.colors.blue[70]
+          : props.theme.colors.orange[90]};
+      font-family: ${props => props.theme.fonts.header};
+      font-size: ${props => props.theme.fontSizes[1]};
       left: 0;
-      letter-spacing: ${letterSpacings.tracked};
+      letter-spacing: ${props => props.theme.letterSpacings.tracked};
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;

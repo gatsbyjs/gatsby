@@ -113,7 +113,7 @@ class CreatorsView extends Component {
         />
         <main
           id={`reach-skip-nav`}
-          css={{
+          sx={{
             p: 6,
             paddingBottom: `10vh`,
             [mediaQueries.md]: {
@@ -135,7 +135,7 @@ class CreatorsView extends Component {
               <p sx={{ color: `gatsby` }}>No results</p>
             ) : (
               creators.map(item => (
-                <div key={item.node.name} css={styles.creatorCard}>
+                <div key={item.node.name} sx={styles.creatorCard}>
                   <ThumbnailLink
                     slug={item.node.fields.slug}
                     image={item.node.image}

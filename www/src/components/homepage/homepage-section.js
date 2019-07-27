@@ -7,14 +7,7 @@ import styled from "@emotion/styled"
 import Button from "../button"
 
 import { rhythm } from "../../utils/typography"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  fonts,
-  fontWeights,
-} from "../../gatsby-plugin-theme-ui"
+import { space, mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const ICON_SIZE = space[7]
 
@@ -24,16 +17,17 @@ export const Header = styled(`header`)`
   }
 
   ${mediaQueries.lg} {
-    margin-left: ${space[9]};
+    margin-left: ${props => props.theme.space[9]};
   }
 `
 
 export const Name = styled(`h3`)`
   align-items: center;
-  color: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
+  color: ${props =>
+    props.inverse ? props.theme.colors.purple[10] : props.theme.colors.lilac};
   display: flex;
-  font-size: ${fontSizes[2]};
-  font-weight: ${fontWeights[0]};
+  font-size: ${props => props.theme.fontSizes[2]};
+  font-weight: ${props => props.theme.fontWeights[0]};
   margin: 0;
   margin-left: calc(${ICON_SIZE} * -0.2);
   margin-bottom: 0.5em;
@@ -53,22 +47,27 @@ const Icon = styled(`span`)`
   svg {
     fill: transparent;
     height: ${ICON_SIZE};
-    stroke: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
+    stroke: ${props =>
+      props.inverse ? props.theme.colors.purple[10] : props.theme.colors.lilac};
     width: ${ICON_SIZE};
   }
 `
 
 export const Title = styled(`h1`)`
-  color: ${props => (props.inverse ? colors.yellow[40] : colors.gatsby)};
-  font-size: ${fontSizes[6]};
-  font-weight: ${fontWeights[1]};
+  color: ${props =>
+    props.inverse ? props.theme.colors.yellow[40] : props.theme.colors.gatsby};
+  font-size: ${props => props.theme.fontSizes[6]};
+  font-weight: ${props => props.theme.fontWeights[1]};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
-  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
-  font-size: ${fontSizes[3]};
-  font-family: ${fonts.header};
+  color: ${props =>
+    props.inverse
+      ? props.theme.colors.purple[10]
+      : props.theme.colors.purple[80]};
+  font-size: ${props => props.theme.fontSizes[3]};
+  font-family: ${props => props.theme.fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `

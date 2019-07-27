@@ -25,11 +25,11 @@ export const SidebarContainer = ({ children, className }) => (
         borderRightStyle: `solid`,
         borderRightWidth: `1px`,
         display: `block`,
-        flexBasis: `15rem`,
+        flexBasis: t => t.sizes.showcaseSidebarMaxWidth,
         height: t =>
           `calc(100vh - (${t.sizes.headerHeight} + ${t.sizes.bannerHeight}))`,
-        minWidth: `15rem`,
-        paddingTop: 0,
+        minWidth: `showcaseSidebarMaxWidth`,
+        pt: 0,
       },
     }}
     css={sticky}

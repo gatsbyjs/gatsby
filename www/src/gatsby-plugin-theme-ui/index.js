@@ -83,7 +83,7 @@ export default {
       searchBackground: c.grey[10],
       searchBackgroundFocus: c.white,
       searchIcon: c.grey[50],
-      searchIconFocus: c.purple[40],
+      searchIconFocus: c.grey[60],
       searchPlaceholder: c.grey[60],
     },
     sidebar: {
@@ -182,6 +182,7 @@ export default {
     sidebarItemMinHeight: spc[8],
     pluginsSidebarWidthDefault: `21rem`,
     pluginsSidebarWidthLarge: `24rem`,
+    showcaseSidebarMaxWidth: `15rem`,
     mainContentWidth: {
       default: `54rem`,
       withSidebar: `42rem`,

@@ -6,8 +6,6 @@ import { Helmet } from "react-helmet"
 import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
-import { rhythm } from "../../utils/typography"
-import { space } from "../../gatsby-plugin-theme-ui"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -60,8 +58,7 @@ class NodeModelDocs extends React.Component {
               }}
             />
           </div>
-          <hr />
-          <h2 sx={{ marginBottom: rhythm(space[3]) }}>Methods</h2>
+          <h2>Methods</h2>
           <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
@@ -69,7 +66,6 @@ class NodeModelDocs extends React.Component {
               </li>
             ))}
           </ul>
-          <hr />
           <h2>Reference</h2>
           <APIReference docs={funcs} />
         </Container>
