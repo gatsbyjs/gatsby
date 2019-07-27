@@ -176,53 +176,49 @@ query {
 If you skipped the last step and want to use frontmatter for your
 slugs instead of the generated field, replace `fields` with `frontmatter`.
 
-```javascript=gatsby-node.js
+```javascript:title=gatsby-node.js
 const path = require("path")
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   // Destructure the createPage function from the actions object
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    resolve(
-      graphql(
-        `
-          {
-            allMdx {
-              edges {
-                node {
-                  id
-                  fields {
-                    slug
-                  }
-                }
-              }
+  const result = await graphql(`
+    query {
+      allMdx {
+        edges {
+          node {
+            id
+            fields {
+              slug
             }
+            body
           }
-        `
-      ).then(result => {
-        // this is some boilerlate to handle errors
-        if (result.errors) {
-          console.error(result.errors)
-          reject(result.errors)
         }
+      }
+    }
+  `)
 
-        // We'll call `createPage` for each result
-        result.data.allMdx.edges.forEach(({ node }) => {
-          createPage({
-            // This is the slug we created before
-            // (or `node.frontmatter.slug`)
-            path: node.fields.slug,
-            // This component will wrap our MDX content
-            component: path.resolve(`./src/components/posts-page-layout.js`),
-            // We can use the values in this context in
-            // our page layout component
-            context: { id: node.id },
-          })
-        })
-      })
-    )
-  })
+  if (result.errors) {
+    reporter.panic('🚨  ERROR: Loading "createPages" query', result.errors);
+  }
+
+  // Create blog post pages.
+  const posts = result.data.allMdx.edges;
+
+  // We'll call `createPage` for each result
+  posts.forEach(({ node }, index) => {
+    createPage({
+      // This is the slug we created before
+      // (or `node.frontmatter.slug`)
+      path: node.fields.slug,
+      // This component will wrap our MDX content
+      component: path.resolve(`./src/components/posts-page-layout.js`),
+      // We can use the values in this context in
+      // our page layout component
+      context: { id: node.id },
+    });
+  }
 }
 ```
 
@@ -243,13 +239,13 @@ added in the next step).
 ```javascript:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
-import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
-      <MDXRenderer>{mdx.code.body}</MDXRenderer>
+      <MDXRenderer>{mdx.body}</MDXRenderer>
     </div>
   )
 }
@@ -264,11 +260,9 @@ export const pageQuery = graphql`
   query BlogPostQuery($id: String) {
     mdx(id: { eq: $id }) {
       id
+      body
       frontmatter {
         title
-      }
-      code {
-        body
       }
     }
   }
@@ -281,13 +275,13 @@ component should look like:
 ```javascript:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
-import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
-      <MDXRenderer>{mdx.code.body}</MDXRenderer>
+      <MDXRenderer>{mdx.body}</MDXRenderer>
     </div>
   )
 }
@@ -296,11 +290,9 @@ export const pageQuery = graphql`
   query BlogPostQuery($id: String) {
     mdx(id: { eq: $id }) {
       id
+      body
       frontmatter {
         title
-      }
-      code {
-        body
       }
     }
   }
