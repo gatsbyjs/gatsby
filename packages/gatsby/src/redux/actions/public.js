@@ -35,6 +35,16 @@ const findChildrenRecursively = (children = []) => {
   return children
 }
 
+const getCommonDir = (path1, path2) => {
+  var iChar
+  for (iChar = 0; iChar < path1.length; iChar += 1) {
+    if (path1[iChar] !== path2[iChar]) {
+      return path1.substring(0, iChar)
+    }
+  }
+  return ``
+}
+
 import type { Plugin } from "./types"
 
 type Job = {
@@ -266,12 +276,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch {
         // systems where user doesn't have access to /
-        const relativePath = page.component
-          .replace(store.getState().program.directory, ``)
-          .replace(/^\//, ``)
-        trueComponentPath = slash(
-          trueCasePathSync(relativePath, store.getState().program.directory)
+        const commonDir = getCommonDir(
+          store.getState().program.directory,
+          page.component
         )
+        const relativePath = page.component
+          .replace(commonDir, ``)
+          .replace(/^\//, ``)
+        trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
       }
 
       if (trueComponentPath !== page.component) {
