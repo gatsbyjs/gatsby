@@ -2,8 +2,8 @@
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import MdInfoOutline from "react-icons/lib/md/info-outline"
 import EvaluationCell from "./evaluation-cell"
-import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
@@ -21,14 +21,9 @@ class EvaluationTable extends Component {
         <span key={`info-icon-${words[words.length - 1]}`}>
           {` `}
           {`${words[words.length - 1]} `}
-          <img
-            src={infoIcon}
-            sx={{
-              height: t => t.space[3],
-              mb: 1,
-              verticalAlign: `baseline`,
-            }}
+          <MdInfoOutline
             alt={`Info Icon`}
+            sx={{ color: `grey.50`, verticalAlign: `baseline` }}
           />
         </span>,
       ]

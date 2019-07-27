@@ -13,7 +13,7 @@ import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
-import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
+import FeaturedIcon from "../../assets/icons/featured-sites-icons--white.svg"
 
 const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)

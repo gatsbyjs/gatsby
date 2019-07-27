@@ -8,7 +8,7 @@ import MdStar from "react-icons/lib/md/star"
 import styles, { showcaseList, showcaseItem } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import V2Icon from "../../assets/v2icon.svg"
+import V2Icon from "../../assets/icons/v2icon.svg"
 import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
