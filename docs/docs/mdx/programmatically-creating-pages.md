@@ -249,7 +249,7 @@ export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
-      <MDXRenderer>{mdx.code.body}</MDXRenderer>
+      <MDXRenderer>{mdx.rawBody}</MDXRenderer>
     </div>
   )
 }
@@ -267,9 +267,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
       }
-      code {
-        body
-      }
+      rawBody
     }
   }
 `
@@ -287,7 +285,7 @@ export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
-      <MDXRenderer>{mdx.code.body}</MDXRenderer>
+      <MDXRenderer>{mdx.rawBody}</MDXRenderer>
     </div>
   )
 }
@@ -299,9 +297,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
       }
-      code {
-        body
-      }
+      rawBody
     }
   }
 `
