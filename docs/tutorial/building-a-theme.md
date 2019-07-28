@@ -600,11 +600,21 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "event" and "events" template components.
+### Create the "events" and "event" template components.
 
 The last step to make sure that these pages build is to create the page template components.
 
 Create new files for the event template, and the events template:
+
+#### Events template
+
+```javascript:title=gatsby-theme-events/src/templates/events.js
+import React from "react"
+
+const EventsTemplate = () => <p>TODO: Build the events page template</p>
+
+export default EventsTemplate
+```
 
 #### Event template
 
@@ -616,16 +626,6 @@ const EventTemplate = () => <p>TODO: Build the event page template</p>
 export default EventTemplate
 ```
 
-
-#### Events template
-
-```javascript:title=gatsby-theme-events/src/templates/events.js
-import React from "react"
-
-const EventsTemplate = () => <p>TODO: Build the events page template</p>
-
-export default EventsTemplate
-```
 ### Test that pages are building
 
 To test that the root path (`"/"`) and individual event pages are building successfully, run `gatsby-theme-events` in develop mode again:
