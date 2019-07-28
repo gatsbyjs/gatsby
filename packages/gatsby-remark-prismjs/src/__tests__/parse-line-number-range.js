@@ -96,6 +96,7 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
         highlightLines: [1],
         showLineNumbersLocal: true,
         numberLinesStartAt: 3,
+        outputLines: [],
       })
     })
     it(`multiple lines highlighted`, () => {
@@ -104,6 +105,7 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
         highlightLines: [1, 5, 7, 8],
         showLineNumbersLocal: true,
         numberLinesStartAt: 3,
+        outputLines: [],
       })
     })
     it(`numberLines: true`, () => {
@@ -112,6 +114,7 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
         highlightLines: [1, 5, 7, 8],
         showLineNumbersLocal: true,
         numberLinesStartAt: 1,
+        outputLines: [],
       })
     })
     it(`reverse ordering`, () => {
@@ -120,6 +123,7 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
         highlightLines: [2],
         showLineNumbersLocal: true,
         numberLinesStartAt: 4,
+        outputLines: [],
       })
     })
   })
