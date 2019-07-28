@@ -608,16 +608,6 @@ Create new files for the event template, and the events template:
 
 #### Event template
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
-import React from "react"
-
-const EventsTemplate = () => <p>TODO: Build the events page template</p>
-
-export default EventsTemplate
-```
-
-#### Events template
-
 ```javascript:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 
@@ -626,6 +616,16 @@ const EventTemplate = () => <p>TODO: Build the event page template</p>
 export default EventTemplate
 ```
 
+
+#### Events template
+
+```javascript:title=gatsby-theme-events/src/templates/events.js
+import React from "react"
+
+const EventsTemplate = () => <p>TODO: Build the events page template</p>
+
+export default EventsTemplate
+```
 ### Test that pages are building
 
 To test that the root path (`"/"`) and individual event pages are building successfully, run `gatsby-theme-events` in develop mode again:
