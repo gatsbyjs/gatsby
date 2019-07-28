@@ -64,3 +64,10 @@ getPackages(process.cwd()).then(packages => {
     process.exit(1)
   }
 })
+
+/* {
+  "scripts": {
+    "develop": "gatsby develop"
+  }
+}
+*/
