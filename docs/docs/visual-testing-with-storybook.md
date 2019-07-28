@@ -102,8 +102,8 @@ module.exports = ({ config }) => {
 > When using TypeScript, add this rule:
 
 ```js:title=.storybook/webpack.config.js
-
-config.module.rules.push({
+module.exports = ({ config }) => {
+  config.module.rules.push({
     test: /\.(ts|tsx)$/,
     loader: require.resolve('babel-loader'),
     options: {
