@@ -31,11 +31,12 @@ function discoverPluginsWithoutNodes(storeState) {
   return _.difference(nodeCreationPlugins, nodeOwners)
 }
 
-module.exports = async ({ parentSpan } = {}) => {
+module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
-    parentSpan: parentSpan,
+    parentSpan,
+    webhookBody,
   })
 
   const state = store.getState()

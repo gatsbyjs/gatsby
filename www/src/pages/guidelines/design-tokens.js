@@ -630,15 +630,15 @@ const DesignTokens = ({ location }) => (
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(theme.transition).map((color, i) => {
-                  if (typeof theme.transition[color] === `object`) {
-                    return Object.keys(theme.transition[color]).map(
-                      (range, i) => (
+                {Object.keys(theme.transition).map(token => {
+                  if (typeof theme.transition[token] === `object`) {
+                    return Object.keys(theme.transition[token]).map(
+                      (value, i) => (
                         <tr key={`tokens-transition-${i}`}>
                           <td>
-                            <code>{`colors.${color}.${range}`}</code>
+                            <code>{`transition.${token}.${value}`}</code>
                           </td>
-                          <td>{theme.transition[color][range]}</td>
+                          <td>{theme.transition[token][value]}</td>
                         </tr>
                       )
                     )

@@ -60,7 +60,7 @@ similar and supports both SSR for dynamic content and exporting to static pages.
 And don't forget [Netlify](https://www.netlify.com) who is doing an amazing job
 at building and hosting static websites.
 
-It is so much easier and fun to code for the web today. I would haved saved a
+It is so much easier and fun to code for the web today. I would have saved a
 lot of development/devops hours at my previous startup just by using Gatsby. And
 the most fun fact about Gatsby is these aren’t modern ideas at all - it's just
 static websites done right.
