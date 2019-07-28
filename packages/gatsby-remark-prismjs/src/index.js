@@ -15,7 +15,7 @@ module.exports = (
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
     languageExtensions = [],
-    prompt = null
+    prompt = null,
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -73,8 +73,7 @@ module.exports = (
     if (highlightLines && highlightLines.length > 0)
       highlightClassName += ` has-highlighted-lines`
 
-    const useCommandLine = ['shell', 'bash'].includes(languageName)
-      && prompt;
+    const useCommandLine = [`shell`, `bash`].includes(languageName) && prompt
 
     // prettier-ignore
     node.value = ``
