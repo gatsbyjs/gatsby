@@ -4,6 +4,7 @@ const parseLineNumberRange = require(`./parse-line-number-range`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
+const commandLine = require(`./command-line`)
 
 module.exports = (
   { markdownAST },
@@ -14,6 +15,7 @@ module.exports = (
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
     languageExtensions = [],
+    prompt = null
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -31,6 +33,7 @@ module.exports = (
       highlightLines,
       showLineNumbersLocal,
       numberLinesStartAt,
+      outputLines,
     } = parseLineNumberRange(language)
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     language = splitLanguage
@@ -70,11 +73,15 @@ module.exports = (
     if (highlightLines && highlightLines.length > 0)
       highlightClassName += ` has-highlighted-lines`
 
+    const useCommandLine = ['shell', 'bash'].includes(languageName)
+      && prompt;
+
     // prettier-ignore
     node.value = ``
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
+    +       `${useCommandLine ? commandLine(node.value, outputLines, prompt.user, prompt.host) : ``}`
     +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`

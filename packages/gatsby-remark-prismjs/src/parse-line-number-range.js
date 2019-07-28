@@ -7,6 +7,7 @@ module.exports = language => {
   if (language.split(`{`).length > 1) {
     let [splitLanguage, ...options] = language.split(`{`)
     let highlightLines = [],
+      outputLines = [],
       showLineNumbersLocal = false,
       numberLinesStartAt
     // Options can be given in any order and are optional
@@ -20,6 +21,7 @@ module.exports = language => {
       // Test if the option is for line numbering
       // Option must look like `numberLines: true` or `numberLines: <integer>`
       // Otherwise we disable line numbering
+      
       if (
         option.length === 2 &&
         option[0] === `numberLines` &&
@@ -30,6 +32,12 @@ module.exports = language => {
         numberLinesStartAt =
           option[1].trim() === `true` ? 1 : parseInt(option[1].trim(), 10)
       }
+      if (
+        option.length === 2 &&
+        option[0] === `outputLines`
+      ) {
+        outputLines = rangeParser.parse(option[1].trim()).filter(n => n > 0)
+      }
     })
 
     return {
@@ -37,6 +45,7 @@ module.exports = language => {
       highlightLines,
       showLineNumbersLocal,
       numberLinesStartAt,
+      outputLines,
     }
   }
 
