@@ -5,8 +5,7 @@ import React, { Component } from "react"
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import { transition, mediaQueries } from "../../gatsby-plugin-theme-ui"
-import { rhythm } from "../../utils/typography"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
 } from "./scrollbar-position-provider"
@@ -36,7 +35,6 @@ class StickyResponsiveSidebar extends Component {
 
     const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
-    const menuOffset = open ? 0 : rhythm(10)
 
     const sidebarType = pathname.split(`/`)[1]
 
@@ -54,7 +52,7 @@ class StickyResponsiveSidebar extends Component {
               `opacity ${t.transition.speed.slow} ${
                 t.transition.curve.default
               }`,
-            width: 320,
+            width: `sidebarWidth.mobile`,
             zIndex: `sidebar`,
             [mediaQueries.md]: {
               height: t =>
@@ -66,10 +64,10 @@ class StickyResponsiveSidebar extends Component {
               pointerEvents: `auto`,
               top: t =>
                 `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
-              width: t => rhythm(t.sizes.sidebarWidth.default),
+              width: `sidebarWidth.default`,
             },
             [mediaQueries.lg]: {
-              width: t => rhythm(t.sizes.sidebarWidth.large),
+              width: `sidebarWidth.large`,
             },
             opacity: menuOpacity,
             pointerEvents: open ? `auto` : `none`,
@@ -79,7 +77,9 @@ class StickyResponsiveSidebar extends Component {
             sx={{
               boxShadow: `dialog`,
               height: `100%`,
-              transform: `translateX(-${menuOffset})`,
+              transform: open
+                ? `translateX(0)`
+                : t => `translateX(-${t.sizes.sidebarWidth.mobile})`,
               transition: t =>
                 `transform ${t.transition.speed.slow} ${
                   t.transition.curve.default
@@ -138,22 +138,24 @@ class StickyResponsiveSidebar extends Component {
             }}
           >
             <ChevronSvg
-              size={15}
+              size={16}
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
-                transition: `transform ${transition.speed.fast} ${
-                  transition.curve.default
-                }`,
+                transition: t =>
+                  `transform ${t.transition.speed.slow} ${
+                    t.transition.curve.default
+                  }`,
               }}
             />
             <ChevronSvg
-              size={15}
+              size={16}
               cssProps={{
                 transform: `translate(${5 -
                   iconOffset}px, -5px) rotate(270deg)`,
-                transition: `transform ${transition.speed.fast} ${
-                  transition.curve.default
-                }`,
+                transition: t =>
+                  `transform ${t.transition.speed.slow} ${
+                    t.transition.curve.default
+                  }`,
               }}
             />
           </div>

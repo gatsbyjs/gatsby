@@ -33,8 +33,8 @@ const spc = sp.map(token => `${token / 16}rem`)
 
 const darkBackground = `#0c0b0e` // meh
 const darkBorder = `#131217`
-const shadowDarkBase = `#131217`
-const shadowDarkFlares = c.black
+const shadowDarkBase = `19,18,23`
+const shadowDarkFlares = `0,0,0`
 
 export const borders = b
 export const breakpoints = breakps
@@ -117,7 +117,7 @@ export default {
         card: {
           background: c.purple[90],
           header: c.white,
-          color: c.purple[90],
+          color: c.whiteFade[60],
         },
         text: {
           header: c.white,
@@ -131,10 +131,10 @@ export default {
           hoverColor: c.purple[30],
         },
         ui: {
+          background: darkBackground,
           border: {
             subtle: darkBorder,
           },
-          background: darkBackground,
         },
         sidebar: {
           itemHoverBackground: hex2rgba(c.purple[70], 0.275),
@@ -153,8 +153,8 @@ export default {
           bg: darkBorder,
           bgInline: darkBorder,
           border: darkBackground,
-          lineHighlightBorder: c.purple[90],
-          lineHighlightBackground: hex2rgba(c.purple[90], 0.5),
+          lineHighlightBorder: c.teal[90],
+          lineHighlightBackground: hex2rgba(c.teal[90], 0.25),
           punctuation: c.whiteFade[60],
           add: c.green[50],
           comment: c.grey[30],
@@ -163,7 +163,7 @@ export default {
           keyword: c.magenta[40],
           regex: `#d88489`,
           remove: `#e45c5c`,
-          scrollbarThumb: darkBackground,
+          scrollbarThumb: c.purple[90],
           selector: c.orange[30],
           tag: c.teal[60],
           text: c.grey[30],
@@ -186,6 +186,11 @@ export default {
     mainContentWidth: {
       default: `54rem`,
       withSidebar: `42rem`,
+    },
+    sidebarWidth: {
+      mobile: `320px`,
+      default: `16.5rem`,
+      large: `18rem`,
     },
   },
   shadows: sh,

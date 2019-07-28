@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import { options, rhythm } from "../../utils/typography"
 import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
 
@@ -50,7 +49,7 @@ const Details = ({
       <div
         sx={{
           display: `grid`,
-          marginBottom: rhythm(options.blockMarginBottom * 5),
+          marginBottom: `7.5rem`,
           [mediaQueries.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
             gridGap: 5,

@@ -6,7 +6,6 @@ import {
   HorizontalScroller,
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
-
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 

@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
-import { space, mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { svgStyles } from "../../utils/styles"
 
 const PageHeadingContainer = styled(`header`)`
@@ -29,7 +29,10 @@ const H1 = styled(`h1`)`
 
   ${mediaQueries.md} {
     transform: rotate(-90deg)
-      translate(calc(-100% - ${props => props.theme.space[7]}), ${space[4]});
+      translate(
+        calc(-100% - ${props => props.theme.space[7]}),
+        ${props => props.theme.space[4]}
+      );
     transform-origin: top left;
   }
 

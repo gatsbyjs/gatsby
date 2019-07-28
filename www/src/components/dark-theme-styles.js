@@ -19,7 +19,7 @@ const darkThemeGlobalStyles = {
   },
   ".main-body a": {
     color: t.colors.modes.dark.link.color,
-    borderVottom: `1px solid ${t.colors.modes.dark.link.border}`,
+    borderBottom: `1px solid ${t.colors.modes.dark.link.border}`,
   },
   ".main-body a:hover": {
     borderBottomColor: t.colors.modes.dark.link.linkHoverBorder,
@@ -40,6 +40,13 @@ const darkThemeGlobalStyles = {
     background: t.colors.modes.dark.code.lineHighlightBackground,
     borderLeft: `${t.space[1]} solid
       ${t.colors.modes.dark.code.lineHighlightBorder}`,
+  },
+
+  ".gatsby-highlight pre::-webkit-scrollbar-thumb": {
+    background: t.colors.modes.dark.code.scrollbarThumb,
+  },
+  ".gatsby-highlight pre::-webkit-scrollbar-track": {
+    background: t.colors.modes.dark.code.border,
   },
 
   ".token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata": {

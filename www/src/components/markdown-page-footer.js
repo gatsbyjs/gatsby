@@ -14,10 +14,10 @@ export default class MarkdownPageFooter extends React.Component {
   render() {
     return (
       <>
-        <hr sx={{ marginTop: 9 }} />
+        <hr sx={{ display: `none` }} />
         {this.props.page && (
           <a
-            css={{ ...linkStyles }}
+            sx={{ ...linkStyles, marginTop: 9 }}
             href={`https://github.com/gatsbyjs/gatsby/blob/master/${
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}

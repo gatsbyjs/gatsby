@@ -4,7 +4,6 @@ import React, { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
-import { rhythm } from "../utils/typography"
 
 export default props => {
   if (props.disable) {
@@ -14,12 +13,8 @@ export default props => {
       <Fragment>
         <div
           sx={{
-            [mediaQueries.md]: {
-              pl: t => rhythm(t.sizes.sidebarWidth.default),
-            },
-            [mediaQueries.lg]: {
-              pl: t => rhythm(t.sizes.sidebarWidth.large),
-            },
+            [mediaQueries.md]: { pl: t => t.sizes.sidebarWidth.default },
+            [mediaQueries.lg]: { pl: t => t.sizes.sidebarWidth.large },
           }}
         >
           {props.renderContent()}

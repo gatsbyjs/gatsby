@@ -206,7 +206,7 @@ export default class FilteredStarterLibrary extends Component {
                 }}
                 onClick={toggleSort}
               >
-                <MdSort css={{ marginRight: 8 }} />
+                <MdSort sx={{ mr: 2 }} />
                 {urlState.sort === `recent` ? `Most recent` : `Most stars`}
               </label>
               <label css={{ position: `relative` }}>

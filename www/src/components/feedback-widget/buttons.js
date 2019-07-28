@@ -91,7 +91,8 @@ export const ToggleButtonLabel = styled(`span`)`
   width: 100%;
 
   ${mediaQueries.lg} {
-    background: ${props => props.theme.colors.white};
+    background: ${props => props.theme.colors.widget.background};
+    color: ${props => props.theme.colors.text.primary};
     border: 0;
     box-shadow: ${props => props.theme.shadows.floating};
     width: auto;
@@ -99,52 +100,47 @@ export const ToggleButtonLabel = styled(`span`)`
   }
 `
 
-export const ToggleButtonIcon = styled(`span`)`
-  align-items: center;
-  background: ${props => props.theme.colors.accent};
-  border-radius: ${props => props.theme.radii[6]};
-  color: ${props => props.theme.colors.white};
-  display: flex;
-  font-size: ${props => props.theme.fontSizes[1]};
-  height: ${props => props.theme.space[8]};
-  justify-content: center;
-  position: absolute;
-  right: ${props => props.theme.space[1]};
-  transform: scale(0.6);
-  transition: 0.5s;
-  width: ${props => props.theme.space[8]};
-  z-index: 2;
-
-  svg {
-    fill: ${props => props.theme.colors.white};
-    height: ${props => props.theme.space[6]};
-    width: ${props => props.theme.space[6]};
-    transition: 0.5s;
+export const ToggleButtonIcon = styled(`span`)(props => {
+  return {
+    alignItems: `center`,
+    background: props.theme.colors.accent,
+    borderRadius: props.theme.radii[6],
+    color: props.theme.colors.white,
+    display: `flex`,
+    fontSize: props.theme.fontSizes[1],
+    height: props.theme.space[8],
+    justifyContent: `center`,
+    position: `absolute`,
+    right: props.theme.space[1],
+    transform: `scale(0.6)`,
+    transition: `0.5s`,
+    width: props.theme.space[8],
+    zIndex: 2,
+    svg: {
+      fill: props.theme.colors.white,
+      height: props.theme.space[6],
+      width: props.theme.space[6],
+      transition: `0.5s`,
+    },
+    [mediaQueries.lg]: {
+      ".opened &, .failed &, .success &, .submitting &": {
+        svg: {
+          height: props.theme.space[5],
+          width: props.theme.space[5],
+        },
+        "&:hover": {
+          svg: {
+            transform: `rotate(90deg)`,
+            fill: props.theme.colors.accent,
+          },
+        },
+      },
+    },
+    "@media screen and (prefers-reduced-motion: reduce)": {
+      transition: 0,
+    },
   }
-
-  ${mediaQueries.lg} {
-    .opened &,
-    .failed &,
-    .success &,
-    .submitting & {
-      svg {
-        height: ${props => props.theme.space[5]};
-        width: ${props => props.theme.space[5]};
-      }
-
-      &:hover {
-        svg {
-          transform: rotate(90deg);
-          fill: ${props => props.theme.colors.accent};
-        }
-      }
-    }
-  }
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    transition: 0;
-  }
-`
+})
 
 export const ToggleButton = styled(`button`)`
   align-items: center;

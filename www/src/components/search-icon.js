@@ -6,7 +6,6 @@ import MdSearch from "react-icons/lib/md/search"
 
 const SearchIcon = ({ focussed }) => (
   <MdSearch
-    fill={false}
     focusable="false"
     aria-hidden="true"
     sx={{

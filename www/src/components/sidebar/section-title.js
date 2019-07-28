@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React from "react"
 
 import ChevronSvg from "./chevron-svg"
-import { transition } from "../../gatsby-plugin-theme-ui"
 import indention from "../../utils/sidebar/indention"
 
 const Chevron = ({ isExpanded }) => (
@@ -11,10 +10,10 @@ const Chevron = ({ isExpanded }) => (
     sx={{
       display: `flex`,
       flexShrink: 0,
-      marginLeft: `auto`,
+      ml: `auto`,
       height: `100%`,
       width: `100%`,
-      paddingTop: `1.3em`,
+      pt: `1.3em`,
       minHeight: `sidebarItemMinHeight`,
       minWidth: `sidebarItemMinHeight`,
       "&:hover": {
@@ -27,9 +26,8 @@ const Chevron = ({ isExpanded }) => (
         color: `text.secondary`,
         mx: `auto`,
         transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,
-        transition: `transform ${transition.speed.fast} ${
-          transition.curve.default
-        }`,
+        transition: t =>
+          `transform ${t.transition.speed.fast} ${t.transition.curve.default}`,
       }}
     />
   </span>
@@ -128,7 +126,7 @@ const SplitButton = ({
                     : `navigation.linkDefault`,
               },
             }),
-          pr: `sidebarItemMinHeight`,
+          pr: t => t.sizes.sidebarItemMinHeight,
         },
       })}
     </span>
@@ -156,7 +154,7 @@ const SplitButton = ({
 
 const Title = ({ item, isActive, isExpanded }) => (
   <div
-    css={{
+    sx={{
       alignItems: `center`,
       display: `flex`,
       paddingLeft: indention(item.level),

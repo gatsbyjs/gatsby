@@ -5,7 +5,6 @@ import styled from "@emotion/styled"
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
-
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const EcosystemSectionRoot = styled(`section`)`

@@ -432,7 +432,7 @@ export const global = {
   ...gatsbyHighlight,
   ...gatsbyHighlightLanguageBadges,
   html: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.background,
     WebkitFontSmoothing: `antialiased`,
     MozOsxFontSmoothing: `grayscale`,
   },

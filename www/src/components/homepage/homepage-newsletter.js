@@ -7,9 +7,9 @@ import EmailCaptureForm from "../../components/email-capture-form"
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
 import { rhythm } from "../../utils/typography"
-import { space, mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
-const stripedBorderHeight = space[1]
+const stripedBorderHeight = 1
 
 const Container = styled(`div`)`
   border: 1px solid ${props => props.theme.colors.ui.border.subtle};
@@ -20,7 +20,7 @@ const Container = styled(`div`)`
   padding: calc(${props => props.theme.space[8]} * 1.2);
   padding-bottom: calc(
     ${props => rhythm(props.theme.space[8] * 1.2)} +
-      ${props => props.theme.stripedBorderHeight}
+      ${props => props.theme.space[stripedBorderHeight]}
   );
   position: relative;
 
@@ -41,7 +41,7 @@ const Container = styled(`div`)`
       );
     bottom: 0;
     content: "";
-    height: ${stripedBorderHeight};
+    height: ${props => props.theme.space[stripedBorderHeight]};
     left: 0;
     right: 0;
     position: absolute;

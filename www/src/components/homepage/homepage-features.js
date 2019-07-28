@@ -11,10 +11,11 @@ import FuturaParagraph from "../futura-paragraph"
 const HomepageFeatures = () => (
   <div
     sx={{
+      borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,
-      borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+      px: 8,
     }}
   >
     <Card>

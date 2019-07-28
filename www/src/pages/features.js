@@ -10,9 +10,9 @@ import EvaluationCell from "../components/evaluation-cell"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
-import { colors, mediaQueries, fonts } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
-const legendBorderColor = colors.ui.border.subtle
+const legendBorderColor = `ui.border.subtle`
 
 const LegendTable = () => {
   const legendBallStyle = {
@@ -26,55 +26,51 @@ const LegendTable = () => {
     display: `table-cell`,
     verticalAlign: `middle`,
     textAlign: `center`,
-    padding: 10,
-    borderLeft: `1px solid ${legendBorderColor}`,
-    borderBottom: `1px solid ${legendBorderColor}`,
+    padding: 4,
+    borderColor: legendBorderColor,
+    borderLeftWidth: `1px`,
+    borderBottomWidth: `1px`,
+    borderLeftStyle: `solid`,
+    borderBottomStyle: `solid`,
   }
 
   const legendExplanationCellStyle = {
-    display: `table-cell`,
-    verticalAlign: `middle`,
-    textAlign: `center`,
-    padding: 10,
-    borderLeft: `1px solid ${legendBorderColor}`,
-    borderBottom: `1px solid ${legendBorderColor}`,
-    [mediaQueries.sm]: {
-      borderBottom: 0,
-    },
+    ...legendBallCellStyle,
+    [mediaQueries.sm]: { borderBottom: 0 },
   }
 
   const balls = [
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
       <h4 style={{ margin: 0 }}>Icon</h4>
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
       <EvaluationCell num="3" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-3`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-3`}>
       <EvaluationCell num="2" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-4`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-4`}>
       <EvaluationCell num="1" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
       <EvaluationCell num="0" style={legendBallStyle} />
     </div>,
   ]
 
   const legendText = [
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
       <h5 style={{ margin: 0 }}>Feature Availability</h5>
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
       Out of the box
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
       Plugins available
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
       Needs customization
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
       Not possible
     </div>,
   ]
@@ -89,10 +85,12 @@ const LegendTable = () => {
         />
       </Helmet>
       <div
-        css={{
-          border: `1px solid ${legendBorderColor}`,
+        sx={{
+          borderColor: legendBorderColor,
+          borderWidth: `1px`,
+          borderStyle: `solid`,
           borderLeft: 0,
-          fontFamily: fonts.header,
+          fontFamily: `header`,
           display: `none`,
           [mediaQueries.sm]: {
             display: `table`,
@@ -103,11 +101,11 @@ const LegendTable = () => {
         <div css={{ display: `table-row` }}>{legendText}</div>
       </div>
       <div
-        css={{
+        sx={{
           display: `table`,
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: fonts.header,
+          fontFamily: `header`,
           [mediaQueries.sm]: {
             display: `none`,
           },

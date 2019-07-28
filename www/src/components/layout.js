@@ -9,7 +9,7 @@ import MdClose from "react-icons/lib/md/close"
 import { Global } from "@emotion/core"
 import { global } from "../utils/styles"
 
-import { space, sizes, zIndices } from "../gatsby-plugin-theme-ui"
+import { space, zIndices } from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
 import Navigation from "../components/navigation"
@@ -159,15 +159,15 @@ class DefaultLayout extends React.Component {
         <Navigation pathname={this.props.location.pathname} />
         <div
           className={`main-body`}
-          css={{
-            paddingLeft: `env(safe-area-inset-left)`,
-            paddingRight: `env(safe-area-inset-right)`,
-            paddingTop: sizes.bannerHeight,
+          sx={{
+            px: `env(safe-area-inset-left)`,
+            pt: t => t.sizes.bannerHeight,
             // make room for the mobile navigation
-            paddingBottom: sizes.headerHeight,
+            pb: t => t.sizes.headerHeight,
             [breakpointGutter]: {
-              paddingTop: `calc(${sizes.bannerHeight} + ${sizes.headerHeight})`,
-              paddingBottom: 0,
+              pt: t =>
+                `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+              pb: 0,
             },
           }}
         >

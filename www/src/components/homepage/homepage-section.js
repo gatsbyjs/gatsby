@@ -5,11 +5,10 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
 import Button from "../button"
-
 import { rhythm } from "../../utils/typography"
-import { space, mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
-const ICON_SIZE = space[7]
+const ICON_SIZE = 7
 
 export const Header = styled(`header`)`
   ${mediaQueries.md} {
@@ -29,11 +28,11 @@ export const Name = styled(`h3`)`
   font-size: ${props => props.theme.fontSizes[2]};
   font-weight: ${props => props.theme.fontWeights[0]};
   margin: 0;
-  margin-left: calc(${ICON_SIZE} * -0.2);
+  margin-left: calc(${props => props.theme.space[ICON_SIZE]} * -0.2);
   margin-bottom: 0.5em;
 
   ${mediaQueries.lg} {
-    margin-left: calc(${ICON_SIZE} * -1.2);
+    margin-left: calc(${props => props.theme.space[ICON_SIZE]} * -1.2);
   }
 `
 
@@ -75,14 +74,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: ${space[4]} 0 ${space[6]};
+  margin: ${props => props.theme.space[4]} 0 ${props => props.theme.space[6]};
 
   > a {
-    margin-right: ${space[1]};
+    margin-right: ${props => props.theme.space[1]};
   }
 
   ${mediaQueries.lg} {
-    margin: ${space[4]} 0 ${space[8]};
+    margin: ${props => props.theme.space[4]} 0 ${props => props.theme.space[8]};
   }
 `
 

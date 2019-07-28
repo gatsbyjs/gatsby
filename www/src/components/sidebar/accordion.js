@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Fragment } from "react"
+import React from "react"
 
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
@@ -20,31 +20,27 @@ const ItemWithSubitems = ({
   const SectionTitleComponent = disableAccordions ? Title : TitleButton
   const isActive = item.link === activeItemLink.link
 
-  return (
-    <Fragment>
-      {item.link ? (
-        <SplitButton
-          createLink={createLink}
-          isActive={isActive}
-          isExpanded={isExpanded}
-          isParentOfActiveItem={isParentOfActiveItem}
-          item={item}
-          location={location}
-          onLinkClick={onLinkClick}
-          onSectionTitleClick={onSectionTitleClick}
-          uid={uid}
-        />
-      ) : (
-        <SectionTitleComponent
-          isActive={isActive}
-          isExpanded={isExpanded}
-          isParentOfActiveItem={isParentOfActiveItem}
-          item={item}
-          onSectionTitleClick={onSectionTitleClick}
-          uid={uid}
-        />
-      )}
-    </Fragment>
+  return item.link ? (
+    <SplitButton
+      createLink={createLink}
+      isActive={isActive}
+      isExpanded={isExpanded}
+      isParentOfActiveItem={isParentOfActiveItem}
+      item={item}
+      location={location}
+      onLinkClick={onLinkClick}
+      onSectionTitleClick={onSectionTitleClick}
+      uid={uid}
+    />
+  ) : (
+    <SectionTitleComponent
+      isActive={isActive}
+      isExpanded={isExpanded}
+      isParentOfActiveItem={isParentOfActiveItem}
+      item={item}
+      onSectionTitleClick={onSectionTitleClick}
+      uid={uid}
+    />
   )
 }
 

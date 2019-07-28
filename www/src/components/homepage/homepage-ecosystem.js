@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import HomepageSection from "./homepage-section"
@@ -9,17 +8,13 @@ import EcosystemSection from "../ecosystem/ecosystem-section"
 import EcosystemFeaturedItem, {
   BlockLink as FeaturedItemBlockLink,
 } from "../ecosystem/ecosystem-featured-item"
-
 import {
   HorizontalScroller,
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
-
 import { EcosystemIcon } from "../../assets/icons"
 import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
-
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const Sections = styled(`div`)`

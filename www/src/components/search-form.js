@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
-import { rhythm } from "../utils/typography"
 
 import {
   colors,
@@ -171,7 +170,7 @@ const algoliaStyles = css`
   .searchWrap
     .algolia-autocomplete.algolia-autocomplete-right
     .ds-dropdown-menu::before {
-    right: ${rhythm(4.75)} !important;
+    right: 7.125rem !important;
   }
 
   .algolia-autocomplete

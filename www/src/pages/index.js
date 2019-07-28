@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -107,14 +106,8 @@ class IndexRoute extends React.Component {
           <div
             sx={{
               width: `100%`,
-              borderColor: `ui.border.subtle`,
-              borderBottomWidth: `1px`,
-              borderBottomStyle: `solid`,
-              borderTopWidth: `1px`,
-              borderTopStyle: `solid`,
-              [mediaQueries.xl]: {
-                p: 8,
-              },
+              p: 8,
+              pt: 0,
             }}
           >
             <Diagram />
@@ -132,7 +125,7 @@ class IndexRoute extends React.Component {
                   large
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: space[4] }}
+                  overrideCSS={{ mt: 5 }}
                   icon={<ArrowForwardIcon />}
                 >
                   Get Started

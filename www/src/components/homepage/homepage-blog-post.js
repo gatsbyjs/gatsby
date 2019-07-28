@@ -3,22 +3,18 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
-
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Avatar from "../avatar"
-
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import { rhythm } from "../../utils/typography"
 
 const HomepageBlogPostRoot = styled(
   HorizontalScrollerItem.withComponent(`article`)
 )`
   display: flex;
   flex-direction: column;
-  padding-bottom: ${rhythm(2.5)};
+  padding-bottom: ${props => props.theme.space[11]};
   position: relative;
 
   a {
@@ -38,7 +34,7 @@ const HomepageBlogPostRoot = styled(
     flex-shrink: 0;
     margin-right: 0;
     margin-bottom: ${props => props.theme.space[8]};
-    padding-bottom: ${rhythm(3.5)};
+    padding-bottom: calc(${props => props.theme.space[9]} * 2);
     width: ${props => (props.fullWidth ? `100%` : `80%`)};
     transition: transform ${props => props.theme.transition.speed.default}
         ${props => props.theme.transition.curve.default},
@@ -68,7 +64,7 @@ const Header = styled(`h1`)`
   font-size: ${props => props.theme.fontSizes[4]};
   font-weight: bold;
   margin: 0;
-  padding: ${rhythm(4 / 5)};
+  padding: ${props => props.theme.space[5]};
   padding-bottom: 0;
 
   ${mediaQueries.lg} {
@@ -86,7 +82,7 @@ const Meta = styled(`div`)`
   flex-wrap: wrap;
   font-size: ${props => props.theme.fontSizes[1]};
   margin-top: ${props => props.theme.space[4]};
-  padding: 0 ${rhythm(4 / 5)};
+  padding: 0 ${props => props.theme.space[5]};
 
   & > * {
     flex-shrink: 0;
@@ -123,7 +119,7 @@ const Author = styled(Link)`
 
 const Excerpt = styled(`p`)`
   color: ${props => props.theme.colors.text.primary};
-  padding: 0 ${rhythm(4 / 5)};
+  padding: 0 ${props => props.theme.space[5]};
 
   ${mediaQueries.lg} {
     margin: 0;
@@ -141,7 +137,7 @@ const ReadMore = styled(Link)`
   flex-grow: 1;
   font-size: ${props => props.theme.fontSizes[1]};
   left: 0;
-  padding: ${rhythm(4 / 5)};
+  padding: ${props => props.theme.space[5]};
   position: absolute;
   right: 0;
   top: 0;

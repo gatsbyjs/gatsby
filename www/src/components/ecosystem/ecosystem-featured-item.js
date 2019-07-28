@@ -3,12 +3,10 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-
-import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-
 import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
+import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const MAX_DESCRIPTION_LENGTH = 100
