@@ -71,9 +71,9 @@ plugins: [
             // Customize the prompt used in shell output
             // Leave empty to hide prompts
             prompt: {
-              user: 'root',
-              host: 'localhost'
-            }
+              user: "root",
+              host: "localhost",
+            },
           },
         },
       ],
@@ -214,7 +214,7 @@ If you want to change the resulting prompt, use the following CSS:
 ```css
 .command-line-prompt > span:before {
   color: #999;
-  content: ' ';
+  content: " ";
   display: block;
   padding-right: 0.8em;
 }
@@ -232,7 +232,6 @@ If you want to change the resulting prompt, use the following CSS:
 .command-line-prompt > span[data-prompt]:before {
   content: attr(data-prompt);
 }
-
 ```
 
 ### Usage in Markdown
