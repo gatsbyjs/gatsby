@@ -3428,3 +3428,22 @@
     - Page Transitions
     - Blog Post Template
     - Sitemap & Robots.txt generation
+- url: https://advancedblog.netlify.com/
+  repo: https://github.com/Bvlktech/AdvancedBlog
+  description: Advanced Blog Starter for GatsbyJS
+  tags:
+    - CMS:Netlify
+    - Styling:CSS-in-JS
+    - Blog
+    - SEO
+  features:
+    - A simple landing page with blog functionality built with Netlify CMS
+    - Create Blog posts from Netlify CMS
+    - Basic directory organization
+    - Uses Styled-Components for styling
+    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
+    - Uses gatbsy-image with Netlify-CMS preview support
+    - Separate components for everything
+    - Netlify deploy configuration
+    - Perfect score on Lighthouse for SEO, Accessibility and Performance and PWA!
+    - ..and more
