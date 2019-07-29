@@ -3432,8 +3432,8 @@
   repo: https://github.com/Bvlktech/AdvancedBlog
   description: Advanced Blog Starter for GatsbyJS
   tags:
-    - CMS: NetlifyCMS
-    - Styling: CSS-in-JS
+    - CMS:Netlify
+    - Styling:CSS-in-JS
     - Blog
     - SEO
   features:
