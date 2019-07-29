@@ -423,4 +423,7 @@ Though, if you do, we will make sure we don't arbitrarily error.
 
 ## Summary
 
-TODO
+Shadowing uses a predictable algorithm that leverages webpack to dynamically
+change module resolution based on a `gatsby-config` and a theme composition.
+The last theme will take precedence in the shadowing algorithm, and the
+user's `src` directory is always take into account first.
