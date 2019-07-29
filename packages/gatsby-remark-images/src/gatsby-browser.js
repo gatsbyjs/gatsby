@@ -5,7 +5,7 @@ const {
   imageWrapperClass,
 } = require(`./constants`)
 
-exports.onRouteUpdate = ({ pluginOptions }) => {
+exports.onRouteUpdate = (apiCallbackContext, pluginOptions) => {
   const options = Object.assign({}, DEFAULT_OPTIONS, pluginOptions)
 
   const imageWrappers = document.querySelectorAll(`.${imageWrapperClass}`)
