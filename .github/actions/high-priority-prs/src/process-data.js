@@ -230,6 +230,12 @@ const report = ({ queues, channelId }) => {
         channel: channelId,
         blocks: report,
       })
+      
+      // When ok is false we should throw
+      // @see https://api.slack.com/methods/chat.postMessage#response
+      if (!res.ok) {
+        throw new Error(res.error)
+      }
 
       // `res` contains information about the posted message
       tools.log.success("Message sent: ", res.ts)
