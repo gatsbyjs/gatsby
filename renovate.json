@@ -1,6 +1,6 @@
 {
   "extends": ["config:base", ":disablePeerDependencies"],
-  "includePaths": ["starters/**", "themes/**"],
+  "includePaths": ["starters/**"],
   "major": {
     "enabled": false
   },
@@ -9,5 +9,5 @@
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
-  "semanticCommitScope": null
+  "semanticCommitScope": "starters"
 }
