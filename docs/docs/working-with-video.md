@@ -143,14 +143,14 @@ import React from "react"
 import DogVideo from "../assets/dog.mp4"
 
 export default () => (
-  <video controls style={{ width: "100%" }}>
+  <video controls>
     <source src={DogVideo} type="video/mp4" /> // highlight-line
   </video>
 )
 
 ```
 
-The `controls` attribute on the `<video>` will provide buttons overlaid on the video to play/pause, adjust volume, and go full screen. Other attributes like `muted` can set audio to silent, or `poster` can display an image when the video isn't playing. Common attributes that you'd want to apply to multiple videos could be extracted into a custom React video component. A full list of `<video>` attributes can be found on [the MDN docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#Attributes).
+The `controls` attribute on the `<video>` will provide a default set of buttons overlaid on the video to play/pause, adjust volume, and go full screen. Other attributes like `muted` can set audio to silent, or `poster` can display an image when the video isn't playing. Common attributes that you'd want to apply to multiple videos could be extracted into a custom React video component. A full list of `<video>` attributes can be found on [the MDN docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#Attributes).
 
 ### Supporting multiple browsers and formats
 
@@ -163,7 +163,7 @@ import DogMp4 from "../assets/dog.mp4"
 import DogOgg from "../assets/dog.ogg" // highlight-line
 
 export default () => (
-  <video controls style={{ width: "100%" }}>
+  <video controls>
     <source src={DogMp4} type="video/mp4" />
     <source src={DogOgg} type="video/ogg" /> // highlight-line
   </video>
@@ -177,8 +177,36 @@ Even though there are two `<source>` elements, only one video will be displayed,
 
 [See an example repository using `<video>` elements](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-video/)
 
-## Using custom video players
+### Accessibility with custom video players
 
-One advantage of integrating a custom component with your own hosted video is it can give you more control over the video player, including its accessibility. It is strongly encouraged to provide captions and subtitles for your videos, and use a player with accessible controls.
+One advantage of integrating a custom component with your own hosted video is it can give you more control over the video player, including its accessibility. Elements of accessible video and audio include:
+
+- captions: a text version of the audio, syncronized with the video
+- transcript (or subtitles): a text version of the audio and visual content, like captions but also including descriptions of key visual elements in the video
+- audio description: an audio version of visual information not conveyed in dialouge
+- accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers
+
+Though captions, transcripts, and audio descriptions primarily aim to assist those with greater difficulty seeing or hearing, they benefit many other users who prefer reading to listening.
+
+HTML5 provides support for these types of assistive content through the `<track>` element. The track element is nested under a `<video`> element as an empty tag. An example usage of the `<track>` element with a video looks like this:
+
+```javascript:title=src/pages/index.js
+import React from "react"
+import DogMp4 from "../assets/dog.mp4"
+import Captions from "file-loader!../assets/captions.vtt" // highlight-line
+
+export default () => (
+  <video controls>
+    <source src={DogMp4} type="video/mp4" />
+    // highlight-start
+    <track kind="captions" srcLang="en" src={Captions} />
+    // highlight-end
+  </video>
+)
+```
+
+The kind attribute can be of a variety of different types including `captions`, `subtitles`, and `descriptions`, among others. The `srcLang` defines English as the language used in the captions in the example, and the captions file imported is used as the source. You can read about the specific attributes of a [`<track>` on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track).
+
+**Note**: the filepath to import the captions includes the "file-path!" prefix which helps webpack import the `.vtt` file.
 
 Check out the accessible [HTML5 video player from PayPal](https://github.com/paypal/accessible-html5-video-player#react-version) for an example compatible with Gatsby and React.
