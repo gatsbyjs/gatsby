@@ -1,5 +1,5 @@
 import React from "react"
-import { colors } from "../utils/presets"
+import { colors } from "../../utils/presets"
 
 const SvgDefs = props => (
   <svg
