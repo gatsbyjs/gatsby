@@ -16,7 +16,7 @@ const getLatestAPIs = require(`../get-latest-apis`)
 
 beforeEach(() => {
   ;[fs, axios].forEach(mock =>
-    Object.keys(mock).forEach(key => mock[key].mockClear())
+    Object.keys(mock).forEach(key => mock[key].mockReset())
   )
 })
 
@@ -28,18 +28,7 @@ const getMockAPIFile = () => {
   }
 }
 
-it(`defaults to cached file, if it exists`, async () => {
-  const apis = getMockAPIFile()
-  fs.exists.mockResolvedValueOnce(true)
-  fs.readJSON.mockResolvedValueOnce(apis)
-
-  const data = await getLatestAPIs()
-
-  expect(fs.writeFile).not.toHaveBeenCalled()
-  expect(data).toEqual(apis)
-})
-
-describe(`API file not cached`, () => {
+describe(`default behavior: has network connectivity`, () => {
   beforeEach(() => {
     fs.exists.mockResolvedValueOnce(false)
     axios.get.mockResolvedValueOnce({ data: getMockAPIFile() })
@@ -59,6 +48,38 @@ describe(`API file not cached`, () => {
       expect.stringContaining(`latest-apis.json`),
       JSON.stringify(data, null, 2),
       expect.any(String)
+    )
+  })
+})
+
+describe(`downloading APIs failure`, () => {
+  beforeEach(() => {
+    axios.get.mockRejectedValueOnce(new Error(`does not matter`))
+  })
+
+  it(`falls back to downloaded cached file, if it exists`, async () => {
+    const apis = getMockAPIFile()
+    fs.exists.mockResolvedValueOnce(true)
+    fs.readJSON.mockResolvedValueOnce(apis)
+
+    const data = await getLatestAPIs()
+
+    expect(fs.writeFile).not.toHaveBeenCalled()
+    expect(fs.readJSON).toHaveBeenCalledWith(
+      expect.stringContaining(`/latest-apis.json`)
+    )
+    expect(data).toEqual(apis)
+  })
+
+  it(`falls back to local api.json if latest-apis.json not cached`, async () => {
+    const apis = getMockAPIFile()
+    fs.exists.mockResolvedValueOnce(false)
+    fs.readJSON.mockResolvedValueOnce(apis)
+
+    await getLatestAPIs()
+
+    expect(fs.readJSON).toHaveBeenCalledWith(
+      expect.stringContaining(`/apis.json`)
     )
   })
 })

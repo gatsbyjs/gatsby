@@ -7,13 +7,6 @@ const ROOT = path.join(__dirname, `..`, `..`)
 const OUTPUT_FILE = path.join(ROOT, `latest-apis.json`)
 
 module.exports = async function getLatestAPI() {
-  /*
-   * Happy path `postinstall` script created the file
-   */
-  if (await fs.exists(OUTPUT_FILE)) {
-    return fs.readJSON(OUTPUT_FILE)
-  }
-
   try {
     const { data } = await axios.get(API_FILE)
 
@@ -21,6 +14,9 @@ module.exports = async function getLatestAPI() {
 
     return data
   } catch (e) {
+    if (await fs.exists(OUTPUT_FILE)) {
+      return fs.readJSON(OUTPUT_FILE)
+    }
     // possible offline/network issue
     return fs.readJSON(path.join(ROOT, `apis.json`)).catch(() => {
       return {
