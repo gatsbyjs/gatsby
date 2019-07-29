@@ -47,3 +47,33 @@ module.exports = {
   ],
 }
 ```
+
+## Integrating with CI
+
+Integrating this plugin within a CI pipeline may cause errors because the plugin will prompt the user/machine to log into the Google Analytics account - you need to send a jwt to authenticate properly
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-plugin-guess-js",
+      options: {
+        // Find the view id in the GA admin in a section labeled "views"
+        GAViewID: `VIEW_ID`,
+        minimumThreshold: 0.03,
+        // Set Google Analytics jwt with Google Service Account email and private key
+        jwt: {
+          client_email: `GOOGLE_SERVICE_ACCOUNT_EMAIL`,
+          private_key: `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`,
+        },
+        // The "period" for fetching analytic data.
+        period: {
+          startDate: new Date("2018-1-1"),
+          endDate: new Date(),
+        },
+      },
+    },
+  ],
+}
+```

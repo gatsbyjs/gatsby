@@ -11,6 +11,7 @@ action "high-priority-prs" {
     "SLACK_CHANNEL_ID",
     "SLACK_CORE_CHANNEL_ID",
     "SLACK_LEARNING_CHANNEL_ID",
+    "PERSONAL_GITHUB_TOKEN",
   ]
 }
 

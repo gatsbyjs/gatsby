@@ -23,7 +23,7 @@ generated sitemap will include all of your site's pages, except the ones you exc
 
 ## Options
 
-The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L34) can be overridden.
+The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L45) can be overridden.
 
 The options are as follows:
 
