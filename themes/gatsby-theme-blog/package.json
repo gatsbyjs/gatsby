@@ -30,7 +30,7 @@
     "gatsby-plugin-mdx": "^1.0.18",
     "gatsby-plugin-react-helmet": "^3.1.2",
     "gatsby-plugin-sharp": "^2.2.9",
-    "gatsby-plugin-theme-ui": "^0.2.18",
+    "gatsby-plugin-theme-ui": "^0.2.23",
     "gatsby-plugin-twitter": "^2.1.2",
     "gatsby-remark-code-titles": "^1.1.0",
     "gatsby-remark-copy-linked-files": "^2.1.3",
