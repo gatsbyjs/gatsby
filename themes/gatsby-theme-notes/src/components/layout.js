@@ -2,6 +2,7 @@ import React from "react"
 import { Global } from "@emotion/core"
 import { css } from "theme-ui"
 import { Layout, Main, Container } from "theme-ui"
+import Footer from "./footer"
 
 export default props => (
   <>
@@ -12,15 +13,16 @@ export default props => (
         },
         body: {
           margin: 0,
-          color: `text`,
-          bg: `background`,
           fontFamily: `body`,
         },
       })}
     />
     <Layout>
       <Main>
-        <Container>{props.children}</Container>
+        <Container>
+          {props.children}
+          <Footer />
+        </Container>
       </Main>
     </Layout>
   </>

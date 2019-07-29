@@ -31,6 +31,20 @@ Object {
         },
       ],
     },
+    "interface": Object {
+      "nodes": Array [
+        Object {
+          "code": "3lADm0M90E",
+          "id": "1001206739996237060",
+          "image": Object {
+            "childImageSharp": Object {
+              "id": "0b06bdfe-f253-5859-8321-b42b5d737195",
+            },
+          },
+          "time": "06 kesäkuu",
+        },
+      ],
+    },
     "resolveFilter": Object {
       "id": "1601601194425654597",
       "idWithDecoration": "decoration-1601601194425654597",

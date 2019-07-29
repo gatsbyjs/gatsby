@@ -116,9 +116,62 @@ in the plugin options.
 
 This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
 
-Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) may provide a workaround, but at present this is not in the build and implementation would demand customization.
+Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) provides a workaround, if you want to use relative url just install the plugin and then add it to your sass plugin options configuration.
 
-<!-- TODO link to a plugin that adds resolve-url-loader -->
+First:
+
+```javascript
+  npm install resolve-url-loader --save-dev
+  or
+  yarn add resolve-url-loader --dev
+```
+
+And then:
+
+```javascript
+plugins: [
+  {
+    resolve: "gatsby-plugin-sass",
+    options: {
+      useResolveUrlLoader: true,
+    },
+  },
+]
+```
+
+You can also configure resolve-url-plugin providing some options (see plugin documentation for all options https://github.com/bholloway/resolve-url-loader):
+
+```javascript
+plugins: [
+  {
+    resolve: "gatsby-plugin-sass",
+    options: {
+      useResolveUrlLoader: {
+        options: {
+          debug: true,
+        },
+      },
+    },
+  },
+]
+```
+
+NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for sass files in the plugin:
+
+```javascript
+plugins: [
+  {
+    resolve: "gatsby-plugin-sass",
+    options: {
+      useResolveUrlLoader: {
+        options: {
+          sourceMap: true, //default is false
+        },
+      },
+    },
+  },
+]
+```
 
 ## Breaking changes history
 
