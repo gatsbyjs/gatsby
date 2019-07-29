@@ -3254,6 +3254,22 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://myclicks.netlify.com/
+  repo: https://github.com/himali-patel/MyClicks
+  description: A simple Gatsby starter template to create portfolio website with contentful and Netlify.
+  tags:
+    - Blog
+    - Netlify
+    - CMS:Contentful
+    - Styling:Bootstrap
+    - Disqus
+    - SEO
+  features:
+    - Fecthing Dynamic content from Contentful.
+    - Blog post listing with previews, disqus implementation and social sharing for each blog post.
+    - Contact form integration with Netlify.
+    - Portfolio Result Filteration according to Category.
+    - Index pages design with Recent Blogs and Intagram Feed.
 - url: https://gatsby-starter-typescript-graphql.netlify.com
   repo: https://github.com/spawnia/gatsby-starter-typescript-graphql
   description: A Gatsby starter with typesafe GraphQL using TypeScript
