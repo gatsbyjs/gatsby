@@ -5,19 +5,24 @@ module.exports = language => {
     return ``
   }
   if (language.split(`{`).length > 1) {
-    let [splitLanguage, ...options] = language.split(`{`)
+    let [splitLanguage] = language.split(`{`)
+
+    let options = language
+      .substring(language.lastIndexOf(`{`) + 1, language.lastIndexOf(`}`))
+      .split(`;`)
     let highlightLines = [],
       outputLines = [],
       showLineNumbersLocal = false,
       numberLinesStartAt
     // Options can be given in any order and are optional
+    // console.log(options.split(`;`))
+
     options.forEach(option => {
-      option = option.slice(0, -1)
       // Test if the option is for line hightlighting
       if (rangeParser.parse(option).length > 0) {
         highlightLines = rangeParser.parse(option).filter(n => n > 0)
       }
-      option = option.split(`:`)
+      option = option.replace(/ /g, ``).split(`:`)
       // Test if the option is for line numbering
       // Option must look like `numberLines: true` or `numberLines: <integer>`
       // Otherwise we disable line numbering

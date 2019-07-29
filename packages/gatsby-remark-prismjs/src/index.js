@@ -1,6 +1,6 @@
 const visit = require(`unist-util-visit`)
 
-const parseLineNumberRange = require(`./parse-line-number-range`)
+const parseLineNumberRange = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
@@ -15,7 +15,11 @@ module.exports = (
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
     languageExtensions = [],
-    prompt = null,
+    prompt = {
+      user: `root`,
+      host: `localhost`,
+      global: false,
+    },
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -27,7 +31,7 @@ module.exports = (
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
-    let language = node.lang
+    let language = node.meta ? node.lang + node.meta : node.lang
     let {
       splitLanguage,
       highlightLines,
@@ -73,7 +77,9 @@ module.exports = (
     if (highlightLines && highlightLines.length > 0)
       highlightClassName += ` has-highlighted-lines`
 
-    const useCommandLine = [`shell`, `bash`].includes(languageName) && prompt
+    const useCommandLine =
+      [`shell`, `bash`].includes(languageName) &&
+      (prompt.global || (outputLines && outputLines.length > 0))
 
     // prettier-ignore
     node.value = ``
