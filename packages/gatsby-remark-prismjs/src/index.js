@@ -78,7 +78,7 @@ module.exports = (
       highlightClassName += ` has-highlighted-lines`
 
     const useCommandLine =
-      [`shell`, `bash`].includes(languageName) &&
+      [`bash`].includes(languageName) &&
       (prompt.global || (outputLines && outputLines.length > 0))
 
     // prettier-ignore

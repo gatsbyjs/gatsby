@@ -69,10 +69,11 @@ plugins: [
               },
             ],
             // Customize the prompt used in shell output
-            // Leave empty to hide prompts
+            // Values below are default
             prompt: {
               user: "root",
               host: "localhost",
+              global: false,
             },
           },
         },
@@ -368,11 +369,17 @@ plugins: [
 
 ### Shell prompt
 
-To show fancy prompts next to shell commands (only triggers on `shell` and `bash` languages), set the `prompt` object in
-`gatsby-config.js`.
+To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+or pass `{outputLines: <range>}` to a snippet
 
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specififying `{outputLines: <range>}`
 to the language.
+
+This can be combined with line numbers by using a semi-colon as a seperator.
+
+````
+```bash{outputLines: 2-10,12; numberLines: true}
+````
 
 ### Line hiding
 
