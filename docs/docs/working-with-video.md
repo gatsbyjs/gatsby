@@ -171,7 +171,7 @@ export default () => (
 
 Even though there are two `<source>` elements, only one video will be displayed, first `mp4` if it is supported, then `.ogg`.
 
-**Note**: this requires adding the link to a video in the format of the type specified, i.e. adding `type=ogg` would also need an associated file at `src/assets/dog.ogg` or a link to where that video is hosted elsewhere.
+**Note**: this requires importing a video in the format of the type specified, i.e. adding a `<source>` element with `type=video/ogg` would also need a file import with a format of `.ogg`. Alternatively, you can specify a URL to where a video is remotely hosted as the `src` instead of importing a local file.
 
 [See an example repository using `<video>` elements](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-video/)
 
