@@ -14,7 +14,7 @@
     "gatsby-source-wordpress": "^3.0.0",
     "gatsby-transformer-sharp": "^2.1.1",
     "glamor": "^2.20.40",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-helmet": "^5.2.0",
