@@ -1,11 +1,24 @@
 const Promise = require(`bluebird`)
 const os = require(`os`)
-const yaml = require(`js-yaml`)
-
 const { onCreateNode } = require(`../gatsby-node`)
 
-describe(`Process YAML nodes correctly`, () => {
-  const node = {
+const createNodeId = jest.fn().mockReturnValue(`uuid-from-gatsby`)
+const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+const loadNodeContent = node => Promise.resolve(node.content)
+
+let createNode
+let createParentChildLink
+let actions
+let node
+let createNodeSpec
+
+beforeEach(() => {
+  createNode = jest.fn()
+  createParentChildLink = jest.fn()
+  actions = { createNode, createParentChildLink }
+
+  node = {
     id: `whatever`,
     parent: null,
     children: [],
@@ -13,170 +26,196 @@ describe(`Process YAML nodes correctly`, () => {
       contentDigest: `whatever`,
       mediaType: `text/yaml`,
     },
-    name: `test`,
   }
 
-  // Make some fake functions its expecting.
-  const loadNodeContent = node => Promise.resolve(node.content)
+  createNodeSpec = {
+    node,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    createContentDigest,
+  }
+})
 
-  it(`correctly creates nodes from JSON which is an array of objects`, async () => {
-    const data = [{ blue: true, funny: `yup` }, { blue: false, funny: `nope` }]
-    node.content = yaml.safeDump(data)
+const expectCreatedNodesMatchingSnapshot = count => {
+  expect(createNode.mock.calls).toMatchSnapshot()
+  expect(createParentChildLink.mock.calls).toMatchSnapshot()
+  expect(createNode).toHaveBeenCalledTimes(count)
+  expect(createParentChildLink).toHaveBeenCalledTimes(count)
+}
 
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-      createContentDigest,
-    }).then(() => {
-      expect(createNode.mock.calls).toMatchSnapshot()
-      expect(createParentChildLink.mock.calls).toMatchSnapshot()
-      expect(createNode).toHaveBeenCalledTimes(2)
-      expect(createParentChildLink).toHaveBeenCalledTimes(2)
+const expectCreatedNodeTypeName = nodeTypeName => {
+  expect(createNode).toBeCalledWith(
+    expect.objectContaining({
+      internal: expect.objectContaining({
+        type: nodeTypeName,
+      }),
     })
+  )
+}
+
+describe(`Processing YAML nodes with internal type 'File'`, () => {
+  beforeEach(() => {
+    node.internal.type = `File`
+    node.dir = `${os.tmpdir()}/top/foo bar/`
+    node.name = `My File`
   })
 
-  it(`correctly creates a node from JSON which is a single object`, async () => {
-    const data = { blue: true, funny: `yup` }
-    node.content = yaml.safeDump(data)
-    node.dir = `${os.tmpdir()}/bar/`
-
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-      createNodeId,
-      createContentDigest,
-    }).then(() => {
-      expect(createNode.mock.calls).toMatchSnapshot()
-      expect(createParentChildLink.mock.calls).toMatchSnapshot()
-      expect(createNode).toHaveBeenCalledTimes(1)
-      expect(createParentChildLink).toHaveBeenCalledTimes(1)
+  describe(`from a single YAML dictionary,`, () => {
+    beforeEach(() => {
+      node.content = `
+            id: some
+            blue: true
+            funny: yup
+      `
     })
-  })
 
-  it(`correctly sets node type for array of objects`, () =>
-    Promise.all(
-      [
-        {
-          typeName: null,
-          expectedNodeTypes: [`TestYaml`, `TestYaml`],
-        },
-        {
-          typeName: `fixed`,
-          expectedNodeTypes: [`fixed`, `fixed`],
-        },
-        {
-          typeName: ({ node, object }) => object.funny,
-          expectedNodeTypes: [`yup`, `nope`],
-        },
-      ].map(
-        async ({ typeName, expectedNodeTypes: [expectedOne, expectedTwo] }) => {
-          const data = [
-            { id: `foo`, blue: true, funny: `yup` },
-            { blue: false, funny: `nope` },
-          ]
+    it(`when no target type name is specified, the type name is based on the directory name`, async () => {
+      await onCreateNode(createNodeSpec)
 
-          node.content = yaml.safeDump(data)
-          node.dir = `${os.tmpdir()}/bar/`
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`FooBarYaml`)
+    })
 
-          const createNode = jest.fn()
-          const createParentChildLink = jest.fn()
-          const actions = { createNode, createParentChildLink }
-          const createNodeId = jest.fn()
-          createNodeId.mockReturnValue(`uuid-from-gatsby`)
-          const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
-
-          return onCreateNode(
-            {
-              node,
-              loadNodeContent,
-              actions,
-              createNodeId,
-              createContentDigest,
-            },
-            { typeName }
-          ).then(() => {
-            expect(createNode).toBeCalledWith(
-              expect.objectContaining({
-                internal: expect.objectContaining({
-                  type: expectedOne,
-                }),
-              })
-            )
-            expect(createNode).toBeCalledWith(
-              expect.objectContaining({
-                internal: expect.objectContaining({
-                  type: expectedTwo,
-                }),
-              })
-            )
-          })
-        }
-      )
-    ))
-
-  it(`correctly sets node type for single object`, () =>
-    Promise.all(
-      [
-        {
-          typeName: null,
-          expectedNodeType: `TestdirYaml`,
-        },
-        {
-          typeName: `fixed`,
-          expectedNodeType: `fixed`,
-        },
-        {
-          typeName: ({ node, object }) => object.funny,
-          expectedNodeType: `yup`,
-        },
-      ].map(async ({ typeName, expectedNodeType }) => {
-        const data = { id: `foo`, blue: true, funny: `yup` }
-
-        node.content = yaml.safeDump(data)
-        node.dir = `${os.tmpdir()}/testdir/`
-
-        const createNode = jest.fn()
-        const createParentChildLink = jest.fn()
-        const actions = { createNode, createParentChildLink }
-        const createNodeId = jest.fn()
-        createNodeId.mockReturnValue(`uuid-from-gatsby`)
-        const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
-
-        return onCreateNode(
-          {
-            node,
-            loadNodeContent,
-            actions,
-            createNodeId,
-            createContentDigest,
-          },
-          { typeName }
-        ).then(() => {
-          expect(createNode).toBeCalledWith(
-            expect.objectContaining({
-              internal: expect.objectContaining({
-                type: expectedNodeType,
-              }),
-            })
-          )
-        })
+    it(`with the specified target type name`, async () => {
+      await onCreateNode(createNodeSpec, {
+        typeName: `fixed`,
       })
-    ))
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`fixed`)
+    })
+
+    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+      // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
+      await onCreateNode(createNodeSpec, {
+        typeName: ({ node, object, isArray }) => object.funny,
+      })
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`yup`)
+    })
+  })
+
+  describe(`from a YAML array of dictionaries,`, () => {
+    beforeEach(() => {
+      node.content = `
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      `
+    })
+
+    it(`when no target type name is specified, all nodes have a type name based on the file name`, async () => {
+      await onCreateNode(createNodeSpec)
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`MyFileYaml`)
+      expectCreatedNodeTypeName(`MyFileYaml`)
+    })
+
+    it(`with the specified target type name`, async () => {
+      await onCreateNode(createNodeSpec, {
+        typeName: `fixed`,
+      })
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`fixed`)
+      expectCreatedNodeTypeName(`fixed`)
+    })
+
+    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+      // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
+      await onCreateNode(createNodeSpec, {
+        typeName: ({ node, object, isArray }) => object.funny,
+      })
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`yup`)
+      expectCreatedNodeTypeName(`nope`)
+    })
+  })
+})
+
+describe(`Processing YAML nodes with internal type other than 'File'`, () => {
+  beforeEach(() => {
+    node.internal.type = `Other`
+  })
+
+  describe(`from a single YAML dictionary,`, () => {
+    beforeEach(() => {
+      node.content = `
+            id: some
+            blue: true
+            funny: yup
+      `
+    })
+
+    it(`when no target type name is specified, the type name is based on the original node's internal type`, async () => {
+      await onCreateNode(createNodeSpec)
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`OtherYaml`)
+    })
+
+    it(`with the specified target type name`, async () => {
+      await onCreateNode(createNodeSpec, {
+        typeName: `fixed`,
+      })
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`fixed`)
+    })
+
+    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+      // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
+      await onCreateNode(createNodeSpec, {
+        typeName: ({ node, object, isArray }) => object.funny,
+      })
+
+      expectCreatedNodesMatchingSnapshot(1)
+      expectCreatedNodeTypeName(`yup`)
+    })
+  })
+
+  describe(`from a YAML array of dictionaries,`, () => {
+    beforeEach(() => {
+      node.content = `
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      `
+    })
+
+    it(`when no target type name is specified, all nodes have a type name based on the original node's internal type`, async () => {
+      await onCreateNode(createNodeSpec)
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`OtherYaml`)
+      expectCreatedNodeTypeName(`OtherYaml`)
+    })
+
+    it(`with the specified target type name`, async () => {
+      await onCreateNode(createNodeSpec, {
+        typeName: `fixed`,
+      })
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`fixed`)
+      expectCreatedNodeTypeName(`fixed`)
+    })
+
+    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+      // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
+      await onCreateNode(createNodeSpec, {
+        typeName: ({ node, object, isArray }) => object.funny,
+      })
+
+      expectCreatedNodesMatchingSnapshot(2)
+      expectCreatedNodeTypeName(`yup`)
+      expectCreatedNodeTypeName(`nope`)
+    })
+  })
 })

@@ -22,7 +22,7 @@ const spawn = (cmd: string, options: any) => {
   return spawnWithArgs(file, args, options)
 }
 const spawnWithArgs = (file: string, args: string[], options: any) =>
-  execa(file, args, { stdio: `inherit`, ...options })
+  execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
 
 // Checks the existence of yarn package and user preference if it exists
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
@@ -271,7 +271,7 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   const hostedInfo = hostedGitInfo.fromUrl(starterPath)
 
   trackCli(`NEW_PROJECT`, {
-    starterName: hostedInfo.shortcut(),
+    starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`,
   })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starterPath, rootPath)

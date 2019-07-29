@@ -136,3 +136,5 @@
           link: /tutorial/prismic-source-graphql-tutorial
         - title: Writing Documentation with Docz
           link: /tutorial/writing-documentation-with-docz/
+        - title: Making a Blog with Netlify CMS
+          link: /tutorial/blog-netlify-cms-tutorial/

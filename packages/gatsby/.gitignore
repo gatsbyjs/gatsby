@@ -31,3 +31,4 @@ dist
 
 # built files
 cache-dir/commonjs/
+apis.json
