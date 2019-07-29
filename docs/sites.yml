@@ -6665,6 +6665,24 @@
   built_by: Mediacurrent
   built_by_url: https://www.mediacurrent.com
   featured: false
+- title: Behalf
+  url: https://www.behalf.no/
+  main_url: https://www.behalf.no/
+  description: >
+    Behalf is Norwegian based digital design agency.
+  categories:
+    - Agency
+    - Portfolio
+    - Business
+    - Consulting
+    - Design
+    - Design System
+    - Marketing
+    - Web Development
+    - User Experience
+  built_by: Behalf
+  built_by_url: https://www.behalf.no/
+  featured: false
 - title: Saxenhammer & Co.
   url: https://saxenhammer-co.com/
   main_url: https://saxenhammer-co.com/
