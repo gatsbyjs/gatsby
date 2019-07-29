@@ -3428,6 +3428,22 @@
     - Page Transitions
     - Blog Post Template
     - Sitemap & Robots.txt generation
+- url: https://gatsby-starter-blog-and-portfolio.netlify.com/
+  repo: https://github.com/alisalahio/gatsby-starter-blog-and-portfolio
+  description: Just gatsby-starter-blog , with portfolio section added
+  tags:
+    - Blog
+    - Portfolio
+  features:
+    - Basic setup for a full-featured blog
+    - Basic setup for a portfolio
+    - Support for an RSS feed
+    - Google Analytics support
+    - Automatic optimization of images in Markdown posts
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
 - url: https://advancedblog.netlify.com/
   repo: https://github.com/Bvlktech/AdvancedBlog
   description: Advanced Blog Starter for GatsbyJS
