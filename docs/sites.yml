@@ -6691,3 +6691,14 @@
     - Directory
     - Marketing
     - Landing Page
+- title: Cade Kynaston
+  url: https://cade.codes
+  main_url: https://cade.codes
+  source_url: https://github.com/cadekynaston/gatsby-portfolio
+  description: >
+    Cade Kynaston's Portfolio
+  categories:
+    - Portfolio
+  built_by: Cade Kynaston
+  built_by_url: https://github.com/cadekynaston
+  featured: false
