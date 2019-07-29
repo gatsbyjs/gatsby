@@ -6691,6 +6691,21 @@
     - Directory
     - Marketing
     - Landing Page
+- title: Lars Roettig
+  url: https://larsroettig.dev/
+  main_url: https://larsroettig.dev/
+  description: >
+    Lars Roettig is a Magento Maintainer and e-commerce specialist. On his Blog, he writes Software Architecture and Magento Development.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Community
+    - Open Source
+    - eCommerce
+  built_by: Lars Roettig
+  built_by_url: https://larsroettig.dev/
+  featured: false
 - title: Cade Kynaston
   url: https://cade.codes
   main_url: https://cade.codes
