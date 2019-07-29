@@ -5,11 +5,7 @@ module.exports = language => {
     return ``
   }
   if (language.split(`{`).length > 1) {
-    let [splitLanguage] = language.split(`{`)
-
-    let options = language
-      .substring(language.lastIndexOf(`{`) + 1, language.lastIndexOf(`}`))
-      .split(`;`)
+    let [splitLanguage, ...options] = language.split(`{`)
     let highlightLines = [],
       outputLines = [],
       showLineNumbersLocal = false,

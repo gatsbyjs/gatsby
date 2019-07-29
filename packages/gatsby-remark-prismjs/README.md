@@ -375,10 +375,8 @@ or pass `{outputLines: <range>}` to a snippet
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specififying `{outputLines: <range>}`
 to the language.
 
-This can be combined with line numbers by using a semi-colon as a seperator.
-
 ````
-```bash{outputLines: 2-10,12; numberLines: true}
+```bash{outputLines: 2-10,12}
 ````
 
 ### Line hiding
