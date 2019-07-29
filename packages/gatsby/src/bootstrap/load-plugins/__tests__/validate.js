@@ -1,6 +1,7 @@
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panicOnBuild: jest.fn(),
+    error: jest.fn(),
     warn: jest.fn(),
   }
 })
@@ -55,7 +56,7 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    let result = collatePluginAPIs({ apis, flattenedPlugins })
+    let result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
     expect(result).toMatchSnapshot()
   })
 
@@ -82,7 +83,7 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    let result = collatePluginAPIs({ apis, flattenedPlugins })
+    let result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
     expect(result).toMatchSnapshot()
   })
 })
@@ -90,7 +91,7 @@ describe(`collatePluginAPIs`, () => {
 describe(`handleBadExports`, () => {
   it(`Does nothing when there are no bad exports`, async () => {
     handleBadExports({
-      apis: {
+      currentAPIs: {
         node: [`these`, `can`, `be`],
         browser: [`anything`, `as there`],
         ssr: [`are no`, `bad errors`],
@@ -103,9 +104,14 @@ describe(`handleBadExports`, () => {
     })
   })
 
-  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {
+  it(`Calls reporter.error when bad exports are detected`, async () => {
     handleBadExports({
-      apis: {
+      currentAPIs: {
+        node: [``],
+        browser: [``],
+        ssr: [`notFoo`, `bar`],
+      },
+      latestAPIs: {
         node: [``],
         browser: [``],
         ssr: [`notFoo`, `bar`],
@@ -122,7 +128,12 @@ describe(`handleBadExports`, () => {
       },
     })
 
-    expect(reporter.panicOnBuild.mock.calls.length).toBe(1)
+    expect(reporter.error).toHaveBeenCalledTimes(1)
+    expect(reporter.error).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: `11329`,
+      })
+    )
   })
 })
 
