@@ -465,7 +465,12 @@ class Skus extends Component {
   // https://dashboard.stripe.com/account/apikeys
   // highlight-start
   state = {
-    stripe: window.Stripe('pk_test_qOUT7QyfVVOJlWXtnbzzZ9Tn'),
+    stripe: null,
+  }
+
+  componentDidMount() {
+    const stripe = window.Stripe(process.env.GATSBY_STRIPE_PUBLIC_KEY)
+    this.setState({ stripe })
   }
   // highlight-end
 
