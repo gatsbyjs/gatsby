@@ -173,19 +173,19 @@ plugins: [
 `TemplateConverter` needs to be declared by you, information on what templates you can provide and further information can be found in the [asciidoctor docs](https://asciidoctor-docs.netlify.com/asciidoctor.js/extend/converter/custom-converter/)
 
 ```javascript
-const asciidoc = require(`asciidoctor.js`)();
+const asciidoc = require(`asciidoctor.js`)()
 
 class TemplateConverter {
   constructor() {
-    this.baseConverter = asciidoc.Html5Converter.$new();
+    this.baseConverter = asciidoc.Html5Converter.$new()
   }
 
   convert(node, transform) {
-    if (node.getNodeName() === 'paragraph') {
+    if (node.getNodeName() === "paragraph") {
       return `<p>${node.getContent()}</p>`
     }
 
-    return this.baseConverter.convert(node, transform);
+    return this.baseConverter.convert(node, transform)
   }
 }
 ```
