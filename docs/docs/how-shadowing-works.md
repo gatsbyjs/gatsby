@@ -1,13 +1,5 @@
 ---
 title: How Shadowing Works
-path: /how-shadowing-works
-author: Chris Biscardi and John Otander
-date: 2019-07-17
-tags:
-  - open source
-  - webpack
-  - gatsby
-  - themes
 ---
 
 Shadowing is a powerful feature that allows theme users to override components,
