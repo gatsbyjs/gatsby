@@ -141,17 +141,13 @@ exports.sourceNodes = async (
 
   // Download all files (await for each pool to complete to fix concurrency issues)
   const fileNodes = [...nodes.values()].filter(isFileNode)
-  if(fileNodes.length) {
-    await asyncPool(
-      concurrentFileRequests,
-      fileNodes,
-      async node => {
-        await downloadFile(
-          { node, store, cache, createNode, createNodeId },
-          pluginOptions
-        )
-      }
-    )
+  if (fileNodes.length) {
+    await asyncPool(concurrentFileRequests, fileNodes, async node => {
+      await downloadFile(
+        { node, store, cache, createNode, createNodeId },
+        pluginOptions
+      )
+    })
   }
 
   downloadingFilesActivity.end()
