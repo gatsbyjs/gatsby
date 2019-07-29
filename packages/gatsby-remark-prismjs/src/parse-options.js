@@ -5,14 +5,7 @@ module.exports = language => {
     return ``
   }
   if (language.split(`{`).length > 1) {
-    let [splitLanguage] = language.split(`{`)
-
-    let options = [
-      language.substring(
-        language.lastIndexOf(`{`) + 1,
-        language.lastIndexOf(`}`)
-      ),
-    ]
+    let [splitLanguage, ...options] = language.split(`{`)
     let highlightLines = [],
       outputLines = [],
       showLineNumbersLocal = false,
@@ -20,8 +13,8 @@ module.exports = language => {
     // Options can be given in any order and are optional
 
     options.forEach(option => {
+      option = option.slice(0, -1)
       let splitOption = option.replace(/ /g, ``).split(`:`)
-      console.log(option, splitOption)
 
       // Test if the option is for line hightlighting
       if (splitOption.length === 1 && rangeParser.parse(option).length > 0) {

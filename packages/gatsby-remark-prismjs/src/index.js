@@ -1,6 +1,6 @@
 const visit = require(`unist-util-visit`)
 
-const parseLineNumberRange = require(`./parse-options`)
+const parseOptions = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
@@ -38,7 +38,7 @@ module.exports = (
       showLineNumbersLocal,
       numberLinesStartAt,
       outputLines,
-    } = parseLineNumberRange(language)
+    } = parseOptions(language)
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     language = splitLanguage
 
