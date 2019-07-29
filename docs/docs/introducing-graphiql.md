@@ -30,6 +30,16 @@ Make sure to check out the GraphiQL docs in the upper right-hand corner of the I
 
 ![A diagram pointing out where to find the GraphiQl docs](images/graphiql-docs.png)
 
+## Using the GraphiQL Explorer
+
+The GraphiQL Explorer enables you to interactively construct full queries by clicking through available fields and inputs without the repetitive process of typing these queries out by hand.
+
+<iframe class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/gatsby-build-a-graphql-query-using-gatsby-s-graphiql-explorer/embed" title="Video: Build a GraphQL Query using Gatsby’s GraphiQL Explorer" />
+
+Video hosted on [egghead.io][egghead].
+
+[egghead]: https://egghead.io/lessons/gatsby-build-a-graphql-query-using-gatsby-s-graphiql-explorer
+
 ## Other resources
 
 - See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using GraphiQL
