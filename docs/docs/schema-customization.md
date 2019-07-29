@@ -890,6 +890,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       receivedSwag: Boolean
     }
   `
+  createTypes(typeDefs)
 }
 
 exports.createResolvers = ({ createResolvers }) => {

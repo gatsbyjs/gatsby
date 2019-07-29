@@ -8,6 +8,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const { cpuCoreCount } = require(`gatsby-core-utils`)
 const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
@@ -16,16 +17,10 @@ const got = require(`got`)
 // adventurous and see what happens with it on.
 sharp.simd(true)
 
-try {
-  // Handle Sharp's concurrency based on the Gatsby CPU count
-  // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
-  // See: https://www.gatsbyjs.org/docs/multi-core-builds/
-  const cpuCoreCount = require(`gatsby/dist/utils/worker/cpu-core-count`)
-  sharp.concurrency(cpuCoreCount())
-} catch {
-  // if above throws error this probably means that used Gatsby version
-  // doesn't support cpu-core-count utility.
-}
+// Handle Sharp's concurrency based on the Gatsby CPU count
+// See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
+// See: https://www.gatsbyjs.org/docs/multi-core-builds/
+sharp.concurrency(cpuCoreCount())
 
 /**
  * List of arguments used by `processFile` function.
