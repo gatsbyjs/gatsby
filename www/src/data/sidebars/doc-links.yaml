@@ -235,13 +235,13 @@
             - title: Using Multiple Gatsby Themes
               link: /docs/themes/using-multiple-gatsby-themes/
             - title: Building Themes
-              link: /docs/themes/building-themes
+              link: /docs/themes/building-themes/
             - title: Converting a Starter
-              link: /docs/themes/converting-a-starter
+              link: /docs/themes/converting-a-starter/
             - title: Theme Composition
-              link: /docs/themes/theme-composition
+              link: /docs/themes/theme-composition/
             - title: Conventions
-              link: /docs/themes/conventions
+              link: /docs/themes/conventions/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -598,7 +598,7 @@
                 - title: Answering IT/Security Questions
                   link: /docs/answering-it-security/
                 - title: Setting Up Gatsby Without Gatsby New
-                  link: /docs/setting-up-gatsby-without-gatsby-new
+                  link: /docs/setting-up-gatsby-without-gatsby-new/
         - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:

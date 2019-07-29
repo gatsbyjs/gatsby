@@ -13,14 +13,15 @@ import {
 } from "../utils/presets"
 
 const prevNextLinkStyles = {
+  // bump specificity to override the border applied to Link's by default
   "&&": {
     borderBottom: 0,
-    color: colors.gatsby,
-    fontFamily: fonts.header,
-    fontSize: fontSizes[3],
-    fontWeight: `bold`,
-    lineHeight: lineHeights.dense,
   },
+  color: colors.gatsby,
+  fontFamily: fonts.header,
+  fontSize: fontSizes[3],
+  fontWeight: `bold`,
+  lineHeight: lineHeights.dense,
 }
 const prevNextLabelStyles = {
   color: colors.text.secondary,
