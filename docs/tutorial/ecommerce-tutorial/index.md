@@ -2,7 +2,7 @@
 title: "Gatsby E-Commerce Tutorial"
 ---
 
-In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments. 
+In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
 
 ## Why use Gatsby for an e-commerce site?
 
