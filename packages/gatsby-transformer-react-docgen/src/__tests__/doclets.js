@@ -1,6 +1,52 @@
 import { applyPropDoclets } from "../doclets"
 
 describe(`transformer-react-doc-gen: Doclets`, () => {
+  describe(`TypeScript type when doclet type is undefined`, () => {
+    it(`should set the tsType as type`, () => {
+      const doclets = [{ tag: `type`, value: `propertyName` }]
+      const type = undefined
+      const tsType = {
+        name: `propertyName`,
+        value: `String`,
+      }
+
+      expect(applyPropDoclets({ doclets, tsType, type })).toHaveProperty(
+        `type`,
+        tsType
+      )
+    })
+  })
+
+  describe(`FlowType type when doclet type is undefined`, () => {
+    it(`should set the flowType as type`, () => {
+      const doclets = [{ tag: `type`, value: `propertyName` }]
+      const type = undefined
+      const flowType = {
+        name: `propertyName`,
+        value: `String`,
+      }
+
+      expect(applyPropDoclets({ doclets, flowType, type })).toHaveProperty(
+        `type`,
+        flowType
+      )
+    })
+  })
+
+  describe(`no types set `, () => {
+    it(`should return an object with the propety "name" equal to "propertyName"`, () => {
+      const doclets = [{ tag: `type`, value: `propertyName` }]
+      const type = undefined
+
+      expect(applyPropDoclets({ doclets, type })).toHaveProperty(
+        `type`,
+        expect.objectContaining({
+          name: `propertyName`,
+        })
+      )
+    })
+  })
+
   it(`should apply @required`, () => {
     const doclets = [{ tag: `required`, value: true }]
     expect(applyPropDoclets({ doclets })).toEqual({
