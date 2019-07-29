@@ -16,7 +16,6 @@ title: "Gatsby E-Commerce Tutorial"
 - [Examples](#examples)
   - [Easy: One Button](#easy-one-button)
   - [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
-  - [Custom: Fully custom checkout flow (requires backend component)](#custom-fully-custom-checkout-flow-requires-backend-component)
 - [Testing Payments](#testing-payments)
 
 # Why use Gatsby for an e-commerce site?
@@ -27,7 +26,7 @@ In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for 
 - Blazing fast performance when your pages are converted from React into static files
 - Easy to host
 
-You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
+You can see the working demo hosted here: https://gatsby-ecommerce-stripe.netlify.com/
 
 # Prerequisites
 
@@ -41,8 +40,6 @@ Stripe is a payment processing service that allows you to securely collect and p
 There are alternatives to Stripe, like Square and Braintree, and their setup is very similar to Stripe.
 
 Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
-
-> **NOTE**: Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you might need to set up a simple function that your Gatsby project can POST to in order to handle the payment. See the ["custom example"](#custom-fully-custom-checkout-flow-requires-backend-component) section below for more details.
 
 # Setting up a Gatsby site
 
@@ -139,15 +136,13 @@ const Checkout = class extends React.Component {
   // You can find your key in the Dashboard:
   // https://dashboard.stripe.com/account/apikeys
   componentDidMount() {
-    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd", {
-      betas: ["checkout_beta_4"],
-    })
+    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd')
   }
 
   async redirectToCheckout(event) {
     event.preventDefault()
     const { error } = await this.stripe.redirectToCheckout({
-      items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
+      items: [{ sku: 'sku_DjQJN2HJ1kkvI3', quantity: 1 }],
       successUrl: `http://localhost:8000/page-2/`,
       cancelUrl: `http://localhost:8000/`,
     })
@@ -178,9 +173,7 @@ You imported React, added a button with some styles, and introduced some React f
 
 ```js:title=src/components/checkout.js
   componentDidMount() {
-    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd', {
-      betas: ['checkout_beta_4'],
-    })
+    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd')
   }
 ```
 
@@ -472,9 +465,7 @@ class Skus extends Component {
   // https://dashboard.stripe.com/account/apikeys
   // highlight-start
   state = {
-    stripe: window.Stripe('pk_test_qOUT7QyfVVOJlWXtnbzzZ9Tn', {
-      betas: ['checkout_beta_4'],
-    }),
+    stripe: window.Stripe('pk_test_qOUT7QyfVVOJlWXtnbzzZ9Tn'),
   }
   // highlight-end
 
@@ -515,10 +506,6 @@ export default Skus
 ### Adding a cart component
 
 You can call `redirectToCheckout()` providing an array of SKUs and their quantities to charge for multiple items at the same time. Instead of each "BUY ME" button redirecting to the checkout page, you can therefore provide a central "GO TO CHECKOUT" button that uses the state of a cart component. You can see the necessary changes for this example [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial/tree/cart-example).
-
-## Custom: Fully custom checkout flow (requires backend component)
-
-Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you can set up a simple function that your Gatsby project can POST to in order to handle the payment. See the previous version of [this tutorial](https://github.com/gatsbyjs/gatsby/blob/6b3c08782d0898719b61181638b6a0967da49dd6/docs/tutorial/ecommerce-tutorial/index.md) for detailed steps.
 
 # Testing Payments
 
