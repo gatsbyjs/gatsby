@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.20...gatsby-cli@2.7.21) (2019-07-29)
+
+### Bug Fixes
+
+- **gatsby-cli:** don't crash when creating project from local starter ([#16066](https://github.com/gatsbyjs/gatsby/issues/16066)) ([b9fb49d](https://github.com/gatsbyjs/gatsby/commit/b9fb49d))
+
 ## [2.7.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.19...gatsby-cli@2.7.20) (2019-07-25)
 
 ### Bug Fixes

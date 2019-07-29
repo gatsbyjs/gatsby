@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import MdInfoOutline from "react-icons/lib/md/info-outline"
 import {
   colors,
   space,
@@ -7,7 +8,6 @@ import {
   lineHeights,
 } from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
-import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
@@ -25,14 +25,9 @@ class EvaluationTable extends Component {
         <span key={`info-icon-${words[words.length - 1]}`}>
           {` `}
           {`${words[words.length - 1]} `}
-          <img
-            src={infoIcon}
-            css={{
-              height: space[3],
-              marginBottom: space[1],
-              verticalAlign: `baseline`,
-            }}
+          <MdInfoOutline
             alt={`Info Icon`}
+            style={{ color: colors.grey[50], verticalAlign: `baseline` }}
           />
         </span>,
       ]
