@@ -1030,3 +1030,8 @@ exports.createResolvers = ({ createResolvers }) => {
     },
   })
 }
+
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.printTypeDefinitions({})
+  // actions.createTypes(fs.readFileSync(`schema.gql`, { encoding: `utf-8` }))
+}

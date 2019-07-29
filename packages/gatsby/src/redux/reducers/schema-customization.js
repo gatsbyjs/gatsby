@@ -1,6 +1,7 @@
 module.exports = (
   state = {
     composer: null,
+    printConfig: null,
     fieldExtensions: {},
     thirdPartySchemas: [],
     types: [],
@@ -48,9 +49,22 @@ module.exports = (
         fieldExtensions: { ...state.fieldExtensions, [name]: extension },
       }
     }
+    case `PRINT_SCHEMA_REQUESTED`: {
+      const { path, include, exclude, withFieldTypes } = action.payload
+      return {
+        ...state,
+        printConfig: {
+          path,
+          include,
+          exclude,
+          withFieldTypes,
+        },
+      }
+    }
     case `DELETE_CACHE`:
       return {
         composer: null,
+        printConfig: null,
         fieldExtensions: {},
         thirdPartySchemas: [],
         types: [],

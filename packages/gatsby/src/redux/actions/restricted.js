@@ -79,7 +79,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  *
  *
  * @example
- * exports.sourceNodes = ({ actions }) => {
+ * exports.createSchemaCustomization = ({ actions }) => {
  *   const { createTypes } = actions
  *   const typeDefs = `
  *     """
@@ -113,7 +113,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  * }
  *
  * // using Gatsby Type Builder API
- * exports.sourceNodes = ({ actions, schema }) => {
+ * exports.createSchemaCustomization = ({ actions, schema }) => {
  *   const { createTypes } = actions
  *   const typeDefs = [
  *     schema.buildObjectType({
@@ -261,6 +261,51 @@ actions.createFieldExtension = (
   }
 }
 
+/**
+ * Write GraphQL schema to file
+ *
+ * Writes out inferred and explicitly specified type definitions. This is not
+ * the full GraphQL schema, but only the types necessary to recreate all type
+ * definitions, i.e. it does not include directives, built-ins, and derived
+ * types for filtering, sorting, pagination etc. Optionally, you can define a
+ * list of types to include/exclude. This is recommended to avoid including
+ * definitions for plugin-created types.
+ *
+ * @availableIn [createSchemaCustomization]
+ *
+ * @param {object} $0
+ * @param {string} [$0.path] The path to the output file, defaults to `schema.gql`
+ * @param {string[]} [$0.include] Only include these types
+ * @param {string[]} [$0.exclude] Do not include these types
+ */
+actions.printTypeDefinitions = (
+  {
+    path = `schema.gql`,
+    include,
+    exclude,
+    withFieldTypes = true,
+  }: {
+    path?: string,
+    include?: Array<string>,
+    exclude?: Array<string>,
+    withFieldTypes: boolean,
+  },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `PRINT_SCHEMA_REQUESTED`,
+    plugin,
+    traceId,
+    payload: {
+      path,
+      include,
+      exclude,
+      withFieldTypes,
+    },
+  }
+}
+
 const withDeprecationWarning = (actionName, action, api, allowedIn) => (
   ...args
 ) => {
@@ -339,6 +384,9 @@ const availableActionsByAPI = mapAvailableActionsToAPIs({
   addThirdPartySchema: {
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
     [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
+  },
+  printTypeDefinitions: {
+    [ALLOWED_IN]: [`createSchemaCustomization`],
   },
 })
 
