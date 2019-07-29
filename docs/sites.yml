@@ -6695,11 +6695,20 @@
   built_by: Axel Fuhrmann
   built_by_url: https://axelfuhrmann.com/
   featured: false
+- title: Nick Selvaggio
+  url: https://nickgs.com/
+  main_url: https://nickgs.com/
+  description: >
+    The personal website of Nick Selvaggio. Long Island based web developer, teacher, and technologist.
+  categories:
+    - Consulting
+    - Programming
+    - Web Development
+  featured: false
 - title: Free & Open Source Gatsby Themes by LekoArts
   main_url: "https://themes.lekoarts.de"
   url: "https://themes.lekoarts.de"
   source_url: "https://github.com/LekoArts/gatsby-themes/tree/master/www"
-  featured: false
   built_by: LekoArts
   built_by_url: "https://github.com/LekoArts"
   description: >-
@@ -6709,6 +6718,7 @@
     - Directory
     - Marketing
     - Landing Page
+  featured: false
 - title: Lars Roettig
   url: https://larsroettig.dev/
   main_url: https://larsroettig.dev/
