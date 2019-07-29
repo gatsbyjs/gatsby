@@ -1,6 +1,6 @@
 const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
-const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
+const { cleanPaths } = require(`./error-helpers`)
 const ci = require(`ci-info`)
 const os = require(`os`)
 const { join, sep } = require(`path`)
@@ -119,12 +119,30 @@ module.exports = class AnalyticsTracker {
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
 
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  captureBuildError(type, tags = {}) {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    const decoration = this.metadataCache[type]
+    delete this.metadataCache[type]
+    const eventType = `BUILD_ERROR_${type}`
+
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  formatErrorAndStoreEvent(eventType, tags) {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
         const { error, ...restOfTags } = tags
         error.forEach(err => {
-          this.captureError(type, { error: err, ...restOfTags })
+          this.formatErrorAndStoreEvent(eventType, {
+            error: err,
+            ...restOfTags,
+          })
         })
         return
       }
@@ -142,23 +160,7 @@ module.exports = class AnalyticsTracker {
       delete tags.error
     }
 
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
-  }
-
-  captureBuildError(type, tags = {}) {
-    if (!this.isTrackingEnabled()) {
-      return
-    }
-    const decoration = this.metadataCache[type]
-    delete this.metadataCache[type]
-    const eventType = `BUILD_ERROR_${type}`
-
-    if (tags.error) {
-      // `error` ought to have been `errors` but is `error` in the database
-      tags.error = sanitizeErrors(tags.error)
-    }
-
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+    this.buildAndStoreEvent(eventType, tags)
   }
 
   buildAndStoreEvent(eventType, tags) {

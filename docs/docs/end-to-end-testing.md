@@ -4,7 +4,7 @@ title: End-to-End Testing
 
 [Cypress](https://www.cypress.io/) is one of the options when it comes to end-to-end (E2E) testing. Cypress is an all-in-one testing framework focused on E2E testing, meaning that you don't have to install 10 different things to get your test suite set up. You can write your first passing test in minutes without any configuration with the help of Cypress' API, which is easy to read and understand. It runs tests as fast as your browser can render content, which also makes test-driven development possible. You'll also profit from the time travel feature or the extensive debugging capabilities with Chrome DevTools. Of course you can also use it with Gatsby, and this guide will explain how.
 
-In order to run Gatsby's development server and Cypress at the same time you'll use the little helper [start-server-and-test](https://github.com/bahmutov/start-server-and-test). If you're already using [react-testing-library](/docs/testing-react-components) for [unit testing](/docs/unit-testing) you might want to install [cypress-testing-library](https://github.com/kentcdodds/cypress-testing-library), too. This way you can use the exact same methods you used with `react-testing-library` in your Cypress tests. Install the following packages to your `devDependencies`:
+In order to run Gatsby's development server and Cypress at the same time you'll use the little helper [start-server-and-test](https://github.com/bahmutov/start-server-and-test). If you're already using [@testing-library/react](https://github.com/testing-library/react-testing-library) for [unit testing](/docs/unit-testing) you might want to install [@testing-library/react](https://github.com/testing-library/cypress-testing-library), too. This way you can use the exact same methods you used with `@testing-library/react` in your Cypress tests. Install the following packages to your `devDependencies`:
 
 ```shell
 npm install --save-dev cypress start-server-and-test
@@ -64,13 +64,13 @@ Please read the [Cypress' official documentation](https://docs.cypress.io/guides
 
 A good use case for writing automated end-to-end tests is asserting **accessibility** with [cypress-axe](https://github.com/avanslaars/cypress-axe), a Cypress plugin that incorporates the [axe](https://deque.com/axe) accessibility testing API. While some [manual testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) is still required to ensure good web accessibility, automation can ease the burden on human testers.
 
-To use cypress-axe you have to install `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core). You'll also use some commands from [cypress-testing-library](https://testing-library.com/docs/cypress-testing-library/intro) to target elements easier:
+To use cypress-axe you have to install `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core). You'll also use some commands from [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) to target elements easier:
 
 ```bash
 npm install --save-dev cypress-axe axe-core @testing-library/cypress
 ```
 
-Then you add the `cypress-axe` and `cypress-testing-library` commands in `cypress/support/commands.js`:
+Then you add the `cypress-axe` and `@testing-library/cypress` commands in `cypress/support/commands.js`:
 
 ```js:title=cypress/support/commands.js
 import "./commands"

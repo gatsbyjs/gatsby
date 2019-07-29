@@ -236,15 +236,12 @@
               link: /docs/themes/using-multiple-gatsby-themes
             - title: Building Themes
               link: /docs/themes/building-themes
-              items:
-                - title: Themes API Reference
-                  link: /docs/themes/api-reference
-                - title: Converting a Starter
-                  link: /docs/themes/converting-a-starter
-                - title: Theme Composition
-                  link: /docs/themes/theme-composition
-                - title: Conventions
-                  link: /docs/themes/conventions
+            - title: Converting a Starter
+              link: /docs/themes/converting-a-starter
+            - title: Theme Composition
+              link: /docs/themes/theme-composition
+            - title: Conventions
+              link: /docs/themes/conventions
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -275,6 +272,8 @@
                   link: /docs/tailwind-css/
                 - title: Using Bulma
                   link: /docs/bulma/
+                - title: Using Theme UI
+                  link: /docs/theme-ui/
         - title: Adding Components to Markdown with MDX
           link: /docs/mdx/
           breadcrumbTitle: MDX
@@ -289,6 +288,8 @@
               link: /docs/mdx/programmatically-creating-pages/
             - title: Using MDX Plugins
               link: /docs/mdx/plugins/
+            - title: Markdown Syntax
+              link: /docs/mdx/markdown-syntax/
         - title: Adding Testing
           link: /docs/testing/
           items:
@@ -439,6 +440,8 @@
     - title: Gatsby API
       link: /docs/api-reference/
       items:
+        - title: Gatsby Themes
+          link: /docs/theme-api/
         - title: Gatsby Link
           link: /docs/gatsby-link/
         - title: Gatsby Image

@@ -10,9 +10,14 @@ markdown. It’s a great combination because it allows you to use markdown’s o
 terse syntax (such as `# heading`) for the little things and JSX for more advanced
 components.
 
+## Why MDX?
+
+Before MDX, some of the benefits of writing Markdown were lost when integrating with JSX. Implementations were often template string-based which required lots of escaping and cumbersome syntax.
+
+MDX seeks to make writing with Markdown and JSX simpler while being more expressive. Writing is fun again when you combine components, that can even be dynamic or load data, with the simplicity of Markdown for long-form content.
+
 ### Read more about MDX
 
-- [❔ Why MDX?](https://www.gatsbyjs.org/docs/mdx/why/)
 - [📚 Gatsby guide](https://www.gatsbyjs.org/docs/mdx/)
 - [📣 Language](https://mdxjs.com)
 - [👩‍🔬 Specification](https://github.com/mdx-js/specification)
@@ -26,7 +31,7 @@ components.
     - [Default layouts](#default-layouts)
     - [Imports](#imports)
     - [Shortcodes](#shortcodes)
-    - [Gatbsy remark plugins](#gatsby-remark-plugins)
+    - [Gatsby remark plugins](#gatsby-remark-plugins)
     - [Markdown plugins](#remark-plugins)
     - [HAST plugins](#rehype-plugins)
     - [Media types](#media-types)
@@ -430,7 +435,7 @@ from a GraphQL page query or `StaticQuery`.
 just like a normal React component.
 
 ```js
-<MDXRenderer title="My Stuff!">{mdx.code.body}</MDXRenderer>
+<MDXRenderer title="My Stuff!">{mdx.body}</MDXRenderer>
 ```
 
 Using a page query:
@@ -440,7 +445,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default class MyPageLayout {
   render() {
-    ;<MDXRenderer>{this.props.data.mdx.code.body}</MDXRenderer>
+    return <MDXRenderer>{this.props.data.mdx.body}</MDXRenderer>
   }
 }
 
@@ -448,9 +453,7 @@ export const pageQuery = graphql`
   query MDXQuery($id: String!) {
     mdx(id: { eq: $id }) {
       id
-      code {
-        body
-      }
+      body
     }
   }
 `
