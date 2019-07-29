@@ -42,7 +42,7 @@ async function onCreateNode(
   // Load Asciidoc file for extracting
   // https://asciidoctor-docs.netlify.com/asciidoctor.js/processor/extract-api/
   // We use a `let` here as a warning: some operations, like .convert() mutate the document
-  const doc = await asciidoc.load(content, asciidocOptions)
+  let doc = await asciidoc.load(content, asciidocOptions)
 
   try {
     const html = doc.convert()
@@ -71,7 +71,7 @@ async function onCreateNode(
       }
     }
 
-    const pageAttributes = extractPageAttributes(doc.getAttributes())
+    let pageAttributes = extractPageAttributes(doc.getAttributes())
 
     const asciiNode = {
       id: createNodeId(`${node.id} >>> ASCIIDOC`),
