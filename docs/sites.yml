@@ -6761,3 +6761,14 @@
   built_by: Cade Kynaston
   built_by_url: https://github.com/cadekynaston
   featured: false
+- title: Fantastic Metropolis
+  main_url: https://fantasticmetropolis.com
+  url: https://fantasticmetropolis.com
+  description: >
+    Fantastic Metropolis ran between 2001 and 2006, highlighting the potential of literary science fiction and fantasy.
+  categories:
+    - Entertainment
+    - Literature
+  built_by: Luis Rodrigues
+  built_by_url: https://goblindegook.com
+  featured: false
