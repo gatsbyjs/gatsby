@@ -10,7 +10,6 @@
       "message": "chore(release): Publish"
     }
   },
-  "packages": ["packages/*"],
   "loglevel": "success",
   "version": "independent",
   "npmClient": "yarn",
