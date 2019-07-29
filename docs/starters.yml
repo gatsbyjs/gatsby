@@ -3444,6 +3444,18 @@
     - Page Transitions
     - Blog Post Template
     - Sitemap & Robots.txt generation
+- url: https://elemental.netlify.com/
+  repo: https://github.com/akzhy/gatsby-starter-elemental
+  description: A highly customizable portfolio starter with grid support.
+  tags:
+    - Blog
+    - Portfolio
+    - SEO
+  features:
+    - Highly Customizable
+    - Portfolio Template
+    - Blog Post Template
+    - SEO Friendly
 - url: https://gatsby-starter-apollo.netlify.com/
   repo: https://github.com/piducancore/gatsby-starter-apollo-netlify
   description: This project is an easy way to start developing fullstack apps with Gatsby and Apollo Server (using Netlify Lambda functions). For developing we use Netlify Dev to bring all of this magic to our local machine.
