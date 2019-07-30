@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
+import { Link } from "gatsby"
 import { css } from "@emotion/core"
 import Layout from "../components/layout"
 import FooterLinks from "../components/shared/footer-links"
@@ -7,6 +8,7 @@ import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
 import LogoDictionary from "../components/features/logo-dictionary"
 import LegendTable from "../components/features/legend-table"
+import Breadcrumb from "../components/docs-breadcrumb"
 
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import { getFeaturesData } from "../utils/get-csv-features-data"
@@ -33,6 +35,7 @@ class FeatureComparison extends Component {
         </Helmet>
         <Container>
           <main>
+            <Breadcrumb location={location} itemList={itemListFeatures} />
             <h1>{titleString}</h1>
             {options.map(o => (
               <section key={o.key} css={{ marginBottom: space[6] }}>

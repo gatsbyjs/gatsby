@@ -1,5 +1,5 @@
 Category,Subcategory,Feature,Gatsby,WordPress,Drupal,Description
-Performance,Delivery Optimization,Static content,3,0,0,Build your site as static files which can be deployed without a server.
+Performance,Delivery Optimization,Static content,3,2,2,Build your site as static files which can be deployed without a server.
 ,,CDN,2,2,2,Cache your site on a CDN distributed throughout the globe.
 ,,AMP support,2,2,2,"Use Google’s AMP’s static page format, which enables faster loads and are privileged in Google search results."
 ,Payload optimization,Progressive image loading,3,2,2,"Load images progressively by displaying a blurry placeholder image before loading the full heavyweight asset, thus preventing pages from appearing incomplete."
@@ -7,12 +7,12 @@ Performance,Delivery Optimization,Static content,3,0,0,Build your site as static
 ,,Inlines critical CSS,3,1,1,Inline CSS within your rendered HTML in order to prevent blocking page load in the case of a separate CSS file.
 ,,Font self-hosting,3,3,3,Host fonts on your own server so you can load them from your local filesystem so that a page load-blocking request to external servers does not occur.
 ,Progressive Web App (PWA),Offline access,3,2,2,Provide offline access via service workers in Progressive Web Apps so that users on spotty connections can access your site.
-,,Prefetching of linked pages,3,1,1,Prefetch all the content needed to load the next link you click in the background while you browse the page as it loads.
+,,Prefetching of linked pages,3,2,2,Prefetch all the content needed to load the next link you click in the background while you browse the page as it loads.
 ,,Page caching,3,2,2,Allow browsers to serve content locally without an extra network call when a user visits a previously visited page by fingerprinting static resources that aren’t expected to change.
-,,No extraneous code fetching,3,3,3,Fetch only the code for the loaded page on page load as opposed to the code needed to run the entire application.
+,,No extraneous code fetching,3,2,2,Fetch only the code for the loaded page on page load as opposed to the code needed to run the entire application.
 Developer Experience,Maintainability and debuggability,Serverless features,3,2,2,Reduce operations overhead by using serverless hosting that doesn’t require security or framework upgrades or accessing a live production server.
 ,,Preview on refresh or with link,3,3,3,Click a Preview button or refresh the page to preview what your content looks like while writing or editing a piece of content.
-,,Hot reloading of content,3,1,1,See UI changes without refreshing the page in your local development environment browser while editing content.
+,,Hot reloading of content,3,2,1,See UI changes without refreshing the page in your local development environment browser while editing content.
 ,,Hot reloading of code,3,1,1,See UI changes without refreshing the page in your local development environment browser while editing code.
 ,Declarative rendering,Componentization,3,3,3,Plug and play internal or external third-party components from a shared codebase or component library.
 ,,One-way data binding,3,1,1,Use a unidirectional data flow without complex interdependencies that are present in other data flow approaches like MVC in order to build complex front-end components.
@@ -25,13 +25,12 @@ Governance,Security,XSS protection,3,3,3,Protect your application from cross-sit
 ,,Access control (CORS),3,3,3,Enable access control through cross-origin resource sharing (CORS) to prevent unwanted access through vectors such as distributed-denial-of-service (DDoS) attacks.
 ,,Environment variables,3,1,1,Use environment variables so you can deploy configuration to hosting services without exposing them in your codebase.
 ,,User authentication,2,3,3,Provide user authentication through an authentication provider that will permit access to sensitive areas of your application.
-,,Anonymous authentication,2,3,3,Provide anonymous authentication that will track an unauthenticated user’s application state and text input in your application.
 ,Design,Programmatic design,2,1,1,Use tools like Typography.js to make it easier to programmatically design your site by generating CSS that adheres to a certain intended design.
 ,,Design systems,2,0,0,"Export application components for use in other applications such as Sketch, which has integrations like react-sketchapp for React components."
 ,,Component libraries,2,0,0,Leverage component libraries in other applications like Sketch with integrations like react-sketchapp to accelerate the articulation of your style guide.
 Accessibility,Accessible markup,Progressive enhancement,3,3,3,Provide a baseline of progressive enhancement where all sites can be accessed as static HTML and CSS and where all fundamental functionality is preserved without JavaScript being enabled.
 ,,Landmark elements,2,3,3,Leverage ARIA landmarks to provide semantic markers that indicate certain page elements for users of assistive and accessible technologies such as screen readers.
-,,Semantic HTML,2,3,3,Introduce meaning to HTML to reinforce desired semantics and to aid the navigation of your site by users of assistive and accessible technologies such as screen readers.
+,,Semantic HTML,2,2,2,Introduce meaning to HTML to reinforce desired semantics and to aid the navigation of your site by users of assistive and accessible technologies such as screen readers.
 ,Accessible defaults,Accessible routing,3,3,3,"Provide focus management on each page change through libraries such as @reach/router, an accessible routing library."
 ,,Accessibility statement,3,3,3,Leverage a framework with a clear and robust accessibility statement explaining its position on accessibility and that it is a first-class consideration.
 ,,WCAG 2.0 AA compliance,2,3,3,Leverage a framework with full compliance with the Web Content Accessibility Guidelines (WCAG) 2.0. Gatsby is partially compliant.
@@ -48,7 +47,7 @@ Documentation,Tutorials and guides,Introductory tutorial,3,3,3,Read an introduct
 ,,Adding authentication,3,3,3,Read a guide with a set of instructions to add authentication providers to gate access to your application.
 ,,Adding SEO,3,3,3,Read a guide with a set of instructions to perform search engine optimization for your application.
 Ecosystem,Ecosystem,Component ecosystem,3,3,3,"Leverage an existing component ecosystem such as React’s, which includes out-of-the-box component libraries and curated sets such as JSCoach."
-,,Hosted option,2,3,2,"Plug your application into static hosts such as Netlify, Render, or surge.sh. WordPress and Squarespace include built-in hosting."
+,,Hosted option,2,2,2,"Plug your application into static hosts such as Netlify, Render, or surge.sh. WordPress and Squarespace include built-in hosting."
 ,,Themes ecosystem,2,3,3,"Leverage a theme ecosystem with various options for your application to take on a custom look and feel. Jekyll has themes, and WordPress and Squarespace offer default theme selection."
 ,Integrations,OOTB integrations with 20+ other systems,3,3,3,Leverage a framework that has integrations off the shelf with more than 20 other systems.
 ,,OOTB integrations with 50+ other systems,3,3,3,Leverage a framework that has integrations off the shelf with more than 50 other systems.

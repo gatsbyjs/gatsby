@@ -37,6 +37,7 @@ class EvaluationTable extends Component {
           // scrolling library
           display: `table`,
           overflowX: `scroll`,
+          width: `100%`,
         }}
       >
         <tbody>

@@ -7,7 +7,7 @@ const FeaturesFooter = () => (
     Please comment
     {` `}
     <a
-      href="https://github.com/gatsbyjs/gatsby/issues/2444"
+      href="https://github.com/gatsbyjs/gatsby/issues/16233"
       target="_blank"
       rel="noopener noreferrer"
     >

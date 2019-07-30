@@ -11,6 +11,7 @@ import FooterLinks from "../../components/shared/footer-links"
 import FeaturesFooter from "../../components/features/features-footer"
 import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
+import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
 import { space } from "../../utils/presets"
 import useComparisonState from "../../hooks/use-comparison-state"
@@ -18,9 +19,9 @@ import useComparisonState from "../../hooks/use-comparison-state"
 const FeaturesHeader = () => (
   <section>
     <h1 id="introduction" style={{ marginTop: 0 }}>
-      <Link to="features">Features</Link> > JAMstack
+      JAMstack
     </h1>
-    <p>Looking for a specific technology? Find it on this page.</p>
+    <p>Compare popular JAMstack technologies on this page.</p>
     <LegendTable />
   </section>
 )
@@ -45,6 +46,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
     >
       <Container>
         <main id={`reach-skip-nav`}>
+          <Breadcrumb location={location} itemList={itemListFeatures} />
           <FeaturesHeader />
           <h3>Comparison</h3>
           <p>
@@ -86,12 +88,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
             </Button>
           </div>
           <EvaluationTable
-            options={[
-              { key: `nextjs`, display: `Next.js`, nodeField: `Nextjs` },
-              { key: `jekyll`, display: `Jekyll`, nodeField: `Jekyll` },
-              { key: `hugo`, display: `Hugo`, nodeField: `Hugo` },
-              { key: `nuxtjs`, display: `Nuxt.js`, nodeField: `Nuxtjs` },
-            ]}
+            options={featureComparisonOptions.jamstack}
             sections={sections}
             sectionHeaders={sectionHeaders}
           />
