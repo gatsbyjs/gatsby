@@ -94,7 +94,7 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       postCssPlugins: [somePostCssPlugin()],
-      precision: 8,
+      precision: 8, // Set to 6 for Bootstrap 4: https://github.com/twbs/bootstrap/blob/master/site/content/docs/4.3/getting-started/theming.md#sass
     },
   },
 ]
