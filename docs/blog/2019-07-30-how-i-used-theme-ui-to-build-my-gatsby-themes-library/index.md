@@ -53,7 +53,7 @@ It's great to have the same design tokens in all places. I chose the color **Ind
 
 ### Variants
 
-The bottom view of VS Code shows a snippet of the button variants — variants are a Theme UI feature (see [documentation](https://theme-ui.com/guides/variants)). I used them for the buttons and gradients. The latter looks something like this:
+In the above screenshot of Figma (on the left) and VS Code (on the right), the latter shows a snippet of button variants — variants are a Theme UI feature (see [documentation](https://theme-ui.com/guides/variants)). I used them for the buttons and gradients. Gradients are created like this:
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 gradients: {
