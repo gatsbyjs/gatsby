@@ -15,6 +15,10 @@ const {
   warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
 
+beforeEach(() => {
+  Object.keys(reporter).forEach(key => reporter[key].mockReset())
+})
+
 describe(`collatePluginAPIs`, () => {
   const MOCK_RESULTS = {
     "/foo/gatsby-node": [`node-1`, `node-2`],
@@ -134,6 +138,84 @@ describe(`handleBadExports`, () => {
         id: `11329`,
       })
     )
+  })
+
+  it(`Adds fixes to context if newer API introduced in Gatsby`, () => {
+    const version = `2.2.0`
+
+    handleBadExports({
+      currentAPIs: {
+        node: [``],
+        browser: [``],
+        ssr: [``],
+      },
+      latestAPIs: {
+        browser: {},
+        ssr: {},
+        node: {
+          validatePluginOptions: {
+            version,
+          },
+        },
+      },
+      badExports: {
+        browser: [],
+        ssr: [],
+        node: [
+          {
+            exportName: `validatePluginOptions`,
+            pluginName: `gatsby-source-contentful`,
+          },
+        ],
+      },
+    })
+
+    expect(reporter.error).toHaveBeenCalledTimes(1)
+    expect(reporter.error).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: expect.objectContaining({
+          fixes: [`npm install gatsby@^${version}`],
+        }),
+      })
+    )
+  })
+
+  it(`adds fixes if close match/typo`, () => {
+    ;[
+      [`modifyWebpackConfig`, `onCreateWebpackConfig`],
+      [`createPagesss`, `createPages`],
+    ].forEach(([typoOrOldAPI, newAPI]) => {
+      handleBadExports({
+        currentAPIs: {
+          node: [newAPI],
+          browser: [``],
+          ssr: [``],
+        },
+        latestAPIs: {
+          browser: {},
+          ssr: {},
+          node: {},
+        },
+        badExports: {
+          browser: [],
+          ssr: [],
+          node: [
+            {
+              exportName: typoOrOldAPI,
+              pluginName: `default-site-plugin`,
+            },
+          ],
+        },
+      })
+
+      expect(reporter.error).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            fixes: [`Rename "${typoOrOldAPI}" -> "${newAPI}"`],
+          }),
+        })
+      )
+    })
   })
 })
 

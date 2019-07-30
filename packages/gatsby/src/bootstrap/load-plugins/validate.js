@@ -33,9 +33,6 @@ const getBadExports = (plugin, pluginAPIKeys, apis) => {
 }
 
 const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
-  let capitalized = `${exportType[0].toUpperCase()}${exportType.slice(1)}`
-  if (capitalized === `Ssr`) capitalized = `SSR`
-
   const entries = badExports.map(ex => {
     return {
       ...ex,
