@@ -127,7 +127,7 @@ export const onRenderBody = (
         }
         return gaSetCommands
       }, ``)}
-      `,
+      }`,
       }}
     />,
   ])
