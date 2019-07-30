@@ -12,22 +12,6 @@ and "transformer" plugins.
 
 This doc focuses on source plugins and uses `gatsby-source-filesystem` to explain how source plugins work.
 
-# Table of Contents
-
-- [What do source plugins do?](#what-do-source-plugins-do)
-- [What fields are required?](#what-fields-are-required)
-- [`media type` is not required, yet necessary to work with transformer plugins](#media-type-is-not-required-yet-necessary-to-work-with-transformer-plugins)
-- [What does the code look like?](#what-does-the-code-look-like)
-- [What are the jobs of a source plugin?](#what-are-the-jobs-of-a-source-plugin)
-- [Getting helper functions](#getting-helper-functions)
-- [Advanced](#advanced)
-- [Two ways of adding relationships between nodes](#two-ways-of-adding-relationships-between-nodes)
-  - [Option 1: transformation relationships](#option-1-transformation-relationships)
-  - [Option 2: foreign-key relationships](#option-2-foreign-key-relationships)
-    - [Creating the relationship](#creating-the-relationship)
-    - [Creating the reverse relationship](#creating-the-reverse-relationship)
-  - [Union types](#union-types)
-
 ## What do source plugins do?
 
 The [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin

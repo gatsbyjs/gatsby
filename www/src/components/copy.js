@@ -11,18 +11,7 @@ import {
   shadows,
   transition,
 } from "../utils/presets"
-
-const copyToClipboard = content => {
-  const el = document.createElement(`textarea`)
-  el.value = content
-  el.setAttribute(`readonly`, ``)
-  el.style.position = `absolute`
-  el.style.left = `-9999px`
-  document.body.appendChild(el)
-  el.select()
-  document.execCommand(`copy`)
-  document.body.removeChild(el)
-}
+import copyToClipboard from "../utils/copy-to-clipboard"
 
 const delay = duration => new Promise(resolve => setTimeout(resolve, duration))
 
@@ -61,7 +50,7 @@ function Copy({ className, content, duration, fileName, trim = false }) {
         },
       }}
       onClick={async () => {
-        copyToClipboard(trim ? content.trim() : content)
+        await copyToClipboard(trim ? content.trim() : content)
 
         setCopied(true)
 

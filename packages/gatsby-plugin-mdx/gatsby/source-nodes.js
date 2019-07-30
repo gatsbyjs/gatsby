@@ -217,7 +217,7 @@ ${e}`
         },
         async resolve(mdxNode, { maxDepth }) {
           const { mdast } = await processMDX({ node: mdxNode });
-          const toc = generateTOC(mdast, maxDepth);
+          const toc = generateTOC(mdast, {maxDepth});
 
           return getTableOfContents(toc.map, {});
         }
