@@ -30,18 +30,6 @@ See [docs templates](/docs/docs-templates/) in the contributing docs for more he
 
 Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
-## Table of Contents
-
-1. [Pages and Layouts](#1-pages-and-layouts)
-2. [Styling with CSS](#2-styling-with-css)
-3. [Working with starters](#3-working-with-starters)
-4. [Working with themes](#4-working-with-themes)
-5. [Sourcing data](#5-sourcing-data)
-6. [Querying data](#6-querying-data)
-7. [Working with images](#7-working-with-images)
-8. [Transforming data](#8-transforming-data)
-9. [Deploying your site](#9-deploying-your-site)
-
 ## 1. Pages and Layouts
 
 ### Project structure
