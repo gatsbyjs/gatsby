@@ -1,37 +1,31 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
-import {
-  fontSizes,
-  colors,
-  space,
-  mediaQueries,
-  letterSpacings,
-  transition,
-} from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 function createItems(items, location) {
   return (
     items &&
     items.map(item => (
       <li
-        css={{
+        sx={{
           [mediaQueries.xl]: {
-            fontSize: fontSizes[1],
+            fontSize: 1,
           },
         }}
         key={location.pathname + item.url}
       >
         <Link
-          css={{
+          sx={{
             "&&": {
-              color: colors.grey[60],
+              color: `grey.60`,
               border: 0,
-              transition: `all ${transition.speed.fast} ${
-                transition.curve.default
-              }`,
+              transition: t =>
+                `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
               ":hover": {
-                color: colors.link.color,
-                borderBottom: `1px solid ${colors.link.hoverBorder}`,
+                color: `link.color`,
+                borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`,
               },
             },
           }}
@@ -40,13 +34,7 @@ function createItems(items, location) {
           {item.title}
         </Link>
         {item.items && (
-          <ul
-            css={{
-              marginLeft: space[6],
-            }}
-          >
-            {createItems(item.items, location)}
-          </ul>
+          <ul sx={{ ml: 6 }}>{createItems(item.items, location)}</ul>
         )}
       </li>
     ))
@@ -57,18 +45,18 @@ function TableOfContents({ page, location }) {
   return page.tableOfContents.items ? (
     <nav>
       <h2
-        css={{
+        sx={{
           textTransform: `uppercase`,
-          fontSize: fontSizes[1],
-          color: colors.grey[80],
-          letterSpacing: letterSpacings.tracked,
-          marginTop: 0,
+          fontSize: 1,
+          color: `grey.80`,
+          letterSpacing: `tracked`,
+          mt: 0,
         }}
       >
         Table of Contents
       </h2>
       <ul
-        css={{
+        sx={{
           [mediaQueries.xl]: {
             listStyle: `none`,
             margin: 0,

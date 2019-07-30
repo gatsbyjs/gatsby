@@ -36,6 +36,29 @@ const darkBorder = `#131217`
 const shadowDarkBase = `19,18,23`
 const shadowDarkFlares = `0,0,0`
 
+const si = {
+  ...s,
+  logo: spc[6],
+  sidebarItemMinHeight: spc[8],
+  pluginsSidebarWidthDefault: `21rem`,
+  pluginsSidebarWidthLarge: `24rem`,
+  showcaseSidebarMaxWidth: `15rem`,
+  mainContentWidth: {
+    default: `54rem`,
+    withSidebar: `42rem`,
+  },
+  sidebarWidth: {
+    mobile: `320px`,
+    default: `16.5rem`,
+    large: `18rem`,
+  },
+  mainContentWidth: {
+    default: `54rem`,
+    withSidebar: `42rem`,
+  },
+  tocWidth: `18rem`,
+}
+
 export const borders = b
 export const breakpoints = breakps
 export const colors = c
@@ -47,7 +70,7 @@ export const lineHeights = lh
 export const mediaQueries = mq
 export const radii = r
 export const shadows = sh
-export const sizes = s
+export const sizes = si
 export const space = spc
 export const transition = t
 export const zIndices = z
@@ -137,10 +160,10 @@ export default {
           },
         },
         sidebar: {
-          itemHoverBackground: hex2rgba(c.purple[70], 0.275),
+          itemHoverBackground: hex2rgba(c.purple[90], 0.2),
           activeItemBackground: `transparent`,
           itemBorderColor: `transparent`,
-          activeSectionBackground: hex2rgba(c.purple[70], 0.275),
+          activeSectionBackground: hex2rgba(c.purple[90], 0.2),
           itemBorderActive: c.purple[80],
         },
         shadows: {
@@ -176,28 +199,7 @@ export default {
   fontWeights: fw,
   letterSpacings: ls,
   radii: r,
-  sizes: {
-    ...s,
-    logo: spc[6],
-    sidebarItemMinHeight: spc[8],
-    pluginsSidebarWidthDefault: `21rem`,
-    pluginsSidebarWidthLarge: `24rem`,
-    showcaseSidebarMaxWidth: `15rem`,
-    mainContentWidth: {
-      default: `54rem`,
-      withSidebar: `42rem`,
-    },
-    sidebarWidth: {
-      mobile: `320px`,
-      default: `16.5rem`,
-      large: `18rem`,
-    },
-    mainContentWidth: {
-      default: `54rem`,
-      withSidebar: `42rem`,
-    },
-    tocWidth: `18rem`,
-  },
+  sizes: si,
   shadows: sh,
   space: spc,
   transition: t,
