@@ -392,6 +392,15 @@ const addExtensions = ({
         .filter(name => !internalExtensionNames.includes(name))
         .forEach(name => {
           const args = fieldExtensions[name]
+
+          if (!args || typeof args !== `object`) {
+            report.error(
+              `Field extension arguments must be provided as an object. ` +
+                `Received "${args}" on \`${typeName}.${fieldName}\`.`
+            )
+            return
+          }
+
           try {
             const definition = schemaComposer.getDirective(name)
 
