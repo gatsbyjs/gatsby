@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.44](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.43...gatsby@2.13.44) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby:** enable babel.config.js once again ([#16205](https://github.com/gatsbyjs/gatsby/issues/16205)) ([d72b6d9](https://github.com/gatsbyjs/gatsby/commit/d72b6d9))
+- **gatsby:** run onPrefetchPathname when prefetch is disabled ([#16208](https://github.com/gatsbyjs/gatsby/issues/16208)) ([da859c0](https://github.com/gatsbyjs/gatsby/commit/da859c0))
+
 ## [2.13.43](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.42...gatsby@2.13.43) (2019-07-30)
 
 **Note:** Version bump only for package gatsby
