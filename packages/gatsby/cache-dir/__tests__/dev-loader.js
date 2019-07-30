@@ -541,6 +541,19 @@ describe(`Dev loader`, () => {
 
       expect(devLoader.prefetch(`/mypath/`)).toBe(false)
       expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
+      expect(devLoader.apiRunner).not.toHaveBeenCalled()
+      expect(devLoader.doPrefetch).not.toHaveBeenCalled()
+    })
+
+    it(`should trigger custom prefetch logic when core is disabled`, () => {
+      const devLoader = new DevLoader(null, [])
+      devLoader.shouldPrefetch = jest.fn(() => true)
+      devLoader.doPrefetch = jest.fn()
+      devLoader.apiRunner = jest.fn()
+      devLoader.prefetchDisabled = true
+
+      expect(devLoader.prefetch(`/mypath/`)).toBe(false)
+      expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(devLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
         pathname: `/mypath/`,
       })
