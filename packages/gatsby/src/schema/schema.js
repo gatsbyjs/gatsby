@@ -66,14 +66,20 @@ const rebuildSchemaWithSitePage = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  const typeComposer = addInferredType({
-    schemaComposer,
-    typeComposer: schemaComposer.getOTC(`SitePage`),
-    nodeStore,
-    typeConflictReporter,
-    typeMapping,
-    parentSpan,
-  })
+  const typeComposer = schemaComposer.getOTC(`SitePage`)
+  const shouldInfer =
+    !typeComposer.hasExtension(`infer`) ||
+    typeComposer.getExtension(`infer`) !== false
+  if (shouldInfer) {
+    addInferredType({
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
+  }
   await processTypeComposer({
     schemaComposer,
     typeComposer,
