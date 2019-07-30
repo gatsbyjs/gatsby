@@ -12,7 +12,7 @@ import StarterSource from "../views/starter/source"
 import StarterDetails from "../views/starter/details"
 import FooterLinks from "../components/shared/footer-links"
 
-const getFallbackScreenshot = (data, fallback) => {
+const getScreenshot = (data, fallback) => {
   if (!data.screenshotFile || !data.screenshotFile.childImageSharp) {
     return fallback
   }
@@ -32,11 +32,7 @@ class StarterTemplate extends React.Component {
       childScreenshot,
     } = startersYaml
 
-    /*
-     * Sometimes childScreenshot.screenshotFile can be null
-     * this guards against that scenario
-     */
-    const screenshot = getFallbackScreenshot(childScreenshot, fallback)
+    const screenshot = getScreenshot(childScreenshot, fallback)
 
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
