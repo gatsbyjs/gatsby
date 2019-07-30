@@ -108,24 +108,25 @@ describe(`handleBadExports`, () => {
     })
   })
 
-  it(`Calls reporter.error when bad exports are detected`, async () => {
+  it(`Calls structured error with reporter.error when bad exports are detected`, async () => {
+    const exportName = `foo`
     handleBadExports({
       currentAPIs: {
         node: [``],
         browser: [``],
-        ssr: [`notFoo`, `bar`],
+        ssr: [``],
       },
       latestAPIs: {
-        node: [``],
-        browser: [``],
-        ssr: [`notFoo`, `bar`],
+        node: {},
+        browser: {},
+        ssr: {},
       },
       badExports: {
         node: [],
         browser: [],
         ssr: [
           {
-            exportName: `foo`,
+            exportName,
             pluginName: `default-site-plugin`,
           },
         ],
@@ -136,6 +137,53 @@ describe(`handleBadExports`, () => {
     expect(reporter.error).toHaveBeenCalledWith(
       expect.objectContaining({
         id: `11329`,
+        context: expect.objectContaining({
+          exportType: `ssr`,
+          errors: [
+            expect.stringContaining(`"${exportName}" which is not a known API`),
+          ],
+        }),
+      })
+    )
+  })
+
+  it(`adds info on plugin if a plugin API error`, () => {
+    const exportName = `foo`
+    const pluginName = `gatsby-source-contentful`
+    const pluginVersion = `2.1.0`
+    handleBadExports({
+      currentAPIs: {
+        node: [``],
+        browser: [``],
+        ssr: [``],
+      },
+      latestAPIs: {
+        node: {},
+        browser: {},
+        ssr: {},
+      },
+      badExports: {
+        node: [],
+        browser: [],
+        ssr: [
+          {
+            exportName,
+            pluginName,
+            pluginVersion,
+          },
+        ],
+      },
+    })
+
+    expect(reporter.error).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: expect.objectContaining({
+          errors: [
+            expect.stringContaining(
+              `${pluginName}@${pluginVersion} is using the API "${exportName}"`
+            ),
+          ],
+        }),
       })
     )
   })

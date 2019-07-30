@@ -67,7 +67,7 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
       )
     } else {
       errors.push(
-        `- The plugin "${entry.pluginName}@${
+        `- The plugin ${entry.pluginName}@${
           entry.pluginVersion
         } is using the API "${entry.exportName}" which ${message}.`
       )
