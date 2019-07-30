@@ -38,7 +38,7 @@ As mentioned I also wanted a rad hero section, nothing boring but also not somet
 
 ## Code
 
-The website lives inside the [www](https://github.com/LekoArts/gatsby-themes/tree/master/www) folder of the monorepo and thus is already setup to be used with TypeScript. You can have a look at the source code to see how it's done (as going through the complete code would be a bit boring...). A follow-up blogpost will explain how I created the 3D element in the hero section.
+The website lives inside the [www](https://github.com/LekoArts/gatsby-themes/tree/master/www) folder of the monorepo and thus is already setup to be used with TypeScript. You can have a look at the source code to see how it's done (as going through the complete code would be a bit boring...).
 
 I want to focus on [Theme UI](https://theme-ui.com/) and explain how I used it on this landing page, especially the breakpoints syntax, variants, and Tailwind preset. These are truly game changers for me!
 
