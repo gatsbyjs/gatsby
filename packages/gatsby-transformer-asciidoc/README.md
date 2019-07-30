@@ -170,7 +170,7 @@ plugins: [
 ]
 ```
 
-`TemplateConverter` is a custom javascript class you'll need to write. Information on how to write a custom `TemplateConverter` can be found at the [asciidoctor docs](https://asciidoctor-docs.netlify.com/asciidoctor.js/extend/converter/custom-converter/).
+`TemplateConverter` is a custom javascript class you'll need to create. Information on how to write a custom `TemplateConverter` can be found at the [asciidoctor docs](https://asciidoctor-docs.netlify.com/asciidoctor.js/extend/converter/custom-converter/).
 
 In the example below, we will use a custom converter to convert paragraphs but the other nodes will be converted using the built-in HTML5 converter:
 
