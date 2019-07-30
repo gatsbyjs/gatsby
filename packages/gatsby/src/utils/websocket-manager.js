@@ -27,7 +27,7 @@ const getCachedPageData = async (
 ): QueryResult => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
-  if (pages.has(pageData)) {
+  if (pages.has(pagePath)) {
     try {
       const pageData = await pageDataUtil.read({ publicDir }, pagePath)
       return {
