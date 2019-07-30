@@ -15,7 +15,7 @@ import { itemListFeatures } from "../utils/sidebar/item-list"
 const FeaturesHeader = () => (
   <section>
     <h1 id="introduction" style={{ marginTop: 0 }}>
-      Features
+      Features Overview
     </h1>
     <p>
       There are many ways to build a website. If you’re considering Gatsby, you
@@ -125,10 +125,6 @@ class FeaturesPage extends Component {
                 { display: `Category`, nodeFieldProperty: `Category` },
                 { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
                 {
-                  display: `React DIY + CMS`,
-                  nodeFieldProperty: `ReactDiyCms`,
-                },
-                {
                   display: `JAMstack frameworks`,
                   nodeFieldProperty: `Jamstack`,
                 },
@@ -154,7 +150,6 @@ export const pageQuery = graphql`
         node {
           Category
           Gatsby
-          ReactDiyCms
           Jamstack
           Cms
           Description
