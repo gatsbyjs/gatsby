@@ -32,7 +32,7 @@ module.exports = {
         experimentId: "YOUR_GOOGLE_EXPERIMENT_ID",
         // Set Variation ID. 0 for original 1,2,3....
         variationId: "YOUR_GOOGLE_OPTIMIZE_VARIATION_ID",
-        // Any additional create only fields (optional)
+        // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
         cookieDomain: "example.com",
@@ -42,7 +42,7 @@ module.exports = {
 }
 ```
 
-See below for the complete list of [Create Only Fields](#create-only-fields).
+See below for the complete list of [optional fields](#optional-fields).
 
 ## `<OutboundLink>` component
 
@@ -120,7 +120,7 @@ If you need to set up SERVER_SIDE Google Optimize experiment, you can add the ex
 
 Besides the experiment ID you also need the variation ID for SERVER_SIDE experiments in Google Optimize. Set 0 for original version.
 
-## Create Only Fields
+## Optional Fields
 
 This plugin supports all optional Create Only Fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create):
 
@@ -137,5 +137,13 @@ This plugin supports all optional Create Only Fields documented in [Google Analy
 - `legacyCookieDomain`: string
 - `legacyHistoryImport`: boolean
 - `allowLinker`: boolean
+
+This plugin also supports several optional General fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#general):
+
+- `allowAdFeatures`: boolean
+- `dataSource`: string
+- `queueTime`: number
+- `forceSSL`: boolean
+- `transport`: string
 
 These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.
