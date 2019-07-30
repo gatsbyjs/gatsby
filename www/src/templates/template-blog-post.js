@@ -3,8 +3,6 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
@@ -14,6 +12,7 @@ import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import Avatar from "../components/avatar"
+import PrevAndNext from "../components/prev-and-next"
 import FooterLinks from "../components/shared/footer-links"
 
 class BlogPostTemplate extends React.Component {
@@ -23,23 +22,6 @@ class BlogPostTemplate extends React.Component {
       data: { mdx: post },
       location: { href },
     } = this.props
-    const prevNextLinkStyles = {
-      "&&": {
-        borderBottom: 0,
-        color: `gatsby`,
-        fontFamily: `header`,
-        fontSize: 3,
-        fontWeight: `bold`,
-        lineHeight: `dense`,
-      },
-    }
-    const prevNextLabelStyles = {
-      color: `text.secondary`,
-      fontSize: 2,
-      fontWeight: `normal`,
-      mb: 2,
-      mt: 0,
-    }
     const BioLine = ({ children }) => (
       <p
         sx={{
@@ -242,52 +224,20 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <div
-              css={{
-                [mediaQueries.sm]: { display: `flex`, width: `100%` },
-              }}
-            >
-              <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
-                {prev && (
-                  <Link to={prev.fields.slug} sx={prevNextLinkStyles}>
-                    <h4 sx={prevNextLabelStyles}>Previous</h4>
-                    <span
-                      sx={{
-                        [mediaQueries.md]: {
-                          marginLeft: t => `-${t.space[4]}`,
-                        },
-                      }}
-                    >
-                      <ArrowBackIcon style={{ verticalAlign: `sub` }} />
-                      {prev.frontmatter.title}
-                    </span>
-                  </Link>
-                )}
-              </div>
-              <div
-                sx={{
-                  textAlign: `right`,
-                  mt: 5,
-                  [mediaQueries.sm]: { mt: 0, width: `50%` },
-                }}
-              >
-                {next && (
-                  <Link to={next.fields.slug} sx={prevNextLinkStyles}>
-                    <h4 sx={prevNextLabelStyles}>Next</h4>
-                    <span
-                      sx={{
-                        [mediaQueries.md]: {
-                          marginRight: t => `-${t.space[4]}`,
-                        },
-                      }}
-                    >
-                      {next.frontmatter.title}
-                      <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
-                    </span>
-                  </Link>
-                )}
-              </div>
-            </div>
+            <PrevAndNext
+              prev={
+                prev && {
+                  title: prev.frontmatter.title,
+                  link: prev.fields.slug,
+                }
+              }
+              next={
+                next && {
+                  title: next.frontmatter.title,
+                  link: next.fields.slug,
+                }
+              }
+            />
           </Container>
           <FooterLinks />
         </div>

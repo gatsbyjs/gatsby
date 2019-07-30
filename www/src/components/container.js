@@ -4,10 +4,10 @@ import React from "react"
 
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
-const Container = ({ children, hasSideBar = true, overrideCSS }) => (
+const Container = ({ children, withSidebar = true, overrideCSS }) => (
   <div
     sx={{
-      maxWidth: hasSideBar
+      maxWidth: withSidebar
         ? `mainContentWidth.withSidebar`
         : `mainContentWidth.default`,
       mx: `auto`,

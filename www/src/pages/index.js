@@ -114,7 +114,7 @@ class IndexRoute extends React.Component {
           </div>
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
-            <Container hasSideBar={false}>
+            <Container withSidebar={false}>
               <section css={{ textAlign: `center` }}>
                 <h1 sx={{ fontWeight: 1, mt: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>

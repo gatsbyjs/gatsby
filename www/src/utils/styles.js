@@ -594,10 +594,4 @@ export const global = {
       borderRadius: `0 0 ${radii[2]}px ${radii[2]}px`,
     },
   },
-  [mediaQueries.lg]: {
-    ".gatsby-highlight, .post-body .gatsby-resp-image-link, .gatsby-code-title": {
-      marginLeft: `-${space[6]}`,
-      marginRight: `-${space[6]}`,
-    },
-  },
 }

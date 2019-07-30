@@ -2,26 +2,11 @@
 title: "Gatsby E-Commerce Tutorial"
 ---
 
-# Table of Contents
+In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
 
-- [Table of Contents](#table-of-contents)
-- [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
-- [Prerequisites](#prerequisites)
-  - [How does Gatsby work with Stripe?](#how-does-gatsby-work-with-stripe)
-- [Setting up a Gatsby site](#setting-up-a-gatsby-site)
-- [Installing the StripeJS plugin](#installing-the-stripejs-plugin)
-  - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
-  - [How does the StripeJS plugin work?](#how-does-the-stripejs-plugin-work)
-  - [Getting your Stripe test keys](#getting-your-stripe-test-keys)
-- [Examples](#examples)
-  - [Easy: One Button](#easy-one-button)
-  - [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
-  - [Custom: Fully custom checkout flow (requires backend component)](#custom-fully-custom-checkout-flow-requires-backend-component)
-- [Testing Payments](#testing-payments)
+## Why use Gatsby for an e-commerce site?
 
-# Why use Gatsby for an e-commerce site?
-
-In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments. Benefits of using Gatsby for e-commerce sites include the following:
+Benefits of using Gatsby for e-commerce sites include the following:
 
 - Security inherent in static sites
 - Blazing fast performance when your pages are converted from React into static files
@@ -29,12 +14,12 @@ In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for 
 
 You can see the working demo hosted here: https://gatsby-ecommerce.netlify.com/
 
-# Prerequisites
+## Prerequisites
 
 - Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
 - Stripe account: [register for an account here](https://dashboard.stripe.com/register)
 
-## How does Gatsby work with Stripe?
+### How does Gatsby work with Stripe?
 
 Stripe is a payment processing service that allows you to securely collect and process payment information from your customers. To try out Stripe for yourself, go to [Stripe’s Quick Start Guide](https://stripe.com/docs/payments/checkout#tryout).
 
@@ -44,7 +29,7 @@ Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) tha
 
 > **NOTE**: Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you might need to set up a simple function that your Gatsby project can POST to in order to handle the payment. See the ["custom example"](#custom-fully-custom-checkout-flow-requires-backend-component) section below for more details.
 
-# Setting up a Gatsby site
+## Setting up a Gatsby site
 
 Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
 
@@ -53,7 +38,7 @@ gatsby new ecommerce-gatsby-tutorial
 cd ecommerce-gatsby-tutorial
 ```
 
-# Installing the StripeJS plugin
+## Installing the StripeJS plugin
 
 You can extend the functionality of this default starter with plugins. One such plugin is `gatsby-plugin-stripe`, which you’ll install in this project:
 
@@ -72,13 +57,13 @@ module.exports = {
 }
 ```
 
-## See your site hot reload in the browser!
+### See your site hot reload in the browser!
 
 Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost:8000/) and you should see a default homepage.
 
 > **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost:8000/)
 
-## How does the StripeJS plugin work?
+### How does the StripeJS plugin work?
 
 Stripe provides a JavaScript library the allows you to securely redirect your customer to the Stripe hosted checkout page. The Gatsby plugin, `gatsby-plugin-stripe`, will add this snippet:
 
@@ -90,7 +75,7 @@ to the end of the `<body>` tag across all of your pages. This helps facilitate S
 
 If you want to further customise the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://www.gatsbyjs.org/plugins/?=stripe).
 
-## Getting your Stripe test keys
+### Getting your Stripe test keys
 
 View your API credentials by logging into your Stripe account, and then going to Developers > API Keys.
 
@@ -103,19 +88,19 @@ You have 2 keys in both test mode and production mode:
 
 While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
-# Examples
+## Examples
 
 You can find an implementation of these examples [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial).
 
-## Easy: One Button
+### Easy: One Button
 
 If you're selling a simple product, like an eBook for example, you can create a single button that will perform a redirect to the Stripe Checkout page:
 
-### Create a product and SKU
+#### Create a product and SKU
 
 For Stripe Checkout to work without any backend component, you need to create a product listing in the Stripe Dashboard. This is required for Stripe to validate that the request coming from the frontend is legitimate and to charge the right amount for the selected product/SKU. To set this up, simply follow the steps in the [Stripe docs](https://stripe.com/docs/payments/checkout#configure).
 
-### Create a checkout component that loads StripeJS and redirects to the checkout
+#### Create a checkout component that loads StripeJS and redirects to the checkout
 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
 
@@ -172,7 +157,7 @@ const Checkout = class extends React.Component {
 export default Checkout
 ```
 
-### What did you just do?
+#### What did you just do?
 
 You imported React, added a button with some styles, and introduced some React functions. The `componentDidMount()` and `redirectToCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to initialise the Stripe.js client. It looks like this:
 
@@ -218,7 +203,7 @@ The `redirectToCheckout()` function validates your checkout request and either r
 
 The `render()` function applies our styles to the button and binds the `redirectToCheckout()` function to the button's onclick event.
 
-### Importing the checkout component into the homepage
+#### Importing the checkout component into the homepage
 
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look like similar to this:
 
@@ -251,11 +236,11 @@ export default IndexPage
 
 If you go back to [localhost:8000](http://localhost:8000/) in your browser and you have `npm run develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
 
-## Advanced: Import SKUs via source plugin
+### Advanced: Import SKUs via source plugin
 
 Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve your SKUs at build time.
 
-### Add the Stripe source plugin
+#### Add the Stripe source plugin
 
 Add the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) which you can use to pull in the SKUs from your Stripe account.
 
@@ -311,7 +296,7 @@ Lastly, make sure that your `.gitignore` file excludes all of your `.env.*` file
 .env.production
 ```
 
-### Create a component that lists your SKUs
+#### Create a component that lists your SKUs
 
 In your components folder add a new `Products` folder. This folder will include the components that interact with the Stripe SKUs. First, you need a component that queries and lists your SKUs:
 
@@ -374,7 +359,7 @@ export default AdvancedExamplePage
 
 When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your SKU names.
 
-### Create a component that presents a single SKU
+#### Create a component that presents a single SKU
 
 To make your SKUs more visually appealing and interactive, create a new `SkuCard` component in your `Products` folder:
 
@@ -512,14 +497,14 @@ class Skus extends Component {
 export default Skus
 ```
 
-### Adding a cart component
+#### Adding a cart component
 
 You can call `redirectToCheckout()` providing an array of SKUs and their quantities to charge for multiple items at the same time. Instead of each "BUY ME" button redirecting to the checkout page, you can therefore provide a central "GO TO CHECKOUT" button that uses the state of a cart component. You can see the necessary changes for this example [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial/tree/cart-example).
 
-## Custom: Fully custom checkout flow (requires backend component)
+### Custom: Fully custom checkout flow (requires backend component)
 
 Stripe Checkout is currently in beta. You can sign up to receive updates on the [Stripe website](https://stripe.com/docs/payments/checkout). In the meantime, if you're looking to build more custom checkout flows, you can set up a simple function that your Gatsby project can POST to in order to handle the payment. See the previous version of [this tutorial](https://github.com/gatsbyjs/gatsby/blob/6b3c08782d0898719b61181638b6a0967da49dd6/docs/tutorial/ecommerce-tutorial/index.md) for detailed steps.
 
-# Testing Payments
+## Testing Payments
 
 In test mode (when using the API key that includes _test_) Stripe provides [test cards](https://stripe.com/docs/testing#cards) for you to test different checkout scenarios.

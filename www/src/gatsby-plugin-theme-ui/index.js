@@ -192,6 +192,11 @@ export default {
       default: `16.5rem`,
       large: `18rem`,
     },
+    mainContentWidth: {
+      default: `54rem`,
+      withSidebar: `42rem`,
+    },
+    tocWidth: `18rem`,
   },
   shadows: sh,
   space: spc,

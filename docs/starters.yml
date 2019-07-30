@@ -3254,6 +3254,22 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
+- url: https://myclicks.netlify.com/
+  repo: https://github.com/himali-patel/MyClicks
+  description: A simple Gatsby starter template to create portfolio website with contentful and Netlify.
+  tags:
+    - Blog
+    - Netlify
+    - CMS:Contentful
+    - Styling:Bootstrap
+    - Disqus
+    - SEO
+  features:
+    - Fecthing Dynamic content from Contentful.
+    - Blog post listing with previews, disqus implementation and social sharing for each blog post.
+    - Contact form integration with Netlify.
+    - Portfolio Result Filteration according to Category.
+    - Index pages design with Recent Blogs and Intagram Feed.
 - url: https://gatsby-starter-typescript-graphql.netlify.com
   repo: https://github.com/spawnia/gatsby-starter-typescript-graphql
   description: A Gatsby starter with typesafe GraphQL using TypeScript
@@ -3428,3 +3444,59 @@
     - Page Transitions
     - Blog Post Template
     - Sitemap & Robots.txt generation
+- url: https://elemental.netlify.com/
+  repo: https://github.com/akzhy/gatsby-starter-elemental
+  description: A highly customizable portfolio starter with grid support.
+  tags:
+    - Blog
+    - Portfolio
+    - SEO
+  features:
+    - Highly Customizable
+    - Portfolio Template
+    - Blog Post Template
+    - SEO Friendly
+- url: https://gatsby-starter-apollo.netlify.com/
+  repo: https://github.com/piducancore/gatsby-starter-apollo-netlify
+  description: This project is an easy way to start developing fullstack apps with Gatsby and Apollo Server (using Netlify Lambda functions). For developing we use Netlify Dev to bring all of this magic to our local machine.
+  tags:
+    - Netlify
+  features:
+    - Apollo Client
+    - Apollo Server running on Netlify functions
+    - Netlify Dev for local development
+- url: https://gatsby-starter-blog-and-portfolio.netlify.com/
+  repo: https://github.com/alisalahio/gatsby-starter-blog-and-portfolio
+  description: Just gatsby-starter-blog , with portfolio section added
+  tags:
+    - Blog
+    - Portfolio
+  features:
+    - Basic setup for a full-featured blog
+    - Basic setup for a portfolio
+    - Support for an RSS feed
+    - Google Analytics support
+    - Automatic optimization of images in Markdown posts
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://advancedblog.netlify.com/
+  repo: https://github.com/Bvlktech/AdvancedBlog
+  description: Advanced Blog Starter for GatsbyJS
+  tags:
+    - CMS:Netlify
+    - Styling:CSS-in-JS
+    - Blog
+    - SEO
+  features:
+    - A simple landing page with blog functionality built with Netlify CMS
+    - Create Blog posts from Netlify CMS
+    - Basic directory organization
+    - Uses Styled-Components for styling
+    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
+    - Uses gatbsy-image with Netlify-CMS preview support
+    - Separate components for everything
+    - Netlify deploy configuration
+    - Perfect score on Lighthouse for SEO, Accessibility and Performance and PWA!
+    - ..and more
