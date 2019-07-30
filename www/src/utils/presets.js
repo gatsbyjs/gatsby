@@ -10,7 +10,7 @@ import {
   mediaQueries,
   radii,
   shadows,
-  sizes,
+  sizes as sizeTokens,
   space as spaceTokens,
   transition,
   zIndices,
@@ -23,6 +23,15 @@ for (let fontFamily in fontTokens) {
 
 const fontSizes = fontSizeTokens.map(token => `${token / 16}rem`)
 const space = spaceTokens.map(token => `${token / 16}rem`)
+
+const sizes = {
+  ...sizeTokens,
+  mainContentWidth: {
+    default: `54rem`,
+    withSidebar: `42rem`,
+  },
+  tocWidth: `18rem`,
+}
 
 export {
   borders,
