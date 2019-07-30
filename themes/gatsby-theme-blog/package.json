@@ -26,7 +26,7 @@
     "deepmerge": "^4.0.0",
     "gatsby-image": "^2.2.7",
     "gatsby-plugin-emotion": "^4.1.2",
-    "gatsby-plugin-feed": "^2.3.5",
+    "gatsby-plugin-feed": "^2.3.6",
     "gatsby-plugin-mdx": "^1.0.18",
     "gatsby-plugin-react-helmet": "^3.1.2",
     "gatsby-plugin-sharp": "^2.2.9",
@@ -48,7 +48,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.13.42",
+    "gatsby": "^2.13.44",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
