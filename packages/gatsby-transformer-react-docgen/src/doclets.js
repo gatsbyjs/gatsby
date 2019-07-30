@@ -47,6 +47,35 @@ export const parseDoclets = obj => {
   return getDoclets(desc) || Object.create(null)
 }
 
+function parseType(type) {
+  if (!type) {
+    return undefined
+  }
+
+  const { name, raw } = type
+
+  if (name === `union`) {
+    return {
+      name,
+      value: raw.split(`|`).map(v => {
+        return { name: v.trim() }
+      }),
+    }
+  }
+
+  if (name === `enum`) {
+    return { ...type }
+  }
+
+  if (raw) {
+    return {
+      name: raw,
+    }
+  }
+
+  return { ...type }
+}
+
 /**
  * Reads the JSDoc "doclets" and applies certain ones to the prop type data
  * This allows us to "fix" parsing errors, or unparsable data with JSDoc
@@ -64,17 +93,16 @@ export const applyPropDoclets = prop => {
       value = cleanDocletValue(value)
 
       if (prop.type === undefined) {
-        prop.type = prop.tsType
-          ? { ...prop.tsType }
-          : prop.flowType
-          ? { ...prop.flowType }
-          : {}
+        prop.type = {}
       }
 
       prop.type.name = value
 
       if (value[0] === `(`) {
-        value = value.substring(1, value.length - 1).split(`|`)
+        value = value
+          .substring(1, value.length - 1)
+          .split(`|`)
+          .map(v => v.trim())
         const name = value.every(isLiteral) ? `enum` : `union`
         prop.type.name = name
         prop.type.value = value.map(value =>
@@ -97,6 +125,11 @@ export const applyPropDoclets = prop => {
       return
     }
   })
+
+  // lookup for tsTypes or flowTypes
+  if (prop.type === undefined) {
+    prop.type = parseType(prop.tsType) || parseType(prop.flowType)
+  }
 
   return prop
 }
