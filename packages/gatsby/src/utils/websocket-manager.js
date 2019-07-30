@@ -25,20 +25,23 @@ const getCachedPageData = async (
   pagePath: string,
   directory: string
 ): QueryResult => {
-  const { program } = store.getState()
+  const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
-  try {
-    const pageData = await pageDataUtil.read({ publicDir }, pagePath)
-    return {
-      result: pageData.result,
-      id: pagePath,
+  if (pages.has(pageData)) {
+    try {
+      const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+      return {
+        result: pageData.result,
+        id: pagePath,
+      }
+    } catch (err) {
+      console.log(
+        `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
+      )
+      return undefined
     }
-  } catch (err) {
-    console.log(
-      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
-    )
-    return undefined
   }
+  return undefined
 }
 
 const hashPaths = paths => {
