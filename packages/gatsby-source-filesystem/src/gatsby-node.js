@@ -40,10 +40,19 @@ const createFSMachine = () =>
   })
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged, reporter, emitter },
+  { actions, getNode, createNodeId, reporter, emitter },
   pluginOptions
 ) => {
-  const { createNode, deleteNode } = actions
+  reporter.info(`Creating GraphQL type definition for File`)
+  const { createNode, createTypes, deleteNode } = actions
+
+  const typeDefs = `
+    type File implements Node @infer {
+      birthtime: Date @deprecated(reason: "Use \`birthTime\` instead")
+      birthtimeMs: Float @deprecated(reason: "Use \`birthTime\` instead")
+    }
+  `
+  createTypes(typeDefs)
 
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
@@ -183,14 +192,3 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 }
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-file-node`)
-
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
-  const typeDefs = `
-  type File implements Node @infer {
-    birthtime: Date @deprecated(reason: "Use \`birthTime\` instead")
-    birthtimeMs: Float @deprecated(reason: "Use \`birthTime\` instead")
-  }
-  `
-  createTypes(typeDefs)
-}
