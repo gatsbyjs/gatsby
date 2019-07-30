@@ -6785,3 +6785,16 @@
   built_by: Luis Rodrigues
   built_by_url: https://goblindegook.com
   featured: false
+- title: Simon Koelewijn
+  main_url: https://simonkoelewijn.nl
+  url: https://simonkoelewijn.nl
+  description: >
+    Personal blog of Simon Koelewijn, where he blogs about UX, analytics and web development (in Dutch). Made awesome and fast by using Gatsby 2.x (naturally) and gratefully using Netlify and Netlify CMS.
+  categories:
+    - Freelance
+    - Blog
+    - Web Development
+    - User Experience
+  built_by: Simon Koelewijn
+  built_by_url: https://simonkoelewijn.nl
+  featured: false
