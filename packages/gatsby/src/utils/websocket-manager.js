@@ -16,6 +16,19 @@ type QueryResult = {
 
 type QueryResultsMap = Map<string, QueryResult>
 
+const denormalize = path => {
+  if (path === undefined) {
+    return path
+  }
+  if (path === `/`) {
+    return `/`
+  }
+  if (path.charAt(path.length - 1) !== `/`) {
+    return path + `/`
+  }
+  return path
+}
+
 /**
  * Get cached page query result for given page path.
  * @param {string} pagePath Path to a page.
@@ -27,7 +40,7 @@ const getCachedPageData = async (
 ): QueryResult => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
-  if (pages.has(pagePath)) {
+  if (pages.has(denormalize(pagePath)) || pages.has(pagePath)) {
     try {
       const pageData = await pageDataUtil.read({ publicDir }, pagePath)
       return {
