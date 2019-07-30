@@ -729,6 +729,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   })
 
   parentTypesToChildren.forEach((children, parent) => {
+    if (!schemaComposer.has(parent)) return
     const typeComposer = schemaComposer.getAnyTC(parent)
     if (
       typeComposer instanceof InterfaceTypeComposer &&
@@ -753,8 +754,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   mimeTypesToChildren.forEach((children, mimeType) => {
     const parentTypes = typesHandlingMimeTypes.get(mimeType)
     if (parentTypes) {
-      parentTypes.forEach(parent => {
-        const typeComposer = schemaComposer.getAnyTC(parent)
+      parentTypes.forEach(typeComposer => {
         if (
           typeComposer instanceof InterfaceTypeComposer &&
           !typeComposer.hasExtension(`nodeInterface`)
