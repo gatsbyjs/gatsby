@@ -14,7 +14,7 @@ _This blog post was originally posted on [LekoArts' Blog](https://www.lekoarts.d
 
 Building [themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes/) for Gatsby is fun and a great way to share projects with the open source community. In the past I mainly created starters which I added to the [starter library](https://www.gatsbyjs.org/starters/?v=2) on Gatsbyjs.org and called it a day. While working on my first starter to theme conversion I realized that I don't have a great overview or marketing site for my starters — I wanted to change that for my upcoming themes! Hence I created [themes.lekoarts.de](https://themes.lekoarts.de). It currently shows my available themes and their respective links to GitHub and demo website. Moreover I plan to send out a newsletter every month so be sure to subscribe :)
 
-With this blogpost I want to describe the process of creating my Gatsby Themes library website with [Theme UI](https://theme-ui.com/). I won't go too deep into technical details so please don't expect this to be a tutorial.
+With this blogpost I want to describe the process of creating my Gatsby themes library website with [Theme UI](https://theme-ui.com/). I won't go too deep into technical details so please don't expect this to be a tutorial.
 
 ## Design
 
