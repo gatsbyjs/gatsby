@@ -4,15 +4,6 @@ title: Themes Conventions
 
 As we begin to formalize and standardize the methodologies for building Gatsby Themes, we're documenting them all here. These aren't intended to be the only way to solve things, but are recommended approaches. If you have other ideas and best practices please open up a PR to update this page.
 
-## Table of Contents
-
-- [Naming](#naming)
-- [Initializing required directories](#initializing-required-directories)
-- [Separating queries and presentational components](#separating-queries-and-presentational-components)
-  - [Page queries](#page-queries)
-  - [Static queries](#static-queries)
-- [Site metadata](#site-metadata)
-
 ## Naming
 
 It's recommended to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you

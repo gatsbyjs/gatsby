@@ -12,14 +12,6 @@ support for MDX so you can start your blog. The posts will live in
 `gatsby-source-filesystem` and [`createPages`](/docs/node-apis/#createPages) in
 `gatsby-node.js`.
 
-## Table of contents
-
-- [Source from the filesystem](#source-mdx-pages-from-the-filesystem)
-- [Add MDX files](#add-mdx-files)
-- [Generate slugs](#generate-slugs)
-- [Create pages](#create-pages-from-sourced-mdx-files)
-- [Make a template](#make-a-template-for-your-posts)
-
 ## Source MDX pages from the filesystem
 
 To let Gatsby know that you'll be working with MDX content you need to
