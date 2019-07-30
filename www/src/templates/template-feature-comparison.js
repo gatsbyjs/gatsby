@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import { Link } from "gatsby"
 import { css } from "@emotion/core"
 import Layout from "../components/layout"
 import FooterLinks from "../components/shared/footer-links"

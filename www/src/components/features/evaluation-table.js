@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import MdInfoOutline from "react-icons/lib/md/info-outline"
 import {
   colors,
   space,
