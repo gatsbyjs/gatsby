@@ -22,9 +22,6 @@ exports.sourceNodes = async (
   } = pluginOptions
   const { createNode } = actions
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
-  const downloadingFilesActivity = reporter.activityTimer(
-    `Remote file download`
-  )
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
@@ -141,6 +138,9 @@ exports.sourceNodes = async (
   // Download all files (await for each pool to complete to fix concurrency issues)
   const fileNodes = [...nodes.values()].filter(isFileNode)
   if (fileNodes.length) {
+    const downloadingFilesActivity = reporter.activityTimer(
+      `Remote file download`
+    )
     downloadingFilesActivity.start()
     await asyncPool(concurrentFileRequests, fileNodes, async node => {
       await downloadFile(
