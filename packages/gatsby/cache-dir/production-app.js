@@ -95,7 +95,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const { pagePath, location: browserLoc } = window
 
-  const globalLoader = window.__loader
+  const globalLoader = window.___loader
 
   // Explicitly call navigate if the canonical path (window.pagePath)
   // is different to the browser path (window.location.pathname). But
