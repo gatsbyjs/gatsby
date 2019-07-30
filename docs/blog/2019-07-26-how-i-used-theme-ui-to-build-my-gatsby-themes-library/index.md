@@ -76,7 +76,7 @@ const Circle = ({ color, className }) => (
 )
 ```
 
-Little tip here: When you pass `className` down, you can style the component individually when using it.
+> Little tip here: When you pass `className` down, you can style the component individually when using it.
 
 ### Breakpoints
 
