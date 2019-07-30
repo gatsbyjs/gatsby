@@ -25,7 +25,7 @@ Nearly every time before I start coding a project I start with the design in Fig
 <figcaption>Inspirational screenshots</figcaption>
 </figure>
 
-I really liked the prominent and actionable hero section of the Refactoring UI website, the shapes and colors from the other designs. Speaking of Refactoring UI: For the design (and later for coding) I used the TailwindCSS colors and styles.
+I really liked the prominent and actionable hero section of the [Refactoring UI website](https://refactoringui.com/), the shapes and colors from the other designs. Speaking of Refactoring UI, for the design (and later for coding) I used the TailwindCSS colors and styles.
 
 The design you see live on the website now is pretty much the design I created in Figma — which speaks for the ease of use of a Figma (+ Tailwind styles) => Theme UI (+ Tailwind preset) workflow!
 
