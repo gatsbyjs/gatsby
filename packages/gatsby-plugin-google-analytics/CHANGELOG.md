@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.5...gatsby-plugin-google-analytics@2.1.6) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Fix broken script ([#16223](https://github.com/gatsbyjs/gatsby/issues/16223)) ([4ff5321](https://github.com/gatsbyjs/gatsby/commit/4ff5321))
+
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.4...gatsby-plugin-google-analytics@2.1.5) (2019-07-30)
 
 ### Features

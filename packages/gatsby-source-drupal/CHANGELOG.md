@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.9...gatsby-source-drupal@3.2.10) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** don't show "file download" activity if there are no files to download ([#16157](https://github.com/gatsbyjs/gatsby/issues/16157)) ([a488588](https://github.com/gatsbyjs/gatsby/commit/a488588))
+
 ## [3.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.8...gatsby-source-drupal@3.2.9) (2019-07-29)
 
 ### Bug Fixes
