@@ -326,7 +326,8 @@ module.exports = async ({
         use: [
           loaders.js({
             ...options,
-            configFile: false,
+            // TODO(v3): set configFile to false
+            configFile: true,
             compact: true,
           }),
         ],
