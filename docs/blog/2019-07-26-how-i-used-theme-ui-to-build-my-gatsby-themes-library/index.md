@@ -171,6 +171,6 @@ Setting the offset values to either _left_ or _right_ is decided by _isEven_ whi
 
 ## Conclusion
 
-All in all Theme UI helped me a lot to get this done quickly. Starting at the Design to Code Handoff (by using the same design tokens) and ending at using the breakpoint syntax in the GraphQL layer of Gatsby to individually style theme entries. Of course Theme UI offers you all the things it says on its own website: Ergonomic, Themeable, Contraint-based. And in the case of Gatsby Themes: Also shadowable.
+All in all Theme UI helped me a lot to get this done quickly. From the design phase, to the code handoff phase (by using the same design tokens) to finally using the breakpoint syntax in the GraphQL layer of Gatsby to individually style theme entries. Of course Theme UI offers you all the things it says on its own website: "Ergonomic, Themeable, Contraint-based". And in the case of Gatsby themes: Also shadowable.
 
 I highly recommend using Theme UI for your projects and especially for Gatsby Themes 🎉
