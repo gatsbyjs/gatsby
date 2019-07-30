@@ -1,6 +1,6 @@
 import React from "react"
 import { colors, space } from "../../utils/presets"
-import infoIcon from "../../assets/info-icon.svg"
+import MdInfoOutline from "react-icons/lib/md/info-outline"
 
 const bgDefault = colors.orange[20]
 const bgFeatureAvailability = colors.orange[50]
@@ -12,8 +12,7 @@ const renderText = txt => {
     <span key={`info-icon-${words[words.length - 1]}`}>
       {` `}
       {`${words[words.length - 1]} `}
-      <img
-        src={infoIcon}
+      <MdInfoOutline
         css={{
           height: space[3],
           marginBottom: space[1],

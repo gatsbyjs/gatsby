@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "@emotion/styled"
-import logo from "../../monogram.svg"
+import logo from "../../assets/monogram.svg"
 import logoDictionary from "./logo-dictionary"
 import {
   colors,

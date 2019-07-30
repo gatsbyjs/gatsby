@@ -30,6 +30,7 @@ const extendItemList = itemList => {
 const extendSidebarData = item => {
   return {
     title: item[0].title,
+    breadcrumbTitle: item[0].breadcrumbTitle,
     key: item[0].key,
     disableExpandAll: item[0].disableExpandAll,
     disableAccordions: item[0].disableAccordions,

@@ -48,6 +48,7 @@ async function fetch({
   _acfOptionPageIds,
   _hostingWPCOM,
   _auth,
+  _cookies,
   _perPage,
   _concurrentRequests,
   _includedRoutes,
@@ -113,6 +114,13 @@ Mama Route URL: ${url}
       }
     }
 
+    if (_cookies) {
+      options.headers = {
+        ...options.headers,
+        Cookie: getCookieString(_cookies),
+      }
+    }
+
     allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
@@ -161,6 +169,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _verbose,
           _perPage,
           _auth,
+          _cookies,
           _accessToken,
           _concurrentRequests,
         })
@@ -246,6 +255,7 @@ async function fetchData({
   _verbose,
   _perPage,
   _auth,
+  _cookies,
   _accessToken,
   _concurrentRequests,
 }) {
@@ -267,6 +277,7 @@ async function fetchData({
     url,
     _perPage,
     _auth,
+    _cookies,
     _accessToken,
     _verbose,
     _concurrentRequests,
@@ -274,6 +285,11 @@ async function fetchData({
 
   let entities = []
   if (routeResponse) {
+    if (type.indexOf(`wordpress__menus_menus`) !== -1) {
+      routeResponse = routeResponse.map(r => {
+        return { ...r, ID: r.term_id }
+      })
+    }
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
       routeResponse = routeResponse.map(r => {
@@ -293,7 +309,7 @@ async function fetchData({
     }
 
     // WordPress exposes the menu items in meta links.
-    if (type == `wordpress__wp_api_menus_menus`) {
+    if (type === `wordpress__wp_api_menus_menus`) {
       for (let menu of routeResponse) {
         if (menu.meta && menu.meta.links && menu.meta.links.self) {
           entities = entities.concat(
@@ -306,12 +322,30 @@ async function fetchData({
               _verbose,
               _perPage,
               _auth,
+              _cookies,
               _accessToken,
             })
           )
         }
       }
     }
+
+    // Menu nodes for WP-REST-API V2 Menus ( https://wordpress.org/plugins/wp-rest-api-v2-menus/ )
+    if (type === `wordpress__menus_menus`) {
+      for (let menu of routeResponse) {
+        entities = entities.concat(
+          await fetchData({
+            route: { url: `${url}/${menu.term_id}`, type: `${type}_items` },
+            _verbose,
+            _perPage,
+            _auth,
+            _accessToken,
+            _cookies,
+          })
+        )
+      }
+    }
+
     // TODO : Get the number of created nodes using the nodes in state.
     let length
     if (routeResponse && Array.isArray(routeResponse)) {
@@ -342,7 +376,15 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _auth, _accessToken, _concurrentRequests, _verbose },
+  {
+    url,
+    _perPage,
+    _auth,
+    _cookies,
+    _accessToken,
+    _concurrentRequests,
+    _verbose,
+  },
   page = 1
 ) {
   try {
@@ -360,6 +402,13 @@ async function getPages(
       if (_accessToken) {
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
+        }
+      }
+
+      if (_cookies) {
+        o.headers = {
+          ...o.headers,
+          Cookie: getCookieString(_cookies),
         }
       }
 
@@ -641,7 +690,7 @@ const useApiUrl = (apiUrl, endpointURL) => {
 
 /**
  * Build full URL from baseUrl and fullPath.
- * Method of contructing full URL depends on wether it's hosted on wordpress.com
+ * Method of constructing full URL depends on wether it's hosted on wordpress.com
  * or not as wordpress.com have slightly different (custom) REST structure
  *
  * @param {any} baseUrl The base site URL that should be prepended to full path
@@ -662,6 +711,16 @@ const buildFullUrl = (baseUrl, fullPath, _hostingWPCOM) => {
  */
 const getManufacturer = route =>
   route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
+
+/**
+ * Build a cookie header string from an object of key value pairs
+ *
+ * @param {any} cookies
+ */
+const getCookieString = cookies =>
+  Object.entries(cookies)
+    .map(([key, value]) => `${key}=${value}`)
+    .join(`; `)
 
 fetch.getRawEntityType = getRawEntityType
 fetch.getRoutePath = getRoutePath

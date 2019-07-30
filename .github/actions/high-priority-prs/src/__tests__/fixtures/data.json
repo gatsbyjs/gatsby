@@ -3649,7 +3649,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-04-29T06:37:51Z",
-                  "message": "remove accidentally commited .patch file"
+                  "message": "remove accidentally committed .patch file"
                 }
               },
               {
@@ -4853,7 +4853,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-05-26T18:18:31Z",
-                  "message": "skip checking if createTypes is available - this is hard requirment now and wouldn't work without it"
+                  "message": "skip checking if createTypes is available - this is hard requirement now and wouldn't work without it"
                 }
               },
               {
@@ -6424,7 +6424,7 @@
         {
           "createdAt": "2019-05-17T13:04:21Z",
           "updatedAt": "2019-06-03T13:52:10Z",
-          "title": "fix(www): Normalize data from airtable on schema level, remove unnessecary hook.",
+          "title": "fix(www): Normalize data from airtable on schema level, remove unnecessary hook.",
           "url": "https://github.com/gatsbyjs/gatsby/pull/14114",
           "author": {
             "url": "https://github.com/freiksenet"
@@ -6465,7 +6465,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-05-17T13:03:04Z",
-                  "message": "Normalize data from airtable on schema level, remove unnessecary hook."
+                  "message": "Normalize data from airtable on schema level, remove unnecessary hook."
                 }
               },
               {
@@ -7098,13 +7098,13 @@
               {
                 "commit": {
                   "authoredDate": "2019-05-19T22:50:18Z",
-                  "message": "fix focusing on navigation from 404 to different 404, improve focus managment tests"
+                  "message": "fix focusing on navigation from 404 to different 404, improve focus management tests"
                 }
               },
               {
                 "commit": {
                   "authoredDate": "2019-05-19T22:55:39Z",
-                  "message": "fix most of focus navigation focus managment in development\n\nnavigating from and to 404 doesn't focus router wrapper correctly. This is because 404 in development is special case (see notes before skipped e2e-tests/development-runtime accessibility tests). This can be fixed but require a lot of changes which would be out of scope of this PR and would potentially make it harder to merge page manifest changes, so for now lets ship fixes that are already here."
+                  "message": "fix most of focus navigation focus management in development\n\nnavigating from and to 404 doesn't focus router wrapper correctly. This is because 404 in development is special case (see notes before skipped e2e-tests/development-runtime accessibility tests). This can be fixed but require a lot of changes which would be out of scope of this PR and would potentially make it harder to merge page manifest changes, so for now lets ship fixes that are already here."
                 }
               },
               {
