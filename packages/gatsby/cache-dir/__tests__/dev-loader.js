@@ -537,9 +537,13 @@ describe(`Dev loader`, () => {
       const devLoader = new DevLoader(null, [])
       devLoader.shouldPrefetch = jest.fn(() => false)
       devLoader.doPrefetch = jest.fn()
+      devLoader.apiRunner = jest.fn()
 
       expect(devLoader.prefetch(`/mypath/`)).toBe(false)
       expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
+      expect(devLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
+        pathname: `/mypath/`,
+      })
       expect(devLoader.doPrefetch).not.toHaveBeenCalled()
     })
 

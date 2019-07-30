@@ -258,15 +258,15 @@ export class BaseLoader {
   }
 
   prefetch(pagePath) {
-    if (!this.shouldPrefetch(pagePath)) {
-      return false
-    }
-
     // Tell plugins with custom prefetching logic that they should start
     // prefetching this path.
     if (!this.prefetchTriggered.has(pagePath)) {
       this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
       this.prefetchTriggered.add(pagePath)
+    }
+
+    if (!this.shouldPrefetch(pagePath)) {
+      return false
     }
 
     const realPath = cleanPath(pagePath)
