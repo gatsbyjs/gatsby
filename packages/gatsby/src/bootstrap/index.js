@@ -77,7 +77,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   if (typeof config === `function`) {
     report.panic(
-      `Custom gatsby-config as a Function is not supported in site root.`
+      `A gatsby-config that exports a function can only be used as a theme and not run directly.
+      If you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.
+      If you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions are not supported in the root gatsby-config.`
     )
   }
 
