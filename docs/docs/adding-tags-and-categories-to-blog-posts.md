@@ -57,7 +57,7 @@ Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql
 }
 ```
 
-The above query groups posts by `tags`, and return each `tag` with the number of posts for each as `totalCount`. We could also extract some post data in each group, but to create a page for each tag, we only need to know the tag name. Let's make the tag page template now:
+The above query groups posts by `tags`, and returns each `tag` with the number of posts as `totalCount`. As an addition, we could extract some post data in each group if we need to. To keep this tutorial small, we're only using the tag name in our tag pages. Let's make the tag page template now:
 
 ## Make a tags page template (for `/tags/{tag}`)
 
@@ -224,7 +224,7 @@ exports.createPages = ({ actions, graphql }) => {
 Some notes:
 
 - Our GraphQL query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
-- We have 2 `allMarkdownRemark` bits so we must alias one of them. We alias both to avoid generic names their content.
+- We have referenced two `allMarkdownRemark` fields in our query. To avoid naming collisions we must alias one of them. We alias both to make our code more human-readable.
 - While making the tag pages, note that we pass `tag.name` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
