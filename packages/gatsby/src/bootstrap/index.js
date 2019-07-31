@@ -75,6 +75,12 @@ module.exports = async (args: BootstrapArgs) => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
+  if (typeof config === `function`) {
+    report.panic(
+      `Custom gatsby-config as a Function is not supported in site root.`
+    )
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     // TODO: deprecation message for old __experimentalThemes
