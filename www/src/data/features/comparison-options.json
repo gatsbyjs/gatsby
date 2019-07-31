@@ -22,7 +22,7 @@
       "key": "nuxtjs",
       "display": "Nuxt.js",
       "nodeField": "Nuxtjs",
-      "description": "Next.js is a free and open source web application framework based on Vue.js, Node.js, webpack and Babel.js for building server-side rendered and/or static web applications using Vue."
+      "description": "Nuxt.js is a free and open source web application framework based on Vue.js, Node.js, webpack and Babel.js for building server-side rendered and/or static web applications using Vue."
     }
   ],
   "cms": [

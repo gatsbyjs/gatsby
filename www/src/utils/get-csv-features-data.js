@@ -1,3 +1,9 @@
+/**
+ * Splits data from the Features query into more manageable data structures"
+ * @param {Array} data Edges in response from GraphQL
+ * @returns {Object} headers and sections for features tables
+ */
+
 export const getFeaturesData = function(data) {
   const sections = (data || [])
     .map((row, i) => (row.node.Category ? i : -1))

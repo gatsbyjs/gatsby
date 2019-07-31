@@ -7,6 +7,7 @@ import Container from "../components/container"
 import EvaluationTable from "../components/features/evaluation-table"
 import LogoDictionary from "../components/features/logo-dictionary"
 import LegendTable from "../components/features/legend-table"
+import FeaturesFooter from "../components/features/features-footer"
 import Breadcrumb from "../components/docs-breadcrumb"
 
 import { itemListFeatures } from "../utils/sidebar/item-list"
@@ -17,6 +18,7 @@ class FeatureComparison extends Component {
   render() {
     const {
       pageContext: { options, featureType },
+      location,
       data,
     } = this.props
     const optionsDisplay = options.map(o => o.display)
@@ -64,6 +66,7 @@ class FeatureComparison extends Component {
               sectionHeaders={sectionHeaders}
             />
           </main>
+          <FeaturesFooter />
           <FooterLinks />
         </Container>
       </Layout>

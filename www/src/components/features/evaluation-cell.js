@@ -51,7 +51,6 @@ const renderCell = (text, column) => {
           >
             {renderText(text)}
           </button>
-          {/* eslint-enable */}
         </div>
       )
     }

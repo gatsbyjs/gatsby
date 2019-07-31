@@ -10,7 +10,9 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
-const featureComparisonOptions = require(`./src/data/features/comparison-options.json`)
+const {
+  generateComparisonPageSet,
+} = require(`./src/utils/generate-comparison-page-set.js`)
 const yaml = require(`js-yaml`)
 const docLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
@@ -764,61 +766,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create feature comparison pages
-
-      // create power sets of all possible feature comparison options:
-      // adapted from https://github.com/acarl005/generatorics
-      function* generatePowerSet(arr) {
-        const length = arr.length
-        let options = []
-
-        yield* powerUtil(0, 0)
-        function* powerUtil(start, index) {
-          options.length = index
-          yield options
-          if (index === length) return
-          for (let i = start; i < length; i++) {
-            options[index] = arr[i]
-            yield* powerUtil(i + 1, index + 1)
-          }
-        }
-        return options
-      }
-
-      for (const set of generatePowerSet(
-        featureComparisonOptions.cms.map(option => option.key)
-      )) {
-        if (set.length > 0) {
-          const optionSet = [...set]
-          const options = _.filter(featureComparisonOptions.cms, o =>
-            optionSet.includes(o.key)
-          )
-          createPage({
-            path: `/features/cms/gatsby-vs-${set.join(`-vs-`)}`,
-            component: slash(featureComparisonPageTemplate),
-            context: {
-              options,
-              featureType: `cms`,
-            },
-          })
-        }
-      }
-      for (const value of generatePowerSet(
-        featureComparisonOptions.jamstack.map(option => option.key)
-      )) {
-        if (value.length > 0) {
-          const optionSet = [...value]
-          const options = _.filter(featureComparisonOptions.jamstack, o =>
-            optionSet.includes(o.key)
-          )
-          createPage({
-            path: `/features/jamstack/gatsby-vs-${value.join(`-vs-`)}`,
-            component: slash(featureComparisonPageTemplate),
-            context: {
-              options,
-              featureType: `jamstack`,
-            },
-          })
-        }
+      const jamstackPages = generateComparisonPageSet(`jamstack`)
+      const cmsPages = generateComparisonPageSet(`cms`)
+      const comparisonPages = [...jamstackPages, ...cmsPages]
+      for (const { path, options, featureType } of comparisonPages) {
+        createPage({
+          path,
+          component: slash(featureComparisonPageTemplate),
+          context: {
+            options,
+            featureType,
+          },
+        })
       }
 
       // redirecting cypress-gatsby => gatsby-cypress
