@@ -24,7 +24,7 @@ As such, this article will show how I built this site. I'll show only the code s
 
 ## Creating a Basic Gatsby Setup with Material-UI
 
-Gatsby's docs have a wide variety of [Gatsby starters](/starters/?v=2), each with different features and advantages. I opted to use a starter I built for [another Gatsby tutorial I wrote](https://appendto.com/2019/04/build-fast-and-elegant-sites-with-gatsby-netlifycms-and-material-ui/). My starter has a simple file structure and is setup to use Material-UI (which I'll use heavily for building this interface). There are a couple ways to use Material-UI in Gatsby but I found the [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/) plugin route the easiest. Unless you have a very specific use case, save yourself the rabbit hole, install the plugin, and setup the theme within gatsby-config.js like so:
+Gatsby's docs have a wide variety of [Gatsby starters](/starters/?v=2), each with different features and advantages. I opted to use a starter I built for [another Gatsby tutorial I wrote](https://appendto.com/2019/04/build-fast-and-elegant-sites-with-gatsby-netlifycms-and-material-ui/). My starter has a simple file structure and is setup to use Material-UI (which I'll use heavily for building this interface). There are a couple ways to use Material-UI in Gatsby but I found the [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/) plugin route the easiest. Unless you have a very specific use case, save yourself the rabbit hole, install the plugin, and setup the theme within `gatsby-config.js` like so:
 
 ```javascript
 module.exports = {
