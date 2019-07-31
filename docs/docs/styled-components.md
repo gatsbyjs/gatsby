@@ -114,7 +114,7 @@ export default () => (
 
 ### Enabling end user stylesheets with a stable class name
 
-Adding a persistent CSS `className` to your styled components can make it easier for end-users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
+Adding a persistent CSS `className` to your styled components can make it easier for end users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 
 Here's an example where the class name `container` is added to the DOM along with the Styled Components' dynamically-created class names:
 
@@ -133,4 +133,4 @@ export default ({ children }) => (
 ```
 
 A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS-in-JS output changed.
-
+More info : [Including user stylesheets](https://mediatemple.net/blog/tips/bend-websites-css-will-stylish-stylebot/)
