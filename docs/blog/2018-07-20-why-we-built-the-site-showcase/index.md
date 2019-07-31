@@ -2,7 +2,7 @@
 title: Why We Created the Site Showcase
 date: 2018-07-20
 author: Shannon Soper
-tags: ["documentation", "launch"]
+tags: ["documentation", "releases"]
 ---
 
 We recently finished the first phase of the [Site Showcase](/showcase/), which is a searchable, filterable library of sites built with Gatsby!

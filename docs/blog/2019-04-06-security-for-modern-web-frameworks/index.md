@@ -5,8 +5,8 @@ author: Alex Moon
 excerpt: "While more secure than their server-side counterparts, modern web frameworks provide new and unique security concerns."
 tags:
   - security
-  - api
-  - JAMstack
+  - apis
+  - jamstack
 ---
 
 Among the many lauded benefits of using Gatsby (and other static app frameworks) is security. It is encouraging to see a framework not require developers to stress about security, but for those new to Gatsby or web development, this can contribute to a myth that there are no security issues.

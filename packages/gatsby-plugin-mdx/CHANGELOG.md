@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.18...gatsby-plugin-mdx@1.0.19) (2019-07-30)
+
+### Bug Fixes
+
+- **deps:** add missing deps to gatsby-plugin-mdx ([#16207](https://github.com/gatsbyjs/gatsby/issues/16207)) ([2db54b3](https://github.com/gatsbyjs/gatsby/commit/2db54b3))
+
+## [1.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.17...gatsby-plugin-mdx@1.0.18) (2019-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.16...gatsby-plugin-mdx@1.0.17) (2019-07-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Add missing HTML attribute translations ([#16043](https://github.com/gatsbyjs/gatsby/issues/16043)) ([36e742a](https://github.com/gatsbyjs/gatsby/commit/36e742a))
+
 ## [1.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.15...gatsby-plugin-mdx@1.0.16) (2019-07-23)
 
 ### Bug Fixes

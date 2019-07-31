@@ -1144,7 +1144,7 @@
     - Portfolio
     - Web Development
     - Blog
-- title: LekoArts
+- title: LekoArts — Graphic Designer & Front-End Developer
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
   source_url: "https://github.com/LekoArts/portfolio"
@@ -1164,6 +1164,7 @@
     - Design
     - Web Development
     - Freelance
+    - Open Source
 - title: 杨二小的博客
   main_url: "https://blog.yangerxiao.com/"
   url: "https://blog.yangerxiao.com/"
@@ -6441,18 +6442,6 @@
     - Consulting
     - Education
     - Landing Page
-- title: Onramp
-  url: https://www.onramp.io/
-  main_url: https://www.onramp.io/
-  description: >
-    Onramp is a technical workforce solutions company. We help corporate clients build new pipelines of talent to meet their technical and HR goals. We specialize in discovering new pools of talent and provide customized training so candidates are qualified and better prepared employees.
-  categories:
-    - Business
-    - Education
-    - Landing Page
-  built_by: Nicola B.
-  built_by_url: https://www.linkedin.com/in/nicola-b/
-  featured: false
 - title: Write/Speak/Code
   url: https://www.writespeakcode.com/
   main_url: https://www.writespeakcode.com/
@@ -6664,6 +6653,24 @@
   built_by: Mediacurrent
   built_by_url: https://www.mediacurrent.com
   featured: false
+- title: Behalf
+  url: https://www.behalf.no/
+  main_url: https://www.behalf.no/
+  description: >
+    Behalf is Norwegian based digital design agency.
+  categories:
+    - Agency
+    - Portfolio
+    - Business
+    - Consulting
+    - Design
+    - Design System
+    - Marketing
+    - Web Development
+    - User Experience
+  built_by: Behalf
+  built_by_url: https://www.behalf.no/
+  featured: false
 - title: Saxenhammer & Co.
   url: https://saxenhammer-co.com/
   main_url: https://saxenhammer-co.com/
@@ -6675,4 +6682,119 @@
     - Business
   built_by: Axel Fuhrmann
   built_by_url: https://axelfuhrmann.com/
+  featured: false
+- title: UltronEle
+  url: http://ultronele.com
+  main_url: https://runbytech.github.io/ueofcweb/
+  source_url: https://github.com/runbytech/ueofcweb
+  description: >
+    UltronEle is a light, fast, simple yet interesting serverless e-learning CMS based on GatsbyJS. It aims to provide a easy-use product for tutors, teachers, instructors from all kinks of fields with near-zero efforts to setup their own authoring tool and content publish website.
+  categories:
+    - Education
+    - Consulting
+    - Landing Page
+    - Web Development
+    - Open Source
+    - Learning
+  built_by: RunbyTech
+  built_by_url: http://runbytech.co
+  featured: false
+- title: Nick Selvaggio
+  url: https://nickgs.com/
+  main_url: https://nickgs.com/
+  description: >
+    The personal website of Nick Selvaggio. Long Island based web developer, teacher, and technologist.
+  categories:
+    - Consulting
+    - Programming
+    - Web Development
+  featured: false
+- title: Free & Open Source Gatsby Themes by LekoArts
+  main_url: "https://themes.lekoarts.de"
+  url: "https://themes.lekoarts.de"
+  source_url: "https://github.com/LekoArts/gatsby-themes/tree/master/www"
+  built_by: LekoArts
+  built_by_url: "https://github.com/LekoArts"
+  description: >-
+    Get high-quality and customizable Gatsby themes to quickly bootstrap your website! Choose from many professionally created and impressive designs with a wide variety of features and customization options. Use Gatsby Themes to take your project to the next level and let you and your customers take advantage of the many benefits Gatsby has to offer.
+  categories:
+    - Open Source
+    - Directory
+    - Marketing
+    - Landing Page
+  featured: false
+- title: Lars Roettig
+  url: https://larsroettig.dev/
+  main_url: https://larsroettig.dev/
+  description: >
+    Lars Roettig is a Magento Maintainer and e-commerce specialist. On his Blog, he writes Software Architecture and Magento Development.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Community
+    - Open Source
+    - eCommerce
+  built_by: Lars Roettig
+  built_by_url: https://larsroettig.dev/
+  featured: false
+- title: Cade Kynaston
+  url: https://cade.codes
+  main_url: https://cade.codes
+  source_url: https://github.com/cadekynaston/gatsby-portfolio
+  description: >
+    Cade Kynaston's Portfolio
+  categories:
+    - Portfolio
+  built_by: Cade Kynaston
+  built_by_url: https://github.com/cadekynaston
+  featured: false
+- title: Growable Meetups
+  url: https://www.growable.io/
+  main_url: https://www.growable.io/
+  description: >
+    Growable - Events to Accelerate your career in Tech. Made with <3 with Gatsby, React & Netlify by Talent Point in London.
+  categories:
+    - Event
+    - Technology
+    - Education
+    - Community
+    - Conference
+  built_by: Talent Point
+  built_by_url: https://github.com/talent-point/
+  featured: false
+- title: Fantastic Metropolis
+  main_url: https://fantasticmetropolis.com
+  url: https://fantasticmetropolis.com
+  description: >
+    Fantastic Metropolis ran between 2001 and 2006, highlighting the potential of literary science fiction and fantasy.
+  categories:
+    - Entertainment
+  built_by: Luis Rodrigues
+  built_by_url: https://goblindegook.com
+  featured: false
+- title: Simon Koelewijn
+  main_url: https://simonkoelewijn.nl
+  url: https://simonkoelewijn.nl
+  description: >
+    Personal blog of Simon Koelewijn, where he blogs about UX, analytics and web development (in Dutch). Made awesome and fast by using Gatsby 2.x (naturally) and gratefully using Netlify and Netlify CMS.
+  categories:
+    - Freelance
+    - Blog
+    - Web Development
+    - User Experience
+  built_by: Simon Koelewijn
+  built_by_url: https://simonkoelewijn.nl
+  featured: false
+- title: Raconteur Careers
+  main_url: https://careers.raconteur.net
+  url: https://careers.raconteur.net
+  description: >
+    Raconteur is a London-based publishing house and content marketing agency. We have built this careers portal Gatsby v2 with TypeScript, Styled-Components, React-Spring and Contentful.
+  categories:
+    - Media
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
   featured: false

@@ -183,3 +183,7 @@ module.exports = {
 ## Happy blogging!
 
 With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
+
+## More resources
+
+[Jason Lengstorf and Amberley Romo livestream building an RSS feed powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ).

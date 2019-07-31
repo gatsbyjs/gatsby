@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.45](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.44...gatsby@2.13.45) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby:** Add error message for field extension validation ([#16232](https://github.com/gatsbyjs/gatsby/issues/16232)) ([f64a9e0](https://github.com/gatsbyjs/gatsby/commit/f64a9e0))
+- **gatsby:** Fix absent parents ([#16228](https://github.com/gatsbyjs/gatsby/issues/16228)) ([5330a21](https://github.com/gatsbyjs/gatsby/commit/5330a21))
+- **gatsby:** Fix special case id:eq queries for abstract types ([#16114](https://github.com/gatsbyjs/gatsby/issues/16114)) ([6d8b663](https://github.com/gatsbyjs/gatsby/commit/6d8b663))
+- **gatsby:** Respect infer extension in schema update ([#16110](https://github.com/gatsbyjs/gatsby/issues/16110)) ([ce56b9d](https://github.com/gatsbyjs/gatsby/commit/ce56b9d))
+
+## [2.13.44](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.43...gatsby@2.13.44) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby:** enable babel.config.js once again ([#16205](https://github.com/gatsbyjs/gatsby/issues/16205)) ([d72b6d9](https://github.com/gatsbyjs/gatsby/commit/d72b6d9))
+- **gatsby:** run onPrefetchPathname when prefetch is disabled ([#16208](https://github.com/gatsbyjs/gatsby/issues/16208)) ([da859c0](https://github.com/gatsbyjs/gatsby/commit/da859c0))
+
+## [2.13.43](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.42...gatsby@2.13.43) (2019-07-30)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.42](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.41...gatsby@2.13.42) (2019-07-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.41](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.40...gatsby@2.13.41) (2019-07-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.39...gatsby@2.13.40) (2019-07-25)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.13.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.38...gatsby@2.13.39) (2019-07-24)
 
 **Note:** Version bump only for package gatsby
