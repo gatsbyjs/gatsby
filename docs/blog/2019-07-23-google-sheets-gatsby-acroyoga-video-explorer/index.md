@@ -369,7 +369,7 @@ module.exports = {
 }
 ```
 
-This tells the plugin that it will be the item nodes (the nodes created in gatsby-node.js for my videos) and to grab the instructor_image and thumbnail paths. Optimized_instructor_image and optimized_thumbnail are the aliases for the new gatsby-image friendly fields.
+This tells the plugin that it will be the item nodes (the nodes created in `gatsby-node.js` for my videos) and to grab the instructor_image and thumbnail paths. Optimized_instructor_image and optimized_thumbnail are the aliases for the new gatsby-image friendly fields.
 
 Next, I had to change my graphql queries to fit the gatsby-image way of getting images (vs. just getting an image url link string like I was doing before). Here's how single-item.js query now looks.
 
