@@ -6,7 +6,7 @@ import Slider from "./slider"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
-import { srOnly } from "../utils/styles"
+import { visuallyHidden } from "../utils/styles"
 
 const controlButtonStyles = {
   WebkitAppearance: `none`,
@@ -114,8 +114,8 @@ class Rotator extends Component {
     return (
       <div
         sx={{
-          borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
-          borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+          borderTop: t => `1px solid ${t.colors.ui.border}`,
+          borderBottom: t => `1px solid ${t.colors.ui.border}`,
           py: 4,
           px: 9,
           my: 6,
@@ -185,7 +185,7 @@ class Rotator extends Component {
           aria-controls="headline-slider"
         >
           <MdNavigateBefore aria-hidden="true" />
-          <span css={srOnly}>Previous plugin category</span>
+          <span css={visuallyHidden}>Previous plugin category</span>
         </button>
         <button
           sx={{ ...controlButtonStyles, left: `auto`, right: 0 }}
@@ -193,7 +193,7 @@ class Rotator extends Component {
           aria-controls="headline-slider"
         >
           <MdNavigateNext aria-hidden="true" />
-          <span css={srOnly}>Next plugin category</span>
+          <span css={visuallyHidden}>Next plugin category</span>
         </button>
       </div>
     )

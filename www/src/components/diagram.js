@@ -4,7 +4,6 @@ import React, { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm } from "../utils/typography"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
@@ -20,7 +19,7 @@ const Segment = ({ className, children }) => (
     className={`Segment ${className}`}
     css={{
       margin: `0 auto`,
-      maxWidth: rhythm(32),
+      maxWidth: `48rem`,
       textAlign: `center`,
     }}
   >
@@ -74,7 +73,7 @@ const VerticalLine = () => (
 )
 
 const box = {
-  borderColor: `ui.border.subtle`,
+  borderColor: `ui.border`,
   borderRadius: 2,
   borderStyle: `solid`,
   borderWidth: `1px`,
@@ -83,7 +82,7 @@ const box = {
 }
 
 const borderAndBoxShadow = {
-  bg: `white`,
+  bg: `card.background`,
   border: 0,
   borderRadius: 1,
   boxShadow: `raised`,
@@ -171,14 +170,11 @@ const Gatsby = () => (
   <div
     sx={{
       ...borderAndBoxShadow,
+      bg: `white`,
       p: 5,
       margin: `0 auto`,
-      width: rhythm(5.5),
-      height: rhythm(5.5),
-      [mediaQueries.lg]: {
-        width: rhythm(6),
-        height: rhythm(6),
-      },
+      width: `8.5rem`,
+      height: `8.5rem`,
     }}
   >
     <img
@@ -199,7 +195,8 @@ const Gatsby = () => (
       <small
         sx={{
           display: `block`,
-          mt: 1,
+          mt: 2,
+          mb: 1,
         }}
       >
         powered by
@@ -247,7 +244,7 @@ const Diagram = () => (
         >
           How Gatsby works
         </h1>
-        <div sx={{ maxWidth: rhythm(20), mt: 0, mx: `auto`, mb: 9 }}>
+        <div sx={{ maxWidth: `30rem`, mt: 0, mx: `auto`, mb: 9 }}>
           <FuturaParagraph>
             Pull data from <em>anywhere</em>
           </FuturaParagraph>
@@ -301,6 +298,7 @@ const Diagram = () => (
               sx={{
                 ...borderAndBoxShadow,
                 ...boxPadding,
+                bg: `white`,
                 display: `inline-block`,
                 py: 3,
                 width: `auto`,

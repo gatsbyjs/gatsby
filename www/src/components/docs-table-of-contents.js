@@ -15,7 +15,7 @@ function createItems(items, location) {
         <Link
           sx={{
             "&&": {
-              color: `grey.60`,
+              color: `text.secondary`,
               border: 0,
               transition: t =>
                 `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
@@ -44,7 +44,7 @@ function TableOfContents({ page, location }) {
         sx={{
           textTransform: `uppercase`,
           fontSize: 1,
-          color: `grey.80`,
+          color: `text.secondary`,
           letterSpacing: `tracked`,
           mt: 0,
         }}

@@ -10,7 +10,7 @@ const Source = ({ startersYaml, repoUrl }) => (
   <div
     sx={{
       display: `flex`,
-      borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
+      borderTop: t => `1px solid ${t.colors.ui.border}`,
       fontFamily: `header`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
@@ -18,40 +18,33 @@ const Source = ({ startersYaml, repoUrl }) => (
     }}
   >
     {repoUrl && (
-      <div
-        csx={{
-          padding: 20,
-          pl: startersYaml.featured ? false : 0,
-          display: `flex`,
+      <a
+        href={repoUrl}
+        sx={{
           alignItems: `center`,
+          display: `flex`,
+          lineHeight: `solid`,
+          p: 4,
+          pl: startersYaml.featured ? false : 0,
+          "&&": {
+            borderBottom: 0,
+            color: `link.color`,
+            cursor: `pointer`,
+            fontWeight: `normal`,
+            "&:hover": {
+              color: `link.hoverColor`,
+            },
+          },
         }}
       >
         <GithubIcon
           sx={{
             mb: 0,
             mr: 2,
-            height: 26,
-            width: 20,
-            color: `gatsby`,
           }}
         />
-        <a
-          href={repoUrl}
-          sx={{
-            "&&": {
-              borderBottom: 0,
-              color: `gatsby`,
-              cursor: `pointer`,
-              fontWeight: `normal`,
-              "&:hover": {
-                color: `lilac`,
-              },
-            },
-          }}
-        >
-          Source
-        </a>
-      </div>
+        Source
+      </a>
     )}
     <div
       sx={{
@@ -61,15 +54,15 @@ const Source = ({ startersYaml, repoUrl }) => (
           display: `flex`,
           flex: 1,
           justifyContent: `flex-end`,
-          p: 20,
+          p: 4,
           pl: 0,
         },
       }}
     >
       <span
         sx={{
-          marginRight: 20,
           color: `text.secondary`,
+          mr: 4,
         }}
       >
         Try this starter
@@ -79,12 +72,6 @@ const Source = ({ startersYaml, repoUrl }) => (
         sx={{
           "&&": {
             borderBottom: 0,
-            color: `gatsby`,
-            cursor: `pointer`,
-            fontWeight: `normal`,
-            "&:hover": {
-              color: `lilac`,
-            },
           },
         }}
       >

@@ -19,72 +19,29 @@ const stripeAnimation = keyframes({
 
 export const focusStyle = {
   outline: 0,
-  boxShadow: `0 0 0 ${space[1]} ${colors.input.focusBoxShadow}`,
+  boxShadow: `0 0 0 2px ${colors.input.focusBoxShadow}`,
 }
 
-export const srOnly = {
-  position: `absolute`,
-  // include `px` so we can use it with `sx`
-  width: `1px`,
-  height: `1px`,
-  padding: 0,
-  overflow: `hidden`,
-  clip: `rect(0, 0, 0, 0)`,
-  whiteSpace: `nowrap`,
-  border: 0,
-}
-
-export const searchInputStyles = {
-  appearance: `none`,
-  bg: `navigation.searchBackground`,
-  border: 0,
-  borderRadius: 2,
-  color: `text.primary`,
-  fontFamily: `header`,
-  fontSize: 3,
-  p: 1,
-  pr: 3,
-  pl: 7,
-  overflow: `hidden`,
-  transition: t =>
-    `width ${t.transition.speed.default} ${
-      t.transition.curve.default
-    }, background-color ${t.transition.speed.default} ${
-      t.transition.curve.default
-    }`,
-  width: `100%`,
-  ":focus": {
-    bg: `navigation.searchBackgroundFocus`,
-    color: `text.primary`,
-    outline: 0,
-    width: `100%`,
-  },
-  "::placeholder": {
-    color: `navigation.searchPlaceholder`,
-  },
-}
-
-// TODO fix, consider using variants?—using theme-ui currently,
-// which fails for ´email-capture-form`, `hubspot-form`, probably more
 export const buttonStyles = {
   default: {
     alignItems: `center`,
-    backgroundColor: `gatsby`,
-    borderRadius: 2,
+    backgroundColor: colors.gatsby,
+    borderRadius: `${radii[2]}px`,
     borderWidth: 1,
     borderStyle: `solid`,
-    borderColor: `gatsby`,
-    color: `white`,
+    borderColor: colors.gatsby,
+    color: colors.white,
     cursor: `pointer`,
     display: `inline-flex`,
-    fontFamily: `header`,
+    fontFamily: fonts.header,
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: `dense`,
+    lineHeight: lineHeights.solid,
     textDecoration: `none`,
-    WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
-    padding: `${space[2]} ${space[3]}`,
+    paddingLeft: space[3],
+    paddingRight: space[3],
+    height: 36,
     backgroundSize: `${space[7]} ${space[7]}`,
     transition: `all ${transition.speed.default} ${transition.curve.default}`,
     ":hover, :focus": {
@@ -107,7 +64,9 @@ export const buttonStyles = {
   },
   large: {
     fontSize: fontSizes[4],
-    padding: `${space[3]} ${space[4]}`,
+    paddingLeft: space[4],
+    paddingRight: space[4],
+    height: 52,
   },
   small: {
     fontSize: fontSizes[1],
@@ -191,25 +150,78 @@ export const linkStyles = {
   },
 }
 
-export const formInput = {
-  backgroundColor: colors.white,
-  border: `1px solid ${colors.input.border}`,
-  borderRadius: radii[2],
-  padding: space[2],
-  fontFamily: fonts.system,
-  fontSize: fontSizes[2],
-  verticalAlign: `middle`,
-  transition: `all ${transition.speed.default} ${transition.curve.default}`,
-  "::placeholder": {
-    color: colors.text.placeholder,
-    opacity: 1,
-  },
-}
-
+// form elements
 export const formInputFocus = {
   borderColor: colors.input.focusBorder,
   ...focusStyle,
 }
+
+export const formInput = {
+  backgroundColor: colors.white,
+  border: `1px solid ${colors.input.border}`,
+  borderRadius: `${radii[2]}px`,
+  display: `block`,
+  fontFamily: fonts.system,
+  fontSize: fontSizes[2],
+  fontWeight: `normal`,
+  padding: space[1],
+  paddingLeft: space[2],
+  paddingRight: space[2],
+  transition: `all ${transition.speed.default} ${transition.curve.default}`,
+  verticalAlign: `middle`,
+  width: `100%`,
+  "::placeholder": {
+    color: colors.input.placeholder,
+    opacity: 1,
+  },
+  "&:focus": {
+    ...formInputFocus,
+  },
+  "&:disabled": {
+    cursor: `not-allowed`,
+    opacity: `0.5`,
+  },
+}
+
+export const themedInput = {
+  ...formInput,
+  appearance: `none`,
+  bg: `themedInput.background`,
+  border: 0,
+  color: `text.primary`,
+  fontFamily: `header`,
+  fontSize: 3,
+  overflow: `hidden`,
+  pl: 7,
+  pr: 3,
+  ":focus": {
+    bg: `themedInput.backgroundFocus`,
+    boxShadow: t => `0 0 0 2px ${t.colors.themedInput.focusBoxShadow}`,
+    color: `text.primary`,
+    outline: 0,
+    width: `100%`,
+  },
+  "::placeholder": {
+    color: `themedInput.placeholder`,
+  },
+}
+
+// Utilities
+export const visuallyHidden = {
+  // include `px` so we can use it with `sx`
+  border: 0,
+  clip: `rect(0, 0, 0, 0)`,
+  height: `1px`,
+  margin: `-1px`,
+  overflow: `hidden`,
+  padding: 0,
+  position: `absolute`,
+  whiteSpace: `nowrap`,
+  width: `1px`,
+}
+
+// Layout
+export const breakpointGutter = `@media (min-width: 42rem)`
 
 export const pullIntoGutter = {
   marginLeft: `-${space[6]}`,
@@ -218,23 +230,21 @@ export const pullIntoGutter = {
   paddingRight: space[6],
 }
 
+// Components
 export const skipLink = {
-  ...srOnly,
+  ...visuallyHidden,
   color: colors.gatsby,
-  margin: -1,
-  zIndex: zIndices.skipLink,
   fontSize: fontSizes[1],
+  zIndex: zIndices.skipLink,
   ":focus": {
+    background: colors.white,
+    clip: `auto`,
+    height: `auto`,
+    left: space[6],
     padding: space[4],
     position: `fixed`,
-    top: space[6],
-    left: space[6],
-    background: colors.white,
     textDecoration: `none`,
+    top: space[6],
     width: `auto`,
-    height: `auto`,
-    clip: `auto`,
   },
 }
-
-export const breakpointGutter = `@media (min-width: 42rem)`

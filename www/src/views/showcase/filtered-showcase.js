@@ -15,7 +15,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
-import { searchInputStyles } from "../../utils/styles"
+import { themedInput } from "../../utils/styles"
 
 const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, edge) => {
@@ -120,7 +120,7 @@ class FilteredShowcase extends Component {
             <div sx={{ ml: `auto` }}>
               <label css={{ position: `relative` }}>
                 <input
-                  sx={searchInputStyles}
+                  sx={themedInput}
                   type="search"
                   value={this.state.search}
                   onChange={e => this.setState({ search: e.target.value })}
@@ -141,6 +141,7 @@ class FilteredShowcase extends Component {
 
           {this.state.sitesToShow < items.length && (
             <Button
+              large
               tag="button"
               overrideCSS={loadMoreButton}
               onClick={() => {

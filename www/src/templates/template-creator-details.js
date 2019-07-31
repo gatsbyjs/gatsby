@@ -42,9 +42,8 @@ const MetaSection = ({ children, background, last, first }) => (
       background: background ? background : `ui.background`,
       mx: t => `-${t.space[5]}`,
       p: 5,
-      borderTop: t => (first ? `1px solid ${t.colors.ui.border.subtle}` : null),
-      borderBottom: t =>
-        last ? null : `1px solid ${t.colors.ui.border.subtle}`,
+      borderTop: t => (first ? `1px solid ${t.colors.ui.border}` : null),
+      borderBottom: t => (last ? null : `1px solid ${t.colors.ui.border}`),
       [breakpoint2Columns]: {
         background: `transparent`,
         px: 0,

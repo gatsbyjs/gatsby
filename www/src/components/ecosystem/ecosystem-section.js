@@ -8,20 +8,20 @@ import EcosystemFeaturedItem from "./ecosystem-featured-item"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const EcosystemSectionRoot = styled(`section`)`
-  background: ${props => props.theme.colors.white};
-  padding: 0 ${props => props.theme.space[6]};
-  margin-bottom: ${props => props.theme.space[3]};
+  background: ${p => p.theme.colors.white};
+  padding: 0 ${p => p.theme.space[6]};
+  margin-bottom: ${p => p.theme.space[3]};
 
   ${mediaQueries.md} {
-    box-shadow: ${props => props.theme.shadows.raised};
-    border-radius: ${props => props.theme.radii[2]}px;
+    box-shadow: ${p => p.theme.shadows.raised};
+    border-radius: ${p => p.theme.radii[2]}px;
     display: flex;
-    flex-basis: calc(50% - ${props => props.theme.space[5]});
+    flex-basis: calc(50% - ${p => p.theme.space[5]});
     flex-direction: column;
     flex-grow: 0;
-    margin: 0 ${props => props.theme.space[2]} ${props => props.theme.space[6]};
+    margin: 0 ${p => p.theme.space[2]} ${p => p.theme.space[6]};
     max-height: 60vh;
-    padding: ${props => props.theme.space[6]};
+    padding: ${p => p.theme.space[6]};
     padding-bottom: 0;
 
     :last-child {
@@ -30,12 +30,12 @@ const EcosystemSectionRoot = styled(`section`)`
   }
 
   ${mediaQueries.lg} {
-    flex-basis: calc(33.33% - ${props => props.theme.space[5]});
+    flex-basis: calc(33.33% - ${p => p.theme.space[5]});
     max-height: 100%;
 
     :last-child {
       align-self: flex-start;
-      padding-bottom: ${props => props.theme.space[6]};
+      padding-bottom: ${p => p.theme.space[6]};
     }
   }
 
@@ -50,49 +50,49 @@ export const Header = styled(`header`)`
 
 const Title = styled(`h1`)`
   align-items: center;
-  color: ${props => props.theme.colors.gatsby};
+  color: ${p => p.theme.colors.gatsby};
   display: flex;
-  font-size: ${props => props.theme.fontSizes[4]};
-  font-weight: ${props => props.theme.fontWeights[1]};
-  line-height: ${props => props.theme.lineHeights.solid};
+  font-size: ${p => p.theme.fontSizes[4]};
+  font-weight: ${p => p.theme.fontWeights[1]};
+  line-height: ${p => p.theme.lineHeights.solid};
   margin: 0;
-  margin-bottom: ${props => props.theme.space[1]};
-  min-height: ${props => props.theme.space[7]};
+  margin-bottom: ${p => p.theme.space[1]};
+  min-height: ${p => p.theme.space[7]};
 
   span {
-    margin: 0 ${props => props.theme.space[1]} 0 0;
+    margin: 0 ${p => p.theme.space[1]} 0 0;
   }
 `
 
 const Icon = styled(`span`)`
   display: block;
-  height: ${props => props.theme.space[7]};
-  width: ${props => props.theme.space[7]};
+  height: ${p => p.theme.space[7]};
+  width: ${p => p.theme.space[7]};
 `
 
 const SubTitle = styled(`h2`)`
-  color: ${props => props.theme.colors.lilac};
-  font-size: ${props => props.theme.fontSizes[1]};
+  color: ${p => p.theme.colors.lilac};
+  font-size: ${p => p.theme.fontSizes[1]};
   font-weight: normal;
-  letter-spacing: ${props => props.theme.letterSpacings.tracked};
+  letter-spacing: ${p => p.theme.letterSpacings.tracked};
   margin: 0;
-  margin-top: ${props => props.theme.space[5]};
+  margin-top: ${p => p.theme.space[5]};
   text-transform: uppercase;
 `
 
 const Description = styled(`p`)`
-  color: ${props => props.theme.colors.text.primary};
-  font-size: ${props => props.theme.fontSizes[2]};
+  color: ${p => p.theme.colors.text.primary};
+  font-size: ${p => p.theme.fontSizes[2]};
 `
 
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: -${props => props.theme.space[1]};
+  margin-top: -${p => p.theme.space[1]};
 
   > a {
-    margin: ${props => props.theme.space[1]} ${props => props.theme.space[2]}
-      ${props => props.theme.space[1]} 0;
+    margin: ${p => p.theme.space[1]} ${p => p.theme.space[2]}
+      ${p => p.theme.space[1]} 0;
   }
 `
 

@@ -50,7 +50,7 @@ const renderSubHeader = props => (
         key={i}
         sx={{
           background: `ui.background`,
-          borderColor: `ui.border.subtle`,
+          borderColor: `ui.border`,
           display: `table-cell`,
           fontFamily: `header`,
           fontWeight: 600,

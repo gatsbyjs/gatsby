@@ -7,7 +7,7 @@ const FooterLinks = props => (
   <ul
     sx={{
       background: props => (props.bg ? props.bg : `0`),
-      borderColor: `ui.border.subtle`,
+      borderColor: `ui.border`,
       borderTopStyle: `solid`,
       borderTopWidth: `1px`,
       fontSize: 1,

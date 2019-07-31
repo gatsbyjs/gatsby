@@ -25,7 +25,7 @@ const TagsSection = ({ tags }) => {
         flexFlow: `row wrap`,
         justifyContent: `space-between`,
         alignItems: `baseline`,
-        borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
+        borderTop: t => `1px solid ${t.colors.ui.border}`,
         mt: 10,
       }}
     >

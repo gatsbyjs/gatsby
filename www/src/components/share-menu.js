@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import MdShare from "react-icons/lib/md/share"
 import FaPinterestP from "react-icons/lib/fa/pinterest-p"
@@ -60,7 +62,14 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, className, theme = `gatsby` } = this.props
+    const {
+      url,
+      title,
+      image,
+      className,
+      theme = `gatsby`,
+      overrideCSS,
+    } = this.props
     const { open } = this.state
     return (
       <Fragment>
@@ -72,6 +81,7 @@ class ShareMenu extends React.Component {
             borderRadius: 1,
             color: styles[theme].textColor,
             cursor: `pointer`,
+            ...overrideCSS,
           }}
           className={className}
           ref={this.setShareBtnRef}

@@ -64,7 +64,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
 
     <div
       sx={{
-        borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+        borderBottom: t => `1px solid ${t.colors.ui.border}`,
         display: `flex`,
         flexGrow: 1,
         flexWrap: `nowrap`,
@@ -131,7 +131,6 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               mr: 2,
               py: 1,
               px: 4,
-              WebkitFontSmoothing: `antialiased`,
               "&&": {
                 backgroundColor: `accent`,
                 borderBottom: `none`,

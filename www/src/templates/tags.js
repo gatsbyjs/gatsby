@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
@@ -8,7 +10,6 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"
-import { space } from "../gatsby-plugin-theme-ui"
 import { TAGS_AND_DOCS } from "../data/tags-docs"
 
 // Select first tag with whitespace instead of hyphens for
@@ -59,10 +60,7 @@ const Tags = ({ pageContext, data, location }) => {
           <BlogPostPreviewItem
             post={node}
             key={node.fields.slug}
-            css={{
-              marginTop: space[9],
-              marginBottom: space[9],
-            }}
+            sx={{ my: 9 }}
           />
         ))}
       </Container>

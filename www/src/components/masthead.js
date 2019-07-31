@@ -26,7 +26,6 @@ const MastheadContent = () => (
         mb: 6,
         mt: 0,
         mx: `auto`,
-        WebkitFontSmoothing: `antialiased`,
       }}
     >
       Fast in every way that&nbsp;matters
@@ -41,7 +40,6 @@ const MastheadContent = () => (
         mb: 10,
         mt: 0,
         mx: `auto`,
-        WebkitFontSmoothing: `antialiased`,
         [mediaQueries.sm]: { fontSize: 5 },
         [mediaQueries.lg]: { fontSize: 6 },
       }}

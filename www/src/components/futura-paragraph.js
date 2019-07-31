@@ -8,7 +8,6 @@ const FuturaParagraph = ({ children }) => (
       fontFamily: `header`,
       mb: 0,
       fontSize: 3,
-      WebkitFontSmoothing: `antialiased`,
     }}
   >
     {children}

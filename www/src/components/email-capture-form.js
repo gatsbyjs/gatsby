@@ -10,36 +10,34 @@ import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
 const Container = styled(`div`)`
-  background: ${props => props.theme.colors.purple[5]};
-  box-shadow: ${props => props.theme.shadows.raised},
-    inset 0 0 0 1px ${props => props.theme.colors.purple[10]};
-  border-radius: ${props => props.theme.radii[2]}px;
-  margin-top: ${props => props.theme.space[8]};
-  padding: calc(${props => props.theme.space[6]} * 1.2);
+  background: ${p => p.theme.colors.purple[5]};
+  box-shadow: ${p => p.theme.shadows.raised},
+    inset 0 0 0 1px ${p => p.theme.colors.purple[10]};
+  border-radius: ${p => p.theme.radii[2]}px;
+  margin-top: ${p => p.theme.space[8]};
+  padding: calc(${p => p.theme.space[6]} * 1.2);
   padding-bottom: calc(
-    ${props => rhythm(props.theme.space[6] * 1.2)} +
-      ${props => props.theme.space[1]}
+    ${props => rhythm(props.theme.space[6] * 1.2)} + ${p => p.theme.space[1]}
   );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${props => props.theme.radii[2]}px
-      ${props => props.theme.radii[2]}px;
-    background: ${props => props.theme.colors.white}
+    border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
+    background: ${p => p.theme.colors.white}
       repeating-linear-gradient(
         135deg,
-        ${props => props.theme.colors.red[40]},
-        ${props => props.theme.colors.red[40]} 20px,
+        ${p => p.theme.colors.red[40]},
+        ${p => p.theme.colors.red[40]} 20px,
         transparent 20px,
         transparent 40px,
-        ${props => props.theme.colors.blue[40]} 40px,
-        ${props => props.theme.colors.blue[40]} 60px,
+        ${p => p.theme.colors.blue[40]} 40px,
+        ${p => p.theme.colors.blue[40]} 60px,
         transparent 60px,
         transparent 80px
       );
     bottom: 0;
     content: "";
-    height: ${props => props.theme.space[1]};
+    height: ${p => p.theme.space[1]};
     left: 0;
     right: 0;
     position: absolute;
@@ -64,16 +62,16 @@ const StyledForm = styled(`form`)`
 `
 
 const Label = styled(`label`)`
-  font-size: ${props => props.theme.fontSizes[1]};
+  font-size: ${p => p.theme.fontSizes[1]};
   :after {
     content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${props => props.theme.colors.text.secondary};
+    color: ${p => p.theme.colors.text.secondary};
   }
 `
 
 const SingleLineInput = styled(`input`)`
   ${formInput};
-  border-color: ${props => props.theme.colors.purple[20]};
+  border-color: ${p => p.theme.colors.purple[20]};
   width: 100%;
   -webkit-appearance: none;
 
@@ -83,32 +81,32 @@ const SingleLineInput = styled(`input`)`
 `
 
 const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${props => props.theme.fonts.system};
-  font-size: ${props => props.theme.fontSizes[2]};
-  padding: ${props => props.theme.space[2]};
+  font-family: ${p => p.theme.fonts.system};
+  font-size: ${p => p.theme.fontSizes[2]};
+  padding: ${p => p.theme.space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
-  color: ${props => props.theme.colors.warning};
-  font-family: ${props => props.theme.fonts.system};
-  font-size: ${props => props.theme.fontSizes[1]};
-  margin: ${props => props.theme.space[2]} 0;
+  color: ${p => p.theme.colors.warning};
+  font-family: ${p => p.theme.fonts.system};
+  font-size: ${p => p.theme.fontSizes[1]};
+  margin: ${p => p.theme.space[2]} 0;
 `
 
 const SuccessMessage = styled(`div`)`
-  font-family: ${props => props.theme.fonts.system};
+  font-family: ${p => p.theme.fonts.system};
 `
 
 const Submit = styled(`input`)`
   ${buttonStyles.default};
-  margin-top: ${props => props.theme.space[3]};
+  margin-top: ${p => p.theme.space[3]};
 `
 
 const SubmitOnHomepage = styled(`button`)`
   ${buttonStyles.default};
-  font-size: ${props => props.theme.fontSizes[3]};
+  font-size: ${p => p.theme.fontSizes[3]};
   width: 100%;
-  margin-top: ${props => props.theme.space[3]};
+  margin-top: ${p => p.theme.space[3]};
 
   span {
     align-items: center;
@@ -120,7 +118,7 @@ const SubmitOnHomepage = styled(`button`)`
   ${mediaQueries.lg} {
     width: auto;
     margin-top: 0;
-    margin-left: ${props => props.theme.space[2]};
+    margin-left: ${p => p.theme.space[2]};
   }
 `
 

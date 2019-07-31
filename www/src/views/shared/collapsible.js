@@ -21,7 +21,7 @@ class Collapsible extends Component {
       <div
         sx={{
           borderBottom: t =>
-            collapsed ? 0 : `1px solid ${t.colors.ui.border.subtle}`,
+            collapsed ? 0 : `1px solid ${t.colors.ui.border}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
           minHeight: fixed ? `${fixed}px` : `initial`,
@@ -41,7 +41,7 @@ class Collapsible extends Component {
           <h4
             sx={{
               alignItems: `center`,
-              color: `lilac`,
+              color: `text.secondary`,
               cursor: `pointer`,
               display: `flex`,
               flexShrink: 0,

@@ -46,12 +46,12 @@ const animC = keyframes`
 
 const IconWrapper = styled(`span`)`
   display: block;
-  height: ${props => props.theme.space[9]};
+  height: ${p => p.theme.space[9]};
   transition: 0.5s;
-  width: ${props => props.theme.space[9]};
+  width: ${p => p.theme.space[9]};
 
   svg {
-    color: ${props => props.theme.colors.lilac};
+    color: ${p => p.theme.colors.lilac};
     height: 100%;
     width: 100%;
   }
@@ -59,16 +59,16 @@ const IconWrapper = styled(`span`)`
 
 const RatingText = styled(`span`)`
   display: block;
-  font-size: ${props => props.theme.fontSizes[0]};
+  font-size: ${p => p.theme.fontSizes[0]};
   font-weight: bold;
   transition: 0.5s;
   line-height: 1;
-  margin-top: ${props => props.theme.space[1]};
+  margin-top: ${p => p.theme.space[1]};
 `
 
 const Label = styled(`label`)`
   align-items: center;
-  background: ${props => props.theme.colors.white};
+  background: ${p => p.theme.colors.white};
   cursor: pointer;
   display: flex;
   flex-basis: 33.33%;
@@ -79,12 +79,12 @@ const Label = styled(`label`)`
   transition: background 0.25s;
 
   &.focused {
-    background: ${props => props.theme.colors.lilac};
-    color: ${props => props.theme.colors.white};
+    background: ${p => p.theme.colors.lilac};
+    color: ${p => p.theme.colors.white};
 
     ${IconWrapper} {
       svg {
-        color: ${props => props.theme.colors.orange[40]};
+        color: ${p => p.theme.colors.orange[40]};
       }
     }
   }

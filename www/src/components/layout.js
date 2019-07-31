@@ -7,20 +7,18 @@ import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { Global } from "@emotion/core"
-import { global } from "../utils/styles/global"
 
-import { space, zIndices } from "../gatsby-plugin-theme-ui"
+import { global } from "../utils/styles/global"
+import { colors, space, zIndices } from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
+import withColorMode from "../components/with-color-mode"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
-
-// Import Futura PT typeface
-import "../assets/fonts/futura"
-
 import { skipLink } from "../utils/styles"
+import "../assets/fonts/futura"
 
 let windowWidth
 
@@ -67,6 +65,7 @@ class DefaultLayout extends React.Component {
     if (this.props.isModal && windowWidth > 750) {
       isModal = true
     }
+    const isDark = this.props.colorMode[0] === `dark`
 
     if (isModal && window.innerWidth > 750) {
       return (
@@ -79,28 +78,30 @@ class DefaultLayout extends React.Component {
             isOpen={true}
             style={{
               content: {
-                top: `inherit`,
-                left: `inherit`,
-                right: `inherit`,
-                bottom: `inherit`,
-                margin: `0 auto`,
-                width: `750px`,
                 background: `none`,
                 border: `none`,
-                padding: `${space[8]} 0`,
+                bottom: `inherit`,
+                left: `inherit`,
+                margin: `0 auto`,
                 overflow: `visible`,
+                padding: `${space[8]} 0`,
+                right: `inherit`,
+                top: `inherit`,
+                width: `750px`,
               },
               overlay: {
-                position: `absolute`,
-                top: 0,
-                left: 0,
-                right: 0,
+                backgroundColor: isDark
+                  ? colors.modes.dark.modal.overlayBackground
+                  : colors.modal.overlayBackground,
                 bottom: `unset`,
+                left: 0,
                 minHeight: `100%`,
                 minWidth: `100%`,
-                zIndex: zIndices.modal,
                 overflowY: `auto`,
-                backgroundColor: `rgba(255, 255, 255, 0.95)`,
+                position: `absolute`,
+                right: 0,
+                top: 0,
+                zIndex: zIndices.modal,
               },
             }}
             onRequestClose={() => navigate(this.props.modalBackgroundPath)}
@@ -108,7 +109,7 @@ class DefaultLayout extends React.Component {
           >
             <div
               sx={{
-                backgroundColor: `white`,
+                bg: `widget.background`,
                 borderRadius: 2,
                 boxShadow: `dialog`,
                 position: `relative`,
@@ -117,25 +118,24 @@ class DefaultLayout extends React.Component {
               <button
                 onClick={this.handleCloseModal}
                 sx={{
-                  bg: `white`,
+                  bg: `widget.background`,
                   border: 0,
                   borderRadius: 6,
                   color: `text.secondary`,
                   cursor: `pointer`,
-                  position: `absolute`,
+                  fontSize: 4,
+                  height: 40,
                   left: `auto`,
+                  position: `absolute`,
                   right: t => t.space[7],
                   top: t => t.space[8],
-                  height: 40,
                   width: 40,
-                  fontSize: 4,
                   "&:hover": {
                     bg: `ui.hover`,
                     color: `gatsby`,
                   },
                 }}
               >
-                s
                 <MdClose />
               </button>
               {this.props.children}
@@ -151,7 +151,7 @@ class DefaultLayout extends React.Component {
       <>
         <Global styles={global} />
         <SiteMetadata pathname={this.props.location.pathname} />
-        <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
+        <SkipNavLink sx={skipLink}>Skip to main content</SkipNavLink>
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
@@ -182,4 +182,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-export default DefaultLayout
+export default withColorMode(DefaultLayout)

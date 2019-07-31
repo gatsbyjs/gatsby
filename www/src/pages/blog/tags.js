@@ -13,7 +13,7 @@ import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
-import { searchInputStyles } from "../../utils/styles"
+import { themedInput } from "../../utils/styles"
 import { colors, space, mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const POPULAR_TAGS = [
@@ -133,7 +133,7 @@ class TagsPage extends React.Component {
               css={{
                 padding: `${space[6]} 0`,
                 margin: 0,
-                borderBottom: `1px solid ${colors.ui.border.subtle}`,
+                borderBottom: `1px solid ${colors.ui.border}`,
               }}
             >
               Tags ({Object.keys(uniqGroup).length || 0})
@@ -152,7 +152,7 @@ class TagsPage extends React.Component {
               <h2>All tags</h2>
               <label css={{ position: `relative` }}>
                 <input
-                  sx={searchInputStyles}
+                  sx={themedInput}
                   id="tagsFilter"
                   name="filterQuery"
                   type="search"

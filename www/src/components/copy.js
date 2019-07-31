@@ -23,7 +23,7 @@ function Copy({ className, content, duration, fileName, trim = false }) {
       sx={{
         backgroundColor: `transparent`,
         border: `none`,
-        color: `grey.60`,
+        color: `code.copyButton`,
         cursor: `pointer`,
         fontSize: 2,
         fontFamily: `header`,

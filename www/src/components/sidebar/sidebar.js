@@ -208,7 +208,7 @@ class SidebarBody extends Component {
             sx={{
               alignItems: `center`,
               bg: `background`,
-              borderColor: `ui.border.subtle`,
+              borderColor: `ui.border`,
               borderRightStyle: `solid`,
               borderRightWidth: `1px`,
               display: `flex`,
@@ -248,7 +248,7 @@ class SidebarBody extends Component {
             zIndex: 10,
             borderRightWidth: `1px`,
             borderRightStyle: `solid`,
-            borderColor: `ui.border.subtle`,
+            borderColor: `ui.border`,
             height: t =>
               this.props.disableExpandAll
                 ? `100%`

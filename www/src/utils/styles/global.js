@@ -10,11 +10,11 @@ const prismToken = t => {
     ".token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata": {
       color: t.colors.code.comment,
     },
-    ".token.punctuation": {
-      color: t.colors.code.punctuation,
-    },
     ".token.property, .token.tag, .token.boolean, .token.number, .token.function-name, .token.constant, .token.symbol": {
       color: t.colors.code.tag,
+    },
+    ".token.punctuation": {
+      color: t.colors.code.punctuation,
     },
     ".token.selector, .token.attr-name, .token.string, .token.char, .token.function, .token.builtin": {
       color: t.colors.code.selector,
@@ -66,9 +66,9 @@ const gatsbyHighlightLanguageBadges = t => {
       WebkitOverflowScrolling: `touch`,
     },
     ".gatsby-highlight pre[class*='language-']::before": {
-      background: `#ddd`,
+      background: t.colors.grey[30],
       borderRadius: `0 0 ${t.radii[2]}px ${t.radii[2]}px`,
-      color: t.colors.text.header,
+      color: t.colors.grey[90],
       fontSize: t.fontSizes[0],
       fontFamily: t.fonts.monospace,
       letterSpacing: t.letterSpacings.tracked,
@@ -87,7 +87,6 @@ const gatsbyHighlightLanguageBadges = t => {
     ".gatsby-highlight pre[class='language-js']::before": {
       content: `'js'`,
       background: `#f7df1e`,
-      color: t.colors.black,
     },
     ".gatsby-highlight pre[class='language-jsx']::before": {
       content: `'jsx'`,
@@ -153,8 +152,7 @@ const gatsbyHighlight = t => {
   return {
     // gatsby-remark-prismjs styles
     ".gatsby-highlight": {
-      background: t.colors.code.bg,
-      borderColor: t.colors.code.border,
+      background: t.colors.code.background,
       color: t.colors.text.primary,
       position: `relative`,
       WebkitOverflowScrolling: `touch`,
@@ -169,7 +167,7 @@ const gatsbyHighlight = t => {
       padding: `0 ${t.space[6]}`,
     },
     ".gatsby-highlight-code-line": {
-      background: t.colors.code.border, // lineHighlightBackground
+      background: t.colors.code.lineHighlightBackground,
       marginLeft: `-${t.space[6]}`,
       marginRight: `-${t.space[6]}`,
       paddingLeft: t.space[5],
@@ -185,7 +183,7 @@ const gatsbyHighlight = t => {
       background: t.colors.code.scrollbarThumb,
     },
     ".gatsby-highlight pre::-webkit-scrollbar-track": {
-      background: t.colors.code.border,
+      background: t.colors.code.scrollbarTrack,
     },
   }
 }
@@ -196,10 +194,10 @@ export const global = t => {
     ...gatsbyHighlight(t),
     ...gatsbyHighlightLanguageBadges(t),
     "html, body": {
-      backgroundColor: t.colors.background,
       color: t.colors.text.primary,
-      WebkitFontSmoothing: `antialiased`,
       MozOsxFontSmoothing: `grayscale`,
+      textRendering: `optimizelegibility`,
+      WebkitFontSmoothing: `antialiased`,
     },
     a: {
       textDecoration: `none`,
@@ -223,16 +221,16 @@ export const global = t => {
     blockquote: {
       paddingLeft: t.space[6],
       marginLeft: 0,
-      borderLeft: `${t.space[1]} solid ${t.colors.ui.border.subtle}`,
+      borderLeft: `${t.space[1]} solid ${t.colors.ui.border}`,
     },
     hr: {
-      backgroundColor: t.colors.ui.border.subtle,
+      backgroundColor: t.colors.ui.border,
     },
     iframe: {
       border: 0,
     },
     "th, td": {
-      borderColor: t.colors.ui.border.subtle,
+      borderColor: t.colors.ui.border,
     },
     "tt, code, kbd, samp": {
       // reset line-height set by
@@ -244,7 +242,7 @@ export const global = t => {
       fontSize: `82.5%`,
     },
     "tt, code, kbd": {
-      background: t.colors.code.bgInline,
+      background: t.colors.code.backgroundInline,
       paddingTop: `0.2em`,
       paddingBottom: `0.2em`,
     },
@@ -327,7 +325,7 @@ export const global = t => {
     // gatsby-remark-code-titles styles
     // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
     ".gatsby-code-title": {
-      background: t.colors.code.bg,
+      background: t.colors.code.background,
       borderBottom: `1px solid ${t.colors.code.border}`,
       color: t.colors.code.text,
       padding: `${t.space[5]} ${t.space[6]} ${t.space[4]}`,

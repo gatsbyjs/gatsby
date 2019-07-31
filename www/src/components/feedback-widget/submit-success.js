@@ -5,8 +5,8 @@ import { CloseButton } from "./buttons"
 import { Title as BaseTitle } from "./styled-elements"
 
 const Title = styled(BaseTitle)`
-  font-size: ${props => props.theme.fontSizes[5]};
-  margin-bottom: ${props => props.theme.space[6]};
+  font-size: ${p => p.theme.fontSizes[5]};
+  margin-bottom: ${p => p.theme.space[6]};
   text-align: left;
 `
 

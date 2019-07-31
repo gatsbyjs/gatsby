@@ -14,24 +14,22 @@ import { navigate as reachNavigate } from "@reach/router"
 import { Link } from "gatsby"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
-import GatsbyIcon from "../assets/monogram.svg"
+import GatsbyIcon from "../components/gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
 import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
-import { rhythm } from "../utils/typography"
-import { skipLink, formInput, formInputFocus } from "../utils/styles"
+import { skipLink, formInputFocus, visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
-import VisuallyHidden from "@reach/visually-hidden"
 import { SkipNavLink } from "@reach/skip-nav"
 
 // This is for the urlSync
 const updateAfter = 700
 
 // A couple constants for CSS
-const searchInputHeight = rhythm(7 / 4)
-const searchMetaHeight = rhythm(8 / 4)
+const searchInputHeight = `2.25rem`
+const searchMetaHeight = `3rem`
 const searchInputWrapperMargin = space[6]
 
 /* stylelint-disable */
@@ -58,8 +56,12 @@ const searchBoxStyles = t => css`
   }
 
   .ais-SearchBox-input {
-    ${formInput}
+    appearance: none;
     -webkit-appearance: none;
+    background: ${t.colors.themedInput.background};
+    border-radius: ${t.radii[2]}px;
+    border: 0;
+    color: ${t.colors.text.primary};
     display: inline-block;
     height: ${searchInputHeight};
     padding: 0;
@@ -67,29 +69,27 @@ const searchBoxStyles = t => css`
     padding-left: ${searchInputHeight};
     margin: 0 ${searchInputWrapperMargin};
     transition: box-shadow ${t.transition.speed.default}
-        ${t.transition.curve.default},
-      background ${t.transition.speed.default} ${t.transition.curve.default};
+      ${t.transition.curve.default};
     vertical-align: middle;
     white-space: normal;
-    width: calc(100% - ${rhythm(6 / 4)});
-  }
-  .ais-SearchBox-input:hover,
-  .ais-SearchBox-input:active,
-  .ais-SearchBox-input:focus {
-    box-shadow: none;
-    outline: 0;
-  }
+    width: calc(100% - 2rem);
 
-  .ais-SearchBox-input:active,
-  .ais-SearchBox-input:focus {
-    ${formInputFocus}
-  }
+    :hover,
+    :active,
+    :focus {
+      box-shadow: none;
+      outline: 0;
+    }
 
-  .ais-SearchBox-input::-webkit-input-placeholder,
-  .ais-SearchBox-input::-moz-placeholder,
-  .ais-SearchBox-input:-ms-input-placeholder,
-  .ais-SearchBox-input::placeholder {
-    color: ${t.colors.text.placeholder};
+    :active,
+    :focus {
+      /* box-shadow: 0 0 0 2px ${t.colors.themedInput.focusBoxShadow}; */
+      background: ${t.colors.themedInput.backgroundFocus};
+    }
+
+    ::placeholder {
+      color: ${t.colors.themedInput.placeholder};
+    }
   }
 
   .ais-SearchBox-submit,
@@ -128,7 +128,7 @@ const searchBoxStyles = t => css`
   .ais-SearchBox-submit svg {
     width: ${t.space[4]};
     height: ${t.space[4]};
-    fill: ${t.colors.text.placeholder};
+    fill: ${t.colors.themedInput.placeholder};
   }
 
   .ais-SearchBox-reset {
@@ -146,7 +146,7 @@ const searchBoxStyles = t => css`
     fill: ${t.colors.gatsby};
   }
   .ais-SearchBox-reset svg {
-    fill: ${t.colors.text.placeholder};
+    fill: ${t.colors.themedInput.placeholder};
     width: ${t.space[3]};
     height: ${t.space[3]};
     vertical-align: middle;
@@ -168,25 +168,24 @@ const searchBoxStyles = t => css`
   }
 
   .ais-InfiniteHits-loadMore {
-    background-color: transparent;
-    border: 1px solid ${t.colors.gatsby};
+    background-color: ${t.colors.gatsby};
+    border: 0;
     border-radius: ${t.radii[1]}px;
-    color: ${t.colors.gatsby};
+    color: ${t.colors.white};
     cursor: pointer;
-    width: calc(100% - ${rhythm(space[6] * 2)});
+    width: calc(100% - (${space[6]} * 2));
     margin: ${t.space[6]};
     height: ${t.space[9]};
     outline: none;
     transition: all ${t.transition.speed.default} ${t.transition.curve.default};
     font-family: ${t.fonts.header};
+    font-weight: bold;
   }
-
   .ais-InfiniteHits-loadMore:hover,
   .ais-InfiniteHits-loadMore:focus {
     background-color: ${t.colors.gatsby};
     color: ${t.colors.white};
   }
-
   .ais-InfiniteHits-loadMore[disabled] {
     display: none;
   }
@@ -194,8 +193,6 @@ const searchBoxStyles = t => css`
 /* stylelint-enable */
 
 const StyledSkipNavLink = styled(SkipNavLink)({ ...skipLink })
-
-console.log(rhythm(2.5))
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
@@ -213,7 +210,7 @@ class Search extends Component {
           sx={{
             borderBottomWidth: `1px`,
             borderBottomStyle: `solid`,
-            borderColor: `ui.border.subtle`,
+            borderColor: `ui.border`,
             display: `flex`,
             flexDirection: `column`,
             width: `100%`,
@@ -350,8 +347,7 @@ const Result = ({ hit, pathname, query }) => {
           position: `relative`,
           px: 6,
           py: 5,
-          transition: t =>
-            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+          transition: `none`,
           zIndex: selected ? 1 : false,
           "&:hover": {
             bg: selected
@@ -359,7 +355,7 @@ const Result = ({ hit, pathname, query }) => {
               : `sidebar.itemHoverBackground`,
           },
           "&:before": {
-            bg: `ui.border.subtle`,
+            bg: `ui.border`,
             bottom: 0,
             content: `''`,
             height: 1,
@@ -377,7 +373,7 @@ const Result = ({ hit, pathname, query }) => {
             content: `''`,
             left: 0,
             position: `absolute`,
-            top: -1,
+            top: 0,
             width: 4,
           },
         },
@@ -405,9 +401,9 @@ const Result = ({ hit, pathname, query }) => {
           {hit.name}
         </h2>
         <div>
-          <VisuallyHidden>
+          <span sx={visuallyHidden}>
             {hit.downloadsLast30Days} monthly downloads
-          </VisuallyHidden>
+          </span>
         </div>
         <div
           aria-hidden
@@ -415,6 +411,7 @@ const Result = ({ hit, pathname, query }) => {
             alignItems: `center`,
             color: selected ? `lilac` : `text.secondary`,
             display: `flex`,
+            lineHeight: `solid`,
             fontSize: 0,
           }}
         >
@@ -422,17 +419,9 @@ const Result = ({ hit, pathname, query }) => {
             hit.name[0] !== `@` &&
             hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
               0 && (
-              <img
-                src={GatsbyIcon}
-                css={{
-                  height: 12,
-                  marginBottom: 0,
-                  marginRight: 4,
-                  filter: selected ? false : `grayscale(100%)`,
-                  opacity: selected ? false : `0.2`,
-                }}
-                alt={`Official Gatsby Plugin`}
-              />
+              <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
+                <GatsbyIcon />
+              </span>
             )}
           <span
             css={{

@@ -17,7 +17,7 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
         zIndex: 1,
         [mediaQueries.md]: {
           backgroundColor: `background`,
-          borderColor: `ui.border.subtle`,
+          borderColor: `ui.border`,
           borderRightStyle: `solid`,
           borderRightWidth: `1px`,
           display: `block`,

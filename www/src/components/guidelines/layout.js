@@ -1,11 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
-import { ThemeProvider } from "emotion-theming"
 
-import theme from "../../utils/guidelines/theme"
-
+import { global } from "../../utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
 import AnotherHeader from "../navigation"
@@ -16,7 +16,7 @@ import Footer from "../shared/footer-links"
 import "../../assets/fonts/futura"
 
 const Layout = ({ children, background, pathname, pageTitle }) => (
-  <ThemeProvider theme={theme}>
+  <>
     <Global
       styles={{
         ".ReactModal__Overlay": {
@@ -34,6 +34,7 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
         },
       }}
     />
+    <Global styles={global} />
     <Helmet>
       <title>
         {pageTitle ? `${pageTitle} | Guidelines | GatsbyJS` : `GatsbyJS`}
@@ -47,11 +48,13 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
     <Banner />
     <AnotherHeader pathname={pathname} />
     <Box
-      bg="white"
+      bg="background"
       position="relative"
-      pt={{
-        xxs: t => t.sizes.bannerHeight,
-        sm: t => `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+      sx={{
+        pt: [
+          t => t.sizes.bannerHeight,
+          t => `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+        ],
       }}
     >
       {background && background}
@@ -61,7 +64,7 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
         <Footer />
       </Box>
     </Box>
-  </ThemeProvider>
+  </>
 )
 
 Layout.propTypes = {

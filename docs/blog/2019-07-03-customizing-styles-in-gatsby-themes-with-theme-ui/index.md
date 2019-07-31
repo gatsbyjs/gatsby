@@ -2,6 +2,8 @@
 title: "Customizing Styles in Gatsby Themes with Theme UI"
 date: 2019-07-03
 author: Brent Jackson
+image: "./theme-ui.png"
+imageTitle: "Customizing Styles with Theme UI"
 tags:
   - themes
   - cutting-edge-experiences

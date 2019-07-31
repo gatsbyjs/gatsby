@@ -1,6 +1,7 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import styled from "@emotion/styled"
-import { ThemeProvider } from "emotion-theming"
 import MdWarning from "react-icons/lib/md/warning"
 
 import {
@@ -23,7 +24,6 @@ import Blog from "../../components/guidelines/cards/blog"
 import ImagePlaceholder from "../../components/guidelines/image-placeholder"
 
 import theme from "../../utils/guidelines/theme"
-import themeInverted from "../../utils/guidelines/theme-inverted"
 import {
   Box,
   Button,
@@ -46,7 +46,7 @@ const MarketingColumn = ({ children, title }) => (
 
 const Typeface = ({ children, fontFamily }) => (
   <Text
-    color="grey.90"
+    color="text.primary"
     fontFamily={fontFamily}
     fontSize={{ xxs: 8, lg: 12 }}
     lineHeight="solid"
@@ -166,7 +166,7 @@ const Typography = ({ location }) => (
               <Text
                 // don't scale based on root font size here
                 fontSize={`${parseFloat(size) * 16}px`}
-                color="grey.90"
+                color="text.primary"
                 css={{
                   overflow: `hidden`,
                   position: `relative`,
@@ -182,7 +182,7 @@ const Typography = ({ location }) => (
               <Box
                 fontSize={0}
                 mb={theme.fontSizes.length === index + 1 ? 0 : 3}
-                color="grey.70"
+                color="text.secondary"
               >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
@@ -290,7 +290,7 @@ const Typography = ({ location }) => (
               capital letters together, the default spacing looks too tight.
             </p>
             <Text
-              color="grey.60"
+              color="text.secondary"
               fontFamily="header"
               fontSize={1}
               letterSpacing="tracked"
@@ -433,95 +433,78 @@ const Typography = ({ location }) => (
                 requirements by shifting resources around.
               </p>
             </Text>
-            <Button bg="black">Read more</Button>
+            <Button>Read more</Button>
           </Box>
         </ContentColumn>
       </Columns>
     </Section>
 
-    <ThemeProvider theme={themeInverted}>
-      <Container
-        bg="white"
-        py={8}
-        my={8}
-        textAlign="center"
-        css={{ WebkitFontSmoothing: `antialiased` }}
-      >
-        <Text fontSize={1} color="blackFade.70">
-          Simple landing page (using an inverted theme)
-        </Text>
+    <Container py={8} my={8} textAlign="center">
+      <Text fontSize={1}>Simple landing page</Text>
 
-        <Box maxWidth={1040} mx="auto">
-          <PageHeading
-            fontSize={{ md: 11 }}
-            lineHeight="solid"
-            maxWidth="48rem"
-            mb={3}
-            mx="auto"
-          >
-            Stop managing content.
-            <br /> Start telling your story.
-          </PageHeading>
-          <Intro color="blackFade.80" maxWidth="40rem" mx="auto" mb={6}>
-            Gatsby brings your content to the edge for lightning fast, safe
-            website delivery with no CMS overhead.
-          </Intro>
-          <Button
-            bg="black"
-            mx="auto"
-            mb={4}
-            css={{ color: `black !important` }}
-          >
-            Start a free trial
-          </Button>
-          <Text color="blackFade.70" fontSize={1}>
-            14 day free trial — no credit card required
-          </Text>
+      <Box maxWidth={1040} mx="auto">
+        <PageHeading
+          fontSize={{ md: 11 }}
+          lineHeight="solid"
+          maxWidth="48rem"
+          mb={3}
+          mx="auto"
+        >
+          Stop managing content.
+          <br /> Start telling your story.
+        </PageHeading>
+        <Intro maxWidth="40rem" mx="auto" mb={6}>
+          Gatsby brings your content to the edge for lightning fast, safe
+          website delivery with no CMS overhead.
+        </Intro>
+        <Button mx="auto" mb={4}>
+          Start a free trial
+        </Button>
+        <Text fontSize={1}>14 day free trial — no credit card required</Text>
 
-          <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
-            <MarketingColumn title="Modern web tech without the headache">
-              Enjoy the power of the latest web technologies – React.js ,
-              Webpack , modern JavaScript and CSS and more — all set up and
-              waiting for you to start building.
-            </MarketingColumn>
-            <MarketingColumn title="Bring your own data">
-              Gatsby’s rich data plugin ecosystem lets you build sites with the
-              data you want — pull data from headless CMSs, SaaS services, APIs,
-              databases, your file system, and more.
-            </MarketingColumn>
-          </Box>
-          <Box display={{ md: `flex ` }} pb={12} textAlign="left">
-            <MarketingColumn title="Future-proof your website">
-              Do not build a website with last decade’s tech. The future of the
-              web is mobile, JavaScript and APIs—the JAMstack. Every website is
-              a web app and every web app is a website. Gatsby.js is the
-              universal JavaScript framework you’ve been waiting for.
-            </MarketingColumn>
-            <MarketingColumn title="Scale to the entire internet">
-              Forget complicated deploys with databases and servers and their
-              expensive, time-consuming setup costs, maintenance, and scaling
-              fears — Gatsby builds your site as “static” files which can be
-              deployed easily on various services.
-            </MarketingColumn>
-          </Box>
-          <Box display={{ md: `flex ` }} pb={12} textAlign="left">
-            <MarketingColumn title="Speed past the competition">
-              Gatsby.js builds the fastest possible website. Instead of waiting
-              to generate pages when requested, pre-build pages and lift them
-              into a global cloud of servers — ready to be delivered instantly
-              to your users wherever they are.
-            </MarketingColumn>
-            <MarketingColumn title="Static Progressive Web Apps">
-              Gatsby.js is a static PWA (Progressive Web App) generator. You get
-              code and data splitting out-of-the-box. Gatsby loads only the
-              critical HTML, CSS, data, and JavaScript so your site loads as
-              fast as possible. Once loaded, Gatsby prefetches resources for
-              other pages so clicking around the site feels incredibly fast.
-            </MarketingColumn>
-          </Box>
+        <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
+          <MarketingColumn title="Modern web tech without the headache">
+            Enjoy the power of the latest web technologies – React.js , Webpack
+            , modern JavaScript and CSS and more — all set up and waiting for
+            you to start building.
+          </MarketingColumn>
+          <MarketingColumn title="Bring your own data">
+            Gatsby’s rich data plugin ecosystem lets you build sites with the
+            data you want — pull data from headless CMSs, SaaS services, APIs,
+            databases, your file system, and more.
+          </MarketingColumn>
         </Box>
-      </Container>
-    </ThemeProvider>
+        <Box display={{ md: `flex ` }} pb={12} textAlign="left">
+          <MarketingColumn title="Future-proof your website">
+            Do not build a website with last decade’s tech. The future of the
+            web is mobile, JavaScript and APIs—the JAMstack. Every website is a
+            web app and every web app is a website. Gatsby.js is the universal
+            JavaScript framework you’ve been waiting for.
+          </MarketingColumn>
+          <MarketingColumn title="Scale to the entire internet">
+            Forget complicated deploys with databases and servers and their
+            expensive, time-consuming setup costs, maintenance, and scaling
+            fears — Gatsby builds your site as “static” files which can be
+            deployed easily on various services.
+          </MarketingColumn>
+        </Box>
+        <Box display={{ md: `flex ` }} pb={12} textAlign="left">
+          <MarketingColumn title="Speed past the competition">
+            Gatsby.js builds the fastest possible website. Instead of waiting to
+            generate pages when requested, pre-build pages and lift them into a
+            global cloud of servers — ready to be delivered instantly to your
+            users wherever they are.
+          </MarketingColumn>
+          <MarketingColumn title="Static Progressive Web Apps">
+            Gatsby.js is a static PWA (Progressive Web App) generator. You get
+            code and data splitting out-of-the-box. Gatsby loads only the
+            critical HTML, CSS, data, and JavaScript so your site loads as fast
+            as possible. Once loaded, Gatsby prefetches resources for other
+            pages so clicking around the site feels incredibly fast.
+          </MarketingColumn>
+        </Box>
+      </Box>
+    </Container>
 
     <Container>
       <Box bt={1} py={8} my={8}>
@@ -542,10 +525,10 @@ const Typography = ({ location }) => (
       <Flex as="section" py={4} my={4}>
         <Box mt={8} mr="auto" pr={7} display={{ xxs: `none`, md: `block` }}>
           <Box
-            css={{
+            sx={{
               borderRightWidth: 1,
               borderRightStyle: `solid`,
-              borderColor: `#F5F5F5`,
+              borderColor: `ui.border`,
             }}
             pr={7}
           >

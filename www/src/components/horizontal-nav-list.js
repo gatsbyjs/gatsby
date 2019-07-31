@@ -16,7 +16,7 @@ const HorizontalNavList = ({ items = [], slug }) => (
         "& * + *": {
           borderLeftStyle: `solid`,
           borderLeftWidth: `1px`,
-          borderColor: `ui.border.subtle`,
+          borderColor: `ui.border`,
         },
       }}
     >

@@ -8,17 +8,17 @@ export const HorizontalScroller = styled(`div`)`
 export const HorizontalScrollerContent = styled(`ul`)`
   display: inline-flex;
   list-style: none;
-  padding: ${props => props.theme.space[2]} ${props => props.theme.space[6]}
-    calc(${props => props.theme.space[2]} * 1.5);
+  padding: ${p => p.theme.space[2]} ${p => p.theme.space[6]}
+    calc(${p => p.theme.space[2]} * 1.5);
   margin: 0;
 `
 
 export const HorizontalScrollerItem = styled(`li`)`
-  background: ${props => props.theme.colors.white};
-  border-radius: ${props => props.theme.radii[2]}px;
-  box-shadow: ${props => props.theme.shadows.raised};
+  background: ${p => p.theme.colors.card.background};
+  border-radius: ${p => p.theme.radii[2]}px;
+  box-shadow: ${p => p.theme.shadows.raised};
   margin: 0;
-  margin-right: ${props => props.theme.space[6]};
+  margin-right: ${p => p.theme.space[6]};
   width: 77vw;
 
   :last-child {

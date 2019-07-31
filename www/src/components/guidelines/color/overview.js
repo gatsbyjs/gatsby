@@ -82,6 +82,7 @@ const Palette = ({ color, handler }) => {
             handler(e, node)
           }}
           css={{
+            background: `transparent`,
             border: 0,
             cursor: `pointer`,
             WebkitAppearance: `none`,

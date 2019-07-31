@@ -9,7 +9,7 @@ import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import FooterLinks from "../components/shared/footer-links"
 import GithubIcon from "react-icons/lib/go/mark-github"
-import GatsbyIcon from "../assets/monogram.svg"
+import GatsbyIcon from "../components/gatsby-monogram"
 import { linkStyles } from "../utils/styles"
 
 const PackageReadMe = props => {
@@ -51,21 +51,27 @@ const PackageReadMe = props => {
                 <div
                   sx={{
                     ...linkStyles,
-                    color: `#aaa !important`,
-                    mr: 6,
+                    mr: 8,
+                    "&&": {
+                      border: 0,
+                      color: `text.secondary`,
+                      display: `flex`,
+                      fontWeight: `normal`,
+                    },
+                    "&&:hover": {
+                      color: `text.secondary`,
+                    },
                   }}
                 >
-                  <img
-                    src={GatsbyIcon}
-                    css={{
-                      height: 16,
-                      marginBottom: 0,
-                      marginRight: 5,
-                      filter: `grayscale(100%)`,
-                      opacity: 0.5,
+                  <span
+                    sx={{
+                      display: `inline-block`,
+                      mr: 2,
                     }}
-                    alt={`Official Gatsby Plugin`}
-                  />
+                    title={`Official Gatsby Plugin`}
+                  >
+                    <GatsbyIcon />
+                  </span>
                   Official Plugin
                 </div>
               )}

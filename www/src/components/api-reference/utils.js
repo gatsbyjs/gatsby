@@ -6,18 +6,18 @@ import styled from "@emotion/styled"
 
 export const LinkBox = styled(`a`)`
   border-bottom: none !important;
-  border-radius: ${props => props.theme.radii[1]}px;
-  font-size: ${props => props.theme.fontSizes[0]} !important;
-  color: ${props => props.theme.colors.text.primary} !important;
+  border-radius: ${p => p.theme.radii[1]}px;
+  font-size: ${p => p.theme.fontSizes[0]} !important;
+  color: ${p => p.theme.colors.text.primary} !important;
   line-height: 22px;
-  background: ${props => props.theme.colors.ui.background};
-  margin-left: ${props => props.theme.space[1]};
+  background: ${p => p.theme.colors.ui.background};
+  margin-left: ${p => p.theme.space[1]};
   width: 22px;
   text-align: center;
   display: inline-block;
   &:hover {
-    background: ${props => props.theme.colors.gatsby};
-    color: ${props => props.theme.colors.white} !important;
+    background: ${p => p.theme.colors.gatsby};
+    color: ${p => p.theme.colors.white} !important;
   }
 `
 

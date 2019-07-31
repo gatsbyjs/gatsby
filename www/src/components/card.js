@@ -13,16 +13,16 @@ const Card = ({ children }) => (
       [mediaQueries.md]: {
         flex: `0 0 auto`,
         maxWidth: `50%`,
-        boxShadow: t => `0 1px 0 0 ${t.colors.ui.border.subtle}`,
+        boxShadow: t => `0 1px 0 0 ${t.colors.ui.border}`,
         "&:nth-of-type(5), &:nth-of-type(6)": { boxShadow: `none` },
         "&:nth-of-type(2n)": {
-          borderLeft: t => `1px solid ${t.colors.ui.border.subtle}`,
+          borderLeft: t => `1px solid ${t.colors.ui.border}`,
         },
       },
       [mediaQueries.xl]: {
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
-        borderLeft: t => `1px solid ${t.colors.ui.border.subtle}`,
+        borderLeft: t => `1px solid ${t.colors.ui.border}`,
         "&:nth-of-type(4)": { boxShadow: `none` },
         "&:nth-of-type(3n+1)": { borderLeft: 0 },
       },

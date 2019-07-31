@@ -23,19 +23,19 @@ const Sections = styled(`div`)`
 
   ${mediaQueries.md} {
     flex-direction: row;
-    margin: 0 -${props => props.theme.space[2]};
+    margin: 0 -${p => p.theme.space[2]};
   }
 `
 
 const Section = styled(EcosystemSection)`
-  box-shadow: ${props => props.theme.shadows.raised};
-  border-radius: ${props => props.theme.radii[2]}px;
-  margin-bottom: ${props => props.theme.space[6]};
-  padding: ${props => props.theme.space[6]};
+  box-shadow: ${p => p.theme.shadows.raised};
+  border-radius: ${p => p.theme.radii[2]}px;
+  margin-bottom: ${p => p.theme.space[6]};
+  padding: ${p => p.theme.space[6]};
 
   ${mediaQueries.md} {
-    margin: 0 ${props => props.theme.space[2]} 0;
-    padding: ${props => props.theme.space[6]};
+    margin: 0 ${p => p.theme.space[2]} 0;
+    padding: ${p => p.theme.space[6]};
 
     :last-child {
       align-self: stretch;
@@ -44,18 +44,18 @@ const Section = styled(EcosystemSection)`
 `
 
 const SubTitle = styled(`h3`)`
-  font-size: ${props => props.theme.fontSizes[3]};
-  margin-bottom: ${props => props.theme.space[1]};
-  margin-top: ${props => props.theme.space[7]};
+  font-size: ${p => p.theme.fontSizes[3]};
+  margin-bottom: ${p => p.theme.space[1]};
+  margin-top: ${p => p.theme.space[7]};
 
   ${mediaQueries.lg} {
-    margin-left: ${props => props.theme.space[9]};
-    margin-bottom: ${props => props.theme.space[4]};
+    margin-left: ${p => p.theme.space[9]};
+    margin-bottom: ${p => p.theme.space[4]};
   }
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${props => props.theme.space[6]};
+  margin: 0 -${p => p.theme.space[6]};
 
   ${mediaQueries.lg} {
     margin: 0;
@@ -73,11 +73,11 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${props => props.theme.space[6]};
+  margin-right: ${p => p.theme.space[6]};
 
   ${mediaQueries.md} {
     border-bottom: none;
-    margin: ${props => props.theme.space[6]};
+    margin: ${p => p.theme.space[6]};
     margin-top: 0;
     margin-left: 0;
     width: 20rem;
@@ -92,19 +92,19 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${props => props.theme.space[5]} + ${props =>
+    padding-left: calc(${p => p.theme.space[5]} + ${props =>
   props.theme.space[6]});
     position: relative;
     border: 0;
-    box-shadow: ${props => props.theme.shadows.raised};
+    box-shadow: ${p => p.theme.shadows.raised};
 
     ${mediaQueries.md} {
-      border-radius: ${props => props.theme.radii[2]}px;
+      border-radius: ${p => p.theme.radii[2]}px;
     }
 
     ${mediaQueries.lg} {
       :hover {
-        background: ${props => props.theme.colors.ui.hover};
+        background: ${p => p.theme.colors.ui.hover};
       }
     }
 
@@ -113,14 +113,14 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
         props.item.type === `Starter`
           ? props.theme.colors.teal[10]
           : props.theme.colors.orange[20]};
-      border-radius: ${props => props.theme.radii[2]}px 0 0 ${props =>
+      border-radius: ${p => p.theme.radii[2]}px 0 0 ${props =>
   props.theme.radii[2]}px;
       bottom: 0;
       content: "";
       left: 0;
       position: absolute;
       top: 0;
-      width: ${props => props.theme.space[5]};
+      width: ${p => p.theme.space[5]};
     }
 
     :after {
@@ -130,10 +130,11 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
         props.item.type === `Starter`
           ? props.theme.colors.blue[70]
           : props.theme.colors.orange[90]};
-      font-family: ${props => props.theme.fonts.header};
-      font-size: ${props => props.theme.fontSizes[1]};
+      font-family: ${p => p.theme.fonts.header};
+      font-size: ${p => p.theme.fontSizes[0]};
       left: 0;
-      letter-spacing: ${props => props.theme.letterSpacings.tracked};
+      letter-spacing: ${p => p.theme.letterSpacings.tracked};
+      text-transform: uppercase;
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
       transform-origin: top left;

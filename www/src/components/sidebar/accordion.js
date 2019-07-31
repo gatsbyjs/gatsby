@@ -105,7 +105,7 @@ class Accordion extends React.Component {
                 position: `absolute`,
                 borderTopWidth: `1px`,
                 borderTopStyle: `solid`,
-                borderColor: `ui.border.subtle`,
+                borderColor: `ui.border`,
                 left: t =>
                   (isParentOfActiveItem && isExpanded) ||
                   (isActive && isExpanded)
@@ -144,7 +144,7 @@ class Accordion extends React.Component {
             position: `relative`,
             ...(item.ui === `steps` && {
               "&:after": {
-                backgroundColor: `ui.border.subtle`,
+                backgroundColor: `ui.border`,
                 bottom: 0,
                 content: `''`,
                 left: 27,

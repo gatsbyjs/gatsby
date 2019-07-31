@@ -21,9 +21,10 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
       color: `text.secondary`,
       display: `${mobile ? `inherit` : `none`}`,
       fontSize: 1,
-      mb: 7,
+      mb: 6,
       [mediaQueries.md]: {
         display: `${mobile ? `none` : `inherit`}`,
+        mb: 8,
       },
     }}
   >

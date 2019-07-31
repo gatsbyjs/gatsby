@@ -23,13 +23,13 @@ const opacityEntry = keyframes`
 `
 
 const WrapperDiv = styled(`div`)`
-  background-color: ${props => props.theme.colors.widget.background};
-  border-top: 1px solid ${props => props.theme.colors.ui.border.subtle};
+  background-color: ${p => p.theme.colors.widget.background};
+  border-top: 1px solid ${p => p.theme.colors.ui.border};
   height: 100%;
   opacity: 0.5;
-  padding: ${props => props.theme.space[6]} 0;
+  padding: ${p => p.theme.space[6]} 0;
   width: 100%;
-  z-index: ${props => props.theme.zIndices.widget};
+  z-index: ${p => p.theme.zIndices.widget};
 
   [tabindex="-1"]:focus {
     outline: none;
@@ -65,11 +65,11 @@ const WrapperDiv = styled(`div`)`
   }
 
   ${mediaQueries.lg} {
-    box-shadow: ${props => props.theme.shadows.overlay};
+    box-shadow: ${p => p.theme.shadows.overlay};
     border: 0;
-    border-radius: ${props => props.theme.radii[2]}px;
+    border-radius: ${p => p.theme.radii[2]}px;
     height: 100%;
-    padding: ${props => props.theme.space[7]} ${props => props.theme.space[6]};
+    padding: ${p => p.theme.space[7]} ${p => p.theme.space[6]};
     transform: scale(0);
     transform-origin: top center;
   }

@@ -12,36 +12,36 @@ import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 const stripedBorderHeight = 1
 
 const Container = styled(`div`)`
-  border: 1px solid ${props => props.theme.colors.ui.border.subtle};
-  border-radius: ${props => props.theme.radii[2]}px;
+  background: ${p => p.theme.colors.white};
+  border: 1px solid ${p => p.theme.colors.ui.border};
+  border-radius: ${p => p.theme.radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${props => props.theme.space[8]};
-  padding: calc(${props => props.theme.space[8]} * 1.2);
+  margin-bottom: ${p => p.theme.space[8]};
+  padding: calc(${p => p.theme.space[8]} * 1.2);
   padding-bottom: calc(
     ${props => rhythm(props.theme.space[8] * 1.2)} +
-      ${props => props.theme.space[stripedBorderHeight]}
+      ${p => p.theme.space[stripedBorderHeight]}
   );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${props => props.theme.radii[2]}px
-      ${props => props.theme.radii[2]}px;
-    background: ${props => props.theme.colors.white}
+    border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
+    background: ${p => p.theme.colors.white}
       repeating-linear-gradient(
         135deg,
-        ${props => props.theme.colors.yellow[40]},
-        ${props => props.theme.colors.yellow[40]} 20px,
+        ${p => p.theme.colors.yellow[40]},
+        ${p => p.theme.colors.yellow[40]} 20px,
         transparent 20px,
         transparent 40px,
-        ${props => props.theme.colors.teal[40]} 40px,
-        ${props => props.theme.colors.teal[40]} 60px,
+        ${p => p.theme.colors.teal[40]} 40px,
+        ${p => p.theme.colors.teal[40]} 60px,
         transparent 60px,
         transparent 80px
       );
     bottom: 0;
     content: "";
-    height: ${props => props.theme.space[stripedBorderHeight]};
+    height: ${p => p.theme.space[stripedBorderHeight]};
     left: 0;
     right: 0;
     position: absolute;
@@ -58,32 +58,32 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -${props => props.theme.space[1]};
+  left: -${p => p.theme.space[1]};
   position: absolute;
-  top: -${props => props.theme.space[2]};
+  top: -${p => p.theme.space[2]};
 `
 
 const Name = styled(`h3`)`
-  color: ${props => props.theme.colors.lilac};
-  font-family: ${props => props.theme.fonts.header};
-  font-size: ${props => props.theme.fontSizes[1]};
-  font-weight: ${props => props.theme.fontWeights[0]};
-  letter-spacing: ${props => props.theme.letterSpacings.tracked};
+  color: ${p => p.theme.colors.lilac};
+  font-family: ${p => p.theme.fonts.header};
+  font-size: ${p => p.theme.fontSizes[1]};
+  font-weight: ${p => p.theme.fontWeights[0]};
+  letter-spacing: ${p => p.theme.letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
 
 const Title = styled(`h1`)`
-  color: ${props => props.theme.colors.gatsby};
-  font-size: ${props => props.theme.fontSizes[4]};
-  font-weight: ${props => props.theme.fontWeights[1]};
-  line-height: ${props => props.theme.lineHeights.dense};
+  color: ${p => p.theme.colors.gatsby};
+  font-size: ${p => p.theme.fontSizes[4]};
+  font-weight: ${p => p.theme.fontWeights[1]};
+  line-height: ${p => p.theme.lineHeights.dense};
   margin: 0;
-  margin-top: ${props => props.theme.space[1]};
+  margin-top: ${p => p.theme.space[1]};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: ${props => props.theme.space[5]};
+  margin-top: ${p => p.theme.space[5]};
 
   ${mediaQueries.lg} {
     margin-top: 0;

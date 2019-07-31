@@ -6,14 +6,13 @@ import React from "react"
 import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
-import MdBrightness1 from "react-icons/lib/md/brightness-2"
-import MdBrightness2 from "react-icons/lib/md/brightness-1"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../assets/logo.svg"
 import logoInverted from "../logo-inverted.svg"
 import { colors, mediaQueries } from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
+import DarkModeToggle from "../components/dark-mode-toggle"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -29,8 +28,6 @@ const navItemStyles = {
   lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
   position: `relative`,
   textDecoration: `none`,
-  top: 0,
-  WebkitFontSmoothing: `antialiased`,
   zIndex: 1,
   "&:hover": { color: `navigation.linkHover` },
 }
@@ -74,7 +71,7 @@ const SocialNavItem = ({ href, title, children }) => (
 )
 
 const Navigation = ({ pathname }) => {
-  const [colorMode, setColorMode] = useColorMode()
+  const [colorMode] = useColorMode()
   const isHomepage = pathname === `/`
 
   return (
@@ -117,7 +114,7 @@ const Navigation = ({ pathname }) => {
           position: `relative`,
           width: `100%`,
           "&:after": {
-            bg: isHomepage ? `transparent` : `ui.border.subtle`,
+            bg: isHomepage ? `transparent` : `ui.border`,
             bottom: 0,
             content: `''`,
             height: 1,
@@ -190,7 +187,7 @@ const Navigation = ({ pathname }) => {
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
             <NavItem linkTo="/contributing/">Contributing</NavItem>
-            <NavItem linkTo="/starters/">Starters</NavItem>
+            {/* <NavItem linkTo="/starters/">Starters</NavItem> */}
           </ul>
         </nav>
         <SearchForm key="SearchForm" offsetVertical={navItemTopOffset} />
@@ -198,7 +195,6 @@ const Navigation = ({ pathname }) => {
           sx={{
             alignSelf: `flex-end`,
             display: `flex`,
-            ml: `auto`,
           }}
         >
           <SocialNavItem
@@ -213,36 +209,31 @@ const Navigation = ({ pathname }) => {
               [mediaQueries.lg]: { display: `flex` },
             }}
           >
-            <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
-              <DiscordIcon overrideCSS={{ verticalAlign: `middle` }} />
-            </SocialNavItem>
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
               <TwitterIcon style={{ verticalAlign: `middle` }} />
             </SocialNavItem>
+            <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
+              <DiscordIcon
+                overrideCSS={{
+                  verticalAlign: `middle`,
+                  position: `relative`,
+                  top: `0.05em`,
+                }}
+              />
+            </SocialNavItem>
           </div>
-          <button
+          <div
             sx={{
               ...navItemStyles,
-              background: `transparent`,
-              border: 0,
               color: `navigation.socialLink`,
-              cursor: `pointer`,
-              outline: 0,
-              ml: 4,
+              ml: 2,
               "&:hover": {
                 color: `navigation.linkHover`,
               },
             }}
-            onClick={e => {
-              setColorMode(colorMode === `light` ? `dark` : `light`)
-            }}
           >
-            {colorMode === `light` ? (
-              <MdBrightness1 style={{ verticalAlign: `middle` }} />
-            ) : (
-              <MdBrightness2 style={{ verticalAlign: `middle` }} />
-            )}
-          </button>
+            <DarkModeToggle />
+          </div>
         </div>
       </div>
     </header>

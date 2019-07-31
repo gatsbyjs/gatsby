@@ -16,7 +16,7 @@ export const Header = styled(`header`)`
   }
 
   ${mediaQueries.lg} {
-    margin-left: ${props => props.theme.space[9]};
+    margin-left: ${p => p.theme.space[9]};
   }
 `
 
@@ -25,14 +25,14 @@ export const Name = styled(`h3`)`
   color: ${props =>
     props.inverse ? props.theme.colors.purple[10] : props.theme.colors.lilac};
   display: flex;
-  font-size: ${props => props.theme.fontSizes[2]};
-  font-weight: ${props => props.theme.fontWeights[0]};
+  font-size: ${p => p.theme.fontSizes[2]};
+  font-weight: ${p => p.theme.fontWeights[0]};
   margin: 0;
-  margin-left: calc(${props => props.theme.space[ICON_SIZE]} * -0.2);
+  margin-left: calc(${p => p.theme.space[ICON_SIZE]} * -0.2);
   margin-bottom: 0.5em;
 
   ${mediaQueries.lg} {
-    margin-left: calc(${props => props.theme.space[ICON_SIZE]} * -1.2);
+    margin-left: calc(${p => p.theme.space[ICON_SIZE]} * -1.2);
   }
 `
 
@@ -55,8 +55,8 @@ const Icon = styled(`span`)`
 export const Title = styled(`h1`)`
   color: ${props =>
     props.inverse ? props.theme.colors.yellow[40] : props.theme.colors.gatsby};
-  font-size: ${props => props.theme.fontSizes[6]};
-  font-weight: ${props => props.theme.fontWeights[1]};
+  font-size: ${p => p.theme.fontSizes[6]};
+  font-weight: ${p => p.theme.fontWeights[1]};
   margin: 0;
 `
 
@@ -65,8 +65,8 @@ const Introduction = styled(`p`)`
     props.inverse
       ? props.theme.colors.purple[10]
       : props.theme.colors.purple[80]};
-  font-size: ${props => props.theme.fontSizes[3]};
-  font-family: ${props => props.theme.fonts.header};
+  font-size: ${p => p.theme.fontSizes[3]};
+  font-family: ${p => p.theme.fonts.header};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `
@@ -74,14 +74,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: ${props => props.theme.space[4]} 0 ${props => props.theme.space[6]};
+  margin: ${p => p.theme.space[4]} 0 ${p => p.theme.space[6]};
 
   > a {
-    margin-right: ${props => props.theme.space[1]};
+    margin-right: ${p => p.theme.space[1]};
   }
 
   ${mediaQueries.lg} {
-    margin: ${props => props.theme.space[4]} 0 ${props => props.theme.space[8]};
+    margin: ${p => p.theme.space[4]} 0 ${p => p.theme.space[8]};
   }
 `
 

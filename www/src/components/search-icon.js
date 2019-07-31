@@ -17,9 +17,7 @@ const SearchIcon = ({ focussed }) => (
       pointerEvents: `none`,
       transform: `translateY(-50%)`,
       fill: t =>
-        focussed
-          ? t.colors.navigation.searchIconFocus
-          : t.colors.navigation.searchIcon,
+        focussed ? t.colors.themedInput.iconFocus : t.colors.themedInput.icon,
     }}
   />
 )

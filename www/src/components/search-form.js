@@ -6,7 +6,7 @@ import { navigate } from "gatsby"
 
 import { space } from "../gatsby-plugin-theme-ui"
 import SearchIcon from "./search-icon"
-import { searchInputStyles } from "../utils/styles"
+import { themedInput } from "../utils/styles"
 
 const loadJS = () => import(`./docsearch.min.js`)
 let loadedJs = false
@@ -17,13 +17,17 @@ import { Global, css } from "@emotion/core"
 const searchDropdownOffsetTop = space[9]
 
 const algoliaStyles = t => css`
+  .algolia-autocomplete .algolia-docsearch-suggestion--title {
+    color: ${t.colors.text.primary} !important;
+  }
+
   .algolia-autocomplete .ds-dropdown-menu [class^=ds-dataset-] {
-    border-color: ${t.colors.ui.border.subtle} !important;
-    background: ${t.colors.widget.background} !important;
+    border-color: ${t.colors.ui.border} !important;
+    background: ${t.colors.background} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion {
-    background: ${t.colors.widget.background} !important; 
+    background: ${t.colors.background} !important; 
   }
 
   .algolia-autocomplete .ds-dropdown-menu {
@@ -38,7 +42,7 @@ const algoliaStyles = t => css`
   }
 
   .algolia-autocomplete .ds-dropdown-menu:before {
-    background: ${t.colors.widget.background} !important; 
+    background: ${t.colors.background} !important; 
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -69,7 +73,7 @@ const algoliaStyles = t => css`
 
   .algolia-autocomplete
     .algolia-docsearch-suggestion--subcategory-column:before {
-    background: ${t.colors.ui.border.subtle} !important;
+    background: ${t.colors.ui.border} !important;
   }
 
   .algolia-autocomplete
@@ -89,8 +93,8 @@ const algoliaStyles = t => css`
 
   /* Caret */
   .algolia-autocomplete .ds-dropdown-menu::before {
-    border-top-color: ${t.colors.ui.border.subtle} !important;
-    border-right-color: ${t.colors.ui.border.subtle} !important;
+    border-top-color: ${t.colors.ui.border} !important;
+    border-right-color: ${t.colors.ui.border} !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
@@ -98,13 +102,15 @@ const algoliaStyles = t => css`
       100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight}
     ) !important;
     padding: 0 !important;
-    border-color: ${t.colors.ui.border.subtle} !important;
+    border-color: ${t.colors.ui.border} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    background-color: ${t.colors.lavender} !important;
+    background-color: ${
+      t.colors.search.suggestionHighlightBackground
+    } !important;
     box-shadow: 0 !important;
-    color: ${t.colors.gatsby} !important;
+    color: ${t.colors.search.suggestionHighlightColor} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--text {
@@ -129,7 +135,8 @@ const algoliaStyles = t => css`
     .ds-suggestion.ds-cursor
     .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
     .algolia-docsearch-suggestion--content {
-    background-color: ${t.colors.ui.hover} !important;
+    background-color: ${t.colors.sidebar.itemHoverBackground} !important;
+    color: inherit !important;
   }
 
   .algolia-autocomplete
@@ -164,12 +171,11 @@ const algoliaStyles = t => css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
-    padding: ${t.space[1]} ${t.space[3]} !important;
-    margin-top: 0 !important;
+    border-color: ${t.colors.ui.border} !important;
     font-size: ${t.fontSizes[1]} !important;
-    border-color: ${t.colors.ui.border.subtle} !important;
-    color: ${t.colors.gatsby} !important;
     font-weight: bold !important;
+    margin-top: 0 !important;
+    padding: ${t.space[1]} ${t.space[3]} !important;
   }
 
   .searchWrap
@@ -185,10 +191,10 @@ const algoliaStyles = t => css`
   }
 
   .algolia-autocomplete .algolia-docsearch-footer {
-    width: 100% !important;
+    border-top: 1px solid ${t.colors.ui.border} !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px solid ${t.colors.ui.border.subtle} !important;
+    width: 100% !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {
@@ -200,7 +206,7 @@ const algoliaStyles = t => css`
 
   ${t.mediaQueries.sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
-      color: inherit !important;
+      color: ${t.colors.text.primary} !important;
       font-weight: normal !important;
     }
 
@@ -234,7 +240,7 @@ const algoliaStyles = t => css`
       top: 0 !important;
       height: 100% !important;
       width: 1px !important;
-      background: ${t.colors.ui.border.subtle} !important;
+      background: ${t.colors.ui.border} !important;
     }
 
     .algolia-autocomplete
@@ -376,14 +382,15 @@ class SearchForm extends Component {
     return (
       <form
         sx={{
-          alignItems: `center`,
+          alignItems: `flex-end`,
           display: `flex`,
-          flex: `1 1 auto`,
+          flex: `1 0 auto`,
           flexDirection: `row`,
           mb: 0,
-          ml: `auto`,
+          ml: 4,
           mr: 4,
-          minWidth: [null, null, null, null, null, `12rem`],
+          // minWidth: [null, null, null, null, null, `12rem`],
+          maxWidth: [null, null, null, null, null, `24rem`],
           mt: offsetVertical ? offsetVertical : false,
         }}
         className="searchWrap"
@@ -396,7 +403,6 @@ class SearchForm extends Component {
           sx={{
             position: `relative`,
             width: `100%`,
-            ml: 4,
             "& .algolia-autocomplete": {
               width: `100%`,
               display: `block !important`,
@@ -406,7 +412,7 @@ class SearchForm extends Component {
           <input
             id="doc-search"
             sx={{
-              ...searchInputStyles,
+              ...themedInput,
               width: [`100%`, null, null, null, 5, `100%`],
               transition: t =>
                 `width ${t.transition.speed.default} ${

@@ -46,6 +46,7 @@ class EvaluationTable extends Component {
                   background: `none`,
                   border: 0,
                   cursor: `inherit`,
+                  color: `text.primary`,
                   p: 0,
                   textAlign: `left`,
                 }}
@@ -115,7 +116,7 @@ class EvaluationTable extends Component {
                               },
                               borderBottom: t =>
                                 !showTooltip(s, i)
-                                  ? `1px solid ${t.colors.ui.border.subtle}`
+                                  ? `1px solid ${t.colors.ui.border}`
                                   : `none`,
                               minWidth: 40,
                               paddingRight: 0,

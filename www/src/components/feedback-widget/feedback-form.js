@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton } from "./buttons"
-import { formInputFocus } from "../../utils/styles"
+import { formInput, formInputFocus } from "../../utils/styles"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
 import MdSentimentDissatisfied from "react-icons/lib/md/sentiment-dissatisfied"
@@ -17,22 +17,22 @@ const Form = styled(`form`)`
 
 const Fieldset = styled(`fieldset`)`
   border: 0;
-  margin: 0 0 ${props => props.theme.space[4]};
+  margin: 0 0 ${p => p.theme.space[4]};
   padding: 0;
 `
 
 const Legend = styled(`legend`)`
   display: inline-block;
-  font-size: ${props => props.theme.fontSizes[1]};
-  margin-bottom: ${props => props.theme.space[4]};
-  padding: 0 ${props => props.theme.space[2]};
+  font-size: ${p => p.theme.fontSizes[1]};
+  margin-bottom: ${p => p.theme.space[4]};
+  padding: 0 ${p => p.theme.space[2]};
   text-align: center;
 `
 
 const Rating = styled(`div`)`
   align-content: stretch;
-  border: 1px solid ${props => props.theme.colors.input.border};
-  border-radius: ${props => props.theme.radii[2]}px;
+  border: 1px solid ${p => p.theme.colors.input.border};
+  border-radius: ${p => p.theme.radii[2]}px;
   display: flex;
   flex: 1 1 auto;
   justify-content: stretch;
@@ -50,7 +50,7 @@ const Rating = styled(`div`)`
 `
 
 const TextareaLabel = styled(`label`)`
-  font-size: ${props => props.theme.fontSizes[1]};
+  font-size: ${p => p.theme.fontSizes[1]};
   font-weight: bold;
 
   span {
@@ -59,24 +59,9 @@ const TextareaLabel = styled(`label`)`
 `
 
 const Textarea = styled(`textarea`)`
-  border: 1px solid ${props => props.theme.colors.input.border};
-  border-radius: ${props => props.theme.radii[2]}px;
-  display: block;
-  font-weight: normal;
+  ${formInput}
   height: 5.5rem;
-  margin: ${props => props.theme.space[1]} 0 ${props => props.theme.space[4]};
-  padding: ${props => props.theme.space[1]} ${props => props.theme.space[2]};
-  transition: 0.5s;
-  width: 100%;
-
-  &:focus {
-    ${formInputFocus}
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
+  margin: ${p => p.theme.space[1]} 0 ${p => p.theme.space[4]};
 `
 
 const FeedbackForm = ({

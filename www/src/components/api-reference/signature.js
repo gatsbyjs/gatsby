@@ -7,7 +7,7 @@ import { graphql } from "gatsby"
 import { SubHeader } from "./utils"
 
 const Wrapper = styled(`span`)`
-  font-family: ${props => props.theme.fonts.header};
+  font-family: ${p => p.theme.fonts.header};
   font-weight: 400;
 
   :before,

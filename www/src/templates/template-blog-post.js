@@ -113,101 +113,113 @@ class BlogPostTemplate extends React.Component {
               />
               {canonicalLink}
             </Helmet>
-            <section
-              sx={{
-                display: `flex`,
-                mb: 5,
-                [mediaQueries.md]: {
-                  mt: 3,
-                  mb: 9,
+            <div sx={{ display: `flex`, flexDirection: `column` }}>
+              <section
+                sx={{
+                  display: `flex`,
+                  mb: 5,
+                  [mediaQueries.md]: {
+                    mt: 3,
+                    mb: 9,
+                  },
                   [mediaQueries.lg]: {
                     ml: `-8em`,
                   },
-                },
-              }}
-            >
-              <div css={{ flex: `0 0 auto` }}>
-                <Link
-                  to={post.frontmatter.author.fields.slug}
-                  css={{ "&&": { borderBottom: 0 } }}
-                >
-                  <Avatar
-                    image={post.frontmatter.author.avatar.childImageSharp.fixed}
-                  />
-                </Link>
-              </div>
-              <div css={{ flex: `1 1 auto` }}>
-                <Link to={post.frontmatter.author.fields.slug}>
-                  <h4
-                    sx={{
-                      fontSize: 3,
-                      mb: 1,
-                      color: `link.color`,
-                    }}
+                }}
+              >
+                <div css={{ flex: `0 0 auto` }}>
+                  <Link
+                    to={post.frontmatter.author.fields.slug}
+                    css={{ "&&": { borderBottom: 0 } }}
                   >
-                    <span
+                    <Avatar
+                      image={
+                        post.frontmatter.author.avatar.childImageSharp.fixed
+                      }
+                    />
+                  </Link>
+                </div>
+                <div css={{ flex: `1 1 auto` }}>
+                  <Link to={post.frontmatter.author.fields.slug}>
+                    <h4
                       sx={{
-                        borderBottom: t => `1px solid ${t.colors.link.border}`,
-                        transition: t =>
-                          `all ${t.transition.speed.fast} ${
-                            t.transition.curve.default
-                          }`,
-                        "&:hover": { borderColor: `link.hoverBorder` },
+                        fontSize: 3,
+                        mb: 1,
+                        color: `link.color`,
                       }}
                     >
-                      {post.frontmatter.author.id}
-                    </span>
-                  </h4>
-                </Link>
-                <BioLine>{post.frontmatter.author.bio}</BioLine>
-                <BioLine>
-                  {post.timeToRead} min read · {post.frontmatter.date}
-                  {post.frontmatter.canonicalLink && (
-                    <span>
-                      {` `}
-                      (originally published at
-                      {` `}
-                      <a href={post.frontmatter.canonicalLink}>
-                        {post.fields.publishedAt}
-                      </a>
-                      )
-                    </span>
-                  )}
-                </BioLine>
-              </div>
-            </section>
-            <h1
-              sx={{
-                marginTop: 0,
-                // fontWeight: `600`,
-                // fontStyle: `italic`,
-                [mediaQueries.lg]: {
-                  mx: `-8rem`,
-                  fontSize: `calc(10px + 2vh + 2vw)`,
+                      <span
+                        sx={{
+                          borderBottom: t =>
+                            `1px solid ${t.colors.link.border}`,
+                          transition: t =>
+                            `all ${t.transition.speed.fast} ${
+                              t.transition.curve.default
+                            }`,
+                          "&:hover": { borderColor: `link.hoverBorder` },
+                        }}
+                      >
+                        {post.frontmatter.author.id}
+                      </span>
+                    </h4>
+                  </Link>
+                  <BioLine>{post.frontmatter.author.bio}</BioLine>
+                  <BioLine>
+                    {post.timeToRead} min read · {post.frontmatter.date}
+                    {post.frontmatter.canonicalLink && (
+                      <span>
+                        {` `}
+                        (originally published at
+                        {` `}
+                        <a href={post.frontmatter.canonicalLink}>
+                          {post.fields.publishedAt}
+                        </a>
+                        )
+                      </span>
+                    )}
+                  </BioLine>
+                </div>
+              </section>
+              <h1
+                sx={{
+                  marginTop: 0,
+                  order: 0,
                   letterSpacing: `tight`,
                   lineHeight: `dense`,
-                  mb: 12,
-                },
-              }}
-            >
-              {post.frontmatter.title}
-            </h1>
-            {post.frontmatter.image &&
-              !(post.frontmatter.showImageInArticle === false) && (
-                <div sx={{ mb: 5 }}>
-                  <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
-                  {post.frontmatter.imageAuthor &&
-                    post.frontmatter.imageAuthorLink && (
-                      <em>
-                        Image by
-                        {` `}
-                        <a href={post.frontmatter.imageAuthorLink}>
-                          {post.frontmatter.imageAuthor}
-                        </a>
-                      </em>
-                    )}
-                </div>
-              )}
+                  fontSize: [5, 6, 7, 8, 10, 12],
+                  [mediaQueries.lg]: {
+                    ml: `-8rem`,
+                    mb: 8,
+                  },
+                }}
+              >
+                {post.frontmatter.title}
+              </h1>
+              {post.frontmatter.image &&
+                !(post.frontmatter.showImageInArticle === false) && (
+                  <div
+                    sx={{
+                      mt: 8,
+                      mb: 12,
+                      [mediaQueries.lg]: {
+                        ml: `-8em`,
+                      },
+                    }}
+                  >
+                    <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
+                    {post.frontmatter.imageAuthor &&
+                      post.frontmatter.imageAuthorLink && (
+                        <em>
+                          Image by
+                          {` `}
+                          <a href={post.frontmatter.imageAuthorLink}>
+                            {post.frontmatter.imageAuthor}
+                          </a>
+                        </em>
+                      )}
+                  </div>
+                )}
+            </div>
             <section className="post-body">
               <MDXRenderer>{post.body}</MDXRenderer>
             </section>
@@ -217,7 +229,7 @@ class BlogPostTemplate extends React.Component {
         </Container>
         <div
           sx={{
-            borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
+            borderTop: t => `1px solid ${t.colors.ui.border}`,
             mt: 9,
             [mediaQueries.md]: { pt: 5 },
             [mediaQueries.lg]: { pt: 7 },

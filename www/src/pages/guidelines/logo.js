@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import Link from "gatsby-link"
@@ -476,16 +478,16 @@ const Logo = ({ data, location }) => (
     </Section>
 
     <Section bg="blue.5" id="clearspace">
-      <SectionHeading>Clearspace</SectionHeading>
+      <SectionHeading color="black">Clearspace</SectionHeading>
       <Columns>
         <CopyColumn>
-          <p>
+          <p sx={{ color: `grey.90` }}>
             To ensure the legibility of the logo, it must be surrounded with a
             minimum amount of clearspace. This isolates the logo from competing
             elements such as photography, text or background patterns that may
             detract attention and lessen the overall impact.
           </p>
-          <Text>
+          <Text color="grey.90">
             <Text as="span" color="magenta.50">
               Magenta
             </Text>
@@ -533,10 +535,10 @@ const Logo = ({ data, location }) => (
       <SectionHeading id="scale">Scale</SectionHeading>
       <Columns>
         <CopyColumn sticky={false}>
-          <p>
+          <p sx={{ color: `grey.90` }}>
             Our logo is designed to scale to small sizes on print and screen.
           </p>
-          <p>
+          <p sx={{ color: `grey.90` }}>
             Smallest size: 24 pixels high for screens, 0.3 inch/0.762 centimeter
             high for print.
           </p>

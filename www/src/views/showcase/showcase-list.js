@@ -18,7 +18,7 @@ import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
-import FeaturedIcon from "../../assets/icons/featured-sites-icons--white.svg"
+import FeaturedIcon from "../../assets/icons/featured-sites-icons"
 
 const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)
@@ -72,7 +72,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     </Fragment>
                   )}
                   <a
-                    css={shortcutIcon}
+                    sx={shortcutIcon}
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -118,11 +118,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     })}`}
                     className="featured-site"
                   >
-                    <img
-                      src={FeaturedIcon}
-                      alt="icon"
-                      xs={{ my: 0, mx: `auto`, display: `block` }}
-                    />
+                    <FeaturedIcon />
                   </Link>
                 )}
               </div>

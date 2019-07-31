@@ -12,7 +12,7 @@ import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
-const legendBorderColor = `ui.border.subtle`
+const legendBorderColor = `ui.border`
 
 const LegendTable = () => {
   const legendBallStyle = {

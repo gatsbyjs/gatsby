@@ -8,7 +8,6 @@ import hex2rgba from "hex2rgba"
 import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
-import FeaturedSitesIcon from "../../assets/icons/featured-sites-icons.svg"
 import { ShowcaseIcon } from "../../assets/icons"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { svgStyles } from "../../utils/styles"
@@ -57,21 +56,7 @@ class FeaturedSites extends Component {
       >
         <div
           sx={{
-            background: `url(${FeaturedSitesIcon})`,
-            backgroundRepeat: `no-repeat`,
-            backgroundSize: `contain`,
-            position: `absolute`,
-            height: `100%`,
-            width: `100%`,
-            left: -100,
-            opacity: 0.02,
-            top: 0,
-            zIndex: -1,
-          }}
-        />
-        <div
-          sx={{
-            mb: 9,
+            mb: 6,
             display: `flex`,
             alignItems: `center`,
             flexWrap: `wrap`,
@@ -147,7 +132,7 @@ class FeaturedSites extends Component {
         <div css={{ position: `relative` }}>
           <div
             sx={{
-              borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+              borderBottom: t => `1px solid ${t.colors.ui.border}`,
               display: `flex`,
               flexShrink: 0,
               margin: t => `0 -${t.space[6]}`,
@@ -221,7 +206,7 @@ class FeaturedSites extends Component {
               <a
                 href="#showcase"
                 sx={{
-                  backgroundColor: `purple.5`,
+                  backgroundColor: `card.background`,
                   borderRadius: 1,
                   marginRight: t => `${t.space[6]} !important`,
                   textAlign: `center`,
@@ -232,7 +217,6 @@ class FeaturedSites extends Component {
                         t.transition.curve.default
                       }`,
                     "&:hover": {
-                      bg: `white`,
                       transform: t => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,
                     },

@@ -32,7 +32,7 @@ class BlogPostsIndex extends React.Component {
                 ...pullIntoGutter,
                 display: `flex`,
                 justifyContent: `space-between`,
-                borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+                borderBottom: t => `1px solid ${t.colors.ui.border}`,
                 mb: 6,
                 pb: 6,
                 [breakpointGutter]: {
@@ -53,7 +53,7 @@ class BlogPostsIndex extends React.Component {
                 sx={{
                   borderBottomWidth: `1px`,
                   borderBottomStyle: `solid`,
-                  borderColor: `ui.border.subtle`,
+                  borderColor: `ui.border`,
                   pb: 8,
                   mb: index === allMdx.edges.length - 1 ? 0 : 8,
                   ...pullIntoGutter,

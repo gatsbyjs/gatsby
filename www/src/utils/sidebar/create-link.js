@@ -66,7 +66,7 @@ const createLink = ({
               fontWeight: 600,
             }),
             ...(isParentOfActiveItem && {
-              bg: `sidebar.activeItemBackground`,
+              bg: `sidebar.itemBackgroundActive`,
               color: `link.color`,
               fontWeight: 600,
             }),
@@ -113,7 +113,7 @@ const createLink = ({
           <span
             sx={{
               bg: `white`,
-              borderColor: `ui.border.subtle`,
+              borderColor: `ui.border`,
               borderRadius: 6,
               borderStyle: `solid`,
               borderWidth: `1px`,

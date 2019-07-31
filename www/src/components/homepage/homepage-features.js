@@ -11,7 +11,7 @@ import FuturaParagraph from "../futura-paragraph"
 const HomepageFeatures = () => (
   <div
     sx={{
-      borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+      borderBottom: t => `1px solid ${t.colors.ui.border}`,
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,

@@ -12,7 +12,7 @@ import {
 } from "../assets/icons"
 
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
-import { srOnly, svgStyles } from "../utils/styles"
+import { visuallyHidden, svgStyles } from "../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -44,13 +44,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
 
 const MobileNavigation = () => (
   <>
-    <span
-      sx={{
-        ...srOnly,
-        // this is 0 because shows in dark mode, fix that
-        height: 0,
-      }}
-    >
+    <span sx={visuallyHidden}>
       <SvgDefs />
     </span>
     <div
@@ -64,7 +58,7 @@ const MobileNavigation = () => (
         zIndex: `navigation`,
         borderTopWidth: `1px`,
         borderTopStyle: `solid`,
-        borderColor: `ui.border.subtle`,
+        borderColor: `ui.border`,
         bg: `navigation.background`,
         height: `headerHeight`,
         fontFamily: `header`,
@@ -109,7 +103,6 @@ const styles = {
       padding: 1,
       textDecoration: `none`,
       textAlign: `center`,
-      WebkitFontSmoothing: `antialiased`,
       "& svg": {
         display: `block`,
         height: 32,

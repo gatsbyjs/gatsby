@@ -14,7 +14,7 @@ import ShareMenu from "../components/share-menu"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLink from "react-icons/lib/md/link"
-import FeaturedIcon from "../assets/icons/featured-sites-icons.svg"
+import FeaturedIcon from "../assets/icons/featured-sites-icons"
 import FeatherIcon from "../assets/icons/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
@@ -23,7 +23,7 @@ const gutterDesktop = 8
 
 const styles = {
   link: {
-    color: `gattsby`,
+    color: `link.default`,
     textDecoration: `none`,
   },
   prevNextLink: {
@@ -173,10 +173,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   alt=""
                 />
               </div>
-              <div css={styles.prevNextLink}>
+              <div sx={styles.prevNextLink}>
                 <MdArrowUpward />
                 <div> Next Site in Showcase </div>
-                <div css={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
+                <div sx={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
               </div>
             </Link>
           }
@@ -197,9 +197,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div css={{ margin: `25px` }}>
                 <Img
                   key={previousSite.id}
-                  css={{
-                    ...styles.prevNextImage,
-                  }}
+                  sx={styles.prevNextImage}
                   backgroundColor
                   fixed={{
                     srcSet: ``,
@@ -322,47 +320,44 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 sx={{
                   display: `flex`,
-                  borderTop: t => `1px solid ${t.colors.ui.border.subtle}`,
-                  fontFamily: `headerr`,
-                  margin: `0 ${gutter}`,
+                  fontFamily: `header`,
+                  mx: gutter,
                   [mediaQueries.lg]: {
-                    margin: `0 ${gutterDesktop}`,
+                    mx: gutterDesktop,
                   },
                 }}
               >
                 {data.sitesYaml.featured && (
                   <div
                     sx={{
-                      borderRight: t =>
-                        `1px solid ${t.colors.ui.border.subtle}`,
-                      color: `gatsby`,
+                      color: `text.secondary`,
                       display: `flex`,
                       fontWeight: `bold`,
-                      padding: 20,
-                      paddingLeft: 0,
+                      p: 5,
+                      pl: 0,
                     }}
                   >
-                    <img
-                      src={FeaturedIcon}
-                      alt="icon"
-                      css={{
-                        width: 20,
-                        height: 20,
-                        marginBottom: 0,
-                        marginRight: 10,
+                    <span
+                      sx={{
+                        height: t => t.space[5],
+                        mb: 0,
+                        mr: 2,
+                        width: t => t.space[5],
                       }}
-                    />
+                    >
+                      <FeaturedIcon />
+                    </span>
+                    {` `}
                     Featured
                   </div>
                 )}
                 {data.sitesYaml.source_url && (
                   <div
                     sx={{
-                      padding: 20,
-                      paddingLeft: data.sitesYaml.featured ? false : 0,
+                      borderRight: t => `1px solid ${t.colors.ui.border}`,
                       display: `flex`,
-                      borderRight: t =>
-                        `1px solid ${t.colors.ui.border.subtle}`,
+                      p: 5,
+                      pl: data.sitesYaml.featured ? false : 0,
                     }}
                   >
                     <a href={data.sitesYaml.source_url} sx={styles.link}>
@@ -380,10 +375,9 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 {false && ( // TODO: NOT IMPLEMENTED YET!!!
                   <div
                     sx={{
-                      padding: 20,
+                      borderRight: t => `1px solid ${t.colors.ui.border}`,
                       display: `flex`,
-                      borderRight: t =>
-                        `1px solid ${t.colors.ui.border.subtle}`,
+                      p: 5,
                     }}
                   >
                     <img
@@ -405,44 +399,43 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 >
                   <div
                     css={{
+                      display: `flex`,
                       position: `relative`,
                       zIndex: 1,
-                      display: `flex`,
                     }}
                   >
                     <a
                       href={data.sitesYaml.main_url}
                       sx={{
-                        backgroundColor: `gatsby`,
+                        bg: `gatsby`,
                         border: 0,
                         borderRadius: 1,
                         display: shouldShowVisitButtonOnMobile ? `none` : null,
                         fontFamily: `header`,
                         fontWeight: `bold`,
                         mr: 2,
-                        py: 1,
                         px: 4,
+                        py: 1,
                         textDecoration: `none`,
-                        WebkitFontSmoothing: `antialiased`,
                         "&&": {
-                          color: `white`,
                           borderBottom: `none`,
+                          color: `white`,
                         },
                         [shouldShowVisitButtonOnMobile && mediaQueries.sm]: {
                           display: `block`,
                         },
                       }}
                     >
-                      <MdLink style={{ verticalAlign: `sub` }} />
                       Visit site
                       {` `}
+                      <MdLink sx={{ verticalAlign: `sub` }} />
                     </a>
                     <ShareMenu
-                      css={{
-                        display: `flex`,
+                      overrideCSS={{
                         alignItems: `center`,
-                        minWidth: 32,
-                        minHeight: 32,
+                        display: `flex`,
+                        minHeight: t => t.space[7],
+                        minWidth: t => t.space[7],
                       }}
                       url={data.sitesYaml.main_url}
                       title={data.sitesYaml.title}

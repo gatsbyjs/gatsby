@@ -27,7 +27,6 @@ const Button = styled(Box)(
     lineHeight: `inherit`,
     textAlign: `center`,
     textDecoration: `none`,
-    WebkitFontSmoothing: `antialiased`,
   },
   styleProps,
   props =>

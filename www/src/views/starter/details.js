@@ -97,7 +97,6 @@ const styles = {
     fontWeight: `bold`,
     py: 1,
     px: 4,
-    WebkitFontSmoothing: `antialiased`,
     "&&": {
       borderBottom: `none`,
       color: `white`,

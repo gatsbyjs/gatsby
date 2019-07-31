@@ -6,7 +6,6 @@ import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { rhythm } from "../../utils/typography"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
@@ -23,7 +22,7 @@ import {
 import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
-import { searchInputStyles } from "../../utils/styles"
+import { themedInput } from "../../utils/styles"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
@@ -199,7 +198,7 @@ export default class FilteredStarterLibrary extends Component {
                     fontFamily: `header`,
                     py: 1,
                     pr: 1,
-                    width: rhythm(5),
+                    width: `10rem`,
                   },
                 }}
                 onClick={toggleSort}
@@ -210,9 +209,8 @@ export default class FilteredStarterLibrary extends Component {
               <label css={{ position: `relative` }}>
                 <DebounceInput
                   sx={{
-                    mt: 1,
-                    ...searchInputStyles,
-                    width: rhythm(6),
+                    ...themedInput,
+                    width: `10rem`,
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}
@@ -242,6 +240,7 @@ export default class FilteredStarterLibrary extends Component {
           />
           {this.state.sitesToShow < starters.length && (
             <Button
+              large
               tag="button"
               overrideCSS={loadMoreButton}
               onClick={() => this.showMoreSites(starters)}
