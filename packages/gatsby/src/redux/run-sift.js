@@ -107,7 +107,7 @@ function handleMany(siftArgs, nodes, sort) {
 module.exports = (args: Object) => {
   const { getNode, getNodesByType } = require(`../db/nodes`)
 
-  const { queryArgs, gqlType, firstOnly = false } = args
+  const { queryArgs, gqlType, firstOnly = false, nodeTypeNames } = args
 
   // If nodes weren't provided, then load them from the DB
   const nodes = args.nodes || getNodesByType(gqlType.name)
@@ -121,7 +121,10 @@ module.exports = (args: Object) => {
   if (isEqId(firstOnly, fieldsToSift, siftFilter)) {
     const node = getNode(siftFilter[0].id[`$eq`])
 
-    if (!node || (node.internal && node.internal.type !== gqlType.name)) {
+    if (
+      !node ||
+      (node.internal && !nodeTypeNames.includes(node.internal.type))
+    ) {
       return []
     }
 

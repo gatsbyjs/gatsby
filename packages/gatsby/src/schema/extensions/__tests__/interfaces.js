@@ -339,6 +339,29 @@ describe(`Queryable Node interfaces`, () => {
         `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`
     )
   })
+
+  it(`works with special case id: { eq: $id } queries`, async () => {
+    const query = `
+      {
+        testInterface(id: { eq: "test1" }) {
+          id
+        }
+        test(id: { eq: "test1" }) {
+          id
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      testInterface: {
+        id: `test1`,
+      },
+      test: {
+        id: `test1`,
+      },
+    }
+    expect(results).toEqual(expected)
+  })
 })
 
 const buildSchema = async () => {

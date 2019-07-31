@@ -27,15 +27,25 @@ class BlogPostsIndex extends React.Component {
             <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
           <Container>
-            <h1
+            <div
               sx={{
-                mt: 0,
-                mb: 8,
-                [mediaQueries.md]: { ...srOnly, clipPath: `inset(50%)` },
+                ...pullIntoGutter,
+                display: `flex`,
+                justifyContent: `space-between`,
+                borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+                mb: 6,
+                pb: 6,
+                [breakpointGutter]: {
+                  pb: 0,
+                  border: 0,
+                },
               }}
             >
-              Blog
-            </h1>
+              <h1 sx={{ mb: 0 }}>Blog</h1>
+              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
+                View all Tags <TagsIcon />
+              </Button>
+            </div>
             {allMdx.edges.map(({ node }, index) => (
               <BlogPostPreviewItem
                 post={node}
@@ -80,25 +90,6 @@ class BlogPostsIndex extends React.Component {
               />
             ))}
             <Pagination context={this.props.pageContext} />
-            <div
-              sx={{
-                ...pullIntoGutter,
-                pb: 6,
-                borderBottomWidth: `1px`,
-                borderBottomStyle: `solid`,
-                borderColor: `ui.border.subtle`,
-                display: `flex`,
-                flexFlow: `row nowrap`,
-                justifyContent: `flex-end`,
-                [breakpointGutter]: {
-                  border: 0,
-                },
-              }}
-            >
-              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
-                View all Tags <TagsIcon />
-              </Button>
-            </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
           <FooterLinks />

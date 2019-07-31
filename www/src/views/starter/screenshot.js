@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import Img from "gatsby-image"
 
-import screenshot from "../shared/styles"
+import { screenshot } from "../shared/styles"
 
 const Screenshot = ({ imageSharp, repoName }) => (
   <div

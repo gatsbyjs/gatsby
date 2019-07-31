@@ -1,15 +1,60 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
+import { graphql, Link } from "gatsby"
+import styled from "@emotion/styled"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
-import { graphql, Link } from "gatsby"
 import { kebabCase } from "lodash-es"
+import TiArrowRight from "react-icons/lib/ti/arrow-right"
 
+import Button from "../../components/button"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
+import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { searchInputStyles } from "../../utils/styles"
+import { colors, space, mediaQueries } from "../../gatsby-plugin-theme-ui"
+
+const POPULAR_TAGS = [
+  `themes`,
+  `case-studies`,
+  `content-mesh`,
+  `plugins`,
+  `accessibility`,
+  `graphql`,
+  `netlify`,
+  `performance`,
+  `wordpress`,
+  `releases`,
+  `community`,
+  `contentful`,
+]
+
+const PopularTagGrid = styled.div`
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: ${space[2]};
+  ${mediaQueries.md} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`
+
+const PopularTagButton = ({ children, tag }) => (
+  <Button
+    small
+    secondary
+    to={`/blog/tags/${tag}`}
+    style={{
+      border: `1px solid ${colors.purple[20]}`,
+    }}
+  >
+    {tag}
+    <TiArrowRight />
+    {children}
+  </Button>
+)
 
 let currentLetter = ``
 
@@ -47,24 +92,31 @@ class TagsPage extends React.Component {
       location,
     } = this.props
     const { filterQuery } = this.state
-    const uniqGroup = group.reduce((lookup, tag) => {
-      const key = kebabCase(tag.fieldValue.toLowerCase())
-      if (!lookup[key]) {
-        lookup[key] = Object.assign(tag, {
-          slug: `/blog/tags/${key}`,
-        })
-      } else {
-        lookup[key].totalCount += tag.totalCount
-      }
-      // Prefer spaced tag names (instead of hyphenated) for display
-      if (tag.fieldValue.includes(` `)) {
-        lookup[key].fieldValue = tag.fieldValue
-      }
-      return lookup
-    }, {})
+    const uniqGroup = group
+      .filter(x => TAGS_AND_DOCS.has(x.fieldValue))
+      .reduce((lookup, tag) => {
+        const key = kebabCase(tag.fieldValue.toLowerCase())
+        if (!lookup[key]) {
+          lookup[key] = Object.assign(tag, {
+            slug: `/blog/tags/${key}`,
+          })
+        } else {
+          lookup[key].totalCount += tag.totalCount
+        }
+        // Prefer spaced tag names (instead of hyphenated) for display
+        if (tag.fieldValue.includes(` `)) {
+          lookup[key].fieldValue = tag.fieldValue
+        }
+        return lookup
+      }, {})
     const results = Object.keys(uniqGroup)
       .sort((tagA, tagB) => tagA.localeCompare(tagB))
       .filter(key => uniqGroup[key].fieldValue.includes(filterQuery))
+
+    let PopularTagButtons = []
+    POPULAR_TAGS.forEach(key => {
+      PopularTagButtons.push(<PopularTagButton tag={key} />)
+    })
 
     return (
       <Layout location={location}>
@@ -72,39 +124,57 @@ class TagsPage extends React.Component {
           <Helmet>
             <title>Tags</title>
             <meta
-              name="description"
-              content="Find case studies, tutorials, and more about Gatsby related topics by tag"
+              name={`description`}
+              content={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
             />
           </Helmet>
           <div>
+            <h1
+              css={{
+                padding: `${space[6]} 0`,
+                margin: 0,
+                borderBottom: `1px solid ${colors.ui.border.subtle}`,
+              }}
+            >
+              Tags ({Object.keys(uniqGroup).length || 0})
+            </h1>
+            <div />
+            <h2>Popular tags</h2>
+            <PopularTagGrid>{PopularTagButtons}</PopularTagGrid>
             <div
               sx={{
                 display: `flex`,
                 flexFlow: `row nowrap`,
                 justifyContent: `space-between`,
-                alignItems: `center`,
-                pt: 9,
-                pb: 6,
-                borderBottom: t => `1px solid ${t.colors.ui.border.subtle}`,
+                pb: 4,
               }}
             >
-              <h1 sx={{ m: 0 }}>Tags ({Object.keys(uniqGroup).length || 0})</h1>
-              <div>
-                <label sx={{ position: `relative` }}>
-                  <input
-                    sx={searchInputStyles}
-                    id="tagsFilter"
-                    name="filterQuery"
-                    type="search"
-                    placeholder="Search tags"
-                    aria-label="Tag Search"
-                    title="Filter tag list"
-                    value={filterQuery}
-                    onChange={this.handleChange}
-                  />
-                  <SearchIcon />
-                </label>
-              </div>
+              <h2>All tags</h2>
+              <label css={{ position: `relative` }}>
+                <input
+                  sx={searchInputStyles}
+                  id="tagsFilter"
+                  name="filterQuery"
+                  type="search"
+                  placeholder="Search tags"
+                  aria-label="Tag Search"
+                  title="Filter tag list"
+                  value={filterQuery}
+                  onChange={this.handleChange}
+                />
+                <SearchIcon
+                  overrideCSS={{
+                    fill: colors.lilac,
+                    position: `absolute`,
+                    left: space[1],
+                    top: `50%`,
+                    width: space[4],
+                    height: space[4],
+                    pointerEvents: `none`,
+                    transform: `translateY(-50%)`,
+                  }}
+                />
+              </label>
             </div>
             <ul
               sx={{

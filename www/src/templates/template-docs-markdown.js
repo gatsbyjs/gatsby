@@ -4,7 +4,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries, space, sizes } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 import Layout from "../components/layout"
 import {
@@ -46,8 +46,9 @@ const getDocsData = location => {
 
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-
   const [urlSegment, itemList] = getDocsData(location)
+  const toc =
+    !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
   return (
     <>
@@ -73,7 +74,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
               [mediaQueries.lg]: {
                 pt: 9,
               },
-              [page.tableOfContents.items && mediaQueries.xl]: {
+              [toc && mediaQueries.xl]: {
                 ...containerStyles,
               },
             }}
@@ -90,37 +91,36 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
               [mediaQueries.lg]: {
                 pb: 9,
               },
-              [page.tableOfContents.items && mediaQueries.xl]: {
+              [toc && mediaQueries.xl]: {
                 ...containerStyles,
                 display: `flex`,
                 alignItems: `flex-start`,
               },
             }}
           >
-            {!page.frontmatter.disableTableOfContents &&
-              page.tableOfContents.items && (
-                <div
-                  sx={{
-                    order: 2,
-                    [mediaQueries.xl]: {
-                      ml: 9,
-                      maxWidth: `tocWidth`,
-                      position: `sticky`,
-                      top: t =>
-                        `calc(${t.sizes.headerHeight} + ${
-                          t.sizes.bannerHeight
-                        } + ${t.space[9]})`,
-                      maxHeight: t =>
-                        `calc(100vh - ${t.sizes.headerHeight} - ${
-                          t.sizes.bannerHeight
-                        } - ${t.space[9]} - ${t.space[9]})`,
-                      overflow: `auto`,
-                    },
-                  }}
-                >
-                  <TableOfContents location={location} page={page} />
-                </div>
-              )}
+            {toc && (
+              <div
+                sx={{
+                  order: 2,
+                  [mediaQueries.xl]: {
+                    ml: 9,
+                    maxWidth: `tocWidth`,
+                    position: `sticky`,
+                    top: t =>
+                      `calc(${t.sizes.headerHeight} + ${
+                        t.sizes.bannerHeight
+                      } + ${t.space[9]})`,
+                    maxHeight: t =>
+                      `calc(100vh - ${t.sizes.headerHeight} - ${
+                        t.sizes.bannerHeight
+                      } - ${t.space[9]} - ${t.space[9]})`,
+                    overflow: `auto`,
+                  },
+                }}
+              >
+                <TableOfContents location={location} page={page} />
+              </div>
+            )}
             <div
               sx={{
                 [page.tableOfContents.items && mediaQueries.xl]: {
