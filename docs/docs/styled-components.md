@@ -134,4 +134,3 @@ export default ({ children }) => (
 
 A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS-in-JS output changed.
 
- More info on [including user stylesheets](https://mediatemple.net/blog/tips/bend-websites-css-will-stylish-stylebot/).
