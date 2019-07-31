@@ -1,5 +1,5 @@
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
-const isTruthy = require("./is-truthy")
+const isTruthy = require(`./is-truthy`)
 
 let enabled = false
 try {
