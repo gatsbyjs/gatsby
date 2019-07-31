@@ -2,7 +2,7 @@
 title: "How we tested prototypes for the new gatsbyjs.org homepage"
 date: 2019-03-11
 author: Shannon Soper
-tags: ["ux", "design"]
+tags: ["ux", "user-testing", "cutting-edge-experiences"]
 ---
 
 Our current [gatsbyjs.org](/) homepage is getting a bit long in the tooth -- our incredible designer @fk built it out a year and a half ago, but a lot has changed and we're getting ready to update it.

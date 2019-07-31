@@ -8,7 +8,7 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
-const createContentDigest = require(`./create-content-digest`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
   buildUnionType,

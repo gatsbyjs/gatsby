@@ -66,14 +66,20 @@ const rebuildSchemaWithSitePage = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  const typeComposer = addInferredType({
-    schemaComposer,
-    typeComposer: schemaComposer.getOTC(`SitePage`),
-    nodeStore,
-    typeConflictReporter,
-    typeMapping,
-    parentSpan,
-  })
+  const typeComposer = schemaComposer.getOTC(`SitePage`)
+  const shouldInfer =
+    !typeComposer.hasExtension(`infer`) ||
+    typeComposer.getExtension(`infer`) !== false
+  if (shouldInfer) {
+    addInferredType({
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
+  }
   await processTypeComposer({
     schemaComposer,
     typeComposer,
@@ -124,6 +130,7 @@ const updateSchemaComposer = async ({
     )
   )
   checkQueryableInterfaces({ schemaComposer })
+  await addConvenienceChildrenFields({ schemaComposer, parentSpan })
   await addThirdPartySchemas({ schemaComposer, thirdPartySchemas, parentSpan })
   await addCustomResolveFunctions({ schemaComposer, parentSpan })
 }
@@ -144,7 +151,7 @@ const processTypeComposer = async ({
     })
     if (typeComposer.hasInterface(`Node`)) {
       await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
-      await addConvenienceChildrenFields({
+      await addImplicitConvenienceChildrenFields({
         schemaComposer,
         typeComposer,
         nodeStore,
@@ -329,6 +336,12 @@ const addExtensions = ({
             )
           }
           break
+        case `mimeTypes`:
+          typeComposer.setExtension(`mimeTypes`, args)
+          break
+        case `childOf`:
+          typeComposer.setExtension(`childOf`, args)
+          break
         case `nodeInterface`:
           if (typeComposer instanceof InterfaceTypeComposer) {
             if (
@@ -379,6 +392,15 @@ const addExtensions = ({
         .filter(name => !internalExtensionNames.includes(name))
         .forEach(name => {
           const args = fieldExtensions[name]
+
+          if (!args || typeof args !== `object`) {
+            report.error(
+              `Field extension arguments must be provided as an object. ` +
+                `Received "${args}" on \`${typeName}.${fieldName}\`.`
+            )
+            return
+          }
+
           try {
             const definition = schemaComposer.getDirective(name)
 
@@ -654,18 +676,135 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
     })
   }
   await apiRunner(`createResolvers`, {
-    schema: intermediateSchema,
+    intermediateSchema,
     createResolvers,
     traceId: `initial-createResolvers`,
     parentSpan,
   })
 }
 
-const addConvenienceChildrenFields = ({
+const addConvenienceChildrenFields = ({ schemaComposer }) => {
+  const parentTypesToChildren = new Map()
+  const mimeTypesToChildren = new Map()
+  const typesHandlingMimeTypes = new Map()
+
+  schemaComposer.forEach(type => {
+    if (
+      (type instanceof ObjectTypeComposer ||
+        type instanceof InterfaceTypeComposer) &&
+      type.hasExtension(`mimeTypes`)
+    ) {
+      const { types } = type.getExtension(`mimeTypes`)
+      new Set(types).forEach(mimeType => {
+        if (!typesHandlingMimeTypes.has(mimeType)) {
+          typesHandlingMimeTypes.set(mimeType, new Set())
+        }
+        typesHandlingMimeTypes.get(mimeType).add(type)
+      })
+    }
+
+    if (
+      (type instanceof ObjectTypeComposer ||
+        type instanceof InterfaceTypeComposer) &&
+      type.hasExtension(`childOf`)
+    ) {
+      if (type instanceof ObjectTypeComposer && !type.hasInterface(`Node`)) {
+        report.error(
+          `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
+            `Check the type definition of \`${type.getTypeName()}\`.`
+        )
+        return
+      }
+      if (
+        type instanceof InterfaceTypeComposer &&
+        !type.hasExtension(`nodeInterface`)
+      ) {
+        report.error(
+          `The \`childOf\` extension can only be used on interface types that ` +
+            `have the \`@nodeInterface\` extension.\n` +
+            `Check the type definition of \`${type.getTypeName()}\`.`
+        )
+        return
+      }
+
+      const { types, mimeTypes, many } = type.getExtension(`childOf`)
+      new Set(types).forEach(parentType => {
+        if (!parentTypesToChildren.has(parentType)) {
+          parentTypesToChildren.set(parentType, new Map())
+        }
+        parentTypesToChildren.get(parentType).set(type, many)
+      })
+      new Set(mimeTypes).forEach(mimeType => {
+        if (!mimeTypesToChildren.has(mimeType)) {
+          mimeTypesToChildren.set(mimeType, new Map())
+        }
+        mimeTypesToChildren.get(mimeType).set(type, many)
+      })
+    }
+  })
+
+  parentTypesToChildren.forEach((children, parent) => {
+    if (!schemaComposer.has(parent)) return
+    const typeComposer = schemaComposer.getAnyTC(parent)
+    if (
+      typeComposer instanceof InterfaceTypeComposer &&
+      !typeComposer.hasExtension(`nodeInterface`)
+    ) {
+      report.error(
+        `With the \`childOf\` extension, children fields can only be added to ` +
+          `interfaces which have the \`@nodeInterface\` extension.\n` +
+          `Check the type definition of \`${typeComposer.getTypeName()}\`.`
+      )
+      return
+    }
+    children.forEach((many, child) => {
+      if (many) {
+        typeComposer.addFields(createChildrenField(child.getTypeName()))
+      } else {
+        typeComposer.addFields(createChildField(child.getTypeName()))
+      }
+    })
+  })
+
+  mimeTypesToChildren.forEach((children, mimeType) => {
+    const parentTypes = typesHandlingMimeTypes.get(mimeType)
+    if (parentTypes) {
+      parentTypes.forEach(typeComposer => {
+        if (
+          typeComposer instanceof InterfaceTypeComposer &&
+          !typeComposer.hasExtension(`nodeInterface`)
+        ) {
+          report.error(
+            `With the \`childOf\` extension, children fields can only be added to ` +
+              `interfaces which have the \`@nodeInterface\` extension.\n` +
+              `Check the type definition of \`${typeComposer.getTypeName()}\`.`
+          )
+          return
+        }
+        children.forEach((many, child) => {
+          if (many) {
+            typeComposer.addFields(createChildrenField(child.getTypeName()))
+          } else {
+            typeComposer.addFields(createChildField(child.getTypeName()))
+          }
+        })
+      })
+    }
+  })
+}
+
+const addImplicitConvenienceChildrenFields = ({
   schemaComposer,
   typeComposer,
   nodeStore,
 }) => {
+  const shouldInfer = typeComposer.getExtension(`infer`)
+  // In Gatsby v3, when `@dontInfer` is set, children fields will not be
+  // created for parent-child relations set by plugins with
+  // `createParentChildLink`. With `@dontInfer`, only parent-child
+  // relations explicitly set with the `childOf` extension will be added.
+  // if (shouldInfer === false) return
+
   const nodes = nodeStore.getNodesByType(typeComposer.getTypeName())
 
   const childNodesByType = groupChildNodesByType({ nodeStore, nodes })
@@ -677,6 +816,24 @@ const addConvenienceChildrenFields = ({
       g => g.length
     ).length
 
+    // Adding children fields to types with the `@dontInfer` extension is deprecated
+    if (shouldInfer === false) {
+      const fieldName = _.camelCase(
+        `${maxChildCount > 1 ? `children` : `child`} ${typeName}`
+      )
+      if (!typeComposer.hasField(fieldName)) {
+        report.warn(
+          `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+            `extension set to \`false\`, automatically adding fields for ` +
+            `children types is deprecated.\n` +
+            `In Gatsby v3, only children fields explicitly set with the ` +
+            `\`childOf\` extension will be added.\n` +
+            `For example, in Gatsby v3, \`${typeComposer.getTypeName()}\` will ` +
+            `not get a \`${fieldName}\` field.`
+        )
+      }
+    }
+
     if (maxChildCount > 1) {
       typeComposer.addFields(createChildrenField(typeName))
     } else {
@@ -685,7 +842,7 @@ const addConvenienceChildrenFields = ({
   })
 }
 
-function createChildrenField(typeName) {
+const createChildrenField = typeName => {
   return {
     [_.camelCase(`children ${typeName}`)]: {
       type: () => [typeName],
@@ -700,7 +857,7 @@ function createChildrenField(typeName) {
   }
 }
 
-function createChildField(typeName) {
+const createChildField = typeName => {
   return {
     [_.camelCase(`child ${typeName}`)]: {
       type: () => typeName,
@@ -720,12 +877,11 @@ function createChildField(typeName) {
   }
 }
 
-function groupChildNodesByType({ nodeStore, nodes }) {
-  return _(nodes)
+const groupChildNodesByType = ({ nodeStore, nodes }) =>
+  _(nodes)
     .flatMap(node => (node.children || []).map(nodeStore.getNode))
     .groupBy(node => (node.internal ? node.internal.type : undefined))
     .value()
-}
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   // TODO: We should have an abstraction for keeping and clearing
