@@ -1,98 +1,106 @@
+// everything in here is supposed to be used with `sx` from `theme-ui`
+// so use those design tokens and shorthand syntax
+
 export const showcaseList = {
   display: `flex`,
   flexWrap: `wrap`,
-  p: 6,
   justifyContent: `space-evenly`,
+  p: 6,
 }
 
 export const showcaseItem = {
   display: `flex`,
+  flex: `1 0 0`,
   flexDirection: `column`,
   m: 6,
-  minWidth: 259, // shows 3 items/row on windows > 1200px wide
   maxWidth: 350,
-  flex: `1 0 0`,
+  minWidth: 259, // shows 3 items/row on windows > 1200px wide
   position: `relative`,
 }
 
-const styles = {
-  withTitleHover: {
-    "& .title": {
-      transition: t =>
-        `box-shadow ${t.transition.speed.slow} ${
-          t.transition.curve.default
-        }, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
-    },
-    "&:hover .title": {
-      boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.lavender}`,
-    },
-  },
-  loadMoreButton: {
-    alignItems: `center`,
-    display: `flex`,
-    flexFlow: `row wrap`,
-    mt: 0,
-    mx: `auto`,
-    mb: 9,
-  },
-  screenshot: {
-    borderRadius: 1,
-    boxShadow: `raised`,
-    mb: 3,
+export const withTitleHover = {
+  "& .title": {
     transition: t =>
-      `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+      `box-shadow ${t.transition.speed.slow} ${
+        t.transition.curve.default
+      }, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
   },
-  screenshotHover: {
-    bg: `transparent`,
-    color: `gatsby`,
-    "& .gatsby-image-wrapper": {
-      transform: t => `translateY(-${t.space[1]})`,
-      boxShadow: `overlay`,
-    },
+  "&:hover .title": {
+    boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.lavender}`,
   },
-  shortcutIcon: {
-    pl: 1,
-    "&&": {
-      color: `text.secondary`,
-      borderBottom: `none`,
-      "&:hover": {
-        color: `gatsby`,
-      },
-    },
+}
+
+export const loadMoreButton = {
+  alignItems: `center`,
+  display: `flex`,
+  flexFlow: `row wrap`,
+  mt: 0,
+  mx: `auto`,
+  mb: 9,
+}
+
+export const screenshot = {
+  borderRadius: 1,
+  boxShadow: `raised`,
+  mb: 3,
+  transition: t =>
+    `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+}
+
+export const screenshotHover = {
+  bg: `transparent`,
+  color: `gatsby`,
+  "& .gatsby-image-wrapper": {
+    transform: t => `translateY(-${t.space[1]})`,
+    boxShadow: `overlay`,
   },
-  meta: {
-    fontSize: 1,
-    alignItems: `baseline`,
-    "&&": {
-      color: `text.secondary`,
-    },
-  },
-  filterButton: {
-    fontSize: 1,
-    margin: 0,
-    alignItems: `flex-start`,
-    background: `none`,
-    border: `none`,
-    color: `text.primary`,
-    cursor: `pointer`,
-    display: `flex`,
-    justifyContent: `space-between`,
-    outline: `none`,
-    padding: 0,
-    pr: 5,
-    py: 1,
-    textAlign: `left`,
-    ":hover": {
+}
+
+export const shortcutIcon = {
+  pl: 1,
+  "&&": {
+    borderBottom: `none`,
+    color: `text.secondary`,
+    "&:hover": {
       color: `gatsby`,
     },
   },
-  filterCheckbox: {
-    mr: 2,
-    fontSize: 2,
-  },
-  filterCount: {
+}
+
+export const meta = {
+  alignItems: `baseline`,
+  fontSize: 1,
+  "&&": {
     color: `text.secondary`,
   },
 }
 
-export default styles
+export const filterButton = {
+  alignItems: `flex-start`,
+  background: `none`,
+  border: `none`,
+  color: `text.primary`,
+  cursor: `pointer`,
+  display: `flex`,
+  fontSize: 1,
+  justifyContent: `space-between`,
+  margin: 0,
+  outline: `none`,
+  p: 0,
+  pr: 5,
+  py: 1,
+  textAlign: `left`,
+  width: `100%`,
+  ":hover": {
+    color: `gatsby`,
+  },
+}
+
+export const filterCheckbox = {
+  fontSize: 2,
+  mr: 2,
+}
+
+export const filterCount = {
+  color: `text.secondary`,
+}

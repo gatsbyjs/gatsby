@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
 
-import styles from "../shared/styles"
+import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import FeaturedSitesIcon from "../../assets/icons/featured-sites-icons.svg"
@@ -92,7 +92,7 @@ class FeaturedSites extends Component {
           <a
             href="#showcase"
             sx={{
-              ...styles.withTitleHover,
+              ...withTitleHover,
               display: `none`,
               fontSize: 1,
               [mediaQueries.sm]: {
@@ -160,7 +160,7 @@ class FeaturedSites extends Component {
                 key={node.id}
                 sx={{
                   ...featuredSitesCard,
-                  ...styles.withTitleHover,
+                  ...withTitleHover,
                 }}
               >
                 <Link
@@ -175,7 +175,7 @@ class FeaturedSites extends Component {
                         `box-shadow ${t.transition.speed.slow} ${
                           t.transition.curve.default
                         }, transform .3s ${t.transition.curve.default}`,
-                      "&:hover": { ...styles.screenshotHover },
+                      "&:hover": { ...screenshotHover },
                     },
                   }}
                   to={node.fields.slug}
@@ -188,7 +188,7 @@ class FeaturedSites extends Component {
                           .fluid
                       }
                       alt={node.title}
-                      css={{ ...styles.screenshot }}
+                      sx={{ ...screenshot }}
                     />
                   )}
                   <div>

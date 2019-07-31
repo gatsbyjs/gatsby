@@ -129,7 +129,7 @@ export const ContentTitle = ({
   filters,
   edges,
   label,
-  // todo smooth that out ("Starters" uses "size")
+  // TODO smooth that out ("Starters" uses "size")
   what = `length`,
 }) => (
   <h1

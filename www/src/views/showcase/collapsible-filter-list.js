@@ -5,7 +5,11 @@ import React from "react"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import Collapsible from "../shared/collapsible"
-import styles from "../../views/shared/styles"
+import {
+  filterButton,
+  filterCount,
+  filterCheckbox,
+} from "../../views/shared/styles"
 
 const CollapsibleFilterList = ({
   filters,
@@ -26,12 +30,12 @@ const CollapsibleFilterList = ({
             setFilters([...filters, c])
           }
         }}
-        sx={styles.filterButton}
+        sx={filterButton}
       >
         <div
           sx={{
             color: filters.includes(c) ? `gatsby` : `input.border`,
-            ...styles.filterCheckbox,
+            ...filterCheckbox,
           }}
         >
           {filters.includes(c) ? (
@@ -48,7 +52,7 @@ const CollapsibleFilterList = ({
         >
           {c}
         </div>
-        <div sx={styles.filterCount}>{aggregatedCategories[c]}</div>
+        <div sx={filterCount}>{aggregatedCategories[c]}</div>
       </button>
     ))}
   </Collapsible>

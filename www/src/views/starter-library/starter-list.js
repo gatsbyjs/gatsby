@@ -5,7 +5,13 @@ import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import MdStar from "react-icons/lib/md/star"
-import styles, { showcaseList, showcaseItem } from "../shared/styles"
+import {
+  showcaseList,
+  showcaseItem,
+  withTitleHover,
+  shortcutIcon,
+  meta,
+} from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "../../assets/icons/v2icon.svg"
@@ -71,7 +77,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 key={starter.id}
                 sx={{
                   ...showcaseItem,
-                  ...styles.withTitleHover,
+                  ...withTitleHover,
                 }}
               >
                 <ThumbnailLink
@@ -79,7 +85,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   image={starter.childScreenshot}
                   title={`${owner}/${name}`}
                 />
-                <div css={{ ...styles.meta }}>
+                <div sx={meta}>
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
@@ -126,7 +132,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <div css={{ display: `inline-block` }}>
+                    <div sx={{ display: `inline-block`, fontSize: 0 }}>
                       Updated {new Date(lastUpdated).toLocaleDateString()}
                     </div>
                     <span>
@@ -134,8 +140,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         href={`https://github.com/${githubFullName}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        css={{
-                          ...styles.shortcutIcon,
+                        sx={{
+                          ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
                       >
@@ -146,8 +152,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         href={demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        css={{
-                          ...styles.shortcutIcon,
+                        sx={{
+                          ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
                       >

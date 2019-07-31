@@ -39,12 +39,10 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
         display: isPluginsIndex ? `none` : false,
         [mediaQueries.md]: {
           display: `block`,
-          // todo use theme-ui "sizes" token
-          paddingLeft: `21rem`,
+          pl: t => t.sizes.pluginsSidebarWidthDefault,
         },
         [mediaQueries.lg]: {
-          // todo use theme-ui "sizes" token
-          paddingLeft: `24rem`,
+          pl: t => t.sizes.pluginsSidebarWidthLarge,
         },
       }}
     >

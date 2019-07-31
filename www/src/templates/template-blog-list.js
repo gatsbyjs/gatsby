@@ -31,17 +31,7 @@ class BlogPostsIndex extends React.Component {
               sx={{
                 mt: 0,
                 mb: 8,
-                // refactor: screen reader stuff again
-                [mediaQueries.md]: {
-                  position: `absolute`,
-                  width: 1,
-                  height: 1,
-                  padding: 0,
-                  overflow: `hidden`,
-                  clip: `rect(0,0,0,0)`,
-                  whiteSpace: `nowrap`,
-                  clipPath: `inset(50%)`,
-                },
+                [mediaQueries.md]: { ...srOnly, clipPath: `inset(50%)` },
               }}
             >
               Blog

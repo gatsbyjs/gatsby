@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import sharedStyles from "../shared/styles"
 import FaExtLink from "react-icons/lib/fa/external-link"
 
 const Details = ({
@@ -63,7 +62,7 @@ const Details = ({
                 <Link to={`/packages/${dep}`}>{dep}</Link>
               </div>
             ) : (
-              <div key={dep} css={{ ...sharedStyles.truncate }}>
+              <div key={dep}>
                 <a href={`https://npm.im/${dep}`}>
                   {`${dep} `}
                   <FaExtLink />

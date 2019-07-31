@@ -44,7 +44,7 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location}>
         <Container>
           {
-            // todo
+            // TODO
             // - settle on `docSearch-content` as selector to identify
             //   Algolia DocSearch content
             // - make use of components/docsearch-content in place of <main>

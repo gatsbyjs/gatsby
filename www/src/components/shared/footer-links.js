@@ -30,10 +30,10 @@ const FooterLinks = props => (
           content: `none`,
         },
         "& a": {
-          color: `link.color`,
-          borderColor: `link.border`,
+          color: `navigation.linkDefault`,
+          borderColor: `transparent`,
           "&:hover": {
-            color: `link.hoverColor`,
+            color: `navigation.linkHover`,
             borderColor: `link.hoverBorder`,
           },
         },

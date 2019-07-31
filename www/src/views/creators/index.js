@@ -11,7 +11,7 @@ import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import sharedStyles from "../shared/styles"
+import { meta, shortcutIcon } from "../shared/styles"
 
 class CreatorsView extends Component {
   state = {
@@ -143,7 +143,7 @@ class CreatorsView extends Component {
                   >
                     <strong className="title">{item.node.name}</strong>
                   </ThumbnailLink>
-                  <div css={{ display: `flex`, ...sharedStyles.meta }}>
+                  <div sx={{ display: `flex`, ...meta }}>
                     <div
                       sx={{
                         mb: 1,
@@ -155,7 +155,7 @@ class CreatorsView extends Component {
                     {item.node.github && (
                       <a
                         sx={{
-                          ...sharedStyles.shortcutIcon,
+                          ...shortcutIcon,
                           ml: `auto`,
                         }}
                         href={item.node.github}

@@ -7,7 +7,7 @@ import Img from "gatsby-image"
 import qs from "qs"
 
 import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
-import sharedStyles from "../views/shared/styles"
+import { screenshot } from "../views/shared/styles"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
@@ -389,18 +389,18 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     <img
                       src={FeatherIcon}
                       alt="icon"
-                      css={{
-                        marginBottom: 0,
-                        marginRight: 10,
+                      sx={{
+                        mb: 0,
+                        mr: 3,
                       }}
                     />
                     <a href={data.sitesYaml.source_url}> Case Study </a>
                   </div>
                 )}
                 <div
-                  css={{
+                  sx={{
                     alignSelf: `center`,
-                    marginLeft: `auto`,
+                    ml: `auto`,
                   }}
                 >
                   <div
@@ -461,10 +461,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     .fluid
                 }
                 alt={`Screenshot of ${data.sitesYaml.title}`}
-                css={{
-                  boxShadow: isModal
-                    ? false
-                    : sharedStyles.screenshot.boxShadow,
+                sx={{
+                  boxShadow: isModal ? false : screenshot.boxShadow,
                 }}
               />
               <div
@@ -485,7 +483,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   <div
                     sx={{
                       color: `text.secondary`,
-                      paddingRight: 20,
+                      pr: 5,
                     }}
                   >
                     Categories

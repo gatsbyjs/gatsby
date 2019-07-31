@@ -4,7 +4,11 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-import styles from "./styles"
+import {
+  screenshot as screenshotStyles,
+  screenshotHover,
+  withTitleHover,
+} from "./styles"
 
 const ThumbnailLink = ({ slug, image, title, children, state }) => {
   let screenshot = false
@@ -22,7 +26,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       to={slug}
       state={{ isModal: true, ...state }}
       sx={{
-        ...styles.withTitleHover,
+        ...withTitleHover,
         lineHeight: `dense`,
         fontFamily: `header`,
         "&&": {
@@ -30,7 +34,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
           color: `text.header`,
           transition: t =>
             `all ${t.transition.speed.default} ${t.transition.curve.default}`,
-          "&:hover": { ...styles.screenshotHover },
+          "&:hover": screenshotHover,
           "&:hover ~ .meta > .featured-site": {
             transform: t => `translateY(-${t.space[1]})`,
           },
@@ -41,7 +45,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
         <Img
           fluid={screenshot}
           alt={`Screenshot of ${title}`}
-          sx={styles.screenshot}
+          sx={screenshotStyles}
         />
       ) : (
         <div sx={{ width: 320, bg: `grey.10` }}>missing</div>

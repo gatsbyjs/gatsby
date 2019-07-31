@@ -1,4 +1,6 @@
 import styled from "@emotion/styled"
+
+import { srOnly } from "../../utils/styles"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 export const WidgetContainer = styled(`div`)`
@@ -41,16 +43,4 @@ export const Actions = styled(`div`)`
   justify-content: space-between;
 `
 
-// refactor—we have this in navigation-mobile,
-// and in some shared styles thing for the showcase views
-export const ScreenReaderText = styled(`span`)`
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  -webkit-clip: rect(0, 0, 0, 0);
-  height: 1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
-`
+export const ScreenReaderText = styled.span(srOnly)

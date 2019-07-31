@@ -8,9 +8,7 @@ import MdSort from "react-icons/lib/md/sort"
 
 import { rhythm } from "../../utils/typography"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-
-import styles from "../shared/styles"
-
+import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
 import StarterList from "./starter-list"
 import Button from "../../components/button"
@@ -190,7 +188,7 @@ export default class FilteredStarterLibrary extends Component {
                 },
               }}
             >
-              {/* @todo: add sorting. */}
+              {/* TODO add sorting. */}
               <label
                 sx={{
                   display: `none`,
@@ -245,7 +243,7 @@ export default class FilteredStarterLibrary extends Component {
           {this.state.sitesToShow < starters.length && (
             <Button
               tag="button"
-              overrideCSS={styles.loadMoreButton}
+              overrideCSS={loadMoreButton}
               onClick={() => this.showMoreSites(starters)}
               icon={<MdArrowDownward />}
             >

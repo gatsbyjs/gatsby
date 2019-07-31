@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import Img from "gatsby-image"
 
-import sharedStyles from "../shared/styles"
+import screenshot from "../shared/styles"
 
 const Screenshot = ({ imageSharp, repoName }) => (
   <div
@@ -16,7 +16,7 @@ const Screenshot = ({ imageSharp, repoName }) => (
       <Img
         fluid={imageSharp.childImageSharp.fluid}
         alt={`Screenshot of ${repoName}`}
-        sx={sharedStyles.screenshot}
+        sx={screenshot}
       />
     )}
   </div>

@@ -10,7 +10,8 @@ const Avatar = ({ image, alt }) => (
     sx={{
       borderRadius: 6,
       display: `inline-block`,
-      // todo remove
+      // TODO remove, component shouldn't decide this
+      // if required, those styles should be defined via component props
       mr: 3,
       mb: 0,
       verticalAlign: `top`,

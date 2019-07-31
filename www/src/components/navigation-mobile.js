@@ -10,9 +10,9 @@ import {
   ShowcaseIcon,
   SvgDefs,
 } from "../assets/icons"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
-import { svgStyles } from "../utils/styles"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { srOnly, svgStyles } from "../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {
@@ -46,17 +46,9 @@ const MobileNavigation = () => (
   <>
     <span
       sx={{
-        // refactor: we have this in a couple places
-        position: `absolute`,
-        width: 1,
-        // this is 0 because shows in dark mode,
-        // fix that
+        ...srOnly,
+        // this is 0 because shows in dark mode, fix that
         height: 0,
-        padding: 0,
-        overflow: `hidden`,
-        clip: `rect(0,0,0,0)`,
-        whiteSpace: `nowrap`,
-        border: 0,
       }}
     >
       <SvgDefs />

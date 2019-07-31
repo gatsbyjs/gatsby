@@ -1,5 +1,6 @@
 import hex2rgba from "hex2rgba"
 
+// ugly
 import {
   borders as b,
   breakpoints as bps,
@@ -84,6 +85,7 @@ export default {
   borders: borders,
   colors: {
     ...c,
+    // lots to consolidate here
     banner: c.purple[70],
     // ref. e.g. https://github.com/system-ui/theme-ui/blob/702c43e804046a94389e7a12a8bba4c4f436b14e/packages/presets/src/tailwind.js#L6
     // transparent: `transparent`,
@@ -126,7 +128,6 @@ export default {
         background: darkBackground,
         navigation: {
           background: hex2rgba(darkBackground, 0.975),
-          // background: c.purple[90],
           linkDefault: c.whiteFade[50],
           linkActive: c.purple[40],
           socialLink: c.grey[60],

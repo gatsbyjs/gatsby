@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import sharedStyles from "../shared/styles"
+import { withTitleHover } from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 
 const Header = ({ stub }) => (
@@ -28,7 +28,7 @@ const Header = ({ stub }) => (
               color: `lilac`,
             },
           },
-          ...sharedStyles.withTitleHover,
+          ...withTitleHover,
         }}
       >
         <MdArrowBack sx={{ mr: 1 }} />

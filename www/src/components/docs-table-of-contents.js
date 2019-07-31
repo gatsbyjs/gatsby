@@ -9,11 +9,7 @@ function createItems(items, location) {
     items &&
     items.map(item => (
       <li
-        sx={{
-          [mediaQueries.xl]: {
-            fontSize: 1,
-          },
-        }}
+        sx={{ [mediaQueries.xl]: { fontSize: 1 } }}
         key={location.pathname + item.url}
       >
         <Link
@@ -59,7 +55,7 @@ function TableOfContents({ page, location }) {
         sx={{
           [mediaQueries.xl]: {
             listStyle: `none`,
-            margin: 0,
+            m: 0,
           },
         }}
       >

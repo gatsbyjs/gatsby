@@ -3,7 +3,12 @@ import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import { Link } from "gatsby"
 
-import styles, { showcaseList, showcaseItem } from "../shared/styles"
+import {
+  showcaseList,
+  showcaseItem,
+  shortcutIcon,
+  meta,
+} from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
@@ -34,8 +39,8 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 <strong className="title">{node.title}</strong>
               </ThumbnailLink>
               <div
-                css={{
-                  ...styles.meta,
+                sx={{
+                  ...meta,
                   display: `flex`,
                   justifyContent: `space-between`,
                 }}
@@ -56,7 +61,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                   {node.source_url && (
                     <Fragment>
                       <a
-                        css={styles.shortcutIcon}
+                        sx={shortcutIcon}
                         href={node.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -67,7 +72,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     </Fragment>
                   )}
                   <a
-                    css={styles.shortcutIcon}
+                    css={shortcutIcon}
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"

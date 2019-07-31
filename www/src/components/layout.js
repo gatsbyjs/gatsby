@@ -7,7 +7,7 @@ import Modal from "react-modal"
 import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { Global } from "@emotion/core"
-import { global } from "../utils/styles"
+import { global } from "../utils/styles/global"
 
 import { space, zIndices } from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
@@ -16,7 +16,6 @@ import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
-import DarkThemeStyles from "../components/dark-theme-styles"
 
 // Import Futura PT typeface
 import "../assets/fonts/futura"
@@ -73,7 +72,6 @@ class DefaultLayout extends React.Component {
       return (
         <>
           <Global styles={global} />
-          <DarkThemeStyles />
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
@@ -152,7 +150,6 @@ class DefaultLayout extends React.Component {
     return (
       <>
         <Global styles={global} />
-        <DarkThemeStyles />
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink css={skipLink}>Skip to main content</SkipNavLink>
         <Banner />
