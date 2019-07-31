@@ -4,7 +4,7 @@ date: 2017-10-01
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."
-tags: ["hexo", "getting-started", "markdown"]
+tags: ["getting-started", "markdown"]
 ---
 
 _This article was originally posted on
