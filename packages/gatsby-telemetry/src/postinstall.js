@@ -1,4 +1,5 @@
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
+const isTruthy = require("./is-truthy")
 
 let enabled = false
 try {
@@ -6,7 +7,8 @@ try {
   const Configstore = require(`configstore`)
   const config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
   enabled = config.get(`telemetry.enabled`)
-  if (enabled === undefined && !ci.isCI) {
+  const disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+  if (enabled === undefined && !disabled && !ci.isCI) {
     showAnalyticsNotification()
   }
 } catch (e) {
