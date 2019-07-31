@@ -103,4 +103,4 @@ plugins: [
 ```
 
 Above is the minimal configuration to split large sitemap.
-When number of URL in sitemap is more than 5000, the plugin will create sitemap (e.g. `sitemap-0.xml`, `sitemap-1.xml`) and index (e.g. `sitemap.xml`) files.
+When the number of URL's in a sitemap is more than 5000, the plugin will create sitemap (e.g. `sitemap-0.xml`, `sitemap-1.xml`) and index (e.g. `sitemap.xml`) files.
