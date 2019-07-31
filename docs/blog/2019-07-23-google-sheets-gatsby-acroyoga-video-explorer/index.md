@@ -143,7 +143,7 @@ Here's my new array of objects with the properties matching the first row.
 ]
 ```
 
-Next, I'd like for my comma-separated strings of tags (column I) to be arrays of tags (so I can .map over them in my React UI). This code allows me to do that:
+Next, I'd like for my comma-separated strings of tags (column I) to be arrays of tags (so I can `.map` over them in my React UI). This code allows me to do that:
 
 ```javascript
 let itemsArrayWithTagsArray = rows.map(function(item) {
