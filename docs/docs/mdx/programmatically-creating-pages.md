@@ -191,11 +191,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `)
 
   if (result.errors) {
-    reporter.panic('🚨  ERROR: Loading "createPages" query', result.errors);
+    reporter.panic('🚨  ERROR: Loading "createPages" query', result.errors)
   }
 
   // Create blog post pages.
-  const posts = result.data.allMdx.edges;
+  const posts = result.data.allMdx.edges
 
   // We'll call `createPage` for each result
   posts.forEach(({ node }, index) => {
@@ -208,8 +208,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // We can use the values in this context in
       // our page layout component
       context: { id: node.id },
-    });
-  }
+    })
+  })
 }
 ```
 
