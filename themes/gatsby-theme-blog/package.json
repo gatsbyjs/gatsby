@@ -21,7 +21,7 @@
     "@emotion/core": "^10.0.14",
     "@mdx-js/mdx": "^1.1.1",
     "@mdx-js/react": "^1.1.1",
-    "@theme-ui/prism": "^0.2.23",
+    "@theme-ui/prism": "^0.2.25",
     "@theme-ui/typography": "^0.2.23",
     "deepmerge": "^4.0.0",
     "gatsby-image": "^2.2.7",
