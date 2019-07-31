@@ -35,11 +35,11 @@ Some examples using react-helmet:
 - [Gatsby Mail](https://github.com/DSchau/gatsby-mail/blob/89b467e5654619ffe3073133ef0ae48b4d7502e3/src/components/meta.js)
 - [Jason Lengstorf’s personal blog](https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/e6d25ca927afdc75c759e611d4ba6ba086452bb8/src/components/SEO/SEO.js)
 
-### How structured data works
+### Generate rich snippets in search engines using structured data
 
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
-For example, here is a JSON-LD structured data snippet that might appear on the contact page of the spooky technologies, describing their contact information:
-
+For example, here is a structured data snippet in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data) that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
+```js
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -53,7 +53,5 @@ For example, here is a JSON-LD structured data snippet that might appear on the 
   }
 }
 </script>
-
-###
-
-Be sure to test your structured data using the Structured Data Testing tool during development, and the Rich result status reports after deployment, to monitor the health of your pages, which might break after deployment due to templating or serving issues
+```
+ When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method. After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
