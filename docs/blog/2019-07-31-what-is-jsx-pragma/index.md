@@ -68,7 +68,7 @@ There are two ways to specify a custom function (and therefore replace `React.cr
 
 ### Add an option to the Babel plugin
 
-Changing the function in tha Babel plugin will transform _all_ JSX in an application to use the specified function.
+Changing the function in the Babel plugin will transform _all_ JSX in an application to use the specified function.
 
 ### Set a pragma comment
 
