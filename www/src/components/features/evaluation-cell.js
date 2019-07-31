@@ -25,46 +25,37 @@ const renderText = txt => {
 }
 
 const renderCell = (text, column) => {
-  switch (column) {
-    case 0: {
-      return (
-        <div
+  if (column === 0) {
+    return (
+      <div
+        css={{
+          verticalAlign: `middle`,
+          textAlign: `left`,
+          display: `inline-block`,
+          marginLeft: `auto`,
+          marginRight: `auto`,
+        }}
+      >
+        <button
           css={{
-            verticalAlign: `middle`,
+            background: `none`,
+            border: 0,
+            cursor: `inherit`,
+            padding: 0,
             textAlign: `left`,
-            display: `inline-block`,
-            marginLeft: `auto`,
-            marginRight: `auto`,
+          }}
+          onClick={e => {
+            e.preventDefault()
           }}
         >
-          <button
-            css={{
-              background: `none`,
-              border: 0,
-              cursor: `inherit`,
-              padding: 0,
-              textAlign: `left`,
-            }}
-            onClick={e => {
-              e.preventDefault()
-            }}
-          >
-            {renderText(text)}
-          </button>
-        </div>
-      )
-    }
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5: {
-      return <EvaluationCell num={text} />
-    }
-    default: {
-      return null
-    }
+          {renderText(text)}
+        </button>
+      </div>
+    )
+  } else if (column >= 1 || column <= 5) {
+    return <EvaluationCell num={text} />
   }
+  return null
 }
 
 const getBackground = num => {
