@@ -404,7 +404,7 @@ export const ItemPageQuery = graphql\`
 \`
 ```
 
-You probably recognize those fluid and childImageSharp fields if you've worked with gatsby-image and gatsby-plugin-sharp before. The maxHeight:50 part there scales the instructor images down from 267 pixels to 50. I run my site through GTmetrix again and lo and behold, I had shaved my site down from 543KB to 385KB.
+You probably recognize those `fluid` and `childImageSharp` fields if you've worked with gatsby-image and gatsby-plugin-sharp before. The `maxHeight: 50` part there scales the instructor images down from 267 pixels to 50. I run my site through GTmetrix again and lo and behold, I had shaved my site down from 543KB to 385KB.
 
 ### Before
 
