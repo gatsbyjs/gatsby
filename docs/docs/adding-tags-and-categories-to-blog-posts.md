@@ -156,7 +156,7 @@ export const pageQuery = graphql`
 
 Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
-```js
+```js:title=gatsby-node.js
 const path = require("path")
 const _ = require("lodash")
 
