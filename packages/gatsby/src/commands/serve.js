@@ -31,7 +31,22 @@ onExit(() => {
 
 const readMatchPaths = async program => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
-  const rawJSON = await fs.readFile(filePath)
+  let rawJSON = `[]`
+  try {
+    rawJSON = await fs.readFile(filePath)
+  } catch (error) {
+    console.log(`${chalk.yellow(`warn`)} ${error}`)
+    console.log(
+      `${chalk.yellow(
+        `warn`
+      )} Could not read "match-paths.json" from the .cache directory`
+    )
+    console.log(
+      `${chalk.yellow(
+        `warn`
+      )} Client-side routing will not work correctly. Maybe you need to re-run "gatsby build"?`
+    )
+  }
   return JSON.parse(rawJSON)
 }
 
