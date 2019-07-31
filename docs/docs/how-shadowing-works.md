@@ -74,26 +74,32 @@ exports.onCreateWebpackConfig = (
   { store, stage, getConfig, rules, loaders, actions },
   pluginOptions
 ) => {
-  const { program, themes } = store.getState()
+  const { themes, flattenedPlugins } = store.getState()
 
-  if (themes.themes) {
-    actions.setWebpackConfig({
-      resolve: {
-        plugins: [
-          new GatsbyThemeComponentShadowingResolverPlugin({
-            themes: themes.themes,
-            projectRoot: program.directory,
-          }),
-        ],
-      },
-    })
-  }
+  actions.setWebpackConfig({
+    resolve: {
+      plugins: [
+        new GatsbyThemeComponentShadowingResolverPlugin({
+          themes: themes.themes
+            ? themes.themes
+            : flattenedPlugins.map(plugin => {
+                return {
+                  themeDir: plugin.pluginFilepath,
+                  themeName: plugin.name,
+                }
+              }),
+        }),
+      ],
+    },
+  })
 }
 ```
 
-The collection of themes in the project are added to Gatsby's redux
-store which we retrieve. If there are indeed themes, we apply the
-component shadowing resolver plugin.
+We first check for themes in the redux store. This is for
+backwards-compatibility since themes are now merged with
+plugins. If the `themes` key was used in the user's
+`gatsby-config.js` those are passed to the shadowing resolver
+plugin. Otherwise, the flattened plugin list is passed.
 
 ## Structure of a webpack Plugin
 
