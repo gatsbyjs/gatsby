@@ -10,6 +10,7 @@ jest.mock(`axios`, () => {
     get: jest.fn(),
   }
 })
+const path = require(`path`)
 const fs = require(`fs-extra`)
 const axios = require(`axios`)
 const getLatestAPIs = require(`../get-latest-apis`)
@@ -66,7 +67,7 @@ describe(`downloading APIs failure`, () => {
 
     expect(fs.writeFile).not.toHaveBeenCalled()
     expect(fs.readJSON).toHaveBeenCalledWith(
-      expect.stringContaining(`/latest-apis.json`)
+      expect.stringContaining(`${path.sep}latest-apis.json`)
     )
     expect(data).toEqual(apis)
   })
@@ -79,7 +80,7 @@ describe(`downloading APIs failure`, () => {
     await getLatestAPIs()
 
     expect(fs.readJSON).toHaveBeenCalledWith(
-      expect.stringContaining(`/apis.json`)
+      expect.stringContaining(`${path.sep}apis.json`)
     )
   })
 })
