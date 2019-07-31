@@ -209,7 +209,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // our page layout component
       context: { id: node.id },
     });
-  }
+  });
 }
 ```
 
