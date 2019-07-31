@@ -12,7 +12,7 @@ I recently prototyped an [Acroyoga](https://en.wikipedia.org/wiki/Acroyoga)-focu
 
 ## Background on an Acroyoga obsession and the Need for a Video Explorer Site
 
-In the Summer of 2018, I became obsessed with the niche sport of Acroyoga. Acroyoga is the practice of doing yoga-inspired acrobatics with other people. Most people start with simple positions like 'Bird', which you might have tried and called 'airplane' as a kid (holding a person up on your feet while laying down). From Bird, Acroyoga progresses into hundreds of other positions and sequences of positions. Acroyoga scenes exist all over the world and the common vocabulary of positions allows strangers to meet up and easily 'jam' together.
+In the Summer of 2018, I became obsessed with the niche sport of Acroyoga. Acroyoga is the practice of doing yoga-inspired acrobatics with other people. Most people start with simple positions like 'bird', which you might have tried and called 'airplane' as a kid (holding a person up on your feet while laying down). From bird, Acroyoga progresses into hundreds of other positions and sequences of positions. Acroyoga scenes exist all over the world and the common vocabulary of positions allows strangers to meet up and easily 'jam' together.
 
 There are thousands of 'acroyogis' on Instagram and Youtube and many of them post and share their latest creations constantly. For intermediate acroyogis like myself, I'm constantly saving, reposting, and curating from this firehose of Acroyoga content. When I'm trying something new at an Acroyoga jam, I'm often pulling my phone out to go through my favorited videos.
 
