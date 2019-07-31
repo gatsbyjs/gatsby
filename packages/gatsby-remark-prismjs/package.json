@@ -1,5 +1,5 @@
 {
-  "name": "@elken/gatsby-remark-prismjs",
+  "name": "gatsby-remark-prismjs",
   "description": "Adds syntax highlighting to code blocks at build time using PrismJS",
   "version": "0.3.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
