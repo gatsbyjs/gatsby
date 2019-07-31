@@ -1,3 +1,17 @@
+const path = require(`path`)
+
+exports.createPages = ({ actions: { createPage } }) => {
+  createPage({
+    path: `/안녕`,
+    component: path.resolve(`src/pages/page-2.js`),
+  })
+
+  createPage({
+    path: `/client-only-paths/static`,
+    component: path.resolve(`src/templates/static-page.js`),
+  })
+}
+
 exports.onCreatePage = ({ page, actions }) => {
   switch (page.path) {
     case `/client-only-paths/`:
@@ -26,9 +40,5 @@ exports.onCreatePage = ({ page, actions }) => {
         },
       })
       break
-  }
-  if (page.path.match(/^\/paths/)) {
-    page.matchPath = `/paths/*`
-    actions.createPage(page)
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Welcome to gastby-mdx!
+ * Welcome to gatsby-plugin-mdx!
  *
  * Start reading in gatsby-node.js
  */

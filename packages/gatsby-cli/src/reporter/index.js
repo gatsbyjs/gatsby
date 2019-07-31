@@ -38,7 +38,7 @@ const { getErrorFormatter } = require(`./errors`)
 const { dispatch, getStore } = require(`./redux`)
 const constructError = require(`../structured-errors/construct-error`)
 
-const getElapsedTime = activity => {
+const getElapsedTimeMS = activity => {
   const elapsed = process.hrtime(activity.startTime)
   return convertHrtime(elapsed)[`seconds`].toFixed(3)
 }
@@ -46,6 +46,8 @@ const getElapsedTime = activity => {
 const getActivity = name => getStore().getState().logs.activities[name]
 
 const errorFormatter = getErrorFormatter()
+const { trackCli } = require(`gatsby-telemetry`)
+const convertHrtime = require(`convert-hrtime`)
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
@@ -110,6 +112,9 @@ const reporter: Reporter = {
     let details = {}
     // Many paths to retain backcompat :scream:
     if (arguments.length === 2) {
+      if (Array.isArray(error)) {
+        return error.map(errorItem => this.error(errorMeta, errorItem))
+      }
       details.error = error
       details.context = {
         sourceMessage: errorMeta + ` ` + error.message,
@@ -206,6 +211,7 @@ const reporter: Reporter = {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
+    let startTime = 0
 
     return {
       start: () => {
@@ -226,18 +232,24 @@ const reporter: Reporter = {
           },
         })
       },
-      end: () => {
+      end() {
         span.finish()
 
         let activity = getActivity(name)
         if (activity) {
-          const elapsedTime = getElapsedTime(activity)
+          const duration = getElapsedTimeMS(activity)
+
+          trackCli(`ACTIVITY_DURATION`, {
+            name: name,
+            duration,
+          })
+
           dispatch({
             type: `STRUCTURED_ACTIVITY_END`,
             payload: {
               ...activity,
               name,
-              elapsedTime,
+              elapsedTime: (duration / 1000).toFixed(3),
             },
           })
         }
@@ -304,13 +316,13 @@ const reporter: Reporter = {
         span.finish()
         let activity = getActivity(name)
         if (activity) {
-          const elapsedTime = getElapsedTime(activity)
+          const duration = getElapsedTimeMS(activity)
           dispatch({
             type: `STRUCTURED_ACTIVITY_END`,
             payload: {
               ...activity,
               name,
-              elapsedTime,
+              elapsedTime: (duration / 1000).toFixed(3),
             },
           })
         }

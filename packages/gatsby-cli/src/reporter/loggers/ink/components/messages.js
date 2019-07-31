@@ -1,10 +1,10 @@
 import React from "react"
-import { Color } from "ink"
+import { Box, Color } from "ink"
 import stripAnsi from "strip-ansi"
 
 const ColorSwitcher = ({ hideColors, children, ...props }) => {
   if (hideColors) {
-    return <>{stripAnsi(children)}</>
+    return stripAnsi(children)
   }
 
   return <Color {...props}>{children}</Color>
@@ -37,10 +37,10 @@ export const Message = ({ level, hideColors, children }) => {
   const TextLabel = getLabel(level)
 
   return (
-    <>
+    <Box textWrap="wrap" flexDirection="row">
       <TextLabel hideColors={hideColors} />
       {` `}
       {children}
-    </>
+    </Box>
   )
 }
