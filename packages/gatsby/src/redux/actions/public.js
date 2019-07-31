@@ -15,6 +15,7 @@ const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
+const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 
@@ -33,16 +34,6 @@ const findChildrenRecursively = (children = []) => {
   )
 
   return children
-}
-
-const getCommonDir = (path1, path2) => {
-  var iChar
-  for (iChar = 0; iChar < path1.length; iChar += 1) {
-    if (path1[iChar] !== path2[iChar]) {
-      return path1.substring(0, iChar)
-    }
-  }
-  return path1
 }
 
 import type { Plugin } from "./types"
@@ -280,9 +271,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           store.getState().program.directory,
           page.component
         )
-        const relativePath = page.component
-          .replace(commonDir, ``)
-          .replace(/^\//, ``)
+
+        // using `path.win32` to force case insensitive relative path
+        const relativePath = path.win32.relative(commonDir, page.component)
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
       }
 
@@ -304,7 +295,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
           page.component:     "${page.component}"
           path in filesystem: "${trueComponentPath}"
-                                ${markers}
+                               ${markers}
         `
           )
           hasWarnedForPageComponentInvalidCasing.add(page.component)
