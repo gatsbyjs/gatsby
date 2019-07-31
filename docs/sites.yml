@@ -6793,8 +6793,8 @@
     Raconteur is a London-based publishing house and content marketing agency. We have built this careers portal Gatsby v2 with TypeScript, Styled-Components, React-Spring and Contentful.
   categories:
     - Media
-    - Careers
-    - Publishing
+    - Marketing
+    - Landing Page
   built_by: Jacob Herper
   built_by_url: https://herper.io
   featured: false
