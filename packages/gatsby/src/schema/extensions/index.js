@@ -92,6 +92,8 @@ const builtInFieldExtensions = {
     args: {
       formatString: `String`,
       locale: `String`,
+      fromNow: `Boolean`,
+      difference: `String`,
     },
     extend(args, fieldConfig) {
       return getDateResolver(args, fieldConfig)
