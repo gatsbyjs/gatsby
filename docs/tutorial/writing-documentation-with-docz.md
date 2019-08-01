@@ -30,7 +30,7 @@ And install the following packages:
 npm install --save gatsby-theme-docz docz docz-theme-default
 ```
 
-Define `docz-theme-default` as a theme inside the `__experimentalThemes` of `gatsby-config.js`:
+Define `gatsby-theme-docz` as a theme inside the `__experimentalThemes` of `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
