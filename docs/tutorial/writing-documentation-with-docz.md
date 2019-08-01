@@ -2,7 +2,7 @@
 title: "Writing documentation with Docz"
 ---
 
-Writing good documentation is important for your project maintainers (and for your future self!). A very nice documentation generator is [Docz](https://www.docz.site). It allows you to easily write interactive docs for your React components.
+Writing good documentation is important for your project maintainers (and for your future self). [Docz](https://www.docz.site) is a very nice documentation generator. It enables you to write interactive documentation for your React components with very little effort.
 
 Docz leverages `mdx` files – short for Markdown with JSX – which brings **React components** to Markdown files. From your PropTypes, or Flow types or TypeScript types, it can generate **property tables** to document properly how to use your components. In addition, you can provide a **coding playground** for your components, so that anyone can see them in action, modify the code and see the changes live, or copy the snippet to use it somewhere else.
 
@@ -18,7 +18,7 @@ First, if you do not have a Gatsby project set up yet, use the Gatsby CLI to cre
 gatsby new my-gatsby-site-with-docz
 ```
 
-To set up Docz you need to install dependencies and do some custom configuration. Make sure you are in the root directory of your Gatsby project:
+To set up Docz you need to install the Docz Gatsby theme and add some custom configuration. Make sure you are in the root directory of your Gatsby project:
 
 ```shell
 cd my-gatsby-site-with-docz
@@ -27,16 +27,18 @@ cd my-gatsby-site-with-docz
 And install the following packages:
 
 ```shell
-npm install --save gatsby-theme-docz docz docz-theme-default
+npm install --save gatsby-theme-docz
 ```
 
-Define `gatsby-theme-docz` as a theme inside the `__experimentalThemes` of `gatsby-config.js`:
+Add `gatsby-theme-docz` under `plugins` in `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
-  //highlight-next-line
-  __experimentalThemes: [`gatsby-theme-docz`],
-  plugins: [`// your plugins go here`],
+  plugins: [
+    //highlight-next-line
+    `gatsby-theme-docz`,
+    // Your plugins go here
+  ],
 }
 ```
 
@@ -160,15 +162,17 @@ You can usually set your config using a `doczrc.js` file ([see all available opt
 
 ```js:title=gatsby-config.js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
+    //highlight-start
     {
       resolve: `gatsby-theme-docz`,
       options: {
         // Your options here
       },
     },
+    //hightlight-end
+    // Your plugins go here
   ],
-  plugins: [`// your plugins go here`],
 }
 ```
 
