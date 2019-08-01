@@ -275,8 +275,13 @@ actions.createFieldExtension = (
  *
  * @param {object} $0
  * @param {string} [$0.path] The path to the output file, defaults to `schema.gql`
- * @param {string[]} [$0.include] Only include these types
- * @param {string[]} [$0.exclude] Do not include these types
+ * @param {object} [$0.include] Configure types to include
+ * @param {string[]} [$0.include.types] Only include these types
+ * @param {string[]} [$0.include.plugins] Only include types owned by these plugins
+ * @param {object} [$0.exclude] Configure types to exclude
+ * @param {string[]} [$0.exclude.types] Do not include these types
+ * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
+ * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
  */
 actions.printTypeDefinitions = (
   {
@@ -286,9 +291,9 @@ actions.printTypeDefinitions = (
     withFieldTypes = true,
   }: {
     path?: string,
-    include?: Array<string>,
-    exclude?: Array<string>,
-    withFieldTypes: boolean,
+    include?: { types?: Array<string>, plugins?: Array<string> },
+    exclude?: { types?: Array<string>, plugins?: Array<string> },
+    withFieldTypes?: boolean,
   },
   plugin: Plugin,
   traceId?: string
