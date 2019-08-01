@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.21...gatsby-plugin-mdx@1.0.22) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Replaces to-style with style-to-object ([#16062](https://github.com/gatsbyjs/gatsby/issues/16062)) ([a4947ef](https://github.com/gatsbyjs/gatsby/commit/a4947ef))
+
 ## [1.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.20...gatsby-plugin-mdx@1.0.21) (2019-08-01)
 
 ### Features
