@@ -1,7 +1,7 @@
-const showAnalyticsNotification = require(`./showAnalyticsNotification`)
-const EventStorage = require(`./event-storage`)
-
 try {
+  const showAnalyticsNotification = require(`./showAnalyticsNotification`)
+  const EventStorage = require(`./event-storage`)
+
   const ci = require(`ci-info`)
   const eventStorage = new EventStorage()
   const disabled = eventStorage.disabled
@@ -10,5 +10,5 @@ try {
     showAnalyticsNotification()
   }
 } catch (e) {
-  console.log(e)
+  // ignore
 }
