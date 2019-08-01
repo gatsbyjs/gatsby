@@ -81,6 +81,7 @@ module.exports = async (args: BootstrapArgs) => {
       id: `10126`,
       context: {
         configName: `gatsby-config`,
+        path: program.directory,
       },
     })
   }

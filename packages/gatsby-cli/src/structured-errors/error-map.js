@@ -83,11 +83,13 @@ const errorMap = {
   },
   "10126": {
     text: context =>
-      `A ${
+      `${context.path}/${context.configName} cannot export a function.` +
+      `\n\nA ${
         context.configName
-      } that exports a function can only be used as a theme and not run directly.` +
+      } exported as a Function can only be used as a theme and not run directly.` +
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
-      `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions are not supported in the root gatsby-config.`,
+      `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
+      `\nare not supported in the root gatsby-config.`,
     type: `CONFIG`,
     level: `ERROR`,
   },
