@@ -621,21 +621,17 @@
     - And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 - url: https://cara.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-cara
-  description: A portfolio starter for Gatsby. The target audience are designers and photographers. The playful & colorful Onepage has beautiful parallax effects (made possible by React Spring) and has a Hero, Projects, About and Contact section. The styling is defined by TailwindCSS which enables easy edits and a consistent look. General settings and colors can be changed in a config & theme file.
+  description: Playful and Colorful One-Page portfolio featuring Parallax effects and animations. Especially designers and/or photographers will love this theme! Built with MDX and Theme UI.
   tags:
     - Portfolio
     - Onepage
     - Styling:CSS-in-JS
-    - Styling:Tailwind
     - PWA
-    - Linting
   features:
-    - React Spring
-    - TailwindCSS & Styled Components
-    - Uses tailwind.macro (Babel macro) for easy TailwindCSS styling
-    - Playful & Colorful One-Page website with Parallax effect
-    - Easily configurable
-    - And other good stuff (SEO, Responsive images, Offline Support, WebApp Manifest Support)
+    - React Spring Parallax effects
+    - Theme UI-based theming
+    - CSS Animations and shapes
+    - Light/Dark mode
 - url: https://emilia.lekoarts.de
   repo: https://github.com/LekoArts/gatsby-starter-portfolio-emilia
   description: A portfolio starter for Gatsby. The target audience are designers and photographers. The dark themed website shows your work with large images in a grid-layout (powered by CSS Grid). The transition effects on the header add a playful touch to the overall minimal design. The website has programmatically created pages for your projects (with automatic image import). General settings and colors can be changed in a config & theme file.
