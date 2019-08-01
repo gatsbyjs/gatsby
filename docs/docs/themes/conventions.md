@@ -190,7 +190,7 @@ means that public facing APIs are unaffected.
 #### Example patch versions
 
 - **Fixing a bug** in a component, such as fixing a warning or adding a fallback value.
-- **Upgrading upstream dependencies** to their latest minor and patch versions.
+- **Upgrading dependencies** to their latest minor and patch versions.
 
 ### Minor _(0.X.0)_
 
