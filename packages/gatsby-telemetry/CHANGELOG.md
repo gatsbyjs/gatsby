@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.7...gatsby-telemetry@1.1.8) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Don't display analytics notification if opted out ([#16258](https://github.com/gatsbyjs/gatsby/issues/16258)) ([2b3a150](https://github.com/gatsbyjs/gatsby/commit/2b3a150))
+
 ## [1.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.6...gatsby-telemetry@1.1.7) (2019-07-23)
 
 **Note:** Version bump only for package gatsby-telemetry
