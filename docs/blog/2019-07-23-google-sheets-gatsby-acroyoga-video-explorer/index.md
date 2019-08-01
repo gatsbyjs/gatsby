@@ -211,7 +211,7 @@ tags.forEach(tag => {
 })
 ```
 
-I did exactly the same for my instructors so I'll skip it here for brevity. As you can see, createPage is using single-tag.js and single-instructor.js to create these pages. I'll next show you, at a high-level, how I created these.
+I did exactly the same for my instructors so I'll skip it here for brevity. As you can see, `createPage` is using single-tag.js and single-instructor.js to create these pages. I'll next show you, at a high-level, how I created these.
 
 ## Creating the UI with Material-UI
 
