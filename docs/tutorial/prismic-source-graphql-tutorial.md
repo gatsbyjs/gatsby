@@ -124,7 +124,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt={doc.node.image.alt} />
+        <img src={doc.node.image.url} alt={doc.node.image.alt} /> // Make sure to add an accessible alt attribute when adding images in Prismic: https://user-guides.prismic.io/articles/768849-add-metadata-to-an-asset
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
