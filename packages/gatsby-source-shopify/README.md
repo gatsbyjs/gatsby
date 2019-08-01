@@ -225,6 +225,9 @@ Products in the collection are provided on the `products` field.
 Product variants and options are provided on the `variants` and `options`
 fields.
 
+_Note:_ By default, all metafields are private. In order to pull metafields,
+you must first [expose the metafield to the Storefront API](https://help.shopify.com/en/api/guides/metafields/storefront-api-metafields#expose-metafields-to-the-storefront-api).
+
 ```graphql
 {
   allShopifyProduct {
