@@ -9,7 +9,7 @@ const getService = (args = {}) =>
     machine.withContext({
       componentPath: `/a/path.js`,
       query: ``,
-      pages: [`/`],
+      pages: new Set([`/`]),
       isInBootstrap: true,
       ...args,
     })
