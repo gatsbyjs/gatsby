@@ -68,6 +68,13 @@ plugins: [
                 },
               },
             ],
+            // Customize the prompt used in shell output
+            // Values below are default
+            prompt: {
+              user: "root",
+              host: "localhost",
+              global: false,
+            },
           },
         },
       ],
@@ -190,6 +197,41 @@ Then add in the corresponding CSS:
   padding: 0;
   padding-left: 2.8em;
   overflow: initial;
+}
+```
+
+#### Optional: Add shell prompt
+
+If you want a fancy prompt on anything with `shell` or `bash`, you need to import
+the following CSS file in `gatsby-browser.js`:
+
+```javascript
+// gatsby-browser.js
+require("prismjs/plugins/command-line/prism-command-line.css")
+```
+
+If you want to change the resulting prompt, use the following CSS:
+
+```css
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
 }
 ```
 
@@ -323,6 +365,18 @@ plugins: [
   }
 ]
 ```
+````
+
+### Shell prompt
+
+To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+or pass `{outputLines: <range>}` to a snippet
+
+By default, every line gets a prompt appended to the start, this behaviour can be changed by specififying `{outputLines: <range>}`
+to the language.
+
+````
+```bash{outputLines: 2-10,12}
 ````
 
 ### Line hiding
