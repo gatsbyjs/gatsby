@@ -1,72 +1,71 @@
-import hex2rgba from "hex2rgba"
-import { keyframes } from "react-emotion"
+import { keyframes } from "@emotion/core"
 
-import presets, { colors } from "./presets"
-import { rhythm, scale, options } from "./typography"
+import {
+  colors,
+  space,
+  transition,
+  radii,
+  mediaQueries,
+  fontSizes,
+  lineHeights,
+  fonts,
+  zIndices,
+} from "./presets"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `30px 60px` },
+  "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
 
-export const scrollbarStyles = {
-  WebkitOverflowScrolling: `touch`,
-  "&::-webkit-scrollbar": {
-    width: `6px`,
-    height: `6px`,
-  },
-  "&::-webkit-scrollbar-thumb": {
-    background: colors.ui.bright,
-  },
-  "&::-webkit-scrollbar-thumb:hover": {
-    background: colors.lilac,
-  },
-  "&::-webkit-scrollbar-track": {
-    background: colors.ui.light,
-  },
+export const focusStyle = {
+  outline: 0,
+  boxShadow: `0 0 0 ${space[1]} ${colors.input.focusBoxShadow}`,
+}
+
+export const srOnly = {
+  position: `absolute`,
+  width: 1,
+  height: 1,
+  padding: 0,
+  overflow: `hidden`,
+  clip: `rect(0,0,0,0)`,
+  whiteSpace: `nowrap`,
+  border: 0,
 }
 
 export const buttonStyles = {
   default: {
     alignItems: `center`,
     backgroundColor: colors.gatsby,
-    borderRadius: presets.radius,
+    borderRadius: radii[2],
     borderWidth: 1,
     borderStyle: `solid`,
     borderColor: colors.gatsby,
-    boxShadow: `none`,
-    color: `#fff`,
+    color: colors.white,
     cursor: `pointer`,
     display: `inline-flex`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: fonts.header,
     fontWeight: `bold`,
     flexShrink: 0,
-    lineHeight: 1,
+    lineHeight: lineHeights.dense,
+    textDecoration: `none`,
     WebkitFontSmoothing: `antialiased`,
     whiteSpace: `nowrap`,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    backgroundSize: `30px 30px`,
-    transition: `all ${presets.animation.speedDefault} ${
-      presets.animation.curveDefault
-    }`,
-    ":hover, &:focus": {
-      backgroundSize: `30px 30px`,
+    padding: `${space[2]} ${space[3]}`,
+    backgroundSize: `${space[7]} ${space[7]}`,
+    transition: `all ${transition.speed.default} ${transition.curve.default}`,
+    ":hover, :focus": {
       backgroundColor: colors.gatsby,
-      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-      color: `#fff`,
+      backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+      color: colors.white,
       animation: `${stripeAnimation} 2.8s linear infinite`,
+      borderColor: colors.gatsby,
     },
     ":focus": {
-      outline: 0,
-      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
+      ...focusStyle,
     },
     ":after": { content: `''`, display: `block` },
     "& svg": { marginLeft: `.2em` },
-    [presets.Tablet]: {
-      ...scale(1 / 5),
-      padding: `${rhythm(2 / 6)} ${rhythm(3 / 5)}`,
-    },
-    [presets.VHd]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
   },
   secondary: {
     backgroundColor: `transparent`,
@@ -74,48 +73,53 @@ export const buttonStyles = {
     fontWeight: `normal`,
   },
   large: {
-    // borderRadius: presets.radiusLg,
-    fontSize: scale(1 / 5).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    [presets.Tablet]: {
-      fontSize: scale(2 / 5).fontSize,
-      padding: `${rhythm(2 / 4)} ${rhythm(3 / 5)}`,
-    },
-    [presets.VHd]: { padding: `${rhythm(1 / 2)} ${rhythm(1)}` },
+    fontSize: fontSizes[4],
+    padding: `${space[3]} ${space[4]}`,
   },
   small: {
-    fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    [presets.Tablet]: {
-      fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
-    },
-    [presets.VHd]: {
-      fontSize: scale(-1 / 6).fontSize,
-      padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
+    fontSize: fontSizes[1],
+    padding: `${space[2]} ${space[3]}`,
+    [mediaQueries.md]: {
+      fontSize: fontSizes[2],
     },
   },
   tiny: {
-    fontSize: scale(-1 / 3).fontSize,
-    padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
-    [presets.Tablet]: {
-      fontSize: scale(-1 / 4).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
-    },
-    [presets.VHd]: {
-      fontSize: scale(-1 / 5).fontSize,
-      padding: `${rhythm(1 / 5)} ${rhythm(1 / 3)}`,
+    borderRadius: radii[1],
+    fontSize: fontSizes[1],
+    padding: `${space[1]} ${space[2]}`,
+    [mediaQueries.md]: {
+      fontSize: fontSizes[2],
     },
   },
-  ondark: { border: `1px solid ${colors.ui.light}` },
+  ondark: {
+    border: `1px solid ${colors.purple[10]}`,
+    background: colors.purple[80],
+  },
 }
 
 export const svgStyles = {
-  active: {
+  stroke: {
     "& .svg-stroke": {
-      strokeWidth: 1.4173,
       strokeMiterlimit: 10,
+      strokeWidth: 1.4173,
     },
+  },
+  default: {
+    "& .svg-stroke-accent": { stroke: colors.purple[40] },
+    "& .svg-stroke-lilac": { stroke: colors.purple[40] },
+    "& .svg-fill-lilac": { fill: colors.purple[40] },
+    "& .svg-fill-gatsby": { fill: colors.purple[40] },
+    "& .svg-fill-brightest": { fill: colors.white },
+    "& .svg-fill-accent": { fill: colors.purple[40] },
+    "& .svg-stroke-gatsby": { stroke: colors.purple[40] },
+    "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
+    "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
+    "& .svg-fill-gradient-accent-white-bottom": { fill: colors.white },
+    "& .svg-fill-gradient-purple": { fill: colors.purple[40] },
+    "& .svg-stroke-gradient-purple": { stroke: colors.purple[40] },
+    "& .svg-fill-lavender": { fill: `transparent` },
+  },
+  active: {
     "& .svg-stroke-accent": { stroke: colors.accent },
     "& .svg-stroke-lilac": { stroke: colors.lilac },
     "& .svg-stroke-gatsby": { stroke: colors.gatsby },
@@ -123,8 +127,8 @@ export const svgStyles = {
     "& .svg-fill-lilac": { fill: colors.lilac },
     "& .svg-fill-gatsby": { fill: colors.gatsby },
     "& .svg-fill-accent": { fill: colors.accent },
-    "& .svg-fill-wisteria": { fill: colors.wisteria },
-    "& .svg-fill-brightest": { fill: `#fff` },
+    "& .svg-fill-lavender": { fill: colors.lavender },
+    "& .svg-fill-brightest": { fill: colors.white },
     "& .svg-fill-gradient-accent-white-45deg": {
       fill: `url(#accent-white-45deg)`,
     },
@@ -137,3 +141,73 @@ export const svgStyles = {
     },
   },
 }
+
+// This is an exceptionally bad name
+export const linkStyles = {
+  fontSize: fontSizes[1],
+  lineHeight: lineHeights.solid,
+  padding: `${space[3]} 0`,
+  "&&": {
+    border: 0,
+    color: colors.text.secondary,
+    display: `flex`,
+    fontWeight: `normal`,
+  },
+  "&&:hover": {
+    color: colors.gatsby,
+  },
+}
+
+export const formInput = {
+  backgroundColor: colors.white,
+  border: `1px solid ${colors.input.border}`,
+  borderRadius: radii[2],
+  padding: space[2],
+  fontFamily: fonts.system,
+  fontSize: fontSizes[2],
+  verticalAlign: `middle`,
+  transition: `all ${transition.speed.default} ${transition.curve.default}`,
+  "::placeholder": {
+    color: colors.text.placeholder,
+    opacity: 1,
+  },
+}
+
+export const formInputFocus = {
+  borderColor: colors.input.focusBorder,
+  ...focusStyle,
+}
+
+export const pullIntoGutter = {
+  marginLeft: `-${space[6]}`,
+  marginRight: `-${space[6]}`,
+  paddingLeft: space[6],
+  paddingRight: space[6],
+}
+
+export const skipLink = {
+  border: 0,
+  color: colors.gatsby,
+  clip: `rect(0 0 0 0)`,
+  height: 1,
+  width: 1,
+  margin: -1,
+  padding: 0,
+  overflow: `hidden`,
+  position: `absolute`,
+  zIndex: zIndices.skipLink,
+  fontSize: fontSizes[1],
+  ":focus": {
+    padding: space[4],
+    position: `fixed`,
+    top: space[6],
+    left: space[6],
+    background: colors.white,
+    textDecoration: `none`,
+    width: `auto`,
+    height: `auto`,
+    clip: `auto`,
+  },
+}
+
+export const breakpointGutter = `@media (min-width: 42rem)`

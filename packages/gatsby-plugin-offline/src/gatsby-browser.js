@@ -1,22 +1,18 @@
 exports.registerServiceWorker = () => true
 
-let swNotInstalled = true
 const prefetchedPathnames = []
-
-exports.onPostPrefetchPathname = ({ pathname }) => {
-  // if SW is not installed, we need to record any prefetches
-  // that happen so we can then add them to SW cache once installed
-  if (swNotInstalled && `serviceWorker` in navigator) {
-    prefetchedPathnames.push(pathname)
-  }
-}
+const whitelistedPathnames = []
 
 exports.onServiceWorkerActive = ({
   getResourceURLsForPathname,
   serviceWorker,
 }) => {
-  // stop recording prefetch events
-  swNotInstalled = false
+  // if the SW has just updated then reset whitelisted paths and don't cache
+  // stuff, since we're on the old revision until we navigate to another page
+  if (window.___swUpdated) {
+    serviceWorker.active.postMessage({ gatsbyApi: `resetWhitelist` })
+    return
+  }
 
   // grab nodes from head of document
   const nodes = document.querySelectorAll(`
@@ -51,4 +47,44 @@ exports.onServiceWorkerActive = ({
 
     document.head.appendChild(link)
   })
+
+  serviceWorker.active.postMessage({
+    gatsbyApi: `whitelistPathnames`,
+    pathnames: whitelistedPathnames,
+  })
+}
+
+function whitelistPathname(pathname, includesPrefix) {
+  if (`serviceWorker` in navigator) {
+    const { serviceWorker } = navigator
+
+    if (serviceWorker.controller !== null) {
+      serviceWorker.controller.postMessage({
+        gatsbyApi: `whitelistPathnames`,
+        pathnames: [{ pathname, includesPrefix }],
+      })
+    } else {
+      whitelistedPathnames.push({ pathname, includesPrefix })
+    }
+  }
+}
+
+exports.onPostPrefetchPathname = ({ pathname }) => {
+  // do nothing if the SW has just updated, since we still have old pages in
+  // memory which we don't want to be whitelisted
+  if (window.___swUpdated) return
+
+  whitelistPathname(pathname, false)
+
+  // if SW is not installed, we need to record any prefetches
+  // that happen so we can then add them to SW cache once installed
+  if (
+    `serviceWorker` in navigator &&
+    !(
+      navigator.serviceWorker.controller !== null &&
+      navigator.serviceWorker.controller.state === `activated`
+    )
+  ) {
+    prefetchedPathnames.push(pathname)
+  }
 }

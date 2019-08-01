@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Add pages Fails if component path is missing 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when create creating a page"`;
+exports[`Add pages Fails if component path is missing 1`] = `"A component must be set when creating a page"`;
 
 exports[`Add pages Fails if path is missing 1`] = `"The plugin \\"test\\" must set the page path when creating a page"`;
 
@@ -40,7 +40,7 @@ The following fields are used by the page object and should be avoided.
   * \\"component\\"
   * \\"componentChunkName\\"
   * \\"pluginCreator___NODE\\"
-  * \\"pluginCreatorName\\"
+  * \\"pluginCreatorId\\"
 
             "
 `;
@@ -52,7 +52,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -64,7 +64,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHiPizza",
-    "jsonName": "hi-pizza-f10",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": undefined,
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
@@ -76,12 +76,13 @@ Map {
 
 exports[`Add pages allows you to add pages 1`] = `
 Object {
+  "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -103,7 +104,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -115,6 +116,7 @@ Map {
 
 exports[`Add pages allows you to add pages with context 1`] = `
 Object {
+  "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
@@ -122,7 +124,7 @@ Object {
       "id": 123,
     },
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -146,7 +148,7 @@ Map {
       "id": 123,
     },
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -158,12 +160,13 @@ Map {
 
 exports[`Add pages allows you to add pages with matchPath 1`] = `
 Object {
+  "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -185,7 +188,7 @@ Map {
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
     "pluginCreatorId": "test",
@@ -204,7 +207,7 @@ Map {
     "componentChunkName": "component---whatever-2-index-js",
     "context": Object {},
     "internalComponentName": "ComponentHi",
-    "jsonName": "hi-18e",
+    "isCreatedByStatefulCreatePages": undefined,
     "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",

@@ -2,110 +2,43 @@
 const sift = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
-const Promise = require(`bluebird`)
-const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
-const { getNode, getNodesByType } = require(`../db/nodes`)
-
-const resolvedNodesCache = new Map()
-const enhancedNodeCache = new Map()
-const enhancedNodePromiseCache = new Map()
-const enhancedNodeCacheId = ({ node, args }) =>
-  node && node.internal && node.internal.contentDigest
-    ? JSON.stringify({
-        nodeid: node.id,
-        digest: node.internal.contentDigest,
-        ...args,
-      })
-    : null
-
-const nodesCache = new Map()
-
-function loadNodes(type) {
-  let nodes
-  // this caching can be removed if we move to loki
-  if (process.env.NODE_ENV === `production` && nodesCache.has(type)) {
-    nodes = nodesCache.get(type)
-  } else {
-    nodes = getNodesByType(type)
-    nodesCache.set(type, nodes)
-  }
-  return nodes
-}
+const { resolveNodes, resolveRecursive } = require(`./prepare-nodes`)
+const { makeRe } = require(`micromatch`)
+const { getQueryFields } = require(`../db/common/query`)
+const { getValueAt } = require(`../utils/get-value-at`)
 
 /////////////////////////////////////////////////////////////////////
 // Parse filter
 /////////////////////////////////////////////////////////////////////
 
-function siftifyArgs(object) {
-  const newObject = {}
-  _.each(object, (v, k) => {
-    if (_.isPlainObject(v)) {
-      if (k === `elemMatch`) {
-        k = `$elemMatch`
-      }
-      newObject[k] = siftifyArgs(v)
+const prepareQueryArgs = (filterFields = {}) =>
+  Object.keys(filterFields).reduce((acc, key) => {
+    const value = filterFields[key]
+    if (_.isPlainObject(value)) {
+      acc[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(value)
     } else {
-      // Compile regex first.
-      if (k === `regex`) {
-        newObject[`$regex`] = prepareRegex(v)
-      } else if (k === `glob`) {
-        const Minimatch = require(`minimatch`).Minimatch
-        const mm = new Minimatch(v)
-        newObject[`$regex`] = mm.makeRe()
-      } else {
-        newObject[`$${k}`] = v
+      switch (key) {
+        case `regex`:
+          acc[`$regex`] = prepareRegex(value)
+          break
+        case `glob`:
+          acc[`$regex`] = makeRe(value)
+          break
+        default:
+          acc[`$${key}`] = value
       }
     }
-  })
-  return newObject
-}
+    return acc
+  }, {})
 
-// Build an object that excludes the innermost leafs,
-// this avoids including { eq: x } when resolving fields.
-function extractFieldsToSift(prekey, key, preobj, obj, val) {
-  if (_.isPlainObject(val)) {
-    _.forEach((val: any), (v, k) => {
-      if (k === `elemMatch`) {
-        // elemMatch is operator for arrays and not field we want to prepare
-        // so we need to skip it
-        extractFieldsToSift(prekey, key, preobj, obj, v)
-        return
-      }
-      preobj[prekey] = obj
-      extractFieldsToSift(key, k, obj, {}, v)
-    })
-  } else {
-    preobj[prekey] = true
-  }
-}
-
-/**
- * Parse filter and returns an object with two fields:
- * - siftArgs: the filter in a format that sift understands
- * - fieldsToSift: filter with operate leaves (e.g { eq: 3 })
- *   removed. Used later to resolve all filter fields
- */
-function parseFilter(filter) {
-  const siftArgs = []
-  const fieldsToSift = {}
-  if (filter) {
-    _.each(filter, (v, k) => {
-      // Ignore connection and sorting args.
-      if (_.includes([`skip`, `limit`, `sort`], k)) return
-
-      siftArgs.push(
-        siftifyArgs({
-          [k]: v,
-        })
-      )
-      extractFieldsToSift(``, k, {}, fieldsToSift, v)
-    })
-  }
-  return { siftArgs, fieldsToSift }
-}
+const getFilters = filters =>
+  Object.keys(filters).reduce(
+    (acc, key) => acc.push({ [key]: filters[key] }) && acc,
+    []
+  )
 
 /////////////////////////////////////////////////////////////////////
-// Resolve nodes
+// Run Sift
 /////////////////////////////////////////////////////////////////////
 
 function isEqId(firstOnly, fieldsToSift, siftArgs) {
@@ -117,126 +50,6 @@ function isEqId(firstOnly, fieldsToSift, siftArgs) {
     Object.keys(siftArgs[0].id)[0] === `$eq`
   )
 }
-
-function awaitSiftField(fields, node, k) {
-  const field = fields[k]
-  if (field.resolve) {
-    return field.resolve(
-      node,
-      {},
-      {},
-      {
-        fieldName: k,
-      }
-    )
-  } else if (node[k] !== undefined) {
-    return node[k]
-  }
-
-  return undefined
-}
-
-// Resolves every field used in the node.
-function resolveRecursive(node, siftFieldsObj, gqFields) {
-  return Promise.all(
-    _.keys(siftFieldsObj).map(k =>
-      Promise.resolve(awaitSiftField(gqFields, node, k))
-        .then(v => {
-          const innerSift = siftFieldsObj[k]
-          const innerGqConfig = gqFields[k]
-          if (
-            _.isObject(innerSift) &&
-            v != null &&
-            innerGqConfig &&
-            innerGqConfig.type
-          ) {
-            if (_.isFunction(innerGqConfig.type.getFields)) {
-              // this is single object
-              return resolveRecursive(
-                v,
-                innerSift,
-                innerGqConfig.type.getFields()
-              )
-            } else if (
-              _.isArray(v) &&
-              innerGqConfig.type.ofType &&
-              _.isFunction(innerGqConfig.type.ofType.getFields)
-            ) {
-              // this is array
-              return Promise.all(
-                v.map(item =>
-                  resolveRecursive(
-                    item,
-                    innerSift,
-                    innerGqConfig.type.ofType.getFields()
-                  )
-                )
-              )
-            }
-          }
-
-          return v
-        })
-        .then(v => [k, v])
-    )
-  ).then(resolvedFields => {
-    const myNode = {
-      ...node,
-    }
-    resolvedFields.forEach(([k, v]) => (myNode[k] = v))
-    return myNode
-  })
-}
-
-function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
-  const nodesCacheKey = JSON.stringify({
-    // typeName + count being the same is a pretty good
-    // indication that the nodes are the same.
-    typeName,
-    firstOnly,
-    nodesLength: nodes.length,
-    ...fieldsToSift,
-  })
-  if (
-    process.env.NODE_ENV === `production` &&
-    resolvedNodesCache.has(nodesCacheKey)
-  ) {
-    return Promise.resolve(resolvedNodesCache.get(nodesCacheKey))
-  } else {
-    return Promise.all(
-      nodes.map(node => {
-        const cacheKey = enhancedNodeCacheId({
-          node,
-          args: fieldsToSift,
-        })
-        if (cacheKey && enhancedNodeCache.has(cacheKey)) {
-          return Promise.resolve(enhancedNodeCache.get(cacheKey))
-        } else if (cacheKey && enhancedNodePromiseCache.has(cacheKey)) {
-          return enhancedNodePromiseCache.get(cacheKey)
-        }
-
-        const enhancedNodeGenerationPromise = new Promise(resolve => {
-          resolveRecursive(node, fieldsToSift, gqlFields).then(resolvedNode => {
-            trackInlineObjectsInRootNode(resolvedNode)
-            if (cacheKey) {
-              enhancedNodeCache.set(cacheKey, resolvedNode)
-            }
-            resolve(resolvedNode)
-          })
-        })
-        enhancedNodePromiseCache.set(cacheKey, enhancedNodeGenerationPromise)
-        return enhancedNodeGenerationPromise
-      })
-    ).then(resolvedNodes => {
-      resolvedNodesCache.set(nodesCacheKey, resolvedNodes)
-      return resolvedNodes
-    })
-  }
-}
-
-/////////////////////////////////////////////////////////////////////
-// Run Sift
-/////////////////////////////////////////////////////////////////////
 
 function handleFirst(siftArgs, nodes) {
   const index = _.isEmpty(siftArgs)
@@ -270,12 +83,10 @@ function handleMany(siftArgs, nodes, sort) {
   // Sort results.
   if (sort) {
     // create functions that return the item to compare on
-    // uses _.get so nested fields can be retrieved
-    const convertedFields = sort.fields
-      .map(field => field.replace(/___/g, `.`))
-      .map(field => v => _.get(v, field))
+    const sortFields = sort.fields.map(field => v => getValueAt(v, field))
+    const sortOrder = sort.order.map(order => order.toLowerCase())
 
-    result = _.orderBy(result, convertedFields, sort.order)
+    result = _.orderBy(result, sortFields, sortOrder)
   }
   return result
 }
@@ -294,24 +105,32 @@ function handleMany(siftArgs, nodes, sort) {
  *   if `firstOnly` is true
  */
 module.exports = (args: Object) => {
-  const { queryArgs, gqlType, firstOnly = false } = args
-  // Clone args as for some reason graphql-js removes the constructor
-  // from nested objects which breaks a check in sift.js.
-  const clonedArgs = JSON.parse(JSON.stringify(queryArgs))
+  const { getNode, getNodesByType } = require(`../db/nodes`)
+
+  const { queryArgs, gqlType, firstOnly = false, nodeTypeNames } = args
 
   // If nodes weren't provided, then load them from the DB
-  const nodes = args.nodes || loadNodes(gqlType.name)
+  const nodes = args.nodes || getNodesByType(gqlType.name)
 
-  const { siftArgs, fieldsToSift } = parseFilter(clonedArgs.filter)
+  const { filter, sort, group, distinct } = queryArgs
+  const siftFilter = getFilters(prepareQueryArgs(filter))
+  const fieldsToSift = getQueryFields({ filter, sort, group, distinct })
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(firstOnly, fieldsToSift, siftArgs)) {
-    return resolveRecursive(
-      getNode(siftArgs[0].id[`$eq`]),
-      fieldsToSift,
-      gqlType.getFields()
-    ).then(node => (node ? [node] : []))
+  if (isEqId(firstOnly, fieldsToSift, siftFilter)) {
+    const node = getNode(siftFilter[0].id[`$eq`])
+
+    if (
+      !node ||
+      (node.internal && !nodeTypeNames.includes(node.internal.type))
+    ) {
+      return []
+    }
+
+    return resolveRecursive(node, fieldsToSift, gqlType.getFields()).then(
+      node => (node ? [node] : [])
+    )
   }
 
   return resolveNodes(
@@ -322,9 +141,9 @@ module.exports = (args: Object) => {
     gqlType.getFields()
   ).then(resolvedNodes => {
     if (firstOnly) {
-      return handleFirst(siftArgs, resolvedNodes)
+      return handleFirst(siftFilter, resolvedNodes)
     } else {
-      return handleMany(siftArgs, resolvedNodes, clonedArgs.sort)
+      return handleMany(siftFilter, resolvedNodes, queryArgs.sort)
     }
   })
 }

@@ -1,6 +1,6 @@
 ---
 title: Creating a Blog with Gatsby
-date: "2017-07-19"
+date: 2017-07-19
 author: "Dustin Schau"
 image: "../images/15009741473_9ced5e3209_o.jpg"
 imageAuthor: Daniel Go
@@ -9,7 +9,7 @@ imageTitle: "Old typewriter"
 canonicalLink: "https://objectpartners.com/2017/07/19/creating-a-static-blog-with-gatsby/"
 publishedAt: "Object Partners, Inc."
 excerpt: "In this post, we'll take a deep dive into Gatsby and some of the new 1.0 features by creating a static blog. Let's get on it!"
-tags: ["getting-started", "blog", "markdown"]
+tags: ["getting-started", "blogs", "markdown"]
 ---
 
 Gatsby is an incredible static site generator that allows for React to be used
@@ -20,7 +20,7 @@ rendering][react-dom-server] at build time. This means that your users get all
 the benefits of a static site such as the ability to work without JavaScript,
 search engine friendliness, speedy load times, etc. without losing the dynamism
 and interactivity that is expected of the modern web. Once rendered to static
-HTML, client-site React/JavaScript _can_ take over (if creating stateful
+HTML, client-side React/JavaScript _can_ take over (if creating stateful
 components or logic in `componentDidMount`) and add dynamism to the statically
 generated content.
 
@@ -33,25 +33,22 @@ these new features by creating a static blog. Let's get on it!
 
 ## Getting started
 
-### Installing the CLI
-
-`npm install -g gatsby-cli`
+### Using the CLI
 
 Gatsby ships with a great CLI (command line interface) that contains the
-functionality of scaffolding out a working site, as well as commands to help
+functionality of scaffolding out a working site as well as commands to help
 develop the site once created.
 
 `gatsby new personal-blog && cd $_`
 
 This command will create the folder `personal-blog` and then change into that
 directory. A working `gatsby` statically generated application can now be
-developed upon. The Gatsby CLI includes many common development features such as
-`gatsby build` (build a production, statically generated version of the
-project), `gatsby develop` (launch a hot-reload enabled web development server),
+developed upon. The CLI generates common development scripts to help you get started.
+For example you can run `npm run build` (build a production, statically generated version of the project) or `npm run develop` (launch a hot-reload enabled web development server),
 etc.
 
-We can now begin the exciting task of _actually_ developing on the site, and
-creating a functional, modern blog. You'll generally want to use `gatsby develop` to launch the local development server to validate functionality as we
+We can now begin the exciting task of _actually_ developing on the site and
+creating a functional, modern blog. You'll generally want to use `npm run develop` to launch the local development server to validate functionality as we
 progress through the steps.
 
 ## Adding necessary plugins
@@ -68,14 +65,14 @@ generating a sitemap, etc.) _or_ they extend Gatsby's webpack configuration
 adding support for TypeScript, Sass, etc.
 
 For this particular blog post, we want a single page app-like feel (without page
-reloads), as well as the ability to dynamically change the `title` tag within
+reloads) as well as the ability to dynamically change the `title` tag within
 the `head` tags. As noted, the Gatsby plugin ecosystem is rich, vibrant, and
 growing, so oftentimes a plugin already exists that solves the particular
 problem you're trying to solve. To address the functionality we want for _this_
 blog, we'll use the following plugins:
 
 - [`gatsby-plugin-catch-links`][gatsby-plugin-catch-links]
-  - implements the history `pushState` API, and does not require a page reload
+  - implements the history `pushState` API and does not require a page reload
     on navigating to a different page in the blog
 - [`gatsby-plugin-react-helmet`][gatsby-plugin-react-helmet]
   - [react-helmet][react-helmet] is a tool that allows for modification of the
@@ -93,19 +90,21 @@ After installing each of these functional plugins, we'll edit
 `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed
 functionality of the specified plugins.
 
-```javascript{6-9}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Your Name - Blog`,
     author: `Your Name`,
   },
+  // highlight-start
   plugins: ["gatsby-plugin-catch-links", "gatsby-plugin-react-helmet"],
 }
+// highlight-end
 ```
 
 Without any additional work besides a `yarn install` and editing a config file,
-we now have the ability to edit our site's head tags, as well as implement a
-single page app feel without reloads. Now let's enhance the base functionality
+we now have the ability to edit our site's head tags as well as implement a
+single page app feel without reloads. Now, let's enhance the base functionality
 by implementing a source plugin which can load blog posts from our local file
 system.
 
@@ -118,7 +117,7 @@ workflow often involves using
 disk--e.g. Markdown files--and then specifying a Markdown transformer to
 transform the Markdown into HTML.
 
-Since the bulk of the blog's content, and each article, will be authored in
+Since the bulk of the blog's content and each article will be authored in
 Markdown, let's add that [`gatsby-source-filesystem`][gatsby-source-filesystem]
 plugin. Similarly to our previous step, we'll install the plugin and then inject
 into our `gatsby-config.js`, like so:
@@ -127,12 +126,13 @@ into our `gatsby-config.js`, like so:
 yarn add gatsby-source-filesystem
 ```
 
-```javascript{6-12}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   // previous configuration
   plugins: [
     "gatsby-plugin-catch-links",
     "gatsby-plugin-react-helmet",
+    // highlight-start
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -140,21 +140,22 @@ module.exports = {
         name: "pages",
       },
     },
+    // highlight-end
   ],
 }
 ```
 
 Some explanation will be helpful here! An `options` object can be passed to a
-plugin, and we're passing the filesystem `path` (i.e. where our Markdown files
-will be located), and then a `name` for the source files. Now that Gatsby knows
+plugin, and we're passing the filesystem `path` (which is where our Markdown files
+will be located) and then a `name` for the source files. Now that Gatsby knows
 about our source files, we can begin applying some useful transformers to
 convert those files into usable data!
 
 ### Transformer plugins
 
 As mentioned, a transformer plugin takes some underlying data format that is not
-inherently usable in its current form (e.g. Markdown, json, yaml, etc.), and
-transforms it into a format that Gatsby can understand, and that we can query
+inherently usable in its current form (e.g. Markdown, json, yaml, etc.) and
+transforms it into a format that Gatsby can understand and that we can query
 against with GraphQL. Jointly, the filesystem source plugin will load file nodes
 (as Markdown) off of our filesystem, and then the Markdown transformer will take
 over and convert to usable HTML.
@@ -164,7 +165,7 @@ installed.
 
 - [gatsby-transformer-remark][gatsby-transformer-remark]
   - Uses the [remark][remark] Markdown parser to transform .md files on disk
-    into HTML; additionally this transformer can optionally take plugins to
+    into HTML; additionally, this transformer can optionally take plugins to
     further extend functionality--e.g. add syntax highlighting with
     `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative
     files specified in markdown, `gatsby-remark-images` to compress images and
@@ -178,7 +179,7 @@ yarn add gatsby-transformer-remark
 
 and editing `gatsby-config.js`
 
-```javascript{13-18}:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   // previous setup
   plugins: [
@@ -191,19 +192,21 @@ module.exports = {
         name: "pages",
       },
     },
+    // highlight-start
     {
       resolve: "gatsby-transformer-remark",
       options: {
         plugins: [], // just in case those previously mentioned remark plugins sound cool :)
       },
     },
+    // highlight-end
   ],
 }
 ```
 
 Whew! Seems like a lot of set up, but collectively these plugins are going to
-super charge Gatsby, and give us an incredibly powerful (yet relatively simple!)
-development environment. We have one more set up step and it's an easy one.
+super charge Gatsby and give us an incredibly powerful (yet relatively simple!)
+development environment. We have one more setup step and it's an easy one.
 We're simply going to create a Markdown file that will contain the content of
 our first blog post. Let's get to it.
 
@@ -214,8 +217,8 @@ to be in `src/pages`, so that's exactly where we'll put it!
 
 Gatsby is not at all prescriptive in naming conventions, but a typical practice
 for blog posts is to name the folder something like `MM-DD-YYYY-title`, e.g.
-`07-12-2017-hello-world`. Let's do just that, and create the folder
-`src/pages/07-12-2017-getting-started`, and place an `index.md` inside!
+`07-12-2017-hello-world`. Let's do just that. Create the folder
+`src/pages/07-12-2017-getting-started` and place an `index.md` inside!
 
 The content of this Markdown file will be our blog post, authored in Markdown
 (of course!). Here's what it'll look like:
@@ -223,7 +226,7 @@ The content of this Markdown file will be our blog post, authored in Markdown
 ```markdown:title=src/pages/07-12-2017-getting-started/index.md
 ---
 path: "/hello-world"
-date: "2017-07-12T17:12:33.962Z"
+date: 2017-07-12T17:12:33.962Z
 title: "My First Gatsby Post"
 ---
 
@@ -234,7 +237,7 @@ _Fairly_ typical stuff, except for the block surrounded in dashes. What is that?
 That is what is referred to as [`frontmatter`][frontmatter], and the contents of
 the block can be used to inject React components with the specified data, e.g.
 path, date, title, etc. Any piece of data can be injected here (e.g. tags,
-sub-title,draft, etc.), so feel free to experiment and find what necessary
+sub-title, draft, etc.), so feel free to experiment and find what necessary
 pieces of frontmatter are required to achieve an ideal blogging system for your
 usage. One important note is that `path` will be used when we dynamically create
 our pages to specify the URL/path to render the file (in a later step!). In this
@@ -254,7 +257,7 @@ We'll want to create the file `src/templates/blog-post.js` (please create the
 
 ```javascript:title=src/templates/blog-post.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 // import '../css/blog-post.css'; // make it pretty!
 
@@ -294,9 +297,9 @@ very simply the pieces of data that we want to display for our blog post. Each
 piece of data our query selects will be injected via the `data` property we
 specified earlier.
 
-```javascript{23-32}:title=src/templates/blog-post.js
+```javascript:title=src/templates/blog-post.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 // import '../css/blog-post.css';
@@ -317,6 +320,7 @@ export default function Template({ data }) {
   )
 }
 
+// highlight-start
 export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
@@ -329,6 +333,7 @@ export const pageQuery = graphql`
     }
   }
 `
+// highlight-end
 ```
 
 If you're not familiar with GraphQL, this may seem slightly confusing, but we can
@@ -355,7 +360,7 @@ into the query.
 At this point, we have a bunch of plugins installed to load files off of disk,
 transform Markdown to HTML, and other utilities. We have a single, lonely
 Markdown file that will be rendered as a blog post. Finally, we have a React
-template for blog posts, as well as a wired up GraphQL query to query for a blog
+template for blog posts as well as a wired up GraphQL query to query for a blog
 post and inject the React template with the queried data. Next up:
 programmatically creating the necessary static pages (and injecting the
 templates) with Gatsby's Node API. Let's get down to it.
@@ -398,7 +403,7 @@ query, which will fetch all of our Markdown posts.
 
 ### Querying for posts
 
-```javascript{8-31}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const path = require("path")
 
 exports.createPages = ({ actions, graphql }) => {
@@ -406,6 +411,7 @@ exports.createPages = ({ actions, graphql }) => {
 
   const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
 
+  // highlight-start
   return graphql(`
     {
       allMarkdownRemark(
@@ -427,6 +433,7 @@ exports.createPages = ({ actions, graphql }) => {
     }
   })
 }
+// highlight-end
 ```
 
 We're using GraphQL to get all Markdown nodes and making them available under
@@ -447,7 +454,7 @@ pages (with the `createPage` action creator). Let's do that!
 
 ### Creating the pages
 
-```javascript{28-34}:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const path = require("path")
 
 exports.createPages = ({ actions, graphql }) => {
@@ -475,6 +482,7 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors)
     }
 
+    // highlight-start
     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
       createPage({
         path: node.frontmatter.path,
@@ -482,6 +490,7 @@ exports.createPages = ({ actions, graphql }) => {
         context: {}, // additional data can be passed via context
       })
     })
+    // highlight-end
   })
 }
 ```
@@ -503,7 +512,7 @@ frontmatter--the result of which will be our stringified and parsed React
 template injected with the data from our GraphQL query. Whoa, it's actually
 starting to come together!
 
-We can run `yarn develop` at this point, and then navigate to
+We can run `yarn develop` at this point and then navigate to
 `http://localhost:8000/hello-world` to see our first blog post, which should
 look something like below:
 
@@ -515,18 +524,18 @@ isn't a blog! We can't expect our users to guess the path of each post, we need
 to have an index or listing page, where we display each blog post, a short
 snippet, and a link to the full blog post. Wouldn't you know it, we can do this
 incredibly easily with Gatsby, using a similar strategy as we used in our blog
-template, e.g. a React component and a GraphQL query.
+template, i.e. a React component and a GraphQL query.
 
 ## Creating the Blog Listing
 
-I won't go into quite as much detail for this section, because we've already
+I won't go into quite as much detail for this section because we've already
 done something very similar for our blog template! Look at us, we're pro
 Gatsby-ers at this point!
 
 Gatsby has a standard for "listing pages," and they're placed in the root of our
 filesystem we specified in `gatsby-source-filesystem`, e.g.
-`src/pages/index.js`. So create that file if it does not exist, and let's get it
-working! Additionally note that any static JavaScript files (that export a React
+`src/pages/index.js`. So, create that file if it does not exist, and let's get it
+working! Additionally, note that any static JavaScript files (that export a React
 component!) will get a corresponding static HTML file. For instance, if we
 create `src/pages/tags.js`, the path `http://localhost:8000/tags/` will be
 available within the browser and the statically generated site.
@@ -534,7 +543,7 @@ available within the browser and the statically generated site.
 ```javascript:title=src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 // import '../css/index.css'; // add some style if you want!
 
@@ -581,19 +590,19 @@ export const pageQuery = graphql`
 OK! So we've followed a similar approach to our blog post template, so this
 should hopefully seem pretty familiar. Once more we're exporting `pageQuery`
 which contains a GraphQL query. Note that we're pulling a slightly different
-data set, specifically we are pulling an `excerpt` of 250 characters rather than
-the full HTML, as well as we are formatting the pulled date with a format
+data set -- specifically, we are pulling an `excerpt` of 250 characters rather than
+the full HTML as we are formatting the pulled date with a format
 string! GraphQL is awesome.
 
 The actual React component is fairly trivial, but one important note should be
-made. It's important that when linking to internal content, i.e. other blog
+made. It's important that when linking to internal content, e.g. other blog
 links, that you should always use `Link` from `gatsby`. Gatsby does not work if pages
 are not routed via this utility. Additionally, this utility also works with
-`pathPrefix`, which allows for a Gatsby site to be deployed a non-root domain.
-This is useful if this blog will be hosted on something like GitHub Pages, or
+`pathPrefix`, which allows for a Gatsby site to be deployed on a non-root domain.
+This is useful if this blog will be hosted on something like GitHub Pages or
 perhaps hosted at `/blog`.
 
-Now this is getting exciting and it feels like we're finally getting somewhere!
+Now, this is getting exciting and it feels like we're finally getting somewhere!
 At this point, we have a fully functional blog generated by Gatsby, with real
 content authored in Markdown, a blog listing, and the ability to navigate around
 in the blog. If you run `yarn develop`, `http://localhost:8000` should display a

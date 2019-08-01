@@ -1,17 +1,23 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout"
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
-import FuturaParagraph from "../components/futura-paragraph"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import Container from "../components/container"
-import { options, rhythm } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
+import FooterLinks from "../components/shared/footer-links"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  letterSpacings,
+  fonts,
+} from "../utils/presets"
 
-const legendBorderColor = colors.ui.light
+const legendBorderColor = colors.ui.border.subtle
 
 const LegendTable = () => {
   const legendBallStyle = {
@@ -37,51 +43,63 @@ const LegendTable = () => {
     padding: 10,
     borderLeft: `1px solid ${legendBorderColor}`,
     borderBottom: `1px solid ${legendBorderColor}`,
-    [presets.Phablet]: {
+    [mediaQueries.sm]: {
       borderBottom: 0,
     },
   }
 
   const balls = [
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
       <h4 style={{ margin: 0 }}>Icon</h4>
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
       <EvaluationCell num="3" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-3`}>
       <EvaluationCell num="2" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-4`}>
       <EvaluationCell num="1" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle}>
+    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
       <EvaluationCell num="0" style={legendBallStyle} />
     </div>,
   ]
 
   const legendText = [
-    <div css={legendExplanationCellStyle}>
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
       <h5 style={{ margin: 0 }}>Feature Availability</h5>
     </div>,
-    <div css={legendExplanationCellStyle}>Out of the box</div>,
-    <div css={legendExplanationCellStyle}>Plugins available</div>,
-    <div css={legendExplanationCellStyle}>Needs customization</div>,
-    <div css={legendExplanationCellStyle}>Not possible</div>,
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
+      Out of the box
+    </div>,
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
+      Plugins available
+    </div>,
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
+      Needs customization
+    </div>,
+    <div css={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
+      Not possible
+    </div>,
   ]
 
   return (
     <div>
       <Helmet>
         <title>Features</title>
+        <meta
+          name="description"
+          content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+        />
       </Helmet>
       <div
         css={{
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
+          fontFamily: fonts.header,
           display: `none`,
-          [presets.Phablet]: {
+          [mediaQueries.sm]: {
             display: `table`,
           },
         }}
@@ -94,8 +112,8 @@ const LegendTable = () => {
           display: `table`,
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: options.headerFontFamily.join(`,`),
-          [presets.Phablet]: {
+          fontFamily: fonts.header,
+          [mediaQueries.sm]: {
             display: `none`,
           },
         }}
@@ -116,11 +134,11 @@ const FeaturesHeader = () => (
     <h1 id="introduction" style={{ marginTop: 0 }}>
       Features
     </h1>
-    <FuturaParagraph>
+    <p>
       There are many ways to build a website. If you’re considering Gatsby, you
       may also be looking at some alternatives:
-    </FuturaParagraph>
-    <ul css={{ fontFamily: options.headerFontFamily.join(`,`) }}>
+    </p>
+    <ul>
       <li>
         <b>Traditional static site generators</b> such as
         {` `}
@@ -149,12 +167,19 @@ const FeaturesHeader = () => (
         website and customize it.
       </li>
     </ul>
-    <FuturaParagraph>
+    <p>
       The chart below details Gatsby’s capabilities in comparison with a
       representative from each category. Click on any row to see a more detailed
       explanation on that feature and our rating for each system.
-    </FuturaParagraph>
-    <h6 id="legend" css={{ textTransform: `uppercase` }}>
+    </p>
+    <h6
+      id="legend"
+      css={{
+        fontWeight: `normal`,
+        textTransform: `uppercase`,
+        letterSpacing: letterSpacings.tracked,
+      }}
+    >
       Legend
     </h6>
     <LegendTable />
@@ -185,7 +210,7 @@ const getFeaturesData = function(data) {
 }
 
 const FeaturesFooter = () => (
-  <p css={{ fontSize: `80%`, marginTop: rhythm(1) }}>
+  <p css={{ fontSize: fontSizes[1], marginTop: space[8] }}>
     Want to help keep this information complete, accurate, and up-to-date?
     Please comment
     {` `}
@@ -221,6 +246,7 @@ class FeaturesPage extends Component {
             <FeaturesFooter />
           </main>
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

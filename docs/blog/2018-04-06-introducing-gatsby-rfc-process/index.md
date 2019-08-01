@@ -1,7 +1,7 @@
 ---
 title: "Introducing the Gatsby RFC Process"
 author: Kyle Mathews
-date: "2018-04-06"
+date: 2018-04-06
 ---
 
 We're adopting an RFC ("request for comments") process for contributing ideas to Gatsby.

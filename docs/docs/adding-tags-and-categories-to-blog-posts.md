@@ -42,9 +42,9 @@ If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
 
 ## Write a query to get all tags for your posts
 
-Now these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
+Now, these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
 
-Try running in Graph<em>i</em>QL (`localhost:8000/___graphql`) the following query
+Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql`):
 
 ```graphql
 {
@@ -54,8 +54,10 @@ Try running in Graph<em>i</em>QL (`localhost:8000/___graphql`) the following que
   ) {
     edges {
       node {
+        fields {
+          slug
+        }
         frontmatter {
-          path
           tags
         }
       }
@@ -64,7 +66,7 @@ Try running in Graph<em>i</em>QL (`localhost:8000/___graphql`) the following que
 }
 ```
 
-The resulting data includes the `path` and `tags` frontmatter for each post, which is all the data we'll need to create pages for each tag which contain a list of posts under that tag. Let's make the tag page template now:
+The resulting data includes the `slug` field and `tags` frontmatter for each post, which is all the data we'll need to create pages for each tag which contain a list of posts under that tag. Let's make the tag page template now:
 
 ## Make a tags page template (for `/tags/{tag}`)
 
@@ -91,10 +93,11 @@ const Tags = ({ pageContext, data }) => {
       <h1>{tagHeader}</h1>
       <ul>
         {edges.map(({ node }) => {
-          const { path, title } = node.frontmatter
+          const { slug } = node.fields
+          const { title } = node.frontmatter
           return (
-            <li key={path}>
-              <Link to={path}>{title}</Link>
+            <li key={slug}>
+              <Link to={slug}>{title}</Link>
             </li>
           )
         })}
@@ -109,7 +112,7 @@ const Tags = ({ pageContext, data }) => {
 }
 
 Tags.propTypes = {
-  pathContext: PropTypes.shape({
+  pageContext: PropTypes.shape({
     tag: PropTypes.string.isRequired,
   }),
   data: PropTypes.shape({
@@ -119,8 +122,10 @@ Tags.propTypes = {
         PropTypes.shape({
           node: PropTypes.shape({
             frontmatter: PropTypes.shape({
-              path: PropTypes.string.isRequired,
               title: PropTypes.string.isRequired,
+            }),
+            fields: PropTypes.shape({
+              slug: PropTypes.string.isRequired,
             }),
           }),
         }).isRequired
@@ -141,9 +146,11 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
+          fields {
+            slug
+          }
           frontmatter {
             title
-            path
           }
         }
       }
@@ -176,8 +183,10 @@ exports.createPages = ({ actions, graphql }) => {
       ) {
         edges {
           node {
+            fields {
+              slug
+            }
             frontmatter {
-              path
               tags
             }
           }
@@ -194,7 +203,7 @@ exports.createPages = ({ actions, graphql }) => {
     // Create post detail pages
     posts.forEach(({ node }) => {
       createPage({
-        path: node.frontmatter.path,
+        path: node.fields.slug,
         component: blogPostTemplate,
       })
     })
@@ -241,7 +250,7 @@ import PropTypes from "prop-types"
 import kebabCase from "lodash/kebabCase"
 
 // Components
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 
 const TagsPage = ({
@@ -296,10 +305,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(
-      limit: 2000
-      filter: { frontmatter: { published: { ne: false } } }
-    ) {
+    allMarkdownRemark(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
         totalCount

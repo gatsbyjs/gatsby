@@ -1,0 +1,13 @@
+{
+  "extends": ["config:base", ":disablePeerDependencies"],
+  "includePaths": ["starters/**", "themes/**"],
+  "major": {
+    "enabled": false
+  },
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
+  "rebaseStalePrs": false,
+  "rangeStrategy": "bump",
+  "bumpVersion": null,
+  "semanticCommitScope": null
+}

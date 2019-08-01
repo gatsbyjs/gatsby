@@ -1,0 +1,45 @@
+{
+  "name": "gatsby-example-using-shopify",
+  "private": true,
+  "description": "An example of using Gatsby + Shopify together seamlessly",
+  "version": "0.1.0",
+  "author": "Dustin Schau <dustin@gatsbyjs.com>",
+  "dependencies": {
+    "gatsby": "^2.0.119",
+    "gatsby-image": "^2.0.29",
+    "gatsby-plugin-manifest": "^2.0.17",
+    "gatsby-plugin-offline": "^2.0.23",
+    "gatsby-plugin-react-helmet": "^3.0.6",
+    "gatsby-plugin-sharp": "^2.0.20",
+    "gatsby-source-filesystem": "^2.0.20",
+    "gatsby-source-shopify": "^2.0.13",
+    "gatsby-transformer-sharp": "^2.1.13",
+    "prop-types": "^15.7.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "react-helmet": "^5.2.0",
+    "react-icons": "^3.4.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "devDependencies": {
+    "dotenv": "^6.2.0",
+    "limax": "^1.7.0"
+  }
+}

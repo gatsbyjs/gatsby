@@ -12,7 +12,11 @@ image formats.
 For JPEGs it generates progressive images with a default quality level of 50.
 
 For PNGs it uses [pngquant](https://github.com/pornel/pngquant) to compress
-images. By default it uses a quality setting of [50-75].
+images. By default it uses a quality setting of [50-75]. The `pngCompressionSpeed`
+value is a speed/quality trade-off from 1 (brute-force) to 10 (fastest). Speed
+10 has 5% lower quality, but is 8 times faster than the default (4). In most
+cases you should stick with the default, but if you have very large numbers
+of PNGs then it can significantly reduce build times.
 
 ## Install
 
@@ -22,7 +26,16 @@ images. By default it uses a quality setting of [50-75].
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-sharp`]
+plugins: [
+  {
+    resolve: `gatsby-plugin-sharp`,
+    options: {
+      useMozJpeg: false,
+      stripMetadata: true,
+      defaultQuality: 75,
+    },
+  },
+]
 ```
 
 ## Methods
@@ -47,8 +60,7 @@ plugins: [`gatsby-plugin-sharp`]
 
 ### fixed
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
-3x.
+Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
 
 #### Parameters
 
@@ -68,8 +80,8 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 ### fluid
 
 Create fluid sizes (in width) for the image. If the max width of the container for the
-rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
-1600, 2400 – enough to provide close to the optimal image size for every device
+rendered markdown file is 800px, the sizes would then be: 200px, 400px, 800px, 1200px,
+1600px – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
 If you want more control over which sizes are output you can use the `srcSetBreakpoints`
@@ -83,13 +95,22 @@ a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
 plugin for Markdown content as gatsby-remark-images).
 
+When both a `maxWidth` and `maxHeight` are provided, sharp will use `COVER` as a fit strategy by default. This might not be ideal so you can now choose between `COVER`, `CONTAIN` and `FILL` as a fit strategy. To see them in action the [CSS property object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) comes close to its implementation.
+
+#### Note
+
+fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned to [sharp.strategy][6]. The `cropFocus` option cannot be `ENTROPY` or `ATTENTION`
+
 #### Parameters
 
 - `maxWidth` (int, default: 800)
 - `maxHeight` (int)
 - `quality` (int, default: 50)
-- `sizeByPixelDensity` (bool, default: false)
 - `srcSetBreakpoints` (array of int, default: [])
+- `fit` (string, default: '[sharp.fit.cover][6]')
+- `background` (string, default: 'rgba(0,0,0,1)')
+- [deprecated] `sizeByPixelDensity` (bool, default: false)
+  - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.
 
 #### Returns
 
@@ -110,6 +131,7 @@ following:
 - `duotone` (bool|obj, default: false)
 - `toFormat` (string, default: '')
 - `cropFocus` (string, default: '[sharp.strategy.attention][6]')
+- `pngCompressionSpeed` (int, default: 4)
 
 #### toFormat
 
@@ -236,17 +258,77 @@ fixed(
 }
 ```
 
+### Setting a default quality
+
+You can pass a default image quality to `sharp` by setting the `defaultQuality` option.
+
 ### Using MozJPEG
 
 You can opt-in to use [MozJPEG][16] for jpeg-encoding. MozJPEG provides even
 better image compression than the default encoder used in `gatsby-plugin-sharp`.
 However, when using MozJPEG the build time of your Gatsby project will increase
 significantly.
-To enable MozJPEG set the [environment variable](/docs/environment-variables/#environment-variables):
+
+To enable MozJPEG, you can set the `useMozJpeg` plugin option to `true` in
+`gatsby-config.js`.
+
+For backwards compatible reasons, if `useMozJpeg` is not defined in the plugin
+options, the [environment variable](/docs/environment-variables/#environment-variables)
+`GATSBY_JPEG_ENCODER` acts as a fallback if set to `MOZJPEG`:
 
 ```shell
 GATSBY_JPEG_ENCODER=MOZJPEG
 ```
+
+### EXIF and ICC metadata
+
+By default, `gatsby-plugin-sharp` strips all EXIF, ICC and other metadata
+present in your source file. This is the recommended default as it leads to
+smaller file sizes.
+
+However, in situations where you wish to preserve EXIF metadata or ICC profiles
+(example: you are building a photography portfolio and wish to conserve
+the color profile or the copyright information of the photos you've exported
+from Adobe Lightroom or Phase One's Capture One), you can set the `stripMetadata`
+plugin option to `false` in `gatsby-config.js`.
+
+It is important to note that if `stripMetadata` is set to `false`, **all**
+metadata information will be preserved from the source image, including but not
+limited to the latitude/longitude information of where the picture was taken
+(if present). If you wish to strip this information from the source file, you
+can either leave `stripMetadata` to its default of `true`, or manually
+pre-process your images with a tool such as [ExifTool][17].
+
+## Troubleshooting
+
+### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
+
+This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
+
+```
+Something went wrong installing the "sharp" module
+
+dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
+  Referenced from: /Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node
+  Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
+```
+
+To fix this, you'll need to update all Gatsby plugins in the current project that depend on the `sharp` package. Here's a list of official plugins that you might need to update in case your projects uses them:
+
+- `gatsby-plugin-sharp`
+- `gatsby-plugin-manifest`
+- `gatsby-remark-images-contentful`
+- `gatsby-source-contentful`
+- `gatsby-transformer-sharp`
+- `gatsby-transformer-sqip`
+
+To update these packages, run:
+
+```sh
+npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
+```
+
+If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of `sharp`. Try running `npm list sharp` or `yarn why sharp` to see all packages in the current project that use `sharp` and try updating them as well.
 
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
@@ -264,3 +346,5 @@ GATSBY_JPEG_ENCODER=MOZJPEG
 [14]: https://github.com/oliver-moran/jimp
 [15]: http://sharp.dimens.io/en/stable/api-operation/#flatten
 [16]: https://github.com/mozilla/mozjpeg
+[17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
+[18]: https://www.npmjs.com/package/color

@@ -71,7 +71,7 @@ e.g
 ]
 ```
 
-`pages.json` is generated for `gatsby develop` purposes only. In `gatsby build`, we use [data.json](/docs/write-pages/#datajson) (below) which includes the pages info plus more.
+`pages.json` is generated for `gatsby develop` purposes only. In `npm run build`, we use [data.json](/docs/write-pages/#datajson) (below) which includes the pages info plus more.
 
 ### sync-requires.js
 
@@ -99,7 +99,9 @@ An example of async-requires is:
 ```javascript
 exports.components = {
   "component---src-blog-2-js": () =>
-    import("/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */),
+    import(
+      "/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */
+    ),
   // more components
 }
 

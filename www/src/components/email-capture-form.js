@@ -1,55 +1,132 @@
 import React from "react"
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/form-styles"
-import { buttonStyles } from "../utils/styles"
+import styled from "@emotion/styled"
 
-const Label = props => (
-  <label htmlFor={props.for}>
-    {props.children}
-    {props.isRequired && (
-      <span
-        css={{
-          color: `red`,
-          "&:before": {
-            content: `'*'`,
-            color: colors.warning,
-          },
-        }}
-      />
-    )}
-  </label>
-)
+import SendIcon from "react-icons/lib/md/send"
 
-const SingleLineInput = React.forwardRef((props, ref) => (
-  <input
-    ref={ref}
-    css={{
-      ...formInput,
-      width: `100% !important`,
-      ":focus": {
-        borderColor: colors.gatsby,
-        outline: 0,
-        boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
-      },
-    }}
-    {...props}
-  />
-))
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  fonts,
+  radii,
+  shadows,
+  lineHeights,
+} from "../utils/presets"
+import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
+import { rhythm } from "../utils/typography"
 
-const ErrorMessage = ({ children }) => (
-  <div
-    css={{
-      // dunno where this is comming from - just straight copied li style from dev tools
-      marginBottom: `calc(1.05rem / 2)`,
-      color: colors.warning,
-      fontSize: rhythm(1 / 2),
-    }}
-  >
-    {children}
-  </div>
-)
+const stripedBorderHeight = space[1]
+
+const Container = styled(`div`)`
+  background: ${colors.purple[5]};
+  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[10]};
+  border-radius: ${radii[2]}px;
+  margin-top: ${space[8]};
+  padding: calc(${space[6]} * 1.2);
+  padding-bottom: calc(${rhythm(space[6] * 1.2)} + ${stripedBorderHeight});
+  position: relative;
+
+  :after {
+    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
+    background: ${colors.white}
+      repeating-linear-gradient(
+        135deg,
+        ${colors.red[40]},
+        ${colors.red[40]} 20px,
+        transparent 20px,
+        transparent 40px,
+        ${colors.blue[40]} 40px,
+        ${colors.blue[40]} 60px,
+        transparent 60px,
+        transparent 80px
+      );
+    bottom: 0;
+    content: "";
+    height: ${stripedBorderHeight};
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  ${mediaQueries.lg} {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > * {
+      flex-basis: 50%;
+    }
+  }
+`
+
+const StyledForm = styled(`form`)`
+  margin: 0;
+
+  ${mediaQueries.lg} {
+    display: ${props => (props.isHomepage ? `flex` : `block`)};
+  }
+`
+
+const Label = styled(`label`)`
+  font-size: ${fontSizes[1]};
+  :after {
+    content: ${props => (props.isRequired ? `'*'` : ``)};
+    color: ${colors.text.secondary};
+  }
+`
+
+const SingleLineInput = styled(`input`)`
+  ${formInput};
+  border-color: ${colors.purple[20]};
+  width: 100%;
+  -webkit-appearance: none;
+
+  :focus {
+    ${formInputFocus}
+  }
+`
+
+const SingleLineInputOnHomepage = styled(SingleLineInput)`
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[2]};
+  padding: ${space[2]};
+`
+
+const ErrorMessage = styled(`div`)`
+  color: ${colors.warning};
+  font-family: ${fonts.system};
+  font-size: ${fontSizes[1]};
+  margin: ${space[2]} 0;
+`
+
+const SuccessMessage = styled(`div`)`
+  font-family: ${fonts.system};
+`
+
+const Submit = styled(`input`)`
+  ${buttonStyles.default};
+  margin-top: ${space[3]};
+`
+
+const SubmitOnHomepage = styled(`button`)`
+  ${buttonStyles.default};
+  font-size: ${fontSizes[3]};
+  width: 100%;
+  margin-top: ${space[3]};
+
+  span {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  ${mediaQueries.lg} {
+    width: auto;
+    margin-top: 0;
+    margin-left: ${space[2]};
+  }
+`
 
 class Form extends React.Component {
   constructor(props) {
@@ -58,7 +135,7 @@ class Form extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
 
     // let's use uncontrolled components https://reactjs.org/docs/uncontrolled-components.html
-    this.email = React.createRef()
+    this.email = null
   }
 
   state = {
@@ -78,7 +155,7 @@ class Form extends React.Component {
       fields: [
         {
           name: `email`,
-          value: this.email.current.value,
+          value: this.email.value,
         },
       ],
       context: {
@@ -133,33 +210,49 @@ class Form extends React.Component {
   }
 
   render() {
+    const { isHomepage } = this.props
+
+    const SingleLineInputComponent = isHomepage
+      ? SingleLineInputOnHomepage
+      : SingleLineInput
+
     return (
-      <form onSubmit={this.onSubmit}>
-        <div
-          css={{
-            paddingBottom: `20px`,
-          }}
-        >
-          <Label isRequired for="email">
+      <StyledForm onSubmit={this.onSubmit} isHomepage={isHomepage}>
+        {!isHomepage && (
+          <Label isRequired htmlFor="email">
             Email
           </Label>
-          <SingleLineInput
-            id="email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            ref={this.email}
-          />
-          {this.state.fieldErrors.email && (
-            <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
-          )}
-        </div>
+        )}
+        <SingleLineInputComponent
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          ref={input => {
+            this.email = input
+          }}
+          aria-label={isHomepage ? `Email` : ``}
+          placeholder={`your.email@example.com`}
+        />
+        {this.state.fieldErrors.email && (
+          <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
+        )}
         {this.state.errorMessage && (
           <ErrorMessage>{this.state.errorMessage}</ErrorMessage>
         )}
-        <input type="submit" value="Subscribe" css={buttonStyles.default} />
-      </form>
+
+        {isHomepage ? (
+          <SubmitOnHomepage type="submit">
+            <span>
+              Subscribe
+              <SendIcon />
+            </span>
+          </SubmitOnHomepage>
+        ) : (
+          <Submit type="submit" value="Subscribe" />
+        )}
+      </StyledForm>
     )
   }
 }
@@ -179,44 +272,55 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS } = this.props
+    const { signupMessage, isHomepage, className } = this.props
+
+    const FormComponent = props => (
+      <Form
+        onSuccess={this.onSuccess}
+        portalId="4731712"
+        formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
+        sfdcCampaignId="701f4000000Us7pAAC"
+        {...props}
+      />
+    )
 
     return (
-      <div
-        css={{
-          borderTop: `2px solid ${colors.lilac}`,
-          fontFamily: options.headerFontFamily.join(`,`),
-          marginTop: rhythm(3),
-          paddingTop: `${rhythm(1)}`,
-          ...overrideCSS,
-        }}
-      >
-        <div>
-          <p>{signupMessage}</p>
-          <div
-            css={{
-              backgroundColor: colors.ui.light,
-              borderRadius: presets.radius,
-              color: colors.gatsby,
-              fontFamily: options.headerFontFamily.join(`,`),
-              padding: `15px`,
-            }}
-          >
+      <>
+        {isHomepage ? (
+          <div className={className}>
             {this.state.successMessage ? (
-              <div
+              <SuccessMessage
                 dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
               />
             ) : (
-              <Form
-                onSuccess={this.onSuccess}
-                portalId="4731712"
-                formId="089352d8-a617-4cba-ba46-6e52de5b6a1d"
-                sfdcCampaignId="701f4000000Us7pAAC"
-              />
+              <FormComponent isHomepage={true} />
             )}
           </div>
-        </div>
-      </div>
+        ) : (
+          <Container>
+            <p
+              css={{
+                color: colors.gatsby,
+                fontWeight: `bold`,
+                fontSize: fontSizes[3],
+                fontFamily: fonts.header,
+                lineHeight: lineHeights.dense,
+              }}
+            >
+              {signupMessage}
+            </p>
+            {this.state.successMessage ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: this.state.successMessage,
+                }}
+              />
+            ) : (
+              <FormComponent />
+            )}
+          </Container>
+        )}
+      </>
     )
   }
 }
@@ -224,7 +328,8 @@ class EmailCaptureForm extends React.Component {
 EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
-  overrideCSS: {},
+  isHomepage: false,
+  className: ``,
 }
 
 export default EmailCaptureForm

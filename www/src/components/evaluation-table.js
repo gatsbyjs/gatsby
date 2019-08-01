@@ -1,11 +1,16 @@
 import React, { Component } from "react"
-import presets, { colors } from "../utils/presets"
+import MdInfoOutline from "react-icons/lib/md/info-outline"
+import {
+  colors,
+  space,
+  mediaQueries,
+  fontSizes,
+  lineHeights,
+} from "../utils/presets"
 import EvaluationCell from "./evaluation-cell"
-import infoIcon from "../assets/info-icon.svg"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
-import { options, rhythm } from "../utils/typography"
 
 class EvaluationTable extends Component {
   constructor() {
@@ -17,28 +22,12 @@ class EvaluationTable extends Component {
       const words = txt.split(` `)
       return [
         words.slice(0, words.length - 1).join(` `),
-        <span
-          css={{
-            // WebkitHyphens: `auto`,
-            // MsHyphens: `auto`,
-            // hyphens: `auto`,
-            // wordBreak: `break-all`,
-            // display: `inline-block`,
-            "&:hover": {
-              background: colors.ui.bright,
-            },
-          }}
-        >
+        <span key={`info-icon-${words[words.length - 1]}`}>
           {` `}
           {`${words[words.length - 1]} `}
-          <img
-            src={infoIcon}
-            css={{
-              height: rhythm(2 / 5),
-              marginBottom: rhythm(2 / 15),
-              verticalAlign: `text-bottom`,
-            }}
+          <MdInfoOutline
             alt={`Info Icon`}
+            style={{ color: colors.grey[50], verticalAlign: `baseline` }}
           />
         </span>,
       ]
@@ -55,30 +44,22 @@ class EvaluationTable extends Component {
                 display: `inline-block`,
                 marginLeft: `auto`,
                 marginRight: `auto`,
-                padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
-                [presets.Mobile]: {
-                  padding: `${rhythm(1 / 2)} 0 ${rhythm(1 / 2)} ${rhythm(
-                    1 / 2
-                  )}`,
-                },
               }}
             >
-              {/* eslint-disable jsx-a11y/anchor-is-valid */}
-              {/* jsx-a11y really wants us to change this to a button */}
-              {/* eslint-disable-next-line */}
-              <a
+              <button
                 css={{
-                  "&&": {
-                    fontWeight: `normal`,
-                    borderBottom: 0,
-                  },
+                  background: `none`,
+                  border: 0,
+                  cursor: `inherit`,
+                  padding: 0,
+                  textAlign: `left`,
                 }}
                 onClick={e => {
                   e.preventDefault()
                 }}
               >
                 {renderText(text)}
-              </a>
+              </button>
               {/* eslint-enable */}
             </div>
           )
@@ -114,8 +95,11 @@ class EvaluationTable extends Component {
           {flatten(
             sections.map((section, s) =>
               [
-                <SectionTitle text={sectionHeaders[s]} />,
-                <SectionHeaderTop />,
+                <SectionTitle
+                  text={sectionHeaders[s]}
+                  key={`section-title-${s}`}
+                />,
+                <SectionHeaderTop key={`section-header-${s}`} />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
@@ -123,8 +107,9 @@ class EvaluationTable extends Component {
                       <SectionHeaderBottom
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
+                        key={`section-header-${s}-bottom-${i}`}
                       />,
-                      <tr>
+                      <tr key={`section-${s}-first-row-${i}`}>
                         {headers.map((header, j) => (
                           <td
                             key={j}
@@ -134,22 +119,22 @@ class EvaluationTable extends Component {
                                 cursor: j >= 0 ? `pointer` : `inherit`,
                               },
                               borderBottom: !showTooltip(s, i)
-                                ? `1px solid ${colors.ui.light}`
+                                ? `1px solid ${colors.ui.border.subtle}`
                                 : `none`,
                               minWidth: 40,
                               paddingRight: 0,
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: `90%`,
-                              lineHeight: `${rhythm(3 / 4)}`,
+                              fontSize: fontSizes[1],
+                              lineHeight: lineHeights.solid,
                             }}
                             id={
                               j === 0
                                 ? row.node.Feature.toLowerCase()
                                     .split(` `)
                                     .join(`-`)
-                                : false
+                                : undefined
                             }
                             onClick={() => {
                               this.setState({
@@ -165,21 +150,15 @@ class EvaluationTable extends Component {
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
                         }}
+                        key={`section-${s}-second-row-${i}`}
                       >
                         <td
                           css={{
-                            fontFamily: options.headerFontFamily.join(`,`),
-                            paddingBottom: `calc(${rhythm(1)} - 1px)`,
+                            paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
-                              paddingRight: `${rhythm(1 / 4)}`,
-                              paddingLeft: `${rhythm(1 / 4)}`,
-                              [presets.Mobile]: {
-                                paddingRight: `${rhythm(1 / 2)}`,
-                                paddingLeft: `${rhythm(1 / 2)}`,
-                              },
-                              [presets.Phablet]: {
-                                paddingRight: `${rhythm(2)}`,
-                                paddingLeft: `${rhythm(2)}`,
+                              [mediaQueries.xs]: {
+                                paddingRight: `${space[3]}`,
+                                paddingLeft: `${space[3]}`,
                               },
                             },
                           }}

@@ -25,7 +25,11 @@ describe(`Process WordPress data`, () => {
   it(`creates Gatsby IDs for each entity`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    entities = normalize.createGatsbyIds(createNodeId, entities)
+    entities = normalize.createGatsbyIds(
+      createNodeId,
+      entities,
+      `http://dev-gatbsyjswp.pantheonsite.io`
+    )
     expect(entities).toMatchSnapshot()
   })
   it(`Creates map of types`, () => {
@@ -50,6 +54,7 @@ describe(`Process WordPress data`, () => {
     entities = normalize.mapEntitiesToMedia(entities)
     expect(entities).toMatchSnapshot()
   })
+
   it(`Removes the acf key when acf is not an object`, () => {
     let dummyEntities = [{ id: 1, acf: false }, { id: 2, acf: {} }]
     expect(normalize.normalizeACF(dummyEntities)).toEqual([
@@ -57,9 +62,49 @@ describe(`Process WordPress data`, () => {
       { id: 2, acf: {} },
     ])
   })
+
   it(`Creates links between entities and polylang translations entities`, () => {
     entities = normalize.mapPolylangTranslations(entities)
     expect(entities).toMatchSnapshot()
+  })
+
+  describe(`createUrlPathsFromLinks`, () => {
+    it(`should create URL paths from links`, () => {
+      entities = normalize.createUrlPathsFromLinks(entities)
+      expect(entities).toMatchSnapshot()
+    })
+
+    // Some WordPress plugins (like https://wordpress.org/plugins/relative-url/)
+    // convert URLS to relative links
+    it(`should work if links are already relative`, () => {
+      const link = `/packages/gatsby-source-wordpress/`
+      entities = normalize.createUrlPathsFromLinks([
+        { link, __type: `wordpress__PAGE` },
+      ])
+      expect(entities).toEqual([
+        {
+          link,
+          __type: `wordpress__PAGE`,
+          path: link,
+        },
+      ])
+    })
+
+    // Someone or some plugin could have already enriched the
+    // REST endpoint on WordPress side with a "path" field
+    it(`should not touch already present "path" fields`, () => {
+      const link = `/packages/gatsby-source-wordpress/`
+      entities = normalize.createUrlPathsFromLinks([
+        { link, __type: `wordpress__PAGE`, path: `already-set` },
+      ])
+      expect(entities).toEqual([
+        {
+          link,
+          __type: `wordpress__PAGE`,
+          path: `already-set`,
+        },
+      ])
+    })
   })
 
   // Actually let's not test this since it's a bit tricky to mock
@@ -71,7 +116,12 @@ describe(`Process WordPress data`, () => {
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
-    normalize.createNodesFromEntities({ entities, createNode })
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    normalize.createNodesFromEntities({
+      entities,
+      createNode,
+      createContentDigest,
+    })
     expect(createNode.mock.calls).toMatchSnapshot()
   })
 })

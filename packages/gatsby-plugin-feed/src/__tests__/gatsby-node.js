@@ -1,8 +1,7 @@
-const fs = require(`fs`)
+jest.mock(`fs-extra`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
-const { onPostBuild } = require(`../gatsby-node`)
-const internals = require(`../internals`)
-jest.mock(`fs`)
+const { onPreBootstrap, onPostBuild } = require(`../gatsby-node`)
 const DATE_TO_USE = new Date(`2018`)
 const _Date = Date
 global.Date = jest.fn(() => DATE_TO_USE)
@@ -10,12 +9,97 @@ global.Date.UTC = _Date.UTC
 global.Date.now = _Date.now
 
 describe(`Test plugin feed`, async () => {
-  fs.existsSync = jest.fn()
-  fs.existsSync.mockReturnValue(true)
+  beforeEach(() => {
+    fs.exists = jest.fn().mockResolvedValue(true)
+    fs.writeFile = jest.fn().mockResolvedValue()
+    fs.mkdirp = jest.fn().mockResolvedValue()
+  })
+
+  describe(`options validation`, () => {
+    const setup = async options => {
+      const reporter = {
+        stripIndent: jest.fn(value => value.trim()),
+        warn: jest.fn(),
+      }
+      await onPreBootstrap({ reporter }, options)
+
+      return [reporter, options]
+    }
+
+    const deprecationNotice = `This behavior will be removed in the next major release of gatsby-plugin-feed`
+
+    it(`removes plugins`, async () => {
+      const options = { plugins: [] }
+
+      await setup(options)
+
+      expect(options.plugins).toBeUndefined()
+    })
+
+    it(`warns when feeds is not supplied`, async () => {
+      const options = {}
+
+      const [reporter] = await setup(options)
+
+      expect(reporter.warn).toHaveBeenCalledTimes(1)
+      expect(reporter.warn).toHaveBeenCalledWith(
+        expect.stringContaining(deprecationNotice)
+      )
+    })
+
+    it(`warns when individual feed does not have serialize function`, async () => {
+      const options = {
+        feeds: [
+          {
+            output: `rss.xml`,
+            query: `{}`,
+          },
+        ],
+      }
+
+      const [reporter] = await setup(options)
+
+      expect(reporter.warn).toHaveBeenCalledTimes(1)
+      expect(reporter.warn).toHaveBeenCalledWith(
+        expect.stringContaining(deprecationNotice)
+      )
+    })
+
+    it(`throws when invalid plugin options`, async () => {
+      const invalidOptions = [
+        {
+          feeds: [
+            {
+              // output is missing
+              query: `{}`,
+            },
+          ],
+        },
+        {
+          feeds: [
+            {
+              output: `rss.xml`,
+              // query is misisng
+            },
+          ],
+        },
+      ]
+
+      for (let options of invalidOptions) {
+        try {
+          await setup(options)
+        } catch (e) {
+          expect(e).toMatchSnapshot()
+        }
+      }
+
+      expect.assertions(invalidOptions.length)
+    })
+  })
 
   it(`default settings work properly`, async () => {
-    internals.writeFile = jest.fn()
-    internals.writeFile.mockResolvedValue(true)
+    fs.writeFile = jest.fn()
+    fs.writeFile.mockResolvedValue(true)
     const graphql = jest.fn()
     graphql.mockResolvedValue({
       data: {
@@ -41,14 +125,14 @@ describe(`Test plugin feed`, async () => {
       },
     })
     await onPostBuild({ graphql }, {})
-    const [filePath, contents] = internals.writeFile.mock.calls[0]
+    const [filePath, contents] = fs.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `rss.xml`))
     expect(contents).toMatchSnapshot()
   })
 
   it(`custom query runs`, async () => {
-    internals.writeFile = jest.fn()
-    internals.writeFile.mockResolvedValue(true)
+    fs.writeFile = jest.fn()
+    fs.writeFile.mockResolvedValue(true)
     const graphql = jest.fn()
     graphql.mockResolvedValue({
       data: {
@@ -114,9 +198,66 @@ describe(`Test plugin feed`, async () => {
       ],
     }
     await onPostBuild({ graphql }, options)
-    const [filePath, contents] = internals.writeFile.mock.calls[0]
+    const [filePath, contents] = fs.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `rss_new.xml`))
     expect(contents).toMatchSnapshot()
     expect(graphql).toBeCalledWith(customQuery)
+  })
+
+  it(`does not mutate base query when merging`, async () => {
+    fs.writeFile = jest.fn()
+    fs.writeFile.mockResolvedValue()
+
+    const siteQuery = {
+      data: {
+        site: {
+          siteMetadata: {
+            title: `Hello World`,
+          },
+        },
+      },
+    }
+
+    const markdownQuery = {
+      data: {
+        allMarkdownRemark: {
+          edges: [
+            {
+              node: {
+                fields: {
+                  slug: `/hello-world`,
+                },
+                frontmatter: {
+                  title: `Hello World`,
+                },
+              },
+            },
+          ],
+        },
+      },
+    }
+
+    const graphql = jest
+      .fn()
+      .mockResolvedValueOnce(siteQuery)
+      .mockResolvedValueOnce(markdownQuery)
+
+    const options = {
+      query: `{}`,
+      feeds: [
+        {
+          output: `rss.xml`,
+          query: `{ firstMarkdownQuery }`,
+        },
+      ],
+    }
+
+    await onPostBuild({ graphql }, options)
+
+    expect(siteQuery).toEqual({
+      data: {
+        site: expect.any(Object),
+      },
+    })
   })
 })

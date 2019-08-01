@@ -16,7 +16,12 @@ export default ShowcasePage
 
 export const showcaseQuery = graphql`
   query {
-    featured: allSitesYaml(filter: { featured: { eq: true } }) {
+    featured: allSitesYaml(
+      filter: {
+        featured: { eq: true }
+        fields: { hasScreenshot: { eq: true } }
+      }
+    ) {
       edges {
         node {
           id
@@ -38,7 +43,12 @@ export const showcaseQuery = graphql`
         }
       }
     }
-    allSitesYaml(filter: { main_url: { ne: null } }) {
+    allSitesYaml(
+      filter: {
+        main_url: { ne: null }
+        fields: { hasScreenshot: { eq: true } }
+      }
+    ) {
       edges {
         node {
           id

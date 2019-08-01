@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-In this guide, we'll walk through setting up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
+In this guide, you will learn setting up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
 
 Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
@@ -10,19 +10,21 @@ One of the most important problems they solve is selector name collisions. With 
 
 With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it much easier to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
-<iframe class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components/embed" />
-
-Video hosted on [egghead.io](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components).
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components"
+  lessonTitle="Style Gatsby sites with styled-components"
+/>
 
 First, open a new terminal window and run the following to create a new site:
 
 ```shell
 gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd styled-components-tutorial
 ```
 
-Second, we'll install the Gatsby plugin for Styled Components.
+Second, install the necessary dependencies for `styled-components`, including the Gatsby plugin.
 
-```sh
+```shell
 npm install --save gatsby-plugin-styled-components styled-components babel-plugin-styled-components
 ```
 
@@ -109,3 +111,25 @@ export default () => (
   </Container>
 )
 ```
+
+### Enabling user stylesheets with a stable class name
+
+Adding a persistent CSS `className` to your styled components can make it easier for users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
+
+Here's an example where the class name `container` is added to the DOM along with the Styled Components' dynamically-created class names:
+
+```jsx:title=src/components/container.js
+import React from "react"
+import styled from "styled-components"
+
+const Section = styled.section`
+  margin: 3rem auto;
+  max-width: 600px;
+`
+
+export default ({ children }) => (
+  <Section className={`container`}>{children}</Section>
+)
+```
+
+A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS-in-JS output changed.

@@ -11,11 +11,16 @@
   "dependencies": {
     "dateformat": "^3.0.3",
     "gatsby": "^2.0.0",
+    "gatsby-image": "^2.0.34",
     "gatsby-plugin-netlify": "^2.0.0",
+    "gatsby-plugin-sharp": "^2.0.30",
+    "gatsby-source-filesystem": "^2.0.27",
     "gatsby-source-graphql": "^2.0.0",
+    "gatsby-transformer-sharp": "^2.1.17",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-markdown": "^3.3.4"
+    "remark": "^10.0.1",
+    "remark-html": "^9.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

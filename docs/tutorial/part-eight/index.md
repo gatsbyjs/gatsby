@@ -1,6 +1,7 @@
 ---
 title: Preparing a site to go live
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Wow! You've come a long way! You've learned how to:
@@ -25,13 +26,13 @@ Lighthouse is included in Chrome DevTools. Running its audit -- and then address
 
 Let's try it out!
 
-First you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast; But the site that it generates, while closely resembling a production version of the site, isn't as optimized.
+First, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast; But the site that it generates, while closely resembling a production version of the site, isn't as optimized.
 
 ### ✋ Create a production build
 
-1.  Stop the development server (if it's still running) and run:
+1.  Stop the development server (if it's still running) and run the following command:
 
-```bash
+```shell
 gatsby build
 ```
 
@@ -39,17 +40,17 @@ gatsby build
 
 2.  View the production site locally. Run:
 
-```bash
+```shell
 gatsby serve
 ```
 
-Once this starts, you can now view your site at `localhost:9000`.
+Once this starts, you can view your site at [`localhost:9000`](http://localhost:9000).
 
 ### Run a Lighthouse audit
 
 Now you're going to run your first Lighthouse test.
 
-1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
+1.  If you haven't already done so, open the site in Chrome Incognito Mode so no extensions interfere with the test. Then, open up the Chrome DevTools.
 
 2.  Click on the "Audits" tab where you'll see a screen that looks like:
 
@@ -73,7 +74,7 @@ Inclusion of a web app manifest is one of the three generally accepted [baseline
 
 Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest/):
 
-> The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when 'installed' on the users mobile device or desktop.
+> The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when 'installed' on the user's mobile device or desktop.
 
 [Gatsby's manifest plugin](/packages/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
 
@@ -81,11 +82,13 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-manifest
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+
+3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -93,13 +96,15 @@ npm install --save gatsby-plugin-manifest
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: "GatsbyJS",
-        short_name: "GatsbyJS",
-        start_url: "/",
-        background_color: "#6b37bf",
-        theme_color: "#6b37bf",
-        display: "minimal-ui",
-        icon: "src/images/icon.png", // This path is relative to the root of the site.
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
   ]
@@ -112,13 +117,13 @@ That's all you need to get started with adding a web manifest to a Gatsby site. 
 
 Another requirement for a website to qualify as a PWA is the use of a [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). A service worker runs in the background, deciding to serve network or cached content based on connectivity, allowing for a seamless, managed offline experience.
 
-[Gatsby's offline plugin](/packages/gatsby-plugin-offline/) makes a Gatsby site work offline, and more resistant to bad network conditions, by creating a service worker for your site.
+[Gatsby's offline plugin](/packages/gatsby-plugin-offline/) makes a Gatsby site work offline and more resistant to bad network conditions by creating a service worker for your site.
 
 ### ✋ Using `gatsby-plugin-offline`
 
 1.  Install the plugin:
 
-```bash
+```shell
 npm install --save gatsby-plugin-offline
 ```
 
@@ -126,25 +131,34 @@ npm install --save gatsby-plugin-offline
 
 ```javascript:title=gatsby-config.js
 {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-manifest`,
-            options: {
-                ...
-            }
-        },
-        'gatsby-plugin-offline'
-    ]
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    // highlight-next-line
+    `gatsby-plugin-offline`,
+  ]
 }
 ```
 
 That's all you need to get started with service workers with Gatsby.
 
-> 💡 The manifest plugin should be listed _before_ the offline plugin so that the offline plugin can cache the created `manifest.webmanifest`.
+> 💡 The offline plugin should be listed _after_ the manifest plugin so that the offline plugin can cache the created `manifest.webmanifest`.
 
 ## Add page metadata
 
-Adding metadata to pages (such as a title or description) are key in helping search engines like Google understand your content, and decide when to surface it in search results.
+Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your content and decide when to surface it in search results.
 
 [React Helmet](https://github.com/nfl/react-helmet) is a package that provides a React component interface for you to manage your [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head).
 
@@ -154,7 +168,7 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 1.  Install both packages:
 
-```bash
+```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
@@ -162,13 +176,31 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 
 ```javascript:title=gatsby-config.js
 {
-  plugins: [`gatsby-plugin-react-helmet`]
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    `gatsby-plugin-offline`,
+    // highlight-next-line
+    `gatsby-plugin-react-helmet`,
+  ]
 }
 ```
 
 3.  Use `React Helmet` in your pages:
 
-```jsx{8-12}
+```jsx
 import React from "react"
 import { Helmet } from "react-helmet"
 
@@ -176,12 +208,14 @@ class Application extends React.Component {
   render() {
     return (
       <div className="application">
+        {/* highlight-start */}
         <Helmet>
           <meta charSet="utf-8" />
           <title>My Title</title>
           <link rel="canonical" href="http://mysite.com/example" />
         </Helmet>
         ...
+        {/* highlight-end */}
       </div>
     )
   }
@@ -192,7 +226,7 @@ class Application extends React.Component {
 
 ## Keep making it better
 
-In this section we've shown you a few Gatsby-specific tools to improve your site's performance and prepare to go live.
+In this section, we've shown you a few Gatsby-specific tools to improve your site's performance and prepare to go live.
 
 Lighthouse is a great tool for site improvements and learning -- Continue looking through the detailed feedback it provides and keep making your site better!
 
@@ -200,7 +234,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ### Official Documentation
 
-- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_ and much more.
+- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
 
 ### Official Plugins
 
@@ -210,16 +244,18 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 1.  [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](http://gatsbyjs.github.io/gatsby-starter-default/)_
 2.  [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](http://gatsbyjs.github.io/gatsby-starter-blog/)_
-3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
+3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
 
 ## That's all, folks
 
-Well, not quite. Just for this tutorial. This is just the beginning. Keep going!
+Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutorial/additional-tutorials/) to check out for more guided use cases.
+
+This is just the beginning. Keep going!
 
 - Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
 - Did you write a cool blog post about what you learned? Share that, too!
-- Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22%F0%9F%93%8D+status%3A+help+wanted%22) on the gatsby repo and [become a contributor](/docs/how-to-contribute/).
+- Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the gatsby repo and [become a contributor](/contributing/how-to-contribute/).
 
-Check out the ["how to contribute"](/docs/how-to-contribute/) docs for even more ideas.
+Check out the ["how to contribute"](/contributing/how-to-contribute/) docs for even more ideas.
 
 We can't wait to see what you do 😄.

@@ -14,7 +14,7 @@ class URLQuery extends Component {
 
     this.getDerivedStateFromQuery(search)
 
-    this.unlisten = globalHistory.listen(({ search }) => {
+    this.unlisten = globalHistory.listen(({ location: { search } }) => {
       this.getDerivedStateFromQuery(search)
     })
   }

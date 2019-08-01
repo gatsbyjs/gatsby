@@ -1,6 +1,6 @@
 ---
 title: Gatsbygram Case Study
-date: "2017-03-09"
+date: 2017-03-09
 author: "Kyle Mathews"
 image: "ui-and-code.png"
 imageTitle: Gatsbygram
@@ -374,7 +374,7 @@ generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as several
 browsers (Safari/Microsoft Edge) still don't support Service Workers, the
-[Gatsby `<Link>` component](/packages/gatsby/) pre-caches resources for
+[Gatsby `<Link>` component](/docs/linking-between-pages/#the-gatsby-link-component) pre-caches resources for
 pages it links to by loading them into memory.
 
 ## Plugins
@@ -554,7 +554,7 @@ node scrape.js INSTAGRAM_USERNAME
 # Start the Gatsby development server. The initial
 # run will take extra time as it processes
 # images the first time.
-gatsby develop
+npm run develop
 ```
 
 While writing this post I scraped a few accounts and published their resulting

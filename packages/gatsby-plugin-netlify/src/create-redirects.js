@@ -21,10 +21,12 @@ export default async function writeRedirectsFile(
       redirectInBrowser, // eslint-disable-line no-unused-vars
       force,
       toPath,
+      statusCode,
       ...rest
     } = redirect
 
     let status = isPermanent ? `301` : `302`
+    if (statusCode) status = statusCode
 
     if (force) status = status.concat(`!`)
 

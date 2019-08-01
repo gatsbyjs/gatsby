@@ -1,15 +1,17 @@
 const globCB = require(`glob`)
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
-const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
 const existsSync = require(`fs-exists-cached`).sync
 
 const glob = Promise.promisify(globCB)
 
-const createPath = require(`./create-path`)
-const validatePath = require(`./validate-path`)
-const slash = require(`slash`)
+const {
+  createPath,
+  validatePath,
+  ignorePath,
+  watchDirectory,
+} = require(`gatsby-page-utils`)
 
 // Path creator.
 // Auto-create pages.
@@ -18,7 +20,7 @@ const slash = require(`slash`)
 // takes control of that page component in gatsby-node.
 exports.createPagesStatefully = async (
   { store, actions, reporter },
-  { path: pagesPath, pathCheck = true },
+  { path: pagesPath, pathCheck = true, ignore },
   doneCb
 ) => {
   const { createPage, deletePage } = actions
@@ -48,48 +50,54 @@ exports.createPagesStatefully = async (
     )
   }
 
-  const pagesDirectory = systemPath.posix.join(pagesPath)
-  const pagesGlob = `${pagesDirectory}/**/*.{${exts}}`
+  const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
+  const pagesGlob = `**/*.{${exts}}`
 
   // Get initial list of files.
-  let files = await glob(pagesGlob)
-  files.forEach(file => _createPage(file, pagesDirectory, createPage))
+  let files = await glob(pagesGlob, { cwd: pagesPath })
+  files.forEach(file => _createPage(file, pagesDirectory, createPage, ignore))
 
-  // Listen for new component pages to be added or removed.
-  chokidar
-    .watch(pagesGlob)
-    .on(`add`, path => {
-      if (!_.includes(files, path)) {
-        _createPage(path, pagesDirectory, createPage)
-        files.push(path)
+  watchDirectory(
+    pagesPath,
+    pagesGlob,
+    addedPath => {
+      if (!_.includes(files, addedPath)) {
+        _createPage(addedPath, pagesDirectory, createPage, ignore)
+        files.push(addedPath)
       }
-    })
-    .on(`unlink`, path => {
-      path = slash(path)
+    },
+    removedPath => {
       // Delete the page for the now deleted component.
+      const componentPath = systemPath.join(pagesDirectory, removedPath)
       store.getState().pages.forEach(page => {
-        if (page.component === path) {
+        if (page.component === componentPath) {
           deletePage({
-            path: createPath(pagesDirectory, path),
-            component: path,
+            path: createPath(removedPath),
+            component: componentPath,
           })
         }
       })
-      files = files.filter(f => f !== path)
-    })
-    .on(`ready`, () => doneCb())
+      files = files.filter(f => f !== removedPath)
+    }
+  ).then(() => doneCb())
 }
-const _createPage = (filePath, pagesDirectory, createPage) => {
+const _createPage = (filePath, pagesDirectory, createPage, ignore) => {
   // Filter out special components that shouldn't be made into
   // pages.
-  if (!validatePath(systemPath.posix.relative(pagesDirectory, filePath))) {
+  if (!validatePath(filePath)) {
+    return
+  }
+
+  // Filter out anything matching the given ignore patterns and options
+  if (ignorePath(filePath, ignore)) {
     return
   }
 
   // Create page object
+  const createdPath = createPath(filePath)
   const page = {
-    path: createPath(pagesDirectory, filePath),
-    component: filePath,
+    path: createdPath,
+    component: systemPath.join(pagesDirectory, filePath),
   }
 
   // Add page

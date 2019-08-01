@@ -8,8 +8,8 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^2.0.0-beta.76",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "gatsby": "^2.0.118",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   }
 }

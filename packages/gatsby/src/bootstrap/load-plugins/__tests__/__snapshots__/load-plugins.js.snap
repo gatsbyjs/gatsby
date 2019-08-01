@@ -61,10 +61,10 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
-    "name": "query-runner",
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "name": "webpack-theme-component-shadowing",
     "nodeAPIs": Array [
-      "onCreatePage",
+      "onCreateWebpackConfig",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -165,10 +165,10 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "84dad27f-1d44-51fc-ac56-4db2e5222995",
-    "name": "query-runner",
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "name": "webpack-theme-component-shadowing",
     "nodeAPIs": Array [
-      "onCreatePage",
+      "onCreateWebpackConfig",
     ],
     "pluginOptions": Object {
       "plugins": Array [],

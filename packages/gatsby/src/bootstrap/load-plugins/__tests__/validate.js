@@ -11,6 +11,7 @@ const {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
+  warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
 
 describe(`collatePluginAPIs`, () => {
@@ -127,10 +128,6 @@ describe(`handleBadExports`, () => {
 
 describe(`handleMultipleReplaceRenderers`, () => {
   it(`Does nothing when replaceRenderers is implemented once`, async () => {
-    const apiToPlugins = {
-      replaceRenderer: [`foo-plugin`],
-    }
-
     const flattenedPlugins = [
       {
         resolve: `___TEST___`,
@@ -155,7 +152,6 @@ describe(`handleMultipleReplaceRenderers`, () => {
     ]
 
     const result = handleMultipleReplaceRenderers({
-      apiToPlugins,
       flattenedPlugins,
     })
 
@@ -163,10 +159,6 @@ describe(`handleMultipleReplaceRenderers`, () => {
   })
 
   it(`Sets skipSSR when replaceRenderers is implemented more than once`, async () => {
-    const apiToPlugins = {
-      replaceRenderer: [`foo-plugin`, `default-site-plugin`],
-    }
-
     const flattenedPlugins = [
       {
         resolve: `___TEST___`,
@@ -191,10 +183,33 @@ describe(`handleMultipleReplaceRenderers`, () => {
     ]
 
     const result = handleMultipleReplaceRenderers({
-      apiToPlugins,
       flattenedPlugins,
     })
 
     expect(result).toMatchSnapshot()
+  })
+})
+
+describe(`warnOnIncompatiblePeerDependency`, () => {
+  beforeEach(() => {
+    reporter.warn.mockClear()
+  })
+
+  it(`Does not warn when no peer dependency`, () => {
+    warnOnIncompatiblePeerDependency(`dummy-package`, { peerDependencies: {} })
+
+    expect(reporter.warn).not.toHaveBeenCalled()
+  })
+
+  it(`Warns on incompatible gatsby peer dependency`, async () => {
+    warnOnIncompatiblePeerDependency(`dummy-package`, {
+      peerDependencies: {
+        gatsby: `<2.0.0`,
+      },
+    })
+
+    expect(reporter.warn).toHaveBeenCalledWith(
+      expect.stringContaining(`Plugin dummy-package is not compatible`)
+    )
   })
 })
