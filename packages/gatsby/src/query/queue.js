@@ -2,6 +2,7 @@ const Queue = require(`better-queue`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
 const websocketManager = require(`../utils/websocket-manager`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const createBaseOptions = () => {
   return {
@@ -97,8 +98,26 @@ const processBatch = async (queue, jobs) => {
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job))
-  return await Promise.all(runningJobs)
+  // console.log(`running queries`, { start: 0, total: numJobs })
+
+  const queryRunningActivity = report.createProgress(
+    `Running queries`,
+    numJobs,
+    0,
+    {
+      dontShowSuccess: true,
+    }
+  )
+  queryRunningActivity.start()
+
+  const runningJobs = jobs.map(job =>
+    pushJob(queue, job).then(() => {
+      queryRunningActivity.tick()
+    })
+  )
+  await Promise.all(runningJobs)
+
+  queryRunningActivity.done()
 }
 
 module.exports = {

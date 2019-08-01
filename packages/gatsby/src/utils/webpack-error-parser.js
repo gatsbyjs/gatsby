@@ -1,6 +1,7 @@
 const stageCodeToReadableLabel = {
   "build-javascript": `Generating JavaScript bundles`,
   "build-html": `Generating SSR bundle`,
+  develop: `Generating development JavaScript bundle`,
 }
 
 const transformWebpackError = (stage, webpackError) => {

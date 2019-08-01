@@ -39,17 +39,15 @@ class SimpleOutput extends React.Component {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static>
-            {messages.map((msg, index) => (
-              <Box textWrap="wrap" key={index}>
-                {msg.level === `ERROR` ? (
-                  <Error details={msg} />
-                ) : (
-                  <Message level={msg.level} hideColors={true}>
-                    {msg.text}
-                  </Message>
-                )}
-              </Box>
-            ))}
+            {messages.map((msg, index) =>
+              msg.level === `ERROR` ? (
+                <Error details={msg} key={index} />
+              ) : (
+                <Message level={msg.level} hideColors={true} key={index}>
+                  {msg.text}
+                </Message>
+              )
+            )}
           </Static>
 
           {spinners.map(activity => (
@@ -66,14 +64,16 @@ class SimpleOutput extends React.Component {
             />
           ))}
 
-          {Object.keys(statefulMessages).map(messageID => {
-            const message = statefulMessages[messageID]
-            return (
-              <Message type={message.type} key={messageID}>
-                {message.text}
+          {statefulMessages.map((msg, index) =>
+            // const message = statefulMessages[messageID]
+            msg.level === `ERROR` ? (
+              <Error details={msg} key={index} />
+            ) : (
+              <Message level={msg.level} hideColors={true} key={index}>
+                {msg.text}
               </Message>
             )
-          })}
+          )}
         </Box>
         {showStatusBar && <Develop />}
       </Box>

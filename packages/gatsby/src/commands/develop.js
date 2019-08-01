@@ -80,6 +80,10 @@ const waitJobsFinished = () =>
   })
 
 async function startServer(program) {
+  const indexHTMLActivity = report.activityTimer(`building index.html`, {
+    dontShowSuccess: true,
+  })
+  indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const workerPool = WorkerPool.create()
@@ -108,6 +112,13 @@ async function startServer(program) {
   }
 
   await createIndexHtml()
+
+  indexHTMLActivity.end()
+
+  const webpackActivity = report.activityTimer(`Building development bundle`, {
+    dontShowSuccess: true,
+  })
+  webpackActivity.start()
 
   const devConfig = await webpackConfig(
     program,
@@ -184,9 +195,14 @@ async function startServer(program) {
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      console.log(`Refreshing source data`)
+      const activity = report.activityTimer(`Refreshing source data`, {
+        dontShowSuccess: true,
+      })
+      activity.start()
       sourceNodes({
         webhookBody: req.body,
+      }).then(() => {
+        activity.end()
       })
     }
     res.end()
@@ -311,7 +327,7 @@ async function startServer(program) {
     socket.to(`clients`).emit(`reload`)
   })
 
-  return [compiler, listener]
+  return { compiler, listener, webpackActivity }
 }
 
 module.exports = async (program: any) => {
@@ -380,7 +396,7 @@ module.exports = async (program: any) => {
   queryUtil.startListening(queryQueue.createDevelopQueue())
   queryWatcher.startWatchDeletePage()
 
-  const [compiler] = await startServer(program)
+  let { compiler, webpackActivity } = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -516,18 +532,50 @@ module.exports = async (program: any) => {
     })
   }
 
-  compiler.hooks.invalid.tap(`log compiling`, () => {
-    // compiling
-    // report.stateUpdate({
-    //   id: `webpack`,
-    //   status: `working`,
-    // })
+  // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
+  //   console.log(`set invalid`, args, this)
+  //   // compiling
+  //   // report.stateUpdate({
+  //   //   id: `webpack`,
+  //   //   status: `working`,
+  //   // })
+  // })
+
+  compiler.hooks.watchRun.tapAsync(`log compiling2`, function(args, done) {
+    if (webpackActivity) {
+      webpackActivity.end()
+      // webpackActivity = null
+    }
+    webpackActivity = report.activityTimer(`Re-building development bundle`, {
+      dontShowSuccess: true,
+    })
+    webpackActivity.start()
+    // console.log(`set watchrun`)
+    done()
   })
+
+  // compiler.hooks.beforeCompile.tapAsync(`log compiling3`, function(args, done) {
+  //   console.log(`set beforeCompile`)
+  //   done()
+  //   // compiling
+  //   // report.stateUpdate({
+  //   //   id: `webpack`,
+  //   //   status: `working`,
+  //   // })
+  // })
 
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, (stats, done) => {
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
+    stats,
+    done,
+    ...args
+  ) {
+    if (webpackActivity) {
+      webpackActivity.end()
+      webpackActivity = null
+    }
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
@@ -547,25 +595,39 @@ module.exports = async (program: any) => {
     // TODO: Would be nice to copy (at least some) of friendly-errors-webpack-plugin
     // error/warning enhancing
 
+    report.clearStatefulMessage({ group: `webpack-errors` })
     if (messages.errors.length > 0) {
-      report.statefulMessage({
-        type: `error`,
-        id: `webpack-errors`,
-        text: messages.errors.join(`\n`),
-      })
-    } else {
-      report.clearStatefulMessage({ id: `webpack-errors` })
-    }
+      const handleWebpackError = require(`../utils/webpack-error-parser`)
+      // const constructError = require(`gatsby-cli/lib/structured-errors`)
+      const errors = handleWebpackError(`develop`, stats.compilation.errors)
 
-    if (messages.warnings.length > 0) {
-      report.statefulMessage({
-        type: `warn`,
-        id: `webpack-warnings`,
-        text: messages.warnings.join(`\n`),
+      errors.forEach(error => {
+        report.statefulMessage({
+          ...error,
+          group: `webpack-errors`,
+        })
       })
-    } else {
-      report.clearStatefulMessage({ id: `webpack-warnings` })
+
+      // console.log(test)
+      // report.statefulMessage({
+      //   type: `error`,
+      //   id: `webpack-errors`,
+      //   text: messages.errors.join(`\n`),
+      // })
     }
+    // else {
+    //   report.clearStatefulMessage({ group: `webpack-errors` })
+    // }
+
+    // if (messages.warnings.length > 0) {
+    //   report.statefulMessage({
+    //     type: `warn`,
+    //     id: `webpack-warnings`,
+    //     text: messages.warnings.join(`\n`),
+    //   })
+    // } else {
+    //   report.clearStatefulMessage({ id: `webpack-warnings` })
+    // }
 
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))

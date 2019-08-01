@@ -36,7 +36,7 @@ const Develop = ({ pagesCount, appName, errorCount, working }) => {
 const ConnectedDevelop = connect(state => {
   return {
     pagesCount: state.pages ? state.pages.size : 0,
-    appName: state.program.sitePackageJson.name,
+    appName: state.program.sitePackageJson.name || ``,
   }
 })(Develop)
 

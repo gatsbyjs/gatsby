@@ -2,7 +2,7 @@ module.exports = (
   state = {
     messages: [],
     activities: {},
-    statefulMessages: {},
+    statefulMessages: [],
   },
   action
 ) => {
@@ -53,24 +53,30 @@ module.exports = (
     const activities = { ...state.activities }
     delete activities[name]
 
-    let text = name
-    if (action.payload.status) {
-      text += ` - ${action.payload.status}`
-    }
-    if (action.payload.elapsedTime) {
-      text += ` - ${action.payload.elapsedTime} s`
-    }
+    let messages = state.messages
 
-    const successLog = {
-      level: `SUCCESS`,
-      timestamp: new Date().toJSON(),
-      text,
+    if (!activity.dontShowSuccess) {
+      let text = name
+      if (action.payload.status) {
+        text += ` - ${action.payload.status}`
+      }
+      if (action.payload.elapsedTime) {
+        text += ` - ${action.payload.elapsedTime} s`
+      }
+
+      const successLog = {
+        level: `SUCCESS`,
+        timestamp: new Date().toJSON(),
+        text,
+      }
+
+      messages = [...messages, successLog]
     }
 
     state = {
       ...state,
       activities,
-      messages: [...state.messages, successLog],
+      messages,
     }
   } else if (action.type === `STRUCTURED_ACTIVITY_TICK`) {
     const { name } = action.payload
@@ -89,20 +95,24 @@ module.exports = (
   } else if (action.type === `INIT_STRUCTURED_LOGS`) {
     state = action.payload
   } else if (action.type === `STATEFUL_LOG`) {
+    action.payload.timestamp = new Date().toJSON()
     state = {
       ...state,
-      statefulMessages: {
-        ...state.errors,
-        [action.payload.id]: action.payload,
-      },
+      statefulMessages: [...state.statefulMessages, action.payload],
     }
   } else if (action.type === `CLEAR_STATEFUL_LOG`) {
-    const statefulMessages = { ...state.statefulMessages }
-    delete statefulMessages[action.payload.id]
     state = {
       ...state,
-      statefulMessages,
+      statefulMessages: state.statefulMessages.filter(
+        msg => msg.group !== action.payload.group
+      ),
     }
+    // const statefulMessages = { ...state.statefulMessages }
+    // delete statefulMessages[action.payload.id]
+    // state = {
+    //   ...state,
+    //   statefulMessages,
+    // }
   }
 
   return state

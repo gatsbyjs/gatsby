@@ -17,9 +17,13 @@ if (!process.env.gatsby_logger) {
   }
 }
 // inject logger
-if (process.env.gatsby_logger === `json`) {
+if (process.env.gatsby_logger && process.env.gatsby_logger.includes(`ipc`)) {
+  // process.env.FORCE_COLOR = `0`
+  require(`./loggers/ipc`)
+}
+if (process.env.gatsby_logger && process.env.gatsby_logger.includes(`json`)) {
   // implied no-colors
-  process.env.FORCE_COLOR = `0`
+  // process.env.FORCE_COLOR = `0`
   require(`./loggers/json`)
 } else if (process.env.gatsby_logger === `yurnalist`) {
   require(`./loggers/yurnalist`)
@@ -47,7 +51,7 @@ const getActivity = name => getStore().getState().logs.activities[name]
 
 const errorFormatter = getErrorFormatter()
 const { trackCli } = require(`gatsby-telemetry`)
-const convertHrtime = require(`convert-hrtime`)
+// const convertHrtime = require(`convert-hrtime`)
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
@@ -161,9 +165,10 @@ const reporter: Reporter = {
   },
 
   statefulMessage(payload) {
+    const e = constructError({ details: payload })
     dispatch({
       type: `STATEFUL_LOG`,
-      payload,
+      payload: e,
     })
   },
 
@@ -208,7 +213,7 @@ const reporter: Reporter = {
     name: string,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    const { parentSpan } = activityArgs
+    const { parentSpan, dontShowSuccess } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
     let startTime = 0
@@ -220,6 +225,7 @@ const reporter: Reporter = {
           payload: {
             name,
             type: `spinner`,
+            dontShowSuccess,
           },
         })
       },
@@ -272,7 +278,7 @@ const reporter: Reporter = {
     start = 0,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    const { parentSpan } = activityArgs
+    const { parentSpan, dontShowSuccess } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
     let hasStarted = false
@@ -292,6 +298,7 @@ const reporter: Reporter = {
             type: `progress`,
             current: start,
             total,
+            dontShowSuccess,
           },
         })
       },

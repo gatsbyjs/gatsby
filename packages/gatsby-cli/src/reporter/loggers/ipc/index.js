@@ -7,5 +7,5 @@ onLogAaction(action => {
     text: stripAnsi(action.text),
   }
 
-  process.stdout.write(JSON.stringify(some) + `\n`)
+  process.send(some)
 })
