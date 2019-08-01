@@ -1,6 +1,6 @@
 ---
 title: What is JSX pragma?
-date: 2019-07-31
+date: 2019-08-02
 author: Amberley Romo
 excerpt: "Theme UI uses custom JSX pragma to make JSX theme-aware. But what is JSX pragma?"
 tags:
