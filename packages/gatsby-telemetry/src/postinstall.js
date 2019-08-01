@@ -10,5 +10,5 @@ try {
     showAnalyticsNotification()
   }
 } catch (e) {
-  // ignore
+  console.log(e)
 }
