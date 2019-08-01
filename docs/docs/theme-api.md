@@ -2,13 +2,6 @@
 title: Themes API Reference
 ---
 
-## Table of contents
-
-- [Core Gatsby APIs](#core-gatsby-apis)
-- [Configuration](#configuration)
-- [Theme composition](#theme-composition)
-- [Shadowing](#shadowing)
-
 ## Core Gatsby APIs
 
 Themes are packaged Gatsby sites shipped as plugins, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.

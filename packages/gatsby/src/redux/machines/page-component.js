@@ -105,7 +105,7 @@ module.exports = Machine(
                 queryUtil.runQueuedQueries(event.path)
               }
             }, 0)
-            ctx.pages.push(event.path)
+            ctx.pages.add(event.path)
             return ctx.pages
           } else {
             return ctx.pages
@@ -113,7 +113,10 @@ module.exports = Machine(
         },
       }),
       deletePage: assign({
-        pages: (ctx, event) => ctx.pages.filter(p => p !== event.page.path),
+        pages: (ctx, event) => {
+          ctx.pages.delete(event.page.path)
+          return ctx.pages
+        },
       }),
       setBootstrapFinished: assign({
         isInBootstrap: false,

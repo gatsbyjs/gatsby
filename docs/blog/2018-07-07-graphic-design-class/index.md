@@ -2,7 +2,13 @@
 title: Learning how to code with Gatsby
 date: 2018-07-07
 author: "Shannon Soper"
-tags: ["college", "case study", "design", "getting-started"]
+tags:
+  [
+    "learning-to-code",
+    "case-studies",
+    "cutting-edge-experiences",
+    "getting-started",
+  ]
 ---
 
 ## Graphic Design Students at the Art Institute
@@ -56,7 +62,8 @@ Structure of the class:
 3.  _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
 
 <Pullquote>
-Once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
+  Once we jumped to learn GatsbyJS, some interesting things happened. A light
+  when on. They were excited.
 </Pullquote>
 
 ### What do your students like about Gatsby?

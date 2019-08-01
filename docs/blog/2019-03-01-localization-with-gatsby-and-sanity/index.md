@@ -2,7 +2,7 @@
 title: A method for Localization with Gatsby and Sanity.io
 date: 2019-03-01
 author: Travis Stanley
-tags: ["sanity", "localization", "l10n"]
+tags: ["sanity", "i18n"]
 image: "./images/gatsby-sanity-l10n.png"
 showImageInArticle: true
 ---

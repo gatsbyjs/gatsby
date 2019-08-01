@@ -10,6 +10,16 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const yaml = require(`js-yaml`)
+const docLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
+)
+const tutorialLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
+)
+const contributingLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
+)
 
 let ecosystemFeaturedItems
 
@@ -615,18 +625,109 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create docs pages.
-      result.data.allMdx.edges.forEach(edge => {
-        const slug = _.get(edge, `node.fields.slug`)
+      const docPages = result.data.allMdx.edges
+      const docLinks = docLinksData[0].items
+      const tutorialLinks = tutorialLinksData[0].items
+      const contributingLinks = contributingLinksData[0].items
+
+      // flatten sidebar links trees for easier next/prev link calculation
+      function flattenList(itemList) {
+        return itemList.reduce((reducer, { items, ...rest }) => {
+          reducer.push(rest)
+          if (items) reducer.push(...flattenList(items))
+          return reducer
+        }, [])
+      }
+
+      const flattenedDocs = flattenList(docLinks)
+      const flattenedTutorials = flattenList(tutorialLinks)
+      const flattenedContributing = flattenList(contributingLinks)
+
+      // with flattened tree object finding next and prev is just getting the next index
+      function getSibling(index, list, direction) {
+        if (direction === `next`) {
+          const next = index === list.length - 1 ? null : list[index + 1]
+          // for tutorial links that use subheadings on the same page skip the link and try the next item
+          if (next && next.link && next.link.includes(`#`)) {
+            return getSibling(index + 1, list, `next`)
+          }
+          return next
+        } else if (direction === `prev`) {
+          const prev = index === 0 ? null : list[index - 1]
+          if (prev && prev.link && prev.link.includes(`#`)) {
+            return getSibling(index - 1, list, `prev`)
+          }
+          return prev
+        } else {
+          reporter.warn(
+            `Did not provide direction to sibling function for building next and prev links`
+          )
+          return null
+        }
+      }
+
+      function findDoc(doc) {
+        if (!doc.link) return null
+        return (
+          doc.link === this.link ||
+          doc.link === this.link.substring(0, this.link.length - 1)
+        )
+      }
+
+      docPages.forEach(({ node }) => {
+        const slug = _.get(node, `fields.slug`)
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
+          const docIndex = flattenedDocs.findIndex(findDoc, {
+            link: slug,
+          })
+          const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
+            link: slug,
+          })
+          const contributingIndex = flattenedContributing.findIndex(findDoc, {
+            link: slug,
+          })
+
+          // add values to page context for next and prev page
+          let nextAndPrev = {}
+          if (docIndex > -1) {
+            nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
+            nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
+          }
+          if (tutorialIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `next`
+            )
+          }
+          if (contributingIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `next`
+            )
+          }
+
           createPage({
-            path: `${edge.node.fields.slug}`, // required
+            path: `${node.fields.slug}`, // required
             component: slash(
-              edge.node.fields.package ? localPackageTemplate : docsTemplate
+              node.fields.package ? localPackageTemplate : docsTemplate
             ),
             context: {
-              slug: edge.node.fields.slug,
+              slug: node.fields.slug,
+              ...nextAndPrev,
             },
           })
         }

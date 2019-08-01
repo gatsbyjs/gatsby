@@ -1,6 +1,7 @@
 ---
 title: Programmatically create pages from data
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 > This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/), [part 5](/tutorial/part-five/), and [part 6](/tutorial/part-six/) before continuing here.
