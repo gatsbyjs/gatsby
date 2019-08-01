@@ -36,7 +36,12 @@
     "jest-junit": "^6.1.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "src/postinstall.js",
+    "src/showAnalyticsNotification.js",
+    "src/event-storage.js",
+    "src/is-truthy.js",
+    "src/store.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry#readme",
   "keywords": [
@@ -53,7 +58,7 @@
     "build": "babel src --out-dir lib --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "jest": "jest",
-    "postinstall": "node lib/postinstall.js",
+    "postinstall": "node src/postinstall.js",
     "watch": "babel -w src --out-dir lib --ignore **/__tests__"
   },
   "yargs": {
