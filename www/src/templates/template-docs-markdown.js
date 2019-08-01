@@ -44,8 +44,9 @@ const getDocsData = location => {
 
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-
   const [urlSegment, itemList] = getDocsData(location)
+  const toc =
+    !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
   return (
     <>
@@ -71,7 +72,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
               [mediaQueries.lg]: {
                 paddingTop: space[9],
               },
-              [page.tableOfContents.items && mediaQueries.xl]: {
+              [toc && mediaQueries.xl]: {
                 ...containerStyles,
               },
             }}
@@ -88,38 +89,37 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
               [mediaQueries.lg]: {
                 paddingBottom: space[9],
               },
-              [page.tableOfContents.items && mediaQueries.xl]: {
+              [toc && mediaQueries.xl]: {
                 ...containerStyles,
                 display: `flex`,
                 alignItems: `flex-start`,
               },
             }}
           >
-            {!page.frontmatter.disableTableOfContents &&
-              page.tableOfContents.items && (
-                <div
-                  css={{
-                    order: 2,
-                    [mediaQueries.xl]: {
-                      marginLeft: space[9],
-                      maxWidth: sizes.tocWidth,
-                      position: `sticky`,
-                      top: `calc(${sizes.headerHeight} + ${
-                        sizes.bannerHeight
-                      } + ${space[9]})`,
-                      maxHeight: `calc(100vh - ${sizes.headerHeight} - ${
-                        sizes.bannerHeight
-                      } - ${space[9]} - ${space[9]})`,
-                      overflow: `auto`,
-                    },
-                  }}
-                >
-                  <TableOfContents location={location} page={page} />
-                </div>
-              )}
+            {toc && (
+              <div
+                css={{
+                  order: 2,
+                  [mediaQueries.xl]: {
+                    marginLeft: space[9],
+                    maxWidth: sizes.tocWidth,
+                    position: `sticky`,
+                    top: `calc(${sizes.headerHeight} + ${
+                      sizes.bannerHeight
+                    } + ${space[9]})`,
+                    maxHeight: `calc(100vh - ${sizes.headerHeight} - ${
+                      sizes.bannerHeight
+                    } - ${space[9]} - ${space[9]})`,
+                    overflow: `auto`,
+                  },
+                }}
+              >
+                <TableOfContents location={location} page={page} />
+              </div>
+            )}
             <div
               css={{
-                [page.tableOfContents.items && mediaQueries.xl]: {
+                [toc && mediaQueries.xl]: {
                   maxWidth: sizes.mainContentWidth.withSidebar,
                   minWidth: 0,
                 },

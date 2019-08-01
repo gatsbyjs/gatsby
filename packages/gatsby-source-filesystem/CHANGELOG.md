@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.6...gatsby-source-filesystem@2.1.7) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Move GraphQL definition for Fil… ([#16041](https://github.com/gatsbyjs/gatsby/issues/16041)) ([36eae6b](https://github.com/gatsbyjs/gatsby/commit/36eae6b))
+
 ## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.5...gatsby-source-filesystem@2.1.6) (2019-07-22)
 
 **Note:** Version bump only for package gatsby-source-filesystem
