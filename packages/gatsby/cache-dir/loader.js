@@ -144,7 +144,7 @@ export class BaseLoader {
   }
 
   loadPageDataJson(rawPath) {
-    const pagePath = cleanPath(rawPath)
+    const pagePath = cleanPath(findMatchPath(rawPath) || rawPath)
     if (this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
     }
