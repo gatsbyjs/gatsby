@@ -60,13 +60,26 @@ After installing gatsby-plugin-mdx you can add it to your plugins list in your
 
 ```js
 module.exports = {
-  plugins: [`gatsby-plugin-mdx`],
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    `gatsby-plugin-mdx`,
+  ],
 }
 ```
 
 By default, this configuration will allow you to create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
+
+Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
+and configured to process local markdown files in order to
+generate the resulting Gatsby nodes.
 
 ### Configuration
 
@@ -115,6 +128,20 @@ layout defined, even if it's imported manually using `import MDX from './thing.m
 // gatsby-config.js
 module.exports = {
   plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`,
+      },
+    },
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
