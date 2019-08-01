@@ -37,11 +37,7 @@
   },
   "files": [
     "lib",
-    "src/postinstall.js",
-    "src/showAnalyticsNotification.js",
-    "src/event-storage.js",
-    "src/is-truthy.js",
-    "src/store.js"
+    "src"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry#readme",
   "keywords": [
