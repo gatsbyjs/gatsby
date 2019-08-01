@@ -39,7 +39,7 @@ An example of this in JavaScript is `'use strict'` mode. `'use strict'` is a dir
 
 JSX syntax on its own isn’t readable by the browser. In order to ship something readable to the browser, JSX needs to be converted to plain JavaScript.
 
-Most React-based frameworks (like Gatsby), come with tooling already set up to support this conversion (usually Babel). How does that tooling know how to transform JSX? By default, the Babel plugin will convert JSX into JavaScript that calls the `React.createElement` function.
+Most React-based frameworks (like Gatsby), come with tooling already set up to support this conversion (usually Babel). How does that tooling know how to transform JSX? By default, [the Babel plugin](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx) will convert JSX into JavaScript that calls the `React.createElement` function.
 
 Take the following JSX, for example:
 
