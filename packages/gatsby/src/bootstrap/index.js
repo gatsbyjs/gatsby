@@ -75,12 +75,14 @@ module.exports = async (args: BootstrapArgs) => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
+  // The root config cannot be exported as a function, only theme configs
   if (typeof config === `function`) {
-    report.panic(
-      `A gatsby-config that exports a function can only be used as a theme and not run directly.
-      If you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.
-      If you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions are not supported in the root gatsby-config.`
-    )
+    report.panic({
+      id: `10126`,
+      context: {
+        configName: `gatsby-config`,
+      },
+    })
   }
 
   // theme gatsby configs can be functions or objects
