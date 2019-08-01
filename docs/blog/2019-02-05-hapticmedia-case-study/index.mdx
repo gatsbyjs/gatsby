@@ -32,7 +32,9 @@ According to Bonnet, “the 3D app integrated very well. And another dynamic ele
 
 The day they launched, the Hapticmedia team was immediately impressed by the fast page load times of the new site and the seamless page transitions due to Gatsby’s pre-fetching (which comes in Gatsby out-of-the-box). As the team scrolled down the page, they watched in Chrome Dev Tools as the subsequent pages loaded in the background. This pre-loading of pages meant there were no hiccups in page transitions and moving between pages was almost instantaneous.
 
-<Pullquote>Every page loads before we click. It’s magic! No page transitions!</Pullquote>
+<Pullquote>
+  Every page loads before we click. It’s magic! No page transitions!
+</Pullquote>
 
 The interactive 3D rendering of a watch, showcasing Hapticmedia’s 3D configurator tools, also worked seamlessly. The user could interact with the image by rotating it 360 degrees, change the band style and color, and even push the buttons on the watch to see how the minute and second hands responded. It was exactly what Hapticmedia needed to showcase their 3D product configurator.
 

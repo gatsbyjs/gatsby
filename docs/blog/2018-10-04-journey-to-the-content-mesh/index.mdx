@@ -20,10 +20,12 @@ When website teams want to add search, they can turn to [Algolia](https://www.al
 Teams are adopting these services because each is tailored to a specific use-case; the generic enterprise CMS alternative is often optimized for none.
 
 <figure>
-  <img alt="The modularization of the CMS" height="400" src="./modular-cms-architecture.png" />
-  <figcaption>
-   The modularization of the CMS
-  </figcaption>
+  <img
+    alt="The modularization of the CMS"
+    height="400"
+    src="./modular-cms-architecture.png"
+  />
+  <figcaption>The modularization of the CMS</figcaption>
 </figure>
 
 ## Emergence of the Content Mesh
@@ -45,10 +47,12 @@ Change is being spurred by the confluence of three revolutions in how we create 
 - _Performance._ As mobile surpasses 50% of internet traffic, high-performance is becoming a must-have, not a nice-to-have.
 
 <figure>
-  <img alt="Three areas of rapid innovation" height="300" src="./three-website-revolutions.png" />
-  <figcaption>
-    Three areas of rapid innovation
-  </figcaption>
+  <img
+    alt="Three areas of rapid innovation"
+    height="300"
+    src="./three-website-revolutions.png"
+  />
+  <figcaption>Three areas of rapid innovation</figcaption>
 </figure>
 
 These technological changes have made modern web technology both _essential_ for creating fresh, novel, and engaging digital experiences, and _more accessible_ for the enterprise.
@@ -74,8 +78,10 @@ In our conclusion, [Creating Compelling Experiences](/blog/2018-10-18-creating-c
 ## The Modern Website Landscape
 
 <figure>
-  <img alt="The modern website landscape" src="./content-mesh.png" height="300" />
-  <figcaption>
-    The modern website landscape
-  </figcaption>
+  <img
+    alt="The modern website landscape"
+    src="./content-mesh.png"
+    height="300"
+  />
+  <figcaption>The modern website landscape</figcaption>
 </figure>

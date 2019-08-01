@@ -21,8 +21,11 @@ With this blogpost I want to describe the process of creating my Gatsby themes l
 Nearly every time before I start coding a project I start with the design in Figma. I'm still faster with prototyping with Figma than in code with React (probably due to my design background). I started looking at Dribbble and Behance to find some inspiration as I had a light website with playful elements, a **stunning** hero section and otherwise minimal design in mind.
 
 <figure>
-<img src="./images/behance-dribbble-inspiration.png" alt="Screenshot of Figma showing different screenshots from Dribbble, Behance and Refactoring UI for inspiration" />
-<figcaption>Inspirational screenshots</figcaption>
+  <img
+    src="./images/behance-dribbble-inspiration.png"
+    alt="Screenshot of Figma showing different screenshots from Dribbble, Behance and Refactoring UI for inspiration"
+  />
+  <figcaption>Inspirational screenshots</figcaption>
 </figure>
 
 I really liked the prominent and actionable hero section of the [Refactoring UI website](https://refactoringui.com/), the shapes and colors from the other designs. Speaking of Refactoring UI, for the design (and later for coding) I used the TailwindCSS colors and styles.
@@ -32,8 +35,11 @@ The design you see live on the website now is pretty much the design I created i
 As mentioned I also wanted a rad hero section, nothing boring but also not something that is overused (and potentially can also slow down your website) like particles.js. Since I'm pretty proficient with Cinema4D and 3D in general I just tried to visualize "Gatsby Themes" with 3D models. I drew some inspiration from [Kyle Gill's illustrations](https://kylegill.com/blog/2019-04-22-a-simple-guide-to-gatsby-themes/index). I rendered the scene with Arnold, modified it a bit with Photoshop and et voilá: You can see the finished result on my social preview image now.
 
 <figure>
-<img src="./images/gatsby-themes-3d-illustration.png" alt="3D Rendering showing a little factory receiving input from four objects." />
-<figcaption>Cinema4D Rendering of a "Gatsby Themes factory"</figcaption>
+  <img
+    src="./images/gatsby-themes-3d-illustration.png"
+    alt="3D Rendering showing a little factory receiving input from four objects."
+  />
+  <figcaption>Cinema4D Rendering of a "Gatsby Themes factory"</figcaption>
 </figure>
 
 ## Code
@@ -45,8 +51,13 @@ I want to focus on [Theme UI](https://theme-ui.com/) and explain how I used it o
 To get started I installed the preset and put it into my shadowed theme config (see [official documentation](https://theme-ui.com/presets) on that). Then I had to override the colors e.g. the primary and secondary color. For that I took a look into my Figma design:
 
 <figure>
-<img src="./images/figma-theme-ui-handoff.png" alt="Screenshot showing both Figma and VS Code. The value used in Figma can easily get transferred to VS Code and Theme UI." />
-<figcaption>Using Tailwind styles in both Figma and Theme UI is the best!</figcaption>
+  <img
+    src="./images/figma-theme-ui-handoff.png"
+    alt="Screenshot showing both Figma and VS Code. The value used in Figma can easily get transferred to VS Code and Theme UI."
+  />
+  <figcaption>
+    Using Tailwind styles in both Figma and Theme UI is the best!
+  </figcaption>
 </figure>
 
 It's great to have the same design tokens in all places. I chose the color **Indigo.600** and later in Theme UI I just had to use `colors.indigo[6]`.
