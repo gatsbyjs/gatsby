@@ -164,7 +164,7 @@ offers the option to set default layouts in the `gatsby-config.js` plugin
 config. Set the key to the `name` set in the `gatsby-source-filesystem` config.
 If no matching default layout is found, the `default` default layout is used.
 
-You can also set `options.defaultLayout.default` if you only want to
+You can also set `options.defaultLayouts.default` if you only want to
 use one layout for all MDX pages that don't already have a layout defined.
 
 ```js
