@@ -21,10 +21,16 @@ module.exports = class AnalyticsTracker {
 
   constructor() {
     try {
-      this.componentVersion = require(`../package.json`).version
-      this.installedGatsbyVersion = this.getGatsbyVersion()
-      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      if (this.store.isTrackingDisabled()) {
+        this.trackingEnabled = false
+      }
+
       this.defaultTags = this.getTagsFromEnv()
+
+      // These may throw and should be last
+      this.componentVersion = require(`../package.json`).version
+      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      this.installedGatsbyVersion = this.getGatsbyVersion()
     } catch (e) {
       // ignore
     }
