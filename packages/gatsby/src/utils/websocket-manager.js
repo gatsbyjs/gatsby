@@ -43,17 +43,18 @@ const getCachedPageData = async (
   if (pages.has(denormalize(pagePath)) || pages.has(pagePath)) {
     try {
       const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+
       return {
         result: pageData.result,
         id: pagePath,
       }
     } catch (err) {
-      console.log(
+      throw new Error(
         `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
       )
-      return undefined
     }
   }
+
   return undefined
 }
 
@@ -195,11 +196,17 @@ class WebsocketManager {
 
       const getDataForPath = async path => {
         if (!this.pageResults.has(path)) {
-          const result = await getCachedPageData(path, this.programDir)
-          if (result) {
+          try {
+            const result = await getCachedPageData(path, this.programDir)
+
+            if (!result) {
+              return
+            }
+
             this.pageResults.set(path, result)
-          } else {
-            console.log(`Page not found`, path)
+          } catch (err) {
+            console.log(err.message)
+
             return
           }
         }
