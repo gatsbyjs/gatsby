@@ -54,7 +54,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   const getName = tc => tc.name || tc.getTypeName()
 
   const isInternalType = tc => {
-    const typeName = tc.name || tc.getTypeName()
+    const typeName = getName(tc)
     if (internalTypes.includes(typeName)) {
       return true
     }
@@ -68,7 +68,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   }
 
   const shouldIncludeType = tc => {
-    const typeName = tc.name || tc.getTypeName()
+    const typeName = getName(tc)
     if (typesToExclude.includes(typeName)) {
       return false
     }
@@ -94,7 +94,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   const typeDefs = new Set()
 
   const addType = tc => {
-    const typeName = tc.name || tc.getTypeName()
+    const typeName = getName(tc)
     if (!processedTypes.has(typeName) && !isInternalType(tc)) {
       processedTypes.add(typeName)
       return typeDefs.add(tc)
@@ -113,7 +113,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
       if (tc instanceof ObjectTypeComposer) {
         const interfaces = tc.getInterfaces()
         interfaces.forEach(iface => {
-          const ifaceName = iface.name || iface.getTypeName()
+          const ifaceName = getName(iface)
           if (ifaceName !== `Node`) {
             addWithFieldTypes(schemaComposer.getAnyTC(ifaceName))
           }
