@@ -375,20 +375,12 @@ export default () => (
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
-- Walk through adding global styles to an example site in [tutorial part two](/tutorial/part-two/#creating-global-styles)
-  - More on global styles [with standard CSS files](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files)
-  - More on global styles with [CSS-in-JS](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-using-css-in-js)
-  - More on global styles [with CSS files and no layout component](/docs/creating-global-styles/#add-global-styles-with-css-files-and-no-layout-component)
-- Use the CSS-in-JS library [Glamor](/docs/glamor/)
-- Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
-- Use [CSS Modules](/tutorial/part-two/#css-modules)
-
 ### Using Styled Components
 
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `gatsby-config.js`
+- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
 
 #### Directions
 
