@@ -179,7 +179,7 @@ itemsArrayWithTagsArray.map((item, i) => {
 })
 ```
 
-I then used the gatsby createPage method to create pages for each of these rows ([shown here](https://github.com/kpennell/acrotagsgatsbyblog/blob/master/gatsby-node.js#L41)).
+I then used the Gatsby `createPage` method to create pages for each of these rows ([shown here](https://github.com/kpennell/acrotagsgatsbyblog/blob/master/gatsby-node.js#L41)).
 
 ## Making Gatsby Pages for Tags and Instructors
 
