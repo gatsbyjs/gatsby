@@ -16,7 +16,7 @@ npm i -g now
 
 ## Step 2: Deploying
 
-You can deploy your application by running the following in the root of the project directory:
+You can deploy your application by running the following command in the root of the project directory:
 
 ```shell
 now
