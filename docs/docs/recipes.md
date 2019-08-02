@@ -388,15 +388,23 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-pluging-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `gatsby-config.js`
+- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `gatsby-config.js`
 
 #### Directions
 
-1. Open the index page component (`src/pages/index.js`) and import the `styled-components` package
+1. Inside your `gatsby-config.js` file add `gatsby-plugin-styled-components`
 
-2. Style components by creating style blocks for each element type
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-styled-components`],
+}
+```
 
-3. Apply to the page by including styled components in the JSX
+2. Open the index page component (`src/pages/index.js`) and import the `styled-components` package
+
+3. Style components by creating style blocks for each element type
+
+4. Apply to the page by including styled components in the JSX
 
 ```jsx:title=src/pages/index.js
 import React from "react"
