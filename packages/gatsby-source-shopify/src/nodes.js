@@ -1,5 +1,4 @@
 import createNodeHelpers from "gatsby-node-helpers"
-import { camelCase } from "lodash/fp"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
@@ -16,7 +15,6 @@ const PRODUCT_OPTION = `ProductOption`
 const PRODUCT_VARIANT = `ProductVariant`
 const PRODUCT_METAFIELD = `ProductMetafield`
 const SHOP_POLICY = `ShopPolicy`
-const PRODUCT_TYPE = `ProductType`
 const PAGE = `Page`
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
@@ -96,9 +94,6 @@ export const CollectionNode = imageArgs =>
   })
 
 export const CommentNode = _imageArgs => createNodeFactory(COMMENT)
-
-export const ProductTypeNode = imageArgs => rawNode =>
-  createNodeFactory(PRODUCT_TYPE)({ id: camelCase(rawNode), name: rawNode })
 
 export const ProductNode = imageArgs =>
   createNodeFactory(PRODUCT, async node => {

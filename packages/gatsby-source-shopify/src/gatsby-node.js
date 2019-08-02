@@ -12,7 +12,6 @@ import {
   ProductVariantNode,
   ProductMetafieldNode,
   ShopPolicyNode,
-  ProductTypeNode,
   PageNode,
 } from "./nodes"
 import {
@@ -21,7 +20,6 @@ import {
   COLLECTIONS_QUERY,
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
-  PRODUCT_TYPES_QUERY,
   PAGES_QUERY,
 } from "./queries"
 
@@ -72,7 +70,6 @@ export const sourceNodes = async (
       }),
       createNodes(`blogs`, BLOGS_QUERY, BlogNode, args),
       createNodes(`collections`, COLLECTIONS_QUERY, CollectionNode, args),
-      createNodes(`productTypes`, PRODUCT_TYPES_QUERY, ProductTypeNode, args),
       createPageNodes(`pages`, PAGES_QUERY, PageNode, args),
       createNodes(`products`, PRODUCTS_QUERY, ProductNode, args, async x => {
         if (x.variants)
