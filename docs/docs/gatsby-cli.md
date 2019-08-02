@@ -74,7 +74,7 @@ You can now view gatsbyjs.org in the browser.
   On Your Network:  http://192.168.0.212:8000/ // highlight-line
 ```
 
-**Note**: you can't visit 0.0.0.0:8000 on Windows (but things will work with using either localhost:8000 or the "On Your Network" URL on Windows)
+**Note**: you can't visit 0.0.0.0:8000 on Windows (but things will work using either localhost:8000 or the "On Your Network" URL on Windows)
 
 ### `build`
 
