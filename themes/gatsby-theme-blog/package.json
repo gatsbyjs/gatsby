@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog#readme",
   "dependencies": {
-    "@emotion/core": "^10.0.14",
+    "@emotion/core": "^10.0.15",
     "@mdx-js/mdx": "^1.1.4",
     "@mdx-js/react": "^1.1.4",
     "@theme-ui/prism": "^0.2.25",
