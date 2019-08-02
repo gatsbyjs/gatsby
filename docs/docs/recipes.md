@@ -13,8 +13,8 @@ title: Recipes
 - Including setting up accounts at other sites, like Netlify
 - See [docs templates](/docs/docs-templates/) for formatting tips
 
-### Step-by-step directions
-Each step should be repeatable and to-the-point. Anything not critical to the task should be omitted.
+### Directions
+Step-by-step directions. Each step should be repeatable and to-the-point. Anything not critical to the task should be omitted.
 
 #### Live example (optional)
 A live example may not be possible depending on the nature of the recipe, in which case it is fine to omit.
@@ -267,7 +267,7 @@ You can use the node `createPages` API to pull unstructured data directly into G
 #### Prerequisites
 
 - A Gatsby Site with a `gatsby-node.js` file
-- The Gatsby CLI installed
+- The [Gatsby CLI](/docs/gatsby-cli) installed
 - The [axios](https://www.npmjs.com/package/axios) package installed through npm
 
 #### Directions
@@ -494,10 +494,38 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 ## 3. Working with starters
 
-Starters are boilerplate Gatsby sites maintained officially, or by the community.
+[Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
-- Learn how to use the Gatsby CLI tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
-- Browse the [Starter Library](/starters/)
+### Using a starter
+
+#### Prerequisites
+
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Find the starter you'd like to use. (_The [Starter Library](/starters/?v=2) is a good place to look!_)
+
+2. Generate a new site based on the starter. In the terminal, run:
+
+```shell
+gatsby new {your-project-name} {link-to-starter}
+```
+
+> _Don't run the above command as-is -- remember to replace {your-project-name} and {link-to-starter}!_
+
+3. Run your new site:
+
+```shell
+cd {your-project-name}
+gatsby develop
+```
+
+#### Additional resources
+
+- Follow a [more detailed guide](/docs/starters/) on using Gatsby starters.
+- Learn how to use the [Gatsby CLI](/docs/gatsby-cli) tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
+- Browse the [Starter Library](/starters/?v=2)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
 
 ## 4. Working with themes
@@ -505,7 +533,64 @@ Starters are boilerplate Gatsby sites maintained officially, or by the community
 A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
 - Read more on [What is a Gatsby Theme?](/docs/themes/what-are-gatsby-themes)
-- Learn how to use an existing Gatsby theme in the [shorter conceptual guide](/docs/themes/using-a-gatsby-theme) or the [step-by-step tutorial](/tutorial/using-a-theme).
+
+### Creating a new site using a theme starter
+
+Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example we'll use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
+
+#### Prerequisites
+
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Generate a new site based on the blog theme starter:
+
+```shell
+gatsby new {your-project-name} https://github.com/gatsbyjs/gatsby-starter-blog-theme
+```
+
+2. Run your new site:
+
+```shell
+cd {your-project-name}
+gatsby develop
+```
+
+#### Additional resources
+
+- Learn how to use an existing Gatsby theme in the [shorter conceptual guide](/docs/themes/using-a-gatsby-theme) or the more detailed [step-by-step tutorial](/tutorial/using-a-theme).
+
+### Building a new theme
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-the-gatsby-theme-workspace-starter-to-begin-building-a-new-theme"
+  lessonTitle="Use the Gatsby Theme Workspace Starter to Begin Building a New Theme"
+/>
+
+#### Prerequisites
+
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+* [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) installed
+
+#### Directions
+
+1. Generate a new theme workspace using the [Gatsby theme workspace starter](https://github.com/gatsbyjs/gatsby-starter-theme-workspace):
+
+```shell
+gatsby new {your-project-name} https://github.com/gatsbyjs/gatsby-starter-theme-workspace
+```
+
+2. Run the example site in the workspace:
+
+```shell
+yarn workspace example develop
+```
+
+#### Additional resources
+
+- Follow a [more detailed guide](/docs/themes/building-themes/) on using the Gatsby theme workspace starter.
 - Learn how to build your own theme in the [Gatsby Theme Authoring video course on Egghead](https://egghead.io/courses/gatsby-theme-authoring), or in the [video course's complementary written tutorial companion](/tutorial/building-a-theme).
 
 ## 5. Sourcing data
@@ -518,7 +603,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ## 6. Querying data
 
-### Using PageQuery
+### Using a Page Query
 
 You can use the `graphql` tag to query data in the pages of your Gatsby site. This gives you access to anything included in Gatsby's data layer, such as site metadata, source plugins, images, and more.
 
