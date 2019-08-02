@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.24...gatsby-cli@2.7.26) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.23...gatsby-cli@2.7.24) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.22...gatsby-cli@2.7.23) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.21...gatsby-cli@2.7.22) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby:** Panic when root config is a function ([#16272](https://github.com/gatsbyjs/gatsby/issues/16272)) ([81ff489](https://github.com/gatsbyjs/gatsby/commit/81ff489))
+
 ## [2.7.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.20...gatsby-cli@2.7.21) (2019-07-29)
 
 ### Bug Fixes

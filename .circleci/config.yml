@@ -318,6 +318,17 @@ workflows:
             branches:
               only:
                 - master
+      - manual_www_approval:
+          type: approval
+      - build_www:
+          context: build_www
+          requires:
+            - manual_www_approval
+      - deploy_www:
+          requires:
+            - build_www
+          context: build_www
+
   www_deploy:
     triggers:
       - schedule:
