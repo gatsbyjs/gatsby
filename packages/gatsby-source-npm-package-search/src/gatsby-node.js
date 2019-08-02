@@ -1,4 +1,7 @@
 const algoliasearch = require(`algoliasearch`)
+const got = require(`got`)
+const url = require(`url`)
+const path = require(`path`)
 
 const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
 var index = client.initIndex(`npm-search`)
@@ -14,6 +17,23 @@ function browse({ index, ...params }) {
   })
 }
 
+const generateGithubReadmeUrl = ({
+  user,
+  project,
+  head,
+  branch,
+  path: dir,
+}) => {
+  let directory = head || branch
+  if (dir) {
+    directory = dir.replace(/^\/(tree)?/, ``)
+  }
+
+  return url.resolve(
+    `https://raw.githubusercontent.com/`,
+    path.posix.join(user, project, directory, `README.md`)
+  )
+}
 exports.sourceNodes = async (
   { boundActionCreators, createNodeId, createContentDigest },
   { keywords }
@@ -28,8 +48,29 @@ exports.sourceNodes = async (
     hitsPerPage: 1000,
   })
 
-  hits.forEach(hit => {
+  await hits.map(async hit => {
     const parentId = createNodeId(`plugin ${hit.objectID}`)
+
+    if (!hit.readme && hit.repository && hit.repository.host === `github.com`) {
+      try {
+        hit.readme = (await got.get(
+          generateGithubReadmeUrl(hit.repository)
+        )).body
+      } catch (err) {
+        // carry-on
+      }
+    }
+
+    if (!hit.readme) {
+      try {
+        hit.readme = (await got.get(
+          url.resolve(`https://unpkg.com/`, `/${hit.objectID}/README.md`)
+        )).body
+      } catch (err) {
+        // carry-on
+      }
+    }
+
     const readmeNode = {
       id: createNodeId(`readme ${hit.objectID}`),
       parent: parentId,

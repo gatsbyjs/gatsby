@@ -19996,6 +19996,7 @@ timsort@^0.3.0:
 tiny-async-pool@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/tiny-async-pool/-/tiny-async-pool-1.0.4.tgz#bbac28a39a754576d8d0615d4e2ad35c87da6169"
+  integrity sha512-4gdLvReS3WwmPCxZjj38Go673xhEXlK77fVFA2x+dE2Bf9QzDkVQb3rdO1iJt337ybhir42m4zM2GHJjiuFwoA==
   dependencies:
     semver "^5.5.0"
     yaassertion "^1.0.0"
