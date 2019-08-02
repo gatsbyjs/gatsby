@@ -39,6 +39,7 @@ Some examples using react-helmet:
 
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
 For example, here is a structured data snippet in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data) that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
+
 ```js
 <script type="application/ld+json">
 {
@@ -54,4 +55,5 @@ For example, here is a structured data snippet in the [JSON-LD format](https://d
 }
 </script>
 ```
- When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method. After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
+
+When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method. After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
