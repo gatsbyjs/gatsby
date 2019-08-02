@@ -12,9 +12,9 @@ Sass will compile `.sass` and `.scss` files to `.css` files for you, so you can 
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs), then come back.
 
-1.  Install the Gatsby plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass/).
+1.  Install the Gatsby plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass/) and `node-sass`, a required peer dependency as of v2.0.0.
 
-`npm install --save gatsby-plugin-sass`
+`npm install --save node-sass gatsby-plugin-sass`
 
 2.  Include the plugin in your `gatsby-config.js` file.
 

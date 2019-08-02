@@ -39,4 +39,11 @@ In Markdown posts and pages, including an animated GIF is the same as a static i
 
 Animated GIFs can be quite large in size, however, so be careful not to sabotage your webpages' performance with extremely large files. You could reduce file size by [optimizing the frames](https://skylilies.livejournal.com/244378.html) or converting them to video.
 
-> Note: beware that flashing and autoplaying GIFs can cause accessibility problems. One technique would be to add controls, such as using a package like [react-gif-player](https://www.npmjs.com/package/react-gif-player).
+## Accessibility concerns with animated GIFs
+
+Beware that flashing and autoplaying GIFs can cause issues for users who are sensitive to motion. GIFs should not autoplay whenever possible for safety reasons. One technique would be to add controls, such as using a package like [react-gif-player](https://www.npmjs.com/package/react-gif-player) as a [client-only package](/docs/using-client-side-only-packages/).
+
+For more information on accessible motion:
+
+- https://source.opennews.org/articles/motion-sick/
+- https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-pause.html
