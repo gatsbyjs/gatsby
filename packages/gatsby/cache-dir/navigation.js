@@ -129,7 +129,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
-    return results[0]
+    return results[results.length - 1]
   }
 
   if (prevRouterProps) {
