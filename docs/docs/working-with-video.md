@@ -186,7 +186,7 @@ One advantage of integrating a custom component with your own hosted video is it
 - audio description: an audio version of visual information not conveyed in dialogue
 - accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers
 
-Though captions, transcripts, and audio descriptions primarily aim to assist those with greater difficulty seeing or hearing, they benefit many other users who prefer reading to listening.
+Though captions, transcripts, and audio descriptions primarily aim to assist those with greater difficulty seeing or hearing, they benefit many other users who prefer reading to listening. Captions can also help people watching videos when they can't have the sound turned on for whatever reason.
 
 HTML5 provides support for these types of assistive content through the `<track>` element. The track element is nested under a `<video`> element as an empty tag. An example usage of the `<track>` element with a video looks like this:
 
