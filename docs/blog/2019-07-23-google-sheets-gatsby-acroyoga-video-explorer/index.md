@@ -1,11 +1,11 @@
 ---
 title: "Using the Google Sheets API With Gatsby for Creating Fast Sites With Simple Data Sources"
-date: 2019-07-23
+date: 2019-08-02
 author: Kyle Pennell
 excerpt: "Learn how to use the Google Sheets API with Gatsby to build an AcroYoga video explorer site."
 tags:
-  - Google Sheets
-  - Video Player
+  - apis
+  - gatsby-image
 ---
 
 I recently prototyped an [Acroyoga](https://en.wikipedia.org/wiki/Acroyoga)-focused side project, called ['AcroTags'](https://acrotagsgatsbyblog.netlify.com), using Gatsby and the Google Sheets API. The site was as fun to build and populate with data as it is to use for discovering Acroyoga videos. This post will explore why and how I made this site and cover the specific code I used to get Gatsby and Google Sheets to work nicely together. I hope this tutorial and the code samples allow you to quickly prototype your next idea using this very simple and powerful stack.
