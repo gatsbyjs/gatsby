@@ -3496,3 +3496,17 @@
     - Netlify deploy configuration
     - Perfect score on Lighthouse for SEO, Accessibility and Performance and PWA!
     - ..and more
+- url: https://gatsby-starter-fashion-portfolio.netlify.com/
+  repo: https://github.com/shobhitchittora/gatsby-starter-fashion-portfolio
+  description: A Gatsby starter for a professional and minimal fashion portfolio.
+  tags:
+    - Fashion-portfolio
+    - Blog
+    - Styling: CSS
+    - CSS-grid
+  features:
+    - A minimal and simple starter for your fashion portfolio
+    - No need for any CMS, work with all your data and images locally.
+    - Separate components for different pages and grid
+    - Uses gatsby-image to load images
+    - Built using the old school CSS.
