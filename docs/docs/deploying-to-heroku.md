@@ -26,25 +26,41 @@ You can optionally add the buildpacks to `app.json` if you want to take advantag
 }
 ```
 
-Add a `heroku-postbuild` script in your `package.json`:
+Heroku will automatically detect and run the `build` script from your `package.json` which should already look like this:
 
 ```json:title=package.json
 {
   "scripts": {
-    "heroku-postbuild": "gatsby build"
+    "build": "gatsby build"
   }
 }
 ```
 
 Finally, add a `static.json` file in the root of your project to define the directory where your static assets will be. You can check all the options for this file in the [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static#configuration) configuration.
 
+The following configuration will give you a good start point in line with Gatsby's [suggested approach to caching](/docs/caching/).
+
 ```json:title=static.json
 {
   "root": "public/",
   "headers": {
-    "/**.js": {
+    "/**/": {
       "Cache-Control": "public, max-age=0, must-revalidate"
+    },
+    "/**.css": {
+      "Cache-Control": "public, max-age=31536000, immutable"
+    },
+    "/**.js": {
+      "Cache-Control": "public, max-age=31536000, immutable"
+    },
+    "/static/**": {
+      "Cache-Control": "public, max-age=31536000, immutable"
+    },
+    "/icons/*.png": {
+      "Cache-Control": "public, max-age=31536000, immutable"
     }
-  }
+  },
+  "https_only": true,
+  "error_page": "404.html"
 }
 ```

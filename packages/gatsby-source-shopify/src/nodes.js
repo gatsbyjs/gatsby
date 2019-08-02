@@ -14,6 +14,7 @@ const COMMENT = `Comment`
 const PRODUCT = `Product`
 const PRODUCT_OPTION = `ProductOption`
 const PRODUCT_VARIANT = `ProductVariant`
+const PRODUCT_METAFIELD = `ProductMetafield`
 const SHOP_POLICY = `ShopPolicy`
 const PRODUCT_TYPE = `ProductType`
 const PAGE = `Page`
@@ -109,6 +110,14 @@ export const ProductNode = imageArgs =>
       )
     }
 
+    if (node.metafields) {
+      const metafields = node.metafields.edges.map(edge => edge.node)
+
+      node.metafields___NODE = metafields.map(metafield =>
+        generateNodeId(PRODUCT_METAFIELD, metafield.id)
+      )
+    }
+
     if (node.options)
       node.options___NODE = node.options.map(option =>
         generateNodeId(PRODUCT_OPTION, option.id)
@@ -129,6 +138,9 @@ export const ProductNode = imageArgs =>
     return node
   })
 
+export const ProductMetafieldNode = _imageArgs =>
+  createNodeFactory(PRODUCT_METAFIELD)
+
 export const ProductOptionNode = _imageArgs => createNodeFactory(PRODUCT_OPTION)
 
 export const ProductVariantNode = imageArgs =>
@@ -147,4 +159,4 @@ export const ProductVariantNode = imageArgs =>
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
 
-export const PagesNode = createNodeFactory(PAGE)
+export const PageNode = createNodeFactory(PAGE)

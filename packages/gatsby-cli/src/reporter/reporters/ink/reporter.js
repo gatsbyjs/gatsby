@@ -1,9 +1,14 @@
 import React from "react"
-import { Static, Box } from "ink"
+import { Static, Box, Text } from "ink"
 import chalk from "chalk"
+import { trackBuildError } from "gatsby-telemetry"
 import Spinner from "./components/spinner"
 import ProgressBar from "./components/progress-bar"
+import Develop from "./components/develop"
 import { Message } from "./components/messages"
+
+import Error from "./components/error"
+
 import isTTY from "../../../util/is-tty"
 import calcElapsedTime from "../../../util/calc-elapsed-time"
 
@@ -32,9 +37,14 @@ export default class GatsbyReporter extends React.Component {
     verbose: false,
     messages: [],
     activities: {},
+    stage: { stage: `init`, context: {} },
   }
 
   format = chalk
+
+  setStage = stage => {
+    this.setState({ stage })
+  }
 
   createActivity = ({ id, ...options }) => {
     this.setState(state => {
@@ -89,21 +99,17 @@ export default class GatsbyReporter extends React.Component {
     this.verbose = isVerbose
   }
 
-  _addMessage(type, str) {
+  _addMessage(type, details) {
     // threat null/undefind as an empty character, it seems like ink can't handle empty str
-    if (!str) {
-      str = `\u2800`
+    if (!details) {
+      details = `\u2800`
     }
+
+    const msg = { type, details }
 
     this.setState(state => {
       return {
-        messages: [
-          ...state.messages,
-          {
-            text: str,
-            type,
-          },
-        ],
+        messages: [...state.messages, msg],
       }
     })
   }
@@ -121,8 +127,39 @@ export default class GatsbyReporter extends React.Component {
     this._addMessage(`verbose`, str)
   }
 
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error: error.name }
+  }
+
+  componentDidCatch(error, info) {
+    trackBuildError(`INK`, {
+      error: {
+        message: error.name,
+        stack: info.componentStack,
+      },
+    })
+  }
+
   render() {
-    const { activities, messages, disableColors } = this.state
+    const {
+      activities,
+      messages,
+      disableColors,
+      stage,
+      hasError,
+      error,
+    } = this.state
+
+    if (hasError) {
+      // You can render any custom fallback UI
+      return (
+        <Box flexDirection="row">
+          <Message type="error" hideColors={disableColors}>
+            We've encountered an error: {error}
+          </Message>
+        </Box>
+      )
+    }
 
     const spinners = []
     const progressBars = []
@@ -142,13 +179,15 @@ export default class GatsbyReporter extends React.Component {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static>
-            {messages.map((msg, index) => (
-              <Box textWrap="wrap" key={index}>
-                <Message type={msg.type} hideColors={disableColors}>
-                  {msg.text}
+            {messages.map((msg, index) =>
+              msg.type === `error` ? (
+                <Error type={msg.type} details={msg.details} key={index} />
+              ) : (
+                <Message type={msg.type} hideColors={disableColors} key={index}>
+                  <Text>{msg.details}</Text>
                 </Message>
-              </Box>
-            ))}
+              )
+            )}
           </Static>
 
           {spinners.map(activity => (
@@ -165,6 +204,9 @@ export default class GatsbyReporter extends React.Component {
             />
           ))}
         </Box>
+        {stage.stage === `DevelopBootstrapFinished` && (
+          <Develop stage={stage} />
+        )}
       </Box>
     )
   }
