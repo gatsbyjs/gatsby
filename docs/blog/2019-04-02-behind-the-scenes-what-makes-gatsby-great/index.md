@@ -6,9 +6,8 @@ excerpt: "Gatsby is fast. You know this. This post outlines the numerous perform
 tags:
   - performance
   - apis
-  - webpagetest
   - lighthouse
-  - ci
+  - deployment
 ---
 
 Gatsby is **great** from a multititude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
@@ -16,7 +15,7 @@ Gatsby is **great** from a multititude of perspectives. Our community is **great
 As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider [this post on the `webdev` subreddit on Reddit](https://www.reddit.com/r/webdev/comments/9z5dsr/how_does_reactjs_have_such_a_fast_website/?st=jtqbllhm&sh=60148ea7).
 
 <Pullquote citation="reddit/r/webdev">
-Genuine question, every page is loaded immediatley [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
+Genuine question, every page is loaded immediately [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
 </Pullquote>
 
 Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, as you may or may not know, is an application built with and powered by Gatsby 💪

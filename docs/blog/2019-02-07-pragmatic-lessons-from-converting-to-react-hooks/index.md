@@ -4,7 +4,6 @@ date: 2019-02-07
 author: Daniel Lemay
 tags:
   - react
-  - react hooks
 image: "./images/hooks-diff.jpg"
 showImageInArticle: true
 canonicalLink: "https://www.dslemay.com/blog/2019/02/06/pragmatic-lessons-from-converting-to-react-hooks"

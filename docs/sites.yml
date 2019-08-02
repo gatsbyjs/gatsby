@@ -1144,7 +1144,7 @@
     - Portfolio
     - Web Development
     - Blog
-- title: LekoArts
+- title: LekoArts — Graphic Designer & Front-End Developer
   main_url: "https://www.lekoarts.de"
   url: "https://www.lekoarts.de"
   source_url: "https://github.com/LekoArts/portfolio"
@@ -1164,6 +1164,7 @@
     - Design
     - Web Development
     - Freelance
+    - Open Source
 - title: 杨二小的博客
   main_url: "https://blog.yangerxiao.com/"
   url: "https://blog.yangerxiao.com/"
@@ -1176,7 +1177,7 @@
   main_url: "https://mottox2.com"
   url: "https://mottox2.com"
   source_url: "https://github.com/mottox2/website"
-  description: Web developer / UI Desinger in Tokyo Japan.
+  description: Web developer / UI Designer in Tokyo Japan.
   featured: false
   categories:
     - Blog
@@ -2905,7 +2906,7 @@
   url: https://www.dekema.com/
   main_url: https://www.dekema.com/
   description: >
-    Worldclass crafting: Furnace, fervor, fullfilment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
+    Worldclass crafting: Furnace, fervor, fulfillment. Delivering highest demand for future craftsmanship. Built using Gatsby v2 and Prismic.
   categories:
     - Healthcare
     - Science
@@ -3634,7 +3635,7 @@
 - title: Gábor Fűzy pianist
   main_url: "https://pianobar.hu"
   url: "https://pianobar.hu"
-  description: Gábor Fűzy pianist's offical website built with Gatsby v2.
+  description: Gábor Fűzy pianist's official website built with Gatsby v2.
   categories:
     - Music
   built_by: Zoltán Bedi
@@ -4609,7 +4610,7 @@
   url: https://our-academy.org/
   source_url: "https://github.com/ouracademy/website"
   description: >
-    Ouracademy is an organization that promoves the education in software development throught blog posts & videos smiley.
+    Ouracademy is an organization that promoves the education in software development through blog posts & videos smiley.
   categories:
     - Open Source
     - Blog
@@ -5518,7 +5519,7 @@
   url: https://lendo.at
   main_url: https://lendo.at
   description: >
-    A Comparsion site for best private loan offer from banks in Austria.
+    A Comparison site for best private loan offer from banks in Austria.
   categories:
     - Business
     - Finance
@@ -6364,8 +6365,8 @@
   url: https://homealarmreport.com/
   main_url: https://homealarmreport.com/
   description: >
-    Home Alarm Report is dedicated to helping consumers make informed decisions 
-    about home security solutions. The site was easily migrated from a legacy WordPress 
+    Home Alarm Report is dedicated to helping consumers make informed decisions
+    about home security solutions. The site was easily migrated from a legacy WordPress
     installation and the dev team chose Gatsby for its site speed and SEO capabilities.
   categories:
     - Blog
@@ -6441,18 +6442,6 @@
     - Consulting
     - Education
     - Landing Page
-- title: Onramp
-  url: https://www.onramp.io/
-  main_url: https://www.onramp.io/
-  description: >
-    Onramp is a technical workforce solutions company. We help corporate clients build new pipelines of talent to meet their technical and HR goals. We specialize in discovering new pools of talent and provide customized training so candidates are qualified and better prepared employees.
-  categories:
-    - Business
-    - Education
-    - Landing Page
-  built_by: Nicola B.
-  built_by_url: https://www.linkedin.com/in/nicola-b/
-  featured: false
 - title: Write/Speak/Code
   url: https://www.writespeakcode.com/
   main_url: https://www.writespeakcode.com/
@@ -6562,6 +6551,27 @@
     - Consulting
     - Community
   featured: false
+- title: Zoe Rodriguez
+  url: https://zoerodrgz.com
+  main_url: https://zoerodrgz.com
+  description: >
+    Portfolio for Los Angeles-based designer Zoe Rodriguez. Built with Gatsby.
+  categories:
+    - Portfolio
+    - Design
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
+  featured: false
+- title: TriActive USA
+  url: https://triactiveusa.com
+  main_url: https://triactiveusa.com
+  description: >
+    Website and blog for TriActive USA. Built with Gatsby.
+  categories:
+    - Landing Page
+    - Business
+  built_by: Chase Ohlson
+  built_by_url: https://chaseohlson.com
 - title: LaunchDarkly
   url: https://launchdarkly.com/
   main_url: https://launchdarkly.com/
@@ -6572,4 +6582,230 @@
     - Marketing
   built_by: LaunchDarkly
   built_by_url: https://launchdarkly.com/
+  featured: false
+- title: Arpit Goyal
+  url: https://arpitgoyal.com
+  main_url: https://arpitgoyal.com
+  source_url: https://github.com/92arpitgoyal/ag-blog
+  description: >
+    Blog and portfolio website of a Front-end Developer turned Product Manager.
+  categories:
+    - Blog
+    - Portfolio
+    - Technology
+    - User Experience
+  built_by: Arpit Goyal
+  built_by_url: https://twitter.com/_arpitgoyal
+  featured: false
+- title: Portfolio of Cole Townsend
+  url: https://twnsnd.co
+  main_url: https://twnsnd.co
+  description: Portfolio of Cole Townsend, Product Designer
+  categories:
+    - Portfolio
+    - User Experience
+    - Web Development
+    - Design
+  built_by: Cole Townsend
+  built_by_url: https://twitter.com/twnsndco
+- title: Jana Desomer
+  url: https://www.janadesomer.be/
+  main_url: https://www.janadesomer.be/
+  description: >
+    I'm Jana, a digital product designer with coding skills, based in Belgium
+  categories:
+    - Portfolio
+  built_by: Jana Desomer Designer/Developer
+  built_by_url: https://www.janadesomer.be/
+  featured: false
+- title: Carbon8 Regenerative Agriculture
+  url: https://www.carbon8.org.au/
+  main_url: https://www.carbon8.org.au/
+  description: >
+    Carbon8 is a Not for Profit charity that supports Aussie farmers to transition to regenerative agriculture practices and rebuild the carbon (organic matter) in their soil from 1% to 8%.
+  categories:
+    - Nonprofit
+    - eCommerce
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
+- title: Reactgo blog
+  url: https://reactgo.com/
+  main_url: https://reactgo.com/
+  description: >
+    It provides tutorials & articles about modern open source web technologies such as react,vuejs and gatsby.
+  categories:
+    - Blog
+    - Education
+    - Programming
+    - Web Development
+  built_by: Sai gowtham
+  built_by_url: "https://twitter.com/saigowthamr"
+  featured: false
+- title: City Springs
+  url: https://citysprings.com/
+  main_url: https://citysprings.com/
+  description: >
+    Sandy Springs is a city built on creative thinking and determination. They captured a bold vision for a unified platform to bring together new and existing information systems. To get there, the Sandy Springs communications team partnered with Mediacurrent on a new Drupal 8 decoupled platform architecture with a Gatsbyjs front end to power both the City Springs website and its digital signage network. Now, the Sandy Springs team can create content once and publish it everywhere.
+  categories:
+    - Community
+    - Government
+  built_by: Mediacurrent
+  built_by_url: https://www.mediacurrent.com
+  featured: false
+- title: Behalf
+  url: https://www.behalf.no/
+  main_url: https://www.behalf.no/
+  description: >
+    Behalf is Norwegian based digital design agency.
+  categories:
+    - Agency
+    - Portfolio
+    - Business
+    - Consulting
+    - Design
+    - Design System
+    - Marketing
+    - Web Development
+    - User Experience
+  built_by: Behalf
+  built_by_url: https://www.behalf.no/
+  featured: false
+- title: Saxenhammer & Co.
+  url: https://saxenhammer-co.com/
+  main_url: https://saxenhammer-co.com/
+  description: >
+    Saxenhammer & Co. is a leading boutique investment bank in Continental Europe. The firm’s strong track record is comprised of the execution of 200 successful transactions across all major industries.
+  categories:
+    - Consulting
+    - Finance
+    - Business
+  built_by: Axel Fuhrmann
+  built_by_url: https://axelfuhrmann.com/
+  featured: false
+- title: UltronEle
+  url: http://ultronele.com
+  main_url: https://runbytech.github.io/ueofcweb/
+  source_url: https://github.com/runbytech/ueofcweb
+  description: >
+    UltronEle is a light, fast, simple yet interesting serverless e-learning CMS based on GatsbyJS. It aims to provide a easy-use product for tutors, teachers, instructors from all kinks of fields with near-zero efforts to setup their own authoring tool and content publish website.
+  categories:
+    - Education
+    - Consulting
+    - Landing Page
+    - Web Development
+    - Open Source
+    - Learning
+  built_by: RunbyTech
+  built_by_url: http://runbytech.co
+  featured: false
+- title: Nick Selvaggio
+  url: https://nickgs.com/
+  main_url: https://nickgs.com/
+  description: >
+    The personal website of Nick Selvaggio. Long Island based web developer, teacher, and technologist.
+  categories:
+    - Consulting
+    - Programming
+    - Web Development
+  featured: false
+- title: Free & Open Source Gatsby Themes by LekoArts
+  main_url: "https://themes.lekoarts.de"
+  url: "https://themes.lekoarts.de"
+  source_url: "https://github.com/LekoArts/gatsby-themes/tree/master/www"
+  built_by: LekoArts
+  built_by_url: "https://github.com/LekoArts"
+  description: >-
+    Get high-quality and customizable Gatsby themes to quickly bootstrap your website! Choose from many professionally created and impressive designs with a wide variety of features and customization options. Use Gatsby Themes to take your project to the next level and let you and your customers take advantage of the many benefits Gatsby has to offer.
+  categories:
+    - Open Source
+    - Directory
+    - Marketing
+    - Landing Page
+  featured: false
+- title: Lars Roettig
+  url: https://larsroettig.dev/
+  main_url: https://larsroettig.dev/
+  description: >
+    Lars Roettig is a Magento Maintainer and e-commerce specialist. On his Blog, he writes Software Architecture and Magento Development.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Community
+    - Open Source
+    - eCommerce
+  built_by: Lars Roettig
+  built_by_url: https://larsroettig.dev/
+  featured: false
+- title: Cade Kynaston
+  url: https://cade.codes
+  main_url: https://cade.codes
+  source_url: https://github.com/cadekynaston/gatsby-portfolio
+  description: >
+    Cade Kynaston's Portfolio
+  categories:
+    - Portfolio
+  built_by: Cade Kynaston
+  built_by_url: https://github.com/cadekynaston
+  featured: false
+- title: Growable Meetups
+  url: https://www.growable.io/
+  main_url: https://www.growable.io/
+  description: >
+    Growable - Events to Accelerate your career in Tech. Made with <3 with Gatsby, React & Netlify by Talent Point in London.
+  categories:
+    - Event
+    - Technology
+    - Education
+    - Community
+    - Conference
+  built_by: Talent Point
+  built_by_url: https://github.com/talent-point/
+  featured: false
+- title: Fantastic Metropolis
+  main_url: https://fantasticmetropolis.com
+  url: https://fantasticmetropolis.com
+  description: >
+    Fantastic Metropolis ran between 2001 and 2006, highlighting the potential of literary science fiction and fantasy.
+  categories:
+    - Entertainment
+  built_by: Luis Rodrigues
+  built_by_url: https://goblindegook.com
+  featured: false
+- title: Simon Koelewijn
+  main_url: https://simonkoelewijn.nl
+  url: https://simonkoelewijn.nl
+  description: >
+    Personal blog of Simon Koelewijn, where he blogs about UX, analytics and web development (in Dutch). Made awesome and fast by using Gatsby 2.x (naturally) and gratefully using Netlify and Netlify CMS.
+  categories:
+    - Freelance
+    - Blog
+    - Web Development
+    - User Experience
+  built_by: Simon Koelewijn
+  built_by_url: https://simonkoelewijn.nl
+  featured: false
+- title: Raconteur Careers
+  main_url: https://careers.raconteur.net
+  url: https://careers.raconteur.net
+  description: >
+    Raconteur is a London-based publishing house and content marketing agency. We have built this careers portal Gatsby v2 with TypeScript, Styled-Components, React-Spring and Contentful.
+  categories:
+    - Media
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+  featured: false
+- title: Frankly Steve
+  url: https://www.franklysteve.com/
+  main_url: https://www.franklysteve.com/
+  description: >
+    Wedding photography with all the hugs, tears, kisses, smiles, laughter, banter, kids up trees, friends in hedges.
+  categories:
+    - Photography
+    - Portfolio
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
   featured: false

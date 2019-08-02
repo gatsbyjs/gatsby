@@ -10,9 +10,9 @@ Object {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
       "isInBootstrap": true,
-      "pages": Array [
+      "pages": Set {
         "/my-sweet-new-page/",
-      ],
+      },
       "query": "",
     },
   },
