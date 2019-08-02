@@ -501,7 +501,9 @@ gatsby develop
 #### Prerequisites
 
 - The [Gatsby CLI](/docs/gatsby-cli) installed
-+ [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) installed
+
+* [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) installed
+
 #### Directions
 
 1. Generate a new theme workspace using the [Gatsby theme workspace starter](https://github.com/gatsbyjs/gatsby-starter-theme-workspace):
