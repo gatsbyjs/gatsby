@@ -375,13 +375,83 @@ export default () => (
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
-- Walk through adding global styles to an example site in [tutorial part two](/tutorial/part-two/#creating-global-styles)
-  - More on global styles [with standard CSS files](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files)
-  - More on global styles with [CSS-in-JS](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-using-css-in-js)
-  - More on global styles [with CSS files and no layout component](/docs/creating-global-styles/#add-global-styles-with-css-files-and-no-layout-component)
-- Use the CSS-in-JS library [Glamor](/docs/glamor/)
-- Use the CSS-in-JS library [Styled Components](/docs/styled-components/)
-- Use [CSS Modules](/tutorial/part-two/#css-modules)
+### Using Styled Components
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/) with an index page component
+- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
+
+#### Directions
+
+1. Inside your `gatsby-config.js` file add `gatsby-plugin-styled-components`
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-styled-components`],
+}
+```
+
+2. Open the index page component (`src/pages/index.js`) and import the `styled-components` package
+
+3. Style components by creating style blocks for each element type
+
+4. Apply to the page by including styled components in the JSX
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import styled from "styled-components" //highlight-line
+
+const Container = styled.div`
+  margin: 3rem auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+const Avatar = styled.img`
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  margin: 0;
+`
+
+const Username = styled.h2`
+  margin: 0 0 12px 0;
+  padding: 0;
+`
+
+const User = props => (
+  <UserWrapper>
+    <Avatar src={props.avatar} alt={props.username} />
+    <Username>{props.username}</Username>
+  </UserWrapper>
+)
+
+export default () => (
+  <Container>
+    <h1>About Styled Components</h1>
+    <p>Styled Components is cool</p>
+    <User
+      username="Jane Doe"
+      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+    />
+    <User
+      username="Bob Smith"
+      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+    />
+  </Container>
+)
+```
+
+4. Run `gatsby develop` to see the changes
+
+#### Related Links
+
+- [More on Using Styled Components](/docs/styled-components/)
+- [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
 
 ### Adding a Local Font
 
