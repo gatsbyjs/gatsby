@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-cli
 
-## [2.7.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.24...gatsby-cli@2.7.25) (2019-08-01)
-
-**Note:** Version bump only for package gatsby-cli
-
 ## [2.7.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.23...gatsby-cli@2.7.24) (2019-08-01)
 
 **Note:** Version bump only for package gatsby-cli

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.1.10...gatsby-source-shopify@2.2.0) (2019-08-01)
+
+### Features
+
+- **gatsby-source-shopify:** add metafields to product nodes ([#16312](https://github.com/gatsbyjs/gatsby/issues/16312)) ([271bad2](https://github.com/gatsbyjs/gatsby/commit/271bad2))
+
 ## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.1.9...gatsby-source-shopify@2.1.10) (2019-08-01)
 
 **Note:** Version bump only for package gatsby-source-shopify
