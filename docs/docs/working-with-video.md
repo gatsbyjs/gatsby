@@ -207,6 +207,6 @@ export default () => (
 
 The kind attribute can be of a variety of different types including `captions`, `subtitles`, and `descriptions`, among others. The `srcLang` defines English as the language used in the captions in the example, and the captions file imported is used as the source. You can read about the specific attributes of a [`<track>` on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track).
 
-**Note**: the filepath to import the captions includes the "file-path!" prefix which helps webpack import the `.vtt` file.
+**Note**: the filepath to import the captions in the above code snippet includes the `file-loader!` prefix, which helps webpack import the `.vtt` caption file.
 
 Check out the accessible [HTML5 video player from PayPal](https://github.com/paypal/accessible-html5-video-player#react-version) for an example compatible with Gatsby and React.
