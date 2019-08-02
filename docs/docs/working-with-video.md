@@ -183,7 +183,7 @@ One advantage of integrating a custom component with your own hosted video is it
 
 - captions: a text version of the audio, syncronized with the video
 - transcript (or subtitles): a text version of the audio and visual content, like captions but also including descriptions of key visual elements in the video
-- audio description: an audio version of visual information not conveyed in dialouge
+- audio description: an audio version of visual information not conveyed in dialogue
 - accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers
 
 Though captions, transcripts, and audio descriptions primarily aim to assist those with greater difficulty seeing or hearing, they benefit many other users who prefer reading to listening.
