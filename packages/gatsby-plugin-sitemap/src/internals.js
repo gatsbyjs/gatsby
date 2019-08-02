@@ -34,8 +34,11 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
         `SiteMetaData 'siteUrl' property is required. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
       )
     }
-    
-    if(r.data.site.siteMetadata.siteUrl!=null || r.data.site.siteMetadata.siteUrl.trim()!="") {
+
+    if (
+      r.data.site.siteMetadata.siteUrl == null ||
+      r.data.site.siteMetadata.siteUrl.trim() == ""
+    ) {
       throw new Error(
         `SiteMetaData 'siteUrl' property can't be left empty, site's url is required. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
       )
