@@ -191,7 +191,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `)
 
   if (result.errors) {
-    reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query', result.errors);
+    reporter.panicOnBuild(
+      '🚨  ERROR: Loading "createPages" query',
+      result.errors
+    )
   }
 
   // Create blog post pages.
