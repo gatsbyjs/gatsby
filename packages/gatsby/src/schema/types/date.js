@@ -4,6 +4,7 @@ const {
   GraphQLBoolean,
   GraphQLScalarType,
   Kind,
+  defaultFieldResolver,
 } = require(`graphql`)
 const { oneLine } = require(`common-tags`)
 
@@ -215,10 +216,12 @@ const formatDate = ({
   return normalizedDate
 }
 
-const getDateResolver = defaults => {
+const getDateResolver = (defaults, prevFieldConfig) => {
+  const resolver = prevFieldConfig.resolve || defaultFieldResolver
   const { locale, formatString } = defaults
   return {
     args: {
+      ...prevFieldConfig.args,
       formatString: {
         type: GraphQLString,
         description: oneLine`
@@ -248,8 +251,8 @@ const getDateResolver = defaults => {
         defaultValue: locale,
       },
     },
-    resolve(source, args, context, { fieldName }) {
-      const date = source[fieldName]
+    async resolve(source, args, context, info) {
+      const date = await resolver(source, args, context, info)
       if (date == null) return null
 
       return Array.isArray(date)

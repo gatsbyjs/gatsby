@@ -5,7 +5,7 @@ title: Setting Up Your Local Dev Environment
 This page outlines how to get set up to contribute to Gatsby core and its ecosystem. For instructions on working with docs, visit the [docs contributions](/contributing/docs-contributions/) page. For blog and website setup instructions, visit the [blog and website contributions](/contributing/blog-and-website-contributions/) page.
 
 > Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
-> [Lerna](https://lernajs.io/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for both active development and documentation infrastructure changes.
+> [Lerna](https://lerna.js.org/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for both active development and documentation infrastructure changes.
 
 ## Using Yarn
 
@@ -39,5 +39,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
   - Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
+  - To run tests for a single package you can run: `yarn jest <package-name>`.
+  - To run a single test file you can run: `yarn jest <file-path>`.
 - Commit and push to your fork.
 - Create a pull request from your branch.

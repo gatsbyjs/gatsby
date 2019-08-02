@@ -43,6 +43,10 @@ module.exports = class EventStorage {
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
   }
 
+  isTrackingDisabled() {
+    return this.disabled
+  }
+
   addEvent(event) {
     if (this.disabled) {
       return
@@ -51,7 +55,7 @@ module.exports = class EventStorage {
     const eventString = JSON.stringify(event)
 
     if (this.debugEvents || this.verbose) {
-      console.error(`Captured event:`, eventString)
+      console.error(`Captured event:`, JSON.parse(eventString))
 
       if (this.debugEvents) {
         // Bail because we don't want to send debug events

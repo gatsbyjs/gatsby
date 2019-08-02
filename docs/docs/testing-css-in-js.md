@@ -50,7 +50,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-In this example you'll use `react-test-renderer` but you can also use [react-testing-library](/docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
+In this example you'll use `react-test-renderer` but you can also use [@testing-library/react](/docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
 
 ```js:title=src/components/Button.test.js
 import React from "react"

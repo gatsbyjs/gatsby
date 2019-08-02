@@ -3,8 +3,6 @@ title: "Q and A: Reactiflux and the Gatsby Team"
 date: 2019-02-27
 author: Linda Watkins
 canonicalLink: https://www.reactiflux.com/transcripts/gatsby-team/
-tags:
-  - q&a
 ---
 
 Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Thanks to the Reactiflux team for organizing this Q&A and writing the original post (https://www.reactiflux.com/transcripts/gatsby-team/). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
@@ -73,7 +71,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 **Q:** Is there any specific place for documented or known issues with the react component lifecycle/prerendering in v2? I have a website that renders images correctly using gatsby build and serve, but when deployed to a CDN it seems my component never starts its animation and images are stuck with 0 opacity. (no asset optimization or configured prerendering selected on the CDN) — Tyler Churchill
 
-**A:** Yes, (this is github issues)[https://github.com/gatsbyjs/gatsby/issues] which you should definitely file an issue for so we can investigate your issue in depth.
+**A:** Yes, (this is GitHub issues)[https://github.com/gatsbyjs/gatsby/issues] which you should definitely file an issue for so we can investigate your issue in depth.
 
 — biscarch
 

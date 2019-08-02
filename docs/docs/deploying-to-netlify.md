@@ -38,3 +38,4 @@ Now that your site is connected to your repository, Netlify will deploy the site
 - [Escalade Sports: From $5000 to \$5/month in Hosting With Gatsby](/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Why I created my blog with Gatsby and Contentful](/blog/2017-11-09-why-i-created-my-blog-with-gatsby-and-contentful/#hosting-with-netlify)
 - [Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby)
+- More [blog posts on Gatsby + Netlify](/blog/tags/netlify)

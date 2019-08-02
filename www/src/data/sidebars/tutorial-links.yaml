@@ -1,4 +1,5 @@
 - title: Tutorial (step-by-step)
+  breadcrumbTitle: Tutorials
   key: tutorial
   items:
     - title: Introduction
@@ -109,9 +110,20 @@
           link: /tutorial/part-eight/#add-page-metadata
         - title: Keep making it better
           link: /tutorial/part-eight/#keep-making-it-better
+    - title: Theme tutorials
+      link: /tutorial/theme-tutorials/
+      items:
+        - title: Using a Theme
+          link: /tutorial/using-a-theme/
+        - title: Using Multiple Themes Together
+          link: /tutorial/using-multiple-themes-together/
+        - title: Building a Theme
+          link: /tutorial/building-a-theme/
     - title: Additional Tutorials
       link: /tutorial/additional-tutorials/
       items:
+        - title: Using Gatsby Image with Your Site
+          link: /tutorial/gatsby-image-tutorial/
         - title: Making a Site with User Authentication
           link: /tutorial/authentication-tutorial/
         - title: Making an e-commerce Gatsby Site with Stripe
@@ -119,8 +131,10 @@
         - title: Using the WordPress Source Plugin
           link: /tutorial/wordpress-source-plugin-tutorial/
         - title: Adding Images to a WordPress Site
-          link: /tutorial/image-tutorial/
+          link: /tutorial/wordpress-image-tutorial/
         - title: Using the Prismic with GraphQL Source Plugin
-          link: /tutorial/prismic-source-graphql-tutorial
+          link: /tutorial/prismic-source-graphql-tutorial/
         - title: Writing Documentation with Docz
           link: /tutorial/writing-documentation-with-docz/
+        - title: Making a Blog with Netlify CMS
+          link: /tutorial/blog-netlify-cms-tutorial/
