@@ -35,7 +35,6 @@ Some examples using react-helmet:
 - [Gatsby Mail](https://github.com/DSchau/gatsby-mail/blob/89b467e5654619ffe3073133ef0ae48b4d7502e3/src/components/meta.js)
 - [Jason Lengstorf’s personal blog](https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/e6d25ca927afdc75c759e611d4ba6ba086452bb8/src/components/SEO/SEO.js)
 
-
 ## Generate rich snippets in search engines using structured data
 
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
