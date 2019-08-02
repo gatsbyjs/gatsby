@@ -390,7 +390,6 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - A [Gatsby site](/docs/quick-start/) with an index page component
 - [gatsby-pluging-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `gatsby-config.js`
 
-
 #### Directions
 
 1. Open the index page component (`src/pages/index.js`) and import the `styled-components` package
