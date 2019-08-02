@@ -10,6 +10,9 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const {
+  generateComparisonPageSet,
+} = require(`./src/utils/generate-comparison-page-set.js`)
 const yaml = require(`js-yaml`)
 const docLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
@@ -368,6 +371,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     )
     const creatorPageTemplate = path.resolve(
       `src/templates/template-creator-details.js`
+    )
+    const featureComparisonPageTemplate = path.resolve(
+      `src/templates/template-feature-comparison.js`
     )
 
     // Query for markdown nodes to use in creating pages.
@@ -758,6 +764,21 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           })
         }
       })
+
+      // Create feature comparison pages
+      const jamstackPages = generateComparisonPageSet(`jamstack`)
+      const cmsPages = generateComparisonPageSet(`cms`)
+      const comparisonPages = [...jamstackPages, ...cmsPages]
+      for (const { path, options, featureType } of comparisonPages) {
+        createPage({
+          path,
+          component: slash(featureComparisonPageTemplate),
+          context: {
+            options,
+            featureType,
+          },
+        })
+      }
 
       // redirecting cypress-gatsby => gatsby-cypress
       createRedirect({
