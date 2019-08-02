@@ -59,7 +59,7 @@ module.exports = (
   const { createTypes } = actions;
 
   const options = defaultOptions(pluginOptions);
-
+  const headingsMdx = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
   createTypes(`
     type MdxFrontmatter {
       title: String!
@@ -71,12 +71,7 @@ module.exports = (
     }
 
     enum HeadingsMdx {
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6
+      ${headingsMdx}
     }
 
     type MdxWordCount {
@@ -172,8 +167,8 @@ module.exports = (
               depth: heading.depth
             });
           });
-          if (typeof depth === `number`) {
-            headings = headings.filter(heading => heading.depth === depth);
+          if (headingsMdx.includes(depth)) {
+            headings = headings.filter(heading => `h${heading.depth}` === depth);
           }
           return headings;
         }
