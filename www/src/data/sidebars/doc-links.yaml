@@ -496,6 +496,8 @@
           link: /docs/querying-with-graphql/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
+        - title: Theme Shadowing
+          link: /docs/how-shadowing-works
     - title: Gatsby Internals
       link: /docs/gatsby-internals/
       items:
