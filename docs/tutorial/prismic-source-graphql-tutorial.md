@@ -82,32 +82,32 @@ import { RichText } from "prismic-reactjs" //highlight-line
 
 //highlight-start
 export const query = graphql`
-{
-  prismic {
-    allBlog_homes {
-      edges {
-        node {
-          headline
-          description
-          image
+  {
+    prismic {
+      allBlog_homes {
+        edges {
+          node {
+            headline
+            description
+            image
+          }
         }
       }
-    }
-    allPosts(sortBy: date_DESC) {
-      edges {
-        node {
-          _meta {
-            id
-            uid
-            type
+      allPosts(sortBy: date_DESC) {
+        edges {
+          node {
+            _meta {
+              id
+              uid
+              type
+            }
+            title
+            date
           }
-          title
-          date
         }
       }
     }
   }
-}
 `
 // highlight-end
 ```
@@ -124,7 +124,9 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt={doc.node.image.alt} /> // Make sure to add an accessible alt attribute when adding images in Prismic: https://user-guides.prismic.io/articles/768849-add-metadata-to-an-asset
+        <img src={doc.node.image.url} alt={doc.node.image.alt} /> // Make sure
+        to add an accessible alt attribute when adding images in Prismic:
+        https://user-guides.prismic.io/articles/768849-add-metadata-to-an-asset
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
