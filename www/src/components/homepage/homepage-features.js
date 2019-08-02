@@ -1,7 +1,7 @@
 import React from "react"
 
 import { colors } from "../../utils/presets"
-import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/logos"
+import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/tech-logos"
 import Card from "../card"
 import CardHeadline from "../card-headline"
 import TechWithIcon from "../tech-with-icon"
