@@ -2926,7 +2926,7 @@
   featured: false
 - title: Ramón Chancay
   description: >-
-    Frontend / Backend Developer in Guayaquil Ecuador.
+    Front-end / Back-end Developer in Guayaquil Ecuador.
     Currently at Everymundo, previously at El Universo.
     I enjoy teaching and sharing what I know.
     I give professional advice to developers and companies.
@@ -2939,8 +2939,8 @@
     - Blog
     - Technology
     - Web Development
-  built_by: Codedebug
-  built_by_url: "https://codedebug.co/"
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
 - title: BELLHOPS
   main_url: https://www.getbellhops.com/
   url: https://www.getbellhops.com/
@@ -6809,3 +6809,14 @@
   built_by: Little & Big
   built_by_url: "https://www.littleandbig.com.au/"
   featured: false
+- title: Eventos orellana
+  description: >-
+    We are a company dedicated to providing personalized and professional advice
+    for the elaboration and coordination of social and business events.
+  main_url: "https://eventosorellana.com/"
+  url: "https://eventosorellana.com/"
+  featured: false
+  categories:
+    - Gallery
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
