@@ -346,7 +346,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             //   type: "AuthorJson",
             // })
             // But since we are using the author email as foreign key,
-            // we can use `runQuery`, or simply get all author nodes
+            // we can use `runQuery`, or get all author nodes
             // with `getAllNodes` and manually find the linked author
             // node:
             return context.nodeModel
@@ -382,12 +382,12 @@ type AuthorJson implements Node {
 }
 ```
 
-You simply provide a `@link` directive on a field and Gatsby will internally
+You provide a `@link` directive on a field and Gatsby will internally
 add a resolver that is quite similar to the one we wrote manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
-optional `from` argument allows getting the foreign-keys from the specified
-field, which is especially helpful when adding a field for back-linking.
+optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`.
+In other words, you `link` **on** `from` **to** `by`. This makes `from` especially helpful when adding a field for back-linking.
 
 > Note that when using `createTypes` to fix type inference for a foreign-key field
 > created by a plugin, the underlying data will probably live on a field with
