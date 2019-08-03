@@ -387,7 +387,7 @@ add a resolver that is quite similar to the one we wrote manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
 optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`.
-In other words, you `link` __on__ `from` __to__ `by`. This makes `from` especially helpful when adding a field for back-linking.
+In other words, you `link` **on** `from` **to** `by`. This makes `from` especially helpful when adding a field for back-linking.
 
 > Note that when using `createTypes` to fix type inference for a foreign-key field
 > created by a plugin, the underlying data will probably live on a field with
