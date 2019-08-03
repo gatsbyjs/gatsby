@@ -30,7 +30,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.14",
+    "@emotion/core": "^10.0.15",
     "@mdx-js/mdx": "^1.1.4",
     "@mdx-js/react": "^1.1.4",
     "gatsby-core-utils": "^1.0.3",
