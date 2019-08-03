@@ -2,36 +2,9 @@
 title: Getting Started with MDX
 ---
 
-The fastest way to get started with Gatsby + MDX is to use the [MDX
-starter](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic). This
-allows you to write .mdx files in `src/pages` in order to create new pages on
-your site.
+## Add MDX to a Gatsby site
 
-## 🚀 Quick start
-
-1. **Initialize the MDX starter** with the Gatsby CLI
-
-   ```sh
-   gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
-   ```
-
-1. **Run the dev server** by changing directory to the scaffolded site and install dependencies
-
-   ```sh
-   cd my-mdx-starter/
-   gatsby develop
-   ```
-
-1. **Open the site** running at http://localhost:8000
-
-1. **Update the MDX content** by opening the `my-mdx-starter` directory
-   in your code editor of choice and edit `src/pages/index.mdx`.
-   Save your changes and the browser will update in real time!
-
-## Add MDX to an existing Gatsby site
-
-If you already have a Gatsby site that you'd like to add MDX to, you
-can follow these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/) plugin:
+[MDX](https://mdxjs.com/) is a format that allows you include and write JSX components inside your markdown documents. Assuming you already [have a Gatsby site created](/docs/quick-start/), you can add the ability to write `.mdx` files in `src/pages` to create new pages by following these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/) plugin:
 
 1. **Add `gatsby-plugin-mdx`** and MDX as dependencies
 
