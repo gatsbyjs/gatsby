@@ -2023,7 +2023,6 @@
   repo: https://github.com/baobabKoodaa/gatsby-starter-infinite-scroll
   description: Infinite Scroll and Pagination with 10k photos
   tags:
-    - InfiniteScroll
     - Pagination
     - Styling:CSS-in-JS
   features:
@@ -3502,7 +3501,6 @@
   description: Blog with all the Bells and Whistles
   tags:
     - Blog
-    - InfiniteScroll
     - Pagination
     - SEO
     - Markdown
