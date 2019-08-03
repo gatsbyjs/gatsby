@@ -346,7 +346,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             //   type: "AuthorJson",
             // })
             // But since we are using the author email as foreign key,
-            // we can use `runQuery`, or simply get all author nodes
+            // we can use `runQuery`, or get all author nodes
             // with `getAllNodes` and manually find the linked author
             // node:
             return context.nodeModel
@@ -382,7 +382,7 @@ type AuthorJson implements Node {
 }
 ```
 
-You simply provide a `@link` directive on a field and Gatsby will internally
+You provide a `@link` directive on a field and Gatsby will internally
 add a resolver that is quite similar to the one we wrote manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
