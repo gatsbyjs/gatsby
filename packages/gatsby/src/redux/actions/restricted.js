@@ -1,4 +1,5 @@
 // @flow
+const { camelCase } = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 import type { Plugin } from "./types"
@@ -261,6 +262,60 @@ actions.createFieldExtension = (
   }
 }
 
+/**
+ * Make functionality available on field resolver `context`
+ *
+ * @availableIn [createSchemaCustomization]
+ *
+ * @param {object} context Object to make available on `context`.
+ * When called from a plugin, the context value will be namespaced under
+ * the camel-cased plugin name without the "gatsby-" prefix
+ * @example
+ * const getHtml = md => remark().use(html).process(md)
+ * exports.createSchemaCustomization = ({ actions }) => {
+ *   actions.createResolverContext({ getHtml })
+ * }
+ * // The context value can then be accessed in any field resolver like this:
+ * exports.createSchemaCustomization = ({ actions }) => {
+ *   actions.createTypes(schema.buildObjectType({
+ *     name: 'Test',
+ *     interfaces: ['Node'],
+ *     fields: {
+ *       md: {
+ *         type: 'String!',
+ *         async resolve(source, args, context, info) {
+ *           const processed = await context.transformerRemark.getHtml(source.internal.contents)
+ *           return processed.contents
+ *         }
+ *       }
+ *     }
+ *   }))
+ * }
+ */
+actions.createResolverContext = (
+  context: object,
+  plugin: Plugin,
+  traceId?: string
+) => dispatch => {
+  if (!context || typeof context !== `object`) {
+    report.error(
+      `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
+    )
+  } else {
+    const { name } = plugin || {}
+    const payload =
+      !name || name === `default-site-plugin`
+        ? context
+        : { [camelCase(name.replace(/^gatsby-/, ``))]: context }
+    dispatch({
+      type: `CREATE_RESOLVER_CONTEXT`,
+      plugin,
+      traceId,
+      payload,
+    })
+  }
+}
+
 const withDeprecationWarning = (actionName, action, api, allowedIn) => (
   ...args
 ) => {
@@ -335,6 +390,9 @@ const availableActionsByAPI = mapAvailableActionsToAPIs({
   createTypes: {
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
     [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
+  },
+  createResolverContext: {
+    [ALLOWED_IN]: [`createSchemaCustomization`],
   },
   addThirdPartySchema: {
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
