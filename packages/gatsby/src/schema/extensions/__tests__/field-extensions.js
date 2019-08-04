@@ -628,7 +628,7 @@ describe(`GraphQL field extensions`, () => {
     )
     const directive = schema.getDirective(`dateformat`)
     expect(directive).toBeDefined()
-    expect(directive.args).toHaveLength(2)
+    expect(directive.args).toHaveLength(4)
   })
 
   it(`shows error message when extension is already defined`, async () => {
