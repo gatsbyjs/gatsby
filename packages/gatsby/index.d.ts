@@ -374,6 +374,24 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
+    
+  /**
+   * Customize Gatsby’s GraphQL schema by creating type definitions, field extensions or adding third-party schemas.
+   * The createTypes, createFieldExtension and addThirdPartySchema actions are only available in this API.
+   *
+   * For details on their usage please refer to the actions documentation.
+   *
+   * This API runs immediately before schema generation. For modifications of the generated schema, e.g.
+   * to customize added third-party types, use the createResolvers API.
+   * @see https://www.gatsbyjs.org/docs/node-apis/#createSchemaCustomization
+   */
+  createSchemaCustomization?(arguments: {
+    actions: Pick<Actions
+      , 'addThirdPartySchema' 
+      | 'createFieldExtension' 
+      | 'createTypes'
+    >
+  })
 }
 
 /**
