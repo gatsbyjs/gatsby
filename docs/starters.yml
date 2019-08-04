@@ -3517,7 +3517,7 @@
 - url: https://novela.narative.co
   repo: https://github.com/narative/gatsby-starter-novela
   description: Welcome to Novela, the simplest way to start publishing with Gatsby.
-  tags: 
+  tags:
     - Blog
     - MDX
     - Portfolio
