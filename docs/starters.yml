@@ -3514,3 +3514,21 @@
     - Teasers of posts are generated to front page with infinite scroll which gracefully degrades into pagination.
     - Allow readers to be notified of updates with RSS feed and email newsletter.
     - Contact Form.
+- url: https://novela.narative.co
+  repo: https://github.com/narative/gatsby-starter-novela
+  description: Welcome to Novela, the simplest way to start publishing with Gatsby.
+  tags: 
+    - Blog
+    - MDX
+    - Portfolio
+    - Pagination
+    - SEO
+  features:
+    - Beautifully Designed
+    - Multiple Homepage Layouts
+    - Toggleable Light and Dark Mode
+    - Simple Customization with Theme UI
+    - Highlight-to-Share
+    - Read Time and Progress
+    - MDX support and inline code
+    - Accessibility in Mind
