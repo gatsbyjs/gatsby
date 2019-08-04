@@ -11,7 +11,7 @@ This guide will show you how to get started in a few quick steps:
 To install their command-line interface with [npm](https://www.npmjs.com/), run the following command:
 
 ```shell
-npm i -g now
+npm install -g now
 ```
 
 ## Step 2: Deploying
