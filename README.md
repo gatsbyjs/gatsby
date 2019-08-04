@@ -38,6 +38,9 @@
   <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
     <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
   </a>
+  <a href="https://github.com/prettier/prettier">
+    <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" alt="Code Style Prettier" />
+  </a>
 </p>
 
 <h3 align="center">
