@@ -3496,22 +3496,6 @@
     - Netlify deploy configuration
     - Perfect score on Lighthouse for SEO, Accessibility and Performance and PWA!
     - ..and more
-- url: https://novela.narative.co
-  repo: https://github.com/narative/gatsby-starter-novela
-  description: Welcome to Novela, the simplest way to start publishing with Gatsby.
-  tags:
-    - Markdown, 
-    - MDX,
-    - Portfolio
-  features:
-    - Beautifully Designed
-    - Multiple Homepage Layouts
-    - Toggleable Light and Dark Mode
-    - Simple Customization with Theme UI
-    - Highlight-to-Share
-    - Read Time and Progress
-    - MDX support and inline code
-    - Accessibility in Mind
 - url: https://www.attejuvonen.fi
   repo: https://github.com/baobabKoodaa/blog
   description: Blog with all the Bells and Whistles
