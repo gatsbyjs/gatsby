@@ -3500,12 +3500,9 @@
   repo: https://github.com/narative/gatsby-starter-novela
   description: Welcome to Novela, the simplest way to start publishing with Gatsby.
   tags:
-    - Novela
-    - Narative
-    - Theme
-    - Design
-    - Blog
-    - Articles
+    - Markdown, 
+    - MDX,
+    - Portfolio
   features:
     - Beautifully Designed
     - Multiple Homepage Layouts
