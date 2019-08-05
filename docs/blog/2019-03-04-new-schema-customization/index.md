@@ -2,7 +2,7 @@
 title: New schema customization API in Gatsby
 date: 2019-03-04
 author: Mikhail Novikov
-tags: ["schema", "graphql"]
+tags: ["graphql", "releases"]
 ---
 
 Today we are releasing a preview of a new core Gatsby API - Schema Customization. It gives Gatsby users much better control over the inferred schema, solving many common issues that people have had with their data sources. In addition to adding the new API, we rewrote big chunks of schema generation code from scratch. This gives us a great long-term foundation that will let us make Gatsby GraphQL better in the future.

@@ -1,13 +1,12 @@
 import React, { Component } from "react"
-import MdInfoOutline from "react-icons/lib/md/info-outline"
 import {
   colors,
   space,
   mediaQueries,
   fontSizes,
   lineHeights,
-} from "../utils/presets"
-import EvaluationCell from "./evaluation-cell"
+} from "../../utils/presets"
+import { renderCell } from "./evaluation-cell"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
@@ -18,68 +17,16 @@ class EvaluationTable extends Component {
     this.state = {}
   }
   render() {
-    const renderText = txt => {
-      const words = txt.split(` `)
-      return [
-        words.slice(0, words.length - 1).join(` `),
-        <span key={`info-icon-${words[words.length - 1]}`}>
-          {` `}
-          {`${words[words.length - 1]} `}
-          <MdInfoOutline
-            alt={`Info Icon`}
-            style={{ color: colors.grey[50], verticalAlign: `baseline` }}
-          />
-        </span>,
-      ]
-    }
-    const headers = [`Feature`, `Gatsby`, `Jekyll`, `WordPress`, `Squarespace`]
-    const renderCell = (text, column) => {
-      switch (column) {
-        case 0: {
-          return (
-            <div
-              css={{
-                verticalAlign: `middle`,
-                textAlign: `left`,
-                display: `inline-block`,
-                marginLeft: `auto`,
-                marginRight: `auto`,
-              }}
-            >
-              <button
-                css={{
-                  background: `none`,
-                  border: 0,
-                  cursor: `inherit`,
-                  padding: 0,
-                  textAlign: `left`,
-                }}
-                onClick={e => {
-                  e.preventDefault()
-                }}
-              >
-                {renderText(text)}
-              </button>
-              {/* eslint-enable */}
-            </div>
-          )
-        }
-        case 1:
-        case 2:
-        case 3:
-        case 4: {
-          return <EvaluationCell num={text} />
-        }
-        default: {
-          return null
-        }
-      }
-    }
-
     const showTooltip = (section, row) => this.state[`${section},${row}`]
 
-    const { sections, sectionHeaders } = this.props
+    const { options, sections, sectionHeaders } = this.props
     const flatten = arrays => [].concat.apply([], arrays)
+    const columnHeaders = [`Category`, `Gatsby`].concat(
+      options.map(o => o.display)
+    )
+    const nodeFieldProperties = [`Feature`, `Gatsby`].concat(
+      options.map(o => o.nodeField)
+    )
 
     return (
       <div
@@ -89,6 +36,7 @@ class EvaluationTable extends Component {
           // scrolling library
           display: `table`,
           overflowX: `scroll`,
+          width: `100%`,
         }}
       >
         <tbody>
@@ -99,18 +47,23 @@ class EvaluationTable extends Component {
                   text={sectionHeaders[s]}
                   key={`section-title-${s}`}
                 />,
-                <SectionHeaderTop key={`section-header-${s}`} />,
+                <SectionHeaderTop
+                  key={`section-header-${s}`}
+                  columnHeaders={columnHeaders}
+                />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
                     [].concat([
                       <SectionHeaderBottom
+                        options={options}
                         display={row.node.Subcategory}
                         category={row.node.Subcategory}
                         key={`section-header-${s}-bottom-${i}`}
                       />,
+                      // table row with the name of the feature and corresponding scores
                       <tr key={`section-${s}-first-row-${i}`}>
-                        {headers.map((header, j) => (
+                        {nodeFieldProperties.map((nodeProperty, j) => (
                           <td
                             key={j}
                             css={{
@@ -142,10 +95,11 @@ class EvaluationTable extends Component {
                               })
                             }}
                           >
-                            {renderCell(row.node[header], j)}
+                            {renderCell(row.node[nodeProperty], j)}
                           </td>
                         ))}
                       </tr>,
+                      // table row containing details of each feature
                       <tr
                         style={{
                           display: showTooltip(s, i) ? `table-row` : `none`,
@@ -154,6 +108,7 @@ class EvaluationTable extends Component {
                       >
                         <td
                           css={{
+                            fontSize: fontSizes[1],
                             paddingBottom: `calc(${space[5]} - 1px)`,
                             "&&": {
                               [mediaQueries.xs]: {

@@ -3,8 +3,6 @@ title: "Q and A: Reactiflux and the Gatsby Team"
 date: 2019-02-27
 author: Linda Watkins
 canonicalLink: https://www.reactiflux.com/transcripts/gatsby-team/
-tags:
-  - q&a
 ---
 
 Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Thanks to the Reactiflux team for organizing this Q&A and writing the original post (https://www.reactiflux.com/transcripts/gatsby-team/). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
