@@ -82,7 +82,7 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
-      if (argv.noColor) {
+      if (argv.noColor || process.env.NO_COLOR) {
         // disables colors in popular terminal output coloring packages
         //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
         //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
