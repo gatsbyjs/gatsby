@@ -4,6 +4,10 @@ const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
 const pageDataUtil = require(`../utils/page-data`)
+const normalizePagePath = require(`../utils/normalize-page-path`)
+const telemetry = require(`gatsby-telemetry`)
+const url = require(`url`)
+const { createHash } = require(`crypto`)
 
 type QueryResult = {
   id: string,
@@ -11,6 +15,19 @@ type QueryResult = {
 }
 
 type QueryResultsMap = Map<string, QueryResult>
+
+const denormalize = path => {
+  if (path === undefined) {
+    return path
+  }
+  if (path === `/`) {
+    return `/`
+  }
+  if (path.charAt(path.length - 1) !== `/`) {
+    return path + `/`
+  }
+  return path
+}
 
 /**
  * Get cached page query result for given page path.
@@ -21,20 +38,37 @@ const getCachedPageData = async (
   pagePath: string,
   directory: string
 ): QueryResult => {
-  const { program } = store.getState()
+  const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
-  try {
-    const pageData = await pageDataUtil.read({ publicDir }, pagePath)
-    return {
-      result: pageData.result,
-      id: pagePath,
+  if (pages.has(denormalize(pagePath)) || pages.has(pagePath)) {
+    try {
+      const pageData = await pageDataUtil.read({ publicDir }, pagePath)
+      return {
+        result: pageData.result,
+        id: pagePath,
+      }
+    } catch (err) {
+      console.log(
+        `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
+      )
+      return undefined
     }
-  } catch (err) {
-    console.log(
-      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
-    )
+  }
+  return undefined
+}
+
+const hashPaths = paths => {
+  if (!paths) {
     return undefined
   }
+  return paths.map(path => {
+    if (!path) {
+      return undefined
+    }
+    return createHash(`sha256`)
+      .update(path)
+      .digest(`hex`)
+  })
 }
 
 /**
@@ -99,6 +133,7 @@ class WebsocketManager {
     this.emitPageData = this.emitPageData.bind(this)
     this.emitStaticQueryData = this.emitStaticQueryData.bind(this)
     this.emitError = this.emitError.bind(this)
+    this.connectedClients = 0
   }
 
   init({ server, directory }) {
@@ -117,6 +152,20 @@ class WebsocketManager {
 
     this.websocket.on(`connection`, s => {
       let activePath = null
+      if (
+        s &&
+        s.handshake &&
+        s.handshake.headers &&
+        s.handshake.headers.referer
+      ) {
+        const path = url.parse(s.handshake.headers.referer).path
+        if (path) {
+          activePath = path
+          this.activePaths.add(path)
+        }
+      }
+
+      this.connectedClients += 1
       // Send already existing static query results
       this.staticQueryResults.forEach(result => {
         this.websocket.send({
@@ -160,6 +209,17 @@ class WebsocketManager {
           why: `getDataForPath`,
           payload: this.pageResults.get(path),
         })
+
+        telemetry.trackCli(
+          `WEBSOCKET_PAGE_DATA_UPDATE`,
+          {
+            siteMeasurements: {
+              clientsCount: this.connectedClients,
+              paths: hashPaths(Array.from(this.activePaths)),
+            },
+          },
+          { debounce: true }
+        )
       }
 
       s.on(`getDataForPath`, getDataForPath)
@@ -172,6 +232,7 @@ class WebsocketManager {
 
       s.on(`disconnect`, s => {
         leaveRoom(activePath)
+        this.connectedClients -= 1
       })
 
       s.on(`unregisterPath`, path => {
@@ -190,13 +251,34 @@ class WebsocketManager {
     this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
+      telemetry.trackCli(
+        `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
+        {
+          siteMeasurements: {
+            clientsCount: this.connectedClients,
+            paths: hashPaths(Array.from(this.activePaths)),
+          },
+        },
+        { debounce: true }
+      )
     }
   }
 
   emitPageData(data: QueryResult) {
+    data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
+      telemetry.trackCli(
+        `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
+        {
+          siteMeasurements: {
+            clientsCount: this.connectedClients,
+            paths: hashPaths(Array.from(this.activePaths)),
+          },
+        },
+        { debounce: true }
+      )
     }
   }
   emitError(id: string, message?: string) {

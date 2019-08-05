@@ -1,5 +1,5 @@
 ---
-title: Using the Prismic with GraphQL Source Plugin
+title: Using Prismic with GraphQL Source Plugin
 ---
 
 ## Prismic + Gatsby features
@@ -81,33 +81,33 @@ import Layout from "../components/layout"
 import { RichText } from "prismic-reactjs" //highlight-line
 
 //highlight-start
-const export query = graphql`
-{
-  prismic {
-    allBlog_homes {
-      edges {
-        node {
-          headline
-          description
-          image
+export const query = graphql`
+  {
+    prismic {
+      allBlog_homes {
+        edges {
+          node {
+            headline
+            description
+            image
+          }
         }
       }
-    }
-    allPosts(sortBy: date_DESC) {
-      edges {
-        node {
-          _meta {
-            id
-            uid
-            type
+      allPosts(sortBy: date_DESC) {
+        edges {
+          node {
+            _meta {
+              id
+              uid
+              type
+            }
+            title
+            date
           }
-          title
-          date
         }
       }
     }
   }
-}
 `
 // highlight-end
 ```
@@ -124,7 +124,9 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt="avatar image" />
+        <img src={doc.node.image.url} alt={doc.node.image.alt} /> // Make sure
+        to add an accessible alt attribute when adding images in Prismic:
+        https://user-guides.prismic.io/articles/768849-add-metadata-to-an-asset
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
@@ -145,7 +147,7 @@ const BlogPosts = ({ posts }) => {
     <div>
       {posts.map(post => {
         return (
-          <div key={post.node.id}>
+          <div key={post.node._meta.id}>
             <h2>{RichText.asText(post.node.title)}</h2>
             <p>
               <time>{post.node.date}</time>
@@ -167,7 +169,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt="avatar" />
+        <img src={doc.node.image.url} alt={doc.node.image.alt} />
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
@@ -212,7 +214,7 @@ const BlogPosts = ({ posts }) => {
     <ul>
       {posts.map(post => {
         return (
-          <li key={post.node.id}>
+          <li key={post.node._meta.id}>
             // highlight-start
             <Link to={linkResolver(post.node._meta)}>
               {RichText.asText(post.node.title)}
@@ -303,7 +305,7 @@ And with this last step you should be able to see all of your blog posts rendere
 
 One of the most exciting features that this Gatsby Prismic source plugin provides is the ability to preview changes to your documents without having to publish them or rebuild your Gatsby app. To activate this, you first need to setup an endpoint in your Prismic repository.
 
-In your repository, go to **Settings > Previews > Create a New Preview** and fill in the fields for your setup. For a default local development environment, you should use `[http://localhost:8000]`(http://localhost:8000) as the Domain, with `/preview` as the optional Link Resolver. Don't worry about including the toolbar script, the plugin will take care of it.
+In your repository, go to **Settings > Previews > Create a New Preview** and fill in the fields for your setup. For a default local development environment, you should use [`http://localhost:8000`](http://localhost:8000) as the Domain, with `/preview` as the optional Link Resolver. Don't worry about including the toolbar script, the plugin will take care of it.
 
 Finally, return to your Gatsby configuration file to activate the feature.
 

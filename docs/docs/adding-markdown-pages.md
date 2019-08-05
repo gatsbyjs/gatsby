@@ -71,9 +71,9 @@ plugins: [
 Create a folder in the `/src` directory of your Gatsby application called `markdown-pages`.
 Now create a Markdown file inside it with the name `post-1.md`.
 
-#### Including frontmatter
+#### Frontmatter for metadata in markdown files
 
-When you create a Markdown file, at the top of the file, add the frontmatter (metadata) block below. You can have different key value pairs that are relevant to your website. This block will be parsed by `gatsby-transformer-remark` as `frontmatter`. The GraphQL API will provide this data in your React components.
+When you create a Markdown file, you can include a set of key value pairs that can be used to provide additional data relevant to specific pages in the GraphQL data layer. This data is called frontmatter and is denoted by the triple dashes at the start and end of the block. This block will be parsed by `gatsby-transformer-remark` as `frontmatter`. The GraphQL API will provide the key value pairs as data in our React components.
 
 ```markdown:title=src/markdown-pages/post-1.md
 ---

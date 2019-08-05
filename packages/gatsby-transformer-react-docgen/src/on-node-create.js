@@ -23,8 +23,9 @@ function createDescriptionNode(
   createNodeId,
   createContentDigest
 ) {
-  if (!entry.description) return node
   const { createNode } = actions
+
+  delete node.description
 
   const descriptionNode = {
     id: createNodeId(descId(node.id)),

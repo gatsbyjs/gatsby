@@ -10,6 +10,7 @@ import {
   ProductNode,
   ProductOptionNode,
   ProductVariantNode,
+  ProductMetafieldNode,
   ShopPolicyNode,
   ProductTypeNode,
   PageNode,
@@ -25,7 +26,7 @@ import {
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache },
+  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
   { shopName, accessToken, verbose = true, paginationSize = 250 }
 ) => {
   const client = createClient(shopName, accessToken)
@@ -38,7 +39,14 @@ export const sourceNodes = async (
     console.log(formatMsg(`starting to fetch data from Shopify`))
 
     // Arguments used for file node creation.
-    const imageArgs = { createNode, createNodeId, touchNode, store, cache }
+    const imageArgs = {
+      createNode,
+      createNodeId,
+      touchNode,
+      store,
+      cache,
+      reporter,
+    }
 
     // Arguments used for node creation.
     const args = {
@@ -65,11 +73,16 @@ export const sourceNodes = async (
       createNodes(`blogs`, BLOGS_QUERY, BlogNode, args),
       createNodes(`collections`, COLLECTIONS_QUERY, CollectionNode, args),
       createNodes(`productTypes`, PRODUCT_TYPES_QUERY, ProductTypeNode, args),
-      createNodes(`pages`, PAGES_QUERY, PageNode, args),
+      createPageNodes(`pages`, PAGES_QUERY, PageNode, args),
       createNodes(`products`, PRODUCTS_QUERY, ProductNode, args, async x => {
         if (x.variants)
           await forEach(x.variants.edges, async edge =>
             createNode(await ProductVariantNode(imageArgs)(edge.node))
+          )
+
+        if (x.metafields)
+          await forEach(x.metafields.edges, async edge =>
+            createNode(await ProductMetafieldNode(imageArgs)(edge.node))
           )
 
         if (x.options)
@@ -81,7 +94,7 @@ export const sourceNodes = async (
     ])
     console.timeEnd(msg)
   } catch (e) {
-    console.error(chalk`\n{red error} an error occured while sourcing data`)
+    console.error(chalk`\n{red error} an error occurred while sourcing data`)
 
     // If not a GraphQL request error, let Gatsby print the error.
     if (!e.hasOwnProperty(`request`)) throw e
@@ -137,5 +150,27 @@ const createShopPolicies = async ({
         createNode
       )
     )
+  if (verbose) console.timeEnd(msg)
+}
+
+const createPageNodes = async (
+  endpoint,
+  query,
+  nodeFactory,
+  { client, createNode, formatMsg, verbose, paginationSize },
+  f = async () => {}
+) => {
+  // Message printed when fetching is complete.
+  const msg = formatMsg(`fetched and processed ${endpoint}`)
+
+  if (verbose) console.time(msg)
+  await forEach(
+    await queryAll(client, [endpoint], query, paginationSize),
+    async entity => {
+      const node = await nodeFactory(entity)
+      createNode(node)
+      await f(entity)
+    }
+  )
   if (verbose) console.timeEnd(msg)
 }

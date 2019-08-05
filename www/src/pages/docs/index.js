@@ -4,10 +4,13 @@ import { Helmet } from "react-helmet"
 
 import Layout from "../../components/layout"
 import { itemListDocs } from "../../utils/sidebar/item-list"
+import { space } from "../../utils/presets"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
 import FooterLinks from "../../components/shared/footer-links"
+import Breadcrumb from "../../components/docs-breadcrumb"
+import PrevAndNext from "../../components/prev-and-next"
 
 class IndexRoute extends React.Component {
   render() {
@@ -22,27 +25,34 @@ class IndexRoute extends React.Component {
                 content="The one stop location for tutorials, guides, and information about building with Gatsby"
               />
             </Helmet>
+            <Breadcrumb
+              itemList={itemListDocs}
+              location={this.props.location}
+            />
             <h1 id="gatsby-documentation" css={{ marginTop: 0 }}>
               Gatsby.js Documentation
             </h1>
             <p>Gatsby is a blazing fast modern site generator for React.</p>
             <h2>Get Started</h2>
-            <p>There are four main ways to get started with Gatsby:</p>
+            <p>There are two main ways to get started with Gatsby:</p>
             <ol>
               <li>
                 <Link to="/tutorial/">Tutorial</Link>: Step-by-step instructions
                 on how to install Gatsby and start a project: written for people
-                without Gatsby or web development experience, though it has
-                helped developers of all skill levels.
+                without Gatsby or web development experience, though these
+                learning resources have helped developers of all skill levels.
               </li>
               <li>
                 <Link to="/docs/quick-start">Quick start</Link>: One page
                 summary of how to install Gatsby and start a new project.
               </li>
+            </ol>
+            <h2>Go further</h2>
+            <ol>
               <li>
-                <Link to="/docs/recipes/">Recipes</Link>: A happy medium between
-                the tutorial and the quick start. Find some quick answers for
-                how to accomplish some specific, common tasks with Gatsby.
+                <Link to="/docs/recipes/">Recipes</Link>: Find some quick
+                answers for how to accomplish some specific, common tasks with
+                Gatsby.
               </li>
               <li>
                 Choose your own adventure and peruse the various sections of the
@@ -52,11 +62,6 @@ class IndexRoute extends React.Component {
                     <Link to="/docs/guides/">Reference Guides</Link>: Learn
                     about the many different topics around building with Gatsby,
                     like sourcing data, deployment, and more.
-                  </li>
-                  <li>
-                    <Link to="/ecosystem/">Ecosystem</Link>: Check out libraries
-                    for Gatsby starters and plugins, as well as external
-                    community resources.
                   </li>
                   <li>
                     <Link to="/docs/api-reference/">Gatsby API Reference</Link>:
@@ -78,13 +83,6 @@ class IndexRoute extends React.Component {
                     Dig into how Gatsby works behind the scenes.
                   </li>
                   <li>
-                    <Link to="/tutorial/advanced-tutorials/">
-                      Advanced Tutorials
-                    </Link>
-                    : Learn about topics that are too large for a doc and
-                    warrant a tutorial.
-                  </li>
-                  <li>
                     <Link to="/docs/using-gatsby-professionally/">
                       Using Gatsby Professionally
                     </Link>
@@ -94,13 +92,23 @@ class IndexRoute extends React.Component {
                   </li>
                 </ul>
               </li>
+              <li>
+                Check out the <Link to="/ecosystem/">Ecosystem</Link> libraries
+                for Gatsby starters and plugins, as well as external community
+                resources.
+              </li>
             </ol>
+            <h2>Start contributing</h2>
             <p>
               Visit the <Link to="/contributing">Contributing</Link> section to
               find guides on the Gatsby community, code of conduct, and how to
               get started contributing to Gatsby.
             </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
+            <PrevAndNext
+              css={{ marginTop: space[9] }}
+              next={{ title: `Quick Start`, link: `/docs/quick-start/` }}
+            />
           </Container>
           <FooterLinks />
         </DocSearchContent>

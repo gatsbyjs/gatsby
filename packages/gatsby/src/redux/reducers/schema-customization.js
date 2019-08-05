@@ -1,7 +1,8 @@
-const _ = require(`lodash`)
 module.exports = (
   state = {
     composer: null,
+    context: {},
+    fieldExtensions: {},
     thirdPartySchemas: [],
     types: [],
   },
@@ -20,7 +21,7 @@ module.exports = (
       }
     case `CREATE_TYPES`: {
       let types
-      if (_.isArray(action.payload)) {
+      if (Array.isArray(action.payload)) {
         types = [
           ...state.types,
           ...action.payload.map(typeOrTypeDef => {
@@ -41,9 +42,25 @@ module.exports = (
         types,
       }
     }
+    case `CREATE_FIELD_EXTENSION`: {
+      const { extension, name } = action.payload
+      return {
+        ...state,
+        fieldExtensions: { ...state.fieldExtensions, [name]: extension },
+      }
+    }
+    case `CREATE_RESOLVER_CONTEXT`: {
+      const context = action.payload
+      return {
+        ...state,
+        context: { ...state.context, ...context },
+      }
+    }
     case `DELETE_CACHE`:
       return {
         composer: null,
+        context: {},
+        fieldExtensions: {},
         thirdPartySchemas: [],
         types: [],
       }

@@ -203,7 +203,7 @@ exports.createPages = ({ actions, graphql }) => {
     // Create post detail pages
     posts.forEach(({ node }) => {
       createPage({
-        path: node.frontmatter.path,
+        path: node.fields.slug,
         component: blogPostTemplate,
       })
     })
