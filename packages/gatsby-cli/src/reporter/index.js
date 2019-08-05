@@ -38,6 +38,11 @@ const reporter: Reporter = {
     if (isNoColor) {
       errorFormatter.withoutColors()
     }
+
+    // disables colors in popular terminal output coloring packages
+    //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
+    //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
+    process.env.FORCE_COLOR = isNoColor ? `0` : undefined
   },
   /**
    * Log arguments and exit process with status 1.
