@@ -1,8 +1,3 @@
-const {
-  GraphQLObjectType,
-  GraphQLInt,
-  GraphQLJSON
-} = require("gatsby/graphql");
 const _ = require("lodash");
 const remark = require("remark");
 const english = require("retext-english");
@@ -66,24 +61,30 @@ module.exports = (
   const options = defaultOptions(pluginOptions);
 
   createTypes(`
-  type MdxFrontmatter {
-title: String!
+    type MdxFrontmatter {
+      title: String!
+    }
 
-}
-  type MdxHeadingMdx {
-    value: String
-    depth: Int
-  }
+    type MdxHeadingMdx {
+      value: String
+      depth: Int
+    }
 
-  enum HeadingsMdx {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6
-  }
-`);
+    enum HeadingsMdx {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6
+    }
+
+    type MdxWordCount {
+      paragraphs: Int
+      sentences: Int
+      words: Int
+    }
+  `);
 
   /**
    * Support gatsby-remark parser plugins
@@ -201,7 +202,7 @@ ${e}`
         }
       },
       mdxAST: {
-        type: GraphQLJSON,
+        type: `JSON`,
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode });
           return mdast;
@@ -237,20 +238,7 @@ ${e}`
         }
       },
       wordCount: {
-        type: new GraphQLObjectType({
-          name: `wordCountsMdx`,
-          fields: {
-            paragraphs: {
-              type: GraphQLInt
-            },
-            sentences: {
-              type: GraphQLInt
-            },
-            words: {
-              type: GraphQLInt
-            }
-          }
-        }),
+        type: `MdxWordCount`,
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode });
           return getCounts({ mdast });

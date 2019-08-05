@@ -5,11 +5,11 @@
     - title: Introduction
       link: /docs/
     - title: Quick Start
-      link: /docs/quick-start
+      link: /docs/quick-start/
     - title: Recipes
       link: /docs/recipes/
     - title: Plugin Library
-      link: /plugins
+      link: /plugins/
     - title: Starter Library
       link: /starters/
     - title: Awesome Gatsby Resources
@@ -229,22 +229,19 @@
           link: /docs/themes/
           items:
             - title: What are Gatsby Themes?
-              link: /docs/themes/what-are-gatsby-themes
+              link: /docs/themes/what-are-gatsby-themes/
             - title: Using a Gatsby Theme
-              link: /docs/themes/using-a-gatsby-theme
+              link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
-              link: /docs/themes/using-multiple-gatsby-themes
+              link: /docs/themes/using-multiple-gatsby-themes/
             - title: Building Themes
-              link: /docs/themes/building-themes
-              items:
-                - title: Themes API Reference
-                  link: /docs/themes/api-reference
-                - title: Converting a Starter
-                  link: /docs/themes/converting-a-starter
-                - title: Theme Composition
-                  link: /docs/themes/theme-composition
-                - title: Conventions
-                  link: /docs/themes/conventions
+              link: /docs/themes/building-themes/
+            - title: Converting a Starter
+              link: /docs/themes/converting-a-starter/
+            - title: Theme Composition
+              link: /docs/themes/theme-composition/
+            - title: Conventions
+              link: /docs/themes/conventions/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -291,6 +288,8 @@
               link: /docs/mdx/programmatically-creating-pages/
             - title: Using MDX Plugins
               link: /docs/mdx/plugins/
+            - title: Markdown Syntax
+              link: /docs/mdx/markdown-syntax/
         - title: Adding Testing
           link: /docs/testing/
           items:
@@ -352,7 +351,7 @@
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
             - title: Building a Contact Form
-              link: /docs/building-a-contact-form
+              link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
               link: /docs/add-404-page/
               breadcrumbTitle: 404 Page
@@ -384,7 +383,7 @@
                   link: /docs/adding-page-transitions-with-plugin-page-transitions/
                   breadcrumbTitle: gatsby-plugin-page-transitions
             - title: Making Your Site Accessible
-              link: /docs/making-your-site-accessible
+              link: /docs/making-your-site-accessible/
             - title: Routing
               link: /docs/routing/
               items:
@@ -441,6 +440,8 @@
     - title: Gatsby API
       link: /docs/api-reference/
       items:
+        - title: Gatsby Themes
+          link: /docs/theme-api/
         - title: Gatsby Link
           link: /docs/gatsby-link/
         - title: Gatsby Image
@@ -495,6 +496,8 @@
           link: /docs/querying-with-graphql/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
+        - title: Theme Shadowing
+          link: /docs/how-shadowing-works
     - title: Gatsby Internals
       link: /docs/gatsby-internals/
       items:
@@ -597,7 +600,7 @@
                 - title: Answering IT/Security Questions
                   link: /docs/answering-it-security/
                 - title: Setting Up Gatsby Without Gatsby New
-                  link: /docs/setting-up-gatsby-without-gatsby-new
+                  link: /docs/setting-up-gatsby-without-gatsby-new/
         - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:

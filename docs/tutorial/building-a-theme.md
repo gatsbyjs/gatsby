@@ -600,13 +600,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "event" and "events" template components.
+### Create the "events" and "event" template components.
 
 The last step to make sure that these pages build is to create the page template components.
 
 Create new files for the event template, and the events template:
 
-#### Event template
+#### Events template
 
 ```javascript:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
@@ -616,7 +616,7 @@ const EventsTemplate = () => <p>TODO: Build the events page template</p>
 export default EventsTemplate
 ```
 
-#### Events template
+#### Event template
 
 ```javascript:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
@@ -1047,7 +1047,7 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
-> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead.
+> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because we've converted the theme to use a function export, we can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
 

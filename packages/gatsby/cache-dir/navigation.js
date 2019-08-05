@@ -129,7 +129,9 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
-    return results[0]
+    // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
+    // @see https://github.com/gatsbyjs/gatsby/issues/12038
+    return results[results.length - 1]
   }
 
   if (prevRouterProps) {

@@ -7,49 +7,6 @@ will be full of relevant articles written to be easily understood by the many pe
 
 The community plans, writes, and maintains these Docs on GitHub.
 
-## Table of Contents
-
-- [Welcome!](#welcome)
-- [What kinds of docs can I write?](#what-kinds-of-docs-can-i-write)
-- [Writing process](#writing-process)
-  - [Think of your audience](#think-of-your-audience)
-  - [Research](#research)
-  - [Write drafts and get feedback](#write-drafts-and-get-feedback)
-- [Word choice](#word-choice)
-  - [Use "you" as the pronoun](#use-you-as-the-pronoun)
-  - [Avoid "easy" and "simple"](#avoid-easy-and-simple)
-  - [Avoid emojis, slang, and metaphors](#avoid-emojis-slang-and-metaphors)
-  - [Define jargon](#define-jargon)
-- [Writing style](#writing-style)
-  - [Write concisely](#write-concisely)
-  - [Use clear hyperlinks](#use-clear-hyperlinks)
-  - [Indicate when something is optional](#indicate-when-something-is-optional)
-  - [Abbreviate terms](#abbreviate-terms)
-  - [Use SEO optimized titles](#use-seo-optimized-titles)
-- [Grammar & formatting](#grammar-and-formatting)
-  - [Format titles and headers](#format-titles-and-headers)
-  - [Format code blocks, inline code, and images](#format-code-blocks-inline-code-and-images)
-  - [Capitalize proper nouns](#capitalize-proper-nouns)
-  - [Use active voice](#use-active-voice)
-  - [Make lists clear with the Oxford Comma](#make-lists-clear-with-the-oxford-comma)
-  - [Use apps that help you edit](#use-apps-that-help-you-edit)
-- [Best practices](#best-practices)
-  - [Support software versions](#software-versions)
-  - [Share best practices whenever possible](#share-best-practices-whenever-possible)
-- [The difference between tutorials, recipes, and docs](#the-difference-between-tutorials-recipes-and-docs)
-- [Tutorials](#tutorials)
-  - [Tutorials Audience](#tutorials-audience)
-  - [Tutorials Purpose](#tutorials-purpose)
-  - [Tutorials Tone and style](#tutorials-tone-and-style)
-- [Recipes](#recipes)
-  - [Recipes Audience](#recipes-audience)
-  - [Recipes Purpose](#recipes-purpose)
-  - [Recipes Tone and style](#recipes-tone-and-style)
-- [Docs](#docs)
-  - [Docs Audience](#docs-audience)
-  - [Docs Purpose](#docs-purpose)
-  - [Docs Tone and style](#docs-tone-and-style)
-
 ## Welcome!
 
 You don't have to be an expert in a

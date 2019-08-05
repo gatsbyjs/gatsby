@@ -6,8 +6,8 @@ excerpt: "Gatsby’s calling card is blazing fast websites. But let’s dive dee
 canonicalLink: https://www.littleandbig.com.au/blog/building-with-gatsby/
 tags:
   - seo
-  - lead conversion
-  - user experience
+  - lead-conversion
+  - cutting-edge-experiences
 ---
 
 ## What is Gatsby?

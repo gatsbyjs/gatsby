@@ -1,5 +1,6 @@
 const { camelCase } = require("change-case");
-const toStyleObject = require("to-style").object;
+const styleToObject = require('style-to-object');
+const camelCaseCSS = require('camelcase-css');
 const t = require("@babel/types");
 
 // object retrieved from https://github.com/facebook/react/blob/master/packages/react-dom/src/shared/possibleStandardNames.js
@@ -490,19 +491,6 @@ var TRANSLATIONS = {
   zoomandpan: "zoomAndPan",
 }
 
-const valueFromType = value => {
-  switch (typeof value) {
-    case "string":
-      return t.stringLiteral(value);
-    case "number":
-      return t.numericLiteral(value);
-    case "boolean":
-      return t.booleanLiteral(value);
-    default:
-      throw new Error("gatsby-plugin-mdx needs to include a new type");
-  }
-};
-
 const propsKeysVisitor = {
   ObjectProperty(node) {
     if (node.node.key.extra.rawValue in TRANSLATIONS) {
@@ -529,14 +517,14 @@ var jsxAttributeFromHTMLAttributeVisitor = {
       node.node.value.type === "StringLiteral"
       //      node.node.value.type !== "JSXExpressionContainer"
     ) {
-      const styleObject = toStyleObject(node.node.value.extra.rawValue, {
-        camelize: true
-      });
-      //      node.node.value.value = `{${JSON.stringify(styleObject)}}`;
+      let styleArray = []
+      styleToObject(node.node.value.extra.rawValue, function(name, value, declaration) {
+        styleArray.push([camelCaseCSS(name), value])
+      })
       node.node.value = t.jSXExpressionContainer(
         t.objectExpression(
-          Object.entries(styleObject).map(([key, value]) =>
-            t.objectProperty(t.StringLiteral(key), valueFromType(value))
+          styleArray.map(([key, value]) =>
+            t.objectProperty(t.StringLiteral(key), t.stringLiteral(value))
           )
         )
       );

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.4...gatsby-transformer-sharp@2.2.5) (2019-07-29)
+
+### Features
+
+- **gatsby-transformer-sharp:** ImageSharp as child of File type([#16109](https://github.com/gatsbyjs/gatsby/issues/16109)) ([272d22f](https://github.com/gatsbyjs/gatsby/commit/272d22f))
+
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.3...gatsby-transformer-sharp@2.2.4) (2019-07-17)
 
 ### Bug Fixes

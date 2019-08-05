@@ -6,8 +6,8 @@ excerpt: "In the third part of this series about WordPress and Gatsby.js, you wi
 tags:
   - wordpress
   - apis
-  - blog
-  - headless cms
+  - blogs
+  - headless-cms
   - react
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-3/
 ---
