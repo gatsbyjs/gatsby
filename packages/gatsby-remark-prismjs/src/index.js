@@ -1,9 +1,10 @@
 const visit = require(`unist-util-visit`)
 
-const parseLineNumberRange = require(`./parse-line-number-range`)
+const parseOptions = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
+const commandLine = require(`./command-line`)
 
 module.exports = (
   { markdownAST },
@@ -14,6 +15,11 @@ module.exports = (
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
     languageExtensions = [],
+    prompt = {
+      user: `root`,
+      host: `localhost`,
+      global: false,
+    },
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -25,13 +31,14 @@ module.exports = (
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
-    let language = node.lang
+    let language = node.meta ? node.lang + node.meta : node.lang
     let {
       splitLanguage,
       highlightLines,
       showLineNumbersLocal,
       numberLinesStartAt,
-    } = parseLineNumberRange(language)
+      outputLines,
+    } = parseOptions(language)
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     language = splitLanguage
 
@@ -70,11 +77,16 @@ module.exports = (
     if (highlightLines && highlightLines.length > 0)
       highlightClassName += ` has-highlighted-lines`
 
+    const useCommandLine =
+      [`bash`].includes(languageName) &&
+      (prompt.global || (outputLines && outputLines.length > 0))
+
     // prettier-ignore
     node.value = ``
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
+    +       `${useCommandLine ? commandLine(node.value, outputLines, prompt.user, prompt.host) : ``}`
     +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`

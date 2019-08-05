@@ -1,8 +1,9 @@
 module.exports = (
   state = {
     composer: null,
-    printConfig: null,
+    context: {},
     fieldExtensions: {},
+    printConfig: null,
     thirdPartySchemas: [],
     types: [],
   },
@@ -61,11 +62,19 @@ module.exports = (
         },
       }
     }
+    case `CREATE_RESOLVER_CONTEXT`: {
+      const context = action.payload
+      return {
+        ...state,
+        context: { ...state.context, ...context },
+      }
+    }
     case `DELETE_CACHE`:
       return {
         composer: null,
-        printConfig: null,
+        context: {},
         fieldExtensions: {},
+        printConfig: null,
         thirdPartySchemas: [],
         types: [],
       }

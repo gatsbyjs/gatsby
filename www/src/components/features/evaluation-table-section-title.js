@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { space } from "../utils/presets"
+import { space } from "../../utils/presets"
 
 const SectionTitle = props => (
   <tr css={{ borderBottom: 0 }}>
