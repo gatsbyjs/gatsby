@@ -489,7 +489,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 #### Additional resources
 
-- More on [importing assets into files](/docs/importing-assets-into-files/]
+- More on [importing assets into files](/docs/importing-assets-into-files/)
 - [Using Typography.js for Google fonts](/docs/typography-js/)
 
 ## 3. Working with starters
