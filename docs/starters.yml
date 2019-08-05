@@ -3532,3 +3532,18 @@
     - Read Time and Progress
     - MDX support and inline code
     - Accessibility in Mind
+- url: https://gatsby-starter-fashion-portfolio.netlify.com/
+  repo: https://github.com/shobhitchittora/gatsby-starter-fashion-portfolio
+  description: A Gatsby starter for a professional and minimal fashion portfolio.
+  tags:
+    - Blog
+    - Client-side App
+    - Landing Page
+    - Portfolio
+    - Styling:Other
+  features:
+    - A minimal and simple starter for your fashion portfolio
+    - No need for any CMS, work with all your data and images locally.
+    - Separate components for different pages and grid
+    - Uses gatsby-image to load images
+    - Built using the old school CSS.
