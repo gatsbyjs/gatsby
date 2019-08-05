@@ -1237,7 +1237,7 @@ const runQuery = async query => {
     schema,
     query,
     undefined,
-    withResolverContext({})
+    withResolverContext({}, schema)
   )
   expect(results.errors).toBeUndefined()
   return results.data
