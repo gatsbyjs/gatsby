@@ -1142,18 +1142,6 @@
     - Features a custom, accessible lightbox with gatsby-image
     - Styled with styled-components using CSS Grid
     - React Helmet for SEO
-- url: https://stoic-swirles-4bd808.netlify.com/
-  repo: https://github.com/crstnio/gatsby-starter-antd
-  description: Gatsby's default starter configured for use with the Antd component library, modular imports and less.
-  tags:
-    - Styling:Ant Design
-    - Styling:Other
-  features:
-    - Fork of Gatsby's default starter
-    - React Helmet, Manifest and offline support retained
-    - Antd component library pre-installed
-    - Uses gatsby-plugin-antd for modular imports
-    - Customize the theme of Antd with `modifyVars`
 - url: http://jackbravo.github.io/gatsby-starter-i18n-blog/
   repo: https://github.com/jackbravo/gatsby-starter-i18n-blog
   description: Same as official gatsby-starter-blog but with i18n support
