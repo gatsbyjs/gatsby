@@ -387,7 +387,6 @@ export const publicLoader = {
   prefetch: rawPath => instance.prefetch(rawPath),
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
-  findMatchPath: rawPath => instance.findMatchPath(rawPath),
 }
 
 export default publicLoader
