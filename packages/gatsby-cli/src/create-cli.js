@@ -83,8 +83,7 @@ function buildLocalCommands(cli, isLocalSite) {
     return argv => {
       report.setVerbose(!!argv.verbose)
 
-      const noColor = argv.noColor || process.env.NO_COLOR
-      report.setNoColor(noColor)
+      report.setNoColor(argv.noColor || process.env.NO_COLOR)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
