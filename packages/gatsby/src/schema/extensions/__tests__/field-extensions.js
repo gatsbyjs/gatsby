@@ -23,6 +23,7 @@ describe(`GraphQL field extensions`, () => {
     const nodes = [
       {
         id: `test1`,
+        parent: `test5`,
         internal: { type: `Test` },
         somedate: `2019-09-01`,
         otherdate: `2019-09-01`,
@@ -33,12 +34,14 @@ describe(`GraphQL field extensions`, () => {
       },
       {
         id: `test2`,
+        parent: `test6`,
         internal: { type: `Test` },
         somedate: `2019-09-13`,
         otherdate: `2019-09-13`,
       },
       {
         id: `test3`,
+        parent: null,
         internal: { type: `Test` },
         somedate: `2019-09-26`,
         otherdate: `2019-09-26`,
@@ -50,11 +53,13 @@ describe(`GraphQL field extensions`, () => {
       },
       {
         id: `test5`,
+        children: [`test1`],
         internal: { type: `AnotherTest` },
         date: `2019-01-01`,
       },
       {
         id: `test6`,
+        children: [`test2`],
         internal: { type: `AnotherTest` },
         date: 0,
       },
@@ -1496,6 +1501,55 @@ describe(`GraphQL field extensions`, () => {
       const expected = {
         test: {
           slug: `hello-world`,
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`proxies to field from parent node`, async () => {
+      dispatch(
+        createFieldExtension({
+          name: `parent`,
+          extend(options, fieldConfig) {
+            return {
+              resolve(source, args, context, info) {
+                const resolver =
+                  fieldConfig.resolve || context.defaultFieldResolver
+                return resolver(
+                  context.nodeModel.getNodeById({ id: source.parent }),
+                  args,
+                  context,
+                  info
+                )
+              },
+            }
+          },
+        })
+      )
+      dispatch(
+        createTypes(`
+          type Test implements Node {
+            fromParentNode: Date @dateformat(formatString: "YYYY") @parent @proxy(from: "date")
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            fromParentNode
+          }
+          filtered: test(parent: { id: { ne: null } }) {
+            fromParentNode
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          fromParentNode: `2019`,
+        },
+        filtered: {
+          fromParentNode: `2019`,
         },
       }
       expect(results).toEqual(expected)

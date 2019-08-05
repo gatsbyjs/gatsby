@@ -291,9 +291,9 @@ const defaultFieldResolver = (source, args, context, info) => {
 
   if (info.from) {
     if (info.fromNode) {
-      const parentNode = context.nodeModel.findRootNodeAncestor(source)
-      if (!parentNode) return null
-      return getValueAt(parentNode, info.from)
+      const node = context.nodeModel.findRootNodeAncestor(source)
+      if (!node) return null
+      return getValueAt(node, info.from)
     }
     return getValueAt(source, info.from)
   }
