@@ -1,4 +1,6 @@
 const sharp = require(`./safe-sharp`)
+const blurhash = require(`blurhash`)
+const { createCanvas, loadImage } = require(`canvas`)
 
 const imageSize = require(`probe-image-size`)
 
@@ -139,6 +141,34 @@ function queueImageResizing({ file, args = {}, reporter }) {
 // A value in pixels(Int)
 const defaultBase64Width = () => getPluginOptions().base64Width || 20
 async function generateBase64({ file, args, reporter }) {
+  console.log('BASE64 ----->')
+  const myImg = loadImage(file.absolutePath);
+  myImg.then((imagen) => {
+    console.log('Imagen ----->')
+    console.log()
+    const canvas = createCanvas(args.width, args.height)
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(imagen, 0, 0, args.width, args.height);
+    const imageData = ctx.getImageData(
+      0,
+      0,
+      args.width,
+      args.height
+    );
+    console.log('Tengo image data ----->')
+    console.log(imageData)
+  })
+  /*fs.readFile(file.absolutePath, "base64", function(err, buffer){
+    if ( err ) {
+        console.log('In read file')
+        console.log(err)
+    } else {
+        // check err
+        console.log('Getting ----->')
+        const byteArray = Buffer.from(buffer, "base64");
+        
+    }*/
+  console.log('Sobrevivio al canvas ----->')
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
     width: defaultBase64Width(),
