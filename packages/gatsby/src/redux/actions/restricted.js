@@ -238,7 +238,7 @@ actions.createFieldExtension = (
   plugin: Plugin,
   traceId?: string
 ) => (dispatch, getState) => {
-  const { name, args } = extension || {}
+  const { name } = extension || {}
   const { fieldExtensions } = getState().schemaCustomization
 
   if (!name) {
@@ -252,16 +252,6 @@ actions.createFieldExtension = (
       `A field extension with the name \`${name}\` has already been registered.`
     )
   } else {
-    if (args && (args.from || args.fromNode)) {
-      report.info(
-        `The arguments \`from\` and \`fromNode\` are reserved for the default ` +
-          `field resolver. If you intend to use the arguments to retrieve the` +
-          `fieldValue from a proxied field, then all is :+1:.\n` +
-          `If this is not what you are intending, please adjust the field ` +
-          `extension definition of \`${name}\`.`
-      )
-    }
-
     dispatch({
       type: `CREATE_FIELD_EXTENSION`,
       plugin,

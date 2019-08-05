@@ -10,11 +10,9 @@ const { trackInlineObjectsInRootNode } = require(`../../../db/node-tracking`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
-report.info = jest.fn()
 report.error = jest.fn()
 report.panic = jest.fn()
 afterEach(() => {
-  report.info.mockClear()
   report.error.mockClear()
   report.panic.mockClear()
 })
@@ -604,12 +602,12 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `uppercase`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
             type: `String`,
-            async resolve(...rp) {
-              const resolved = await originalResolver(...rp)
+            async resolve(source, args, context, info) {
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const resolved = await resolver(source, args, context, info)
               return String(resolved).toUpperCase()
             },
           }
@@ -620,12 +618,12 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `reverse`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
             type: `String`,
-            async resolve(...rp) {
-              const resolved = await originalResolver(...rp)
+            async resolve(source, args, context, info) {
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const resolved = await resolver(source, args, context, info)
               return [...String(resolved)].reverse().join(``)
             },
           }
@@ -1100,11 +1098,11 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `zeroToNull`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
-            async resolve(...rp) {
-              const fieldValue = await originalResolver(...rp)
+            async resolve(source, args, context, info) {
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const fieldValue = await resolver(source, args, context, info)
               if (fieldValue === 0) {
                 return null
               }
@@ -1155,8 +1153,6 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `replace`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
             args: {
               ...prevFieldConfig.args,
@@ -1164,12 +1160,9 @@ describe(`GraphQL field extensions`, () => {
               replaceWith: `String!`,
             },
             async resolve(source, args, context, info) {
-              const fieldValue = await originalResolver(
-                source,
-                args,
-                context,
-                info
-              )
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const fieldValue = await resolver(source, args, context, info)
               if (fieldValue == args.match) {
                 return args.replaceWith
               }
@@ -1268,32 +1261,6 @@ describe(`GraphQL field extensions`, () => {
   })
 
   describe(`nested-fields-aware default field resolver`, () => {
-    it(`informs that args.from and args.fromNode are for proxy use`, async () => {
-      dispatch(
-        createFieldExtension({
-          name: `info`,
-          args: {
-            from: `String`,
-          },
-          extend() {
-            return {
-              resolve() {
-                return `:+1:`
-              },
-            }
-          },
-        })
-      )
-      await buildSchema()
-      expect(report.info).toBeCalledWith(
-        `The arguments \`from\` and \`fromNode\` are reserved for the default ` +
-          `field resolver. If you intend to use the arguments to retrieve the` +
-          `fieldValue from a proxied field, then all is :+1:.\n` +
-          `If this is not what you are intending, please adjust the field ` +
-          `extension definition of \`info\`.`
-      )
-    })
-
     it(`@proxy extension works with nested fields`, async () => {
       dispatch(
         createTypes(`
@@ -1479,7 +1446,7 @@ describe(`GraphQL field extensions`, () => {
       expect(results).toEqual(expected)
     })
 
-    it(`allows using args.from in a custom field extension`, async () => {
+    it(`works in a custom field extension`, async () => {
       dispatch(
         createFieldExtension({
           name: `slug`,
@@ -1491,9 +1458,13 @@ describe(`GraphQL field extensions`, () => {
               resolve(source, args, context, info) {
                 const fieldValue = context.defaultFieldResolver(
                   source,
-                  { ...options, ...args },
+                  args,
                   context,
-                  info
+                  {
+                    ...info,
+                    from: options.from || info.from,
+                    fromNode: options.from ? options.fromNode : info.fromNode,
+                  }
                 )
                 return String(fieldValue)
                   .toLowerCase()

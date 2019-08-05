@@ -111,14 +111,18 @@ const paginate = (results = [], { skip = 0, limit }) => {
   }
 }
 
-const link = (options, fieldConfig) => async (source, args, context, info) => {
+const link = (options = {}, fieldConfig) => async (
+  source,
+  args,
+  context,
+  info
+) => {
   const resolver = fieldConfig.resolve || context.defaultFieldResolver
-  const fieldValue = await resolver(
-    source,
-    { ...options, ...args },
-    context,
-    info
-  )
+  const fieldValue = await resolver(source, args, context, {
+    ...info,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -175,19 +179,18 @@ const link = (options, fieldConfig) => async (source, args, context, info) => {
   }
 }
 
-const fileByPath = (options, fieldConfig) => async (
+const fileByPath = (options = {}, fieldConfig) => async (
   source,
   args,
   context,
   info
 ) => {
   const resolver = fieldConfig.resolve || context.defaultFieldResolver
-  const fieldValue = await resolver(
-    source,
-    { ...options, ...args },
-    context,
-    info
-  )
+  const fieldValue = await resolver(source, args, context, {
+    ...info,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -286,13 +289,13 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
 const defaultFieldResolver = (source, args, context, info) => {
   if (!source || typeof source !== `object`) return null
 
-  if (args.from) {
-    if (args.fromNode) {
+  if (info.from) {
+    if (info.fromNode) {
       const parentNode = context.nodeModel.findRootNodeAncestor(source)
       if (!parentNode) return null
-      return getValueAt(parentNode, args.from)
+      return getValueAt(parentNode, info.from)
     }
-    return getValueAt(source, args.from)
+    return getValueAt(source, info.from)
   }
 
   return source[info.fieldName]

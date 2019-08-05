@@ -3,7 +3,6 @@ const invariant = require(`invariant`)
 const {
   isSpecifiedScalarType,
   isIntrospectionType,
-  defaultFieldResolver,
   assertValidName,
   parse,
   GraphQLNonNull,
@@ -635,7 +634,8 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                 newConfig.resolve = (source, args, context, info) =>
                   fieldConfig.resolve(source, args, context, {
                     ...info,
-                    originalResolver: originalResolver || defaultFieldResolver,
+                    originalResolver:
+                      originalResolver || context.defaultFieldResolver,
                   })
               }
               tc.extendField(fieldName, newConfig)

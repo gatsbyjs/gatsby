@@ -137,14 +137,12 @@ const builtInFieldExtensions = {
     extend(options, fieldConfig) {
       return {
         resolve(source, args, context, info) {
-          const originalResolver =
-            fieldConfig.resolve || context.defaultFieldResolver
-          return originalResolver(
-            source,
-            { ...options, ...args },
-            context,
-            info
-          )
+          const resolver = fieldConfig.resolve || context.defaultFieldResolver
+          return resolver(source, args, context, {
+            ...info,
+            from: options.from || info.from,
+            fromNode: options.from ? options.fromNode : info.fromNode,
+          })
         },
       }
     },

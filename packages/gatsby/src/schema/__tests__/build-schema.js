@@ -914,7 +914,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -924,7 +924,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -960,7 +960,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -970,7 +970,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }

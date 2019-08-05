@@ -215,7 +215,7 @@ const formatDate = ({
   return normalizedDate
 }
 
-const getDateResolver = (options, fieldConfig) => {
+const getDateResolver = (options = {}, fieldConfig) => {
   const { locale, formatString } = options
   return {
     args: {
@@ -251,12 +251,11 @@ const getDateResolver = (options, fieldConfig) => {
     },
     async resolve(source, args, context, info) {
       const resolver = fieldConfig.resolve || context.defaultFieldResolver
-      const date = await resolver(
-        source,
-        { ...options, ...args },
-        context,
-        info
-      )
+      const date = await resolver(source, args, context, {
+        ...info,
+        from: options.from || info.from,
+        fromNode: options.from ? options.fromNode : info.fromNode,
+      })
       if (date == null) return null
 
       return Array.isArray(date)
