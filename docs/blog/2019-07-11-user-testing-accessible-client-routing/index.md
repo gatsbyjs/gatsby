@@ -5,13 +5,10 @@ date: 2019-07-11
 excerpt: "We conducted 5 user testing sessions with Fable Tech Labs to determine which client-side routing techniques are the most accessible to people with disabilities. With this research, we can make more informed decisions for accessible page changes in sites built with Gatsby, React, and beyond."
 tags:
   - accessibility
-  - user testing
-  - client-side routing
-  - React
-  - JavaScript
-  - components
-  - research
-  - UI
+  - user-testing
+  - client-side-routing
+  - react
+  - cutting-edge-experiences
 ---
 
 In June 2019, I conducted 5 user testing sessions for accessibility research with [Fable Tech Labs](https://www.makeitfable.com/), a Toronto-based start-up that’s “making it easier for digital teams to engage people with disabilities in product development.”
@@ -127,8 +124,13 @@ For sighted magnification users, our **first couple of prototypes were quite use
 For the focus management techniques, horizontal scrolling presented an issue without a mobile viewport: if focus was sent to a wrapper or heading spanning a width much larger than the screen, **mobile Chrome would scroll to the middle of it and cut off the beginning and end of the text...making it illegible**. This was exacerbated in our prototypes until we adjusted the design to fit a single column, but still wasn’t great to have a visible focus outline covering so much of the screen. Some of this seemed limited to Samsung’s Chrome browser and weren’t reproducible elsewhere, but even with slightly better scroll/focus behavior it illustrated the **need for responsive pages that adapt to fit smaller screens** without as much horizontal scrolling.
 
 <figure>
-<img src="./images/magnification-a11y.png" alt="two screenshots of mobile Chrome showing a barely-visible focus outline at the edge, cut-off text, and how much horizontal scrolling is needed to read the Doggo Ipsum placeholder text" />
-<figcaption>Screenshots from mobile Chrome on a Samsung Note 9 using magnification</figcaption>
+  <img
+    src="./images/magnification-a11y.png"
+    alt="two screenshots of mobile Chrome showing a barely-visible focus outline at the edge, cut-off text, and how much horizontal scrolling is needed to read the Doggo Ipsum placeholder text"
+  />
+  <figcaption>
+    Screenshots from mobile Chrome on a Samsung Note 9 using magnification
+  </figcaption>
 </figure>
 
 While some scrolling is unavoidable for magnification users, the zoom/focus problems with these prototypes were so stark that it was **almost better to do nothing** (no focus management or screen reader announcements). This was consistent with the first two prototypes actually being a better experience because the Live Region announcements didn’t apply. **But considering the pervasiveness of client-rendered apps** and the aforementioned **needs of blind users, doing nothing isn’t really an option**.

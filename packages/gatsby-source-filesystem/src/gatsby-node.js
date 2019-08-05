@@ -43,7 +43,6 @@ exports.sourceNodes = (
   { actions, getNode, createNodeId, reporter, emitter },
   pluginOptions
 ) => {
-  reporter.info(`Creating GraphQL type definition for File`)
   const { createNode, createTypes, deleteNode } = actions
 
   const typeDefs = `

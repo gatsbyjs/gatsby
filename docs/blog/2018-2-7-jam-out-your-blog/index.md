@@ -2,7 +2,7 @@
 title: JAM Out Your Blog - Gatsby + Prose + Netlify
 date: 2018-02-07
 author: "Vlad Pasculescu"
-tags: ["prose-io", "netlify", "ci", "jamstack"]
+tags: ["netlify", "deployment", "jamstack"]
 ---
 
 If you’re reading this, chances are you’ve heard a thing or two about Gatsby. Let me take you through a _jamstacked_ workflow that is friendly to both developers, as well as content-creators.
