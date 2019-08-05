@@ -1,4 +1,4 @@
-const { GraphQLString, graphql, defaultFieldResolver } = require(`graphql`)
+const { GraphQLString, graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { buildObjectType } = require(`../../types/type-builders`)
