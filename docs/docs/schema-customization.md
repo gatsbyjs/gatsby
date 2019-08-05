@@ -319,6 +319,10 @@ Gatsby's automatic type inference has one trick up its sleeve: for every field
 that ends in `___NODE` it will interpret the field value as an `id` and create a
 foreign-key relation.
 
+> Note: Before the introduction of the Schema Customization APIs in Gatsby v2.2,
+> there were two mechanisms to create links between node types: a plugin author would use the `___NODE`
+> fieldname convention (for plugins), and a user would define [mappings](/docs/gatsby-config/#mapping-node-types) between fields in their `gatsby-config.js`. Both users and plugin authors can now use the `@link` extension described below.
+
 Creating foreign-key relations with the `createTypes` action,
 i.e. without relying on type inference and the `___NODE` field naming
 convention, requires a bit of manual setup.
