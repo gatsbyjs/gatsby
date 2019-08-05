@@ -6830,6 +6830,15 @@
   built_by: CloudDog
   built_by_url: https://clouddog.com.br
   featured: false
+- title: AntdSite
+  main_url: https://antdsite.yvescoding.org
+  url: https://antdsite.yvescoding.org
+  description: >-
+    A static docs generator based on Ant Design and GatsbyJs.
+  categories:
+    - Documentation
+  built_by: Yves Wang
+  built_by_url: https://antdsite.yvescoding.org
 - title: Fourpost
   url: https://www.fourpost.com
   main_url: https://www.fourpost.com
