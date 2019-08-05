@@ -3547,3 +3547,17 @@
     - Separate components for different pages and grid
     - Uses gatsby-image to load images
     - Built using the old school CSS.
+- url: https://gatsby-theme-profile-builder.netlify.com/
+  repo: https://github.com/ashr81/gatsby-theme-profile-builder
+  description: Simple theme to build your personal portfolio and publish your articles using Contentful CMS.
+  tags:
+    - Profile
+    - Articles
+    - Styling:CSS-in-JS
+    - Blog
+    - Contentful CMS
+  features:
+    - Mobile Screen support
+    - Out of the box support with Contentful CMS for articles.
+    - Dark Mode Support
+    - Profile image with links to github and twitter.
