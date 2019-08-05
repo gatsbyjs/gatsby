@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.51](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.50...gatsby@2.13.51) (2019-08-05)
+
+### Bug Fixes
+
+- **gatsby:** Don't delete 404 page-data so we don't crash build ([#16354](https://github.com/gatsbyjs/gatsby/issues/16354)) ([a2855b3](https://github.com/gatsbyjs/gatsby/commit/a2855b3))
+- **gatsby:** Prefer a user's shouldUpdateScroll over a plugin's ([#16328](https://github.com/gatsbyjs/gatsby/issues/16328)) ([f02f366](https://github.com/gatsbyjs/gatsby/commit/f02f366))
+
+### Features
+
+- **gatsby:** Allow all dateformat options as directive args ([#16335](https://github.com/gatsbyjs/gatsby/issues/16335)) ([1a02b85](https://github.com/gatsbyjs/gatsby/commit/1a02b85))
+
 ## [2.13.50](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.48...gatsby@2.13.50) (2019-08-01)
 
 **Note:** Version bump only for package gatsby
