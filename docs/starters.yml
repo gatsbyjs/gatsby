@@ -3551,11 +3551,11 @@
   repo: https://github.com/ashr81/gatsby-theme-profile-builder
   description: Simple theme to build your personal portfolio and publish your articles using Contentful CMS.
   tags:
-    - Profile
-    - Articles
+    - Landing Page
+    - Portfolio
     - Styling:CSS-in-JS
     - Blog
-    - Contentful CMS
+    - CMS:Contentful
   features:
     - Mobile Screen support
     - Out of the box support with Contentful CMS for articles.
