@@ -65,14 +65,20 @@ const rebuildSchemaWithSitePage = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  const typeComposer = addInferredType({
-    schemaComposer,
-    typeComposer: schemaComposer.getOTC(`SitePage`),
-    nodeStore,
-    typeConflictReporter,
-    typeMapping,
-    parentSpan,
-  })
+  const typeComposer = schemaComposer.getOTC(`SitePage`)
+  const shouldInfer =
+    !typeComposer.hasExtension(`infer`) ||
+    typeComposer.getExtension(`infer`) !== false
+  if (shouldInfer) {
+    addInferredType({
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
+  }
   await processTypeComposer({
     schemaComposer,
     typeComposer,
@@ -385,6 +391,15 @@ const addExtensions = ({
         .filter(name => !internalExtensionNames.includes(name))
         .forEach(name => {
           const args = fieldExtensions[name]
+
+          if (!args || typeof args !== `object`) {
+            report.error(
+              `Field extension arguments must be provided as an object. ` +
+                `Received "${args}" on \`${typeName}.${fieldName}\`.`
+            )
+            return
+          }
+
           try {
             const definition = schemaComposer.getDirective(name)
 
@@ -729,6 +744,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   })
 
   parentTypesToChildren.forEach((children, parent) => {
+    if (!schemaComposer.has(parent)) return
     const typeComposer = schemaComposer.getAnyTC(parent)
     if (
       typeComposer instanceof InterfaceTypeComposer &&
@@ -753,8 +769,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   mimeTypesToChildren.forEach((children, mimeType) => {
     const parentTypes = typesHandlingMimeTypes.get(mimeType)
     if (parentTypes) {
-      parentTypes.forEach(parent => {
-        const typeComposer = schemaComposer.getAnyTC(parent)
+      parentTypes.forEach(typeComposer => {
         if (
           typeComposer instanceof InterfaceTypeComposer &&
           !typeComposer.hasExtension(`nodeInterface`)

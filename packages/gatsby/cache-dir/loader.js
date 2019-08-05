@@ -239,11 +239,6 @@ export class BaseLoader {
   }
 
   shouldPrefetch(pagePath) {
-    // If a plugin has disabled core prefetching, stop now.
-    if (this.prefetchDisabled) {
-      return false
-    }
-
     // Skip prefetching if we know user is on slow or constrained connection
     if (!doesConnectionSupportPrefetch()) {
       return false
@@ -267,6 +262,11 @@ export class BaseLoader {
     if (!this.prefetchTriggered.has(pagePath)) {
       this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
       this.prefetchTriggered.add(pagePath)
+    }
+
+    // If a plugin has disabled core prefetching, stop now.
+    if (this.prefetchDisabled) {
+      return false
     }
 
     const realPath = cleanPath(pagePath)

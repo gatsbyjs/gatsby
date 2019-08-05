@@ -5,8 +5,7 @@ author: Sam Bhagwat
 excerpt: "Discover what David Eads has used Gatsby for and why he’s used it for ProPublica's Ticket Trap data visualization."
 tags:
   - react
-  - ticket trap
-  - visualization
+  - data-visualization
 ---
 
 I recently sat down with David Eads, who recently wrote a [fascinating deep dive](https://www.propublica.org/nerds/the-ticket-trap-news-app-front-to-back-david-eads-propublica-illinois) about how he used Gatsby for ProPublica's Ticket Trap data visualization. David and I talked about what he's used Gatsby for and why.
@@ -18,20 +17,29 @@ I recently sat down with David Eads, who recently wrote a [fascinating deep dive
 **David:** Everything I've made since 2018 has been in Gatsby. https://projects.propublica.org/graphics/il/stuck-kids/ is one example, https://projects.propublica.org/chicago-tickets/ is another. I've also done embedded graphics with Gatsby, like the one seen here https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
 
 <Pullquote citation="ProPublica">
-Every day, a child is held beyond medical necessity in Illinois.
-They've been cleared to leave, but there's no where for them to go. Explore the cases of Illinois youths stuck in psychiatric hospitals because of failures within the state'a Department of Children and Family Services.</Pullquote>
+  Every day, a child is held beyond medical necessity in Illinois. They've been
+  cleared to leave, but there's no where for them to go. Explore the cases of
+  Illinois youths stuck in psychiatric hospitals because of failures within the
+  state'a Department of Children and Family Services.
+</Pullquote>
 
 ![Illinois medical necessity](./images/medical.png)
 
 <Pullquote citation="ProPublica">
-The Ticket Trap: Where Chicago Issues Parking Tickets and Who Pays...
-The city of Chicago has generated billions of dollars in revenue from parking tickets while sending low-income and black communities into debt. Search our interactive database of 54 million tickets issued since 1996 — and learn how your ward stacks up.</Pullquote>
+  The Ticket Trap: Where Chicago Issues Parking Tickets and Who Pays... The city
+  of Chicago has generated billions of dollars in revenue from parking tickets
+  while sending low-income and black communities into debt. Search our
+  interactive database of 54 million tickets issued since 1996 — and learn how
+  your ward stacks up.
+</Pullquote>
 
 ![Chicago parking tickets](./images/chicagoparking.jpg)
 
 <Pullquote citation="ProPublica">
-Illinois Bet on Video Gambling — and Lost
-Legalizing video poker and slots was supposed to generate billions of dollars for the state. A decade later, that hasn’t happened. Now, legislators want to double down on gambling.</Pullquote>
+  Illinois Bet on Video Gambling — and Lost Legalizing video poker and slots was
+  supposed to generate billions of dollars for the state. A decade later, that
+  hasn’t happened. Now, legislators want to double down on gambling.
+</Pullquote>
 
 ![Illinois video gambling](./images/illinoisgambling.jpg)
 

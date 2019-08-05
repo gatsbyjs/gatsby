@@ -10,25 +10,29 @@ const GA = {
 }
 
 const dynamicPlugins = []
-// if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
-// // pick data from 3 months ago
-// const startDate = new Date()
-// startDate.setMonth(startDate.getMonth() - 3)
-// dynamicPlugins.push({
-// resolve: `gatsby-plugin-guess-js`,
-// options: {
-// GAViewID: GA.viewId,
-// jwt: {
-// client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
-// private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY,
-// },
-// period: {
-// startDate,
-// endDate: new Date(),
-// },
-// },
-// })
-// }
+if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
+  // pick data from 3 months ago
+  const startDate = new Date()
+  startDate.setMonth(startDate.getMonth() - 3)
+  dynamicPlugins.push({
+    resolve: `gatsby-plugin-guess-js`,
+    options: {
+      GAViewID: GA.viewId,
+      jwt: {
+        client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
+        // replace \n characters in real new lines for circleci deploys
+        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY.replace(
+          /\\n/g,
+          `\n`
+        ),
+      },
+      period: {
+        startDate,
+        endDate: new Date(),
+      },
+    },
+  })
+}
 
 if (process.env.AIRTABLE_API_KEY) {
   dynamicPlugins.push({

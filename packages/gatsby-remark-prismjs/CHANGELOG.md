@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.3...gatsby-remark-prismjs@3.3.4) (2019-08-01)
+
+### Features
+
+- **gatsby-remark-prismjs:** Add support for Prism command-lin… ([#16170](https://github.com/gatsbyjs/gatsby/issues/16170)) ([a1c8fdd](https://github.com/gatsbyjs/gatsby/commit/a1c8fdd))
+
 ## [3.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.2...gatsby-remark-prismjs@3.3.3) (2019-07-12)
 
 ### Bug Fixes

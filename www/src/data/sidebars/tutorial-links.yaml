@@ -114,11 +114,11 @@
       link: /tutorial/theme-tutorials/
       items:
         - title: Using a Theme
-          link: /tutorial/using-a-theme
+          link: /tutorial/using-a-theme/
         - title: Using Multiple Themes Together
           link: /tutorial/using-multiple-themes-together/
         - title: Building a Theme
-          link: /tutorial/building-a-theme
+          link: /tutorial/building-a-theme/
     - title: Additional Tutorials
       link: /tutorial/additional-tutorials/
       items:
@@ -133,7 +133,7 @@
         - title: Adding Images to a WordPress Site
           link: /tutorial/wordpress-image-tutorial/
         - title: Using the Prismic with GraphQL Source Plugin
-          link: /tutorial/prismic-source-graphql-tutorial
+          link: /tutorial/prismic-source-graphql-tutorial/
         - title: Writing Documentation with Docz
           link: /tutorial/writing-documentation-with-docz/
         - title: Making a Blog with Netlify CMS
