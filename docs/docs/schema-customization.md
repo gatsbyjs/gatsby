@@ -927,16 +927,98 @@ all team members, we can write:
 export const query = graphql`
   {
     allTeamMembers {
-      ... on Author {
+      ... on AuthorJson {
         fullName
       }
-      ... on Contributor {
+      ... on ContributorJson {
         fullName
       }
     }
   }
 `
 ```
+
+### Queryable interfaces with the `@nodeInterface` extension
+
+Since Gatsby 2.13.22, we can achieve the same thing as above by adding the `@nodeInterface`
+extension to the `TeamMember` interface. This will treat the interface like a normal
+top-level type that implements the `Node` interface, and thus automatically add root
+query fields for the interface.
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    interface TeamMember @nodeInterface {
+      id: ID!
+      name: String!
+      firstName: String!
+      email: String!
+    }
+
+    type AuthorJson implements Node & TeamMember {
+      name: String!
+      firstName: String!
+      email: String!
+      joinedAt: Date
+    }
+
+    type ContributorJson implements Node & TeamMember {
+      name: String!
+      firstName: String!
+      email: String!
+      receivedSwag: Boolean
+    }
+  `
+  createTypes(typeDefs)
+}
+```
+
+When querying, use inline fragments for the fields that are specific to the types
+implementing the interface (i.e. fields that are not shared):
+
+```js
+export const query = graphql`
+  {
+    allTeamMember {
+      nodes {
+        name
+        firstName
+        email
+        __typeName
+        ... on AuthorJson {
+          joinedAt
+        }
+        ... on ContributorJson {
+          receivedSwag
+        }
+        ... on Node {
+          parent {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+Including the `__typeName` introspection field allows to check the node type when iterating
+over the query results in your component:
+
+```js
+data.allTeamMember.nodes.map(node => {
+  switch (node.__typeName) {
+    case `AuthorJson`:
+      return <Author {...node} />
+    case `ContributorJson`:
+      return <Contributor {...node} />
+  }
+})
+```
+
+> Note: All types implementing an interface with the `@nodeInterface` extension
+> must also implement the `Node` interface.
 
 ## Extending third-party types
 
