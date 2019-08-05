@@ -1,6 +1,7 @@
 module.exports = (
   state = {
     composer: null,
+    context: {},
     fieldExtensions: {},
     thirdPartySchemas: [],
     types: [],
@@ -48,9 +49,17 @@ module.exports = (
         fieldExtensions: { ...state.fieldExtensions, [name]: extension },
       }
     }
+    case `CREATE_RESOLVER_CONTEXT`: {
+      const context = action.payload
+      return {
+        ...state,
+        context: { ...state.context, ...context },
+      }
+    }
     case `DELETE_CACHE`:
       return {
         composer: null,
+        context: {},
         fieldExtensions: {},
         thirdPartySchemas: [],
         types: [],
