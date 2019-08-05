@@ -6837,7 +6837,6 @@
     A static docs generator based on Ant Design and GatsbyJs.
   categories:
     - Document
-    - Ant Design
   built_by: Yves Wang
   built_by_url: https://antdsite.yvescoding.org
   featured: false
