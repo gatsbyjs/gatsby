@@ -153,3 +153,7 @@ You can type in a command, such as one of these:
 When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
 See the Gatsby REPL documentation [here](/docs/gatsby-repl/).
+
+### Disabling colored output
+
+In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org/)).
