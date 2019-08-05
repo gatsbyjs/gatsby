@@ -38,6 +38,7 @@ module.exports = {
   jobs: require(`./jobs`),
   webpack: require(`./webpack`),
   webpackCompilationHash: require(`./webpack-compilation-hash`),
+  webpackChunkGroupHashes: require(`./webpack-chunk-group-hashes`),
   redirects: require(`./redirects`),
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),

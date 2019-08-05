@@ -28,7 +28,7 @@ module.exports = async (queryJob: QueryJob) => {
     schema,
     schemaCustomization,
     program,
-    webpackCompilationHash,
+    webpackChunkGroupHashes,
   } = store.getState()
 
   const graphql = (query, context) =>
@@ -105,7 +105,7 @@ ${formatErrorDetails(errorDetails)}`)
         { publicDir },
         page,
         result,
-        webpackCompilationHash
+        webpackChunkGroupHashes[page.componentChunkName]
       )
     } else {
       // The babel plugin is hard-coded to load static queries from

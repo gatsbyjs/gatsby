@@ -102,6 +102,41 @@ module.exports = async function build(program: BuildArgs) {
     })
     activity.start()
 
+    const { namedChunkGroups, chunks } = stats.toJson({
+      all: false,
+      chunkGroups: true,
+      chunks: true,
+    })
+
+    // Create a chunkGroupHash per namedChunkGroups entry
+
+    const getHashForChunk = chunkId => {
+      const chunk = chunks.find(({ id }) => id === chunkId)
+      return chunk && chunk.hash
+    }
+    const getHashForNamedChunk = ({ chunks }) =>
+      chunks.reduce(
+        (namedChunkHash, chunkId) =>
+          `${namedChunkHash}${getHashForChunk(chunkId)}`,
+        ``
+      )
+
+    // Get app chunk hash as that will be needed for all other named chunk groups
+
+    // Construct hashes for remaining named chunk groups
+    const namedChunkHashes = Object.keys(namedChunkGroups).reduce(
+      (groupHashes, key) => {
+        groupHashes[key] = `${getHashForNamedChunk(namedChunkGroups[key])}`
+        return groupHashes
+      },
+      {}
+    )
+
+    store.dispatch({
+      type: `SET_WEBPACK_CHUNK_GROUP_HASHES`,
+      payload: namedChunkHashes,
+    })
+
     // We need to update all page-data.json files with the new
     // compilation hash. As a performance optimization however, we
     // don't update the files for `pageQueryIds` (dirty queries),
@@ -113,7 +148,7 @@ module.exports = async function build(program: BuildArgs) {
     await pageDataUtil.updateCompilationHashes(
       { publicDir, workerPool },
       cleanPagePaths,
-      webpackCompilationHash
+      namedChunkHashes
     )
 
     activity.end()

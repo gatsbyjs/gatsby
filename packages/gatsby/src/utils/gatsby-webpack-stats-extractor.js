@@ -27,9 +27,10 @@ class GatsbyWebpackStatsExtractor {
         }
       }
       const webpackStats = {
-        ...stats.toJson({ all: false, chunkGroups: true }),
+        ...stats.toJson({ all: false, chunkGroups: true, chunks: true }),
         assetsByChunkName: assets,
       }
+
       fs.writeFile(
         path.join(`public`, `chunk-map.json`),
         JSON.stringify(assetsMap),

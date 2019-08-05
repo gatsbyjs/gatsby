@@ -28,15 +28,12 @@ const write = async ({ publicDir }, page, result, webpackCompilationHash) => {
 const updateCompilationHashes = (
   { publicDir, workerPool },
   pagePaths,
-  webpackCompilationHash
+  namedChunkHashes
 ) => {
   const segments = chunk(pagePaths, 50)
+  console.log(`Passed namedChunkHashes:: `, JSON.stringify(namedChunkHashes))
   return Promise.map(segments, segment =>
-    workerPool.updateCompilationHashes(
-      { publicDir },
-      segment,
-      webpackCompilationHash
-    )
+    workerPool.updateCompilationHashes({ publicDir }, segment, namedChunkHashes)
   )
 }
 
