@@ -29,9 +29,7 @@ Similarly, earlier last month, we felt like we needed to take some time to slow 
 
 We called this the [Snow Leopard](https://github.com/gatsbyjs/gatsby/projects/13) release.
 
-We think this was a good idea because besides being the best React framework there is, we also want to be the most stable one.
-
-Looks like people think we're doing fine. 🙂
+We intend to keep doing this every now and then to keep Gatsby stable and ensure you have painless upgrades.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have an opinionated starter for creating course sites built with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> that I hadn&#39;t updated since January so I full well expected to spend a few hours fixing it after I updated all the deps.<br/><br/>Nope, just updated the packages and everything worked. Thanks Gatsby team!</p>&mdash; Brian Holt (@holtbt) <a href="https://twitter.com/holtbt/status/1158559782451609600?ref_src=twsrc%5Etfw">August 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
