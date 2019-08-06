@@ -44,7 +44,7 @@ type RenderCallback = (data: any) => React.ReactNode
 
 export interface StaticQueryProps {
   query: any
-  render?: RenderCallbackActions
+  render?: RenderCallback
   children?: RenderCallback
 }
 
