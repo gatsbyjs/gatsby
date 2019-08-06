@@ -78,7 +78,7 @@ We love it because:
 
 - It's so fast
 - The illustrations are so very pretty
-- Uses Gatsby Preview
+- Uses [Gatsby Preview](https://www.gatsbyjs.com/preview)
 - Pulls in content from DatoCMS & EventBrite
 
 ### Theme of the Month
