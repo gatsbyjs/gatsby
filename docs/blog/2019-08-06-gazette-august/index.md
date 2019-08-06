@@ -109,7 +109,7 @@ We've also restructured the meeting with a new format that includes
 
 We think live pull request reviews are a great way to involve the community in not only contributing code but also helping us merge those contributions in. We hope these give you some insight into how we review contributions and help make [your first contribution](http://gatsby.dev/pair-programming) even easier.
 
-In case you're not comfortable asking questions on the call (first call with strangers can be intimidating, we understand), we have a form to submit questions/pull requests for live review. The form is at https://gatsby.dev/oss-maintainers-form.
+In case you're not comfortable asking questions on the call (a video call with strangers can be intimidating, we understand), we have a form to submit questions/pull requests for live review. The form is at https://gatsby.dev/oss-maintainers-form.
 
 Here's a nifty [add to calendar link](http://gatsby.dev/oss-maintainers) for the meeting.
 
