@@ -121,4 +121,4 @@ If you like what you see and want to work on the best React framework there is, 
 
 Check out the open roles at https://www.gatsbyjs.com/careers/
 
-We're lovely people, we promise. 💜
+We can't wait to work with you. 💜
