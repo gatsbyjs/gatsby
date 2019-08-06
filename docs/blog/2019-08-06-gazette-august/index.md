@@ -13,7 +13,7 @@ Remember when I said I'll see you folks next week with a jam packed Gazette? It'
 
 Welcome to the _new_ and _improved_ Gatsby Gazette. It's been a while. We have a lot to talk about.
 
-This edition features our work on making Gatsby more stable, the Themes Jam, Jason _Blitz_ Lengstorf, highlights from the community and the revamped Community Maintainers meeting.
+This edition features our work on making Gatsby more stable, the Themes Jam, some solid documentation improvements, exciting livestreams featuring Jason _Blitz_ Lengstorf, highlights from the community and the revamped Core Maintainers meeting.
 
 ## Team Highlights
 
@@ -32,6 +32,23 @@ We called this the [Snow Leopard](https://github.com/gatsbyjs/gatsby/projects/13
 We intend to keep doing this every now and then to keep Gatsby stable and ensure you have painless upgrades.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have an opinionated starter for creating course sites built with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> that I hadn&#39;t updated since January so I full well expected to spend a few hours fixing it after I updated all the deps.<br/><br/>Nope, just updated the packages and everything worked. Thanks Gatsby team!</p>&mdash; Brian Holt (@holtbt) <a href="https://twitter.com/holtbt/status/1158559782451609600?ref_src=twsrc%5Etfw">August 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+### WPGraphQL for Advanced Custom Fields
+
+[WPGraphQL for Advanced Custom Fields](https://www.wpgraphql.com/acf/) is now open source. [Jason Bahl](https://twitter.com/jasonbahl) recently joined our team and open sourcing this is a step forward in our commitment to making Gatsby + WordPress seamless.
+
+### Learning
+
+Our learning team has been hard at work on improving the documentation on [gatsbyjs.org](https://gatsbyjs.org)
+
+Amongst many many other things, we've added
+
+- Next and previous pagination links to guide users through the documentation
+- A floating Table of Contents on most pages
+
+[Marcy](https://twitter.com/marcysutton) also taught a workshop at Frontend Masters and this is a must watch for all of us to learn how to build accessible applications on the web.
+
+Check out the workshop at https://frontendmasters.com/workshops/javascript-accessibility/
 
 ### Jason _Blitz_ Lengstorf
 
