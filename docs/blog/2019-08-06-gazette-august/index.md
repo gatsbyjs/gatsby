@@ -7,7 +7,7 @@ tags:
   - gazette
 ---
 
-Remember when I said I'll see you folks next week with a jam packed Gazette? It's been 3 months! 😱 If it's any consolation though, this one is a jam packed edition.
+Remember when I said I'll see you folks next week with a jam packed Gazette? It's been 3 months! 😱 If it's any consolation though, this one _is_ a jam packed edition.
 
 ![Meme joking about how I said I'll be back in a week and readers are now skeletons because 3 months passed](./meme.jpg)
 
@@ -23,7 +23,7 @@ The past few weeks has been all about what we're calling the Snow Leopard releas
 
 First, an aside.
 
-[Mac OS X Snow Leopard](https://en.wikipedia.org/wiki/Mac_OS_X_Snow_Leopard) (version 10.6) was the seventh major release of Mac OS X (now named macOS). Unlike those of previous versions, the goals of Snow Leopard were improved performance, greater efficiency and the reduction of its overall memory footprint. Addition of new end-user features was not a primary consideration: its name signified its goal to be a refinement of the previous OS X version, Leopard.
+[Snow Leopard](https://en.wikipedia.org/wiki/Mac_OS_X_Snow_Leopard) was the seventh major release of macOS. Unlike those of previous versions, the goals of Snow Leopard were improved performance, greater efficiency and the reduction of its overall memory footprint. Addition of new end-user features was not a primary consideration: its name signified its goal to be a refinement of the previous OS X version, Leopard.
 
 Similarly, earlier last month, we felt like we needed to take some time to slow down and clean up Gatsby after some of the big features that we've shipped recently ([themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes/), [per page manifest](https://www.gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites/)). Our goal was to squash bugs and issues that had happened as a result of moving fast and shipping.
 
@@ -115,7 +115,7 @@ In case you're not comfortable asking questions on the call (a video call with s
 
 Here's a nifty [add to calendar link](http://gatsby.dev/oss-maintainers) for the meeting.
 
-Join us on the meeting every Wednesday at 8:30am (PDT). 🙌
+Join us on the meeting every Wednesday at 8:30 AM (PDT) 🙌
 
 ## We're hiring
 
@@ -123,4 +123,4 @@ Like what you see and want to help us build Gatsby? We're now hiring engineers o
 
 Check out the open roles at https://www.gatsbyjs.com/careers/
 
-We can't wait to work with you. 💜
+We can't wait to work with you 💜
