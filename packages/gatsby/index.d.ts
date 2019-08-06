@@ -44,7 +44,7 @@ type RenderCallback = (data: any) => React.ReactNode
 
 export interface StaticQueryProps {
   query: any
-  render?: RenderCallback
+  render?: RenderCallbackActions
   children?: RenderCallback
 }
 
@@ -385,13 +385,19 @@ export interface GatsbyNode {
    * to customize added third-party types, use the createResolvers API.
    * @see https://www.gatsbyjs.org/docs/node-apis/#createSchemaCustomization
    */
-  createSchemaCustomization?(arguments: {
-    actions: Pick<Actions
-      , 'addThirdPartySchema' 
-      | 'createFieldExtension' 
-      | 'createTypes'
-    >
-  })
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions
+  ): any
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions
+  ): Promise<any>
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 }
 
 /**
@@ -694,6 +700,10 @@ export interface CreateResolversArgs extends ParentSpanPluginArgs {
   intermediateSchema: object
   createResolvers: Function
   traceId: `initial-createResolvers`
+}
+    
+export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
+  traceId: `initial-createSchemaCustomization`
 }
 
 export interface PreRenderHTMLArgs extends NodePluginArgs {
