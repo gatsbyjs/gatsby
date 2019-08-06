@@ -6820,3 +6820,44 @@
     - Gallery
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: DIA Supermercados
+  main_url: https://dia.com.br
+  url: https://dia.com.br
+  description: >-
+    Brazilian retailer subsidiary, with more than 1,100 stores in Brazil, focusing on low prices and exclusive DIA Products.
+  categories:
+    - Business
+  built_by: CloudDog
+  built_by_url: https://clouddog.com.br
+  featured: false
+- title: AntdSite
+  main_url: https://antdsite.yvescoding.org
+  url: https://antdsite.yvescoding.org
+  description: >-
+    A static docs generator based on Ant Design and GatsbyJs.
+  categories:
+    - Documentation
+  built_by: Yves Wang
+  built_by_url: https://antdsite.yvescoding.org
+- title: Fourpost
+  url: https://www.fourpost.com
+  main_url: https://www.fourpost.com
+  description: >
+    Fourpost is a shopping destination for today’s family that combines the best brands and experiences under one roof.
+  categories:
+    - Retail
+    - Marketing
+  built_by: Fourpost
+  built_by_url: https://github.com/fourpost
+  featured: false
+- title: ReactStudy Blog
+  url: https://elated-lewin-51cf0d.netlify.com
+  main_url: https://elated-lewin-51cf0d.netlify.com
+  description: >
+    Belong to your own blog by gatsby
+  categories:
+    - Study
+    - Life
+  built_by: 97thjingba
+  built_by_url: https://github.com/97thjingba
+  featured: false

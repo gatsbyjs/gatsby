@@ -38,7 +38,7 @@ const generateComparisonPageSet = type => {
       )
       pages.push({
         options,
-        type,
+        featureType: type,
         path: `/features/${type}/gatsby-vs-${set.join(`-vs-`)}`,
       })
     }
