@@ -140,7 +140,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
 // Get blurhashed and transform to base64
 
-async function fileBlurhashedToBase64(absolutePath, width, height) {
+/*async function fileBlurhashedToBase64(absolutePath, width, height) {
   // Load image
   const image = await loadImage(absolutePath, width, height)
   const canvas = createCanvas(width, height)
@@ -161,7 +161,7 @@ async function fileBlurhashedToBase64(absolutePath, width, height) {
   imageCanvasPixels.data.set(pixels)
   ctx.putImageData(imageCanvasPixels, 0, 0)
   return canvas.toDataURL()
-}
+}*/
 
 // A value in pixels(Int)
 const defaultBase64Width = () => getPluginOptions().base64Width || 20
@@ -229,7 +229,7 @@ async function generateBase64({ file, args, reporter }) {
     resolveWithObject: true,
   })
   const base64output = {
-    src: `data:image/${info.format};base64,${finalImageData}`,
+    src: `data:image/${info.format};base64,${buffer}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
