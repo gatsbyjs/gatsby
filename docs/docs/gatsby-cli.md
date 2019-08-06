@@ -57,6 +57,25 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 Follow the [Local HTTPS guide](/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
 
+#### Preview changes on other devices
+
+You can use the Gatsby develop command with the host option to access your dev environment on other devices on the same network, run:
+
+```shell
+gatsby develop -H 0.0.0.0
+```
+
+Then the terminal will log information as usual, but will additionally include a URL that you can navigate to from a client on the same network to see how the site renders.
+
+```
+You can now view gatsbyjs.org in the browser.
+⠀
+  Local:            http://0.0.0.0:8000/
+  On Your Network:  http://192.168.0.212:8000/ // highlight-line
+```
+
+**Note**: you can't visit 0.0.0.0:8000 on Windows (but things will work using either localhost:8000 or the "On Your Network" URL on Windows)
+
 ### `build`
 
 At the root of a Gatsby site, compile your application and make it ready for deployment:
