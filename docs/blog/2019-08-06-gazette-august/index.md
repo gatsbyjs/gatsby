@@ -39,11 +39,15 @@ Looks like people think we're doing fine. 🙂
 
 Jason has basically been living his life on livestream since the past month. He's done some incredible streams and has many more exciting ones coming up.
 
-My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) Mikhail Novikov.
+My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) with [Mikhail Novikov](https://twitter.com/freiksenet).
+
+In case that isn't your jam, there's also [Gatsby + WordPress](https://www.youtube.com/watch?v=DH7I1xRrbxs), [building an RSS feed-powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ), [composing and styling Gatsby themes](https://www.youtube.com/watch?v=6Z4p-qjnKCQ), [Microfrontends](https://www.youtube.com/watch?v=0Ta-awtLZTs) and even a [livestream on livestreaming](https://www.youtube.com/watch?v=rgTugjTDYaE)!
+
+Here's a convenient [playlist](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) if you want to binge watch these.
 
 ### Theme Jam
 
-To celebrate the launch of Gatsby Themes, we announced the [Gatsby Theme Jam](https://themejam.gatsbyjs.org/) last month.
+Talking about jam, to celebrate the launch of Gatsby Themes, we announced the [Gatsby Theme Jam](https://themejam.gatsbyjs.org/) last month.
 
 The response was incredible. Seeing so many wonderful themes from all of you has been spectacular and we're afraid we might like _too_ many of them to pick one.
 
