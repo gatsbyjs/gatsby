@@ -140,13 +140,13 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
 // Get blurhashed and transform to base64
 
-async function fileBlurhashedToBase64(absolutePath) {
+async function fileBlurhashedToBase64(absolutePath, width, height) {
   // Load image
-  const image = await loadImage(absolutePath)
-  const canvas = createCanvas(args.width, args.height)
+  const image = await loadImage(absolutePath, width, height)
+  const canvas = createCanvas(width, height)
   const ctx = canvas.getContext(`2d`)
-  ctx.drawImage(image, 0, 0, args.width, args.height)
-  const imageData = ctx.getImageData(0, 0, args.width, args.height)
+  ctx.drawImage(image, 0, 0, width, height)
+  const imageData = ctx.getImageData(0, 0, width, height)
   // Blurhash
   const blurhashed = blurhash.encode(
     imageData.data,
@@ -155,9 +155,9 @@ async function fileBlurhashedToBase64(absolutePath) {
     5,
     5
   )
-  const pixels = blurhash.decode(blurhashed, args.width, args.height)
+  const pixels = blurhash.decode(blurhashed, width, height)
   // Set in canvas to get Base64
-  const imageCanvasPixels = ctx.createImageData(args.width, args.height)
+  const imageCanvasPixels = ctx.createImageData(width, height)
   imageCanvasPixels.data.set(pixels)
   ctx.putImageData(imageCanvasPixels, 0, 0)
   return canvas.toDataURL()
