@@ -161,13 +161,13 @@ async function generateBase64({ file, args, reporter }) {
   )
   console.log(`BLUR HASH MAGIC 🔥`)
   console.log(imageData)
-  const pixels = blurhash.decode(blurhashed, args.width, args.height);
+  const pixels = blurhash.decode(blurhashed, args.width, args.height)
   // Set in canvas to get Base64
-  const imageCanvasPixels = ctx.createImageData(args.width, args.height);
-  imageCanvasPixels.data.set(pixels);
-  ctx.putImageData(imageCanvasPixels, 0, 0);
-  const base64Data = canvas.toDataURL();
-  console.log('TENGO ------------>')
+  const imageCanvasPixels = ctx.createImageData(args.width, args.height)
+  imageCanvasPixels.data.set(pixels)
+  ctx.putImageData(imageCanvasPixels, 0, 0)
+  const base64Data = canvas.toDataURL()
+  console.log(`TENGO ------------>`)
   console.log(base64Data)
   /*fs.readFile(file.absolutePath, "base64", function(err, buffer){
     if ( err ) {
@@ -239,7 +239,8 @@ async function generateBase64({ file, args, reporter }) {
   if (options.duotone) {
     pipeline = await duotone(options.duotone, args.toFormat, pipeline)
   }
-  const { data: buffer, info } = await pipeline.toBuffer({
+  // const { data: buffer, info } = await pipeline.toBuffer({
+  const { info } = await pipeline.toBuffer({
     resolveWithObject: true,
   })
   const base64output = {
