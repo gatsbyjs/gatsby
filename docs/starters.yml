@@ -3547,6 +3547,20 @@
     - Separate components for different pages and grid
     - Uses gatsby-image to load images
     - Built using the old school CSS.
+- url: https://gatsby-theme-profile-builder.netlify.com/
+  repo: https://github.com/ashr81/gatsby-theme-profile-builder
+  description: Simple theme to build your personal portfolio and publish your articles using Contentful CMS.
+  tags:
+    - Landing Page
+    - Portfolio
+    - Styling:CSS-in-JS
+    - Blog
+    - CMS:Contentful
+  features:
+    - Mobile Screen support
+    - Out of the box support with Contentful CMS for articles.
+    - Toggleable Light and Dark Mode
+    - Profile image with links to your github and twitter.
 - url: https://prist.marguerite.io/
   repo: https://github.com/margueriteroth/gatsby-prismic-starter-prist
   description: A light-themed starter powered by Gatsby v2 and Prismic to showcase portfolios and blogs.
