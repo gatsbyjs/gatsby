@@ -142,27 +142,33 @@ function queueImageResizing({ file, args = {}, reporter }) {
 const defaultBase64Width = () => getPluginOptions().base64Width || 20
 async function generateBase64({ file, args, reporter }) {
   console.log(`BASE64 ----->`)
-  const myImg = loadImage(file.absolutePath)
-  myImg.then(imagen => {
-    console.log(`Imagen ----->`)
-    console.log()
-    const canvas = createCanvas(args.width, args.height)
-    const ctx = canvas.getContext(`2d`)
-    ctx.drawImage(imagen, 0, 0, args.width, args.height)
-    const imageData = ctx.getImageData(0, 0, args.width, args.height)
-    console.log(`Tengo image data ----->`)
-    console.log(imageData)
-    // Blurhash
-    const blurhashed = blurhash.encode(
-      imageData.data,
-      imageData.width,
-      imageData.height,
-      5,
-      5
-    )
-    console.log(`BLUR HASH MAGIC 🔥`)
-    console.log(blurhashed)
-  })
+  const imagen = await loadImage(file.absolutePath)
+  console.log(`Imagen ----->`)
+  console.log(imagen)
+  const canvas = createCanvas(args.width, args.height)
+  const ctx = canvas.getContext(`2d`)
+  ctx.drawImage(imagen, 0, 0, args.width, args.height)
+  const imageData = ctx.getImageData(0, 0, args.width, args.height)
+  console.log(`Tengo image data ----->`)
+  console.log(imageData)
+  // Blurhash
+  const blurhashed = blurhash.encode(
+    imageData.data,
+    imageData.width,
+    imageData.height,
+    5,
+    5
+  )
+  console.log(`BLUR HASH MAGIC 🔥`)
+  console.log(imageData)
+  const pixels = blurhash.decode(blurhashed, args.width, args.height);
+  // Set in canvas to get Base64
+  const imageCanvasPixels = ctx.createImageData(args.width, args.height);
+  imageCanvasPixels.data.set(pixels);
+  ctx.putImageData(imageCanvasPixels, 0, 0);
+  const base64Data = canvas.toDataURL();
+  console.log('TENGO ------------>')
+  console.log(base64Data)
   /*fs.readFile(file.absolutePath, "base64", function(err, buffer){
     if ( err ) {
         console.log('In read file')
@@ -237,7 +243,7 @@ async function generateBase64({ file, args, reporter }) {
     resolveWithObject: true,
   })
   const base64output = {
-    src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
+    src: `${base64Data}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
