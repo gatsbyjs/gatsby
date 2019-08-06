@@ -49,7 +49,7 @@ See below for the complete list of [optional fields](#optional-fields).
 To make it easy to track clicks on outbound links in Google Analytics,
 the plugin provides a component.
 
-To use it, simply import it and use it like you would the `<a>` element e.g.
+To use it, simply import it and use it like you will do for the `<a>` element e.g.
 
 ```jsx
 import React
@@ -91,18 +91,18 @@ function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 
 ga('set', 'anonymizeIp', 1);
 ```
 
-If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
+If your visitors should be able to set an Opt-Out-Cookie (No future tracking) ,
 you can set a link e.g. in your imprint as follows:
 
 `<a href="javascript:gaOptout();">Deactivate Google Analytics</a>`
 
 ### `respectDNT`
 
-If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
+If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics it does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
 
 ### `exclude`
 
-If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
+If you need to exclude any path from the tracking system, then you can add it (one or more) to this optional array as glob expressions.
 
 ### `pageTransitionDelay`
 
