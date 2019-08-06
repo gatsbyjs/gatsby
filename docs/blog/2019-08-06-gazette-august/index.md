@@ -117,7 +117,7 @@ Join us on the meeting every Wednesday at 8:30am (PDT). 🙌
 
 ## We're hiring
 
-If you like what you see and want to work on the best React framework there is, we're now hiring.
+Like what you see and want to help us build Gatsby? We're now hiring engineers on both the Open Source and Cloud teams.
 
 Check out the open roles at https://www.gatsbyjs.com/careers/
 
