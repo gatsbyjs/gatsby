@@ -39,7 +39,7 @@ Looks like people think we're doing fine. 🙂
 
 Jason has basically been living his life on livestream since the past month. He's done some incredible streams and has many more exciting ones coming up.
 
-My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462900728) Mikhail Novikov.
+My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) Mikhail Novikov.
 
 ### Theme Jam
 
