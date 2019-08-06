@@ -3559,5 +3559,5 @@
   features:
     - Mobile Screen support
     - Out of the box support with Contentful CMS for articles.
-    - Dark Mode Support
+    - Toggleable Light and Dark Mode
     - Profile image with links to your github and twitter.
