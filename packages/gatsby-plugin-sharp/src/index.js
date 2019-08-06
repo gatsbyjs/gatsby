@@ -1,6 +1,6 @@
 const sharp = require(`./safe-sharp`)
-// const blurhash = require(`blurhash`)
-// const { createCanvas, loadImage } = require(`canvas`)
+const blurhash = require(`blurhash`)
+const { createCanvas, loadImage } = require(`canvas`)
 
 const imageSize = require(`probe-image-size`)
 
@@ -139,8 +139,13 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 // Get blurhashed and transform to base64
-
-/*async function fileBlurhashedToBase64(absolutePath, width, height) {
+async function fileBlurhashedToBase64(
+  absolutePath,
+  width,
+  height,
+  componentX,
+  componentY
+) {
   // Load image
   const image = await loadImage(absolutePath, width, height)
   const canvas = createCanvas(width, height)
@@ -152,8 +157,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
     imageData.data,
     imageData.width,
     imageData.height,
-    5,
-    5
+    componentX,
+    componentY
   )
   const pixels = blurhash.decode(blurhashed, width, height)
   // Set in canvas to get Base64
@@ -161,7 +166,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   imageCanvasPixels.data.set(pixels)
   ctx.putImageData(imageCanvasPixels, 0, 0)
   return canvas.toDataURL()
-}*/
+}
 
 // A value in pixels(Int)
 const defaultBase64Width = () => getPluginOptions().base64Width || 20
@@ -170,6 +175,23 @@ async function generateBase64({ file, args, reporter }) {
   const options = healOptions(pluginOptions, args, file.extension, {
     width: defaultBase64Width(),
   })
+  // Decide to return blurhashed or continue to normal base64 function
+  if (options.blurhashed) {
+    const blurHashedBase64 = await fileBlurhashedToBase64(
+      file.absolutePath,
+      args.width,
+      args.height,
+      options.componentX,
+      options.componentY
+    )
+    return {
+      src: blurHashedBase64,
+      width: args.width,
+      height: args.height,
+      aspectRatio: args.width / args.height,
+      originalName: file.base,
+    }
+  }
   let pipeline
   try {
     pipeline = sharp(file.absolutePath)
@@ -229,7 +251,7 @@ async function generateBase64({ file, args, reporter }) {
     resolveWithObject: true,
   })
   const base64output = {
-    src: `data:image/${info.format};base64,${buffer}`,
+    src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
@@ -413,6 +435,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
     const base64Width = options.base64Width || defaultBase64Width()
     const base64Height = Math.max(1, Math.round((base64Width * height) / width))
     const base64Args = {
+      blurhashed: options.blurhashed,
+      componentX: options.componentX,
+      componentY: options.componentY,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
