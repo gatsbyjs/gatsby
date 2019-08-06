@@ -19,10 +19,7 @@ export const TAGS_AND_DOCS = new Map([
   [`case-studies`, ``],
   [`cdn`, ``],
   [`cli`, ``],
-  [
-    `client-side-routing`,
-    `/docs/building-apps-with-gatsby/#client-only-routes--user-authentication`,
-  ],
+  [`client-side-routing`, `/docs/client-only-routes-and-user-authentication`],
   [`cms`, `/docs/headless-cms/`],
   [`code-editor`, ``],
   [`community`, `/contributing/community/`],
