@@ -1,3 +1,15 @@
+- url: https://authenticaysh.netlify.com/
+  repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
+  description: Full-featured Auth with AWS Amplify & AWS Cognito
+  tags:
+    - AWS
+    - Authentication
+  features:
+    - Full-featured AWS Authentication with Cognito
+    - Error feedback in forms
+    - Password Reset
+    - Multi-Factor Authentication
+    - Styling with Bootstrap and Sass
 - url: https://gatsby-starter-blog-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
   description: official blog
