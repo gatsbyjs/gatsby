@@ -35,7 +35,7 @@ Looks like people think we're doing fine. 🙂
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have an opinionated starter for creating course sites built with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> that I hadn&#39;t updated since January so I full well expected to spend a few hours fixing it after I updated all the deps.<br/><br/>Nope, just updated the packages and everything worked. Thanks Gatsby team!</p>&mdash; Brian Holt (@holtbt) <a href="https://twitter.com/holtbt/status/1158559782451609600?ref_src=twsrc%5Etfw">August 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-### Jason Blitz Lengstorf
+### Jason _Blitz_ Lengstorf
 
 Jason has basically been living his life on livestream since the past month. He's done some incredible streams and has many more exciting ones coming up.
 
@@ -51,11 +51,7 @@ The team is currently hard at work judging and picking their favourites so resul
 
 ## Community Highlights
 
-Gatsby has always been a community effort. We get a lot of contributions every month. Want proof?
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We&#39;ve merged in 500 PRs into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> over the past month! 😱<br/><br/>Thank you for your contributions, folks! <a href="https://t.co/dsU85CzuGX">pic.twitter.com/dsU85CzuGX</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1156334013247737856?ref_src=twsrc%5Etfw">July 30, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-Some of the highlights from the last month include:
+Firstly, thank you for all your contributions, folks! Every single contribution to Gatsby (however small or big) makes it better. Some of the community highlights from the last month include:
 
 - [lannonbr](https://github.com/lannonbr) [built a Table of Contents component](https://github.com/gatsbyjs/gatsby/pull/15251) that is live on our documentation and is great when reading a lengthy documentation page
 - [kellyvaughn](https://github.com/kellyvaughn) [added support for metafields to product nodes](https://github.com/gatsbyjs/gatsby/pull/16312) in `gatsby-source-shopify`
@@ -64,7 +60,9 @@ Some of the highlights from the last month include:
 - [elken](https://github.com/elken) added [support for the Prism command-line](https://github.com/gatsbyjs/gatsby/pull/16170) plugin in `gatsby-remark-prismjs`
 - [cephalization](https://github.com/cephalization) added a [great error check](https://github.com/gatsbyjs/gatsby/pull/16272) in Gatsby
 
-Thank you for all your contributions, folks!
+Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we made a brand new record last month:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We&#39;ve merged in 500 PRs into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> over the past month! 😱<br/><br/>Thank you for your contributions, folks! <a href="https://t.co/dsU85CzuGX">pic.twitter.com/dsU85CzuGX</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1156334013247737856?ref_src=twsrc%5Etfw">July 30, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Gatsby Site and Theme of the month
 
