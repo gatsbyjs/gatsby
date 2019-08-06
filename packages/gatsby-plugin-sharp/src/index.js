@@ -138,19 +138,15 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-// A value in pixels(Int)
-const defaultBase64Width = () => getPluginOptions().base64Width || 20
-async function generateBase64({ file, args, reporter }) {
-  console.log(`BASE64 ----->`)
-  const imagen = await loadImage(file.absolutePath)
-  console.log(`Imagen ----->`)
-  console.log(imagen)
+// Get blurhashed and transform to base64
+
+async function fileBlurhashedToBase64(absolutePath) {
+  // Load image
+  const image = await loadImage(absolutePath)
   const canvas = createCanvas(args.width, args.height)
   const ctx = canvas.getContext(`2d`)
-  ctx.drawImage(imagen, 0, 0, args.width, args.height)
+  ctx.drawImage(image, 0, 0, args.width, args.height)
   const imageData = ctx.getImageData(0, 0, args.width, args.height)
-  console.log(`Tengo image data ----->`)
-  console.log(imageData)
   // Blurhash
   const blurhashed = blurhash.encode(
     imageData.data,
@@ -159,27 +155,17 @@ async function generateBase64({ file, args, reporter }) {
     5,
     5
   )
-  console.log(`BLUR HASH MAGIC 🔥`)
-  console.log(imageData)
   const pixels = blurhash.decode(blurhashed, args.width, args.height)
   // Set in canvas to get Base64
   const imageCanvasPixels = ctx.createImageData(args.width, args.height)
   imageCanvasPixels.data.set(pixels)
   ctx.putImageData(imageCanvasPixels, 0, 0)
-  const base64Data = canvas.toDataURL()
-  console.log(`TENGO ------------>`)
-  console.log(base64Data)
-  /*fs.readFile(file.absolutePath, "base64", function(err, buffer){
-    if ( err ) {
-        console.log('In read file')
-        console.log(err)
-    } else {
-        // check err
-        console.log('Getting ----->')
-        const byteArray = Buffer.from(buffer, "base64");
-        
-    }*/
-  console.log(`Sobrevivio al canvas ----->`)
+  return canvas.toDataURL()
+}
+
+// A value in pixels(Int)
+const defaultBase64Width = () => getPluginOptions().base64Width || 20
+async function generateBase64({ file, args, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
     width: defaultBase64Width(),
@@ -239,12 +225,11 @@ async function generateBase64({ file, args, reporter }) {
   if (options.duotone) {
     pipeline = await duotone(options.duotone, args.toFormat, pipeline)
   }
-  // const { data: buffer, info } = await pipeline.toBuffer({
-  const { info } = await pipeline.toBuffer({
+  const { data: buffer, info } = await pipeline.toBuffer({
     resolveWithObject: true,
   })
   const base64output = {
-    src: `${base64Data}`,
+    src: `data:image/${info.format};base64,${finalImageData}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
