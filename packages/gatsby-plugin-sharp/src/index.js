@@ -1,5 +1,5 @@
 const sharp = require(`./safe-sharp`)
-// const blurhash = require(`blurhash`)
+const blurhash = require(`blurhash`)
 const { createCanvas, loadImage } = require(`canvas`)
 
 const imageSize = require(`probe-image-size`)
@@ -152,6 +152,16 @@ async function generateBase64({ file, args, reporter }) {
     const imageData = ctx.getImageData(0, 0, args.width, args.height)
     console.log(`Tengo image data ----->`)
     console.log(imageData)
+    // Blurhash
+    const blurhashed = blurhash.encode(
+      imageData.data,
+      imageData.width,
+      imageData.height,
+      5,
+      5
+    )
+    console.log(`BLUR HASH MAGIC 🔥`)
+    console.log(blurhashed)
   })
   /*fs.readFile(file.absolutePath, "base64", function(err, buffer){
     if ( err ) {
