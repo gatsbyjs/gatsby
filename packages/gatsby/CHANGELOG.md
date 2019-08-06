@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.52](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.51...gatsby@2.13.52) (2019-08-06)
+
+### Bug Fixes
+
+- **gatsby:** Add findMatchPath to the default loader ([#16334](https://github.com/gatsbyjs/gatsby/issues/16334)) ([f6aa41e](https://github.com/gatsbyjs/gatsby/commit/f6aa41e))
+- **gatsby:** always use publicLoader for window.\_\_\_loader ([#16122](https://github.com/gatsbyjs/gatsby/issues/16122)) ([afb3485](https://github.com/gatsbyjs/gatsby/commit/afb3485))
+- **gatsby:** createSchemaCustomization typings ([#16369](https://github.com/gatsbyjs/gatsby/issues/16369)) ([ac48c51](https://github.com/gatsbyjs/gatsby/commit/ac48c51))
+
+### Features
+
+- **gatsby:** Allow custom resolver context ([#16359](https://github.com/gatsbyjs/gatsby/issues/16359)) ([142b8ff](https://github.com/gatsbyjs/gatsby/commit/142b8ff))
+
 ## [2.13.51](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.50...gatsby@2.13.51) (2019-08-05)
 
 ### Bug Fixes
