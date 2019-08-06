@@ -1,6 +1,6 @@
 const sharp = require(`./safe-sharp`)
-const blurhash = require(`blurhash`)
-const { createCanvas, loadImage } = require(`canvas`)
+// const blurhash = require(`blurhash`)
+// const { createCanvas, loadImage } = require(`canvas`)
 
 const imageSize = require(`probe-image-size`)
 
