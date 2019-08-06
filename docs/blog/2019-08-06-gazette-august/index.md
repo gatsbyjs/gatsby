@@ -83,11 +83,9 @@ Gatsby has always been a community effort. You make a _lot_ of contributions. In
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">We&#39;ve merged in 500 PRs into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> over the past month! 😱<br/><br/>Thank you for your contributions, folks! <a href="https://t.co/dsU85CzuGX">pic.twitter.com/dsU85CzuGX</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1156334013247737856?ref_src=twsrc%5Etfw">July 30, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-## Gatsby Site and Theme of the month
+## Gatsby Site of the month
 
-Time to show off some great stuff people have been building
-
-### Site of the Month
+Time to show off some great stuff people have been building.
 
 The Gatsby site of the month is [www.fourpost.com](https://www.fourpost.com)
 
@@ -97,20 +95,6 @@ We love it because:
 - The illustrations are so very pretty
 - Uses [Gatsby Preview](https://www.gatsbyjs.com/preview)
 - Pulls in content from DatoCMS & EventBrite
-
-### Theme of the Month
-
-The Gatsby theme of the month is [Novela (a theme by Narative)](https://github.com/narative/gatsby-theme-novela)
-
-![Novela (a Gatsby theme by Narative)](./gatsby-theme-novela-hero.jpg)
-
-With minimal styling and maximum features — including multiple homepage layouts, built-in social sharing and dark mode — Novela makes it easy to start publishing beautiful articles and stories with Gatsby.
-
-I'm a big fan of the team at Narative and think Novela shows off some of the best part of Gatsby themes.
-
-Here is what [Dennis Brotzky](https://twitter.com/_brotzky) (Co-founder, [narative.co](https://www.narative.co/)) had to say:
-
-> We’ve always enjoyed using Gatsby for our projects and when themes were announcement we knew it would be special. Novela is our first dive into themes and we’ve quickly grown to love it. It’s exciting to be part of the formation of a new way to build and share Gatsby sites.
 
 ## Community Maintainers Meeting
 
