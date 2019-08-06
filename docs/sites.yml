@@ -6850,11 +6850,11 @@
   built_by: Fourpost
   built_by_url: https://github.com/fourpost
   featured: false
-  - title: PersonalBlog Example
+- title: ReactStudy Blog
   url: https://elated-lewin-51cf0d.netlify.com
   main_url: https://elated-lewin-51cf0d.netlify.com
   description: >
-    Belong to your own blog
+    Belong to your own blog by gatsby
   categories:
     - Study
     - Life
