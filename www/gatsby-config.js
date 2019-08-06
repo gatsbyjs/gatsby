@@ -20,7 +20,11 @@ if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
       GAViewID: GA.viewId,
       jwt: {
         client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
-        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY,
+        // replace \n characters in real new lines for circleci deploys
+        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY.replace(
+          /\\n/g,
+          `\n`
+        ),
       },
       period: {
         startDate,

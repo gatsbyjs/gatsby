@@ -160,13 +160,13 @@ Now we've got a template. Great! I'll assume you followed the tutorial for [Addi
 const path = require("path")
 const _ = require("lodash")
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve("src/templates/blog.js")
   const tagTemplate = path.resolve("src/templates/tags.js")
 
-  return graphql(`
+  const result = await graphql(`
     {
       postsRemark: allMarkdownRemark(
         sort: { order: DESC, fields: [frontmatter___date] }
@@ -189,33 +189,35 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors)
-    }
+  `)
 
-    const posts = result.data.postsRemark.edges
+  // handle errors
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
 
-    // Create post detail pages
-    posts.forEach(({ node }) => {
-      createPage({
-        path: node.fields.slug,
-        component: blogPostTemplate,
-      })
+  const posts = result.data.postsRemark.edges
+
+  // Create post detail pages
+  posts.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: blogPostTemplate,
     })
+  })
 
-    // Extract tag data from query
-    const tags = result.data.tagsGroup.group
+  // Extract tag data from query
+  const tags = result.data.tagsGroup.group
 
-    // Make tag pages
-    tags.forEach(tag => {
-      createPage({
-        path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
-        component: tagTemplate,
-        context: {
-          tag: tag.fieldValue,
-        },
-      })
+  // Make tag pages
+  tags.forEach(tag => {
+    createPage({
+      path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
+      component: tagTemplate,
+      context: {
+        tag: tag.fieldValue,
+      },
     })
   })
 }

@@ -155,11 +155,11 @@ async function startServer(program) {
   app.use(
     graphqlEndpoint,
     graphqlHTTP(() => {
-      const schema = store.getState().schema
+      const { schema, schemaCustomization } = store.getState()
       return {
         schema,
         graphiql: false,
-        context: withResolverContext({}, schema),
+        context: withResolverContext({}, schema, schemaCustomization.context),
         formatError(err) {
           return {
             ...formatError(err),

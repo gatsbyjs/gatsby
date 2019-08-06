@@ -43,6 +43,10 @@ module.exports = class EventStorage {
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
   }
 
+  isTrackingDisabled() {
+    return this.disabled
+  }
+
   addEvent(event) {
     if (this.disabled) {
       return

@@ -12,7 +12,7 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import { setLoader, ProdLoader } from "./loader"
+import { setLoader, ProdLoader, publicLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
 
@@ -25,7 +25,7 @@ loader.setApiRunner(apiRunner)
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
-window.___loader = loader
+window.___loader = publicLoader
 window.___webpackCompilationHash = window.webpackCompilationHash
 
 navigationInit()

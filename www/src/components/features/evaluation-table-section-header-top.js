@@ -6,20 +6,12 @@ import {
   mediaQueries,
   fontSizes,
   lineHeights,
-} from "../utils/presets"
-import { rhythm } from "../utils/typography"
+} from "../../utils/presets"
+import { rhythm } from "../../utils/typography"
 
-const superHeaderTitles = [
-  `Feature`,
-  `Gatsby`,
-  `Static site gens`,
-  `CMS`,
-  `Site builders`,
-]
-
-const superHeader = () => (
+const superHeader = ({ columnHeaders }) => (
   <tr>
-    {superHeaderTitles.map((header, i) => (
+    {columnHeaders.map((header, i) => (
       <td
         key={i}
         css={{

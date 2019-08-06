@@ -88,7 +88,7 @@ prop to change it.
 If `NewsletterButton` accepts a `variant` prop which changes the
 look and colors of the button, you can use it when you extend
 the component. Below, `NewsletterButton` is re-exported and
-`variant="link"` is added in the shadowed file to override it's
+`variant="link"` is added in the shadowed file to override its
 default value.
 
 ```js:title=src/gatsby-theme-blog/components/newsletter/button.js
