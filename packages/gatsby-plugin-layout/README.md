@@ -28,7 +28,7 @@ module.exports = {
     plugins: [
       `gatsby-plugin-layout`
     ]
-];
+};
 ```
 
 If you prefer to keep layout in different place, you can use `component` option:
@@ -43,7 +43,7 @@ module.exports = {
             }
         }
     ]
-];
+};
 ```
 
 Once the plugin is added, you don't need to manually wrap your pages with the Layout component. The plugin does this automatically.
