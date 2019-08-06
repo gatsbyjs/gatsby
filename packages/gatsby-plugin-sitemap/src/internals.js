@@ -29,18 +29,13 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
     })
 
     // siteUrl Validation
-    if (!r.data.site.siteMetadata.siteUrl) {
-      throw new Error(
-        `SiteMetaData 'siteUrl' property is required. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
-      )
-    }
-
     if (
+      !r.data.site.siteMetadata.siteUrl ||
       r.data.site.siteMetadata.siteUrl == null ||
       r.data.site.siteMetadata.siteUrl.trim().length == 0
     ) {
       throw new Error(
-        `SiteMetaData 'siteUrl' property can't be left empty, site's url is required. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
+        `SiteMetaData 'siteUrl' property is required and cannot be left empty. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
       )
     }
 
