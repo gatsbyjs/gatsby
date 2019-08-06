@@ -374,7 +374,7 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
-    
+
   /**
    * Customize Gatsby’s GraphQL schema by creating type definitions, field extensions or adding third-party schemas.
    * The createTypes, createFieldExtension and addThirdPartySchema actions are only available in this API.
@@ -699,11 +699,11 @@ export interface SourceNodesArgs extends ParentSpanPluginArgs {
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
   intermediateSchema: object
   createResolvers: Function
-  traceId: `initial-createResolvers`
+  traceId: "initial-createResolvers"
 }
-    
+
 export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
-  traceId: `initial-createSchemaCustomization`
+  traceId: "initial-createSchemaCustomization"
 }
 
 export interface PreRenderHTMLArgs extends NodePluginArgs {
