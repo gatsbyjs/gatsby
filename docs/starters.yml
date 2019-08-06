@@ -3547,3 +3547,21 @@
     - Separate components for different pages and grid
     - Uses gatsby-image to load images
     - Built using the old school CSS.
+- url: https://prist.marguerite.io/
+  repo: https://github.com/margueriteroth/gatsby-prismic-starter-prist
+  description: A light-themed starter powered by Gatsby v2 and Prismic to showcase portfolios and blogs.
+  tags:
+    - Blog
+    - CMS:Prismic
+    - Landing Page
+    - Netlify
+    - Portfolio
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - Landing page with customizable Hero, Portfolio preview, and About component
+    - Emotion styled components
+    - Blog layout and pages
+    - Portfolio layout and pages
+    - Google Analytics
+    - Mobile ready
