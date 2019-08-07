@@ -91,10 +91,10 @@ The Gatsby site of the month is [www.fourpost.com](https://www.fourpost.com)
 
 We love it because:
 
-- It's so fast
+- Wonderful image loading
 - The illustrations are so very pretty
 - Uses [Gatsby Preview](https://www.gatsbyjs.com/preview)
-- Pulls in content from DatoCMS & EventBrite
+- Pulls in content from multiple data sources: DatoCMS & EventBrite
 
 ## Community Maintainers Meeting
 
