@@ -21,7 +21,7 @@ In a nutshell, the Theme Jam was a way for Gatsby to give back to its community:
 
 Every Theme Jam entry needed to have a demo site, a published npm package, a public repo, and a properly configured `package.json`.
 
-Entries also needed to be incredibly performant (something something blazing fast) and meet accessibility standards.
+Entries also needed to be incredibly performant (_something something blazing fast_) and meet accessibility standards.
 
 On top of that, submissions were code reviewed for documentation, the ability to extend and shadow the themes, and creativity.
 
