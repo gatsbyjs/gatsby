@@ -2,12 +2,14 @@ let resolve = null
 let awaitingAPI = null
 
 export function waitForAPI(api) {
+  console.log(`waiting for API: ${api}`)
   const promise = new Promise(r => {
     resolve = r
   })
   awaitingAPI = api
 
   if (this.___resolvedAPIs && this.___resolvedAPIs.includes(api)) {
+    console.log(`API has already run; resolving and resetting`)
     // If the API has been marked as pre-resolved,
     // resolve immediately and reset the variables.
     awaitingAPI = null
@@ -26,6 +28,9 @@ export default function apiHandler(api) {
     // If we've been waiting for something, now it's time to resolve it.
     awaitingAPI = null
     this.___resolvedAPIs = []
+    console.log(`received API call, resolving: ${api}`)
     resolve()
+  } else {
+    console.log(`received API call, and waiting for an API, but not ${api}`)
   }
 }

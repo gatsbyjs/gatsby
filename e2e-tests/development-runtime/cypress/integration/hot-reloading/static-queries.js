@@ -1,7 +1,7 @@
 const author = `@gatsbyjs`
 
 beforeEach(() => {
-  cy.visit(`/static-query/`).waitForAPIorTimeout(`onRouteUpdate`)
+  cy.visit(`/static-query/`).waitForAPI(`onRouteUpdate`)
 })
 
 describe(`hot-reloading static queries`, () => {

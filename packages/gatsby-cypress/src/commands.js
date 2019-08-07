@@ -11,31 +11,21 @@ const TIMEOUT = 9999
 Cypress.Commands.add(
   `waitForAPI`,
   { prevSubject: `optional` },
-  (subject, api, { timeout = TIMEOUT } = {}) => {
+  (subject, api, { skip = false, timeout = TIMEOUT } = {}) => {
+    // skip when specified, usually when resources have been deleted
+    // intentionally to simulate poor network
+    if (skip) {
+      console.log(`skipping`)
+      cy.wait(300)
+      return
+    }
+
     cy.window().then({ timeout: timeout }, win => {
       if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }
 
       return waitForAPI.call(win, api).then(() => subject)
-    })
-  }
-)
-
-Cypress.Commands.add(
-  `waitForAPIorTimeout`,
-  { prevSubject: `optional` },
-  (subject, api, { timeout = TIMEOUT } = {}) => {
-    cy.window().then({ timeout: timeout + 1000 }, win => {
-      if (!win.___apiHandler) {
-        win.___apiHandler = apiHandler.bind(win)
-      }
-      return Promise.race([
-        waitForAPI.call(win, api).then(() => subject),
-        new Promise(resolve => {
-          setTimeout(resolve, timeout)
-        }),
-      ])
     })
   }
 )

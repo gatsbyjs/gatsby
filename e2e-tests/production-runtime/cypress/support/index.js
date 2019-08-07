@@ -14,7 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import 'gatsby-cypress'
+// TODO: figure out a better way to keep this up to date?
+import '../../../../packages/gatsby-cypress'
 import './commands'
 
 // Alternatively you can use CommonJS syntax:
