@@ -122,7 +122,7 @@ The Core Maintainers Meeting is now the **Community** Maintainers Meeting.
 
 We've renamed the meeting to emphasize that this time is for the community. You can join the meeting whether you've contributed to Gatsby, use it regularly, or are just trying it out for the first time. Everyone is welcome!
 
-We've also restructured the meeting with a new format that includes
+We've also restructured the meeting with a new format that includes:
 
 - time for questions
 - time for updates
@@ -130,7 +130,7 @@ We've also restructured the meeting with a new format that includes
 
 Live pull request reviews are a great way to involve the community in growing understanding of the PR process _and_ to also get user-impactful PRs merged! We hope these give you some insight into how we review contributions and help make [your first contribution](http://gatsby.dev/pair-programming) as smooth as possible.
 
-In case you're not comfortable asking questions on the call (a video call with strangers can be intimidating, we understand), we have a form to submit questions/pull requests for live review. The form is at https://gatsby.dev/oss-maintainers-form.
+In case you're not comfortable asking questions on the call (a video call with strangers can be intimidating, we understand), we have a form to submit questions/pull requests for live review. The form is at [gatsby.dev/oss-maintainers-form](https://gatsby.dev/oss-maintainers-form).
 
 Here's a nifty [add to calendar link](http://gatsby.dev/oss-maintainers) for the meeting.
 
@@ -140,6 +140,6 @@ Join us on the meeting every Wednesday at 8:30 AM (PDT) 🙌
 
 Like what you see and want to help us build Gatsby? We're now hiring engineers on both the Open Source and Cloud teams.
 
-Check out the open roles at https://www.gatsbyjs.com/careers/
+Check out the open roles at [gatsbyjs.com/careers](https://www.gatsbyjs.com/careers/)
 
 We can't wait to work with you 💜
