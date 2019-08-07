@@ -122,9 +122,11 @@ const processData = (data, now = new Date()) => {
   prs.nodes.forEach(pr => {
     pr.participants = {}
     pr.participants.nodes = _.uniqBy(
-      pr.comments.nodes.filter(c => c.author.url != pr.author.url).map(c => {
-        return { url: c.author.url }
-      }),
+      pr.comments.nodes
+        .filter(c => c.author.url != pr.author.url)
+        .map(c => {
+          return { url: c.author.url }
+        }),
       node => node.url
     )
   })
@@ -230,6 +232,12 @@ const report = ({ queues, channelId }) => {
         channel: channelId,
         blocks: report,
       })
+
+      // When ok is false we should throw
+      // @see https://api.slack.com/methods/chat.postMessage#response
+      if (!res.ok) {
+        throw new Error(res.error)
+      }
 
       // `res` contains information about the posted message
       tools.log.success("Message sent: ", res.ts)

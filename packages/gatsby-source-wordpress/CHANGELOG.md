@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.13...gatsby-source-wordpress@3.1.14) (2019-08-06)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.12...gatsby-source-wordpress@3.1.13) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.11...gatsby-source-wordpress@3.1.12) (2019-07-30)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.10...gatsby-source-wordpress@3.1.11) (2019-07-22)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** WordPress does not properly enco… ([#15835](https://github.com/gatsbyjs/gatsby/issues/15835)) ([f4af142](https://github.com/gatsbyjs/gatsby/commit/f4af142))
+
+## [3.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.9...gatsby-source-wordpress@3.1.10) (2019-07-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [3.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.8...gatsby-source-wordpress@3.1.9) (2019-07-15)
 
 **Note:** Version bump only for package gatsby-source-wordpress
