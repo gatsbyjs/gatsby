@@ -47,9 +47,12 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
     ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2.  Using VS Code's integrated terminal run `node --inspect node_modules/.bin/gatsby develop` instead of `gatsby develop`
+2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/.bin/gatsby develop` instead of `gatsby develop`
 
 3.  Set breakpoints and debug!
+
+> **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
+> try running `gatsby clean` to delete the `.cache` and `public` folder and try again.
 
 ## VS Code Debugger (Manual Config)
 
@@ -90,6 +93,9 @@ We won't go in depth here about how to debug in VS Code - for that you can check
 After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
 
 ![VSCode breakpoint hit](./images/vscode-debug.png)
+
+> **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
+> try running `gatsby clean` to delete the `.cache` and `public` folder and try again.
 
 ## Chrome DevTools for Node
 

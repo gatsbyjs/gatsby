@@ -59,14 +59,13 @@ Awesome! Now that you have your page template created, you can add pages to the 
 
 // You can delete this file if you're not using it
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const BlogPostTemplate = path.resolve("./src/templates/BlogPost.js")
   const PageTemplate = path.resolve("./src/templates/Page.js")
 
-  return graphql(`
+  const result = await graphql(`
     {
       allWordpressPost {
         edges {
@@ -85,30 +84,31 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      throw result.errors
-    }
+  `)
 
-    const BlogPosts = result.data.allWordpressPost.edges
-    BlogPosts.forEach(post => {
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  const BlogPosts = result.data.allWordpressPost.edges
+  BlogPosts.forEach(post => {
+    createPage({
+      path: `/post/${post.node.slug}`,
+      component: BlogPostTemplate,
+      context: {
+        id: post.node.wordpress_id,
+      },
+    })
+
+    const Pages = result.data.allWordpressPage.edges
+    Pages.forEach(page => {
       createPage({
-        path: `/post/${post.node.slug}`,
-        component: BlogPostTemplate,
+        path: `/${page.node.slug}`,
+        component: PageTemplate,
         context: {
-          id: post.node.wordpress_id,
+          id: page.node.wordpress_id,
         },
-      })
-
-      const Pages = result.data.allWordpressPage.edges
-      Pages.forEach(page => {
-        createPage({
-          path: `/${page.node.slug}`,
-          component: PageTemplate,
-          context: {
-            id: page.node.wordpress_id,
-          },
-        })
       })
     })
   })
