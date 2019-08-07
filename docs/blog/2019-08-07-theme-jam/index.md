@@ -25,7 +25,7 @@ Entries also needed to be incredibly performant (_something something blazing fa
 
 On top of that, submissions were code reviewed for documentation, the ability to extend and shadow the themes, and creativity.
 
-### Part 1: automated review
+### Part 1: Automated Review
 
 Several parts of the judging could be done automatically, so we set up an ugly-but-effective [automated test](https://github.com/jlengstorf/theme-jam-tester) that would:
 
