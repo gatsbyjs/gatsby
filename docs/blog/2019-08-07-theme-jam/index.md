@@ -41,7 +41,7 @@ To pass the automated review, a theme must:
 
 Of the 111 submissions, 52 passed the automated review.
 
-### Part 2: manual review
+### Part 2: Manual Review
 
 Every theme that cleared the automated review was manually reviewed by [Jackson](https://twitter.com/jxnblk), [Amberley](https://twitter.com/amber1ey), [John](https://twitter.com/4lpine), [Kyle Gill](https://gill_kyle), [Chris](https://twitter.com/chrisbiscardi), [Flo](https://twitter.com/fk), and me.
 
