@@ -170,8 +170,8 @@ class RouteUpdates extends React.Component {
     onRouteUpdate(this.props.location, null)
   }
 
-  componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
-    if (shouldFireRouteUpdate) {
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
       onRouteUpdate(this.props.location, prevProps.location)
     }
   }
@@ -182,6 +182,7 @@ class RouteUpdates extends React.Component {
       return true
     }
 
+    console.log(`!!! navigating to same path:`, this.props.location.pathname)
     return false
   }
 

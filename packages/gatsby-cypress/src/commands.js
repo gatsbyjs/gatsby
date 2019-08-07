@@ -12,6 +12,10 @@ Cypress.Commands.add(
   `waitForAPI`,
   { prevSubject: `optional` },
   (subject, api, { skip = false, timeout = TIMEOUT } = {}) => {
+    Cypress.log({
+      name: `waitForAPI`,
+      message: api,
+    })
     // skip when specified, usually when resources have been deleted
     // intentionally to simulate poor network
     if (skip) {
@@ -20,7 +24,7 @@ Cypress.Commands.add(
       return
     }
 
-    cy.window().then({ timeout: timeout }, win => {
+    cy.window({ log: false }).then({ timeout: timeout }, win => {
       if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }

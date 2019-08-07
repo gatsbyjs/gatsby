@@ -51,6 +51,7 @@ Cypress.Commands.add(
   },
   (subject, pathname) => {
     cy.window().then(win => {
+      win.console.log(`just about to navigate`)
       win.___navigate(pathname)
     })
 
