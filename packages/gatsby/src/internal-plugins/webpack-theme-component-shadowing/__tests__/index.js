@@ -112,4 +112,75 @@ describe(`Component Shadowing`, () => {
       ).toEqual(result)
     }
   )
+
+  const route = routing => dirname => {
+    if (routing[dirname]) {
+      return routing[dirname]
+    } else {
+      throw new Error(
+        `dir '${dirname}' is not handled by fake readdirSync for component shadowing test in routing table ${routing}`
+      )
+    }
+  }
+  it.each(
+    [
+      [
+        {
+          matchingTheme: `theme-a`,
+          themes: [
+            {
+              themeName: `theme-a`,
+              themeDir: `/a-theme`,
+            },
+          ],
+          component: `/styles.css`,
+        },
+        {
+          fs: {
+            readdirSync: route({
+              "/fake-site-root/src/theme-a": [`irrelevant-dir`, `styles.css`],
+            }),
+          },
+          pathResolve: route({ ".": `/fake-site-root` }),
+        },
+        `/fake-site-root/src/theme-a/styles.css`,
+      ],
+      [
+        {
+          matchingTheme: `theme-a`,
+          themes: [
+            {
+              themeName: `theme-a`,
+              themeDir: `/a-theme`,
+            },
+            {
+              themeName: `theme-b`,
+              themeDir: `/b-theme`,
+            },
+          ],
+          component: `/templates/template.js`,
+        },
+        {
+          fs: {
+            readdirSync: route({
+              "/b-theme/src/theme-a": [`template.js`],
+            }),
+          },
+          pathResolve: route({ ".": `/fake-site-root` }),
+        },
+        `/b-theme/src/theme-a/templates/template.js`,
+      ],
+    ],
+    `resolves components`,
+    ({ matchingTheme, themes, component }, system, result) => {
+      // shadowing plugin options don't matter. resolveComponentPath is pure
+      const plugin = new ShadowingPlugin()
+      expect(
+        plugin.resolveComponentPath(
+          { matchingTheme, themes, component },
+          system
+        )
+      ).toEqual(result)
+    }
+  )
 })

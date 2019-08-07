@@ -86,7 +86,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
             themes: this.themes,
             component,
           },
-          { fs: nodeFS }
+          { fs: nodeFS, pathResolve: path.resolve }
         )
 
         return resolver.doResolve(
@@ -103,11 +103,11 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   // check the cache, the user's project, and finally the theme files
   resolveComponentPath(
     { matchingTheme: theme, themes: ogThemes, component },
-    { fs }
+    { fs, pathResolve }
   ) {
     // don't include matching theme in possible shadowing paths
     const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
-    return [path.join(path.resolve(`.`), `src`, theme)]
+    return [path.join(pathResolve(`.`), `src`, theme)]
       .concat(
         Array.from(themes)
           .reverse()
