@@ -60,7 +60,7 @@ const runBlockedScenario = (scenario, args) => {
           runTests({ skipAll: true })
         } else if (args.pagePath === `/404.html`) {
           runTests({
-            skipNavigate: { '/page-3/': true },
+            skipNavigate: { '/404.html': true },
           })
         } else {
           runTests({
