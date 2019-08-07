@@ -983,7 +983,7 @@
     - Medium integration
     - Social sharing (Twitter, Facebook, Google, LinkedIn)
 - url: https://gatsby-starter-typescript-sass.netlify.com
-  repo: https://github.com/tdharmon/gatsby-starter-typescript-sass
+  repo: https://github.com/thetrevorharmon/gatsby-starter-typescript-sass
   description: A basic starter with TypeScript and Sass built in
   tags:
     - Language:TypeScript
