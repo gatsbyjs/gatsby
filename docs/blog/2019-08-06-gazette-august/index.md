@@ -19,7 +19,7 @@ Moving forward, we'll be posting these on a monthly cadence wrapping up all the 
 
 ### Snow Leopard Release
 
-The past few weeks has been all about what we're calling the Snow Leopard release (kudos to [Dustin](https://twitter.com/schaudustin) for the name).
+The past few weeks has been all about what we're calling the Snow Leopard release (kudos to [Dustin](https://twitter.com/schaudustin) for the idea and name).
 
 First, an aside.
 
@@ -72,12 +72,12 @@ The team is currently hard at work judging and picking their favourites so resul
 
 Firstly, thank you for all your contributions, folks! Every single contribution to Gatsby makes it better and every single contribution _matters_. Some of the community highlights from the last month include:
 
-- [lannonbr](https://github.com/lannonbr) [built a Table of Contents component](https://github.com/gatsbyjs/gatsby/pull/15251) that is live on our documentation and is great when reading a lengthy documentation page
-- [kellyvaughn](https://github.com/kellyvaughn) [added support for metafields to product nodes](https://github.com/gatsbyjs/gatsby/pull/16312) in `gatsby-source-shopify`
-- [datakurre](https://github.com/datakurre) added a great [fix to ensure touchNode](https://github.com/gatsbyjs/gatsby/pull/15919) populates typeOwners
-- [grantglidewell](https://github.com/grantglidewell) added [support](https://github.com/gatsbyjs/gatsby/pull/14630) for Gatsby [Preview](https://www.gatsbyjs.com/preview) for Drupal in `gatsby-source-drupal`
-- [elken](https://github.com/elken) added [support for the Prism command-line](https://github.com/gatsbyjs/gatsby/pull/16170) plugin in `gatsby-remark-prismjs`
-- [cephalization](https://github.com/cephalization) added a [great error check](https://github.com/gatsbyjs/gatsby/pull/16272) in Gatsby
+- [Benjamin Lannon](https://github.com/lannonbr) [built a Table of Contents component](https://github.com/gatsbyjs/gatsby/pull/15251) that is live on our documentation and is great when reading a lengthy documentation page
+- [Kelly Vaughn](https://github.com/kellyvaughn) [added support for metafields to product nodes](https://github.com/gatsbyjs/gatsby/pull/16312) in `gatsby-source-shopify`
+- [Asko Soukka](https://github.com/datakurre) added a great [fix to ensure touchNode](https://github.com/gatsbyjs/gatsby/pull/15919) populates typeOwners
+- [Grant Glidewell](https://github.com/grantglidewell) added [support](https://github.com/gatsbyjs/gatsby/pull/14630) for Gatsby [Preview](https://www.gatsbyjs.com/preview) for Drupal in `gatsby-source-drupal`
+- [Ellis Kenyő](https://github.com/elken) added [support for the Prism command-line](https://github.com/gatsbyjs/gatsby/pull/16170) plugin in `gatsby-remark-prismjs`
+- [Anthony Powell](https://github.com/cephalization) added a [great error check](https://github.com/gatsbyjs/gatsby/pull/16272) in Gatsby
 
 Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we achieved a new record in merged PRs last month:
 
