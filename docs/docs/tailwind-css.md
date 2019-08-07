@@ -85,8 +85,10 @@ npm install --save tailwind.macro@next
 **Option 2**: Install stable `tailwind.macro` and use Tailwind 0.7.4
 
 ```bash
+// Remove tailwind 1.0.0+ if you've already installed it
 npm uninstall tailwindcss
 
+// Install tailwind 0.7.4 and stable tailwind.macro
 npm install tailwindcss@0.7.4
 npm install tailwind.macro
 ```
@@ -106,7 +108,7 @@ const Button = styled.button`
 
 // tailwind.macro@next
 const Button = tw.button`
-	bg-blue hover:bg-blue-dark text-white p-2 rounded
+  bg-blue hover:bg-blue-dark text-white p-2 rounded
 `
 ```
 
