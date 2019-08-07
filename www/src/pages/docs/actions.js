@@ -11,14 +11,17 @@ import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class ActionCreatorsDocs extends React.Component {
   render() {
-    const funcs = sortBy(
-      this.props.data.file.childrenDocumentationJs,
-      func => func.name
-    ).filter(func => func.name !== `deleteNodes`)
+    const docs = this.props.data.allFile.nodes.reduce((acc, node) => {
+      const doc = node.childrenDocumentationJs.map(def => {
+        def.codeLocation.file = node.relativePath
+        return def
+      })
+      return acc.concat(doc)
+    }, [])
 
-    const githubPath = `https://github.com/gatsbyjs/gatsby/blob/${
-      process.env.COMMIT_SHA
-    }/packages/${this.props.data.file.relativePath}`
+    const funcs = sortBy(docs, func => func.name).filter(
+      func => func.name !== `deleteNodes`
+    )
 
     return (
       <Layout location={this.props.location} itemList={itemListDocs}>
@@ -69,7 +72,7 @@ exports<span class="token punctuation">.</span><span class="token function-varia
           </ul>
           <hr />
           <h2>Reference</h2>
-          <APIReference githubPath={githubPath} docs={funcs} />
+          <APIReference docs={funcs} />
         </Container>
       </Layout>
     )
@@ -80,18 +83,30 @@ export default ActionCreatorsDocs
 
 export const pageQuery = graphql`
   query {
-    file(relativePath: { eq: "gatsby/src/redux/actions.js" }) {
-      relativePath
-      childrenDocumentationJs {
-        codeLocation {
-          start {
-            line
-          }
-          end {
-            line
-          }
+    allFile(
+      filter: {
+        relativePath: {
+          in: [
+            "gatsby/src/redux/actions/public.js"
+            "gatsby/src/redux/actions/restricted.js"
+          ]
         }
-        ...DocumentationFragment
+      }
+    ) {
+      nodes {
+        relativePath
+        childrenDocumentationJs {
+          availableIn
+          codeLocation {
+            start {
+              line
+            }
+            end {
+              line
+            }
+          }
+          ...DocumentationFragment
+        }
       }
     }
   }

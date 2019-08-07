@@ -48,6 +48,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 6,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 2,
+          },
+        },
+        "text": "
+query PageQueryName {
+  foo
+}
+",
         "variableDefinitions": Array [],
       },
     ],
@@ -95,6 +111,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 6,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 31,
+            "line": 2,
+          },
+        },
+        "text": "
+query {
+  foo
+}
+",
         "variableDefinitions": Array [],
       },
     ],
@@ -149,6 +181,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -199,6 +242,17 @@ Map {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 26,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
         },
         "text": "{ foo }",
         "variableDefinitions": Array [],
@@ -255,6 +309,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -305,6 +370,17 @@ Map {
               "selectionSet": undefined,
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 26,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
         },
         "text": "{ foo }",
         "variableDefinitions": Array [],
@@ -361,6 +437,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 48,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
         "text": "query StaticQueryName { foo }",
         "variableDefinitions": Array [],
       },
@@ -408,6 +495,18 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 60,
+            "line": 8,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 8,
+          },
+        },
+        "text": "query PageQueryName { foo }",
         "variableDefinitions": Array [],
       },
     ],
@@ -458,6 +557,25 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 9,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 35,
+            "line": 2,
+          },
+        },
+        "text": "
+  fragment Fragment1 on RootQueryField {
+    foo
+  }
+  fragment Fragment2 on RootQueryField {
+    bar
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -517,6 +635,25 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 9,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 35,
+            "line": 2,
+          },
+        },
+        "text": "
+  fragment Fragment1 on RootQueryField {
+    foo
+  }
+  fragment Fragment2 on RootQueryField {
+    bar
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -576,6 +713,22 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 14,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 10,
+          },
+        },
+        "text": "
+  fragment Fragment3 on RootQueryField {
+    baz
+  }
+",
         "typeCondition": Object {
           "kind": "NamedType",
           "loc": Object {
@@ -693,6 +846,17 @@ Map {
               },
             },
           ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 0,
+            "line": 12,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
         },
         "text": "
   query {
@@ -834,6 +998,17 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 69,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
+        },
         "text": "{ allMarkdownRemark { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
       },
@@ -966,7 +1141,293 @@ Map {
             },
           ],
         },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 82,
+            "line": 5,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 33,
+            "line": 5,
+          },
+        },
         "text": "{ allStrangeQueryName { blah { node { cheese }}}}",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "static-query-hooks.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 407706182,
+        "isHook": true,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 29,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 6,
+          },
+          "value": "StaticQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 29,
+            "start": 22,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 27,
+                "start": 24,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 67,
+            "line": 3,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 38,
+            "line": 3,
+          },
+        },
+        "text": "query StaticQueryName { foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "static-query-hooks-with-type-parameter.ts" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 407706182,
+        "isHook": true,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 29,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 21,
+            "start": 6,
+          },
+          "value": "StaticQueryName",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 29,
+            "start": 22,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 27,
+                "start": 24,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 82,
+            "line": 3,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 53,
+            "line": 3,
+          },
+        },
+        "text": "query StaticQueryName { foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "static-query-hooks-in-separate-variable.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 3748317405,
+        "isHook": true,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 47,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "staticQueryHooksInSeparateVariableJs3748317405",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 47,
+            "start": 0,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 46,
+                "start": 2,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 19,
+                  "start": 2,
+                },
+                "value": "allMarkdownRemark",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 46,
+                  "start": 20,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 45,
+                      "start": 22,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 26,
+                        "start": 22,
+                      },
+                      "value": "blah",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 45,
+                        "start": 27,
+                      },
+                      "selections": Array [
+                        Object {
+                          "alias": undefined,
+                          "arguments": Array [],
+                          "directives": Array [],
+                          "kind": "Field",
+                          "loc": Object {
+                            "end": 44,
+                            "start": 29,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 33,
+                              "start": 29,
+                            },
+                            "value": "node",
+                          },
+                          "selectionSet": Object {
+                            "kind": "SelectionSet",
+                            "loc": Object {
+                              "end": 44,
+                              "start": 34,
+                            },
+                            "selections": Array [
+                              Object {
+                                "alias": undefined,
+                                "arguments": Array [],
+                                "directives": Array [],
+                                "kind": "Field",
+                                "loc": Object {
+                                  "end": 42,
+                                  "start": 36,
+                                },
+                                "name": Object {
+                                  "kind": "Name",
+                                  "loc": Object {
+                                    "end": 42,
+                                    "start": 36,
+                                  },
+                                  "value": "cheese",
+                                },
+                                "selectionSet": undefined,
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 69,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 22,
+            "line": 4,
+          },
+        },
+        "text": "{ allMarkdownRemark { blah { node { cheese }}}}",
         "variableDefinitions": Array [],
       },
     ],
@@ -996,8 +1457,34 @@ Perhaps the variable name has a typo?
 Also note that we are currently unable to use queries defined in files other than the file where the <StaticQuery> is defined. If you're attempting to import the query, please move it into \\"query-imported.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
 ",
     ],
+    Array [
+      "
+We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the useStaticQuery declaration in \\"static-query-hooks-not-defined.js\\".
+
+Perhaps the variable name has a typo?
+
+Also note that we are currently unable to use queries defined in files other than the file where the useStaticQuery is defined. If you're attempting to import the query, please move it into \\"static-query-hooks-not-defined.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
+",
+    ],
+    Array [
+      "
+We were unable to find the declaration of variable \\"strangeQueryName\\", which you passed as the \\"query\\" prop into the useStaticQuery declaration in \\"static-query-hooks-imported.js\\".
+
+Perhaps the variable name has a typo?
+
+Also note that we are currently unable to use queries defined in files other than the file where the useStaticQuery is defined. If you're attempting to import the query, please move it into \\"static-query-hooks-imported.js\\". If being able to import queries from another file is an important capability for you, we invite your help fixing it.
+",
+    ],
   ],
   "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
     Object {
       "type": "return",
       "value": undefined,

@@ -2,8 +2,8 @@
 
 import apiHandler, { waitForAPI } from "./api-handler"
 
-Cypress.Commands.add(`getTestElement`, selector =>
-  cy.get(`[data-testid="${selector}"]`)
+Cypress.Commands.add(`getTestElement`, (selector, options = {}) =>
+  cy.get(`[data-testid="${selector}"]`, options)
 )
 
 const TIMEOUT = 9999

@@ -47,67 +47,64 @@ const runTests = ({
 
 describe(`Every resources available`, () => {
   it(`Restore resources`, () => {
-    cy.exec(`npm run chunks -- restore`)
+    cy.task(`restoreAllBlockedResources`)
   })
   runTests()
 })
 
-describe(`Missing top level resources`, () => {
-  describe(`Deleted pages manifest`, () => {
-    it(`Block resources`, () => {
-      cy.exec(`npm run chunks -- restore`)
-      cy.exec(`npm run chunks -- block pages-manifest`)
+const runBlockedScenario = (scenario, args) => {
+  it(`Block resources`, () => {
+    cy.task(`restoreAllBlockedResources`).then(() => {
+      cy.task(scenario, args).then(() => {
+        if (args.chunk === `app`) {
+          runTests({ skipAll: true })
+        } else if (args.pagePath === `/404.html`) {
+          runTests({
+            skipNavigate: { '/page-3/': true },
+          })
+        } else {
+          runTests({
+            skipNavigate: { [args.pagePath]: true },
+            skipLoad: { [args.pagePath]: true },
+          })
+        }
+        runTests()
+      })
     })
-    runTests({ skipNavigate: { '/page-3/': true } })
   })
+}
 
+describe(`Missing top level resources`, () => {
   describe(`Deleted app chunk assets`, () => {
-    it(`Block resources`, () => {
-      cy.exec(`npm run chunks -- restore`)
-      cy.exec(`npm run chunks -- block app`)
-    })
-    runTests({ skipAll: true })
+    runBlockedScenario(`blockAssetsForChunk`, { chunk: `app` })
   })
 })
 
-const runSuiteForPage = (label, path) => {
-  // skip waiting for resources in tests when we know not to expect them
-  // (i.e. when they have been intentionally deleted)
-  const runTestsSkipping = () => {
-    runTests({
-      skipLoad: { [path]: true },
-      skipNavigate: { [path]: true },
-    })
-  }
-
+const runSuiteForPage = (label, pagePath) => {
   describe(`Missing "${label}" resources`, () => {
     describe(`Missing "${label}" page query results`, () => {
-      it(`Block resources`, () => {
-        cy.exec(`npm run chunks -- restore`)
-        cy.exec(`npm run chunks -- block-page ${path} query-result`)
+      runBlockedScenario(`blockAssetsForPage`, {
+        pagePath,
+        filter: `page-data`,
       })
-      runTestsSkipping()
     })
     describe(`Missing "${label}" page page-template asset`, () => {
-      it(`Block resources`, () => {
-        cy.exec(`npm run chunks -- restore`)
-        cy.exec(`npm run chunks -- block-page ${path} page-template`)
+      runBlockedScenario(`blockAssetsForPage`, {
+        pagePath,
+        filter: `page-template`,
       })
-      runTestsSkipping()
     })
     describe(`Missing "${label}" page extra assets`, () => {
-      it(`Block resources`, () => {
-        cy.exec(`npm run chunks -- restore`)
-        cy.exec(`npm run chunks -- block-page ${path} extra`)
+      runBlockedScenario(`blockAssetsForPage`, {
+        pagePath,
+        filter: `extra`,
       })
-      runTestsSkipping()
     })
     describe(`Missing all "${label}" page assets`, () => {
-      it(`Block resources`, () => {
-        cy.exec(`npm run chunks -- restore`)
-        cy.exec(`npm run chunks -- block-page ${path} all`)
+      runBlockedScenario(`blockAssetsForPage`, {
+        pagePath,
+        filter: `all`,
       })
-      runTestsSkipping()
     })
   })
 }
@@ -118,6 +115,6 @@ runSuiteForPage(`404`, `/404.html`)
 
 describe(`Cleanup`, () => {
   it(`Restore resources`, () => {
-    cy.exec(`npm run chunks -- restore`)
+    cy.task(`restoreAllBlockedResources`)
   })
 })

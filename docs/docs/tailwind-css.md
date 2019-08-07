@@ -4,9 +4,7 @@ title: Tailwind CSS
 
 Tailwind is a utility-first CSS framework for rapidly building custom user interfaces. This guide will show you how to get started with Gatsby and [Tailwind CSS](https://tailwindcss.com/).
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs), then come back.
-
-### Overview
+## Overview
 
 There are two ways you can use Tailwind with Gatsby:
 
@@ -16,6 +14,8 @@ There are two ways you can use Tailwind with Gatsby:
 You have to install and configure Tailwind for both of these methods, so this guide will walk through that step first, then you can follow the instructions for either PostCSS or CSS-in-JS.
 
 ## Installing and Configuring Tailwind
+
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start), then come back.
 
 1. Install Tailwind
 
@@ -31,7 +31,7 @@ To configure Tailwind, we'll need to add a Tailwind configuration file. Luckily,
 ./node_modules/.bin/tailwind init
 ```
 
-## Option #1: PostCSS
+### Option #1: PostCSS
 
 1.  Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss).
 
@@ -61,7 +61,7 @@ You can now use the `@tailwind` directives to add Tailwind's utilites, preflight
 
 To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documentation](https://tailwindcss.com/docs/installation#3-use-tailwind-in-your-css)
 
-## Option #2: CSS-in-JS
+### Option #2: CSS-in-JS
 
 These steps assume you have a CSS-in-JS library already installed, and the examples are based on Styled Components.
 
@@ -82,7 +82,7 @@ const Button = styled.button`
 `
 ```
 
-### Other resources
+## Other resources
 
 - [Introduction to PostCSS](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
 - [Tailwind Documentation](https://tailwindcss.com/)

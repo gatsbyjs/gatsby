@@ -7,36 +7,29 @@ const validatePrefixEntry = prefix => {
   }
 }
 
-exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
+exports.onCreatePage = ({ page, actions }, { prefixes }) => {
   const { createPage } = actions
   const re = {}
   prefixes.forEach(validatePrefixEntry)
 
-  return new Promise(resolve => {
-    // Don't set matchPath again if it's already been set.
-    if (page.matchPath || page.path.match(/dev-404-page/)) {
-      return resolve()
+  // Don't set matchPath again if it's already been set.
+  if (page.matchPath || page.path.match(/dev-404-page/)) {
+    return
+  }
+
+  prefixes.forEach(prefix => {
+    if (!re[prefix]) {
+      // Remove the * from the prefix and memoize
+      const trimmedPrefix = prefix.replace(/\*$/, ``)
+      re[prefix] = new RegExp(`^${trimmedPrefix}`)
     }
 
-    prefixes.some(prefix => {
-      if (!re[prefix]) {
-        // Remove the * from the prefix and memoize
-        const trimmedPrefix = prefix.replace(/\*$/, ``)
-        re[prefix] = new RegExp(`^${trimmedPrefix}`)
-      }
+    // Ensure that the path ends in a trailing slash, since it can be removed.
+    const path = page.path.match(/\/$/) ? page.path : `${page.path}/`
 
-      // Ensure that the path ends in a trailing slash, since it can be removed.
-      const path = page.path.match(/\/$/) ? page.path : `${page.path}/`
-
-      if (path.match(re[prefix])) {
-        page.matchPath = prefix.replace(/\*$/, `*`)
-        createPage(page)
-        return true
-      }
-
-      return false
-    })
-
-    return resolve()
+    if (path.match(re[prefix])) {
+      page.matchPath = prefix.replace(/\*$/, `*`)
+      createPage(page)
+    }
   })
 }

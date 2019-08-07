@@ -2,7 +2,7 @@ import _ from "lodash"
 import crypto from "crypto"
 import fs from "fs-extra"
 import { store, emitter } from "../redux/"
-import { joinPath } from "../utils/path"
+import { joinPath } from "gatsby-core-utils"
 
 let lastHash = null
 

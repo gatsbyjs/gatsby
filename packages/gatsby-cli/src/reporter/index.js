@@ -6,8 +6,10 @@ const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 const { getErrorFormatter } = require(`./errors`)
 const reporterInstance = require(`./reporters`)
-
+const constructError = require(`../structured-errors/construct-error`)
 const errorFormatter = getErrorFormatter()
+const { trackCli } = require(`gatsby-telemetry`)
+const convertHrtime = require(`convert-hrtime`)
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
@@ -36,35 +38,70 @@ const reporter: Reporter = {
     if (isNoColor) {
       errorFormatter.withoutColors()
     }
+
+    // disables colors in popular terminal output coloring packages
+    //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
+    //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
+    if (isNoColor) {
+      process.env.FORCE_COLOR = `0`
+    }
   },
   /**
    * Log arguments and exit process with status 1.
    * @param {*} args
    */
   panic(...args) {
-    this.error(...args)
-    trackError(`GENERAL_PANIC`, { error: args })
+    const error = this.error(...args)
+    trackError(`GENERAL_PANIC`, { error })
     process.exit(1)
   },
 
   panicOnBuild(...args) {
-    const [message, error] = args
-    this.error(message, error)
-    trackError(`BUILD_PANIC`, { error: args })
+    const error = this.error(...args)
+    trackError(`BUILD_PANIC`, { error })
     if (process.env.gatsby_executing_command === `build`) {
       process.exit(1)
     }
   },
 
-  error(message, error) {
-    if (arguments.length === 1 && typeof message !== `string`) {
-      error = message
-      message = error.message
+  error(errorMeta, error) {
+    let details = {}
+    // Many paths to retain backcompat :scream:
+    if (arguments.length === 2) {
+      if (Array.isArray(error)) {
+        return error.map(errorItem => this.error(errorMeta, errorItem))
+      }
+      details.error = error
+      details.context = {
+        sourceMessage: errorMeta + ` ` + error.message,
+      }
+    } else if (arguments.length === 1 && errorMeta instanceof Error) {
+      details.error = errorMeta
+      details.context = {
+        sourceMessage: errorMeta.message,
+      }
+    } else if (arguments.length === 1 && Array.isArray(errorMeta)) {
+      // when we get an array of messages, call this function once for each error
+      return errorMeta.map(errorItem => this.error(errorItem))
+    } else if (arguments.length === 1 && typeof errorMeta === `object`) {
+      details = Object.assign({}, errorMeta)
+    } else if (arguments.length === 1 && typeof errorMeta === `string`) {
+      details.context = {
+        sourceMessage: errorMeta,
+      }
     }
 
-    reporterInstance.error(message)
-    if (error) this.log(errorFormatter.render(error))
+    const structuredError = constructError({ details })
+    if (structuredError) reporterInstance.error(structuredError)
+
+    // TODO: remove this once Error component can render this info
+    // log formatted stacktrace
+    if (structuredError.error) {
+      this.log(errorFormatter.render(structuredError.error))
+    }
+    return structuredError
   },
+
   /**
    * Set prefix on uptime.
    * @param {string} prefix - A string to prefix uptime with.
@@ -92,23 +129,113 @@ const reporter: Reporter = {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
+    let startTime = 0
 
-    const activity = reporterInstance.createActivity(name)
+    const activity = reporterInstance.createActivity({
+      type: `spinner`,
+      id: name,
+      status: ``,
+    })
 
     return {
-      ...activity,
+      start() {
+        startTime = process.hrtime()
+        activity.update({
+          startTime: startTime,
+        })
+      },
+      setStatus(status) {
+        activity.update({
+          status: status,
+        })
+      },
       end() {
+        trackCli(`ACTIVITY_DURATION`, {
+          name: name,
+          duration: Math.round(
+            convertHrtime(process.hrtime(startTime))[`milliseconds`]
+          ),
+        })
+
         span.finish()
-        activity.end()
+        activity.done()
       },
       span,
+    }
+  },
+
+  /**
+   * Create a progress bar for an activity
+   * @param {string} name - Name of activity.
+   * @param {number} total - Total items to be processed.
+   * @param {number} start - Start count to show.
+   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
+   * @returns {ActivityTracker} The activity tracker.
+   */
+  createProgress(
+    name: string,
+    total,
+    start = 0,
+    activityArgs: ActivityArgs = {}
+  ): ActivityTracker {
+    const { parentSpan } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    const span = tracer.startSpan(name, spanArgs)
+
+    let hasStarted = false
+    let current = start
+    const activity = reporterInstance.createActivity({
+      type: `progress`,
+      id: name,
+      current,
+      total,
+    })
+
+    return {
+      start() {
+        if (hasStarted) {
+          return
+        }
+
+        hasStarted = true
+        activity.update({
+          startTime: process.hrtime(),
+        })
+      },
+      setStatus(status) {
+        activity.update({
+          status: status,
+        })
+      },
+      tick() {
+        activity.update({
+          current: ++current,
+        })
+      },
+      done() {
+        span.finish()
+        activity.done()
+      },
+      set total(value) {
+        total = value
+        activity.update({
+          total: value,
+        })
+      },
+      span,
+    }
+  },
+  // Make private as we'll probably remove this in a future refactor.
+  _setStage(stage) {
+    if (reporterInstance.setStage) {
+      reporterInstance.setStage(stage)
     }
   },
 }
 
 console.log = (...args) => reporter.log(util.format(...args))
-console.warn = (...args) => reporter.warn(util.format(...args))
-console.info = (...args) => reporter.info(util.format(...args))
-console.error = (...args) => reporter.error(util.format(...args))
+console.warn = (...args) => reporter.log(util.format(...args))
+console.info = (...args) => reporter.log(util.format(...args))
+console.error = (...args) => reporter.log(util.format(...args))
 
 module.exports = reporter

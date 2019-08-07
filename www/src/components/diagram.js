@@ -13,25 +13,19 @@ import {
   lineHeights,
   fontSizes,
   fonts,
+  fontWeights,
 } from "../utils/presets"
-import logo from "../monogram.svg"
-import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
+import logo from "../assets/monogram.svg"
+import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
 const stripeColor = colors.purple[70]
 const stripeSize = 15
-const stripeAnimation = keyframes({
-  "0%": {
-    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
-  },
-  "100%": { backgroundPosition: `0 0` },
-})
 const stripeBg = {
   backgroundColor: colors.purple[80],
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
   backgroundImage: `linear-gradient(45deg, ${stripeColor} 25%, transparent 25%, transparent 50%, ${stripeColor} 50%, ${stripeColor} 75%, transparent 75%, transparent)`,
-  animation: `${stripeAnimation} 14s linear infinite`,
 }
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
@@ -259,6 +253,7 @@ const Diagram = () => (
       >
         <h1
           css={{
+            fontWeight: fontWeights[1],
             marginTop: 0,
             marginBottom: space[6],
             [mediaQueries.md]: {

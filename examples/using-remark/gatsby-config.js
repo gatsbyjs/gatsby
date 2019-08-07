@@ -60,6 +60,7 @@ module.exports = {
             },
           },
           `gatsby-remark-autolink-headers`,
+          `gatsby-remark-graphviz`, // graphviz before prismjs
           `gatsby-remark-prismjs`,
           `gatsby-remark-katex`,
         ],

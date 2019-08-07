@@ -1,5 +1,5 @@
 ---
-title: How to Make a Reproducible Test Case
+title: How to Make a Minimal Reproduction
 ---
 
 ## What is a reproducible test case?

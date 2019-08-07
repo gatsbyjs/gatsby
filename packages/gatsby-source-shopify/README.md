@@ -52,10 +52,18 @@ plugins: [
       // much time was required to fetch and process the data.
       // Defaults to true.
       verbose: true,
+
+      // Number of records to fetch on each request when building the cache
+      // at startup. If your application encounters timeout errors during
+      // startup, try decreasing this number.
+      paginationSize: 250,
     },
   },
 ]
 ```
+
+NOTE: By default, all metafields are private. In order to pull metafields,
+you must first [expose the metafield to the Storefront API](https://help.shopify.com/en/api/guides/metafields/storefront-api-metafields#expose-metafields-to-the-storefront-api).
 
 ## How to query
 
@@ -318,6 +326,26 @@ like the following:
         body
         title
         type
+      }
+    }
+  }
+}
+```
+
+### Query pages
+
+Shopify merchants can create pages to hold static HTML content.
+
+```graphql
+{
+  allShopifyPage {
+    edges {
+      node {
+        id
+        handle
+        title
+        body
+        bodySummary
       }
     }
   }

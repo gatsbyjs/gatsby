@@ -267,6 +267,11 @@ module.exports = (
       `src`
     ).forEach(processUrl)
 
+    // Handle flash embed tags.
+    extractUrlAttributeAndElement($(`object param[value]`), `value`).forEach(
+      processUrl
+    )
+
     // Handle a tags.
     extractUrlAttributeAndElement($(`a[href]`), `href`).forEach(processUrl)
 
@@ -275,7 +280,7 @@ module.exports = (
 
   return Promise.all(
     Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
-      // Don't copy anything is the file already exists at the location.
+      // Don't copy anything if the file already exists at the location.
       if (!fsExtra.existsSync(newFilePath)) {
         try {
           await fsExtra.ensureDir(path.dirname(newFilePath))

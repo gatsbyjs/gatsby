@@ -1,13 +1,13 @@
 {
-  "extends": ["config:base"],
-  "includePaths": ["starters/**"],
+  "extends": ["config:base", ":disablePeerDependencies"],
+  "includePaths": ["starters/**", "themes/**"],
   "major": {
     "enabled": false
   },
-  "prHourlyLimit": 2,
-  "prConcurrentLimit": 20,
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
-  "semanticCommitScope": "starters"
+  "semanticCommitScope": null
 }

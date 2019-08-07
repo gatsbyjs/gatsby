@@ -168,6 +168,9 @@ Array [
   Array [
     Array [
       "/path/to/module/babel-preset-gatsby",
+      Object {
+        "stage": "test",
+      },
     ],
     Object {
       "type": "preset",
