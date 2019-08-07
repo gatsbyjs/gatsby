@@ -38,8 +38,12 @@ module.exports = (
       showLineNumbersLocal,
       numberLinesStartAt,
       outputLines,
+      promptUserLocal,
+      promptHostLocal,
     } = parseOptions(language)
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
+    const promptUser = promptUserLocal || prompt.user
+    const promptHost = promptHostLocal || prompt.host
     language = splitLanguage
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
@@ -79,14 +83,17 @@ module.exports = (
 
     const useCommandLine =
       [`bash`].includes(languageName) &&
-      (prompt.global || (outputLines && outputLines.length > 0))
+      (prompt.global ||
+        (outputLines && outputLines.length > 0) ||
+        promptUserLocal ||
+        promptHostLocal)
 
     // prettier-ignore
     node.value = ``
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
-    +       `${useCommandLine ? commandLine(node.value, outputLines, prompt.user, prompt.host) : ``}`
+    +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
     +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`
