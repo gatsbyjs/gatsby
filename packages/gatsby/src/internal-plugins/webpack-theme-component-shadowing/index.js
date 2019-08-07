@@ -101,7 +101,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // check the cache, the user's project, and finally the theme files
-  resolveComponentPath({ matchingTheme: theme, themes: ogThemes, component }) {
+  resolveComponentPath(
+    { matchingTheme: theme, themes: ogThemes, component },
+    { fs }
+  ) {
     // don't include matching theme in possible shadowing paths
     const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
     return [path.join(path.resolve(`.`), `src`, theme)]
