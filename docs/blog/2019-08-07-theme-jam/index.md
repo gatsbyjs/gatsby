@@ -57,7 +57,7 @@ For Theme Jam, we specifically wanted to call out excellence. This is really imp
 
 Two of the themes we received stood out especially. As we reviewed, we all took notes on the themes we thought were outstanding, and _every one of us_ chose these two themes as excellent examples.
 
-**So please join us in congratulating Vojtěch Holík and Allan Pooley, who will receive an all-expenses paid trip to Gatsby Days in recognition of their outstanding work on [`gatsby-theme-simplecast`](https://github.com/vojtaholik/gatsby-theme-simplecast) and [`gatsby-theme-legals-prismic`](https://github.com/littleplusbig/gatsby-theme-legals-prismic)!**
+**So please join us in congratulating Vojtěch Holík and Allan Pooley on their outstanding work on [`gatsby-theme-simplecast`](https://github.com/vojtaholik/gatsby-theme-simplecast) and [`gatsby-theme-legals-prismic`](https://github.com/littleplusbig/gatsby-theme-legals-prismic)!**
 
 ### Vojtěch’s Simplecast Gatsby Theme
 
