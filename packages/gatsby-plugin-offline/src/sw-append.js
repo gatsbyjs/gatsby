@@ -15,6 +15,9 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   }
 
   for (const resource of resources) {
+    // As soon as we detect a failed resource, fetch the entire page from
+    // network - that way we won't risk being in an inconsistent state with
+    // some parts of the page failing.
     if (!(await caches.match(resource))) {
       return await fetch(event.request)
     }
