@@ -13,6 +13,8 @@ Welcome to the _new_ and _improved_ Gatsby Gazette. It's been a while. We have a
 
 This edition features our work on making Gatsby more stable, the Themes Jam, some solid documentation improvements, exciting livestreams featuring Jason _Blitz_ Lengstorf, highlights from the community and the revamped Core Maintainers meeting.
 
+Moving forward, we'll be posting these on a monthly cadence wrapping up all the latest and greatest news in Gatsby-land!
+
 ## Team Highlights
 
 ### Snow Leopard Release
@@ -25,11 +27,11 @@ First, an aside.
 
 Similarly, earlier last month, we felt like we needed to take some time to slow down and clean up Gatsby after some of the big features that we've shipped recently: notably ([themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes/) and [per page manifest](https://www.gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites/)). Our goal was to take a step back, move a bit more slowly, and improve the overall code base, add tests, and overall ensure our house is in good order for more improvements in the future.
 
-We called this the [Snow Leopard](https://github.com/gatsbyjs/gatsby/projects/13) release.
-
 We feel this went quite well, so we intend to keep doing this fairly regularly to keep Gatsby stable and ensure you have painless upgrades. Our goal is to always enable the experience [Brian Holt](https://twitter.com/holtbt) depicts below, specifically painless upgrades and all the while delivering real value and fixes in every version of Gatsby.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have an opinionated starter for creating course sites built with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> that I hadn&#39;t updated since January so I full well expected to spend a few hours fixing it after I updated all the deps.<br/><br/>Nope, just updated the packages and everything worked. Thanks Gatsby team!</p>&mdash; Brian Holt (@holtbt) <a href="https://twitter.com/holtbt/status/1158559782451609600?ref_src=twsrc%5Etfw">August 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Check out the [project](https://github.com/gatsbyjs/gatsby/projects/13) on GitHub if you're interested.
 
 ### WPGraphQL for Advanced Custom Fields
 
