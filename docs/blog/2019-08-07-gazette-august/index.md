@@ -107,7 +107,7 @@ Gatsby has always been a community effort. You make a _lot_ of contributions. In
 
 Time to show off some great stuff people have been building.
 
-The Gatsby site of the month is [www.fourpost.com](https://www.fourpost.com)
+The Gatsby site of the month is [fourpost.com](https://www.fourpost.com)
 
 We love it because:
 
