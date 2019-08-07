@@ -155,6 +155,8 @@ module.exports = (
 
     const title = node.title ? node.title : alt
 
+    const loading = options.loading
+
     // Create our base image tag
     let imageTag = `
       <img
@@ -164,6 +166,7 @@ module.exports = (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
+        loading="${loading}"
       />
     `.trim()
 
@@ -202,6 +205,7 @@ module.exports = (
           src="${fallbackSrc}"
           alt="${alt}"
           title="${title}"
+          loading="${loading}"
         />
       </picture>
       `.trim()
