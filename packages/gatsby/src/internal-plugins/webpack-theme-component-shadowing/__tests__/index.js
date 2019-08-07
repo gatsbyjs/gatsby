@@ -1,6 +1,8 @@
 import path from "path"
 import ShadowingPlugin from "../"
 
+// allow writing paths like path/to/thing, even on windows
+const xplatPath = uri => uri.split(`/`).join(path.sep)
 describe(`Component Shadowing`, () => {
   it(`gets matching themes`, () => {
     const plugin = new ShadowingPlugin({
@@ -8,7 +10,7 @@ describe(`Component Shadowing`, () => {
         name => {
           return {
             themeName: name,
-            themeDir: path.join(path.sep, `some`, `place`, name),
+            themeDir: xplatPath(`/some/place/${name}`),
           }
         }
       ),
@@ -16,19 +18,11 @@ describe(`Component Shadowing`, () => {
     expect(
       // simple request path to a theme's component
       plugin.getMatchingThemesForPath(
-        path.join(
-          path.sep,
-          `some`,
-          `place`,
-          `a-theme`,
-          `src`,
-          `components`,
-          `a-component`
-        )
+        xplatPath(`/some/place/a-theme/src/components/a-component`)
       )
     ).toEqual([
       {
-        themeDir: path.join(path.sep, `some`, `place`, `a-theme`),
+        themeDir: xplatPath(`/some/place/a-theme`),
         themeName: `a-theme`,
       },
     ])
@@ -37,20 +31,11 @@ describe(`Component Shadowing`, () => {
       // request to a shadowed component in theme b
       // component-path is expected to be `a-theme/components/a-component`
       plugin.getMatchingThemesForPath(
-        path.join(
-          path.sep,
-          `some`,
-          `place`,
-          `theme-b`,
-          `src`,
-          `a-theme`,
-          `components`,
-          `a-component`
-        )
+        xplatPath(`/some/place/theme-b/src/a-theme/components/a-component`)
       )
     ).toEqual([
       {
-        themeDir: path.join(path.sep, `some`, `place`, `theme-b`),
+        themeDir: xplatPath(`/some/place/theme-b`),
         themeName: `theme-b`,
       },
     ])
@@ -62,7 +47,7 @@ describe(`Component Shadowing`, () => {
         name => {
           return {
             themeName: name,
-            themeDir: path.join(path.sep, `some`, `node_modules`, name),
+            themeDir: xplatPath(`/some/node_modules/${name}`),
           }
         }
       ),
@@ -70,107 +55,60 @@ describe(`Component Shadowing`, () => {
     expect(
       plugin.requestPathIsIssuerShadowPath({
         // issuer is in `theme-b`
-        issuerPath: path.join(
-          path.sep,
-          `some`,
-          `node_modules`,
-          `theme-b`,
-          `src`,
-          `a-theme`,
-          `components`,
-          `a-component`
+        issuerPath: xplatPath(
+          `/some/node_modules/theme-b/src/a-theme/components/a-component`
         ),
         // require'ing a file it is a "shadow child" of in a-theme
-        requestPath: path.join(
-          path.sep,
-          `some`,
-          `node_modules`,
-          `a-theme`,
-          `src`,
-          `components`,
-          `a-component`
+        requestPath: xplatPath(
+          `/some/node_modules/a-theme/src/components/a-component`
         ),
-        userSiteDir: path.join(path.sep, `some`),
+        userSiteDir: xplatPath(`/some`),
       })
     ).toEqual(true)
 
     expect(
       plugin.requestPathIsIssuerShadowPath({
         // issuer is in `theme-b`
-        issuerPath: path.join(
-          path.sep,
-          `some`,
-          `node_modules`,
-          `theme-b`,
-          `src`,
-          `a-theme`,
-          `components`,
-          `a-component`
+        issuerPath: xplatPath(
+          `/some/node_modules/theme-b/src/a-theme/components/a-component`
         ),
         // require'ing a file it is NOT a "shadow child" of, also in theme-b
         // the `component-path` here would be "components/a-component"
-        requestPath: path.join(
-          path.sep,
-          `some`,
-          `node_modules`,
-          `theme-b`,
-          `src`,
-          `components`,
-          `a-component`
+        requestPath: xplatPath(
+          `/some/node_modules/theme-b/src/components/a-component`
         ),
-        userSiteDir: path.join(path.sep, `some`),
+        userSiteDir: xplatPath(`/some`),
       })
     ).toEqual(false)
 
     expect(
       plugin.requestPathIsIssuerShadowPath({
         // issuer is in the user's site
-        issuerPath: path.join(
-          path.sep,
-          `some`,
-          `src`,
-          `theme-b`,
-          `components`,
-          `a-component`
-        ),
+        issuerPath: xplatPath(`/some/src/theme-b/components/a-component`),
         // require'ing a file it is a "shadow child" of
-        requestPath: path.join(
-          path.sep,
-          `some`,
-          `node_modules`,
-          `theme-b`,
-          `src`,
-          `components`,
-          `a-component`
+        requestPath: xplatPath(
+          `/some/node_modules/theme-b/src/components/a-component`
         ),
-        userSiteDir: path.join(path.sep, `some`),
+        userSiteDir: xplatPath(`/some`),
       })
     ).toEqual(true)
 
     expect(
       plugin.requestPathIsIssuerShadowPath({
         // issuer is in the user's site
-        issuerPath: path.join(
-          path.sep,
-          `some`,
-          `src`,
-          `@orgname`,
-          `theme-d`,
-          `components`,
-          `a-component`
+        issuerPath: xplatPath(
+          `/some`,
+          `/src`,
+          `/@orgname`,
+          `/theme-d`,
+          `/components`,
+          `/a-component`
         ),
         // require'ing a file it is a "shadow child" of
         requestPath: path.join(
-          path.sep,
-          `some`,
-          `node_modules`,
-          `@orgname`,
-          `theme-d`,
-          `src`,
-          `components`,
-          `a-component`
+          `/some/node_modules/@orgname/theme-d/src/components/a-component`
         ),
-        userSiteDir: path.join(path.sep, `some`),
+        userSiteDir: xplatPath(`/some`),
       })
     ).toEqual(true)
   })
