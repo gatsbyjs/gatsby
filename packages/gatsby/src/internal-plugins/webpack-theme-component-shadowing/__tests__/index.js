@@ -97,15 +97,10 @@ describe(`Component Shadowing`, () => {
       plugin.requestPathIsIssuerShadowPath({
         // issuer is in the user's site
         issuerPath: xplatPath(
-          `/some`,
-          `/src`,
-          `/@orgname`,
-          `/theme-d`,
-          `/components`,
-          `/a-component`
+          `/some/src/@orgname/theme-d/components/a-component`
         ),
         // require'ing a file it is a "shadow child" of
-        requestPath: path.join(
+        requestPath: xplatPath(
           `/some/node_modules/@orgname/theme-d/src/components/a-component`
         ),
         userSiteDir: xplatPath(`/some`),
