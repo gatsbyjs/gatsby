@@ -1,6 +1,6 @@
 ---
 title: "Gatsby Gazette: The August Edition"
-date: 2019-08-06
+date: 2019-08-07
 author: Sidhartha Chatterjee
 excerpt: "Welcome to the new and improved Gatsby Gazette"
 tags:
@@ -35,20 +35,40 @@ Check out the [project](https://github.com/gatsbyjs/gatsby/projects/13) on GitHu
 
 ### WPGraphQL for Advanced Custom Fields
 
-[WPGraphQL for Advanced Custom Fields](https://www.wpgraphql.com/acf/) is now open source. [Jason Bahl](https://twitter.com/jasonbahl) recently joined our team and open sourcing this is a step forward in our commitment to making Gatsby + WordPress seamless.
+[WPGraphQL for Advanced Custom Fields](https://www.wpgraphql.com/acf) is a WordPress plugin that enables you to use [`gatsby-source-graphql`](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) for your complex WordPress sites that use the hugely popular [Advanced Custom Fields](https://www.advancedcustomfields.com/) plugin.
+
+The author of WPGraphQL, [Jason Bahl](https://twitter.com/jasonbahl) recently joined our team and open sourced WPGraphQL for Advanced Custom Fields which was previously a paid plugin.
+
+Open sourcing this is a step forward in our commitment to making Gatsby + WordPress even more seamless and we're excited for you to try it out. You can find it on GitHub at [github.com/wp-graphql/wp-graphql-acf](https://github.com/wp-graphql/wp-graphql-acf).
 
 ### Learning
 
-Our learning team has been hard at work on improving the documentation on [gatsbyjs.org](https://gatsbyjs.org)
-
-Amongst many many other things, we've added
+Our team has been hard at work on improving the documentation on [gatsbyjs.org](https://gatsbyjs.org). Amongst many _many_ other things, we've added:
 
 - Next and previous pagination links to guide users through the documentation
-- A floating Table of Contents on most pages
+- A floating Table of Contents
 
 [Marcy](https://twitter.com/marcysutton) also taught a workshop at Frontend Masters and this is a must watch for all of us to learn how to build accessible applications on the web.
 
-Check out the workshop at https://frontendmasters.com/workshops/javascript-accessibility/
+Accessibility is very important to us and this is one of many steps we're taking in helping make the web more accessible. Check out the workshop at [frontendmasters.com/workshops/javascript-accessibility](https://frontendmasters.com/workshops/javascript-accessibility/).
+
+### Copy Button for Code Snippets
+
+[Dustin](https://twitter.com/schaudustin) noticed at a workshop recently that people tend to highlight the wrong lines, or lose a few lines when highlighting a code snippet to copy leading to strange errors and confusion.
+
+He decided to improve this and _did_ by adding a beautiful and accessible Copy button to all code snippets in our documentation! Here is what it looks like:
+
+![Copy Button GIF](./copy-button.gif)
+
+If you're curious about the implementation, [here](https://github.com/gatsbyjs/gatsby/pull/15834) is a link to the PR.
+
+### Native Lazy Loading
+
+[Native Lazy Loading](https://web.dev/native-lazy-loading) just launched in Chrome 76. We shipped support for this in `gatsby-image` back in May! So if you're using Gatsby, your site already does this out of the box.
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We at <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> just shipped support for Chrome&#39;s new native lazy loading feature in gatsby-image@2.1.0<br/><br/>Works out of the box if your browser supports it and falls back to our own implementation if it doesn&#39;t 😉 <a href="https://t.co/0XoXSr3Col">https://t.co/0XoXSr3Col</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1129118956193640448?ref_src=twsrc%5Etfw">May 16, 2019</a></blockquote>
+
+Check out the implementation on the [PR on GitHub](https://github.com/gatsbyjs/gatsby/pull/13217).
 
 ### Jason _Blitz_ Lengstorf
 
@@ -81,7 +101,7 @@ Firstly, thank you for all your contributions, folks! Every single contribution 
 
 Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we achieved a new record in merged PRs last month:
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We&#39;ve merged in 500 PRs into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> over the past month! 😱<br/><br/>Thank you for your contributions, folks! <a href="https://t.co/dsU85CzuGX">pic.twitter.com/dsU85CzuGX</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1156334013247737856?ref_src=twsrc%5Etfw">July 30, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We&#39;ve merged in 500 PRs into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> over the past month! 😱<br/><br/>Thank you for your contributions, folks! <a href="https://t.co/dsU85CzuGX">pic.twitter.com/dsU85CzuGX</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1156334013247737856?ref_src=twsrc%5Etfw">July 30, 2019</a></blockquote>
 
 ## Gatsby Site of the month
 
