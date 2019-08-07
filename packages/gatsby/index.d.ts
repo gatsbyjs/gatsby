@@ -1,6 +1,5 @@
 import * as React from "react"
 import { EventEmitter } from "events"
-import { Application } from "express"
 import { WindowLocation } from "@reach/router"
 
 export {
@@ -11,6 +10,7 @@ export {
   push,
   replace,
   withPrefix,
+  withAssetPrefix,
 } from "gatsby-link"
 
 export interface StaticQueryProps {
@@ -96,7 +96,7 @@ export interface GatsbyConfig {
     url: string
   }
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
-  developMiddleware?(app: Application): void
+  developMiddleware?(app: any): void
 }
 
 /**
@@ -616,7 +616,7 @@ export interface CreateBabelConfigArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateDevServerArgs extends ParentSpanPluginArgs {
-  app: Application
+  app: any
 }
 
 export interface CreateNodeArgs extends ParentSpanPluginArgs {
@@ -809,7 +809,7 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
   createParentChildLink(
-    { parent: Node, child: Node },
+    args: { parent: Node; child: Node },
     plugin?: ActionPlugin
   ): void
 
@@ -868,16 +868,16 @@ export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#addThirdPartySchema */
   addThirdPartySchema(
     args: { schema: object },
-    plugin?: ActionPlugin,
-    traceId: string
-  )
+    plugin: ActionPlugin,
+    traceId?: string
+  ): void
 
   /** TODO create jsdoc on gatsbyjs.org */
   createTypes(
     types: string | object | Array<string | object>,
-    plugin?: ActionPlugin,
-    traceId: string
-  )
+    plugin: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {

@@ -4,15 +4,16 @@ const openurl = require(`better-opn`)
 const fs = require(`fs-extra`)
 const compression = require(`compression`)
 const express = require(`express`)
-const getConfigFile = require(`../bootstrap/get-config-file`)
-const preferDefault = require(`../bootstrap/prefer-default`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
-const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const rl = require(`readline`)
 const onExit = require(`signal-exit`)
 
 const telemetry = require(`gatsby-telemetry`)
+
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const getConfigFile = require(`../bootstrap/get-config-file`)
+const preferDefault = require(`../bootstrap/prefer-default`)
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
@@ -68,8 +69,9 @@ module.exports = async program => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
-  let pathPrefix = config && config.pathPrefix
-  pathPrefix = prefixPaths && pathPrefix ? pathPrefix : `/`
+  const { pathPrefix: configPathPrefix } = config || {}
+
+  const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
   const root = path.join(program.directory, `public`)
   const pages = await getPages(program.directory)
@@ -87,6 +89,15 @@ module.exports = async program => {
       return res.status(404).sendFile(`404.html`, { root })
     }
     return next()
+  })
+  app.use(function(req, res, next) {
+    res.header(`Access-Control-Allow-Origin`, `http://${host}:${port}`)
+    res.header(`Access-Control-Allow-Credentials`, true)
+    res.header(
+      `Access-Control-Allow-Headers`,
+      `Origin, X-Requested-With, Content-Type, Accept`
+    )
+    next()
   })
   app.use(pathPrefix, router)
 

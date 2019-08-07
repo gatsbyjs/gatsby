@@ -56,20 +56,22 @@ describe(`create-remote-file-node`, () => {
 
   describe(`basic functionality`, () => {
     describe(`non-url`, () => {
-      it(`short-circuits and resolves`, async () => {
-        const value = await createRemoteFileNode({
+      it(`short-circuits and resolves`, () => {
+        const value = createRemoteFileNode({
           ...defaultArgs,
           url: ``,
         })
 
-        expect(value).toBe(undefined)
+        expect(value).rejects.toMatch(`wrong url: `)
       })
 
-      it(`does not increment progress bar total`, async () => {
-        await createRemoteFileNode({
+      it(`does not increment progress bar total`, () => {
+        const value = createRemoteFileNode({
           ...defaultArgs,
           url: ``,
         })
+
+        expect(value).rejects.toMatch(`wrong url: `)
 
         expect(ProgressBar.total).toBe(0)
         expect(ProgressBar.tick).not.toHaveBeenCalled()
@@ -102,6 +104,11 @@ describe(`create-remote-file-node`, () => {
         pipe: jest.fn(() => gotMock),
         on: jest.fn((mockType, mockCallback) => {
           if (mockType === type) {
+            // got throws on 404/500 so we mimic this behaviour
+            if (response.statusCode === 404) {
+              throw new Error(`Response code 404 (Not Found)`)
+            }
+
             mockCallback(response)
           }
 
@@ -175,7 +182,7 @@ describe(`create-remote-file-node`, () => {
         )
       })
 
-      it(`passes custom http heades, if defined`, async () => {
+      it(`passes custom http header, if defined`, async () => {
         await setup({
           httpHeaders: {
             Authorization: `Bearer foobar`,
@@ -190,6 +197,19 @@ describe(`create-remote-file-node`, () => {
             }),
           })
         )
+      })
+
+      it(`fails when 404 is given`, async () => {
+        expect.assertions(1)
+        try {
+          await setup({}, `response`, { statusCode: 404 })
+        } catch (err) {
+          expect(err).toEqual(
+            expect.stringContaining(
+              `failed to process https://images.whatever.com/real-image-trust-me`
+            )
+          )
+        }
       })
     })
   })

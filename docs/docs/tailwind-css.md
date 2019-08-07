@@ -51,7 +51,7 @@ Create a postcss.config.js in your project's root folder with the following cont
 
 ```javascript:title=postcss.config.js
 module.exports = () => ({
-  plugins: [require("tailwindcss")("./tailwind.js")],
+  plugins: [require("tailwindcss")],
 })
 ```
 

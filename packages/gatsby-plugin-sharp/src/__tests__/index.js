@@ -116,28 +116,6 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(path.parse(result.srcSet).name).toBe(file.name)
     })
 
-    it(`accounts for pixel density`, async () => {
-      const result = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: {
-          sizeByPixelDensity: true,
-        },
-      })
-
-      expect(result).toMatchSnapshot()
-    })
-
-    it(`can optionally ignore pixel density`, async () => {
-      const result = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: {
-          sizeByPixelDensity: false,
-        },
-      })
-
-      expect(result).toMatchSnapshot()
-    })
-
     it(`does not change the arguments object it is given`, async () => {
       const args = { maxWidth: 400 }
       await fluid({

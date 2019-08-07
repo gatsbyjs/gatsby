@@ -18,10 +18,10 @@ import {
   fonts,
 } from "../../utils/presets"
 
-const stripedBorderHeight = space[2]
+const stripedBorderHeight = space[1]
 
 const Container = styled(`div`)`
-  border: 1px solid ${colors.ui.light};
+  border: 1px solid ${colors.ui.border.subtle};
   border-radius: ${radii[2]}px;
   display: flex;
   flex-direction: column;
@@ -32,15 +32,15 @@ const Container = styled(`div`)`
 
   :after {
     border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
-    background: ${colors.ui.whisper}
+    background: ${colors.white}
       repeating-linear-gradient(
         135deg,
-        ${colors.lemon},
-        ${colors.lemon} 20px,
+        ${colors.yellow[40]},
+        ${colors.yellow[40]} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.mint} 40px,
-        ${colors.mint} 60px,
+        ${colors.teal[40]} 40px,
+        ${colors.teal[40]} 60px,
         transparent 60px,
         transparent 80px
       );

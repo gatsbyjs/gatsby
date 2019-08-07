@@ -79,37 +79,6 @@ Then, tell the plugin to look in your theme's `src/pages` directory.
 },
 ```
 
-## Transpiling Your Theme With Webpack
-
-**Note**: This is only needed temporarily. Themes will automatically be transpiled in later versions.
-
-Since your theme will be installed, it will end up in `node_modules` which Gatsby doesn't transpile by default.
-This is something you can achieve with `gatsby-plugin-compile-es6-packages`.
-
-You will need to install the package:
-
-```shell
-yarn add gatsby-plugin-compile-es6-packages
-```
-
-And then add it to your plugins list:
-
-```js:title=gatsby-config.js
-const path = require("path")
-
-module.exports = {
-  plugins: [
-    // ...
-    {
-      resolve: "gatsby-plugin-compile-es6-packages",
-      options: {
-        modules: ["gatsby-theme-NAME"],
-      },
-    },
-  ],
-}
-```
-
 ## Publishing to NPM
 
 In order to allow others to install your theme you will need to publish it to npm. If you haven't published to npm before, learn how [here](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).

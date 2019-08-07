@@ -11,6 +11,7 @@ import {
   fontSizes,
   transition,
   fonts as fontTokens,
+  zIndices,
 } from "./tokens"
 import { rhythm } from "./typography"
 
@@ -34,4 +35,5 @@ export {
   space,
   fontSizes,
   fonts,
+  zIndices,
 }

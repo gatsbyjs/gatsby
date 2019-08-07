@@ -28,13 +28,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
    * This is especially frustrating when you need to test the
    * production build on your local machine.
    *
-   * Let's unregister the service workers in development, and tidy up a few errors.
+   * Let's warn if we find service workers in development.
    */
-  if (supportsServiceWorkers(location, navigator)) {
+  if (`serviceWorker` in navigator) {
     navigator.serviceWorker.getRegistrations().then(registrations => {
-      for (let registration of registrations) {
-        registration.unregister()
-      }
+      if (registrations.length > 0)
+        console.warn(
+          `Warning: found one or more service workers present.`,
+          `If your site isn't behaving as expected, you might want to remove these.`,
+          registrations
+        )
     })
   }
 
@@ -63,10 +66,3 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   })
 })
-
-function supportsServiceWorkers(location, navigator) {
-  if (location.hostname === `localhost` || location.protocol === `https:`) {
-    return `serviceWorker` in navigator
-  }
-  return false
-}

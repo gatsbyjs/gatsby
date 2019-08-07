@@ -1,5 +1,6 @@
 ---
 title: Winning Over Developers
+issue: https://github.com/gatsbyjs/gatsby/issues/14040
 ---
 
 Often developers are the main evangelists of Gatsby, because they use it and can see the benefit.

@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Link, {
   withPrefix,
+  withAssetPrefix,
   navigate,
   push,
   replace,
@@ -69,6 +70,7 @@ function graphql() {
 
 export {
   Link,
+  withAssetPrefix,
   withPrefix,
   graphql,
   parsePath,

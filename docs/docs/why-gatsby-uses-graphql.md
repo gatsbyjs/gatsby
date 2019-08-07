@@ -12,7 +12,7 @@ Without providing some context, it can seem like GraphQL is overkill for somethi
   title="Screencast on egghead of creating pages in Gatsby from hard-coded React components."
   src="https://egghead.io/lessons/gatsby-create-a-gatsby-page-without-any-data/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -61,7 +61,7 @@ In the simplest cases, this is all that’s required for building pages with Gat
   title="Screencast on egghead of creating pages from hard-coded context data in Gatsby."
   src="https://egghead.io/lessons/gatsby-create-a-gatsby-page-with-hard-coded-data/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -114,7 +114,7 @@ In some cases, this approach may be enough. However, it’s often necessary to c
   title="Screencast on egghead of creating pages from JSON data in Gatsby."
   src="https://egghead.io/lessons/gatsby-create-pages-from-json-with-images/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -224,7 +224,7 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
   title="Screencast on egghead of adding data to GraphQL in Gatsby."
   src="https://egghead.io/lessons/gatsby-make-data-queryable-in-graphql-with-gatsby/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].
@@ -302,7 +302,7 @@ The results will appear in the panel between the query and the docs, and they’
   title="Screencast on egghead of generating pages using GraphQL in Gatsby."
   src="https://egghead.io/lessons/gatsby-create-pages-in-gatsby-using-graphql/embed"
   class="egghead-video"
-  width=600 height=348
+  width={600} height={348}
 />
 
 Video hosted on [egghead.io][egghead].

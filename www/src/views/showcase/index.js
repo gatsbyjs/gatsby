@@ -52,6 +52,10 @@ class ShowcaseView extends Component {
       <Layout location={location}>
         <Helmet>
           <title>Showcase</title>
+          <meta
+            name="description"
+            content="Gallery of sites using Gatsby acros the web, find inspiration or inspect the code of popular projects."
+          />
         </Helmet>
         <FeaturedSites
           setFilters={this.setFilters}

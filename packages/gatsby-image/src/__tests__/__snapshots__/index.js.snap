@@ -35,7 +35,7 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
       />
     </picture>
     <noscript>
-      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;img width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;img loading="lazy" width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
     </noscript>
   </div>
 </div>
@@ -76,7 +76,7 @@ exports[`<Image /> should render fixed size images 1`] = `
       />
     </picture>
     <noscript>
-      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;img width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" /&gt;&lt;img loading="lazy" width="100" height="100" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
     </noscript>
   </div>
 </div>
@@ -120,7 +120,7 @@ exports[`<Image /> should render fluid images 1`] = `
       />
     </picture>
     <noscript>
-      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;img sizes="(max-width: 600px) 100vw, 600px" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
+      &lt;picture&gt;&lt;source type='image/webp' srcset="some srcSetWebp" sizes="(max-width: 600px) 100vw, 600px" /&gt;&lt;img loading="lazy" sizes="(max-width: 600px) 100vw, 600px" srcset="some srcSet" src="test_image.jpg" alt="Alt text for the image" title="Title for the image" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/&gt;&lt;/picture&gt;
     </noscript>
   </div>
 </div>

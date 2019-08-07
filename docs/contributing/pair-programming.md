@@ -20,7 +20,7 @@ These sessions are intended for people who:
 - would like to work on an issue or pull request related to Gatsby, or
 - are using Gatsby for a personal, open source, charity or education project
 
-If you're interested in support for a commercial Gatsby project, please [get in touch via the support page](https://www.gatsbyjs.com/support/).
+If you're interested in support for a commercial Gatsby project, please [get in touch via the contact page](https://www.gatsbyjs.com/contact-us/).
 
 We also expect the following from pair programming participants:
 

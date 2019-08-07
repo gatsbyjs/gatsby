@@ -17,7 +17,7 @@ import {
   fonts,
 } from "../utils/presets"
 
-const legendBorderColor = colors.ui.light
+const legendBorderColor = colors.ui.border.subtle
 
 const LegendTable = () => {
   const legendBallStyle = {
@@ -88,6 +88,10 @@ const LegendTable = () => {
     <div>
       <Helmet>
         <title>Features</title>
+        <meta
+          name="description"
+          content="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+        />
       </Helmet>
       <div
         css={{
@@ -241,8 +245,8 @@ class FeaturesPage extends Component {
             />
             <FeaturesFooter />
           </main>
-          <FooterLinks />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

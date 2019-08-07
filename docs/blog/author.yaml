@@ -282,3 +282,13 @@
   bio: Building things at Gatsby. Writing things at johno.com.
   avatar: avatars/john-otander.jpg
   twitter: "@4lpine"
+- id: Cory Mortimer
+  bio: Software Engineer at Housecall Pro. Previously KnuEdge, Intuit. Passionate about front-end technologies, user-friendly design.
+  avatar: avatars/cory-mortimer.png
+- id: Aileen Nowak
+  bio: JavaScript lover. JAMStack enthusiast. Developer at Ghost.org
+  avatar: avatars/aileen-nowak.jpeg
+- id: Brent Jackson
+  bio: Software developer @ GatsbyJS. Loves cats, design systems, CSS, and JavaScript.
+  avatar: avatars/brent-jackson.jpg
+  twitter: "@jxnblk"

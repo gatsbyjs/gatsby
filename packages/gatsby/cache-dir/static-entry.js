@@ -167,11 +167,11 @@ export default (pagePath, callback) => {
 
   const routerElement = createElement(
     ServerLocation,
-    { url: `${__PATH_PREFIX__}${pagePath}` },
+    { url: `${__BASE_PATH__}${pagePath}` },
     createElement(
       Router,
       {
-        baseuri: `${__PATH_PREFIX__}`,
+        baseuri: `${__BASE_PATH__}`,
       },
       createElement(RouteHandler, { path: `/*` })
     )

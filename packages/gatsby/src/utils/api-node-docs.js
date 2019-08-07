@@ -20,19 +20,20 @@ exports.resolvableExtensions = true
  *   // Query for markdown nodes to use in creating pages.
  *   // You can query for whatever data you want to create pages for e.g.
  *   // products, portfolio items, landing pages, etc.
+ *   // Variables can be added as the second function parameter
  *   return graphql(`
- *     {
- *       allMarkdownRemark(limit: 1000) {
+ *     query loadPagesQuery ($limit: Int!) {
+ *       allMarkdownRemark(limit: $limit) {
  *         edges {
  *           node {
- *             fields {
+ *             frontmatter {
  *               slug
  *             }
  *           }
  *         }
  *       }
  *     }
- *   `).then(result => {
+ *   `, { limit: 1000 }).then(result => {
  *     if (result.errors) {
  *       throw result.errors
  *     }
@@ -41,7 +42,7 @@ exports.resolvableExtensions = true
  *     result.data.allMarkdownRemark.edges.forEach(edge => {
  *       createPage({
  *         // Path for this page — required
- *         path: `${edge.node.fields.slug}`,
+ *         path: `${edge.node.frontmatter.slug}`,
  *         component: blogPostTemplate,
  *         context: {
  *           // Add optional context data to be inserted

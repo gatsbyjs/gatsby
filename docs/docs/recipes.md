@@ -54,10 +54,33 @@ You can create pages in Gatsby explicitly by defining React components in `src/p
 
 ## Linking between pages
 
-Routing in Gatsby relies on the `<Link />` component, a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link).
+Routing in Gatsby relies on the `<Link />` component.
 
-- Walk through using Gatsby's `<Link />` component in [tutorial part one](/tutorial/part-one/#linking-between-pages)
-- Learn more about how `<Link />` works [in the docs](/docs/gatsby-link/)
+### Requirements
+
+- A Gatsby site with two page components: `index.js` and `contact.js`
+- The Gatsby `<Link />` component
+- `gatsby develop`
+
+### Directions
+
+1. Open the index page component (`src/pages/index.js`), import the `<Link />` component from Gatsby, add a `<Link />` component above the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import { Link } from "gatsby"
+
+export default () => (
+  <div style={{ color: `purple` }}>
+    <Link to="/contact/">Contact</Link>
+    <p>What a world.</p>
+  </div>
+)
+```
+
+2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
+
+> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
 
 ## Styling
 

@@ -17,6 +17,7 @@ const { store } = require(`./index`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../utils/js-chunk-names`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 const actions = {}
 
@@ -527,6 +528,8 @@ const typeOwners = {}
  * readable description of what this node represent / its source. It will
  * be displayed when type conflicts are found, making it easier to find
  * and correct type conflicts.
+ * @returns {Promise} The returned Promise resolves when all cascading
+ * `onCreateNode` API calls triggered by `createNode` have finished.
  * @example
  * createNode({
  *   // Data for the node.
@@ -551,7 +554,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (
+const createNode = (
   node: any,
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
@@ -714,6 +717,26 @@ actions.createNode = (
   } else {
     return updateNodeAction
   }
+}
+
+actions.createNode = (...args) => dispatch => {
+  const actions = createNode(...args)
+  dispatch(actions)
+  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
+    action => action.type === `CREATE_NODE`
+  )
+
+  if (!createNodeAction) {
+    return undefined
+  }
+
+  const { payload: node, traceId, parentSpan } = createNodeAction
+  return apiRunnerNode(`onCreateNode`, {
+    node,
+    traceId,
+    parentSpan,
+    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+  })
 }
 
 /**
@@ -1265,8 +1288,30 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *   with inferred field types, and default field resolvers for `Date` (which
  *   adds formatting options) and `File` (which resolves the field value as
  *   a `relativePath` foreign-key field) are added. This behavior can be
- *   customised with `@infer` and `@dontInfer` directives, and their
- *   `noDefaultResolvers` argument.
+ *   customised with `@infer`, `@dontInfer` directives or extensions. Fields
+ *   may be assigned resolver (and other option like args) with additional
+ *   directives. Currently `@dateformat`, `@link` and `@fileByRelativePath` are
+ *   available.
+ *
+ *
+ * Schema customization controls:
+ * * `@infer` - run inference on the type and add fields that don't exist on the
+ * defined type to it.
+ * * `@dontInfer` - don't run any inference on the type
+ *
+ * Extensions to add resolver options:
+ * * `@dateformat` - add date formatting arguments. Accepts `formatString` and
+ *   `locale` options that sets the defaults for this field
+ * * `@link` - connect to a different Node. Arguments `by` and `from`, which
+ *   define which field to compare to on a remote node and which field to use on
+ *   the source node
+ * * `@fileByRelativePath` - connect to a File node. Same arguments. The
+ *   difference from link is that this normalizes the relative path to be
+ *   relative from the path where source node is found.
+ * * `proxy` - in case the underlying node data contains field names with
+ *   characters that are invalid in GraphQL, `proxy` allows to explicitly
+ *   proxy those properties to fields with valid field names. Takes a `from` arg.
+ *
  *
  * @example
  * exports.sourceNodes = ({ actions }) => {
@@ -1275,17 +1320,17 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     """
  *     Markdown Node
  *     """
- *     type MarkdownRemark implements Node {
+ *     type MarkdownRemark implements Node @infer {
  *       frontmatter: Frontmatter!
  *     }
  *
  *     """
  *     Markdown Frontmatter
  *     """
- *     type Frontmatter {
+ *     type Frontmatter @infer {
  *       title: String!
- *       author: AuthorJson!
- *       date: Date!
+ *       author: AuthorJson! @link
+ *       date: Date! @dateformat
  *       published: Boolean!
  *       tags: [String!]!
  *     }
@@ -1294,9 +1339,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *     Author information
  *     """
  *     # Does not include automatically inferred fields
- *     type AuthorJson implements Node @dontInfer(noFieldResolvers: true) {
+ *     type AuthorJson implements Node @dontInfer {
  *       name: String!
- *       birthday: Date! # no default resolvers for Date formatting added
+ *       birthday: Date! @dateformat(locale: "ru")
  *     }
  *   `
  *   createTypes(typeDefs)
@@ -1312,6 +1357,9 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *         frontmatter: 'Frontmatter!'
  *       },
  *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: true,
+ *       },
  *     }),
  *     schema.buildObjectType({
  *       name: 'Frontmatter',
@@ -1322,12 +1370,40 @@ import type GatsbyGraphQLType from "../schema/types/type-builders"
  *             return parent.title || '(Untitled)'
  *           }
  *         },
- *         author: 'AuthorJson!',
- *         date: 'Date!',
+ *         author: {
+ *           type: 'AuthorJson'
+ *           extensions: {
+ *             link: {},
+ *           },
+ *         }
+ *         date: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             dateformat: {},
+ *           },
+ *         },
  *         published: 'Boolean!',
  *         tags: '[String!]!',
  *       }
- *     })
+ *     }),
+ *     schema.buildObjectType({
+ *       name: 'AuthorJson',
+ *       fields: {
+ *         name: 'String!'
+ *         birthday: {
+ *           type: 'Date!'
+ *           extensions: {
+ *             dateformat: {
+ *               locale: 'ru',
+ *             },
+ *           },
+ *         },
+ *       },
+ *       interfaces: ['Node'],
+ *       extensions: {
+ *         infer: false,
+ *       },
+ *     }),
  *   ]
  *   createTypes(typeDefs)
  * }

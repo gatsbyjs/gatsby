@@ -1,23 +1,4 @@
-try {
-  require(`sharp`)
-} catch (error) {
-  // Bail early if sharp isn't available
-  console.error(
-    `
-      The dependency "sharp" does not seem to have been built or installed correctly.
-
-      - Try to reinstall packages and look for errors during installation
-      - Consult "sharp" installation page at http://sharp.pixelplumbing.com/en/stable/install/
-      
-      If neither of the above work, please open an issue in https://github.com/gatsbyjs/gatsby/issues
-    `
-  )
-  console.log()
-  console.error(error)
-  process.exit(1)
-}
-
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 
 const imageSize = require(`probe-image-size`)
 
@@ -263,6 +244,23 @@ async function getTracedSVG(options, file) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
+
+  if (options.sizeByPixelDensity) {
+    /*
+     * We learned that `sizeByPixelDensity` is only valid for vector images,
+     * and Gatsby’s implementation of Sharp doesn’t support vector images.
+     * This means we should remove this option in the next major version of
+     * Gatsby, but for now we can no-op and warn.
+     *
+     * See https://github.com/gatsbyjs/gatsby/issues/12743
+     *
+     * TODO: remove the sizeByPixelDensity option in the next breaking release
+     */
+    reporter.warn(
+      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
+    )
+  }
+
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   let metadata
@@ -274,11 +272,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   const { width, height, density, format } = metadata
-  const defaultImagePPI = 72 // Standard digital image pixel density
-  const pixelRatio =
-    options.sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / defaultImagePPI
-      : 1
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
@@ -294,16 +287,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
-    presentationWidth = Math.min(
-      options.maxWidth,
-      Math.round(width / pixelRatio)
-    )
+    presentationWidth = Math.min(options.maxWidth, width)
     presentationHeight = Math.round(presentationWidth * (height / width))
   } else {
-    presentationHeight = Math.min(
-      options.maxHeight,
-      Math.round(height / pixelRatio)
-    )
+    presentationHeight = Math.min(options.maxHeight, height)
     presentationWidth = Math.round(presentationHeight * (width / height))
   }
 
@@ -314,7 +301,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   // Create sizes (in width) for the image if no custom breakpoints are
   // provided. If the max width of the container for the rendered markdown file
-  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400.
+  // is 800px, the sizes would then be: 200, 400, 800, 1200, 1600.
   //
   // This is enough sizes to provide close to the optimal image size for every
   // device size / screen resolution while (hopefully) not requiring too much
@@ -329,7 +316,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     fluidSizes.push(options[fixedDimension] / 2)
     fluidSizes.push(options[fixedDimension] * 1.5)
     fluidSizes.push(options[fixedDimension] * 2)
-    fluidSizes.push(options[fixedDimension] * 3)
   } else {
     options.srcSetBreakpoints.forEach(breakpoint => {
       if (breakpoint < 1) {
@@ -449,12 +435,11 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
 
-  // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
+  // Create sizes for different resolutions — we do 1x, 1.5x, and 2x.
   const sizes = []
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  sizes.push(options[fixedDimension] * 3)
   const dimensions = getImageSize(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
@@ -533,9 +518,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
           break
         case 2:
           resolution = `2x`
-          break
-        case 3:
-          resolution = `3x`
           break
         default:
       }

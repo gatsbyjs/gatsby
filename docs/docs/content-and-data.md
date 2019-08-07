@@ -3,4 +3,4 @@ title: Sourcing Content and Data
 overview: true
 ---
 
-[[guidelist]]
+<GuideList slug={props.slug} />

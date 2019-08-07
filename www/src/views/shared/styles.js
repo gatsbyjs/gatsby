@@ -4,30 +4,11 @@ import {
   radii,
   transition,
   shadows,
-  mediaQueries,
-  sizes,
   fontSizes,
-  lineHeights,
   fonts,
 } from "../../utils/presets"
 
 const styles = {
-  featuredSitesCard: {
-    display: `flex`,
-    flexDirection: `column`,
-    flexGrow: 0,
-    flexShrink: 0,
-    width: 320,
-    marginBottom: space[9],
-    marginRight: space[6],
-    [mediaQueries.xl]: {
-      width: 360,
-      marginRight: space[8],
-    },
-    [mediaQueries.xxl]: {
-      width: 400,
-    },
-  },
   showcaseList: {
     display: `flex`,
     flexWrap: `wrap`,
@@ -38,40 +19,10 @@ const styles = {
     display: `flex`,
     flexDirection: `column`,
     margin: space[6],
-    minWidth: 259, //shows 3 items/row on windows > 1200px wide
+    minWidth: 259, // shows 3 items/row on windows > 1200px wide
     maxWidth: 350,
     flex: `1 0 0`,
     position: `relative`,
-  },
-  featuredItem: {
-    display: `none`,
-    transition: `background ${transition.speed.slow} ${
-      transition.curve.default
-    }, transform ${transition.speed.slow} ${transition.curve.default}`,
-    [mediaQueries.lg]: {
-      alignItems: `center`,
-      background: colors.accent,
-      border: `none`,
-      borderTopRightRadius: radii[1],
-      borderBottomLeftRadius: radii[1],
-      boxShadow: `none`,
-      cursor: `pointer`,
-      display: `flex`,
-      height: 24,
-      margin: 0,
-      padding: 0,
-      position: `absolute`,
-      top: 0,
-      right: 0,
-      width: 24,
-      "&:hover": {
-        background: colors.gatsby,
-      },
-    },
-  },
-  featuredIcon: {
-    margin: `0 auto`,
-    display: `block`,
   },
   withTitleHover: {
     "& .title": {
@@ -80,7 +31,7 @@ const styles = {
       }, transform ${transition.speed.slow} ${transition.curve.default}`,
     },
     "&:hover .title": {
-      boxShadow: `inset 0 -1px 0px 0px ${colors.ui.bright}`,
+      boxShadow: `inset 0 -1px 0px 0px ${colors.lavender}`,
     },
   },
   loadMoreButton: {
@@ -88,34 +39,6 @@ const styles = {
     display: `flex`,
     flexFlow: `row wrap`,
     margin: `0 auto ${space[9]}`,
-  },
-  sticky: {
-    position: `sticky`,
-    // We need the -1px here to work around a weird issue on Chrome
-    // where the sticky element is consistently positioned 1px too far down,
-    // leaving a nasty gap that the page content peeks through.
-    // FWIW the problem is only present on the "Site Showcase" index page,
-    // not the "Starter Showcase" index page; if the "Featured Sites" block
-    // is removed, the problem goes away. I tried removing elements in the
-    // "Featured Sites" content block, but no success—only removing the entire block
-    // resolves the issue.
-    top: `calc(${sizes.bannerHeight} - 1px)`,
-    [mediaQueries.lg]: {
-      top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
-    },
-  },
-  scrollbar: {
-    WebkitOverflowScrolling: `touch`,
-    "&::-webkit-scrollbar": {
-      width: space[2],
-      height: space[2],
-    },
-    "&::-webkit-scrollbar-thumb": {
-      background: colors.ui.bright,
-    },
-    "&::-webkit-scrollbar-track": {
-      background: colors.ui.whisper,
-    },
   },
   screenshot: {
     borderRadius: radii[1],
@@ -134,7 +57,7 @@ const styles = {
   shortcutIcon: {
     paddingLeft: space[1],
     "&&": {
-      color: colors.gray.bright,
+      color: colors.text.secondary,
       borderBottom: `none`,
       "&:hover": {
         color: colors.gatsby,
@@ -145,7 +68,7 @@ const styles = {
     fontSize: fontSizes[1],
     alignItems: `baseline`,
     "&&": {
-      color: colors.gray.bright,
+      color: colors.text.secondary,
     },
   },
   searchInput: {
@@ -170,7 +93,7 @@ const styles = {
     "&:focus": {
       outline: `none`,
       width: `9rem`,
-      background: colors.ui.light,
+      background: colors.purple[10],
     },
   },
   filterButton: {
@@ -179,7 +102,7 @@ const styles = {
     alignItems: `flex-start`,
     background: `none`,
     border: `none`,
-    color: colors.gray.text,
+    color: colors.text.primary,
     cursor: `pointer`,
     display: `flex`,
     justifyContent: `space-between`,
@@ -199,65 +122,7 @@ const styles = {
     fontSize: fontSizes[2],
   },
   filterCount: {
-    color: colors.gray.bright,
-  },
-  sidebarHeader: {
-    margin: 0,
-    [mediaQueries.lg]: {
-      fontSize: fontSizes[3],
-      display: `none`,
-      borderBottom: `1px solid ${colors.ui.light}`,
-      color: colors.gray.calm,
-      fontWeight: `normal`,
-      flexShrink: 0,
-      lineHeight: lineHeights.solid,
-      height: sizes.headerHeight,
-      margin: 0,
-      paddingLeft: space[6],
-      paddingRight: space[6],
-      paddingTop: space[6],
-      paddingBottom: space[6],
-    },
-  },
-  sidebarBody: {
-    paddingLeft: space[6],
-    height: `calc(100vh - ((${sizes.headerHeight}) + ${sizes.bannerHeight}))`,
-    display: `flex`,
-    flexDirection: `column`,
-  },
-  sidebarContainer: {
-    display: `none`,
-    [mediaQueries.lg]: {
-      display: `block`,
-      flexBasis: `15rem`,
-      minWidth: `15rem`,
-      paddingTop: 0,
-      borderRight: `1px solid ${colors.ui.light}`,
-      height: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
-    },
-  },
-  contentHeader: {
-    alignItems: `center`,
-    background: `rgba(255,255,255,0.98)`,
-    borderBottom: `1px solid ${colors.ui.light}`,
-    display: `flex`,
-    flexDirection: `row`,
-    flexWrap: `wrap`,
-    height: sizes.headerHeight,
-    justifyContent: `space-between`,
-    paddingLeft: space[6],
-    paddingRight: space[6],
-    zIndex: 1,
-  },
-  contentTitle: {
-    color: colors.gatsby,
-    margin: 0,
-    fontSize: fontSizes[3],
-    lineHeight: lineHeights.solid,
-  },
-  resultCount: {
-    color: colors.lilac,
-    fontWeight: `normal`,
+    color: colors.text.secondary,
   },
 }
 

@@ -3,7 +3,7 @@ title: Testing
 overview: true
 ---
 
-[[guidelist]]
+<GuideList slug={props.slug} />
 
 ## Other resources
 

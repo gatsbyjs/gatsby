@@ -6,7 +6,7 @@ This quick start is intended for intermediate to advanced developers. For a gent
 
 ## Use the Gatsby CLI
 
-<iframe title="Screencast on egghead of getting started with Gatsby." class="egghead-video" width=600 height=348 src="https://egghead.io/lessons/gatsby-quick-start-with-gatsby-create-develop-and-build-gatsby-sites-from-the-command-line/embed" />
+<iframe title="Screencast on egghead of getting started with Gatsby." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/gatsby-quick-start-with-gatsby-create-develop-and-build-gatsby-sites-from-the-command-line/embed" />
 
 Video hosted on [egghead.io][egghead].
 

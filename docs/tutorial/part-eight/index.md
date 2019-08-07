@@ -220,7 +220,9 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ## That's all, folks
 
-Well, not quite. Just for this tutorial. This is just the beginning. Keep going!
+Well, not quite; just for this tutorial. There are also [Advanced Tutorials](/tutorial/advanced-tutorials/) to check out for more guided use cases.
+
+This is just the beginning. Keep going!
 
 - Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
 - Did you write a cool blog post about what you learned? Share that, too!

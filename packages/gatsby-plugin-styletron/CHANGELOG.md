@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron/compare/gatsby-plugin-styletron@3.0.5...gatsby-plugin-styletron@4.0.0) (2019-05-16)
+
+### Features
+
+- **gatsby-plugin-styletron:** update to v5, debug mode, useStyletron ([#13955](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron/issues/13955)) ([7a80d1a](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron/commit/7a80d1a))
+
+### BREAKING CHANGES
+
+- **gatsby-plugin-styletron:** styletron.css() removed, useStyletron as a native replacement
+
+- feat(gatsby-plugin-styletron): debug mode can be disabled through the config
+
+- feat(gatsby-plugin-styletron): add note about styletron-react v5 support
+
 ## [3.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styletron/compare/gatsby-plugin-styletron@3.0.4...gatsby-plugin-styletron@3.0.5) (2019-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-styletron

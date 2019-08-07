@@ -1,5 +1,6 @@
 ---
 title: Making Components Discoverable
+issue: https://github.com/gatsbyjs/gatsby/issues/14042
 ---
 
 In larger organizations using Gatsby, it becomes important for different teams to be able to browse components used by other teams, in order to avoid reinventing the wheel.

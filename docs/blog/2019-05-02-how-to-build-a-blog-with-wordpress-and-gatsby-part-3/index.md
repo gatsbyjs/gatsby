@@ -160,7 +160,7 @@ I mentioned at the end of [part two](/blog/2019-04-30-how-to-build-a-blog-with-w
 
 <figure>
 <video autoplay muted loop width="400">
-  <source src="https://media.giphy.com/media/zcCGBRQshGdt6/giphy.mp4">
+  <source src="https://media.giphy.com/media/zcCGBRQshGdt6/giphy.mp4"/>
 </video>
 <figcaption>...That was easy</figcaption>
 </figure>
@@ -285,7 +285,7 @@ It's looking pretty good so far. You're getting pretty close to being done, you 
 
 <figure>
   <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/qLWdMYX1NYF2g/giphy.mp4">
+    <source src="https://media.giphy.com/media/qLWdMYX1NYF2g/giphy.mp4"/>
   </video>
   <figcaption>So close...</figcaption>
 </figure>

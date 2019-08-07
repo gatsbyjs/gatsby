@@ -42,7 +42,7 @@ export default function LHSFilter({
             >
               <div
                 css={{
-                  color: filters.has(c) ? colors.gatsby : colors.ui.bright,
+                  color: filters.has(c) ? colors.gatsby : colors.input.border,
                   ...styles.filterCheckbox,
                 }}
               >

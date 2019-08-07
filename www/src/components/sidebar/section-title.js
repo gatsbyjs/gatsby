@@ -30,7 +30,7 @@ const Chevron = ({ isExpanded }) => (
   >
     <ChevronSvg
       cssProps={{
-        color: colors.gray.calm,
+        color: colors.text.secondary,
         marginLeft: `auto`,
         marginRight: `auto`,
         transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,
@@ -125,8 +125,8 @@ const SplitButton = ({
                 ...styles.level0,
                 color:
                   (isParentOfActiveItem && isExpanded) || isActive
-                    ? colors.gatsby
-                    : colors.gray.copy,
+                    ? colors.link.color
+                    : colors.text.primary,
               },
             }),
           paddingRight: presets.itemMinHeight,
@@ -193,7 +193,7 @@ const SectionTitle = ({ children, isExpanded, isActive, disabled, item }) => (
         isExpanded && !disabled
           ? colors.gatsby
           : disabled
-          ? colors.gray.calm
+          ? colors.text.secondary
           : false,
       "&:hover": {
         color: disabled ? false : colors.gatsby,

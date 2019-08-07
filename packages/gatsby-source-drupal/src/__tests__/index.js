@@ -17,6 +17,7 @@ jest.mock(`gatsby-source-filesystem`, () => {
     createRemoteFileNode: jest.fn(),
   }
 })
+
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const { sourceNodes } = require(`../gatsby-node`)
@@ -28,6 +29,15 @@ describe(`gatsby-source-drupal`, () => {
   const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
   const { objectContaining } = expect
 
+  const activity = {
+    start: jest.fn(),
+    end: jest.fn(),
+  }
+  const reporter = {
+    info: jest.fn(),
+    activityTimer: jest.fn(() => activity),
+  }
+
   beforeAll(async () => {
     const args = {
       createNodeId,
@@ -35,6 +45,7 @@ describe(`gatsby-source-drupal`, () => {
       actions: {
         createNode: jest.fn(node => (nodes[node.id] = node)),
       },
+      reporter,
     }
 
     await sourceNodes(args, { baseUrl })
