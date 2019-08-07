@@ -9,8 +9,6 @@ tags:
 
 Remember when I said I'll see you folks next week with a jam packed Gazette? It's been 3 months! 😱 If it's any consolation though, this one _is_ a jam packed edition.
 
-![Meme joking about how I said I'll be back in a week and readers are now skeletons because 3 months passed](./meme.jpg)
-
 Welcome to the _new_ and _improved_ Gatsby Gazette. It's been a while. We have a lot to talk about.
 
 This edition features our work on making Gatsby more stable, the Themes Jam, some solid documentation improvements, exciting livestreams featuring Jason _Blitz_ Lengstorf, highlights from the community and the revamped Core Maintainers meeting.
