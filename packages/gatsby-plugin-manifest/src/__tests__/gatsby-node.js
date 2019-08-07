@@ -16,7 +16,7 @@ jest.mock(`fs`, () => {
 jest.mock(`sharp`, () => {
   let sharp = jest.fn(
     () =>
-      new class {
+      new (class {
         resize() {
           return this
         }
@@ -29,7 +29,7 @@ jest.mock(`sharp`, () => {
             height: 128,
           }
         }
-      }()
+      })()
   )
 
   sharp.simd = jest.fn()
