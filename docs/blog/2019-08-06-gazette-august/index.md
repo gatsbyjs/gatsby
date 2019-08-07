@@ -29,7 +29,7 @@ Similarly, earlier last month, we felt like we needed to take some time to slow 
 
 We called this the [Snow Leopard](https://github.com/gatsbyjs/gatsby/projects/13) release.
 
-We intend to keep doing this every now and then to keep Gatsby stable and ensure you have painless upgrades.
+We feel this went quite well, so we intend to keep doing this fairly regularly to keep Gatsby stable and ensure you have painless upgrades. Our goal is to always enable the experience [Brian Holt](https://twitter.com/holtbt) depicts below, specifically painless upgrades and all the while delivering real value and fixes in every version of Gatsby.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have an opinionated starter for creating course sites built with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> that I hadn&#39;t updated since January so I full well expected to spend a few hours fixing it after I updated all the deps.<br/><br/>Nope, just updated the packages and everything worked. Thanks Gatsby team!</p>&mdash; Brian Holt (@holtbt) <a href="https://twitter.com/holtbt/status/1158559782451609600?ref_src=twsrc%5Etfw">August 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -56,7 +56,7 @@ Jason has basically been living his life on livestream since the past month. He'
 
 My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) with [Mikhail Novikov](https://twitter.com/freiksenet).
 
-In case that isn't your jam, there's also [Gatsby + WordPress](https://www.youtube.com/watch?v=DH7I1xRrbxs), [building an RSS feed-powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ), [composing and styling Gatsby themes](https://www.youtube.com/watch?v=6Z4p-qjnKCQ), [Microfrontends](https://www.youtube.com/watch?v=0Ta-awtLZTs) and even a [livestream on livestreaming](https://www.youtube.com/watch?v=rgTugjTDYaE)!
+In case that isn't your jam, there's also [Gatsby + WordPress](https://www.youtube.com/watch?v=DH7I1xRrbxs), [building an RSS feed-powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ), [composing and styling Gatsby themes](https://www.youtube.com/watch?v=6Z4p-qjnKCQ), [Microfrontends](https://www.youtube.com/watch?v=0Ta-awtLZTs) and even a [livestream on livestreaming](https://www.youtube.com/watch?v=rgTugjTDYaE)! How _meta_!
 
 Here's a convenient [playlist](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) if you want to binge watch these.
 
@@ -70,7 +70,7 @@ The team is currently hard at work judging and picking their favourites so resul
 
 ## Community Highlights
 
-Firstly, thank you for all your contributions, folks! Every single contribution to Gatsby (however small or big) makes it better. Some of the community highlights from the last month include:
+Firstly, thank you for all your contributions, folks! Every single contribution to Gatsby makes it better and every single contribution _matters_. Some of the community highlights from the last month include:
 
 - [lannonbr](https://github.com/lannonbr) [built a Table of Contents component](https://github.com/gatsbyjs/gatsby/pull/15251) that is live on our documentation and is great when reading a lengthy documentation page
 - [kellyvaughn](https://github.com/kellyvaughn) [added support for metafields to product nodes](https://github.com/gatsbyjs/gatsby/pull/16312) in `gatsby-source-shopify`
@@ -79,7 +79,7 @@ Firstly, thank you for all your contributions, folks! Every single contribution 
 - [elken](https://github.com/elken) added [support for the Prism command-line](https://github.com/gatsbyjs/gatsby/pull/16170) plugin in `gatsby-remark-prismjs`
 - [cephalization](https://github.com/cephalization) added a [great error check](https://github.com/gatsbyjs/gatsby/pull/16272) in Gatsby
 
-Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we made a brand new record last month:
+Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we achieved a new record in merged PRs last month:
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">We&#39;ve merged in 500 PRs into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> over the past month! 😱<br/><br/>Thank you for your contributions, folks! <a href="https://t.co/dsU85CzuGX">pic.twitter.com/dsU85CzuGX</a></p>&mdash; Sid (@chatsidhartha) <a href="https://twitter.com/chatsidhartha/status/1156334013247737856?ref_src=twsrc%5Etfw">July 30, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -100,7 +100,7 @@ We love it because:
 
 The Core Maintainers Meeting is now the **Community** Maintainers Meeting.
 
-We've renamed the meeting to emphasise that this time is for the community. You can join the meeting whether you've contributed to Gatsby, use it regularly or just tried it out for the first time. Everyone is welcome!
+We've renamed the meeting to emphasize that this time is for the community. You can join the meeting whether you've contributed to Gatsby, use it regularly, or are just trying it out for the first time. Everyone is welcome!
 
 We've also restructured the meeting with a new format that includes
 
