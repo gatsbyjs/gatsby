@@ -49,7 +49,7 @@ For Gatsby theme development, that means you can keep multiple themes and exampl
 
 The `package.json` in the root of the new project is primarily responsible for setting up the yarn workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
 
-```json:title=my-theme/gatsby-config.js
+```json:title=my-theme/package.json
 {
   "name": "gatsby-starter-theme-workspace",
   "private": true,
