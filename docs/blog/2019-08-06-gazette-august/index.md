@@ -25,7 +25,7 @@ First, an aside.
 
 [Snow Leopard](https://en.wikipedia.org/wiki/Mac_OS_X_Snow_Leopard) was the seventh major release of macOS. Unlike those of previous versions, the goals of Snow Leopard were improved performance, greater efficiency and the reduction of its overall memory footprint. Addition of new end-user features was not a primary consideration: its name signified its goal to be a refinement of the previous OS X version, Leopard.
 
-Similarly, earlier last month, we felt like we needed to take some time to slow down and clean up Gatsby after some of the big features that we've shipped recently ([themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes/), [per page manifest](https://www.gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites/)). Our goal was to squash bugs and issues that had happened as a result of moving fast and shipping.
+Similarly, earlier last month, we felt like we needed to take some time to slow down and clean up Gatsby after some of the big features that we've shipped recently: notably ([themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes/) and [per page manifest](https://www.gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites/)). Our goal was to take a step back, move a bit more slowly, and improve the overall code base, add tests, and overall ensure our house is in good order for more improvements in the future.
 
 We called this the [Snow Leopard](https://github.com/gatsbyjs/gatsby/projects/13) release.
 
@@ -108,7 +108,7 @@ We've also restructured the meeting with a new format that includes
 - time for updates
 - live pull request reviews
 
-We think live pull request reviews are a great way to involve the community in not only contributing code but also helping us merge those contributions in. We hope these give you some insight into how we review contributions and help make [your first contribution](http://gatsby.dev/pair-programming) even easier.
+Live pull request reviews are a great way to involve the community in growing understanding of the PR process _and_ to also get user-impactful PRs merged! We hope these give you some insight into how we review contributions and help make [your first contribution](http://gatsby.dev/pair-programming) as smooth as possible.
 
 In case you're not comfortable asking questions on the call (a video call with strangers can be intimidating, we understand), we have a form to submit questions/pull requests for live review. The form is at https://gatsby.dev/oss-maintainers-form.
 
