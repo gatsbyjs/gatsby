@@ -6861,3 +6861,16 @@
   built_by: 97thjingba
   built_by_url: https://github.com/97thjingba
   featured: false
+- title: QuantumBlack
+  main_url: https://www.quantumblack.com/
+  url: https://www.quantumblack.com/
+  description: >
+    We help companies use data to make distinctive, sustainable and significant improvements to their performance.
+  categories:
+    - Technology
+    - Consulting
+    - Data
+    - Design
+  built_by: Richard Westenra
+  built_by_url: https://www.richardwestenra.com/
+  featured: false
