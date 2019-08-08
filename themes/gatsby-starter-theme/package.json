@@ -11,7 +11,7 @@
     "gatsby": "^2.13.53",
     "gatsby-theme-blog": "^1.0.2",
     "gatsby-theme-notes": "^1.0.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }
