@@ -3579,6 +3579,23 @@
     - Portfolio layout and pages
     - Google Analytics
     - Mobile ready
+- url: https://demos.simplecode.io/gatsby/crafty/
+  repo: https://github.com/simplecode-io/gatsby-crafty-theme
+  description: SEO-friendly, fast, and fully responsive Gatsby starter with minimal plugins, utilizing JSON files as a content source.
+  tags:
+    - SEO
+    - Portfolio
+    - CMS:Other
+    - Styling:Other
+  features:
+    - Beautiful and simple design
+    - 100/100 Google Lighthouse score
+    - SEO Optimized
+    - Includes header/footer/sidebar (on Mobile)
+    - CSS based sidebar
+    - CSS based Modals
+    - Content is fetched from JSON Files
+    - Only one extra plugin from default gatsby starter
 - url: https://gatsby-starter-profile-site.netlify.com/
   repo: https://github.com/Mr404Found/gatsby-starter-profile-site
   description: A minimal and clean starter build with gatsby.
