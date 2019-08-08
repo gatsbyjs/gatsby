@@ -226,7 +226,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 Some notes:
 
 - Our GraphQL query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
-- We have referenced two `allMarkdownRemark` fields in our query. To avoid naming collisions we must alias one of them. We alias both to make our code more human-readable.
+- We have referenced two `allMarkdownRemark` fields in our query. To avoid naming collisions we must [alias](/docs/graphql-reference/#aliasing) one of them. We alias both to make our code more human-readable.
 - While making the tag pages, note that we pass `tag.name` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
