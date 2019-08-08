@@ -66,6 +66,8 @@
               breadcrumbTitle: GitHub Pages
             - title: Multi-Core Builds
               link: /docs/multi-core-builds/
+            - title: Asset Prefix
+              link: /docs/asset-prefix/
         - title: Custom Configuration
           link: /docs/customization/
           items:
@@ -184,6 +186,8 @@
               link: /docs/adding-markdown-pages/
             - title: Adding a List of Markdown Blog Posts
               link: /docs/adding-a-list-of-markdown-blog-posts/
+            - title: Using GraphQL Playground
+              link: /docs/using-graphql-playground/
         - title: Plugins
           link: /docs/plugins/
           items:
@@ -395,10 +399,13 @@
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+                - title: Client-only Routes & User Authentication
+                  link: /docs/client-only-routes-and-user-authentication/
+                  breadcrumbTitle: Client Routes & User Auth
             - title: Client Data Fetching
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
-              link: /docs/using-client-side-only-packages
+              link: /docs/using-client-side-only-packages/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -424,6 +431,8 @@
             - title: Optimizing Site Performance with Guess.js
               link: /docs/optimizing-site-performance-with-guessjs/
               breadcrumbTitle: Guess.js
+            - title: Scaling Issues
+              link: /docs/scaling-issues/
         - title: Localization and Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
