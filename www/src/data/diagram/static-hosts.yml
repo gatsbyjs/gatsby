@@ -8,5 +8,5 @@
   url: /docs/deploying-to-surge/
 - title: Aerobatic
   url: /docs/deploying-to-aerobatic/
-- title: Now.sh
-  url: /docs/deploying-to-now/
+- title: ZEIT Now
+  url: /docs/deploying-to-zeit-now/
