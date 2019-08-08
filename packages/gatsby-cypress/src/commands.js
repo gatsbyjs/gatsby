@@ -24,13 +24,23 @@ Cypress.Commands.add(
 
       return waitForAPI.call(win, api).then(() => subject)
     })
+  }
+)
 
-    cy.window({ log: false }).then({ timeout: timeout }, win => {
+Cypress.Commands.add(
+  `waitForAPIorTimeout`,
+  { prevSubject: `optional` },
+  (subject, api, { timeout = TIMEOUT } = {}) => {
+    cy.window().then({ timeout: timeout + 1000 }, win => {
       if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }
-
-      return waitForAPI.call(win, api).then(() => subject)
+      return Promise.race([
+        waitForAPI.call(win, api).then(() => subject),
+        new Promise(resolve => {
+          setTimeout(resolve, timeout)
+        }),
+      ])
     })
   }
 )
