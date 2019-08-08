@@ -44,11 +44,11 @@ describe(`Webpack Compilation Hash tests`, () => {
       // Simulate a new webpack build
       cy.task(`overwriteWebpackCompilationHash`, mockHash).then(() => {
         cy.getTestElement(`compilation-hash`).click()
-        cy.waitForAPIorTimeout(`onRouteUpdate`, { timeout: 3000 })
+        cy.waitForRouteChange()
 
         // Navigate into a non-prefetched page
         cy.getTestElement(`deep-link-page`).click()
-        cy.waitForAPIorTimeout(`onRouteUpdate`, { timeout: 3000 })
+        cy.waitForRouteChange()
 
         // If the window compilation hash has changed, we know the
         // page was refreshed
