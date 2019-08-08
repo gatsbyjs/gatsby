@@ -117,6 +117,19 @@ const fixedNodeType = ({
       },
     }),
     args: {
+      // Blurhashed
+      blurhashed: {
+        type: GraphQLBoolean,
+        defaultValue: false,
+      },
+      componentX: {
+        type: GraphQLInt,
+        defaultValue: 5,
+      },
+      componentY: {
+        type: GraphQLInt,
+        defaultValue: 5,
+      },
       width: {
         type: GraphQLInt,
       },
@@ -472,6 +485,19 @@ module.exports = ({
         },
       }),
       args: {
+        // Blurhashed
+        blurhashed: {
+          type: GraphQLBoolean,
+          defaultValue: false,
+        },
+        componentX: {
+          type: GraphQLInt,
+          defaultValue: 5,
+        },
+        componentY: {
+          type: GraphQLInt,
+          defaultValue: 5,
+        },
         width: {
           type: GraphQLInt,
         },
