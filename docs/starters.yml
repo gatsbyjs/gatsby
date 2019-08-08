@@ -3579,3 +3579,15 @@
     - Portfolio layout and pages
     - Google Analytics
     - Mobile ready
+- url: https://gatsby-starter-profile-site.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-starter-profile-site
+  description: A minimal and clean starter build with gatsby.
+  tags:
+    - Landing Page
+    - Netlify
+    - Portfolio
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - Simple Design
+    - Made by Sumanth
