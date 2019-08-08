@@ -6,23 +6,24 @@ Cypress.Commands.add(`getTestElement`, (selector, options = {}) =>
   cy.get(`[data-testid="${selector}"]`, options)
 )
 
-const TIMEOUT = 9999
+const TIMEOUT = 5000
 
 Cypress.Commands.add(
   `waitForAPI`,
   { prevSubject: `optional` },
-  (subject, api, { skip = false, timeout = TIMEOUT } = {}) => {
+  (subject, api, { timeout = TIMEOUT } = {}) => {
     Cypress.log({
       name: `waitForAPI`,
       message: api,
     })
-    // skip when specified, usually when resources have been deleted
-    // intentionally to simulate poor network
-    if (skip) {
-      console.log(`skipping`)
-      cy.wait(300)
-      return
-    }
+
+    cy.window({ log: false }).then({ timeout: timeout }, win => {
+      if (!win.___apiHandler) {
+        win.___apiHandler = apiHandler.bind(win)
+      }
+
+      return waitForAPI.call(win, api).then(() => subject)
+    })
 
     cy.window({ log: false }).then({ timeout: timeout }, win => {
       if (!win.___apiHandler) {
