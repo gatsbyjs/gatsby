@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.4...gatsby-remark-prismjs@3.3.5) (2019-08-08)
+
+### Features
+
+- **gatsby-remark-primsjs:** Support overriding prompt user/host. ([#16421](https://github.com/gatsbyjs/gatsby/issues/16421)) ([02f861b](https://github.com/gatsbyjs/gatsby/commit/02f861b))
+
 ## [3.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.3...gatsby-remark-prismjs@3.3.4) (2019-08-01)
 
 ### Features
