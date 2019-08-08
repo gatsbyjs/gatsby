@@ -1,18 +1,23 @@
-const runTests = ({
-  skipLoad = {},
-  skipNavigate = {},
-  skipAll = false,
-} = {}) => {
+Cypress.on(`uncaught:exception`, (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  console.log(err)
+  return false
+})
+
+const waitForAPIOptions = {
+  timeout: 3000,
+}
+
+const runTests = () => {
   it(`Loads index`, () => {
-    const skip = skipLoad[`/`] || skipAll
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`, { skip })
+    cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`dom-marker`).contains(`index`)
   })
 
   it(`Navigates to second page`, () => {
     cy.getTestElement(`page2`).click()
-    const skip = skipNavigate[`/page-2/`] || skipAll
-    cy.waitForAPI(`onRouteUpdate`, { skip })
+    cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
       .location(`pathname`)
       .should(`equal`, `/page-2/`)
     cy.getTestElement(`dom-marker`).contains(`page-2`)
@@ -20,25 +25,22 @@ const runTests = ({
 
   it(`Navigates to 404 page`, () => {
     cy.getTestElement(`404`).click()
-    const skip = skipNavigate[`/404.html`] || skipAll
-    cy.waitForAPI(`onRouteUpdate`, { skip })
+    cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
       .location(`pathname`)
       .should(`equal`, `/page-3/`)
     cy.getTestElement(`dom-marker`).contains(`404`)
   })
 
   it(`Loads 404`, () => {
-    const skip = skipLoad[`/404.html`] || skipAll
     cy.visit(`/page-3/`, {
       failOnStatusCode: false,
-    }).waitForAPI(`onRouteUpdate`, { skip })
+    }).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`dom-marker`).contains(`404`)
   })
 
   it(`Can navigate from 404 to index`, () => {
     cy.getTestElement(`index`).click()
-    const skip = skipNavigate[`/`] || skipAll
-    cy.waitForAPI(`onRouteUpdate`, { skip })
+    cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
       .location(`pathname`)
       .should(`equal`, `/`)
     cy.getTestElement(`dom-marker`).contains(`index`)
@@ -56,18 +58,6 @@ const runBlockedScenario = (scenario, args) => {
   it(`Block resources`, () => {
     cy.task(`restoreAllBlockedResources`).then(() => {
       cy.task(scenario, args).then(() => {
-        if (args.chunk === `app`) {
-          runTests({ skipAll: true })
-        } else if (args.pagePath === `/404.html`) {
-          runTests({
-            skipNavigate: { '/404.html': true },
-          })
-        } else {
-          runTests({
-            skipNavigate: { [args.pagePath]: true },
-            skipLoad: { [args.pagePath]: true },
-          })
-        }
         runTests()
       })
     })
