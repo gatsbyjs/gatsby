@@ -94,7 +94,7 @@ class Pagination extends React.Component {
                 value={`${i === 0 ? `` : i + 1}`}
                 key={`pagination-number${i + 1}`}
                 aria-label={`Goto Page ${i + 1}`}
-                aria-current={currentPage === i + 1 && `page`}
+                aria-current={currentPage === i + 1}
               >
                 {i + 1}
               </option>
