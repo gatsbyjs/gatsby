@@ -4,16 +4,18 @@ const withResolverContext = require(`../schema/context`)
 const errorParser = require(`../query/error-parser`).default
 
 const createGraphqlRunner = (store, reporter) => (query, context = {}) => {
-  const {
-    schema,
-    schemaCustomization: { composer: schemaComposer },
-  } = store.getState()
+  const { schema, schemaCustomization } = store.getState()
 
   return graphql(
     schema,
     query,
     context,
-    withResolverContext(context, schema, schemaComposer),
+    withResolverContext(
+      context,
+      schema,
+      schemaCustomization.composer,
+      schemaCustomization.context
+    ),
     context
   ).then(result => {
     if (result.errors) {

@@ -2,7 +2,7 @@
 title: Introducing the Docs IA Redesign
 date: 2018-07-31
 author: Shannon Soper
-tags: ["documentation", "launch"]
+tags: ["documentation", "releases"]
 ---
 
 We've been working on a new design for the docs sidebar. You can see it live on at [www.gatsbyjs.org/docs/](/docs/)!

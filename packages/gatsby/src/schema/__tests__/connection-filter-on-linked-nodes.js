@@ -45,17 +45,19 @@ async function queryResult(nodes, query) {
   })
 
   await build({})
-  const {
-    schema,
-    schemaCustomization: { composer: schemaComposer },
-  } = store.getState()
+  const { schema, schemaCustomization } = store.getState()
 
   const context = { path: `foo` }
   return graphql(
     schema,
     query,
     undefined,
-    withResolverContext(context, schema, schemaComposer)
+    withResolverContext(
+      context,
+      schema,
+      schemaCustomization.composer,
+      schemaCustomization.context
+    )
   )
 }
 

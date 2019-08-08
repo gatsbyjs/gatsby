@@ -202,6 +202,8 @@ mentioned in the beginning of this guide, if you got stuck, you can compare your
 created by following this guide. You can also reach out to the Netlify CMS community on
 [Gitter](https://gitter.im/netlify/netlifycms). Lastly, if you'd like to move into a more complete
 boilerplate to get going with Gatsby and Netlify CMS, you can clone and deploy the [official Gatsby
-Netlify CMS starter][1] to Netlify with [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/gatsby-starter-netlify-cms&stack=cms) .
+Netlify CMS starter][1] to Netlify with [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/gatsby-starter-netlify-cms&stack=cms).
+
+You can also see [blog posts about using Gatsby + Netlify CMS](/blog/tags/netlify-cms)
 
 [1]: https://github.com/netlify-templates/gatsby-starter-netlify-cms

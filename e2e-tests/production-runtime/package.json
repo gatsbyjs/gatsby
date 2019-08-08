@@ -35,11 +35,12 @@
     "cy:open:offline": "npm run cy:open -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run": "npm run cy:run:normal && npm run cy:run:slow",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y",
-    "cy:run:normal": "cypress run --browser chrome --record",
+    "cy:run:normal": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome",
     "cy:run:slow": "CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
   },
   "devDependencies": {
     "fs-extra": "^7.0.1",
+    "is-ci": "^2.0.0",
     "prettier": "^1.14.3",
     "start-server-and-test": "^1.7.1"
   },

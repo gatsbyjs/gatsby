@@ -213,6 +213,13 @@ class LocalNodeModel {
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve)
 
+    let nodeTypeNames
+    if (isAbstractType(gqlType)) {
+      nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+    } else {
+      nodeTypeNames = [gqlType.name]
+    }
+
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
@@ -220,6 +227,7 @@ class LocalNodeModel {
       gqlComposer: this.schemaComposer,
       gqlType,
       resolvedFields: fieldsToResolve,
+      nodeTypeNames,
     })
 
     let result = queryResult

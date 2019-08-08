@@ -150,7 +150,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 
-  // // Create the Posts page
+  // Create the Posts page
   createPage({
     path: basePath,
     component: PostsTemplate,
@@ -188,6 +188,7 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
       tags: node.frontmatter.tags || [],
       slug,
       date: node.frontmatter.date,
+      keywords: node.frontmatter.keywords || [],
     }
     createNode({
       ...fieldData,

@@ -295,30 +295,19 @@ async function runQuery({
   queryArgs,
   firstOnly,
   resolvedFields = {},
+  nodeTypeNames,
 }) {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
   const lokiArgs = convertArgs(gqlArgs, gqlType, resolvedFields)
 
-  let possibleTypeNames
-  if (
-    gqlType instanceof GraphQLUnionType ||
-    gqlType instanceof GraphQLInterfaceType
-  ) {
-    possibleTypeNames = gqlSchema
-      .getPossibleTypes(gqlType)
-      .map(type => type.name)
-  } else {
-    possibleTypeNames = [gqlType.name]
-  }
-
   let chain
   let sortFields
   if (queryArgs.sort) {
     sortFields = toSortFields(queryArgs.sort)
   }
-  const view = getNodeTypeCollection(possibleTypeNames)
+  const view = getNodeTypeCollection(nodeTypeNames)
   chain = view.branchResultset()
   // Somehow the simplesort in dynamic view can get reset, so we are doing it
   // here again

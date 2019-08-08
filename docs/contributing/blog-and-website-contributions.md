@@ -23,7 +23,8 @@ To add a new blog post to the gatsbyjs.org blog:
 - Add your avatar image to `/docs/blog/avatars`.
 - Add your name to `/docs/blog/author.yaml`.
 - Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder, add an `index.md` file.
-- Add `title`, `date`, `author`, `excerpt`, and `tags` ([view existing tags](/blog/tags/) or add a new one) to the frontmatter of your `index.md`. If you are cross posting your post, you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
+- Add `title`, `date`, `author`, `excerpt`, and `tags` to the frontmatter of your `index.md`. You can [view existing tags](/blog/tags/), or [add a new one](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/tags-docs.js) if you feel your tag merits being its own tag, though we encourage you to use existing tags.
+- If you are cross posting your post, you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
 - If your blog post contains images, add them to your blog post folder and reference them in your post's `index.md`.
 - Ensure any links to gatsbyjs.org are relative links - `/contributing/how-to-contribute/` instead of `https://gatsbyjs.org/contributing/how-to-contribute`.
 - Follow the [Style Guide](/contributing/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.

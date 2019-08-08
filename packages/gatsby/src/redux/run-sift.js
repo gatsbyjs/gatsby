@@ -174,33 +174,20 @@ module.exports = (args: Object) => {
 
   const {
     queryArgs = { filter: {}, sort: {} },
-    gqlSchema,
-    gqlType,
     firstOnly = false,
     resolvedFields = {},
+    nodeTypeNames,
   } = args
-
-  let possibleTypeNames
-  if (
-    gqlType instanceof GraphQLUnionType ||
-    gqlType instanceof GraphQLInterfaceType
-  ) {
-    possibleTypeNames = gqlSchema
-      .getPossibleTypes(gqlType)
-      .map(type => type.name)
-  } else {
-    possibleTypeNames = [gqlType.name]
-  }
 
   let nodes
 
-  if (possibleTypeNames.length > 1) {
-    nodes = possibleTypeNames.reduce(
+  if (nodeTypeNames.length > 1) {
+    nodes = nodeTypeNames.reduce(
       (acc, typeName) => acc.concat(getNodesAndResolvedNodes(typeName)),
       []
     )
   } else {
-    nodes = getNodesAndResolvedNodes(possibleTypeNames[0])
+    nodes = getNodesAndResolvedNodes(nodeTypeNames[0])
   }
 
   let siftFilter = getFilters(
@@ -212,7 +199,10 @@ module.exports = (args: Object) => {
   if (isEqId(firstOnly, siftFilter)) {
     const node = getNode(siftFilter[0].id[`$eq`])
 
-    if (!node || (node.internal && node.internal.type !== gqlType.name)) {
+    if (
+      !node ||
+      (node.internal && !nodeTypeNames.includes(node.internal.type))
+    ) {
       return []
     }
 

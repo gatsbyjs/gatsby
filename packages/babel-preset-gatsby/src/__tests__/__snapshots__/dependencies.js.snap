@@ -17,7 +17,7 @@ Object {
   ],
   "presets": Array [
     Array [
-      "@babel/preset-env",
+      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
       Object {
         "corejs": 2,
         "exclude": Array [

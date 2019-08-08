@@ -26,7 +26,7 @@ type QueryJob = {
 module.exports = async (queryJob: QueryJob) => {
   const {
     schema,
-    schemaCustomization: { composer: schemaComposer },
+    schemaCustomization,
     program,
     webpackCompilationHash,
   } = store.getState()
@@ -36,7 +36,12 @@ module.exports = async (queryJob: QueryJob) => {
       schema,
       query,
       context,
-      withResolverContext(context, schema, schemaComposer),
+      withResolverContext(
+        context,
+        schema,
+        schemaCustomization.composer,
+        schemaCustomization.context
+      ),
       context
     )
 

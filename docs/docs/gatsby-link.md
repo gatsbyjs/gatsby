@@ -10,9 +10,10 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 ## How to use Gatsby Link
 
-<iframe title="Screencast on egghead of how to use a Gatsby Link" class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-why-and-how-to-use-gatsby-s-link-component/embed" />
-
-Video hosted on [egghead.io][egghead].
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-why-and-how-to-use-gatsby-s-link-component"
+  lessonTitle="Why and How to Use Gatsby’s Link Component"
+/>
 
 ### Replace `a` tags with the `Link` tag for local links
 
@@ -39,9 +40,10 @@ const Page = () => (
 
 ### Add custom styles for the currently active link
 
-<iframe title="Screencast on egghead of how to style the currently active link in Gatsby." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-add-custom-styles-for-the-active-link-using-gatsby-s-link-component/embed" />
-
-Video hosted on [egghead.io][egghead].
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-add-custom-styles-for-the-active-link-using-gatsby-s-link-component"
+  lessonTitle="Add Custom Styles for the Active Link Using Gatsby’s Link Component"
+/>
 
 It’s often a good idea to show which page is currently being viewed by visually changing the link matching the current page.
 
@@ -107,9 +109,10 @@ _**Note:** Available from Gatsby V2.1.31, if you are experiencing issues please 
 
 ### Pass state as props to the linked page
 
-<iframe title="Screencast on egghead of how to pass state as props using Gatsby’s Link component." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-include-information-about-state-in-navigation-with-gatsby-s-link-component/embed" />
-
-Video hosted on [egghead.io][egghead].
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-include-information-about-state-in-navigation-with-gatsby-s-link-component"
+  lessonTitle="Include Information About State in Navigation With Gatsby’s Link Component"
+/>
 
 Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
 
@@ -140,9 +143,10 @@ const Photo = ({ location, photoId }) => {
 
 ### Replace history to change “back” button behavior
 
-<iframe title="Screencast on egghead of how to replace history on navigation." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-replace-navigation-history-items-with-gatsby-s-link-component/embed" />
-
-Video hosted on [egghead.io][egghead].
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-replace-navigation-history-items-with-gatsby-s-link-component"
+  lessonTitle="Replace Navigation History Items with Gatsby’s Link Component"
+/>
 
 There are a few cases where it might make sense to modify the “back” button’s behavior. For example, if you build a page where you choose something, then see an “are you sure?” page to make sure it’s what you really wanted, and finally see a confirmation page, it may be desirable to skip the “are you sure?” page if the “back” button is clicked.
 
@@ -165,9 +169,10 @@ const AreYouSureLink = () => (
 
 ## How to use the `navigate` helper function
 
-<iframe title="Screencast on egghead of how to navigate programmatically in Gatsby." class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/egghead-navigate-to-a-new-page-programmatically-in-gatsby/embed" />
-
-Video hosted on [egghead.io][egghead].
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-navigate-to-a-new-page-programmatically-in-gatsby"
+  lessonTitle="Navigate to a New Page Programmatically in Gatsby"
+/>
 
 Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work.
 
@@ -354,8 +359,6 @@ You can similarly check for file downloads:
     )
   }
 ```
-
-[egghead]: https://egghead.io/playlists/use-gatsby-s-link-component-to-improve-site-performance-and-simplify-site-development-7ed3ddfe
 
 ## Recommendations for programmatic, in-app navigation
 

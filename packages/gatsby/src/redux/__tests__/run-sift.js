@@ -50,13 +50,27 @@ if (process.env.GATSBY_DB_NODES === `redux`) {
     },
   ]
 
-  jest.mock(`../../db/nodes`, () => {
-    return {
-      getNode: id => mockNodes.find(node => node.id === id),
-      getNodesByType: type =>
-        mockNodes.filter(node => node.internal.type === type),
-    }
-  })
+  describe(`filters by just id correctly`, () => {
+    it(`eq operator`, async () => {
+      const queryArgs = {
+        filter: {
+          id: { eq: `id_2` },
+        },
+      }
+
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
+      })
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+      })
 
   describe(`run-sift`, () => {
     const typeName = `test`
@@ -101,52 +115,25 @@ if (process.env.GATSBY_DB_NODES === `redux`) {
     })
     const nodes = mockNodes
 
-    describe(`filters by just id correctly`, () => {
-      it(`eq operator`, async () => {
-        const queryArgs = {
-          filter: {
-            id: { eq: `id_2` },
-          },
-        }
+    it(`eq operator honors type`, async () => {
+      const queryArgs = {
+        filter: {
+          id: { eq: `id_1` },
+        },
+      }
 
-        const resultSingular = await runSift({
-          gqlType,
-          queryArgs,
-          firstOnly: true,
-        })
-
-        const resultMany = await runSift({
-          gqlType,
-          queryArgs,
-          firstOnly: false,
-        })
-
-        expect(resultSingular).toEqual([nodes[1]])
-        expect(resultMany).toEqual([nodes[1]])
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
       })
 
-      it(`eq operator honors type`, async () => {
-        const queryArgs = {
-          filter: {
-            id: { eq: `id_1` },
-          },
-        }
-
-        const resultSingular = await runSift({
-          gqlType,
-          queryArgs,
-          firstOnly: true,
-        })
-
-        const resultMany = await runSift({
-          gqlType,
-          queryArgs,
-          firstOnly: false,
-        })
-
-        // `id-1` node is not of queried type, so results should be empty
-        expect(resultSingular).toEqual([])
-        expect(resultMany).toEqual(null)
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
       })
 
       it(`non-eq operator`, async () => {
@@ -195,13 +182,45 @@ if (process.env.GATSBY_DB_NODES === `redux`) {
         gqlType,
         queryArgs,
         firstOnly: true,
+        nodeTypeNames: [gqlType.name],
       })
 
-      expect(results[0].id).toBe(`id_4`)
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+      })
+
+      expect(resultSingular).toEqual([nodes[2]])
+      expect(resultMany).toEqual([nodes[2], nodes[3]])
     })
   })
-} else {
-  it(`Skipping redux run-sift in loki`, () => {
-    expect(true).toEqual(true)
+
+  it(`resolves fields before querying`, async () => {
+    const queryArgs = {
+      filter: {
+        first: {
+          willBeResolved: { eq: `resolvedValue` },
+          second: {
+            elemMatch: {
+              willBeResolved: { eq: `resolvedValue` },
+              third: {
+                foo: { eq: `foo` },
+              },
+            },
+          },
+        },
+      },
+    }
+
+    const results = await runSift({
+      gqlType,
+      queryArgs,
+      firstOnly: true,
+      nodeTypeNames: [gqlType.name],
+    })
+
+    expect(results[0].id).toBe(`id_4`)
   })
 }
