@@ -6874,3 +6874,17 @@
   built_by: Richard Westenra
   built_by_url: https://www.richardwestenra.com/
   featured: false
+- title: Coffeeshop Creative
+  url: https://www.coffeeshopcreative.ca
+  main_url: https://www.coffeeshopcreative.ca
+  description: >
+    Marketing site for a Toronto web design and videography studio.
+  categories:
+    - Marketing
+    - Agency
+    - Design
+    - Video
+    - Web Development
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
