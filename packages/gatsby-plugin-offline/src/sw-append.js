@@ -1,7 +1,6 @@
 /* global importScripts, workbox, idbKeyval */
 
 importScripts(`idb-keyval-iife.min.js`)
-workbox.setConfig({ debug: false })
 
 const { NavigationRoute } = workbox.routing
 
