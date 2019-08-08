@@ -44,7 +44,7 @@ class Develop extends Component {
     })
   }
 
-  UNSAFE_componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps) {
     if (this.props.stdout !== nextProps.stdout) {
       this.props.stdout.off(`resize`)
 
