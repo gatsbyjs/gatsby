@@ -1,2 +1,2 @@
-import "../../../../packages/gatsby-cypress/commands"
+import "gatsby-cypress"
 import "./commands"
