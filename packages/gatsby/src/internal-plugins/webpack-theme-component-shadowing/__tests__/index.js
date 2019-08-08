@@ -125,6 +125,7 @@ describe(`Component Shadowing`, () => {
   it.each(
     [
       [
+        // shadowing a styles.css file
         {
           matchingTheme: `theme-a`,
           themes: [
@@ -146,6 +147,7 @@ describe(`Component Shadowing`, () => {
         `/fake-site-root/src/theme-a/styles.css`,
       ],
       [
+        // shadowing a templates/template.js file
         {
           matchingTheme: `theme-a`,
           themes: [
@@ -169,6 +171,31 @@ describe(`Component Shadowing`, () => {
           pathResolve: route({ ".": `/fake-site-root` }),
         },
         `/b-theme/src/theme-a/templates/template.js`,
+      ],
+      [
+        // shadowing a .tsx file with `.` in the name with a .js file
+        {
+          matchingTheme: `theme-a`,
+          themes: [
+            {
+              themeName: `theme-a`,
+              themeDir: `/a-theme`,
+            },
+          ],
+          component: `/Thing.Whatever.My.tsx`,
+        },
+        {
+          fs: {
+            readdirSync: route({
+              "/fake-site-root/src/theme-a": [
+                `irrelevant-dir`,
+                `Thing.Whatever.My.js`,
+              ],
+            }),
+          },
+          pathResolve: route({ ".": `/fake-site-root` }),
+        },
+        `/fake-site-root/src/theme-a/Thing.Whatever.My.js`,
       ],
     ],
     `resolves components`,
