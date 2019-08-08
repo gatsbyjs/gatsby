@@ -196,6 +196,8 @@ Article header or subhead:
 
 > Salty, sweet, and spicy
 
+Titles should aim to be brief while still conveying a comprehensive meaning of the article; headings have more leeway in terms of length. Because titles show up throughout the docs in navigation elements (like breadcrumbs, and sidebar navigation) there is a preference for shorter names to help mitigate visual clutter.
+
 ### Format code blocks, inline code, and images
 
 Use the following as reference when creating and editing docs:

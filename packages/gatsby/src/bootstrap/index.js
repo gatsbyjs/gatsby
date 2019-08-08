@@ -79,6 +79,17 @@ module.exports = async (args: BootstrapArgs) => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
+  // The root config cannot be exported as a function, only theme configs
+  if (typeof config === `function`) {
+    report.panic({
+      id: `10126`,
+      context: {
+        configName: `gatsby-config`,
+        path: program.directory,
+      },
+    })
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     // TODO: deprecation message for old __experimentalThemes
@@ -137,6 +148,7 @@ module.exports = async (args: BootstrapArgs) => {
     await del([
       `public/*.{html,css}`,
       `public/**/*.{html,css}`,
+      `!public/page-data/404.html`,
       `!public/static`,
       `!public/static/**/*.{html,css}`,
     ])

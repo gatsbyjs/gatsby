@@ -24,17 +24,24 @@ type QueryJob = {
 
 // Run query
 module.exports = async (queryJob: QueryJob) => {
-  const { schema, program, webpackCompilationHash } = store.getState()
+  const {
+    schema,
+    schemaCustomization,
+    program,
+    webpackCompilationHash,
+  } = store.getState()
+
   // console.log(`running`, {
   //   path: queryJob.context.path,
   //   template: queryJob.componentPath,
   // })
+
   const graphql = (query, context) =>
     graphqlFunction(
       schema,
       query,
       context,
-      withResolverContext(context, schema),
+      withResolverContext(context, schema, schemaCustomization.context),
       context
     )
 

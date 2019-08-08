@@ -2,9 +2,7 @@
 title: Introducing useStaticQuery
 date: 2019-02-20
 author: Sidhartha Chatterjee
-tags:
-  - hooks
-  - static query
+tags: ["releases"]
 ---
 
 React Hooks are _cool_. Besides simplifying your code and removing the need for a lot of boilerplate associated with classes in JavaScript (looking at you, `this`), they enable some serious shareability. They also make it possible to use state in functional components.

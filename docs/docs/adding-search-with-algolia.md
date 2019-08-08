@@ -593,3 +593,5 @@ If everything works as expected, running `gatsby develop` should now give you so
 If you have any issues or if you want to learn more about using Algolia for search, check out this tutorial from Jason Lengstorf:
 
 `youtube: VSkXyuXzwlc`
+
+You can also find stories of companies using Gatsby + Algolia together [in the Algolia section of the blog](/blog/tags/algolia).

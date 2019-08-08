@@ -35,7 +35,7 @@ In order to tell Jest to use the serializer you'll need to create the file `setu
 
 ```js:title=setup-test-env.js
 import { createSerializer } from "jest-emotion"
-import * as emotion from "emotion"
+import * as emotion from "@emotion/core"
 
 expect.addSnapshotSerializer(createSerializer(emotion))
 ```

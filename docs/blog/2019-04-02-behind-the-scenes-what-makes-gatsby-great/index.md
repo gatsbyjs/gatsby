@@ -6,9 +6,8 @@ excerpt: "Gatsby is fast. You know this. This post outlines the numerous perform
 tags:
   - performance
   - apis
-  - webpagetest
   - lighthouse
-  - ci
+  - deployment
 ---
 
 Gatsby is **great** from a multititude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
