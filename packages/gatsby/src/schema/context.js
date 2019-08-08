@@ -4,7 +4,7 @@ const withResolverContext = (
   context,
   schema,
   schemaComposer,
-  customContext
+  customContext = {}
 ) => {
   const nodeStore = require(`../db/nodes`)
   const createPageDependency = require(`../redux/actions/add-page-dependency`)

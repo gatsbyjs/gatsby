@@ -167,6 +167,7 @@ async function runQuery(queryArgs) {
     firstOnly: false,
     queryArgs,
     gqlComposer: sc,
+    nodeTypeNames: [gqlType.name],
   }
   return await nodesQuery.run(args)
 }

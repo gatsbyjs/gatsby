@@ -1,7 +1,6 @@
 // @flow
 const { default: sift } = require(`sift`)
 const _ = require(`lodash`)
-const { GraphQLUnionType, GraphQLInterfaceType } = require(`graphql`)
 const prepareRegex = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
 const { getValueAt } = require(`../utils/get-value-at`)

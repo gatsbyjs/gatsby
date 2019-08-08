@@ -101,7 +101,7 @@ exports.updateNodesByType = async (typeName, updater) => {
   })
 }
 
-exports.getNodesAndResolvedNodes = typeName => {
+const getNodesAndResolvedNodes = typeName => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes = nodesByType.get(typeName)
   const resolvedNodes = resolvedNodesCache.get(typeName)
@@ -118,3 +118,5 @@ exports.getNodesAndResolvedNodes = typeName => {
     return Array.from(nodes.values())
   }
 }
+
+exports.getNodesAndResolvedNodes = getNodesAndResolvedNodes
