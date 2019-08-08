@@ -401,7 +401,7 @@
                   link: /docs/rendering-sidebar-navigation-dynamically/
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
-                  breadcrumbTitle: Client routes & User auth
+                  breadcrumbTitle: Client Routes & User Auth
             - title: Client Data Fetching
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
