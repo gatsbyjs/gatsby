@@ -33,7 +33,7 @@
     "gatsby-plugin-guess-js": "^1.1.4",
     "gatsby-plugin-layout": "^1.0.10",
     "gatsby-plugin-mailchimp": "^2.2.3",
-    "gatsby-plugin-manifest": "^2.0.2",
+    "gatsby-plugin-manifest": "^2.2.5",
     "gatsby-plugin-mdx": "^1.0.0",
     "gatsby-plugin-netlify": "^2.0.0",
     "gatsby-plugin-netlify-cache": "^0.1.0",

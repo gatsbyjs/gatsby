@@ -632,3 +632,122 @@ color<span class=\\"token punctuation\\">:</span> red<span class=\\"token punctu
 }
 `;
 
+exports[`remark prism plugin promptUser/promptHost adds prompts if promptHost set 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "bash{promptHost:server}",
+      "position": Position {
+        "end": Object {
+          "column": 15,
+          "line": 2,
+          "offset": 41,
+        },
+        "indent": Array [
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=root data-host=server></span></span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 15,
+      "line": 2,
+      "offset": 41,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`remark prism plugin promptUser/promptHost adds prompts if promptUser and promptHost set 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "bash{promptUser:alice}{promptHost:server}",
+      "position": Position {
+        "end": Object {
+          "column": 15,
+          "line": 2,
+          "offset": 59,
+        },
+        "indent": Array [
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=server></span></span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 15,
+      "line": 2,
+      "offset": 59,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`remark prism plugin promptUser/promptHost adds prompts if promptUser set 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "bash{promptUser:alice}",
+      "position": Position {
+        "end": Object {
+          "column": 15,
+          "line": 2,
+          "offset": 40,
+        },
+        "indent": Array [
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=localhost></span></span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 15,
+      "line": 2,
+      "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
