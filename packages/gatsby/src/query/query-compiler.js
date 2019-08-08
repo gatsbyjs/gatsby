@@ -10,6 +10,7 @@ import RelayParser from "@gatsbyjs/relay-compiler/lib/RelayParser"
 import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
 import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
 import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
+import getGatsbyDependents from "../utils/gatsby-dependents"
 const _ = require(`lodash`)
 
 import { store } from "../redux"
@@ -100,17 +101,24 @@ class Runner {
   }
 
   async parseEverything() {
-    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+    const filesRegex = `*.+(t|j)s?(x)`
+    // Pattern that will be appended to searched directories.
+    // It will match any .js, .jsx, .ts, and .tsx files, that are not
+    // inside <searched_directory>/node_modules.
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
+
+    const modulesThatUseGatsby = await getGatsbyDependents()
 
     let files = [
       path.join(this.base, `src`),
       path.join(this.base, `.cache`, `fragments`),
     ]
       .concat(this.additional.map(additional => path.join(additional, `src`)))
+      .concat(modulesThatUseGatsby.map(module => module.path))
       .reduce(
         (merged, folderPath) =>
           merged.concat(
-            glob.sync(path.join(folderPath, filesRegex), {
+            glob.sync(path.join(folderPath, pathRegex), {
               nodir: true,
             })
           ),
@@ -187,7 +195,7 @@ class Runner {
       // The way we currently export fragments requires duplicated ones
       // to be filtered out since there is a global Fragment namespace
       // We maintain a top level fragment Map to keep track of all definitions
-      // of thge fragment type and to filter them out if theythey've already been
+      // of the fragment type and to filter them out if theythey've already been
       // declared before
       doc.definitions = doc.definitions.filter(definition => {
         if (definition.kind === Kind.FRAGMENT_DEFINITION) {
@@ -358,11 +366,19 @@ export { Runner, resolveThemes }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
-  const { program, schema, themes } = store.getState()
+  const { program, schema, themes, flattenedPlugins } = store.getState()
 
   const runner = new Runner(
     program.directory,
-    resolveThemes(themes.themes),
+    resolveThemes(
+      themes.themes
+        ? themes.themes
+        : flattenedPlugins.map(plugin => {
+            return {
+              themeDir: plugin.pluginFilepath,
+            }
+          })
+    ),
     schema
   )
 

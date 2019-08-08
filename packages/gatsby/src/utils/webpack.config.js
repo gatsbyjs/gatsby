@@ -11,6 +11,7 @@ const getPublicPath = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { withBasePath, withTrailingSlash } = require(`./path`)
+const getGatsbyDependents = require(`./gatsby-dependents`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
@@ -23,6 +24,7 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   4) build-html: build all HTML files
 
 module.exports = async (program, directory, suppliedStage) => {
+  const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
   process.env.GATSBY_BUILD_STAGE = suppliedStage
@@ -249,18 +251,36 @@ module.exports = async (program, directory, suppliedStage) => {
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.js(),
+      rules.js({
+        modulesThatUseGatsby,
+      }),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
       rules.media(),
       rules.miscAssets(),
+
+      // This is a hack that exports one of @reach/router internals (BaseContext)
+      // to export list. We need it to reset basepath and baseuri context after
+      // Gatsby main router changes it, to keep v2 behaviour.
+      // We will need to most likely remove this for v3.
+      {
+        test: require.resolve(`@reach/router/es/index`),
+        type: `javascript/auto`,
+        use: [{
+          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
+        }],
+      }
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
     if (stage === `build-javascript`) {
-      configRules.push(rules.dependencies())
+      configRules.push(
+        rules.dependencies({
+          modulesThatUseGatsby,
+        })
+      )
     }
 
     if (store.getState().themes.themes) {
@@ -274,6 +294,7 @@ module.exports = async (program, directory, suppliedStage) => {
         })
       )
     }
+
     switch (stage) {
       case `develop`: {
         // get schema to pass to eslint config and program for directory
@@ -341,9 +362,9 @@ module.exports = async (program, directory, suppliedStage) => {
     return { rules: configRules }
   }
 
-  function getResolve() {
+  function getResolve(stage) {
     const { program } = store.getState()
-    return {
+    const resolve = {
       // Use the program's extension list (generated via the
       // 'resolvableExtensions' API hook).
       extensions: [...program.extensions],
@@ -373,6 +394,19 @@ module.exports = async (program, directory, suppliedStage) => {
         PnpWebpackPlugin,
       ],
     }
+
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+    if (target === `web`) {
+      // force to use es modules when importing internals of @reach.router
+      // for browser bundles
+      resolve.alias[`@reach/router`] = path.join(
+        path.dirname(require.resolve(`@reach/router/package.json`)),
+        `es`
+      )
+    }
+
+    return resolve
   }
 
   function getResolveLoader() {
@@ -420,7 +454,7 @@ module.exports = async (program, directory, suppliedStage) => {
     mode: getMode(),
 
     resolveLoader: getResolveLoader(),
-    resolve: getResolve(),
+    resolve: getResolve(stage),
 
     node: {
       __filename: true,

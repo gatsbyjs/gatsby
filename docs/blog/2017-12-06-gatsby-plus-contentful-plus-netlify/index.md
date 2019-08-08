@@ -11,7 +11,7 @@ tags:
     "algolia",
     "getting-started",
     "hosting",
-    "ci",
+    "deployment",
     "performance",
   ]
 ---

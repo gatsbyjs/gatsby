@@ -67,7 +67,7 @@ We _didn't_ like these things in some of the above libraries:
 Here’s a sampling of screenshots that many community members contributed to and gave feedback about. It’s rewarding to see how much the design has progressed (and will keep progressing).
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/images/gatsby-plugin-library-compressed.mp4"></source>
+  <source type="video/mp4" src="/images/gatsby-plugin-library-compressed.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -83,7 +83,7 @@ Here are some ways you can help make the Gatsby plugin ecosystem great:
 - [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
 - Follow us on [Twitter](https://twitter.com/gatsbyjs).
 
-## Sneak peak into the next UX project
+## Sneak peek into the next UX project
 
 Our next UX project is designing and building a [Gatsby site showcase](https://github.com/gatsbyjs/gatsby/issues/4392). Please contribute to and subscribe to the issue to help out!
 

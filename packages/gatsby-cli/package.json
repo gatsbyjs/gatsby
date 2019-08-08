@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.7.7",
+  "version": "2.7.28",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "lib/index.js"
@@ -26,10 +26,10 @@
     "execa": "^0.8.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^4.0.1",
-    "gatsby-telemetry": "^1.1.2",
+    "gatsby-telemetry": "^1.1.11",
     "hosted-git-info": "^2.6.0",
     "is-valid-path": "^0.1.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "meant": "^1.0.1",
     "node-fetch": "^2.6.0",
     "object.entries": "^1.1.0",
@@ -51,11 +51,11 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.0",
+    "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.1.4"
   },
   "optionalDependencies": {
-    "ink": "^2.0.5",
+    "ink": "^2.3.0",
     "ink-spinner": "^3.0.1"
   },
   "files": [
@@ -67,7 +67,11 @@
   ],
   "license": "MIT",
   "main": "lib/index.js",
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-cli"
+  },
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",

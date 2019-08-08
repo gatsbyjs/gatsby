@@ -14,6 +14,10 @@
   bio: Freelance Web Developer http://line37.com . Maintainer of https://reactfaq.site
   avatar: avatars/tim-arney.jpg
   twitter: "@timarney"
+- id: Tara Arnold
+  bio: Senior Marketing Content Strategist https://mediacurrent.com
+  avatar: avatars/tara-arnold-mc.png
+  twitter: "@mediacurrent"
 - id: Ian Sinnott
   bio: Zealous about simplicity. Loves JavaScript, UX, the web. https://www.iansinnott.com
   avatar: avatars/ian-sinnott.jpg
@@ -243,7 +247,7 @@
   avatar: avatars/katie-fujihara.jpg
   twitter: "@katieofcode"
 - id: Sidhartha Chatterjee
-  bio: OSS Maintainer @ GatsbyJS. Full Stack Developer. Consultant. Scuba Diver.
+  bio: Core team @ GatsbyJS. Full-Stack Developer. Scuba diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
 - id: Tania Rascia
@@ -312,6 +316,10 @@
   bio: Web Developer, Open Source advocate, new tech explorer - https://lannonbr.com/
   avatar: avatars/benjamin-lannon.jpg
   twitter: "@lannonbr"
+- id: Thomas Wang
+  bio: Founder @ DormDev. A social developer on the JAMStack.
+  avatar: avatars/thomas-wang.jpeg
+  twitter: "@thomaswangio"
 - id: Hashim Warren
   bio: Marketer turned Web Developer  - https://hashim.xyz
   avatar: avatars/hashim-warren.jpg
@@ -320,3 +328,14 @@
   bio: Marketing woman-of-all-work, collector of hobbies, very opinionated about opera.
   avatar: avatars/caitlin-cashin.jpg
   twitter: "@caitlinthefirst"
+- id: Trevor Blades
+  bio: Web Developer at Apollo. Always learning!
+  avatar: avatars/trevor-blades.jpg
+  twitter: "@trevorblades"
+- id: Kyle Pennell
+  bio: I make websites that help people explore the offline world - https://kyleapennell.com
+  avatar: avatars/kyle-pennell.jpg
+  twitter: "@kyleapennell"
+- id: Grant Glidewell
+  bio: New dad moving modern technologies forward with cutting-edge projects @ThirdAndGrove. And doggos
+  avatar: avatars/grant-glidewell.jpg

@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Code block metas are correctly generated code block with language and meta 1`] = `
+Object {
+  "htmlAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "type": "text",
+                "value": "console.log('hello world')
+",
+              },
+            ],
+            "properties": Object {
+              "className": Array [
+                "language-js",
+              ],
+              "dataMeta": "foo bar",
+            },
+            "tagName": "code",
+            "type": "element",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "pre",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+}
+`;
+
 exports[`Excerpt is generated correctly from schema correctly loads a default excerpt 1`] = `
 Object {
   "excerpt": "",
@@ -388,6 +425,90 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to default value 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to provided parameter 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to provided parameter with truncate 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dol…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
 exports[`Headings are generated correctly from schema returns value 1`] = `
 Object {
   "headings": Array [
@@ -433,6 +554,20 @@ exports[`Links are correctly prefixed correctly prefixes links 1`] = `
 Object {
   "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
 <p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Links are correctly prefixed when assetPrefix is used correctly prefixes links 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"/prefix/path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"/prefix/path/to/page2\\">a reference</a></p>",
+}
+`;
+
+exports[`Relative links keep being relative relative links are not prefixed 1`] = `
+Object {
+  "html": "<p>This is <a href=\\"path/to/page1\\">a link</a>.</p>
+<p>This is <a href=\\"./path/to/page2\\">a reference</a></p>",
 }
 `;
 

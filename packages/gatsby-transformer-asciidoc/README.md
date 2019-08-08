@@ -153,3 +153,41 @@ Each attribute with the prefix page- will be automatically added under `pageAttr
   }
 }
 ```
+
+## Define a custom converter
+
+You can define a custom converter by adding the `converterFactory` option.
+
+```javascript
+// In your gatsby-config.js, make sure to import or declare TemplateConverter
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      converterFactory: TemplateConverter,
+    },
+  },
+]
+```
+
+`TemplateConverter` is a custom javascript class you'll need to create. Information on how to write a custom `TemplateConverter` can be found at the [asciidoctor docs](https://asciidoctor-docs.netlify.com/asciidoctor.js/extend/converter/custom-converter/).
+
+In the example below, we will use a custom converter to convert paragraphs but the other nodes will be converted using the built-in HTML5 converter:
+
+```javascript
+const asciidoc = require(`asciidoctor.js`)()
+
+class TemplateConverter {
+  constructor() {
+    this.baseConverter = asciidoc.Html5Converter.$new()
+  }
+
+  convert(node, transform) {
+    if (node.getNodeName() === "paragraph") {
+      return `<p>${node.getContent()}</p>`
+    }
+
+    return this.baseConverter.convert(node, transform)
+  }
+}
+```

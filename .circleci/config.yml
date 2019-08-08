@@ -55,8 +55,8 @@ aliases:
       - <<: *install_node_modules
       - <<: *persist_cache
       - <<: *attach_to_bootstrap
-      - run: yarn jest -w 1
-      - run: GATSBY_DB_NODES=loki yarn jest -w 1
+      - run: yarn jest -w 1 --ci
+      - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -116,6 +116,7 @@ jobs:
       - <<: *persist_cache
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: yarn check-repo-fields
 
   unit_tests_node8:
     executor:
@@ -156,26 +157,29 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
 
-  e2e_tests_gatsbygram:
-    <<: *e2e-executor
-    steps:
-      - e2e-test:
-          test_path: examples/gatsbygram
-
   e2e_tests_path-prefix:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: pzj19c
+      CYPRESS_RECORD_KEY: c9ea1b91-eed6-4bac-be41-eccd75a48969
     steps:
       - e2e-test:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_gatsby-image:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: ave32k
+      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
     steps:
       - e2e-test:
           test_path: e2e-tests/gatsby-image
 
   e2e_tests_development_runtime:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: s3j3qj
+      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -185,14 +189,34 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: yarn test && yarn test:offline
+          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+
+  themes_e2e_tests_development_runtime:
+    <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: 9parq5
+      CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/development-runtime
+          test_command: yarn test
+
+  themes_e2e_tests_production_runtime:
+    <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: c9rs27
+      CYPRESS_RECORD_KEY: e4e7b3b8-e1e7-4a74-a0c9-9ac76585236b
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/themes/production-runtime
+          test_command: yarn test
 
   starters_validate:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
-      - run: sh ./scripts/clone-and-validate.sh starters
+      - run: ./scripts/assert-changed-files.sh "starters/*|themes/gatsby-starter-*|.circleci/*"
+      - run: sh ./scripts/validate-starters.sh "starters/* themes/gatsby-starter-*"
 
   starters_publish:
     executor: node
@@ -205,7 +229,48 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/clone-and-validate.sh starters true
+      - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
+
+  build_www:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge # ++ RAM and CPU
+    steps:
+      - checkout
+      - restore_cache:
+          key: www_public_dir_1
+      - restore_cache:
+          key: www_cache_dir_1
+      - run:
+          command: yarn
+          working_directory: ~/project/www
+      - run:
+          # manually match cpu_count to vcpus available in resource_class
+          command: GATSBY_CPU_COUNT=8 yarn build
+          working_directory: ~/project/www
+      - save_cache:
+          key: www_public_dir_1_{{ epoch }}
+          paths:
+            - ~/project/www/public
+      - save_cache:
+          key: www_cache_dir_1_{{ epoch }}
+          paths:
+            - ~/project/www/.cache
+
+  deploy_www:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          key: www_public_dir_1
+      - run:
+          command: yarn add netlify-cli
+          working_directory: ~/project/www
+      - run:
+          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
+          no_output_timeout: 2h
+          working_directory: ~/project/www
 
 workflows:
   version: 2
@@ -234,8 +299,6 @@ workflows:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
-      - e2e_tests_gatsbygram:
-          <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-image:
@@ -244,6 +307,10 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
@@ -251,3 +318,34 @@ workflows:
             branches:
               only:
                 - master
+      - manual_www_approval:
+          type: approval
+          filters:
+            branches:
+              only:
+                - master
+      - build_www:
+          context: build_www
+          requires:
+            - manual_www_approval
+      - deploy_www:
+          requires:
+            - build_www
+          context: build_www
+
+  www_deploy:
+    triggers:
+      - schedule:
+          cron: "0 2,6,10,14,18,22 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build_www:
+          # Check CircleCI web ui for context details (env vars)
+          context: build_www
+      - deploy_www:
+          requires:
+            - build_www
+          context: build_www

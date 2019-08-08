@@ -7,7 +7,6 @@ module.exports = options => {
       description: `Description placeholder`,
       siteUrl: `http://example.com/`,
     },
-    __experimentalThemes: [`gatsby-theme-ui`],
     plugins: [
       mdx && {
         resolve: `gatsby-plugin-mdx`,
@@ -22,8 +21,8 @@ module.exports = options => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          path: options.notes || `content/notes`,
-          name: options.notes || `content/notes`,
+          path: options.contentPath || `content/notes`,
+          name: options.contentPath || `content/notes`,
         },
       },
       `gatsby-plugin-redirects`,
@@ -35,6 +34,7 @@ module.exports = options => {
           modules: [`gatsby-theme-notes`],
         },
       },
+      `gatsby-plugin-theme-ui`,
     ].filter(Boolean),
   }
 }
