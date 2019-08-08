@@ -52,7 +52,8 @@ const BlurHash = ({ data, location }) => (
       integers. Their default values are "false", "5" and "5" respectively and
       both "componentX" and "componentY" could go from 1 to 9, being 1 super
       blurry and 9 little blurry. You'd end un with a query with these arguments
-      like:
+      like: <br />
+      <br />
       <code>fluid(maxHeight: 500, quality: 90, blurhashed: true) ...</code>
     </p>
     <Img
@@ -104,7 +105,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600, blurhashed: true, componentX: 9, componentY: 9) {
+          fluid(maxWidth: 600, blurhashed: true, componentX: 3, componentY: 8) {
             ...GatsbyImageSharpFluid
           }
         }

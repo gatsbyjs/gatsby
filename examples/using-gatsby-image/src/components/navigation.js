@@ -184,6 +184,7 @@ const Navigation = () => (
     <Nav aria-label="Primary Navigation">
       <NavList>
         <NavItem to="/blur-up/" title="Blur Up" />
+        <NavItem to="/blurhash" title="Blurhash" />
         <NavItem to="/background-color/" title="Background Color" />
         <NavItem to="/traced-svg/" title="Traced SVG" />
         <NavItem to="/prefer-webp/" title="WebP" />

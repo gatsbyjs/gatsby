@@ -503,6 +503,16 @@ async function fluid({ file, args = {}, reporter, cache }) {
 async function fixed({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
+  let metadata
+  try {
+    metadata = await sharp(file.absolutePath).metadata()
+  } catch (err) {
+    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    return null
+  }
+
+  const { width, height } = metadata
+
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
 
@@ -555,9 +565,16 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
+    // This could be refactored to an utility function
+    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
     const base64Args = {
       // height is adjusted accordingly with respect to the aspect ratio
-      width: options.base64Width,
+      blurhashed: options.blurhashed,
+      componentX: options.componentX,
+      componentY: options.componentY,
+      width: options.base64Width || base64Width,
+      height: base64Height,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
