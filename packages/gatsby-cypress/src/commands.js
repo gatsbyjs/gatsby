@@ -6,7 +6,7 @@ Cypress.Commands.add(`getTestElement`, (selector, options = {}) =>
   cy.get(`[data-testid="${selector}"]`, options)
 )
 
-const TIMEOUT = 5000
+const TIMEOUT = 10000
 
 Cypress.Commands.add(
   `waitForAPI`,
