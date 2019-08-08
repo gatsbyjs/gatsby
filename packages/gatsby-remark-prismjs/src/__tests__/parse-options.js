@@ -58,6 +58,27 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
     })
   })
 
+  describe(`parses both prompt user and host options`, () => {
+    it(`parses only promptUser option supplied`, () => {
+      expect(parseOptions(`bash{promptUser: pi}`).promptUserLocal).toEqual(`pi`)
+    })
+
+    it(`parses only promptHost option supplied`, () => {
+      expect(
+        parseOptions(`bash{promptHost: dev.localhost}`).promptHostLocal
+      ).toEqual(`dev.localhost`)
+    })
+
+    it(`parses promptHost and promptUser options supplied together`, () => {
+      expect(
+        parseOptions(`bash{promptUser: pi}{promptHost: dev.localhost}`)
+      ).toMatchObject({
+        promptHostLocal: `dev.localhost`,
+        promptUserLocal: `pi`,
+      })
+    })
+  })
+
   describe(`parses both line numbering and line highlighting options`, () => {
     it(`one line highlighted`, () => {
       expect(parseOptions(`jsx{1}{numberLines: 3}`)).toEqual({
