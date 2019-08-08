@@ -6856,8 +6856,7 @@
   description: >
     Belong to your own blog by gatsby
   categories:
-    - Study
-    - Life
+    - Blog
   built_by: 97thjingba
   built_by_url: https://github.com/97thjingba
   featured: false
