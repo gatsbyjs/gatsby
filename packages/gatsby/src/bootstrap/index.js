@@ -437,12 +437,15 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Extract queries
-  activity = report.activityTimer(`extract queries from components`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
+  // activity = report.activityTimer(`extract queries from components`, {
+  //   parentSpan: bootstrapSpan,
+  //   id: `query-extraction`,
+  // })
+  // activity.start()
+  // console.log('before')
   await extractQueries()
-  activity.end()
+  // console.log('after')
+  // activity.end()
 
   // Write out files.
   activity = report.activityTimer(`write out requires`, {

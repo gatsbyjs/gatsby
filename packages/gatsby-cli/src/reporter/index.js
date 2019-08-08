@@ -66,6 +66,19 @@ const addMessage = level => text =>
 
 let isVerbose = false
 
+const prematureEnd = () => {
+  // console.log(`--- PREMATURE END ---`)
+  // finish all not started or in progress activities
+  const { activities } = getStore().getState().logs
+  Object.keys(activities).forEach(activityId => {
+    const activity = activities[activityId]
+    if (activity.state === `IN_PROGRESS` || activity.state === `NOT_STARTED`) {
+      reporter.completeActivity(activityId, `FAILED`)
+    }
+  })
+  process.exit(1)
+}
+
 /**
  * Reporter module.
  * @module reporter
@@ -101,14 +114,15 @@ const reporter: Reporter = {
   panic(...args) {
     const error = this.error(...args)
     trackError(`GENERAL_PANIC`, { error })
-    process.exit(1)
+    // process.exit(1)
+    prematureEnd()
   },
 
   panicOnBuild(...args) {
     const error = this.error(...args)
     trackError(`BUILD_PANIC`, { error })
     if (process.env.gatsby_executing_command === `build`) {
-      process.exit(1)
+      prematureEnd()
     }
   },
 
@@ -165,11 +179,17 @@ const reporter: Reporter = {
   },
 
   statefulMessage(payload) {
-    const e = constructError({ details: payload })
+    const error = constructError({ details: payload })
     dispatch({
       type: `STATEFUL_LOG`,
-      payload: e,
+      payload: error,
     })
+    if (error.panicOnBuild) {
+      trackError(`BUILD_PANIC`, { error })
+      if (process.env.gatsby_executing_command === `build`) {
+        prematureEnd()
+      }
+    }
   },
 
   clearStatefulMessage(payload) {
@@ -179,10 +199,13 @@ const reporter: Reporter = {
     })
   },
 
-  // stateUpdate(update) {
+  // stateUpdate(name, status) {
   //   dispatch({
-  //     type: `STATE_UPDATE`,
-  //     payload: update,
+  //     type: `STRUCTURED_STATE_UPDATE`,
+  //     payload: {
+  //       name,
+  //       status,
+  //     },
   //   })
   // },
 
@@ -203,6 +226,41 @@ const reporter: Reporter = {
   warn: addMessage(`WARNING`),
   log: addMessage(`LOG`),
 
+  pendingActivity(id: string) {
+    dispatch({
+      type: `STRUCTURED_ACTIVITY_START`,
+      payload: {
+        id,
+        name: id,
+        type: `pending`,
+        state: `NOT_STARTED`,
+        dontShowSuccess: true,
+      },
+    })
+  },
+
+  completeActivity(id: string, state: string = `SUCCESS`) {
+    dispatch({
+      type: `STRUCTURED_ACTIVITY_END`,
+      payload: {
+        id,
+        state,
+        // elapsedTime: (duration / 1000).toFixed(3),
+      },
+    })
+
+    // dispatch({
+    //   type: `STRUCTURED_ACTIVITY_START`,
+    //   payload: {
+    //     id,
+    //     name: id,
+    //     type: `pending`,
+    //     state: `NOT_STARTED`,
+    //     dontShowSuccess: true,
+    //   },
+    // })
+  },
+
   /**
    * Time an activity.
    * @param {string} name - Name of activity.
@@ -213,8 +271,12 @@ const reporter: Reporter = {
     name: string,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    const { parentSpan, dontShowSuccess } = activityArgs
+    let { parentSpan, dontShowSuccess, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    if (!id) {
+      id = name
+    }
+
     const span = tracer.startSpan(name, spanArgs)
     let startTime = 0
 
@@ -223,6 +285,7 @@ const reporter: Reporter = {
         dispatch({
           type: `STRUCTURED_ACTIVITY_START`,
           payload: {
+            id,
             name,
             type: `spinner`,
             dontShowSuccess,
@@ -233,15 +296,16 @@ const reporter: Reporter = {
         dispatch({
           type: `STRUCTURED_ACTIVITY_UPDATE`,
           payload: {
+            id,
             name,
             status,
           },
         })
       },
-      end() {
+      end(success = true) {
         span.finish()
 
-        let activity = getActivity(name)
+        let activity = getActivity(id)
         if (activity) {
           const duration = getElapsedTimeMS(activity)
 
@@ -253,8 +317,8 @@ const reporter: Reporter = {
           dispatch({
             type: `STRUCTURED_ACTIVITY_END`,
             payload: {
-              ...activity,
-              name,
+              state: success ? `SUCCESS` : `FAILED`,
+              id,
               elapsedTime: (duration / 1000).toFixed(3),
             },
           })
@@ -278,10 +342,13 @@ const reporter: Reporter = {
     start = 0,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    const { parentSpan, dontShowSuccess } = activityArgs
+    let { parentSpan, dontShowSuccess, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
     let hasStarted = false
+    if (!id) {
+      id = name
+    }
 
     return {
       start: () => {
@@ -294,6 +361,7 @@ const reporter: Reporter = {
         dispatch({
           type: `STRUCTURED_ACTIVITY_START`,
           payload: {
+            id,
             name,
             type: `progress`,
             current: start,
@@ -306,7 +374,7 @@ const reporter: Reporter = {
         dispatch({
           type: `STRUCTURED_ACTIVITY_UPDATE`,
           payload: {
-            name,
+            id,
             status,
           },
         })
@@ -315,20 +383,20 @@ const reporter: Reporter = {
         dispatch({
           type: `STRUCTURED_ACTIVITY_TICK`,
           payload: {
-            name,
+            id,
           },
         })
       },
-      done: () => {
+      done: (success = true) => {
         span.finish()
-        let activity = getActivity(name)
+        let activity = getActivity(id)
         if (activity) {
           const duration = getElapsedTimeMS(activity)
           dispatch({
             type: `STRUCTURED_ACTIVITY_END`,
             payload: {
-              ...activity,
-              name,
+              state: success ? `SUCCESS` : `FAILED`,
+              id,
               elapsedTime: (duration / 1000).toFixed(3),
             },
           })
@@ -338,7 +406,7 @@ const reporter: Reporter = {
         dispatch({
           type: `STRUCTURED_ACTIVITY_UPDATE`,
           payload: {
-            name,
+            id,
             total: value,
           },
         })

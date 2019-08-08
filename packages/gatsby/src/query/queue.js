@@ -93,31 +93,30 @@ const pushJob = (queue, job) =>
  * they're all finished processing (or rejects if one or more jobs
  * fail)
  */
-const processBatch = async (queue, jobs) => {
+const processBatch = async (queue, jobs, activity) => {
   let numJobs = jobs.length
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  // console.log(`running queries`, { start: 0, total: numJobs })
 
-  const queryRunningActivity = report.createProgress(
-    `Running queries`,
-    numJobs,
-    0,
-    {
-      dontShowSuccess: true,
-    }
-  )
-  queryRunningActivity.start()
+  // const queryRunningActivity = report.createProgress(
+  //   label,
+  //   numJobs,
+  //   0,
+  //   activityOpts
+  // )
+  // queryRunningActivity.start()
 
   const runningJobs = jobs.map(job =>
-    pushJob(queue, job).then(() => {
-      queryRunningActivity.tick()
+    pushJob(queue, job).then(v => {
+      // console.log(`tick`)
+      activity.tick()
+      return v
     })
   )
   await Promise.all(runningJobs)
 
-  queryRunningActivity.done()
+  // queryRunningActivity.done()
 }
 
 module.exports = {

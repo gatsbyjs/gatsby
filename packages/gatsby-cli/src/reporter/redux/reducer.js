@@ -3,6 +3,7 @@ module.exports = (
     messages: [],
     activities: {},
     statefulMessages: [],
+    status: `IN_PROGRESS`,
   },
   action
 ) => {
@@ -17,46 +18,51 @@ module.exports = (
       messages: [...state.messages, action.payload],
     }
   } else if (action.type === `STRUCTURED_ACTIVITY_START`) {
-    const { name } = action.payload
+    const { id } = action.payload
     state = {
       ...state,
       activities: {
         ...state.activities,
-        [name]: {
+        [id]: {
+          state: `IN_PROGRESS`,
           status: ``,
           startTime: process.hrtime(),
           ...action.payload,
         },
       },
+      status: `IN_PROGRESS`,
     }
   } else if (action.type === `STRUCTURED_ACTIVITY_UPDATE`) {
-    const { name, ...rest } = action.payload
-    const activity = state.activities[name]
+    const { id, ...rest } = action.payload
+    const activity = state.activities[id]
 
     state = {
       ...state,
       activities: {
         ...state.activities,
-        [name]: {
+        [id]: {
           ...activity,
           ...rest,
         },
       },
     }
   } else if (action.type === `STRUCTURED_ACTIVITY_END`) {
-    const { name } = action.payload
-    const activity = state.activities[name]
+    const { id } = action.payload
+    const activity = state.activities[id]
     if (!activity) {
       return state
     }
 
     const activities = { ...state.activities }
-    delete activities[name]
+    activities[id] = {
+      ...activity,
+      state: action.payload.state || `SUCCESS`,
+    }
 
     let messages = state.messages
 
     if (!activity.dontShowSuccess) {
-      let text = name
+      let text = activity.name
       if (action.payload.status) {
         text += ` - ${action.payload.status}`
       }
@@ -65,28 +71,39 @@ module.exports = (
       }
 
       const successLog = {
-        level: `SUCCESS`,
+        level: action.payload.state || `SUCCESS`,
         timestamp: new Date().toJSON(),
         text,
       }
 
       messages = [...messages, successLog]
     }
-
     state = {
       ...state,
       activities,
       messages,
+      status: Object.keys(activities).reduce((acc, key) => {
+        const activity = activities[key]
+        if (
+          activity.state === `IN_PROGRESS` ||
+          activity.state === `NOT_STARTED`
+        ) {
+          return `IN_PROGRESS`
+        } else if (activity.state === `FAILED` && acc !== `IN_PROGRESS`) {
+          return `FAILED`
+        }
+        return acc
+      }, `SUCCESS`),
     }
   } else if (action.type === `STRUCTURED_ACTIVITY_TICK`) {
-    const { name } = action.payload
-    const activity = state.activities[name]
+    const { id } = action.payload
+    const activity = state.activities[id]
 
     state = {
       ...state,
       activities: {
         ...state.activities,
-        [name]: {
+        [id]: {
           ...activity,
           current: activity.current + 1,
         },
@@ -107,12 +124,6 @@ module.exports = (
         msg => msg.group !== action.payload.group
       ),
     }
-    // const statefulMessages = { ...state.statefulMessages }
-    // delete statefulMessages[action.payload.id]
-    // state = {
-    //   ...state,
-    //   statefulMessages,
-    // }
   }
 
   return state

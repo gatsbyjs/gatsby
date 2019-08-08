@@ -97,7 +97,7 @@ const handleQuery = (
 
 const updateStateAndRunQueries = isFirstRun => {
   const snapshot = getQueriesSnapshot()
-  return queryCompiler().then(queries => {
+  return queryCompiler(isFirstRun).then(queries => {
     // If there's an error while extracting queries, the queryCompiler returns false
     // or zero results.
     // Yeah, should probably be an error but don't feel like threading the error
@@ -239,6 +239,9 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`change`, path => {
+      // console.log(`change`)
+      report.pendingActivity(`query-extraction`)
+      // report.stateUpdate(`queryExtraction`, `NOT_STARTED`)
       debounceCompile()
     })
 

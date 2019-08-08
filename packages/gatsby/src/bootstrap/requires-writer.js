@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const { store, emitter } = require(`../redux/`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 import { joinPath } from "gatsby-core-utils"
 
 let lastHash = null
@@ -32,6 +33,9 @@ const createHash = (matchPaths, components) =>
 
 // Write out pages information.
 const writeAll = async state => {
+  // reporter.activityTimer()
+  // console.log(`on requiresWriter progress`)
+  // reporter.stateUpdate(`requiresWriter`, `IN_PROGRESS`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
@@ -41,7 +45,9 @@ const writeAll = async state => {
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    return Promise.resolve()
+    // reporter.stateUpdate(`requiresWriter`, `SUCCESS`)
+    // console.log(`on requiresWriter END1`)
+    return Promise.resolve(false)
   }
 
   lastHash = newHash
@@ -84,18 +90,38 @@ const preferDefault = m => m && m.default || m
       .then(() => fs.move(tmp, destination, { overwrite: true }))
   }
 
-  const result = await Promise.all([
+  // reporter.pendingActivity(`webpack-develop`)
+  // reporter.stateUpdate(`webpack`, `NOT_STARTED`)
+
+  await Promise.all([
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
     writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
   ])
 
-  return result
+  return true
 }
 
-const debouncedWriteAll = _.debounce(() => writeAll(store.getState()), 500, {
-  leading: true,
-})
+const debouncedWriteAll = _.debounce(
+  async () => {
+    const activity = reporter.activityTimer(`write out requires`, {
+      id: `requires-writer`,
+      dontShowSuccess: true,
+    })
+    activity.start()
+    const didRequiresChange = await writeAll(store.getState())
+    if (didRequiresChange) {
+      reporter.pendingActivity(`webpack-develop`)
+    }
+    activity.end()
+  },
+  500,
+  {
+    // using "leading" can cause double `writeAll` call - particularly
+    // when refreshing data using `/__refresh` hook.
+    leading: false,
+  }
+)
 
 /**
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
@@ -103,18 +129,30 @@ const debouncedWriteAll = _.debounce(() => writeAll(store.getState()), 500, {
  */
 const startListener = () => {
   emitter.on(`CREATE_PAGE`, () => {
+    // console.log(`on CREATE_PAGE`)
+    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
+    reporter.pendingActivity(`requires-writer`)
     debouncedWriteAll()
   })
 
   emitter.on(`CREATE_PAGE_END`, () => {
+    // console.log(`on CREATE_PAGE_END`)
+    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
+    reporter.pendingActivity(`requires-writer`)
     debouncedWriteAll()
   })
 
   emitter.on(`DELETE_PAGE`, () => {
+    // console.log(`on DELETE_PAGE`)
+    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
+    reporter.pendingActivity(`requires-writer`)
     debouncedWriteAll()
   })
 
   emitter.on(`DELETE_PAGE_BY_PATH`, () => {
+    // console.log(`on DELETE_PAGE_BY_PATH`)
+    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
+    reporter.pendingActivity(`requires-writer`)
     debouncedWriteAll()
   })
 }

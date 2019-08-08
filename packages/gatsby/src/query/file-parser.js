@@ -37,7 +37,7 @@ Perhaps the variable name has a typo?
 Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
   )
 
-async function parseToAst(filePath, fileStr) {
+async function parseToAst(filePath, fileStr, messages) {
   let ast
 
   // Preprocess and attempt to parse source; return an AST if we can, log an
@@ -53,7 +53,7 @@ async function parseToAst(filePath, fileStr) {
         ast = tmp
         break
       } catch (error) {
-        report.error(error)
+        // report.error(error)
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -61,7 +61,14 @@ async function parseToAst(filePath, fileStr) {
       }
     }
     if (ast === undefined) {
-      report.error(`Failed to parse preprocessed file ${filePath}`)
+      // report.error(`Failed to parse preprocessed file ${filePath}`)
+      messages.push({
+        level: `ERROR`,
+
+        context: {
+          sourceMessage: `Failed to parse preprocessed file ${filePath}`,
+        },
+      })
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: filePath,
       })
@@ -76,12 +83,23 @@ async function parseToAst(filePath, fileStr) {
         componentPath: filePath,
         error,
       })
-      report.error(
-        `There was a problem parsing "${filePath}"; any GraphQL ` +
-          `fragments or queries in this file were not processed. \n` +
-          `This may indicate a syntax error in the code, or it may be a file type ` +
-          `that Gatsby does not know how to parse.`
-      )
+      // report.error(
+      //   `There was a problem parsing "${filePath}"; any GraphQL ` +
+      //     `fragments or queries in this file were not processed. \n` +
+      //     `This may indicate a syntax error in the code, or it may be a file type ` +
+      //     `that Gatsby does not know how to parse.`
+      // )
+
+      messages.push({
+        level: `ERROR`,
+        context: {
+          sourceMessage:
+            `There was a problem parsing "${filePath}"; any GraphQL ` +
+            `fragments or queries in this file were not processed. \n` +
+            `This may indicate a syntax error in the code, or it may be a file type ` +
+            `that Gatsby does not know how to parse.`,
+        },
+      })
 
       return null
     }
@@ -97,9 +115,13 @@ const warnForGlobalTag = file =>
       file
   )
 
-async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
+async function findGraphQLTags(
+  file,
+  text,
+  messages
+): Promise<Array<DefinitionNode>> {
   return new Promise((resolve, reject) => {
-    parseToAst(file, text)
+    parseToAst(file, text, messages)
       .then(ast => {
         let queries = []
         if (!ast) {
@@ -318,12 +340,23 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 const cache = {}
 
 export default class FileParser {
-  async parseFile(file: string): Promise<?DocumentNode> {
+  async parseFile(file: string, messages): Promise<?DocumentNode> {
     let text
     try {
       text = await fs.readFile(file, `utf8`)
     } catch (err) {
-      report.error(`There was a problem reading the file: ${file}`, err)
+      messages.push({
+        level: `ERROR`,
+        // group: `query-extraction`,
+        text: context =>
+          `There was a problem reading the file: ${context.file}`,
+        context: {
+          file,
+        },
+        error: err,
+      })
+      // report.error(`There was a problem reading the file: ${file}`, err)
+
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: file,
       })
@@ -339,7 +372,8 @@ export default class FileParser {
 
     try {
       let astDefinitions =
-        cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
+        cache[hash] ||
+        (cache[hash] = await findGraphQLTags(file, text, messages))
 
       // If any AST definitions were extracted, report success.
       // This can mean there is none or there was a babel error when
@@ -357,10 +391,22 @@ export default class FileParser {
           }
         : null
     } catch (err) {
-      report.error(
-        `There was a problem parsing the GraphQL query in file: ${file}`,
-        err
-      )
+      messages.push({
+        level: `ERROR`,
+        // group: `query-extraction`,
+        text: context =>
+          `There was a problem parsing the GraphQL query in file: ${
+            context.file
+          }`,
+        context: {
+          file,
+        },
+        error: err,
+      })
+      // report.error(
+      //   `There was a problem parsing the GraphQL query in file: ${file}`,
+      //   err
+      // )
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: file,
       })
@@ -368,12 +414,15 @@ export default class FileParser {
     }
   }
 
-  async parseFiles(files: Array<string>): Promise<Map<string, DocumentNode>> {
+  async parseFiles(
+    files: Array<string>,
+    messages
+  ): Promise<Map<string, DocumentNode>> {
     const documents = new Map()
 
     return Promise.all(
       files.map(file =>
-        this.parseFile(file).then(doc => {
+        this.parseFile(file, messages).then(doc => {
           if (!doc) return
           documents.set(file, doc)
         })

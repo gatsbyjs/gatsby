@@ -40,6 +40,7 @@ const waitJobsFinished = () =>
   })
 
 module.exports = async function build(program: BuildArgs) {
+  report.pendingActivity(`build`)
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
 
@@ -56,18 +57,19 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
-  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+  // const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  // const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
 
-  let activity = report.activityTimer(`run static queries`, {
-    parentSpan: buildSpan,
-  })
-  activity.start()
-  await queryUtil.processStaticQueries(staticQueryIds, {
-    activity,
-    state: store.getState(),
-  })
-  activity.end()
+  // let activity = report.activityTimer(`run static queries`, {
+  //   parentSpan: buildSpan,
+  // })
+  // activity.start()
+  // await queryUtil.processStaticQueries(staticQueryIds, {
+  //   activity,
+  //   state: store.getState(),
+  // })
+  // activity.end()
+  const { pageQueryIds } = await queryUtil.initialProcessQueries()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -78,7 +80,7 @@ module.exports = async function build(program: BuildArgs) {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  activity = report.activityTimer(
+  let activity = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
@@ -119,10 +121,10 @@ module.exports = async function build(program: BuildArgs) {
     activity.end()
   }
 
-  activity = report.activityTimer(`run page queries`)
-  activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, { activity })
-  activity.end()
+  // activity = report.activityTimer(`run page queries`)
+  // activity.start()
+  // await queryUtil.processPageQueries(pageQueryIds, { activity })
+  // activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -170,4 +172,5 @@ module.exports = async function build(program: BuildArgs) {
   buildSpan.finish()
   await stopTracer()
   workerPool.end()
+  report.completeActivity(`build`)
 }

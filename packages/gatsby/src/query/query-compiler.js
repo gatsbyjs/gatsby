@@ -87,20 +87,50 @@ class Runner {
     this.schema = schema
   }
 
-  reportError(message) {
-    const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
-    if (process.env.gatsby_executing_command === `develop`) {
-      websocketManager.emitError(overlayErrorID, queryErrorMessage)
-      lastRunHadErrors = true
-    }
+  // reportError(message) {
+  //   const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
+  //   if (process.env.gatsby_executing_command === `develop`) {
+  //     websocketManager.emitError(overlayErrorID, queryErrorMessage)
+  //     lastRunHadErrors = true
+  //   }
+  // }
+
+  async compileAll(isFirstRun) {
+    // report.stateUpdate(`queryExtraction`, `IN_PROGRESS`)
+    const activity = report.activityTimer(`extract queries from components`, {
+      // parentSpan: bootstrapSpan,
+      id: `query-extraction`,
+      dontShowSuccess: !isFirstRun,
+    })
+    activity.start()
+    const messages = []
+
+    let nodes = await this.parseEverything(messages)
+    const results = await this.write(nodes, messages)
+
+    report.clearStatefulMessage({ group: `query-extraction` })
+
+    // console.log(messages)
+    messages.forEach(msg => {
+      report.statefulMessage({
+        ...msg,
+        group: `query-extraction`,
+        panicOnBuild: true,
+      })
+    })
+
+    // console.log('message count', messages.length)
+    activity.end(messages.length === 0)
+
+    // report.stateUpdate(
+    //   `queryExtraction`,
+    //   messages.length === 0 ? `SUCCESS` : `FAILED`
+    // )
+
+    return results
   }
 
-  async compileAll() {
-    let nodes = await this.parseEverything()
-    return await this.write(nodes)
-  }
-
-  async parseEverything() {
+  async parseEverything(messages) {
     const filesRegex = `*.+(t|j)s?(x)`
     // Pattern that will be appended to searched directories.
     // It will match any .js, .jsx, .ts, and .tsx files, that are not
@@ -148,10 +178,10 @@ class Runner {
 
     let parser = new FileParser()
 
-    return await parser.parseFiles(files)
+    return await parser.parseFiles(files, messages)
   }
 
-  async write(nodes: Map<string, DocumentNode>): Promise<Queries> {
+  async write(nodes: Map<string, DocumentNode>, messages): Promise<Queries> {
     const compiledNodes: Queries = new Map()
     const namePathMap = new Map()
     const nameDefMap = new Map()
@@ -165,8 +195,8 @@ class Runner {
       if (errors && errors.length) {
         const locationOfGraphQLDocInSourceFile = doc.definitions[0].templateLoc
 
-        report.panicOnBuild(
-          errors.map(error => {
+        messages.push(
+          ...errors.map(error => {
             const graphqlLocation = error.locations[0]
             // get location of error relative to soure file (not just graphql text)
             const location = {
@@ -181,11 +211,14 @@ class Runner {
                     : 0) + graphqlLocation.column,
               },
             }
-            return errorParser({ message: error.message, filePath, location })
+            return {
+              ...errorParser({ message: error.message, filePath, location }),
+              // panicOnBuild: true,
+            }
           })
         )
 
-        this.reportError(graphqlValidationError(errors, filePath))
+        // this.reportError(graphqlValidationError(errors, filePath))
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -242,12 +275,16 @@ class Runner {
       })
 
       const filePath = namePathMap.get(docName)
-      const structuredError = errorParser({ message, filePath })
-      report.panicOnBuild(structuredError)
+      // const structuredError = errorParser({ message, filePath })
+      messages.push({
+        ...errorParser({ message, filePath }),
+        // panicOnBuild: true,
+      })
+      // report.panicOnBuild(structuredError)
 
       // report error to browser
       // TODO: move browser error overlay reporting to reporter
-      this.reportError(formattedMessage)
+      // this.reportError(formattedMessage)
 
       return false
     }
@@ -274,13 +311,23 @@ class Runner {
       let filePath = namePathMap.get(name) || ``
       if (compiledNodes.has(filePath)) {
         let otherNode = compiledNodes.get(filePath)
-        this.reportError(
-          multipleRootQueriesError(
-            filePath,
-            nameDefMap.get(name),
-            otherNode && nameDefMap.get(otherNode.name)
-          )
+        const newE = multipleRootQueriesError(
+          filePath,
+          nameDefMap.get(name),
+          otherNode && nameDefMap.get(otherNode.name)
         )
+
+        messages.push({
+          level: `ERROR`,
+          error: newE,
+        })
+        // this.reportError(
+        //   multipleRootQueriesError(
+        //     filePath,
+        //     nameDefMap.get(name),
+        //     otherNode && nameDefMap.get(otherNode.name)
+        //   )
+        // )
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -364,7 +411,9 @@ class Runner {
 }
 export { Runner, resolveThemes }
 
-export default async function compile(): Promise<Map<string, RootQuery>> {
+export default async function compile(
+  isFirstRun
+): Promise<Map<string, RootQuery>> {
   // TODO: swap plugins to themes
   const { program, schema, themes, flattenedPlugins } = store.getState()
 
@@ -382,7 +431,7 @@ export default async function compile(): Promise<Map<string, RootQuery>> {
     schema
   )
 
-  const queries = await runner.compileAll()
+  const queries = await runner.compileAll(isFirstRun)
 
   return queries
 }

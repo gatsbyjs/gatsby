@@ -306,6 +306,11 @@ module.exports = async (api, args = {}, pluginSource) =>
       waitingForCasacadeToFinish.push(apiRunInstance)
     }
 
+    if (apisRunningById.size === 0) {
+      const { emitter } = require(`../redux`)
+      emitter.emit(`API_RUNNING_START`)
+    }
+
     apisRunningById.set(apiRunInstance.id, apiRunInstance)
     if (apisRunningByTraceId.has(apiRunInstance.traceId)) {
       const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)

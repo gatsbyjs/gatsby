@@ -2,10 +2,11 @@
 
 const _ = require(`lodash`)
 const Queue = require(`better-queue`)
-const convertHrtime = require(`convert-hrtime`)
+// const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
 const queryQueue = require(`./queue`)
 const { boundActionCreators } = require(`../redux/actions`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
@@ -146,22 +147,22 @@ const groupQueryIds = queryIds => {
   }
 }
 
-const reportStats = (queue, activity) => {
-  const startQueries = process.hrtime()
-  queue.on(`task_finish`, () => {
-    const stats = queue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
-  })
-}
+// const reportStats = (queue, activity) => {
+//   const startQueries = process.hrtime()
+//   queue.on(`task_finish`, () => {
+//     const stats = queue.getStats()
+//     activity.setStatus(
+//       `${stats.total}/${stats.peak} ${(
+//         stats.total / convertHrtime(process.hrtime(startQueries)).seconds
+//       ).toFixed(2)} queries/second`
+//     )
+//   })
+// }
 
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
-  reportStats(queue, activity)
-  await queryQueue.processBatch(queue, queryJobs)
+  // reportStats(queue, activity)
+  await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
 const createStaticQueryJob = (state, queryId) => {
@@ -176,12 +177,45 @@ const createStaticQueryJob = (state, queryId) => {
   }
 }
 
-const processStaticQueries = async (queryIds, { state, activity }) => {
-  state = state || store.getState()
-  await processQueries(
-    queryIds.map(id => createStaticQueryJob(state, id)),
-    activity
-  )
+// const processStaticQueries = async (queryIds, { state, activityOpts }) => {
+//   state = state || store.getState()
+//   await processQueries(
+//     queryIds.map(id => createStaticQueryJob(state, id)),
+//     activityOpts
+//   )
+// }
+
+const initialProcessQueries = async () => {
+  const state = store.getState()
+  const queryIds = calcInitialDirtyQueryIds(state)
+  const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
+
+  const queryJobs = [
+    ...staticQueryIds.map(id => createStaticQueryJob(state, id)),
+    ..._.filter(pageQueryIds.map(id => state.pages.get(id))).map(page =>
+      createPageQueryJob(state, page)
+    ),
+  ]
+
+  let activity
+  if (queryJobs.length) {
+    // console.log(`create progress`)
+    activity = report.createProgress(`run queries`, queryJobs.length, 0, {
+      id: `query-running`,
+    })
+    activity.start()
+  } else {
+    activity = {
+      done: () => {
+        report.completeActivity(`query-running`)
+      },
+      tick: () => {},
+    }
+  }
+
+  await processQueries(queryJobs, activity)
+  activity.done()
+  return { pageQueryIds }
 }
 
 const createPageQueryJob = (state, page) => {
@@ -200,18 +234,18 @@ const createPageQueryJob = (state, page) => {
   }
 }
 
-const processPageQueries = async (queryIds, { state, activity }) => {
-  state = state || store.getState()
-  // Make sure we filter out pages that don't exist. An example is
-  // /dev-404-page/, whose SitePage node is created via
-  // `internal-data-bridge`, but the actual page object is only
-  // created during `gatsby develop`.
-  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
-  await processQueries(
-    pages.map(page => createPageQueryJob(state, page)),
-    activity
-  )
-}
+// const processPageQueries = async (queryIds, { state, activityOpts }) => {
+//   state = state || store.getState()
+//   // Make sure we filter out pages that don't exist. An example is
+//   // /dev-404-page/, whose SitePage node is created via
+//   // `internal-data-bridge`, but the actual page object is only
+//   // created during `gatsby develop`.
+//   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
+//   await processQueries(
+//     pages.map(page => createPageQueryJob(state, page)),
+//     activityOpts
+//   )
+// }
 
 /////////////////////////////////////////////////////////////////////
 // Listener for gatsby develop
@@ -252,12 +286,56 @@ const runQueuedQueries = () => {
 const startListening = queue => {
   // We use a queue to process batches of queries so that they are
   // processed consecutively
-  listenerQueue = new Queue((queryJobs, callback) =>
+  listenerQueue = new Queue((queryJobs, callback) => {
+    let activity
+
+    if (queryJobs.length) {
+      // console.log(`create progress`)
+      activity = report.createProgress(`run queries`, queryJobs.length, 0, {
+        id: `query-running`,
+        dontShowSuccess: true,
+      })
+      activity.start()
+    } else {
+      // console.log(`just complete activity`)
+      activity = {
+        done: () => {
+          // console.log(`completed activity`)
+          report.completeActivity(`query-running`)
+        },
+        tick: () => {},
+      }
+    }
+    // const activity = report.createProgress(`run queries`, queryJobs.length, 0, {
+    //   id: `query-running`,
+    //   dontShowSuccess: true,
+    // })
+    // activity.start()
+
+    const onFinish = (...arg) => {
+      // console.log(`onFinish`, args)
+      activity.done()
+      return callback(...arg)
+    }
+
     queryQueue
-      .processBatch(queue, queryJobs)
-      .then(() => callback(null))
-      .catch(callback)
-  )
+      .processBatch(queue, queryJobs, activity)
+      .then(() => onFinish(null))
+      .catch(onFinish)
+  })
+
+  // listenerQueue.on(`task_queued`, () => {
+  //   // report.stateUpdate(`queryRunning`, `IN_PROGRESS`)
+  // })
+
+  // listenerQueue.on(`batch_finish`, () => {
+  //   // report.stateUpdate(`queryRunning`, `SUCCESS`)
+  // })
+
+  emitter.on(`API_RUNNING_START`, () => {
+    report.pendingActivity(`query-running`)
+    // report.stateUpdate(`queryRunning`, `NOT_STARTED`)
+  })
 
   emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
 }
@@ -288,8 +366,9 @@ const enqueueExtractedPageComponent = componentPath => {
 module.exports = {
   calcInitialDirtyQueryIds,
   groupQueryIds,
-  processStaticQueries,
-  processPageQueries,
+  initialProcessQueries,
+  // processStaticQueries,
+  // processPageQueries,
   startListening,
   runQueuedQueries,
   enqueueExtractedQueryId,

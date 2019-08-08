@@ -115,8 +115,11 @@ async function startServer(program) {
 
   indexHTMLActivity.end()
 
+  // report.stateUpdate(`webpack`, `IN_PROGRESS`)
+
   const webpackActivity = report.activityTimer(`Building development bundle`, {
     dontShowSuccess: true,
+    id: `webpack-develop`,
   })
   webpackActivity.start()
 
@@ -332,6 +335,7 @@ async function startServer(program) {
 
 module.exports = async (program: any) => {
   initTracer(program.openTracingConfigFile)
+  report.pendingActivity(`webpack-develop`)
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -370,21 +374,33 @@ module.exports = async (program: any) => {
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
-  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+  // const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  // const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
 
-  let activity = report.activityTimer(`run static queries`)
-  activity.start()
-  await queryUtil.processStaticQueries(staticQueryIds, {
-    activity,
-    state: store.getState(),
-  })
-  activity.end()
+  // report.stateUpdate(`queryRunning`, `IN_PROGRESS`)
+  // // let activity = report.activityTimer(`run static queries`)
+  // // activity.start()
+  // await queryUtil.processStaticQueries(staticQueryIds, {
+  //   activityOpts: {
+  //     label: `run static queries`,
+  //   },
+  //   state: store.getState(),
+  // })
+  // // activity.end()
 
-  activity = report.activityTimer(`run page queries`)
-  activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, { activity })
-  activity.end()
+  // // activity = report.activityTimer(`run page queries`)
+  // // activity.start()
+  // await queryUtil.processPageQueries(pageQueryIds, {
+  //   activityOpts: {
+  //     label: `run page queries`,
+  //   },
+  // })
+
+  // report.stateUpdate(`queryRunning`, `SUCCESS`)
+  await queryUtil.initialProcessQueries()
+  // activity = report.activityTimer(`run page queries`)
+
+  // activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -542,15 +558,18 @@ module.exports = async (program: any) => {
   // })
 
   compiler.hooks.watchRun.tapAsync(`log compiling2`, function(args, done) {
+    // report.stateUpdate(`webpack`, `IN_PROGRESS`)
+
     if (webpackActivity) {
       webpackActivity.end()
       // webpackActivity = null
     }
     webpackActivity = report.activityTimer(`Re-building development bundle`, {
       dontShowSuccess: true,
+      id: `webpack-develop`,
     })
     webpackActivity.start()
-    // console.log(`set watchrun`)
+
     done()
   })
 
@@ -569,13 +588,8 @@ module.exports = async (program: any) => {
   // Whether or not you have warnings or errors, you will get this event.
   compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
     stats,
-    done,
-    ...args
+    done
   ) {
-    if (webpackActivity) {
-      webpackActivity.end()
-      webpackActivity = null
-    }
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
@@ -587,10 +601,8 @@ module.exports = async (program: any) => {
     )
     const isSuccessful = !messages.errors.length
 
-    // report.stateUpdate({
-    //   id: `webpack`,
-    //   status: isSuccessful ? `success` : `error`,
-    // })
+    // report.clearStatefulMessage({ group: `webpack-errors` })
+    // report.stateUpdate(`webpack`, isSuccessful ? `SUCCESS` : `FAILED`)
 
     // TODO: Would be nice to copy (at least some) of friendly-errors-webpack-plugin
     // error/warning enhancing
@@ -648,6 +660,11 @@ module.exports = async (program: any) => {
     }
 
     isFirstCompile = false
+
+    if (webpackActivity) {
+      webpackActivity.end(isSuccessful)
+      webpackActivity = null
+    }
 
     // If errors exist, only show errors.
     // if (messages.errors.length) {

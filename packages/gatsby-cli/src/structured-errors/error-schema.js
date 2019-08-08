@@ -23,6 +23,7 @@ const errorSchema = Joi.object().keys({
   error: Joi.object({}).unknown(),
   context: Joi.object({}).unknown(),
   group: Joi.string(),
+  panicOnBuild: Joi.boolean(),
 })
 
 module.exports = errorSchema
