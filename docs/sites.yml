@@ -6861,6 +6861,19 @@
   built_by: 97thjingba
   built_by_url: https://github.com/97thjingba
   featured: false
+- title: CEO amp
+  main_url: https://www.ceoamp.com
+  url: https://www.ceoamp.com
+  description: >
+    CEO amp is an executive training programme to amplify a CEO's voice in the media. This site was built with Gatsby v2, Styled-Components, TypeScript and React Spring.
+  categories:
+    - Consulting
+    - Entrepreneurship
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+  featured: false
 - title: QuantumBlack
   main_url: https://www.quantumblack.com/
   url: https://www.quantumblack.com/
