@@ -22,6 +22,8 @@ const overwriteWebpackCompilationHash = newHash => {
   glob
     .sync(path.join(__dirname, `../../public/**/*.html`))
     .forEach(filename => {
+      // `page-data/404.html` matches the glob above but is a directory
+      // (containing `page-data.json`), so ignore this and similar dirs
       if (!filename.match(/\/page-data\/[^/.]+\.html/))
         replaceHtmlCompilationHash(filename, newHash)
     })
