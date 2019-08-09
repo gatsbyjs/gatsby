@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.27...gatsby-cli@2.7.28) (2019-08-06)
+
+### Features
+
+- **gatsby-cli:** Added support and docs for NO_COLOR env variable ([#16372](https://github.com/gatsbyjs/gatsby/issues/16372)) ([ccebe17](https://github.com/gatsbyjs/gatsby/commit/ccebe17)), closes [#16324](https://github.com/gatsbyjs/gatsby/issues/16324)
+
 ## [2.7.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.26...gatsby-cli@2.7.27) (2019-08-05)
 
 **Note:** Version bump only for package gatsby-cli
