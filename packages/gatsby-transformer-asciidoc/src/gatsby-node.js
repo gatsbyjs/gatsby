@@ -25,6 +25,14 @@ async function onCreateNode(
     return
   }
 
+  // register custom converter if given
+  if (pluginOptions.converterFactory) {
+    asciidoc.ConverterFactory.register(
+      new pluginOptions.converterFactory(asciidoc),
+      [`html5`]
+    )
+  }
+
   // changes the incoming imagesdir option to take the
   const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix)
 

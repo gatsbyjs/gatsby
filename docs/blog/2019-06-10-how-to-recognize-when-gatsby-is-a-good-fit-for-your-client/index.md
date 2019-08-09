@@ -4,8 +4,7 @@ date: 2019-06-10
 author: Justin Emond
 excerpt: "If a client is ready to replace their tech stack, addressing their needs and using a use case is key to determining if Gatsby is a good fit as a replacement."
 tags:
-  - developers
-  - tech stack
+  - migration
   - wordpress
 ---
 
@@ -43,7 +42,7 @@ Gatsby is a bleeding-edge approach to solving problems, and it’s pretty differ
 Mobile websites that take [more than 3 seconds to load have a 53% bounce rate](https://www.thinkwithgoogle.com/marketing-resources/data-measurement/mobile-page-speed-new-industry-benchmarks/), meaning that you lose more than half of your visitors because they would rather try to restart their search than continue waiting for your site. In the ecommerce domain, some estimates say you lose up to [1% of revenue for every 100ms delay](https://www.section.io/blog/page-load-time-bounce-rate/) in page load time. When performant technologies like Gatsby become more common, those numbers are going to become more severe.
 
 <Pullquote>
-There is fast (which every site should be) and then there is Gatsby-fast.
+  There is fast (which every site should be) and then there is Gatsby-fast.
 </Pullquote>
 
 Every site needs to be performant. There isn’t a site out there where slow response times won’t negatively impact user engagement, conversion, and often, the bottom line. But remember, there is fast (which every site should be) and then there is Gatsby-fast. Companies that migrate to Gatsby will find their site is [between three and 10 times faster](https://www.gatsbyjs.com/guides/why-are-gatsby-sites-fast/). Indeed, the speed of a Gatsby-powered front end resembles more of the instantaneous feel of native mobile apps.

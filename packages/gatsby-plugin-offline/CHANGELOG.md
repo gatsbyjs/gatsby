@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.4...gatsby-plugin-offline@2.2.5) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Change navigation handler logic ([#13502](https://github.com/gatsbyjs/gatsby/issues/13502)) ([504b077](https://github.com/gatsbyjs/gatsby/commit/504b077))
+
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.3...gatsby-plugin-offline@2.2.4) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-plugin-offline

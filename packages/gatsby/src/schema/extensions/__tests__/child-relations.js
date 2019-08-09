@@ -849,6 +849,17 @@ describe(`Define parent-child relationships with field extensions`, () => {
         `Check the type definition of \`NextGeneration\`.`
     )
   })
+
+  it(`handle non-existing parent type`, async () => {
+    dispatch(
+      createTypes(`
+        type Child implements Node @childOf(types: ["NonExistent"]) {
+          name: String
+        }
+      `)
+    )
+    await expect(buildSchema()).resolves.toEqual(expect.any(Object))
+  })
 })
 
 const buildSchema = async () => {

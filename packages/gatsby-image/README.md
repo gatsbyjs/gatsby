@@ -361,14 +361,14 @@ export default ({ data }) => {
 
 export const query = graphql`
   query {
-    mobileImage(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
+    mobileImage: file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         fluid(maxWidth: 1000, quality: 100) {
           ...GatsbyImageSharpFluid
         }
       }
     }
-    desktopImage(
+    desktopImage: file(
       relativePath: { eq: "blog/avatars/kyle-mathews-desktop.jpeg" }
     ) {
       childImageSharp {
