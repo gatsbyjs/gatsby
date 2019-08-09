@@ -66,6 +66,9 @@ Array [
     },
     "type": "object",
   },
+  Object {
+    "name": "ReactNode",
+  },
 ]
 `;
 
