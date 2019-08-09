@@ -193,11 +193,28 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
     it(`should add flow type info`, async () => {
       await run(node)
-      const created = createdNodes.find(f => !!f.flowType)
 
-      expect(created.flowType).toEqual({
-        name: `number`,
+      const created = createdNodes.map(f => f.flowType).filter(Boolean)
+
+      expect(created).toMatchSnapshot(`flow types`)
+    })
+  })
+
+  describe(`tsTypes`, () => {
+    beforeEach(() => {
+      node.__fixture = `typescript.tsx`
+    })
+
+    it(`should add TS type info`, async () => {
+      await run(node, {
+        parserOpts: {
+          plugins: [`jsx`, `typescript`, `classProperties`],
+        },
       })
+
+      const created = createdNodes.map(f => f.tsType).filter(Boolean)
+
+      expect(created).toMatchSnapshot(`typescript types`)
     })
   })
 })
