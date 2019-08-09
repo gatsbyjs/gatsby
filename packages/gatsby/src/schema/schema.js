@@ -925,7 +925,7 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       },
       resolve: findManyPaginated(typeName),
     },
-  }).makeFieldNonNull([queryName, queryNamePlural])
+  }).makeFieldNonNull([queryNamePlural])
 }
 
 const parseTypes = ({
