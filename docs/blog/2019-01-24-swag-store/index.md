@@ -3,7 +3,7 @@ title: Gatsby Swag Store Case Study
 date: 2019-01-24
 author: Marisa Morby
 tags:
-  - swag
+  - community
 ---
 
 Gatsby is a React-based site generator that creates some of the fastest websites you’ve ever seen. Go ahead and blink—I dare you! It’s a framework that not only helps people create super fast websites, but it’s also a great equalizer of the web. Think about it: if you’re in an area that has 3G internet, many sites can take about 15 seconds to load, if they even load at all. Thanks to Gatsby’s performance-first architecture, the same site can be on-screen in less than 3 seconds. So Gatsby can really bring the information to everyone.
@@ -38,7 +38,20 @@ We also saw that people were excited about:
 
 - Stickers
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">So... I ordered custom nail wraps for <a href="https://twitter.com/FormidableLabs?ref_src=twsrc%5Etfw">@FormidableLabs</a> swag. They came in the mail today and I love them so much. <a href="https://t.co/h0B8rOqEHs">pic.twitter.com/h0B8rOqEHs</a></p>&mdash; Becca Lee (@the_becca_lee) <a href="https://twitter.com/the_becca_lee/status/1009920104019083264?ref_src=twsrc%5Etfw">June 21, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    So... I ordered custom nail wraps for{" "}
+    <a href="https://twitter.com/FormidableLabs?ref_src=twsrc%5Etfw">
+      @FormidableLabs
+    </a>{" "}
+    swag. They came in the mail today and I love them so much.{" "}
+    <a href="https://t.co/h0B8rOqEHs">pic.twitter.com/h0B8rOqEHs</a>
+  </p>
+  &mdash; Becca Lee (@the_becca_lee){" "}
+  <a href="https://twitter.com/the_becca_lee/status/1009920104019083264?ref_src=twsrc%5Etfw">
+    June 21, 2018
+  </a>
+</blockquote>
 
 Since we had so many things to choose from, we needed something lightweight as a trial run. We decided on shirts because we already had the design for those. We also got socks for people (like me) who always find off the rack shirts impossible to wear and look good. And of course we got some stickers so that we could wallpaper our laptops with Gatsby.
 
@@ -256,11 +269,33 @@ Setting up a mostly automated process for swag gave us the best of both worlds, 
 
 It also meant that we got to see pictures like this:
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for the t-shirt! If there are any developers out there that haven’t tried out Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a></p>&mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    Thanks{" "}
+    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for
+    the t-shirt! If there are any developers out there that haven’t tried out
+    Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s
+    awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a>
+  </p>
+  &mdash; Ryan Wiemer (@ryanwiemer){" "}
+  <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">
+    July 25, 2018
+  </a>
+</blockquote>
 
 And this:
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/jlengstorf?ref_src=twsrc%5Etfw">@jlengstorf</a> You have seen pictures of the Gatsby socks with dogs, well, meet rayman! 🧦 🎉 <a href="https://t.co/kFhAA6SsfV">pic.twitter.com/kFhAA6SsfV</a></p>&mdash; Sara Vieira (@NikkitaFTW) <a href="https://twitter.com/NikkitaFTW/status/1024332058125107200?ref_src=twsrc%5Etfw">July 31, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    <a href="https://twitter.com/jlengstorf?ref_src=twsrc%5Etfw">@jlengstorf</a>{" "}
+    You have seen pictures of the Gatsby socks with dogs, well, meet rayman! 🧦
+    🎉 <a href="https://t.co/kFhAA6SsfV">pic.twitter.com/kFhAA6SsfV</a>
+  </p>
+  &mdash; Sara Vieira (@NikkitaFTW){" "}
+  <a href="https://twitter.com/NikkitaFTW/status/1024332058125107200?ref_src=twsrc%5Etfw">
+    July 31, 2018
+  </a>
+</blockquote>
 
 Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com/)!
 

@@ -4,7 +4,8 @@ date: 2019-01-30
 author: Linda Watkins
 tags:
   - ecommerce
-  - case study
+  - case-studies
+  - marketing
 image: "./images/flamingo.png"
 showImageInArticle: true
 ---

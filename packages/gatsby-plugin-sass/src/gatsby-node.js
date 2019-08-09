@@ -27,12 +27,6 @@ exports.onCreateWebpackConfig = (
           sassLoader,
         ],
   }
-  if (useResolveUrlLoader && !isSSR) {
-    sassRule.use.splice(-1, 0, {
-      loader: `resolve-url-loader`,
-      options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
-    })
-  }
   const sassRuleModules = {
     test: /\.module\.s(a|c)ss$/,
     use: [
@@ -41,6 +35,16 @@ exports.onCreateWebpackConfig = (
       loaders.postcss({ plugins: postCssPlugins }),
       sassLoader,
     ].filter(Boolean),
+  }
+  if (useResolveUrlLoader && !isSSR) {
+    sassRule.use.splice(-1, 0, {
+      loader: `resolve-url-loader`,
+      options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
+    })
+    sassRuleModules.use.splice(-1, 0, {
+      loader: `resolve-url-loader`,
+      options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
+    })
   }
 
   let configRules = []

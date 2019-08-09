@@ -22,6 +22,9 @@ module.exports = Machine(
       NEW_PAGE_CREATED: {
         actions: `setPage`,
       },
+      PAGE_CONTEXT_MODIFIED: {
+        actions: `rerunPageQuery`,
+      },
       QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
       QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
     },
@@ -76,6 +79,14 @@ module.exports = Machine(
       isNotBootstrapping: context => !context.isInBootstrap,
     },
     actions: {
+      rerunPageQuery: (_ctx, event) => {
+        const queryUtil = require(`../../query`)
+        // Wait a bit as calling this function immediately triggers
+        // an Action call which Redux squawks about.
+        setTimeout(() => {
+          queryUtil.enqueueExtractedQueryId(event.path)
+        }, 0)
+      },
       runPageComponentQueries: (context, event) => {
         const queryUtil = require(`../../query`)
         // Wait a bit as calling this function immediately triggers
@@ -105,7 +116,7 @@ module.exports = Machine(
                 queryUtil.runQueuedQueries(event.path)
               }
             }, 0)
-            ctx.pages.push(event.path)
+            ctx.pages.add(event.path)
             return ctx.pages
           } else {
             return ctx.pages
@@ -113,7 +124,10 @@ module.exports = Machine(
         },
       }),
       deletePage: assign({
-        pages: (ctx, event) => ctx.pages.filter(p => p !== event.page.path),
+        pages: (ctx, event) => {
+          ctx.pages.delete(event.page.path)
+          return ctx.pages
+        },
       }),
       setBootstrapFinished: assign({
         isInBootstrap: false,

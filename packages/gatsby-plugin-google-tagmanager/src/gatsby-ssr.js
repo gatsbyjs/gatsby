@@ -1,21 +1,21 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
-const generateGTM = ({ id, environmentParamStr }) => stripIndent`
+const generateGTM = ({ id, environmentParamStr, dataLayerName }) => stripIndent`
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer', '${id}');`
+  })(window,document,'script','${dataLayerName}', '${id}');`
 
 const generateGTMIframe = ({ id, environmentParamStr }) =>
   oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden"></iframe>`
 
-const generateDefaultDataLayer = (dataLayer, reporter) => {
-  let result = `window.dataLayer = window.dataLayer || [];`
+const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
+  let result = `window.${dataLayerName} = window.${dataLayerName} || [];`
 
   if (dataLayer.type === `function`) {
-    result += `window.dataLayer.push((${dataLayer.value})());`
+    result += `window.${dataLayerName}.push((${dataLayer.value})());`
   } else {
     if (dataLayer.type !== `object` || dataLayer.value.constructor !== Object) {
       reporter.panic(
@@ -23,7 +23,9 @@ const generateDefaultDataLayer = (dataLayer, reporter) => {
       )
     }
 
-    result += `window.dataLayer.push(${JSON.stringify(dataLayer.value)});`
+    result += `window.${dataLayerName}.push(${JSON.stringify(
+      dataLayer.value
+    )});`
   }
 
   return stripIndent`${result}`
@@ -31,7 +33,14 @@ const generateDefaultDataLayer = (dataLayer, reporter) => {
 
 exports.onRenderBody = (
   { setHeadComponents, setPreBodyComponents, reporter },
-  { id, includeInDevelopment = false, gtmAuth, gtmPreview, defaultDataLayer }
+  {
+    id,
+    includeInDevelopment = false,
+    gtmAuth,
+    gtmPreview,
+    defaultDataLayer,
+    dataLayerName = `dataLayer`,
+  }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     const environmentParamStr =
@@ -45,7 +54,8 @@ exports.onRenderBody = (
     if (defaultDataLayer) {
       defaultDataLayerCode = generateDefaultDataLayer(
         defaultDataLayer,
-        reporter
+        reporter,
+        dataLayerName
       )
     }
 
@@ -55,7 +65,7 @@ exports.onRenderBody = (
         dangerouslySetInnerHTML={{
           __html: oneLine`
             ${defaultDataLayerCode}
-            ${generateGTM({ id, environmentParamStr })}`,
+            ${generateGTM({ id, environmentParamStr, dataLayerName })}`,
         }}
       />,
     ])
