@@ -6,6 +6,7 @@ excerpt: "Build a full-featured Gatsby website one time, and apply it to multipl
 tags:
   - themes
   - mdx
+  - developer-experience
 ---
 
 Gatsby is a great tool for building static websites, and offers a lot of value when building pages based on a set of Markdown files. This makes it an ideal partner for building documentation websites, which are typically built statically, and updated by writing Markdown.
@@ -28,7 +29,7 @@ In this blog post, I’m going to talk about some of our favorite parts about us
 
 ## Versioning with `gatsby-source-git`
 
-We were able to implement versioned docs by taking advantage of the way that theme configuration works. Normally, a website’s `gatsby-config.js` file would export a JavaScript object, but Themes can include a `gastby-config.js` that exports a function that takes options passed to it by the theme **consumer**, and returns a Gatsby configuration object. You can see how we use this pattern in [our theme’s `gatsby-config.js`](https://github.com/apollographql/gatsby-theme-apollo/blob/master/packages/gatsby-theme-apollo-docs/gatsby-config.js).
+We were able to implement versioned docs by taking advantage of the way that theme configuration works. Normally, a website’s `gatsby-config.js` file would export a JavaScript object, but Themes can include a `gatsby-config.js` that exports a function that takes options passed to it by the theme **consumer**, and returns a Gatsby configuration object. You can see how we use this pattern in [our theme’s `gatsby-config.js`](https://github.com/apollographql/gatsby-theme-apollo/blob/master/packages/gatsby-theme-apollo-docs/gatsby-config.js).
 
 The Apollo docs theme accepts a mapping of version numbers to git branches, which it passes along to the `gatsby-source-git` plugin. A theme consumer can specify minimal configuration, and the theme takes care of creating pages and facilitating navigation between versions.
 
