@@ -6901,8 +6901,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Daily Hacker News
-  url: https://dailyhn.com/
-  main_url: https://dailyhn.com/
+  url: https://dailyhn.com
+  main_url: https://dailyhn.com
   description: >
     Daily Hacker News presents the top five stories from Hacker News daily.
   categories:
