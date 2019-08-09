@@ -10,10 +10,11 @@ const { link, fileByPath } = require(`../resolvers`)
 const { getDateResolver } = require(`../types/date`)
 
 import type { GraphQLFieldConfigArgumentMap, GraphQLFieldConfig } from "graphql"
-import type { ComposeFieldConfig } from "graphql-compose"
+import type { ComposeFieldConfig, ComposeOutputType } from "graphql-compose"
 
 export interface GraphQLFieldExtensionDefinition {
   name: string;
+  type?: ComposeOutputType;
   args?: GraphQLFieldConfigArgumentMap;
   extend(
     args: GraphQLFieldConfigArgumentMap,
@@ -174,7 +175,11 @@ const toDirectives = ({
 }) =>
   Object.keys(extensions).map(name => {
     const extension = extensions[name]
-    const { args, description, locations } = extension
+    const { args, description, locations, type } = extension
+    // Allow field extensions to register a return type
+    if (type) {
+      schemaComposer.createTC(type)
+    }
     // Support the `graphql-compose` style of directly providing the field type as string
     const normalizedArgs = schemaComposer.typeMapper.convertArgConfigMap(args)
     return new GraphQLDirective({
