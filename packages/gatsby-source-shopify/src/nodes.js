@@ -3,32 +3,21 @@ import { camelCase } from "lodash/fp"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
-// Node prefix
-const TYPE_PREFIX = `Shopify`
+import {
+  TYPE_PREFIX,
+  ARTICLE,
+  BLOG,
+  COLLECTION,
+  COMMENT,
+  PRODUCT,
+  PRODUCT_OPTION,
+  PRODUCT_VARIANT,
+  PRODUCT_METAFIELD,
+  SHOP_POLICY,
+  PRODUCT_TYPE,
+  PAGE,
+} from "./constants"
 
-// Node types
-export const ARTICLE = `Article`
-export const BLOG = `Blog`
-export const COLLECTION = `Collection`
-export const COMMENT = `Comment`
-export const PRODUCT = `Product`
-export const PRODUCT_OPTION = `ProductOption`
-export const PRODUCT_VARIANT = `ProductVariant`
-export const PRODUCT_METAFIELD = `ProductMetafield`
-export const SHOP_POLICY = `ShopPolicy`
-export const PRODUCT_TYPE = `ProductType`
-export const PAGE = `Page`
-export const SHOP = `shop`
-export const CONTENT = `content`
-
-export const NODE_TO_ENDPOINT_MAPPING = {
-  [ARTICLE]: `articles`,
-  [BLOG]: `blogs`,
-  [COLLECTION]: `collections`,
-  [PRODUCT]: `products`,
-  [PRODUCT_TYPE]: `productTypes`,
-  [PAGE]: `pages`,
-}
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
