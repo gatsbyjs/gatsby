@@ -2,7 +2,7 @@
 title: My search for the perfect universal JavaScript framework
 date: 2017-10-29
 author: "Tal Bereznitskey"
-tags: ["react", "ssr", "static"]
+tags: ["react", "ssr"]
 ---
 
 It was 2010 when [Backbone.js](http://backbonejs.org) came out. Finally I could
@@ -60,7 +60,7 @@ similar and supports both SSR for dynamic content and exporting to static pages.
 And don't forget [Netlify](https://www.netlify.com) who is doing an amazing job
 at building and hosting static websites.
 
-It is so much easier and fun to code for the web today. I would haved saved a
+It is so much easier and fun to code for the web today. I would have saved a
 lot of development/devops hours at my previous startup just by using Gatsby. And
 the most fun fact about Gatsby is these aren’t modern ideas at all - it's just
 static websites done right.

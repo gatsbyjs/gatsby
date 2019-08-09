@@ -78,7 +78,7 @@ describe(`Babelrc actions/reducer`, () => {
     const fakeResolver = moduleName => `/path/to/module/${moduleName}`
     const babel = { createConfigItem: jest.fn() }
 
-    prepareOptions(babel, fakeResolver)
+    prepareOptions(babel, { stage: `test` }, fakeResolver)
 
     expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
   })

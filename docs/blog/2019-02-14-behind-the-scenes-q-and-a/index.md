@@ -3,8 +3,6 @@ title: "Behind the Scenes Q & A: What Makes Gatsby Great Webinar"
 date: 2019-02-14
 author: Linda Watkins
 tags:
-  - webinar
-  - q&a
   - performance
 image: "./images/what-makes-gatsby-great.png"
 showImageInArticle: true

@@ -4,9 +4,11 @@ jest.mock(`fs`, () => {
   }
 })
 
-jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
-  jest.fn(() => `contentDigest`)
-)
+jest.mock(`gatsby-core-utils`, () => {
+  return {
+    createContentDigest: jest.fn(() => `contentDigest`),
+  }
+})
 
 const { onRenderBody } = require(`../gatsby-ssr`)
 
