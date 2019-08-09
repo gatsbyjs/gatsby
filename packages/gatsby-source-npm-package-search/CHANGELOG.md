@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.2...gatsby-source-npm-package-search@2.1.3) (2019-08-06)
+
+### Bug Fixes
+
+- **www:** fallback to github & unpkg to get README.md ([#16322](https://github.com/gatsbyjs/gatsby/issues/16322)) ([f38b40d](https://github.com/gatsbyjs/gatsby/commit/f38b40d))
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.1...gatsby-source-npm-package-search@2.1.2) (2019-07-12)
 
 **Note:** Version bump only for package gatsby-source-npm-package-search

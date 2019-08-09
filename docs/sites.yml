@@ -6830,3 +6830,104 @@
   built_by: CloudDog
   built_by_url: https://clouddog.com.br
   featured: false
+- title: AntdSite
+  main_url: https://antdsite.yvescoding.org
+  url: https://antdsite.yvescoding.org
+  description: >-
+    A static docs generator based on Ant Design and GatsbyJs.
+  categories:
+    - Documentation
+  built_by: Yves Wang
+  built_by_url: https://antdsite.yvescoding.org
+- title: Fourpost
+  url: https://www.fourpost.com
+  main_url: https://www.fourpost.com
+  description: >
+    Fourpost is a shopping destination for today’s family that combines the best brands and experiences under one roof.
+  categories:
+    - Retail
+    - Marketing
+  built_by: Fourpost
+  built_by_url: https://github.com/fourpost
+  featured: false
+- title: ReactStudy Blog
+  url: https://elated-lewin-51cf0d.netlify.com
+  main_url: https://elated-lewin-51cf0d.netlify.com
+  description: >
+    Belong to your own blog by gatsby
+  categories:
+    - Blog
+  built_by: 97thjingba
+  built_by_url: https://github.com/97thjingba
+  featured: false
+- title: George
+  main_url: https://kind-mestorf-5a2bc0.netlify.com
+  url: https://kind-mestorf-5a2bc0.netlify.com
+  description: >
+    shiny new web built with Gatsby
+  categories:
+    - Blog
+    - Portfolio
+    - Gallery
+    - Landing Page
+    - Design
+    - Web Development
+    - Open Source
+    - Science
+  built_by: George Davituri
+  featured: false
+
+- title: CEO amp
+  main_url: https://www.ceoamp.com
+  url: https://www.ceoamp.com
+  description: >
+    CEO amp is an executive training programme to amplify a CEO's voice in the media. This site was built with Gatsby v2, Styled-Components, TypeScript and React Spring.
+  categories:
+    - Consulting
+    - Entrepreneurship
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+  featured: false
+- title: QuantumBlack
+  main_url: https://www.quantumblack.com/
+  url: https://www.quantumblack.com/
+  description: >
+    We help companies use data to make distinctive, sustainable and significant improvements to their performance.
+  categories:
+    - Technology
+    - Consulting
+    - Data
+    - Design
+  built_by: Richard Westenra
+  built_by_url: https://www.richardwestenra.com/
+  featured: false
+- title: Coffeeshop Creative
+  url: https://www.coffeeshopcreative.ca
+  main_url: https://www.coffeeshopcreative.ca
+  description: >
+    Marketing site for a Toronto web design and videography studio.
+  categories:
+    - Marketing
+    - Agency
+    - Design
+    - Video
+    - Web Development
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: Daily Hacker News
+  url: https://dailyhn.com
+  main_url: https://dailyhn.com
+  description: >
+    Daily Hacker News presents the top five stories from Hacker News daily.
+  categories:
+    - Entertainment
+    - Design
+    - Web Development
+    - Technology
+    - Science
+  built_by: Joeri Smits
+  built_by_url: https://joeri.dev
+  featured: false
