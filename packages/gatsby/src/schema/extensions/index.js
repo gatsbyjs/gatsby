@@ -3,6 +3,7 @@ const {
   GraphQLDirective,
   DirectiveLocation,
   defaultFieldResolver,
+  specifiedDirectives,
 } = require(`graphql`)
 
 const { link, fileByPath } = require(`../resolvers`)
@@ -159,6 +160,7 @@ const internalExtensionNames = [
   `directives`,
   `infer`,
   `plugin`,
+  ...specifiedDirectives.map(directive => directive.name),
 ]
 const reservedExtensionNames = [
   ...internalExtensionNames,
