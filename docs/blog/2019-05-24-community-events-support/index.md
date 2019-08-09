@@ -5,7 +5,6 @@ author: Linda Watkins
 excerpt: Announcing the new Gatsby Community Events Page! Check out the upcoming Gatsby meetups in your area and submit an event for support.
 tags:
   - community
-  - events
 ---
 
 Announcing [support for Gatsby Meetups](/contributing/organize-a-gatsby-event/)! There are tons of Gatsby meetups and events that are being organized by the community worldwide and it’s impressive to hear about the gatherings and how people enjoy connecting in person about Gatsby and the future of the web. We want to show more love for these events, so we’re launching a program that supports community organized meetups, events, and lunch and learns. Check out the new [Gatsby Community Events Page](/contributing/events/) to see all the meetups submitted so far!

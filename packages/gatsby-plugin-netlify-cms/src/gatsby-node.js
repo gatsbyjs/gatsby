@@ -33,18 +33,18 @@ function replaceRule(value) {
     return value
   }
 
-  // when javascript we exclude node_modules
+  // remove dependency rule
   if (
     value.type === `javascript/auto` &&
-    value.exclude &&
-    value.exclude instanceof RegExp
+    value.use &&
+    value.use[0] &&
+    value.use[0].options &&
+    value.use[0].options.presets &&
+    /babel-preset-gatsby[/\\]dependencies\.js/.test(
+      value.use[0].options.presets
+    )
   ) {
-    return {
-      ...value,
-      exclude: new RegExp(
-        [value.exclude.source, `node_modules|bower_components`].join(`|`)
-      ),
-    }
+    return null
   }
 
   // Manually swap `style-loader` for `MiniCssExtractPlugin.loader`.
@@ -61,6 +61,17 @@ function replaceRule(value) {
   }
 
   return value
+}
+
+exports.onPreInit = ({ reporter }) => {
+  try {
+    require.resolve(`netlify-cms`)
+    reporter.warn(
+      `The netlify-cms package is deprecated, please install netlify-cms-app instead. You can do this by running "npm install netlify-cms-app"`
+    )
+  } catch (err) {
+    // carry on
+  }
 }
 
 exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
@@ -85,6 +96,7 @@ exports.onCreateWebpackConfig = (
     publicPath = `admin`,
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
+    htmlFavicon = ``,
     manualInit = false,
   }
 ) => {
@@ -109,7 +121,7 @@ exports.onCreateWebpackConfig = (
       path: path.join(program.directory, `public`, publicPathClean),
     },
     module: {
-      rules: deepMap(gatsbyConfig.module.rules, replaceRule),
+      rules: deepMap(gatsbyConfig.module.rules, replaceRule).filter(Boolean),
     },
     plugins: [
       // Remove plugins that either attempt to process the core Netlify CMS
@@ -146,6 +158,7 @@ exports.onCreateWebpackConfig = (
       // Auto generate CMS index.html page.
       new HtmlWebpackPlugin({
         title: htmlTitle,
+        favicon: htmlFavicon,
         chunks: [`cms`],
         excludeAssets: [/cms.css/],
       }),

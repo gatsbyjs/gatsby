@@ -10,7 +10,8 @@ jest.mock(`sharp`, () => {
     return pipeline
   }
 
-  sharp.simd = () => {}
+  sharp.simd = jest.fn()
+  sharp.concurrency = jest.fn()
 
   return sharp
 })
