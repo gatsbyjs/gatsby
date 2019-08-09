@@ -63,7 +63,7 @@ export const TAGS_AND_DOCS = new Map([
   [`mdx`, `/docs/mdx/`],
   [`migration`, ``],
   [`mobile`, ``],
-  [`netlify`, `/docs/hosting-on-netlify/`],
+  [`netlify`, `/docs/deploying-to-netlify/`],
   [`netlify-cms`, `/docs/sourcing-from-netlify-cms/`],
   [`open-source`, ``],
   [`partner-program`, ``],
