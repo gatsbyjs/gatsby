@@ -3,10 +3,8 @@ title: "Beyond Static: Hapticmedia Uses Gatsby to Build a Dynamic Web App"
 date: 2019-02-05
 author: Linda Watkins
 tags:
-  - case study
-  - hapticmedia
-  - dynamic apps
-  - dynamic web apps
+  - case-studies
+  - apps
   - ecommerce
 image: "images/hapticmedia.jpg"
 showImageInArticle: true

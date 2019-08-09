@@ -4,14 +4,12 @@ date: 2019-07-09
 author: Tara Arnold
 excerpt: "Sandy Springs partners with Mediacurrent to build a new Drupal and Gatsby decoupled platform architecture powering both the City Springs website and its digital signage network."
 tags:
-  - case study
-  - agency
   - case-studies
+  - agencies
   - cms
-  - digital signage
-  - gatsby days
+  - gatsby-days
   - netlify
-  - decoupled
+  - content-mesh
 ---
 
 ![City Springs new homepage on laptop and mobile screens](./images/CitySprings1.jpg "City Springs Drupal homepage")

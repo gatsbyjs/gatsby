@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.3...gatsby-transformer-asciidoc@1.1.4) (2019-07-30)
+
+### Features
+
+- **gatsby-transformer-asciidoc:** add custom template converter([#16180](https://github.com/gatsbyjs/gatsby/issues/16180)) ([1962cc8](https://github.com/gatsbyjs/gatsby/commit/1962cc8))
+
 ## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.2...gatsby-transformer-asciidoc@1.1.3) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-transformer-asciidoc
