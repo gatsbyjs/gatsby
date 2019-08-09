@@ -1,4 +1,5 @@
 starter:
+  - Airtable
   - AMP
   - Authentication
   - AWS
@@ -96,6 +97,7 @@ site:
   - Productivity
   - Programming
   - Real Estate
+  - Retail
   - SEO
   - Science
   - Security

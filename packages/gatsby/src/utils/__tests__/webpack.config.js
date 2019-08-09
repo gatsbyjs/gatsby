@@ -55,7 +55,7 @@ describe(`basic functionality`, () => {
         )
       )
     )
-  })
+  }, 30000)
 })
 
 describe(`environment variables`, () => {

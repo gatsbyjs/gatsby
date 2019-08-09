@@ -20,8 +20,13 @@ const overwriteWebpackCompilationHash = newHash => {
     .sync(path.join(__dirname, `../../public/page-data/**/page-data.json`))
     .forEach(filename => replacePageDataCompilationHash(filename, newHash))
   glob
-    .sync(path.join(__dirname, `../../public/**/index.html`))
-    .forEach(filename => replaceHtmlCompilationHash(filename, newHash))
+    .sync(path.join(__dirname, `../../public/**/*.html`))
+    .forEach(filename => {
+      // `page-data/404.html` matches the glob above but is a directory
+      // (containing `page-data.json`), so ignore this and similar dirs
+      if (!filename.match(/\/page-data\/[^/.]+\.html/))
+        replaceHtmlCompilationHash(filename, newHash)
+    })
 
   // cypress requires that null be returned instead of undefined
   return null

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-drupal",
   "description": "Gatsby source plugin for building websites using the Drupal CMS as a data source",
-  "version": "3.2.1",
+  "version": "3.2.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,14 +10,15 @@
     "@babel/runtime": "^7.0.0",
     "axios": "^0.19.0",
     "bluebird": "^3.5.0",
-    "gatsby-source-filesystem": "^2.1.1",
-    "lodash": "^4.17.10",
+    "body-parser": "^1.19.0",
+    "gatsby-source-filesystem": "^2.1.9",
+    "lodash": "^4.17.14",
     "tiny-async-pool": "^1.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.0",
+    "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
@@ -30,7 +31,11 @@
   "peerDependencies": {
     "gatsby": "^2.0.15"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-source-drupal"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",

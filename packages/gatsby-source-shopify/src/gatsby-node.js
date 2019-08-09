@@ -10,6 +10,7 @@ import {
   ProductNode,
   ProductOptionNode,
   ProductVariantNode,
+  ProductMetafieldNode,
   ShopPolicyNode,
   ProductTypeNode,
   PageNode,
@@ -79,6 +80,11 @@ export const sourceNodes = async (
             createNode(await ProductVariantNode(imageArgs)(edge.node))
           )
 
+        if (x.metafields)
+          await forEach(x.metafields.edges, async edge =>
+            createNode(await ProductMetafieldNode(imageArgs)(edge.node))
+          )
+
         if (x.options)
           await forEach(x.options, async option =>
             createNode(await ProductOptionNode(imageArgs)(option))
@@ -88,7 +94,7 @@ export const sourceNodes = async (
     ])
     console.timeEnd(msg)
   } catch (e) {
-    console.error(chalk`\n{red error} an error occured while sourcing data`)
+    console.error(chalk`\n{red error} an error occurred while sourcing data`)
 
     // If not a GraphQL request error, let Gatsby print the error.
     if (!e.hasOwnProperty(`request`)) throw e

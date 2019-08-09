@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-yaml",
   "description": "Gatsby transformer plugin for yaml",
-  "version": "2.2.0",
+  "version": "2.2.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,13 +9,13 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "js-yaml": "^3.13.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.0",
+    "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-yaml#readme",
@@ -28,7 +28,11 @@
   "peerDependencies": {
     "gatsby": "^2.0.15"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-yaml",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-transformer-yaml"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",

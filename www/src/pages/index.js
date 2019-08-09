@@ -119,7 +119,7 @@ class IndexRoute extends React.Component {
           </div>
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
-            <Container hasSideBar={false}>
+            <Container withSidebar={false}>
               <section css={{ textAlign: `center` }}>
                 <h1 css={{ fontWeight: fontWeights[1], marginTop: 0 }}>
                   Curious yet?
@@ -193,7 +193,10 @@ export const pageQuery = graphql`
     }
     allStartersYaml(
       filter: {
-        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+        fields: {
+          starterShowcase: { slug: { in: $featuredStarters } }
+          hasScreenshot: { eq: true }
+        }
       }
       sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {

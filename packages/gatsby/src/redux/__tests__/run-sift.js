@@ -118,12 +118,14 @@ describe(`run-sift`, () => {
         gqlType,
         queryArgs,
         firstOnly: true,
+        nodeTypeNames: [gqlType.name],
       })
 
       const resultMany = await runSift({
         gqlType,
         queryArgs,
         firstOnly: false,
+        nodeTypeNames: [gqlType.name],
       })
 
       expect(resultSingular).toEqual([nodes[1]])
@@ -141,12 +143,14 @@ describe(`run-sift`, () => {
         gqlType,
         queryArgs,
         firstOnly: true,
+        nodeTypeNames: [gqlType.name],
       })
 
       const resultMany = await runSift({
         gqlType,
         queryArgs,
         firstOnly: false,
+        nodeTypeNames: [gqlType.name],
       })
 
       // `id-1` node is not of queried type, so results should be empty
@@ -165,12 +169,14 @@ describe(`run-sift`, () => {
         gqlType,
         queryArgs,
         firstOnly: true,
+        nodeTypeNames: [gqlType.name],
       })
 
       const resultMany = await runSift({
         gqlType,
         queryArgs,
         firstOnly: false,
+        nodeTypeNames: [gqlType.name],
       })
 
       expect(resultSingular).toEqual([nodes[2]])
@@ -199,6 +205,7 @@ describe(`run-sift`, () => {
       gqlType,
       queryArgs,
       firstOnly: true,
+      nodeTypeNames: [gqlType.name],
     })
 
     expect(results[0].id).toBe(`id_4`)

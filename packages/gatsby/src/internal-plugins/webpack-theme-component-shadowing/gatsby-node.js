@@ -4,18 +4,22 @@ exports.onCreateWebpackConfig = (
   { store, stage, getConfig, rules, loaders, actions },
   pluginOptions
 ) => {
-  const { program, themes } = store.getState()
+  const { themes, flattenedPlugins } = store.getState()
 
-  if (themes.themes) {
-    actions.setWebpackConfig({
-      resolve: {
-        plugins: [
-          new GatsbyThemeComponentShadowingResolverPlugin({
-            themes: themes.themes,
-            projectRoot: program.directory,
-          }),
-        ],
-      },
-    })
-  }
+  actions.setWebpackConfig({
+    resolve: {
+      plugins: [
+        new GatsbyThemeComponentShadowingResolverPlugin({
+          themes: themes.themes
+            ? themes.themes
+            : flattenedPlugins.map(plugin => {
+                return {
+                  themeDir: plugin.pluginFilepath,
+                  themeName: plugin.name,
+                }
+              }),
+        }),
+      ],
+    },
+  })
 }

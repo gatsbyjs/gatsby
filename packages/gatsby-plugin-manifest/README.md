@@ -9,8 +9,9 @@ This plugin provides several features beyond manifest configuration to make your
 - [Favicon support](https://www.w3.org/2005/10/howto-favicon)
 - Legacy icon support (iOS)[^1]
 - [Cache busting](https://www.keycdn.com/support/what-is-cache-busting)
+- Localization - Provides unqiue manifests for path-based localization ([Gatsby Example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n))
 
-Each of these features has extensive configuration available so you're always in control.
+Each of these features has extensive configuration available so you are always in control.
 
 ## Install
 
@@ -56,18 +57,21 @@ There are three modes in which icon generation can function: automatic, hybrid, 
   - Favicon - yes
   - Legacy icon support - yes
   - Cache busting - yes
+  - Localization - optional
 
 - Hybrid - Generate a manually configured set of icons from a single source icon.
 
   - Favicon - yes
   - Legacy icon support - yes
   - Cache busting - yes
+  - Localization - optional
 
 - Manual - Don't generate or pre-configure any icons.
 
   - Favicon - never
   - Legacy icon support - yes
   - Cache busting - never
+  - Localization - optional
 
 **_IMPORTANT:_** For best results, if you're providing an icon for generation it should be...
 
@@ -131,6 +135,49 @@ icons: [
 In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
 
 ### Feature configuration - **Optional**
+
+#### Localization configuration
+
+Localization allows you to create unique manifests for each localized version of your site. As many languages as you want are supported. Localization requires unique paths for each language (e.g. if your default about page is at `/about`, the german(`de`) version would be `/de/about`)
+
+The default site language should be configured in your root plugin options. Any additional languages should be defined in the `localize` array. The root settings will be used as defaults if not overridden in a locale. Any configuration option available in the root is also available in the `localize` array.
+
+`lang` and `start_url` are the only _required_ options in the array objects. `name`, `short_name`, and `description` are [recommended](https://www.w3.org/TR/appmanifest/#dfn-directionality-capable-members) to be translated if being used in the default language. All other config options are optional. This is helpful if you want to provide unique icons for each locale.
+
+The [`lang` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
+
+Using localization requires name based cache busting when using a unique icon in automatic mode for a specific locale. This is automatically enabled if you provide and `icon` in a specific locale without uniquely defining `icons`. If you're using icon creation in hybrid or manual mode for your locales, rememmber to provide unique icon paths.
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `The Cool Application`,
+        short_name: `Cool App`,
+        description: `The application does cool things and makes your life better.`,
+        lang: `en`,
+        display: `standalone`,
+        icon: `src/images/icon.png`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#fff`,
+        localize: [
+          {
+            start_url: `/de/`,
+            lang: `de`,
+            name: `Die coole Anwendung`,
+            short_name: `Coole Anwendung`,
+            description: `Die Anwendung macht coole Dinge und macht Ihr Leben besser.`,
+          },
+        ],
+      },
+    },
+  ],
+}
+```
 
 #### Iterative icon options
 
@@ -224,7 +271,7 @@ Cache busting works by calculating a unique "digest" of the provided icon and mo
 
 - **\`query\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. `icons/icon-48x48.png?digest=abc123`
 
-- **\`name\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. `icons/icon-48x48-abc123.png` (only needed if your CDN does not support URL query based cache busting)
+- **\`name\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. `icons/icon-48x48-abc123.png` (only needed if your CDN does not support URL query based cache busting). This mode is required and automatically enabled for a locale's icons if you are providing a unique icon for a specific locale in automatic mode using the localization features.
 
 - **\`none\`** - Disables cache busting. File names and links remain unmodified.
 

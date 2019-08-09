@@ -280,7 +280,7 @@ module.exports = (
 
   return Promise.all(
     Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
-      // Don't copy anything is the file already exists at the location.
+      // Don't copy anything if the file already exists at the location.
       if (!fsExtra.existsSync(newFilePath)) {
         try {
           await fsExtra.ensureDir(path.dirname(newFilePath))

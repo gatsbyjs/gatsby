@@ -29,7 +29,7 @@ module.exports = {
         url: "https://api.graphcms.com/simple/v1/swapi",
       },
     },
-    // Passing paramaters (passed to apollo-link)
+    // Passing parameters (passed to apollo-link)
     {
       resolve: "gatsby-source-graphql",
       options: {
@@ -40,7 +40,7 @@ module.exports = {
         // HTTP headers
         headers: {
           // Learn about environment variables: https://gatsby.dev/env-vars
-          Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         },
         // Additional options to pass to node-fetch
         fetchOptions: {},
@@ -57,7 +57,7 @@ module.exports = {
           return createHttpLink({
             uri: 'https://api.github.com/graphql',
             headers: {
-              'Authorization': `bearer ${process.env.GITHUB_TOKEN}`,
+              'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
             },
             fetch,
           })
