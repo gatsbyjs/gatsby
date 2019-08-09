@@ -6,15 +6,11 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
 
   on(`before:browser:launch`, (browser = {}, args) => {
-    if (browser.name === `chrome`) {
-      if (process.env.CYPRESS_CONNECTION_TYPE === `slow`) {
-        args.push(`--force-effective-connection-type=2G`)
-      }
-
-      const index = args.indexOf(`--disable-gpu`)
-      if (index !== -1) {
-        args.splice(index, 1)
-      }
+    if (
+      browser.name === `chrome` &&
+      process.env.CYPRESS_CONNECTION_TYPE === `slow`
+    ) {
+      args.push(`--force-effective-connection-type=2G`)
     }
 
     return args
