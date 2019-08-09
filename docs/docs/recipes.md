@@ -830,7 +830,12 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 - [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
 - Live example:
 
-<iframe title="Limiting returned data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Limiting returned data"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
 
 ### Sorting with GraphQL
 
@@ -886,7 +891,12 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
 - Live example:
 
-<iframe title="Sorting data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(sort%3A%20%7Bfields%3A%20path%2C%20order%3A%20ASC%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Sorting data"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(sort%3A%20%7Bfields%3A%20path%2C%20order%3A%20ASC%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
 
 ### Filtering with GraphQL
 
@@ -946,7 +956,12 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
 - Live example:
 
-<iframe title="Filtering data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Bcategories%3A%20%7Beq%3A%20%22magical%20creatures%22%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20categories%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Filtering data"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Bcategories%3A%20%7Beq%3A%20%22magical%20creatures%22%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20categories%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
 
 ### Query Aliases
 
@@ -999,7 +1014,12 @@ If you would like to run two queries on the same datasource, you can use an alia
 - [Gatsby GraphQL reference for aliasing](/docs/graphql-reference/#aliasing)
 - Live example:
 
-<iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Using aliases"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
 
 ## 7. Working with images
 
@@ -1084,6 +1104,170 @@ export default () => (
 - [Example repo referencing an image from the static folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-static-image)
 - [Using the Static Folder](/docs/static-folder/)
 - [More on all image techniques in Gatsby](/docs/images-and-files/)
+
+### Optimizing and querying for images with gatsby-image
+
+The `gatsby-image` plugin can take out much of the pain of optimizing images for your site. Once installed, Gatsby will generate optimized resources to improve loading. Those resources can be queried with GraphQL and passed into Gatsby's image component to do the heavy lifting for you.
+
+#### Prerequisites
+
+- the `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed
+- [images sourced](/packages/gatsby-image/#install) in your `gatsby-config` with a plugin like `gatsby-source-filesystem`
+
+#### Directions
+
+<!-- prettier-ignore -->
+1. First, import `Img` from `gatsby-image`, as well as `graphql` and `useStaticQuery` from `gatsby` into a component
+
+```jsx
+import { useStaticQuery, graphql } from "gatsby" // to query for image data
+import Img from "gatsby-image" // to take image data and render it
+```
+
+2. Write a query to get image(s) data, and provide the data to the Img component:
+
+Choose any of the following options or a combination of them.
+
+a. for a single image based on its path from where the images are sourced (ex: `images/corgi.jpg`)
+
+```jsx
+const data = useStaticQuery(graphql`
+  query {
+    file(relativePath: { eq: "corgi.jpg" }) {
+      childImageSharp {
+        fluid {
+          base64
+          aspectRatio
+          src
+          srcSet
+          sizes
+        }
+      }
+    }
+  }
+`)
+
+return (
+  <Img fluid={data.file.childImageSharp.fluid} alt="A corgi smiling happily" />
+)
+```
+
+b. with a GraphQL fragment, querying for the necessary fields more tersely
+
+```jsx
+const data = useStaticQuery(graphql`
+  query {
+    file(relativePath: { eq: "corgi.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`)
+
+return (
+  <Img fluid={data.file.childImageSharp.fluid} alt="A corgi smiling happily" />
+)
+```
+
+c. for a directory (ex. `images/dogs`) of images by filtering for the extension and relative directory fields, and then mapping the results into `Img` components
+
+```jsx
+const data = useStaticQuery(graphql`
+  query {
+    allFile(
+      filter: {
+        extension: { regex: "/(jpg)|(png)|(jpeg)/" }
+        relativeDirectory: { eq: "dogs" }
+      }
+    ) {
+      edges {
+        node {
+          base
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    }
+  }
+`)
+
+return (
+  <div>
+    {data.allFile.edges.map(image => (
+      <Img
+        fluid={image.node.childImageSharp.fluid}
+        alt={image.node.base.split(".")[0]}
+      />
+    ))}
+  </div>
+)
+```
+
+**Note**: with this method it is difficult to match images to `alt` text for accessibility. This example uses images with alt text encoded in the filenames like `dog in a part hat.jpg`.
+
+d. for an image of a fixed size with the `fixed` field, instead of `fluid`
+
+```jsx
+const data = useStaticQuery(graphql`
+  query {
+    file(relativePath: { eq: "corgi.jpg" }) {
+      childImageSharp {
+        fixed(width: 250, height: 250) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`)
+return (
+  <Img fixed={data.file.childImageSharp.fixed} alt="A corgi smiling happily" />
+)
+```
+
+e. for an image filling a fluid container with a max width (800px) and a higher quality (75%, default is 50)
+
+```jsx
+const data = useStaticQuery(graphql`
+  query {
+    file(relativePath: { eq: "corgi.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 800, quality: 75) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`)
+
+return (
+  <Img fluid={data.file.childImageSharp.fluid} alt="A corgi smiling happily" />
+)
+```
+
+3. (Optional) you can add inline styles to the `<Img />` like you would to other elements
+
+```jsx
+<Img
+  fluid={data.file.childImageSharp.fluid}
+  alt="A corgi smiling happily"
+  style={{ border: "2px solid rebeccapurple", borderRadius: 5, height: 250 }}
+/>
+```
+
+4. Run `gatsby develop`, which will generate images for files sourced in the filesystem (if it hasn't already and cached them)
+
+#### Additional Resources
+
+- [Example repo implementing the above recipes]()
+- [Gatsby Image API](/docs/gatsby-image/)
+- [Using Gatsby Image](/docs/using-gatsby-image)
+- [More on working with images in Gatsby](/docs/working-with-images/)
 
 ## 8. Transforming data
 
