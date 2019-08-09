@@ -247,7 +247,7 @@ exports[`gatsby-plugin-sass Stage: build-html / sass rule test options 1`] = `
                   ],
                 },
                 Object {
-                  "test": "/.global.s(a|c)ss$/",
+                  "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
                   ],
@@ -565,7 +565,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / sass rule test options 1`]
                   ],
                 },
                 Object {
-                  "test": "/.global.s(a|c)ss$/",
+                  "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
                     "css({\\"importLoaders\\":2})",
@@ -891,7 +891,7 @@ exports[`gatsby-plugin-sass Stage: develop / sass rule test options 1`] = `
                   ],
                 },
                 Object {
-                  "test": "/.global.s(a|c)ss$/",
+                  "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
                     "css({\\"importLoaders\\":2})",
@@ -1167,7 +1167,7 @@ exports[`gatsby-plugin-sass Stage: develop-html / sass rule test options 1`] = `
                   ],
                 },
                 Object {
-                  "test": "/.global.s(a|c)ss$/",
+                  "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
                   ],
