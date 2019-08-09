@@ -34,31 +34,34 @@ describe(`Webpack Compilation Hash tests`, () => {
   // figuring out how to perform an actual rebuild while cypress is
   // running. See ../plugins/compilation-hash.js for the
   // implementation
-  it(`should reload page if build occurs in background`, () => {
-    cy.window().then(window => {
-      const oldHash = window.___webpackCompilationHash
-      expect(oldHash).to.not.eq(undefined)
+  // These tests are currently broken with offline plugin - see https://github.com/gatsbyjs/gatsby/issues/16495
+  if (!Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    it(`should reload page if build occurs in background`, () => {
+      cy.window().then(window => {
+        const oldHash = window.___webpackCompilationHash
+        expect(oldHash).to.not.eq(undefined)
 
-      const mockHash = createMockCompilationHash()
+        const mockHash = createMockCompilationHash()
 
-      // Simulate a new webpack build
-      cy.task(`overwriteWebpackCompilationHash`, mockHash).then(() => {
-        cy.getTestElement(`compilation-hash`).click()
-        cy.waitForRouteChange()
+        // Simulate a new webpack build
+        cy.task(`overwriteWebpackCompilationHash`, mockHash).then(() => {
+          cy.getTestElement(`compilation-hash`).click()
+          cy.waitForRouteChange()
 
-        // Navigate into a non-prefetched page
-        cy.getTestElement(`deep-link-page`).click()
-        cy.waitForRouteChange()
+          // Navigate into a non-prefetched page
+          cy.getTestElement(`deep-link-page`).click()
+          cy.waitForRouteChange()
 
-        // If the window compilation hash has changed, we know the
-        // page was refreshed
-        cy.window()
-          .its(`___webpackCompilationHash`)
-          .should(`equal`, mockHash)
+          // If the window compilation hash has changed, we know the
+          // page was refreshed
+          cy.window()
+            .its(`___webpackCompilationHash`)
+            .should(`equal`, mockHash)
+        })
+
+        // Cleanup
+        cy.task(`overwriteWebpackCompilationHash`, oldHash)
       })
-
-      // Cleanup
-      cy.task(`overwriteWebpackCompilationHash`, oldHash)
     })
-  })
+  }
 })
