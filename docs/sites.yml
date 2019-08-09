@@ -6860,6 +6860,23 @@
   built_by: 97thjingba
   built_by_url: https://github.com/97thjingba
   featured: false
+- title: George
+  main_url: https://kind-mestorf-5a2bc0.netlify.com
+  url: https://kind-mestorf-5a2bc0.netlify.com
+  description: >
+    shiny new web built with Gatsby
+  categories:
+    - Blog
+    - Portfolio
+    - Gallery
+    - Landing Page
+    - Design
+    - Web Development
+    - Open Source
+    - Science
+  built_by: George Davituri
+  featured: false
+
 - title: CEO amp
   main_url: https://www.ceoamp.com
   url: https://www.ceoamp.com

@@ -101,6 +101,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   const job = {
     args: options,
     inputPath: file.absolutePath,
+    contentDigest: file.internal.contentDigest,
     outputPath: filePath,
   }
 
