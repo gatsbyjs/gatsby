@@ -75,7 +75,7 @@
     "gatsby-telemetry": "^1.1.11",
     "glob": "^7.1.1",
     "got": "8.0.0",
-    "graphql": "^14.1.1",
+    "graphql": "^14.2.0",
     "graphql-compose": "^6.3.2",
     "graphql-playground-middleware-express": "^1.7.10",
     "invariant": "^2.2.4",
