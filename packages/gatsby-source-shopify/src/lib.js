@@ -22,7 +22,7 @@ export const printGraphQLError = e => {
   if (e.response && e.response.errors) {
     if (e.message.startsWith(`access denied`)) {
       console.error(chalk`\n{yellow Check your token has this read authorization,
-      or omit fetching this object using the fetchCollections options in gatsby-source-shopify plugin options}`)
+      or omit fetching this object using the "includeCollections" options in gatsby-source-shopify plugin options}`)
     }
     console.error(prettyjson.render(e.response.errors, prettyjsonOptions))
   }

@@ -42,7 +42,7 @@ export const sourceNodes = async (
     accessToken,
     verbose = true,
     paginationSize = 250,
-    fetchCollections = [SHOP, CONTENT],
+    includeCollections = [SHOP, CONTENT],
   }
 ) => {
   const client = createClient(shopName, accessToken)
@@ -79,7 +79,7 @@ export const sourceNodes = async (
     const msg = formatMsg(`finished fetching data from Shopify`)
 
     let promises = []
-    if (fetchCollections.includes(SHOP)) {
+    if (includeCollections.includes(SHOP)) {
       promises = promises.concat([
         createNodes(COLLECTION, COLLECTIONS_QUERY, CollectionNode, args),
         createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async x => {
@@ -102,7 +102,7 @@ export const sourceNodes = async (
         createShopPolicies(args),
       ])
     }
-    if (fetchCollections.includes(CONTENT)) {
+    if (includeCollections.includes(CONTENT)) {
       promises = promises.concat([
         createNodes(BLOG, BLOGS_QUERY, BlogNode, args),
         createNodes(ARTICLE, ARTICLES_QUERY, ArticleNode, args, async x => {

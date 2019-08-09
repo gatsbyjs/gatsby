@@ -61,7 +61,7 @@ plugins: [
       // List of collections you want to fetch.
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
-      fetchCollections: ["shop", "content"],
+      includeCollections: ["shop", "content"],
     },
   },
 ]
