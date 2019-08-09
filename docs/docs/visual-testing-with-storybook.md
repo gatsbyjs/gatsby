@@ -101,7 +101,6 @@ module.exports = ({ config }) => {
 
 > When using TypeScript, add this rule:
 
-
 ```diff:title=.storybook/webpack.config.js
 // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
 config.resolve.mainFields = ["browser", "module", "main"]
