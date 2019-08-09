@@ -45,10 +45,7 @@ See the [library of official and community plugins](/plugins/)
 
 ## Livestreams
 
-- [Jason Lengstorf](https://www.twitch.tv/jlengstorf)
-- [Chris Biscardi](https://www.twitch.tv/chrisbiscardi)
-- [Roberttables](https://www.twitch.tv/roberttables)
-- [Cyberbarbie](https://www.twitch.tv/cyberbarbie)
+- [Learn with Jason](https://www.youtube.com/playlist?list=PLCU2qJekvcN0RuMHCnjMYAKlpSKQ_e1hO)
 
 ## Gatsby tutorials
 
