@@ -3,21 +3,21 @@ import { camelCase } from "lodash/fp"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
-// Node prefix
-const TYPE_PREFIX = `Shopify`
+import {
+  TYPE_PREFIX,
+  ARTICLE,
+  BLOG,
+  COLLECTION,
+  COMMENT,
+  PRODUCT,
+  PRODUCT_OPTION,
+  PRODUCT_VARIANT,
+  PRODUCT_METAFIELD,
+  SHOP_POLICY,
+  PRODUCT_TYPE,
+  PAGE,
+} from "./constants"
 
-// Node types
-const ARTICLE = `Article`
-const BLOG = `Blog`
-const COLLECTION = `Collection`
-const COMMENT = `Comment`
-const PRODUCT = `Product`
-const PRODUCT_OPTION = `ProductOption`
-const PRODUCT_VARIANT = `ProductVariant`
-const PRODUCT_METAFIELD = `ProductMetafield`
-const SHOP_POLICY = `ShopPolicy`
-const PRODUCT_TYPE = `ProductType`
-const PAGE = `Page`
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })

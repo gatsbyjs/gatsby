@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.5...gatsby-plugin-sass@2.1.6) (2019-08-09)
+
+### Features
+
+- **gatsby-plugin-sass:** Add ability to override sassRuleTest and sassRuleModulesTest ([#16494](https://github.com/gatsbyjs/gatsby/issues/16494)) ([df209d9](https://github.com/gatsbyjs/gatsby/commit/df209d9))
+
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.4...gatsby-plugin-sass@2.1.5) (2019-08-09)
 
 ### Features
