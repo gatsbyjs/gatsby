@@ -370,13 +370,20 @@ plugins: [
 ### Shell prompt
 
 To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
-or pass `{outputLines: <range>}` to a snippet
+or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
 
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specififying `{outputLines: <range>}`
 to the language.
 
 ````
 ```bash{outputLines: 2-10,12}
+````
+
+The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
+unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
+
+````
+```bash{promptUser: alice}{promptHost: dev.localhost}
 ````
 
 ### Line hiding

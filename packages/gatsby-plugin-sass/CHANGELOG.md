@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.4...gatsby-plugin-sass@2.1.5) (2019-08-09)
+
+### Features
+
+- **gatsby-plugin-sass:** Enable url() resolution for modules ([#16451](https://github.com/gatsbyjs/gatsby/issues/16451)) ([90a345e](https://github.com/gatsbyjs/gatsby/commit/90a345e))
+
 ## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.3...gatsby-plugin-sass@2.1.4) (2019-08-01)
 
 **Note:** Version bump only for package gatsby-plugin-sass

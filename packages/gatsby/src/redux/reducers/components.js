@@ -40,6 +40,11 @@ module.exports = (state = new Map(), action) => {
         service = services.get(action.payload.componentPath)
         if (!service.state.context.pages.has(action.payload.path)) {
           service.send({ type: `NEW_PAGE_CREATED`, path: action.payload.path })
+        } else if (action.contextModified) {
+          service.send({
+            type: `PAGE_CONTEXT_MODIFIED`,
+            path: action.payload.path,
+          })
         }
       }
 
