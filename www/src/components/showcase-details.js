@@ -20,8 +20,8 @@ import ShareMenu from "../components/share-menu"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLink from "react-icons/lib/md/link"
-import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
-import FeatherIcon from "../assets/showcase-feather.svg"
+import FeaturedIcon from "../assets/icons/featured-sites-icons.svg"
+import FeatherIcon from "../assets/icons/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const gutter = space[6]
@@ -285,6 +285,18 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       .childImageSharp.resize.height
                   }
                 />
+                <meta
+                  property="og:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
+                />
+                <meta
+                  name="twitter:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
+                />
               </Helmet>
               <div
                 css={{
@@ -358,6 +370,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       src={FeaturedIcon}
                       alt="icon"
                       css={{
+                        width: 20,
+                        height: 20,
                         marginBottom: 0,
                         marginRight: 10,
                       }}

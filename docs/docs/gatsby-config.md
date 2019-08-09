@@ -87,6 +87,8 @@ See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
 
 Gatsby includes an advanced feature that lets you create "mappings" between node types.
 
+> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/schema-customization/#foreign-key-fields).
+
 For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a yaml file named `author.yaml`:
 
 ```markdown
@@ -114,6 +116,8 @@ module.exports = {
   },
 }
 ```
+
+You may need to install the appropriate file transformer (in this case [YAML](/packages/gatsby-transformer-yaml/)) and set up [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) properly for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
 
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 

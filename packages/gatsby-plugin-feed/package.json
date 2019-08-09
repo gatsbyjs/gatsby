@@ -1,22 +1,22 @@
 {
   "name": "gatsby-plugin-feed",
   "description": "Creates an RSS feed for your Gatsby site.",
-  "version": "2.3.1",
+  "version": "2.3.6",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@hapi/joi": "^14.0.0",
+    "@hapi/joi": "^15.0.0",
     "fs-extra": "^7.0.1",
-    "lodash.merge": "^4.6.0",
+    "lodash.merge": "^4.6.2",
     "rss": "^1.2.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.0",
+    "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.1.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed#readme",
@@ -32,7 +32,11 @@
   "peerDependencies": {
     "gatsby": "^2.4.0"
   },
-  "repository": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-feed"
+  },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
