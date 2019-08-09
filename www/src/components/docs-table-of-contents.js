@@ -36,7 +36,7 @@ function createItems(items, location) {
             },
           }}
           getProps={({ href, location }) =>
-            location.href.includes(href)
+            location && location.href && location.href.includes(href)
               ? {
                   style: {
                     color: colors.link.color,
