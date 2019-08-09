@@ -35,6 +35,10 @@ function createItems(items, location) {
               },
             },
           }}
+          activeStyle={{
+            color: colors.link.color,
+            borderBottom: `1px solid ${colors.link.hoverBorder}`,
+          }}
           to={location.pathname + item.url}
         >
           {item.title}
