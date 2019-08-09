@@ -191,6 +191,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     beforeEach(() => {
       node.__fixture = `flow.js`
     })
+
     it(`should add flow type info`, async () => {
       await run(node)
 
@@ -215,6 +216,29 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       const created = createdNodes.map(f => f.tsType).filter(Boolean)
 
       expect(created).toMatchSnapshot(`typescript types`)
+    })
+
+    it(`literalsAndUnion property should be union type`, async () => {
+      await run(node)
+      const created = createdNodes.find(f => f.name === `literalsAndUnion`)
+
+      expect(created.flowType).toEqual(
+        expect.objectContaining({
+          name: `union`,
+          raw: `"string" | "otherstring" | number`,
+        })
+      )
+    })
+
+    it(`badDocumented property should flowType ReactNode`, async () => {
+      await run(node)
+      const created = createdNodes.find(f => f.name === `badDocumented`)
+
+      expect(created.flowType).toEqual(
+        expect.objectContaining({
+          name: `ReactNode`,
+        })
+      )
     })
   })
 })
