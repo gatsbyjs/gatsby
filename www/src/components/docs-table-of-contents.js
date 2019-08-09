@@ -35,6 +35,16 @@ function createItems(items, location) {
               },
             },
           }}
+          getProps={({ href, location }) =>
+            location.href.includes(href)
+              ? {
+                  style: {
+                    color: colors.link.color,
+                    borderBottom: `1px solid ${colors.link.hoverBorder}`,
+                  },
+                }
+              : null
+          }
           to={location.pathname + item.url}
         >
           {item.title}
