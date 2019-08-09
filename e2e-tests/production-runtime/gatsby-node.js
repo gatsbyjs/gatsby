@@ -5,6 +5,11 @@ exports.createPages = ({ actions: { createPage } }) => {
     path: `/안녕`,
     component: path.resolve(`src/pages/page-2.js`),
   })
+
+  createPage({
+    path: `/client-only-paths/static`,
+    component: path.resolve(`src/templates/static-page.js`),
+  })
 }
 
 exports.onCreatePage = ({ page, actions }) => {
