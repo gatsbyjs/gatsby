@@ -79,6 +79,16 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
   ...
 ```
 
+3. (Optional) if the name of the title seems long, consider adding a `breadcrumbTitle` to the entry in the `doc-links.yaml` file that is a shorter version of the title, and will show up in the breadcrumb on the docs page instead.
+
+```diff:title=www/src/data/sidebars/doc-links.yaml
+  ...
+  - title: Really, Really Long Example Document or Guide Title
+    link: /docs/example-document/
++   breadcrumbTitle: Shorter Title to Display
+  ...
+```
+
 ## Docs site setup instructions
 
 After going through the development setup instructions above, there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/). which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) directory.

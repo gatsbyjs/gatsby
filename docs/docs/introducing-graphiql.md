@@ -18,7 +18,7 @@ When you have <http://localhost:8000/___graphql> open, it will look something li
 on it—including the `siteMetadata` object.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <source type="video/mp4" src="/graphiql-explore.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -43,3 +43,4 @@ The GraphiQL Explorer enables you to interactively construct full queries by cli
 
 - See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using GraphiQL
 - See the [README for GraphiQL](https://github.com/graphql/graphiql)
+- See [Using GraphQL Playground](/docs/using-graphql-playground/) for another example of a GraphQL IDE
