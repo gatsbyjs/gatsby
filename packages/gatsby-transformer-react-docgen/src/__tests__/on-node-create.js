@@ -199,25 +199,6 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
       expect(created).toMatchSnapshot(`flow types`)
     })
-  })
-
-  describe(`tsTypes`, () => {
-    beforeEach(() => {
-      node.__fixture = `typescript.tsx`
-    })
-
-    it(`should add TS type info`, async () => {
-      await run(node, {
-        parserOpts: {
-          plugins: [`jsx`, `typescript`, `classProperties`],
-        },
-      })
-
-      const created = createdNodes.map(f => f.tsType).filter(Boolean)
-
-      expect(created).toMatchSnapshot(`typescript types`)
-    })
-
     it(`literalsAndUnion property should be union type`, async () => {
       await run(node)
       const created = createdNodes.find(f => f.name === `literalsAndUnion`)
@@ -239,6 +220,24 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
           name: `ReactNode`,
         })
       )
+    })
+  })
+
+  describe(`tsTypes`, () => {
+    beforeEach(() => {
+      node.__fixture = `typescript.tsx`
+    })
+
+    it(`should add TS type info`, async () => {
+      await run(node, {
+        parserOpts: {
+          plugins: [`jsx`, `typescript`, `classProperties`],
+        },
+      })
+
+      const created = createdNodes.map(f => f.tsType).filter(Boolean)
+
+      expect(created).toMatchSnapshot(`typescript types`)
     })
   })
 })
