@@ -1,16 +1,5 @@
-import { GraphQLClient } from "graphql-request"
 import prettyjson from "prettyjson"
 import { get, getOr, last } from "lodash/fp"
-
-/**
- * Create a Shopify Storefront GraphQL client for the provided name and token.
- */
-export const createClient = (shopName, accessToken) =>
-  new GraphQLClient(`https://${shopName}.myshopify.com/api/graphql`, {
-    headers: {
-      "X-Shopify-Storefront-Access-Token": accessToken,
-    },
-  })
 
 /**
  * Print an error from a GraphQL client

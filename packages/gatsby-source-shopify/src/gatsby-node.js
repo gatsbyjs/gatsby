@@ -1,7 +1,9 @@
 import { pipe } from "lodash/fp"
 import chalk from "chalk"
 import { forEach } from "p-iteration"
-import { createClient, printGraphQLError, queryAll, queryOnce } from "./lib"
+import { printGraphQLError, queryAll, queryOnce } from "./lib"
+import { createClient } from "./create-client"
+
 import {
   ArticleNode,
   BlogNode,
