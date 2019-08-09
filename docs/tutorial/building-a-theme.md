@@ -93,7 +93,7 @@ Now add `gatsby`, `react`, `react-dom`, and `gatsby-theme-events` as dependencie
 yarn workspace site add gatsby react react-dom gatsby-theme-events@*
 ```
 
-> 🚨 If you use [zsh](https://en.wikipedia.org/wiki/Z_shell), the `*` needs to be quoted, e.g. `gatsby-theme-events@"*"` or `"gatsby-theme-events@*`.
+> 🚨 If you use [zsh](https://en.wikipedia.org/wiki/Z_shell), the `*` needs to be quoted, e.g. `gatsby-theme-events@"*"` or `"gatsby-theme-events@*"`.
 
 - When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
 - You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
@@ -334,7 +334,7 @@ exports.sourceNodes = ({ actions }) => {
 1. You'll use the `createTypes` to create the new `Event` type
 2. The `Event` type will implement the typical Gatsby `Node` interface.
 3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
-4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](g/docs/actions/#createTypes)_.
+4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
 5. You'll also create a `slug` field. You'll notice your event data doesn't include "slug" data. You'll define this in the next step.
 
 ### Define resolvers for any custom fields (slug)
@@ -600,13 +600,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "event" and "events" template components.
+### Create the "events" and "event" template components.
 
 The last step to make sure that these pages build is to create the page template components.
 
 Create new files for the event template, and the events template:
 
-#### Event template
+#### Events template
 
 ```javascript:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
@@ -616,7 +616,7 @@ const EventsTemplate = () => <p>TODO: Build the events page template</p>
 export default EventsTemplate
 ```
 
-#### Events template
+#### Event template
 
 ```javascript:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
@@ -1047,7 +1047,7 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
-> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead.
+> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because we've converted the theme to use a function export, we can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
 

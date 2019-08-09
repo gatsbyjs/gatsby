@@ -4,9 +4,11 @@ date: 2019-04-05
 author: Linda Watkins
 excerpt: "See how health brand Ritual used Gatsby to improve their SEO, page load times, delivery pipeline, and more!"
 tags:
-  - ritual
   - react
   - graphql
+  - case-studies
+  - marketing
+  - performance
 ---
 
 [Ritual](https://ritual.com/) is a health brand led by the belief that women should know exactly what’s in their vitamins. Ritual’s vitamins work smarter to fill the gaps in women’s diets with high quality nutrients. They’re on a mission to inspire women to feel their best, every day. Ritual’s clean, modern stack website, leads customers speedily through an educational purchase experience to learn more about the products, the ingredients, and overall benefits they can find by investing in their vitamin habits every day.
@@ -26,7 +28,9 @@ Ritual chose a rebuild with Gatsby due to the restrictions they were running int
 In addition, they had some specific business and impact goals they were trying to achieve with the new site and top on that list was improving their development velocity.
 
 <Pullquote citation="Daniel Archer">
-We felt that investing in the combination of React, GraphQL, and a headless CMS as early as possible would allow us to streamline our delivery pipeline and iterate faster.
+  We felt that investing in the combination of React, GraphQL, and a headless
+  CMS as early as possible would allow us to streamline our delivery pipeline
+  and iterate faster.
 </Pullquote>
 
 ## Gatsby and React: Shorter builds, rapid changes
@@ -34,7 +38,11 @@ We felt that investing in the combination of React, GraphQL, and a headless CMS 
 Although they considered alternatives like Django, Ghost and Jekyll, they realized these other solutions would require significant new tooling, a longer timeline and a longer ramp-up period.
 
 <Pullquote citation="Daniel Archer">
-We first chose Gatsby because of the appeal with one popular Gatsby solution of using Contentful and Netlify. We felt like it was a compelling ideal to empower our content and creative teams to make rapid changes to our site, and to enable our engineering team to develop in simple, reusable React components that work with a GraphQL interface.
+  We first chose Gatsby because of the appeal with one popular Gatsby solution
+  of using Contentful and Netlify. We felt like it was a compelling ideal to
+  empower our content and creative teams to make rapid changes to our site, and
+  to enable our engineering team to develop in simple, reusable React components
+  that work with a GraphQL interface.
 </Pullquote>
 
 ## Results: Scaling through Gatsby v1 and Gatsby v2
@@ -42,7 +50,10 @@ We first chose Gatsby because of the appeal with one popular Gatsby solution of 
 The initial site re-launched on Gatsby v1 while bringing over some of the legacy pages into the overall codebase. Since then, the six-member Ritual team has rebuilt legacy pages using their new engineering practices, iterated over several other site pages and subsequently upgraded to Gatsby v2, which was a “fairly seamless” and painless process.
 
 <Pullquote citation="Daniel Archer">
-I think the most important facet of the Gatsby experience is its Node environment, enabling data to not only inform the content of our site, but how it’s structured and the pages within. It’s allowed us to scale out many pages very quickly, and to easily relate among data nodes.
+  I think the most important facet of the Gatsby experience is its Node
+  environment, enabling data to not only inform the content of our site, but how
+  it’s structured and the pages within. It’s allowed us to scale out many pages
+  very quickly, and to easily relate among data nodes.
 </Pullquote>
 
 And like so many others, Daniel confirmed that the Gatsby “documentation and community are _huge_ reasons for anybody to pay attention to Gatsby. There’s so many great plugins and open source contributions as well, making it such a vibrant community of talented engineers.”

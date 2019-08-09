@@ -66,8 +66,10 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  site {
-    ...SiteInformation
+  query {
+    site {
+      ...SiteInformation
+    }
   }
 `
 ```
