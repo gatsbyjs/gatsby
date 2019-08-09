@@ -33,6 +33,18 @@ jest.mock(`../create-client`, () => {
 const { sourceNodes } = require(`../gatsby-node`)
 
 describe(`gatsby-source-shopify`, () => {
+  /**
+   * This test is pretty bare-bones. Among other things:
+   *
+   * - Some of the fixtures are empty responses
+   * - There's no pagination testing
+   * - There's no validation that nodes are created correctly, other than a snapshot
+   * - There's no way to test different responses for the same query
+   *
+   * TODO: more and better tests
+   *
+   * Mocking setup is borrowed from gatsby-source-drupal
+   */
   const nodes = {}
   const actions = {
     createNode: jest.fn(node => (nodes[node.id] = node)),
