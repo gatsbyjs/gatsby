@@ -4,9 +4,7 @@ date: 2019-04-08
 author: Marisa Morby
 excerpt: "How do we make decisions about products at Gatsby? Take a look behind the scenes to see how we're using outcome-based planning, product discovery, and other strategies to create the best possible products for our community."
 tags:
-  - company
-  - commercial
-  - product
+  - gatsby-inc
 ---
 
 As a company grows, it will eventually start offering products or services to the community it’s trying to serve. It’s an exciting time filled with near constant changes. At Gatsby, we realized that this meant we needed to have a better understanding and core philosophy around the products we create.

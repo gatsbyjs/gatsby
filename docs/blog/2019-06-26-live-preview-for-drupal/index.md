@@ -17,7 +17,7 @@ Two types of people will be excited about this article.
 
 2. A content focused client who wants their site to be cutting edge, but doesn't want to leave their comfortable workflow that allows them to rapidly toggle between content changes and the visual impact of those changes on the website.
 
-As Sam Bhagwat wrote [when announcing Gatsby Preview](blog/2018-07-17-announcing-gatsby-preview/):
+As Sam Bhagwat wrote [when announcing Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/):
 
 > Content teams are creators. And creators, as Bret Victor put it, “need an immediate connection to what they’re making.”
 
@@ -75,7 +75,7 @@ You can see above how fast this feedback loop is -- and we're working on making 
 
 ## Conclusion
 
-As you're testing out Gatsby Preview + Drupal and using it for company or client projects, please [let the Gatsby team know](support@gatsbyjs.com) if you experience any issues.
+As you're testing out Gatsby Preview + Drupal and using it for company or client projects, please [let the Gatsby team know](https://www.gatsbyjs.com/contact-us/) if you experience any issues.
 
 Drupal-based agencies and companies who want to improve client outcomes, site performance, and UI/UX, while modernizing their engineering stack and increasing engineering team satisfaction have a powerful new tool in their toolkit.
 

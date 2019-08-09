@@ -4,6 +4,11 @@ title: Building Themes
 
 The quickest way to get up and running with a workspace for building themes is to use the official [`gatsby-starter-theme-workspace`](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace) starter.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-the-gatsby-theme-workspace-starter-to-begin-building-a-new-theme"
+  lessonTitle="Use the Gatsby Theme Workspace Starter to Begin Building a New Theme"
+/>
+
 To get started, run:
 
 ```shell
@@ -44,7 +49,7 @@ For Gatsby theme development, that means you can keep multiple themes and exampl
 
 The `package.json` in the root of the new project is primarily responsible for setting up the yarn workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
 
-```json:title=my-theme/gatsby-config.js
+```json:title=my-theme/package.json
 {
   "name": "gatsby-starter-theme-workspace",
   "private": true,

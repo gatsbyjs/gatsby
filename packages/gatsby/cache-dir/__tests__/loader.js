@@ -552,9 +552,26 @@ describe(`Production loader`, () => {
       const prodLoader = new ProdLoader(null, [])
       prodLoader.shouldPrefetch = jest.fn(() => false)
       prodLoader.doPrefetch = jest.fn()
+      prodLoader.apiRunner = jest.fn()
 
       expect(prodLoader.prefetch(`/mypath/`)).toBe(false)
       expect(prodLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
+      expect(prodLoader.apiRunner).not.toHaveBeenCalled()
+      expect(prodLoader.doPrefetch).not.toHaveBeenCalled()
+    })
+
+    it(`should trigger custom prefetch logic when core is disabled`, () => {
+      const prodLoader = new ProdLoader(null, [])
+      prodLoader.shouldPrefetch = jest.fn(() => true)
+      prodLoader.doPrefetch = jest.fn()
+      prodLoader.apiRunner = jest.fn()
+      prodLoader.prefetchDisabled = true
+
+      expect(prodLoader.prefetch(`/mypath/`)).toBe(false)
+      expect(prodLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
+      expect(prodLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
+        pathname: `/mypath/`,
+      })
       expect(prodLoader.doPrefetch).not.toHaveBeenCalled()
     })
 

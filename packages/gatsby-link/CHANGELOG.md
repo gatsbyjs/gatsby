@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.3...gatsby-link@2.2.4) (2019-07-30)
+
+### Bug Fixes
+
+- **docs:** change relative url to absolute url for gatsby-link readme ([#16197](https://github.com/gatsbyjs/gatsby/issues/16197)) ([3eb43db](https://github.com/gatsbyjs/gatsby/commit/3eb43db))
+
 ## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.2...gatsby-link@2.2.3) (2019-07-25)
 
 **Note:** Version bump only for package gatsby-link

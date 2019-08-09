@@ -2,7 +2,7 @@
 title: Publishing Your Next Gatsby Site to AWS With AWS Amplify
 date: 2018-09-04
 author: Nader Dabit
-tags: ["gatsby", "serverless", "hosting", "blog", "aws amplify"]
+tags: ["serverless", "hosting", "blogs", "aws"]
 excerpt: "In this post, we'll walk through how to host & publish your next Gatsby site to AWS"
 canonicalLink: "https://aws-amplify.github.io/amplify-js/media/hosting_guide"
 ---

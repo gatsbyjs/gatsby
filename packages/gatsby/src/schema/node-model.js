@@ -171,12 +171,15 @@ class LocalNodeModel {
     // We provide nodes in case of abstract types, because `run-sift` should
     // only need to know about node types in the store.
     let nodes
+    let nodeTypeNames
     if (isAbstractType(gqlType)) {
-      const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+      nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
       nodes = nodeTypeNames.reduce(
         (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
         []
       )
+    } else {
+      nodeTypeNames = [gqlType.name]
     }
 
     const queryResult = await this.nodeStore.runQuery({
@@ -184,6 +187,7 @@ class LocalNodeModel {
       firstOnly,
       gqlType,
       nodes,
+      nodeTypeNames,
     })
 
     let result = queryResult

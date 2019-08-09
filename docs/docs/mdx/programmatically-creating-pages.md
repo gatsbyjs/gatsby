@@ -12,14 +12,6 @@ support for MDX so you can start your blog. The posts will live in
 `gatsby-source-filesystem` and [`createPages`](/docs/node-apis/#createPages) in
 `gatsby-node.js`.
 
-## Table of contents
-
-- [Source from the filesystem](#source-mdx-pages-from-the-filesystem)
-- [Add MDX files](#add-mdx-files)
-- [Generate slugs](#generate-slugs)
-- [Create pages](#create-pages-from-sourced-mdx-files)
-- [Make a template](#make-a-template-for-your-posts)
-
 ## Source MDX pages from the filesystem
 
 To let Gatsby know that you'll be working with MDX content you need to
@@ -199,11 +191,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `)
 
   if (result.errors) {
-    reporter.panic('🚨  ERROR: Loading "createPages" query', result.errors);
+    reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query')
   }
 
   // Create blog post pages.
-  const posts = result.data.allMdx.edges;
+  const posts = result.data.allMdx.edges
 
   // We'll call `createPage` for each result
   posts.forEach(({ node }, index) => {
@@ -216,8 +208,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // We can use the values in this context in
       // our page layout component
       context: { id: node.id },
-    });
-  }
+    })
+  })
 }
 ```
 
