@@ -12,7 +12,7 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import { setLoader, ProdLoader } from "./loader"
+import { setLoader, ProdLoader, publicLoader } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
 
@@ -25,7 +25,7 @@ loader.setApiRunner(apiRunner)
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
-window.___loader = loader
+window.___loader = publicLoader
 window.___webpackCompilationHash = window.webpackCompilationHash
 
 navigationInit()
@@ -58,7 +58,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   class LocationHandler extends React.Component {
     render() {
-      let { location } = this.props
+      const { location } = this.props
       return (
         <EnsureResources location={location}>
           {({ pageResources, location }) => (
@@ -73,12 +73,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   id="gatsby-focus-wrapper"
                 >
                   <RouteHandler
-                    path={
+                    path={encodeURI(
                       pageResources.page.path === `/404.html`
-                        ? location.pathname
+                        ? stripPrefix(location.pathname, __BASE_PATH__)
                         : pageResources.page.matchPath ||
-                          pageResources.page.path
-                    }
+                            pageResources.page.path
+                    )}
                     {...this.props}
                     location={location}
                     pageResources={pageResources}
@@ -106,9 +106,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
-      loader.pathFinder.findMatchPath(
-        stripPrefix(browserLoc.pathname, __BASE_PATH__)
-      ) ||
+      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
       pagePath === `/404.html` ||
       pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
