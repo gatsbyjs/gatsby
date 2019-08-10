@@ -33,7 +33,7 @@
     "gatsby-plugin-theme-ui": "^0.2.29",
     "gatsby-plugin-twitter": "^2.1.2",
     "gatsby-remark-code-titles": "^1.1.0",
-    "gatsby-remark-copy-linked-files": "^2.1.4",
+    "gatsby-remark-copy-linked-files": "^2.1.5",
     "gatsby-remark-images": "^3.1.8",
     "gatsby-remark-numbered-footnotes": "^1.0.0",
     "gatsby-remark-smartypants": "^2.1.2",
