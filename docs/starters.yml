@@ -3324,3 +3324,19 @@
     - Ready made Components
     - Responsive Design
     - Includes Contentful Delivery API for production build
+- url: http://the404blog.netlify.com
+  repo: https://github.com/mohanmonu777/the404blog
+  description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
+  tags:
+    - Blog
+    - Markdown
+    - Search
+    - Styling:CSS-in-JS
+  features:
+    - Bare-bones starter.
+    - Dynamic content with Markdown
+    - Ready made Components
+    - Responsive Design
+    - Includes Search Feature.
+    - Syntax Highlight in Code.
+    - Styling in Bootstrap
