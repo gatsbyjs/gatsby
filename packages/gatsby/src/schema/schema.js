@@ -30,6 +30,7 @@ const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
   schemaComposer,
@@ -38,6 +39,7 @@ const buildSchema = async ({
   typeMapping,
   fieldExtensions,
   thirdPartySchemas,
+  printConfig,
   typeConflictReporter,
   parentSpan,
 }) => {
@@ -48,6 +50,7 @@ const buildSchema = async ({
     typeMapping,
     fieldExtensions,
     thirdPartySchemas,
+    printConfig,
     typeConflictReporter,
     parentSpan,
   })
@@ -101,6 +104,7 @@ const updateSchemaComposer = async ({
   typeMapping,
   fieldExtensions,
   thirdPartySchemas,
+  printConfig,
   typeConflictReporter,
   parentSpan,
 }) => {
@@ -112,6 +116,7 @@ const updateSchemaComposer = async ({
     typeMapping,
     parentSpan,
   })
+  await printTypeDefinitions({ config: printConfig, schemaComposer })
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
@@ -363,7 +368,8 @@ const addExtensions = ({
 
   if (
     typeComposer instanceof ObjectTypeComposer ||
-    typeComposer instanceof InterfaceTypeComposer
+    typeComposer instanceof InterfaceTypeComposer ||
+    typeComposer instanceof InputTypeComposer
   ) {
     typeComposer.getFieldNames().forEach(fieldName => {
       typeComposer.setFieldExtension(fieldName, `createdFrom`, createdFrom)
@@ -925,7 +931,7 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       },
       resolve: findManyPaginated(typeName),
     },
-  })
+  }).makeFieldNonNull([queryNamePlural])
 }
 
 const parseTypes = ({
