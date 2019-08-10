@@ -1,4 +1,12 @@
-const { createArgsDigest, sortKeys } = require(`../process-file`)
+jest.mock(`got`)
+jest.mock(`../safe-sharp`, () => {
+  return {
+    simd: jest.fn(),
+    concurrency: jest.fn(),
+  }
+})
+const { createArgsDigest, processFile, sortKeys } = require(`../process-file`)
+const got = require(`got`)
 
 describe(`createArgsDigest`, () => {
   const defaultArgsBaseline = {
@@ -114,5 +122,62 @@ describe(`createArgsDigest`, () => {
         })
       })
     })
+  })
+})
+
+describe(`processFile`, () => {
+  beforeEach(() => {
+    process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL = `https://example.com/image-service`
+    got.post.mockReset()
+    got.post.mockResolvedValueOnce({})
+  })
+
+  afterAll(() => {
+    delete process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL
+  })
+
+  const mockProcessFile = async ({ hash = `1234lol` } = {}) => {
+    const transforms = {
+      outputPath: `myoutputpath/1234/file.jpg`,
+      args: {
+        width: 100,
+        height: 100,
+      },
+    }
+
+    const res = await processFile(`mypath/file.jpg`, hash, [transforms], {
+      stripMetadata: true,
+    })
+
+    return [
+      res,
+      {
+        transforms,
+        hash,
+      },
+    ]
+  }
+
+  it(`should offload sharp transforms to the cloud`, async () => {
+    const [res] = await mockProcessFile()
+
+    expect(res).toMatchSnapshot()
+  })
+
+  it(`passes hash and transforms to cloud service`, async () => {
+    const hash = `8675309jenny`
+
+    const [, args] = await mockProcessFile(hash)
+
+    expect(got.post).toHaveBeenCalledTimes(1)
+    expect(got.post).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: expect.objectContaining({
+          hash: args.hash,
+          transforms: [args.transforms],
+        }),
+      })
+    )
   })
 })

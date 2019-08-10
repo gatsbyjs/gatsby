@@ -3,7 +3,7 @@ const grayMatter = require("gray-matter");
 const mdx = require("@mdx-js/mdx");
 const objRestSpread = require("@babel/plugin-proposal-object-rest-spread");
 
-const debug = require("debug")("gatsby-mdx:gen-mdx");
+const debug = require("debug")("gatsby-plugin-mdx:gen-mdx");
 
 const getSourcePluginsAsRemarkPlugins = require("./get-source-plugins-as-remark-plugins");
 const htmlAttrToJSXAttr = require("./babel-plugin-html-attr-to-jsx-attr");
@@ -45,7 +45,7 @@ module.exports = async function genMDX(
 ) {
   const pathPrefixCacheStr = pathPrefix || ``;
   const payloadCacheKey = node =>
-    `gatsby-mdx-entire-payload-${
+    `gatsby-plugin-mdx-entire-payload-${
       node.internal.contentDigest
     }-${pathPrefixCacheStr}`;
 
