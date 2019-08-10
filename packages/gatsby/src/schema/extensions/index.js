@@ -207,7 +207,6 @@ const processFieldExtensions = ({
     const extensions = typeComposer.getFieldExtensions(fieldName)
     Object.keys(extensions)
       .filter(name => !internalExtensionNames.includes(name))
-      .sort(a => a === `proxy`) // Ensure `proxy` is run last
       .forEach(name => {
         const { extend } = fieldExtensions[name] || {}
         if (typeof extend === `function`) {
