@@ -1506,7 +1506,7 @@ describe(`GraphQL field extensions`, () => {
       expect(results).toEqual(expected)
     })
 
-    it(`proxies to field from parent node`, async () => {
+    it(`proxies to field from parent node with helper extension`, async () => {
       dispatch(
         createFieldExtension({
           name: `parent`,
@@ -1553,6 +1553,15 @@ describe(`GraphQL field extensions`, () => {
         },
       }
       expect(results).toEqual(expected)
+    })
+
+    describe(`proxies to fields on other nodes when combined with projection extension`, () => {
+      it.todo(`proxies to field on parent node`)
+      it.todo(`proxies to nested field on parent node`)
+      it.todo(`proxies to field on ancestor node`)
+      it.todo(`proxies to nested field on ancestor node`)
+      it.todo(`proxies to field on linked in node`)
+      it.todo(`proxies to nested field on linked in node`)
     })
   })
 })
