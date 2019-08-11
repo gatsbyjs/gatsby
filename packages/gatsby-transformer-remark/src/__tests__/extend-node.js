@@ -132,7 +132,7 @@ Where oh where is my little pony?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
       expect(node.excerptAst).toMatchObject({
         children: [
           {
