@@ -425,6 +425,90 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to default value 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to provided parameter 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to provided parameter with truncate 1`] = `
+Object {
+  "excerpt": "Where oh where is my little pony? Lorem ipsum dol…",
+  "excerptAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "Where oh where is my little pony? Lorem ipsum dol…",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "p",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
 exports[`Headings are generated correctly from schema returns value 1`] = `
 Object {
   "headings": Array [

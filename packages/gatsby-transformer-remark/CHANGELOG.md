@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.11...gatsby-transformer-remark@2.6.12) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Add fallback when markdown doesn't include excerpt_separator ([#16420](https://github.com/gatsbyjs/gatsby/issues/16420)) ([f77e233](https://github.com/gatsbyjs/gatsby/commit/f77e233))
+
 ## [2.6.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.10...gatsby-transformer-remark@2.6.11) (2019-08-06)
 
 **Note:** Version bump only for package gatsby-transformer-remark
