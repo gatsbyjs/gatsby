@@ -354,19 +354,18 @@ async function getPages(
     let result = []
 
     const getOptions = page => {
-      
       let qs = _queryParams
-      if (typeof _queryParams === 'function') {
+      if (typeof _queryParams === `function`) {
         qs = _queryParams({ url })
       }
-      if (!qs || typeof qs !== 'object') qs = {}
-      
+      if (!qs || typeof qs !== `object`) qs = {}
+
       let o = {
         method: `get`,
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
           page: page,
-          ...qs
+          ...qs,
         })}`,
       }
 

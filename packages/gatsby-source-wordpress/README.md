@@ -134,10 +134,10 @@ module.exports = {
         // queryParams: (object || function<object>)
         // Query params to add to the request for resources from WP
         // Example: { lang: 'en' } will return posts & pages for which lang = en
-        queryParams: function({url}) {
+        queryParams: function({ url }) {
           // Example to excude certain paths from filtering
-          if (url.match(/(tags|categories)/ig)) return {}
-          return { lang: 'en' }
+          if (url.match(/(tags|categories)/gi)) return {}
+          return { lang: "en" }
         },
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
