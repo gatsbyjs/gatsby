@@ -37,9 +37,10 @@ const createNode = content => {
   return markdownNode
 }
 
-const createPluginOptions = (content, imagePaths = `/`) => {
+const createPluginOptions = (content, imagePaths = `/`, options={}) => {
   const dirName = `not-a-real-dir`
   return {
+    ...options,
     files: [].concat(imagePaths).map(imagePath => {
       return {
         absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
@@ -355,9 +356,20 @@ Look ma, no images
 
 })
 
-test('it passes through the srcSetBreakPoints to gatsby-plugin-sharp', () => {
-  const spy = jest.spyOn(gatsby - plugin - sharp, 'play');
+describe(`gatsby-remark-images`, () => {
+
+  it('passes through the srcSetBreakPoints to gatsby-plugin-sharp', () => {
+    const spy = jest.spyOn(`gatsby-plugin-sharp`, 'fluid');
+
+    const imagePath = `images/my-image.jpeg`
+    const content = `![image](./${imagePath}`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath, { srcSetBreakpoints: [ 200, 340, 520, 890 ]}))
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ srcSetBreakpoints: [ 200, 340, 520, 890 ]}))
+    expect(nodes.length).toBe(1)
+  })
 })
+
 
 describe(`showCaptions`, () => {
   it(`display title as caption`, async () => {
