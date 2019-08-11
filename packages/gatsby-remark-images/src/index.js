@@ -71,7 +71,7 @@ module.exports = (
     }
   }
 
-  const getImageCaption = (node, alt, defaultAlt) => {
+  const getImageCaption = (node, overWrites) => {
     const captionOptions = Array.isArray(options.showCaptions)
       ? options.showCaptions
       : options.showCaptions === true
@@ -87,8 +87,11 @@ module.exports = (
             }
             break
           case `alt`:
-            if (alt && alt !== defaultAlt) {
-              return alt
+            if (overWrites.alt) {
+              return overWrites.alt
+            }
+            if (node.alt) {
+              return node.alt
             }
             break
         }
@@ -153,7 +156,7 @@ module.exports = (
       overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
     )
 
-    const title = node.title ? node.title : alt
+    const title = node.title ? _.escape(node.title) : alt
 
     // Create our base image tag
     let imageTag = `
@@ -243,7 +246,7 @@ module.exports = (
 
     // Construct new image node w/ aspect ratio placeholder
     const imageCaption =
-      options.showCaptions && getImageCaption(node, alt, defaultAlt)
+      options.showCaptions && _.escape(getImageCaption(node, overWrites))
 
     let rawHTML = `
   <span

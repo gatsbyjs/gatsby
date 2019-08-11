@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.3...gatsby-cypress@0.2.4) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Change navigation handler logic ([#13502](https://github.com/gatsbyjs/gatsby/issues/13502)) ([504b077](https://github.com/gatsbyjs/gatsby/commit/504b077))
+- **tests:** Remove unreliable timeout logic from development-runtime ([#16454](https://github.com/gatsbyjs/gatsby/issues/16454)) ([1166509](https://github.com/gatsbyjs/gatsby/commit/1166509))
+
 ## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.2...gatsby-cypress@0.2.3) (2019-07-15)
 
 ### Features

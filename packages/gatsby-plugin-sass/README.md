@@ -85,7 +85,28 @@ plugins: [
 
 ### SASS Precision
 
-SASS defaults to [5 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. [if you use Bootstrap](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision)), you may configure it as follows:
+SASS defaults to [5 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. if you use Bootstrap), you may configure it as follows:
+
+#### Bootstrap 4
+
+See [Bootstrap's documentation on theming](https://github.com/twbs/bootstrap/blob/master/site/content/docs/4.3/getting-started/theming.md#sass) for reference.
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      postCssPlugins: [somePostCssPlugin()],
+      precision: 6,
+    },
+  },
+]
+```
+
+### Bootstrap 3 (with `bootstrap-sass`)
+
+See [`bootstrap-sass`](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision) for reference.
 
 ```javascript
 // in gatsby-config.js
@@ -104,6 +125,25 @@ plugins: [
 
 Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
 Any file with the `module` extension will use CSS Modules.
+
+## SASS & CSS Modules file Regexes
+
+To override the file regex for SASS or CSS modules,
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      // Override the file regex for SASS
+      sassRuleTest: /\.global\.s(a|c)ss$/,
+      // Override the file regex for CSS modules
+      sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
+    },
+  },
+]
+```
 
 ### PostCSS plugins
 

@@ -2926,7 +2926,7 @@
   featured: false
 - title: Ramón Chancay
   description: >-
-    Frontend / Backend Developer in Guayaquil Ecuador.
+    Front-end / Back-end Developer in Guayaquil Ecuador.
     Currently at Everymundo, previously at El Universo.
     I enjoy teaching and sharing what I know.
     I give professional advice to developers and companies.
@@ -2939,8 +2939,8 @@
     - Blog
     - Technology
     - Web Development
-  built_by: Codedebug
-  built_by_url: "https://codedebug.co/"
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
 - title: BELLHOPS
   main_url: https://www.getbellhops.com/
   url: https://www.getbellhops.com/
@@ -6442,18 +6442,6 @@
     - Consulting
     - Education
     - Landing Page
-- title: Onramp
-  url: https://www.onramp.io/
-  main_url: https://www.onramp.io/
-  description: >
-    Onramp is a technical workforce solutions company. We help corporate clients build new pipelines of talent to meet their technical and HR goals. We specialize in discovering new pools of talent and provide customized training so candidates are qualified and better prepared employees.
-  categories:
-    - Business
-    - Education
-    - Landing Page
-  built_by: Nicola B.
-  built_by_url: https://www.linkedin.com/in/nicola-b/
-  featured: false
 - title: Write/Speak/Code
   url: https://www.writespeakcode.com/
   main_url: https://www.writespeakcode.com/
@@ -6797,4 +6785,149 @@
     - User Experience
   built_by: Simon Koelewijn
   built_by_url: https://simonkoelewijn.nl
+  featured: false
+- title: Raconteur Careers
+  main_url: https://careers.raconteur.net
+  url: https://careers.raconteur.net
+  description: >
+    Raconteur is a London-based publishing house and content marketing agency. We have built this careers portal Gatsby v2 with TypeScript, Styled-Components, React-Spring and Contentful.
+  categories:
+    - Media
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+  featured: false
+- title: Frankly Steve
+  url: https://www.franklysteve.com/
+  main_url: https://www.franklysteve.com/
+  description: >
+    Wedding photography with all the hugs, tears, kisses, smiles, laughter, banter, kids up trees, friends in hedges.
+  categories:
+    - Photography
+    - Portfolio
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
+- title: Eventos orellana
+  description: >-
+    We are a company dedicated to providing personalized and professional advice
+    for the elaboration and coordination of social and business events.
+  main_url: "https://eventosorellana.com/"
+  url: "https://eventosorellana.com/"
+  featured: false
+  categories:
+    - Gallery
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
+- title: DIA Supermercados
+  main_url: https://dia.com.br
+  url: https://dia.com.br
+  description: >-
+    Brazilian retailer subsidiary, with more than 1,100 stores in Brazil, focusing on low prices and exclusive DIA Products.
+  categories:
+    - Business
+  built_by: CloudDog
+  built_by_url: https://clouddog.com.br
+  featured: false
+- title: AntdSite
+  main_url: https://antdsite.yvescoding.org
+  url: https://antdsite.yvescoding.org
+  description: >-
+    A static docs generator based on Ant Design and GatsbyJs.
+  categories:
+    - Documentation
+  built_by: Yves Wang
+  built_by_url: https://antdsite.yvescoding.org
+- title: Fourpost
+  url: https://www.fourpost.com
+  main_url: https://www.fourpost.com
+  description: >
+    Fourpost is a shopping destination for today’s family that combines the best brands and experiences under one roof.
+  categories:
+    - Retail
+    - Marketing
+  built_by: Fourpost
+  built_by_url: https://github.com/fourpost
+  featured: false
+- title: ReactStudy Blog
+  url: https://elated-lewin-51cf0d.netlify.com
+  main_url: https://elated-lewin-51cf0d.netlify.com
+  description: >
+    Belong to your own blog by gatsby
+  categories:
+    - Blog
+  built_by: 97thjingba
+  built_by_url: https://github.com/97thjingba
+  featured: false
+- title: George
+  main_url: https://kind-mestorf-5a2bc0.netlify.com
+  url: https://kind-mestorf-5a2bc0.netlify.com
+  description: >
+    shiny new web built with Gatsby
+  categories:
+    - Blog
+    - Portfolio
+    - Gallery
+    - Landing Page
+    - Design
+    - Web Development
+    - Open Source
+    - Science
+  built_by: George Davituri
+  featured: false
+
+- title: CEO amp
+  main_url: https://www.ceoamp.com
+  url: https://www.ceoamp.com
+  description: >
+    CEO amp is an executive training programme to amplify a CEO's voice in the media. This site was built with Gatsby v2, Styled-Components, TypeScript and React Spring.
+  categories:
+    - Consulting
+    - Entrepreneurship
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+  featured: false
+- title: QuantumBlack
+  main_url: https://www.quantumblack.com/
+  url: https://www.quantumblack.com/
+  description: >
+    We help companies use data to make distinctive, sustainable and significant improvements to their performance.
+  categories:
+    - Technology
+    - Consulting
+    - Data
+    - Design
+  built_by: Richard Westenra
+  built_by_url: https://www.richardwestenra.com/
+  featured: false
+- title: Coffeeshop Creative
+  url: https://www.coffeeshopcreative.ca
+  main_url: https://www.coffeeshopcreative.ca
+  description: >
+    Marketing site for a Toronto web design and videography studio.
+  categories:
+    - Marketing
+    - Agency
+    - Design
+    - Video
+    - Web Development
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: Daily Hacker News
+  url: https://dailyhn.com
+  main_url: https://dailyhn.com
+  description: >
+    Daily Hacker News presents the top five stories from Hacker News daily.
+  categories:
+    - Entertainment
+    - Design
+    - Web Development
+    - Technology
+    - Science
+  built_by: Joeri Smits
+  built_by_url: https://joeri.dev
   featured: false

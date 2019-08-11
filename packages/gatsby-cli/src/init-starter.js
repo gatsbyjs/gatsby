@@ -275,4 +275,5 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starterPath, rootPath)
+  trackCli(`NEW_PROJECT_END`)
 }
