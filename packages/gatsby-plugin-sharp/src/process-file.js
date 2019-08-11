@@ -8,6 +8,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const { cpuCoreCount } = require(`gatsby-core-utils`)
 const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
@@ -16,16 +17,10 @@ const got = require(`got`)
 // adventurous and see what happens with it on.
 sharp.simd(true)
 
-try {
-  // Handle Sharp's concurrency based on the Gatsby CPU count
-  // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
-  // See: https://www.gatsbyjs.org/docs/multi-core-builds/
-  const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
-  sharp.concurrency(cpuCoreCount())
-} catch {
-  // if above throws error this probably means that used Gatsby version
-  // doesn't support cpu-core-count utility.
-}
+// Handle Sharp's concurrency based on the Gatsby CPU count
+// See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
+// See: https://www.gatsbyjs.org/docs/multi-core-builds/
+sharp.concurrency(cpuCoreCount())
 
 /**
  * List of arguments used by `processFile` function.
@@ -73,7 +68,7 @@ const argsWhitelist = [
  * @param {String} file
  * @param {Transform[]} transforms
  */
-exports.processFile = (file, transforms, options = {}) => {
+exports.processFile = (file, contentDigest, transforms, options = {}) => {
   let pipeline
   try {
     // adds gatsby cloud image service to gatsby-sharp
@@ -87,6 +82,7 @@ exports.processFile = (file, transforms, options = {}) => {
             .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
               body: {
                 file,
+                hash: contentDigest,
                 transforms,
                 options,
               },

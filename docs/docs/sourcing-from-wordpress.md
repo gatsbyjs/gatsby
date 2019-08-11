@@ -6,7 +6,7 @@ This guide will walk you through the process of using [Gatsby](/) with [WordPres
 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
 
-_Note: this guide uses the `gatsby-starter-default` to provide you with a knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
+_Note: this guide uses the `gatsby-starter-default` to provide you with the knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
 [this example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) to gain extra insights._
 
 ## Setup
@@ -106,3 +106,4 @@ created to support this guide.
 - [Blog post on which this guide is based on](/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
 - [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
 - [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)
+- More [Gatsby blog posts about using Gatsby + Wordpress](/blog/tags/wordpress/)

@@ -13,10 +13,7 @@ import { mediaQueries, sizes, fontSizes } from "../../utils/presets"
 import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
-import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
+import "../../assets/fonts/futura"
 
 const Content = styled(`div`)`
   padding-top: ${sizes.bannerHeight};

@@ -1,16 +1,15 @@
 exports.registerServiceWorker = () => true
 
 const prefetchedPathnames = []
-const whitelistedPathnames = []
 
 exports.onServiceWorkerActive = ({
   getResourceURLsForPathname,
   serviceWorker,
 }) => {
-  // if the SW has just updated then reset whitelisted paths and don't cache
+  // if the SW has just updated then clear the path dependencies and don't cache
   // stuff, since we're on the old revision until we navigate to another page
   if (window.___swUpdated) {
-    serviceWorker.active.postMessage({ gatsbyApi: `resetWhitelist` })
+    serviceWorker.active.postMessage({ gatsbyApi: `clearPathResources` })
     return
   }
 
@@ -26,15 +25,22 @@ exports.onServiceWorkerActive = ({
     .call(nodes)
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
-  // Loop over all resources and fetch the page component and JSON
-  // to add it to the sw cache.
+  // Loop over prefetched pages and add their resources to an array,
+  // plus specify which resources are required for those paths.
   const prefetchedResources = []
-  prefetchedPathnames.forEach(path =>
-    getResourceURLsForPathname(path).forEach(resource =>
-      prefetchedResources.push(resource)
-    )
-  )
+  prefetchedPathnames.forEach(path => {
+    const resources = getResourceURLsForPathname(path)
+    prefetchedResources.push(...resources)
 
+    serviceWorker.active.postMessage({
+      gatsbyApi: `setPathResources`,
+      path,
+      resources,
+    })
+  })
+
+  // Loop over all resources and fetch the page component + JSON data
+  // to add it to the SW cache.
   const resources = [...headerResources, ...prefetchedResources]
   resources.forEach(resource => {
     // Create a prefetch link for each resource, so Workbox runtime-caches them
@@ -47,44 +53,26 @@ exports.onServiceWorkerActive = ({
 
     document.head.appendChild(link)
   })
-
-  serviceWorker.active.postMessage({
-    gatsbyApi: `whitelistPathnames`,
-    pathnames: whitelistedPathnames,
-  })
 }
 
-function whitelistPathname(pathname, includesPrefix) {
-  if (`serviceWorker` in navigator) {
-    const { serviceWorker } = navigator
-
-    if (serviceWorker.controller !== null) {
-      serviceWorker.controller.postMessage({
-        gatsbyApi: `whitelistPathnames`,
-        pathnames: [{ pathname, includesPrefix }],
-      })
-    } else {
-      whitelistedPathnames.push({ pathname, includesPrefix })
-    }
-  }
-}
-
-exports.onPostPrefetchPathname = ({ pathname }) => {
+exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {
   // do nothing if the SW has just updated, since we still have old pages in
   // memory which we don't want to be whitelisted
   if (window.___swUpdated) return
 
-  whitelistPathname(pathname, false)
+  if (`serviceWorker` in navigator) {
+    const { serviceWorker } = navigator
 
-  // if SW is not installed, we need to record any prefetches
-  // that happen so we can then add them to SW cache once installed
-  if (
-    `serviceWorker` in navigator &&
-    !(
-      navigator.serviceWorker.controller !== null &&
-      navigator.serviceWorker.controller.state === `activated`
-    )
-  ) {
-    prefetchedPathnames.push(pathname)
+    if (serviceWorker.controller === null) {
+      // if SW is not installed, we need to record any prefetches
+      // that happen so we can then add them to SW cache once installed
+      prefetchedPathnames.push(pathname)
+    } else {
+      serviceWorker.controller.postMessage({
+        gatsbyApi: `setPathResources`,
+        path: pathname,
+        resources: getResourceURLsForPathname(pathname),
+      })
+    }
   }
 }

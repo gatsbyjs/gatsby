@@ -3,7 +3,7 @@ title: "Themes Update: Child Theming and Component Shadowing"
 date: 2019-01-29
 author: Chris Biscardi
 excerpt: "Making it easier to abstract themes into reusable modules"
-tags: ["themes", "architecture"]
+tags: ["themes", "content-mesh"]
 ---
 
 > _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._

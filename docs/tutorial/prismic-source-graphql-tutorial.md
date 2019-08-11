@@ -81,33 +81,33 @@ import Layout from "../components/layout"
 import { RichText } from "prismic-reactjs" //highlight-line
 
 //highlight-start
-const export query = graphql`
-{
-  prismic {
-    allBlog_homes {
-      edges {
-        node {
-          headline
-          description
-          image
+export const query = graphql`
+  {
+    prismic {
+      allBlog_homes {
+        edges {
+          node {
+            headline
+            description
+            image
+          }
         }
       }
-    }
-    allPosts(sortBy: date_DESC) {
-      edges {
-        node {
-          _meta {
-            id
-            uid
-            type
+      allPosts(sortBy: date_DESC) {
+        edges {
+          node {
+            _meta {
+              id
+              uid
+              type
+            }
+            title
+            date
           }
-          title
-          date
         }
       }
     }
   }
-}
 `
 // highlight-end
 ```
@@ -124,7 +124,9 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt="avatar image" />
+        <img src={doc.node.image.url} alt={doc.node.image.alt} /> // Make sure
+        to add an accessible alt attribute when adding images in Prismic:
+        https://user-guides.prismic.io/articles/768849-add-metadata-to-an-asset
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
@@ -145,7 +147,7 @@ const BlogPosts = ({ posts }) => {
     <div>
       {posts.map(post => {
         return (
-          <div key={post.node.id}>
+          <div key={post.node._meta.id}>
             <h2>{RichText.asText(post.node.title)}</h2>
             <p>
               <time>{post.node.date}</time>
@@ -167,7 +169,7 @@ export default ({ data }) => {
   return (
     <Layout>
       <div>
-        <img src={doc.node.image.url} alt="avatar" />
+        <img src={doc.node.image.url} alt={doc.node.image.alt} />
         <h1>{RichText.asText(doc.node.headline)}</h1>
         <p>{RichText.asText(doc.node.description)}</p>
       </div>
@@ -212,7 +214,7 @@ const BlogPosts = ({ posts }) => {
     <ul>
       {posts.map(post => {
         return (
-          <li key={post.node.id}>
+          <li key={post.node._meta.id}>
             // highlight-start
             <Link to={linkResolver(post.node._meta)}>
               {RichText.asText(post.node.title)}

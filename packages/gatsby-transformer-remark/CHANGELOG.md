@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.11...gatsby-transformer-remark@2.6.12) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Add fallback when markdown doesn't include excerpt_separator ([#16420](https://github.com/gatsbyjs/gatsby/issues/16420)) ([f77e233](https://github.com/gatsbyjs/gatsby/commit/f77e233))
+
+## [2.6.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.10...gatsby-transformer-remark@2.6.11) (2019-08-06)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.9...gatsby-transformer-remark@2.6.10) (2019-07-29)
+
+### Features
+
+- **gatsby-transformer-remark:** subscribe to mimeTypes in defs([#16172](https://github.com/gatsbyjs/gatsby/issues/16172)) ([d80c273](https://github.com/gatsbyjs/gatsby/commit/d80c273))
+
+## [2.6.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.8...gatsby-transformer-remark@2.6.9) (2019-07-22)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.7...gatsby-transformer-remark@2.6.8) (2019-07-20)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.6...gatsby-transformer-remark@2.6.7) (2019-07-19)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Restore pathPrefix option in r… ([#15889](https://github.com/gatsbyjs/gatsby/issues/15889)) ([81b6cf1](https://github.com/gatsbyjs/gatsby/commit/81b6cf1))
+
+## [2.6.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.5...gatsby-transformer-remark@2.6.6) (2019-07-15)
+
+### Features
+
+- **gatsby-transformer-remark:** Allow remark subplugins to modify graphql types owned by parent plugin [#15688](https://github.com/gatsbyjs/gatsby/issues/15688) ([6959c6d](https://github.com/gatsbyjs/gatsby/commit/6959c6d))
+
 ## [2.6.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.4...gatsby-transformer-remark@2.6.5) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-transformer-remark

@@ -29,8 +29,9 @@ const loadCachedConfig = () => {
 module.exports = function preset(_, options = {}) {
   let { targets = null } = options
 
+  // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
+  const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
   const pluginBabelConfig = loadCachedConfig()
-  const stage = process.env.GATSBY_BUILD_STAGE || `test`
   const absoluteRuntimePath = path.dirname(
     require.resolve(`@babel/runtime/package.json`)
   )

@@ -8,6 +8,8 @@ const { getErrorFormatter } = require(`./errors`)
 const reporterInstance = require(`./reporters`)
 const constructError = require(`../structured-errors/construct-error`)
 const errorFormatter = getErrorFormatter()
+const { trackCli } = require(`gatsby-telemetry`)
+const convertHrtime = require(`convert-hrtime`)
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
@@ -35,6 +37,13 @@ const reporter: Reporter = {
 
     if (isNoColor) {
       errorFormatter.withoutColors()
+    }
+
+    // disables colors in popular terminal output coloring packages
+    //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
+    //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
+    if (isNoColor) {
+      process.env.FORCE_COLOR = `0`
     }
   },
   /**
@@ -120,6 +129,7 @@ const reporter: Reporter = {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
+    let startTime = 0
 
     const activity = reporterInstance.createActivity({
       type: `spinner`,
@@ -129,8 +139,9 @@ const reporter: Reporter = {
 
     return {
       start() {
+        startTime = process.hrtime()
         activity.update({
-          startTime: process.hrtime(),
+          startTime: startTime,
         })
       },
       setStatus(status) {
@@ -139,6 +150,13 @@ const reporter: Reporter = {
         })
       },
       end() {
+        trackCli(`ACTIVITY_DURATION`, {
+          name: name,
+          duration: Math.round(
+            convertHrtime(process.hrtime(startTime))[`milliseconds`]
+          ),
+        })
+
         span.finish()
         activity.done()
       },

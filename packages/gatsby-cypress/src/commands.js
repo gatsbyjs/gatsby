@@ -2,17 +2,22 @@
 
 import apiHandler, { waitForAPI } from "./api-handler"
 
-Cypress.Commands.add(`getTestElement`, selector =>
-  cy.get(`[data-testid="${selector}"]`)
+Cypress.Commands.add(`getTestElement`, (selector, options = {}) =>
+  cy.get(`[data-testid="${selector}"]`, options)
 )
 
-const TIMEOUT = 9999
+const TIMEOUT = 10000
 
 Cypress.Commands.add(
   `waitForAPI`,
   { prevSubject: `optional` },
   (subject, api, { timeout = TIMEOUT } = {}) => {
-    cy.window().then({ timeout: timeout }, win => {
+    Cypress.log({
+      name: `waitForAPI`,
+      message: api,
+    })
+
+    cy.window({ log: false }).then({ timeout: timeout }, win => {
       if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }
