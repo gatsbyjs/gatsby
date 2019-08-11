@@ -1,5 +1,5 @@
-import React, { createElement } from "react"
-import { Router } from "@reach/router"
+import React from "react"
+import { Router, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
 import {
@@ -33,15 +33,30 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 
 navigationInit()
 
-class RouteHandler extends React.Component {
+// In gatsby v2 if Router is used in page using matchPaths
+// paths need to contain full path.
+// For example:
+//   - page have `/app/*` matchPath
+//   - inside template user needs to use `/app/xyz` as path
+// Resetting `basepath`/`baseuri` keeps current behaviour
+// to not introduce breaking change.
+// Remove this in v3
+const RouteHandler = props => (
+  <BaseContext.Provider
+    value={{
+      baseuri: `/`,
+      basepath: `/`,
+    }}
+  >
+    <JSONStore {...props} />
+  </BaseContext.Provider>
+)
+
+class LocationHandler extends React.Component {
   render() {
     let { location } = this.props
 
-    // check if page exists - in dev pages are sync loaded, it's safe to use
-    // loader.getPage
-    let page = loader.getPage(location.pathname)
-
-    if (page) {
+    if (!loader.isPageNotFound(location.pathname)) {
       return (
         <EnsureResources location={location}>
           {locationAndPageResources => (
@@ -50,47 +65,60 @@ class RouteHandler extends React.Component {
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
               >
-                <JSONStore {...this.props} {...locationAndPageResources} />
+                <Router
+                  basepath={__BASE_PATH__}
+                  location={location}
+                  id="gatsby-focus-wrapper"
+                >
+                  <RouteHandler
+                    path={encodeURI(
+                      locationAndPageResources.pageResources.page.matchPath ||
+                        locationAndPageResources.pageResources.page.path
+                    )}
+                    {...this.props}
+                    {...locationAndPageResources}
+                  />
+                </Router>
               </ScrollContext>
             </RouteUpdates>
           )}
         </EnsureResources>
       )
-    } else {
-      const dev404PageResources = loader.getResourcesForPathnameSync(
-        `/dev-404-page/`
-      )
-      const real404PageResources = loader.getResourcesForPathnameSync(
-        `/404.html`
-      )
-      let custom404
-      if (real404PageResources) {
-        custom404 = (
-          <JSONStore {...this.props} pageResources={real404PageResources} />
-        )
-      }
+    }
 
-      return (
-        <RouteUpdates location={location}>
-          <JSONStore
+    const dev404PageResources = loader.loadPageSync(`/dev-404-page`)
+    const real404PageResources = loader.loadPageSync(`/404.html`)
+    let custom404
+    if (real404PageResources) {
+      custom404 = (
+        <JSONStore {...this.props} pageResources={real404PageResources} />
+      )
+    }
+
+    return (
+      <RouteUpdates location={location}>
+        <Router
+          basepath={__BASE_PATH__}
+          location={location}
+          id="gatsby-focus-wrapper"
+        >
+          <RouteHandler
+            path={location.pathname}
             location={location}
             pageResources={dev404PageResources}
             custom404={custom404}
           />
-        </RouteUpdates>
-      )
-    }
+        </Router>
+      </RouteUpdates>
+    )
   }
 }
 
-const Root = () =>
-  createElement(
-    Router,
-    {
-      basepath: __PATH_PREFIX__,
-    },
-    createElement(RouteHandler, { path: `/*` })
-  )
+const Root = () => (
+  <Location>
+    {locationContext => <LocationHandler {...locationContext} />}
+  </Location>
+)
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(

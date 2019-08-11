@@ -1,5 +1,5 @@
 ---
-title: "Using Gatsby Professionally"
+title: "First Professional Project"
 ---
 
 The most important professional Gatsby project you or your organization will ever ship is your first project.

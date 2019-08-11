@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import Slider from "./slider"
 import { options } from "../utils/typography"
-import { fontSizes, colors, space, radii } from "../utils/presets"
+import { fontSizes, colors, space } from "../utils/presets"
 import Link from "gatsby-link"
 import MdNavigateBefore from "react-icons/lib/md/navigate-before"
 import MdNavigateNext from "react-icons/lib/md/navigate-next"
@@ -9,7 +9,7 @@ import { srOnly } from "../utils/styles"
 
 const controlButtonStyles = {
   WebkitAppearance: `none`,
-  color: colors.gray.calm,
+  color: colors.text.secondary,
   fontWeight: 700,
   border: 0,
   background: `transparent`,
@@ -24,9 +24,9 @@ const controlButtonStyles = {
   "&:hover": {
     cursor: `pointer`,
     color: colors.gatsby,
-    background: colors.ui.whisper,
+    background: colors.ui.hover,
   },
-  "&:active": { background: colors.ui.light },
+  "&:active": { background: colors.ui.hover },
 }
 
 class Rotator extends Component {
@@ -113,9 +113,8 @@ class Rotator extends Component {
     return (
       <div
         css={{
-          borderTop: `1px solid ${colors.gray.border}`,
-          borderBottom: `1px solid ${colors.gray.border}`,
-          borderRadius: radii[2],
+          borderTop: `1px solid ${colors.ui.border.subtle}`,
+          borderBottom: `1px solid ${colors.ui.border.subtle}`,
           padding: `${space[4]} ${space[9]}`,
           margin: `${space[6]} 0`,
           position: `relative`,
@@ -128,7 +127,6 @@ class Rotator extends Component {
         >
           <p
             css={{
-              color: colors.gray.copy,
               fontSize: fontSizes[4],
               fontFamily: options.headerFontFamily.join(`,`),
               textAlign: `center`,
@@ -155,7 +153,7 @@ class Rotator extends Component {
                 {!enableSlider ? (
                   <>{text}</>
                 ) : (
-                  <Slider items={[text]} color={`#000`} />
+                  <Slider items={[text]} color={colors.black} />
                 )}
               </span>
             </span>
@@ -163,7 +161,7 @@ class Rotator extends Component {
 
           <p
             css={{
-              color: colors.gray.calm,
+              color: colors.text.secondary,
               margin: 0,
               fontSize: fontSizes[3],
               textAlign: `center`,

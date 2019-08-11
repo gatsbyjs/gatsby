@@ -38,3 +38,9 @@ Defines if [`@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env) is
 `boolean`, defaults to `false`.
 
 Outputs the targets/plugins used and the version specified in [plugin data version](https://github.com/babel/babel/blob/master/packages/babel-preset-env/data/plugins.json) to `console.log`.
+
+### `nodeVersion`
+
+`string`, defaults to `8.0`
+
+Allows the Node.js version target to be modified per [`@babel/preset-env` documentation](https://babeljs.io/docs/en/babel-preset-env#targetsnode)

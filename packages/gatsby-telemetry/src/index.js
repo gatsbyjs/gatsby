@@ -16,7 +16,7 @@ const tick = _ => {
 }
 
 module.exports = {
-  trackCli: (input, tags) => instance.captureEvent(input, tags),
+  trackCli: (input, tags, opts) => instance.captureEvent(input, tags, opts),
   trackError: (input, tags) => instance.captureError(input, tags),
   trackBuildError: (input, tags) => instance.captureBuildError(input, tags),
   setDefaultTags: tags => instance.decorateAll(tags),

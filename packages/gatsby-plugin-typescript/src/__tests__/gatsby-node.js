@@ -3,6 +3,7 @@ const {
   onCreateBabelConfig,
   onCreateWebpackConfig,
 } = require(`../gatsby-node`)
+const path = require(`path`)
 
 describe(`gatsby-plugin-typescript`, () => {
   describe(`resolvableExtensions`, () => {
@@ -21,7 +22,7 @@ describe(`gatsby-plugin-typescript`, () => {
       }
       onCreateBabelConfig({ actions }, options)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
-        name: `@babel/preset-typescript`,
+        name: expect.stringContaining(path.join(`@babel`, `preset-typescript`)),
         options,
       })
     })

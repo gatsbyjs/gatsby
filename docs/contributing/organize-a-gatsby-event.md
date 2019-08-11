@@ -14,8 +14,8 @@ A community organized Gatsby event can be a local meetup, a small conference, a 
 
 There are several ways Gatsby may support your event:
 
-- Promote event on the Gatsbyjs.org events page
-- Promote event via Gatsby’s Twitter handle
+- Promote event on the [Gatsbyjs.org Events Page](/contributing/events/)
+- Promote event via [Gatsby’s Twitter handle](https://twitter.com/gatsbyjs)
 - \$300 off food related expenses
 - Free Gatsby stickers from the [Gatsby Swag Store](https://store.gatsbyjs.org/)
 - 20% off swag in the [Gatsby Swag Store](https://store.gatsbyjs.org/) for your attendees
@@ -26,10 +26,14 @@ There are several ways Gatsby may support your event:
 - The event must have at least half of the content focused on Gatsby or a Gatsby-related topic (such as JAMstack)
 - Both US and international events qualify for support
 - If you’re requesting the \$300 food credit, then you must submit a receipt for the expense
-- The event must be in harmony with the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and follow the [Gatsby brand guidelines](https://mutability.netlify.com/logo/)
+- The event must be in harmony with the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and follow the [Gatsby brand guidelines](/guidelines/logo/)
 
 ## How do you qualify for Gatsby support?
 
 To request support and submit your event to the Gatsby events page, apply at the link below.
 
 [Request Event Support](https://airtable.com/shrpwc99yogJm9sfI)
+
+## Related Links:
+
+- [Gatsby's Community Events](/contributing/events/)

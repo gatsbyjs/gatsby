@@ -153,7 +153,7 @@ exports.onPreRenderHTML = true
  * @returns {ReactNode} Wrapped element
  * @example
  * const React = require("react")
- * const Layout = require("./src/components/layout")
+ * const Layout = require("./src/components/layout").default
  *
  * exports.wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get

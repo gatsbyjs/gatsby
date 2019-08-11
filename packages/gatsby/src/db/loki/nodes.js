@@ -126,7 +126,7 @@ function getNode(id) {
 /**
  * Returns all nodes of a type (where `typeName ==
  * node.internal.type`). This is an O(1) operation since nodes are
- * already stored in seperate collections by type
+ * already stored in separate collections by type
  */
 function getNodesByType(typeName) {
   invariant(typeName, `typeName is null`)

@@ -80,20 +80,6 @@ describe(`isDate`, () => {
     }
   )
 
-  it.skip.each([
-    `2018-08-31T23:25:16.019345123+02:00`,
-    `2018-08-31T23:25:16.019345123Z`,
-  ])(`should return true for nanosecond precision: %s`, dateString => {
-    expect(isDate(dateString)).toBeTruthy()
-  })
-
-  it.skip.each([`2018-08-31T23:25:16.012345678901+02:00`])(
-    `should return false for precision beyond 9 digits: %s`,
-    dateString => {
-      expect(isDate(dateString)).toBeFalsy()
-    }
-  )
-
   it.each([
     `2010-00-00`,
     `2010-01-00`,
@@ -123,32 +109,6 @@ describe(`isDate`, () => {
     `2012-04-01T00:basketball`,
   ])(`should return false for invalid ISO 8601: %s`, dateString => {
     expect(isDate(dateString)).toBeFalsy()
-  })
-
-  it.skip.each([
-    1371065286,
-    1379066897.0,
-    1379066897.7,
-    1379066897.0,
-    1379066897.07,
-    1379066897.17,
-    1379066897.0,
-    1379066897.007,
-    1379066897.017,
-    1379066897.157,
-    `1371065286`,
-    `1379066897.`,
-    `1379066897.0`,
-    `1379066897.7`,
-    `1379066897.00`,
-    `1379066897.07`,
-    `1379066897.17`,
-    `1379066897.000`,
-    `1379066897.007`,
-    `1379066897.017`,
-    `1379066897.157`,
-  ])(`should return true for unix timestamps: %s`, dateString => {
-    expect(isDate(dateString)).toBeTruthy()
   })
 })
 
@@ -217,27 +177,6 @@ describe(`looksLikeADate`, () => {
     `should return true for ISO 8601 ordinal dates: %s`,
     dateString => {
       expect(looksLikeADate(dateString)).toBeTruthy()
-    }
-  )
-
-  it.skip.each([
-    `2018-08-31T23:25:16.019345+02:00`,
-    `2018-08-31T23:25:16.019345Z`,
-  ])(`should return true for microsecond precision: %s`, dateString => {
-    expect(looksLikeADate(dateString)).toBeTruthy()
-  })
-
-  it.skip.each([
-    `2018-08-31T23:25:16.019345123+02:00`,
-    `2018-08-31T23:25:16.019345123Z`,
-  ])(`should return true for nanosecond precision: %s`, dateString => {
-    expect(looksLikeADate(dateString)).toBeTruthy()
-  })
-
-  it.skip.each([`2018-08-31T23:25:16.012345678901+02:00`])(
-    `should return false for precision beyond 9 digits: %s`,
-    dateString => {
-      expect(looksLikeADate(dateString)).toBeFalsy()
     }
   )
 
@@ -335,6 +274,7 @@ const nodes = [
     invalidDate14: ``,
     invalidDate15: ` `,
     invalidDate16: `2012-04-01T00:basketball`,
+    defaultFormatDate: `2010-01-30T23:59:59.999-07:00`,
   },
 ]
 
@@ -346,33 +286,7 @@ describe(`dateResolver`, () => {
     )
   })
 
-  const buildTestSchema = async ({
-    infer = true,
-    addDefaultResolvers = true,
-  }) => {
-    const inferDirective = infer ? `@infer` : `@dontInfer`
-    const noDefaultResolvers = addDefaultResolvers ? `false` : `true`
-    const typeDefs = [
-      `
-      type Test implements Node ${inferDirective}(noDefaultResolvers: ${noDefaultResolvers}) {
-        testDate: Date
-        explicitValidDate: Date
-        invalidHighPrecision: Date
-        invalidDate8: Date
-        invalidDate9: Date
-        invalidDate10: Date
-        invalidDate11: Date
-        invalidDate12: Date
-        invalidDate13: Date
-        invalidDate14: Date
-        invalidDate15: Date
-        invalidDate16: Date
-      }`,
-    ]
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
-    )
-
+  const buildTestSchema = async () => {
     await build({})
     return store.getState().schema
   }
@@ -423,12 +337,12 @@ describe(`dateResolver`, () => {
     expect(fields.invalidDate5.resolve).toBeUndefined()
     expect(fields.invalidDate6.resolve).toBeUndefined()
     expect(fields.invalidDate7.resolve).toBeUndefined()
-    expect(fields.invalidDate8.resolve).toBeUndefined()
+    expect(fields.invalidDate8).toBeUndefined()
     expect(fields.invalidDate9.resolve).toBeUndefined()
-    expect(fields.invalidDate10.resolve).toBeUndefined()
+    expect(fields.invalidDate10).toBeUndefined()
     expect(fields.invalidDate11.resolve).toBeUndefined()
-    expect(fields.invalidDate12.resolve).toBeUndefined()
-    expect(fields.invalidDate13.resolve).toBeUndefined()
+    expect(fields.invalidDate12).toBeUndefined()
+    expect(fields.invalidDate13).toBeUndefined()
     expect(fields.invalidDate14.resolve).toBeUndefined()
     expect(fields.invalidDate15.resolve).toBeUndefined()
     expect(fields.invalidDate16.resolve).toBeUndefined()
@@ -471,7 +385,7 @@ describe(`dateResolver`, () => {
     const schema = await buildTestSchema({})
     const fields = schema.getType(`Test`).getFields()
     expect(
-      fields[`testDate`].resolve(
+      await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
         {},
@@ -496,7 +410,7 @@ describe(`dateResolver`, () => {
     const schema = await buildTestSchema({})
     const fields = schema.getType(`Test`).getFields()
     expect(
-      fields[`testDate`].resolve(
+      await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
         {},

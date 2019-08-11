@@ -139,6 +139,7 @@ module.exports = {
       activeStyle,
       getProps,
       innerRef,
+      partiallyActive,
       ref,
       replace,
       to,
@@ -207,7 +208,7 @@ Run the tests again now and it should all work! You may get a message about
 the snapshot being written. This is created in a `__snapshots__` directory next
 to your tests. If you take a look at it, you will see that it is a JSON
 representation of the `<Header />` component. You should check your snapshot files
-into a source control system (for example, a GitHub repo) so that so that any changes are tracked in history.
+into a source control system (for example, a GitHub repo) so that any changes are tracked in history.
 This is particularly important to remember if you are using a continuous
 integration system such as Travis or CircleCI to run tests, as these will fail if the snapshot is not checked into source control.
 
@@ -271,7 +272,7 @@ though remember you may need to install the Babel 7 versions. See
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).
 
-For an example encapsulating all of these techniques--and a full unit test suite with [react-testing-library][react-testing-library], check out the [using-jest][using-jest] example.
+For an example encapsulating all of these techniques--and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
 
 [using-jest]: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest
-[react-testing-library]: https://github.com/kentcdodds/react-testing-library
+[react-testing-library]: https://github.com/testing-library/react-testing-library

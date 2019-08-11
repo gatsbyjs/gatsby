@@ -6,18 +6,19 @@ excerpt: "Gatsby is fast. You know this. This post outlines the numerous perform
 tags:
   - performance
   - apis
-  - webpagetest
   - lighthouse
-  - ci
+  - deployment
 ---
 
 Gatsby is **great** from a multititude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
 
 As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider [this post on the `webdev` subreddit on Reddit](https://www.reddit.com/r/webdev/comments/9z5dsr/how_does_reactjs_have_such_a_fast_website/?st=jtqbllhm&sh=60148ea7).
 
-<pullquote citation="reddit/r/webdev">
-Genuine question, every page is loaded immediatley [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
-</pullquote>
+<Pullquote citation="reddit/r/webdev">
+  Genuine question, every page is loaded immediately [sic] on click. Seriously
+  never seen such a quick website before. Any insight as to how they're able to
+  achieve this?
+</Pullquote>
 
 Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, as you may or may not know, is an application built with and powered by Gatsby 💪
 
@@ -96,7 +97,7 @@ This is the central idea of server-side rendering. Gatsby uses server-side APIs 
 
 ### Zero Node.js servers required ✋
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I’m watching <a href="https://twitter.com/SchauDustin?ref_src=twsrc%5Etfw">@SchauDustin</a> talk about how <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> handles things like static rendering  and all the complex scaling problems using it eliminates.<br><br>He‘s effectively gone full <a href="https://twitter.com/MarieKondo?ref_src=twsrc%5Etfw">@MarieKondo</a> on building apps: “Does horizontally scaling servers spark joy? Why are you still doing it?” <a href="https://t.co/uRFXWLsLvZ">pic.twitter.com/uRFXWLsLvZ</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1090659696233463808?ref_src=twsrc%5Etfw">January 30, 2019</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I’m watching <a href="https://twitter.com/SchauDustin?ref_src=twsrc%5Etfw">@SchauDustin</a> talk about how <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> handles things like static rendering  and all the complex scaling problems using it eliminates.<br/><br/>He‘s effectively gone full <a href="https://twitter.com/MarieKondo?ref_src=twsrc%5Etfw">@MarieKondo</a> on building apps: “Does horizontally scaling servers spark joy? Why are you still doing it?” <a href="https://t.co/uRFXWLsLvZ">pic.twitter.com/uRFXWLsLvZ</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1090659696233463808?ref_src=twsrc%5Etfw">January 30, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What's required for a typical set-up for deploying static content (which Gatsby produces)? It looks something like:
@@ -108,7 +109,7 @@ To begin describing why build-time SSR is so appealing, let's first take a look 
 - Routing the CDN layer in front of your static content
 - Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
 
-... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/hosting-on-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
+... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
 We now have an infrastructure setup so that we _can_ release our web application. What's a release look like?
 
@@ -134,7 +135,7 @@ Next:
   - Traditional examples are something like [EC2](https://aws.amazon.com/ec2/)
 - Configure the VM to be able to run Node.js code
   - Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
-- Set up auto-scaling to ensure we can accomodate and fall-over based upon heavy load or error states
+- Set up auto-scaling to ensure we can accommodate and fall-over based upon heavy load or error states
   - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
 
 Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
@@ -198,7 +199,7 @@ export default function Contact() {
 
 Pretty vanilla looking component! We are rendering a `form` with some validation and functionality provided by the excellent libraries [`yup`](https://www.npmjs.com/package/yup) and [`Formik`](https://github.com/jaredpalmer/formik). The likelihood that these libraries are used in _all_ routes in our application is unlikely--yet this is traditionally the approach that many take with bundling their client-side JS libraries. This means that even if a particular route (e.g. `/about`) is _not using_ certain libraries that they will still likely be included in a monolithic JavaScript bundle containing all dependencies. However--Gatsby, your friendly _web app compiler_, is a little smarter!
 
-We use code-splitting (enabled via our internalized dependency [Webpack](https://webpackjs.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
+We use code-splitting (enabled via our internalized dependency [Webpack](https://webpack.js.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
 
 ```title=public/
 ├── 404
@@ -338,7 +339,12 @@ If you've ever browsed a Gatsby application, you've probably noticed that links 
 
 _Curious what an `IntersectionObserver` can do? Check out the following example. Emoji are used when an element is entering/leaving the viewport._
 
-<iframe src="https://codesandbox.io/embed/l70jj9p58m?fontsize=14" title="Intersection Observer Example" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+<iframe
+  src="https://codesandbox.io/embed/l70jj9p58m?fontsize=14"
+  title="Intersection Observer Example"
+  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+/>
 
 #### `gatsby-link` and `link rel="prefetch"`
 
@@ -363,7 +369,7 @@ The feature seamlessly falls back to default behavior if `IntersectionObserver` 
 
 **Mobile**
 
-Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being avalable.
+Most mobile browsers support `IntersectionObserver` but none (of course!) support the `onMouseEnter` event. This means that the strong, non-idle fetch will not be triggered on mobile. This is not necessarily ideal--but the beauty of the feature is that the `prefetch` generally takes care of the necessary resource(s) being available.
 
 **Data-constrained devices**
 
@@ -394,7 +400,7 @@ There are far, far, far too many otherwise decently performing websites that loa
 - Responsive, optimized images using a `srcset`
   - A [`picture`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) element with a `source srcset` is used
   - This means that using several media queries, you load the smallest image that matches your device (e.g. mobile devices get smaller images, desktop devices get larger images, etc.)
-  - We even generate 2x and 3x DPi images for beautiful images, regardless of the screen quality!
+  - We even generate 2x DPi images for beautiful images, regardless of the screen quality!
 - A base64 blurred image loaded by default
   - This has two wins: 1) Larger images outside the viewport are not requested until they're needed, and 2) The blurred image is in a container with the same dimensions as the real image--therefore, no jumping when the image loads!
   - Also see: [traced SVGs for a super slick alternative](/packages/gatsby-plugin-sharp/#tracedsvg)

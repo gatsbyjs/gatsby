@@ -49,3 +49,7 @@ GATSBY_SCREENSHOT_PLACEHOLDER=true
 ```
 
 For more information checkout [`gatsby-transformer-screenshot` docs](http://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image).
+
+## Design tokens
+
+Please make use of the design tokens available in `src/utils/presets` when adding or modifying component CSS styles. You can find a work-in-progress documentation of these tokens at https://www.gatsbyjs.org/guidelines/design-tokens/ (and on some of the sibling pages documenting color and typography).

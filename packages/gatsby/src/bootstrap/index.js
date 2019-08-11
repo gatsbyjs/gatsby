@@ -12,7 +12,6 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
-const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -21,7 +20,6 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const nodeTracking = require(`../db/node-tracking`)
-const withResolverContext = require(`../schema/context`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -30,9 +28,9 @@ process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 
+const createGraphqlRunner = require(`./graphql-runner`)
 const { extractQueries } = require(`../query/query-watcher`)
-const queryUtil = require(`../query`)
-const { writePages } = require(`../query/pages-writer`)
+const requiresWriter = require(`./requires-writer`)
 const { writeRedirects } = require(`./redirects-writer`)
 
 // Override console.log to add the source file + line number.
@@ -77,15 +75,30 @@ module.exports = async (args: BootstrapArgs) => {
     getConfigFile(program.directory, `gatsby-config`)
   )
 
+  // The root config cannot be exported as a function, only theme configs
+  if (typeof config === `function`) {
+    report.panic({
+      id: `10126`,
+      context: {
+        configName: `gatsby-config`,
+        path: program.directory,
+      },
+    })
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    const themes = await loadThemes(config)
+    // TODO: deprecation message for old __experimentalThemes
+    const themes = await loadThemes(config, { useLegacyThemes: true })
     config = themes.config
 
     store.dispatch({
       type: `SET_RESOLVED_THEMES`,
       payload: themes.themes,
     })
+  } else if (config) {
+    const plugins = await loadThemes(config, { useLegacyThemes: false })
+    config = plugins.config
   }
 
   if (config && config.polyfill) {
@@ -131,6 +144,7 @@ module.exports = async (args: BootstrapArgs) => {
     await del([
       `public/*.{html,css}`,
       `public/**/*.{html,css}`,
+      `!public/page-data/404.html`,
       `!public/static`,
       `!public/static/**/*.{html,css}`,
     ])
@@ -384,16 +398,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = (query, context = {}) => {
-    const schema = store.getState().schema
-    return graphql(
-      schema,
-      query,
-      context,
-      withResolverContext(context, schema),
-      context
-    )
-  }
+  const graphqlRunner = createGraphqlRunner(store, report)
 
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
@@ -447,42 +452,15 @@ module.exports = async (args: BootstrapArgs) => {
   await extractQueries()
   activity.end()
 
-  // Start the createPages hot reloader.
-  if (process.env.NODE_ENV !== `production`) {
-    require(`./page-hot-reloader`)(graphqlRunner)
-  }
-
-  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
-
-  activity = report.activityTimer(`run static queries`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await queryUtil.processStaticQueries(staticQueryIds, {
-    activity,
-    state: store.getState(),
-  })
-  activity.end()
-
-  activity = report.activityTimer(`run page queries`)
-  activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, { activity })
-  activity.end()
-
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
-  )
-
   // Write out files.
-  activity = report.activityTimer(`write out page data`, {
+  activity = report.activityTimer(`write out requires`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
   try {
-    await writePages()
+    await requiresWriter.writeAll(store.getState())
   } catch (err) {
-    report.panic(`Failed to write out page data`, err)
+    report.panic(`Failed to write out requires`, err)
   }
   activity.end()
 
@@ -494,33 +472,7 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
-  let onEndJob
-
-  const checkJobsDone = _.debounce(async resolve => {
-    const state = store.getState()
-    if (state.jobs.active.length === 0) {
-      emitter.off(`END_JOB`, onEndJob)
-
-      await finishBootstrap(bootstrapSpan)
-      resolve({ graphqlRunner })
-    }
-  }, 100)
-
-  if (store.getState().jobs.active.length === 0) {
-    await finishBootstrap(bootstrapSpan)
-    return { graphqlRunner }
-  } else {
-    return new Promise(resolve => {
-      // Wait until all side effect jobs are finished.
-      onEndJob = () => checkJobsDone(resolve)
-      emitter.on(`END_JOB`, onEndJob)
-    })
-  }
-}
-
-const finishBootstrap = async bootstrapSpan => {
-  // onPostBootstrap
-  const activity = report.activityTimer(`onPostBootstrap`, {
+  activity = report.activityTimer(`onPostBootstrap`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -536,4 +488,6 @@ const finishBootstrap = async bootstrapSpan => {
   )
 
   bootstrapSpan.finish()
+
+  return { graphqlRunner }
 }

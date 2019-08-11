@@ -1,3 +1,7 @@
+---
+title: Sourcing from ButterCMS
+---
+
 ## Overview
 
 In this guide we'll be setting up a CMS powered Gatsby site that uses [ButterCMS](https://buttercms.com/) as its content management system.
@@ -441,7 +445,7 @@ export const query = graphql`
 export default IndexPage
 ```
 
-Next we'll refactor `gatsby-node-js` to programatically create customer case study pages with gatsby create pages API. First we need to define a customer case study template
+Next we'll refactor `gatsby-node-js` to programmatically create customer case study pages with gatsby create pages API. First we need to define a customer case study template
 
 ```jsx:title=src/templates/customer-case-study.js
 import React from "react"
@@ -486,7 +490,7 @@ export const pageQuery = graphql`
 export default CustomerCaseStudy
 ```
 
-Now Let's programatically Create customer case study pages based on the template we defined in `src/template/customer-case-study.js`
+Now Let's programmatically Create customer case study pages based on the template we defined in `src/template/customer-case-study.js`
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
