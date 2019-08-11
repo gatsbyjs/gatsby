@@ -2,7 +2,7 @@
 title: How Gatsby Works with GitHub Pages
 ---
 
-GitHub pages is a service ofered by GitHub that allows hosting for websites configured straight from the repository. A Gatsby site can be hosted on GitHub pages with just a few configurations to the codebase and the repository's settings.
+GitHub pages is a service offered by GitHub that allows hosting for websites configured straight from the repository. A Gatsby site can be hosted on GitHub pages with just a few configurations to the codebase and the repository's settings.
 
 You can publish your site on GitHub pages several different ways:
 
