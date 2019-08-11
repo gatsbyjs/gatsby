@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.9...gatsby-remark-images@3.1.10) (2019-08-11)
+
+### Features
+
+- **gatsby-remark-images:** Add support for native lazy loading ([#16448](https://github.com/gatsbyjs/gatsby/issues/16448)) ([47d8032](https://github.com/gatsbyjs/gatsby/commit/47d8032))
+
 ## [3.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.8...gatsby-remark-images@3.1.9) (2019-08-11)
 
 ### Bug Fixes

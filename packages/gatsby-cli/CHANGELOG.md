@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.29...gatsby-cli@2.7.30) (2019-08-11)
+
+### Features
+
+- **gatsby:** enable richer error handling for unknown APIs ([#16105](https://github.com/gatsbyjs/gatsby/issues/16105)) ([0adab13](https://github.com/gatsbyjs/gatsby/commit/0adab13))
+
 ## [2.7.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.28...gatsby-cli@2.7.29) (2019-08-09)
 
 **Note:** Version bump only for package gatsby-cli
