@@ -57,6 +57,11 @@ plugins: [
       // at startup. If your application encounters timeout errors during
       // startup, try decreasing this number.
       paginationSize: 250,
+
+      // List of collections you want to fetch.
+      // Possible values are: 'shop' and 'content'.
+      // Defaults to ['shop', 'content'].
+      includeCollections: ["shop", "content"],
     },
   },
 ]

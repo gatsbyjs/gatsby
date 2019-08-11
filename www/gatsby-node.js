@@ -102,6 +102,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/docs/deploying-to-now/`,
+    toPath: `/docs/deploying-to-zeit-now/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/pair-programming/`,
     toPath: `/contributing/pair-programming/`,
     isPermanent: true,
@@ -341,6 +346,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/themes/introduction`,
     toPath: `/docs/themes/what-are-gatsby-themes`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/hosting-on-netlify/`,
+    toPath: `/docs/deploying-to-netlify/`,
     isPermanent: true,
   })
 
