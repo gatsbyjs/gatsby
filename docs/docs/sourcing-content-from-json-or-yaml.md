@@ -1,6 +1,6 @@
 ---
-
-## title: Sourcing Content from JSON or YAML
+title: Sourcing Content from JSON or YAML
+---
 
 ## Table of Contents
 
