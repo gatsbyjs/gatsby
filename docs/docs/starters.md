@@ -49,13 +49,13 @@ If you don't specify a custom starter, your site will be created from the [defau
 Another option is to supply a path (relative or absolute) to a local folder containing a starter:
 
 ```shell
-gatsby new [SITE_DIRECTORY] [STARTER/LOCAL/PATH]
+gatsby new [SITE_DIRECTORY] [LOCAL_PATH_TO_STARTER]
 ```
 
-Here is an example assuming a local starter exists on the path `./my-local-starter`:
+Here is an example assuming a starter exists on the path `Code/my-local-starter`:
 
 ```shell
-gatsby new blog ./my-local-starter
+gatsby new blog Code/my-local-starter
 ```
 
 ## Official starters
