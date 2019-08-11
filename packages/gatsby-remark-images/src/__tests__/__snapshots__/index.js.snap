@@ -280,6 +280,7 @@ exports[`showCaptions display alt as caption if specified in showCaptions array,
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        loading=\\"lazy\\"
       />
   </a>
     </span>
