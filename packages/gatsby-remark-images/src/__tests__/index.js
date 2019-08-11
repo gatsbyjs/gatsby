@@ -516,4 +516,19 @@ describe(`showCaptions`, () => {
     const $ = cheerio.load(node.value)
     expect($(`figcaption`).length).toBe(0)
   })
+
+  it(`display alt as caption if specified in showCaptions array, even if it matches filename`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![my image](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: [`alt`],
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).html()).toEqual(`my image`)
+    expect(node.value).toMatchSnapshot()
+  })
 })

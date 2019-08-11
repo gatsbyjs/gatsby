@@ -139,7 +139,7 @@ plugins: [
       // Override the file regex for SASS
       sassRuleTest: /\.global\.s(a|c)ss$/,
       // Override the file regex for CSS modules
-      sassRuleModulesTest: /\.global\.s(a|c)ss$/,
+      sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
     },
   },
 ]
