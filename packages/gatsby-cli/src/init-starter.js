@@ -1,4 +1,3 @@
-/* @flow */
 const { execSync } = require(`child_process`)
 const execa = require(`execa`)
 const hostedGitInfo = require(`hosted-git-info`)
@@ -17,11 +16,22 @@ const {
   promptPackageManager,
 } = require(`./util/configstore`)
 const isTTY = require(`./util/is-tty`)
-const spawn = (cmd: string, options: any) => {
+
+/**
+ * @param {string} cmd
+ * @param {any} options
+ */
+const spawn = (cmd, options) => {
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
-const spawnWithArgs = (file: string, args: string[], options: any) =>
+
+/**
+ * @param {string} file
+ * @param {string[]} args
+ * @param {any} options
+ */
+const spawnWithArgs = (file, args, options) =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
 
 // Checks the existence of yarn package and user preference if it exists
@@ -113,8 +123,12 @@ const install = async rootPath => {
 
 const ignored = path => !/^\.(git|hg)$/.test(sysPath.basename(path))
 
-// Copy starter from file system.
-const copy = async (starterPath: string, rootPath: string) => {
+/**
+ * Copy starter from file system.
+ * @param {string} starterPath
+ * @param {string} rootPath
+ */
+const copy = async (starterPath, rootPath) => {
   // Chmod with 755.
   // 493 = parseInt('755', 8)
   await fs.mkdirp(rootPath, { mode: 493 })
@@ -145,8 +159,13 @@ const copy = async (starterPath: string, rootPath: string) => {
   return true
 }
 
-// Clones starter from URI.
-const clone = async (hostInfo: any, rootPath: string) => {
+/**
+ * Clones starter from URI.
+ * @param {any} hostInfo
+ * @param {string} rootPath
+ * @returns {Promise<void>}
+ */
+const clone = async (hostInfo, rootPath) => {
   let url
   // Let people use private repos accessed over SSH.
   if (hostInfo.getDefaultRepresentation() === `sshurl`) {
@@ -222,14 +241,12 @@ const getPaths = async (starterPath: string, rootPath: string) => {
   return { starterPath, rootPath, selectedOtherStarter }
 }
 
-type InitOptions = {
-  rootPath?: string,
-}
-
 /**
  * Main function that clones or copies the starter.
+ * @prop {string} starts
+ * @prop {InitOptions} [options]
  */
-module.exports = async (starter: string, options: InitOptions = {}) => {
+module.exports = async (starter, options = {}) => {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
     options.rootPath

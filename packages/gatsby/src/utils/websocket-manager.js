@@ -1,5 +1,3 @@
-// @flow
-
 const path = require(`path`)
 const { store } = require(`../redux`)
 const fs = require(`fs`)
@@ -8,13 +6,6 @@ const normalizePagePath = require(`../utils/normalize-page-path`)
 const telemetry = require(`gatsby-telemetry`)
 const url = require(`url`)
 const { createHash } = require(`crypto`)
-
-type QueryResult = {
-  id: string,
-  result: object,
-}
-
-type QueryResultsMap = Map<string, QueryResult>
 
 const denormalize = path => {
   if (path === undefined) {
@@ -33,11 +24,9 @@ const denormalize = path => {
  * Get cached page query result for given page path.
  * @param {string} pagePath Path to a page.
  * @param {string} directory Root directory of current project.
+ * @returns {QueryResult}
  */
-const getCachedPageData = async (
-  pagePath: string,
-  directory: string
-): QueryResult => {
+const getCachedPageData = async (pagePath, directory) => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
   if (pages.has(denormalize(pagePath)) || pages.has(pagePath)) {
@@ -76,11 +65,9 @@ const hashPaths = paths => {
  * Get cached StaticQuery results for components that Gatsby didn't run query yet.
  * @param {QueryResultsMap} resultsMap Already stored results for queries that don't need to be read from files.
  * @param {string} directory Root directory of current project.
+ * @returns {QueryResultsMap}
  */
-const getCachedStaticQueryResults = (
-  resultsMap: QueryResultsMap,
-  directory: string
-): QueryResultsMap => {
+const getCachedStaticQueryResults = (resultsMap, directory) => {
   const cachedStaticQueryResults = new Map()
   const { staticQueryComponents } = store.getState()
   staticQueryComponents.forEach(staticQueryComponent => {
@@ -108,15 +95,37 @@ const getCachedStaticQueryResults = (
   return cachedStaticQueryResults
 }
 
-const getRoomNameFromPath = (path: string): string => `path-${path}`
+/**
+ * @param {string} path
+ * @returns {string}
+ */
+const getRoomNameFromPath = (path) => `path-${path}`
 
 class WebsocketManager {
-  pageResults: QueryResultsMap
-  staticQueryResults: QueryResultsMap
-  errors: Map<string, QueryResult>
-  isInitialised: boolean
-  activePaths: Set<string>
-  programDir: string
+  /**
+   * @type {QueryResultsMap}
+   */
+  pageResults
+  /**
+   * @type {QueryResultsMap}
+   */
+  staticQueryResults
+  /**
+   * @type {Map<string, QueryResult>}
+   */
+  errors
+  /**
+   * @type {boolean}
+   */
+  isInitialised
+  /**
+   * @type {Set<string>}
+   */
+  activePaths
+  /**
+   * @type {string}
+   */
+  programDir
 
   constructor() {
     this.isInitialised = false
@@ -255,7 +264,10 @@ class WebsocketManager {
     return this.isInitialised && this.websocket
   }
 
-  emitStaticQueryData(data: QueryResult) {
+  /**
+   * @param {QueryResult} data
+   */
+  emitStaticQueryData(data) {
     this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
@@ -275,7 +287,10 @@ class WebsocketManager {
     }
   }
 
-  emitPageData(data: QueryResult) {
+  /**
+   * @param {QueryResult} data
+   */
+  emitPageData(data) {
     data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
@@ -295,7 +310,12 @@ class WebsocketManager {
       }
     }
   }
-  emitError(id: string, message?: string) {
+
+  /**
+   * @param {string} id
+   * @param {string} [message]
+   */
+  emitError(id, message) {
     if (message) {
       this.errors.set(id, message)
     } else {

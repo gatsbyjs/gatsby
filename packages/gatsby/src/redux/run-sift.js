@@ -1,4 +1,3 @@
-// @flow
 const sift = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
@@ -95,16 +94,16 @@ function handleMany(siftArgs, nodes, sort) {
  * Filters a list of nodes using mongodb-like syntax.
  *
  * @param args raw graphql query filter as an object
- * @param nodes The nodes array to run sift over (Optional
+ * @param args.nodes The nodes array to run sift over (Optional
  *   will load itself if not present)
- * @param type gqlType. Created in build-node-types
- * @param firstOnly true if you want to return only the first result
+ * @param args.gqlType. Created in build-node-types
+ * @param args.firstOnly true if you want to return only the first result
  *   found. This will return a collection of size 1. Not a single
  *   element
  * @returns Collection of results. Collection will be limited to size
  *   if `firstOnly` is true
  */
-module.exports = (args: Object) => {
+module.exports = args => {
   const { getNode, getNodesByType } = require(`../db/nodes`)
 
   const { queryArgs, gqlType, firstOnly = false, nodeTypeNames } = args

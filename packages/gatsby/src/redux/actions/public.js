@@ -1,4 +1,3 @@
-// @flow
 const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
@@ -36,42 +35,13 @@ const findChildrenRecursively = (children = []) => {
   return children
 }
 
-import type { Plugin } from "./types"
-
-type Job = {
-  id: string,
-}
-type PageInput = {
-  path: string,
-  component: string,
-  context?: Object,
-}
-
-type Page = {
-  path: string,
-  matchPath: ?string,
-  component: string,
-  context: Object,
-  internalComponentName: string,
-  componentChunkName: string,
-  updatedAt: number,
-}
-
-type ActionOptions = {
-  traceId: ?string,
-  parentSpan: ?Object,
-  followsSpan: ?Object,
-}
-
 /**
  * Delete a page
- * @param {Object} page a page object
- * @param {string} page.path The path of the page
- * @param {string} page.component The absolute path to the page component
+ * @param {Page} page - a page object
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: PageInput) => {
+actions.deletePage = page => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -90,30 +60,11 @@ const fileOkCache = {}
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
- * @param {Object} page a page object
- * @param {string} page.path Any valid URL. Must start with a forward slash
- * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
- * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
- * @param {string} page.component The absolute path to the component for this page
- * @param {Object} page.context Context data for this page. Passed as props
- * to the component `this.props.pageContext` as well as to the graphql query
- * as graphql arguments.
- * @example
- * createPage({
- *   path: `/my-sweet-new-page/`,
- *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
- *   // The context is passed as props to the component as well
- *   // as into the component's GraphQL query.
- *   context: {
- *     id: `123456`,
- *   },
- * })
+ * @param {Page} page - a page object
+ * @param {Plugin} [plugin]
+ * @param {ActionOptions} [actionOptions]
  */
-actions.createPage = (
-  page: PageInput,
-  plugin?: Plugin,
-  actionOptions?: ActionOptions
-) => {
+actions.createPage = (page, plugin, actionOptions) => {
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
@@ -318,7 +269,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  let internalPage: Page = {
+  let internalPage = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -392,7 +343,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     fileOkCache[internalPage.component] = true
   }
 
-  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const oldPage = store.getState().pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
@@ -417,12 +368,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {object} $0
- * @param {object} $0.node the node object
+ * @param {object} options
+ * @param {object} options.node the node object
+ * @param {Plugin} plugin
+ * @param {any} args
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+actions.deleteNode = (options, plugin, args) => {
   let id
 
   // Check if using old method signature. Warn about incorrect usage but get
@@ -495,10 +448,11 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 /**
  * Batch delete nodes
  * @param {Array} nodes an array of node ids
+ * @param {Plugin} plugin
  * @example
  * deleteNodes([`node1`, `node2`])
  */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
+actions.deleteNodes = (nodes, plugin) => {
   let msg =
     `The "deleteNodes" action is now deprecated and will be removed in ` +
     `Gatsby v3. Please use "deleteNode" instead.`
@@ -570,6 +524,8 @@ const typeOwners = {}
  * readable description of what this node represent / its source. It will
  * be displayed when type conflicts are found, making it easier to find
  * and correct type conflicts.
+ * @param {Plugin} [plugin]
+ * @param {ActionOptions} [actionOptions]
  * @returns {Promise} The returned Promise resolves when all cascading
  * `onCreateNode` API calls triggered by `createNode` have finished.
  * @example
@@ -596,11 +552,7 @@ const typeOwners = {}
  *   }
  * })
  */
-const createNode = (
-  node: any,
-  plugin?: Plugin,
-  actionOptions?: ActionOptions = {}
-) => {
+const createNode = (node, plugin, actionOptions = {}) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -791,12 +743,13 @@ actions.createNode = (...args) => dispatch => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} $0
- * @param {string} $0.nodeId The id of a node
+ * @param {Object} options
+ * @param {string} options.nodeId The id of a node
+ * @param {Plugin} [plugin]
  * @example
  * touchNode({ nodeId: `a-node-id` })
  */
-actions.touchNode = (options: any, plugin?: Plugin) => {
+actions.touchNode = (options, plugin) => {
   let nodeId = _.get(options, `nodeId`)
 
   // Check if using old method signature. Warn about incorrect usage
@@ -824,13 +777,6 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
   }
 }
 
-type CreateNodeInput = {
-  node: Object,
-  fieldName?: string,
-  fieldValue?: string,
-  name?: string,
-  value: any,
-}
 /**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
@@ -838,12 +784,9 @@ type CreateNodeInput = {
  * Once a plugin has claimed a field name the field name can't be used by
  * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
- * @param {Object} $0
- * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
- * @param {string} $0.name the name for the field
- * @param {string} $0.value the value for the field
+ * @param {CreateNodeInput} $0
+ * @param {Plugin} plugin
+ * @param {ActionOptions} [actionOptions]
  * @example
  * createNodeField({
  *   node,
@@ -854,9 +797,9 @@ type CreateNodeInput = {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
-  plugin: Plugin,
-  actionOptions?: ActionOptions
+  { node, name, value, fieldName, fieldValue },
+  plugin,
+  actionOptions
 ) => {
   if (fieldName) {
     console.warn(
@@ -924,13 +867,11 @@ actions.createNodeField = (
  * @param {Object} $0
  * @param {Object} $0.parent the parent node object
  * @param {Object} $0.child the child node object
+ * @param {Plugin} [plugin]
  * @example
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
-actions.createParentChildLink = (
-  { parent, child }: { parent: any, child: any },
-  plugin?: Plugin
-) => {
+actions.createParentChildLink = ({ parent, child }, plugin) => {
   // Update parent
   parent.children.push(child.id)
   parent.children = _.uniq(parent.children)
@@ -950,8 +891,9 @@ actions.createParentChildLink = (
  * For full control over the webpack config, use `replaceWebpackConfig()`.
  *
  * @param {Object} config partial webpack config, to be merged into the current one
+ * @param {Plugin | null} [plugin]
  */
-actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+actions.setWebpackConfig = (config, plugin = null) => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -967,8 +909,9 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * yourself, in which case consider using `webpack-merge`.
  *
  * @param {Object} config complete webpack config
+ * @param {Plugin | null} [plugin]
  */
-actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+actions.replaceWebpackConfig = (config, plugin = null) => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
@@ -980,6 +923,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
  * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
+ * @param {Plugin | null} [plugin]
  * @example
  * setBabelOptions({
  *   options: {
@@ -987,7 +931,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  *   }
  * })
  */
-actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
+actions.setBabelOptions = (options, plugin = null) => {
   // Validate
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -1021,6 +965,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config A config object describing the Babel plugin to be added.
  * @param {string} config.name The name of the Babel plugin
  * @param {Object} config.options Options to pass to the Babel plugin.
+ * @param {Plugin | null} [plugin]
  * @example
  * setBabelPlugin({
  *   name:  `babel-plugin-emotion`,
@@ -1029,7 +974,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  *   },
  * })
  */
-actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
+actions.setBabelPlugin = (config, plugin = null) => {
   // Validate
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -1057,6 +1002,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config A config object describing the Babel plugin to be added.
  * @param {string} config.name The name of the Babel preset.
  * @param {Object} config.options Options to pass to the Babel preset.
+ * @param {Plugin | null} [plugin]
  * @example
  * setBabelPreset({
  *   name: `@babel/preset-react`,
@@ -1065,7 +1011,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
  *   },
  * })
  */
-actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
+actions.setBabelPreset = (config, plugin = null) => {
   // Validate
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -1095,12 +1041,12 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * example.
  *
  * Gatsby doesn't finish its bootstrap until all jobs are ended.
- * @param {Object} job A job object with at least an id set
- * @param {id} job.id The id of the job
+ * @param {Job} job A job object with at least an id set
+ * @param {Plugin | null} [plugin]
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
-actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+actions.createJob = (job, plugin = null) => {
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1112,12 +1058,12 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  *
- * @param {Object} job A job object with at least an id set
- * @param {id} job.id The id of the job
+ * @param {Job} job A job object with at least an id set
+ * @param {Plugin | null} [plugin]
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
-actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+actions.setJob = (job, plugin = null) => {
   return {
     type: `SET_JOB`,
     plugin,
@@ -1129,12 +1075,12 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
  * End a "job".
  *
  * Gatsby doesn't finish its bootstrap until all jobs are ended.
- * @param {Object} job  A job object with at least an id set
- * @param {id} job.id The id of the job
+ * @param {Job} job  A job object with at least an id set
+ * @param {Plugin | null} [plugin]
  * @example
  * endJob({ id: `write file id: 123` })
  */
-actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+actions.endJob = (job, plugin = null) => {
   return {
     type: `END_JOB`,
     plugin,
@@ -1147,13 +1093,11 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
  * it fetched something. These values are persisted between runs of Gatsby.
  *
  * @param {Object} status  An object with arbitrary values set
+ * @param {Plugin} plugin
  * @example
  * setPluginStatus({ lastFetched: Date.now() })
  */
-actions.setPluginStatus = (
-  status: { [key: string]: mixed },
-  plugin: Plugin
-) => {
+actions.setPluginStatus = (status, plugin) => {
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,
@@ -1225,6 +1169,7 @@ actions.createRedirect = ({
  * @param {string} $0.path the path to the page
  * @param {string} $0.nodeId A node ID
  * @param {string} $0.connection A connection type
+ * @param {string} plugin
  * @private
  */
 actions.createPageDependency = (
@@ -1232,8 +1177,8 @@ actions.createPageDependency = (
     path,
     nodeId,
     connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
+  },
+  plugin = ``
 ) => {
   console.warn(
     `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`

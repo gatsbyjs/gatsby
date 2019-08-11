@@ -1,7 +1,6 @@
-// @flow
 const path = require(`path`)
 
-module.exports = (filePath: string): string => {
+module.exports = (filePath) => {
   const { dir, name } = path.parse(filePath)
   const parsedName = name === `index` ? `` : name
 

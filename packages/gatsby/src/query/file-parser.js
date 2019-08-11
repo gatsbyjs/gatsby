@@ -1,4 +1,3 @@
-// @flow
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)

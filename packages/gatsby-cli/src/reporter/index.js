@@ -1,4 +1,3 @@
-// @flow
 const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
 const chalk = require(`chalk`)
@@ -11,13 +10,11 @@ const errorFormatter = getErrorFormatter()
 const { trackCli } = require(`gatsby-telemetry`)
 const convertHrtime = require(`convert-hrtime`)
 
-import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
-
 /**
  * Reporter module.
  * @module reporter
  */
-const reporter: Reporter = {
+const reporter = {
   /**
    * Strip initial indentation template function.
    */
@@ -122,10 +119,7 @@ const reporter: Reporter = {
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
-  activityTimer(
-    name: string,
-    activityArgs: ActivityArgs = {}
-  ): ActivityTracker {
+  activityTimer(name: string, activityArgs = {}) {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)
@@ -172,12 +166,7 @@ const reporter: Reporter = {
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
-  createProgress(
-    name: string,
-    total,
-    start = 0,
-    activityArgs: ActivityArgs = {}
-  ): ActivityTracker {
+  createProgress(name: string, total, start = 0, activityArgs = {}) {
     const { parentSpan } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     const span = tracer.startSpan(name, spanArgs)

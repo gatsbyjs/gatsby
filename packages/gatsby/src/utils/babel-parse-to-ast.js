@@ -1,4 +1,3 @@
-/* @flow */
 const parser = require(`@babel/parser`)
 
 const PARSER_OPTIONS = {
@@ -43,7 +42,10 @@ const PARSER_OPTIONS = {
   ],
 }
 
-export function getBabelParserOptions(filePath: string) {
+/**
+ * @param {string} filePath
+ */
+export function getBabelParserOptions(filePath) {
   // Flow and TypeScript plugins can't be enabled simultaneously
   if (/\.tsx?/.test(filePath)) {
     const { plugins } = PARSER_OPTIONS
@@ -57,6 +59,10 @@ export function getBabelParserOptions(filePath: string) {
   return PARSER_OPTIONS
 }
 
-export function babelParseToAst(contents: string, filePath: string) {
+/**
+ * @param {string} contents
+ * @param {string} filePath
+ */
+export function babelParseToAst(contents, filePath) {
   return parser.parse(contents, getBabelParserOptions(filePath))
 }

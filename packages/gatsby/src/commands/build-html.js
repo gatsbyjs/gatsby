@@ -1,4 +1,3 @@
-/* @flow */
 const Promise = require(`bluebird`)
 const webpack = require(`webpack`)
 const fs = require(`fs-extra`)

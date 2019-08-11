@@ -1,4 +1,3 @@
-// @flow
 import React from "react"
 import { Link } from "gatsby"
 import injectSheet from "react-jss"
@@ -23,11 +22,7 @@ const styles = {
   },
 }
 
-type Props = {
-  classes: { [string]: string },
-}
-
-const DetailPage = ({ classes }: Props) => (
+const DetailPage = ({ classes }) => (
   <div>
     <h1 className={classes.heading}>Detail page</h1>
     <main className={classes.main}>

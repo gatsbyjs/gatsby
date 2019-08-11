@@ -1,8 +1,5 @@
-// @flow
 const { camelCase } = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
-
-import type { Plugin } from "./types"
 
 const actions = {}
 
@@ -18,12 +15,10 @@ const actions = {}
  *
  * @param {Object} $0
  * @param {GraphQLSchema} $0.schema GraphQL schema to add
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  */
-actions.addThirdPartySchema = (
-  { schema }: { schema: GraphQLSchema },
-  plugin: Plugin,
-  traceId?: string
-) => {
+actions.addThirdPartySchema = ({ schema }, plugin, traceId) => {
   return {
     type: `ADD_THIRD_PARTY_SCHEMA`,
     plugin,

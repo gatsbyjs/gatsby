@@ -1,4 +1,3 @@
-// @flow
 const fs = require(`fs`)
 const traverse = require(`@babel/traverse`).default
 const get = require(`lodash/get`)

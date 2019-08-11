@@ -1,5 +1,3 @@
-/* @flow */
-
 const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
 const nodeStore = require(`../db/nodes`)

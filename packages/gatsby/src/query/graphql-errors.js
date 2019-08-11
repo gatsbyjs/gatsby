@@ -1,11 +1,7 @@
-// @flow
-
-import { print, visit, GraphQLError, getLocation } from "graphql"
+import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
-
-type RelayGraphQLError = Error & { validationErrors?: Object }
 
 // These handle specific errors throw by RelayParser. If an error matches
 // you get a pointer to the location in the query that is broken, otherwise
@@ -40,11 +36,19 @@ const handlers = [
   ],
 ]
 
-function formatFilePath(filePath: string) {
+/**
+ * @param {string} filePath
+ */
+function formatFilePath(filePath) {
   return `${report.format.bold(`file:`)} ${report.format.blue(filePath)}`
 }
 
-function formatError(message: string, filePath: string, codeFrame: string) {
+/**
+ * @param {string} message
+ * @param {string} filePath
+ * @param {string} codeFrame
+ */
+function formatError(message, filePath, codeFrame) {
   return (
     report.stripIndent`
     ${message}
@@ -54,7 +58,11 @@ function formatError(message: string, filePath: string, codeFrame: string) {
   )
 }
 
-function extractError(error: Error): { message: string, docName: string } {
+/**
+ * @param {Error} error
+ * @returns {{docName: string, codeBlock: string, message: string}}
+ */
+function extractError(error) {
   const docRegex = /Error:.(RelayParser|GraphQLParser):(.*)Source: document.`(.*)`.file.*(GraphQL.request.*^\s*$)/gms
   let matches
   let message = ``
@@ -90,7 +98,12 @@ function findLocation(extractedMessage, def) {
   return location
 }
 
-function getCodeFrame(query: string, line?: number, column?: number) {
+/**
+ * @param {string} query
+ * @param {number} [line]
+ * @param {number} [column]
+ */
+function getCodeFrame(query, line, column) {
   return codeFrameColumns(
     query,
     {
@@ -106,11 +119,12 @@ function getCodeFrame(query: string, line?: number, column?: number) {
   )
 }
 
-function getCodeFrameFromRelayError(
-  def: any,
-  extractedMessage: string,
-  error: Error
-) {
+/**
+ * @param {any} def
+ * @param {string} extractedMessage
+ * @param {Error} error
+ */
+function getCodeFrameFromRelayError(def, extractedMessage, error) {
   let { start, source } = findLocation(extractedMessage, def) || {}
   let query = source ? source.body : print(def)
 
@@ -120,11 +134,12 @@ function getCodeFrameFromRelayError(
   return getCodeFrame(query, line, column)
 }
 
-export function multipleRootQueriesError(
-  filePath: string,
-  def: any,
-  otherDef: any
-) {
+/**
+ * @param {string} filePath
+ * @param {any} def
+ * @param {any} otherDef
+ */
+export function multipleRootQueriesError(filePath, def, otherDef) {
   let name = def.name.value
   let otherName = otherDef.name.value
   let unifiedName = `${_.camelCase(name)}And${_.upperFirst(
@@ -185,11 +200,13 @@ export function multipleRootQueriesError(
   )
 }
 
-export function graphqlValidationError(
-  errors: Array<GraphQLError>,
-  filePath: string,
-  doc: any
-): string {
+/**
+ * @param {GraphQLError[]} errors
+ * @param {string} filePath
+ * @param {any} doc
+ * @returns {string}
+ */
+export function graphqlValidationError(errors, filePath, doc) {
   if (!errors || !errors.length) return ``
   let error = errors[0]
   let { source, locations: [{ line, column }] = [{}] } = error
@@ -198,11 +215,13 @@ export function graphqlValidationError(
   return formatError(error.message, filePath, getCodeFrame(query, line, column))
 }
 
-export function graphqlError(
-  namePathMap: Map<string, string>,
-  nameDefMap: Map<string, any>,
-  error: Error | RelayGraphQLError
-) {
+/**
+ * @param {Map<string, string>} namePathMap
+ * @param {Map<string, any>} nameDefMap
+ * @param {Error | RelayGraphQLError} error
+ * @returns {{docName: *, formattedMessage: *, codeBlock: *, message: *}}
+ */
+export function graphqlError(namePathMap, nameDefMap, error) {
   let codeBlock
   let { message, docName } = extractError(error)
   let filePath = namePathMap.get(docName)

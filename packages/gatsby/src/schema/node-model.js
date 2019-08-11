@@ -1,57 +1,6 @@
-// @flow
-
 const _ = require(`lodash`)
-const {
-  isAbstractType,
-  GraphQLOutputType,
-  GraphQLUnionType,
-} = require(`graphql`)
 const invariant = require(`invariant`)
-
-type IDOrNode = string | { id: string }
-type TypeOrTypeName = string | GraphQLOutputType
-
-/**
- * Optional page dependency information.
- *
- * @typedef {Object} PageDependencies
- * @property {string} path The path of the page that depends on the retrieved nodes' data
- * @property {string} [connectionType] Mark this dependency as a connection
- */
-interface PageDependencies {
-  path: string;
-  connectionType?: string;
-}
-
-interface QueryArguments {
-  type: TypeOrTypeName;
-  query: { filter: Object, sort?: Object };
-  firstOnly?: boolean;
-}
-
-export interface NodeModel {
-  getNodeById(
-    { id: IDOrNode, type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
-  ): any | null;
-  getNodesByIds(
-    { ids: Array<IDOrNode>, type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
-  ): Array<any>;
-  getAllNodes(
-    { type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
-  ): Array<any>;
-  runQuery(
-    args: QueryArguments,
-    pageDependencies?: PageDependencies
-  ): Promise<any>;
-  getTypes(): Array<string>;
-  trackPageDependencies<nodeOrNodes: Node | Node[]>(
-    result: nodeOrNodes,
-    pageDependencies?: PageDependencies
-  ): nodesOrNodes;
-}
+const { isAbstractType, GraphQLUnionType } = require(`graphql`)
 
 class LocalNodeModel {
   constructor({ schema, nodeStore, createPageDependency, path }) {

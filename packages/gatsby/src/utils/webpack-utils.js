@@ -1,5 +1,3 @@
-// @flow
-
 const autoprefixer = require(`autoprefixer`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
 const TerserPlugin = require(`terser-webpack-plugin`)
@@ -12,113 +10,14 @@ const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
 
-type LoaderSpec = string | { loader: string, options?: Object }
-type LoaderResolver<T: Object> = (options?: T) => LoaderSpec
-
-type Condition = string | RegExp | RegExp[]
-
-type Rule = {
-  test?: Condition,
-  use: LoaderSpec[],
-  exclude?: Condition,
-  include?: Condition,
-}
-
-type RuleFactory<T: Object> = (options?: T) => Rule
-
-type ContextualRuleFactory = RuleFactory<*> & {
-  internal: RuleFactory<*>,
-  external: RuleFactory<*>,
-}
-
-type PluginInstance = any
-type PluginFactory = (...args?: any) => PluginInstance
-
-type BuiltinPlugins = typeof builtinPlugins
-
-type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
-
-/**
- * Configuration options for `createUtils`
- */
-export type WebpackUtilsOptions = { stage: Stage, program: any }
-
-/**
- * Utils that produce webpack `loader` objects
- */
-export type LoaderUtils = {
-  json: LoaderResolver<*>,
-  yaml: LoaderResolver<*>,
-  null: LoaderResolver<*>,
-  raw: LoaderResolver<*>,
-
-  style: LoaderResolver<*>,
-  css: LoaderResolver<*>,
-  postcss: LoaderResolver<{
-    browsers?: string[],
-    plugins?: Array<any> | ((loader: any) => Array<any>),
-  }>,
-
-  file: LoaderResolver<*>,
-  url: LoaderResolver<*>,
-  js: LoaderResolver<*>,
-  dependencies: LoaderResovler<*>,
-
-  miniCssExtract: LoaderResolver<*>,
-  imports: LoaderResolver<*>,
-  exports: LoaderResolver<*>,
-
-  eslint: LoaderResolver<*>,
-}
-
-/**
- * Utils that produce webpack rule objects
- */
-export type RuleUtils = {
-  /**
-   * Handles JavaScript compilation via babel
-   */
-  js: RuleFactory<*>,
-  yaml: RuleFactory<*>,
-  fonts: RuleFactory<*>,
-  images: RuleFactory<*>,
-  miscAssets: RuleFactory<*>,
-
-  css: ContextualRuleFactory,
-  cssModules: RuleFactory<*>,
-  postcss: ContextualRuleFactory,
-
-  eslint: RuleFactory<*>,
-}
-
-export type PluginUtils = BuiltinPlugins & {
-  extractText: PluginFactory,
-  uglify: PluginFactory,
-  moment: PluginFactory,
-  extractStats: PluginFactory,
-}
-
-/**
- * webpack atoms namespace
- */
-export type WebpackUtils = {
-  loaders: LoaderUtils,
-
-  rules: RuleUtils,
-
-  plugins: PluginUtils,
-}
-
 /**
  * A factory method that produces an atoms namespace
+ * @param {Object} $0
+ * @param {Stage} $0.stage
+ * @param {any} $0.program
+ * @returns {Promise<WebpackUtilsOptions>}
  */
-module.exports = async ({
-  stage,
-  program,
-}: {
-  stage: Stage,
-  program: any,
-}): Promise<WebpackUtilsOptions> => {
+module.exports = async ({ stage, program }) => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
   const supportedBrowsers = program.browserslist
@@ -127,17 +26,21 @@ module.exports = async ({
 
   const isSSR = stage.includes(`html`)
 
-  const makeExternalOnly = (original: RuleFactory<*>) => (
-    options = {}
-  ): Rule => {
+  /**
+   * @param {RuleFactory<any>} original
+   * @returns {function(options: Object): Rule}
+   */
+  const makeExternalOnly = original => (options = {}) => {
     let rule = original(options)
     rule.include = vendorRegex
     return rule
   }
 
-  const makeInternalOnly = (original: RuleFactory<*>) => (
-    options = {}
-  ): Rule => {
+  /**
+   * @param {RuleFactory<any>} original
+   * @returns {function(options: Object): Rule}
+   */
+  const makeInternalOnly = original => (options = {}) => {
     let rule = original(options)
     rule.exclude = vendorRegex
     return rule
@@ -145,7 +48,10 @@ module.exports = async ({
 
   let ident = 0
 
-  const loaders: LoaderUtils = {
+  /**
+   * @type {LoaderUtils}
+   */
+  const loaders = {
     json: (options = {}) => {
       return {
         options,
@@ -297,6 +203,7 @@ module.exports = async ({
 
   /**
    * Rules
+   * @type {RuleUtils}
    */
   const rules = {}
 
@@ -504,6 +411,7 @@ module.exports = async ({
   }
   /**
    * Plugins
+   * @type {PluginUtils}
    */
   const plugins = { ...builtinPlugins }
 
@@ -622,7 +530,7 @@ module.exports = async ({
 
   return {
     loaders,
-    rules: (rules: RuleUtils),
-    plugins: (plugins: PluginUtils),
+    rules,
+    plugins,
   }
 }

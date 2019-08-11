@@ -1,21 +1,8 @@
-// @flow
 const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 const typeOf = require(`type-of`)
 const util = require(`util`)
 const { findRootNodeAncestor } = require(`../../db/node-tracking`)
-
-export type TypeConflictExample = {
-  value: mixed,
-  parent: {},
-  type: string,
-  arrayTypes: string[],
-}
-
-type TypeConflict = {
-  value: mixed,
-  description: string,
-}
 
 const isNodeWithDescription = node =>
   node && node.internal && node.internal.description
@@ -61,15 +48,27 @@ const formatValue = value => {
 }
 
 class TypeConflictEntry {
-  selector: string
-  types: Map<string, TypeConflict>
+  /**
+   * @type {string}
+   */
+  selector
+  /**
+   * @type {Map<string, TypeConflict>}
+   */
+  types
 
-  constructor(selector: string) {
+  /**
+   * @param {string} selector
+   */
+  constructor(selector) {
     this.selector = selector
     this.types = new Map()
   }
 
-  addExample({ value, type, parent }: TypeConflictExample) {
+  /**
+   * @param {TypeConflictExample} $0
+   */
+  addExample({ value, type, parent }) {
     this.types.set(type, {
       value,
       description: findNodeDescription(parent),
@@ -96,7 +95,10 @@ class TypeConflictEntry {
 }
 
 class TypeConflictReporter {
-  entries: Map<string, TypeConflictEntry>
+  /**
+   * @type {Map<string, TypeConflictEntry>}
+   */
+  entries
 
   constructor() {
     this.entries = new Map()
@@ -106,7 +108,11 @@ class TypeConflictReporter {
     this.entries.clear()
   }
 
-  getEntryFromSelector(selector: string): TypeConflictEntry {
+  /**
+   * @param {string} selector
+   * @returns {TypeConflictEntry}
+   */
+  getEntryFromSelector(selector) {
     let dataEntry = this.entries.get(selector)
 
     if (!dataEntry) {
@@ -117,7 +123,11 @@ class TypeConflictReporter {
     return dataEntry
   }
 
-  addConflict(selector: string, examples: TypeConflictExample[]) {
+  /**
+   * @param {string} selector
+   * @param {TypeConflictExample[]} examples
+   */
+  addConflict(selector, examples) {
     if (selector.substring(0, 11) === `SitePlugin.`) {
       // Don't store and print out type conflicts in plugins.
       // This is out of user control so he/she can't do anything

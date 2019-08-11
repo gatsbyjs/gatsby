@@ -1,5 +1,3 @@
-/* @flow */
-
 const url = require(`url`)
 const glob = require(`glob`)
 const fs = require(`fs`)
@@ -312,7 +310,7 @@ async function startServer(program, { activity }) {
   return [compiler, listener]
 }
 
-module.exports = async (program: any) => {
+module.exports = async (program) => {
   initTracer(program.openTracingConfigFile)
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()

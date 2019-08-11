@@ -1,5 +1,3 @@
-/* @flow */
-
 const { store } = require(`./index`)
 
 /**

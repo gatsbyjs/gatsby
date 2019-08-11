@@ -1,5 +1,3 @@
-/* @flow */
-
 const _ = require(`lodash`)
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -19,14 +17,6 @@ const pageDataUtil = require(`../utils/page-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const handleWebpackError = require(`../utils/webpack-error-parser`)
 
-type BuildArgs = {
-  directory: string,
-  sitePackageJson: object,
-  prefixPaths: boolean,
-  noUglify: boolean,
-  openTracingConfigFile: string,
-}
-
 const waitJobsFinished = () =>
   new Promise((resolve, reject) => {
     const onEndJob = () => {
@@ -39,7 +29,10 @@ const waitJobsFinished = () =>
     onEndJob()
   })
 
-module.exports = async function build(program: BuildArgs) {
+/**
+ * @param {BuildArgs} program
+ */
+module.exports = async function build(program) {
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
 

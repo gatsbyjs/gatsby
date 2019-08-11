@@ -1,5 +1,3 @@
-/* @flow */
-
 import {
   GraphQLBoolean,
   GraphQLInt,
@@ -8,37 +6,18 @@ import {
   GraphQLObjectType,
 } from "graphql"
 
-import type {
-  GraphQLFieldConfigArgumentMap,
-  GraphQLFieldConfigMap,
-  GraphQLFieldResolver,
-  Thunk,
-} from "graphql"
-
 /**
  * Returns a GraphQLFieldConfigArgumentMap appropriate to include on a field
  * whose return type is a connection type with backward pagination.
+ * @type {GraphQLFieldConfigArgumentMap}
  */
-export const connectionArgs: GraphQLFieldConfigArgumentMap = {
+export const connectionArgs = {
   skip: {
     type: GraphQLInt,
   },
   limit: {
     type: GraphQLInt,
   },
-}
-
-type ConnectionConfig = {
-  name?: ?string,
-  nodeType: GraphQLObjectType,
-  resolveNode?: ?GraphQLFieldResolver<*, *>,
-  edgeFields?: ?Thunk<GraphQLFieldConfigMap<*, *>>,
-  connectionFields?: ?Thunk<GraphQLFieldConfigMap<*, *>>,
-}
-
-type GraphQLConnectionDefinitions = {
-  edgeType: GraphQLObjectType,
-  connectionType: GraphQLObjectType,
 }
 
 /**
@@ -57,17 +36,21 @@ const pageInfoType = new GraphQLObjectType({
   },
 })
 
-function resolveMaybeThunk<T>(thingOrThunk: Thunk<T>): T {
+/**
+ * @param {Thunk<T>>} thingOrThunk
+ * @returns {T}
+ */
+function resolveMaybeThunk(thingOrThunk) {
   return typeof thingOrThunk === `function` ? thingOrThunk() : thingOrThunk
 }
 
 /**
  * Returns a GraphQLObjectType for a connection with the given name,
  * and whose nodes are of the specified type.
+ * @param {ConnectionConfig} config
+ * @returns GraphQLConnectionDefinitions
  */
-export function connectionDefinitions(
-  config: ConnectionConfig
-): GraphQLConnectionDefinitions {
+export function connectionDefinitions(config) {
   const { nodeType } = config
   const name = config.name || nodeType.name
   const edgeFields = config.edgeFields || {}

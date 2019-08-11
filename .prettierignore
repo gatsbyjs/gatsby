@@ -1,6 +1,5 @@
 *.min.js
 **/node_modules/**
-flow-typed
 
 # webfont demo styles
 **/specimen_files

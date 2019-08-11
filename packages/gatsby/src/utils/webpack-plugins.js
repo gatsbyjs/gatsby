@@ -1,10 +1,8 @@
-// @flow
-
 const webpack = require(`webpack`)
 
 const plugin = (name, optimize) => {
   let Plugin = (optimize ? webpack.optimize : webpack)[name]
-  return (...args: any) => new Plugin(...args)
+  return (...args) => new Plugin(...args)
 }
 
 const plugins = {

@@ -1,5 +1,3 @@
-/* @flow */
-
 const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
@@ -39,13 +37,10 @@ const { writeRedirects } = require(`./redirects-writer`)
 // Otherwise leave commented out.
 // require(`./log-line-function`)
 
-type BootstrapArgs = {
-  directory: string,
-  prefixPaths?: boolean,
-  parentSpan: Object,
-}
-
-module.exports = async (args: BootstrapArgs) => {
+/**
+ * @param {BootstrapArgs} args
+ */
+module.exports = async args => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 

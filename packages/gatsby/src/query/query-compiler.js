@@ -1,4 +1,3 @@
-// @flow
 import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
@@ -43,17 +42,6 @@ const {
   print,
 } = require(`graphql`)
 
-type RootQuery = {
-  name: string,
-  path: string,
-  text: string,
-  originalText: string,
-  isStaticQuery: boolean,
-  hash: string,
-}
-
-type Queries = Map<string, RootQuery>
-
 const validationRules = [
   ValuesOfCorrectTypeRule,
   FragmentsOnCompositeTypesRule,
@@ -75,12 +63,33 @@ const resolveThemes = (themes = []) =>
   }, [])
 
 class Runner {
-  base: string
-  additional: string[]
-  schema: GraphQLSchema
-  errors: string[]
-  fragmentsDir: string
+  /**
+   * @type {string}
+   */
+  base
+  /**
+   * @type {string[]}
+   */
+  additional
+  /**
+   * @type {GraphQLSchema}
+   */
+  schema
+  /**
+   * @type {string[]}
+   */
+  errors
+  /**
+   * @type {string}
+   */
+  fragmentsDir
 
+  /**
+   * @param {string} base
+   * @param {string[]} additional
+   * @param {GraphQLSchema} schema
+   * @param $3 {}
+   */
   constructor(
     base: string,
     additional: string[],
@@ -157,8 +166,12 @@ class Runner {
     return await parser.parseFiles(files)
   }
 
-  async write(nodes: Map<string, DocumentNode>): Promise<Queries> {
-    const compiledNodes: Queries = new Map()
+  /**
+   * @param {Map<string, DocumentNode>} nodes
+   * @returns {Promise<Queries>}
+   */
+  async write(nodes) {
+    const compiledNodes = new Map()
     const namePathMap = new Map()
     const nameDefMap = new Map()
     const nameErrorMap = new Map()
@@ -218,8 +231,8 @@ class Runner {
       })
 
       documents.push(doc)
-      doc.definitions.forEach((def: any) => {
-        const name: string = def.name.value
+      doc.definitions.forEach((def) => {
+        const name = def.name.value
         namePathMap.set(name, filePath)
         nameDefMap.set(name, def)
       })
@@ -274,7 +287,7 @@ class Runner {
       }
     })
 
-    compilerContext.documents().forEach((node: { name: string }) => {
+    compilerContext.documents().forEach((node) => {
       if (node.kind !== `Root`) return
       const { name } = node
       let filePath = namePathMap.get(name) || ``
@@ -370,6 +383,10 @@ class Runner {
 }
 export { Runner, resolveThemes }
 
+/**
+ * @param $0
+ * @returns {Promise<Map<string, RootQuery>>}
+ */
 export default async function compile({ parentSpan } = {}): Promise<
   Map<string, RootQuery>
 > {

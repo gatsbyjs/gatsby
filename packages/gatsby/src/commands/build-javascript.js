@@ -1,4 +1,3 @@
-/* @flow */
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 

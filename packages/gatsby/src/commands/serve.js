@@ -1,4 +1,3 @@
-/* @flow weak */
 const path = require(`path`)
 const openurl = require(`better-opn`)
 const fs = require(`fs-extra`)

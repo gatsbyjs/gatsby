@@ -1,5 +1,3 @@
-// @flow
-
 const _ = require(`lodash`)
 const Queue = require(`better-queue`)
 const convertHrtime = require(`convert-hrtime`)

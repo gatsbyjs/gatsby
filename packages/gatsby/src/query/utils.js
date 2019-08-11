@@ -1,8 +1,14 @@
-// @flow
+/**
+ * @param {string} string
+ * @returns {string}
+ */
+const indentString = (string) => string.replace(/\n/g, `\n  `)
 
-const indentString = (string: string): string => string.replace(/\n/g, `\n  `)
-
-const formatErrorDetails = (errorDetails: Map<string, any>): string =>
+/**
+ * @param {Map<string, any>} errorDetails
+ * @returns {string}
+ */
+const formatErrorDetails = errorDetails =>
   Array.from(errorDetails.entries())
     .map(
       ([name, details]) => `${name}:

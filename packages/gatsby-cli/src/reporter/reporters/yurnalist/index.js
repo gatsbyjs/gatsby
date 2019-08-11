@@ -1,5 +1,3 @@
-// @flow
-
 const { createReporter } = require(`yurnalist`)
 const { get } = require(`lodash`)
 const path = require(`path`)

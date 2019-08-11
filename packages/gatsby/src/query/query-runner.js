@@ -1,5 +1,3 @@
-// @flow
-
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -13,17 +11,11 @@ const pageDataUtil = require(`../utils/page-data`)
 
 const resultHashes = {}
 
-type QueryJob = {
-  id: string,
-  hash?: string,
-  query: string,
-  componentPath: string,
-  context: Object,
-  isPage: Boolean,
-}
-
 // Run query
-module.exports = async (queryJob: QueryJob) => {
+/**
+ * @param {QueryJob} queryJob
+ */
+module.exports = async queryJob => {
   const {
     schema,
     schemaCustomization,

@@ -1,6 +1,3 @@
-// @flow
-import type { Plugin } from "./types"
-
 const actions = {}
 
 /**
@@ -10,16 +7,10 @@ const actions = {}
  * @param {string} $0.path the path to the page
  * @param {string} $0.nodeId A node ID
  * @param {string} $0.connection A connection type
+ * @param {string} plugin
  * @private
  */
-actions.createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
-) => {
+actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
@@ -34,10 +25,10 @@ actions.createPageDependency = (
 /**
  * Delete dependencies between an array of pages and data. Probably for
  * internal use only. Used when deleting pages.
- * @param {Array} paths the paths to delete.
+ * @param {string[]} paths the paths to delete.
  * @private
  */
-actions.deleteComponentsDependencies = (paths: string[]) => {
+actions.deleteComponentsDependencies = (paths) => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
@@ -50,14 +41,12 @@ actions.deleteComponentsDependencies = (paths: string[]) => {
  * When the query watcher extracts a GraphQL query, it calls
  * this to store the query with its component.
  * @private
+ *
+ * @param {Object} $0
+ * @param {string} $0.query
+ * @param {string} $0.componentPath
  */
-actions.replaceComponentQuery = ({
-  query,
-  componentPath,
-}: {
-  query: string,
-  componentPath: string,
-}) => {
+actions.replaceComponentQuery = ({ query, componentPath }) => {
   return {
     type: `REPLACE_COMPONENT_QUERY`,
     payload: {
@@ -71,8 +60,11 @@ actions.replaceComponentQuery = ({
  * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
  * components, it calls this to store the query with its component.
  * @private
+ *
+ * @param {any} args
+ * @param {Plugin | null} [plugin]
  */
-actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
+actions.replaceStaticQuery = (args, plugin = null) => {
   return {
     type: `REPLACE_STATIC_QUERY`,
     plugin,
@@ -89,13 +81,11 @@ actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
  * @param {query} $0.query The GraphQL query that was extracted from the component.
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  * @private
  */
-actions.queryExtracted = (
-  { componentPath, query },
-  plugin: Plugin,
-  traceId?: string
-) => {
+actions.queryExtracted = ({ componentPath, query }, plugin, traceId) => {
   return {
     type: `QUERY_EXTRACTED`,
     plugin,
@@ -112,12 +102,14 @@ actions.queryExtracted = (
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
  * @param {error} $0.error The GraphQL query that was extracted from the component.
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  * @private
  */
 actions.queryExtractionGraphQLError = (
   { componentPath, error },
-  plugin: Plugin,
-  traceId?: string
+  plugin,
+  traceId
 ) => {
   return {
     type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
@@ -135,13 +127,11 @@ actions.queryExtractionGraphQLError = (
  * @param {Object} $0
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  * @private
  */
-actions.queryExtractedBabelSuccess = (
-  { componentPath },
-  plugin: Plugin,
-  traceId?: string
-) => {
+actions.queryExtractedBabelSuccess = ({ componentPath }, plugin, traceId) => {
   return {
     type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
     plugin,
@@ -158,12 +148,14 @@ actions.queryExtractedBabelSuccess = (
  * @param {componentPath} $0.componentPath The path to the component that just had
  * its query read.
  * @param {error} $0.error The Babel error object
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  * @private
  */
 actions.queryExtractionBabelError = (
   { componentPath, error },
-  plugin: Plugin,
-  traceId?: string
+  plugin,
+  traceId
 ) => {
   return {
     type: `QUERY_EXTRACTION_BABEL_ERROR`,
@@ -176,10 +168,12 @@ actions.queryExtractionBabelError = (
 /**
  * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
  *
- * @param {string} Program status
+ * @param {string} status - Program status
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  * @private
  */
-actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
+actions.setProgramStatus = (status, plugin, traceId) => {
   return {
     type: `SET_PROGRAM_STATUS`,
     plugin,
@@ -191,14 +185,16 @@ actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
 /**
  * Broadcast that a page's query was run.
  *
- * @param {string} Path to the page component that changed.
+ * @param {Object} $0
+ * @param {componentPath} $0.componentPath The path to the component that just had
+ * its query read.
+ * @param {string} $0.path to the page component that changed.
+ * @param {boolean} $0.isPage
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  * @private
  */
-actions.pageQueryRun = (
-  { path, componentPath, isPage },
-  plugin: Plugin,
-  traceId?: string
-) => {
+actions.pageQueryRun = ({ path, componentPath, isPage }, plugin, traceId) => {
   return {
     type: `PAGE_QUERY_RUN`,
     plugin,

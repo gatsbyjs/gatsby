@@ -1,5 +1,3 @@
-// @flow
-
 const {
   getNamedType,
   getNullableType,

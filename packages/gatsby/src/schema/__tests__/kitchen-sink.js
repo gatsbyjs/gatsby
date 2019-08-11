@@ -1,5 +1,3 @@
-// @flow
-
 const { SchemaComposer } = require(`graphql-compose`)
 const {
   graphql,

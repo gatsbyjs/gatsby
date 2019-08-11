@@ -1,5 +1,3 @@
-/* @flow */
-
 const fs = require(`fs-extra`)
 
 const apiRunnerNode = require(`../../utils/api-runner-node`)

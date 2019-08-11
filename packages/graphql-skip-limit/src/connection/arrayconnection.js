@@ -1,16 +1,9 @@
-/* @flow */
-
-import type { Connection, ConnectionArguments } from "./connectiontypes"
-
 /**
  * A function that accepts an array and connection arguments, and returns
  * a connection object for use in GraphQL. It uses array offsets as pagination,
  * so pagination will only work if the array is static.
  */
-export function connectionFromArray<T>(
-  data: Array<T>,
-  args: ConnectionArguments
-): Connection<T> {
+export function connectionFromArray(data, args) {
   const { skip, limit } = args
   let startSlice = 0
   let endSlice = data.length
@@ -61,9 +54,6 @@ export function connectionFromArray<T>(
  * A version of `connectionFromArray` that takes a promised array, and returns a
  * promised connection.
  */
-export function connectionFromPromisedArray<T>(
-  dataPromise: Promise<Array<T>>,
-  args: ConnectionArguments
-): Promise<Connection<T>> {
+export function connectionFromPromisedArray(dataPromise, args) {
   return dataPromise.then(data => connectionFromArray(data, args))
 }
