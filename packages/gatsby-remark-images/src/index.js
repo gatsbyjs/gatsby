@@ -14,6 +14,7 @@ const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
+const chalk = require(`chalk`)
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -156,6 +157,16 @@ module.exports = (
     const title = node.title ? node.title : alt
 
     const loading = options.loading
+
+    if (![`lazy`, `eager`, `auto`].includes(loading)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
+          `loading`
+        )} option. Please pass one of "lazy", "eager" or "auto". 
+      `)
+      )
+    }
 
     // Create our base image tag
     let imageTag = `
