@@ -262,10 +262,10 @@ Edit your Markdown files to include that HTML tag after the text you'd like to a
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
+
 <p>Where oh where is that pony?</p>
 <!-- endexcerpt -->
 <p>Is he in the stable or down by the stream?</p>
-
 ```
 
 Then specify `MARKDOWN` as the format in your graphql query:
