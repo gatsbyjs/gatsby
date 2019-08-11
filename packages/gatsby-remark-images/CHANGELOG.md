@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.8...gatsby-remark-images@3.1.9) (2019-08-11)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** Allow alt to be returned as caption ([#16518](https://github.com/gatsbyjs/gatsby/issues/16518)) ([f09e82f](https://github.com/gatsbyjs/gatsby/commit/f09e82f))
+
 ## [3.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.7...gatsby-remark-images@3.1.8) (2019-08-08)
 
 **Note:** Version bump only for package gatsby-remark-images
