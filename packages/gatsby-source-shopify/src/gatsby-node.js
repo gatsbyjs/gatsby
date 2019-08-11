@@ -15,6 +15,8 @@ import {
   ProductMetafieldNode,
   ShopPolicyNode,
   PageNode,
+} from "./nodes"
+import {
   SHOP,
   CONTENT,
   NODE_TO_ENDPOINT_MAPPING,
@@ -24,7 +26,7 @@ import {
   PRODUCT,
   SHOP_POLICY,
   PAGE,
-} from "./nodes"
+} from "./constants"
 import {
   ARTICLES_QUERY,
   BLOGS_QUERY,
