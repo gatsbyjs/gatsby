@@ -25,8 +25,6 @@ import report from "gatsby-cli/lib/reporter"
 import errorParser from "./error-parser"
 const websocketManager = require(`../utils/websocket-manager`)
 
-import type { DocumentNode, GraphQLSchema } from "graphql"
-
 const { printTransforms } = IRTransforms
 
 const {
@@ -231,7 +229,7 @@ class Runner {
       })
 
       documents.push(doc)
-      doc.definitions.forEach((def) => {
+      doc.definitions.forEach(def => {
         const name = def.name.value
         namePathMap.set(name, filePath)
         nameDefMap.set(name, def)
@@ -287,7 +285,7 @@ class Runner {
       }
     })
 
-    compilerContext.documents().forEach((node) => {
+    compilerContext.documents().forEach(node => {
       if (node.kind !== `Root`) return
       const { name } = node
       let filePath = namePathMap.get(name) || ``

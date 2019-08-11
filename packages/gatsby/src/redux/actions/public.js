@@ -1172,14 +1172,7 @@ actions.createRedirect = ({
  * @param {string} plugin
  * @private
  */
-actions.createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  },
-  plugin = ``
-) => {
+actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   console.warn(
     `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
   )

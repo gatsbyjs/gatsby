@@ -99,7 +99,7 @@ const getCachedStaticQueryResults = (resultsMap, directory) => {
  * @param {string} path
  * @returns {string}
  */
-const getRoomNameFromPath = (path) => `path-${path}`
+const getRoomNameFromPath = path => `path-${path}`
 
 class WebsocketManager {
   /**

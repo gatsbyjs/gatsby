@@ -2,7 +2,7 @@
  * @param {string} string
  * @returns {string}
  */
-const indentString = (string) => string.replace(/\n/g, `\n  `)
+const indentString = string => string.replace(/\n/g, `\n  `)
 
 /**
  * @param {Map<string, any>} errorDetails

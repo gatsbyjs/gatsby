@@ -310,7 +310,7 @@ async function startServer(program, { activity }) {
   return [compiler, listener]
 }
 
-module.exports = async (program) => {
+module.exports = async program => {
   initTracer(program.openTracingConfigFile)
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()

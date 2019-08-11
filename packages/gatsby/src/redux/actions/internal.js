@@ -28,7 +28,7 @@ actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
  * @param {string[]} paths the paths to delete.
  * @private
  */
-actions.deleteComponentsDependencies = (paths) => {
+actions.deleteComponentsDependencies = paths => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {

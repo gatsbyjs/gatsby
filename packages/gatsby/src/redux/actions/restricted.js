@@ -27,13 +27,14 @@ actions.addThirdPartySchema = ({ schema }, plugin, traceId) => {
   }
 }
 
-import type GatsbyGraphQLType from "../../schema/types/type-builders"
 /**
  * Add type definitions to the GraphQL schema.
  *
  * @availableIn [createSchemaCustomization, sourceNodes]
  *
  * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  *
  * Type definitions can be provided either as
  * [`graphql-js` types](https://graphql.org/graphql-js/), in
@@ -169,15 +170,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  *   createTypes(typeDefs)
  * }
  */
-actions.createTypes = (
-  types:
-    | string
-    | GraphQLOutputType
-    | GatsbyGraphQLType
-    | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
-  plugin: Plugin,
-  traceId?: string
-) => {
+actions.createTypes = (types, plugin, traceId) => {
   return {
     type: `CREATE_TYPES`,
     plugin,
@@ -187,7 +180,7 @@ actions.createTypes = (
 }
 
 const { reservedExtensionNames } = require(`../../schema/extensions`)
-import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
+
 /**
  * Add a field extension to the GraphQL schema.
  *
@@ -202,6 +195,9 @@ import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
  * @availableIn [createSchemaCustomization, sourceNodes]
  *
  * @param {GraphQLFieldExtensionDefinition} extension The field extension definition
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
+ *
  * @example
  * exports.createSchemaCustomization = ({ actions }) => {
  *   const { createFieldExtension } = actions
@@ -229,11 +225,10 @@ import type GraphQLFieldExtensionDefinition from "../../schema/extensions"
  *   })
  * }
  */
-actions.createFieldExtension = (
-  extension: GraphQLFieldExtensionDefinition,
-  plugin: Plugin,
-  traceId?: string
-) => (dispatch, getState) => {
+actions.createFieldExtension = (extension, plugin, traceId) => (
+  dispatch,
+  getState
+) => {
   const { name } = extension || {}
   const { fieldExtensions } = getState().schemaCustomization
 
@@ -277,22 +272,14 @@ actions.createFieldExtension = (
  * @param {object} [$0.exclude] Configure types to exclude
  * @param {string[]} [$0.exclude.types] Do not include these types
  * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
- * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
+ * @param {boolean} [$0.withFieldTypes] Include field types, defaults to `true`
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
  */
 actions.printTypeDefinitions = (
-  {
-    path = `schema.gql`,
-    include,
-    exclude,
-    withFieldTypes = true,
-  }: {
-    path?: string,
-    include?: { types?: Array<string>, plugins?: Array<string> },
-    exclude?: { types?: Array<string>, plugins?: Array<string> },
-    withFieldTypes?: boolean,
-  },
-  plugin: Plugin,
-  traceId?: string
+  { path = `schema.gql`, include, exclude, withFieldTypes = true },
+  plugin,
+  traceId
 ) => {
   return {
     type: `PRINT_SCHEMA_REQUESTED`,
@@ -315,6 +302,9 @@ actions.printTypeDefinitions = (
  * @param {object} context Object to make available on `context`.
  * When called from a plugin, the context value will be namespaced under
  * the camel-cased plugin name without the "gatsby-" prefix
+ * @param {Plugin} plugin
+ * @param {string} [traceId]
+ *
  * @example
  * const getHtml = md => remark().use(html).process(md)
  * exports.createSchemaCustomization = ({ actions }) => {
@@ -337,11 +327,7 @@ actions.printTypeDefinitions = (
  *   }))
  * }
  */
-actions.createResolverContext = (
-  context: object,
-  plugin: Plugin,
-  traceId?: string
-) => dispatch => {
+actions.createResolverContext = (context, plugin, traceId) => dispatch => {
   if (!context || typeof context !== `object`) {
     report.error(
       `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
