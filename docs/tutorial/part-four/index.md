@@ -224,8 +224,10 @@ module.exports = {
   },
   // highlight-end
   plugins: [
+    // highlight-start
     `gatsby-transformer-sharp`,
 		`gatsby-plugin-sharp`,
+    // highlight-end
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
