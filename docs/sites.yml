@@ -5145,18 +5145,6 @@
     - Travel
     - Photography
   built_by: Zuyet Awarmatik
-- title: nikodemdeja.pl
-  main_url: https://nikodemdeja.pl
-  url: https://nikodemdeja.pl
-  source_url: https://github.com/Norem80/nikodemdeja.pl
-  description: >
-    Portfolio of Nikodem Deja
-  categories:
-    - Portfolio
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: manuvel.be
   url: https://www.manuvel.be
   main_url: https://www.manuvel.be
@@ -5233,18 +5221,6 @@
     - eCommerce
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
-- title: blog.nikodemdeja.pl
-  main_url: https://blog.nikodemdeja.pl
-  url: https://blog.nikodemdeja.pl
-  source_url: https://github.com/Norem80/blog.nikodemdeja.pl
-  description: >
-    Personal blog of Nikodem Deja
-  categories:
-    - Blog
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: Pella Windows and Doors
   main_url: https://www.pella.com
   url: https://www.pella.com
