@@ -1,4 +1,4 @@
-const { GraphQLString, graphql, defaultFieldResolver } = require(`graphql`)
+const { GraphQLString, graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { buildObjectType } = require(`../../types/type-builders`)
@@ -6,6 +6,7 @@ const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions/restricted`)
 const { createFieldExtension, createTypes } = actions
+const { trackInlineObjectsInRootNode } = require(`../../../db/node-tracking`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
@@ -22,18 +23,25 @@ describe(`GraphQL field extensions`, () => {
     const nodes = [
       {
         id: `test1`,
+        parent: `test5`,
         internal: { type: `Test` },
         somedate: `2019-09-01`,
         otherdate: `2019-09-01`,
+        nested: {
+          onemoredate: `2019-07-30`,
+          title: `Hello World`,
+        },
       },
       {
         id: `test2`,
+        parent: `test6`,
         internal: { type: `Test` },
         somedate: `2019-09-13`,
         otherdate: `2019-09-13`,
       },
       {
         id: `test3`,
+        parent: null,
         internal: { type: `Test` },
         somedate: `2019-09-26`,
         otherdate: `2019-09-26`,
@@ -45,18 +53,55 @@ describe(`GraphQL field extensions`, () => {
       },
       {
         id: `test5`,
+        children: [`test1`],
         internal: { type: `AnotherTest` },
         date: `2019-01-01`,
       },
       {
         id: `test6`,
+        children: [`test2`],
         internal: { type: `AnotherTest` },
         date: 0,
+      },
+      {
+        id: `test7`,
+        internal: { type: `NestedTest` },
+        top: 78,
+        first: {
+          next: 26,
+          second: [
+            {
+              third: {
+                fourth: [
+                  {
+                    fifth: `lorem`,
+                  },
+                  {
+                    fifth: `ipsum`,
+                  },
+                ],
+              },
+            },
+            {
+              third: {
+                fourth: [
+                  {
+                    fifth: `dolor`,
+                  },
+                  {
+                    fifth: `sit`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
       },
     ]
     nodes.forEach(node => {
       dispatch({ type: `CREATE_NODE`, payload: { ...node } })
     })
+    nodes.forEach(node => trackInlineObjectsInRootNode(node))
   })
 
   it(`allows creating a custom field extension`, async () => {
@@ -562,12 +607,12 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `uppercase`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
             type: `String`,
-            async resolve(...rp) {
-              const resolved = await originalResolver(...rp)
+            async resolve(source, args, context, info) {
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const resolved = await resolver(source, args, context, info)
               return String(resolved).toUpperCase()
             },
           }
@@ -578,12 +623,12 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `reverse`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
             type: `String`,
-            async resolve(...rp) {
-              const resolved = await originalResolver(...rp)
+            async resolve(source, args, context, info) {
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const resolved = await resolver(source, args, context, info)
               return [...String(resolved)].reverse().join(``)
             },
           }
@@ -708,7 +753,7 @@ describe(`GraphQL field extensions`, () => {
         }`
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
@@ -752,7 +797,7 @@ describe(`GraphQL field extensions`, () => {
         })
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`hello\` on \`Test.hi\` has argument \`planet\` with ` +
         `invalid value "2". String cannot represent a non string value: 2`
@@ -796,7 +841,7 @@ describe(`GraphQL field extensions`, () => {
         }`,
       ])
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
@@ -927,7 +972,7 @@ describe(`GraphQL field extensions`, () => {
         }),
       ])
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`test\` on \`Test.second\` has argument \`one\` with ` +
         `invalid value "1". Int cannot represent non-integer value: "1"`
@@ -967,7 +1012,7 @@ describe(`GraphQL field extensions`, () => {
         }`
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(`Some error message`)
   })
 
@@ -1006,7 +1051,7 @@ describe(`GraphQL field extensions`, () => {
         })
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`hello\` on \`Test.hi\` has invalid argument \`what\`.`
     )
@@ -1021,7 +1066,7 @@ describe(`GraphQL field extensions`, () => {
         }`
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`what\` on \`Test.hi\` is not available.`
     )
@@ -1047,7 +1092,7 @@ describe(`GraphQL field extensions`, () => {
         })
       )
     )
-    await buildSchema({})
+    await buildSchema()
     expect(report.error).toBeCalledWith(
       `Field extension \`what\` on \`Test.hi\` is not available.`
     )
@@ -1058,11 +1103,11 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `zeroToNull`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
-            async resolve(...rp) {
-              const fieldValue = await originalResolver(...rp)
+            async resolve(source, args, context, info) {
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const fieldValue = await resolver(source, args, context, info)
               if (fieldValue === 0) {
                 return null
               }
@@ -1113,8 +1158,6 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `replace`,
         extend(options, prevFieldConfig) {
-          const originalResolver =
-            prevFieldConfig.resolve || defaultFieldResolver
           return {
             args: {
               ...prevFieldConfig.args,
@@ -1122,12 +1165,9 @@ describe(`GraphQL field extensions`, () => {
               replaceWith: `String!`,
             },
             async resolve(source, args, context, info) {
-              const fieldValue = await originalResolver(
-                source,
-                args,
-                context,
-                info
-              )
+              const resolver =
+                prevFieldConfig.resolve || context.defaultFieldResolver
+              const fieldValue = await resolver(source, args, context, info)
               if (fieldValue == args.match) {
                 return args.replaceWith
               }
@@ -1223,6 +1263,306 @@ describe(`GraphQL field extensions`, () => {
       },
     }
     expect(results).toEqual(expected)
+  })
+
+  describe(`nested-fields-aware default field resolver`, () => {
+    it(`@proxy extension works with nested fields`, async () => {
+      dispatch(
+        createTypes(`
+          type Fourth {
+            fifth: String
+          }
+          type Third {
+            fourth: [Fourth]
+          }
+          type Second {
+            third: Third
+          }
+          type First {
+            next: Int
+            second: [Second]
+          }
+          type NestedTest implements Node {
+            first: First
+            fromNextLevel: Int @proxy(from: "first.next")
+            fromBottomLevel: [[String]] @proxy(from: "first.second.third.fourth.fifth")
+          }
+        `)
+      )
+      const query = `
+        {
+          nestedTest {
+            fromNextLevel
+            fromBottomLevel
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        nestedTest: {
+          fromNextLevel: 26,
+          fromBottomLevel: [[`lorem`, `ipsum`], [`dolor`, `sit`]],
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`@proxy extension works with parent node fields`, async () => {
+      dispatch(
+        createTypes(`
+          type Fourth {
+            fifth: String
+            fromTopLevel: Int @proxy(from: "top", fromNode: true)
+            fromNextLevel: Int @proxy(from: "first.next", fromNode: true)
+          }
+          type Third {
+            fourth: [Fourth]
+          }
+          type Second {
+            third: Third
+          }
+          type First {
+            next: Int
+            second: [Second]
+          }
+          type NestedTest implements Node {
+            first: First
+            top: Int
+          }
+        `)
+      )
+      const query = `
+        {
+          nestedTest {
+            first {
+              second {
+                third {
+                  fourth {
+                    fromTopLevel
+                    fromNextLevel
+                  }
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        nestedTest: {
+          first: {
+            second: [
+              {
+                third: {
+                  fourth: [
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                  ],
+                },
+              },
+              {
+                third: {
+                  fourth: [
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                    {
+                      fromTopLevel: 78,
+                      fromNextLevel: 26,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`works with multiple field extensions`, async () => {
+      dispatch(
+        createTypes(`
+          type Nested {
+            onemoredate: Date
+          }
+          type Test implements Node @dontInfer {
+            nested: Nested
+            proxied: Date @dateformat(formatString: "YYYY") @proxy(from: "nested.onemoredate")
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            proxied
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          proxied: `2019`,
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`allows linking from nested fields`, async () => {
+      dispatch(
+        createTypes(`
+          type Nested {
+            onemoredate: Date @dateformat
+          }
+          type Test implements Node @dontInfer {
+            linked: Test @link(by: "nested.onemoredate", from: "nested.onemoredate")
+            nested: Nested
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            linked {
+              nested {
+                onemoredate(formatString: "MM/DD/YYYY")
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          linked: {
+            nested: {
+              onemoredate: `07/30/2019`,
+            },
+          },
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`works in a custom field extension`, async () => {
+      dispatch(
+        createFieldExtension({
+          name: `slug`,
+          args: {
+            from: `String!`,
+          },
+          extend(options) {
+            return {
+              resolve(source, args, context, info) {
+                const fieldValue = context.defaultFieldResolver(
+                  source,
+                  args,
+                  context,
+                  {
+                    ...info,
+                    from: options.from || info.from,
+                    fromNode: options.from ? options.fromNode : info.fromNode,
+                  }
+                )
+                return String(fieldValue)
+                  .toLowerCase()
+                  .replace(/[^\w]+/g, `-`)
+              },
+            }
+          },
+        })
+      )
+      dispatch(
+        createTypes(`
+          type Test implements Node @dontInfer {
+            nested: Nested
+            slug: String @slug(from: "nested.title")
+          }
+          type Nested {
+            title: String
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            slug
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          slug: `hello-world`,
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    it(`proxies to field from parent node with helper extension`, async () => {
+      dispatch(
+        createFieldExtension({
+          name: `parent`,
+          extend(options, fieldConfig) {
+            return {
+              resolve(source, args, context, info) {
+                const resolver =
+                  fieldConfig.resolve || context.defaultFieldResolver
+                return resolver(
+                  context.nodeModel.getNodeById({ id: source.parent }),
+                  args,
+                  context,
+                  info
+                )
+              },
+            }
+          },
+        })
+      )
+      dispatch(
+        createTypes(`
+          type Test implements Node {
+            fromParentNode: Date @dateformat(formatString: "YYYY") @parent @proxy(from: "date")
+          }
+        `)
+      )
+      const query = `
+        {
+          test {
+            fromParentNode
+          }
+          filtered: test(parent: { id: { ne: null } }) {
+            fromParentNode
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          fromParentNode: `2019`,
+        },
+        filtered: {
+          fromParentNode: `2019`,
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
+    describe(`proxies to fields on other nodes when combined with projection extension`, () => {
+      it.todo(`proxies to field on parent node`)
+      it.todo(`proxies to nested field on parent node`)
+      it.todo(`proxies to field on ancestor node`)
+      it.todo(`proxies to nested field on ancestor node`)
+      it.todo(`proxies to field on linked in node`)
+      it.todo(`proxies to nested field on linked in node`)
+    })
   })
 })
 
