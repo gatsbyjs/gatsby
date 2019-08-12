@@ -40,8 +40,8 @@ NOTE: Items marked with TODO are either not yet supported or a work in progress.
  
 .Inline markup
 * single quotes around a phrase place 'emphasis'
-* astericks around a phrase make the text *bold*
-* double astericks around one or more **l**etters in a word make those letters bold
+* asterisk around a phrase make the text *bold*
+* double asterisk around one or more **l**etters in a word make those letters bold
 * double underscore around a __sub__string in a word emphasize that substring
 * use carrots around characters to make them ^super^script
 * use tildes around characters to make them ~sub~script

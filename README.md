@@ -58,7 +58,7 @@
   <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
-Gatsby is a modern framework for blazing fast websites.
+Gatsby is a modern web framework for blazing fast websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps so you can create high-quality,

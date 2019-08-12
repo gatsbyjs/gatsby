@@ -68,6 +68,13 @@ plugins: [
                 },
               },
             ],
+            // Customize the prompt used in shell output
+            // Values below are default
+            prompt: {
+              user: "root",
+              host: "localhost",
+              global: false,
+            },
           },
         },
       ],
@@ -190,6 +197,41 @@ Then add in the corresponding CSS:
   padding: 0;
   padding-left: 2.8em;
   overflow: initial;
+}
+```
+
+#### Optional: Add shell prompt
+
+If you want a fancy prompt on anything with `shell` or `bash`, you need to import
+the following CSS file in `gatsby-browser.js`:
+
+```javascript
+// gatsby-browser.js
+require("prismjs/plugins/command-line/prism-command-line.css")
+```
+
+If you want to change the resulting prompt, use the following CSS:
+
+```css
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
 }
 ```
 
@@ -325,6 +367,25 @@ plugins: [
 ```
 ````
 
+### Shell prompt
+
+To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
+
+By default, every line gets a prompt appended to the start, this behaviour can be changed by specififying `{outputLines: <range>}`
+to the language.
+
+````
+```bash{outputLines: 2-10,12}
+````
+
+The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
+unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
+
+````
+```bash{promptUser: alice}{promptHost: dev.localhost}
+````
+
 ### Line hiding
 
 As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).
@@ -402,7 +463,7 @@ Note:
   be defined.
 
 In case a language is extended, note that the definitions will not be merged.
-If the extended language defintion and the given definition contains the same
+If the extended language definition and the given definition contains the same
 token, the original pattern will be overwritten.
 
 One of the parameters `definition` and `insertBefore` needs to be defined.

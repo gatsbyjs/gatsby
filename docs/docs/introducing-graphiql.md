@@ -18,7 +18,7 @@ When you have <http://localhost:8000/___graphql> open, it will look something li
 on it—including the `siteMetadata` object.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <source type="video/mp4" src="/graphiql-explore.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -30,7 +30,17 @@ Make sure to check out the GraphiQL docs in the upper right-hand corner of the I
 
 ![A diagram pointing out where to find the GraphiQl docs](images/graphiql-docs.png)
 
+## Using the GraphiQL Explorer
+
+The GraphiQL Explorer enables you to interactively construct full queries by clicking through available fields and inputs without the repetitive process of typing these queries out by hand.
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-build-a-graphql-query-using-gatsby-s-graphiql-explorer"
+  lessonTitle="Build a GraphQL Query using Gatsby’s GraphiQL Explorer"
+/>
+
 ## Other resources
 
 - See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using GraphiQL
 - See the [README for GraphiQL](https://github.com/graphql/graphiql)
+- See [Using GraphQL Playground](/docs/using-graphql-playground/) for another example of a GraphQL IDE

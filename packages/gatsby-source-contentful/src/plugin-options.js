@@ -1,4 +1,4 @@
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 
 const _ = require(`lodash`)
@@ -8,6 +8,7 @@ const defaultOptions = {
   environment: `master`,
   downloadLocal: false,
   localeFilter: () => true,
+  forceFullSync: false,
 }
 
 const createPluginConfig = pluginOptions => {
@@ -30,6 +31,7 @@ const optionsSchema = Joi.object().keys({
   environment: Joi.string().empty(),
   downloadLocal: Joi.boolean(),
   localeFilter: Joi.func(),
+  forceFullSync: Joi.boolean(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
 })
