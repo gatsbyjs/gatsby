@@ -16,6 +16,7 @@ const createLabel = (text, color) => (...props) => (
 
 const getLabel = level => {
   switch (level) {
+    case `ACTIVITY_SUCCESS`:
     case `SUCCESS`:
       return createLabel(`success`, `green`)
     case `WARNING`:
@@ -24,14 +25,26 @@ const getLabel = level => {
       return createLabel(`verbose`, `gray`)
     case `INFO`:
       return createLabel(`info`, `blue`)
+    case `ACTIVITY_FAILED`:
+      return createLabel(`failed`, `red`)
+    case `ACTIVITY_INTERRUPTED`:
+      return createLabel(`not finished`, `gray`)
+
     default:
-      return createLabel(`debug ${level}`, `blue`)
+      return createLabel(level, `blue`)
   }
 }
 
-export const Message = ({ level, hideColors, children }) => {
+export const Message = ({ level, hideColors, text, duration, statusText }) => {
+  let message = text
+  if (duration) {
+    message += ` - ${duration}s`
+  }
+  if (statusText) {
+    message += ` - ${statusText}`
+  }
   if (!level || level === `LOG`) {
-    return <>{children}</>
+    return <>{message}</>
   }
 
   const TextLabel = getLabel(level)
@@ -40,7 +53,7 @@ export const Message = ({ level, hideColors, children }) => {
     <Box textWrap="wrap" flexDirection="row">
       <TextLabel hideColors={hideColors} />
       {` `}
-      {children}
+      {message}
     </Box>
   )
 }

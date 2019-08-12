@@ -108,7 +108,9 @@ class Runner {
     let nodes = await this.parseEverything(messages)
     const results = await this.write(nodes, messages)
 
-    report.clearStatefulMessage({ group: `query-extraction` })
+    activity.end(messages.length === 0)
+
+    report.clearStatefulMessage(`query-extraction`)
 
     // console.log(messages)
     messages.forEach(msg => {
@@ -120,7 +122,6 @@ class Runner {
     })
 
     // console.log('message count', messages.length)
-    activity.end(messages.length === 0)
 
     // report.stateUpdate(
     //   `queryExtraction`,

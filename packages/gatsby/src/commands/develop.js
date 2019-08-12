@@ -607,7 +607,7 @@ module.exports = async (program: any) => {
     // TODO: Would be nice to copy (at least some) of friendly-errors-webpack-plugin
     // error/warning enhancing
 
-    report.clearStatefulMessage({ group: `webpack-errors` })
+    report.clearStatefulMessage(`webpack-errors`)
     if (messages.errors.length > 0) {
       const handleWebpackError = require(`../utils/webpack-error-parser`)
       // const constructError = require(`gatsby-cli/lib/structured-errors`)

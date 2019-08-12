@@ -210,10 +210,12 @@ const initialProcessQueries = async () => {
         report.completeActivity(`query-running`)
       },
       tick: () => {},
+      // setStatus: () => {},
     }
   }
 
   await processQueries(queryJobs, activity)
+  // activity.setStatus(`${queryJobs.length} queries`)
   activity.done()
   return { pageQueryIds }
 }

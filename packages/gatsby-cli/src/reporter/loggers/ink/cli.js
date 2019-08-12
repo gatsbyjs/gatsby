@@ -23,7 +23,7 @@ class CLI extends React.Component {
     if (showProgress) {
       Object.keys(activities).forEach(activityName => {
         const activity = activities[activityName]
-        if (activity.state !== `IN_PROGRESS`) {
+        if (activity.status !== `IN_PROGRESS`) {
           return
         }
         if (activity.type === `spinner`) {
@@ -43,21 +43,19 @@ class CLI extends React.Component {
               msg.level === `ERROR` ? (
                 <Error details={msg} key={index} />
               ) : (
-                <Message level={msg.level} hideColors={true} key={index}>
-                  {msg.text}
-                </Message>
+                <Message hideColors={true} key={index} {...msg} />
               )
             )}
           </Static>
 
           {spinners.map(activity => (
-            <Spinner key={activity.name} {...activity} />
+            <Spinner key={activity.id} {...activity} />
           ))}
 
           {progressBars.map(activity => (
             <ProgressBar
-              key={activity.name}
-              message={activity.name}
+              key={activity.id}
+              message={activity.text}
               total={activity.total}
               current={activity.current}
               startTime={activity.startTime}
@@ -69,9 +67,7 @@ class CLI extends React.Component {
             msg.level === `ERROR` ? (
               <Error details={msg} key={index} />
             ) : (
-              <Message level={msg.level} hideColors={true} key={index}>
-                {msg.text}
-              </Message>
+              <Message hideColors={true} key={index} {...msg} />
             )
           )}
         </Box>

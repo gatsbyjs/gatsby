@@ -14,6 +14,15 @@ const onLogActionListeners = []
 const iface = {
   getStore: () => store,
   dispatch: action => {
+    if (!action) {
+      return
+    }
+
+    if (Array.isArray(action)) {
+      action.forEach(item => iface.dispatch(item))
+      return
+    }
+
     store.dispatch(action)
     onLogActionListeners.forEach(fn => fn(action))
   },
@@ -25,7 +34,7 @@ const iface = {
   },
   setStore: s => {
     s.dispatch({
-      type: `INIT_STRUCTURED_LOGS`,
+      type: `SET_LOGS`,
       payload: store.getState().logs,
     })
     store = s

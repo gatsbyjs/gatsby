@@ -4,6 +4,7 @@ const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const { setStore } = require(`./reporter/redux`)
 const didYouMean = require(`./did-you-mean`)
+const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 const clipboardy = require(`clipboardy`)
@@ -282,29 +283,6 @@ function isLocalGatsbySite() {
     /* ignore */
   }
   return !!inGatsbySite
-}
-
-function getLocalGatsbyVersion() {
-  let version
-  try {
-    const packageInfo = require(path.join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
-    version = packageInfo.version
-
-    try {
-      setDefaultTags({ installedGatsbyVersion: version })
-    } catch (e) {
-      // ignore
-    }
-  } catch (err) {
-    /* ignore */
-  }
-
-  return version
 }
 
 function getVersionInfo() {
