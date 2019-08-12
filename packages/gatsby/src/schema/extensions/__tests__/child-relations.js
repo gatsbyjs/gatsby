@@ -58,7 +58,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `Child`,
           contentDigest: `Child1`,
         },
-        parent: [`parent1`],
+        parent: `parent1`,
         children: [],
         name: `Child 1`,
       },
@@ -68,7 +68,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `Child`,
           contentDigest: `Child2`,
         },
-        parent: [`parent2`],
+        parent: `parent2`,
         children: [],
         name: `Child 2`,
       },
@@ -78,7 +78,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `AnotherChild`,
           contentDigest: `AnotherChild1`,
         },
-        parent: [`parent1`],
+        parent: `parent1`,
         children: [],
         name: `Another Child 1`,
       },
@@ -88,7 +88,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `AnotherChild`,
           contentDigest: `AnotherChild2`,
         },
-        parent: [`parent1`],
+        parent: `parent1`,
         children: [],
         name: `Another Child 2`,
       },
@@ -160,9 +160,13 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node {
           id: ID!
         }
+        type AnotherChild implements Node @childOf(types: ["Parent"], many: true) {
+          id: ID!
+        }
       `)
     )
     await buildSchema()
+    expect(report.warn).toBeCalledTimes(1)
     expect(report.warn).toBeCalledWith(
       `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
         `extension set to \`false\`, automatically adding fields for ` +

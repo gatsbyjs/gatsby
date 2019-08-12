@@ -2,17 +2,18 @@
 const {
   GraphQLDirective,
   DirectiveLocation,
-  defaultFieldResolver,
+  specifiedDirectives,
 } = require(`graphql`)
 
 const { link, fileByPath } = require(`../resolvers`)
 const { getDateResolver } = require(`../types/date`)
 
 import type { GraphQLFieldConfigArgumentMap, GraphQLFieldConfig } from "graphql"
-import type { ComposeFieldConfig } from "graphql-compose"
+import type { ComposeFieldConfig, ComposeOutputType } from "graphql-compose"
 
 export interface GraphQLFieldExtensionDefinition {
   name: string;
+  type?: ComposeOutputType;
   args?: GraphQLFieldConfigArgumentMap;
   extend(
     args: GraphQLFieldConfigArgumentMap,
@@ -111,9 +112,8 @@ const builtInFieldExtensions = {
       from: `String`,
     },
     extend(args, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: link(args, originalResolver),
+        resolve: link(args, fieldConfig),
       }
     },
   },
@@ -125,9 +125,8 @@ const builtInFieldExtensions = {
       from: `String`,
     },
     extend(args, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: fileByPath(args, originalResolver),
+        resolve: fileByPath(args, fieldConfig),
       }
     },
   },
@@ -137,14 +136,19 @@ const builtInFieldExtensions = {
     description: `Proxy resolver from another field.`,
     args: {
       from: `String!`,
+      fromNode: {
+        type: `Boolean!`,
+        defaultValue: false,
+      },
     },
-    extend({ from }, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
+    extend(options, fieldConfig) {
       return {
         resolve(source, args, context, info) {
-          return originalResolver(source, args, context, {
+          const resolver = fieldConfig.resolve || context.defaultFieldResolver
+          return resolver(source, args, context, {
             ...info,
-            fieldName: from,
+            from: options.from || info.from,
+            fromNode: options.from ? options.fromNode : info.fromNode,
           })
         },
       }
@@ -159,6 +163,7 @@ const internalExtensionNames = [
   `directives`,
   `infer`,
   `plugin`,
+  ...specifiedDirectives.map(directive => directive.name),
 ]
 const reservedExtensionNames = [
   ...internalExtensionNames,
@@ -172,7 +177,11 @@ const toDirectives = ({
 }) =>
   Object.keys(extensions).map(name => {
     const extension = extensions[name]
-    const { args, description, locations } = extension
+    const { args, description, locations, type } = extension
+    // Allow field extensions to register a return type
+    if (type) {
+      schemaComposer.createTC(type)
+    }
     // Support the `graphql-compose` style of directly providing the field type as string
     const normalizedArgs = schemaComposer.typeMapper.convertArgConfigMap(args)
     return new GraphQLDirective({
@@ -208,7 +217,6 @@ const processFieldExtensions = ({
     const extensions = typeComposer.getFieldExtensions(fieldName)
     Object.keys(extensions)
       .filter(name => !internalExtensionNames.includes(name))
-      .sort(a => a === `proxy`) // Ensure `proxy` is run last
       .forEach(name => {
         const { extend } = fieldExtensions[name] || {}
         if (typeof extend === `function`) {

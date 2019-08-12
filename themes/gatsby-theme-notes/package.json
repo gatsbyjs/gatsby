@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes#readme",
   "devDependencies": {
-    "gatsby": "^2.13.53",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^2.13.61",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "peerDependencies": {
     "gatsby": "^2.13.13",
@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.15",
-    "@mdx-js/mdx": "^1.1.6",
-    "@mdx-js/react": "^1.1.6",
+    "@mdx-js/mdx": "^1.2.2",
+    "@mdx-js/react": "^1.2.2",
     "gatsby-core-utils": "^1.0.4",
     "gatsby-plugin-compile-es6-packages": "^1.2.0",
     "gatsby-plugin-emotion": "^4.1.2",
@@ -40,10 +40,10 @@
     "gatsby-plugin-meta-redirect": "^1.1.1",
     "gatsby-plugin-og-image": "0.0.1",
     "gatsby-plugin-redirects": "^1.0.0",
-    "gatsby-plugin-theme-ui": "^0.2.29",
+    "gatsby-plugin-theme-ui": "^0.2.33",
     "gatsby-source-filesystem": "^2.1.9",
     "is-present": "^1.0.0",
     "react-feather": "^1.1.6",
-    "theme-ui": "^0.2.31"
+    "theme-ui": "^0.2.33"
   }
 }
