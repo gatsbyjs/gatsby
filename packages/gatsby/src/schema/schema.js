@@ -811,7 +811,8 @@ const addImplicitConvenienceChildrenFields = ({
   // relations explicitly set with the `childOf` extension will be added.
   // if (shouldInfer === false) return
 
-  const nodes = nodeStore.getNodesByType(typeComposer.getTypeName())
+  const parentTypeName = typeComposer.getTypeName()
+  const nodes = nodeStore.getNodesByType(parentTypeName)
 
   const childNodesByType = groupChildNodesByType({ nodeStore, nodes })
 
@@ -824,17 +825,26 @@ const addImplicitConvenienceChildrenFields = ({
 
     // Adding children fields to types with the `@dontInfer` extension is deprecated
     if (shouldInfer === false) {
-      const fieldName = _.camelCase(
-        `${maxChildCount > 1 ? `children` : `child`} ${typeName}`
-      )
-      if (!typeComposer.hasField(fieldName)) {
+      const childTypeComposer = schemaComposer.getAnyTC(typeName)
+      const childOfExtension = childTypeComposer.getExtension(`childOf`)
+      const many = maxChildCount > 1
+
+      // Only warn when the parent-child relation has not been explicitly set with
+      if (
+        !childOfExtension ||
+        !childOfExtension.types.includes(parentTypeName) ||
+        !childOfExtension.many === many
+      ) {
+        const fieldName = _.camelCase(
+          `${many ? `children` : `child`} ${typeName}`
+        )
         report.warn(
           `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
             `extension set to \`false\`, automatically adding fields for ` +
             `children types is deprecated.\n` +
             `In Gatsby v3, only children fields explicitly set with the ` +
             `\`childOf\` extension will be added.\n` +
-            `For example, in Gatsby v3, \`${typeComposer.getTypeName()}\` will ` +
+            `For example, in Gatsby v3, \`${parentTypeName}\` will ` +
             `not get a \`${fieldName}\` field.`
         )
       }
@@ -931,7 +941,7 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       },
       resolve: findManyPaginated(typeName),
     },
-  }).makeFieldNonNull([queryNamePlural])
+  }).makeFieldNonNull(queryNamePlural)
 }
 
 const parseTypes = ({
