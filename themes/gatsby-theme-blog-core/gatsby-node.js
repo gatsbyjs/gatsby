@@ -144,8 +144,8 @@ exports.onCreateNode = (
 }
 
 // These templates are simply data-fetching wrappers that import components
-const PostTemplate = require.resolve(`./src/templates/post`)
-const PostsTemplate = require.resolve(`./src/templates/posts`)
+const PostTemplate = require.resolve(`./src/templates/post-query`)
+const PostsTemplate = require.resolve(`./src/templates/posts-query`)
 
 exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions
