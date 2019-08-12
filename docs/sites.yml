@@ -6920,7 +6920,7 @@
   built_by: Whalar
   built_by_url: https://whalar.com/
   featured: false
-  - title: deepThreads
+- title: deepThreads
   # this is the URL that is linked from the showcase
   main_url: https://deepthreads.com
   # this URL is used to generate a screenshot
