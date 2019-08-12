@@ -80,6 +80,17 @@ const SiteNavigation = () => (
 )
 ```
 
+### Use `getProps` for advanced link styling
+
+Gatsby's `<Link>` component comes with a `getProps` prop, which can be useful for advanced styling. It passes you an object with the following properties:
+
+- `isCurrent` — true if the `location.pathname` is exactly the same as the `<Link>` component's `to` prop
+- `isPartiallyCurrent` — true if the `location.pathname` starts with the `<Link>` component's `to` prop
+- `href` — the value of the `to` prop
+- `location` — the page's `location` object
+
+You can read more about it on [`@reach/router`'s documentation](https://reach.tech/router/api/Link).
+
 ### Show active styles for partially matched and parent links
 
 By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:

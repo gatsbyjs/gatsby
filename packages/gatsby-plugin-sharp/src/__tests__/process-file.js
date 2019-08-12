@@ -126,8 +126,17 @@ describe(`createArgsDigest`, () => {
 })
 
 describe(`processFile`, () => {
-  it(`should offload sharp transforms to the cloud`, async () => {
+  beforeEach(() => {
     process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL = `https://example.com/image-service`
+    got.post.mockReset()
+    got.post.mockResolvedValueOnce({})
+  })
+
+  afterAll(() => {
+    delete process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL
+  })
+
+  const mockProcessFile = async ({ hash = `1234lol` } = {}) => {
     const transforms = {
       outputPath: `myoutputpath/1234/file.jpg`,
       args: {
@@ -136,16 +145,39 @@ describe(`processFile`, () => {
       },
     }
 
-    got.post.mockImplementation(jest.fn(() => Promise.resolve()))
+    const res = await processFile(`mypath/file.jpg`, hash, [transforms], {
+      stripMetadata: true,
+    })
 
-    expect(
-      await processFile(`mypath/file.jpg`, [transforms], {
-        stripMetadata: true,
+    return [
+      res,
+      {
+        transforms,
+        hash,
+      },
+    ]
+  }
+
+  it(`should offload sharp transforms to the cloud`, async () => {
+    const [res] = await mockProcessFile()
+
+    expect(res).toMatchSnapshot()
+  })
+
+  it(`passes hash and transforms to cloud service`, async () => {
+    const hash = `8675309jenny`
+
+    const [, args] = await mockProcessFile(hash)
+
+    expect(got.post).toHaveBeenCalledTimes(1)
+    expect(got.post).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        body: expect.objectContaining({
+          hash: args.hash,
+          transforms: [args.transforms],
+        }),
       })
-    ).toMatchSnapshot()
-    expect(got.post).toHaveBeenCalled()
-    expect(got.post).toMatchSnapshot()
-
-    delete process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL
+    )
   })
 })

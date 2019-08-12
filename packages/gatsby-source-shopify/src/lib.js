@@ -1,5 +1,6 @@
 import { GraphQLClient } from "graphql-request"
 import prettyjson from "prettyjson"
+import chalk from "chalk"
 import { get, getOr, last } from "lodash/fp"
 
 /**
@@ -18,8 +19,13 @@ export const createClient = (shopName, accessToken) =>
 export const printGraphQLError = e => {
   const prettyjsonOptions = { keysColor: `red`, dashColor: `red` }
 
-  if (e.response && e.response.errors)
+  if (e.response && e.response.errors) {
+    if (e.message.startsWith(`access denied`)) {
+      console.error(chalk`\n{yellow Check your token has this read authorization,
+      or omit fetching this object using the "includeCollections" options in gatsby-source-shopify plugin options}`)
+    }
     console.error(prettyjson.render(e.response.errors, prettyjsonOptions))
+  }
 
   if (e.request) console.error(prettyjson.render(e.request, prettyjsonOptions))
 }
