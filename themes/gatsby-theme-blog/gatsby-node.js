@@ -150,7 +150,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 
-  // // Create the Posts page
+  // Create the Posts page
   createPage({
     path: basePath,
     component: PostsTemplate,

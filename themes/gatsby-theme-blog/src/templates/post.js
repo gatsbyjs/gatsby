@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 
 import Post from "../components/post"
 
-export default ({ pathContext: { previous, next }, location, data }) => (
+export default ({ pageContext: { previous, next }, location, data }) => (
   <Post data={data} location={location} previous={previous} next={next} />
 )
 

@@ -3,8 +3,6 @@ title: Maintaining the Site Showcase with GitHub Actions and the Gatsby Site Sho
 date: 2019-06-17
 author: Benjamin Lannon
 excerpt: "Keeping the longevity of the Site Showcase strong is to continue bring in exciting sites that use Gatsby, but as well to keep our existing showcase up to date."
-tags:
-  - github
 ---
 
 Gatsby has rapidly been growing in the market of website generators. As such, the core team developed the Gatsby Site Showcase to present a variety of websites using Gatsby. As the showcase grew to include hundreds of sites, long term maintenance would help strengthen the showcase.

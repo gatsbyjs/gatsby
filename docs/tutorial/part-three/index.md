@@ -1,6 +1,7 @@
 ---
 title: Creating nested layout components
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Welcome to part three!

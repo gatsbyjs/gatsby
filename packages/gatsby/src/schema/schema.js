@@ -3,7 +3,6 @@ const invariant = require(`invariant`)
 const {
   isSpecifiedScalarType,
   isIntrospectionType,
-  defaultFieldResolver,
   assertValidName,
   parse,
   GraphQLNonNull,
@@ -31,6 +30,7 @@ const { getPagination } = require(`./types/pagination`)
 const { getSortInput } = require(`./types/sort`)
 const { getFilterInput } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
   schemaComposer,
@@ -39,6 +39,7 @@ const buildSchema = async ({
   typeMapping,
   fieldExtensions,
   thirdPartySchemas,
+  printConfig,
   typeConflictReporter,
   parentSpan,
 }) => {
@@ -49,6 +50,7 @@ const buildSchema = async ({
     typeMapping,
     fieldExtensions,
     thirdPartySchemas,
+    printConfig,
     typeConflictReporter,
     parentSpan,
   })
@@ -66,14 +68,20 @@ const rebuildSchemaWithSitePage = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  const typeComposer = addInferredType({
-    schemaComposer,
-    typeComposer: schemaComposer.getOTC(`SitePage`),
-    nodeStore,
-    typeConflictReporter,
-    typeMapping,
-    parentSpan,
-  })
+  const typeComposer = schemaComposer.getOTC(`SitePage`)
+  const shouldInfer =
+    !typeComposer.hasExtension(`infer`) ||
+    typeComposer.getExtension(`infer`) !== false
+  if (shouldInfer) {
+    addInferredType({
+      schemaComposer,
+      typeComposer,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      parentSpan,
+    })
+  }
   await processTypeComposer({
     schemaComposer,
     typeComposer,
@@ -96,6 +104,7 @@ const updateSchemaComposer = async ({
   typeMapping,
   fieldExtensions,
   thirdPartySchemas,
+  printConfig,
   typeConflictReporter,
   parentSpan,
 }) => {
@@ -107,6 +116,7 @@ const updateSchemaComposer = async ({
     typeMapping,
     parentSpan,
   })
+  await printTypeDefinitions({ config: printConfig, schemaComposer })
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
@@ -358,7 +368,8 @@ const addExtensions = ({
 
   if (
     typeComposer instanceof ObjectTypeComposer ||
-    typeComposer instanceof InterfaceTypeComposer
+    typeComposer instanceof InterfaceTypeComposer ||
+    typeComposer instanceof InputTypeComposer
   ) {
     typeComposer.getFieldNames().forEach(fieldName => {
       typeComposer.setFieldExtension(fieldName, `createdFrom`, createdFrom)
@@ -386,6 +397,15 @@ const addExtensions = ({
         .filter(name => !internalExtensionNames.includes(name))
         .forEach(name => {
           const args = fieldExtensions[name]
+
+          if (!args || typeof args !== `object`) {
+            report.error(
+              `Field extension arguments must be provided as an object. ` +
+                `Received "${args}" on \`${typeName}.${fieldName}\`.`
+            )
+            return
+          }
+
           try {
             const definition = schemaComposer.getDirective(name)
 
@@ -635,7 +655,8 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                 newConfig.resolve = (source, args, context, info) =>
                   fieldConfig.resolve(source, args, context, {
                     ...info,
-                    originalResolver: originalResolver || defaultFieldResolver,
+                    originalResolver:
+                      originalResolver || context.defaultFieldResolver,
                   })
               }
               tc.extendField(fieldName, newConfig)
@@ -729,6 +750,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   })
 
   parentTypesToChildren.forEach((children, parent) => {
+    if (!schemaComposer.has(parent)) return
     const typeComposer = schemaComposer.getAnyTC(parent)
     if (
       typeComposer instanceof InterfaceTypeComposer &&
@@ -753,8 +775,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   mimeTypesToChildren.forEach((children, mimeType) => {
     const parentTypes = typesHandlingMimeTypes.get(mimeType)
     if (parentTypes) {
-      parentTypes.forEach(parent => {
-        const typeComposer = schemaComposer.getAnyTC(parent)
+      parentTypes.forEach(typeComposer => {
         if (
           typeComposer instanceof InterfaceTypeComposer &&
           !typeComposer.hasExtension(`nodeInterface`)
@@ -910,7 +931,7 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       },
       resolve: findManyPaginated(typeName),
     },
-  })
+  }).makeFieldNonNull([queryNamePlural])
 }
 
 const parseTypes = ({

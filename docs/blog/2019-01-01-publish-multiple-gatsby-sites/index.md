@@ -2,16 +2,7 @@
 title: Publish Multiple Gatsby Sites in a Monorepo, Using Lerna, Travis & Now
 date: 2019-01-01
 author: Andrico Karoulla
-tags:
-  [
-    "apps",
-    "web apps",
-    "applications",
-    "deployment",
-    "testing",
-    "CI",
-    "continuous integration",
-  ]
+tags: ["apps", "testing", "deployment"]
 excerpt: Learn how to create a balanced lasagna instead of a tangled mess of spaghetti.
 ---
 
