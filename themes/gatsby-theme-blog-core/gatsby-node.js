@@ -54,7 +54,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       tags: [String]!
       keywords: [String]!
       excerpt: String!
-      body: String!
   }`)
 
   createTypes(
