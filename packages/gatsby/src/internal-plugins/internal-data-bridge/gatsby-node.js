@@ -42,10 +42,23 @@ function transformPackageJson(json) {
 const createPageId = path => `SitePage ${path}`
 
 exports.sourceNodes = ({ createContentDigest, actions, store }) => {
-  const { createNode } = actions
+  const { createNode, createTypes } = actions
   const state = store.getState()
   const { program } = state
   const { flattenedPlugins } = state
+
+  createTypes(`
+    type SitePlugin implements Node @dontInfer {
+      name: String!
+      version: String!
+      nodeAPIs: [String]!
+      browserAPIs: [String]!
+      ssrAPIs: [String]!
+      pluginFilepath: String!
+      packageJson: JSON!
+      pluginOptions: JSON!
+    }
+  `)
 
   // Add our default development page since we know it's going to
   // exist and we need a node to exist so its query works :-)
