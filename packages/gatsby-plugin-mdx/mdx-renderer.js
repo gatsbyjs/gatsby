@@ -8,6 +8,10 @@ module.exports = function MDXRenderer({
   children,
   ...props
 }) {
+  if (typeof children === 'undefined') {
+    throw new Error('MDXRenderer expected to receive an MDX string. Instead it received "undefined"')
+  }
+
   const mdxComponents = useMDXComponents(components);
   const mdxScope = useMDXScope(scope);
 
