@@ -92,7 +92,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 // Create fields for post slugs and source
 // This will change with schema customization with work
-exports.onCreateNode = (
+exports.onCreateNode = async (
   { node, actions, getNode, createNodeId },
   themeOptions
 ) => {
@@ -122,10 +122,12 @@ exports.onCreateNode = (
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
     }
-    createNode({
+
+    const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
+    await createNode({
       ...fieldData,
       // Required fields.
-      id: createNodeId(`${node.id} >>> MdxBlogPost`),
+      id: mdxBlogPostId,
       parent: node.id,
       children: [],
       internal: {
@@ -138,7 +140,7 @@ exports.onCreateNode = (
         description: `Mdx implementation of the BlogPost interface`,
       },
     })
-    createParentChildLink({ parent: fileNode, child: node })
+    createParentChildLink({ parent: node, child: getNode(mdxBlogPostId) })
   }
 }
 
