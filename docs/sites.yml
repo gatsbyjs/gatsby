@@ -6898,6 +6898,16 @@
   built_by: Joeri Smits
   built_by_url: https://joeri.dev
   featured: false
+- title: Grüne Dresden
+  main_url: https://ltw19dresden.de
+  url: https://ltw19dresden.de
+  description: >
+    This site was built for the Green Party in Germany (Bündnis 90/Die Grünen) for their local election in Dresden, Saxony. The site was built with Gatsby v2 and Styled-Components.
+  categories:
+    - Government
+    - Nonprofit
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
 - title: Gratsy
   url: https://gratsy.com/
   main_url: https://gratsy.com/
