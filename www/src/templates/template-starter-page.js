@@ -12,18 +12,27 @@ import StarterSource from "../views/starter/source"
 import StarterDetails from "../views/starter/details"
 import FooterLinks from "../components/shared/footer-links"
 
+const getScreenshot = (data, fallback) => {
+  if (!data.screenshotFile || !data.screenshotFile.childImageSharp) {
+    return fallback
+  }
+  return data.screenshotFile
+}
+
 class StarterTemplate extends React.Component {
   state = {
     showAllDeps: false,
   }
   render() {
-    const { startersYaml } = this.props.data
+    const { fallback, startersYaml } = this.props.data
     const {
       url: demoUrl,
       repo: repoUrl,
       fields: { starterShowcase },
-      childScreenshot: { screenshotFile },
+      childScreenshot,
     } = startersYaml
+
+    const screenshot = getScreenshot(childScreenshot, fallback)
 
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
@@ -62,12 +71,12 @@ class StarterTemplate extends React.Component {
               <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
                 property="og:image"
-                content={screenshotFile.childImageSharp.fluid.src}
+                content={screenshot.childImageSharp.fluid.src}
               />
               <meta property="og:image:alt" content="Gatsby Logo" />
               <meta
                 name="twitter:image"
-                content={screenshotFile.childImageSharp.fluid.src}
+                content={screenshot.childImageSharp.fluid.src}
               />
               <meta
                 name="description"
@@ -100,13 +109,10 @@ class StarterTemplate extends React.Component {
               <StarterMeta
                 starter={starterShowcase}
                 repoName={repoName}
-                imageSharp={screenshotFile}
+                imageSharp={screenshot}
                 demo={demoUrl}
               />
-              <StarterScreenshot
-                imageSharp={screenshotFile}
-                repoName={repoName}
-              />
+              <StarterScreenshot imageSharp={screenshot} repoName={repoName} />
             </div>
             <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
             <StarterDetails
@@ -131,6 +137,15 @@ class StarterTemplate extends React.Component {
 export default StarterTemplate
 
 export const pageQuery = graphql`
+  fragment ScreenshotDetails on ImageSharp {
+    fluid(maxWidth: 700) {
+      ...GatsbyImageSharpFluid
+    }
+    resize(width: 1500, height: 1500, cropFocus: CENTER, toFormat: JPG) {
+      src
+    }
+  }
+
   query TemplateStarter($slug: String!) {
     startersYaml(fields: { starterShowcase: { slug: { eq: $slug } } }) {
       id
@@ -160,19 +175,15 @@ export const pageQuery = graphql`
       childScreenshot {
         screenshotFile {
           childImageSharp {
-            fluid(maxWidth: 700) {
-              ...GatsbyImageSharpFluid
-            }
-            resize(
-              width: 1500
-              height: 1500
-              cropFocus: CENTER
-              toFormat: JPG
-            ) {
-              src
-            }
+            ...ScreenshotDetails
           }
         }
+      }
+    }
+
+    fallback: file(relativePath: { eq: "screenshot-fallback.png" }) {
+      childImageSharp {
+        ...ScreenshotDetails
       }
     }
   }

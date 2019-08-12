@@ -26,7 +26,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
       wrapperStyle: ``,
     }
     const options = _.defaults(pluginOptions, defaults)
-    visit(markdownAST, `html`, node => {
+    visit(markdownAST, [`html`, `jsx`], node => {
       const $ = cheerio.load(node.value)
       const iframe = $(`iframe, object`)
       if (iframe.length) {

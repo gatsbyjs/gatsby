@@ -6,14 +6,15 @@ const { bindActionCreators } = require(`redux`)
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
 const getCache = require(`./get-cache`)
-const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
-const createContentDigest = require(`./create-content-digest`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
+  buildEnumType,
+  buildScalarType,
 } = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
@@ -188,6 +189,8 @@ const runAPI = (plugin, api, args) => {
           buildUnionType,
           buildInterfaceType,
           buildInputObjectType,
+          buildEnumType,
+          buildScalarType,
         },
       },
       plugin.pluginOptions,
@@ -240,15 +243,6 @@ module.exports = async (api, args = {}, pluginSource) =>
     _.forEach(args.traceTags, (value, key) => {
       apiSpan.setTag(key, value)
     })
-
-    // Check that the API is documented.
-    // "FAKE_API_CALL" is used when code needs to trigger something
-    // to happen once the the API queue is empty. Ideally of course
-    // we'd have an API (returning a promise) for that. But this
-    // works nicely in the meantime.
-    if (!apiList[api] && api !== `FAKE_API_CALL`) {
-      reporter.panic(`api: "${api}" is not a valid Gatsby api`)
-    }
 
     const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
@@ -331,9 +325,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       }
 
       let pluginName =
-        plugin.name === `default-site-plugin`
-          ? `gatsby-node.js`
-          : `Plugin ${plugin.name}`
+        plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
@@ -341,7 +333,17 @@ module.exports = async (api, args = {}, pluginSource) =>
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
         })
-        reporter.panicOnBuild(`${pluginName} returned an error`, err)
+
+        reporter.panicOnBuild({
+          id: `11321`,
+          context: {
+            pluginName,
+            api,
+            message: err instanceof Error ? err.message : err,
+          },
+          error: err instanceof Error ? err : undefined,
+        })
+
         return null
       })
     }).then(results => {

@@ -1,12 +1,3 @@
-const {
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLEnumType,
-  GraphQLJSON,
-  GraphQLBoolean,
-} = require(`gatsby/graphql`)
 const Remark = require(`remark`)
 const select = require(`unist-util-select`)
 const sanitizeHTML = require(`sanitize-html`)
@@ -30,6 +21,7 @@ const {
   cloneTreeUntil,
   findLastTextNode,
 } = require(`./hast-processing`)
+const codeHandler = require(`./code-handler`)
 
 let fileNodes
 let pluginsCacheStr = ``
@@ -77,10 +69,28 @@ const safeGetCache = ({ getCache, cache }) => id => {
  */
 const ASTPromiseMap = new Map()
 
+/**
+ * Set of all Markdown node types which, when encountered, generate an extra to
+ * separate text.
+ *
+ * @type {Set<string>}
+ */
+const SpaceMarkdownNodeTypesSet = new Set([
+  `paragraph`,
+  `heading`,
+  `tableCell`,
+  `break`,
+])
+
+const headingLevels = [...Array(6).keys()].reduce((acc, i) => {
+  acc[`h${i}`] = i
+  return acc
+}, {})
+
 module.exports = (
   {
     type,
-    pathPrefix,
+    basePath,
     getNode,
     getNodesByType,
     cache,
@@ -94,7 +104,7 @@ module.exports = (
     return {}
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
-  pathPrefixCacheStr = pathPrefix || ``
+  pathPrefixCacheStr = basePath || ``
 
   const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
@@ -189,7 +199,7 @@ module.exports = (
       })
       const markdownAST = remark.parse(markdownNode.internal.content)
 
-      if (pathPrefix) {
+      if (basePath) {
         // Ensure relative links include `pathPrefix`
         visit(markdownAST, [`link`, `definition`], node => {
           if (
@@ -197,41 +207,11 @@ module.exports = (
             node.url.startsWith(`/`) &&
             !node.url.startsWith(`//`)
           ) {
-            node.url = withPathPrefix(node.url, pathPrefix)
+            node.url = withPathPrefix(node.url, basePath)
           }
         })
       }
 
-      // source => parse (can order parsing for dependencies) => typegen
-      //
-      // source plugins identify nodes, provide id, initial parse, know
-      // when nodes are created/removed/deleted
-      // get passed cached DataTree and return list of clean and dirty nodes.
-      // Also get passed `dirtyNodes` function which they can call with an array
-      // of node ids which will then get re-parsed and the inferred schema
-      // recreated (if inferring schema gets too expensive, can also
-      // cache the schema until a query fails at which point recreate the
-      // schema).
-      //
-      // parse plugins take data from source nodes and extend it, never mutate
-      // it. Freeze all nodes once done so typegen plugins can't change it
-      // this lets us save off the DataTree at that point as well as create
-      // indexes.
-      //
-      // typegen plugins identify further types of data that should be lazily
-      // computed due to their expense, or are hard to infer graphql type
-      // (markdown ast), or are need user input in order to derive e.g.
-      // markdown headers or date fields.
-      //
-      // wrap all resolve functions to (a) auto-memoize and (b) cache to disk any
-      // resolve function that takes longer than ~10ms (do research on this
-      // e.g. how long reading/writing to cache takes), and (c) track which
-      // queries are based on which source nodes. Also if connection of what
-      // which are always rerun if their underlying nodes change..
-      //
-      // every node type in DataTree gets a schema type automatically.
-      // typegen plugins just modify the auto-generated types to add derived fields
-      // as well as computationally expensive fields.
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
@@ -245,7 +225,7 @@ module.exports = (
               markdownNode,
               getNode,
               files: fileNodes,
-              pathPrefix,
+              basePath,
               reporter,
               cache: getCache(plugin.name),
               getCache,
@@ -308,7 +288,7 @@ module.exports = (
                 return null
               }
               node.url = [
-                pathPrefix,
+                basePath,
                 _.get(markdownNode, appliedTocOptions.pathToSlugField),
                 node.url,
               ]
@@ -338,7 +318,10 @@ module.exports = (
         return cachedAst
       } else {
         const ast = await getAST(markdownNode)
-        const htmlAst = toHAST(ast, { allowDangerousHTML: true })
+        const htmlAst = toHAST(ast, {
+          allowDangerousHTML: true,
+          handlers: { code: codeHandler },
+        })
 
         // Save new HTML AST to cache and return
         cache.set(htmlAstCacheKey(markdownNode), htmlAst)
@@ -368,7 +351,7 @@ module.exports = (
       { pruneLength, truncate, excerptSeparator }
     ) {
       const fullAST = await getHTMLAst(markdownNode)
-      if (excerptSeparator) {
+      if (excerptSeparator && markdownNode.excerpt !== ``) {
         return cloneTreeUntil(
           fullAST,
           ({ nextNode }) =>
@@ -461,20 +444,20 @@ module.exports = (
           node => {
             if (excerptSeparator && node.value === excerptSeparator) {
               isBeforeSeparator = false
-              return
-            }
-            if (node.type === `text` || node.type === `inlineCode`) {
+            } else if (node.type === `text` || node.type === `inlineCode`) {
               excerptNodes.push(node.value)
-            }
-            if (node.type === `image`) {
+            } else if (node.type === `image`) {
               excerptNodes.push(node.alt)
+            } else if (SpaceMarkdownNodeTypesSet.has(node.type)) {
+              // Add a space when encountering one of these node types.
+              excerptNodes.push(` `)
             }
           }
         )
 
-        const excerptText = excerptNodes.join(``)
+        const excerptText = excerptNodes.join(``).trim()
 
-        if (excerptSeparator) {
+        if (excerptSeparator && !isBeforeSeparator) {
           return excerptText
         }
         if (!truncate) {
@@ -492,14 +475,14 @@ module.exports = (
       markdownNode,
       { format, pruneLength, truncate, excerptSeparator }
     ) {
-      if (format === `html`) {
+      if (format === `HTML`) {
         return getExcerptHtml(
           markdownNode,
           pruneLength,
           truncate,
           excerptSeparator
         )
-      } else if (format === `markdown`) {
+      } else if (format === `MARKDOWN`) {
         return getExcerptMarkdown(
           markdownNode,
           pruneLength,
@@ -515,69 +498,15 @@ module.exports = (
       )
     }
 
-    const HeadingType = new GraphQLObjectType({
-      name: `MarkdownHeading`,
-      fields: {
-        value: {
-          type: GraphQLString,
-          resolve(heading) {
-            return heading.value
-          },
-        },
-        depth: {
-          type: GraphQLInt,
-          resolve(heading) {
-            return heading.depth
-          },
-        },
-      },
-    })
-
-    const HeadingLevels = new GraphQLEnumType({
-      name: `HeadingLevels`,
-      values: {
-        h1: { value: 1 },
-        h2: { value: 2 },
-        h3: { value: 3 },
-        h4: { value: 4 },
-        h5: { value: 5 },
-        h6: { value: 6 },
-      },
-    })
-
-    const ExcerptFormats = new GraphQLEnumType({
-      name: `ExcerptFormats`,
-      values: {
-        PLAIN: { value: `plain` },
-        HTML: { value: `html` },
-        MARKDOWN: { value: `markdown` },
-      },
-    })
-
-    const WordCountType = new GraphQLObjectType({
-      name: `wordCount`,
-      fields: {
-        paragraphs: {
-          type: GraphQLInt,
-        },
-        sentences: {
-          type: GraphQLInt,
-        },
-        words: {
-          type: GraphQLInt,
-        },
-      },
-    })
-
     return resolve({
       html: {
-        type: GraphQLString,
+        type: `String`,
         resolve(markdownNode) {
           return getHTML(markdownNode)
         },
       },
       htmlAst: {
-        type: GraphQLJSON,
+        type: `JSON`,
         resolve(markdownNode) {
           return getHTMLAst(markdownNode).then(ast => {
             const strippedAst = stripPosition(_.clone(ast), true)
@@ -586,19 +515,19 @@ module.exports = (
         },
       },
       excerpt: {
-        type: GraphQLString,
+        type: `String`,
         args: {
           pruneLength: {
-            type: GraphQLInt,
+            type: `Int`,
             defaultValue: 140,
           },
           truncate: {
-            type: GraphQLBoolean,
+            type: `Boolean`,
             defaultValue: false,
           },
           format: {
-            type: ExcerptFormats,
-            defaultValue: `plain`,
+            type: `MarkdownExcerptFormats`,
+            defaultValue: `PLAIN`,
           },
         },
         resolve(markdownNode, { format, pruneLength, truncate }) {
@@ -611,14 +540,14 @@ module.exports = (
         },
       },
       excerptAst: {
-        type: GraphQLJSON,
+        type: `JSON`,
         args: {
           pruneLength: {
-            type: GraphQLInt,
+            type: `Int`,
             defaultValue: 140,
           },
           truncate: {
-            type: GraphQLBoolean,
+            type: `Boolean`,
             defaultValue: false,
           },
         },
@@ -634,23 +563,22 @@ module.exports = (
         },
       },
       headings: {
-        type: new GraphQLList(HeadingType),
+        type: [`MarkdownHeading`],
         args: {
-          depth: {
-            type: HeadingLevels,
-          },
+          depth: `MarkdownHeadingLevels`,
         },
         resolve(markdownNode, { depth }) {
           return getHeadings(markdownNode).then(headings => {
-            if (typeof depth === `number`) {
-              headings = headings.filter(heading => heading.depth === depth)
+            const level = depth && headingLevels[depth]
+            if (typeof level === `number`) {
+              headings = headings.filter(heading => heading.depth === level)
             }
             return headings
           })
         },
       },
       timeToRead: {
-        type: GraphQLInt,
+        type: `Int`,
         resolve(markdownNode) {
           return getHTML(markdownNode).then(html => {
             let timeToRead = 0
@@ -666,18 +594,14 @@ module.exports = (
         },
       },
       tableOfContents: {
-        type: GraphQLString,
+        type: `String`,
         args: {
           pathToSlugField: {
-            type: GraphQLString,
+            type: `String`,
             defaultValue: `fields.slug`,
           },
-          maxDepth: {
-            type: GraphQLInt,
-          },
-          heading: {
-            type: GraphQLString,
-          },
+          maxDepth: `Int`,
+          heading: `String`,
         },
         resolve(markdownNode, args) {
           return getTableOfContents(markdownNode, args)
@@ -685,7 +609,7 @@ module.exports = (
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: WordCountType,
+        type: `MarkdownWordCount`,
         resolve(markdownNode) {
           let counts = {}
 
