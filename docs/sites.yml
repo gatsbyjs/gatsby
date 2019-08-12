@@ -6898,3 +6898,16 @@
   built_by: Joeri Smits
   built_by_url: https://joeri.dev
   featured: false
+- title: Gratsy
+  url: https://gratsy.com/
+  main_url: https://gratsy.com/
+  description: >
+    Gratsy: Feedback To Give Back
+  categories:
+    - Agency
+    - Marketing
+    - Landing Page
+    - PWA
+  built_by: Whalar
+  built_by_url: https://whalar.com/
+  featured: false
