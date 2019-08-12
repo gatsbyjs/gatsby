@@ -11,10 +11,10 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   console.log(`Starting to fetch data from Contentful`)
 
   const contentfulClientOptions = {
-    space: pluginConfig.get(`spaceId`),
-    accessToken: pluginConfig.get(`accessToken`),
-    host: pluginConfig.get(`host`),
-    environment: pluginConfig.get(`environment`),
+    space: pluginConfig.spaceId,
+    accessToken: pluginConfig.accessToken,
+    host: pluginConfig.host,
+    environment: pluginConfig.environment,
   }
 
   const client = contentful.createClient(contentfulClientOptions)
@@ -29,7 +29,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     console.log(`Fetching default locale`)
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
-    locales = locales.filter(pluginConfig.get(`localeFilter`))
+    locales = locales.filter(pluginConfig.localeFilter)
     console.log(`default locale is : ${defaultLocale}`)
   } catch (e) {
     let details
@@ -62,7 +62,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
-${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
+${formatPluginOptionsForCLI(pluginConfig, errors)}`)
   }
 
   let currentSyncData

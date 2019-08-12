@@ -10,18 +10,9 @@ const defaultOptions = {
   forceFullSync: false,
 }
 
-const createPluginConfig = pluginOptions => {
-  const conf = { ...defaultOptions, ...pluginOptions }
-
-  return {
-    get: key => conf[key],
-    getOriginalPluginOptions: () => pluginOptions,
-  }
-}
-
 const maskedFields = [`accessToken`, `spaceId`]
 
-const validateOptions = ({ validator: Joi }, options) =>
+const validateOptions = ({ validator: Joi }) =>
   Joi.object().keys({
     accessToken: Joi.string()
       .required()
@@ -29,13 +20,11 @@ const validateOptions = ({ validator: Joi }, options) =>
     spaceId: Joi.string()
       .required()
       .empty(),
-    host: Joi.string().empty(),
-    environment: Joi.string().empty(),
-    downloadLocal: Joi.boolean(),
-    localeFilter: Joi.func(),
-    forceFullSync: Joi.boolean(),
-    // default plugins passed by gatsby
-    plugins: Joi.array(),
+    host: Joi.string().default(defaultOptions.host),
+    environment: Joi.string().default(defaultOptions.environment),
+    downloadLocal: Joi.boolean().default(defaultOptions.downloadLocal),
+    localeFilter: Joi.func().default(defaultOptions.localeFilter),
+    forceFullSync: Joi.boolean().default(defaultOptions.forceFullSync),
   })
 
 const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
@@ -100,10 +89,4 @@ const maskText = input => {
   )}`
 }
 
-export {
-  defaultOptions,
-  validateOptions,
-  formatPluginOptionsForCLI,
-  maskText,
-  createPluginConfig,
-}
+export { defaultOptions, validateOptions, formatPluginOptionsForCLI, maskText }

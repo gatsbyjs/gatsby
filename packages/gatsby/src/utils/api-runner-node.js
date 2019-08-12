@@ -223,6 +223,10 @@ const runAPI = (plugin, api, args) => {
       pluginSpan.finish()
       chain = Promise.resolve(result)
         .then(res => {
+          /*
+           * validatePluginOptions is special
+           * it validates plugin options and (optionally) mutates them
+           */
           if (api === `validatePluginOptions`) {
             if (res) {
               let resChain = Promise.resolve(res)

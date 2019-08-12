@@ -5,7 +5,7 @@ const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
-const { createPluginConfig, validateOptions } = require(`./plugin-options`)
+const { validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
@@ -61,17 +61,15 @@ exports.sourceNodes = async (
     return
   }
 
-  const pluginConfig = createPluginConfig(pluginOptions)
-
   const createSyncToken = () =>
-    `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-      `environment`
-    )}-${pluginConfig.get(`host`)}`
+    [pluginOptions.spaceId, pluginOptions.environment, pluginOptions.host].join(
+      `-`
+    )
 
   // Get sync token if it exists.
   let syncToken
   if (
-    !pluginConfig.get(`forceFullSync`) &&
+    !pluginOptions.forceFullSync &&
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`] &&
     store.getState().status.plugins[`gatsby-source-contentful`][
@@ -91,7 +89,7 @@ exports.sourceNodes = async (
   } = await fetchData({
     syncToken,
     reporter,
-    pluginConfig,
+    pluginOptions,
   })
 
   const entryList = normalize.buildEntryList({
@@ -216,7 +214,7 @@ exports.sourceNodes = async (
     })
   })
 
-  if (pluginConfig.get(`downloadLocal`)) {
+  if (pluginOptions.downloadLocal) {
     await downloadContentfulAssets({
       actions,
       createNodeId,
