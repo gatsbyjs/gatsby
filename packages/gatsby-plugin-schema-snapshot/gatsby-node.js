@@ -8,6 +8,7 @@ exports.createSchemaCustomization = ({ actions, reporter }, options = {}) => {
     reporter.error(
       `\`gatsby-plugin-schema-snapshot\` needs Gatsby v2.13.55 or above.`
     )
+    return
   }
 
   const filePath = path.resolve(options.path || `schema.gql`)
