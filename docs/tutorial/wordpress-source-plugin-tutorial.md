@@ -284,7 +284,7 @@ exports.createPages = ({ graphql, actions }) => {
         component: path.resolve(`./src/templates/blog-posts.js`),
         context: {
           // This is the $slug variable
-          // passed to blog-posts.js
+          // passed to blog-post.js
           slug: node.slug,
         },
       })
