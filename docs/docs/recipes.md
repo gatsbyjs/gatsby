@@ -1105,9 +1105,9 @@ export default () => (
 - [Using the Static Folder](/docs/static-folder/)
 - [More on all image techniques in Gatsby](/docs/images-and-files/)
 
-### Optimizing and querying for images with gatsby-image
+### Optimizing and querying local images with gatsby-image
 
-The `gatsby-image` plugin can take out much of the pain of optimizing images for your site. Once installed, Gatsby will generate optimized resources to improve loading. Those resources can be queried with GraphQL and passed into Gatsby's image component to do the heavy lifting for you.
+The `gatsby-image` plugin can take out much of the pain of optimizing images for your site. Once installed, Gatsby will generate optimized resources to improve loading. Those resources can be queried with GraphQL and passed into Gatsby's image component to do the heavy lifting of creating different image sizes and loading them at the right times for you.
 
 #### Prerequisites
 
@@ -1116,7 +1116,6 @@ The `gatsby-image` plugin can take out much of the pain of optimizing images for
 
 #### Directions
 
-<!-- prettier-ignore -->
 1. First, import `Img` from `gatsby-image`, as well as `graphql` and `useStaticQuery` from `gatsby` into a component
 
 ```jsx
@@ -1124,16 +1123,16 @@ import { useStaticQuery, graphql } from "gatsby" // to query for image data
 import Img from "gatsby-image" // to take image data and render it
 ```
 
-2. Write a query to get image(s) data, and provide the data to the Img component:
+2. Write a query to get image(s) data, and provide the data to the `<Img />` component:
 
 Choose any of the following options or a combination of them.
 
-a. for a single image based on its path from where the images are sourced (ex: `images/corgi.jpg`)
+a. for a single image based on its path from where the images are [sourced](/docs/content-and-data/) (ex: `images/corgi.jpg`)
 
 ```jsx
 const data = useStaticQuery(graphql`
   query {
-    file(relativePath: { eq: "corgi.jpg" }) {
+    file(relativePath: { eq: "corgi.jpg" }) { // highlight-line
       childImageSharp {
         fluid {
           base64
@@ -1152,7 +1151,7 @@ return (
 )
 ```
 
-b. with a GraphQL fragment, querying for the necessary fields more tersely
+b. with a [GraphQL fragment](/docs/using-fragments/), querying for the necessary fields more tersely
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1160,7 +1159,7 @@ const data = useStaticQuery(graphql`
     file(relativePath: { eq: "corgi.jpg" }) {
       childImageSharp {
         fluid {
-          ...GatsbyImageSharpFluid
+          ...GatsbyImageSharpFluid // highlight-line
         }
       }
     }
@@ -1172,16 +1171,18 @@ return (
 )
 ```
 
-c. for a directory (ex. `images/dogs`) of images by filtering for the extension and relative directory fields, and then mapping the results into `Img` components
+c. for a directory (ex. `images/dogs`) of images by [filtering](/docs/graphql-reference/#filter) for the extension and relative directory fields, and then mapping the results into `Img` components
 
 ```jsx
 const data = useStaticQuery(graphql`
   query {
     allFile(
+      // highlight-start
       filter: {
         extension: { regex: "/(jpg)|(png)|(jpeg)/" }
         relativeDirectory: { eq: "dogs" }
       }
+      // highlight-end
     ) {
       edges {
         node {
@@ -1199,17 +1200,19 @@ const data = useStaticQuery(graphql`
 
 return (
   <div>
+    // highlight-start
     {data.allFile.edges.map(image => (
       <Img
         fluid={image.node.childImageSharp.fluid}
-        alt={image.node.base.split(".")[0]}
+        alt={image.node.base.split(".")[0]} // only use section of the file extension with the filename
       />
     ))}
+    // highlight-end
   </div>
 )
 ```
 
-**Note**: with this method it is difficult to match images to `alt` text for accessibility. This example uses images with alt text encoded in the filenames like `dog in a part hat.jpg`.
+**Note**: with this method it is difficult to match images to `alt` text for accessibility. This example uses images with alt text encoded in the filenames like `dog in a party hat.jpg`.
 
 d. for an image of a fixed size with the `fixed` field, instead of `fluid`
 
@@ -1218,7 +1221,7 @@ const data = useStaticQuery(graphql`
   query {
     file(relativePath: { eq: "corgi.jpg" }) {
       childImageSharp {
-        fixed(width: 250, height: 250) {
+        fixed(width: 250, height: 250) { // highlight-line
           ...GatsbyImageSharpFixed
         }
       }
@@ -1230,14 +1233,33 @@ return (
 )
 ```
 
-e. for an image filling a fluid container with a max width (800px) and a higher quality (75%, default is 50)
+e. for an image of a fixed size with `maxWidth`
 
 ```jsx
 const data = useStaticQuery(graphql`
   query {
     file(relativePath: { eq: "corgi.jpg" }) {
       childImageSharp {
-        fluid(maxWidth: 800, quality: 75) {
+        fixed(maxWidth: 250) { // highlight-line
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`)
+return (
+  <Img fixed={data.file.childImageSharp.fixed} alt="A corgi smiling happily" /> // highlight-line
+)
+```
+
+f. for an image filling a fluid container with a max width (800px) and a higher quality (75%, the default value is 50 which equates to 50%)
+
+```jsx
+const data = useStaticQuery(graphql`
+  query {
+    file(relativePath: { eq: "corgi.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 800, quality: 75) { // highlight-line
           ...GatsbyImageSharpFluid
         }
       }
@@ -1256,15 +1278,124 @@ return (
 <Img
   fluid={data.file.childImageSharp.fluid}
   alt="A corgi smiling happily"
-  style={{ border: "2px solid rebeccapurple", borderRadius: 5, height: 250 }}
+  style={{ border: "2px solid rebeccapurple", borderRadius: 5, height: 250 }} // highlight-line
 />
 ```
 
-4. Run `gatsby develop`, which will generate images for files sourced in the filesystem (if it hasn't already and cached them)
+4. (Optional) you can force an image into a desired aspect ratio by overriding the `aspectRatio` field returned from the GraphQL query that gets passed into the `<Img />` component
+
+```jsx
+<Img
+  fluid={{
+    ...data.file.childImageSharp.fluid,
+    aspectRatio: 1.6, // 1280 / 800 = 1.6
+  }}
+  alt="A corgi smiling happily"
+/>
+```
+
+5. Run `gatsby develop`, which will generate images for files sourced in the filesystem (if it hasn't already done so, and cached them)
 
 #### Additional Resources
 
-- [Example repo implementing the above recipes]()
+- [Example repo implementing these examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
+- [Gatsby Image API](/docs/gatsby-image/)
+- [Using Gatsby Image](/docs/using-gatsby-image)
+- [More on working with images in Gatsby](/docs/working-with-images/)
+
+### Optimizing and querying images in post frontmatter with gatsby-image
+
+For use cases like a featured image for a blog post, you can still use `gatsby-image`. The `gatsby-image` component needs to be given processed image data, which can come from a file locally or remote, including from a url in the frontmatter of a `.md` or `.mdx` file.
+
+For inline images inside of markdown (using the `![]()` markdown syntax), consider a plugin like [`gatsby-remark-images`](/packages/gatsby-remark-images/)
+
+#### Prerequisites
+
+- the `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed
+- [images sourced](/packages/gatsby-image/#install) in your `gatsby-config` with a plugin like `gatsby-source-filesystem`
+- markdown files sourced in your `gatsby-config` with an image url in the post frontmatter
+- [pages created](/docs/creating-and-modifying-pages/) from sourced markdown with the `createPages` method
+
+#### Directions
+
+1. Verify that your markdown file has an image url with a correct path to an image in your project
+
+```mdx:title=post.mdx
+---
+title: My First Post
+featuredImage: ./corgi.png // highlight-line
+---
+
+Post content...
+```
+
+2. Verify that a unique identifier (like a slug in this case) is passed into the context of the call to `createPages` in your `gatsby-node.js`, which will be passed into the GraphQL query in the layout component as a variable `slug`
+
+```js:title=gatsby-node.js
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  // query for all markdown
+
+  result.data.allMdx.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: path.resolve(`./src/components/markdown-layout.js`),
+      // highlight-start
+      context: {
+        slug: node.fields.slug,
+      },
+      // highlight-end
+    })
+  })
+}
+```
+
+3. Then, import `Img` from `gatsby-image`, and `graphql` from `gatsby` into the template component being used for your markdown, write a [pageQuery](/docs/page-query/) to get image data based off of the `slug` passed in through the page context, and provide the data to the `<Img />` component:
+
+```jsx:title=markdown-layout.jsx
+import React from "react"
+import { graphql } from "gatsby" // highlight-line
+import Img from "gatsby-image" // highlight-line
+
+export default ({ children, data }) => (
+  <main>
+    // highlight-start
+    <Img
+      fluid={data.markdown.frontmatter.image.childImageSharp.fluid}
+      alt="A corgi smiling happily"
+    />
+    // highlight-end
+    {children}
+  </main>
+)
+
+// highlight-start
+export const pageQuery = graphql`
+  query PostQuery($slug: String) {
+    markdown: mdx(fields: { slug: { eq: $slug } }) {
+      id
+      frontmatter {
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    }
+  }
+`
+// highlight-end
+```
+
+4. Run `gatsby develop`, which will generate images for files sourced in the filesystem
+
+#### Additional Resources
+
+- [Example repo implementing this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
+- [Featured images with frontmatter](/docs/working-with-images-in-markdown/#featured-images-with-frontmatter-metadata)
 - [Gatsby Image API](/docs/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image)
 - [More on working with images in Gatsby](/docs/working-with-images/)
