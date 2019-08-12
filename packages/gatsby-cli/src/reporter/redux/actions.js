@@ -16,7 +16,19 @@ const getElapsedTimeMS = activity => {
 }
 
 const actions = {
-  createLog: ({ level, text, statusText, duration }) => {
+  createLog: ({
+    level,
+    text,
+    statusText,
+    duration,
+    group,
+    id,
+    type,
+    filePath,
+    location,
+    docsUrl,
+    context,
+  }) => {
     return {
       type: `LOG`,
       payload: {
@@ -24,11 +36,30 @@ const actions = {
         text,
         statusText,
         duration,
+        group,
+        id,
+        type,
+        filePath,
+        location,
+        docsUrl,
+        context,
         timestamp: new Date().toJSON(),
       },
     }
   },
-  createStatefulLog: ({ level, text, statusText, duration }) => {
+  createStatefulLog: ({
+    level,
+    text,
+    statusText,
+    duration,
+    group,
+    id,
+    type,
+    filePath,
+    location,
+    docsUrl,
+    context,
+  }) => {
     return {
       type: `STATEFUL_LOG`,
       payload: {
@@ -36,6 +67,13 @@ const actions = {
         text,
         statusText,
         duration,
+        group,
+        id,
+        type,
+        filePath,
+        location,
+        docsUrl,
+        context,
         timestamp: new Date().toJSON(),
       },
     }
