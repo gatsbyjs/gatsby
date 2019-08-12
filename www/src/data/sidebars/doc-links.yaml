@@ -50,8 +50,8 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
-            - title: Hosting on Netlify
-              link: /docs/hosting-on-netlify/
+            - title: Deploying to Netlify
+              link: /docs/deploying-to-netlify/
               breadcrumbTitle: Netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/

@@ -12,38 +12,56 @@ const DEPLOY_DIR = `public`
 const invalidDestinationDirMessage = dir =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
-// dir must be a child
-const destinationDirIsValid = dir => !path.relative(`./`, dir).startsWith(`..`)
+// dest must be a child
+const destinationIsValid = dest => !path.relative(`./`, dest).startsWith(`..`)
 
-const validateDestinationDir = dir =>
-  !dir || (dir && destinationDirIsValid(dir))
-
-const newFileName = linkNode =>
-  `${linkNode.name}-${linkNode.internal.contentDigest}.${linkNode.extension}`
-
-const newPath = (linkNode, destinationDir) => {
-  if (destinationDir) {
-    return path.posix.join(
-      process.cwd(),
-      DEPLOY_DIR,
-      destinationDir,
-      newFileName(linkNode)
-    )
+const validateDestinationDir = dir => {
+  if (typeof dir === `undefined`) {
+    return true
+  } else if (typeof dir === `string`) {
+    // need to pass dummy data for validation to work
+    return destinationIsValid(`${dir}/h/n`)
+  } else if (_.isFunction(dir)) {
+    // need to pass dummy data for validation to work
+    return destinationIsValid(`${dir({ name: `n`, hash: `h` })}`)
+  } else {
+    return false
   }
-  return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
 }
 
-const newLinkURL = (linkNode, destinationDir, pathPrefix) => {
-  const linkPaths = [
-    `/`,
-    pathPrefix,
-    destinationDir,
-    newFileName(linkNode),
-  ].filter(function(lpath) {
-    if (lpath) return true
-    return false
-  })
+const defaultDestination = linkNode =>
+  `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`
 
+const getDestination = (linkNode, dir) => {
+  if (_.isFunction(dir)) {
+    // need to pass dummy data for validation to work
+    const isValidFunction = `${dir({ name: `n`, hash: `h` })}` !== `${dir({})}`
+    return isValidFunction
+      ? `${dir({
+          name: linkNode.name,
+          hash: linkNode.internal.contentDigest,
+        })}.${linkNode.extension}`
+      : `${dir()}/${defaultDestination(linkNode)}`
+  } else if (_.isString(dir)) {
+    return `${dir}/${defaultDestination(linkNode)}`
+  } else {
+    return defaultDestination(linkNode)
+  }
+}
+
+const newPath = (linkNode, options) => {
+  const { destinationDir } = options
+  const destination = getDestination(linkNode, destinationDir)
+  const paths = [process.cwd(), DEPLOY_DIR, destination]
+  return path.posix.join(...paths)
+}
+
+const newLinkURL = (linkNode, options, pathPrefix) => {
+  const { destinationDir } = options
+  const destination = getDestination(linkNode, destinationDir)
+  const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
+    lpath ? true : false
+  )
   return path.posix.join(...linkPaths)
 }
 
@@ -89,12 +107,12 @@ module.exports = (
         return null
       })
       if (linkNode && linkNode.absolutePath) {
-        const newFilePath = newPath(linkNode, options.destinationDir)
+        const newFilePath = newPath(linkNode, options)
 
         // Prevent uneeded copying
         if (linkPath === newFilePath) return
 
-        const linkURL = newLinkURL(linkNode, options.destinationDir, pathPrefix)
+        const linkURL = newLinkURL(linkNode, options, pathPrefix)
         link.url = linkURL
         filesToCopy.set(linkPath, newFilePath)
       }

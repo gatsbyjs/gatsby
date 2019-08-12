@@ -320,6 +320,10 @@ workflows:
                 - master
       - manual_www_approval:
           type: approval
+          filters:
+            branches:
+              only:
+                - master
       - build_www:
           context: build_www
           requires:

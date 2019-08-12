@@ -517,15 +517,6 @@
   categories:
     - Blog
     - Web Development
-- title: Chocolate Free
-  main_url: "https://chocolate-free.com/"
-  url: "https://chocolate-free.com/"
-  source_url: "https://github.com/Khaledgarbaya/chocolate-free-website"
-  featured: false
-  description: "A full time foodie \U0001F60D a forever Parisian \"patisserie\" lover and \U0001F382 \U0001F369 \U0001F370 \U0001F36A explorer and finally an under construction #foodblogger #foodblog"
-  categories:
-    - Blog
-    - Food
 - title: Code Bushi
   main_url: "https://codebushi.com/"
   url: "https://codebushi.com/"
@@ -5145,18 +5136,6 @@
     - Travel
     - Photography
   built_by: Zuyet Awarmatik
-- title: nikodemdeja.pl
-  main_url: https://nikodemdeja.pl
-  url: https://nikodemdeja.pl
-  source_url: https://github.com/Norem80/nikodemdeja.pl
-  description: >
-    Portfolio of Nikodem Deja
-  categories:
-    - Portfolio
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: manuvel.be
   url: https://www.manuvel.be
   main_url: https://www.manuvel.be
@@ -5233,18 +5212,6 @@
     - eCommerce
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
-- title: blog.nikodemdeja.pl
-  main_url: https://blog.nikodemdeja.pl
-  url: https://blog.nikodemdeja.pl
-  source_url: https://github.com/Norem80/blog.nikodemdeja.pl
-  description: >
-    Personal blog of Nikodem Deja
-  categories:
-    - Blog
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: Pella Windows and Doors
   main_url: https://www.pella.com
   url: https://www.pella.com
@@ -6856,10 +6823,39 @@
   description: >
     Belong to your own blog by gatsby
   categories:
-    - Study
-    - Life
+    - Blog
   built_by: 97thjingba
   built_by_url: https://github.com/97thjingba
+  featured: false
+- title: George
+  main_url: https://kind-mestorf-5a2bc0.netlify.com
+  url: https://kind-mestorf-5a2bc0.netlify.com
+  description: >
+    shiny new web built with Gatsby
+  categories:
+    - Blog
+    - Portfolio
+    - Gallery
+    - Landing Page
+    - Design
+    - Web Development
+    - Open Source
+    - Science
+  built_by: George Davituri
+  featured: false
+
+- title: CEO amp
+  main_url: https://www.ceoamp.com
+  url: https://www.ceoamp.com
+  description: >
+    CEO amp is an executive training programme to amplify a CEO's voice in the media. This site was built with Gatsby v2, Styled-Components, TypeScript and React Spring.
+  categories:
+    - Consulting
+    - Entrepreneurship
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
   featured: false
 - title: QuantumBlack
   main_url: https://www.quantumblack.com/
@@ -6887,4 +6883,18 @@
     - Web Development
   built_by: Michael Uloth
   built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: Daily Hacker News
+  url: https://dailyhn.com
+  main_url: https://dailyhn.com
+  description: >
+    Daily Hacker News presents the top five stories from Hacker News daily.
+  categories:
+    - Entertainment
+    - Design
+    - Web Development
+    - Technology
+    - Science
+  built_by: Joeri Smits
+  built_by_url: https://joeri.dev
   featured: false

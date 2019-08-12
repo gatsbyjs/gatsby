@@ -21,6 +21,6 @@ You can also use standard `<a>` links, but you won't get the benefit of prefetch
 
 ## Creating authentication-gated links
 
-If you don't want all of your content available on the public web, Gatsby lets you create ["client-only" routes](/docs/building-apps-with-gatsby/#client-only-routes--user-authentication) that live behind an authentication gate.
+If you don't want all of your content available on the public web, Gatsby lets you create ["client-only" routes](/docs/client-only-routes-and-user-authentication) that live behind an authentication gate.
 
 <GuideList slug={props.slug} />
