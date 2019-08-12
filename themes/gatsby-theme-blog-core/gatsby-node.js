@@ -50,7 +50,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       title: String!
       body: String!
       slug: String!
-      date: Date! @dateformat(formatString: "DD-MM-YYYY")
+      date: Date! @dateformat
       tags: [String]!
       keywords: [String]!
       excerpt: String!
