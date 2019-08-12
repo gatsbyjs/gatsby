@@ -101,8 +101,6 @@
               link: /docs/sourcing-from-private-apis/
             - title: Sourcing from (Headless) CMSs
               link: /docs/headless-cms/
-            - title: Sourcing Content from JSON or YAML
-              link: /docs/sourcing-content-from-json-or-yaml/
               items:
                 # This list should only include the top 5 CMSs by Gatsby plugin usage.
                 # Please do not add your headless CMS here.
@@ -117,6 +115,8 @@
                   link: /docs/sourcing-from-prismic/
                 - title: Sourcing from Netlify CMS
                   link: /docs/sourcing-from-netlify-cms/
+            - title: Sourcing Content from JSON or YAML
+              link: /docs/sourcing-content-from-json-or-yaml/
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           items:
