@@ -1,4 +1,3 @@
-const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 
 const _ = require(`lodash`)
@@ -20,35 +19,24 @@ const createPluginConfig = pluginOptions => {
   }
 }
 
-const optionsSchema = Joi.object().keys({
-  accessToken: Joi.string()
-    .required()
-    .empty(),
-  spaceId: Joi.string()
-    .required()
-    .empty(),
-  host: Joi.string().empty(),
-  environment: Joi.string().empty(),
-  downloadLocal: Joi.boolean(),
-  localeFilter: Joi.func(),
-  forceFullSync: Joi.boolean(),
-  // default plugins passed by gatsby
-  plugins: Joi.array(),
-})
-
 const maskedFields = [`accessToken`, `spaceId`]
 
-const validateOptions = ({ reporter }, options) => {
-  const result = optionsSchema.validate(options, { abortEarly: false })
-  if (result.error) {
-    const errors = {}
-    result.error.details.forEach(detail => {
-      errors[detail.path[0]] = detail.message
-    })
-    reporter.panic(`Problems with gatsby-source-contentful plugin options:
-${exports.formatPluginOptionsForCLI(options, errors)}`)
-  }
-}
+const validateOptions = ({ validator: Joi }, options) =>
+  Joi.object().keys({
+    accessToken: Joi.string()
+      .required()
+      .empty(),
+    spaceId: Joi.string()
+      .required()
+      .empty(),
+    host: Joi.string().empty(),
+    environment: Joi.string().empty(),
+    downloadLocal: Joi.boolean(),
+    localeFilter: Joi.func(),
+    forceFullSync: Joi.boolean(),
+    // default plugins passed by gatsby
+    plugins: Joi.array(),
+  })
 
 const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
   const optionKeys = new Set(

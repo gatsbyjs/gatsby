@@ -71,6 +71,7 @@ const initAPICallTracing = parentSpan => {
 
 const runAPI = (plugin, api, args) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+  let chain = Promise.resolve(null)
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
@@ -200,7 +201,7 @@ const runAPI = (plugin, api, args) => {
     // If the plugin is using a callback use that otherwise
     // expect a Promise to be returned.
     if (gatsbyNode[api].length === 3) {
-      return Promise.fromCallback(callback => {
+      chain = Promise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
           callback(err, val)
@@ -220,14 +221,32 @@ const runAPI = (plugin, api, args) => {
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
       pluginSpan.finish()
-      return Promise.resolve(result).then(res => {
-        apiFinished = true
-        return res
-      })
+      chain = Promise.resolve(result)
+        .then(res => {
+          if (api === `validatePluginOptions`) {
+            if (res) {
+              let resChain = Promise.resolve(res)
+              if (res.validate) {
+                resChain = res.validate(plugin.pluginOptions, {
+                  abortEarly: false,
+                  allowUnknown: true,
+                })
+              }
+              return resChain.then(options => {
+                plugin.pluginOptions = options
+                return options
+              })
+            }
+          }
+          return res
+        })
+        .then(val => {
+          apiFinished = true
+          return val
+        })
     }
   }
-
-  return null
+  return chain
 }
 
 let apisRunningById = new Map()

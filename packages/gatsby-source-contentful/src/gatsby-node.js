@@ -22,7 +22,7 @@ const restrictedNodeFields = [
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
-exports.onPreBootstrap = validateOptions
+exports.validatePluginOptions = validateOptions
 /***
  * Localization algorithm
  *
