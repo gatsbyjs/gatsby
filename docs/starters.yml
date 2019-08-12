@@ -3624,3 +3624,16 @@
     - Includes Search Feature.
     - Syntax Highlight in Code.
     - Styling in Bootstrap
+- url: https://gastby-starter-organization.netlify.com/
+  repo: https://github.com/geocine/gatsby-starter-organization
+  description: A Gatsby starter template for organization pages. Using the Gatsby theme "@geocine/gatsby-theme-organization"
+  tags:
+    - Styling:CSS-in-JS
+    - Landing Page
+    - Portfolio
+    - Onepage
+  features:
+    - React Bootstrap styles
+    - Theme-UI and EmotionJS CSS-in-JS
+    - A landing page with all your organization projects, configurable through a YML file.
+    - Configurable logo, favicon, organization name and title
