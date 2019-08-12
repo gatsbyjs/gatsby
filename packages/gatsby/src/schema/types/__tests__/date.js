@@ -1,5 +1,6 @@
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
+const withResolverContext = require(`../../context`)
 const { isDate, looksLikeADate } = require(`../date`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -388,7 +389,7 @@ describe(`dateResolver`, () => {
       await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
-        {},
+        withResolverContext({}, schema),
         {
           fieldName: `date`,
         }
@@ -413,7 +414,7 @@ describe(`dateResolver`, () => {
       await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
-        {},
+        withResolverContext({}, schema),
         {
           fieldName: `date`,
         }

@@ -2,7 +2,6 @@
 const {
   GraphQLDirective,
   DirectiveLocation,
-  defaultFieldResolver,
   specifiedDirectives,
 } = require(`graphql`)
 
@@ -113,9 +112,8 @@ const builtInFieldExtensions = {
       from: `String`,
     },
     extend(args, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: link(args, originalResolver),
+        resolve: link(args, fieldConfig),
       }
     },
   },
@@ -127,9 +125,8 @@ const builtInFieldExtensions = {
       from: `String`,
     },
     extend(args, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
       return {
-        resolve: fileByPath(args, originalResolver),
+        resolve: fileByPath(args, fieldConfig),
       }
     },
   },
@@ -139,14 +136,19 @@ const builtInFieldExtensions = {
     description: `Proxy resolver from another field.`,
     args: {
       from: `String!`,
+      fromNode: {
+        type: `Boolean!`,
+        defaultValue: false,
+      },
     },
-    extend({ from }, fieldConfig) {
-      const originalResolver = fieldConfig.resolve || defaultFieldResolver
+    extend(options, fieldConfig) {
       return {
         resolve(source, args, context, info) {
-          return originalResolver(source, args, context, {
+          const resolver = fieldConfig.resolve || context.defaultFieldResolver
+          return resolver(source, args, context, {
             ...info,
-            fieldName: from,
+            from: options.from || info.from,
+            fromNode: options.from ? options.fromNode : info.fromNode,
           })
         },
       }
@@ -215,7 +217,6 @@ const processFieldExtensions = ({
     const extensions = typeComposer.getFieldExtensions(fieldName)
     Object.keys(extensions)
       .filter(name => !internalExtensionNames.includes(name))
-      .sort(a => a === `proxy`) // Ensure `proxy` is run last
       .forEach(name => {
         const { extend } = fieldExtensions[name] || {}
         if (typeof extend === `function`) {
