@@ -88,7 +88,10 @@ const loadPageDataJson = loadObj => {
 }
 
 const doesConnectionSupportPrefetch = () => {
-  if (`connection` in navigator) {
+  if (
+    `connection` in navigator &&
+    typeof navigator.connection !== `undefined`
+  ) {
     if ((navigator.connection.effectiveType || ``).includes(`2g`)) {
       return false
     }

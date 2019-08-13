@@ -43,8 +43,12 @@ module.exports = (queues, maintainers, now = new Date()) => {
 
     let text = ``
     queues[key].slice(0, 14).map((pr, i) => {
-      const participated = _.uniqBy(pr.comments.nodes, c => c.author.url)
-        .filter(comment => maintainers[comment.author.url])
+      const participated = _.uniqBy(pr.comments.nodes, c =>
+        c.author ? c.author.url : ""
+      )
+        .filter(comment => {
+          return comment.author ? maintainers[comment.author.url] : false
+        })
         .map(comment => `<${maintainers[comment.author.url].slackUsername}>`)
 
       const participatedStr =

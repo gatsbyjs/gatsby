@@ -14,6 +14,7 @@ const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
+const chalk = require(`chalk`)
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -71,7 +72,7 @@ module.exports = (
     }
   }
 
-  const getImageCaption = (node, alt, defaultAlt) => {
+  const getImageCaption = (node, overWrites) => {
     const captionOptions = Array.isArray(options.showCaptions)
       ? options.showCaptions
       : options.showCaptions === true
@@ -87,8 +88,11 @@ module.exports = (
             }
             break
           case `alt`:
-            if (alt && alt !== defaultAlt) {
-              return alt
+            if (overWrites.alt) {
+              return overWrites.alt
+            }
+            if (node.alt) {
+              return node.alt
             }
             break
         }
@@ -153,7 +157,19 @@ module.exports = (
       overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
     )
 
-    const title = node.title ? node.title : alt
+    const title = node.title ? _.escape(node.title) : alt
+
+    const loading = options.loading
+
+    if (![`lazy`, `eager`, `auto`].includes(loading)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
+          `loading`
+        )} option. Please pass one of "lazy", "eager" or "auto". 
+      `)
+      )
+    }
 
     // Create our base image tag
     let imageTag = `
@@ -164,6 +180,7 @@ module.exports = (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
+        loading="${loading}"
       />
     `.trim()
 
@@ -202,6 +219,7 @@ module.exports = (
           src="${fallbackSrc}"
           alt="${alt}"
           title="${title}"
+          loading="${loading}"
         />
       </picture>
       `.trim()
@@ -243,7 +261,7 @@ module.exports = (
 
     // Construct new image node w/ aspect ratio placeholder
     const imageCaption =
-      options.showCaptions && getImageCaption(node, alt, defaultAlt)
+      options.showCaptions && _.escape(getImageCaption(node, overWrites))
 
     let rawHTML = `
   <span
