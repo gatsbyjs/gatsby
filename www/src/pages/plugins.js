@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import Container from "../components/container"
 import Rotator from "../components/rotator"
 import { Link } from "gatsby"
-import logo from "../monogram.svg"
+import logo from "../assets/monogram.svg"
 import { rhythm } from "../utils/typography"
 import { colors, space, sizes, fontSizes } from "../utils/presets"
 import FooterLinks from "../components/shared/footer-links"
@@ -50,6 +50,7 @@ class Plugins extends Component {
             <h1
               css={{
                 fontSize: fontSizes[6],
+                fontWeight: `700`,
                 marginLeft: space[5],
                 marginRight: space[5],
                 marginBottom: 0,

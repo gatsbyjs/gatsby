@@ -68,14 +68,6 @@ exports.onRouteUpdateDelayed = true
  * exports.onRouteUpdate = ({ location, prevLocation }) => {
  *   console.log('new pathname', location.pathname)
  *   console.log('old pathname', prevLocation ? prevLocation.pathname : null)
- *
- *   // Track pageview with google analytics
- *   window.ga(
- *     `set`,
- *     `page`,
- *     location.pathname + location.search + location.hash,
- *   )
- *   window.ga(`send`, `pageview`)
  * }
  */
 exports.onRouteUpdate = true
@@ -189,7 +181,7 @@ exports.wrapRootElement = true
  * for plugins with custom prefetching logic.
  * @param {object} $0
  * @param {string} $0.pathname The pathname whose resources should now be prefetched
- * @param {function} $0.getResourcesForPathname Function for fetching resources related to pathname
+ * @param {function} $0.loadPage Function for fetching resources related to pathname
  * @param {pluginOptions} pluginOptions
  */
 exports.onPrefetchPathname = true
@@ -199,7 +191,6 @@ exports.onPrefetchPathname = true
  * for plugins with custom prefetching logic.
  * @param {object} $0
  * @param {string} $0.pathname The pathname whose resources have now been prefetched
- * @param {function} $0.getResourceURLsForPathname Function for fetching URLs for resources related to the pathname
  * @param {pluginOptions} pluginOptions
  */
 exports.onPostPrefetchPathname = true

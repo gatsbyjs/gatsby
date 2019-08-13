@@ -3,27 +3,28 @@ import { camelCase } from "lodash/fp"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
-// Node prefix
-const TYPE_PREFIX = `Shopify`
+import {
+  TYPE_PREFIX,
+  ARTICLE,
+  BLOG,
+  COLLECTION,
+  COMMENT,
+  PRODUCT,
+  PRODUCT_OPTION,
+  PRODUCT_VARIANT,
+  PRODUCT_METAFIELD,
+  SHOP_POLICY,
+  PRODUCT_TYPE,
+  PAGE,
+} from "./constants"
 
-// Node types
-const ARTICLE = `Article`
-const BLOG = `Blog`
-const COLLECTION = `Collection`
-const COMMENT = `Comment`
-const PRODUCT = `Product`
-const PRODUCT_OPTION = `ProductOption`
-const PRODUCT_VARIANT = `ProductVariant`
-const SHOP_POLICY = `ShopPolicy`
-const PRODUCT_TYPE = `ProductType`
-const PAGE = `Page`
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
 
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
-  { createNode, createNodeId, touchNode, store, cache }
+  { createNode, createNodeId, touchNode, store, cache, reporter }
 ) => {
   let fileNodeID
 
@@ -43,6 +44,7 @@ const downloadImageAndCreateFileNode = async (
     createNode,
     createNodeId,
     parentNodeId: nodeId,
+    reporter,
   })
 
   if (fileNode) {
@@ -108,6 +110,14 @@ export const ProductNode = imageArgs =>
       )
     }
 
+    if (node.metafields) {
+      const metafields = node.metafields.edges.map(edge => edge.node)
+
+      node.metafields___NODE = metafields.map(metafield =>
+        generateNodeId(PRODUCT_METAFIELD, metafield.id)
+      )
+    }
+
     if (node.options)
       node.options___NODE = node.options.map(option =>
         generateNodeId(PRODUCT_OPTION, option.id)
@@ -128,6 +138,9 @@ export const ProductNode = imageArgs =>
     return node
   })
 
+export const ProductMetafieldNode = _imageArgs =>
+  createNodeFactory(PRODUCT_METAFIELD)
+
 export const ProductOptionNode = _imageArgs => createNodeFactory(PRODUCT_OPTION)
 
 export const ProductVariantNode = imageArgs =>
@@ -146,4 +159,4 @@ export const ProductVariantNode = imageArgs =>
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
 
-export const PagesNode = createNodeFactory(PAGE)
+export const PageNode = createNodeFactory(PAGE)

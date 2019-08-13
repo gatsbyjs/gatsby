@@ -10,9 +10,20 @@ import {
   ProductNode,
   ProductOptionNode,
   ProductVariantNode,
+  ProductMetafieldNode,
   ShopPolicyNode,
   ProductTypeNode,
   PageNode,
+  SHOP,
+  CONTENT,
+  NODE_TO_ENDPOINT_MAPPING,
+  ARTICLE,
+  BLOG,
+  COLLECTION,
+  PRODUCT,
+  SHOP_POLICY,
+  PRODUCT_TYPE,
+  PAGE,
 } from "./nodes"
 import {
   ARTICLES_QUERY,
@@ -25,8 +36,14 @@ import {
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache },
-  { shopName, accessToken, verbose = true, paginationSize = 250 }
+  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
+  {
+    shopName,
+    accessToken,
+    verbose = true,
+    paginationSize = 250,
+    includeCollections = [SHOP, CONTENT],
+  }
 ) => {
   const client = createClient(shopName, accessToken)
 
@@ -38,7 +55,14 @@ export const sourceNodes = async (
     console.log(formatMsg(`starting to fetch data from Shopify`))
 
     // Arguments used for file node creation.
-    const imageArgs = { createNode, createNodeId, touchNode, store, cache }
+    const imageArgs = {
+      createNode,
+      createNodeId,
+      touchNode,
+      store,
+      cache,
+      reporter,
+    }
 
     // Arguments used for node creation.
     const args = {
@@ -54,34 +78,48 @@ export const sourceNodes = async (
     // Message printed when fetching is complete.
     const msg = formatMsg(`finished fetching data from Shopify`)
 
-    console.time(msg)
-    await Promise.all([
-      createNodes(`articles`, ARTICLES_QUERY, ArticleNode, args, async x => {
-        if (x.comments)
-          await forEach(x.comments.edges, async edge =>
-            createNode(await CommentNode(imageArgs)(edge.node))
-          )
-      }),
-      createNodes(`blogs`, BLOGS_QUERY, BlogNode, args),
-      createNodes(`collections`, COLLECTIONS_QUERY, CollectionNode, args),
-      createNodes(`productTypes`, PRODUCT_TYPES_QUERY, ProductTypeNode, args),
-      createNodes(`pages`, PAGES_QUERY, PageNode, args),
-      createNodes(`products`, PRODUCTS_QUERY, ProductNode, args, async x => {
-        if (x.variants)
-          await forEach(x.variants.edges, async edge =>
-            createNode(await ProductVariantNode(imageArgs)(edge.node))
-          )
+    let promises = []
+    if (includeCollections.includes(SHOP)) {
+      promises = promises.concat([
+        createNodes(COLLECTION, COLLECTIONS_QUERY, CollectionNode, args),
+        createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async x => {
+          if (x.variants)
+            await forEach(x.variants.edges, async edge =>
+              createNode(await ProductVariantNode(imageArgs)(edge.node))
+            )
 
-        if (x.options)
-          await forEach(x.options, async option =>
-            createNode(await ProductOptionNode(imageArgs)(option))
-          )
-      }),
-      createShopPolicies(args),
-    ])
+          if (x.metafields)
+            await forEach(x.metafields.edges, async edge =>
+              createNode(await ProductMetafieldNode(imageArgs)(edge.node))
+            )
+
+          if (x.options)
+            await forEach(x.options, async option =>
+              createNode(await ProductOptionNode(imageArgs)(option))
+            )
+        }),
+        createNodes(PRODUCT_TYPE, PRODUCT_TYPES_QUERY, ProductTypeNode, args),
+        createShopPolicies(args),
+      ])
+    }
+    if (includeCollections.includes(CONTENT)) {
+      promises = promises.concat([
+        createNodes(BLOG, BLOGS_QUERY, BlogNode, args),
+        createNodes(ARTICLE, ARTICLES_QUERY, ArticleNode, args, async x => {
+          if (x.comments)
+            await forEach(x.comments.edges, async edge =>
+              createNode(await CommentNode(imageArgs)(edge.node))
+            )
+        }),
+        createPageNodes(PAGE, PAGES_QUERY, PageNode, args),
+      ])
+    }
+
+    console.time(msg)
+    await Promise.all(promises)
     console.timeEnd(msg)
   } catch (e) {
-    console.error(chalk`\n{red error} an error occured while sourcing data`)
+    console.error(chalk`\n{red error} an error occurred while sourcing data`)
 
     // If not a GraphQL request error, let Gatsby print the error.
     if (!e.hasOwnProperty(`request`)) throw e
@@ -101,11 +139,16 @@ const createNodes = async (
   f = async () => {}
 ) => {
   // Message printed when fetching is complete.
-  const msg = formatMsg(`fetched and processed ${endpoint}`)
+  const msg = formatMsg(`fetched and processed ${endpoint} nodes`)
 
   if (verbose) console.time(msg)
   await forEach(
-    await queryAll(client, [`shop`, endpoint], query, paginationSize),
+    await queryAll(
+      client,
+      [`shop`, NODE_TO_ENDPOINT_MAPPING[endpoint]],
+      query,
+      paginationSize
+    ),
     async entity => {
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)
@@ -125,7 +168,7 @@ const createShopPolicies = async ({
   verbose,
 }) => {
   // Message printed when fetching is complete.
-  const msg = formatMsg(`fetched and processed policies`)
+  const msg = formatMsg(`fetched and processed ${SHOP_POLICY} nodes`)
 
   if (verbose) console.time(msg)
   const { shop: policies } = await queryOnce(client, SHOP_POLICIES_QUERY)
@@ -137,5 +180,27 @@ const createShopPolicies = async ({
         createNode
       )
     )
+  if (verbose) console.timeEnd(msg)
+}
+
+const createPageNodes = async (
+  endpoint,
+  query,
+  nodeFactory,
+  { client, createNode, formatMsg, verbose, paginationSize },
+  f = async () => {}
+) => {
+  // Message printed when fetching is complete.
+  const msg = formatMsg(`fetched and processed ${endpoint} nodes`)
+
+  if (verbose) console.time(msg)
+  await forEach(
+    await queryAll(client, [endpoint], query, paginationSize),
+    async entity => {
+      const node = await nodeFactory(entity)
+      createNode(node)
+      await f(entity)
+    }
+  )
   if (verbose) console.timeEnd(msg)
 }

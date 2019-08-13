@@ -16,7 +16,7 @@ const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
 const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
@@ -27,6 +27,7 @@ const chalk = require(`chalk`)
 const address = require(`address`)
 const cors = require(`cors`)
 const telemetry = require(`gatsby-telemetry`)
+const WorkerPool = require(`../utils/worker/pool`)
 
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
@@ -41,6 +42,7 @@ const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
 const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
+const requiresWriter = require(`../bootstrap/requires-writer`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -65,15 +67,29 @@ onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
 
+const waitJobsFinished = () =>
+  new Promise((resolve, reject) => {
+    const onEndJob = () => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
+
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
+  const workerPool = WorkerPool.create()
   const createIndexHtml = async () => {
     try {
       await buildHTML.buildPages({
         program,
         stage: `develop-html`,
         pagePaths: [`/`],
+        workerPool,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
@@ -90,13 +106,6 @@ async function startServer(program) {
       )
     }
   }
-
-  // Start bootstrap process.
-  await bootstrap(program)
-
-  db.startAutosave()
-  queryUtil.startListening(queryQueue.createDevelopQueue())
-  queryWatcher.startWatchDeletePage()
 
   await createIndexHtml()
 
@@ -146,11 +155,11 @@ async function startServer(program) {
   app.use(
     graphqlEndpoint,
     graphqlHTTP(() => {
-      const schema = store.getState().schema
+      const { schema, schemaCustomization } = store.getState()
       return {
         schema,
         graphiql: false,
-        context: withResolverContext({}, schema),
+        context: withResolverContext({}, schema, schemaCustomization.context),
         formatError(err) {
           return {
             ...formatError(err),
@@ -166,7 +175,9 @@ async function startServer(program) {
    * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
-  app.post(`/__refresh`, (req, res) => {
+  const REFRESH_ENDPOINT = `/__refresh`
+  app.use(REFRESH_ENDPOINT, express.json())
+  app.post(REFRESH_ENDPOINT, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
     const authorizedRefresh =
@@ -174,7 +185,9 @@ async function startServer(program) {
 
     if (enableRefresh && authorizedRefresh) {
       console.log(`Refreshing source data`)
-      sourceNodes()
+      sourceNodes({
+        webhookBody: req.body,
+      })
     }
     res.end()
   })
@@ -330,6 +343,37 @@ module.exports = async (program: any) => {
   }
 
   program.port = await detectPortInUseAndPrompt(port, rlInterface)
+  // Start bootstrap process.
+  const { graphqlRunner } = await bootstrap(program)
+
+  // Start the createPages hot reloader.
+  require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
+
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+
+  let activity = report.activityTimer(`run static queries`)
+  activity.start()
+  await queryUtil.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
+  })
+  activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
+
+  await waitJobsFinished()
+  requiresWriter.startListener()
+  db.startAutosave()
+  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryWatcher.startWatchDeletePage()
 
   const [compiler] = await startServer(program)
 
@@ -388,7 +432,13 @@ module.exports = async (program: any) => {
   }
 
   function printInstructions(appName, urls, useYarn) {
-    console.log()
+    report._setStage({
+      stage: `DevelopBootstrapFinished`,
+      context: {
+        url: urls.localUrlForBrowser,
+        appName,
+      },
+    })
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
 
@@ -412,7 +462,21 @@ module.exports = async (program: any) => {
       }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${
+          urls.localUrlForTerminal
+        }___graphql`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${
+          urls.lanUrlForTerminal
+        }___graphql`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}___graphql`)
+    }
 
     console.log()
     console.log(`Note that the development build is not optimized.`)

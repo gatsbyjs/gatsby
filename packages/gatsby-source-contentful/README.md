@@ -80,7 +80,7 @@ Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the c
 ```GraphQL
 graphql`
   query MyQuery {
-    # Example is for a `ContentType` with a `ContenfulAsset` field
+    # Example is for a `ContentType` with a `ContentfulAsset` field
     # You could also query an asset directly via
     # `allContentfulAsset { edges{ node { } } }`
     # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
@@ -152,13 +152,17 @@ For example, to filter locales on only germany `localeFilter: locale => locale.c
 
 List of locales and their codes can be found in Contentful app -> Settings -> Locales
 
+**`forceFullSync`** [boolean][optional] [default: `false`]
+
+Prevents the use of sync tokens when accessing the Contentful API.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
 
 1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
+2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 
@@ -288,7 +292,7 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
           body
         }
         heroImage {
-          resolutions(width: 1600) {
+          fixed(width: 1600) {
             width
             height
             src
@@ -300,6 +304,8 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
   }
 }
 ```
+
+When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that gatsby-source-contentful also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
 
 ## More on Queries with Contentful and Gatsby
 

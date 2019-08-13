@@ -1,5 +1,5 @@
 // @flow
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -8,7 +8,6 @@ const path = require(`path`)
 const fs = require(`fs`)
 const truePath = require(`true-case-path`)
 const url = require(`url`)
-const kebabHash = require(`kebab-hash`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
@@ -17,6 +16,7 @@ const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
+const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
 
@@ -52,7 +52,6 @@ type Page = {
   component: string,
   context: Object,
   internalComponentName: string,
-  jsonName: string,
   componentChunkName: string,
   updatedAt: number,
 }
@@ -92,6 +91,8 @@ const fileOkCache = {}
  * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
+ * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -112,7 +113,6 @@ actions.createPage = (
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  let noPageOrComponent = false
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
@@ -121,13 +121,17 @@ actions.createPage = (
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
     if (process.env.NODE_ENV !== `test`) {
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
+      report.panic({
+        id: `11323`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          message,
+        },
+      })
     } else {
       return message
     }
-    noPageOrComponent = true
   }
 
   // Validate that the context object doesn't overlap with any core page fields
@@ -177,7 +181,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
       } else if (invalidFields.some(f => page.context[f] !== page[f])) {
-        report.panic(error)
+        report.panic({
+          id: `11324`,
+          context: {
+            message: error,
+          },
+        })
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
           report.warn(error)
@@ -187,97 +196,109 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  // Check if a component is set.
+  if (!page.component) {
+    if (process.env.NODE_ENV !== `test`) {
+      report.panic({
+        id: `11322`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+        },
+      })
+    } else {
+      // For test
+      return `A component must be set when creating a page`
+    }
+  }
+
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
     if (!fileExistsSync(page.component)) {
-      const message = `${name} created a page with a component that doesn't exist. Missing component is ${
-        page.component
-      }`
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-      noPageOrComponent = true
-    } else if (page.component) {
-      // check if we've processed this component path
-      // before, before running the expensive "truePath"
-      // operation
-      if (pageComponentCache[page.component]) {
-        page.component = pageComponentCache[page.component]
-      } else {
-        const originalPageComponent = page.component
+      report.panic({
+        id: `11325`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
+    }
+  }
+  if (!path.isAbsolute(page.component)) {
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      report.panic({
+        id: `11326`,
+        context: {
+          pluginName: name,
+          pageObject: page,
+          component: page.component,
+        },
+      })
+    } else {
+      const message = `${name} must set the absolute path to the page component when create creating a page`
+      return message
+    }
+  }
 
-        // normalize component path
-        page.component = slash(page.component)
-        // check if path uses correct casing - incorrect casing will
-        // cause issues in query compiler and inconsistencies when
-        // developing on Mac or Windows and trying to deploy from
-        // linux CI/CD pipeline
-        const trueComponentPath = slash(truePath(page.component))
-        if (trueComponentPath !== page.component) {
-          if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
-            const markers = page.component
-              .split(``)
-              .map((letter, index) => {
-                if (letter !== trueComponentPath[index]) {
-                  return `^`
-                }
-                return ` `
-              })
-              .join(``)
+  // check if we've processed this component path
+  // before, before running the expensive "truePath"
+  // operation
+  //
+  // Skip during testing as the paths don't exist on disk.
+  if (process.env.NODE_ENV !== `test`) {
+    if (pageComponentCache[page.component]) {
+      page.component = pageComponentCache[page.component]
+    } else {
+      const originalPageComponent = page.component
 
-            report.warn(
-              stripIndent`
+      // normalize component path
+      page.component = slash(page.component)
+      // check if path uses correct casing - incorrect casing will
+      // cause issues in query compiler and inconsistencies when
+      // developing on Mac or Windows and trying to deploy from
+      // linux CI/CD pipeline
+      const trueComponentPath = slash(truePath(page.component))
+      if (trueComponentPath !== page.component) {
+        if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
+          const markers = page.component
+            .split(``)
+            .map((letter, index) => {
+              if (letter !== trueComponentPath[index]) {
+                return `^`
+              }
+              return ` `
+            })
+            .join(``)
+
+          report.warn(
+            stripIndent`
             ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
             page.component:     "${page.component}"
             path in filesystem: "${trueComponentPath}"
                                  ${markers}
           `
-            )
-            hasWarnedForPageComponentInvalidCasing.add(page.component)
-          }
-
-          page.component = trueComponentPath
+          )
+          hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
-        pageComponentCache[originalPageComponent] = page.component
+
+        page.component = trueComponentPath
       }
+      pageComponentCache[originalPageComponent] = page.component
     }
   }
 
-  if (!page.component || !path.isAbsolute(page.component)) {
-    const message = `${name} must set the absolute path to the page component when create creating a page`
-    // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
-      console.log(``)
-      console.log(chalk.bold.red(message))
-      console.log(``)
-      console.log(page)
-    } else {
-      return message
-    }
-    noPageOrComponent = true
-  }
-
-  if (noPageOrComponent) {
-    report.panic(
-      `See the documentation for createPage https://www.gatsbyjs.org/docs/actions/#createPage`
-    )
-  }
-
-  let jsonName
   let internalComponentName
   if (page.path === `/`) {
-    jsonName = `index`
     internalComponentName = `ComponentIndex`
   } else {
-    jsonName = `${kebabHash(page.path)}`
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
   let internalPage: Page = {
-    jsonName,
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -330,15 +351,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       )
 
       if (!notEmpty) {
-        report.panicOnBuild(
-          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
-        )
+        report.panicOnBuild({
+          id: `11327`,
+          context: {
+            relativePath,
+          },
+        })
       }
 
       if (!includesDefaultExport) {
-        report.panicOnBuild(
-          `[${fileName}] The page component must export a React component for it to be valid`
-        )
+        report.panicOnBuild({
+          id: `11328`,
+          context: {
+            fileName,
+          },
+        })
       }
     }
 
@@ -502,7 +529,7 @@ const typeOwners = {}
  * @param {string} node.internal.type An arbitrary globally unique type
  * chosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
- * for nodes based on the type choosen here. Nodes of a given type can
+ * for nodes based on the type chosen here. Nodes of a given type can
  * only be created by one plugin.
  * @param {string} node.internal.content An optional field. This is rarely
  * used. It is used when a source plugin sources data it doesn't know how
@@ -589,10 +616,14 @@ const createNode = (
     )
   }
 
+  const trackParams = {}
   // Add the plugin name to the internal object.
   if (plugin) {
     node.internal.owner = plugin.name
+    trackParams[`pluginName`] = `${plugin.name}@${plugin.version}`
   }
+
+  trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
@@ -763,6 +794,11 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
     nodeId = options
   }
 
+  const node = getNode(nodeId)
+  if (node && !typeOwners[node.internal.type]) {
+    typeOwners[node.internal.type] = node.internal.owner
+  }
+
   return {
     type: `TOUCH_NODE`,
     plugin,
@@ -851,6 +887,7 @@ actions.createNodeField = (
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
+  node = trackInlineObjectsInRootNode(node, true)
 
   return {
     type: `ADD_FIELD_TO_NODE`,
@@ -1130,9 +1167,14 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @example
- * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
- * createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ * // Generally you create redirects while creating pages.
+ * exports.createPages = ({ graphql, actions }) => {
+ *   const { createRedirect } = actions
+ *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
+ *   // Create pages here
+ * }
  */
 actions.createRedirect = ({
   fromPath,
@@ -1154,6 +1196,37 @@ actions.createRedirect = ({
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
+    },
+  }
+}
+
+/**
+ * Create a dependency between a page and data.
+ *
+ * @param {Object} $0
+ * @param {string} $0.path the path to the page
+ * @param {string} $0.nodeId A node ID
+ * @param {string} $0.connection A connection type
+ * @private
+ */
+actions.createPageDependency = (
+  {
+    path,
+    nodeId,
+    connection,
+  }: { path: string, nodeId: string, connection: string },
+  plugin: string = ``
+) => {
+  console.warn(
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+  )
+  return {
+    type: `CREATE_COMPONENT_DEPENDENCY`,
+    plugin,
+    payload: {
+      path,
+      nodeId,
+      connection,
     },
   }
 }
