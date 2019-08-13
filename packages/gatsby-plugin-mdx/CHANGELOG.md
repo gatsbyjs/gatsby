@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.23...gatsby-plugin-mdx@1.0.24) (2019-08-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Raise error if MDXRenderer receives un… ([#16555](https://github.com/gatsbyjs/gatsby/issues/16555)) ([aa03d44](https://github.com/gatsbyjs/gatsby/commit/aa03d44))
+
 ## [1.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.22...gatsby-plugin-mdx@1.0.23) (2019-08-06)
 
 ### Bug Fixes
