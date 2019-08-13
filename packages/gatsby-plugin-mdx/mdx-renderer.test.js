@@ -16,7 +16,7 @@ describe("mdx-renderer", () => {
   });
 
   test("provides a useful error message when no mdx is passed", () => {
-    const expectedErrorMessage = 'MDXRenderer expected to receive an MDX string. Instead it received "undefined"';
+    const expectedErrorMessage = 'MDXRenderer expected to receive an MDX String in children. Instead, it received: undefined';
 
     const renderUndefined = () => {
       TestRenderer.create(<MDXRenderer scope={{ React: React }} />);
