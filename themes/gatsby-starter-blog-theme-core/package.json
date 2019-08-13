@@ -10,7 +10,7 @@
   "dependencies": {
     "gatsby": "^2.13.39",
     "gatsby-theme-blog-core": "^0.2.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }
