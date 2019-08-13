@@ -3,7 +3,7 @@
   "version": "2.2.2",
   "description": "Gatsby source plugin for building websites using Shopfiy as a data source.",
   "scripts": {
-    "build": "babel src --out-dir .",
+    "build": "babel src --out-dir . --ignore **/__tests__",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "npm run build -- --watch"
   },
