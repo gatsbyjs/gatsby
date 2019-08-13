@@ -2023,6 +2023,7 @@
   repo: https://github.com/baobabKoodaa/gatsby-starter-infinite-scroll
   description: Infinite Scroll and Pagination with 10k photos
   tags:
+    - Infinite Scroll
     - Pagination
     - Styling:CSS-in-JS
   features:
@@ -3501,6 +3502,7 @@
   description: Blog with all the Bells and Whistles
   tags:
     - Blog
+    - Infinite Scroll
     - Pagination
     - SEO
     - Markdown
@@ -3650,3 +3652,16 @@
     - Option to read all answers to a specific question
     - Share interview on social channels
     - All content in simple json files
+- url: https://gatsby-starter-photo-book.netlify.com/
+  repo: https://github.com/baobabKoodaa/gatsby-starter-photo-book
+  description: A Gatsby starter for sharing photosets.
+  tags:
+    - Gallery
+    - Infinite Scroll
+    - Pagination
+    - Transitions
+  features:
+    - Gallery with auto-generated thumbnails are presented on CSS Grid with infinite scroll.
+    - Beautiful "postcard" view for photos with fullscreen toggle.
+    - Both views are responsive with minimal whitespace and polished UX.
+    - Many performance optimizations for image delivery (both by Gatsby & way beyond what Gatsby can do).
