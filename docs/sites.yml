@@ -4954,9 +4954,14 @@
   main_url: https://www.attejuvonen.fi/
   source_url: https://github.com/baobabKoodaa/blog
   description: >
-    A blog with streamlined design and smooth UX
+    Tech-oriented personal blog covering topics like AI, data, voting, game theory, infosec and software development.
   categories:
     - Blog
+    - Data
+    - JavaScript
+    - Programming
+    - Science
+    - Security
     - Technology
     - Web Development
   featured: false
