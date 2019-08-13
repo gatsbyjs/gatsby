@@ -6,11 +6,11 @@ class ClassComponent extends Component {
   }
 
   render() {
-    const custom = this.state[`%CUSTOM_STATE%`]
+    const custom = this.state[`custom`]
     if (custom) {
       return <h1 data-testid="stateful-class-component">Custom Message</h1>
     }
-    return <h1 data-testid="class-component">I am a %CLASS_COMPONENT%</h1>
+    return <h1 data-testid="class-component">I am a class component</h1>
   }
 }
 
