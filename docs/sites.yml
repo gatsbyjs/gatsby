@@ -6920,3 +6920,13 @@
   built_by: Whalar
   built_by_url: https://whalar.com/
   featured: false
+- title: deepThreads
+  main_url: https://deepthreads.com
+  url: https://deepthreads.com/
+  description: >
+    deepThreads is a shiny new website built with Gatsby v2.  We make art using deep learning along with print on demand providers to create some cool stuff!
+  categories:
+    - eCommerce
+  built_by: Kyle Kitlinski
+  built_by_url: http://github.com/k-kit
+  featured: false
