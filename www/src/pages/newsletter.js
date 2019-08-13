@@ -15,9 +15,13 @@ class NewsLetter extends Component {
       <Layout location={location}>
         <Helmet>
           <title>Newsletter</title>
+          <meta
+            name="description"
+            content="Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community, hear about new features, tips & tricks, and what people are building."
+          />
         </Helmet>
         <Container
-          hasSideBar={false}
+          withSidebar={false}
           css={{
             display: `flex`,
             flexDirection: `column`,
@@ -41,8 +45,8 @@ class NewsLetter extends Component {
               borderTop: `2px solid ${colors.lilac}`,
             }}
           />
-          <FooterLinks />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

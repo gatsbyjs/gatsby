@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import Navigation from "./navigation"
 import { rhythm } from "../utils/typography"
@@ -75,7 +75,7 @@ const LogoLink = styled(`a`)`
     left: ${gutter.tablet};
     top: auto;
     z-index: ${elevation.overlay + 1};
-  },
+  }
 `
 
 const Logo = styled(`img`)`

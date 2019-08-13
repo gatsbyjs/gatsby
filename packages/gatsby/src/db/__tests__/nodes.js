@@ -349,6 +349,32 @@ describe(`nodes db tests`, () => {
     expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
   })
 
+  it(`throws an error when trying to delete a node of a type owned from another plugin`, () => {
+    expect(() => {
+      store.dispatch(
+        actions.createNode(
+          {
+            id: `hi`,
+            children: [],
+            parent: `test`,
+            internal: {
+              contentDigest: `hasdfljds`,
+              type: `Other`,
+            },
+          },
+          {
+            name: `other`,
+          }
+        )
+      )
+      store.dispatch(
+        actions.deleteNode(`hi`, getNode(`hi`), {
+          name: `tests`,
+        })
+      )
+    }).toThrow(/deleted/)
+  })
+
   it(`does not crash when delete node is called on undefined`, () => {
     actions.deleteNode(undefined, {
       name: `tests`,

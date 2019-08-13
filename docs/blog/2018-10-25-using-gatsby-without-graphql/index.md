@@ -2,7 +2,7 @@
 title: Using Gatsby without GraphQL
 date: 2018-10-25
 author: Amberley Romo
-tags: ["sourcing", "data"]
+tags: ["content-mesh"]
 ---
 
 When creating web experiences, an inevitable question is, "how do I get my data from point A (the source) to point B (the component)?". This can end up being a deceptively complex question.
@@ -10,10 +10,12 @@ When creating web experiences, an inevitable question is, "how do I get my data 
 Gatsby’s rich data plugin ecosystem lets you build sites with the data you want — from one or many sources. You can pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your components.
 
 <figure>
-  <img alt="An assortment of possible data sources (CMSs, Markdown, APIs, etc)" height="400" src="./data_sources.png" />
-  <figcaption>
-    Your data could come from anywhere
-  </figcaption>
+  <img
+    alt="An assortment of possible data sources (CMSs, Markdown, APIs, etc)"
+    height="400"
+    src="./data_sources.png"
+  />
+  <figcaption>Your data could come from anywhere</figcaption>
 </figure>
 
 Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightly so! Gatsby's GraphQL data layer is powerful and extremely effective; it solves the "integration problem" of decoupled CMSs -- it's the glue between presentation layer and wherever your data is sourced from.
@@ -21,11 +23,12 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
 <figure>
   <img alt="" height="400" src="./integration_layer.png" />
   <figcaption>
-    Gatsby's GraphQL integration layer is the glue between presentation layer and where your data lives
+    Gatsby's GraphQL integration layer is the glue between presentation layer
+    and where your data lives
   </figcaption>
 </figure>
 
-> _[Source plugins](/docs/source-plugin-tutorial/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
+> _[Source plugins](/docs/creating-a-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
 
 We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)).
 
@@ -44,7 +47,23 @@ That's it!
 
 ### The tldr; (in tweet form)
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">➡ Did you know you can create pages in <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> w/unstructured data? This code will:<br><br>✅ Load data from the <a href="https://twitter.com/PokeAPI?ref_src=twsrc%5Etfw">@PokeAPI</a> <br>✅ Create a page with links to all Pokémon<br>✅ Create individual Pokémon pages<br>✅ Create pages for abilities of each Pokémon<br><br>Repo: <a href="https://t.co/GoQoOYteLW">https://t.co/GoQoOYteLW</a> <a href="https://t.co/CrQWIGnVfl">pic.twitter.com/CrQWIGnVfl</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1050855455759593472?ref_src=twsrc%5Etfw">October 12, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    ➡ Did you know you can create pages in{" "}
+    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>{" "}
+    w/unstructured data? This code will:
+    <br />
+    <br />✅ Load data from the{" "}
+    <a href="https://twitter.com/PokeAPI?ref_src=twsrc%5Etfw">@PokeAPI</a>{" "}
+    <br />✅ Create a page with links to all Pokémon
+    <br />✅ Create individual Pokémon pages
+    <br />✅ Create pages for abilities of each Pokémon
+    <br />
+    <br />
+    Repo: <a href="https://t.co/GoQoOYteLW">https://t.co/GoQoOYteLW</a> <a href="https://t.co/CrQWIGnVfl">pic.twitter.com/CrQWIGnVfl</a>
+  </p>
+  &mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1050855455759593472?ref_src=twsrc%5Etfw">October 12, 2018</a>
+</blockquote>
 
 ### Breaking down the example
 

@@ -1,16 +1,17 @@
 import React from "react"
 
-import { space, breakpoints } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { space, sizes, mediaQueries } from "../utils/presets"
 
-const Container = ({ children, hasSideBar = true, overrideCSS }) => (
+const Container = ({ children, withSidebar = true, overrideCSS }) => (
   <div
     css={{
-      maxWidth: hasSideBar ? rhythm(28) : rhythm(36),
+      maxWidth: withSidebar
+        ? sizes.mainContentWidth.withSidebar
+        : sizes.mainContentWidth.default,
       margin: `0 auto`,
       padding: space[6],
       position: `relative`,
-      [breakpoints.lg]: {
+      [mediaQueries.lg]: {
         paddingTop: space[9],
         paddingBottom: space[9],
       },

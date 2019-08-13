@@ -1,6 +1,7 @@
 ---
 title: Data in Gatsby
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
@@ -63,7 +64,7 @@ See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guid
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
 1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/how-plugins-work/) guide and consider building your own!
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
@@ -292,21 +293,20 @@ Page queries live outside of the component definition -- by convention at the en
 ### Use a StaticQuery
 
 [StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like our `layout.js` component), to retrieve data via GraphQL queries.
-
-Go ahead and add a `<StaticQuery />` to your `src/components/layout.js` file and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
+Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/)
+Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done your file looks like this:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
 import { css } from "@emotion/core"
 // highlight-next-line
-import { StaticQuery, Link, graphql } from "gatsby"
+import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-
-export default ({ children }) => (
-  {/* highlight-start */}
-  <StaticQuery
-    query={graphql`
+// highlight-start
+export default ({ children }) => {
+  const data = useStaticQuery(
+    graphql`
       query {
         site {
           siteMetadata {
@@ -314,43 +314,43 @@ export default ({ children }) => (
           }
         }
       }
-    `}
-    render={data => (
-      {/* highlight-end */}
-      <div
-        css={css`
-          margin: 0 auto;
-          max-width: 700px;
-          padding: ${rhythm(2)};
-          padding-top: ${rhythm(1.5)};
-        `}
-      >
-        <Link to={`/`}>
-          <h3
-            css={css`
-              margin-bottom: ${rhythm(2)};
-              display: inline-block;
-              font-style: normal;
-            `}
-          >
-            {data.site.siteMetadata.title}{/* highlight-line */}
-          </h3>
-        </Link>
-        <Link
-          to={`/about/`}
+    `
+  )
+  return (
+    // highlight-end
+    <div
+      css={css`
+        margin: 0 auto;
+        max-width: 700px;
+        padding: ${rhythm(2)};
+        padding-top: ${rhythm(1.5)};
+      `}
+    >
+      <Link to={`/`}>
+        <h3
           css={css`
-            float: right;
+            margin-bottom: ${rhythm(2)};
+            display: inline-block;
+            font-style: normal;
           `}
         >
-          About
-        </Link>
-        {children}
-      </div>
-      {/* highlight-start */}
-    )}
-  />
-  {/* highlight-end */}
-)
+          {data.site.siteMetadata.title} {/* highlight-line */}
+        </h3>
+      </Link>
+      <Link
+        to={`/about/`}
+        css={css`
+          float: right;
+        `}
+      >
+        About
+      </Link>
+      {children}
+    </div>
+    // highlight-start
+  )
+}
+// highlight-end
 ```
 
 Another success! 🎉

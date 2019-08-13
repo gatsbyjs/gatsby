@@ -66,8 +66,10 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  site {
-    ...SiteInformation
+  query {
+    site {
+      ...SiteInformation
+    }
   }
 `
 ```
@@ -76,5 +78,5 @@ When compiling your site, Gatsby preprocesses all GraphQL queries it finds. Ther
 
 ## Further reading
 
-- [https://www.gatsbyjs.org/docs/querying-with-graphql/#fragments](/docs/querying-with-graphql/#fragments)
-- https://graphql.org/learn/queries/#fragments
+- [Querying Data with GraphQL - Fragments](/docs/querying-with-graphql/#fragments)
+- [GraphQL Docs - Fragments](https://graphql.org/learn/queries/#fragments)

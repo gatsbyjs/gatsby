@@ -1,6 +1,7 @@
-const React = require(`react`)
+import React from "react"
+import wrapRoot from "./wrap-root-element"
 
-exports.onRenderBody = ({ setHeadComponents }) => {
+export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
     <link
       rel="dns-prefetch"
@@ -13,4 +14,22 @@ exports.onRenderBody = ({ setHeadComponents }) => {
       href="https://www.google-analytics.com"
     />,
   ])
+
+  const attachCode = `
+  if (ga) {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['gatsbyjs.com']);
+  }`
+
+  // use with the `allowLinker` option of gatsby-plugin-google-analytics
+  setPostBodyComponents([
+    <script
+      key="ga-linker"
+      dangerouslySetInnerHTML={{
+        __html: attachCode,
+      }}
+    />,
+  ])
 }
+
+export const wrapRootElement = wrapRoot

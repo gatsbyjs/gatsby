@@ -12,7 +12,7 @@ import {
   space,
   transition,
   radii,
-  breakpoints,
+  mediaQueries,
   fontSizes,
   lineHeights,
 } from "../utils/presets"
@@ -20,15 +20,16 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
-const breakpoint2Columns = breakpoints.md
+const breakpoint2Columns = mediaQueries.md
 
 const MetaTitle = ({ children }) => (
   <p
     css={{
       margin: `0`,
-      color: colors.gray.calm,
+      color: colors.text.secondary,
       marginBottom: space[1],
-      [breakpoints.xs]: {
+      flexShrink: 0,
+      [mediaQueries.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
@@ -45,12 +46,12 @@ const MetaTitle = ({ children }) => (
 const MetaSection = ({ children, background, last, first }) => (
   <div
     css={{
-      background: background ? background : colors.ui.whisper,
+      background: background ? background : colors.ui.background,
       marginLeft: `-${space[5]}`,
       marginRight: `-${space[5]}`,
       padding: space[5],
-      borderTop: first ? `1px solid ${colors.ui.light}` : null,
-      borderBottom: last ? null : `1px solid ${colors.ui.light}`,
+      borderTop: first ? `1px solid ${colors.ui.border.subtle}` : null,
+      borderBottom: last ? null : `1px solid ${colors.ui.border.subtle}`,
       [breakpoint2Columns]: {
         background: `transparent`,
         paddingLeft: 0,
@@ -58,7 +59,7 @@ const MetaSection = ({ children, background, last, first }) => (
         marginLeft: 0,
         marginRight: 0,
       },
-      [breakpoints.sm]: {
+      [mediaQueries.sm]: {
         display: `flex`,
       },
     }}
@@ -84,7 +85,7 @@ class CreatorTemplate extends Component {
     return (
       <Layout location={location}>
         <Helmet>
-          <title>{creator.name}</title>
+          <title>{`${creator.name} - Creator`}</title>
         </Helmet>
         <CreatorsHeader submissionText="Add Yourself" />
         <main
@@ -114,7 +115,7 @@ class CreatorTemplate extends Component {
                 width: `auto`,
                 maxWidth: 480,
               },
-              [breakpoints.lg]: {
+              [mediaQueries.lg]: {
                 maxWidth: 560,
               },
             }}
@@ -130,7 +131,7 @@ class CreatorTemplate extends Component {
               margin: space[6],
               flex: `1`,
               width: `100%`,
-              [breakpoints.lg]: {
+              [mediaQueries.lg]: {
                 width: `auto`,
                 maxWidth: 640,
               },
@@ -153,7 +154,7 @@ class CreatorTemplate extends Component {
               {isAgencyOrCompany && (
                 <span
                   css={{
-                    color: colors.gray.calm,
+                    color: colors.text.secondary,
                     marginRight: space[2],
                   }}
                 >
@@ -172,7 +173,7 @@ class CreatorTemplate extends Component {
                   <Badge
                     forHire={creator.for_hire}
                     customCSS={{
-                      background: colors.success,
+                      background: colors.green[50],
                       color: colors.white,
                     }}
                   >
@@ -232,6 +233,7 @@ class CreatorTemplate extends Component {
                   css={{
                     display: `flex`,
                     alignItems: `flex-start`,
+                    flexWrap: `wrap`,
                   }}
                 >
                   {sites.map(site => (
@@ -240,7 +242,9 @@ class CreatorTemplate extends Component {
                       css={{
                         "&&": {
                           marginRight: space[6],
+                          marginBottom: space[6],
                           borderBottom: `none`,
+                          lineHeight: 0,
                           transition: `all ${transition.speed.default} ${
                             transition.curve.default
                           }`,

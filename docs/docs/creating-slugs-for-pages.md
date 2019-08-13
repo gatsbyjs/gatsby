@@ -36,7 +36,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 ## Query created slugs
 
-Open refresh Graph_i_QL, then run this GraphQL query to see all your slugs:
+Open refresh GraphiQL, then run this GraphQL query to see all your slugs:
 
 ```graphql
 {

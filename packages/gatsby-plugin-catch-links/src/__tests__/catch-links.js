@@ -4,7 +4,7 @@ import { navigate } from "gatsby"
 import * as catchLinks from "../catch-links"
 
 beforeAll(() => {
-  global.__PATH_PREFIX__ = ``
+  global.__BASE_PATH__ = ``
   // Set the base URL we will be testing against to http://localhost:8000/blog
   window.history.pushState({}, `APP Url`, `${pathPrefix}`)
 })
@@ -264,7 +264,7 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
 
   beforeAll(() => {
     hrefHandler = jest.fn()
-    eventDestroyer = catchLinks.default(window, hrefHandler)
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
   afterAll(() => {
@@ -286,7 +286,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${sameOriginAndTopPath.pathname}`
       )
@@ -313,7 +314,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${withAnchor.pathname}${withAnchor.hash}`
       )
@@ -340,7 +342,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${withSearch.pathname}${withSearch.search}${withSearch.hash}`
       )
@@ -354,6 +357,50 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
   })
 })
 
+describe(`navigation is routed through browser if resources have failed and the destination href`, () => {
+  // We're going to manually set up the event listener here
+  let hrefHandler
+  let eventDestroyer
+
+  beforeAll(() => {
+    hrefHandler = jest.fn()
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
+    global.___failedResources = true
+  })
+
+  afterAll(() => {
+    eventDestroyer()
+    global.___failedResources = false
+  })
+
+  it(`shares the same origin and top path`, done => {
+    const sameOriginAndTopPath = document.createElement(`a`)
+    sameOriginAndTopPath.setAttribute(
+      `href`,
+      `${window.location.href}/someSubPath`
+    )
+    document.body.appendChild(sameOriginAndTopPath)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
+      expect(hrefHandler).not.toHaveBeenCalled()
+
+      sameOriginAndTopPath.remove()
+
+      done()
+    })
+
+    sameOriginAndTopPath.dispatchEvent(clickEvent)
+  })
+})
+
 describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
@@ -361,17 +408,17 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
   beforeAll(() => {
     hrefHandler = jest.fn()
-    eventDestroyer = catchLinks.default(window, hrefHandler)
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
   afterAll(() => {
-    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
     eventDestroyer()
   })
 
   test(`on sites with pathPrefix '${pathPrefix}'`, done => {
     // simulate case with --prefix-paths and prefix /blog
-    global.__PATH_PREFIX__ = pathPrefix
+    global.__BASE_PATH__ = pathPrefix
 
     // create the element with href /blog/article
     const clickElement = document.createElement(`a`)
@@ -408,7 +455,7 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
   test(`on sites without pathPrefix`, done => {
     // simulate default case without --prefix-paths
-    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = ``
 
     // create the element with href /blog/article
     const clickElement = document.createElement(`a`)

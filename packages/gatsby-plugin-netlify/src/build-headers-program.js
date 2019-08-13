@@ -2,7 +2,7 @@ import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
 import { parse } from "path"
 import kebabHash from "kebab-hash"
-import { HEADER_COMMENT } from "./constants"
+import { HEADER_COMMENT, IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
   COMMON_BUNDLES,
@@ -219,12 +219,29 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
   return defaultMerge(headers, SECURITY_HEADERS)
 }
 
-const applyCachingHeaders = ({ mergeCachingHeaders }) => headers => {
+const applyCachingHeaders = (
+  pluginData,
+  { mergeCachingHeaders }
+) => headers => {
   if (!mergeCachingHeaders) {
     return headers
   }
 
-  return defaultMerge(headers, CACHING_HEADERS)
+  const chunks = Array.from(pluginData.pages.values()).map(
+    page => page.componentChunkName
+  )
+
+  chunks.push(`pages-manifest`, `app`)
+
+  const files = [].concat(...chunks.map(chunk => pluginData.manifest[chunk]))
+
+  const cachingHeaders = {}
+
+  files.forEach(file => {
+    cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+  })
+
+  return defaultMerge(headers, cachingHeaders, CACHING_HEADERS)
 }
 
 const applyTransfromHeaders = ({ transformHeaders }) => headers =>
@@ -241,7 +258,7 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
     validateUserOptions(pluginOptions),
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
-    applyCachingHeaders(pluginOptions),
+    applyCachingHeaders(pluginData, pluginOptions),
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),

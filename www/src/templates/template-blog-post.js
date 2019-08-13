@@ -1,17 +1,15 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import rehypeReact from "rehype-react"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
 import {
   colors,
   space,
   transition,
-  breakpoints,
+  mediaQueries,
   lineHeights,
   fontSizes,
   fonts,
@@ -20,48 +18,24 @@ import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
-import HubspotForm from "../components/hubspot-form"
-import Pullquote from "../components/shared/pullquote"
-import Chart from "../components/chart"
 import Avatar from "../components/avatar"
+import PrevAndNext from "../components/prev-and-next"
 import FooterLinks from "../components/shared/footer-links"
-
-const renderAst = new rehypeReact({
-  createElement: React.createElement,
-  components: {
-    "hubspot-form": HubspotForm,
-    "date-chart": Chart,
-    pullquote: Pullquote,
-  },
-}).Compiler
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
-    const prev = this.props.pageContext.prev
-    const next = this.props.pageContext.next
-    const prevNextLinkStyles = {
-      "&&": {
-        borderBottom: 0,
-        fontFamily: fonts.header,
-        fontWeight: `bold`,
-        color: colors.gatsby,
-      },
-    }
-    const prevNextLabelStyles = {
-      marginTop: 0,
-      marginBottom: 0,
-      color: colors.gray.calm,
-      fontWeight: `normal`,
-      lineHeight: lineHeights.solid,
-    }
+    const {
+      pageContext: { prev, next },
+      data: { mdx: post },
+      location: { href },
+    } = this.props
     const BioLine = ({ children }) => (
       <p
         css={{
           lineHeight: lineHeights.dense,
           fontFamily: fonts.header,
           margin: 0,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         {children}
@@ -73,7 +47,6 @@ class BlogPostTemplate extends React.Component {
         <link rel="canonical" href={post.frontmatter.canonicalLink} />
       )
     }
-
     return (
       <Layout location={this.props.location}>
         <Container>
@@ -109,6 +82,7 @@ class BlogPostTemplate extends React.Component {
               <meta property="og:description" content={post.excerpt} />
               <meta name="twitter:description" content={post.excerpt} />
               <meta property="og:title" content={post.frontmatter.title} />
+              <meta property="og:url" content={href} />
               {post.frontmatter.image && (
                 <meta
                   property="og:image"
@@ -150,7 +124,7 @@ class BlogPostTemplate extends React.Component {
               css={{
                 display: `flex`,
                 marginBottom: space[5],
-                [breakpoints.md]: {
+                [mediaQueries.md]: {
                   marginTop: space[3],
                   marginBottom: space[9],
                 },
@@ -172,16 +146,16 @@ class BlogPostTemplate extends React.Component {
                     css={{
                       fontSize: fontSizes[3],
                       marginBottom: space[1],
-                      color: `${colors.gatsby}`,
+                      color: colors.link.color,
                     }}
                   >
                     <span
                       css={{
-                        borderBottom: `1px solid ${colors.ui.bright}`,
+                        borderBottom: `1px solid ${colors.link.border}`,
                         transition: `all ${transition.speed.fast} ${
                           transition.curve.default
                         }`,
-                        "&:hover": { background: colors.ui.bright },
+                        "&:hover": { borderColor: colors.link.hoverBorder },
                       }}
                     >
                       {post.frontmatter.author.id}
@@ -197,7 +171,7 @@ class BlogPostTemplate extends React.Component {
                       (originally published at
                       {` `}
                       <a href={post.frontmatter.canonicalLink}>
-                        {this.props.data.markdownRemark.fields.publishedAt}
+                        {post.fields.publishedAt}
                       </a>
                       )
                     </span>
@@ -208,10 +182,10 @@ class BlogPostTemplate extends React.Component {
             <h1
               css={{
                 marginTop: 0,
-                [breakpoints.lg]: { marginBottom: rhythm(5 / 4) },
+                [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
               }}
             >
-              {this.props.data.markdownRemark.frontmatter.title}
+              {post.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
               !(post.frontmatter.showImageInArticle === false) && (
@@ -230,71 +204,39 @@ class BlogPostTemplate extends React.Component {
                 </div>
               )}
             <section className="post-body">
-              {renderAst(this.props.data.markdownRemark.htmlAst)}
+              <MDXRenderer>{post.body}</MDXRenderer>
             </section>
-            <TagsSection
-              tags={this.props.data.markdownRemark.frontmatter.tags}
-            />
+            <TagsSection tags={post.frontmatter.tags} />
             <EmailCaptureForm />
           </main>
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${colors.ui.light}`,
+            borderTop: `1px solid ${colors.ui.border.subtle}`,
             marginTop: space[9],
-            [breakpoints.md]: {
-              paddingBottom: space[5],
+            [mediaQueries.md]: {
               paddingTop: space[5],
             },
-            [breakpoints.lg]: {
-              paddingBottom: space[9],
-              paddingTop: space[9],
+            [mediaQueries.lg]: {
+              paddingTop: space[7],
             },
           }}
         >
           <Container>
-            <div css={{ [breakpoints.sm]: { display: `flex`, width: `100%` } }}>
-              <div css={{ [breakpoints.sm]: { width: `50%` } }}>
-                {prev && (
-                  <Link to={prev.fields.slug} css={prevNextLinkStyles}>
-                    <h4 css={prevNextLabelStyles}>Previous</h4>
-                    <span
-                      css={{
-                        [breakpoints.md]: {
-                          marginLeft: `-${space[4]}`,
-                        },
-                      }}
-                    >
-                      <ArrowBackIcon style={{ verticalAlign: `sub` }} />
-                      {prev.frontmatter.title}
-                    </span>
-                  </Link>
-                )}
-              </div>
-              <div
-                css={{
-                  textAlign: `right`,
-                  marginTop: space[5],
-                  [breakpoints.sm]: { marginTop: 0, width: `50%` },
-                }}
-              >
-                {next && (
-                  <Link to={next.fields.slug} css={prevNextLinkStyles}>
-                    <h4 css={prevNextLabelStyles}>Next</h4>
-                    <span
-                      css={{
-                        [breakpoints.md]: {
-                          marginRight: `-${space[4]}`,
-                        },
-                      }}
-                    >
-                      {next.frontmatter.title}
-                      <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
-                    </span>
-                  </Link>
-                )}
-              </div>
-            </div>
+            <PrevAndNext
+              prev={
+                prev && {
+                  title: prev.frontmatter.title,
+                  link: prev.fields.slug,
+                }
+              }
+              next={
+                next && {
+                  title: next.frontmatter.title,
+                  link: next.fields.slug,
+                }
+              }
+            />
           </Container>
           <FooterLinks />
         </div>
@@ -307,8 +249,8 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      htmlAst
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
       excerpt
       timeToRead
       fields {

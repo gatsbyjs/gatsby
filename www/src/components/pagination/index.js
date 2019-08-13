@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import PaginationLink from "./PaginationLink"
-import { colors, space, breakpoints, fonts } from "../../utils/presets"
+import { colors, space, mediaQueries, fontSizes } from "../../utils/presets"
 
 class Pagination extends React.Component {
   changePage = e => {
@@ -22,8 +22,6 @@ class Pagination extends React.Component {
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        fontFamily: fonts.header,
-        fontWeight: `bold`,
         color: colors.gatsby,
       },
     }
@@ -31,11 +29,18 @@ class Pagination extends React.Component {
     return (
       <div
         css={{
+          background: colors.ui.background,
           display: `flex`,
           justifyContent: `space-between`,
-          margin: `${space[5]} 0`,
+          margin: `0 -${space[6]}`,
+          padding: `${space[6]}`,
           flexDirection: `column`,
-          [breakpoints.md]: {
+          fontSize: fontSizes[1],
+          [mediaQueries.md]: {
+            background: `transparent`,
+            borderTop: 0,
+            marginBottom: 0,
+            paddingTop: 0,
             flexDirection: `row`,
           },
         }}
@@ -48,7 +53,7 @@ class Pagination extends React.Component {
             justifyContent: `space-between`,
             alignItems: `center`,
             marginBottom: space[3],
-            [breakpoints.md]: {
+            [mediaQueries.md]: {
               width: `15rem`,
               marginBottom: 0,
             },
@@ -68,18 +73,19 @@ class Pagination extends React.Component {
             display: `flex`,
             alignItems: `center`,
             justifyContent: `flex-end`,
-            fontFamily: fonts.header,
+            fontSize: fontSizes[1],
           }}
         >
           <span>Showing page &nbsp;</span>
           <select
+            aria-label="Pagination Dropdown"
             value={currentPage === 1 ? `` : currentPage.toString()}
             onChange={this.changePage}
             css={{
               appearance: `none`,
               border: `none`,
               padding: `0.5ch 2ch 0.5ch 0.5ch`,
-              color: `rebeccapurple`,
+              color: colors.gatsby,
               fontWeight: `bold`,
             }}
           >
@@ -87,6 +93,8 @@ class Pagination extends React.Component {
               <option
                 value={`${i === 0 ? `` : i + 1}`}
                 key={`pagination-number${i + 1}`}
+                aria-label={`Goto Page ${i + 1}`}
+                aria-current={currentPage === i + 1}
               >
                 {i + 1}
               </option>
@@ -98,8 +106,8 @@ class Pagination extends React.Component {
             viewBox="0 0 10 5"
             css={{
               position: `relative`,
-              right: `1.5ch`,
-              fill: `rebeccapurple`,
+              right: space[4],
+              fill: colors.gatsby,
               pointerEvents: `none`,
             }}
           >

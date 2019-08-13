@@ -8,7 +8,7 @@ Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's Gra
 
 First install the plugin.
 
-```
+```shell
 npm install gatsby-source-graphql
 ```
 

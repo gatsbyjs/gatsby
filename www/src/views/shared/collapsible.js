@@ -21,14 +21,13 @@ class Collapsible extends Component {
     return (
       <div
         css={{
-          borderBottom: collapsed ? 0 : `1px solid ${colors.ui.light}`,
+          borderBottom: collapsed ? 0 : `1px solid ${colors.ui.border.subtle}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
           minHeight: fixed ? `${fixed}px` : `initial`,
           maxHeight: fixed ? `${fixed}px` : `initial`,
           flexBasis: 0,
-          overflowY: `auto`,
-          // paddingBottom: collapsed ? 0 : space[6],
+          overflowY: collapsed ? false : `auto`,
         }}
       >
         <div

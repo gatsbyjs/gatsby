@@ -1,5 +1,5 @@
 ---
-title: "Pixabay Source Plugin Tutorial"
+title: "Pixabay Image Source Plugin Tutorial"
 ---
 
 Creating your own source plugin.
@@ -12,7 +12,7 @@ In this tutorial you'll create your own source plugin. Your plugin will source d
 
 Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/).
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/source-plugin-tutorial/)
+For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/creating-a-source-plugin/)
 
 ## Why create a source plugin?
 
@@ -221,10 +221,10 @@ exports.sourceNodes = (
 ) => {
   const { createNode } = actions
 
-  // highlight-start
   // Gatsby adds a configOption that's not needed for this plugin, delete it
   delete configOptions.plugins
 
+  // highlight-start
   // Convert the options object into a query string
   const apiOptions = queryString.stringify(configOptions)
 
@@ -242,10 +242,10 @@ exports.sourceNodes = (
         // For each query result (or 'hit')
         data.hits.forEach(photo => {
           console.log("Photo data is:", photo)
-          // highlight-end
         })
       })
   )
+  // highlight-end
 }
 ```
 
@@ -273,7 +273,7 @@ You're ready to add the final step of your plugin - converting this data into a 
 
 ### Use `createNode` function
 
-You're adding a helper function on lines 11 to 27 and processing the data into a node on lines 44 to 47:
+You're adding a helper function on lines 13 to 28 and processing the data into a node on lines 46 to 49:
 
 ```js:title=gatsby-node.js
 const fetch = require("node-fetch")
@@ -286,9 +286,9 @@ exports.sourceNodes = (
   const { createNode } = actions
 
   // Gatsby adds a configOption that's not needed for this plugin, delete it
-  // highlight-start
-  delete configOptions.plugins
 
+  delete configOptions.plugins
+  // highlight-start
   // Helper function that processes a photo to match Gatsby's node structure
   const processPhoto = photo => {
     const nodeId = createNodeId(`pixabay-photo-${photo.id}`)
@@ -304,10 +304,10 @@ exports.sourceNodes = (
         contentDigest: createContentDigest(photo),
       },
     })
-    // highlight-end
 
     return nodeData
   }
+  // highlight-end
 
   // Convert the options object into a query string
   const apiOptions = queryString.stringify(configOptions)
@@ -325,10 +325,12 @@ exports.sourceNodes = (
       .then(data => {
         // For each query result (or 'hit')
         data.hits.forEach(photo => {
+          // highlight-start
           // Process the photo data to match the structure of a Gatsby node
           const nodeData = processPhoto(photo)
           // Use Gatsby's createNode helper to create a node from the node data
           createNode(nodeData)
+          // highlight-end
         })
       })
   )
@@ -381,7 +383,7 @@ Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugi
 
 Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
 
-Check out Gatsby's docs on [plugin authoring](/docs/how-plugins-work/) and [creating a source plugin](/docs/source-plugin-tutorial/).
+Check out Gatsby's docs on [plugin authoring](/docs/creating-plugins/) and [creating a source plugin](/docs/creating-a-source-plugin/).
 
 ### A note on JavaScript versions
 

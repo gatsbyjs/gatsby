@@ -83,6 +83,66 @@ const nodes = [
     name: `Author 2`,
     email: `author2@example.com`,
   },
+  {
+    id: `parent1`,
+    parent: null,
+    children: [`child1`],
+    internal: {
+      type: `FirstParent`,
+      contentDigest: `parent1`,
+    },
+    name: `Parent 1`,
+  },
+  {
+    id: `parent3`,
+    parent: null,
+    children: [`child3`],
+    internal: {
+      type: `FirstParent`,
+      contentDigest: `parent3`,
+    },
+    name: `Parent 3`,
+  },
+  {
+    id: `parent2`,
+    parent: null,
+    children: [`child2`],
+    internal: {
+      type: `SecondParent`,
+      contentDigest: `parent2`,
+    },
+    name: `Parent 2`,
+  },
+  {
+    id: `child1`,
+    parent: `parent1`,
+    children: [],
+    internal: {
+      type: `FirstChild`,
+      contentDigest: `child1`,
+    },
+    name: `Child 1`,
+  },
+  {
+    id: `child2`,
+    parent: `parent2`,
+    children: [],
+    internal: {
+      type: `FirstChild`,
+      contentDigest: `child2`,
+    },
+    name: `Child 2`,
+  },
+  {
+    id: `child3`,
+    parent: `parent3`,
+    children: [],
+    internal: {
+      type: `Child`,
+      contentDigest: `child3`,
+    },
+    name: `Child 3`,
+  },
 ]
 
 module.exports = nodes

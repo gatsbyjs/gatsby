@@ -17,62 +17,62 @@ import {
   transition,
   radii,
   shadows,
-  breakpoints,
+  mediaQueries,
 } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
+import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 class BlogPostsIndex extends React.Component {
   render() {
-    const { allMarkdownRemark } = this.props.data
+    const { allMdx } = this.props.data
 
     return (
       <Layout location={this.props.location}>
         <main
           id={`reach-skip-nav`}
-          css={{
-            [breakpoints.md]: {
-              background: colors.gray.whisper,
-              paddingBottom: rhythm(options.blockMarginBottom * 4),
-            },
-          }}
+          css={{ [breakpointGutter]: { background: colors.ui.background } }}
         >
           <Helmet>
-            <title>Blog</title>
+            <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
           <Container>
-            <h1
+            <div
               css={{
-                marginTop: 0,
-                [breakpoints.md]: {
-                  marginTop: 0,
-                  position: `absolute`,
-                  width: 1,
-                  height: 1,
-                  padding: 0,
-                  overflow: `hidden`,
-                  clip: `rect(0,0,0,0)`,
-                  whiteSpace: `nowrap`,
-                  clipPath: `inset(50%)`,
+                ...pullIntoGutter,
+                display: `flex`,
+                justifyContent: `space-between`,
+                borderBottom: `1px solid ${colors.ui.border.subtle}`,
+                marginBottom: `${space[6]}`,
+                paddingBottom: `${space[6]}`,
+                [breakpointGutter]: {
+                  paddingBottom: 0,
+                  border: 0,
                 },
               }}
             >
-              Blog
-            </h1>
-            {allMarkdownRemark.edges.map(({ node }) => (
+              <h1 css={{ marginBottom: 0 }}>Blog</h1>
+              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
+                View all Tags <TagsIcon />
+              </Button>
+            </div>
+            {allMdx.edges.map(({ node }, index) => (
               <BlogPostPreviewItem
                 post={node}
                 key={node.fields.slug}
                 css={{
-                  marginBottom: space[6],
-                  [breakpoints.md]: {
+                  borderBottom: `1px solid ${colors.ui.border.subtle}`,
+                  paddingBottom: space[8],
+                  marginBottom:
+                    index === allMdx.edges.length - 1 ? 0 : space[8],
+                  ...pullIntoGutter,
+                  [breakpointGutter]: {
+                    padding: space[9],
                     boxShadow: shadows.raised,
                     background: colors.white,
                     borderRadius: radii[2],
-                    padding: space[9],
-                    paddingLeft: space[9],
-                    paddingRight: space[9],
-                    marginLeft: `-${space[9]}`,
-                    marginRight: `-${space[9]}`,
+                    border: 0,
+                    marginBottom: space[6],
+                    marginLeft: 0,
+                    marginRight: 0,
                     transition: `transform ${transition.speed.default} ${
                       transition.curve.default
                     },  box-shadow ${transition.speed.default} ${
@@ -89,25 +89,17 @@ class BlogPostsIndex extends React.Component {
                       transform: `translateY(0)`,
                     },
                   },
+                  [mediaQueries.md]: {
+                    marginLeft: `-${space[9]}`,
+                    marginRight: `-${space[9]}`,
+                  },
                 }}
               />
             ))}
             <Pagination context={this.props.pageContext} />
-            <div
-              css={{
-                display: `flex`,
-                flexFlow: `row nowrap`,
-                width: `100%`,
-                justifyContent: `flex-end`,
-              }}
-            >
-              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
-                View All Tags <TagsIcon />
-              </Button>
-            </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
-            <FooterLinks />
           </Container>
+          <FooterLinks />
         </main>
       </Layout>
     )
@@ -118,7 +110,7 @@ export default BlogPostsIndex
 
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         frontmatter: { draft: { ne: true } }
