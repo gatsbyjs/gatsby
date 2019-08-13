@@ -381,6 +381,7 @@ class Image extends React.Component {
       itemProp,
       loading,
       draggable,
+      revealedStyle = {},
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -390,6 +391,7 @@ class Image extends React.Component {
       opacity: shouldReveal ? 1 : 0,
       transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
       ...imgStyle,
+      ...(shouldReveal ? revealedStyle : {})
     }
 
     const bgColor =
