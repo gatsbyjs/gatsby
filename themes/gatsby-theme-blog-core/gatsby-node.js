@@ -158,10 +158,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
         edges {
           node {
             id
-            excerpt
             slug
-            title
-            date(formatString: "MMMM DD, YYYY")
           }
         }
       }
