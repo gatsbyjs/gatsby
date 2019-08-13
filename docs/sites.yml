@@ -6930,3 +6930,14 @@
   built_by: Kyle Kitlinski
   built_by_url: http://github.com/k-kit
   featured: false
+- title: Smoopit
+  main_url: https://smoopit.com
+  url: https://smoopit.com/
+  description: >
+    Smoopit helps you schedule meetings without the extra effort of checking your availability or back-and-forth emails.
+  categories:
+    - Business
+    - Productivity
+  built_by: Chandra Bhushan
+  built_by_url: https://github.com/chandu2304
+  featured: false
