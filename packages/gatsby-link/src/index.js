@@ -180,7 +180,7 @@ GatsbyLink.propTypes = {
 
 const showDeprecationWarning = (functionName, altFunctionName, version) =>
   console.warn(
-    `The "${functionName}" method is now deprecated and will be removed in Gatsby ${version}. Please use "${altFunctionName}" instead.`
+    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
   )
 
 export default React.forwardRef((props, ref) => (
