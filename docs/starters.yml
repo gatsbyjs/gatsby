@@ -3637,3 +3637,16 @@
     - Theme-UI and EmotionJS CSS-in-JS
     - A landing page with all your organization projects, configurable through a YML file.
     - Configurable logo, favicon, organization name and title
+- url: https://gatsby-starter-interviews.netlify.com/
+  repo: https://github.com/rmagon/gatsby-starter-interviews
+  description: A Gatsby starter template for structured Q&A or Interview sessions
+  tags:
+    - SEO
+    - Blog
+    - Styling:SCSS
+  features:
+    - Minimalist design for interviews
+    - Beautifully presented questions and answers
+    - Option to read all answers to a specific question
+    - Share interview on social channels
+    - All content in simple json files
