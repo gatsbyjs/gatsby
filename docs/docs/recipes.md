@@ -628,11 +628,60 @@ yarn workspace example develop
 
 ## 5. Sourcing data
 
-Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
+Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc). You can also source the data yourself.
+
+### Creating source nodes
+
+#### Directions
+
+1. In `gatsby-node.js` use `sourceNodes()` and `actions.createNode()` to create and export nodes to be able to query the data.
+
+```javascript:title=gatsby-node.js
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  const pokemons = [
+    { name: "Pikachu", type: "electric" },
+    { name: "Squirtle", type: "water" },
+  ]
+
+  pokemons.forEach(pokemon => {
+    const node = {
+      name: pokemon.name,
+      type: pokemon.type,
+      id: createNodeId(`Pokemon-${pokemon.name}`),
+      internal: {
+        type: "Pokemon",
+        contentDigest: createContentDigest(pokemon),
+      },
+    }
+    actions.createNode(node)
+  })
+}
+```
+
+2. Run `gatsby develop`.
+
+   > _Note: After making changes in `gatsby-node.js` you need to re-run `gatsby develop` for the changes to take effect._
+
+3. Query the data (in GraphiQL or in your components).
+
+```graphql
+query MyPokemonQuery {
+  allPokemon {
+    nodes {
+      name
+      type
+      id
+    }
+  }
+}
+```
+
+#### Additional resources
 
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
+- The createNode function [documentation](/docs/actions/#createNode)
 
 ## 6. Querying data
 
