@@ -329,6 +329,32 @@ describe(`Filter fields`, () => {
     expect(result[0].index).toEqual(2)
   })
 
+  it(`handles the not and elemMatch operator for array of objects`, async () => {
+    let result = await runFilter({
+      data: {
+        not: {
+          tags: {
+            elemMatch: {
+              tag: {
+                document: {
+                  elemMatch: {
+                    data: {
+                      tag: { eq: `Gatsby` },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+
+    expect(result.length).toEqual(2)
+    expect(result[0].index).toEqual(0)
+    expect(result[1].index).toEqual(1)
+  })
+
   it(`handles the elemMatch operator for array of objects (2)`, async () => {
     let result = await runFilter({
       data: {

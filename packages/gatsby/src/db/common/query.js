@@ -57,7 +57,9 @@ const dropQueryOperators = filter =>
     const v = value[k]
     if (_.isPlainObject(value) && _.isPlainObject(v)) {
       acc[key] =
-        k === `elemMatch` ? dropQueryOperators(v) : dropQueryOperators(value)
+        k === `elemMatch` || k === `not`
+          ? dropQueryOperators(v)
+          : dropQueryOperators(value)
     } else {
       acc[key] = true
     }
