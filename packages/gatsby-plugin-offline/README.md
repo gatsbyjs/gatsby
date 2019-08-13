@@ -62,6 +62,14 @@ const options = {
   skipWaiting: true,
   clientsClaim: true,
 }
+
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: options
+  }
+]
 ```
 
 ## Remove
