@@ -4,6 +4,7 @@ exports.DEFAULT_OPTIONS = {
   backgroundColor: `white`,
   linkImagesToOriginal: true,
   showCaptions: false,
+  markdownCaptions: false,
   withWebp: false,
   tracedSVG: false,
   loading: `lazy`,
