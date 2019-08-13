@@ -188,6 +188,7 @@ class LocalNodeModel {
       gqlType,
       nodes,
       nodeTypeNames,
+      schema: this.schema,
     })
 
     let result = queryResult

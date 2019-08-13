@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const { trackInlineObjectsInRootNode } = require(`../db/node-tracking`)
 const { store } = require(`../redux`)
-const { getNullableType, getNamedType } = require(`graphql`)
+const { getNullableType, getNamedType, isAbstractType } = require(`graphql`)
 const withResolverContext = require(`../schema/context`)
 
 const enhancedNodeCache = new Map()
@@ -25,7 +25,10 @@ function awaitSiftField(fields, node, k) {
     const { schema, schemaCustomization } = store.getState()
     return field.resolve(
       node,
-      {},
+      field.args.reduce((acc, arg) => {
+        acc[arg.name] = arg.defaultValue
+        return acc
+      }, {}), // default values
       withResolverContext({}, schema, schemaCustomization.context),
       {
         fieldName: k,
@@ -40,11 +43,22 @@ function awaitSiftField(fields, node, k) {
   return undefined
 }
 
+const getFields = (gqFields, gqlType, node, schema) => {
+  const abstractType = isAbstractType(gqlType)
+
+  if (!abstractType) return gqFields
+
+  const concreteType = gqlType.resolveType(node)
+  return schema.getType(concreteType).getFields()
+}
+
 // Resolves every field used in the node.
-function resolveRecursive(node, siftFieldsObj, gqFields) {
+function resolveRecursive(node, siftFieldsObj, gqFields, gqlType, schema) {
   return Promise.all(
     _.keys(siftFieldsObj).map(k =>
-      Promise.resolve(awaitSiftField(gqFields, node, k))
+      Promise.resolve(
+        awaitSiftField(getFields(gqFields, gqlType, node, schema), node, k)
+      )
         .then(v => {
           const innerSift = siftFieldsObj[k]
           const innerGqConfig = gqFields[k]
@@ -54,12 +68,24 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
           if (_.isObject(innerSift) && v != null && innerType) {
             if (_.isFunction(innerType.getFields)) {
               // this is single object
-              return resolveRecursive(v, innerSift, innerType.getFields())
+              return resolveRecursive(
+                v,
+                innerSift,
+                innerType.getFields(),
+                innerType,
+                schema
+              )
             } else if (_.isArray(v) && _.isFunction(innerListType.getFields)) {
               // this is array
               return Promise.all(
                 v.map(item =>
-                  resolveRecursive(item, innerSift, innerListType.getFields())
+                  resolveRecursive(
+                    item,
+                    innerSift,
+                    innerListType.getFields(),
+                    innerListType,
+                    schema
+                  )
                 )
               )
             }
@@ -78,7 +104,15 @@ function resolveRecursive(node, siftFieldsObj, gqFields) {
   })
 }
 
-function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
+function resolveNodes(
+  nodes,
+  typeName,
+  firstOnly,
+  fieldsToSift,
+  gqlFields,
+  gqlType,
+  schema
+) {
   const { resolvedNodesCache } = store.getState()
   const nodesCacheKey = JSON.stringify({
     // typeName + count being the same is a pretty good
@@ -104,13 +138,15 @@ function resolveNodes(nodes, typeName, firstOnly, fieldsToSift, gqlFields) {
         }
 
         const enhancedNodeGenerationPromise = new Promise(resolve => {
-          resolveRecursive(node, fieldsToSift, gqlFields).then(resolvedNode => {
-            trackInlineObjectsInRootNode(resolvedNode)
-            if (cacheKey) {
-              enhancedNodeCache.set(cacheKey, resolvedNode)
+          resolveRecursive(node, fieldsToSift, gqlFields, gqlType, schema).then(
+            resolvedNode => {
+              trackInlineObjectsInRootNode(resolvedNode)
+              if (cacheKey) {
+                enhancedNodeCache.set(cacheKey, resolvedNode)
+              }
+              resolve(resolvedNode)
             }
-            resolve(resolvedNode)
-          })
+          )
         })
         enhancedNodePromiseCache.set(cacheKey, enhancedNodeGenerationPromise)
         return enhancedNodeGenerationPromise
