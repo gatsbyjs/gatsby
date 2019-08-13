@@ -21,10 +21,10 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Overriding options
 
-When adding this plugin to your `gatsby-config.js`, you can pass in options to
+When adding this plugin to your `gatsby-config.js`, you can pass in options (via the `options` key) to
 override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
 
-The default config is as follows. Warning: you can break the offline support by
+The default config is as follows. Warning: You can break the offline support by
 changing these options, so tread carefully.
 
 ```javascript
@@ -62,14 +62,6 @@ const options = {
   skipWaiting: true,
   clientsClaim: true,
 }
-
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-offline`,
-    options: options
-  }
-]
 ```
 
 ## Remove
