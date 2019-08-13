@@ -656,11 +656,11 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     actions.createNode(node)
   })
 }
-
 ```
 
 2. Run `gatsby develop`.
-> _Note: After making changes in `gatsby-node.js` you need to re-run `gatsby develop` for the changes to take effect._
+
+   > _Note: After making changes in `gatsby-node.js` you need to re-run `gatsby develop` for the changes to take effect._
 
 3. Query the data (in GraphiQL or in your components).
 
@@ -674,7 +674,6 @@ query MyPokemonQuery {
     }
   }
 }
-
 ```
 
 #### Additional resources
