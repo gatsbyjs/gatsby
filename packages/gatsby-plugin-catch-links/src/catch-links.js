@@ -105,7 +105,10 @@ export const hashShouldBeFollowed = (origin, destination) =>
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
-export const routeThroughBrowserOrApp = hrefHandler => event => {
+export const routeThroughBrowserOrApp = (
+  hrefHandler,
+  pluginOptions
+) => event => {
   if (window.___failedResources) return true
 
   if (userIsForcingNavigation(event)) return true
@@ -143,6 +146,16 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
+  if (pluginOptions.excludeRegex) {
+    console.log(
+      `pluginOptions.excludeRegex.test(destination.pathname)`,
+      pluginOptions.excludeRegex.test(destination.pathname)
+    )
+    if (pluginOptions.excludeRegex.test(destination.pathname)) {
+      return true
+    }
+  }
+
   event.preventDefault()
 
   // See issue #8907: destination.pathname already includes pathPrefix added
@@ -157,8 +170,8 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   return false
 }
 
-export default function(root, cb) {
-  const clickHandler = routeThroughBrowserOrApp(cb)
+export default function(root, pluginOptions, cb) {
+  const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)
 
   root.addEventListener(`click`, clickHandler)
 
