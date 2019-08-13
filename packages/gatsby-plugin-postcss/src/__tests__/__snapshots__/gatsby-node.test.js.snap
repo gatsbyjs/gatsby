@@ -12,7 +12,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -30,7 +30,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -49,7 +49,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -62,7 +62,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
                   "test": /\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -75,7 +75,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -88,7 +88,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
                   "test": /\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -336,7 +336,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / Css options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -349,7 +349,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / Css options 1`] = `
                   "test": /\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -362,7 +362,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / Css options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -375,7 +375,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / Css options 1`] = `
                   "test": /\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -589,7 +589,7 @@ exports[`gatsby-plugin-postcss Stage: develop / Css options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -602,7 +602,7 @@ exports[`gatsby-plugin-postcss Stage: develop / Css options 1`] = `
                   "test": /\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -783,7 +783,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / Css options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -802,7 +802,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / Css options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -815,7 +815,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / Css options 1`] = `
                   "test": /\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -828,7 +828,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / Css options 1`] = `
                   "test": /\\\\\\.module\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1,\\"modules\\":true})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {
@@ -841,7 +841,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / Css options 1`] = `
                   "test": /\\\\\\.css\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css-loader({\\"camelCase\\":\\"true\\",\\"importLoaders\\":1})",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1})",
                     Object {
                       "loader": "/resolved/path/postcss-loader",
                       "options": Object {

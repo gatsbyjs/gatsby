@@ -19,7 +19,7 @@ describe(`gatsby-plugin-postcss`, () => {
     options: {
       "No options": {},
       "PostCss options": { postCssPlugins: [`autoprefixer`], sourceMap: false },
-      "Css options": { cssLoaderOptions: { camelCase: `true` } },
+      "Css options": { cssLoaderOptions: { camelCase: true } },
     },
     configs: {
       "No options": jest.fn().mockReturnValue({
