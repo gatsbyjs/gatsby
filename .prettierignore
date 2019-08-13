@@ -20,7 +20,7 @@ packages/**/*.js
 !packages/gatsby/cache-dir/**/*.js
 !packages/*/src/**/*.js
 !packages/gatsby-plugin-mdx/**/*.js
-packages/gatsby-plugin-mdx/node_modules/*.js
+packages/gatsby-plugin-mdx/node_modules/**/*.js
 packages/gatsby/cache-dir/commonjs/**/*.js
 
 # fixtures
