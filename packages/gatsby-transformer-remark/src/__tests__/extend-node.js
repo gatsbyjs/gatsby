@@ -252,8 +252,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: HTML)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where <strong>is</strong> my little pony?</p>`
+      expect(node.excerpt).toBe(
+        `<p>Where oh where <strong>is</strong> my little pony?</p>\n`
       )
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -265,7 +265,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: MARKDOWN)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where **is** my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where **is** my little pony?\n`)
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
@@ -407,7 +407,7 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -632,7 +632,7 @@ Where is my <code>pony</code> named leo?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where is my <code>pony</code> named leo?</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -687,7 +687,7 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where oh where is that pony? Is he in the stable…</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -730,8 +730,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>`
+      expect(node.excerpt).toBe(
+        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>\n`
       )
       expect(node.excerptAst).toMatchObject({
         children: [
