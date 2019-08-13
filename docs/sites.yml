@@ -6930,10 +6930,7 @@
   # You can list as many categories as you want here. Check list of Categories below in this doc!
   # If you'd like to create a new category, simply list it here.
   categories:
-    - Ecommerce
-    - Shopping
-    - Apparel
-    - Hippy stuff
+    - eCommerce
   # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
   built_by: Kyle Kitlinski
   built_by_url: http://github.com/k-kit
