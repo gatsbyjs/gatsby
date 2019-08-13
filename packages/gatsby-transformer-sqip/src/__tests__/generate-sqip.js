@@ -112,8 +112,8 @@ describe(`gatsby-transformer-sqip`, async () => {
 
       expect(result).toBe(null)
 
-      expect(sqip).toHaveBeenCalledTimes(1)
-      expect(exists).toHaveBeenCalledTimes(1)
+      expect(sqip).toHaveBeenCalledTimes(0)
+      expect(exists).toHaveBeenCalledTimes(0)
       expect(writeFile).toHaveBeenCalledTimes(0)
       expect(readFile).toHaveBeenCalledTimes(0)
     })
