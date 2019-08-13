@@ -178,6 +178,11 @@ GatsbyLink.propTypes = {
   replace: PropTypes.bool,
 }
 
+const showWarningMessage = action =>
+  console.warn(
+    `The "${action}" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
+  )
+
 export default React.forwardRef((props, ref) => (
   <GatsbyLink innerRef={ref} {...props} />
 ))
@@ -187,23 +192,17 @@ export const navigate = (to, options) => {
 }
 
 export const push = to => {
-  console.warn(
-    `The "push" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
-  )
+  showWarningMessage(`push`)
   window.___push(withPrefix(to))
 }
 
 export const replace = to => {
-  console.warn(
-    `The "replace" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
-  )
+  showWarningMessage(`replace`)
   window.___replace(withPrefix(to))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
 export const navigateTo = to => {
-  console.warn(
-    `The "navigateTo" method is now deprecated and will be removed in Gatsby v3. Please use "navigate" instead.`
-  )
+  showWarningMessage(`navigateTo`)
   return push(to)
 }
