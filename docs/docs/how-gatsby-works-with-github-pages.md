@@ -2,7 +2,7 @@
 title: How Gatsby Works with GitHub Pages
 ---
 
-GitHub pages is a service offered by GitHub that allows hosting for websites configured straight from the repository. A Gatsby site can be hosted on GitHub pages with just a few configurations to the codebase and the repository's settings.
+GitHub pages is a service offered by GitHub that allows hosting for websites configured straight from the repository. A Gatsby site can be hosted on GitHub pages with having just a few tweaks to the codebase as well as the repository settings.
 
 You can publish your site on GitHub pages several different ways:
 
@@ -32,7 +32,7 @@ npm install gh-pages --save-dev
 
 ## Using a deploy script
 
-A custom script in your `package.json` makes it easier to build your site and move the contents of the built files to the proper branch for GitHub pages, this helps automate that process.
+A custom script in your `package.json` makes it easier to build your site and move the contents of the built files to the proper branch for GitHub pages, this helps automate the process.
 
 ### Deploying to a path on GitHub pages
 
