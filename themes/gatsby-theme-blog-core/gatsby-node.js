@@ -113,7 +113,7 @@ exports.onCreateNode = async (
     let slug
     if (node.frontmatter.slug) {
       if (path.isAbsolute(node.frontmatter.slug)) {
-        // absolute paths take precedance
+        // absolute paths take precedence
         slug = node.frontmatter.slug
       } else {
         // otherwise a relative slug gets turned into a sub path
