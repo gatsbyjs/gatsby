@@ -110,16 +110,30 @@ exports.onCreateNode = async (
   const source = fileNode.sourceInstanceName
 
   if (node.internal.type === `Mdx` && source === contentPath) {
-    const slug = createFilePath({
-      node: fileNode,
-      getNode,
-      basePath: contentPath,
-    })
+    let slug
+    if (node.frontmatter.slug) {
+      if (path.isAbsolute(node.frontmatter.slug)) {
+        // absolute paths take precedance
+        slug = node.frontmatter.slug
+      } else {
+        // otherwise a relative slug gets turned into a sub path
+        slug = urlResolve(basePath, node.frontmatter.slug)
+      }
+    } else {
+      // otherwise use the filepath function from gatsby-source-filesystem
+      const filePath = createFilePath({
+        node: fileNode,
+        getNode,
+        basePath: contentPath,
+      })
 
+      slug = urlResolve(basePath, filePath)
+    }
+    console.log("slug", slug)
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
-      slug: node.frontmatter.slug || urlResolve(basePath, slug),
+      slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
     }
