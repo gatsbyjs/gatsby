@@ -1,7 +1,6 @@
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
-const fs = require(`fs`)
-const fsExtra = require(`fs-extra`)
+const fse = require(`fs-extra`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
@@ -150,7 +149,7 @@ module.exports = (
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
       dimensions = imageSize.sync(
-        toArray(fs.readFileSync(imageNode.absolutePath))
+        toArray(fse.readFileSync(imageNode.absolutePath))
       )
     }
 
@@ -299,10 +298,10 @@ module.exports = (
   return Promise.all(
     Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
       // Don't copy anything if the file already exists at the location.
-      if (!fsExtra.existsSync(newFilePath)) {
+      if (!fse.existsSync(newFilePath)) {
         try {
-          await fsExtra.ensureDir(path.dirname(newFilePath))
-          await fsExtra.copy(linkPath, newFilePath)
+          await fse.ensureDir(path.dirname(newFilePath))
+          await fse.copy(linkPath, newFilePath)
         } catch (err) {
           console.error(`error copying file`, err)
         }
