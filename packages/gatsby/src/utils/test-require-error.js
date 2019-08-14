@@ -5,14 +5,13 @@ export default (moduleName, err) => {
   // dependency tree rules but the requested file doesn't exist
   if (
     err.code === `QUALIFIED_PATH_RESOLUTION_FAILED` ||
-    err.pnpCode === `QUALIFIED_PATH_RESOLUTION_FAILED` ||
-    err.code === `MODULE_NOT_FOUND`
+    err.pnpCode === `QUALIFIED_PATH_RESOLUTION_FAILED`
   ) {
     return true
   }
 
   const regex = new RegExp(
-    `Error: Cannot find module\\s.${moduleName.replace(
+    `Error:\\s(\\S+\\s)?[Cc]annot find module\\s.${moduleName.replace(
       /[-/\\^$*+?.()|[\]{}]/g,
       `\\$&`
     )}`
