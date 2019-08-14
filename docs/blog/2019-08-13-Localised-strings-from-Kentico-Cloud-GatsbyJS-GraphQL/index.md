@@ -3,20 +3,20 @@ title: Adding and retrieving localized strings from Kentico Cloud to GatsbyJS an
 date: 2019-08-13
 author: Ilesh Mistry
 image: "images/country-clocks.jpg"
-imageTitle: Different country flag clocks on the wall showing the different times 
+imageTitle: Different country flag clocks on the wall showing the different times
 excerpt: "This blog post talks about how to add and retrieve localized strings from Kentico Cloud by using GatsbyJS and GraphQL"
 canonicalLink: https://www.ileshmistry.com/adding-and-retrieving-localised-strings-from-kentico-cloud-to-gatsbyjs-and-graphql/
 publishedAt: Ilesh Mistry's website
 tags: ["gatsby", "graphql", "kentico-cloud", "kentico"]
 ---
 
-Every website or application tends to have text elements which are typically static and rarely change – think of the items in your header or footer (e.g. copyright text). For many sites, the temptation is to simply hard code this into the master template or templates. However, when you throw multilingual websites or shared templates into the mix, this swiftly becomes a bad idea. Handing the editors the ability to content manage these items becomes a necessity. 
+Every website or application tends to have text elements which are typically static and rarely change – think of the items in your header or footer (e.g. copyright text). For many sites, the temptation is to simply hard code this into the master template or templates. However, when you throw multilingual websites or shared templates into the mix, this swiftly becomes a bad idea. Handing the editors the ability to content manage these items becomes a necessity.
 
 If you're familiar with content management systems like [Kentico EMS](https://www.kentico.com/), then you will have come across the term [Resource Strings or localized Strings](https://docs.kentico.com/k12sp/multilingual-websites/setting-up-a-multilingual-user-interface/working-with-resource-strings). These localized strings replace the static text across your site and are a combination of a 'key' and 'value' pairing. The CMS consumes the 'key' to retrieve the 'value' of your chosen culture or language as and when required. The use of these localized strings gives editors the additional content management control required.
 
 Most CMS offer methods for handling these localized strings. However, with “headless”, API-first CMS, there’s no out-of-the-box feature and a best practice has to be established. I'm going to use [Kentico Cloud](https://kenticocloud.com/), a CaaS ([Content as a Service](https://en.wikipedia.org/wiki/Content_as_a_service)) platform which focuses on a content-first approach, providing you the ability to create, manage and distribute content without worrying about how and where it will be displayed. If you need to know more about Kentico Cloud and how to get started with it, you can catch up on the product through my previous post, [Getting started with Kentico Cloud](https://www.ileshmistry.com/getting-started-with-kentico-cloud/).
 
-*Disclaimer – Languages only apply to certain Kentico Cloud plans. For the approach in this article, I’m assuming cultures have been enabled in your selected subscription plan!*
+_Disclaimer – Languages only apply to certain Kentico Cloud plans. For the approach in this article, I’m assuming cultures have been enabled in your selected subscription plan!_
 
 The flexibility of Kentico Cloud means there are many ways to achieve the same goal. Having been through this several times, I’m going to step you through a best practice approach to creating and retrieving localized strings.
 
@@ -24,14 +24,15 @@ The flexibility of Kentico Cloud means there are many ways to achieve the same g
 
 Our first step is to determine how we are going to identify cultures or languages from the front end of the site. As Kentico Cloud is purely a content hub, there’s not the same set of localization web parts and widgets that you might get from a product like Kentico EMS. We need an alternative to pick up that culture code.
 
-There are a few options here. You could be using a simple language switcher control on your site or application. Or, it might be as simple as deriving it from the URL e.g. *www.mysite.com/en-gb/about-us* or *www.mysite.com/about-us?lang=en-gb*.
+There are a few options here. You could be using a simple language switcher control on your site or application. Or, it might be as simple as deriving it from the URL e.g. _www.mysite.com/en-gb/about-us_ or _www.mysite.com/about-us?lang=en-gb_.
 
 Whichever route you’ve taken, once you know the culture code then you can get any ‘key’ and ‘value’ pairs for the required culture.
 
 ## Setting up your content type
+
 If you want to look at building localized strings, the first step is to head to your [Content Types](https://docs.kenticocloud.com/tutorials/set-up-projects/define-content-models/creating-and-deleting-content-types). You would create a localization String content item.
 
-Here is a [Content Item](https://docs.kenticocloud.com/tutorials/write-and-collaborate/write-content/adding-content-items) derived from a '*localized String*' Content Type, which has a single field for the 'value'.
+Here is a [Content Item](https://docs.kenticocloud.com/tutorials/write-and-collaborate/write-content/adding-content-items) derived from a '_localized String_' Content Type, which has a single field for the 'value'.
 
 ![An example of the localized content item](images/Localise-Content-Item.png)
 
@@ -45,7 +46,7 @@ You will most likely be utilizing the IDs for the content item, but it's useful 
 
 With your content type set up, the next step is to get your content in – ensuring you add the content for all your languages (I’m assuming you’ve already set up your languages in the settings!).
 
-*(If you need to know how to switch the content from one culture to another have a look at the [switching languages](https://docs.kenticocloud.com/tutorials/write-and-collaborate/create-multilingual-content/switching-languages) section in the Kentico Cloud documentation.)*
+_(If you need to know how to switch the content from one culture to another have a look at the [switching languages](https://docs.kenticocloud.com/tutorials/write-and-collaborate/create-multilingual-content/switching-languages) section in the Kentico Cloud documentation.)_
 ![An example of the localized content item in FR, showing the code name](images/Localise-Content-Item-FR.png)
 
 One thing to remember at this point is that if you want to use similar text (or simply give yourself a starting point) in the destination culture to your original culture, then you can use the [Copy from language](https://docs.kenticocloud.com/tutorials/write-and-collaborate/create-multilingual-content/translating-content-items#a-translating-a-content-item) option once you have switched over to the new culture.
@@ -54,7 +55,7 @@ One thing to remember at this point is that if you want to use similar text (or 
 
 Now we have the localized string Content Types and Content Items created in Kentico Cloud, the next step is to retrieve the content. I'm using the awesome and very popular static site generator [GatsbyJS](/) with [GraphQL](https://graphql.org/), a query language for your API.
 
-*(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-cloud/).)*
+_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-cloud/).)_
 
 With your content items in Kentico Cloud, you should be able to see them when you conduct a GraphQL query.
 
@@ -84,12 +85,12 @@ We would always advocate pragmatism when creating your content models. In additi
 
 There’s a lot to consider there so let's recap:
 
-* Create a Content Type for localize string items.
-* Add appropriate Content Items with the values for each localized string item.
-* Create the relevant culture alternatives for the content items created.
-* Once you know the desired culture you would then look in GraphQL nodes for the localized strings you need to show and use the filter option to help you bring specific localized strings back.
-* Utilize the query within your GatsbyJS layout/React code.
-* Making sure you create a new project to house all your localized strings.
+- Create a Content Type for localize string items.
+- Add appropriate Content Items with the values for each localized string item.
+- Create the relevant culture alternatives for the content items created.
+- Once you know the desired culture you would then look in GraphQL nodes for the localized strings you need to show and use the filter option to help you bring specific localized strings back.
+- Utilize the query within your GatsbyJS layout/React code.
+- Making sure you create a new project to house all your localized strings.
 
 Like with many things in the CaaS arena, there’s many ways to approach tasks. There are other ways of handling localization but, having been round this before, I recommend this approach.
 
