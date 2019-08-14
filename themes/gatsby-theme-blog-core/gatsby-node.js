@@ -4,6 +4,7 @@ const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const { urlResolve } = require(`gatsby-core-utils`)
 
 const debug = Debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./utils/default-options`)
@@ -97,7 +98,7 @@ exports.onCreateNode = async (
   themeOptions
 ) => {
   const { createNode, createParentChildLink } = actions
-  const { contentPath } = withDefaults(themeOptions)
+  const { contentPath, basePath } = withDefaults(themeOptions)
 
   // Make sure it's an MDX node
   if (node.internal.type !== `Mdx`) {
@@ -118,7 +119,7 @@ exports.onCreateNode = async (
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
-      slug,
+      slug: node.frontmatter.slug || urlResolve(basePath, slug),
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
     }
