@@ -4,6 +4,7 @@ const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const { urlResolve } = require(`gatsby-core-utils`)
 
 const debug = Debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./utils/default-options`)
@@ -97,7 +98,7 @@ exports.onCreateNode = async (
   themeOptions
 ) => {
   const { createNode, createParentChildLink } = actions
-  const { contentPath } = withDefaults(themeOptions)
+  const { contentPath, basePath } = withDefaults(themeOptions)
 
   // Make sure it's an MDX node
   if (node.internal.type !== `Mdx`) {
@@ -109,12 +110,25 @@ exports.onCreateNode = async (
   const source = fileNode.sourceInstanceName
 
   if (node.internal.type === `Mdx` && source === contentPath) {
-    const slug = createFilePath({
-      node: fileNode,
-      getNode,
-      basePath: contentPath,
-    })
+    let slug
+    if (node.frontmatter.slug) {
+      if (path.isAbsolute(node.frontmatter.slug)) {
+        // absolute paths take precedence
+        slug = node.frontmatter.slug
+      } else {
+        // otherwise a relative slug gets turned into a sub path
+        slug = urlResolve(basePath, node.frontmatter.slug)
+      }
+    } else {
+      // otherwise use the filepath function from gatsby-source-filesystem
+      const filePath = createFilePath({
+        node: fileNode,
+        getNode,
+        basePath: contentPath,
+      })
 
+      slug = urlResolve(basePath, filePath)
+    }
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
