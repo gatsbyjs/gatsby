@@ -1,4 +1,5 @@
 const {
+  DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -13,6 +14,7 @@ const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
+const chalk = require(`chalk`)
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -21,21 +23,19 @@ const slash = require(`slash`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
+  {
+    files,
+    markdownNode,
+    markdownAST,
+    pathPrefix,
+    getNode,
+    reporter,
+    cache,
+    compiler,
+  },
   pluginOptions
 ) => {
-  const defaults = {
-    maxWidth: 650,
-    wrapperStyle: ``,
-    backgroundColor: `white`,
-    linkImagesToOriginal: true,
-    showCaptions: false,
-    pathPrefix,
-    withWebp: false,
-    tracedSVG: false,
-  }
-
-  const options = _.defaults(pluginOptions, defaults)
+  const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -81,31 +81,44 @@ module.exports = (
     }
   }
 
-  const getImageCaption = (node, alt, defaultAlt) => {
-    const captionOptions = Array.isArray(options.showCaptions)
-      ? options.showCaptions
-      : options.showCaptions === true
-      ? [`title`, `alt`]
-      : false
+  const getImageCaption = (node, overWrites) => {
+    const getCaptionString = () => {
+      const captionOptions = Array.isArray(options.showCaptions)
+        ? options.showCaptions
+        : options.showCaptions === true
+        ? [`title`, `alt`]
+        : false
 
-    if (captionOptions) {
-      for (const option of captionOptions) {
-        switch (option) {
-          case `title`:
-            if (node.title) {
-              return node.title
-            }
-            break
-          case `alt`:
-            if (alt && alt !== defaultAlt) {
-              return alt
-            }
-            break
+      if (captionOptions) {
+        for (const option of captionOptions) {
+          switch (option) {
+            case `title`:
+              if (node.title) {
+                return node.title
+              }
+              break
+            case `alt`:
+              if (overWrites.alt) {
+                return overWrites.alt
+              }
+              if (node.alt) {
+                return node.alt
+              }
+              break
+          }
         }
       }
+
+      return ``
     }
 
-    return ``
+    const captionString = getCaptionString()
+
+    if (!options.markdownCaptions || !compiler) {
+      return _.escape(captionString)
+    }
+
+    return compiler.generateHTML(compiler.parseString(captionString))
   }
 
   // Takes a node and generates the needed images and then returns
@@ -159,37 +172,34 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    const alt = overWrites.alt
-      ? overWrites.alt
-      : node.alt
-      ? node.alt
-      : defaultAlt
-
-    const title = node.title ? node.title : ``
-
-    const imageStyle = `
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      vertical-align: middle;
-      position: absolute;
-      top: 0;
-      left: 0;
-      box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};`.replace(
-      /\s*(\S+:)\s*/g,
-      `$1`
+    const alt = _.escape(
+      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
     )
+
+    const title = node.title ? _.escape(node.title) : alt
+
+    const loading = options.loading
+
+    if (![`lazy`, `eager`, `auto`].includes(loading)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
+          `loading`
+        )} option. Please pass one of "lazy", "eager" or "auto".
+      `)
+      )
+    }
 
     // Create our base image tag
     let imageTag = `
       <img
         class="${imageClass}"
-        style="${imageStyle}"
         alt="${alt}"
         title="${title}"
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
+        loading="${loading}"
       />
     `.trim()
 
@@ -202,7 +212,7 @@ module.exports = (
           // override options if it's an object, otherwise just pass through defaults
           options.withWebp === true ? {} : options.withWebp,
           pluginOptions,
-          defaults
+          DEFAULT_OPTIONS
         ),
         reporter,
       })
@@ -225,10 +235,10 @@ module.exports = (
         />
         <img
           class="${imageClass}"
-          style="${imageStyle}"
           src="${fallbackSrc}"
           alt="${alt}"
           title="${title}"
+          loading="${loading}"
         />
       </picture>
       `.trim()
@@ -270,21 +280,14 @@ module.exports = (
 
     // Construct new image node w/ aspect ratio placeholder
     const imageCaption =
-      options.showCaptions && getImageCaption(node, alt, defaultAlt)
+      options.showCaptions && getImageCaption(node, overWrites)
 
     let rawHTML = `
   <span
-    class="${imageWrapperClass}"
-    style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-      imageCaption ? `` : wrapperStyle
-    } max-width: ${presentationWidth}px;"
-  >
-    <span
-      class="${imageBackgroundClass}"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
-    ></span>
-    ${imageTag}
-  </span>
+    class="${imageBackgroundClass}"
+    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
+  ></span>
+  ${imageTag}
   `.trim()
 
     // Make linking to original image optional.
@@ -301,6 +304,17 @@ module.exports = (
   </a>
     `.trim()
     }
+
+    rawHTML = `
+    <span
+      class="${imageWrapperClass}"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
+        imageCaption ? `` : wrapperStyle
+      } max-width: ${presentationWidth}px;"
+    >
+      ${rawHTML}
+    </span>
+    `.trim()
 
     // Wrap in figure and use title as caption
     if (imageCaption) {

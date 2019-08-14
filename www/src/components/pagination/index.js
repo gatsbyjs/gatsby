@@ -78,6 +78,7 @@ class Pagination extends React.Component {
         >
           <span>Showing page &nbsp;</span>
           <select
+            aria-label="Pagination Dropdown"
             value={currentPage === 1 ? `` : currentPage.toString()}
             onChange={this.changePage}
             css={{
@@ -92,6 +93,8 @@ class Pagination extends React.Component {
               <option
                 value={`${i === 0 ? `` : i + 1}`}
                 key={`pagination-number${i + 1}`}
+                aria-label={`Goto Page ${i + 1}`}
+                aria-current={currentPage === i + 1}
               >
                 {i + 1}
               </option>

@@ -84,6 +84,29 @@ describe(`remark prism plugin`, () => {
     expect(markdownAST).toMatchSnapshot()
   })
 
+  describe(`promptUser/promptHost`, () => {
+    it(`adds prompts if promptUser set`, () => {
+      const code = `\`\`\`bash{promptUser:alice}\necho 'test'\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`adds prompts if promptHost set`, () => {
+      const code = `\`\`\`bash{promptHost:server}\necho 'test'\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`adds prompts if promptUser and promptHost set`, () => {
+      const code = `\`\`\`bash{promptUser:alice}{promptHost:server}\necho 'test'\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+  })
+
   describe(`numberLines`, () => {
     it(`adds line-number markup when necessary`, () => {
       const code = `\`\`\`js{numberLines:5}\n//.foo { \ncolor: red;\n }\``

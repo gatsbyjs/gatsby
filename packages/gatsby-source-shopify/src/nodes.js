@@ -1,22 +1,21 @@
 import createNodeHelpers from "gatsby-node-helpers"
-import { camelCase } from "lodash/fp"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
-// Node prefix
-const TYPE_PREFIX = `Shopify`
+import {
+  TYPE_PREFIX,
+  ARTICLE,
+  BLOG,
+  COLLECTION,
+  COMMENT,
+  PRODUCT,
+  PRODUCT_OPTION,
+  PRODUCT_VARIANT,
+  PRODUCT_METAFIELD,
+  SHOP_POLICY,
+  PAGE,
+} from "./constants"
 
-// Node types
-const ARTICLE = `Article`
-const BLOG = `Blog`
-const COLLECTION = `Collection`
-const COMMENT = `Comment`
-const PRODUCT = `Product`
-const PRODUCT_OPTION = `ProductOption`
-const PRODUCT_VARIANT = `ProductVariant`
-const SHOP_POLICY = `ShopPolicy`
-const PRODUCT_TYPE = `ProductType`
-const PAGE = `Page`
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
   typePrefix: TYPE_PREFIX,
 })
@@ -77,11 +76,12 @@ export const BlogNode = _imageArgs => createNodeFactory(BLOG)
 
 export const CollectionNode = imageArgs =>
   createNodeFactory(COLLECTION, async node => {
-    if (node.products)
+    if (node.products) {
       node.products___NODE = node.products.edges.map(edge =>
         generateNodeId(PRODUCT, edge.node.id)
       )
-
+      delete node.products
+    }
     if (node.image)
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
@@ -96,9 +96,6 @@ export const CollectionNode = imageArgs =>
 
 export const CommentNode = _imageArgs => createNodeFactory(COMMENT)
 
-export const ProductTypeNode = imageArgs => rawNode =>
-  createNodeFactory(PRODUCT_TYPE)({ id: camelCase(rawNode), name: rawNode })
-
 export const ProductNode = imageArgs =>
   createNodeFactory(PRODUCT, async node => {
     if (node.variants) {
@@ -107,12 +104,25 @@ export const ProductNode = imageArgs =>
       node.variants___NODE = variants.map(variant =>
         generateNodeId(PRODUCT_VARIANT, variant.id)
       )
+
+      delete node.variants
     }
 
-    if (node.options)
+    if (node.metafields) {
+      const metafields = node.metafields.edges.map(edge => edge.node)
+
+      node.metafields___NODE = metafields.map(metafield =>
+        generateNodeId(PRODUCT_METAFIELD, metafield.id)
+      )
+      delete node.metafields
+    }
+
+    if (node.options) {
       node.options___NODE = node.options.map(option =>
         generateNodeId(PRODUCT_OPTION, option.id)
       )
+      delete node.options
+    }
 
     if (node.images && node.images.edges)
       node.images = await map(node.images.edges, async edge => {
@@ -128,6 +138,9 @@ export const ProductNode = imageArgs =>
 
     return node
   })
+
+export const ProductMetafieldNode = _imageArgs =>
+  createNodeFactory(PRODUCT_METAFIELD)
 
 export const ProductOptionNode = _imageArgs => createNodeFactory(PRODUCT_OPTION)
 
@@ -147,4 +160,4 @@ export const ProductVariantNode = imageArgs =>
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
 
-export const PagesNode = createNodeFactory(PAGE)
+export const PageNode = createNodeFactory(PAGE)

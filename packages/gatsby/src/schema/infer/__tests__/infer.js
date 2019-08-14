@@ -2,15 +2,14 @@
 
 const { graphql } = require(`graphql`)
 const nodeStore = require(`../../../db/nodes`)
-const { LocalNodeModel } = require(`../../node-model`)
 const path = require(`path`)
 const slash = require(`slash`)
 const { store } = require(`../../../redux`)
-const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
+const withResolverContext = require(`../../context`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const makeNodes = () => [
@@ -86,11 +85,21 @@ describe(`GraphQL type inference`, () => {
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
 
-    const schemaComposer = createSchemaComposer()
+    const { builtInFieldExtensions } = require(`../../extensions`)
+    Object.keys(builtInFieldExtensions).forEach(name => {
+      const extension = builtInFieldExtensions[name]
+      store.dispatch({
+        type: `CREATE_FIELD_EXTENSION`,
+        payload: { name, extension },
+      })
+    })
+    const { fieldExtensions } = store.getState().schemaCustomization
+    const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
       nodeStore,
       types: typeDefs || [],
+      fieldExtensions,
       thirdPartySchemas: [],
       typeMapping: [],
       typeConflictReporter,
@@ -122,14 +131,7 @@ describe(`GraphQL type inference`, () => {
       }
       `,
       undefined,
-      {
-        path: `/`,
-        nodeModel: new LocalNodeModel({
-          schema,
-          nodeStore,
-          createPageDependency,
-        }),
-      }
+      withResolverContext({ path: `/` }, schema)
     )
   }
 
@@ -501,14 +503,7 @@ describe(`GraphQL type inference`, () => {
         }
       `,
       undefined,
-      {
-        path: `/`,
-        nodeModel: new LocalNodeModel({
-          schema,
-          nodeStore,
-          createPageDependency,
-        }),
-      }
+      withResolverContext({ path: `/` }, schema)
     )
 
     expect(result).toMatchSnapshot()

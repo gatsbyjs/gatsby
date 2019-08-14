@@ -86,3 +86,16 @@ export function slash(path) {
 
   return path.replace(/\\/g, `/`)
 }
+
+/**
+ * createFilePath
+ * --
+ *
+ * @param  {String} directory
+ * @param  {String} filename
+ * @param  {String} url
+ * @return {String}
+ */
+export function createFilePath(directory, filename, ext) {
+  return path.join(directory, `${filename}${ext}`)
+}

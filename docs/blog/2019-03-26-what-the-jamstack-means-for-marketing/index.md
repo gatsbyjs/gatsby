@@ -6,7 +6,7 @@ excerpt: "Learn what JAMstack is and the pros and cons JAMstack websites have fr
 tags:
   - jamstack
   - marketing
-  - headless cms
+  - headless-cms
 canonicalLink: https://kymellis.co/jamstack-marketing-headless-cms/
 ---
 
