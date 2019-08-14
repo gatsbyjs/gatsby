@@ -242,13 +242,18 @@ function applyRichTextEntryFieldFilters(
     _.get(entryItemFieldValue, `data.target.sys.id`) &&
     resolvable.has(entryItemFieldValue.data.target.sys.id)
   ) {
-    const { includeEntryFields, excludeEntryFields } = options.richText || {}
+    const { entryFieldTransformer, includeEntryFields, excludeEntryFields } =
+      options.richText || {}
 
     let fields = entryItemFieldValue.data.target.fields
     if (includeEntryFields) {
       fields = _.pick(fields, includeEntryFields)
     } else if (excludeEntryFields) {
       fields = _.omit(fields, excludeEntryFields)
+    }
+
+    if (entryFieldTransformer) {
+      fields = entryFieldTransformer(fields)
     }
 
     entryItemFieldValue.data.target = {
