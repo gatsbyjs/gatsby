@@ -6,8 +6,8 @@ As we begin to formalize and standardize the methodologies for building Gatsby T
 
 ## Naming
 
-It's recommended to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
-can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`.
+It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
+can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing the themes with `gatsby-theme` allows the gatsby to identify the theme packages and compile the theme code.
 
 ## Initializing Required Directories
 
