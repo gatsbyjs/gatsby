@@ -20,7 +20,6 @@ const doFetch = (url, method = `GET`) =>
   new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(method, url, true)
-    req.withCredentials = true
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
         resolve(req)
