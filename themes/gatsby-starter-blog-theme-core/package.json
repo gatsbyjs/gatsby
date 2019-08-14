@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "gatsby": "^2.13.62",
-    "gatsby-theme-blog-core": "^0.2.0",
+    "gatsby-theme-blog-core": "^1.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   }
