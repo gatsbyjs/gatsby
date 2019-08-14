@@ -78,17 +78,17 @@ As you can see, once you know which 'key' you need, then it's pretty simple to g
 
 Before we go any further, it is important to take stock of your localization string content items. Creating culture versions of each item doesn’t increase your number of Content Items so you’re unlikely to be jumping up through plans. However, the number of localization string Content Items is something to keep in mind. Also, consider the number of environments/projects you have in your subscription, which could multiply the number of Content Items you have in total.
 
-We would always advocate pragmatism when creating your content models. In addition, maybe consider creating the localization strings as a separate project that feeds into all the projects that need to utilise them. This is a solution that has worked across several of our projects and ensures that all localized strings are available to all projects and all environments, removing the overhead for updates.
+We would always advocate pragmatism when creating your content models. In addition, maybe consider creating the localization strings as a separate project that feeds into all the projects that need to utilize them. This is a solution that has worked across several of our projects and ensures that all localized strings are available to all projects and all environments, removing the overhead for updates.
 
 ## Summary - A recap of the steps involved in creating localized content in Kentico Cloud
 
 There’s a lot to consider there so let's recap:
 
-* Create a Content Type for localise string items.
+* Create a Content Type for localize string items.
 * Add appropriate Content Items with the values for each localized string item.
 * Create the relevant culture alternatives for the content items created.
 * Once you know the desired culture you would then look in GraphQL nodes for the localized strings you need to show and use the filter option to help you bring specific localized strings back.
-* Utilise the query within your GatsbyJS layout/React code.
+* Utilize the query within your GatsbyJS layout/React code.
 * Making sure you create a new project to house all your localized strings.
 
 Like with many things in the CaaS arena, there’s many ways to approach tasks. There are other ways of handling localization but, having been round this before, I recommend this approach.
