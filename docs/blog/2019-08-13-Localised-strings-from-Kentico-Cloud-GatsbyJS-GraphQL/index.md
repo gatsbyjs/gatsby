@@ -94,10 +94,3 @@ There’s a lot to consider there so let's recap:
 Like with many things in the CaaS arena, there’s many ways to approach tasks. There are other ways of handling localisation but, having been round this before, I recommend this approach.
 
 Localisation is just one of the many challenges you’re going to face when working with CaaS platforms. If you’re working with Kentico Cloud and facing a particular challenge then get in touch with [Ilesh Mistry](mailto:ilesh.m@mmtdigital.co.uk) to see how I can help.
-
-
-
-
-
-
-
