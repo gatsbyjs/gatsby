@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const del = require(`del`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 
 const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
@@ -17,30 +18,50 @@ const quit = () => {
   process.exit()
 }
 
+const MAX_COPY_RETRIES = 3
+
 /*
- * non-existant packages break on('ready')
+ * non-existent packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
  */
-function watch(
+async function watch(
   root,
   packages,
-  { scanOnce, quiet, monoRepoPackages, localPackages }
+  { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
 ) {
+  // determine if in yarn workspace - if in workspace, force using verdaccio
+  // as current logic of copying files will not work correctly.
+  const yarnWorkspaceRoot = findWorkspaceRoot()
+  if (yarnWorkspaceRoot && process.env.NODE_ENV !== `test`) {
+    console.log(`Yarn workspace found.`)
+    forceInstall = true
+  }
+
   let afterPackageInstallation = false
   let queuedCopies = []
 
-  const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
+  const realCopyPath = arg => {
+    const { oldPath, newPath, quiet, resolve, reject, retry = 0 } = arg
     fs.copy(oldPath, newPath, err => {
       if (err) {
-        console.error(err)
-        return reject(err)
+        if (retry >= MAX_COPY_RETRIES) {
+          console.error(err)
+          reject(err)
+          return
+        } else {
+          setTimeout(
+            () => realCopyPath({ ...arg, retry: retry + 1 }),
+            500 * Math.pow(2, retry)
+          )
+          return
+        }
       }
 
       numCopied += 1
       if (!quiet) {
         console.log(`Copied ${oldPath} to ${newPath}`)
       }
-      return resolve()
+      resolve()
     })
   }
 
@@ -69,12 +90,14 @@ function watch(
     }, new Set())
 
     await Promise.all(
-      [...packagesToClear].map(async packageToClear => {
-        await del([
-          `node_modules/${packageToClear}/**/*.{js,js.map}`,
-          `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
-        ])
-      })
+      [...packagesToClear].map(
+        async packageToClear =>
+          await del([
+            `node_modules/${packageToClear}/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/src/**/*.{js,js.map}`,
+          ])
+      )
     )
   }
   // check packages deps and if they depend on other packages from monorepo
@@ -89,19 +112,30 @@ function watch(
     ? _.intersection(packages, seenPackages)
     : seenPackages
 
-  let packagesToInstall = []
+  let ignoredPackageJSON = new Map()
+  const ignorePackageJSONChanges = (packageName, contentArray) => {
+    ignoredPackageJSON.set(packageName, contentArray)
 
-  const getPackagesToInstall = packages =>
-    packages.forEach(pkg => {
-      if (localPackages.includes(pkg)) {
-        packagesToInstall.push(pkg)
-      }
-      if (depTree[pkg]) {
-        getPackagesToInstall([...depTree[pkg]])
-      }
-    })
+    return () => {
+      ignoredPackageJSON.delete(packageName)
+    }
+  }
 
-  getPackagesToInstall(allPackagesToWatch)
+  if (forceInstall) {
+    try {
+      await publishPackagesLocallyAndInstall({
+        packagesToPublish: allPackagesToWatch,
+        root,
+        localPackages,
+        ignorePackageJSONChanges,
+        yarnWorkspaceRoot,
+      })
+    } catch (e) {
+      console.log(e)
+    }
+
+    process.exit()
+  }
 
   if (allPackagesToWatch.length === 0) {
     console.error(`There are no packages to watch.`)
@@ -113,6 +147,7 @@ function watch(
     /\.git/i,
     /\.DS_Store/,
     /[/\\]__tests__[/\\]/i,
+    /\.npmrc/i,
   ].concat(
     allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )
@@ -125,17 +160,9 @@ function watch(
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
-  let ignoredPackageJSON = new Map()
+
   const waitFor = new Set()
   let anyPackageNotInstalled = false
-
-  const ignorePackageJSONChanges = (packageName, contentArray) => {
-    ignoredPackageJSON.set(packageName, contentArray)
-
-    return () => {
-      ignoredPackageJSON.delete(ignoredPackageJSON)
-    }
-  }
 
   const watchEvents = [`change`, `add`]
 

@@ -147,6 +147,13 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
             d.isHook = isHook
             d.text = text
             d.hash = hash
+
+            taggedTemplateExpressPath.traverse({
+              TemplateElement(templateElementPath) {
+                d.templateLoc = templateElementPath.node.loc
+              },
+            })
+
             return d
           })
 
@@ -262,7 +269,9 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           ExportNamedDeclaration(path, state) {
             path.traverse({
               TaggedTemplateExpression(innerPath) {
-                const { ast: gqlAst, isGlobal, hash } = getGraphQLTag(innerPath)
+                const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(
+                  innerPath
+                )
                 if (!gqlAst) return
 
                 if (isGlobal) warnForGlobalTag(file)
@@ -279,7 +288,19 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
                   })
                 })
 
-                queries.push(...gqlAst.definitions)
+                queries.push(
+                  ...gqlAst.definitions.map(d => {
+                    d.text = text
+
+                    innerPath.traverse({
+                      TemplateElement(templateElementPath) {
+                        d.templateLoc = templateElementPath.node.loc
+                      },
+                    })
+
+                    return d
+                  })
+                )
               },
             })
           },

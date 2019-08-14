@@ -1,27 +1,23 @@
 "use strict"
 
 const fs = require(`fs`)
-const { extname, resolve } = require(`path`)
+const { extname, resolve, parse, join } = require(`path`)
 const readdir = require(`recursive-readdir`)
 const normalizePath = require(`normalize-path`)
 
 const {
-  OPTION_DEFAULT_LINK_TEXT,
-  OPTION_DEFAULT_HTML,
-  OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
-  OPTION_DEFAULT_INCLUDE_MATCHING_CSS,
+  OPTION_DEFAULT_REPL_DIRECTORY,
+  OPTION_DEFAULT_CODEPEN,
 } = require(`./constants`)
 
 exports.createPages = async (
   { actions, reporter },
   {
-    directory = OPTION_DEFAULT_LINK_TEXT,
-    externals = [],
-    html = OPTION_DEFAULT_HTML,
-    redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
-    includeMatchingCSS = OPTION_DEFAULT_INCLUDE_MATCHING_CSS,
+    directory = OPTION_DEFAULT_REPL_DIRECTORY,
+    codepen = OPTION_DEFAULT_CODEPEN,
   } = {}
 ) => {
+  codepen = { ...OPTION_DEFAULT_CODEPEN, ...codepen }
   if (!directory.endsWith(`/`)) {
     directory += `/`
   }
@@ -32,9 +28,9 @@ exports.createPages = async (
     reporter.panic(`Invalid REPL directory specified: "${directory}"`)
   }
 
-  if (!fs.existsSync(redirectTemplate)) {
+  if (!fs.existsSync(codepen.redirectTemplate)) {
     reporter.panic(
-      `Invalid REPL redirectTemplate specified: "${redirectTemplate}"`
+      `Invalid REPL redirectTemplate specified: "${codepen.redirectTemplate}"`
     )
   }
 
@@ -46,17 +42,25 @@ exports.createPages = async (
       return
     }
 
+    // escape backslaches for windows
+    const resolvedDirectory = resolve(directory)
     files.forEach(file => {
       if (extname(file) === `.js` || extname(file) === `.jsx`) {
-        const slug = file
-          .substring(0, file.length - extname(file).length)
-          .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
+        const parsedFile = parse(file)
+        const relativeDir = parsedFile.dir.replace(`${resolvedDirectory}`, ``)
+        const slug = `redirect-to-codepen${normalizePath(relativeDir)}/${
+          parsedFile.name
+        }`
+
         const code = fs.readFileSync(file, `utf8`)
 
         let css
-        if (includeMatchingCSS === true) {
+        if (codepen.includeMatchingCSS === true) {
           try {
-            css = fs.readFileSync(file.replace(extname(file), `.css`), `utf8`)
+            css = fs.readFileSync(
+              join(parsedFile.dir, `${parsedFile.name}.css`),
+              `utf8`
+            )
           } catch (err) {
             // If the file doesn't exist, we gracefully ignore the error
             if (err.code !== `ENOENT`) {
@@ -70,18 +74,16 @@ exports.createPages = async (
         const action = `https://codepen.io/pen/define`
         const payload = JSON.stringify({
           editors: `0010`,
-          html,
+          html: codepen.html,
           js: code,
-          js_external: externals.join(`;`),
+          js_external: codepen.externals.join(`;`),
           js_pre_processor: `babel`,
           layout: `left`,
           css,
         })
-
         createPage({
           path: slug,
-          // Normalize the path so tests pass on Linux + Windows
-          component: normalizePath(resolve(redirectTemplate)),
+          component: normalizePath(resolve(codepen.redirectTemplate)),
           context: {
             action,
             payload,

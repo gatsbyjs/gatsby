@@ -6,13 +6,14 @@ import { colors, fonts } from "../utils/presets"
 
 const formatDate = dateString =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
+    timeZone: `UTC`,
     month: `long`,
     day: `numeric`,
     year: `numeric`,
   })
 
 const BlogPostPreviewItem = ({ post, className }) => (
-  <article className={className}>
+  <article css={{ position: `relative` }} className={className}>
     <Link to={post.fields.slug} css={{ "&&": { color: colors.text.primary } }}>
       <h2 css={{ marginTop: 0 }}>{post.frontmatter.title}</h2>
       <p>

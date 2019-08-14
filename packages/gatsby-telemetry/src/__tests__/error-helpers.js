@@ -1,8 +1,4 @@
-const {
-  sanitizeErrors,
-  sanitizeError,
-  cleanPaths,
-} = require(`../error-helpers`)
+const { sanitizeError, cleanPaths } = require(`../error-helpers`)
 
 describe(`Errors Helpers`, () => {
   describe(`sanitizeError`, () => {
@@ -46,7 +42,7 @@ describe(`Errors Helpers`, () => {
       expect(e.message).toEqual(errormessage)
       expect(e.stack).toEqual(expect.stringContaining(process.cwd()))
 
-      const sanitizedErrorString = sanitizeErrors(e)[0]
+      const sanitizedErrorString = sanitizeError(e)
 
       expect(sanitizedErrorString).toEqual(
         expect.stringContaining(errormessage)

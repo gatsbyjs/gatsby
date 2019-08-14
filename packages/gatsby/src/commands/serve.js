@@ -8,6 +8,7 @@ const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 const rl = require(`readline`)
 const onExit = require(`signal-exit`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const telemetry = require(`gatsby-telemetry`)
 
@@ -29,34 +30,46 @@ onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
 })
 
-const getPages = directory =>
-  fs
-    .readFile(path.join(directory, `.cache`, `pages.json`))
-    .then(contents => JSON.parse(contents))
-    .catch(() => [])
-
-const clientOnlyPathsRouter = (pages, options) => {
-  const clientOnlyRoutes = pages.filter(page => page.matchPath)
-  return (req, res, next) => {
-    const { url } = req
-    if (req.accepts(`html`)) {
-      const route = clientOnlyRoutes.find(
-        clientRoute => reachMatch(clientRoute.matchPath, url) !== null
-      )
-      if (route && route.path) {
-        return res.sendFile(
-          path.join(route.path, `index.html`),
-          options,
-          err => {
-            if (err) {
-              next()
-            }
-          }
-        )
-      }
-    }
-    return next()
+const readMatchPaths = async program => {
+  const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
+  let rawJSON = `[]`
+  try {
+    rawJSON = await fs.readFile(filePath)
+  } catch (error) {
+    report.warn(error)
+    report.warn(
+      `Could not read ${chalk.bold(
+        `match-paths.json`
+      )} from the .cache directory`
+    )
+    report.warn(
+      `Client-side routing will not work correctly. Maybe you need to re-run ${chalk.bold(
+        `gatsby build`
+      )}?`
+    )
   }
+  return JSON.parse(rawJSON)
+}
+
+const matchPathRouter = (matchPaths, options) => (req, res, next) => {
+  const { url } = req
+  if (req.accepts(`html`)) {
+    const matchPath = matchPaths.find(
+      ({ matchPath }) => reachMatch(matchPath, url) !== null
+    )
+    if (matchPath) {
+      return res.sendFile(
+        path.join(matchPath.path, `index.html`),
+        options,
+        err => {
+          if (err) {
+            next()
+          }
+        }
+      )
+    }
+  }
+  return next()
 }
 
 module.exports = async program => {
@@ -74,7 +87,6 @@ module.exports = async program => {
   const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
   const root = path.join(program.directory, `public`)
-  const pages = await getPages(program.directory)
 
   const app = express()
   const router = express.Router()
@@ -83,7 +95,8 @@ module.exports = async program => {
 
   router.use(compression())
   router.use(express.static(`public`))
-  router.use(clientOnlyPathsRouter(pages, { root }))
+  const matchPaths = await readMatchPaths(program)
+  router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })
@@ -103,19 +116,11 @@ module.exports = async program => {
   const startListening = () => {
     app.listen(port, host, () => {
       let openUrlString = `http://${host}:${port}${pathPrefix}`
-      console.log(
-        `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
-          openUrlString
-        )}`
-      )
+      report.info(`gatsby serve running at: ${chalk.bold(openUrlString)}`)
       if (open) {
-        console.log(`${chalk.blue(`info`)} Opening browser...`)
+        report.info(`Opening browser...`)
         Promise.resolve(openurl(openUrlString)).catch(err =>
-          console.log(
-            `${chalk.yellow(
-              `warn`
-            )} Browser not opened because no browser was found`
-          )
+          report.warn(`Browser not opened because no browser was found`)
         )
       }
     })

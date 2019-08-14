@@ -42,6 +42,33 @@ Which will be rendered using viz.js and the output html will replace the code bl
 
 ![rendered-graph](/packages/gatsby-remark-graphviz/rendered-graph.svg)
 
+Custom attributes can be passed to the rendered SVG:
+
+    ```dot id="my-id" class="my-class"
+    digraph graphname {
+      a -> b;
+      b -> c;
+      a -> c;
+    }
+    ```
+
+By default, the following inline style is applied to all rendered SVGs in order to make them responsive:
+
+```css
+max-width: 100%;
+height: auto;
+```
+
+This can be overwritten by using the custom attributes feature:
+
+    ```dot style=""
+    digraph graphname {
+      a -> b;
+      b -> c;
+      a -> c;
+    }
+    ```
+
 ## Caveats
 
 In your gatsby-config.js, make sure you place this plugin before other remark plugins that modify code blocks (like prism).

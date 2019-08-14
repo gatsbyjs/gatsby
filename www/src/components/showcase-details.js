@@ -20,8 +20,8 @@ import ShareMenu from "../components/share-menu"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLink from "react-icons/lib/md/link"
-import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
-import FeatherIcon from "../assets/showcase-feather.svg"
+import FeaturedIcon from "../assets/icons/featured-sites-icons.svg"
+import FeatherIcon from "../assets/icons/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const gutter = space[6]
@@ -251,7 +251,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }}
             >
               <Helmet>
-                <title>{data.sitesYaml.title}</title>
+                <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
                 <meta
                   property="og:image"
                   content={`https://www.gatsbyjs.org${
@@ -265,6 +265,37 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                     data.sitesYaml.childScreenshot.screenshotFile
                       .childImageSharp.resize.src
                   }`}
+                />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta
+                  name="og:title"
+                  value={`${data.sitesYaml.title}: Showcase | GatsbyJS`}
+                />
+                <meta
+                  property="og:image:width"
+                  content={
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.width
+                  }
+                />
+                <meta
+                  property="og:image:height"
+                  content={
+                    data.sitesYaml.childScreenshot.screenshotFile
+                      .childImageSharp.resize.height
+                  }
+                />
+                <meta
+                  property="og:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
+                />
+                <meta
+                  name="twitter:description"
+                  content={
+                    data.sitesYaml.description || data.sitesYaml.main_url
+                  }
                 />
               </Helmet>
               <div
@@ -339,6 +370,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       src={FeaturedIcon}
                       alt="icon"
                       css={{
+                        width: 20,
+                        height: 20,
                         marginBottom: 0,
                         marginRight: 10,
                       }}

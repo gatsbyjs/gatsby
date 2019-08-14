@@ -2,7 +2,7 @@
 title: "Writing documentation with Docz"
 ---
 
-Writing good documentation is important for your project maintainers (and for your future self!). A very nice documentation generator is [Docz](https://www.docz.site). It allows you to easily write interactive docs for your React components.
+Writing good documentation is important for your project maintainers (and for your future self). [Docz](https://www.docz.site) is a very nice documentation generator. It enables you to write interactive documentation for your React components with very little effort.
 
 Docz leverages `mdx` files – short for Markdown with JSX – which brings **React components** to Markdown files. From your PropTypes, or Flow types or TypeScript types, it can generate **property tables** to document properly how to use your components. In addition, you can provide a **coding playground** for your components, so that anyone can see them in action, modify the code and see the changes live, or copy the snippet to use it somewhere else.
 
@@ -18,7 +18,7 @@ First, if you do not have a Gatsby project set up yet, use the Gatsby CLI to cre
 gatsby new my-gatsby-site-with-docz
 ```
 
-To set up Docz you need to install dependencies and do some custom configuration. Make sure you are in the root directory of your Gatsby project:
+To set up Docz you need to install the Docz Gatsby theme and add some custom configuration. Make sure you are in the root directory of your Gatsby project:
 
 ```shell
 cd my-gatsby-site-with-docz
@@ -27,16 +27,18 @@ cd my-gatsby-site-with-docz
 And install the following packages:
 
 ```shell
-npm install --save gatsby-theme-docz docz docz-theme-default
+npm install --save gatsby-theme-docz
 ```
 
-Define `docz-theme-default` as a theme inside the `__experimentalThemes` of `gatsby-config.js`:
+Add `gatsby-theme-docz` under `plugins` in `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
-  //highlight-next-line
-  __experimentalThemes: [`gatsby-theme-docz`],
-  plugins: [`// your plugins go here`],
+  plugins: [
+    //highlight-next-line
+    `gatsby-theme-docz`,
+    // Your plugins go here
+  ],
 }
 ```
 
@@ -44,7 +46,7 @@ module.exports = {
 
 Docz searches your directories for `mdx` files and renders them. Create a `docs` folder at the root of your project. Place an `index.mdx` file inside this directory with the following content:
 
-```md:title=docs/index.mdx
+```mdx:title=docs/index.mdx
 ---
 name: Getting Started
 route: /
@@ -54,7 +56,7 @@ route: /
 
 ## Hello world
 
-Type here the most beautyiful getting started that you ever saw!
+Type here the most beautiful getting started that you ever saw!
 ```
 
 Run the development server with `gatsby develop` and you should be greeted with the default Docz layout and a "Getting Started" heading. Stop the development server after verifying that everything works.
@@ -102,7 +104,7 @@ The button will display its text by default with a `font-size` of `18px` however
 
 Create a new file in the `docs` directory to document your newly created button component. Call the file `button.mdx`:
 
-```md:title=docs/button.mdx
+```mdx:title=docs/button.mdx
 ---
 name: Button
 menu: Components
@@ -115,7 +117,7 @@ Buttons make common actions more obvious and help users more easily perform them
 
 Docz offers some internal components you can use to display the component and its properties. Import both these and your component itself into the document and use them:
 
-```md:title=docs/button.mdx
+```mdx:title=docs/button.mdx
 ---
 name: Button
 menu: Components
@@ -160,15 +162,17 @@ You can usually set your config using a `doczrc.js` file ([see all available opt
 
 ```js:title=gatsby-config.js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
+    //highlight-start
     {
       resolve: `gatsby-theme-docz`,
       options: {
         // Your options here
       },
     },
+    //hightlight-end
+    // Your plugins go here
   ],
-  plugins: [`// your plugins go here`],
 }
 ```
 

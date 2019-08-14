@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 32">
-  <path class="svg-stroke svg-stroke-lilac" d="M24.1 10.7h4.2m-7.1 2.8h5.7m-7.1 1.4l-.1-5.7M17 17.8l-.1-5.8"/>
-  <path class="svg-fill-gradient-accent-white-45deg" d="M27.6 12.8L18.4 22c-1.6 1.6-5.7 0-5.7 0s-1.6-4.1 0-5.7l9.2-9.2c1.6-1.6 4.1-1.6 5.7 0 1.6 1.6 1.6 4.2 0 5.7z"/>
-  <path class="svg-stroke svg-stroke-lilac" d="M27.6 7.2L13.1 21.7"/>
-  <path class="svg-fill-gatsby" d="M10.4 25.4l-2.4.4 4.9-5 1.1 1z"/>
-  <path fill="none" class="svg-stroke svg-stroke-gatsby" d="M27.6 12.8L18.4 22h-5.7v-5.7l9.2-9.2c1.6-1.6 4.1-1.6 5.7 0 1.6 1.6 1.6 4.2 0 5.7z"/>
-</svg>

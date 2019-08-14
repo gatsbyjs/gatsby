@@ -1,4 +1,5 @@
 const path = require(`path`)
+const git = require(`git-rev-sync`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -19,7 +20,11 @@ if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
       GAViewID: GA.viewId,
       jwt: {
         client_email: process.env.ANALYTICS_SERVICE_ACCOUNT,
-        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY,
+        // replace \n characters in real new lines for circleci deploys
+        private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY.replace(
+          /\\n/g,
+          `\n`
+        ),
       },
       period: {
         startDate,
@@ -85,6 +90,13 @@ module.exports = {
         path: `${__dirname}/src/data/ecosystem/`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `guidelines`,
+        path: `${__dirname}/src/data/guidelines/`,
+      },
+    },
     `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -101,6 +113,12 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/assets`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.md`, `.mdx`],
@@ -114,7 +132,6 @@ module.exports = {
         gatsbyRemarkPlugins: [
           `gatsby-remark-graphviz`,
           `gatsby-remark-embed-video`,
-          `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -129,7 +146,6 @@ module.exports = {
             },
           },
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -214,6 +230,7 @@ module.exports = {
               {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] }
+                  limit: 10,
                   filter: {
                     frontmatter: { draft: { ne: true } }
                     fileAbsolutePath: { regex: "/docs.blog/" }
@@ -280,6 +297,16 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sentry`,
+      options: {
+        dsn: `https://2904ad31b1744c688ae19b627f51a5de@sentry.io/1471074`,
+        release: git.long(),
+        environment: process.env.NODE_ENV,
+        enabled: (() =>
+          [`production`, `stage`].indexOf(process.env.NODE_ENV) !== -1)(),
       },
     },
     // `gatsby-plugin-subfont`,

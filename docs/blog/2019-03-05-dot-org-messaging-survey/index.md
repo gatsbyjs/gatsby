@@ -2,7 +2,7 @@
 title: Results from .org messaging survey are in
 date: 2019-03-05
 author: Shannon Soper
-tags: ["ux", "design"]
+tags: ["ux", "user-testing", "cutting-edge-experiences"]
 ---
 
 Recently, we sent out a survey asking people in the Gatsby community how they would define Gatsby and what they value most about Gatsby. The results are in, and I want to share them with you! Thanks to everyone who filled out the survey.
@@ -129,7 +129,10 @@ Here are some ideas to keep in mind throughout for a potential redesign of the .
 
 Quote:
 
-<Pullquote>[I didn’t think the value Gatsby provides was] that crucial until I experienced it firsthand.</Pullquote>
+<Pullquote>
+  [I didn’t think the value Gatsby provides was] that crucial until I
+  experienced it firsthand.
+</Pullquote>
 
 ## How you can participate
 

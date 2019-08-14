@@ -127,6 +127,31 @@ const APILink = ({ definition, githubPath }) => {
   return null
 }
 
+const AvailableIn = ({ definition }) => {
+  if (definition.availableIn && definition.availableIn.length) {
+    return (
+      <div>
+        <span>Only available in:</span>
+        {definition.availableIn.map(api => (
+          <a
+            key={api}
+            href={`/docs/node-apis/#${api}`}
+            css={linkStyles}
+            style={{
+              display: `inline-block`,
+              marginLeft: space[2],
+            }}
+          >
+            {api}
+          </a>
+        ))}
+      </div>
+    )
+  }
+
+  return null
+}
+
 const Description = ({ definition }) => {
   if (definition.description) {
     return (
@@ -208,6 +233,7 @@ const DocBlock = ({
         {definition.optional && <Optional />}
       </Header>
       {showSignature && !showSignatureNextToTitle && signatureElement}
+      <AvailableIn definition={definition} />
       <Description definition={definition} />
       <Deprecated definition={definition} />
       <ParamsBlock

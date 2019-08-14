@@ -1,5 +1,14 @@
 /* global Cypress, cy */
 
+// NOTE: This needs to be run before any other integration tests as it
+// sets up the service worker in offline mode. Therefore, if you want
+// to test an individual integration test, you must run this
+// first. E.g to run `compilation-hash.js` test, run
+//
+// cypress run -s \
+// "cypress/integration/1-production.js,cypress/integration/compilation-hash.js" \
+// -b chrome
+
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
     cy.visit(`/`).waitForRouteChange()
@@ -74,11 +83,46 @@ describe(`Production build tests`, () => {
       .should(`exist`)
   })
 
+  it(`should pass pathContext to props`, () => {
+    cy.visit(`/path-context`).waitForRouteChange()
+
+    // `bar` is set in gatsby-node createPages
+    cy.getTestElement(`path-context-foo`).contains(`bar`)
+  })
+
   it(`Uses env vars`, () => {
     cy.visit(`/env-vars`).waitForRouteChange()
 
     cy.getTestElement(`process.env`).contains(`{}`)
     cy.getTestElement(`process.env.EXISTING_VAR`).contains(`"foo bar"`)
     cy.getTestElement(`process.env.NOT_EXISTING_VAR`).should(`be.empty`)
+  })
+
+  describe(`Supports unicode characters in urls`, () => {
+    it(`Can navigate directly`, () => {
+      cy.visit(`/안녕/`, {
+        // Cypress seems to think it's 404
+        // even if it's not. 404 page doesn't have
+        // `page-2-message` element so the test will fail on
+        // assertion. Using failOnStatusCode here
+        // only to workaround cypress weirdness
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`Can navigate on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`)
+        .click()
+        .waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
   })
 })

@@ -1,115 +1,212 @@
+const fs = require(`fs`)
+const path = require(`path`)
+const mkdirp = require(`mkdirp`)
+const crypto = require(`crypto`)
 const Debug = require(`debug`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
-const path = require(`path`)
-const fs = require(`fs`)
-const mkdirp = require(`mkdirp`)
+const { urlResolve } = require(`gatsby-core-utils`)
 
-// make sure src/pages exists for the filesystem source or it will error
-exports.onPreBootstrap = ({ store }) => {
-  const debug = Debug(`gatsby-theme-blog-core:onPreBoostrap`)
+const debug = Debug(`gatsby-theme-blog-core`)
+const withDefaults = require(`./utils/default-options`)
 
+// Ensure that content directories exist at site-level
+exports.onPreBootstrap = ({ store }, themeOptions) => {
   const { program } = store.getState()
-  const dir = `${program.directory}/src/pages`
-  debug(`ensuring ${dir} exists`)
+  const { contentPath, assetPath } = withDefaults(themeOptions)
 
-  if (!fs.existsSync(dir)) {
-    debug(`creating ${dir}`)
-    mkdirp.sync(dir)
-  }
-}
+  const dirs = [
+    path.join(program.directory, contentPath),
+    path.join(program.directory, assetPath),
+  ]
 
-/**
- * core themes defined the data model, like how to process slugs
- */
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
-
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
-  }
-}
-
-/**
- * When shipping NPM modules, they typically need to be either
- * pre-compiled or the user needs to add bundler config to process the
- * files. Gatsby lets us ship the bundler config *with* the theme, so
- * we never need a lib-side build step.  Since we dont pre-compile the
- * theme, this is how we let webpack know how to process files.
- */
-exports.onCreateWebpackConfig = ({ stage, loaders, plugins, actions }) => {
-  const debug = Debug(`gatsby-theme-blog-core:onCreateWebpackConfig`)
-  debug(`ensuring Webpack will compile theme code`)
-  actions.setWebpackConfig({
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          include: path.dirname(require.resolve(`gatsby-theme-blog-core`)),
-          use: [loaders.js()],
-        },
-      ],
-    },
+  dirs.forEach(dir => {
+    debug(`Initializing ${dir} directory`)
+    if (!fs.existsSync(dir)) {
+      mkdirp.sync(dir)
+    }
   })
 }
 
-exports.createPages = ({ graphql, actions }) => {
-  const debug = Debug(`gatsby-theme-blog-core:createPages`)
-  const { createPage } = actions
-  const blogPost = require.resolve(`./src/templates/blog-post.js`)
+const mdxResolverPassthrough = fieldName => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const type = info.schema.getType(`Mdx`)
+  const mdxNode = context.nodeModel.getNodeById({
+    id: source.parent,
+  })
+  const resolver = type.getFields()[fieldName].resolve
+  const result = await resolver(mdxNode, args, context, {
+    fieldName,
+  })
+  return result
+}
 
-  return new Promise((resolve, reject) => {
-    resolve(
-      graphql(
-        `
-          {
-            allMarkdownRemark(
-              sort: { fields: [frontmatter___date], order: DESC }
-              limit: 1000
-            ) {
-              edges {
-                node {
-                  fields {
-                    slug
-                  }
-                  frontmatter {
-                    title
-                  }
-                }
-              }
-            }
-          }
-        `
-      ).then(result => {
-        if (result.errors) {
-          console.log(result.errors)
-          reject(result.errors)
-        }
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const { createTypes } = actions
+  createTypes(`interface BlogPost @nodeInterface {
+      id: ID!
+      title: String!
+      body: String!
+      slug: String!
+      date: Date! @dateformat
+      tags: [String]!
+      keywords: [String]!
+      excerpt: String!
+  }`)
 
-        // Create blog posts pages.
-        const posts = result.data.allMarkdownRemark.edges
-
-        posts.forEach((post, index) => {
-          const previous =
-            index === posts.length - 1 ? null : posts[index + 1].node
-          const next = index === 0 ? null : posts[index - 1].node
-
-          debug(`creating`, post.node.fields.slug)
-          createPage({
-            path: post.node.fields.slug,
-            component: blogPost,
-            context: {
-              slug: post.node.fields.slug,
-              previous,
-              next,
+  createTypes(
+    schema.buildObjectType({
+      name: `MdxBlogPost`,
+      fields: {
+        id: { type: `ID!` },
+        title: {
+          type: `String!`,
+        },
+        slug: {
+          type: `String!`,
+        },
+        date: { type: `Date!`, extensions: { dateformat: {} } },
+        tags: { type: `[String]!` },
+        keywords: { type: `[String]!` },
+        excerpt: {
+          type: `String!`,
+          args: {
+            pruneLength: {
+              type: `Int`,
+              defaultValue: 140,
             },
-          })
-        })
+          },
+          resolve: mdxResolverPassthrough(`excerpt`),
+        },
+        body: {
+          type: `String!`,
+          resolve: mdxResolverPassthrough(`body`),
+        },
+      },
+      interfaces: [`Node`, `BlogPost`],
+    })
+  )
+}
+
+// Create fields for post slugs and source
+// This will change with schema customization with work
+exports.onCreateNode = async (
+  { node, actions, getNode, createNodeId },
+  themeOptions
+) => {
+  const { createNode, createParentChildLink } = actions
+  const { contentPath, basePath } = withDefaults(themeOptions)
+
+  // Make sure it's an MDX node
+  if (node.internal.type !== `Mdx`) {
+    return
+  }
+
+  // Create source field (according to contentPath)
+  const fileNode = getNode(node.parent)
+  const source = fileNode.sourceInstanceName
+
+  if (node.internal.type === `Mdx` && source === contentPath) {
+    let slug
+    if (node.frontmatter.slug) {
+      if (path.isAbsolute(node.frontmatter.slug)) {
+        // absolute paths take precedence
+        slug = node.frontmatter.slug
+      } else {
+        // otherwise a relative slug gets turned into a sub path
+        slug = urlResolve(basePath, node.frontmatter.slug)
+      }
+    } else {
+      // otherwise use the filepath function from gatsby-source-filesystem
+      const filePath = createFilePath({
+        node: fileNode,
+        getNode,
+        basePath: contentPath,
       })
-    )
+
+      slug = urlResolve(basePath, filePath)
+    }
+    const fieldData = {
+      title: node.frontmatter.title,
+      tags: node.frontmatter.tags || [],
+      slug,
+      date: node.frontmatter.date,
+      keywords: node.frontmatter.keywords || [],
+    }
+
+    const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
+    await createNode({
+      ...fieldData,
+      // Required fields.
+      id: mdxBlogPostId,
+      parent: node.id,
+      children: [],
+      internal: {
+        type: `MdxBlogPost`,
+        contentDigest: crypto
+          .createHash(`md5`)
+          .update(JSON.stringify(fieldData))
+          .digest(`hex`),
+        content: JSON.stringify(fieldData),
+        description: `Mdx implementation of the BlogPost interface`,
+      },
+    })
+    createParentChildLink({ parent: node, child: getNode(mdxBlogPostId) })
+  }
+}
+
+// These templates are simply data-fetching wrappers that import components
+const PostTemplate = require.resolve(`./src/templates/post-query`)
+const PostsTemplate = require.resolve(`./src/templates/posts-query`)
+
+exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
+  const { createPage } = actions
+  const { basePath } = withDefaults(themeOptions)
+
+  const result = await graphql(`
+    {
+      allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
+    }
+  `)
+
+  if (result.errors) {
+    reporter.panic(result.errors)
+  }
+
+  // Create Posts and Post pages.
+  const { allBlogPost } = result.data
+  const posts = allBlogPost.edges
+
+  // Create a page for each Post
+  posts.forEach(({ node: post }, index) => {
+    const previous = index === posts.length - 1 ? null : posts[index + 1]
+    const next = index === 0 ? null : posts[index - 1]
+    const { slug } = post
+    createPage({
+      path: slug,
+      component: PostTemplate,
+      context: {
+        id: post.id,
+        previousId: previous ? previous.node.id : undefined,
+        nextId: next ? next.node.id : undefined,
+      },
+    })
+  })
+
+  // // Create the Posts page
+  createPage({
+    path: basePath,
+    component: PostsTemplate,
+    context: {},
   })
 }
