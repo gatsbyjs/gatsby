@@ -111,15 +111,17 @@ const paginate = (results = [], { skip = 0, limit }) => {
   }
 }
 
-const link = ({ by = `id`, from }, originalResolver) => async (
+const link = (options = {}, fieldConfig) => async (
   source,
   args,
   context,
   info
 ) => {
-  const fieldValue = await originalResolver(source, args, context, {
+  const resolver = fieldConfig.resolve || context.defaultFieldResolver
+  const fieldValue = await resolver(source, args, context, {
     ...info,
-    fieldName: from || info.fieldName,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
@@ -133,7 +135,7 @@ const link = ({ by = `id`, from }, originalResolver) => async (
   const returnType = getNullableType(info.returnType)
   const type = getNamedType(returnType)
 
-  if (by === `id`) {
+  if (options.by === `id`) {
     if (Array.isArray(fieldValue)) {
       return context.nodeModel.getNodesByIds(
         { ids: fieldValue, type: type },
@@ -154,7 +156,7 @@ const link = ({ by = `id`, from }, originalResolver) => async (
     return { in: value }
   }
   const operator = Array.isArray(fieldValue) ? oneOf : equals
-  args.filter = by.split(`.`).reduceRight((acc, key, i, { length }) => {
+  args.filter = options.by.split(`.`).reduceRight((acc, key, i, { length }) => {
     return {
       [key]: i === length - 1 ? operator(acc) : acc,
     }
@@ -170,22 +172,24 @@ const link = ({ by = `id`, from }, originalResolver) => async (
     Array.isArray(result)
   ) {
     return fieldValue.map(value =>
-      result.find(obj => getValueAt(obj, by) === value)
+      result.find(obj => getValueAt(obj, options.by) === value)
     )
   } else {
     return result
   }
 }
 
-const fileByPath = ({ from }, originalResolver) => async (
+const fileByPath = (options = {}, fieldConfig) => async (
   source,
   args,
   context,
   info
 ) => {
-  const fieldValue = await originalResolver(source, args, context, {
+  const resolver = fieldConfig.resolve || context.defaultFieldResolver
+  const fieldValue = await resolver(source, args, context, {
     ...info,
-    fieldName: from || info.fieldName,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
@@ -282,7 +286,23 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
     return acc
   }, [])
 
+const defaultFieldResolver = (source, args, context, info) => {
+  if (!source || typeof source !== `object`) return null
+
+  if (info.from) {
+    if (info.fromNode) {
+      const node = context.nodeModel.findRootNodeAncestor(source)
+      if (!node) return null
+      return getValueAt(node, info.from)
+    }
+    return getValueAt(source, info.from)
+  }
+
+  return source[info.fieldName]
+}
+
 module.exports = {
+  defaultFieldResolver,
   findManyPaginated,
   findOne,
   fileByPath,

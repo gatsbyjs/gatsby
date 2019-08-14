@@ -1,3 +1,5 @@
+const { stripIndent } = require(`common-tags`)
+
 const errorMap = {
   "": {
     text: context => {
@@ -171,6 +173,34 @@ const errorMap = {
       `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${
         context.fileName
       }`,
+    level: `ERROR`,
+  },
+  // invalid or deprecated APIs
+  "11329": {
+    text: context =>
+      [
+        stripIndent(`
+          Your plugins must export known APIs from their gatsby-${
+            context.exportType
+          }.js.
+      
+          See https://www.gatsbyjs.org/docs/${
+            context.exportType
+          }-apis/ for the list of Gatsby ${context.exportType} APIs.
+        `),
+      ]
+        .concat([``].concat(context.errors))
+        .concat(
+          context.fixes.length > 0
+            ? [
+                ``,
+                `Some of the following may help fix the error(s):`,
+                ``,
+                ...context.fixes.map(fix => `- ${fix}`),
+              ]
+            : []
+        )
+        .join(`\n`),
     level: `ERROR`,
   },
 }

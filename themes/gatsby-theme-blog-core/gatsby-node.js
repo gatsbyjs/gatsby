@@ -5,24 +5,13 @@ const crypto = require(`crypto`)
 const Debug = require(`debug`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-const debug = Debug(`gatsby-theme-blog`)
-
-// These are customizable theme options we only need to check once
-let basePath
-let contentPath
-let assetPath
-
-// These templates are simply data-fetching wrappers that import components
-const PostTemplate = require.resolve(`./src/templates/post`)
-const PostsTemplate = require.resolve(`./src/templates/posts`)
+const debug = Debug(`gatsby-theme-blog-core`)
+const withDefaults = require(`./utils/default-options`)
 
 // Ensure that content directories exist at site-level
 exports.onPreBootstrap = ({ store }, themeOptions) => {
   const { program } = store.getState()
-
-  basePath = themeOptions.basePath || `/`
-  contentPath = themeOptions.contentPath || `content/posts`
-  assetPath = themeOptions.assetPath || `content/assets`
+  const { contentPath, assetPath } = withDefaults(themeOptions)
 
   const dirs = [
     path.join(program.directory, contentPath),
@@ -53,11 +42,23 @@ const mdxResolverPassthrough = fieldName => async (
   })
   return result
 }
-exports.sourceNodes = ({ actions, schema }) => {
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
+  createTypes(`interface BlogPost @nodeInterface {
+      id: ID!
+      title: String!
+      body: String!
+      slug: String!
+      date: Date! @dateformat
+      tags: [String]!
+      keywords: [String]!
+      excerpt: String!
+  }`)
+
   createTypes(
     schema.buildObjectType({
-      name: `BlogPost`,
+      name: `MdxBlogPost`,
       fields: {
         id: { type: `ID!` },
         title: {
@@ -66,7 +67,7 @@ exports.sourceNodes = ({ actions, schema }) => {
         slug: {
           type: `String!`,
         },
-        date: { type: `Date`, extensions: { dateformat: {} } },
+        date: { type: `Date!`, extensions: { dateformat: {} } },
         tags: { type: `[String]!` },
         keywords: { type: `[String]!` },
         excerpt: {
@@ -84,88 +85,19 @@ exports.sourceNodes = ({ actions, schema }) => {
           resolve: mdxResolverPassthrough(`body`),
         },
       },
-      interfaces: [`Node`],
+      interfaces: [`Node`, `BlogPost`],
     })
   )
 }
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
-
-  const result = await graphql(`
-    {
-      site {
-        siteMetadata {
-          title
-          social {
-            name
-            url
-          }
-        }
-      }
-      mdxPages: allBlogPost(
-        sort: { fields: [date, title], order: DESC }
-        limit: 1000
-      ) {
-        edges {
-          node {
-            id
-            excerpt
-            slug
-            title
-            date(formatString: "MMMM DD, YYYY")
-          }
-        }
-      }
-    }
-  `)
-
-  if (result.errors) {
-    reporter.panic(result.errors)
-  }
-
-  // Create Posts and Post pages.
-  const {
-    mdxPages,
-    site: { siteMetadata },
-  } = result.data
-  const posts = mdxPages.edges
-  const { title: siteTitle, social: socialLinks } = siteMetadata
-
-  // Create a page for each Post
-  posts.forEach(({ node: post }, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1]
-    const next = index === 0 ? null : posts[index - 1]
-    const { slug } = post
-    createPage({
-      path: slug,
-      component: PostTemplate,
-      context: {
-        ...post,
-        siteTitle,
-        socialLinks,
-        previous,
-        next,
-      },
-    })
-  })
-
-  // Create the Posts page
-  createPage({
-    path: basePath,
-    component: PostsTemplate,
-    context: {
-      posts,
-      siteTitle,
-      socialLinks,
-    },
-  })
-}
-
 // Create fields for post slugs and source
 // This will change with schema customization with work
-exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
+exports.onCreateNode = async (
+  { node, actions, getNode, createNodeId },
+  themeOptions
+) => {
   const { createNode, createParentChildLink } = actions
+  const { contentPath } = withDefaults(themeOptions)
 
   // Make sure it's an MDX node
   if (node.internal.type !== `Mdx`) {
@@ -190,22 +122,77 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId }) => {
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
     }
-    createNode({
+
+    const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
+    await createNode({
       ...fieldData,
       // Required fields.
-      id: createNodeId(`${node.id} >>> BlogPost`),
+      id: mdxBlogPostId,
       parent: node.id,
       children: [],
       internal: {
-        type: `BlogPost`,
+        type: `MdxBlogPost`,
         contentDigest: crypto
           .createHash(`md5`)
           .update(JSON.stringify(fieldData))
           .digest(`hex`),
         content: JSON.stringify(fieldData),
-        description: `Blog Posts`,
+        description: `Mdx implementation of the BlogPost interface`,
       },
     })
-    createParentChildLink({ parent: fileNode, child: node })
+    createParentChildLink({ parent: node, child: getNode(mdxBlogPostId) })
   }
+}
+
+// These templates are simply data-fetching wrappers that import components
+const PostTemplate = require.resolve(`./src/templates/post-query`)
+const PostsTemplate = require.resolve(`./src/templates/posts-query`)
+
+exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
+  const { createPage } = actions
+  const { basePath } = withDefaults(themeOptions)
+
+  const result = await graphql(`
+    {
+      allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
+    }
+  `)
+
+  if (result.errors) {
+    reporter.panic(result.errors)
+  }
+
+  // Create Posts and Post pages.
+  const { allBlogPost } = result.data
+  const posts = allBlogPost.edges
+
+  // Create a page for each Post
+  posts.forEach(({ node: post }, index) => {
+    const previous = index === posts.length - 1 ? null : posts[index + 1]
+    const next = index === 0 ? null : posts[index - 1]
+    const { slug } = post
+    createPage({
+      path: slug,
+      component: PostTemplate,
+      context: {
+        id: post.id,
+        previousId: previous ? previous.node.id : undefined,
+        nextId: next ? next.node.id : undefined,
+      },
+    })
+  })
+
+  // // Create the Posts page
+  createPage({
+    path: basePath,
+    component: PostsTemplate,
+    context: {},
+  })
 }

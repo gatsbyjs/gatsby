@@ -189,6 +189,10 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
               ...rest,
             },
             plugin.pluginOptions
@@ -229,6 +233,10 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
               ...rest,
             },
             plugin.pluginOptions

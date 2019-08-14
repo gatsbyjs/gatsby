@@ -85,7 +85,7 @@ plugins: [
 
 ### SASS Precision
 
-SASS defaults to [5 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. if you use Bootstrap), you may configure it as follows:
+SASS defaults to [10 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. if you use Bootstrap), you may configure it as follows:
 
 #### Bootstrap 4
 
@@ -139,7 +139,7 @@ plugins: [
       // Override the file regex for SASS
       sassRuleTest: /\.global\.s(a|c)ss$/,
       // Override the file regex for CSS modules
-      sassRuleModulesTest: /\.global\.s(a|c)ss$/,
+      sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
     },
   },
 ]
