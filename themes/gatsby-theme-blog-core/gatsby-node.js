@@ -129,7 +129,6 @@ exports.onCreateNode = async (
 
       slug = urlResolve(basePath, filePath)
     }
-    console.log("slug", slug)
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
