@@ -1,14 +1,14 @@
 {
   "name": "gatsby-theme-blog-core",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "main": "index.js",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
   "peerDependencies": {
+    "@mdx-js/react": "^1.0.27",
     "gatsby": "^2.13.13",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "@mdx-js/react": "^1.0.27"
+    "react-dom": "^16.8.6"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.3.0",
