@@ -6946,3 +6946,14 @@
   built_by: Chandra Bhushan
   built_by_url: https://github.com/chandu2304
   featured: false
+- title: Mill3 Studio
+  main_url: https://mill3.studio/en/
+  url: https://mill3.studio/en/
+  description: >
+    Our agency specializes in the analysis, strategy and development of digital products.
+  categories:
+    - Agency
+    - Portfolio
+  built_by: Mill3
+  built_by_url: https://mill3.studio/en/
+  featured: false
