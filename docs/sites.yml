@@ -6991,3 +6991,14 @@
   built_by: Fullstack HQ
   built_by_url: https://fullstackhq.com/
   featured: false
+- title: Cantas
+  main_url: https://www.cantas.co.jp
+  url: https://www.cantas.co.jp
+  description: >
+    Cantas is digital marketing company in Japan.
+  categories:
+    - Business
+    - Agency
+  built_by: Cantas
+  built_by_url: https://www.cantas.co.jp
+  featured: false
