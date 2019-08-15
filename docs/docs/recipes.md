@@ -1107,27 +1107,29 @@ export default () => (
 
 ### Optimizing and querying local images with gatsby-image
 
-The `gatsby-image` plugin can take out much of the pain of optimizing images for your site. Once installed, Gatsby will generate optimized resources to improve loading. Those resources can be queried with GraphQL and passed into Gatsby's image component to do the heavy lifting of creating different image sizes and loading them at the right times for you.
+The `gatsby-image` plugin can relieve much of the pain associated with optimizing images in your site. 
+
+Gatsby will generate optimized resources which can be queried with GraphQL and passed into Gatsby's image component. This takes care of the heavy lifting including creating several image sizes and loading them at the right time.
 
 #### Prerequisites
 
-- the `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed
-- [images sourced](/packages/gatsby-image/#install) in your `gatsby-config` with a plugin like `gatsby-source-filesystem`
+- The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
+- [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 
 #### Directions
 
-1. First, import `Img` from `gatsby-image`, as well as `graphql` and `useStaticQuery` from `gatsby` into a component
+1. First, import `Img` from `gatsby-image`, as well as `graphql` and `useStaticQuery` from `gatsby`
 
 ```jsx
 import { useStaticQuery, graphql } from "gatsby" // to query for image data
 import Img from "gatsby-image" // to take image data and render it
 ```
 
-2. Write a query to get image(s) data, and provide the data to the `<Img />` component:
+2. Write a query to get image data, and pass the data into the `<Img />` component:
 
 Choose any of the following options or a combination of them.
 
-a. for a single image based on its path from where the images are [sourced](/docs/content-and-data/) (ex: `images/corgi.jpg`)
+a. a single image queried by its file [path](/docs/content-and-data/) (Example: `images/corgi.jpg`)
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1151,7 +1153,7 @@ return (
 )
 ```
 
-b. with a [GraphQL fragment](/docs/using-fragments/), querying for the necessary fields more tersely
+b. using a [GraphQL fragment](/docs/using-fragments/), to query for the necessary fields more tersely
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1171,7 +1173,7 @@ return (
 )
 ```
 
-c. for a directory (ex. `images/dogs`) of images by [filtering](/docs/graphql-reference/#filter) for the extension and relative directory fields, and then mapping the results into `Img` components
+c. several images from a directory (Example: `images/dogs`) [filtered](/docs/graphql-reference/#filter) by the `extension` and `relativeDirectory` fields, and then mapped into `Img` components
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1212,9 +1214,9 @@ return (
 )
 ```
 
-**Note**: with this method it is difficult to match images to `alt` text for accessibility. This example uses images with alt text encoded in the filenames like `dog in a party hat.jpg`.
+**Note**: This method can make it difficult to match images with `alt` text for accessibility. This example uses images with `alt` text included in the filename, like `dog in a party hat.jpg`.
 
-d. for an image of a fixed size with the `fixed` field, instead of `fluid`
+d. an image of a fixed size using the `fixed` field instead of `fluid`
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1233,7 +1235,7 @@ return (
 )
 ```
 
-e. for an image of a fixed size with `maxWidth`
+e. an image of a fixed size with a `maxWidth`
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1252,7 +1254,7 @@ return (
 )
 ```
 
-f. for an image filling a fluid container with a max width (800px) and a higher quality (75%, the default value is 50 which equates to 50%)
+f. an image filling a fluid container with a max width (in pixels) and a higher quality (the default value is 50 i.e. 50%)
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1272,7 +1274,7 @@ return (
 )
 ```
 
-3. (Optional) you can add inline styles to the `<Img />` like you would to other elements
+3. (Optional) Add inline styles to the `<Img />` like you would to other components
 
 ```jsx
 <Img
@@ -1282,7 +1284,7 @@ return (
 />
 ```
 
-4. (Optional) you can force an image into a desired aspect ratio by overriding the `aspectRatio` field returned from the GraphQL query that gets passed into the `<Img />` component
+4. (Optional) Force an image into a desired aspect ratio by overriding the `aspectRatio` field returned by the GraphQL query before it is passed into the `<Img />` component
 
 ```jsx
 <Img
@@ -1294,31 +1296,31 @@ return (
 />
 ```
 
-5. Run `gatsby develop`, which will generate images for files sourced in the filesystem (if it hasn't already done so, and cached them)
+5. Run `gatsby develop`, to generate images from files in the filesystem (if not done already) and cache them
 
 #### Additional Resources
 
-- [Example repo implementing these examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
+- [Example repository illustrating these examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
 - [Gatsby Image API](/docs/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image)
 - [More on working with images in Gatsby](/docs/working-with-images/)
 
 ### Optimizing and querying images in post frontmatter with gatsby-image
 
-For use cases like a featured image for a blog post, you can still use `gatsby-image`. The `gatsby-image` component needs to be given processed image data, which can come from a file locally or remote, including from a url in the frontmatter of a `.md` or `.mdx` file.
+For use cases like a featured image in a blog post, you can _still_ use `gatsby-image`. The `Img` component needs processed image data, which can come from a local (or remote) file, including from a URL in the frontmatter of a `.md` or `.mdx` file.
 
-For inline images inside of markdown (using the `![]()` markdown syntax), consider a plugin like [`gatsby-remark-images`](/packages/gatsby-remark-images/)
+To inline images in markdown (using the `![]()` syntax), consider using a plugin like [`gatsby-remark-images`](/packages/gatsby-remark-images/)
 
 #### Prerequisites
 
-- the `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed
-- [images sourced](/packages/gatsby-image/#install) in your `gatsby-config` with a plugin like `gatsby-source-filesystem`
-- markdown files sourced in your `gatsby-config` with an image url in the post frontmatter
-- [pages created](/docs/creating-and-modifying-pages/) from sourced markdown with the `createPages` method
+- The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
+- [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
+- Markdown files sourced in your `gatsby-config` with image URLs in frontmatter
+- [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
 
 #### Directions
 
-1. Verify that your markdown file has an image url with a correct path to an image in your project
+1. Verify that the Markdown file has an image URL with a valid path to an image file in your project
 
 ```mdx:title=post.mdx
 ---
@@ -1329,7 +1331,7 @@ featuredImage: ./corgi.png // highlight-line
 Post content...
 ```
 
-2. Verify that a unique identifier (like a slug in this case) is passed into the context of the call to `createPages` in your `gatsby-node.js`, which will be passed into the GraphQL query in the layout component as a variable `slug`
+2. Verify that a unique identifier (a slug in this example) is passed in context when `createPages` is called in `gatsby-node.js`, which will later be passed into a GraphQL query in the Layout component
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
@@ -1351,7 +1353,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-3. Then, import `Img` from `gatsby-image`, and `graphql` from `gatsby` into the template component being used for your markdown, write a [pageQuery](/docs/page-query/) to get image data based off of the `slug` passed in through the page context, and provide the data to the `<Img />` component:
+3. Now, import `Img` from `gatsby-image`, and `graphql` from `gatsby` into the template component, write a [pageQuery](/docs/page-query/) to get image data based on the passed in `slug` and pass that data to the `<Img />` component:
 
 ```jsx:title=markdown-layout.jsx
 import React from "react"
@@ -1394,7 +1396,7 @@ export const pageQuery = graphql`
 
 #### Additional Resources
 
-- [Example repo implementing this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
+- [Example repository using this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
 - [Featured images with frontmatter](/docs/working-with-images-in-markdown/#featured-images-with-frontmatter-metadata)
 - [Gatsby Image API](/docs/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image)
