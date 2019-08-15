@@ -298,4 +298,47 @@ describe(`rich-text entry field inclusion/exclusion`, () => {
       expect(includedFields).toContain(`body`)
     })
   })
+
+  describe(`when there is an entryFieldTransformer`, () => {
+    const pluginOptions = {
+      richText: {
+        entryFieldTransformer: fields => {
+          if (fields.slug) {
+            delete fields.slug
+          }
+
+          return fields
+        },
+      },
+    }
+
+    it(`transforms the field values using the entryFieldTransformer`, () => {
+      const entryItemFieldValue = {
+        data: {
+          target: {
+            sys: { id: `id123` },
+            fields: {
+              title: `This is a title`,
+              body: `This is the body`,
+              slug: `this-is-a-slug`,
+            },
+          },
+        },
+      }
+      const resolvable = new Set()
+      resolvable.add(`id123`)
+
+      normalize.applyRichTextEntryFieldFilters(
+        entryItemFieldValue,
+        resolvable,
+        pluginOptions
+      )
+
+      const transformedFields = Object.keys(
+        entryItemFieldValue.data.target.fields
+      )
+
+      expect(transformedFields).not.toContain(`slug`)
+    })
+  })
 })
