@@ -1074,7 +1074,7 @@ You might want to use them to share multiple fields between queries or to co-loc
 
 #### Directions
 
-1. Declare a `graphql` template string with a Fragment in it. The fragment should be made up of the keyword fragment, a name, and the GraphQL type it is associated with (in this case of type `Site`, demonstrated by `on Site`), and the fields that make up the fragment inside:
+1. Declare a `graphql` template string with a Fragment in it. The fragment should be made up of the keyword `fragment`, a name, the GraphQL type it is associated with (in this case of type `Site`, as demonstrated by `on Site`), and the fields that make up the fragment:
 
 ```jsx
 export const query = graphql`
@@ -1087,7 +1087,7 @@ export const query = graphql`
 `
 ```
 
-2. Then you can include the fragment in a query for a field of the type specified by the fragment, to include those fields without you having to type them all out:
+2. Now, include the fragment in a query for a field of the type specified by the fragment. This includes those fields without having to declare them all independently:
 
 ```diff
 export const pageQuery = graphql`
@@ -1101,7 +1101,7 @@ export const pageQuery = graphql`
 `
 ```
 
-**Note**: if the fragment is used in a different file it doesn't need to be imported. Exporting the query from the original file will make it available for queries across your project.
+**Note**: Fragments don't need to be imported in Gatsby. Exporting a query with a Fragment makes that Fragment available in _all_ queries in your project.
 
 Fragments can be nested inside other fragments, and multiple fragments can be used in the same query.
 
