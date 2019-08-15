@@ -52,12 +52,12 @@ async function queryResult(nodes, query) {
     schema,
     query,
     undefined,
-    withResolverContext(
-      context,
+    withResolverContext({
       schema,
-      schemaCustomization.composer,
-      schemaCustomization.context
-    )
+      schemaComposer: schemaCustomization.composer,
+      context,
+      customContext: schemaCustomization.context,
+    })
   )
 }
 

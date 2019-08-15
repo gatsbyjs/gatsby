@@ -19,7 +19,10 @@ describe(`Query schema`, () => {
       schema,
       query,
       undefined,
-      withResolverContext({}, schema, schemaComposer)
+      withResolverContext({
+        schema,
+        schemaComposer,
+      })
     )
 
   beforeAll(async () => {

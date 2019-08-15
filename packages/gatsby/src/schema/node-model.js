@@ -66,17 +66,21 @@ class LocalNodeModel {
     schemaComposer,
     nodeStore,
     createPageDependency,
-    path,
+    preparedNodesCache,
   }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.nodeStore = nodeStore
     this.createPageDependency = createPageDependency
-    this.path = path
 
     this._rootNodeMap = new WeakMap()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
+    this._preparedNodesCache = new Map()
+  }
+
+  withContext(context) {
+    return new ContextualNodeModel(this, context)
   }
 
   /**
@@ -290,7 +294,12 @@ class LocalNodeModel {
       }
     )
 
-    if (!_.isEmpty(fieldsToResolve)) {
+    const actualFieldsToResolve = deepObjectDifference(
+      fieldsToResolve,
+      this._preparedNodesCache.get(typeName) || {}
+    )
+
+    if (!_.isEmpty(actualFieldsToResolve)) {
       await this.nodeStore.updateNodesByType(type.name, async node => {
         this.trackInlineObjectsInRootNode(node)
         const resolvedFields = await resolveRecursive(
@@ -300,14 +309,23 @@ class LocalNodeModel {
           node,
           type,
           queryFields,
-          fieldsToResolve
+          actualFieldsToResolve
         )
         const newNode = {
           ...node,
           _$resolved: _.merge(node._$resolved || {}, resolvedFields),
         }
+
         return newNode
       })
+      this._preparedNodesCache.set(
+        typeName,
+        _.merge(
+          {},
+          this._preparedNodesCache.get(typeName) || {},
+          actualFieldsToResolve
+        )
+      )
     }
   }
 
@@ -374,12 +392,8 @@ class LocalNodeModel {
    * @param {PageDependencies} [pageDependencies]
    * @returns {Node | Node[]}
    */
-  trackPageDependencies(result, pageDependencies) {
-    const fullDependencies = {
-      path: this.path,
-      ...(pageDependencies || {}),
-    }
-    const { path, connectionType } = fullDependencies
+  trackPageDependencies(result, pageDependencies = {}) {
+    const { path, connectionType } = pageDependencies
     if (path) {
       if (connectionType) {
         this.createPageDependency({ path, connection: connectionType })
@@ -392,6 +406,60 @@ class LocalNodeModel {
     }
 
     return result
+  }
+}
+
+class ContextualNodeModel {
+  constructor(rootNodeModel, context) {
+    this.nodeModel = rootNodeModel
+    this.context = context
+  }
+
+  withContext(context) {
+    return new ContextualNodeModel(this.nodeModel, {
+      ...this.context,
+      ...context,
+    })
+  }
+
+  getNodeById(...args) {
+    return this.nodeModel.getNodeById(...args)
+  }
+
+  getNodesByIds(...args) {
+    return this.nodeModel.getNodesByIds(...args)
+  }
+
+  getAllNodes(...args) {
+    return this.nodeModel.getAllNodes(...args)
+  }
+
+  runQuery(...args) {
+    return this.nodeModel.runQuery(...args)
+  }
+  prepareNodes(...args) {
+    return this.nodeModel.prepareNodes(...args)
+  }
+
+  getTypes(...args) {
+    return this.nodeModel.getTypes(...args)
+  }
+
+  trackInlineObjectsInRootNode(...args) {
+    return this.nodeModel.trackInlineObjectsInRootNode(...args)
+  }
+
+  findRootNodeAncestor(...args) {
+    return this.nodeModel.findRootNodeAncestor(...args)
+  }
+
+  trackPageDependencies(result, pageDependencies) {
+    const fullDependencies = {
+      path: this.path,
+      ...(pageDependencies || {}),
+    }
+
+    return this.nodeModel.trackPageDependencies(result, fullDependencies)
   }
 }
 
@@ -642,6 +710,24 @@ const addRootNodeToInlineObject = (
       rootNodeMap.set(data, nodeId)
     }
   }
+}
+
+const deepObjectDifference = (from, to) => {
+  const result = {}
+  Object.keys(from).forEach(key => {
+    const toValue = to[key]
+    if (toValue) {
+      if (_.isPlainObject(toValue)) {
+        const deepResult = deepObjectDifference(from[key], toValue)
+        if (!_.isEmpty(deepResult)) {
+          result[key] = deepResult
+        }
+      }
+    } else {
+      result[key] = from[key]
+    }
+  })
+  return result
 }
 
 module.exports = {

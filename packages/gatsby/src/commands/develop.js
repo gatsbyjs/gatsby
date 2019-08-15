@@ -40,7 +40,6 @@ const db = require(`../db`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
-const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
 const requiresWriter = require(`../bootstrap/requires-writer`)
 
@@ -156,15 +155,16 @@ async function startServer(program) {
     graphqlEndpoint,
     graphqlHTTP(() => {
       const { schema, schemaCustomization } = store.getState()
+
       return {
         schema,
         graphiql: false,
-        context: withResolverContext(
-          {},
+        context: withResolverContext({
           schema,
-          schemaCustomization.composer,
-          schemaCustomization.context
-        ),
+          schemaComposer: schemaCustomization.composer,
+          context: {},
+          customContext: schemaCustomization.context,
+        }),
         formatError(err) {
           return {
             ...formatError(err),
@@ -377,7 +377,7 @@ module.exports = async (program: any) => {
   await waitJobsFinished()
   requiresWriter.startListener()
   db.startAutosave()
-  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryUtil.startListeningToDevelopQueue()
   queryWatcher.startWatchDeletePage()
 
   const [compiler] = await startServer(program)

@@ -119,7 +119,10 @@ describe(`Query fields of type File`, () => {
       schema,
       query,
       undefined,
-      withResolverContext({}, schema, schemaComposer)
+      withResolverContext({
+        schema,
+        schemaComposer,
+      })
     )
 
   beforeAll(async () => {

@@ -31,7 +31,12 @@ describe(`Kitchen sink schema test`, () => {
       schema,
       query,
       undefined,
-      withResolverContext({}, schema, schemaComposer)
+      withResolverContext({
+        schema,
+        schemaComposer,
+        context: {},
+        customContext: {},
+      })
     )
 
   beforeAll(async () => {

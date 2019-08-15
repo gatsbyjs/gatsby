@@ -4,6 +4,7 @@ const nodeStore = require(`../../db/nodes`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
+const typeBuilders = require(`../types/type-builders`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -369,6 +370,114 @@ describe(`NodeModel`, () => {
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result.id).toBe(`file1`)
       })
+    })
+  })
+
+  describe(`prepare nodes caching`, () => {
+    let resolveBetterTitleMock
+    let resolveOtherTitleMock
+    beforeEach(async () => {
+      const nodes = (() => [
+        {
+          id: `id1`,
+          title: `Foo`,
+          internal: {
+            type: `Test`,
+            contentDigest: `0`,
+          },
+        },
+      ])()
+      store.dispatch({ type: `DELETE_CACHE` })
+      nodes.forEach(node =>
+        actions.createNode(node, { name: `test` })(store.dispatch)
+      )
+      resolveBetterTitleMock = jest.fn()
+      resolveOtherTitleMock = jest.fn()
+      store.dispatch({
+        type: `CREATE_TYPES`,
+        payload: [
+          typeBuilders.buildObjectType({
+            name: `Test`,
+            interfaces: [`Node`],
+            fields: {
+              betterTitle: {
+                type: `String`,
+                resolve(parent) {
+                  resolveBetterTitleMock()
+                  return `I am amazing title: ${parent.title}`
+                },
+              },
+              otherTitle: {
+                type: `String`,
+                resolve(parent) {
+                  resolveOtherTitleMock()
+                  return `I am the other amazing title: ${parent.title}`
+                },
+              },
+            },
+          }),
+        ],
+      })
+
+      await build({})
+      const {
+        schemaCustomization: { composer: schemaComposer },
+      } = store.getState()
+      schema = store.getState().schema
+
+      nodeModel = new LocalNodeModel({
+        schema,
+        schemaComposer,
+        nodeStore,
+        createPageDependency,
+      })
+    })
+
+    it(`should not resolve prepared nodes more than once`, async () => {
+      await nodeModel.runQuery(
+        {
+          query: { filter: { betterTitle: { eq: `foo` } } },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
+      await nodeModel.runQuery(
+        {
+          query: { filter: { betterTitle: { eq: `foo` } } },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(1)
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(1)
     })
   })
 
