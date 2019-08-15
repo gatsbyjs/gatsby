@@ -72,4 +72,4 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
 }
 ```
 
-Another solution is to use a package named [reactloadble] (https://github.com/jamiebuilds/react-loadable). The module that wants to use the window object will be imported in a way that doesn't trigger a build error.
+Another solution is to use a package named [reactloadble](https://github.com/jamiebuilds/react-loadable). The module that wants to use the window object will be imported in a way that doesn't trigger a build error.
