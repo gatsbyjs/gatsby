@@ -19,10 +19,18 @@ const getPackagesWithReadWriteAccess = async user => {
   }, {})
 }
 
-module.exports = function getUnownedPackages({
+module.exports = async function getUnownedPackages({
   rootPath = path.join(__dirname, `../..`),
   user,
 } = {}) {
+  // infer user from npm whoami
+  // set registry because yarn run hijacks registry
+  if (!user) {
+    user = await execP(`npm whoami --registry https://registry.npmjs.org`)
+      .then(({ stdout }) => stdout.trim())
+      .catch(() => process.exit(1))
+  }
+
   return getPackages(rootPath).then(async packages => {
     const graph = new PackageGraph(packages, `dependencies`, true)
 
@@ -34,14 +42,6 @@ module.exports = function getUnownedPackages({
       [],
       false
     )
-
-    // infer user from npm whoami
-    // set registry because yarn run hijacks registry
-    if (!user) {
-      user = await execP(`npm whoami --registry https://registry.npmjs.org`)
-        .then(({ stdout }) => stdout.trim())
-        .catch(() => process.exit(1))
-    }
 
     const alreadyOwnedPackages = await getPackagesWithReadWriteAccess(user)
 

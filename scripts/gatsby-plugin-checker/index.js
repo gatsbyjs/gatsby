@@ -3,6 +3,7 @@
 const fs = require(`fs`)
 const got = require(`got`)
 const path = require(`path`)
+require(`dotenv`).config()
 
 const keywords = [`gatsby-plugin`, `gatsby-source`, `gatsby-transformer`]
 const pluginsFile = path.join(__dirname, `plugins.json`)
@@ -108,6 +109,35 @@ const updatePlugins = (updates, plugins) => {
   return updates
 }
 
+const filterArchived = plugins => {
+  if (!process.env.GITHUB_API_TOKEN) {
+    throw `Please use instructions in README.md to setup GITHUB_API_TOKEN`
+  }
+
+  const promises = plugins.map(plugin => {
+    const [username, packageName] = plugin.links.repository.split(`/`).slice(-2)
+    const url = `https://api.github.com/repos/${username}/${packageName}`
+    return got(url, {
+      headers: {
+        Authorization: `token ${process.env.GITHUB_API_TOKEN}`,
+      },
+    })
+      .then(response => JSON.parse(response.body))
+      .then(repo => {
+        return { [packageName]: repo.archived }
+      })
+      .catch(_ => {
+        return { [packageName]: false }
+      })
+  })
+
+  return Promise.all(promises)
+    .then(resultsArray =>
+      resultsArray.reduce((obj, result) => Object.assign(obj, result))
+    )
+    .then(result => plugins.filter(plugin => !result[plugin.name]))
+}
+
 const main = () => {
   loadPlugins()
     .then(plugins =>
@@ -118,6 +148,7 @@ const main = () => {
         .then(packages => removePackagesWithoutRepository(packages))
         .then(packages => removeBadNameFormats(packages))
         .then(packages => removePackagesWithoutReadme(packages))
+        .then(packages => filterArchived(packages))
         .then(packages =>
           packages.map(p => {
             // TODO: notify / comment on github

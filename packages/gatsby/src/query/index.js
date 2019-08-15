@@ -51,7 +51,7 @@ const findIdsWithoutDataDependencies = state => {
   const notTrackedIds = _.difference(
     [
       ...Array.from(state.pages.values(), p => p.path),
-      ...[...state.staticQueryComponents.values()].map(c => c.jsonName),
+      ...[...state.staticQueryComponents.values()].map(c => c.id),
     ],
     [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
@@ -166,14 +166,13 @@ const processQueries = async (queryJobs, activity) => {
 
 const createStaticQueryJob = (state, queryId) => {
   const component = state.staticQueryComponents.get(queryId)
-  const { hash, jsonName, query, componentPath } = component
+  const { hash, id, query, componentPath } = component
   return {
     id: hash,
     hash,
-    jsonName,
     query,
     componentPath,
-    context: { path: jsonName },
+    context: { path: id },
   }
 }
 
@@ -187,11 +186,10 @@ const processStaticQueries = async (queryIds, { state, activity }) => {
 
 const createPageQueryJob = (state, page) => {
   const component = state.components.get(page.componentPath)
-  const { path, jsonName, componentPath, context } = page
+  const { path, componentPath, context } = page
   const { query } = component
   return {
     id: path,
-    jsonName,
     query,
     isPage: true,
     componentPath,

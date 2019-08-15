@@ -15,6 +15,7 @@ import {
   shadows,
   mediaQueries,
   fontSizes,
+  fontWeights,
 } from "../../utils/presets"
 
 const EcosystemSectionRoot = styled(`section`)`
@@ -63,6 +64,7 @@ const Title = styled(`h1`)`
   color: ${colors.gatsby};
   display: flex;
   font-size: ${fontSizes[4]};
+  font-weight: ${fontWeights[1]};
   line-height: ${lineHeights.solid};
   margin: 0;
   margin-bottom: ${space[1]};
@@ -90,7 +92,7 @@ const SubTitle = styled(`h2`)`
 `
 
 const Description = styled(`p`)`
-  color: ${colors.gray.lightCopy};
+  color: ${colors.text.primary};
   font-size: ${fontSizes[2]};
 `
 

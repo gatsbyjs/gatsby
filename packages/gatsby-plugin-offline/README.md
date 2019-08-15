@@ -21,10 +21,10 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Overriding options
 
-When adding this plugin to your `gatsby-config.js`, you can pass in options to
+When adding this plugin to your `gatsby-config.js`, you can pass in options (via the `options` key) to
 override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
 
-The default config is as follows. Warning: you can break the offline support by
+The default config is as follows. Warning: You can break the offline support by
 changing these options, so tread carefully.
 
 ```javascript
@@ -89,6 +89,8 @@ outdated version registered in users' browsers.
 
 ## Notes
 
+### Empty View Source and SEO
+
 Gatsby offers great SEO capabilities and that is no different with `gatsby-plugin-offline`. However, you shouldn't think that Gatsby doesn't serve HTML tags anymore when looking at your source code in the browser (with `Right click` => `View source`). `View source` doesn't represent the actual HTML data since `gatsby-plugin-offline` registers and loads a service worker that will cache and handle this differently. Your site is loaded from the service worker, not from its actual source (check your `Network` tab in the DevTools for that).
 
 To see the HTML data that crawlers will receive, run this in your terminal:
@@ -98,3 +100,7 @@ curl https://www.yourdomain.tld
 ```
 
 Alternatively you can have a look at the `/public/index.html` file in your project folder.
+
+### App shell and server logs
+
+Server logs (like from [Netlify analytics](https://www.netlify.com/products/analytics/)) may show a large number of pageviews to a route like `/offline-plugin-app-shell-fallback/index.html`, this is a result of `gatsby-plugin-offline` adding an [app shell](https://developers.google.com/web/fundamentals/architecture/app-shell) to the page. The app shell is a minimal amount of user interface that can be cached offline for reliable performance loading on repeat visits. The shell can be loaded from the cache, and the content of the site loaded into the shell by the service worker.

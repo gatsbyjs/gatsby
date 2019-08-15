@@ -1,6 +1,7 @@
 ---
 title: Data in Gatsby
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
@@ -302,9 +303,8 @@ import { css } from "@emotion/core"
 import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
-
+// highlight-start
 export default ({ children }) => {
-  // highlight-start
   const data = useStaticQuery(
     graphql`
       query {
@@ -316,8 +316,8 @@ export default ({ children }) => {
       }
     `
   )
-  // highlight-end
   return (
+    // highlight-end
     <div
       css={css`
         margin: 0 auto;
@@ -347,8 +347,10 @@ export default ({ children }) => {
       </Link>
       {children}
     </div>
+    // highlight-start
   )
 }
+// highlight-end
 ```
 
 Another success! 🎉

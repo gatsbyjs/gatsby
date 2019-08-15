@@ -6,7 +6,7 @@ excerpt: "The beginning of a beautiful new era: an overview of the steps I took 
 tags:
   - wordpress
   - migration
-  - blog
+  - blogs
 canonicalLink: https://www.taniarascia.com/migrating-from-wordpress-to-gatsby/
 ---
 

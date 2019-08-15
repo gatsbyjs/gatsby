@@ -2,13 +2,13 @@ import React from "react"
 import { colors, space, mediaQueries, fonts } from "../../utils/presets"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
-import { NetlifyIcon } from "../../assets/logos"
+import { NetlifyIcon } from "../../assets/vendor-logos/netlify.svg"
 
 const Source = ({ startersYaml, repoUrl }) => (
   <div
     css={{
       display: `flex`,
-      borderTop: `1px solid ${colors.ui.light}`,
+      borderTop: `1px solid ${colors.ui.border.subtle}`,
       fontFamily: fonts.header,
       margin: `0 ${space[6]}`,
       [mediaQueries.sm]: {
@@ -72,7 +72,7 @@ const Source = ({ startersYaml, repoUrl }) => (
       <span
         css={{
           marginRight: 20,
-          color: colors.gray.calm,
+          color: colors.text.secondary,
         }}
       >
         Try this starter

@@ -1,11 +1,11 @@
 const chokidar = require(`chokidar`)
 const _ = require(`lodash`)
+const del = require(`del`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 
-const {
-  publishPackagesLocallyAndInstall,
-} = require(`./local-npm-registry/verdaccio`)
+const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
 const { getDependantPackages } = require(`./utils/get-dependant-packages`)
 const { promisifiedSpawn } = require(`./utils/promisified-spawn`)
@@ -18,32 +18,56 @@ const quit = () => {
   process.exit()
 }
 
+const MAX_COPY_RETRIES = 3
+
 /*
- * non-existant packages break on('ready')
+ * non-existent packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
  */
-function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
+async function watch(
+  root,
+  packages,
+  { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
+) {
+  // determine if in yarn workspace - if in workspace, force using verdaccio
+  // as current logic of copying files will not work correctly.
+  const yarnWorkspaceRoot = findWorkspaceRoot()
+  if (yarnWorkspaceRoot && process.env.NODE_ENV !== `test`) {
+    console.log(`Yarn workspace found.`)
+    forceInstall = true
+  }
+
   let afterPackageInstallation = false
   let queuedCopies = []
 
-  const realCopyPath = ({ oldPath, newPath, quiet, resolve, reject }) => {
+  const realCopyPath = arg => {
+    const { oldPath, newPath, quiet, resolve, reject, retry = 0 } = arg
     fs.copy(oldPath, newPath, err => {
       if (err) {
-        console.error(err)
-        return reject(err)
+        if (retry >= MAX_COPY_RETRIES) {
+          console.error(err)
+          reject(err)
+          return
+        } else {
+          setTimeout(
+            () => realCopyPath({ ...arg, retry: retry + 1 }),
+            500 * Math.pow(2, retry)
+          )
+          return
+        }
       }
 
       numCopied += 1
       if (!quiet) {
         console.log(`Copied ${oldPath} to ${newPath}`)
       }
-      return resolve()
+      resolve()
     })
   }
 
-  const copyPath = (oldPath, newPath, quiet) =>
+  const copyPath = (oldPath, newPath, quiet, packageName) =>
     new Promise((resolve, reject) => {
-      const argObj = { oldPath, newPath, quiet, resolve, reject }
+      const argObj = { oldPath, newPath, quiet, packageName, resolve, reject }
       if (afterPackageInstallation) {
         realCopyPath(argObj)
       } else {
@@ -56,13 +80,62 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     queuedCopies.forEach(argObj => realCopyPath(argObj))
     queuedCopies = []
   }
+
+  const clearJSFilesFromNodeModules = async () => {
+    const packagesToClear = queuedCopies.reduce((acc, { packageName }) => {
+      if (packageName) {
+        acc.add(packageName)
+      }
+      return acc
+    }, new Set())
+
+    await Promise.all(
+      [...packagesToClear].map(
+        async packageToClear =>
+          await del([
+            `node_modules/${packageToClear}/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
+            `!node_modules/${packageToClear}/src/**/*.{js,js.map}`,
+          ])
+      )
+    )
+  }
   // check packages deps and if they depend on other packages from monorepo
   // add them to packages list
-  const { seenPackages: allPackagesToWatch, depTree } = traversePackagesDeps({
+  const { seenPackages, depTree } = traversePackagesDeps({
     root,
-    packages,
+    packages: _.uniq(localPackages),
     monoRepoPackages,
   })
+
+  const allPackagesToWatch = packages
+    ? _.intersection(packages, seenPackages)
+    : seenPackages
+
+  let ignoredPackageJSON = new Map()
+  const ignorePackageJSONChanges = (packageName, contentArray) => {
+    ignoredPackageJSON.set(packageName, contentArray)
+
+    return () => {
+      ignoredPackageJSON.delete(packageName)
+    }
+  }
+
+  if (forceInstall) {
+    try {
+      await publishPackagesLocallyAndInstall({
+        packagesToPublish: allPackagesToWatch,
+        root,
+        localPackages,
+        ignorePackageJSONChanges,
+        yarnWorkspaceRoot,
+      })
+    } catch (e) {
+      console.log(e)
+    }
+
+    process.exit()
+  }
 
   if (allPackagesToWatch.length === 0) {
     console.error(`There are no packages to watch.`)
@@ -74,6 +147,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
     /\.git/i,
     /\.DS_Store/,
     /[/\\]__tests__[/\\]/i,
+    /\.npmrc/i,
   ].concat(
     allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
   )
@@ -86,17 +160,9 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
-  let ignoredPackageJSON = new Map()
+
   const waitFor = new Set()
   let anyPackageNotInstalled = false
-
-  const ignorePackageJSONChanges = (packageName, contentArray) => {
-    ignoredPackageJSON.set(packageName, contentArray)
-
-    return () => {
-      ignoredPackageJSON.delete(ignoredPackageJSON)
-    }
-  }
 
   const watchEvents = [`change`, `add`]
 
@@ -189,13 +255,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
         return
       }
 
-      if (packagesToPublish.has(packageName)) {
-        // we are in middle of publishing to localy registry,
-        // so we don't need to copy files as yarn will handle this
-        return
-      }
-
-      let localCopies = [copyPath(filePath, newPath, quiet)]
+      let localCopies = [copyPath(filePath, newPath, quiet, packageName)]
 
       // If this is from "cache-dir" also copy it into the site's .cache
       if (_.includes(filePath, `cache-dir`)) {
@@ -216,14 +276,13 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
       if (isInitialScan) {
         isInitialScan = false
         if (packagesToPublish.size > 0) {
-          const publishAndInstallPromise = publishPackagesLocallyAndInstall({
+          await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
             root,
-            packages,
+            localPackages,
             ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
-          allCopies.push(publishAndInstallPromise)
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]
@@ -233,6 +292,7 @@ function watch(root, packages, { scanOnce, quiet, monoRepoPackages }) {
           console.log(`Installation complete`)
         }
 
+        await clearJSFilesFromNodeModules()
         runQueuedCopies()
       }
 

@@ -57,23 +57,6 @@ It's difficult to pin down exactly _how_ to fix a scaling issue. We have some re
 
 Note: the application of these techniques should be considered analogous to a applying a bandage. A bandage solves the underlying issue, but at some indeterminate point in the future the underlying issue may be healed! In much the same way--treat these techniques as temporary and re-visit in the future if underlying scaling issues in Gatsby have since been resolved.
 
-### `DANGEROUSLY_DISABLE_OOM`
-
-Gatsby's caching mechanism persists a (possibly!) large `json` file to disk _in memory._ To opt-out of this, consider something like:
-
-```json
-{
-  "devDependencies": {
-    "cross-env": "^5.2.0"
-  },
-  "scripts": {
-    "build": "cross-env DANGEROUSLY_DISABLE_OOM=true gatsby build"
-  }
-}
-```
-
-This will prevent caching, so it's recommended to only use this alongside the `gatsby build` command.
-
 ### `GATSBY_DB_NODES`
 
 In preparation for future versions of Gatsby, we've enabled **experimental** support for a different mechanism for the persistence of nodes: [Loki](https://www.npmjs.com/package/lokijs). It's challenging to assess whether this could lead to unforeseen issues without breaking changes, so we've exposed it behind a flag while we continue to assess the impact to Gatsby applications.
@@ -88,5 +71,20 @@ Loki allows us to opt-in to possibly more performant internal operations and it 
   "scripts": {
     "build": "cross-env GATSBY_DB_NODES=loki gatsby build"
   }
+}
+```
+
+### Switch off type inference for `SitePage.context`
+
+When using the `createPages` API to pass large amounts of data to pages via `context` (which is generally not recommended), Gatsby's type inference can become slow. In most cases, it is not actually necessary to include the `SitePage.context` field in the GraphQL schema, so switching off type inference for the `SitePage` type should be safe:
+
+```js
+// gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type SitePage implements Node @dontInfer {
+      path: String!
+    }
+  `)
 }
 ```

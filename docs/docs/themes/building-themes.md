@@ -2,154 +2,110 @@
 title: Building Themes
 ---
 
-> ⚠⚠ Gatsby Themes are currently experimental ⚠⚠
+The quickest way to get up and running with a workspace for building themes is to use the official [`gatsby-starter-theme-workspace`](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace) starter.
 
-## Gatsby Theme Starter
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-the-gatsby-theme-workspace-starter-to-begin-building-a-new-theme"
+  lessonTitle="Use the Gatsby Theme Workspace Starter to Begin Building a New Theme"
+/>
 
-There's a Gatsby Theme Starter which you can use to get up and running quickly:
-
-```shell
-npx gatsby new my-theme https://github.com/ChristopherBiscardi/gatsby-starter-theme
-```
-
-This starter will set you up with a yarn workspace and example site which you can
-use to develop your theme. Yarn is required in this project since npm doesn't offer
-workspace functionality. If you haven't set up yarn you can follow along with the
-[yarn setup guide](/contributing/setting-up-your-local-dev-environment/#using-yarn).
-
-If you'd like to walk through setting up a theme project from scratch each step is
-detailed below.
-
-## Initialize a Theme
-
-For the purposes of this tutorial we will be using the name `gatsby-theme-developer`.
-You will likely want to replace `developer` with your own theme name.
-
-To get started, create a directory for your project, initialize npm and install the
-required dependencies.
+To get started, run:
 
 ```shell
-mkdir gatsby-theme-developer
-cd gatsby-theme-developer
-git init
-npm init -y
-npm i -D gatsby react react-dom
+gatsby new my-theme gatsbyjs/gatsby-starter-theme-workspace
 ```
 
-## Add Dependencies
+This will generate a new project for you. The file tree will look like this:
 
-Then, you need to specify `gatsby`, `react`, and `react-dom` as peer dependencies in your theme's `package.json` file. This
-will warn users that install your theme if they're missing those dependencies since they're
-required. The `peerDependencies` approach also allows users to determine what versions
-of Gatsby and React that they'd like to use.
+```text
+.
+├── example
+│   ├── src
+│   │   └── pages
+│   │       └── index.js
+│   ├── gatsby-config.js
+│   ├── package.json
+│   └── README.md
+├── gatsby-theme-minimal
+│   ├── gatsby-config.js
+│   ├── index.js
+│   ├── package.json
+│   └── README.md
+├── .gitignore
+├── package.json
+├── README.md
+└── yarn.lock
+```
 
-```json
+Yarn workspaces are a great way to set up a project for theme development because they support housing multiple packages in a single parent directory and link them together.
+
+For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project, and develop them locally.
+
+> 💡 If you prefer, using `yarn link` or `npm link` are viable alternatives. In general, Gatsby recommends the yarn workspaces approach for building themes, and that's what the starter and this guide will reflect.
+
+> 💡 The starter takes care of all of the configuration for developing a theme using yarn workspaces. If you're interested in more detail on this setup, check out [this blog post](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
+
+### `package.json`
+
+The `package.json` in the root of the new project is primarily responsible for setting up the yarn workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
+
+```json:title=my-theme/package.json
 {
-  "name": "gatsby-theme-developer",
-  "description": "Gatsby theme for developers",
-  "author": "John Otander",
+  "name": "gatsby-starter-theme-workspace",
+  "private": true,
   "version": "0.0.1",
   "main": "index.js",
-  "keywords": ["gatsby-theme"],
+  "license": "MIT",
   "scripts": {
-    "develop": "gatsby develop"
+    "build": "yarn workspace example build"
   },
-  "peerDependencies": {
-    "gatsby": "^2.1.9",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2"
-  },
-  "devDependencies": {
-    "gatsby": "^2.1.9",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2"
-  }
+  // highlight-start
+  "workspaces": ["gatsby-theme-minimal", "example"]
+  // highlight-end
 }
 ```
 
-Next, create an `index.js` entrypoint that serves as a noop (an empty function):
+### `/gatsby-theme-minimal`
 
-```js:title=index.js
-// noop
-```
+The `/gatsby-theme-minimal` directory is the starting point of the new theme you'll develop.
 
-Then create a `src/pages/index.js`:
+Inside it you'll find:
 
-```shell
-mkdir -p src/pages
-```
+- `gatsby-config.js`: An empty gatsby-config that you can use as a starting point for building functionality into your theme.
+- `index.js`: Since themes also function as plugins, this is an empty file that Gatsby requires in order to use this theme as a plugin.
+- `package.json`: A file listing the dependencies that your theme will pull in when people install it. Gatsby should be a peer dependency.
 
-```js:title=src/pages/index.js
-import React from "react"
+### `/example`
 
-export default () => <h1>Hello from gatsby-theme-developer</h1>
-```
+The `/example` directory is an example Gatsby site that installs and uses the local theme, `gatsby-theme-minimal`.
 
-You'll need to install the `gatsby-plugin-page-creator` package and create a `gatsby-config.js` that sources `pages`:
+Inside it you'll find:
 
-```shell
-npm i --save gatsby-plugin-page-creator
-```
+- `gatsby-config.js`: Specifies which theme to use and any other one-off configuration a site might need.
+- `/src`: Contains source code such as custom pages or components that might live in a user's site.
 
-```js:title=gatsby-config.js
-const path = require("path")
+## Further resources
 
-module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-plugin-page-creator",
-      options: {
-        path: path.join(__dirname, "src", "pages"),
-      },
-    },
-  ],
-}
-```
+### Gatsby Theme Authoring (Video course)
 
-## Add Theme Transpilation
+Watch the new [Egghead course on Authoring Gatsby Themes](https://egghead.io/courses/gatsby-theme-authoring).
 
-You will need to set up your theme to be automatically transpiled by Gatsby. This
-doesn't happen by default because your theme will end up in an end user's `node_modules`
-directory.
+### Building a Gatsby Theme (Tutorial)
 
-[See how to set up theme transpilation](/docs/themes/api-reference#add-theme-transpilation)
+Check out the [tutorial for building a Gatsby theme](/tutorial/building-a-theme). The step-by-step tutorial goes into much more detail than this docs guide. It was written as a companion to the [Egghead theme authoring course](https://egghead.io/courses/gatsby-theme-authoring), so they can be used together!
 
-## Publish to NPM
+### Theme API reference
 
-In order to allow others to install your theme you will need to publish it to npm. If you haven't published to npm before, learn how [here](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+Check out the [Theme API documentation](/docs/theme-api/).
 
-From the root of your `gatsby-theme-developer` you can run `npm publish`.
+### Accessibility
 
-## Create Your Starter
+A Gatsby theme is a Gatsby site, therefore building with accessibility in mind is critical. Check out these [tips on making your sites (and themes!) accessible](/docs/making-your-site-accessible/).
 
-```shell
-cd ..
-mkdir gatsby-starter-developer
-git init
-npm init -y
-npm install --save gatsby-theme-developer gatsby react react-dom
-```
+### Read through source code
 
-Then create your config:
+Check out how some existing themes are built:
 
-```js:title=gatsby-config.js
-module.exports = {
-  __experimentalThemes: ["gatsby-theme-developer"],
-}
-```
-
-### Add Some Seed Content
-
-In your starter you can add seed content so when the site is first run there
-is something to display. This often means some examples posts or project
-content.
-
-When a user installs your starter all they will see is the content since the
-theme internals are hidden away as a library!
-
-### Make it accessible by default
-
-To ensure your themes are usable by the widest range of people, we highly encourage including
-accessible styles and defaults like color contrast, keyboard functionality, and assistive
-technology support. For more information, visit our [accessibility page](/docs/making-your-site-accessible/)
-and resources like the [A11y Project](https://a11yproject.com) and [WebAIM](https://webaim.org).
+- The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog)
+- The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes)
+- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](https://www.gatsbyjs.org/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)

@@ -1,24 +1,24 @@
 const fs = require(`fs-extra`)
 const got = require(`got`)
-const { createContentDigest } = require(`./fallback`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const ProgressBar = require(`progress`)
+const { createProgress } = require(`./utils`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension, getRemoteFileName } = require(`./utils`)
+const {
+  getRemoteFileExtension,
+  getRemoteFileName,
+  createFilePath,
+} = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-const bar = new ProgressBar(
-  `Downloading remote files [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
+let bar
+// Keep track of the total number of jobs we push in the queue
+let totalJobs = 0
 
 /********************
  * Type Definitions *
@@ -32,6 +32,11 @@ const bar = new ProgressBar(
 /**
  * @typedef {GatsbyCache}
  * @see gatsby/packages/gatsby/utils/cache.js
+ */
+
+/**
+ * @typedef {Reporter}
+ * @see gatsby/packages/gatsby-cli/lib/reporter.js
  */
 
 /**
@@ -51,22 +56,11 @@ const bar = new ProgressBar(
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
  * @param  {Auth} [options.auth]
+ * @param  {Reporter} [options.reporter]
  */
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} url
- * @return {String}
- */
-const createFilePath = (directory, filename, ext) =>
-  path.join(directory, `${filename}${ext}`)
 
 /********************
  * Queue Management *
@@ -81,7 +75,15 @@ const createFilePath = (directory, filename, ext) =>
 const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
-  concurrent: 200,
+  concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+})
+
+// when the queue is empty we stop the progressbar
+queue.on(`drain`, () => {
+  if (bar) {
+    bar.done()
+  }
+  totalJobs = 0
 })
 
 /**
@@ -105,7 +107,6 @@ async function pushToQueue(task, cb) {
     const node = await processRemoteNode(task)
     return cb(null, node)
   } catch (e) {
-    console.warn(`Failed to process remote content ${task.url}`)
     return cb(e)
   }
 }
@@ -242,7 +243,7 @@ async function processRemoteNode({
   // be the owner of File nodes or there'll be conflicts if any other
   // File nodes are created through normal usages of
   // gatsby-source-filesystem.
-  createNode(fileNode, { name: `gatsby-source-filesystem` })
+  await createNode(fileNode, { name: `gatsby-source-filesystem` })
 
   return fileNode
 }
@@ -267,13 +268,10 @@ const pushTask = task =>
       .on(`finish`, task => {
         resolve(task)
       })
-      .on(`failed`, () => {
-        resolve()
+      .on(`failed`, err => {
+        reject(`failed to process ${task.url}\n${err}`)
       })
   })
-
-// Keep track of the total number of jobs we push in the queue
-let totalJobs = 0
 
 /***************
  * Entry Point *
@@ -301,6 +299,7 @@ module.exports = ({
   createNodeId,
   ext = null,
   name = null,
+  reporter,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -327,9 +326,12 @@ module.exports = ({
   }
 
   if (!url || isWebUri(url) === undefined) {
-    // should we resolve here, or reject?
-    // Technically, it's invalid input
-    return Promise.resolve()
+    return Promise.reject(`wrong url: ${url}`)
+  }
+
+  if (totalJobs === 0) {
+    bar = createProgress(`Downloading remote files`, reporter)
+    bar.start()
   }
 
   totalJobs += 1
@@ -348,8 +350,11 @@ module.exports = ({
     name,
   })
 
-  fileDownloadPromise.then(() => bar.tick())
+  processingCache[url] = fileDownloadPromise.then(node => {
+    bar.tick()
 
-  processingCache[url] = fileDownloadPromise
-  return fileDownloadPromise
+    return node
+  })
+
+  return processingCache[url]
 }

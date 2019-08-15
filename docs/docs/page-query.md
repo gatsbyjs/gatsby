@@ -126,7 +126,7 @@ After restarting `gatsby develop`, your home page will now display "This is wher
 
 ## How does the `graphql` tag work?
 
-`graphql` is a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals). Behind the scenes Gatsby handles these tags in a particular way:
+`graphql` is a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_templates). Behind the scenes Gatsby handles these tags in a particular way:
 
 ### The short answer
 

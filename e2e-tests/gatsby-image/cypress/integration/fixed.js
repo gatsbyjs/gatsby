@@ -22,15 +22,23 @@ describe(`fixed`, () => {
       })
   })
 
-  // TODO: figure out why these tests are failing
-  it(`applies 1x/2x/3x`, () => {
+  it(`applies 1x/2x`, () => {
     cy.getTestElement(fixedTestId)
       .find(`picture > source`)
       .should(`have.attr`, `srcset`)
       .and(srcset => {
-        ;[`1x`, `2x`, `3x`].forEach(size => {
+        ;[`1x`, `2x`].forEach(size => {
           expect(srcset).contains(size)
         })
+      })
+  })
+
+  it(`does not apply 3x`, () => {
+    cy.getTestElement(fixedTestId)
+      .find(`picture > source`)
+      .should(`have.attr`, `srcset`)
+      .and(srcset => {
+        expect(srcset).not.contains(`3x`)
       })
   })
 

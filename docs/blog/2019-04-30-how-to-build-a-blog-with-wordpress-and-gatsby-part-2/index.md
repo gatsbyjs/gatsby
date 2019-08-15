@@ -6,8 +6,8 @@ excerpt: "In the last post, you covered setting up WordPress for use with Gatsby
 tags:
   - wordpress
   - apis
-  - blog
-  - headless cms
+  - blogs
+  - headless-cms
   - react
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-2/
 ---
@@ -20,7 +20,7 @@ I have set up a WordPress site for you to use with the plugins mentioned in the 
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4">
+    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4"/>
   </video>
   <figcaption>Shut up and take my money!</figcaption>
 </figure>
@@ -116,7 +116,7 @@ Whew! That was a mouthful.
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4">
+    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4"/>
   </video>
   <figcaption>Get on with it!</figcaption>
 </figure>
@@ -236,7 +236,7 @@ Since you are seeing stuff on the right-hand side, it means that you are getting
 
 ## Creating pages in gatsby-node.js
 
-As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
+As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programmatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
 
 ### Creating templates in Gatsby.js
 
@@ -272,9 +272,9 @@ The gatsby-node.js file allows you to pull in a template file, then query your d
 
 <figure>
   <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4">
+    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4"/>
   </video>
-  <figcaption>Yes!!!<figcaption>
+  <figcaption>Yes!!!</figcaption>
 </figure>
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
@@ -292,11 +292,11 @@ The code below pulls in the data for blog posts from WordPress and creates a pag
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const BlogPostTemplate = path.resolve("./src/templates/BlogPost.js")
 
-  return graphql(`
+  const result = await graphql(`
     {
       allWordpressPost {
         edges {
@@ -307,20 +307,21 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      throw result.errors
-    }
+  `)
 
-    const BlogPosts = result.data.allWordpressPost.edges
-    BlogPosts.forEach(post => {
-      createPage({
-        path: `/post/${post.node.slug}`,
-        component: BlogPostTemplate,
-        context: {
-          id: post.node.wordpress_id,
-        },
-      })
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  const BlogPosts = result.data.allWordpressPost.edges
+  BlogPosts.forEach(post => {
+    createPage({
+      path: `/post/${post.node.slug}`,
+      component: BlogPostTemplate,
+      context: {
+        id: post.node.wordpress_id,
+      },
     })
   })
 }
@@ -409,7 +410,7 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 <figure>
   <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4">
+    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4"/>
   </video>
   <figcaption>Obligatory Great Gatsby meme</figcaption>
 </figure>

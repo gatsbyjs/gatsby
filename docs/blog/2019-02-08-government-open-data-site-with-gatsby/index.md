@@ -3,11 +3,8 @@ title: "How we're migrating a government open data site to Gatsby"
 date: 2019-02-08
 author: Ryan Johnson
 tags:
-  - open data
-  - government
-  - design
-  - data
-  - d3
+  - cutting-edge-experiences
+  - data-visualization
   - case-studies
 canonicalLink: https://revenuedata.doi.gov/blog/homepage-revamp-part-two/
 ---
@@ -223,8 +220,7 @@ We set a `BASEURL` environment variable in `gatsby-config.js` that resolves the 
 const BASEURL = process.env.BASEURL || ""
 
 module.exports = {
-  // Note: it must *not* have a trailing slash.
-  // This is currently the realtive path in our Jekyll deployment. This path points to our Gatsby pages.
+  // This is currently the relative path in our Jekyll deployment. This path points to our Gatsby pages.
   // This prefix is prepended to load all our related images, code, and pages.
   pathPrefix: `${BASEURL}/gatsby-public`,
 }

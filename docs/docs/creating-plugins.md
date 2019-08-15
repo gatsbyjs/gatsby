@@ -12,4 +12,4 @@ You may be looking to build and perhaps publish a plugin that doesn't exist yet,
 
 This section of the docs includes the following guides:
 
-[[guidelist]]
+<GuideList slug={props.slug} />

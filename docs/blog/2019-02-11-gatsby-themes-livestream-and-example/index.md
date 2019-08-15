@@ -6,7 +6,7 @@ author: Jason Lengstorf
 tags:
   - themes
   - livestream
-  - tutorials
+  - getting-started
 ---
 
 One of the most exciting things we’re working on at Gatsby right now is themes.

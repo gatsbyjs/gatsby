@@ -1,16 +1,26 @@
 import React from "react"
+import { graphql } from "gatsby"
 import { css } from "@emotion/core"
-import GatsbyLogo from "../../monogram.svg"
+import GatsbyLogo from "../../assets/monogram.svg"
+
+const displayDate = date =>
+  date.toLocaleDateString(`en-US`, {
+    year: `numeric`,
+    month: `long`,
+    day: `numeric`,
+  })
 
 const Event = ({
-  name,
-  organizer_fname,
-  organizer_lname,
-  date,
-  location,
-  url,
-  type,
-  hasGatsbyTeamSpeaker,
+  event: {
+    name,
+    organizerFirstName,
+    organizerLastName,
+    date,
+    location,
+    url,
+    type,
+    hasGatsbyTeamSpeaker,
+  },
 }) => (
   <React.Fragment>
     <p
@@ -32,17 +42,30 @@ const Event = ({
         />
       )}
       <strong>{url ? <a href={url}>{name}</a> : name}</strong> —{` `}
-      {date}
+      {date ? displayDate(new Date(date)) : ``}
       {` `}({location})
     </p>
     <p>
       <small>
-        This {type.toLowerCase()} was submitted by {organizer_fname}
+        This {type.toLowerCase()} was submitted by {organizerFirstName}
         {` `}
-        {organizer_lname}.
+        {organizerLastName}.
       </small>
     </p>
   </React.Fragment>
 )
 
 export default Event
+
+export const query = graphql`
+  fragment EventFragment on AirtableData {
+    name
+    organizerFirstName
+    organizerLastName
+    date
+    location
+    url
+    type
+    hasGatsbyTeamSpeaker
+  }
+`

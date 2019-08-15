@@ -2,7 +2,7 @@ const { promisify } = require(`bluebird`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
@@ -16,7 +16,11 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 }) => {
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath).rotate()
+    pipeline = sharp(file.absolutePath)
+
+    if (!options.rotate) {
+      pipeline.rotate()
+    }
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return
@@ -114,9 +118,13 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 
     const optionsSVG = _.defaults(args, defaultArgs)
 
+    // `srcset` attribute rejects URIs with literal spaces
+    const encodeSpaces = str => str.replace(/ /gi, `%20`)
+
     return trace(tmpFilePath, optionsSVG)
       .then(optimize)
       .then(svgToMiniDataURI)
+      .then(encodeSpaces)
   } catch (e) {
     throw e
   }
@@ -138,7 +146,7 @@ const createMemoizedFunctions = () => {
   )
 }
 
-// This is very hacky, but memozied function are pretty tricky to spy on
+// This is very hacky, but memoized function are pretty tricky to spy on
 // in tests ;(
 createMemoizedFunctions()
 exports.createMemoizedFunctions = () => {
