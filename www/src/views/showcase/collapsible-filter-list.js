@@ -30,7 +30,7 @@ const CollapsibleFilterList = ({
       >
         <div
           css={{
-            color: filters.includes(c) ? colors.gatsby : colors.ui.bright,
+            color: filters.includes(c) ? colors.gatsby : colors.input.border,
             ...styles.filterCheckbox,
           }}
         >

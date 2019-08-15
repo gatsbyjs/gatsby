@@ -1,6 +1,7 @@
 ---
 title: Transformer plugins
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 > This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.
@@ -78,7 +79,7 @@ module.exports = {
 }
 ```
 
-Restart the development server then refresh (or open again) Graph_i_QL and look
+Restart the development server then refresh (or open again) GraphiQL and look
 at the autocomplete:
 
 ![markdown-autocomplete](markdown-autocomplete.png)
@@ -201,7 +202,7 @@ In your index page's GraphQL query, change `allMarkdownRemark` to
 `allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. _Note: There are 3 underscores between `frontmatter` and `date`._ Save
 this and the sort order should be fixed.
 
-Try opening Graph_i_QL and playing with different sort options. You can sort the
+Try opening GraphiQL and playing with different sort options. You can sort the
 `allFile` connection along with other connections.
 
 For more documentation on our query operators, explore our [GraphQL reference guide.](/docs/graphql-reference/)

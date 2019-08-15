@@ -4,9 +4,6 @@ date: 2018-11-07
 author: Dustin Schau
 tags:
   - apps
-  - web apps
-  - applications
-  - beyond static
 excerpt: Gatsby is great for not only static sites but also traditional web applications. Using Gatsby enables the benefits of both static and web applications so you don't have to sacrifice the advantages of one approach to reap the benefits of the other.
 cover: images/what-if-i-told-you.jpg
 ---
@@ -233,8 +230,8 @@ We can't wait to see what you build.
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
 [gatsby-graphql]: /docs/querying-with-graphql/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
-[authentication-data]: /docs/authentication-tutorial/
-[client-only-routes]: /docs/building-apps-with-gatsby/#client-only-routes--user-authentication
+[authentication-data]: /tutorial/authentication-tutorial/
+[client-only-routes]: /docs/client-only-routes-and-user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
 [cdm]: https://reactjs.org/docs/react-component.html#componentdidmount
@@ -242,7 +239,7 @@ We can't wait to see what you build.
 [react-context]: https://reactjs.org/docs/context.html
 [react-lifecycle-methods]: https://reactjs.org/docs/state-and-lifecycle.html
 [gatsby-unstructured]: /blog/2018-10-25-unstructured-data/
-[authentication-tutorial]: /docs/authentication-tutorial/
+[authentication-tutorial]: /tutorial/authentication-tutorial/
 [using-gatsby-image]: https://using-gatsby-image.gatsbyjs.org/
 [traced-svg]: https://using-gatsby-image.gatsbyjs.org/traced-svg/
 [gatsby-plugin-offline]: /packages/gatsby-plugin-offline/

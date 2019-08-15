@@ -25,6 +25,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     store,
     cache,
     getNodes,
+    reporter,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
@@ -41,7 +42,8 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       bar.total = totalJobs
 
       let fileNodeID
-      const remoteDataCacheKey = `contentful-asset-${node.contentful_id}`
+      const { contentful_id: id, node_locale: locale } = node
+      const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
       const url = `http://${node.file.url.slice(2)}`
 
@@ -62,6 +64,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
             cache,
             createNode,
             createNodeId,
+            reporter,
           })
 
           if (fileNode) {

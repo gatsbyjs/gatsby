@@ -2,7 +2,7 @@
 title: "Improvements to Plugin Authoring Experience"
 date: 2019-04-25
 author: Shannon Soper
-tags: ["ux", "plugins"]
+tags: ["ux", "user-testing", "plugins"]
 ---
 
 We recently interviewed authors of popular Gatsby plugins; here's what we learned and how we're changing to support plugin authors!
@@ -84,5 +84,5 @@ Read these ideas and create issues and/or PRs for ones that prove valuable!
 
 - Add a “processAllNodes()” helper that automatically sets up the Promise.all() so people don’t need to know how this works
 - Plugin library default filter set to v2 compatible. Script to grab file, looks for exported APIs that aren’t compatible
-- Create end-to-end tests for plugins (more needed for internal/core plugins where we want to test the outpout)
+- Create end-to-end tests for plugins (more needed for internal/core plugins where we want to test the output)
 - Create #plugin-authoring Discord channel and publicize the #contributing channel more

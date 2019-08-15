@@ -10,21 +10,7 @@ Their generous free tier permits unlimited publishing, using custom domains, bas
 
 This guide will show you how to get started in a few quick steps:
 
-## Step 1: Getting Started with Gatsby
-
-If you don't already [have a Gatsby project](/docs/quick-start), start by installing Gatsby:
-
-```shell
-npm install -g gatsby-cli
-```
-
-Then, generate a project with the following:
-
-```shell
-gatsby new <project name>
-```
-
-## Step 2: Getting Surge
+## Step 1: Getting Surge
 
 To install the surge CLI with `npm`, paste the following into your terminal:
 
@@ -32,7 +18,7 @@ To install the surge CLI with `npm`, paste the following into your terminal:
 npm install -g surge
 ```
 
-## Step 3: Preparing to Deploy
+## Step 2: Preparing to Deploy
 
 Build a site by running this command in your project's root directory:
 
@@ -42,21 +28,21 @@ gatsby build
 
 This generates a publishable version of your site in the `./public` folder.
 
-## Step 4: Deploying
+## Step 3: Deploying
 
 You can deploy your site by running the following in the root of the project directory.
 
 ```shell
-surge build/
+surge public/
 ```
 
 If this is your first time using surge, you'll be prompted to create a (free) account from the command line. This will only happen once.
 
-Press `enter` to confirm that the path to your `build/` folder is correct, and that you'd like to keep the randomly generated subdomain name (it can be edited if not).
+Press `enter` to confirm that the path to your `public/` folder is correct, and that you'd like to keep the randomly generated subdomain name (it can be edited if not).
 
 You're done! Your terminal will output the address of the domain where your site was deployed.
 
-## Step 5: Bonus - Remembering a Domain
+## Step 4: Bonus - Remembering a Domain
 
 To ensure future deploys are sent to the same location, you can store the domain name in a [`CNAME`](https://surge.sh/help/remembering-a-domain) file from your project root. Assuming your site was deployed to `https://my-cool-domain.surge.sh`, run the following command:
 

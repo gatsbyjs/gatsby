@@ -1,20 +1,29 @@
 import React from "react"
 
 const knownOptions = {
-  clientId: `string`,
-  sampleRate: `number`,
-  siteSpeedSampleRate: `number`,
-  alwaysSendReferrer: `boolean`,
-  allowAnchor: `boolean`,
-  cookieName: `string`,
-  cookieExpires: `number`,
-  storeGac: `boolean`,
-  legacyCookieDomain: `string`,
-  legacyHistoryImport: `boolean`,
-  allowLinker: `boolean`,
+  createOnly: {
+    clientId: `string`,
+    sampleRate: `number`,
+    siteSpeedSampleRate: `number`,
+    alwaysSendReferrer: `boolean`,
+    allowAnchor: `boolean`,
+    cookieName: `string`,
+    cookieExpires: `number`,
+    storeGac: `boolean`,
+    legacyCookieDomain: `string`,
+    legacyHistoryImport: `boolean`,
+    allowLinker: `boolean`,
+  },
+  general: {
+    allowAdFeatures: `boolean`,
+    dataSource: `string`,
+    queueTime: `number`,
+    forceSSL: `boolean`,
+    transport: `string`,
+  },
 }
 
-exports.onRenderBody = (
+export const onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
@@ -31,7 +40,7 @@ exports.onRenderBody = (
     />,
   ])
 
-  let excludeGAPaths = []
+  const excludeGAPaths = []
   if (typeof pluginOptions.exclude !== `undefined`) {
     const Minimatch = require(`minimatch`).Minimatch
     pluginOptions.exclude.map(exclude => {
@@ -41,8 +50,8 @@ exports.onRenderBody = (
   }
 
   const gaCreateOptions = {}
-  for (const option in knownOptions) {
-    if (typeof pluginOptions[option] === knownOptions[option]) {
+  for (const option in knownOptions.createOnly) {
+    if (typeof pluginOptions[option] === knownOptions.createOnly[option]) {
       gaCreateOptions[option] = pluginOptions[option]
     }
   }
@@ -109,8 +118,16 @@ exports.onRenderBody = (
         typeof pluginOptions.variationId !== `undefined`
           ? `ga('set', 'expVar', '${pluginOptions.variationId}');`
           : ``
-      }}
-      `,
+      }
+      ${Object.keys(knownOptions.general).reduce((gaSetCommands, option) => {
+        if (typeof pluginOptions[option] === knownOptions.general[option]) {
+          gaSetCommands += `ga('set', '${option}', '${
+            pluginOptions[option]
+          }');\n`
+        }
+        return gaSetCommands
+      }, ``)}
+      }`,
       }}
     />,
   ])

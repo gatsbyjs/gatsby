@@ -1,8 +1,6 @@
 ---
-title: ESLint
+title: Using ESLint
 ---
-
-## Why use ESLint
 
 ESLint is an open source JavaScript linting utility. Code linting is a type of static analysis that is frequently used to find problematic patterns. There are code linters for most programming languages, and compilers sometimes incorporate linting into the compilation process.
 

@@ -58,7 +58,7 @@ const QuotationMark = styled(`span`)`
   top: ${space[7]};
 
   svg {
-    fill: ${colors.gatsbyDark};
+    fill: ${colors.purple[80]};
   }
 
   ${mediaQueries.lg} {
@@ -66,7 +66,7 @@ const QuotationMark = styled(`span`)`
     top: 2.8rem;
 
     svg {
-      fill: ${colors.gatsbyDark};
+      fill: ${colors.purple[80]};
       transform: scale(1.1);
     }
   }
@@ -89,7 +89,7 @@ const Star = styled(`span`)`
     width: 20px;
 
     svg {
-      fill: ${colors.lemon};
+      fill: ${colors.yellow[40]};
     }
 
     ${mediaQueries.lg} {
@@ -121,7 +121,7 @@ const Star = styled(`span`)`
     width: 14px;
 
     svg {
-      fill: ${colors.mint};
+      fill: ${colors.teal[40]};
     }
     .variantB & {
       bottom: 0;
@@ -147,7 +147,7 @@ const Star = styled(`span`)`
     width: ${space[3]};
 
     svg {
-      fill: ${colors.warning};
+      fill: ${colors.red[60]};
     }
 
     .variantB & {
