@@ -9,7 +9,10 @@ const imageSize = require(`probe-image-size`)
 const DEPLOY_DIR = `public`
 
 const invalidDestinationDirMessage = dir =>
-  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
+  `[gatsby-remark-copy-linked-files] You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
+
+const invalidHashLengthMessage = len =>
+  `[gatsby-remark-copy-linked-files] You have supplied an invalid hash length. The hash length must be an integer but was: ${len}`
 
 // dest must be a child
 const destinationIsValid = dest => !path.relative(`./`, dest).startsWith(`..`)
@@ -28,36 +31,47 @@ const validateDestinationDir = dir => {
   }
 }
 
-const defaultDestination = linkNode =>
-  `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`
+const validateHashLength = size =>
+  typeof size === `undefined` || Number.isInteger(size)
 
-const getDestination = (linkNode, dir) => {
+const shorten = (hash, size) => {
+  if (hash && hash.length) {
+    return hash.substring(0, size)
+  }
+  return hash
+}
+
+const defaultDestination = (linkNode, size) =>
+  `${shorten(linkNode.internal.contentDigest, size)}/${linkNode.name}.${
+    linkNode.extension
+  }`
+
+const getDestination = (linkNode, options) => {
+  const { destinationDir: dir, hashLength: size } = options
   if (_.isFunction(dir)) {
     // need to pass dummy data for validation to work
     const isValidFunction = `${dir({ name: `n`, hash: `h` })}` !== `${dir({})}`
     return isValidFunction
       ? `${dir({
           name: linkNode.name,
-          hash: linkNode.internal.contentDigest,
+          hash: shorten(linkNode.internal.contentDigest, size),
         })}.${linkNode.extension}`
-      : `${dir()}/${defaultDestination(linkNode)}`
+      : `${dir()}/${defaultDestination(linkNode, size)}`
   } else if (_.isString(dir)) {
-    return `${dir}/${defaultDestination(linkNode)}`
+    return `${dir}/${defaultDestination(linkNode, size)}`
   } else {
-    return defaultDestination(linkNode)
+    return defaultDestination(linkNode, size)
   }
 }
 
 const newPath = (linkNode, options) => {
-  const { destinationDir } = options
-  const destination = getDestination(linkNode, destinationDir)
+  const destination = getDestination(linkNode, options)
   const paths = [process.cwd(), DEPLOY_DIR, destination]
   return path.posix.join(...paths)
 }
 
 const newLinkURL = (linkNode, options, pathPrefix) => {
-  const { destinationDir } = options
-  const destination = getDestination(linkNode, destinationDir)
+  const destination = getDestination(linkNode, options)
   const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
     lpath ? true : false
   )
@@ -81,9 +95,11 @@ module.exports = (
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
   }
-  const { destinationDir } = pluginOptions
+  const { destinationDir, hashLength } = pluginOptions
   if (!validateDestinationDir(destinationDir))
     return Promise.reject(invalidDestinationDirMessage(destinationDir))
+  if (!validateHashLength(hashLength))
+    return Promise.reject(invalidHashLengthMessage(hashLength))
 
   const options = _.defaults(pluginOptions, defaults)
 

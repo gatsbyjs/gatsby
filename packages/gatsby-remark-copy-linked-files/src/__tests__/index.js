@@ -418,6 +418,36 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
   })
 
+  describe(`options.hashLength`, () => {
+    const imagePath = `images/sample-image.gif`
+
+    it(`sets the contentDigest hash to the length supplied by hashLength`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const validHashLength = 3
+      const expectedNewPath = path.posix.join(
+        process.cwd(),
+        `public`,
+        `/undefined/undefined.gif`
+      )
+      expect.assertions(3)
+      await plugin(
+        {
+          files: getFiles(imagePath),
+          markdownAST,
+          markdownNode,
+          getNode,
+        },
+        {
+          hashLength: validHashLength,
+        }
+      ).then(v => {
+        expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(`/undefined/undefined.gif`)
+      })
+    })
+  })
+
   describe(`options.ignoreFileExtensions`, () => {
     const pngImagePath = `images/sample-image.png`
     const jpgImagePath = `images/sample-image.jpg`
