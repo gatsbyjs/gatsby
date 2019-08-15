@@ -178,6 +178,26 @@ describe(`Options validation`, () => {
     expect(reporter.panic).not.toBeCalled()
   })
 
+  it(`Passes when both richText.entryFieldTransformer and richText.includeEntryFields options are passed`, () => {
+    validateOptions(
+      {
+        reporter,
+      },
+      {
+        spaceId: `spaceId`,
+        accessToken: `accessToken`,
+        localeFilter: locale => locale.code === `de`,
+        downloadLocal: false,
+        richText: {
+          includeEntryFields: [`title`],
+          entryFieldTransformer: () => {},
+        },
+      }
+    )
+
+    expect(reporter.panic).not.toBeCalled()
+  })
+
   it(`Fails with missing required options`, () => {
     validateOptions(
       {
