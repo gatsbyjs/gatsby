@@ -1070,7 +1070,7 @@ If you would like to run two queries on the same datasource, you can use an alia
 
 GraphQL fragments are shareable chunks of a query that can be reused.
 
-You might want to use them to share multiple fields between queries or to co-locate the data with the component it's used in.
+You might want to use them to share multiple fields between queries or to colocate a component with the data it uses. 
 
 #### Directions
 
