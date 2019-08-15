@@ -62,7 +62,7 @@ module.exports = {
 }
 ```
 
-**Note**: if you're config varies from what it shown above, like if you are hosting on WordPress.com, refer to the [plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) for more information on how to setup different option fields need to pull in your data.
+**Note**: If your config varies from what it shown above, for instance, if you are hosting your WordPress instance on WordPress.com, please refer to the [plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) for more information on how to setup other options required for your use case.
 
 ## Using WordPress data
 
@@ -72,9 +72,9 @@ The `createPages` API exposes the `graphql` function:
 
 > The GraphQL function allows us to run arbitrary queries against the local WordPress GraphQL schema... like the site has a built-in database constructed from the fetched data that you can run queries against. ([Source](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js#L15))
 
-You can use the [`gatsby-node.js` file](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide the code to construct posts does what it needs to do out of the box (at least for the moment). It queries your local WordPress GraphQL schema for post data, then [iterates through each post node](/docs/programmatically-create-pages-from-data/) to construct a static page for each, [based on whatever template you define](/docs/layout-components/) and feed it.
+You can use the [`gatsby-node.js`](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/layout-components/).
 
-For example, below is a simplified version of the demo `gatsby-node.js` file that iterates over all the WordPress post data.
+For example, find an excerpt of the demo `gatsby-node.js` below. 
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
@@ -114,11 +114,13 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-After pulling data from WordPress with the query, all the posts are iterated over, calling the `createPage` action on each one.
+After fetching data from WordPress via the query, all posts are iterated over, calling [`createPage`](/docs/actions/#createPage) for each one.
 
-A [Gatsby page is defined](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component."
+A [Gatsby page is defined](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and an _optional_ GraphQL query and Layout component."
 
-When you restart your server with the `gatsby develop` command, you'll be able to navigate to the new pages created for each of your posts at their respective slugs. In the GraphiQL IDE at [localhost:8000](http://localhost:8000) you should now see queryable fields in the docs or the explorer sidebar for `allWordpressPosts`.
+When you restart your server with the `gatsby develop` command, you'll be able to navigate to the new pages created for each of your posts at their respective paths. 
+
+In the GraphiQL IDE at [localhost:8000](http://localhost:8000) you should now see queryable fields for `allWordpressPosts` in the docs or explorer sidebar. 
 
 ## Wrapping Up
 
