@@ -159,6 +159,25 @@ describe(`Options validation`, () => {
     expect(reporter.panic).toBeCalled()
   })
 
+  it(`Passes with a richText.entryFieldTransformer option`, () => {
+    validateOptions(
+      {
+        reporter,
+      },
+      {
+        spaceId: `spaceId`,
+        accessToken: `accessToken`,
+        localeFilter: locale => locale.code === `de`,
+        downloadLocal: false,
+        richText: {
+          entryFieldTransformer: () => {},
+        },
+      }
+    )
+
+    expect(reporter.panic).not.toBeCalled()
+  })
+
   it(`Fails with missing required options`, () => {
     validateOptions(
       {
