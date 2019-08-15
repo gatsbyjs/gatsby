@@ -6967,3 +6967,14 @@
   built_by: Zellement
   built_by_url: https://www.zellement.com
   featured: false
+- title: Cantas
+  main_url: https://www.cantas.co.jp
+  url: https://www.cantas.co.jp
+  description: >
+    Cantas is digital marketing company in Japan.
+  categories:
+    - Business
+    - Agency
+  built_by: Cantas
+  built_by_url: https://www.cantas.co.jp
+  featured: false
