@@ -71,3 +71,5 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   }
 }
 ```
+
+Another solution is to use a package named [reactloadble] (https://github.com/jamiebuilds/react-loadable). The module will be imported in a way that doesn't trigger a build error.
