@@ -143,7 +143,6 @@ exports.sourceNodes = async (
     getNode,
     _auth,
     sourceThumbnails,
-
   })
 
   // Creates links between elements and parent element.
