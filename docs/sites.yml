@@ -6957,3 +6957,13 @@
   built_by: Mill3
   built_by_url: https://mill3.studio/en/
   featured: false
+- title: Zellement
+  main_url: https://www.zellement.com
+  url: https://www.zellement.com
+  description: >
+    Online portfolio of Dan Farrow from Nottingham, UK.
+  categories:
+    - Portfolio
+  built_by: Zellement
+  built_by_url: https://www.zellement.com
+  featured: false
