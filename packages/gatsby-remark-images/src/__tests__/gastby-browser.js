@@ -1,4 +1,5 @@
 const {
+  DEFAULT_OPTIONS,
   imageClass,
   imageWrapperClass,
   imageBackgroundClass,
@@ -16,22 +17,48 @@ const createImageElement = () => {
   return global.document.querySelector(`.${imageClass}`)
 }
 
-test(`it sets correct box-shadow on img element`, () => {
+const defaultImageBoxShadowStyle = `inset 0px 0px 0px 400px ${
+  DEFAULT_OPTIONS.backgroundColor
+}`
+
+test(`it sets the default box-shadow on img element`, () => {
   const pluginOptions = {}
   const imageElement = createImageElement()
 
   onRouteUpdate({}, pluginOptions)
   imageElement.dispatchEvent(new Event(`load`))
 
-  expect(imageElement.style[`box-shadow`]).toBe(`inset 0px 0px 0px 400px white`)
+  expect(imageElement.style[`box-shadow`]).toBe(defaultImageBoxShadowStyle)
+  expect(
+    window.getComputedStyle(imageElement).getPropertyValue(`box-shadow`)
+  ).toBe(defaultImageBoxShadowStyle)
 })
 
-test(`it sets correct box-shadow on img element with custom backgroundColor`, () => {
-  const pluginOptions = { backgroundColor: `blue` }
-  const imageElement = createImageElement()
+const customBackgroundColors = [
+  `blue`,
+  `#0ff`,
+  `#00ffff`,
+  `rgb(255, 0, 0)`,
+  `rgba(255, 0, 0, 0.3)`,
+  `hsl(120, 100%, 50%)`,
+  `hsla(120, 100%, 50%, 0.3)`,
+  `aqua`,
+  `doesnotexist`,
+  `none`,
+]
+customBackgroundColors.forEach(c => {
+  test(`it sets box-shadow color to '${c}' on img when backgroundColor is set to '${c}'`, () => {
+    const pluginOptions = { backgroundColor: `${c}` }
+    const imageElement = createImageElement()
 
-  onRouteUpdate({}, pluginOptions)
-  imageElement.dispatchEvent(new Event(`load`))
+    onRouteUpdate({}, pluginOptions)
+    imageElement.dispatchEvent(new Event(`load`))
 
-  expect(imageElement.style[`box-shadow`]).toBe(`inset 0px 0px 0px 400px blue`)
+    expect(imageElement.style[`box-shadow`]).toBe(
+      `inset 0px 0px 0px 400px ${c}`
+    )
+    expect(
+      window.getComputedStyle(imageElement).getPropertyValue(`box-shadow`)
+    ).toBe(`inset 0px 0px 0px 400px ${c}`)
+  })
 })

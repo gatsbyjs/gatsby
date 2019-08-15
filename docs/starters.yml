@@ -3665,3 +3665,12 @@
     - Beautiful "postcard" view for photos with fullscreen toggle.
     - Both views are responsive with minimal whitespace and polished UX.
     - Many performance optimizations for image delivery (both by Gatsby & way beyond what Gatsby can do).
+- url: https://ghs.ksmorano.com/
+  repo: https://github.com/ksmorano/gatsby-hasura-starter
+  description: A boilerplate for a Gatsby app paired with a Hasura project as the backend.
+  tags:
+    - Hasura
+    - Styling:Bulma
+  features:
+    - Demonstrates both query and mutation from the linked Hasura project.
+    - Uses apollo react hooks for query and mutation.

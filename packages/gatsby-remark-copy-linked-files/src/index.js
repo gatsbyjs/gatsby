@@ -1,6 +1,5 @@
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
-const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
 const _ = require(`lodash`)
@@ -150,7 +149,7 @@ module.exports = (
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
       dimensions = imageSize.sync(
-        toArray(fs.readFileSync(imageNode.absolutePath))
+        toArray(fsExtra.readFileSync(imageNode.absolutePath))
       )
     }
 

@@ -307,13 +307,10 @@ export default ({ pageContext: { allPokemon } }) => (
   <div>
     <h1>Behold, the Pokémon!</h1>
     <ul>
-      {allPokemon.map(allPokemon => (
-        <li key={allPokemon.pokemon.id}>
-          <img
-            src={allPokemon.pokemon.sprites.front_default}
-            alt={allPokemon.pokemon.name}
-          />
-          <p>{allPokemon.pokemon.name}</p>
+      {allPokemon.map(pokemon => (
+        <li key={pokemon.id}>
+          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+          <p>{pokemon.name}</p>
         </li>
       ))}
     </ul>
@@ -689,6 +686,39 @@ query MyPokemonQuery {
 
 You can use the `graphql` tag to query data in the pages of your Gatsby site. This gives you access to anything included in Gatsby's data layer, such as site metadata, source plugins, images, and more.
 
+### Deploying to Netlify
+
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Build your gatsby application using `gatsby build`
+
+2. Login into netlify using `netlify login`
+
+3. Run the command `netlify build`. Select the "Create & configure a new site" option.
+
+4. Choose a custom website name if you want or press enter to receive a random one.
+
+5. Choose your [Team](/docs/teams/).
+
+6. Change the deploy path to `public/`
+
+7. Make sure that everything looks fine before deploying to production using `netlify deploy --prod`
+
+#### Additional resources
+
+- [Hosting on Netlify](/docs/hosting-on-netlify)
+- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+
+## Querying data
+
 #### Directions
 
 1. Import `graphql` from `gatsby`.
@@ -879,7 +909,12 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 - [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
 - Live example:
 
-<iframe title="Limiting returned data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Limiting returned data"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
 
 ### Sorting with GraphQL
 
@@ -935,7 +970,12 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
 - Live example:
 
-<iframe title="Sorting data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(sort%3A%20%7Bfields%3A%20path%2C%20order%3A%20ASC%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Sorting data"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allSitePage(sort%3A%20%7Bfields%3A%20path%2C%20order%3A%20ASC%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
 
 ### Filtering with GraphQL
 
@@ -995,17 +1035,18 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
 - Live example:
 
-<iframe title="Filtering data" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Bcategories%3A%20%7Beq%3A%20%22magical%20creatures%22%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20categories%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Filtering data"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Bcategories%3A%20%7Beq%3A%20%22magical%20creatures%22%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20categories%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
 
-### Query Aliases
+### GraphQL Query Aliases
 
 You can rename any field in a GraphQL query with an alias.
 
 If you would like to run two queries on the same datasource, you can use an alias to avoid a naming collision with two queries of the same name.
-
-#### Prerequisites
-
-- A [Gatsby site](/docs/quick-start)
 
 #### Directions
 
@@ -1048,7 +1089,58 @@ If you would like to run two queries on the same datasource, you can use an alia
 - [Gatsby GraphQL reference for aliasing](/docs/graphql-reference/#aliasing)
 - Live example:
 
-<iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="300"></iframe>
+<iframe
+  title="Using aliases"
+  src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20fileCount%3A%20allFile%20%7B%20%0A%20%20%20%20totalCount%0A%20%20%7D%0A%20%20filePageInfo%3A%20allFile%20%7B%0A%20%20%20%20pageInfo%20%7B%0A%20%20%20%20%20%20currentPage%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false"
+  width="600"
+  height="300"
+/>
+
+### GraphQL Query Fragments
+
+GraphQL fragments are shareable chunks of a query that can be reused.
+
+You might want to use them to share multiple fields between queries or to colocate a component with the data it uses.
+
+#### Directions
+
+1. Declare a `graphql` template string with a Fragment in it. The fragment should be made up of the keyword `fragment`, a name, the GraphQL type it is associated with (in this case of type `Site`, as demonstrated by `on Site`), and the fields that make up the fragment:
+
+```jsx
+export const query = graphql`
+  // highlight-start
+  fragment SiteInformation on Site {
+    title
+    description
+  }
+  // highlight-end
+`
+```
+
+2. Now, include the fragment in a query for a field of the type specified by the fragment. This includes those fields without having to declare them all independently:
+
+```diff
+export const pageQuery = graphql`
+  query SiteQuery {
+    site {
+-     title
+-     description
++   ...SiteInformation
+    }
+  }
+`
+```
+
+**Note**: Fragments don't need to be imported in Gatsby. Exporting a query with a Fragment makes that Fragment available in _all_ queries in your project.
+
+Fragments can be nested inside other fragments, and multiple fragments can be used in the same query.
+
+#### Additional Resources
+
+- [Simple example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
+- [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
+- [Gatsby image fragments](/docs/gatsby-image/#image-query-fragments)
+- [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
 ## 7. Working with images
 
