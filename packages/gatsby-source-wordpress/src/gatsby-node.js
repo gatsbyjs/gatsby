@@ -23,7 +23,7 @@ let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
 let _normalizer
-let _sourceThumbnails
+let _keepMediaDetails
 
 exports.sourceNodes = async (
   {
@@ -182,7 +182,7 @@ exports.sourceNodes = async (
       searchAndReplaceContentUrls,
       concurrentRequests,
       excludedRoutes,
-      sourceThumbnails,
+      keepMediaDetails,
     })
   }
 
