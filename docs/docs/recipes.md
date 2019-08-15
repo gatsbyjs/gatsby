@@ -1228,7 +1228,7 @@ export default () => (
 
 ### Optimizing and querying local images with gatsby-image
 
-The `gatsby-image` plugin can relieve much of the pain associated with optimizing images in your site. 
+The `gatsby-image` plugin can relieve much of the pain associated with optimizing images in your site.
 
 Gatsby will generate optimized resources which can be queried with GraphQL and passed into Gatsby's image component. This takes care of the heavy lifting including creating several image sizes and loading them at the right time.
 
