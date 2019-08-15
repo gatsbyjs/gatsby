@@ -1,18 +1,13 @@
 {
-  "extends": ["config:base"],
-  "includePaths": [
-    "starters/**",
-    "themes/gatsby-starter-blog-theme/**",
-    "themes/gatsby-starter-notes-theme/**",
-    "themes/gatsby-starter-theme/**"
-  ],
+  "extends": ["config:base", ":disablePeerDependencies"],
+  "includePaths": ["starters/**", "themes/**"],
   "major": {
     "enabled": false
   },
-  "prHourlyLimit": 2,
-  "prConcurrentLimit": 20,
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
-  "semanticCommitScope": "starters"
+  "semanticCommitScope": null
 }

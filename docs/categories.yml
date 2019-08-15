@@ -1,4 +1,5 @@
 starter:
+  - Airtable
   - AMP
   - Authentication
   - AWS
@@ -18,9 +19,12 @@ starter:
   - Documentation
   - eCommerce
   - Firebase
+  - Gallery
   - Google Sheets
+  - Hasura
   - HTML5UP
   - i18n
+  - Infinite Scroll
   - Landing Page
   - Language:Other
   - Language:TypeScript
@@ -96,6 +100,7 @@ site:
   - Productivity
   - Programming
   - Real Estate
+  - Retail
   - SEO
   - Science
   - Security

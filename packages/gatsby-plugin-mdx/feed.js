@@ -6,7 +6,7 @@
  * Usage: gatsby-config.js
  *
  * ```
- * const mdxFeed = require("gatsby-mdx/feed");
+ * const mdxFeed = require("gatsby-plugin-mdx/feed");
  *
  * module.exports = {
  *   plugins: [
@@ -25,17 +25,16 @@ module.exports = {
    */
   feeds: [
     {
-      serialize: ({ query: { site, allMdx } }) => {
-        return allMdx.edges.map(edge => {
+      serialize: ({ query: { site, allMdx } }) =>
+        allMdx.edges.map(edge => {
           return {
             ...edge.node.frontmatter,
             description: edge.node.excerpt,
             url: site.siteMetadata.siteUrl + edge.node.fields.slug,
             guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-            custom_elements: [{ "content:encoded": edge.node.html }]
-          };
-        });
-      },
+            custom_elements: [{ "content:encoded": edge.node.html }],
+          }
+        }),
       query: `
       {
         allMdx(
@@ -61,7 +60,7 @@ module.exports = {
         }
       }
     `,
-      output: `rss.xml`
-    }
-  ]
-};
+      output: `rss.xml`,
+    },
+  ],
+}

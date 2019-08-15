@@ -14,7 +14,7 @@ There are a few React i18n packages out there. Several options include [react-in
 
 ### gatsby-plugin-i18n
 
-This plugin helps you use `react-intl`, `i18next` or and other i18n library with Gatsby. This plugin does not translate or format your content rather it creates routes for each language, allowing Google to more easily find the correct version of your site, and if you need to, designate alternative UI layouts.
+This plugin helps you use `react-intl`, `i18next` or any other i18n library with Gatsby. This plugin does not translate or format your content, but rather it creates routes for each language, allowing Google to more easily find the correct version of your site, and if you need to, designate alternative UI layouts.
 
 The naming format follows .**languageKey**.js for files and /**languageKey**/path/fileName for URLs.
 
@@ -30,7 +30,7 @@ URL - /**en**/about
 
 React-intl is a part of the FormatJS set of i18n libraries and provides support for over 150+ languages. It builds on JavaScript's [Internationalization API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) providing enhanced APIs and components. React-intl uses React context and HOCs (Higher Order Components) to provide translations allowing you to dynamically load language modules as you need them. There are also polyfill options available for older browsers that do not support the base JavaScript i18n API.
 
-More detailed information about react-intl's [APIs](https://github.com/yahoo/react-intl/wiki/API) and [components](https://github.com/yahoo/react-intl/wiki/Components), including [demos](https://github.com/yahoo/react-intl/tree/master/examples), are available in the [documentation](https://github.com/yahoo/react-intl/wiki).
+More detailed information about react-intl's [APIs](https://github.com/formatjs/react-intl/blob/master/docs/API.md) and [components](https://github.com/formatjs/react-intl/blob/master/docs/Components.md), including [demos](https://github.com/formatjs/react-intl/tree/master/examples), are available in the [documentation](https://github.com/formatjs/react-intl/tree/master/docs).
 
 ### react-i18next
 
@@ -48,5 +48,5 @@ This framework also has experimental support for the React suspense API and Reac
 
 - [Gatsby i18n packages](https://www.gatsbyjs.org/packages/gatsby-plugin-i18n/?=i18)
 
-- [Gatsby i118n articles](https://www.gatsbyjs.org/blog/tags/i-18-n/)
+- [Gatsby i18n articles](https://www.gatsbyjs.org/blog/tags/i-18-n/)
 - [W3C's i18n resources](http://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)

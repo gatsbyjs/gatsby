@@ -101,7 +101,11 @@ class Runner {
   }
 
   async parseEverything() {
-    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
+    const filesRegex = `*.+(t|j)s?(x)`
+    // Pattern that will be appended to searched directories.
+    // It will match any .js, .jsx, .ts, and .tsx files, that are not
+    // inside <searched_directory>/node_modules.
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
 
     const modulesThatUseGatsby = await getGatsbyDependents()
 
@@ -114,7 +118,7 @@ class Runner {
       .reduce(
         (merged, folderPath) =>
           merged.concat(
-            glob.sync(path.join(folderPath, filesRegex), {
+            glob.sync(path.join(folderPath, pathRegex), {
               nodir: true,
             })
           ),
@@ -191,7 +195,7 @@ class Runner {
       // The way we currently export fragments requires duplicated ones
       // to be filtered out since there is a global Fragment namespace
       // We maintain a top level fragment Map to keep track of all definitions
-      // of thge fragment type and to filter them out if theythey've already been
+      // of the fragment type and to filter them out if theythey've already been
       // declared before
       doc.definitions = doc.definitions.filter(definition => {
         if (definition.kind === Kind.FRAGMENT_DEFINITION) {

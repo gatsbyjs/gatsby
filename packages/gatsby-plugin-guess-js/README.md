@@ -36,6 +36,8 @@ module.exports = {
       options: {
         // Find the view id in the GA admin in a section labeled "views"
         GAViewID: `VIEW_ID`,
+        // Add JWT token to perform authentication on deployment builds
+        jwt: GA_JWT
         minimumThreshold: 0.03,
         // The "period" for fetching analytic data.
         period: {
@@ -47,3 +49,37 @@ module.exports = {
   ],
 }
 ```
+
+## Integrating with CI
+
+Integrating this plugin within a CI pipeline may cause errors because the plugin will prompt the user/machine to log into the Google Analytics account. To get around this you'll need to generate a JWT for your GA account to pass to the plugin, this will enable the plugin to work in prod without any human interaction to authenticate permissions
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-plugin-guess-js",
+      options: {
+        // Find the view id in the GA admin in a section labeled "views"
+        GAViewID: `VIEW_ID`,
+        minimumThreshold: 0.03,
+        // Set Google Analytics jwt with Google Service Account email and private key
+        jwt: {
+          client_email: `GOOGLE_SERVICE_ACCOUNT_EMAIL`,
+          private_key: `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`,
+        },
+        // The "period" for fetching analytic data.
+        period: {
+          startDate: new Date("2018-1-1"),
+          endDate: new Date(),
+        },
+      },
+    },
+  ],
+}
+```
+
+### How to get a JWT token?
+
+[Here](https://2ality.com/2015/10/google-analytics-api.html)

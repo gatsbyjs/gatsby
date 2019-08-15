@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
 const { getValueAt } = require(`../utils/get-value-at`)
 
-const findMany = typeName => ({ args, context, info }) =>
+const findMany = typeName => (source, args, context, info) =>
   context.nodeModel.runQuery(
     {
       query: args,
@@ -14,7 +14,7 @@ const findMany = typeName => ({ args, context, info }) =>
     { path: context.path, connectionType: typeName }
   )
 
-const findOne = typeName => ({ args, context, info }) =>
+const findOne = typeName => (source, args, context, info) =>
   context.nodeModel.runQuery(
     {
       query: { filter: args },
@@ -24,19 +24,15 @@ const findOne = typeName => ({ args, context, info }) =>
     { path: context.path }
   )
 
-const findManyPaginated = typeName => async rp => {
+const findManyPaginated = typeName => async (source, args, context, info) => {
   // Peek into selection set and pass on the `field` arg of `group` and
-  // `distinct` which might need to be resolved. The easiest way to check if
-  // `group` or `distinct` are in the selection set is with the `projection`
-  // field which is added by `graphql-compose`'s `Resolver`. If we find it
-  // there, get the actual `field` arg.
-  const group = rp.projection.group && getProjectedField(rp.info, `group`)
-  const distinct =
-    rp.projection.distinct && getProjectedField(rp.info, `distinct`)
-  const args = { ...rp.args, group: group || [], distinct: distinct || [] }
+  // `distinct` which might need to be resolved.
+  const group = getProjectedField(info, `group`)
+  const distinct = getProjectedField(info, `distinct`)
+  const extendedArgs = { ...args, group: group || [], distinct: distinct || [] }
 
-  const result = await findMany(typeName)({ ...rp, args })
-  return paginate(result, { skip: rp.args.skip, limit: rp.args.limit })
+  const result = await findMany(typeName)(source, extendedArgs, context, info)
+  return paginate(result, { skip: args.skip, limit: args.limit })
 }
 
 const distinct = (source, args, context, info) => {
@@ -115,8 +111,18 @@ const paginate = (results = [], { skip = 0, limit }) => {
   }
 }
 
-const link = ({ by = `id`, from }) => async (source, args, context, info) => {
-  const fieldValue = source && source[from || info.fieldName]
+const link = (options = {}, fieldConfig) => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const resolver = fieldConfig.resolve || context.defaultFieldResolver
+  const fieldValue = await resolver(source, args, context, {
+    ...info,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -129,7 +135,7 @@ const link = ({ by = `id`, from }) => async (source, args, context, info) => {
   const returnType = getNullableType(info.returnType)
   const type = getNamedType(returnType)
 
-  if (by === `id`) {
+  if (options.by === `id`) {
     if (Array.isArray(fieldValue)) {
       return context.nodeModel.getNodesByIds(
         { ids: fieldValue, type: type },
@@ -150,7 +156,7 @@ const link = ({ by = `id`, from }) => async (source, args, context, info) => {
     return { in: value }
   }
   const operator = Array.isArray(fieldValue) ? oneOf : equals
-  args.filter = by.split(`.`).reduceRight((acc, key, i, { length }) => {
+  args.filter = options.by.split(`.`).reduceRight((acc, key, i, { length }) => {
     return {
       [key]: i === length - 1 ? operator(acc) : acc,
     }
@@ -166,15 +172,25 @@ const link = ({ by = `id`, from }) => async (source, args, context, info) => {
     Array.isArray(result)
   ) {
     return fieldValue.map(value =>
-      result.find(obj => getValueAt(obj, by) === value)
+      result.find(obj => getValueAt(obj, options.by) === value)
     )
   } else {
     return result
   }
 }
 
-const fileByPath = ({ from }) => (source, args, context, info) => {
-  const fieldValue = source && source[from || info.fieldName]
+const fileByPath = (options = {}, fieldConfig) => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const resolver = fieldConfig.resolve || context.defaultFieldResolver
+  const fieldValue = await resolver(source, args, context, {
+    ...info,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
+  })
 
   if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
   if (
@@ -270,7 +286,23 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
     return acc
   }, [])
 
+const defaultFieldResolver = (source, args, context, info) => {
+  if (!source || typeof source !== `object`) return null
+
+  if (info.from) {
+    if (info.fromNode) {
+      const node = context.nodeModel.findRootNodeAncestor(source)
+      if (!node) return null
+      return getValueAt(node, info.from)
+    }
+    return getValueAt(source, info.from)
+  }
+
+  return source[info.fieldName]
+}
+
 module.exports = {
+  defaultFieldResolver,
   findManyPaginated,
   findOne,
   fileByPath,

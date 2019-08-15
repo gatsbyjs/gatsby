@@ -155,11 +155,11 @@ async function startServer(program) {
   app.use(
     graphqlEndpoint,
     graphqlHTTP(() => {
-      const schema = store.getState().schema
+      const { schema, schemaCustomization } = store.getState()
       return {
         schema,
         graphiql: false,
-        context: withResolverContext({}, schema),
+        context: withResolverContext({}, schema, schemaCustomization.context),
         formatError(err) {
           return {
             ...formatError(err),
@@ -175,7 +175,9 @@ async function startServer(program) {
    * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
-  app.post(`/__refresh`, (req, res) => {
+  const REFRESH_ENDPOINT = `/__refresh`
+  app.use(REFRESH_ENDPOINT, express.json())
+  app.post(REFRESH_ENDPOINT, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
     const authorizedRefresh =
@@ -183,7 +185,9 @@ async function startServer(program) {
 
     if (enableRefresh && authorizedRefresh) {
       console.log(`Refreshing source data`)
-      sourceNodes()
+      sourceNodes({
+        webhookBody: req.body,
+      })
     }
     res.end()
   })
@@ -458,7 +462,21 @@ module.exports = async (program: any) => {
       }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${
+          urls.localUrlForTerminal
+        }___graphql`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${
+          urls.lanUrlForTerminal
+        }___graphql`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}___graphql`)
+    }
 
     console.log()
     console.log(`Note that the development build is not optimized.`)

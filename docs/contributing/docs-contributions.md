@@ -34,7 +34,7 @@ When working on the Gatsby.js documentation, you can choose between two major st
 
 If you find a broken image URL in the Gatsby docs, it should be fixed and kept relative to the site source rather than linked to the remote repo on GitHub. This ensures that when the site is deployed, all images are included in the build.
 
-To address missing images, check the doc or tutorial source [in the Gatsby repo](https://github.com/gatsbyjs/gatsby/docs) to see if it was moved in its history and if the images are still in its old location. Check to see if those images are also referenced from more than one doc. If they aren't, move them to the new directory location (and update URL references relative to the content, if necessary). If they are referenced in more than one location, use relative paths and don't duplicate images.
+To address missing images, check the doc or tutorial source [in the Gatsby repo](https://github.com/gatsbyjs/gatsby/tree/master/docs) to see if it was moved in its history and if the images are still in its old location. Check to see if those images are also referenced from more than one doc. If they aren't, move them to the new directory location (and update URL references relative to the content, if necessary). If they are referenced in more than one location, use relative paths and don't duplicate images.
 
 If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
 
@@ -76,6 +76,16 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
 - - title: Example Document*
 + - title: Example Document
     link: /docs/example-document/
+  ...
+```
+
+3. (Optional) if the name of the title seems long, consider adding a `breadcrumbTitle` to the entry in the `doc-links.yaml` file that is a shorter version of the title, and will show up in the breadcrumb on the docs page instead.
+
+```diff:title=www/src/data/sidebars/doc-links.yaml
+  ...
+  - title: Really, Really Long Example Document or Guide Title
+    link: /docs/example-document/
++   breadcrumbTitle: Shorter Title to Display
   ...
 ```
 

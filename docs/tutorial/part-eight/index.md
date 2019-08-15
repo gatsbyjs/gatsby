@@ -1,6 +1,7 @@
 ---
 title: Preparing a site to go live
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Wow! You've come a long way! You've learned how to:
@@ -233,7 +234,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ### Official Documentation
 
-- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
+- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
 
 ### Official Plugins
 

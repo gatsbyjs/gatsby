@@ -21,7 +21,7 @@ class NewsLetter extends Component {
           />
         </Helmet>
         <Container
-          hasSideBar={false}
+          withSidebar={false}
           css={{
             display: `flex`,
             flexDirection: `column`,
