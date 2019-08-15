@@ -4,7 +4,7 @@ title: Using fragments
 
 Fragments allow you to reuse parts of GraphQL queries. It also allows you to split up complex queries into smaller, easier to understand components.
 
-### The building blocks of a fragment
+## The building blocks of a fragment
 
 Here is an example fragment:
 
@@ -21,7 +21,7 @@ A fragment consists of three components:
 2. `TypeName`: the [GraphQL type](https://graphql.org/graphql-js/object-types/) of the object the fragment will be used on. This is important because you can only query for fields that actually exist on a given object.
 3. The body of the query. You can define any fields with any level of nesting in here, the same that you would elsewhere in a GraphQL query
 
-### Creating and using a fragment
+## Creating and using a fragment
 
 A fragment can be created inside any GraphQL query, but it's good practice to create the query separately. More organization advice in the [Conceptual Guide](/docs/querying-with-graphql/#fragments).
 

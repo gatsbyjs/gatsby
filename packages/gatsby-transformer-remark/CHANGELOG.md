@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.13...gatsby-transformer-remark@2.6.14) (2019-08-13)
+
+### Features
+
+- **gatsby-remark-images:** Add markdownCaptions option ([#16574](https://github.com/gatsbyjs/gatsby/issues/16574)) ([a72cbaf](https://github.com/gatsbyjs/gatsby/commit/a72cbaf))
+
 ## [2.6.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.12...gatsby-transformer-remark@2.6.13) (2019-08-11)
 
 **Note:** Version bump only for package gatsby-transformer-remark

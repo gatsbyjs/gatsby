@@ -9,7 +9,7 @@ const conflictFieldPrefix = `wordpress_`
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 /**
- * Validate the GraphQL naming convetions & protect specific fields.
+ * Validate the GraphQL naming conventions & protect specific fields.
  *
  * @param {any} key
  * @returns the valid name

@@ -192,6 +192,70 @@ exports[`it uses tracedSVG placeholder when enabled 1`] = `
     </span>"
 `;
 
+exports[`markdownCaptions display title in markdown as caption when showCaptions === true && markdownCaptions === true 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some _title_\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\"><p>some <em>title</em></p></figcaption>
+  </figure>"
+`;
+
+exports[`markdownCaptions display title in text as caption when showCaptions === true && markdownCaptions === false 1`] = `
+"<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
+    <span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some _title_\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>
+    <figcaption class=\\"gatsby-resp-image-figcaption\\">some _title_</figcaption>
+  </figure>"
+`;
+
 exports[`showCaptions display alt as caption if specified first in showCaptions array 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
     <span

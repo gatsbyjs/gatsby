@@ -307,13 +307,10 @@ export default ({ pageContext: { allPokemon } }) => (
   <div>
     <h1>Behold, the Pokémon!</h1>
     <ul>
-      {allPokemon.map(allPokemon => (
-        <li key={allPokemon.pokemon.id}>
-          <img
-            src={allPokemon.pokemon.sprites.front_default}
-            alt={allPokemon.pokemon.name}
-          />
-          <p>{allPokemon.pokemon.name}</p>
+      {allPokemon.map(pokemon => (
+        <li key={pokemon.id}>
+          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+          <p>{pokemon.name}</p>
         </li>
       ))}
     </ul>
@@ -628,17 +625,99 @@ yarn workspace example develop
 
 ## 5. Sourcing data
 
-Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc).
+Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc). You can also source the data yourself.
+
+### Creating source nodes
+
+#### Directions
+
+1. In `gatsby-node.js` use `sourceNodes()` and `actions.createNode()` to create and export nodes to be able to query the data.
+
+```javascript:title=gatsby-node.js
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  const pokemons = [
+    { name: "Pikachu", type: "electric" },
+    { name: "Squirtle", type: "water" },
+  ]
+
+  pokemons.forEach(pokemon => {
+    const node = {
+      name: pokemon.name,
+      type: pokemon.type,
+      id: createNodeId(`Pokemon-${pokemon.name}`),
+      internal: {
+        type: "Pokemon",
+        contentDigest: createContentDigest(pokemon),
+      },
+    }
+    actions.createNode(node)
+  })
+}
+```
+
+2. Run `gatsby develop`.
+
+   > _Note: After making changes in `gatsby-node.js` you need to re-run `gatsby develop` for the changes to take effect._
+
+3. Query the data (in GraphiQL or in your components).
+
+```graphql
+query MyPokemonQuery {
+  allPokemon {
+    nodes {
+      name
+      type
+      id
+    }
+  }
+}
+```
+
+#### Additional resources
 
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
+- The createNode function [documentation](/docs/actions/#createNode)
 
 ## 6. Querying data
 
 ### Using a Page Query
 
 You can use the `graphql` tag to query data in the pages of your Gatsby site. This gives you access to anything included in Gatsby's data layer, such as site metadata, source plugins, images, and more.
+
+### Deploying to Netlify
+
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Build your gatsby application using `gatsby build`
+
+2. Login into netlify using `netlify login`
+
+3. Run the command `netlify build`. Select the "Create & configure a new site" option.
+
+4. Choose a custom website name if you want or press enter to receive a random one.
+
+5. Choose your [Team](/docs/teams/).
+
+6. Change the deploy path to `public/`
+
+7. Make sure that everything looks fine before deploying to production using `netlify deploy --prod`
+
+#### Additional resources
+
+- [Hosting on Netlify](/docs/hosting-on-netlify)
+- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+
+## Querying data
 
 #### Directions
 
@@ -963,15 +1042,11 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
   height="300"
 />
 
-### Query Aliases
+### GraphQL Query Aliases
 
 You can rename any field in a GraphQL query with an alias.
 
 If you would like to run two queries on the same datasource, you can use an alias to avoid a naming collision with two queries of the same name.
-
-#### Prerequisites
-
-- A [Gatsby site](/docs/quick-start)
 
 #### Directions
 
@@ -1020,6 +1095,52 @@ If you would like to run two queries on the same datasource, you can use an alia
   width="600"
   height="300"
 />
+
+### GraphQL Query Fragments
+
+GraphQL fragments are shareable chunks of a query that can be reused.
+
+You might want to use them to share multiple fields between queries or to colocate a component with the data it uses.
+
+#### Directions
+
+1. Declare a `graphql` template string with a Fragment in it. The fragment should be made up of the keyword `fragment`, a name, the GraphQL type it is associated with (in this case of type `Site`, as demonstrated by `on Site`), and the fields that make up the fragment:
+
+```jsx
+export const query = graphql`
+  // highlight-start
+  fragment SiteInformation on Site {
+    title
+    description
+  }
+  // highlight-end
+`
+```
+
+2. Now, include the fragment in a query for a field of the type specified by the fragment. This includes those fields without having to declare them all independently:
+
+```diff
+export const pageQuery = graphql`
+  query SiteQuery {
+    site {
+-     title
+-     description
++   ...SiteInformation
+    }
+  }
+`
+```
+
+**Note**: Fragments don't need to be imported in Gatsby. Exporting a query with a Fragment makes that Fragment available in _all_ queries in your project.
+
+Fragments can be nested inside other fragments, and multiple fragments can be used in the same query.
+
+#### Additional Resources
+
+- [Simple example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
+- [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
+- [Gatsby image fragments](/docs/gatsby-image/#image-query-fragments)
+- [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
 ## 7. Working with images
 

@@ -2023,6 +2023,7 @@
   repo: https://github.com/baobabKoodaa/gatsby-starter-infinite-scroll
   description: Infinite Scroll and Pagination with 10k photos
   tags:
+    - Infinite Scroll
     - Pagination
     - Styling:CSS-in-JS
   features:
@@ -3501,6 +3502,7 @@
   description: Blog with all the Bells and Whistles
   tags:
     - Blog
+    - Infinite Scroll
     - Pagination
     - SEO
     - Markdown
@@ -3637,3 +3639,38 @@
     - Theme-UI and EmotionJS CSS-in-JS
     - A landing page with all your organization projects, configurable through a YML file.
     - Configurable logo, favicon, organization name and title
+- url: https://gatsby-starter-interviews.netlify.com/
+  repo: https://github.com/rmagon/gatsby-starter-interviews
+  description: A Gatsby starter template for structured Q&A or Interview sessions
+  tags:
+    - SEO
+    - Blog
+    - Styling:SCSS
+  features:
+    - Minimalist design for interviews
+    - Beautifully presented questions and answers
+    - Option to read all answers to a specific question
+    - Share interview on social channels
+    - All content in simple json files
+- url: https://gatsby-starter-photo-book.netlify.com/
+  repo: https://github.com/baobabKoodaa/gatsby-starter-photo-book
+  description: A Gatsby starter for sharing photosets.
+  tags:
+    - Gallery
+    - Infinite Scroll
+    - Pagination
+    - Transitions
+  features:
+    - Gallery with auto-generated thumbnails are presented on CSS Grid with infinite scroll.
+    - Beautiful "postcard" view for photos with fullscreen toggle.
+    - Both views are responsive with minimal whitespace and polished UX.
+    - Many performance optimizations for image delivery (both by Gatsby & way beyond what Gatsby can do).
+- url: https://ghs.ksmorano.com/
+  repo: https://github.com/ksmorano/gatsby-hasura-starter
+  description: A boilerplate for a Gatsby app paired with a Hasura project as the backend.
+  tags:
+    - Hasura
+    - Styling:Bulma
+  features:
+    - Demonstrates both query and mutation from the linked Hasura project.
+    - Uses apollo react hooks for query and mutation.

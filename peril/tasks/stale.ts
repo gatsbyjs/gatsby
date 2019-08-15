@@ -21,7 +21,7 @@ We get a lot of issues, so we currently close issues after ${DAYS_TO_STALE +
 
 If we missed this issue or if you want to keep it open, please reply here. You can also add the label "${EXEMPT_LABEL}" to keep this issue open!
 
-As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](${CONTRIBUTION_GUIDE_LINK})for more information about opening PRs, triaging issues, and contributing!
+As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](${CONTRIBUTION_GUIDE_LINK}) for more information about opening PRs, triaging issues, and contributing!
 
 Thanks for being a part of the Gatsby community! 💪💜`
 
