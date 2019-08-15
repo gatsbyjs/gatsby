@@ -1074,25 +1074,43 @@ You might want to use them to share multiple fields between queries or to co-loc
 
 #### Directions
 
-1. Declare a `graphql` template string with a Fragment in it:
+1. Declare a `graphql` template string with a Fragment in it. The fragment should be made up of the keyword fragment, a name, and the GraphQL type it is associated with (in this case of type `Site`, demonstrated by `on Site`), and the fields that make up the fragment inside:
 
 ```jsx
 export const query = graphql`
+  // highlight-start
   fragment SiteInformation on Site {
+    title
+    description
+  }
+  // highlight-end
+`
+```
+
+2. Then you can include the fragment in a query for a field of the type specified by the fragment, to include those fields without you having to type them all out:
+
+```diff
+export const pageQuery = graphql`
+  query SiteQuery {
     site {
-      title
-      description
+-     title
+-     description
++   ...SiteInformation
     }
   }
 `
 ```
 
+**Note**: if the fragment is used in a different file it doesn't need to be imported. Exporting the query from the original file will make it available for queries across your project.
+
+Fragments can be nested inside other fragments, and multiple fragments can be used in the same query.
+
 #### Additional Resources
 
-- [Simple example repo using fragments]()
-- [Example repo with co-located data]()
+- [Simple example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
 - [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
 - [Gatsby image fragments](/docs/gatsby-image/#image-query-fragments)
+- [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
 ## 7. Working with images
 
