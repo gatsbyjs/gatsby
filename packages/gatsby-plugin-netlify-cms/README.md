@@ -182,7 +182,8 @@ bar).
 
 (_optional_, type: `boolean`, default: `true`)
 
-Use a `meta` tag to ask robots to not index the CMS page.
+Use a `meta` tag to ask robots to not index the CMS page. When using this, it's advisable
+[_not_ to have your CMS page in a `robots.txt` file](https://support.google.com/webmasters/answer/93710?hl=en).
 
 ## Example
 
