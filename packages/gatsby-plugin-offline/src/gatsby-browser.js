@@ -1,5 +1,6 @@
 exports.registerServiceWorker = () => true
 
+const ignoredLinkRels = /\b(preconnect|prefetch|prerender|dns-prefetch)\b/
 const prefetchedPathnames = []
 
 exports.onServiceWorkerActive = ({
@@ -23,6 +24,8 @@ exports.onServiceWorkerActive = ({
   // get all resource URLs
   const headerResources = [].slice
     .call(nodes)
+    // don't include preconnect/prefetch/prerender resources
+    .filter(node => !ignoredLinkRels.test(node.getAttribute(`rel`)))
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
   // Loop over prefetched pages and add their resources to an array,
