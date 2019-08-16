@@ -142,6 +142,7 @@ exports.sourceNodes = async (
     touchNode,
     getNode,
     _auth,
+    reporter,
     keepMediaSizes,
   })
 
