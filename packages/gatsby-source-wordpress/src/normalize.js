@@ -478,7 +478,7 @@ exports.downloadMediaFiles = async ({
   getNode,
   _auth,
   reporter,
-  keepMediaDetails,
+  keepMediaSizes,
 }) =>
   Promise.all(
     entities.map(async e => {
@@ -535,7 +535,7 @@ exports.downloadMediaFiles = async ({
 
       if (fileNodeID) {
         e.localFile___NODE = fileNodeID
-        if (!keepMediaDetails) {
+        if (!keepMediaSizes) {
           delete e.media_details.sizes
         }
       }
