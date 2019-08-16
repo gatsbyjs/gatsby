@@ -1,6 +1,5 @@
 /* @flow */
 
-const _ = require(`lodash`)
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
