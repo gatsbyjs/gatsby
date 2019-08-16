@@ -580,7 +580,12 @@ exports.createSchemaCustomization = ({ actions }) => {
           sanitize: "Boolean",
         },
         resolve(source, args, context, info) {
-          const fieldValue = source[info.fieldName]
+          const fieldValue = context.defaultFieldResolver(
+            source,
+            args,
+            context,
+            info
+          )
           const shouldSanitize =
             args.sanitize != null ? args.sanitize : options.sanitize
           const processor = remark().use(html, { sanitize: shouldSanitize })
@@ -639,6 +644,8 @@ extend(options, prevFieldConfig) {
 If multiple field extensions are added to a field, resolvers are processed in this order:
 first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field
 extension resolvers execute from left to right.
+
+Finally, note that in order to get the current fieldValue, we use `context.defaultFieldResolver`.
 
 ## createResolvers API
 

@@ -34,7 +34,7 @@ describe(`Webpack Compilation Hash tests`, () => {
   // figuring out how to perform an actual rebuild while cypress is
   // running. See ../plugins/compilation-hash.js for the
   // implementation
-  it(`should reload page if build occurs in background`, () => {
+  it.skip(`should reload page if build occurs in background`, () => {
     cy.window().then(window => {
       const oldHash = window.___webpackCompilationHash
       expect(oldHash).to.not.eq(undefined)

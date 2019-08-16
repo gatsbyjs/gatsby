@@ -1,8 +1,8 @@
-beforeEach(() => {
-  cy.visit(`/static-query/`).waitForRouteChange()
-})
-
 describe(`StaticQuery behavior`, () => {
+  beforeEach(() => {
+    cy.visit(`/static-query/`).waitForRouteChange()
+  })
+
   it(`works with inline query`, () => {
     cy.getTestElement(`inline`)
       .invoke(`text`)
