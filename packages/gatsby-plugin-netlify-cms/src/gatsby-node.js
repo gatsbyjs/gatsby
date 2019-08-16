@@ -98,7 +98,7 @@ exports.onCreateWebpackConfig = (
     htmlTitle = `Content Manager`,
     htmlFavicon = ``,
     manualInit = false,
-    excludeRobots = true,
+    includeRobots = false,
   }
 ) => {
   if (![`develop`, `build-javascript`].includes(stage)) {
@@ -163,7 +163,7 @@ exports.onCreateWebpackConfig = (
         chunks: [`cms`],
         excludeAssets: [/cms.css/],
         meta: {
-          robots: excludeRobots ? `noindex` : ``, // Ensure search engines don't index this page.
+          robots: includeRobots ? `all` : `none`, // Control whether search engines index this page
         },
       }),
 
