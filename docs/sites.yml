@@ -7002,3 +7002,16 @@
   built_by: Cantas
   built_by_url: https://www.cantas.co.jp
   featured: false
+- title: Sheringham Shantymen
+  main_url: https://www.shantymen.com/
+  url: https://www.shantymen.com/
+  description: >
+    The Sheringham Shantymen are a sea shanty singing group that raise money for the RNLI in the UK.
+  categories:
+    - Music
+    - Community
+    - Entertainment
+    - Nonprofit
+  built_by: Zellement
+  built_by_url: https://www.zellement.com/
+  featured: false
