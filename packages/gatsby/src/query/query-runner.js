@@ -24,12 +24,7 @@ type QueryJob = {
 
 // Run query
 module.exports = async (queryJob: QueryJob) => {
-  const {
-    schema,
-    schemaCustomization,
-    program,
-    webpackCompilationHash,
-  } = store.getState()
+  const { schema, schemaCustomization, program } = store.getState()
 
   const graphql = (query, context) =>
     graphqlFunction(
@@ -101,12 +96,7 @@ ${formatErrorDetails(errorDetails)}`)
       const publicDir = path.join(program.directory, `public`)
       const { pages } = store.getState()
       const page = pages.get(queryJob.id)
-      await pageDataUtil.write(
-        { publicDir },
-        page,
-        result,
-        webpackCompilationHash
-      )
+      await pageDataUtil.write({ publicDir }, page, result)
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/

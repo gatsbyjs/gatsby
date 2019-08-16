@@ -322,6 +322,15 @@ export default (pagePath, callback) => {
       )
     })
 
+  headComponents.push(
+    <link
+      as="fetch"
+      rel="preload"
+      key="/app-data.json"
+      href="/app-data.json"
+      crossOrigin="anonymous"
+    />
+  )
   if (pageData) {
     headComponents.push(
       <link
@@ -365,10 +374,8 @@ export default (pagePath, callback) => {
       }
     })
 
-  const webpackCompilationHash = pageData.webpackCompilationHash
-
   // Add page metadata for the current page
-  const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";window.webpackCompilationHash="${webpackCompilationHash}";/*]]>*/`
+  const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";/*]]>*/`
 
   postBodyComponents.push(
     <script
