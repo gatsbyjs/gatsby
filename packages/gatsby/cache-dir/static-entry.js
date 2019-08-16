@@ -3,7 +3,15 @@ const fs = require(`fs`)
 const { join } = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
-const { get, merge, isObject, flatten, uniqBy } = require(`lodash`)
+const {
+  get,
+  merge,
+  isObject,
+  flatten,
+  uniqBy,
+  flattenDeep,
+  replace,
+} = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
@@ -69,10 +77,26 @@ const loadPageDataSync = pagePath => {
 
 const createElement = React.createElement
 
-const sanitizeComponents = components => {
+export const sanitizeComponents = components => {
+  const componentsArray = ensureArray(components)
+  return componentsArray.map(component => {
+    // Ensure manifest is always loaded from content server
+    // And not asset server when an assetPrefix is used
+    if (__ASSET_PREFIX__ && component.props.rel === `manifest`) {
+      return React.cloneElement(component, {
+        href: replace(component.props.href, __ASSET_PREFIX__, ``),
+      })
+    }
+    return component
+  })
+}
+
+const ensureArray = components => {
   if (Array.isArray(components)) {
-    // remove falsy items
-    return components.filter(val => (Array.isArray(val) ? val.length > 0 : val))
+    // remove falsy items and flatten
+    return flattenDeep(
+      components.filter(val => (Array.isArray(val) ? val.length > 0 : val))
+    )
   } else {
     // we also accept single components, so we need to handle this case as well
     return components ? [components] : []
@@ -305,7 +329,7 @@ export default (pagePath, callback) => {
         rel="preload"
         key={pageDataUrl}
         href={pageDataUrl}
-        crossOrigin="use-credentials"
+        crossOrigin="anonymous"
       />
     )
   }

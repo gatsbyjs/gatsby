@@ -23,7 +23,16 @@ const chalk = require(`chalk`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
+  {
+    files,
+    markdownNode,
+    markdownAST,
+    pathPrefix,
+    getNode,
+    reporter,
+    cache,
+    compiler,
+  },
   pluginOptions
 ) => {
   const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
@@ -73,33 +82,43 @@ module.exports = (
   }
 
   const getImageCaption = (node, overWrites) => {
-    const captionOptions = Array.isArray(options.showCaptions)
-      ? options.showCaptions
-      : options.showCaptions === true
-      ? [`title`, `alt`]
-      : false
+    const getCaptionString = () => {
+      const captionOptions = Array.isArray(options.showCaptions)
+        ? options.showCaptions
+        : options.showCaptions === true
+        ? [`title`, `alt`]
+        : false
 
-    if (captionOptions) {
-      for (const option of captionOptions) {
-        switch (option) {
-          case `title`:
-            if (node.title) {
-              return node.title
-            }
-            break
-          case `alt`:
-            if (overWrites.alt) {
-              return overWrites.alt
-            }
-            if (node.alt) {
-              return node.alt
-            }
-            break
+      if (captionOptions) {
+        for (const option of captionOptions) {
+          switch (option) {
+            case `title`:
+              if (node.title) {
+                return node.title
+              }
+              break
+            case `alt`:
+              if (overWrites.alt) {
+                return overWrites.alt
+              }
+              if (node.alt) {
+                return node.alt
+              }
+              break
+          }
         }
       }
+
+      return ``
     }
 
-    return ``
+    const captionString = getCaptionString()
+
+    if (!options.markdownCaptions || !compiler) {
+      return _.escape(captionString)
+    }
+
+    return compiler.generateHTML(compiler.parseString(captionString))
   }
 
   // Takes a node and generates the needed images and then returns
@@ -166,7 +185,7 @@ module.exports = (
         reporter.stripIndent(`
         ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
           `loading`
-        )} option. Please pass one of "lazy", "eager" or "auto". 
+        )} option. Please pass one of "lazy", "eager" or "auto".
       `)
       )
     }
@@ -261,7 +280,7 @@ module.exports = (
 
     // Construct new image node w/ aspect ratio placeholder
     const imageCaption =
-      options.showCaptions && _.escape(getImageCaption(node, overWrites))
+      options.showCaptions && getImageCaption(node, overWrites)
 
     let rawHTML = `
   <span
