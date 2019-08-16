@@ -29,7 +29,7 @@ const colls = {
     name: `gatsby:nodes`,
     options: {
       unique: [`id`],
-      indices: [`id`, `internal.type`],
+      indices: [`id`, `internal.type`, `internal.$counter`],
       disableMeta: true,
     },
   },

@@ -106,16 +106,16 @@ const getNodesAndResolvedNodes = typeName => {
   const nodes = nodesByType.get(typeName)
   const resolvedNodes = resolvedNodesCache.get(typeName)
   if (resolvedNodes) {
-    const result = []
-    for (const node of nodes.values()) {
-      result.push({
-        ...node,
-        _$resolved: resolvedNodes.get(node.id),
-      })
-    }
-    return result
+    return Array.from(resolvedNodesIterator(nodes, resolvedNodes))
   } else {
     return Array.from(nodes.values())
+  }
+}
+
+function* resolvedNodesIterator(nodes, resolvedNodes) {
+  for (const node of nodes.values()) {
+    node._$resolved = resolvedNodes.get(node.id)
+    yield node
   }
 }
 

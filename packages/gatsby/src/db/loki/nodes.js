@@ -149,8 +149,14 @@ function createNode(node, oldNode) {
   }
 
   const nodeTypeColl = getNodeTypesCollection()
-  if (!nodeTypeColl.by(`type`, node.internal.type)) {
-    nodeTypeColl.insert({ type: node.internal.type })
+  const nodeByType = nodeTypeColl.by(`type`, node.internal.type)
+  if (!nodeByType) {
+    nodeTypeColl.insert({ type: node.internal.type, count: 1 })
+  } else {
+    nodeTypeColl.findAndUpdate({ type: node.internal.type }, object => {
+      object.count++
+      return object
+    })
   }
 
   const nodeColl = getNodesCollection()
@@ -191,6 +197,12 @@ function deleteNode(node) {
 
   if (nodeColl.by(`id`, node.id)) {
     nodeColl.remove(node)
+  }
+
+  const nodeTypeColl = getNodeTypesCollection()
+  const nodeByType = nodeTypeColl.by(`type`, node.internal.type)
+  if (nodeByType.count === 1) {
+    nodeTypeColl.remove(nodeByType)
   }
   // idempotent. Do nothing if node wasn't already in DB
 }

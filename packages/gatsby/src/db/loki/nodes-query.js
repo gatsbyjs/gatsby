@@ -1,7 +1,5 @@
 const _ = require(`lodash`)
 const {
-  GraphQLUnionType,
-  GraphQLInterfaceType,
   GraphQLList,
   getNullableType,
   getNamedType,
