@@ -23,7 +23,7 @@ plugins: [`gatsby-plugin-offline`]
 
 As of `gatsby-plugin-offline` 3.0.0, the following options are available:
 
-- `appendScript` lets you specify a file to be injected into the end of the generated service worker (`sw.js`). For example:
+- `appendScript` lets you specify a file to be appended at the end of the generated service worker (`sw.js`). For example:
 
   ```javascript:title=gatsby-config.js
   plugins: [
