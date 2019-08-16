@@ -1,6 +1,7 @@
 ---
 title: Set Up Your Development Environment
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
@@ -17,15 +18,16 @@ To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.
 
 How to install or verify Homebrew on your computer:
 
-1. Open your Terminal
+1. Open your Terminal.
 1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
 1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
 1. Once you've installed Homebrew, repeat step 2 to verify.
 
-### Mac Users: install XCode Command Line Tools
+### Mac Users: install Xcode Command Line Tools
 
-1. Open your Terminal
-1. On a Mac, install XCode Command line tools by running `xcode-select --install`.
+1. Open your Terminal.
+1. On a Mac, install Xcode Command line tools by running `xcode-select --install`.
+   1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
 ## ⌚ Install Node.js and npm
@@ -66,7 +68,9 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
-To see the commands available to run `gatsby --help`.
+To see the commands available, run `gatsby --help`.
+
+![Check gatsby commands in terminal](05-gatsby-help.png)
 
 > 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
@@ -136,7 +140,7 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 1.  Open the extensions view on VS Code (View => Extensions).
 2.  Search for "Prettier - Code formatter".
-3.  Click "Install". After installation you'll be prompted to restart VS Code to enable the extension.
+3.  Click "Install". (After installation you'll be prompted to restart VS Code to enable the extension. Newer versions of VS Code will automatically enable the extension after download.)
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 

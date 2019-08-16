@@ -1,0 +1,13 @@
+on:
+  schedules:
+    - cron: 0 0 * * *
+name: Site Showcase Validator workflow
+jobs:
+  gatsby-site-showcase-validator:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: gatsby-site-showcase-validator
+        uses: ./.github/actions/gatsby-site-showcase-validator
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

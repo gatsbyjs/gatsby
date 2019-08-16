@@ -4,8 +4,6 @@ title: Deploying to Render
 
 [Render](https://render.com) is a fully-managed cloud platform where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
 
-> Sign up for Render using invite code `gatsby` or the Gatsby [invite link](https://render.com/i/gatsby).
-
 Static sites are **completely free** on Render and include the following features:
 
 - Continuous, automatic builds & deploys from GitHub.

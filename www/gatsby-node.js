@@ -1,7 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
-const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`slugify`)
@@ -11,6 +10,19 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const {
+  generateComparisonPageSet,
+} = require(`./src/utils/generate-comparison-page-set.js`)
+const yaml = require(`js-yaml`)
+const docLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
+)
+const tutorialLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
+)
+const contributingLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
+)
 
 let ecosystemFeaturedItems
 
@@ -48,6 +60,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
+    fromPath: `/docs/themes/api-reference`,
+    toPath: `/docs/theme-api/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/component-css/`, // Merged Component CSS and CSS Modules
+    toPath: `/docs/css-modules/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/blog/2018-10-25-unstructured-data/`,
     toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
     isPermanent: true,
@@ -75,6 +99,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/community/`, // Moved "Community" page from /docs/community to /contributing/community
     toPath: `/contributing/community/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/deploying-to-now/`,
+    toPath: `/docs/deploying-to-zeit-now/`,
     isPermanent: true,
   })
   createRedirect({
@@ -255,6 +284,77 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/advanced-tutorials/`,
+    toPath: `/tutorial/additional-tutorials/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/advanced-tutorials/`,
+    toPath: `/tutorial/additional-tutorials/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/authentication-tutorial/`,
+    toPath: `/tutorial/authentication-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/ecommerce-tutorial/`,
+    toPath: `/tutorial/ecommerce-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/wordpress-source-plugin-tutorial/`,
+    toPath: `/tutorial/wordpress-source-plugin-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/writing-documentation-with-docz/`,
+    toPath: `/tutorial/writing-documentation-with-docz/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/behind-the-scenes/`,
+    toPath: `/docs/gatsby-internals/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/behind-the-scenes-terminology/`,
+    toPath: `/docs/gatsby-internals-terminology/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/getting-started`,
+    toPath: `/docs/themes/using-a-gatsby-theme`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/themes/introduction`,
+    toPath: `/docs/themes/what-are-gatsby-themes`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/hosting-on-netlify/`,
+    toPath: `/docs/deploying-to-netlify/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
@@ -283,11 +383,14 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     const creatorPageTemplate = path.resolve(
       `src/templates/template-creator-details.js`
     )
+    const featureComparisonPageTemplate = path.resolve(
+      `src/templates/template-feature-comparison.js`
+    )
 
     // Query for markdown nodes to use in creating pages.
     graphql(`
       query {
-        allMarkdownRemark(
+        allMdx(
           sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
           limit: 10000
           filter: { fileAbsolutePath: { ne: null } }
@@ -348,6 +451,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                   slug
                   stub
                 }
+                hasScreenshot
               }
               url
               repo
@@ -384,7 +488,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         return reject(result.errors)
       }
 
-      const blogPosts = _.filter(result.data.allMarkdownRemark.edges, edge => {
+      const blogPosts = _.filter(result.data.allMdx.edges, edge => {
         const slug = _.get(edge, `node.fields.slug`)
         const draft = _.get(edge, `node.frontmatter.draft`)
         if (!slug) return undefined
@@ -467,6 +571,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         const slug = _.get(edge, `node.fields.starterShowcase.slug`)
         if (!slug) {
           return null
+        } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
+          reporter.warn(
+            `Starter showcase entry "${
+              edge.node.repo
+            }" seems offline. Skipping.`
+          )
+          return null
         } else {
           return edge
         }
@@ -531,18 +642,109 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create docs pages.
-      result.data.allMarkdownRemark.edges.forEach(edge => {
-        const slug = _.get(edge, `node.fields.slug`)
+      const docPages = result.data.allMdx.edges
+      const docLinks = docLinksData[0].items
+      const tutorialLinks = tutorialLinksData[0].items
+      const contributingLinks = contributingLinksData[0].items
+
+      // flatten sidebar links trees for easier next/prev link calculation
+      function flattenList(itemList) {
+        return itemList.reduce((reducer, { items, ...rest }) => {
+          reducer.push(rest)
+          if (items) reducer.push(...flattenList(items))
+          return reducer
+        }, [])
+      }
+
+      const flattenedDocs = flattenList(docLinks)
+      const flattenedTutorials = flattenList(tutorialLinks)
+      const flattenedContributing = flattenList(contributingLinks)
+
+      // with flattened tree object finding next and prev is just getting the next index
+      function getSibling(index, list, direction) {
+        if (direction === `next`) {
+          const next = index === list.length - 1 ? null : list[index + 1]
+          // for tutorial links that use subheadings on the same page skip the link and try the next item
+          if (next && next.link && next.link.includes(`#`)) {
+            return getSibling(index + 1, list, `next`)
+          }
+          return next
+        } else if (direction === `prev`) {
+          const prev = index === 0 ? null : list[index - 1]
+          if (prev && prev.link && prev.link.includes(`#`)) {
+            return getSibling(index - 1, list, `prev`)
+          }
+          return prev
+        } else {
+          reporter.warn(
+            `Did not provide direction to sibling function for building next and prev links`
+          )
+          return null
+        }
+      }
+
+      function findDoc(doc) {
+        if (!doc.link) return null
+        return (
+          doc.link === this.link ||
+          doc.link === this.link.substring(0, this.link.length - 1)
+        )
+      }
+
+      docPages.forEach(({ node }) => {
+        const slug = _.get(node, `fields.slug`)
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
+          const docIndex = flattenedDocs.findIndex(findDoc, {
+            link: slug,
+          })
+          const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
+            link: slug,
+          })
+          const contributingIndex = flattenedContributing.findIndex(findDoc, {
+            link: slug,
+          })
+
+          // add values to page context for next and prev page
+          let nextAndPrev = {}
+          if (docIndex > -1) {
+            nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
+            nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
+          }
+          if (tutorialIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `next`
+            )
+          }
+          if (contributingIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `next`
+            )
+          }
+
           createPage({
-            path: `${edge.node.fields.slug}`, // required
+            path: `${node.fields.slug}`, // required
             component: slash(
-              edge.node.fields.package ? localPackageTemplate : docsTemplate
+              node.fields.package ? localPackageTemplate : docsTemplate
             ),
             context: {
-              slug: edge.node.fields.slug,
+              slug: node.fields.slug,
+              ...nextAndPrev,
             },
           })
         }
@@ -574,6 +776,21 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         }
       })
 
+      // Create feature comparison pages
+      const jamstackPages = generateComparisonPageSet(`jamstack`)
+      const cmsPages = generateComparisonPageSet(`cms`)
+      const comparisonPages = [...jamstackPages, ...cmsPages]
+      for (const { path, options, featureType } of comparisonPages) {
+        createPage({
+          path,
+          component: slash(featureComparisonPageTemplate),
+          context: {
+            options,
+            featureType,
+          },
+        })
+      }
+
       // redirecting cypress-gatsby => gatsby-cypress
       createRedirect({
         fromPath: `/packages/cypress-gatsby/`,
@@ -594,7 +811,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
-    const parsedFilePath = parseFilepath(node.relativePath)
+    const parsedFilePath = path.parse(node.relativePath)
     if (node.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
@@ -608,11 +825,11 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (
-    node.internal.type === `MarkdownRemark` &&
+    [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
     getNode(node.parent).internal.type === `File`
   ) {
     const fileNode = getNode(node.parent)
-    const parsedFilePath = parseFilepath(fileNode.relativePath)
+    const parsedFilePath = path.parse(fileNode.relativePath)
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
@@ -697,6 +914,13 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       gatsbyDependencies: [[`no data`, `0`]],
       miscDependencies: [[`no data`, `0`]],
     }
+
+    // determine if screenshot is available
+    const screenshotNode = node.children
+      .map(childID => getNode(childID))
+      .find(node => node.internal.type === `Screenshot`)
+
+    createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
 
     if (!process.env.GITHUB_API_TOKEN) {
       return createNodeField({
@@ -838,4 +1062,104 @@ exports.onPostBuild = () => {
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`
   )
+}
+
+// XXX this should probably be a plugin or something.
+exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
+  /*
+   * NOTE: This _only_ defines the schema we currently query for. If anything in
+   * the query at `src/pages/contributing/events.js` changes, we need to make
+   * sure these types are updated as well.
+   *
+   * But why?! Why would I do something this fragile?
+   *
+   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
+   * lazy to make upstream fixes...
+   */
+  const typeDefs = `
+    type Airtable implements Node {
+      id: ID!
+      data: AirtableData
+    }
+
+    type SitesYaml implements Node {
+      title: String!
+      main_url: String!
+      url: String!
+      source_url: String
+      featured: Boolean
+      categories: [String]!
+      built_by: String
+      built_by_url: String
+      description: String
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
+    type StartersYaml implements Node {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
+    type AirtableData @dontInfer {
+      name: String @proxy(from: "Name_of_Event")
+      organizerFirstName: String @proxy(from: "Organizer_Name")
+      organizerLastName: String @proxy(from: "Organizer's_Last_Name")
+      date: Date @dateformat @proxy(from: "Date_of_Event")
+      location: String @proxy(from: "Location_of_Event")
+      url: String @proxy(from: "Event_URL_(if_applicable)")
+      type: String @proxy(from: "What_type_of_event_is_this?")
+      hasGatsbyTeamSpeaker: Boolean @proxy(from: "Gatsby_Speaker_Approved")
+      approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
+    }
+  `
+
+  createTypes(typeDefs)
+}
+
+exports.onCreateWebpackConfig = ({ actions, plugins }) => {
+  const currentCommitSHA = require(`child_process`)
+    .execSync(`git rev-parse HEAD`, {
+      encoding: `utf-8`,
+    })
+    .trim()
+
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
+      }),
+    ],
+  })
+}
+
+// Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    DocumentationJs: {
+      availableIn: {
+        type: `[String]`,
+        resolve(source) {
+          const { tags } = source
+          if (!tags || !tags.length) {
+            return []
+          }
+
+          const availableIn = tags.find(tag => tag.title === `availableIn`)
+          if (availableIn) {
+            return availableIn.description
+              .split(`\n`)[0]
+              .replace(/[[\]]/g, ``)
+              .split(`,`)
+              .map(api => api.trim())
+          }
+
+          return []
+        },
+      },
+    },
+  })
 }

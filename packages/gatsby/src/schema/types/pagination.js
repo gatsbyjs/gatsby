@@ -4,12 +4,12 @@ const { distinct, group } = require(`../resolvers`)
 const getPageInfo = ({ schemaComposer }) =>
   schemaComposer.getOrCreateOTC(`PageInfo`, tc => {
     tc.addFields({
+      currentPage: `Int!`,
+      hasPreviousPage: `Boolean!`,
       hasNextPage: `Boolean!`,
-      // currentPage: `Int!`,
-      // hasPreviousPage: `Boolean!`,
-      // itemCount: `Int!`,
-      // pageCount: `Int!`,
-      // perPage: `Int`,
+      itemCount: `Int!`,
+      pageCount: `Int!`,
+      perPage: `Int`,
     })
   })
 

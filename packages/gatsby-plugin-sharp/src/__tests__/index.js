@@ -116,28 +116,6 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(path.parse(result.srcSet).name).toBe(file.name)
     })
 
-    it(`accounts for pixel density`, async () => {
-      const result = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: {
-          sizeByPixelDensity: true,
-        },
-      })
-
-      expect(result).toMatchSnapshot()
-    })
-
-    it(`can optionally ignore pixel density`, async () => {
-      const result = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: {
-          sizeByPixelDensity: false,
-        },
-      })
-
-      expect(result).toMatchSnapshot()
-    })
-
     it(`does not change the arguments object it is given`, async () => {
       const args = { maxWidth: 400 }
       await fluid({
@@ -269,15 +247,8 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fixed`, () => {
-    beforeEach(() => {
-      console.warn = jest.fn()
-    })
-
-    afterAll(() => {
-      console.warn.mockClear()
-    })
-
     it(`does not warn when the requested width is equal to the image width`, async () => {
+      console.warn = jest.fn()
       const args = { width: 1 }
 
       const result = await fixed({
@@ -287,9 +258,11 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.width).toEqual(1)
       expect(console.warn).toHaveBeenCalledTimes(0)
+      console.warn.mockClear()
     })
 
     it(`warns when the requested width is greater than the image width`, async () => {
+      console.warn = jest.fn()
       const { width } = await sharp(file.absolutePath).metadata()
       const args = { width: width * 2 }
 
@@ -300,6 +273,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.width).toEqual(width)
       expect(console.warn).toHaveBeenCalledTimes(1)
+      console.warn.mockClear()
     })
 
     it(`correctly infers the width when only the height is given`, async () => {

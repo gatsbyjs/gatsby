@@ -2,7 +2,7 @@
 title: Introducing the Docs IA Redesign
 date: 2018-07-31
 author: Shannon Soper
-tags: ["documentation", "launch"]
+tags: ["documentation", "releases"]
 ---
 
 We've been working on a new design for the docs sidebar. You can see it live on at [www.gatsbyjs.org/docs/](/docs/)!
@@ -105,7 +105,7 @@ Want to volunteer to write one? Check out all the stub articles (titles in _ital
 
 Want to sign up for a 45 minute usability test of the new structure? (It will likely take 20-30 minutes, and I blocked out 45 minutes in case you have questions and more commentary. I'll close the sign-up link once I get 5 people who sign up.
 
-- Sign up here: [https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018](https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018)
+- [Sign up here](https://calendly.com/shannon-soper/new-ia-usability-test/07-30-2018)
 
 ### Issues to be resolved
 

@@ -59,6 +59,8 @@ exports[`transformer-react-doc-gen: onCreateNode Simple example should extract o
 
 exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: example 1`] = `
 Object {
+  "description": "const apple = require('apple')
+apple()",
   "highlighted": "<span class=\\"token keyword\\">const</span> apple <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'apple'</span><span class=\\"token punctuation\\">)</span>
 <span class=\\"token function\\">apple</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>",
   "raw": "const apple = require('apple')

@@ -25,10 +25,12 @@ This module currently pulls the following entities from WordPress:
       users, statuses, taxonomies, site metadata, ...)
 - [x] Any new entity should be pulled as long as the IDs are correct.
 - [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
-- [x] Custom post types (any type you could have declared using WordPress'
-      `functions.php`)
+- [x] Custom Post Types (any type you could have registered and enabled in the REST API)
+- [x] Post Meta (any meta fields you could have registered and enabled in the REST API)
 
 We welcome PRs adding support for data from other plugins.
+
+Note : If some fields are missing, check [troubleshooting missing fields](#missing-fields) section.
 
 ## Install
 
@@ -99,6 +101,8 @@ module.exports = {
           jwt_pass: process.env.JWT_PASSWORD,
           jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
+        // Set cookies that should be send with requests to wordpress as key value pairs
+        cookies: {},
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems.
         verboseOutput: false,
@@ -131,6 +135,11 @@ module.exports = {
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["**/posts/1456"],
+        // Set this to keep media sizes.
+        // This option is particularly useful in case you need access to
+        // URLs for thumbnails, or any other media detail.
+        // Defaults to false
+        keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
@@ -184,12 +193,17 @@ plugins.
 
 ## How to use Gatsby with Wordpress.com hosting
 
+### For Blogger, Personal, and Premium Plans
+
 Set `hostingWPCOM: true`.
 
 You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/).
 
-Note : you don't need this for Wordpress.org hosting in which your WordPress
-will behave like a self-hosted instance.
+Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
+
+### For Business, and eCommerce Plans
+
+Business and eCommerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
 
 ## Test your WordPress API
 
@@ -878,6 +892,18 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ## Troubleshooting
 
+### Missing Fields
+
+If you have custom post types or metadata that are not showing up within the schema, make sure that they are enabled within the REST API.
+
+- **Custom Meta**
+
+  To retrieve custom post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`. You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see <https://developer.wordpress.org/reference/functions/register_meta/>.
+
+- **Custom Post Types**
+
+  If you are programmatically registering post types with `register_post_type()` and would like to use them in your queries, make sure to have `show_in_rest` set as `true`. Otherwise if you are using a plugin such as CPT UI to register your custom post types, check your configurations to make sure that the post types you want to query are enabled to show in REST API.
+
 ### GraphQL Error - Unknown Field on ACF
 
 ACF returns `false` in cases where there is no data to be returned. This can cause conflicting data types in GraphQL and often leads to the error: `GraphQL Error Unknown field {field} on type {type}`.
@@ -946,6 +972,14 @@ When the post an image is attached to becomes inaccessible (e.g. from changing v
 which prevents Gatsby from retrieving it.
 
 In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
+
+### TypeError - `Cannot read property 'id' of undefined` with WordPress.com
+
+While there are other reasons this can occur (see issues), a very specific version of this issue occurs when a particlar tag, category, file (or any other referenced object) is referenced in a post but cannot be mapped to the list of related items to generate the proper node.
+
+This problem occurs because WordPress.com's API lacks the `X-WP-Total` and `X-WP-TotalPages` headers, which are used to determine the number of items and number of pages to pull from the API. Because of this, lower WordPress.com plans (Starter, Personal, and Premium) will not traverse the 2,...n pages and **will not be able to work with more than 100 items**.
+
+Note: The plugin is currently using `https://public-api.wordpress.com/wp/v2/sites/[site]/` base endpoint, instead of what is in the WordPress.com documentation (`https://public-api.wordpress.com/rest/v1.1/sites/[site]/`. the `wp/v2` closely resembles the WordPress.org API, whereas the `rest/v1` and `rest/v1.1` enpoints behave differently.
 
 ### ACF Option Pages - Option page data not showing or not updating
 

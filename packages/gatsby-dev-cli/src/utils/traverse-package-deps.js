@@ -9,7 +9,7 @@ const path = require(`path`)
  * ```
  * {
  *   "gatsby-cli": Set(["gatsby"]),
- *   "gatsby-telemtry": Set(["gatsby", "gatsby-cli"]),
+ *   "gatsby-telemetry": Set(["gatsby", "gatsby-cli"]),
  *   "gatsby-source-filesystem": Set(["gatsby-source-contentful", "gatsby-source-drupal", "gatsby-source-wordpress", etc])
  *   // no package have remark plugin in dependencies - so dependant list is empty
  *   "gatsby-transformer-remark": Set([])

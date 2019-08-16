@@ -4,17 +4,19 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
-import logo from "../logo.svg"
+import logo from "../assets/logo.svg"
 import { rhythm } from "../utils/typography"
 import {
   colors,
   space,
   fontSizes,
   transition,
-  breakpoints,
+  mediaQueries,
   sizes,
   fonts,
+  zIndices,
 } from "../utils/presets"
+import { breakpointGutter } from "../utils/styles"
 
 // what we need to nudge down the navItems to sit
 // on the baseline of the logo's wordmark
@@ -66,7 +68,7 @@ const Navigation = ({ pathname }) => {
         left: 0,
         right: 0,
         top: sizes.bannerHeight,
-        zIndex: 2,
+        zIndex: zIndices.navigation,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
         // "&:before": {
@@ -80,9 +82,9 @@ const Navigation = ({ pathname }) => {
         //   zIndex: 10,
         //   background: `red`,
         // },
-        [breakpoints.md]: {
+        [breakpointGutter]: {
+          backgroundColor: isBlog ? colors.ui.background : false,
           position: isHomepage || isBlog ? `absolute` : `fixed`,
-          backgroundColor: isBlog ? colors.gray.whisper : false,
         },
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,
@@ -99,7 +101,7 @@ const Navigation = ({ pathname }) => {
             right: 0,
             height: 1,
             zIndex: -1,
-            background: isHomepage ? `transparent` : colors.gray.border,
+            background: isHomepage ? `transparent` : colors.ui.border.subtle,
           },
         }}
       >
@@ -122,21 +124,12 @@ const Navigation = ({ pathname }) => {
         >
           <ul css={styles.ulContainer}>
             <NavItem linkTo="/docs/">Docs</NavItem>
-            <NavItem linkTo="/tutorial/">Tutorial</NavItem>
+            <NavItem linkTo="/tutorial/">Tutorials</NavItem>
             <NavItem linkTo="/plugins/">Plugins</NavItem>
             <NavItem linkTo="/features/">Features</NavItem>
             <NavItem linkTo="/blog/">Blog</NavItem>
             <NavItem linkTo="/showcase/">Showcase</NavItem>
             <NavItem linkTo="/contributing/">Contributing</NavItem>
-            {/* <li css={styles.li}>
-                <Link
-                  to="/community/"
-                  css={styles.navItem}
-                  state={{ filter: `` }}
-                >
-                  Community
-                </Link>
-              </li> */}
           </ul>
         </nav>
         <div css={styles.searchAndSocialContainer}>
@@ -154,7 +147,7 @@ const Navigation = ({ pathname }) => {
           <div
             css={{
               display: `none`,
-              [breakpoints.lg]: { display: `flex` },
+              [mediaQueries.lg]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://gatsby.dev/discord" title="Discord">
@@ -179,17 +172,15 @@ const styles = {
   },
   navContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       marginLeft: space[6],
-      // marginLeft: isHomepage ? false : `auto`,
-      // marginRight: `auto`,
     },
   },
   ulContainer: {
     display: `none`,
-    [breakpoints.md]: {
+    [mediaQueries.md]: {
       alignSelf: `flex-end`,
       display: `flex`,
       flexGrow: 1,
@@ -215,7 +206,7 @@ const styles = {
   navItem: {
     fontSize: fontSizes[3],
     borderBottom: `2px solid transparent`,
-    color: colors.gray.copy,
+    color: colors.text.primary,
     display: `block`,
     WebkitFontSmoothing: `antialiased`,
     lineHeight: `calc(${sizes.headerHeight} - ${navItemTopOffset})`,
@@ -228,8 +219,8 @@ const styles = {
       color: colors.gatsby,
     },
     active: {
-      borderBottomColor: colors.gatsby,
-      color: colors.gatsby,
+      borderBottomColor: colors.lilac,
+      color: colors.lilac,
     },
   },
   socialIconItem: {

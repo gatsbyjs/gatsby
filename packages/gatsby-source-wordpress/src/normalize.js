@@ -9,7 +9,7 @@ const conflictFieldPrefix = `wordpress_`
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 /**
- * Validate the GraphQL naming convetions & protect specific fields.
+ * Validate the GraphQL naming conventions & protect specific fields.
  *
  * @param {any} key
  * @returns the valid name
@@ -453,7 +453,7 @@ exports.mapEntitiesToMedia = entities => {
       })
 
       // Deleting fields and replacing them with links to different nodes
-      // can cause build errors if object will have only linked properites:
+      // can cause build errors if object will have only linked properties:
       // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L205
       // Hacky workaround:
       // Adding dummy field with concrete value (not link) fixes build
@@ -477,6 +477,8 @@ exports.downloadMediaFiles = async ({
   touchNode,
   getNode,
   _auth,
+  reporter,
+  keepMediaSizes,
 }) =>
   Promise.all(
     entities.map(async e => {
@@ -502,15 +504,19 @@ exports.downloadMediaFiles = async ({
 
         // If we don't have cached data, download the file
         if (!fileNodeID) {
+          // wordpress does not properly encode it's media urls
+          const encodedSourceUrl = encodeURI(e.source_url)
+
           try {
             const fileNode = await createRemoteFileNode({
-              url: e.source_url,
+              url: encodedSourceUrl,
               store,
               cache,
               createNode,
               createNodeId,
               parentNodeId: e.id,
               auth: _auth,
+              reporter,
             })
 
             if (fileNode) {
@@ -529,7 +535,9 @@ exports.downloadMediaFiles = async ({
 
       if (fileNodeID) {
         e.localFile___NODE = fileNodeID
-        delete e.media_details.sizes
+        if (!keepMediaSizes) {
+          delete e.media_details.sizes
+        }
       }
 
       return e
@@ -644,6 +652,17 @@ exports.createUrlPathsFromLinks = entities =>
       } catch (error) {
         e.path = e.link
       }
+    }
+    return e
+  })
+
+exports.normalizeMenuItems = entities =>
+  entities.map(e => {
+    if (e.__type === `wordpress__menus_menus_items`) {
+      // in case of nested menus items might be object
+      // this converts it into array so it's consistent
+      // and queried in simple manner
+      e.items = _.values(e.items)
     }
     return e
   })

@@ -81,8 +81,8 @@ export const pathIsNotHandledByApp = (destination, pathStartRegEx) => {
      * pointing to the same domain but outside of the app's pathPrefix. For
      * example, a Gatsby app lives at https://example.com/myapp/, with the
      * pathPrefix set to `/myapp`. When adding an absolute link to the same
-     * domain but outside of the /myapp path, for example, <a
-     * href="https://example.com/not-my-app"> the plugin won't catch it and
+     * domain but outside of the /myapp path, for example, `<a
+     * href="https://example.com/not-my-app">` the plugin won't catch it and
      * will navigate to an external link instead of doing a pushState resulting
      * in `https://example.com/myapp/https://example.com/not-my-app`
      */
@@ -105,7 +105,12 @@ export const hashShouldBeFollowed = (origin, destination) =>
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
-export const routeThroughBrowserOrApp = hrefHandler => event => {
+export const routeThroughBrowserOrApp = (
+  hrefHandler,
+  pluginOptions
+) => event => {
+  if (window.___failedResources) return true
+
   if (userIsForcingNavigation(event)) return true
 
   if (navigationWasHandledElsewhere(event)) return true
@@ -141,6 +146,16 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
+  if (pluginOptions.excludeRegex) {
+    console.log(
+      `pluginOptions.excludeRegex.test(destination.pathname)`,
+      pluginOptions.excludeRegex.test(destination.pathname)
+    )
+    if (pluginOptions.excludeRegex.test(destination.pathname)) {
+      return true
+    }
+  }
+
   event.preventDefault()
 
   // See issue #8907: destination.pathname already includes pathPrefix added
@@ -155,8 +170,8 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   return false
 }
 
-export default function(root, cb) {
-  const clickHandler = routeThroughBrowserOrApp(cb)
+export default function(root, pluginOptions, cb) {
+  const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)
 
   root.addEventListener(`click`, clickHandler)
 
