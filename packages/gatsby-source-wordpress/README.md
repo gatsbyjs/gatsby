@@ -135,6 +135,11 @@ module.exports = {
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["**/posts/1456"],
+        // Set whether or not media details are sourced.
+        // This option is here primarily in case you need access to the
+        // specific URLs for thumnbails, or any other media detail.
+        // Defaults to false.
+        keepMediaDetails: false,
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
