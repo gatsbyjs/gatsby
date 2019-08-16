@@ -135,11 +135,11 @@ module.exports = {
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["**/posts/1456"],
-        // Set whether or not media details are sourced.
-        // This option is here primarily in case you need access to the
-        // specific URLs for thumnbails, or any other media detail.
-        // Defaults to false.
-        keepMediaDetails: false,
+        // Set this to keep media sizes.
+        // This option is particularly useful in case you need access to
+        // URLs for thumbnails, or any other media detail.
+        // Defaults to false
+        keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
