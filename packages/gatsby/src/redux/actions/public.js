@@ -273,7 +273,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         )
 
         // using `path.win32` to force case insensitive relative path
-        const relativePath = path.win32.relative(commonDir, page.component)
+        const relativePath = slash(
+          path.win32.relative(commonDir, page.component)
+        )
+
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
       }
 
