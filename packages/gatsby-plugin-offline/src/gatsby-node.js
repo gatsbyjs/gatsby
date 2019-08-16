@@ -70,7 +70,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     importWorkboxFrom: `local`,
     globDirectory: rootDir,
     globPatterns,
-    modifyUrlPrefix: {
+    modifyURLPrefix: {
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
       "/": `${pathPrefix}/`,
@@ -78,28 +78,28 @@ exports.onPostBuild = (args, pluginOptions) => {
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory,
     // since these files have unique URLs and their contents will never change
-    dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
+    dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
     runtimeCaching: [
       {
         // Use cacheFirst since these don't need to be revalidated (same RegExp
         // and same reason as above)
         urlPattern: /(\.js$|\.css$|static\/)/,
-        handler: `cacheFirst`,
+        handler: `CacheFirst`,
       },
       {
         // page-data.json files are not content hashed
         urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        handler: `networkFirst`,
+        handler: `NetworkFirst`,
       },
       {
         // Add runtime caching of various other page resources
         urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-        handler: `staleWhileRevalidate`,
+        handler: `StaleWhileRevalidate`,
       },
       {
         // Google Fonts CSS (doesn't end in .css so we need to specify it)
         urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-        handler: `staleWhileRevalidate`,
+        handler: `StaleWhileRevalidate`,
       },
     ],
     skipWaiting: true,
