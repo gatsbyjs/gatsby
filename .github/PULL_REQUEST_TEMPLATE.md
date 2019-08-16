@@ -1,5 +1,6 @@
 <!--
-  Have any questions? Check out the contributing docs at https://gatsby.dev/contribute, or
+  Thank you for the PR! Contributors like you keep Gatsby awesome!
+  If you have any questions? Check out the contributing docs at https://gatsby.dev/contribute, or
   ask in this Pull Request and a Gatsby maintainer will be happy to help :)
 -->
 
