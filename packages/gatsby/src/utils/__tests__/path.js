@@ -54,7 +54,7 @@ describe(`paths`, () => {
     }
   })
 
-  describe.only(`getCommonDir`, () => {
+  describe(`getCommonDir`, () => {
     it.each([
       [
         `posix: path2 is sub-path of path1`,
