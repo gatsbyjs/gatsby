@@ -422,30 +422,24 @@ describe(`Queryable Node interfaces`, () => {
           id: ID!
           name: String
           echo: String @echo(value: "Interface")
-          birthday: Date @dateformat(formatString: "YYYY")
         }
         type AuthorJson implements Node & Author {
           name: String
           echo: String @echo(value: "Concrete Type")
-          birthday: Date @dateformat(formatString: "DD-MM-YYYY")
         }
         type AuthorYaml implements Node & Author {
           name: String
           echo: String @echo(value: "Another Concrete Type")
-          birthday: Date @dateformat(formatString: "MM/DD/YYYY")
         }
       `)
     )
     const query = `
       {
-        allNodeInterface(
+        allPost(
           filter: {
             author: {
               echo: {
                 in: ["Concrete Type", "Another Concrete Type"]
-              }
-              birthday: {
-                in: ["26-09-1978", "09/26/1978"]
               }
             }
           }
@@ -454,7 +448,6 @@ describe(`Queryable Node interfaces`, () => {
             author {
               name
               echo
-              birthday
             }
           }
         }
@@ -462,13 +455,12 @@ describe(`Queryable Node interfaces`, () => {
     `
     const results = await runQuery(query)
     const expected = {
-      allNodeInterface: {
+      allPost: {
         nodes: [
           {
             author: {
               name: `Author 1`,
               echo: `Another Concrete Type`,
-              birthday:
             },
           },
           {
