@@ -141,7 +141,7 @@ describe(`Queryable Node interfaces`, () => {
             date: {
               type: `Date`,
               extensions: {
-                dateformat: true,
+                dateformat: {},
               },
             },
           },
@@ -154,7 +154,7 @@ describe(`Queryable Node interfaces`, () => {
             date: {
               type: `Date`,
               extensions: {
-                dateformat: true,
+                dateformat: {},
               },
             },
           },
@@ -167,7 +167,7 @@ describe(`Queryable Node interfaces`, () => {
             date: {
               type: `Date`,
               extensions: {
-                dateformat: true,
+                dateformat: {},
               },
             },
           },

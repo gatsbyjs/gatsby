@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Print type definitions allows explicitly listing types to include without including field types 1`] = `
+"### Type definitions saved at 2019-01-01 ###
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+}"
+`;
+
+exports[`Print type definitions allows specifying types owned by plugins to exclude 1`] = `
+"### Type definitions saved at 2019-01-01 ###
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+}
+
+interface ITest @nodeInterface {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
+type Inline {
+  foo: Nested
+}
+
+type Nested {
+  baz: Boolean
+}
+
+input Baz {
+  qux: Boolean
+}
+
+type Test implements Node @dontInfer {
+  foo: Int
+}"
+`;
+
+exports[`Print type definitions allows specifying types owned by plugins to include 1`] = `
+"### Type definitions saved at 2019-01-01 ###
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+}
+
+interface ITest @nodeInterface {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
+type Inline {
+  foo: Nested
+}
+
+type Nested {
+  baz: Boolean
+}
+
+input Baz {
+  qux: Boolean
+}"
+`;
+
+exports[`Print type definitions allows specifying types to exclude 1`] = `
+"### Type definitions saved at 2019-01-01 ###
+
+type AnotherTest implements Node & ITest @dontInfer {
+  nested: Nested
+  date: Date @dateformat(formatString: \\"YYYY\\")
+  hello(planet: String = \\"world\\", language: [Language!]!): String!
+}
+
+interface ITest @nodeInterface {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
+type Nested {
+  baz: Boolean
+}
+
+input Language {
+  lang: String
+  hello: String
+}
+
+type OneMoreTest implements Node @dontInfer {
+  bar: Boolean
+}
+
+union ThisOrThat = AnotherTest | OneMoreTest
+
+type Test implements Node @dontInfer {
+  foo: Int
+}"
+`;
+
+exports[`Print type definitions allows specifying types to include (and includes interfaces and field types) 1`] = `
+"### Type definitions saved at 2019-01-01 ###
+
+type AnotherTest implements Node & ITest @dontInfer {
+  nested: Nested
+  date: Date @dateformat(formatString: \\"YYYY\\")
+  hello(planet: String = \\"world\\", language: [Language!]!): String!
+}
+
+interface ITest @nodeInterface {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
+type Nested {
+  baz: Boolean
+}
+
+input Language {
+  lang: String
+  hello: String
+}"
+`;
+
+exports[`Print type definitions saves correct type definitions 1`] = `
+"### Type definitions saved at 2019-01-01 ###
+
+type AnotherTest implements Node & ITest @dontInfer {
+  nested: Nested
+  date: Date @dateformat(formatString: \\"YYYY\\")
+  hello(planet: String = \\"world\\", language: [Language!]!): String!
+}
+
+interface ITest @nodeInterface {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
+type Nested {
+  baz: Boolean
+}
+
+input Language {
+  lang: String
+  hello: String
+}
+
+type OneMoreTest implements Node @dontInfer {
+  bar: Boolean
+}
+
+union ThisOrThat = AnotherTest | OneMoreTest
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+}
+
+type Inline {
+  foo: Nested
+}
+
+input Baz {
+  qux: Boolean
+}
+
+type Test implements Node @dontInfer {
+  foo: Int
+}"
+`;

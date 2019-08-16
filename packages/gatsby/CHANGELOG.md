@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.65](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.64...gatsby@2.13.65) (2019-08-16)
+
+### Bug Fixes
+
+- **gatsby:** Set default for modulesThatUseGatsby ([#16657](https://github.com/gatsbyjs/gatsby/issues/16657)) ([278ff98](https://github.com/gatsbyjs/gatsby/commit/278ff98))
+
+## [2.13.64](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.63...gatsby@2.13.64) (2019-08-15)
+
+### Bug Fixes
+
+- **gatsby:** adjust regex to handle MODULE_NOT_FOUND errors thrown by Bazel ([#16573](https://github.com/gatsbyjs/gatsby/issues/16573)) ([ee19535](https://github.com/gatsbyjs/gatsby/commit/ee19535))
+
+## [2.13.63](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.62...gatsby@2.13.63) (2019-08-14)
+
+### Bug Fixes
+
+- **gatsby:** Set CORS to \* in serve ([#14483](https://github.com/gatsbyjs/gatsby/issues/14483)) ([74959ab](https://github.com/gatsbyjs/gatsby/commit/74959ab))
+- **gatsby:** Use anonymous requests when fetching resources ([#14443](https://github.com/gatsbyjs/gatsby/issues/14443)) ([cdd800f](https://github.com/gatsbyjs/gatsby/commit/cdd800f)), closes [/github.com/gatsbyjs/gatsby/issues/14293#issue-448125073](https://github.com//github.com/gatsbyjs/gatsby/issues/14293/issues/issue-448125073) [#14293](https://github.com/gatsbyjs/gatsby/issues/14293)
+
+## [2.13.62](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.61...gatsby@2.13.62) (2019-08-13)
+
+### Bug Fixes
+
+- **gatsby:** check if navigator.connection is defined ([#16572](https://github.com/gatsbyjs/gatsby/issues/16572)) ([8c54e5b](https://github.com/gatsbyjs/gatsby/commit/8c54e5b))
+- **gatsby:** Don't show deprecation warning when adding childr… ([#16559](https://github.com/gatsbyjs/gatsby/issues/16559)) ([5c7a3e1](https://github.com/gatsbyjs/gatsby/commit/5c7a3e1))
+
+## [2.13.61](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.60...gatsby@2.13.61) (2019-08-12)
+
+### Features
+
+- **gatsby-plugin-schema-snapshot:** First version ([#16561](https://github.com/gatsbyjs/gatsby/issues/16561)) ([9dd1070](https://github.com/gatsbyjs/gatsby/commit/9dd1070))
+
+## [2.13.60](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.59...gatsby@2.13.60) (2019-08-12)
+
+### Bug Fixes
+
+- **gatsby:** improve hot-reloading for hooks ([#16546](https://github.com/gatsbyjs/gatsby/issues/16546)) ([8d66161](https://github.com/gatsbyjs/gatsby/commit/8d66161))
+
+## [2.13.59](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.58...gatsby@2.13.59) (2019-08-12)
+
+### Bug Fixes
+
+- **gatsby:** remove page not found for client routes in develop ([#16301](https://github.com/gatsbyjs/gatsby/issues/16301)) ([69b808a](https://github.com/gatsbyjs/gatsby/commit/69b808a))
+
+### Features
+
+- **gatsby:** Allow proxying field values from nested fields ([#16149](https://github.com/gatsbyjs/gatsby/issues/16149)) ([d2128ab](https://github.com/gatsbyjs/gatsby/commit/d2128ab))
+
+## [2.13.58](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.57...gatsby@2.13.58) (2019-08-11)
+
+### Features
+
+- **gatsby:** Display network url for GraphiQL when using -H ([#16530](https://github.com/gatsbyjs/gatsby/issues/16530)) ([44fd333](https://github.com/gatsbyjs/gatsby/commit/44fd333))
+- **gatsby:** enable richer error handling for unknown APIs ([#16105](https://github.com/gatsbyjs/gatsby/issues/16105)) ([0adab13](https://github.com/gatsbyjs/gatsby/commit/0adab13))
+
+## [2.13.57](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.56...gatsby@2.13.57) (2019-08-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.56](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.55...gatsby@2.13.56) (2019-08-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.55](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.54...gatsby@2.13.55) (2019-08-09)
+
+### Bug Fixes
+
+- **gatsby:** Make root plural fields non nullable ([#15321](https://github.com/gatsbyjs/gatsby/issues/15321)) ([2c79309](https://github.com/gatsbyjs/gatsby/commit/2c79309))
+- **gatsby:** Reserve graphqljs internal directive names ([#16483](https://github.com/gatsbyjs/gatsby/issues/16483)) ([4032012](https://github.com/gatsbyjs/gatsby/commit/4032012))
+
+### Features
+
+- **gatsby:** Allow field extensions to register return types ([#16484](https://github.com/gatsbyjs/gatsby/issues/16484)) ([0df297b](https://github.com/gatsbyjs/gatsby/commit/0df297b))
+- **gatsby:** Allow printing type definitions to file (schema lock-down) ([#16291](https://github.com/gatsbyjs/gatsby/issues/16291)) ([23a460a](https://github.com/gatsbyjs/gatsby/commit/23a460a))
+
+## [2.13.54](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.53...gatsby@2.13.54) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby:** reevaluate page query if context modified via createPage ([#15404](https://github.com/gatsbyjs/gatsby/issues/15404)) ([ddddc68](https://github.com/gatsbyjs/gatsby/commit/ddddc68))
+
+## [2.13.53](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.52...gatsby@2.13.53) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Change navigation handler logic ([#13502](https://github.com/gatsbyjs/gatsby/issues/13502)) ([504b077](https://github.com/gatsbyjs/gatsby/commit/504b077))
+
 ## [2.13.52](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.51...gatsby@2.13.52) (2019-08-06)
 
 ### Bug Fixes

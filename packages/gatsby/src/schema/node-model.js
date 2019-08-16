@@ -637,12 +637,15 @@ function resolveField(
   gqlField,
   fieldName
 ) {
+  const withResolverContext = require(`./context`)
   return gqlField.resolve(
     node,
     {},
-    {
+    withResolverContext({
+      schema,
+      schemaComposer,
       nodeModel,
-    },
+    }),
     {
       fieldName,
       schema,

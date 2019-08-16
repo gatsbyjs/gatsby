@@ -3,6 +3,7 @@ module.exports = (
     composer: null,
     context: {},
     fieldExtensions: {},
+    printConfig: null,
     thirdPartySchemas: [],
     types: [],
   },
@@ -49,6 +50,18 @@ module.exports = (
         fieldExtensions: { ...state.fieldExtensions, [name]: extension },
       }
     }
+    case `PRINT_SCHEMA_REQUESTED`: {
+      const { path, include, exclude, withFieldTypes } = action.payload
+      return {
+        ...state,
+        printConfig: {
+          path,
+          include,
+          exclude,
+          withFieldTypes,
+        },
+      }
+    }
     case `CREATE_RESOLVER_CONTEXT`: {
       const context = action.payload
       return {
@@ -61,6 +74,7 @@ module.exports = (
         composer: null,
         context: {},
         fieldExtensions: {},
+        printConfig: null,
         thirdPartySchemas: [],
         types: [],
       }

@@ -23,7 +23,12 @@ module.exports = async function generateSqip(options) {
 
   debug({ options })
 
-  const { name } = parse(absolutePath)
+  const { name, ext } = parse(absolutePath)
+
+  if (!ext.match(/(jpe?g|png|gif)$/)) {
+    debug(`Unsupported file type ${name} (${contentDigest})`)
+    return null
+  }
 
   const sqipOptions = {
     numberOfPrimitives,

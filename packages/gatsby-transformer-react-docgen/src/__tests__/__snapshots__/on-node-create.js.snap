@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformer-react-doc-gen: onCreateNode flowTypes should add flow type info: flow types 1`] = `
+Array [
+  Object {
+    "name": "number",
+  },
+  Object {
+    "elements": Array [
+      Object {
+        "name": "literal",
+        "value": "\\"string\\"",
+      },
+      Object {
+        "name": "literal",
+        "value": "\\"otherstring\\"",
+      },
+      Object {
+        "name": "number",
+      },
+    ],
+    "name": "union",
+    "raw": "\\"string\\" | \\"otherstring\\" | number",
+  },
+  Object {
+    "elements": Array [
+      Object {
+        "name": "any",
+      },
+    ],
+    "name": "Array",
+    "raw": "Array<any>",
+  },
+  Object {
+    "name": "signature",
+    "raw": "(value: string) => void",
+    "signature": Object {
+      "arguments": Array [
+        Object {
+          "name": "value",
+          "type": Object {
+            "name": "string",
+          },
+        },
+      ],
+      "return": Object {
+        "name": "void",
+      },
+    },
+    "type": "function",
+  },
+  Object {
+    "name": "signature",
+    "raw": "{ subvalue: ?boolean }",
+    "signature": Object {
+      "properties": Array [
+        Object {
+          "key": "subvalue",
+          "value": Object {
+            "name": "boolean",
+            "nullable": true,
+            "required": true,
+          },
+        },
+      ],
+    },
+    "type": "object",
+  },
+  Object {
+    "name": "ReactNode",
+  },
+]
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode tsTypes should add TS type info: typescript types 1`] = `
+Array [
+  Object {
+    "name": "number",
+  },
+  Object {
+    "elements": Array [
+      Object {
+        "name": "literal",
+        "value": "string",
+      },
+      Object {
+        "name": "literal",
+        "value": "otherstring",
+      },
+      Object {
+        "name": "number",
+      },
+    ],
+    "name": "union",
+    "raw": "\\"string\\" | \\"otherstring\\" | number",
+  },
+  Object {
+    "elements": Array [
+      Object {
+        "name": "any",
+      },
+    ],
+    "name": "Array",
+    "raw": "Array<any>",
+  },
+  Object {
+    "name": "signature",
+    "raw": "(value: string) => void",
+    "signature": Object {
+      "arguments": Array [
+        Object {
+          "name": "value",
+          "type": Object {
+            "name": "string",
+          },
+        },
+      ],
+      "return": Object {
+        "name": "void",
+      },
+    },
+    "type": "function",
+  },
+  Object {
+    "name": "signature",
+    "raw": "{ subvalue: boolean }",
+    "signature": Object {
+      "properties": Array [
+        Object {
+          "key": "subvalue",
+          "value": Object {
+            "name": "boolean",
+            "required": true,
+          },
+        },
+      ],
+    },
+    "type": "object",
+  },
+]
+`;

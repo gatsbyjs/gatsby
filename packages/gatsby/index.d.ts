@@ -937,15 +937,16 @@ export interface Store {
 }
 
 type logMessageType = (format: string, ...args: any[]) => void
+type logErrorType = (message: string, error?: Error) => void
 
 export interface Reporter {
   stripIndent: Function
   format: object
   setVerbose(isVerbose: boolean): void
   setNoColor(isNoColor: boolean): void
-  panic(...args: any[]): void
-  panicOnBuild(...args: any[]): void
-  error(message: string, error: Error): void
+  panic: logErrorType
+  panicOnBuild: logErrorType
+  error: logErrorType
   uptime(prefix: string): void
   success: logMessageType
   verbose: logMessageType

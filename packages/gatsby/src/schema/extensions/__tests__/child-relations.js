@@ -161,9 +161,13 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node {
           id: ID!
         }
+        type AnotherChild implements Node @childOf(types: ["Parent"], many: true) {
+          id: ID!
+        }
       `)
     )
     await buildSchema()
+    expect(report.warn).toBeCalledTimes(1)
     expect(report.warn).toBeCalledWith(
       `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
         `extension set to \`false\`, automatically adding fields for ` +

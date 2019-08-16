@@ -1,4 +1,5 @@
 const { LocalNodeModel } = require(`./node-model`)
+const { defaultFieldResolver } = require(`./resolvers`)
 
 const withResolverContext = ({
   schema,
@@ -22,6 +23,7 @@ const withResolverContext = ({
   return {
     ...(context || {}),
     ...(customContext || {}),
+    defaultFieldResolver,
     nodeModel: nodeModel.withContext({
       path: context ? context.path : undefined,
     }),
