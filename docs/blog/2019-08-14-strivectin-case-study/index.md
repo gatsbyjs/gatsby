@@ -11,7 +11,7 @@ image: "./images/strivectin.jpg"
 showImageInArticle: true
 ---
 
-[Strivectin](https://www.strivectin.com), founded in 2002, sells lab-tested, anti-aging skincare products. They offer direct-to-consumer products online and are stocked in thousands of retailers globally. Their first site went live on Magento Enterprise in 2011. During this time, the customer base has grown more than 10x. This growth introduced technical obstacles. Site outages became a constant problem during marketing events and press releases. The site performance was sluggish—even when utilizing a CDN, browser cache, and Magento’s page cache.
+[StriVectin](https://www.strivectin.com), founded in 2002, sells lab-tested, anti-aging skincare products. They offer direct-to-consumer products online and are stocked in thousands of retailers globally. Their first site went live on Magento Enterprise in 2011. During this time, the customer base has grown more than 10x. This growth introduced technical obstacles. Site outages became a constant problem during marketing events and press releases. The site performance was sluggish—even when utilizing a CDN, browser cache, and Magento’s page cache.
 
 The performance and stability concerns needed resolution in order for StriVectin to succeed. [Elevar](https://getelevar.com/?utm_source=gatsbyjs&utm_medium=blog&utm_campaign=casestudy&utm_content=casestudy), an ecommerce data analysis and optimization company, helped with implementation which included designing, building, and launching. Fast forward to July 2019 and a new, blazing-fast site launched using Gatsby. Day-to-day concerns with site outages, instability, or “the site is slow for me” are now a thing of the past!
 
@@ -44,12 +44,12 @@ Gatsby provides us with a superior DX and a fast site. This includes:
 - Code splitting
 - Link preloading
 - Image optimization
-- The "content mesh" via Graphql with Graphiql
+- The "content mesh" via GraphQL with GraphiQL
 - Hooks API
 
 ### Content Mesh
 
-Gatsby provides conveniences around data fetching. The “Content Mesh” is a mesh of different content sources stitched into a single data layer. You can query this layer using Graphql. Our “Content Mesh” consists of Prismic, Shopify, and Yotpo. You can see how those data sources make up the Homepage below:
+Gatsby provides conveniences around data fetching. The “Content Mesh” is a mesh of different content sources stitched into a single data layer. You can query this layer using GraphQL. Our “Content Mesh” consists of Prismic, Shopify, and Yotpo. You can see how those data sources make up the Homepage below:
 
 ![Strivectin content mesh.](images/content-mesh.png)
 
@@ -96,7 +96,7 @@ Our project plan was not traditional compared to most e-commerce projects:
 
 After design approval, we could focus purely on the designs and component implementation. We were only in Storybook at this point. User Acceptance Testing (UAT) is simpler this way. The client can view components shared across pages in various states. Component tweaks are smoother during this phase. The component data is completely decoupled from the source. Our React components already defined the data that they needed. We only needed to define the data in the CMS (Prismic).
 
-After defining and populating our CMS with sample data, we were onto the Gatsby phase. Keep in mind that we didn't have any templates like a typical Shopify theme. You would think that it would be slower to start from scratch, but it had the opposite effect. Implementing with Gatsby enabled us to developer faster. We weren't bound by templates like a typical Shopify theme. We were able to reuse queries and components across pages.
+After defining and populating our CMS with sample data, we were onto the Gatsby phase. Keep in mind that we didn't have any templates like a typical Shopify theme. You would think that it would be slower to start from scratch, but it had the opposite effect. Implementing with Gatsby enabled us to develop faster. We weren't bound by templates like a typical Shopify theme. We were able to reuse queries and components across pages.
 
 After completing the majority of the implementation, we moved onto integration with Shopify. The Storefront API made it easy to create checkouts. We use the online store for account management, so we had to theme it. We mirrored the Gatsby site for the account management pages.
 
@@ -129,6 +129,6 @@ Feature development and maintenance is much simpler. The codebase was around 20,
 
 ## Final Thoughts
 
-We are still less than 30 days out from launch so we have a lot of time for standard eCommerce metrics such as conversion rate and revenue per visitor to stabilize but the results so far look great. One KPI that is not discussed much in headless/PWA discussions is the impact on organic SEO traffic. We have seen an immediate and sustained increase of 20% in organic traffic to the site.
+We are still less than 30 days out from launch which means the typical e-commerce KPIs like conversion rate and revenue per visitor have not stabilized due to traffic and marketing changes during the cutover. One KPI that is not discussed much in headless/PWA discussions is the impact on organic SEO traffic. We have seen an immediate and sustained increase of 20% in organic traffic to the site.
 
 The StriVectin team is now armed with a site that is fast, secure, can handle rapid merchandising iterations, and ready to scale for the Q4 holiday season and beyond.
