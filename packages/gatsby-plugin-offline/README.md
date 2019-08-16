@@ -23,38 +23,47 @@ plugins: [`gatsby-plugin-offline`]
 
 As of `gatsby-plugin-offline` 3.0.0, the following options are available:
 
-- `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration)
-- `injectScript` lets you specify a file to be injected into the end of the generated service worker (`sw.js`)
+- `injectScript` lets you specify a file to be injected into the end of the generated service worker (`sw.js`). For example:
 
-For example:
-
-```javascript:title=gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-offline`,
-    options: {
-      workboxConfig: {
-        importWorkboxFrom: `cdn`,
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        injectScript: `src/custom-sw-code.js`,
       },
-      injectScript: `src/custom-sw-code.js`,
     },
-  },
-]
-```
+  ]
+  ```
 
-```javascript:title=src/custom-sw-code.js
-// show a notification after 15 seconds (the notification
-// permission must be granted first)
-setTimeout(() => {
-  self.registration.showNotification("Hello, world!")
-}, 15000)
+  ```javascript:title=src/custom-sw-code.js
+  // show a notification after 15 seconds (the notification
+  // permission must be granted first)
+  setTimeout(() => {
+    self.registration.showNotification("Hello, world!")
+  }, 15000)
 
-// register a custom navigation route
-const customRoute = new workbox.routing.NavigationRoute(({ event }) => {
-  // ...
-})
-workbox.routing.registerRoute(customRoute)
-```
+  // register a custom navigation route
+  const customRoute = new workbox.routing.NavigationRoute(({ event }) => {
+    // ...
+  })
+  workbox.routing.registerRoute(customRoute)
+  ```
+
+- `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
+
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        workboxConfig: {
+          importWorkboxFrom: `cdn`,
+        },
+      },
+    },
+  ]
+  ```
 
 ## Upgrading from 2.x
 
