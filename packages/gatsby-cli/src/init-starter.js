@@ -271,8 +271,9 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   const hostedInfo = hostedGitInfo.fromUrl(starterPath)
 
   trackCli(`NEW_PROJECT`, {
-    starterName: hostedInfo.shortcut(),
+    starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`,
   })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starterPath, rootPath)
+  trackCli(`NEW_PROJECT_END`)
 }

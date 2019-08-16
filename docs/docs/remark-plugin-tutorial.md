@@ -272,7 +272,7 @@ At this point, our plugin is now ready to be used. To see the resulting function
 
 ## Publishing the plugin
 
-To be shared with others, you can extract the plugin to its own directory outside of this site and then publish it to NPM so it can be accessed both on NPM and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
+To share this plugin with others, you can extract the plugin to its own directory outside of this site and then publish it to NPM so it can be accessed both on NPM and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
 
 ## Summary
 

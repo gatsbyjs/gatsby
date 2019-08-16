@@ -71,3 +71,5 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   }
 }
 ```
+
+Another solution is to use a package like [react-loadable](https://github.com/jamiebuilds/react-loadable). The module that tries to use `window` will be dynamically loaded only on the client side (and not during SSR).

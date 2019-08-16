@@ -189,6 +189,10 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
               ...rest,
             },
             plugin.pluginOptions
@@ -229,6 +233,10 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
               ...rest,
             },
             plugin.pluginOptions
@@ -351,7 +359,7 @@ module.exports = (
       { pruneLength, truncate, excerptSeparator }
     ) {
       const fullAST = await getHTMLAst(markdownNode)
-      if (excerptSeparator) {
+      if (excerptSeparator && markdownNode.excerpt !== ``) {
         return cloneTreeUntil(
           fullAST,
           ({ nextNode }) =>
@@ -457,7 +465,7 @@ module.exports = (
 
         const excerptText = excerptNodes.join(``).trim()
 
-        if (excerptSeparator) {
+        if (excerptSeparator && !isBeforeSeparator) {
           return excerptText
         }
         if (!truncate) {

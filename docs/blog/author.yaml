@@ -247,7 +247,7 @@
   avatar: avatars/katie-fujihara.jpg
   twitter: "@katieofcode"
 - id: Sidhartha Chatterjee
-  bio: OSS Maintainer @ GatsbyJS. Full Stack Developer. Consultant. Scuba Diver.
+  bio: Core team @ GatsbyJS. Full-Stack Developer. Scuba diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
 - id: Tania Rascia
@@ -332,3 +332,14 @@
   bio: Web Developer at Apollo. Always learning!
   avatar: avatars/trevor-blades.jpg
   twitter: "@trevorblades"
+- id: Kyle Pennell
+  bio: I make websites that help people explore the offline world - https://kyleapennell.com
+  avatar: avatars/kyle-pennell.jpg
+  twitter: "@kyleapennell"
+- id: Grant Glidewell
+  bio: New dad moving modern technologies forward with cutting-edge projects @ThirdAndGrove. And doggos
+  avatar: avatars/grant-glidewell.jpg
+- id: Ilesh Mistry
+  bio: https://www.ileshmistry.com | Gatsby and GraphQL fan | @kentico MVP working at @MMT_Digital uses KenticoCloud 💻 | @ManUtd fan 🔴 | Husband ❤️ | Father 💙 | Traveller ✈️ 🏝 | @Marvel fan 💪
+  avatar: avatars/ilesh-mistry.jpg
+  twitter: "@ileshmistry"

@@ -4,7 +4,7 @@ author: Jason Lengstorf
 date: 2018-09-07
 image: images/values-whiteboard.jpg
 showImageInArticle: false
-tags: ["company"]
+tags: ["gatsby-inc"]
 ---
 
 Most of the Gatsby [Inkteam](https://www.gatsbyjs.com/about/) was together in Portland last week for our latest team onsite, which we lovingly refer to as “Gatsby Gatherings”. The team assembles every few months to discuss pressing needs, our company’s direction, and our roadmap.
@@ -24,12 +24,13 @@ In this post, we’ll break down the process we followed, what we came up with, 
 Gatsby is a distributed team, which means that on most days we only interact with contributors and team members through Slack and GitHub messages. And with team members everywhere from San Francisco to Chiang Mai, getting the whole team on extended video calls to discuss philosophical questions is extremely difficult.
 
 <figure>
-  <img alt="The Gatsby team gathered around a whiteboard." src="./images/team-discussion.jpg" />
+  <img
+    alt="The Gatsby team gathered around a whiteboard."
+    src="./images/team-discussion.jpg"
+  />
   <figcaption>
     The Inkteam in Portland, Oregon for a Gatsby Gathering. Photo:
-    <a href="https://www.houseofschaab.photography/">
-      Danielle Schaab
-    </a>
+    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
   </figcaption>
 </figure>
 
@@ -48,12 +49,13 @@ Once we had all the anonymous ideas collected, Sam condensed them into common th
 While we were all together, Sam went through the themes with all of us and we wrote them out on a whiteboard. This helped all of us get back into the context of what we’d written down before, and what the team collectively values.
 
 <figure>
-  <img alt="Kurt holding a sticky note with “always be open to change” written on it." src="./images/kurt-sticky-note.jpg" />
+  <img
+    alt="Kurt holding a sticky note with “always be open to change” written on it."
+    src="./images/kurt-sticky-note.jpg"
+  />
   <figcaption>
     Kurt writing down really good ideas on a sticky note. Photo:
-    <a href="https://www.houseofschaab.photography/">
-      Danielle Schaab
-    </a>
+    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
   </figcaption>
 </figure>
 
@@ -66,12 +68,13 @@ Once we all had context, we distributed sticky notes and markers, then set a tim
 With everyone’s ideas on the board, we started grouping. [Marisa](https://twitter.com/marisamorby) and I looked for common threads in the ideas on the whiteboard and started to condense them down into a set of core values.
 
 <figure>
-  <img alt="Kyle, Linda, and Marisa adding and grouping ideas on the whiteboard." src="./images/values-whiteboard.jpg" />
+  <img
+    alt="Kyle, Linda, and Marisa adding and grouping ideas on the whiteboard."
+    src="./images/values-whiteboard.jpg"
+  />
   <figcaption>
     Kyle, Linda, and Marisa adding and grouping ideas on the whiteboard. Photo:
-    <a href="https://www.houseofschaab.photography/">
-      Danielle Schaab
-    </a>
+    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
   </figcaption>
 </figure>
 
@@ -79,7 +82,18 @@ As we wrote these out, we discussed them with the whole team to make sure we wer
 
 At the end of the exercise, we’d extracted 8 shared core values, all of which the team is fully aligned on and deeply committed to.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">What we&#39;re doing at <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> this week: writing down what kind of company we want to be. <a href="https://t.co/N0SRaJXILS">pic.twitter.com/N0SRaJXILS</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1032319257298628608?ref_src=twsrc%5Etfw">August 22, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    What we&#39;re doing at{" "}
+    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>{" "}
+    this week: writing down what kind of company we want to be.{" "}
+    <a href="https://t.co/N0SRaJXILS">pic.twitter.com/N0SRaJXILS</a>
+  </p>
+  &mdash; Jason Lengstorf (@jlengstorf){" "}
+  <a href="https://twitter.com/jlengstorf/status/1032319257298628608?ref_src=twsrc%5Etfw">
+    August 22, 2018
+  </a>
+</blockquote>
 
 ## What we learned — Gatsby’s core values
 
@@ -143,7 +157,19 @@ Open source doesn’t have the best reputation for being friendly and welcoming,
 
 We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through [pair programming](https://gatsby.dev/pairing), offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Huge shoutout to <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>. Not only have hey been the perfect open source project for Lambda School students to contribute to, but the whole community goes above and beyond in helping students understand the OSS ecosystem generally</p>&mdash; Austen Allred (@AustenAllred) <a href="https://twitter.com/AustenAllred/status/1038084753008652289?ref_src=twsrc%5Etfw">September 7, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    Huge shoutout to{" "}
+    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>.
+    Not only have hey been the perfect open source project for Lambda School
+    students to contribute to, but the whole community goes above and beyond in
+    helping students understand the OSS ecosystem generally
+  </p>
+  &mdash; Austen Allred (@AustenAllred){" "}
+  <a href="https://twitter.com/AustenAllred/status/1038084753008652289?ref_src=twsrc%5Etfw">
+    September 7, 2018
+  </a>
+</blockquote>
 
 We’re so happy you’re here. 💪💜
 
@@ -156,9 +182,13 @@ To ensure we live and work according to these values, we’re using our values a
 Are we acting like the company we want to be? Like the _people_ we want to be?
 
 <figure>
-  <img alt="The Gatsby Inkteam together in a park." src="./images/team-in-the-park.jpg" />
+  <img
+    alt="The Gatsby Inkteam together in a park."
+    src="./images/team-in-the-park.jpg"
+  />
   <figcaption>
-    The Gatsby Inkteam (not pictured: Florian Kissling). Photo: <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
+    The Gatsby Inkteam (not pictured: Florian Kissling). Photo:{" "}
+    <a href="https://www.houseofschaab.photography/">Danielle Schaab</a>
   </figcaption>
 </figure>
 
