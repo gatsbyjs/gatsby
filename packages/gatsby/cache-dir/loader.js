@@ -38,6 +38,9 @@ const loadPageDataJson = loadObj => {
     if (status === 200) {
       try {
         const jsonPayload = JSON.parse(responseText)
+        if (jsonPayload.path === undefined) {
+          throw new Error(`not a valid pageData response`)
+        }
 
         return Object.assign(loadObj, {
           status: `success`,
