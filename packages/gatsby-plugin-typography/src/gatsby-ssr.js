@@ -24,9 +24,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
 exports.onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) => {
   const headComponents = getHeadComponents()
   headComponents.sort((x, y) => {
-    if (x.key === `TypographyStyle`) {
+    if (x && x.key === `TypographyStyle`) {
       return -1
-    } else if (y.key === `TypographyStyle`) {
+    } else if (y && y.key === `TypographyStyle`) {
       return 1
     }
     return 0

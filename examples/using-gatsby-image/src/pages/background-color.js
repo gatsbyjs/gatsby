@@ -1,8 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
-import Lorem from "../components/lorem"
-import Ipsum from "../components/ipsum"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
@@ -25,7 +23,19 @@ const BackgroundColor = ({ data, location }) => (
       } (via unsplash.com)`}
       backgroundColor="#DB3225"
     />
-    <Lorem />
+    <p>
+      With the Background Color technique, you can specify a CSS background
+      color to fill the space as your images download. For graphic images with a
+      predominant color in the foreground or background, a matching color in the
+      loading space can create a visually pleasing image load experience.
+    </p>
+    <p>
+      To use the Background Color technique, provide a{` `}
+      <code>backgroundColor</code> prop in your floating or fixed image
+      component instance. You can use hex color values, RGB values, or any other
+      valid CSS background color format.
+    </p>
+
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
       backgroundColor="#F9D6CE"
@@ -33,7 +43,6 @@ const BackgroundColor = ({ data, location }) => (
         data.fullWidthImage.credit
       } (via unsplash.com)`}
     />
-    <Ipsum />
   </Layout>
 )
 

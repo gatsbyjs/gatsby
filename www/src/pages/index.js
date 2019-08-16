@@ -1,9 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
 import Layout from "../components/layout"
-import presets, { colors } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { colors, space, mediaQueries, fontWeights } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -13,6 +14,8 @@ import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
+import HomepageSection from "../components/homepage/homepage-section"
+import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -38,7 +41,7 @@ class IndexRoute extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: { edges: postsData },
+        allMdx: { edges: postsData },
         allStartersYaml: { edges: startersData },
         allNpmPackage: { edges: pluginsData },
       },
@@ -89,7 +92,6 @@ class IndexRoute extends React.Component {
             content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
           />
         </Helmet>
-        <MastheadContent />
         <main
           id={`reach-skip-nav`}
           css={{
@@ -99,16 +101,17 @@ class IndexRoute extends React.Component {
             justifyContent: `space-between`,
           }}
         >
+          <MastheadContent />
           <div
             css={{
-              padding: rhythm(presets.gutters.default / 2),
+              padding: space[6],
               paddingTop: 0,
               width: `100%`,
-              borderBottom: `1px solid ${colors.ui.light}`,
-              borderTop: `1px solid ${colors.ui.light}`,
-              background: colors.ui.whisper,
-              [presets.Xl]: {
-                padding: rhythm(presets.gutters.default),
+              borderBottom: `1px solid ${colors.purple[10]}`,
+              borderTop: `1px solid ${colors.purple[10]}`,
+              background: colors.purple[5],
+              [mediaQueries.xl]: {
+                padding: space[8],
               },
             }}
           >
@@ -116,26 +119,25 @@ class IndexRoute extends React.Component {
           </div>
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
-            <Container hasSideBar={false}>
-              <div
-                css={{
-                  textAlign: `center`,
-                  padding: `${rhythm(1)} 0 ${rhythm(1.5)}`,
-                }}
-              >
-                <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
+            <Container withSidebar={false}>
+              <section css={{ textAlign: `center` }}>
+                <h1 css={{ fontWeight: fontWeights[1], marginTop: 0 }}>
+                  Curious yet?
+                </h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
                 </FuturaParagraph>
                 <Button
                   secondary
+                  large
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: `1rem` }}
+                  overrideCSS={{ marginTop: space[4] }}
+                  icon={<ArrowForwardIcon />}
                 >
                   Get Started
                 </Button>
-              </div>
+              </section>
             </Container>
           </div>
 
@@ -144,7 +146,15 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
+
+          <HomepageSection
+            css={{
+              paddingTop: `0 !important`,
+              paddingBottom: `0 !important`,
+            }}
+          />
         </main>
+        <FooterLinks />
       </Layout>
     )
   }
@@ -166,7 +176,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       limit: 4
       filter: {
@@ -183,7 +193,10 @@ export const pageQuery = graphql`
     }
     allStartersYaml(
       filter: {
-        fields: { starterShowcase: { slug: { in: $featuredStarters } } }
+        fields: {
+          starterShowcase: { slug: { in: $featuredStarters } }
+          hasScreenshot: { eq: true }
+        }
       }
       sort: { order: DESC, fields: [fields___starterShowcase___stars] }
     ) {

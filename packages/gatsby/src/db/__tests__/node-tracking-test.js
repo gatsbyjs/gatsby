@@ -3,8 +3,11 @@ const {
   boundActionCreators: { createNode },
 } = require(`../../redux/actions`)
 const { getNode } = require(`../../db/nodes`)
-const { findRootNodeAncestor, trackDbNodes } = require(`../node-tracking`)
-const nodeTypes = require(`../../schema/build-node-types`)
+const {
+  findRootNodeAncestor,
+  trackDbNodes,
+  trackInlineObjectsInRootNode,
+} = require(`../node-tracking`)
 const { run: runQuery } = require(`../nodes-query`)
 require(`./fixtures/ensure-loki`)()
 
@@ -18,7 +21,7 @@ function makeNode() {
     },
     inlineArray: [1, 2, 3],
     internal: {
-      type: `TestNode`,
+      type: `Test`,
       contentDigest: `digest1`,
       owner: `test`,
     },
@@ -43,7 +46,7 @@ describe(`track root nodes`, () => {
         },
         inlineArray: [1, 2, 3],
         internal: {
-          type: `TestNode`,
+          type: `Test`,
           contentDigest: `digest2`,
         },
       },
@@ -89,7 +92,21 @@ describe(`track root nodes`, () => {
     let type
 
     beforeAll(async () => {
-      type = (await nodeTypes.buildAll({})).testNode.nodeObjectType
+      const { createSchemaComposer } = require(`../../schema/schema-composer`)
+      const {
+        addInferredFields,
+      } = require(`../../schema/infer/add-inferred-fields`)
+      const { getExampleValue } = require(`../../schema/infer/example-value`)
+
+      const sc = createSchemaComposer()
+      const typeName = `Test`
+      const tc = sc.createObjectTC(typeName)
+      addInferredFields({
+        schemaComposer: sc,
+        typeComposer: tc,
+        exampleValue: getExampleValue({ nodes: [makeNode()], typeName }),
+      })
+      type = tc.getType()
     })
 
     it(`Tracks objects when running query without filter`, async () => {
@@ -121,6 +138,72 @@ describe(`track root nodes`, () => {
 
       expect(result.length).toEqual(1)
       expect(findRootNodeAncestor(result[0].inlineObject)).toEqual(result[0])
+    })
+  })
+
+  describe(`Node sanitization`, () => {
+    let testNode
+    beforeEach(() => {
+      testNode = {
+        id: `id1`,
+        parent: null,
+        children: [],
+        unsupported: () => {},
+        inlineObject: {
+          field: `fieldOfFirstNode`,
+          re: /re/,
+        },
+        inlineArray: [1, 2, 3, Symbol(`test`)],
+        internal: {
+          type: `Test`,
+          contentDigest: `digest1`,
+          owner: `test`,
+        },
+      }
+    })
+
+    it(`Remove not supported fields / values`, () => {
+      const result = trackInlineObjectsInRootNode(testNode, true)
+      expect(result).toMatchSnapshot()
+      expect(result.unsupported).not.toBeDefined()
+      expect(result.inlineObject.re).not.toBeDefined()
+      expect(result.inlineArray[3]).not.toBeDefined()
+    })
+
+    it(`Doesn't mutate original`, () => {
+      trackInlineObjectsInRootNode(testNode, true)
+      expect(testNode.unsupported).toBeDefined()
+      expect(testNode.inlineObject.re).toBeDefined()
+      expect(testNode.inlineArray[3]).toBeDefined()
+    })
+
+    it(`Create copy of node if it has to remove anything`, () => {
+      const result = trackInlineObjectsInRootNode(testNode, true)
+      expect(result).not.toBe(testNode)
+    })
+
+    it(`Doesn't create clones if it doesn't have to`, () => {
+      const testNodeWithoutUnserializableData = {
+        id: `id1`,
+        parent: null,
+        children: [],
+        inlineObject: {
+          field: `fieldOfFirstNode`,
+        },
+        inlineArray: [1, 2, 3],
+        internal: {
+          type: `Test`,
+          contentDigest: `digest1`,
+          owner: `test`,
+        },
+      }
+
+      const result = trackInlineObjectsInRootNode(
+        testNodeWithoutUnserializableData,
+        true
+      )
+      // should be same instance
+      expect(result).toBe(testNodeWithoutUnserializableData)
     })
   })
 })

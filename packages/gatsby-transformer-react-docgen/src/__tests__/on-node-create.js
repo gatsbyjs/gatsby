@@ -15,18 +15,27 @@ const readFile = file =>
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let loadNodeContent, actions, node, createdNodes, updatedNodes
   const createNodeId = jest.fn()
-  createNodeId.mockReturnValue(`uuid-from-gatsby`)
-  let run = (node, opts = {}) =>
-    onCreateNode(
+  let i
+
+  beforeAll(() => {
+    i = 0
+    createNodeId.mockImplementation(() => i++)
+  })
+
+  let run = (node, opts = {}) => {
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    return onCreateNode(
       {
         node,
         loadNodeContent,
         actions,
         createNodeId,
         reporter: { error: console.error },
+        createContentDigest,
       },
-      opts
+      { cwd: path.join(__dirname, `fixtures`), ...opts }
     )
+  }
 
   let consoleError
   beforeEach(() => {
@@ -39,6 +48,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       children: [],
       internal: {
         mediaType: `application/javascript`,
+      },
+      get absolutePath() {
+        return path.join(__dirname, `fixtures`, this.__fixture)
       },
       __fixture: `classes.js`,
     }
@@ -54,7 +66,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   })
 
   it(`should only process javascript, jsx, and typescript nodes`, async () => {
-    loadNodeContent = jest.fn().mockResolvedValue({})
+    loadNodeContent = jest.fn().mockResolvedValue(``)
 
     const unknown = [
       null,
@@ -114,10 +126,22 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
   it(`should infer a name`, async () => {
     node.__fixture = `unnamed.js`
-    node.absolutePath = path.join(__dirname, `UnnamedExport`)
+
     await run(node)
 
-    expect(createdNodes[0].displayName).toEqual(`UnnamedExport`)
+    expect(
+      groupBy(createdNodes, `internal.type`).ComponentMetadata[0].displayName
+    ).toEqual(`Unnamed`)
+  })
+
+  it(`should create a description node when there is no description`, async () => {
+    node.__fixture = `unnamed.js`
+
+    await run(node)
+
+    expect(
+      groupBy(createdNodes, `internal.type`).ComponentDescription
+    ).toHaveLength(1)
   })
 
   it(`should extract all propTypes`, async () => {
@@ -131,13 +155,17 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     let types = groupBy(createdNodes, `internal.type`)
-    expect(types.ComponentProp[0].description).toEqual(
-      `An object hash of field (fix this @mention?) errors for the form.`
-    )
+
+    const id = types.ComponentProp[0].id
+
     expect(types.ComponentProp[0].doclets).toEqual([
       { tag: `type`, value: `{Foo}` },
       { tag: `default`, value: `blue` },
     ])
+
+    expect(types.ComponentDescription.find(d => d.parent === id).text).toEqual(
+      `An object hash of field (fix this @mention?) errors for the form.`
+    )
   })
 
   it(`should extract create description nodes with markdown types`, async () => {
@@ -163,13 +191,53 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     beforeEach(() => {
       node.__fixture = `flow.js`
     })
+
     it(`should add flow type info`, async () => {
       await run(node)
-      const created = createdNodes.find(f => !!f.flowType)
 
-      expect(created.flowType).toEqual({
-        name: `number`,
+      const created = createdNodes.map(f => f.flowType).filter(Boolean)
+
+      expect(created).toMatchSnapshot(`flow types`)
+    })
+    it(`literalsAndUnion property should be union type`, async () => {
+      await run(node)
+      const created = createdNodes.find(f => f.name === `literalsAndUnion`)
+
+      expect(created.flowType).toEqual(
+        expect.objectContaining({
+          name: `union`,
+          raw: `"string" | "otherstring" | number`,
+        })
+      )
+    })
+
+    it(`badDocumented property should flowType ReactNode`, async () => {
+      await run(node)
+      const created = createdNodes.find(f => f.name === `badDocumented`)
+
+      expect(created.flowType).toEqual(
+        expect.objectContaining({
+          name: `ReactNode`,
+        })
+      )
+    })
+  })
+
+  describe(`tsTypes`, () => {
+    beforeEach(() => {
+      node.__fixture = `typescript.tsx`
+    })
+
+    it(`should add TS type info`, async () => {
+      await run(node, {
+        parserOpts: {
+          plugins: [`jsx`, `typescript`, `classProperties`],
+        },
       })
+
+      const created = createdNodes.map(f => f.tsType).filter(Boolean)
+
+      expect(created).toMatchSnapshot(`typescript types`)
     })
   })
 })

@@ -6,8 +6,7 @@ import FaLinkedin from "react-icons/lib/fa/linkedin"
 import FaFacebook from "react-icons/lib/fa/facebook"
 import FaTwitter from "react-icons/lib/fa/twitter"
 
-import presets, { colors } from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { colors, space, radii } from "../utils/presets"
 
 const objectToParams = object =>
   `?` +
@@ -72,7 +71,7 @@ class ShareMenu extends React.Component {
           css={{
             background: styles[theme].background,
             border: 0,
-            borderRadius: presets.radius,
+            borderRadius: radii[1],
             color: styles[theme].textColor,
             cursor: `pointer`,
           }}
@@ -99,7 +98,7 @@ class ShareMenu extends React.Component {
                 media: image,
                 description: title,
               })}`}
-              title="Share on Pinterest'"
+              title="Share on Pinterest"
             >
               <FaPinterestP />
             </a>
@@ -159,7 +158,7 @@ export default ShareMenu
 const styles = {
   gatsby: {
     background: colors.gatsby,
-    textColor: `white`,
+    textColor: colors.white,
   },
   accent: {
     background: colors.accent,
@@ -169,13 +168,12 @@ const styles = {
     gatsby: {
       width: 32,
       height: 32,
-      marginBottom: rhythm(1.5 / 4),
+      marginBottom: space[2],
       "&&": {
         background: colors.gatsby,
         border: 0,
-        borderRadius: presets.radius,
-        boxShadow: `none`,
-        color: `#fff`,
+        borderRadius: radii[1],
+        color: colors.white,
         display: `flex`,
         alignItems: `center`,
         justifyContent: `center`,
@@ -187,19 +185,15 @@ const styles = {
     accent: {
       width: 32,
       height: 32,
-      marginBottom: rhythm(1.5 / 4),
+      marginBottom: space[2],
       "&&": {
         background: colors.accent,
         border: 0,
-        borderRadius: presets.radius,
-        boxShadow: `none`,
+        borderRadius: radii[1],
         color: colors.gatsby,
         display: `flex`,
         alignItems: `center`,
         justifyContent: `center`,
-        "&:hover": {
-          background: colors.accent,
-        },
       },
     },
   },

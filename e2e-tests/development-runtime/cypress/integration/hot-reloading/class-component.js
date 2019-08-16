@@ -2,7 +2,7 @@ const TEST_ID = `class-component`
 
 describe(`reloading class component`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
   it(`displays placeholder on launch`, () => {
     cy.getTestElement(TEST_ID)

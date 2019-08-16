@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { SkipNavLink } from "@reach/skip-nav"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 import styled from "@emotion/styled"
 
 import Banner from "../banner"
@@ -10,51 +9,26 @@ import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
 
-import presets from "../../utils/presets"
+import { mediaQueries, sizes, fontSizes } from "../../utils/presets"
+import { skipLink } from "../../utils/styles"
 
 // Import Futura PT typeface
-import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-// Other fonts
-import "typeface-spectral"
+import "../../assets/fonts/futura"
 
 const Content = styled(`div`)`
-  padding-top: ${presets.bannerHeight};
-  padding-bottom: 3.5rem;
+  padding-top: ${sizes.bannerHeight};
+  padding-bottom: ${fontSizes[10]};
 
-  ${presets.Md} {
-    margin-left: ${presets.pageHeadingDesktopWidth};
-    padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
+  ${mediaQueries.md} {
+    margin-left: ${sizes.pageHeadingDesktopWidth};
+    padding-top: calc(${sizes.bannerHeight} + ${sizes.headerHeight});
     padding-bottom: 0;
   }
 `
 
-const StyledSkipNavLink = styled(SkipNavLink)`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: 100;
-  font-size: 0.85rem;
-
-  :focus {
-    padding: 0.9rem;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: white;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    clip: auto;
-  }
-`
+const StyledSkipNavLink = styled(SkipNavLink)({
+  ...skipLink,
+})
 
 const LayoutWithHeading = props => {
   const {
@@ -79,15 +53,7 @@ const LayoutWithHeading = props => {
 
       <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
 
-      <Banner>
-        <OutboundLink
-          href="https://www.gatsbyjs.com/behind-the-scenes/"
-          css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
-        >
-          Watch now
-        </OutboundLink>
-        {`: “Behind the Scenes: What makes Gatsby Great”.`}
-      </Banner>
+      <Banner />
 
       <Navigation pathname={props.location.pathname} />
 

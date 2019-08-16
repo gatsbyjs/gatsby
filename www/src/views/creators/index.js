@@ -1,12 +1,11 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import typography, { rhythm, scale } from "../../utils/typography"
 import Layout from "../../components/layout"
 import CreatorsHeader from "./creators-header"
 import Badge from "./badge"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import { navigate } from "gatsby"
-import presets, { colors } from "../../utils/presets"
+import { colors, space, mediaQueries, fontSizes } from "../../utils/presets"
 import qs from "qs"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -99,6 +98,10 @@ class CreatorsView extends Component {
       <Layout location={location}>
         <Helmet>
           <title>{title}</title>
+          <meta
+            name="description"
+            content="Discover developers skilled in working on Gatsby applications available for hire"
+          />
         </Helmet>
         <CreatorsHeader
           applyFilter={filter => applyFilter(filter)}
@@ -109,11 +112,10 @@ class CreatorsView extends Component {
         <main
           id={`reach-skip-nav`}
           css={{
-            padding: rhythm(3 / 4),
+            padding: space[6],
             paddingBottom: `10vh`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
-            [presets.Md]: {
-              paddingBottom: rhythm(3 / 4),
+            [mediaQueries.md]: {
+              paddingBottom: space[6],
             },
           }}
         >
@@ -122,7 +124,7 @@ class CreatorsView extends Component {
               display: `flex`,
               flexWrap: `wrap`,
               justifyContent: `center`,
-              [presets.Lg]: {
+              [mediaQueries.lg]: {
                 justifyContent: `flex-start`,
               },
             }}
@@ -142,9 +144,8 @@ class CreatorsView extends Component {
                   <div css={{ display: `flex`, ...sharedStyles.meta }}>
                     <div
                       css={{
-                        margin: `0 0 ${rhythm(1 / 8)}`,
-                        color: colors.gray.calm,
-                        ...scale(-1 / 3),
+                        margin: `0 0 ${space[1]}`,
+                        color: colors.text.secondary,
                       }}
                     >
                       {item.node.location}
@@ -165,7 +166,7 @@ class CreatorsView extends Component {
                     <div
                       css={{
                         alignSelf: `flex-start`,
-                        ...scale(-1 / 3),
+                        fontSize: fontSizes[0],
                       }}
                     >
                       <Badge forHire={item.node.for_hire}>
@@ -190,7 +191,7 @@ const styles = {
   creatorCard: {
     display: `flex`,
     flexDirection: `column`,
-    margin: rhythm(3 / 4),
+    margin: space[6],
     minWidth: 200,
     maxWidth: 240,
     flex: `1 0 0`,

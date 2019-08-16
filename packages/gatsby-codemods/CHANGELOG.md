@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.1.1...gatsby-codemods@1.1.2) (2019-07-12)
+
+### Bug Fixes
+
+- correct links in package changelogs ([#15630](https://github.com/gatsbyjs/gatsby/issues/15630)) ([d07b9dd](https://github.com/gatsbyjs/gatsby/commit/d07b9dd))
+
+## [1.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.1.0...gatsby-codemods@1.1.1) (2019-07-11)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.0.11...gatsby-codemods@1.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-codemods
+
+## [1.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.0.10...gatsby-codemods@1.0.11) (2019-04-23)
+
+**Note:** Version bump only for package gatsby-codemods
+
+## [1.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.0.9...gatsby-codemods@1.0.10) (2019-03-15)
+
+**Note:** Version bump only for package gatsby-codemods
+
+## [1.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.0.8...gatsby-codemods@1.0.9) (2019-03-11)
+
+**Note:** Version bump only for package gatsby-codemods
+
 <a name="1.0.8"></a>
 
 ## [1.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.0.7...gatsby-codemods@1.0.8) (2018-11-29)

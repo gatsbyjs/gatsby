@@ -17,7 +17,7 @@ const EmptyGridItems = ({ styles }) => {
     )
   }
 
-  return <React.Fragment>{items}</React.Fragment>
+  return <>{items}</>
 }
 
 export default EmptyGridItems

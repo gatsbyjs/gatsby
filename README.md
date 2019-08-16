@@ -10,9 +10,11 @@
 <h3 align="center">
   ⚛️ 📄 :rocket:
 </h3>
+<h3 align="center">
+  Fast in every way that matters
+</h3>
 <p align="center">
-  <strong>Blazing fast modern site generator for React</strong><br>
-  Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby.
+  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -56,7 +58,7 @@
   <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
 
-Gatsby is a modern framework for blazing fast websites.
+Gatsby is a modern web framework for blazing fast websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps so you can create high-quality,
@@ -91,29 +93,36 @@ Gatsby is a modern framework for blazing fast websites.
 
 ## 🚀 Get Up and Running in 5 Minutes
 
-You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these three steps:
+You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
 
-1.  **Create a Gatsby site from a Gatsby starter.**
+1. **Install the Gatsby CLI.**
 
-    Get your Gatsby blog set up in a single command:
+   ```shell
+   npm install -g gatsby-cli
 
-    ```sh
-    # create a new Gatsby site using the default starter
-    gatsby new my-blazing-fast-site
-    ```
+   ```
 
-2.  **Start the site in `develop` mode.**
+2. **Create a Gatsby site from a Gatsby starter.**
 
-    Next, move into your new site’s directory and start it up:
+   Get your Gatsby blog set up in a single command:
 
-    ```sh
-    cd my-blazing-fast-site/
-    gatsby develop
-    ```
+   ```sh
+   # create a new Gatsby site using the default starter
+   gatsby new my-blazing-fast-site
+   ```
 
-3.  **Open the source code and start editing!**
+3. **Start the site in `develop` mode.**
 
-    Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
+   Next, move into your new site’s directory and start it up:
+
+   ```sh
+   cd my-blazing-fast-site/
+   gatsby develop
+   ```
+
+4. **Open the source code and start editing!**
+
+   Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.org/plugins/) and [the official tutorial](https://gatsbyjs.org/tutorial/).
 
@@ -136,15 +145,15 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 - [Migrate a Gatsby site from v1 to v2](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/)
 - Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 
+## ❗ Code of Conduct
+
+Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://gatsbyjs.org/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
+
 ## 🤝 How to Contribute
 
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
 
 Check out our [**Contributing Guide**](https://gatsbyjs.org/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
-
-### Code of Conduct
-
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://gatsbyjs.org/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
 ### A note on how this repository is organized
 

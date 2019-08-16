@@ -45,6 +45,7 @@ function cloneTreeUntil(root, endCondition) {
         clonedRoot = newNode
         preOrderTraversal(child)
       })
+      clonedRoot = newNode
     }
   }
   preOrderTraversal(root)

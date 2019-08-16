@@ -36,7 +36,7 @@ Array [
       "parent": Object {
         "children": Array [],
         "content": "{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
-        "dir": "/tmp/foo/",
+        "dir": "<TEMP_DIR>/foo/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
@@ -149,7 +149,7 @@ Array [
       "parent": Object {
         "children": Array [],
         "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
-        "dir": "/tmp/foo/",
+        "dir": "<TEMP_DIR>/foo/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
@@ -177,7 +177,7 @@ Array [
       "parent": Object {
         "children": Array [],
         "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
-        "dir": "/tmp/foo/",
+        "dir": "<TEMP_DIR>/foo/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",

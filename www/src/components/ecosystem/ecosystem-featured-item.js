@@ -9,16 +9,24 @@ import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
 import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
-import { rhythm, options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import {
+  colors,
+  space,
+  transition,
+  radii,
+  shadows,
+  mediaQueries,
+  fontSizes,
+  fonts,
+} from "../../utils/presets"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${rhythm(options.blockMarginBottom)};
+  margin-right: ${space[6]};
 
-  ${presets.Md} {
-    border-bottom: 1px solid ${colors.gray.superLight};
+  ${mediaQueries.md} {
+    border-bottom: 1px solid ${colors.ui.border.subtle};
     box-shadow: none;
     margin: 0;
     padding: 0;
@@ -27,24 +35,23 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 `
 
 export const BlockLink = styled(Link)`
-  background: #fff;
-  border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  background: ${colors.white};
+  border-radius: ${radii[2]}px;
+  box-shadow: ${shadows.raised};
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${rhythm(3 / 4)};
+  padding: ${space[6]};
 
-  ${presets.Md} {
+  ${mediaQueries.md} {
     border-radius: 0;
     box-shadow: none;
-    transition: all ${presets.animation.speedDefault}
-      ${presets.animation.curveDefault};
+    transition: all ${transition.speed.default} ${transition.curve.default};
   }
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     :hover {
-      background: ${colors.ui.whisper};
+      background: ${colors.ui.hover};
     }
   }
 `
@@ -55,8 +62,8 @@ const Header = styled(`header`)`
   justify-content: space-between;
 
   h3 {
-    color: ${colors.gatsbyDark};
-    font-size: 1rem;
+    color: ${colors.purple[80]};
+    font-size: ${fontSizes[2]};
     margin: 0;
   }
 
@@ -64,15 +71,14 @@ const Header = styled(`header`)`
     align-items: center;
     color: ${colors.lilac};
     display: flex;
-    font-size: 0.8125rem;
-    font-family: ${options.systemFontFamily.join(`,`)};
-    padding-left: 5px;
+    font-size: ${fontSizes[1]};
+    padding-left: ${space[3]};
 
     svg {
-      fill: ${colors.gray.light};
-      height: 1.2em;
-      margin-left: 2px;
-      width: 1.2em;
+      fill: ${colors.lilac};
+      height: auto;
+      margin-left: ${space[1]};
+      width: ${space[4]};
     }
   }
 `
@@ -80,25 +86,25 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  font-family: ${options.systemFontFamily.join(`,`)};
+  font-family: ${fonts.system};
   justify-content: space-between;
-  padding: ${rhythm(0.5)} 0 0;
+  padding: ${space[3]} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
-  height: 64px;
-  padding-right: ${rhythm(2 / 3)};
-  margin-top: ${rhythm(1 / 12)};
+  height: ${space[11]};
+  padding-right: ${space[4]};
+  margin-top: ${space[1]};
 
   img {
-    border: 1px solid ${colors.gray.superLight};
+    border: 1px solid ${colors.ui.border.subtle};
   }
 `
 
 const Description = styled(`p`)`
-  color: ${colors.gray.lightCopy};
+  color: ${colors.text.secondary};
   flex-grow: 1;
-  font-size: 0.85rem;
+  font-size: ${fontSizes[1]};
   margin: 0;
 `
 

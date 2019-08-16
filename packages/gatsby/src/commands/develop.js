@@ -9,26 +9,40 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
-const request = require(`request`)
+const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
+const { formatError } = require(`graphql`)
+const got = require(`got`)
 const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
-const developHtml = require(`./develop-html`)
+const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const cors = require(`cors`)
+const telemetry = require(`gatsby-telemetry`)
+const WorkerPool = require(`../utils/worker/pool`)
+
+const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
 const slash = require(`slash`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const db = require(`../db`)
+const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
+const onExit = require(`signal-exit`)
+const queryUtil = require(`../query`)
+const queryQueue = require(`../query/queue`)
+const queryWatcher = require(`../query/query-watcher`)
+const requiresWriter = require(`../bootstrap/requires-writer`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -49,11 +63,35 @@ rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
 
+onExit(() => {
+  telemetry.trackCli(`DEVELOP_STOP`)
+})
+
+const waitJobsFinished = () =>
+  new Promise((resolve, reject) => {
+    const onEndJob = () => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
+
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = () =>
-    developHtml(program).catch(err => {
+  const workerPool = WorkerPool.create()
+  const createIndexHtml = async () => {
+    try {
+      await buildHTML.buildPages({
+        program,
+        stage: `develop-html`,
+        pagePaths: [`/`],
+        workerPool,
+      })
+    } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
         return
@@ -66,10 +104,8 @@ async function startServer(program) {
         `,
         err
       )
-    })
-
-  // Start bootstrap process.
-  await bootstrap(program)
+    }
+  }
 
   await createIndexHtml()
 
@@ -86,6 +122,7 @@ async function startServer(program) {
    * Set up the express app.
    **/
   const app = express()
+  app.use(telemetry.expressMiddleware(`DEVELOP`))
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
       log: false,
@@ -94,39 +131,53 @@ async function startServer(program) {
     })
   )
 
+  app.use(cors())
+
+  /**
+   * Pattern matching all endpoints with graphql or graphiql with 1 or more leading underscores
+   */
+  const graphqlEndpoint = `/_+graphi?ql`
+
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
-      `/___graphql`,
+      graphqlEndpoint,
       graphqlPlayground({
         endpoint: `/___graphql`,
       }),
       () => {}
     )
+  } else {
+    graphiqlExplorer(app, {
+      graphqlEndpoint,
+    })
   }
+
   app.use(
-    `/___graphql`,
-    graphqlHTTP({
-      schema: store.getState().schema,
-      graphiql: process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
+    graphqlEndpoint,
+    graphqlHTTP(() => {
+      const { schema, schemaCustomization } = store.getState()
+      return {
+        schema,
+        graphiql: false,
+        context: withResolverContext({}, schema, schemaCustomization.context),
+        formatError(err) {
+          return {
+            ...formatError(err),
+            stack: err.stack ? err.stack.split(`\n`) : [],
+          }
+        },
+      }
     })
   )
-
-  // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
-  app.use((req, res, next) => {
-    res.header(`Access-Control-Allow-Origin`, `*`)
-    res.header(
-      `Access-Control-Allow-Headers`,
-      `Origin, X-Requested-With, Content-Type, Accept`
-    )
-    next()
-  })
 
   /**
    * Refresh external data sources.
    * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
-  app.post(`/__refresh`, (req, res) => {
+  const REFRESH_ENDPOINT = `/__refresh`
+  app.use(REFRESH_ENDPOINT, express.json())
+  app.post(REFRESH_ENDPOINT, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
     const authorizedRefresh =
@@ -134,7 +185,9 @@ async function startServer(program) {
 
     if (enableRefresh && authorizedRefresh) {
       console.log(`Refreshing source data`)
-      sourceNodes()
+      sourceNodes({
+        webhookBody: req.body,
+      })
     }
     res.end()
   })
@@ -148,7 +201,7 @@ async function startServer(program) {
   // This can lead to serving stale html files during development.
   //
   // We serve by default an empty index.html that sets up the dev environment.
-  app.use(express.static(`public`, { index: false }))
+  app.use(require(`./develop-static`)(`public`, { index: false }))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
@@ -171,22 +224,45 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
+      const {
+        // remove `host` from copied headers
+        // eslint-disable-next-line no-unused-vars
+        headers: { host, ...headers },
+        method,
+      } = req
       req
         .pipe(
-          request(proxiedUrl).on(`error`, err => {
-            const message = `Error when trying to proxy request "${
-              req.originalUrl
-            }" to "${proxiedUrl}"`
+          got
+            .stream(proxiedUrl, { headers, method, decompress: false })
+            .on(`response`, response =>
+              res.writeHead(response.statusCode, response.headers)
+            )
+            .on(`error`, (err, _, response) => {
+              if (response) {
+                res.writeHead(response.statusCode, response.headers)
+              } else {
+                const message = `Error when trying to proxy request "${
+                  req.originalUrl
+                }" to "${proxiedUrl}"`
 
-            report.error(message, err)
-            res.status(500).end()
-          })
+                report.error(message, err)
+                res.sendStatus(500)
+              }
+            })
         )
         .pipe(res)
     })
   }
 
   await apiRunnerNode(`onCreateDevServer`, { app })
+
+  // In case nothing before handled hot-update - send 404.
+  // This fixes "Unexpected token < in JSON at position 0" runtime
+  // errors after restarting development server and
+  // cause automatic hard refresh in the browser.
+  app.use(/.*\.hot-update\.json$/i, (req, res) => {
+    res.status(404).end()
+  })
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
@@ -240,8 +316,9 @@ async function startServer(program) {
 
 module.exports = async (program: any) => {
   initTracer(program.openTracingConfigFile)
+  telemetry.trackCli(`DEVELOP_START`)
+  telemetry.startBackgroundUpdate()
 
-  const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
@@ -265,35 +342,40 @@ module.exports = async (program: any) => {
     })
   }
 
-  let compiler
-  await new Promise(resolve => {
-    detect(port, (err, _port) => {
-      if (err) {
-        report.panic(err)
-      }
+  program.port = await detectPortInUseAndPrompt(port, rlInterface)
+  // Start bootstrap process.
+  const { graphqlRunner } = await bootstrap(program)
 
-      if (port !== _port) {
-        // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+  // Start the createPages hot reloader.
+  require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
-        rlInterface.question(question, answer => {
-          if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-            program.port = _port // eslint-disable-line no-param-reassign
-          }
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
 
-          startServer(program).then(([c, l]) => {
-            compiler = c
-            resolve()
-          })
-        })
-      } else {
-        startServer(program).then(([c, l]) => {
-          compiler = c
-          resolve()
-        })
-      }
-    })
+  let activity = report.activityTimer(`run static queries`)
+  activity.start()
+  await queryUtil.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
   })
+  activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
+
+  await waitJobsFinished()
+  requiresWriter.startListener()
+  db.startAutosave()
+  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryWatcher.startWatchDeletePage()
+
+  const [compiler] = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -350,7 +432,13 @@ module.exports = async (program: any) => {
   }
 
   function printInstructions(appName, urls, useYarn) {
-    console.log()
+    report._setStage({
+      stage: `DevelopBootstrapFinished`,
+      context: {
+        url: urls.localUrlForBrowser,
+        appName,
+      },
+    })
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
 
@@ -374,7 +462,21 @@ module.exports = async (program: any) => {
       }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${
+          urls.localUrlForTerminal
+        }___graphql`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${
+          urls.lanUrlForTerminal
+        }___graphql`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}___graphql`)
+    }
 
     console.log()
     console.log(`Note that the development build is not optimized.`)

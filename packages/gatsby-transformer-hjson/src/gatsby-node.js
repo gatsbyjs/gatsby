@@ -1,17 +1,18 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const path = require(`path`)
 const HJSON = require(`hjson`)
 
-async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
+async function onCreateNode({
+  node,
+  actions,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) {
   const { createNode, createParentChildLink } = actions
 
   function transformObject(obj, id, type) {
-    const objStr = JSON.stringify(obj)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(objStr)
-      .digest(`hex`)
+    const contentDigest = createContentDigest(obj)
     const jsonNode = {
       ...obj,
       id,

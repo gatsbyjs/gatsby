@@ -50,7 +50,7 @@ export const query = graphql`
 Here is an image component that uses the query from the previous example:
 
 ```jsx
-<Img fluid={data.fileName.childImageSharp.fluid} />
+<Img fluid={data.fileName.childImageSharp.fluid} alt="" />
 ```
 
 ## Using Fragments To Standardize Formatting
@@ -90,3 +90,10 @@ export const query = graphql`
   }
 `
 ```
+
+### Additional resources
+
+- [Gatsby Image API docs](/docs/gatsby-image/)
+- [gatsby-image plugin README file](/packages/gatsby-image/)
+- [gatsby-plugin-sharp README file](/packages/gatsby-plugin-sharp/)
+- [gatsby-transformer-sharp README file](/packages/gatsby-transformer-sharp/)

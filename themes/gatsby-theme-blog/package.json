@@ -1,72 +1,52 @@
 {
   "name": "gatsby-theme-blog",
-  "description": "Gatsby Blog Theme",
-  "version": "0.0.6",
-  "author": "Chris Biscardi <chris@christopherbiscardi.com>",
-  "bugs": {
-    "url": "https://github.com/christopherbiscardi/gatsby-theme-examples/issues"
-  },
-  "dependencies": {
-    "@emotion/core": "^10.0.7",
-    "debug": "^4.1.0",
-    "emotion-theming": "^10.0.7",
-    "gatsby": "^2.0.59",
-    "gatsby-plugin-emotion": "4.0.3",
-    "gatsby-plugin-feed": "^2.0.10",
-    "gatsby-plugin-google-analytics": "^2.0.8",
-    "gatsby-plugin-manifest": "^2.0.11",
-    "gatsby-plugin-offline": "^2.0.18",
-    "gatsby-plugin-react-helmet": "^3.0.3",
-    "gatsby-plugin-sharp": "^2.0.14",
-    "gatsby-plugin-typography": "^2.2.2",
-    "gatsby-remark-copy-linked-files": "^2.0.7",
-    "gatsby-remark-images": "^3.0.1",
-    "gatsby-remark-prismjs": "^3.1.1",
-    "gatsby-remark-responsive-iframe": "^2.0.7",
-    "gatsby-remark-smartypants": "^2.0.7",
-    "gatsby-source-filesystem": "^2.0.10",
-    "gatsby-transformer-remark": "^2.1.14",
-    "gatsby-transformer-sharp": "^2.1.9",
-    "gatsby-theme-blog-core": "*",
-    "lodash": "^4.17.11",
-    "mkdirp": "^0.5.1",
-    "prismjs": "^1.15.0",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
-    "react-helmet": "^5.2.0",
-    "react-typography": "^0.16.13",
-    "typeface-merriweather": "0.0.54",
-    "typeface-montserrat": "0.0.54",
-    "typography": "^0.16.17",
-    "typography-theme-wordpress-2016": "^0.15.10"
-  },
-  "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-plugin-react": "^7.11.1",
-    "gh-pages": "^1.2.0",
-    "prettier": "^1.14.2"
-  },
-  "homepage":
-    "https://github.com/christopherbiscardi/gatsby-theme-examples#readme",
-  "keywords": ["gatsby"],
+  "version": "1.1.2",
+  "description": "A Gatsby theme for miscellaneous blogging with a dark/light mode",
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-theme",
+    "gatsby-plugin",
+    "react",
+    "blog"
+  ],
   "license": "MIT",
-  "main": "n/a",
   "repository": {
     "type": "git",
-    "url":
-      "git+https://github.com/christopherbiscardi/gatsby-theme-examples.git"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "themes/gatsby-theme-blog"
   },
-  "scripts": {
-    "dev": "gatsby develop",
-    "lint":
-      "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format":
-      "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md'",
-    "develop": "gatsby develop",
-    "build": "gatsby build",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
-    "fix-semi":
-      "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog#readme",
+  "dependencies": {
+    "@emotion/core": "^10.0.16",
+    "@mdx-js/react": "^1.3.0",
+    "@theme-ui/prism": "^0.2.29",
+    "@theme-ui/typography": "^0.2.34",
+    "deepmerge": "^4.0.0",
+    "gatsby-image": "^2.2.8",
+    "gatsby-plugin-emotion": "^4.1.2",
+    "gatsby-plugin-feed": "^2.3.6",
+    "gatsby-plugin-react-helmet": "^3.1.3",
+    "gatsby-plugin-theme-ui": "^0.2.34",
+    "gatsby-plugin-twitter": "^2.1.2",
+    "gatsby-theme-blog-core": "^1.0.2",
+    "mdx-utils": "0.2.0",
+    "react-helmet": "^5.2.1",
+    "react-switch": "^5.0.1",
+    "theme-ui": "^0.2.35",
+    "typeface-merriweather": "0.0.72",
+    "typeface-montserrat": "0.0.75",
+    "typography-theme-wordpress-2016": "^0.16.19"
+  },
+  "devDependencies": {
+    "gatsby": "^2.13.65",
+    "prettier": "^1.18.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.13.13",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }

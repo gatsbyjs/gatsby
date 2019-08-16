@@ -2,7 +2,7 @@ const TEST_ID = `page-component`
 
 describe(`hot reloading page component`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
   it(`displays placeholder content on launch`, () => {
     cy.getTestElement(TEST_ID)

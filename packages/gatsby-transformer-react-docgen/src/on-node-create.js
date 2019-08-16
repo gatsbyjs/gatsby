@@ -1,11 +1,4 @@
-import crypto from "crypto"
 import parseMetadata from "./parse"
-
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
 
 const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
 const descId = parentId => `${parentId}--ComponentDescription`
@@ -14,7 +7,7 @@ function canParse(node) {
   return (
     node &&
     (node.internal.mediaType === `application/javascript` ||
-      // Typescript doesn't really have a mime type and .ts files are a media file :/
+      // TypeScript doesn't really have a mime type and .ts files are a media file :/
       node.internal.mediaType === `application/typescript` ||
       node.internal.mediaType === `text/jsx` ||
       node.internal.mediaType === `text/tsx` ||
@@ -23,9 +16,16 @@ function canParse(node) {
   )
 }
 
-function createDescriptionNode(node, entry, actions, createNodeId) {
-  if (!entry.description) return node
+function createDescriptionNode(
+  node,
+  entry,
+  actions,
+  createNodeId,
+  createContentDigest
+) {
   const { createNode } = actions
+
+  delete node.description
 
   const descriptionNode = {
     id: createNodeId(descId(node.id)),
@@ -36,7 +36,7 @@ function createDescriptionNode(node, entry, actions, createNodeId) {
       type: `ComponentDescription`,
       mediaType: `text/markdown`,
       content: entry.description,
-      contentDigest: digest(entry.description),
+      contentDigest: createContentDigest(entry.description),
     },
   }
 
@@ -47,7 +47,13 @@ function createDescriptionNode(node, entry, actions, createNodeId) {
   return node
 }
 
-function createPropNodes(node, component, actions, createNodeId) {
+function createPropNodes(
+  node,
+  component,
+  actions,
+  createNodeId,
+  createContentDigest
+) {
   const { createNode } = actions
   let children = new Array(component.props.length)
 
@@ -63,11 +69,17 @@ function createPropNodes(node, component, actions, createNodeId) {
       parentType: prop.type,
       internal: {
         type: `ComponentProp`,
-        contentDigest: digest(content),
+        contentDigest: createContentDigest(content),
       },
     }
     children[i] = propNode.id
-    propNode = createDescriptionNode(propNode, prop, actions, createNodeId)
+    propNode = createDescriptionNode(
+      propNode,
+      prop,
+      actions,
+      createNodeId,
+      createContentDigest
+    )
     createNode(propNode)
   })
 
@@ -77,7 +89,14 @@ function createPropNodes(node, component, actions, createNodeId) {
 }
 
 export default async function onCreateNode(
-  { node, loadNodeContent, actions, createNodeId, reporter },
+  {
+    node,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    reporter,
+    createContentDigest,
+  },
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
@@ -101,7 +120,7 @@ export default async function onCreateNode(
 
   components.forEach(component => {
     const strContent = JSON.stringify(component)
-    const contentDigest = digest(strContent)
+    const contentDigest = createContentDigest(strContent)
     const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
 
     let metadataNode = {
@@ -121,13 +140,15 @@ export default async function onCreateNode(
       metadataNode,
       component,
       actions,
-      createNodeId
+      createNodeId,
+      createContentDigest
     )
     metadataNode = createDescriptionNode(
       metadataNode,
       component,
       actions,
-      createNodeId
+      createNodeId,
+      createContentDigest
     )
     createNode(metadataNode)
   })

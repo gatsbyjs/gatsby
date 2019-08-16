@@ -23,6 +23,9 @@ See the [library of official and community plugins](/plugins/)
 
 ## Podcasts
 
+- [2019-06-05: Jason Lengstorf on Syntax #150: Gatsby Themes](https://syntax.fm/show/150/gatsby-themes)
+- [2019-05-22: Jason Lengstorf on Full Stack Radio #115: Gatsby for Skeptics](http://www.fullstackradio.com/115)
+- [2019-04-12: Jason Lengstorf on JS Party #71](https://changelog.com/jsparty/71)
 - [2018-11-30: Kyle Mathews on Founders Talk #59](https://changelog.com/founderstalk/59)
 - [2018-11-14: Jason Lengstorf on React Podcast](https://reactpodcast.simplecast.fm/28)
 - [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
@@ -39,9 +42,13 @@ See the [library of official and community plugins](/plugins/)
 - [Gatsby Days Bay Area December 2018 - Kyle Mathews & Guest Speakers](https://www.youtube.com/playlist?list=PLCU2qJekvcN1wzgVKymbjbGtZ3VgAWOdj)
 - [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
 - [React.js Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
-- [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
+- [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
 - [GraphQL Summit Open Source Lightning Talk on Gatsby — Kyle Mathews](https://youtu.be/y588qNiCZZo)
 - [Talk on GatsbyJS @ ViennaJS — Gerald Bauer](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
+
+## Livestreams
+
+- [Learn with Jason](https://www.youtube.com/playlist?list=PLCU2qJekvcN0RuMHCnjMYAKlpSKQ_e1hO)
 
 ## Gatsby tutorials
 
@@ -57,20 +64,34 @@ See the [library of official and community plugins](/plugins/)
 - [ReactJS E-Commerce With No Backend Using Snipcart & Gatsby](https://snipcart.com/blog/snipcart-reactjs-static-ecommerce-gatsby)
 - [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
 - [Gatsby – Static Site Generator For React](https://codingthesmartway.com/gatsby-static-site-generater-for-react-introduction/)
-- [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
-- [Ultra-schnellen Blog mit React und Gatsby erstellen (German)](https://www.lekoarts.de/blog/ultra-schnellen-blog-mit-react-und-gatsby-erstellen)
-- [styled-components in Gatsby nutzen (German)](https://www.lekoarts.de/blog/styled-components-in-gatsby-nutzen)
 - [Build your own blog CMS with Gatsby and Airtable](https://blog.airtable.com/build-your-own-custom-blog-cms-with-airtable-and-gatsbyjs/)
 - [Gatsby JS Crash Course](https://www.youtube.com/watch?v=6YhqQ2ZW1sc)
-- [Kategorien & Tags zu Gatsby hinzufügen (German)](https://www.lekoarts.de/blog/kategorien-tags-zu-gatsby-hinzufugen/)
-- [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
-- [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 - [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
 - [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
 - [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
 - [A comprehensive guide to build your personal website using GatsbyJS and Ghost deployed on AWS](https://nishantdania.com/blog/guide-to-setup-ghost-gatsby-website)
 - [Zero to Deploy: A Practical Guide to Static Sites with Gatsby.js](https://scotch.io/tutorials/zero-to-deploy-a-practical-guide-to-static-sites-with-gatsbyjs)
 - [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
+- [Build a Coffee Shop Website w/ Gatsby, Contentful, SnipCard & Formspree](https://www.youtube.com/watch?v=oAVhEPey_qA)
+- [Why I used GatsbyJS](https://medium.com/@jameshunt.co/why-i-used-gatsbyjs-70bbb0f5c4a7)
+- [Introducing Dashbored — Generate Static Dashboards Using Gatsby](https://medium.com/planes-agency/introducing-dashbored-62550a028fcc)
+- [12 Factor Applications with GatsbyJS](https://medium.com/@wonderboymusic/12-factor-applications-with-gatsbyjs-ef8a2b1f883a)
+- [Reading Data From A JSON File With Gatsby + GraphQL](https://itnext.io/reading-data-from-a-json-file-with-gatsby-graphql-572b18ab98a)
+- [The Great Gatsby Bootcamp \[Full Course\] - Andrew Mead](https://www.youtube.com/watch?v=8t0vNu2fCCM)
+- [Understanding the Gatsby lifecycle](https://medium.com/narative/understanding-gatsbys-lifecycle-31c473ba2f2d)
+- [GatsbyGuides.com series on building web applications with Gatsby & Drupal](https://gatsbyguides.com/)
+
+### German
+
+- [Ultra-schnellen Blog mit React und Gatsby erstellen (German)](https://www.lekoarts.de/blog/ultra-schnellen-blog-mit-react-und-gatsby-erstellen)
+- [styled-components in Gatsby nutzen (German)](https://www.lekoarts.de/blog/styled-components-in-gatsby-nutzen)
+- [Kategorien & Tags zu Gatsby hinzufügen (German)](https://www.lekoarts.de/blog/kategorien-tags-zu-gatsby-hinzufugen/)
+- [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
+- [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
+
+### Spanish
+
+- [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
 
 ## Other resources
 

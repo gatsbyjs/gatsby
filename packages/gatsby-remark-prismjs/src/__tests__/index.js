@@ -1,7 +1,12 @@
 const remark = require(`remark`)
-const plugin = require(`../index`)
+let plugin
 
 describe(`remark prism plugin`, () => {
+  beforeEach(() => {
+    jest.resetModules()
+    plugin = require(`../index`)
+  })
+
   describe(`generates a <pre> tag`, () => {
     it(`with class="language-*" prefix by default`, () => {
       const code = `\`\`\`js\n// Fake\n\`\`\``
@@ -79,6 +84,29 @@ describe(`remark prism plugin`, () => {
     expect(markdownAST).toMatchSnapshot()
   })
 
+  describe(`promptUser/promptHost`, () => {
+    it(`adds prompts if promptUser set`, () => {
+      const code = `\`\`\`bash{promptUser:alice}\necho 'test'\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`adds prompts if promptHost set`, () => {
+      const code = `\`\`\`bash{promptHost:server}\necho 'test'\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+
+    it(`adds prompts if promptUser and promptHost set`, () => {
+      const code = `\`\`\`bash{promptUser:alice}{promptHost:server}\necho 'test'\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+  })
+
   describe(`numberLines`, () => {
     it(`adds line-number markup when necessary`, () => {
       const code = `\`\`\`js{numberLines:5}\n//.foo { \ncolor: red;\n }\``
@@ -99,6 +127,65 @@ describe(`remark prism plugin`, () => {
       const markdownAST = remark.parse(code)
       plugin({ markdownAST })
       expect(markdownAST).toMatchSnapshot()
+    })
+    it(`should not wrap keywords with <span class="token extensionTokenName"> if no extension given`, () => {
+      const code = `\`\`\`c\naRandomTypeKeyword var = 32\n\``
+      const markdownAST = remark.parse(code)
+
+      plugin({ markdownAST })
+
+      expect(markdownAST.children).toBeDefined()
+      expect(markdownAST.children).toHaveLength(1)
+
+      const htmlResult = markdownAST.children[0].value
+
+      expect(htmlResult).not.toMatch(/<span class="token extended_keywords">/)
+    })
+    it(`should wrap keywords with <span class="token extensionTokenName"> based on given extension`, () => {
+      const code = `\`\`\`c\naRandomTypeKeyword var = 32\n\``
+      const markdownAST = remark.parse(code)
+
+      const config = {
+        languageExtensions: {
+          extend: `c`,
+          definition: {
+            extended_keywords: /(aRandomTypeKeyword)/,
+          },
+        },
+      }
+
+      plugin({ markdownAST }, config)
+
+      expect(markdownAST.children).toBeDefined()
+      expect(markdownAST.children).toHaveLength(1)
+
+      const htmlResult = markdownAST.children[0].value
+
+      expect(htmlResult).toMatch(/<span class="token extended_keywords">/)
+    })
+  })
+
+  describe(`warnings`, () => {
+    it(`warns if the language is not specified for a code block`, () => {
+      spyOn(console, `warn`)
+      const code = `\`\`\`\n// Fake\n\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST }, { noInlineHighlight: true })
+      expect(console.warn).toHaveBeenCalledWith(
+        `code block language not specified in markdown.`,
+        `applying generic code block`
+      )
+    })
+
+    it(`gives a different warning if inline code can be highlighted`, () => {
+      spyOn(console, `warn`)
+      const code = `\`foo bar\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(console.warn).toHaveBeenCalledWith(
+        `code block or inline code language not specified in markdown.`,
+        `applying generic code block`
+      )
     })
   })
 })

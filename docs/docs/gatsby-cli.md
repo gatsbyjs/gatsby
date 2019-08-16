@@ -6,15 +6,15 @@ title: Commands (Gatsby CLI)
 
 The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including like running a development server and building out your Gatsby application for deployment.
 
-_We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md)._
+_We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md), and our [cheat sheet](/docs/cheat-sheet/) has all the top CLI commands ready to print out._
 
-## Note on globally installed executables
+## How to use
 
-The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally--in fact, this was previously how we recommended using the CLI.
+The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
-However, global installs of the Gatsby CLI can sometimes lead to subtle bugs in behavior and functionality if the version of the globally installed executable does not match the version of Gatsby in your application. To avoid this, we highly recommend using the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/).
+Run `gatsby --help` for full help.
 
-For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
+You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
 
 ```json:title=package.json
 {
@@ -23,14 +23,6 @@ For example, if we want to make the [`gatsby develop`](#develop) command availab
   }
 }
 ```
-
-Now we have the `develop` script available to be used which will use our package's version of Gatsby, rather than a globally installed version. It can be run by using the name of the script, e.g. `npm run develop` in this case. Feel free to [read more about NPM scripts](https://docs.npmjs.com/misc/scripts) if you're interested!
-
-## How to use
-
-The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
-
-Run `gatsby --help` for full help.
 
 ### `new`
 
@@ -57,6 +49,25 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 Follow the [Local HTTPS guide](/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
 
+#### Preview changes on other devices
+
+You can use the Gatsby develop command with the host option to access your dev environment on other devices on the same network, run:
+
+```shell
+gatsby develop -H 0.0.0.0
+```
+
+Then the terminal will log information as usual, but will additionally include a URL that you can navigate to from a client on the same network to see how the site renders.
+
+```
+You can now view gatsbyjs.org in the browser.
+⠀
+  Local:            http://0.0.0.0:8000/
+  On Your Network:  http://192.168.0.212:8000/ // highlight-line
+```
+
+**Note**: you can't visit 0.0.0.0:8000 on Windows (but things will work using either localhost:8000 or the "On Your Network" URL on Windows)
+
 ### `build`
 
 At the root of a Gatsby site, compile your application and make it ready for deployment:
@@ -65,11 +76,12 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                         |
-| :--------------------------: | ----------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                 |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                             |
-| `--open-tracing-config-file` | Tracer configuration file (open tracing compatible). See /docs/performance-tracing/ |
+|            Option            | Description                                                                                               |
+| :--------------------------: | --------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                       |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                   |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                          |
 
 ### `serve`
 
@@ -111,6 +123,16 @@ This is useful as a last resort when your local project seems to have issues or 
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 - Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
 
+### `plugin`
+
+Run commands pertaining to gatsby plugins.
+
+#### `docs`
+
+`gatsby plugin docs`
+
+Directs you to documentation about using and creating plugins.
+
 ### Repl
 
 Get a Node.js REPL (interactive shell) with context of your Gatsby environment:
@@ -141,4 +163,8 @@ You can type in a command, such as one of these:
 
 When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
-<!-- TODO: add repl documentation link when ready -->
+See the Gatsby REPL documentation [here](/docs/gatsby-repl/).
+
+### Disabling colored output
+
+In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org/)).

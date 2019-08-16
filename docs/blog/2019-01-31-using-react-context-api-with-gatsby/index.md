@@ -3,18 +3,22 @@ title: Using React Context API with Gatsby
 author: Muhammad Muhsin
 date: 2019-01-31
 tags:
-  - "React"
+  - "react"
 ---
 
 You often feel the unsettling flash of a bright phone screen while relaxing in a dimly lit room. This is alleviated by introducing a "dark mode" which switches background and foreground colors to reduce eye strain. I decided to add this to my boutique web agency [Laccadive IO's](https://laccadive.io/) new Gatsby-based site.
 
-<pullquote citation="Heydon Pickering">
-One of the few types of alternative theme that adds real value to users is a low light intensity “night mode” theme. Not only is it easier on the eyes when reading in the dark, but it also reduces the likelihood of migraine and the irritation of other light sensitivity disorders. As a migraine sufferer, I’m interested!
-</pullquote>
+<Pullquote citation="Heydon Pickering">
+  One of the few types of alternative theme that adds real value to users is a
+  low light intensity “night mode” theme. Not only is it easier on the eyes when
+  reading in the dark, but it also reduces the likelihood of migraine and the
+  irritation of other light sensitivity disorders. As a migraine sufferer, I’m
+  interested!
+</Pullquote>
 
 In considering the different ways to implement this a natural fit become apparent: React’s new Context API. Having worked with Context API before, this seemed like a particularly well suited use for this API. However, I soon realized I would need to do a little set-up work to get this up and running.
 
-After a brief search, I came across just what I was looking for, the Gatsby Browser APIs. Specifically, the [`wrapRootElement`](https://www.gatsbyjs.org/docs/browser-apis/#wrapRootElement) API was a perfect fit for this use case. This API allows you to wrap your root element with a wrapping component, e.g. a `Provider` from Redux or... a ThemeProvider from React Context. Using this, I managed to achieve dark mode for my use case.
+After a brief search, I came across just what I was looking for, the Gatsby Browser APIs. Specifically, the [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API was a perfect fit for this use case. This API allows you to wrap your root element with a wrapping component, e.g. a `Provider` from Redux or... a ThemeProvider from React Context. Using this, I managed to achieve dark mode for my use case.
 
 Let's do a deep dive into how this feature was actually implemented step by step using React Context, Gatsby, and a Theme Provider to implement a dark mode UI!
 

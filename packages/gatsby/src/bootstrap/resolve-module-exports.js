@@ -6,16 +6,9 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-/**
- * Given a `require.resolve()` compatible path pointing to a JS module,
- * return an array listing the names of the module's exports.
- *
- * Returns [] for invalid paths and modules without exports.
- *
- * @param {string} modulePath
- * @param {function} resolver
- */
-module.exports = (modulePath, resolver = require.resolve) => {
+const testRequireError = require(`../utils/test-require-error`).default
+
+const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   let absPath
   const exportNames = []
 
@@ -117,4 +110,39 @@ https://gatsby.dev/no-mixed-modules
     )
   }
   return exportNames
+}
+
+/**
+ * Given a `require.resolve()` compatible path pointing to a JS module,
+ * return an array listing the names of the module's exports.
+ *
+ * Returns [] for invalid paths and modules without exports.
+ *
+ * @param {string} modulePath
+ * @param {string} mode
+ * @param {function} resolver
+ */
+module.exports = (
+  modulePath,
+  { mode = `analysis`, resolver = require.resolve } = {}
+) => {
+  if (mode === `require`) {
+    let absPath
+    try {
+      absPath = resolver(modulePath)
+      return Object.keys(require(modulePath)).filter(
+        exportName => exportName !== `__esModule`
+      )
+    } catch (e) {
+      if (!testRequireError(modulePath, e)) {
+        // if module exists, but requiring it cause errors,
+        // show the error to the user and terminate build
+        report.panic(`Error in "${absPath}":`, e)
+      }
+    }
+  } else {
+    return staticallyAnalyzeExports(modulePath, resolver)
+  }
+
+  return []
 }

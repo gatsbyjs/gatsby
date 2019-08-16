@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const babylon = require(`@babel/parser`)
 const traverse = require(`@babel/traverse`).default
 
@@ -9,6 +8,7 @@ async function onCreateNode({
   actions,
   loadNodeContent,
   createNodeId,
+  createContentDigest,
 }) {
   const { createNode, createParentChildLink } = actions
 
@@ -126,12 +126,7 @@ async function onCreateNode({
       },
     }
   } finally {
-    const objStr = JSON.stringify(node)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(objStr)
-      .digest(`hex`)
-
+    const contentDigest = createContentDigest(node)
     const nodeData = {
       id: createNodeId(`${node.id} >>> JSFrontmatter`),
       children: [],

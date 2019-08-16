@@ -2,6 +2,14 @@
 title: Community
 ---
 
+As of March 2019, the Gatsby community is comprised of over 1,800 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
+
+Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
+
+We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through helping you contribute to the Gatsby ecosystem, offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
+
+One of our community's values is that ["you belong here"](/blog/2018-09-07-gatsby-values/#you-belong-here).
+
 ## Gatsby Contributor Covenant Code of Conduct
 
 In the interest of fostering an open and welcoming environment, we as
@@ -35,6 +43,14 @@ Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby com
 For the latest news about Gatsby,
 [follow **@gatsbyjs** on Twitter](https://twitter.com/gatsbyjs).
 
+### Core Maintainers Meeting
+
+The Gatsby Core team (official Gatsby employees who are working on Gatsby open-source) holds a weekly meeting where we encourage community members to share their projects, struggles, and successes directly with the Gatsby Core team. Additionally the Core team shares pertinent info and plans that are applicable to the community!
+
+This event is held on a recurring basis, every Wednesday at 8:45 AM Pacific Standard Time (PST).
+
+[Add the recurring calendar invite here](https://gatsby.dev/core-maintainers)
+
 ## Where to get support
 
 ### Stack Overflow
@@ -56,3 +72,13 @@ Many members of the community also use Hashnode to ask questions and share their
 the [existing questions and posts](https://hashnode.com/n/gatsby)
 tagged with **gatsby** or
 [ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
+
+## Learn More About Gatsby:
+
+- [Why Contribute to Gatsby?](/contributing/why-contribute-to-gatsby/)
+- [Gatsby Community Events](/contributing/events/)
+- [Where to Participate in the Community?](/contributing/where-to-participate/)
+- [Organize a Gatsby Event](/contributing/organize-a-gatsby-event/)
+- [How to Run a Gatsby Workshop](/contributing/how-to-run-a-gatsby-workshop/)
+- [How to Pitch Gatsby](/contributing/how-to-pitch-gatsby/)
+- [Blog posts on the Gatsby community](/blog/tags/community/)

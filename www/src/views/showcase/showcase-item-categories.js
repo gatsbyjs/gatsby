@@ -13,12 +13,10 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
       <LinkComponent
         css={{
           "&&": {
-            color: colors.gray.calm,
+            color: colors.text.secondary,
             fontWeight: `normal`,
             borderBottom: `none`,
-            boxShadow: `none`,
             "&:hover": {
-              background: `none`,
               color: colors.gatsby,
             },
           },

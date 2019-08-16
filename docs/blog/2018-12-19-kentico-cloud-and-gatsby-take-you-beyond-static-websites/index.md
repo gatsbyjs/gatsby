@@ -4,7 +4,7 @@ date: 2019-01-07
 author: "Ondrej Polesny"
 image: "images/teaser.png"
 imageTitle: Kentico Cloud and Gatsby
-tags: ["react", "kentico cloud", "graphql"]
+tags: ["react", "graphql", "content-mesh"]
 ---
 
 I have to admit I have never really been a fan of JavaScript. I know, shame on me! When I was finishing my studies, I was all about .NET as it was easy to understand, debugging capabilities came with Visual Studio out-of-the-box, and the inheritance and objects model was simple. I looked at JavaScript with thoughts like "what kind of language would allow you to create objects freely, clone them, add functions to only specific instances or allow anyone to see the source code?"
@@ -57,7 +57,7 @@ Whenever I code with a new framework or plugin, I like to take inspiration from 
 
 ## Generating pages from dynamic content
 
-Almost every website has a set of content items that use the same template. It can be news articles, a list of offices, or products and other similar items. For these cases, [Gatsby allows us to programmatically generate](https://www.gatsbyjs.org/tutorial/part-seven/) these pages using their content and a template. This is so cool as I was able to create the whole website using just three files representing static pages, two templates of dynamic pages and this simple piece of code using GraphQL and data from Kentico Cloud:
+Almost every website has a set of content items that use the same template. It can be news articles, a list of offices, or products and other similar items. For these cases, [Gatsby allows us to programmatically generate](/tutorial/part-seven/) these pages using their content and a template. This is so cool as I was able to create the whole website using just three files representing static pages, two templates of dynamic pages and this simple piece of code using GraphQL and data from Kentico Cloud:
 
 ```jsx
 graphql(`
@@ -99,11 +99,11 @@ Implementing the site using Gatsby and the Kentico Cloud source plugin is super 
 - Where should I host the static files?
 - How can I automatically regenerate the site when there are content or implementation changes?
 
-The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
+The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub Pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
 
 ![Deploying static site](images/illustration-02.png)
 
-The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) - this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files - your static site. The last step of Travis is deployment to GitHub pages.
+The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub Pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) - this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files - your static site. The last step of Travis is deployment to GitHub Pages.
 
 ## Build a Static Site Today
 

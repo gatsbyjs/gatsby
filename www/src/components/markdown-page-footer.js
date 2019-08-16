@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import EditIcon from "react-icons/lib/md/create"
 
-import { rhythm } from "../utils/typography"
+import { space } from "../utils/presets"
 import { linkStyles } from "../utils/styles"
 
 export default class MarkdownPageFooter extends React.Component {
@@ -13,7 +13,7 @@ export default class MarkdownPageFooter extends React.Component {
   render() {
     return (
       <>
-        <hr css={{ marginTop: rhythm(2) }} />
+        <hr css={{ marginTop: space[9] }} />
 
         {this.props.page && (
           <a
@@ -22,7 +22,7 @@ export default class MarkdownPageFooter extends React.Component {
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
           >
-            <EditIcon css={{ marginRight: `.5rem` }} />
+            <EditIcon css={{ marginRight: space[2] }} />
             {` `}
             Edit this page on GitHub
           </a>
@@ -33,6 +33,13 @@ export default class MarkdownPageFooter extends React.Component {
 }
 
 export const fragment = graphql`
+  fragment MarkdownPageFooterMdx on Mdx {
+    parent {
+      ... on File {
+        relativePath
+      }
+    }
+  }
   fragment MarkdownPageFooter on MarkdownRemark {
     parent {
       ... on File {

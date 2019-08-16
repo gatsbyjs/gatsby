@@ -1,7 +1,7 @@
 import React from "react"
 
 import { colors } from "../../utils/presets"
-import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/logos"
+import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/tech-logos"
 import Card from "../card"
 import CardHeadline from "../card-headline"
 import TechWithIcon from "../tech-with-icon"
@@ -13,7 +13,7 @@ const HomepageFeatures = () => (
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,
-      borderBottom: `1px solid ${colors.ui.light}`,
+      borderBottom: `1px solid ${colors.purple[10]}`,
     }}
   >
     <Card>

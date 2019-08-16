@@ -28,5 +28,23 @@ With the above configuration, the plugin will add to the head of every HTML page
 a `rel=canonical` e.g.
 
 ```html
-<link rel="canonical" href="http://www.example.com/about-us/" />
+<link rel="canonical" href="https://www.example.com/about-us/" />
+```
+
+### Excluding search parameters
+
+URL search parameters are included in the canonical URL by default. If you worry about duplicate content because for example `/blog` and `/blog?tag=foobar` will be indexed separately, you should set the option `stripQueryString` to `true`. The latter will then be changed to `/blog`.
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://www.example.com`,
+        stripQueryString: true,
+      },
+    },
+  ],
+}
 ```

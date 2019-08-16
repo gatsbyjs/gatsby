@@ -3,12 +3,14 @@ title: "Themes Update: Child Theming and Component Shadowing"
 date: 2019-01-29
 author: Chris Biscardi
 excerpt: "Making it easier to abstract themes into reusable modules"
-tags: ["themes", "architecture"]
+tags: ["themes", "content-mesh"]
 ---
+
+> _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
 
 > If you aren't familiar with Gatsby themes yet, then check out [Introducing
 > Gatsby
-> Themes](https://www.gatsbyjs.org/blog/2018-11-11-introducing-gatsby-themes/)
+> Themes](/blog/2018-11-11-introducing-gatsby-themes/)
 > for a written introduction and [my Gatsby Days
 > talk](https://www.youtube.com/watch?v=wX84vXBpMR8) for a more audio/visual
 > approach.
@@ -64,7 +66,7 @@ for the core theme.
 
 ```js:title=gatsby-theme-blog-core/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-mdx`],
+  plugins: [`gatsby-plugin-mdx`],
 }
 ```
 

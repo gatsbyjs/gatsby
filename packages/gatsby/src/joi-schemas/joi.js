@@ -1,18 +1,73 @@
-const Joi = require(`joi`)
+const Joi = require(`@hapi/joi`)
 
-export const gatsbyConfigSchema = Joi.object().keys({
-  __experimentalThemes: Joi.array(),
-  polyfill: Joi.boolean(),
-  siteMetadata: Joi.object(),
-  pathPrefix: Joi.string(),
-  mapping: Joi.object(),
-  plugins: Joi.array(),
-  proxy: Joi.object().keys({
-    prefix: Joi.string().required(),
-    url: Joi.string().required(),
-  }),
-  developMiddleware: Joi.func(),
-})
+const stripTrailingSlash = chain => chain.replace(/(\w)\/+$/, `$1`)
+// only add leading slash on relative urls
+const addLeadingSlash = chain =>
+  chain.when(Joi.string().uri({ relativeOnly: true }), {
+    then: chain.replace(/^([^/])/, `/$1`),
+  })
+
+export const gatsbyConfigSchema = Joi.object()
+  .keys({
+    __experimentalThemes: Joi.array(),
+    polyfill: Joi.boolean().default(true),
+    assetPrefix: stripTrailingSlash(
+      Joi.string().uri({
+        allowRelative: true,
+      })
+    ),
+    pathPrefix: addLeadingSlash(
+      stripTrailingSlash(
+        Joi.string()
+          .uri({
+            allowRelative: true,
+            relativeOnly: true,
+          })
+          .default(``)
+          // removes single / value
+          .allow(``)
+          .replace(/^\/$/, ``)
+      )
+    ),
+    siteMetadata: Joi.object({
+      siteUrl: stripTrailingSlash(Joi.string()).uri(),
+    }).unknown(),
+    mapping: Joi.object(),
+    plugins: Joi.array(),
+    proxy: Joi.object().keys({
+      prefix: Joi.string().required(),
+      url: Joi.string().required(),
+    }),
+    developMiddleware: Joi.func(),
+  })
+  // throws when both assetPrefix and pathPrefix are defined
+  .when(
+    Joi.object({
+      assetPrefix: Joi.string().uri({
+        allowRelative: true,
+        relativeOnly: true,
+      }),
+      pathPrefix: Joi.string()
+        .uri({
+          allowRelative: true,
+          relativeOnly: true,
+        })
+        .default(``),
+    }),
+    {
+      then: Joi.object({
+        assetPrefix: Joi.string()
+          .uri({
+            allowRelative: false,
+          })
+          .error(
+            new Error(
+              `assetPrefix must be an absolute URI when used with pathPrefix`
+            )
+          ),
+      }),
+    }
+  )
 
 export const pageSchema = Joi.object()
   .keys({
