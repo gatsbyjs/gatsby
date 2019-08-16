@@ -97,6 +97,8 @@ plugins: [
 ]
 ```
 
+In version 3, Workbox is also upgraded to version 4 so you may need to update your `workboxConfig` if any of those changes apply to you. Please see the [docs on Google Developers](https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v3) for more information.
+
 ## Overriding Workbox configuration
 
 When adding this plugin to your `gatsby-config.js`, you can use the option `workboxConfig` to override the default Workbox config. To see the full list of options, see [this article on Google Developers](https://developers.google.com/web/tools/workbox/modules/workbox-build#full_generatesw_config).
@@ -108,7 +110,7 @@ const options = {
   importWorkboxFrom: `local`,
   globDirectory: rootDir,
   globPatterns,
-  modifyUrlPrefix: {
+  modifyURLPrefix: {
     // If `pathPrefix` is configured by user, we should replace
     // the default prefix with `pathPrefix`.
     "/": `${pathPrefix}/`,
@@ -116,23 +118,28 @@ const options = {
   cacheId: `gatsby-plugin-offline`,
   // Don't cache-bust JS or CSS files, and anything in the static directory,
   // since these files have unique URLs and their contents will never change
-  dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
+  dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
   runtimeCaching: [
     {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `cacheFirst`,
+      handler: `CacheFirst`,
+    },
+    {
+      // page-data.json files are not content hashed
+      urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+      handler: `NetworkFirst`,
     },
     {
       // Add runtime caching of various other page resources
       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `staleWhileRevalidate`,
+      handler: `StaleWhileRevalidate`,
     },
     {
       // Google Fonts CSS (doesn't end in .css so we need to specify it)
       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `staleWhileRevalidate`,
+      handler: `StaleWhileRevalidate`,
     },
   ],
   skipWaiting: true,
