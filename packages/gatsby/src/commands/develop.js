@@ -60,6 +60,7 @@ const rlInterface = rl.createInterface({
 
 // Quit immediately on hearing ctrl-c
 rlInterface.on(`SIGINT`, () => {
+  rlInterface.close()
   process.exit()
 })
 
