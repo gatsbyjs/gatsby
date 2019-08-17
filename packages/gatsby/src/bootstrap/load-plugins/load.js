@@ -149,6 +149,7 @@ module.exports = (config = {}, rootDir = null) => {
           pluginOptions: {
             plugins: [],
           },
+          resolve: `__TEST__`,
         }
       }
 
