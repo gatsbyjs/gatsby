@@ -60,8 +60,10 @@ const rlInterface = rl.createInterface({
 
 // Quit immediately on hearing ctrl-c
 rlInterface.on(`SIGINT`, () => {
-  rlInterface.close()
-  process.exit()
+  // fixes issue with bash shell not receiving control of
+  // stdio when exiting
+  rlInterface.close() // Release stdio streams
+  process.exit(0)
 })
 
 onExit(() => {
