@@ -28,7 +28,11 @@ Html = Html && Html.__esModule ? Html.default : Html
 
 export default (pagePath, callback) => {
   let headComponents = [
-    <meta key="env:development" name="note" content="env:development" />,
+    <meta
+      key="environment-note"
+      name="note"
+      content="environment=development"
+    />,
   ]
   let htmlAttributes = {}
   let bodyAttributes = {}

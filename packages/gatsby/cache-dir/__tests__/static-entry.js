@@ -169,7 +169,9 @@ describe(`develop-static-entry`, () => {
 
   test(`onPreRenderHTML adds metatag note for development environment`, done => {
     DevelopStaticEntry(`/about/`, (_, html) => {
-      expect(html).toContain(`<meta name="note" content="env:development"/>`)
+      expect(html).toContain(
+        `<meta name="note" content="environment=development"/>`
+      )
       done()
     })
   })
@@ -178,7 +180,9 @@ describe(`develop-static-entry`, () => {
     global.plugins = [reverseHeadersPlugin]
 
     DevelopStaticEntry(`/about/`, (_, html) => {
-      expect(html).toContain(`<meta name="note" content="env:development"/>`)
+      expect(html).toContain(
+        `<meta name="note" content="environment=development"/>`
+      )
       done()
     })
   })
@@ -295,7 +299,7 @@ describe(`static-entry`, () => {
   test(`onPreRenderHTML does not add metatag note for development environment`, done => {
     StaticEntry(`/about/`, (_, html) => {
       expect(html).not.toContain(
-        `<meta name="note" content="env:development"/>`
+        `<meta name="note" content="environment=development"/>`
       )
       done()
     })
