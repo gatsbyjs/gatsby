@@ -3,6 +3,7 @@ title: "Gatsby: Why We Write"
 date: 2019-04-19
 author: Sam Bhagwat
 excerpt: "Why does the Gatsby team and community write so much? Six principles that explain our love for writing."
+tags: ["gatsby-inc"]
 ---
 
 If you're a Gatsby community member, you may have noticed something: we write _a lot_.

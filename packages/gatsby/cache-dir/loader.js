@@ -20,7 +20,6 @@ const doFetch = (url, method = `GET`) =>
   new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(method, url, true)
-    req.withCredentials = true
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
         resolve(req)
@@ -88,7 +87,10 @@ const loadPageDataJson = loadObj => {
 }
 
 const doesConnectionSupportPrefetch = () => {
-  if (`connection` in navigator) {
+  if (
+    `connection` in navigator &&
+    typeof navigator.connection !== `undefined`
+  ) {
     if ((navigator.connection.effectiveType || ``).includes(`2g`)) {
       return false
     }
@@ -239,11 +241,6 @@ export class BaseLoader {
   }
 
   shouldPrefetch(pagePath) {
-    // If a plugin has disabled core prefetching, stop now.
-    if (this.prefetchDisabled) {
-      return false
-    }
-
     // Skip prefetching if we know user is on slow or constrained connection
     if (!doesConnectionSupportPrefetch()) {
       return false
@@ -267,6 +264,11 @@ export class BaseLoader {
     if (!this.prefetchTriggered.has(pagePath)) {
       this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
       this.prefetchTriggered.add(pagePath)
+    }
+
+    // If a plugin has disabled core prefetching, stop now.
+    if (this.prefetchDisabled) {
+      return false
     }
 
     const realPath = cleanPath(pagePath)

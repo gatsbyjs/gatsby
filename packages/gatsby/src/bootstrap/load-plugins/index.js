@@ -11,11 +11,11 @@ const {
   handleMultipleReplaceRenderers,
 } = require(`./validate`)
 
-const apis = {
-  node: _.keys(nodeAPIs),
-  browser: _.keys(browserAPIs),
-  ssr: _.keys(ssrAPIs),
-}
+const getAPI = api =>
+  _.keys(api).reduce((merged, key) => {
+    merged[key] = _.keys(api[key])
+    return merged
+  }, {})
 
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
@@ -37,7 +37,15 @@ const flattenPlugins = plugins => {
   return flattened
 }
 
-module.exports = async (config = {}, rootDir = null) => {
+module.exports = async (config = {}, rootDir = null, latestAPIs = {}) => {
+  const apis = {
+    currentAPIs: getAPI({
+      browser: browserAPIs,
+      node: nodeAPIs,
+      ssr: ssrAPIs,
+    }),
+    latestAPIs,
+  }
   // Collate internal plugins, site config plugins, site default plugins
   const plugins = loadPlugins(config, rootDir)
 
@@ -46,12 +54,12 @@ module.exports = async (config = {}, rootDir = null) => {
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
-  const x = collatePluginAPIs({ apis, flattenedPlugins })
+  const x = collatePluginAPIs({ ...apis, flattenedPlugins })
   flattenedPlugins = x.flattenedPlugins
   const badExports = x.badExports
 
   // Show errors for any non-Gatsby APIs exported from plugins
-  handleBadExports({ apis, badExports })
+  handleBadExports({ ...apis, badExports })
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({

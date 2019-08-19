@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.2.2...gatsby-source-shopify@3.0.0) (2019-08-13)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.2.1...gatsby-source-shopify@2.2.2) (2019-08-09)
+
+### Features
+
+- **gatsby-source-shopify:** Filter fetched collections ([#15046](https://github.com/gatsbyjs/gatsby/issues/15046)) ([ce1bf9c](https://github.com/gatsbyjs/gatsby/commit/ce1bf9c))
+
+## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.2.0...gatsby-source-shopify@2.2.1) (2019-08-06)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.1.10...gatsby-source-shopify@2.2.0) (2019-08-01)
+
+### Features
+
+- **gatsby-source-shopify:** add metafields to product nodes ([#16312](https://github.com/gatsbyjs/gatsby/issues/16312)) ([271bad2](https://github.com/gatsbyjs/gatsby/commit/271bad2))
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.1.9...gatsby-source-shopify@2.1.10) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.1.8...gatsby-source-shopify@2.1.9) (2019-07-30)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.1.7...gatsby-source-shopify@2.1.8) (2019-07-22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.1.6...gatsby-source-shopify@2.1.7) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-source-shopify

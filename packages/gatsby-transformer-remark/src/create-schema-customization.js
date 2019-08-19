@@ -24,6 +24,10 @@ const typeDefs = `
     sentences: Int
     words: Int
   }
+
+  type MarkdownRemark implements Node @infer @childOf(mimeTypes: ["text/markdown", "text/x-markdown"]) {
+    id: ID!
+  }
 `
 
 module.exports = (nodeApiArgs, pluginOptions = {}) => {

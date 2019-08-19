@@ -6,7 +6,7 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const path = require(`path`)
 const fs = require(`fs`)
-const truePath = require(`true-case-path`)
+const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
@@ -15,6 +15,7 @@ const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
+const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 
@@ -91,6 +92,8 @@ const fileOkCache = {}
  * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
+ * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -242,7 +245,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   // check if we've processed this component path
-  // before, before running the expensive "truePath"
+  // before, before running the expensive "trueCasePath"
   // operation
   //
   // Skip during testing as the paths don't exist on disk.
@@ -258,7 +261,25 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
-      const trueComponentPath = slash(truePath(page.component))
+      let trueComponentPath
+      try {
+        // most systems
+        trueComponentPath = slash(trueCasePathSync(page.component))
+      } catch {
+        // systems where user doesn't have access to /
+        const commonDir = getCommonDir(
+          store.getState().program.directory,
+          page.component
+        )
+
+        // using `path.win32` to force case insensitive relative path
+        const relativePath = slash(
+          path.win32.relative(commonDir, page.component)
+        )
+
+        trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
+      }
+
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
           const markers = page.component
@@ -273,18 +294,19 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
           report.warn(
             stripIndent`
-            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
-            page.component:     "${page.component}"
-            path in filesystem: "${trueComponentPath}"
-                                 ${markers}
-          `
+          page.component:     "${page.component}"
+          path in filesystem: "${trueComponentPath}"
+                               ${markers}
+        `
           )
           hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
 
         page.component = trueComponentPath
       }
+
       pageComponentCache[originalPageComponent] = page.component
     }
   }
@@ -790,6 +812,11 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
     }
 
     nodeId = options
+  }
+
+  const node = getNode(nodeId)
+  if (node && !typeOwners[node.internal.type]) {
+    typeOwners[node.internal.type] = node.internal.owner
   }
 
   return {

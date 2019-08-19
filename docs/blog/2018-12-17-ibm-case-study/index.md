@@ -3,7 +3,7 @@ title: IBM Uses Gatsby to Manage Enterprise-Level Content
 date: 2018-12-17
 author: Linda Watkins
 tags:
-  - case study
+  - case-studies
 ---
 
 [![Carbon Design System](./images/carbon.png)][carbon]
