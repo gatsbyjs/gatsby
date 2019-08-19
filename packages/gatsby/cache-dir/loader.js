@@ -216,7 +216,7 @@ export class BaseLoader {
               finalResult.notFound = true
             }
             pageData = Object.assign(pageData, {
-              webpackCompilationHash: allData[0].appHash,
+              webpackCompilationHash: allData[0] ? allData[0].appHash : ``,
             })
             pageResources = toPageResources(pageData, component)
             finalResult.payload = pageResources
