@@ -12,9 +12,9 @@ tags:
 canonicalLink: https://clearleft.com/casestudies/change-incorporated
 ---
 
-Change Incorporated is a new, purpose-driven media company owned by VICE. The new channel aims to create measurable social change from the inside out for some of the biggest social issues affecting VICE's audience.
+[Change Incorporated](https://uk.changeincorporated.com/) is a new, purpose-driven media company owned by [VICE](https://www.vice.com). The new channel aims to create measurable social change from the inside out for some of the biggest social issues affecting VICE's audience.
 
-The team needed a minimum viable product within a very aggressive time frame. It was a tough challenge, one that would ultimately result in a fully-functioning publishing platform and a fully articulated design vision.
+The Change Incorporated team needed a minimum viable product within a very aggressive time frame. It was a tough challenge, one that would ultimately result in a fully-functioning publishing platform and a fully articulated design vision.
 
 ![Team of three working through the visual design for change incorporated](change-inc-visual.jpg)
 
@@ -26,11 +26,11 @@ The innovative approach ensured that scalability, speed and consistency were bui
 
 ### Exceptional performance
 
-The JAMstack used offers faster site performance, improved security and more cost-effective, long-term hosting.
+The stack used offers faster site performance, improved security and more cost-effective, long-term hosting.
 
 ### A foundation for real change
 
-The platform is receiving a nationwide digital and out of home (OOH) campaign to support the Quit Cigarettes mission.
+The platform is receiving a nationwide digital and out of home (OOH) campaign to support the [Quit Cigarettes](https://uk.changeincorporated.com/quit-cigarettes) mission.
 
 <Pullquote citation="Toby Lee, AZ, Product Owner Change Incorporated">
   “Your flexibility, professionalism, and high standards throughout have been very much appreciated. We started with an ambitious set of goals and a very tight deadline, and I was fully expecting we would have to look at compromises for what we were hoping to achieve. Thanks to your efforts we have a really solid foundation, technically, experientially, and visually, to continue building and iterating on what is already a great website (and dashboard!). On top of all that, it’s a pleasure working with you all. Great work, thank you!”
@@ -40,9 +40,9 @@ The platform is receiving a nationwide digital and out of home (OOH) campaign to
 
 ### Taking a pause to improve pace
 
-Change Incorporated had a well-defined brief including a list of their desired features. Some of this was new territory for [Clearleft](https://clearleft.com) from a technical perspective – we don’t typically do backend website builds so we enlisted a tech partner Nearform to support us in delivering the project.
+Change Incorporated had a well-defined brief including a list of their desired features. Some of this was new territory for [Clearleft](https://clearleft.com) from a technical perspective – we don’t typically do backend website builds so we enlisted a tech partner [Nearform](https://www.nearform.com/) to support us in delivering the project.
 
-We proposed a headless Content Management System with server-side rendering. Nearform helped validate this and proposed a static site renderer. We based the project on the JAMstack architecture: an approach based on client-side JavaScript, reusable APIs and prebuilt Markup.
+We proposed a headless Content Management System (CMS) with server-side rendering. Nearform helped validate this and proposed a static site renderer. We based the project on the JAMstack architecture: an approach based on client-side JavaScript, reusable APIs and prebuilt Markup.
 
 Compared to more traditional approaches, we found that JAMstack offered faster site performance, improved security, more cost-effective hosting, a quicker and more focused developer experience, and more practical scalability. The key tools we used to build the site were [Contentful](https://www.contentful.com/) (as a headless CMS) and the static site generator [Gatsby](/), with GraphQL to build the pages. The impressive performance benefits Gatsby brought us were immediately evident. These technologies were great to work with and fitted really well into our skillset.
 
@@ -58,7 +58,7 @@ The Change Incorporated team had already scouted some incredible photographic an
 
 Strong typography is especially crucial for a publishing platform. We wanted a simple, authoritative typographic system that would work well with a wide range of content on any device. We needed to introduce enough character for the brand to own and build on in the future, but keep the type restrained enough to avoid visual competition with the site’s strong imagery.
 
-During our early exploration, our head of Front End Development suggested a font budget of five files. Using a mixture of system fonts and variable fonts where appropriate, we were able to squeeze a few extra styles into this budget without loading more than five files. Working within this constraint really forced us to consider our choices. The end result is a performant site with consistent typography that feels at home on any device.
+During our early exploration, our head of frontend development suggested a font budget of five files. Using a mixture of system fonts and variable fonts where appropriate, we were able to squeeze a few extra styles into this budget without loading more than five files. Working within this constraint really forced us to consider our choices. The end result is a performant site with consistent typography that feels at home on any device.
 
 <Pullquote citation="James Gilyead, AZ, Visual Designer Clearleft">
 It was a pleasure to work alongside fellow visual designer Luke on Change Incorporated. Having a full-time critique partner kept the designs on track, and Abstract helped us to present a unified vision to the project team.
