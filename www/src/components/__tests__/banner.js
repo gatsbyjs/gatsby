@@ -1,9 +1,9 @@
 import React from "react"
-import { render } from "react-testing-library"
+import { render } from "@testing-library/react"
 
 import Banner from "../banner"
 
-const matchers = [`Watch now`, `Register now`]
+const matchers = [`Watch now`, `Register now`, `Gatsby Preview`]
 
 const getElement = utils => utils.getByText(text => matchers.includes(text))
 

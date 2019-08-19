@@ -1,8 +1,3 @@
-const {
-  GraphQLObjectType,
-  GraphQLInt,
-  GraphQLJSON
-} = require("gatsby/graphql");
 const _ = require("lodash");
 const remark = require("remark");
 const english = require("retext-english");
@@ -14,7 +9,7 @@ const toString = require("mdast-util-to-string");
 const generateTOC = require("mdast-util-toc");
 const prune = require("underscore.string/prune");
 
-const debug = require("debug")("gatsby-mdx:extend-node-type");
+const debug = require("debug")("gatsby-plugin-mdx:extend-node-type");
 const getTableOfContents = require("../utils/get-table-of-content");
 const defaultOptions = require("../utils/default-options");
 const genMDX = require("../utils/gen-mdx");
@@ -64,26 +59,27 @@ module.exports = (
   const { createTypes } = actions;
 
   const options = defaultOptions(pluginOptions);
-
+  const headingsMdx = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
   createTypes(`
-  type MdxFrontmatter {
-title: String!
+    type MdxFrontmatter {
+      title: String!
+    }
 
-}
-  type MdxHeadingMdx {
-    value: String
-    depth: Int
-  }
+    type MdxHeadingMdx {
+      value: String
+      depth: Int
+    }
 
-  enum HeadingsMdx {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6
-  }
-`);
+    enum HeadingsMdx {
+      ${headingsMdx}
+    }
+
+    type MdxWordCount {
+      paragraphs: Int
+      sentences: Int
+      words: Int
+    }
+  `);
 
   /**
    * Support gatsby-remark parser plugins
@@ -171,8 +167,8 @@ title: String!
               depth: heading.depth
             });
           });
-          if (typeof depth === `number`) {
-            headings = headings.filter(heading => heading.depth === depth);
+          if (headingsMdx.includes(depth)) {
+            headings = headings.filter(heading => `h${heading.depth}` === depth);
           }
           return headings;
         }
@@ -201,7 +197,7 @@ ${e}`
         }
       },
       mdxAST: {
-        type: GraphQLJSON,
+        type: `JSON`,
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode });
           return mdast;
@@ -217,7 +213,7 @@ ${e}`
         },
         async resolve(mdxNode, { maxDepth }) {
           const { mdast } = await processMDX({ node: mdxNode });
-          const toc = generateTOC(mdast, maxDepth);
+          const toc = generateTOC(mdast, {maxDepth});
 
           return getTableOfContents(toc.map, {});
         }
@@ -237,20 +233,7 @@ ${e}`
         }
       },
       wordCount: {
-        type: new GraphQLObjectType({
-          name: `wordCountsMdx`,
-          fields: {
-            paragraphs: {
-              type: GraphQLInt
-            },
-            sentences: {
-              type: GraphQLInt
-            },
-            words: {
-              type: GraphQLInt
-            }
-          }
-        }),
+        type: `MdxWordCount`,
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode });
           return getCounts({ mdast });

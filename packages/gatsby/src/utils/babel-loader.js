@@ -24,19 +24,22 @@ const {
 module.exports = babelLoader.custom(babel => {
   const toReturn = {
     // Passed the loader options.
-    customOptions(options) {
+    customOptions({ stage = `test`, ...options }) {
       return {
+        custom: {
+          stage,
+        },
         loader: {
           cacheDirectory: true,
           sourceType: `unambiguous`,
-          ...getCustomOptions(),
+          ...getCustomOptions(stage),
           ...options,
         },
       }
     },
 
     // Passed Babel's 'PartialConfig' object.
-    config(partialConfig) {
+    config(partialConfig, { customOptions }) {
       let { options } = partialConfig
       const [
         reduxPresets,
@@ -44,7 +47,7 @@ module.exports = babelLoader.custom(babel => {
         requiredPresets,
         requiredPlugins,
         fallbackPresets,
-      ] = prepareOptions(babel)
+      ] = prepareOptions(babel, customOptions)
 
       // If there is no filesystem babel config present, add our fallback
       // presets/plugins.

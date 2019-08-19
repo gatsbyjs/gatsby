@@ -3,13 +3,17 @@ title: Using React Context API with Gatsby
 author: Muhammad Muhsin
 date: 2019-01-31
 tags:
-  - "React"
+  - "react"
 ---
 
 You often feel the unsettling flash of a bright phone screen while relaxing in a dimly lit room. This is alleviated by introducing a "dark mode" which switches background and foreground colors to reduce eye strain. I decided to add this to my boutique web agency [Laccadive IO's](https://laccadive.io/) new Gatsby-based site.
 
 <Pullquote citation="Heydon Pickering">
-One of the few types of alternative theme that adds real value to users is a low light intensity “night mode” theme. Not only is it easier on the eyes when reading in the dark, but it also reduces the likelihood of migraine and the irritation of other light sensitivity disorders. As a migraine sufferer, I’m interested!
+  One of the few types of alternative theme that adds real value to users is a
+  low light intensity “night mode” theme. Not only is it easier on the eyes when
+  reading in the dark, but it also reduces the likelihood of migraine and the
+  irritation of other light sensitivity disorders. As a migraine sufferer, I’m
+  interested!
 </Pullquote>
 
 In considering the different ways to implement this a natural fit become apparent: React’s new Context API. Having worked with Context API before, this seemed like a particularly well suited use for this API. However, I soon realized I would need to do a little set-up work to get this up and running.

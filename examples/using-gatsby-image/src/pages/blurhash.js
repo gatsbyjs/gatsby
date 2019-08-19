@@ -46,12 +46,12 @@ const BlurHash = ({ data, location }) => (
     </p>
     <p>
       This technique could be used out of the usual blur up technique, since
-      it's an alternative what you need to do is pass an optional arguments to
+      it's an alternative what you need to do is pass some optional arguments to
       your image queries on the nodes that returns a base64, this arguments are
       "blurhashed" being a boolean, and "componentX" and "componentY" being
       integers. Their default values are "false", "5" and "5" respectively and
       both "componentX" and "componentY" could go from 1 to 9, being 1 super
-      blurry and 9 little blurry. You'd end un with a query with these arguments
+      blurry and 9 little blurry. You'd end up with a query with these arguments
       like: <br />
       <br />
       <code>fluid(maxHeight: 500, quality: 90, blurhashed: true) ...</code>
@@ -69,7 +69,9 @@ export default BlurHash
 
 export const query = graphql`
   query {
-    coverImage: unsplashImagesYaml(title: { eq: "Plant with leaves" }) {
+    coverImage: unsplashImagesYaml(
+      title: { eq: "People in mountains background" }
+    ) {
       credit
       title
       localFile {
@@ -80,7 +82,7 @@ export const query = graphql`
         }
       }
     }
-    floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
+    floatingImageMobile: unsplashImagesYaml(title: { eq: "Owl looking left" }) {
       localFile {
         childImageSharp {
           fixed(width: 120, blurhashed: true, componentX: 7, componentY: 7) {
@@ -89,7 +91,7 @@ export const query = graphql`
         }
       }
     }
-    floatingImage: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
+    floatingImage: unsplashImagesYaml(title: { eq: "Owl looking left" }) {
       credit
       title
       localFile {
@@ -100,7 +102,7 @@ export const query = graphql`
         }
       }
     }
-    fullWidthImage: unsplashImagesYaml(title: { eq: "Alien in the forest" }) {
+    fullWidthImage: unsplashImagesYaml(title: { eq: "Jellyfish in the sea" }) {
       credit
       title
       localFile {
