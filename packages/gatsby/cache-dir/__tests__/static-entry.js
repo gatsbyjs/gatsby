@@ -166,6 +166,22 @@ describe(`develop-static-entry`, () => {
       done()
     })
   })
+
+  test(`onPreRenderHTML adds metatag note for development environment`, done => {
+    DevelopStaticEntry(`/about/`, (_, html) => {
+      expect(html).toContain(`<meta name="note" content="env:development"/>`)
+      done()
+    })
+  })
+
+  test(`onPreRenderHTML adds metatag note for development environment after replaceHeaders`, done => {
+    global.plugins = [reverseHeadersPlugin]
+
+    DevelopStaticEntry(`/about/`, (_, html) => {
+      expect(html).toContain(`<meta name="note" content="env:development"/>`)
+      done()
+    })
+  })
 })
 
 describe(`static-entry sanity checks`, () => {

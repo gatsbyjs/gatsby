@@ -27,7 +27,9 @@ try {
 Html = Html && Html.__esModule ? Html.default : Html
 
 export default (pagePath, callback) => {
-  let headComponents = []
+  let headComponents = [
+    <meta key="env:development" name="note" content="env:development" />,
+  ]
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []
