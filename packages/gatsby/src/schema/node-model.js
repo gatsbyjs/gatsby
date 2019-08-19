@@ -215,14 +215,14 @@ class LocalNodeModel {
       fields
     )
 
-    await this.prepareNodes(gqlType, fields, fieldsToResolve)
-
     let nodeTypeNames
     if (isAbstractType(gqlType)) {
       nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
     } else {
       nodeTypeNames = [gqlType.name]
     }
+
+    await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
 
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
@@ -249,7 +249,7 @@ class LocalNodeModel {
     return this.trackPageDependencies(result, pageDependencies)
   }
 
-  prepareNodes(type, queryFields, fieldsToResolve) {
+  prepareNodes(type, queryFields, fieldsToResolve, nodeTypeNames) {
     const typeName = type.name
     if (!this._prepareNodesQueues[typeName]) {
       this._prepareNodesQueues[typeName] = []
@@ -263,7 +263,7 @@ class LocalNodeModel {
     if (!this._prepareNodesPromises[typeName]) {
       this._prepareNodesPromises[typeName] = new Promise(resolve => {
         process.nextTick(async () => {
-          await this._doResolvePrepareNodesQueue(type)
+          await this._doResolvePrepareNodesQueue(type, nodeTypeNames)
           resolve()
         })
       })
@@ -272,7 +272,7 @@ class LocalNodeModel {
     return this._prepareNodesPromises[typeName]
   }
 
-  async _doResolvePrepareNodesQueue(type) {
+  async _doResolvePrepareNodesQueue(type, nodeTypeNames) {
     const typeName = type.name
     const queue = this._prepareNodesQueues[typeName]
     this._prepareNodesQueues[typeName] = []
@@ -300,24 +300,28 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
-      await this.nodeStore.updateNodesByType(type.name, async node => {
-        this.trackInlineObjectsInRootNode(node)
-        const resolvedFields = await resolveRecursive(
-          this,
-          this.schemaComposer,
-          this.schema,
-          node,
-          type,
-          queryFields,
-          actualFieldsToResolve
-        )
-        const newNode = {
-          ...node,
-          _$resolved: _.merge(node._$resolved || {}, resolvedFields),
-        }
+      await this.nodeStore.updateNodesByType(
+        type.name,
+        async node => {
+          this.trackInlineObjectsInRootNode(node)
+          const resolvedFields = await resolveRecursive(
+            this,
+            this.schemaComposer,
+            this.schema,
+            node,
+            type,
+            queryFields,
+            actualFieldsToResolve
+          )
+          const newNode = {
+            ...node,
+            _$resolved: _.merge(node._$resolved || {}, resolvedFields),
+          }
 
-        return newNode
-      })
+          return newNode
+        },
+        nodeTypeNames
+      )
       this._preparedNodesCache.set(
         typeName,
         _.merge(

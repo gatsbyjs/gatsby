@@ -1,5 +1,5 @@
 const lokiRunQuery = require(`./loki/nodes-query`)
-const siftRunQuery = require(`../redux/run-sift`)
+const { runSift: siftRunQuery } = require(`../redux/run-sift`)
 
 /**
  * Runs the query over all nodes of type. It must first select the

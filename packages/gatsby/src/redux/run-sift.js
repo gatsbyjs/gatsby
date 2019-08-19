@@ -168,15 +168,10 @@ const liftResolvedFields = (args, resolvedFields) => {
  * @returns Collection of results. Collection will be limited to size
  *   if `firstOnly` is true
  */
-module.exports = (args: Object) => {
+const runSift = (args: Object) => {
   const { getNode, getNodesAndResolvedNodes } = require(`./nodes`)
 
-  const {
-    queryArgs = { filter: {}, sort: {} },
-    firstOnly = false,
-    resolvedFields = {},
-    nodeTypeNames,
-  } = args
+  const { nodeTypeNames } = args
 
   let nodes
 
@@ -188,6 +183,19 @@ module.exports = (args: Object) => {
   } else {
     nodes = getNodesAndResolvedNodes(nodeTypeNames[0])
   }
+
+  return runSiftOnNodes(nodes, args, getNode)
+}
+
+exports.runSift = runSift
+
+const runSiftOnNodes = (nodes, args, getNode) => {
+  const {
+    queryArgs = { filter: {}, sort: {} },
+    firstOnly = false,
+    resolvedFields = {},
+    nodeTypeNames,
+  } = args
 
   let siftFilter = getFilters(
     liftResolvedFields(prepareQueryArgs(queryArgs.filter), resolvedFields)
@@ -214,3 +222,5 @@ module.exports = (args: Object) => {
     return handleMany(siftFilter, nodes, queryArgs.sort, resolvedFields)
   }
 }
+
+exports.runSiftOnNodes = runSiftOnNodes

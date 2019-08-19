@@ -1,5 +1,5 @@
 if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
-  const runSift = require(`../run-sift`)
+  const { runSift } = require(`../run-sift`)
   const { store } = require(`../index`)
   const { actions } = require(`../actions`)
   const {

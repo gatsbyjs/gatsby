@@ -7,9 +7,9 @@ const customComparators = require(`./custom-comparators`)
 
 // Ensure sorting behavior matches old lodash `orderBy`
 // implementation. See `custom-comparators.js` for why.
-loki.Comparators.aeq = customComparators.aeqHelper
 loki.Comparators.lt = customComparators.ltHelper
 loki.Comparators.gt = customComparators.gtHelper
+loki.Comparators.aeq = customComparators.aeqHelper
 
 // Loki is a document store with the same semantics as mongo. This
 // means there are no tables or relationships. Just a bunch of
@@ -24,13 +24,14 @@ loki.Comparators.gt = customComparators.gtHelper
 // functions in `./nodes.js`. E.g `getTypeCollName()` and
 // `getNodeTypeCollection`
 const colls = {
-  // Main node collection
-  nodes: {
-    name: `gatsby:nodes`,
+  // Each object has keys `id` and `typeCollName`. It's a way of
+  // quickly looking up the collection that a node is contained in.
+  // E.g { id: `someNodeId`, typeCollName: `gatsby:nodeType:myType` }
+  nodeMeta: {
+    name: `gatsby:nodeMeta`,
     options: {
       unique: [`id`],
-      indices: [`id`, `internal.type`, `internal.$counter`],
-      disableMeta: true,
+      indices: [`id`],
     },
   },
   // The list of all node type collections. Each object has keys
@@ -40,8 +41,8 @@ const colls = {
   nodeTypes: {
     name: `gatsby:nodeTypes`,
     options: {
-      unique: [`id`, `type`],
-      indices: [`id`, `type`],
+      unique: [`type`, `collName`],
+      indices: [`type`],
     },
   },
 }
@@ -54,8 +55,8 @@ let db
  * created. See `colls` var in this file
  */
 function ensureNodeCollections(db) {
-  Object.keys(colls).forEach(collName => {
-    const { name, options } = colls[collName]
+  _.forEach(colls, collInfo => {
+    const { name, options } = collInfo
     db.addCollection(name, options)
   })
 }
@@ -135,26 +136,9 @@ function getDb() {
   return db
 }
 
-function getNodesCollection() {
-  if (db) {
-    return getDb().getCollection(colls.nodes.name)
-  } else {
-    return null
-  }
-}
-
-function getNodeTypesCollection() {
-  if (db) {
-    return getDb().getCollection(colls.nodeTypes.name)
-  } else {
-    return null
-  }
-}
-
 module.exports = {
   start,
   getDb,
-  getNodesCollection,
-  getNodeTypesCollection,
+  colls,
   saveState,
 }

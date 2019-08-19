@@ -1,17 +1,12 @@
-const {
-  getNodesCollection,
-  getNodeTypesCollection,
-  start,
-} = require(`../index`)
+const { colls, getDb, start } = require(`../index`)
 
-describe(`Loki Db`, () => {
-  beforeAll(() => {
-    start()
-  })
+describe(`db`, () => {
+  start()
   it(`should create system collections`, () => {
-    const nodesColl = getNodesCollection()
-    const nodeTypesColl = getNodeTypesCollection()
-    expect(nodesColl).toBeDefined()
+    const db = getDb()
+    const nodeMetaColl = db.getCollection(colls.nodeMeta.name)
+    const nodeTypesColl = db.getCollection(colls.nodeTypes.name)
+    expect(nodeMetaColl).toBeDefined()
     expect(nodeTypesColl).toBeDefined()
   })
 })

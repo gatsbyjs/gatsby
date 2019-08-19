@@ -3,6 +3,7 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
   const { GraphQLObjectType } = require(`graphql`)
   const { store } = require(`../../../redux`)
   const runQuery = require(`../nodes-query`)
+  const { getNodeTypeCollection } = require(`../nodes`)
   const lokiDb = require(`../index`)
 
   function makeNodes() {
@@ -27,29 +28,29 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
       },
     })
     const queryArgs = { filter: { foo: { eq: `bar` } } }
-    const args = { gqlType, queryArgs }
+    const args = { gqlType, queryArgs, nodeTypeNames: [gqlType.name] }
     return await Promise.all(_.map(new Array(n), () => runQuery(args)))
   }
 
-  describe(`Loki Queries query indexing`, () => {
+  describe(`query indexing`, () => {
     beforeEach(async () => {
       await lokiDb.start()
       store.dispatch({ type: `DELETE_CACHE` })
     })
     it(`does not create index when query run 1 time`, async () => {
       await runQueries(makeNodes(), 1)
-      const coll = lokiDb.getNodesCollection()
+      const coll = getNodeTypeCollection(`Test`)
       expect(coll.binaryIndices.hasOwnProperty(`foo`)).toEqual(false)
     })
 
     it(`creates index when query run 5 times`, async () => {
       await runQueries(makeNodes(), 5)
-      const coll = lokiDb.getNodesCollection()
+      const coll = getNodeTypeCollection(`Test`)
       expect(coll.binaryIndices.hasOwnProperty(`foo`)).toEqual(true)
     })
   })
 } else {
-  it(`Loki Queries skipping loki nodes-query-test`, () => {
+  it(`skipping loki nodes-query-test`, () => {
     expect(true).toEqual(true)
   })
 }

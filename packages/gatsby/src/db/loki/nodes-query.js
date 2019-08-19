@@ -6,8 +6,14 @@ const {
   isCompositeType,
 } = require(`graphql`)
 const prepareRegex = require(`../../utils/prepare-regex`)
-const { getNodeTypeCollection, ensureFieldIndexes } = require(`./nodes`)
+const {
+  getNodeTypeCollection,
+  ensureFieldIndexes,
+  getNode,
+  getNodesByType,
+} = require(`./nodes`)
 const { getValueAt } = require(`../../utils/get-value-at`)
+const { runSiftOnNodes } = require(`../../redux/run-sift`)
 
 // Takes a raw graphql filter and converts it into a mongo-like args
 // object that can be understood by loki. E.g `eq` becomes
@@ -287,30 +293,34 @@ function doesSortFieldsHaveArray(type, sortArgs) {
  * @returns {promise} A promise that will eventually be resolved with
  * a collection of matching objects (even if `firstOnly` is true)
  */
-async function runQuery({
-  gqlSchema,
-  gqlType,
-  queryArgs,
-  firstOnly,
-  resolvedFields = {},
-  nodeTypeNames,
-}) {
+async function runQuery(args) {
+  if (args.nodeTypeNames.length > 1) {
+    const nodes = args.nodeTypeNames.reduce(
+      (acc, typeName) => acc.concat(getNodesByType(typeName)),
+      []
+    )
+    return runSiftOnNodes(nodes, args, getNode)
+  }
+
+  const {
+    gqlType,
+    queryArgs,
+    firstOnly,
+    resolvedFields = {},
+    nodeTypeNames,
+  } = args
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
   const lokiArgs = convertArgs(gqlArgs, gqlType, resolvedFields)
 
-  let chain
   let sortFields
   if (queryArgs.sort) {
     sortFields = toSortFields(queryArgs.sort)
   }
-  const view = getNodeTypeCollection(nodeTypeNames)
-  chain = view.branchResultset()
-  // Somehow the simplesort in dynamic view can get reset, so we are doing it
-  // here again
+  const chain = getNodeTypeCollection(nodeTypeNames[0]).chain()
   chain.simplesort(`internal.$counter`)
-  ensureFieldIndexes(lokiArgs, sortFields || [])
+  ensureFieldIndexes(nodeTypeNames[0], lokiArgs, sortFields || [])
 
   chain.find(lokiArgs, firstOnly)
 
