@@ -48,7 +48,7 @@
     "debug": "^3.1.0",
     "del": "^3.0.0",
     "detect-port": "^1.2.1",
-    "devcert-san": "^0.3.3",
+    "devcert": "^1.0.0",
     "dotenv": "^4.0.0",
     "eslint": "^5.6.0",
     "eslint-config-react-app": "^3.0.0",
