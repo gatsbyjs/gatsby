@@ -3674,3 +3674,13 @@
   features:
     - Demonstrates both query and mutation from the linked Hasura project.
     - Uses apollo react hooks for query and mutation.
+- url: https://gatsby-typescript-scss-starter.netlify.com/
+  repo: https://github.com/GrantBartlett/gatsby-typescript-starter
+  description: A simple starter project using TypeScript and SCSS
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+    - SEO
+  features:
+    - Pages and components are classes.
+    - A skeleton SCSS project added with prefixing
