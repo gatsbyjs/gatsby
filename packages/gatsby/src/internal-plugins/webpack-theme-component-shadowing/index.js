@@ -11,10 +11,11 @@ const pathWithoutExtension = fullPath => {
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 
-  constructor({ projectRoot, themes }) {
+  constructor({ projectRoot, themes, extensions }) {
     debug(`themes list`, themes.map(({ themeName }) => themeName))
     this.themes = themes
     this.projectRoot = projectRoot
+    this.extensions = extensions
   }
 
   apply(resolver) {
@@ -124,17 +125,21 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         } catch (e) {
           return false
         }
-        const exists = dir
-          .map(filepath => {
-            const ext = path.extname(filepath)
-            const filenameWithoutExtension = path.basename(filepath, ext)
-            return filenameWithoutExtension
-          })
-          .includes(
-            path.basename(
-              possibleComponentPath,
-              path.extname(possibleComponentPath)
-            )
+        const existsDir = dir.map(filepath => path.basename(filepath))
+        const exists =
+          // has extension, will match styles.css;
+
+          // import Thing from 'whatever.tsx'
+          // extensions: [.js, .tsx]
+          // site/src/whatever.tsx site/src/whatever.js.
+
+          //exact matches
+          existsDir.includes(path.basename(possibleComponentPath)) ||
+          // .js matches
+          // styles.css.js
+          // whatever.tsx.js
+          this.extensions.find(ext =>
+            existsDir.includes(path.basename(possibleComponentPath) + ext)
           )
         return exists
       })
