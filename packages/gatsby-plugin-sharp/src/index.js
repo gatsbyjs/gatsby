@@ -573,7 +573,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
       blurhashed: options.blurhashed,
       componentX: options.componentX,
       componentY: options.componentY,
-      width: options.base64Width || base64Width,
+      width: base64Width,
       height: base64Height,
       duotone: options.duotone,
       grayscale: options.grayscale,
