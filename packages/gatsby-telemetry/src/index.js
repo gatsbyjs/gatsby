@@ -9,7 +9,7 @@ process.on(`exit`, flush)
 // The data is also sent on exit.
 
 const interval = process.env.TELEMETRY_BUFFER_INTERVAL
-  ? Number(process.env.TELEMETRY_BUFFER_INTERVAL)
+  ? Math.max(Number(process.env.TELEMETRY_BUFFER_INTERVAL), 1000)
   : 10 * 60 * 1000 // 10 min
 
 const tick = _ => {
