@@ -59,11 +59,12 @@ const rlInterface = rl.createInterface({
 })
 
 // Quit immediately on hearing ctrl-c
-rlInterface.on(`SIGINT`, () => {
+rlInterface.on(`close`, () => {
   // fixes issue with bash shell not receiving control of
   // stdio when exiting
   rlInterface.close() // Release stdio streams
-  process.exit(0)
+  process.kill(process.pid, `SIGINT`) // Relay signal to node
+  process.kill(process.ppid, `SIGINT`) // Relay signal to parent process (/bin/sh)
 })
 
 onExit(() => {
