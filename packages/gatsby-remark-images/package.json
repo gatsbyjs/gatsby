@@ -23,7 +23,7 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
-    "cross-env": "^5.1.4",
+    "cross-env": "^5.2.0",
     "hast-util-to-html": "^6.0.2",
     "mdast-util-to-hast": "^6.0.1"
   },

@@ -17,7 +17,7 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
-    "cross-env": "^5.1.4",
+    "cross-env": "^5.2.0",
     "remark": "^10.0.1",
     "remark-mdx": "^1.0.14",
     "semver": "^6.0.0",
