@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.69](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.68...gatsby@2.13.69) (2019-08-20)
+
+### Bug Fixes
+
+- **telemetry:** only look at websocket updates when we have active clients. ([#16750](https://github.com/gatsbyjs/gatsby/issues/16750)) ([164cd5b](https://github.com/gatsbyjs/gatsby/commit/164cd5b))
+
 ## [2.13.68](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.67...gatsby@2.13.68) (2019-08-19)
 
 ### Bug Fixes
