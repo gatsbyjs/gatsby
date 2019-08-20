@@ -49,6 +49,7 @@ module.exports = async (
     id: createNodeId(`${node.id} >>> Mdx`),
     node,
     content,
+    options,
   })
 
   createNode(mdxNode)

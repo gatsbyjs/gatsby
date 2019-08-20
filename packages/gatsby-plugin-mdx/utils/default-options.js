@@ -19,6 +19,7 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
       gatsbyRemarkPlugins: [],
       globalScope: `export default {}`,
       shouldBlockNodeFromTransformation: () => false,
+      grayMatter: {},
     },
     pluginOptions
   )

@@ -3,10 +3,10 @@ const { createContentDigest } = require(`gatsby-core-utils`)
 const mdx = require(`../utils/mdx`)
 const extractExports = require(`../utils/extract-exports`)
 
-module.exports = async ({ id, node, content }) => {
+module.exports = async ({ id, node, content, options }) => {
   let code
   try {
-    code = await mdx(content)
+    code = await mdx(content, options)
   } catch (e) {
     // add the path of the file to simplify debugging error messages
     e.message += `${node.absolutePath}: ${e.message}`

@@ -119,6 +119,7 @@ module.exports = async function(content) {
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
       node: fileNode,
       content,
+      options,
     })
   } catch (e) {
     return callback(e)

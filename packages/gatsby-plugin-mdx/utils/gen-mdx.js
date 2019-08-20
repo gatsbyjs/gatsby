@@ -1,5 +1,5 @@
 const babel = require(`@babel/core`)
-const grayMatter = require(`gray-matter`)
+const grayMatterWrapper = require(`./gray-matter-wrapper`)
 const mdx = require(`@mdx-js/mdx`)
 const objRestSpread = require(`@babel/plugin-proposal-object-rest-spread`)
 
@@ -76,7 +76,10 @@ module.exports = async function genMDX(
 
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
-  const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
+  const { data, content: frontMatterCodeResult } = grayMatterWrapper(
+    node.rawBody,
+    options
+  )
   const content = `${frontMatterCodeResult}
 
 export const _frontmatter = ${JSON.stringify(data)}`

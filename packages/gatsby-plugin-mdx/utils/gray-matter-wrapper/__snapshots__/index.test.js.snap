@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gray-matter excerpt snapshot with body 1`] = `
+Object {
+  "content": "
+This is an excerpt.
+This is also an excerpt.
+
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {},
+}
+`;
+
+exports[`gray-matter excerpt snapshot with excerpt 1`] = `
+Object {
+  "content": "
+This is an excerpt.
+This is also an excerpt.
+
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {
+    "excerpt": "
+This is an excerpt.
+This is also an excerpt.
+
+This could be an excerpt.
+",
+  },
+}
+`;
+
+exports[`gray-matter excerpt snapshot with excerpt_separator 1`] = `
+Object {
+  "content": "
+This is an excerpt.
+This is also an excerpt.
+<!--more-->
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {
+    "excerpt": "
+This is an excerpt.
+This is also an excerpt.
+",
+  },
+}
+`;
+
+exports[`gray-matter excerpt snapshot with excerpt-excerpt_separator 1`] = `
+Object {
+  "content": "
+This is an excerpt.
+This is also an excerpt.
+<!--more-->
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {
+    "excerpt": "
+This is an excerpt.
+This is also an excerpt.
+",
+  },
+}
+`;
+
+exports[`gray-matter excerpt snapshot with frontmatter 1`] = `
+Object {
+  "content": "This is an excerpt.
+This is also an excerpt.
+
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {
+    "excerpt": "This is excerpt from frontmatter.",
+    "one": "two",
+  },
+}
+`;
+
+exports[`gray-matter excerpt snapshot with frontmatter-excerpt 1`] = `
+Object {
+  "content": "This is an excerpt.
+This is also an excerpt.
+
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {
+    "excerpt": "This is excerpt from frontmatter.",
+    "one": "two",
+  },
+}
+`;
+
+exports[`gray-matter excerpt snapshot with frontmatter-excerpt_separator 1`] = `
+Object {
+  "content": "This is an excerpt.
+This is also an excerpt.
+<!--more-->
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {
+    "excerpt": "This is excerpt from frontmatter.",
+    "one": "two",
+  },
+}
+`;
+
+exports[`gray-matter excerpt snapshot with frontmatter-excerpt-excerpt_separator 1`] = `
+Object {
+  "content": "This is an excerpt.
+This is also an excerpt.
+<!--more-->
+This could be an excerpt.
+---
+This is content.",
+  "data": Object {
+    "excerpt": "This is excerpt from frontmatter.",
+    "one": "two",
+  },
+}
+`;
