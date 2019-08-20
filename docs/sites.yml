@@ -7015,3 +7015,15 @@
   built_by: Zellement
   built_by_url: https://www.zellement.com/
   featured: false
+- title: Ronald Langeveld
+  description: >
+    Ronald Langeveld's blog and Web Development portfolio website.
+  main_url: "https://www.ronaldlangeveld.com"
+  url: "https://www.ronaldlangeveld.com"
+  categories:
+    - Blog
+    - Web Development
+    - Freelance
+    - Portfolio
+    - Consulting
+  featured: false
