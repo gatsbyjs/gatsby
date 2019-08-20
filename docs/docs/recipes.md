@@ -1494,7 +1494,7 @@ export const pageQuery = graphql`
 
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
-### Transform Markdown into HTML
+### Transforming Markdown into HTML
 
 The `gatsby-transformer-remark` plugin can transform Markdown files to HTML.
 
