@@ -298,7 +298,9 @@ const updateNodesByType = async (typeName, updater, nodeTypeNames) => {
     const nodes = getNodesByType(typeName)
     const updated = await Promise.all(nodes.map(node => updater(node)))
     const nodeColl = getNodeTypeCollection(typeName)
-    nodeColl.update(updated)
+    if (nodeColl) {
+      nodeColl.update(updated)
+    }
   }
 }
 

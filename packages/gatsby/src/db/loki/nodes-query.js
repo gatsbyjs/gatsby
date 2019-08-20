@@ -318,7 +318,11 @@ async function runQuery(args) {
   if (queryArgs.sort) {
     sortFields = toSortFields(queryArgs.sort)
   }
-  const chain = getNodeTypeCollection(nodeTypeNames[0]).chain()
+  const table = getNodeTypeCollection(nodeTypeNames[0])
+  if (!table) {
+    return []
+  }
+  const chain = table.chain()
   chain.simplesort(`internal.$counter`)
   ensureFieldIndexes(nodeTypeNames[0], lokiArgs, sortFields || [])
 
