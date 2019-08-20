@@ -517,15 +517,6 @@
   categories:
     - Blog
     - Web Development
-- title: Chocolate Free
-  main_url: "https://chocolate-free.com/"
-  url: "https://chocolate-free.com/"
-  source_url: "https://github.com/Khaledgarbaya/chocolate-free-website"
-  featured: false
-  description: "A full time foodie \U0001F60D a forever Parisian \"patisserie\" lover and \U0001F382 \U0001F369 \U0001F370 \U0001F36A explorer and finally an under construction #foodblogger #foodblog"
-  categories:
-    - Blog
-    - Food
 - title: Code Bushi
   main_url: "https://codebushi.com/"
   url: "https://codebushi.com/"
@@ -4963,9 +4954,14 @@
   main_url: https://www.attejuvonen.fi/
   source_url: https://github.com/baobabKoodaa/blog
   description: >
-    A blog with streamlined design and smooth UX
+    Tech-oriented personal blog covering topics like AI, data, voting, game theory, infosec and software development.
   categories:
     - Blog
+    - Data
+    - JavaScript
+    - Programming
+    - Science
+    - Security
     - Technology
     - Web Development
   featured: false
@@ -5145,18 +5141,6 @@
     - Travel
     - Photography
   built_by: Zuyet Awarmatik
-- title: nikodemdeja.pl
-  main_url: https://nikodemdeja.pl
-  url: https://nikodemdeja.pl
-  source_url: https://github.com/Norem80/nikodemdeja.pl
-  description: >
-    Portfolio of Nikodem Deja
-  categories:
-    - Portfolio
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: manuvel.be
   url: https://www.manuvel.be
   main_url: https://www.manuvel.be
@@ -5233,18 +5217,6 @@
     - eCommerce
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
-- title: blog.nikodemdeja.pl
-  main_url: https://blog.nikodemdeja.pl
-  url: https://blog.nikodemdeja.pl
-  source_url: https://github.com/Norem80/blog.nikodemdeja.pl
-  description: >
-    Personal blog of Nikodem Deja
-  categories:
-    - Blog
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: Pella Windows and Doors
   main_url: https://www.pella.com
   url: https://www.pella.com
@@ -6930,4 +6902,116 @@
     - Science
   built_by: Joeri Smits
   built_by_url: https://joeri.dev
+  featured: false
+- title: Grüne Dresden
+  main_url: https://ltw19dresden.de
+  url: https://ltw19dresden.de
+  description: >
+    This site was built for the Green Party in Germany (Bündnis 90/Die Grünen) for their local election in Dresden, Saxony. The site was built with Gatsby v2 and Styled-Components.
+  categories:
+    - Government
+    - Nonprofit
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+- title: Gratsy
+  url: https://gratsy.com/
+  main_url: https://gratsy.com/
+  description: >
+    Gratsy: Feedback To Give Back
+  categories:
+    - Agency
+    - Marketing
+    - Landing Page
+  built_by: Whalar
+  built_by_url: https://whalar.com/
+  featured: false
+- title: deepThreads
+  main_url: https://deepthreads.com
+  url: https://deepthreads.com/
+  description: >
+    deepThreads is a shiny new website built with Gatsby v2.  We make art using deep learning along with print on demand providers to create some cool stuff!
+  categories:
+    - eCommerce
+  built_by: Kyle Kitlinski
+  built_by_url: http://github.com/k-kit
+  featured: false
+- title: Smoopit
+  main_url: https://smoopit.com
+  url: https://smoopit.com/
+  description: >
+    Smoopit helps you schedule meetings without the extra effort of checking your availability or back-and-forth emails.
+  categories:
+    - Business
+    - Productivity
+  built_by: Chandra Bhushan
+  built_by_url: https://github.com/chandu2304
+  featured: false
+- title: Mill3 Studio
+  main_url: https://mill3.studio/en/
+  url: https://mill3.studio/en/
+  description: >
+    Our agency specializes in the analysis, strategy and development of digital products.
+  categories:
+    - Agency
+    - Portfolio
+  built_by: Mill3
+  built_by_url: https://mill3.studio/en/
+  featured: false
+- title: Zellement
+  main_url: https://www.zellement.com
+  url: https://www.zellement.com
+  description: >
+    Online portfolio of Dan Farrow from Nottingham, UK.
+  categories:
+    - Portfolio
+  built_by: Zellement
+  built_by_url: https://www.zellement.com
+  featured: false
+- title: Fullstack HQ
+  url: https://fullstackhq.com/
+  main_url: https://fullstackhq.com/
+  description: >
+    Get immediate access to a battle-tested team of designers and developers on a pay-as-you-go monthly subscription.
+  categories:
+    - Agency
+    - Consulting
+    - Freelance
+    - Marketing
+    - Portfolio
+    - Web Development
+    - App
+    - Business
+    - Design
+    - JavaScript
+    - Technology
+    - User Experience
+    - Web Development
+    - eCommerce
+    - WordPress
+  built_by: Fullstack HQ
+  built_by_url: https://fullstackhq.com/
+  featured: false
+- title: Cantas
+  main_url: https://www.cantas.co.jp
+  url: https://www.cantas.co.jp
+  description: >
+    Cantas is digital marketing company in Japan.
+  categories:
+    - Business
+    - Agency
+  built_by: Cantas
+  built_by_url: https://www.cantas.co.jp
+  featured: false
+- title: Sheringham Shantymen
+  main_url: https://www.shantymen.com/
+  url: https://www.shantymen.com/
+  description: >
+    The Sheringham Shantymen are a sea shanty singing group that raise money for the RNLI in the UK.
+  categories:
+    - Music
+    - Community
+    - Entertainment
+    - Nonprofit
+  built_by: Zellement
+  built_by_url: https://www.zellement.com/
   featured: false

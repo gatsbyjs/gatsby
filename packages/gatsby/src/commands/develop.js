@@ -215,7 +215,7 @@ async function startServer(program) {
   const { developMiddleware } = store.getState().config
 
   if (developMiddleware) {
-    developMiddleware(app)
+    developMiddleware(app, program)
   }
 
   // Set up API proxy.
@@ -462,7 +462,21 @@ module.exports = async (program: any) => {
       }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${
+          urls.localUrlForTerminal
+        }___graphql`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${
+          urls.lanUrlForTerminal
+        }___graphql`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}___graphql`)
+    }
 
     console.log()
     console.log(`Note that the development build is not optimized.`)

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.6...gatsby-plugin-netlify-cms@4.1.7) (2019-08-16)
+
+### Features
+
+- **gatsby-plugin-netlify-cms:** Add includeRobots ([#16662](https://github.com/gatsbyjs/gatsby/issues/16662)) ([9a5f71d](https://github.com/gatsbyjs/gatsby/commit/9a5f71d))
+
 ## [4.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.5...gatsby-plugin-netlify-cms@4.1.6) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms
