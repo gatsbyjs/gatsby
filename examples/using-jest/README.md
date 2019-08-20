@@ -11,7 +11,7 @@ Kick off your next Gatsby app with some great testing practices enabled via [Jes
 
 Check out the [unit testing doc][unit-testing-doc] for further info!
 
-[jest]: https://jestjs.io/
+[jest]: https://jestjs.io
 [react-testing-library]: https://github.com/testing-library/react-testing-library
 [gatsby]: https://gatsbyjs.org
-[unit-testing-doc]: https://www.gatsbyjs.org/docs/unit-testing/
+[unit-testing-doc]: https://www.gatsbyjs.org/docs/unit-testing
