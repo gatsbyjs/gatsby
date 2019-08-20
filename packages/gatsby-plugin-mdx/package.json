@@ -58,7 +58,7 @@
     "@mdx-js/mdx": "^1.0.0",
     "@mdx-js/react": "^1.0.0",
     "jest": "^24.0.0",
-    "js-combinatorics": "^0.5.3",
+    "js-combinatorics": "^0.5.4",
     "react-test-renderer": "^16.8.0"
   },
   "jest": {

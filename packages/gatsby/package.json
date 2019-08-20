@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.13.70",
+  "version": "2.13.71",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -76,7 +76,7 @@
     "gatsby-telemetry": "^1.1.13",
     "glob": "^7.1.1",
     "got": "8.0.0",
-    "graphql": "^14.2.0",
+    "graphql": "^14.4.2",
     "graphql-compose": "^6.3.2",
     "graphql-playground-middleware-express": "^1.7.10",
     "invariant": "^2.2.4",
@@ -142,7 +142,7 @@
     "@babel/cli": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
-    "cross-env": "^5.1.4",
+    "cross-env": "^5.2.0",
     "documentation": "^10.1.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
@@ -183,7 +183,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^14.1.1"
+    "graphql": "^14.4.2"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",

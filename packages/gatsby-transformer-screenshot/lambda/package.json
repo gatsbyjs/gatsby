@@ -4,7 +4,7 @@
     "tar": "^4.2.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.181.0"
+    "aws-sdk": "^2.513.0"
   },
   "keywords": [
     "gatsby-plugin"

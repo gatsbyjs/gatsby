@@ -13,7 +13,7 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
-    "cross-env": "^5.1.4",
+    "cross-env": "^5.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-typography": "^0.16.18",
