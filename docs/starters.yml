@@ -3695,7 +3695,7 @@
   features:
     - Blog post listing with previews (image + summary) for each blog post
     - Minimalist, responsive design & typography
-    - Create new markdown posts dynamically 
+    - Create new markdown posts dynamically
     - Configured to work automatically with Forestry CMS
     - Customizable 'info' page
     - Simple layout & scss architecture, easily extensible
