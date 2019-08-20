@@ -49,7 +49,7 @@ See below for the complete list of [optional fields](#optional-fields).
 To make it easy to track clicks on outbound links in Google Analytics,
 the plugin provides a component.
 
-To use it, simply import it and use it like you would the `<a>` element e.g.
+To use it, simply import it and use it like you would do for the `<a>` element e.g.
 
 ```jsx
 import React
