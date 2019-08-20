@@ -53,6 +53,7 @@ describe(`Test plugin feed`, async () => {
           {
             output: `rss.xml`,
             query: `{}`,
+            title: `my feed`,
           },
         ],
       }
@@ -72,6 +73,7 @@ describe(`Test plugin feed`, async () => {
             {
               // output is missing
               query: `{}`,
+              title: `my feed`,
             },
           ],
         },
@@ -79,7 +81,17 @@ describe(`Test plugin feed`, async () => {
           feeds: [
             {
               output: `rss.xml`,
-              // query is misisng
+              // query is missing
+              title: `my feed`,
+            },
+          ],
+        },
+        {
+          feeds: [
+            {
+              output: `rss.xml`,
+              query: `{}`,
+              // title is missing
             },
           ],
         },
@@ -125,6 +137,82 @@ describe(`Test plugin feed`, async () => {
       },
     })
     await onPostBuild({ graphql }, {})
+    const [filePath, contents] = fs.writeFile.mock.calls[0]
+    expect(filePath).toEqual(path.join(`public`, `rss.xml`))
+    expect(contents).toMatchSnapshot()
+  })
+
+  it(`custom properties work properly`, async () => {
+    fs.writeFile = jest.fn()
+    fs.writeFile.mockResolvedValue(true)
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
+      data: {
+        site: {
+          siteMetadata: {
+            title: `site title`,
+            description: `a description`,
+            siteUrl: `http://dummy.url/`,
+          },
+        },
+        allMarkdownRemark: {
+          edges: [
+            {
+              node: {
+                frontmatter: {
+                  path: `a-custom-path`,
+                },
+                excerpt: `post description`,
+              },
+            },
+            {
+              node: {
+                frontmatter: {
+                  path: `another-custom-path`,
+                },
+                excerpt: `post description`,
+              },
+            },
+          ],
+        },
+      },
+    })
+    const customQuery = `
+    {
+      allMarkdownRemark(
+        limit: 1000,
+      ) {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
+            excerpt
+          }
+        }
+      }
+    }
+  `
+    const options = {
+      feeds: [
+        {
+          output: `rss.xml`,
+          title: `feed title`,
+          language: `en`,
+          generator: `custom generator`,
+          query: customQuery,
+          serialize: ({ query: { site, allMarkdownRemark } }) =>
+            allMarkdownRemark.edges.map(edge => {
+              return {
+                ...edge.node.frontmatter,
+                description: edge.node.excerpt,
+                url: site.siteMetadata.siteUrl + edge.node.frontmatter.path,
+              }
+            }),
+        },
+      ],
+    }
+    await onPostBuild({ graphql }, options)
     const [filePath, contents] = fs.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `rss.xml`))
     expect(contents).toMatchSnapshot()
@@ -194,6 +282,7 @@ describe(`Test plugin feed`, async () => {
               }
             }),
           query: customQuery,
+          title: `my feed`,
         },
       ],
     }
