@@ -3626,6 +3626,19 @@
     - Includes Search Feature.
     - Syntax Highlight in Code.
     - Styling in Bootstrap
+- url: https://gatsby-starter-unicorn.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby_starter_unicorn
+  description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
+  tags:
+    - Blog
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Bare-bones starter.
+    - Dynamic content with Markdown
+    - Ready made Components
+    - Responsive Design
+    - Syntax Highlight in Code.
 - url: https://gastby-starter-organization.netlify.com/
   repo: https://github.com/geocine/gatsby-starter-organization
   description: A Gatsby starter template for organization pages. Using the Gatsby theme "@geocine/gatsby-theme-organization"
