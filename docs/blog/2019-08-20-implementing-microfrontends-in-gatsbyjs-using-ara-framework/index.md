@@ -10,6 +10,7 @@ tags: ["microfrontends", "tutorials", "vuejs"]
 GatsbyJS enable us to deliver fast and reliable websites that are easy and cheap to host in any cloud provider, for instance, [Zeit](https://zeit.co/), [Netlify](https://www.netlify.com/), and others are services that make easier this duty.
 
 ## JAMstack and AWS Lambda
+
 The main characteristic of JAMstack is that the computing resources are provisioned on-demand only during build-time to generate the static pages, commonly using a serverless CI/CD tool such as CircleCI or Travis CI, which free us of managing dedicated servers.
 
 ![GatsbyJS Diagram](/images/gatsby-diagram.png)
@@ -18,6 +19,7 @@ The main characteristic of JAMstack is that the computing resources are provisio
 Following this premise, we can deploy a lambda function that generates and stores HTML inside an S3 bucket or why not, a lambda function that renders HTML on demand.
 
 ## What do Microfrontends role play here?
+
 Microfronteds like Microservices enable teams to develop and ship features independently.
 
 The level of isolation enables us to integrate different frameworks into the same page. However it doesn’t mean that we should mix frameworks arbitrarily, we should define standard frameworks and libraries across the company.
@@ -25,6 +27,7 @@ The level of isolation enables us to integrate different frameworks into the sam
 On the other hand, Frontend technologies evolve fast and the true fact is that at some point we need to move to another framework. Therefore, Microfrontends give us the flexibility to gradually switch to another one without rebuilding the Frontend from scratch.
 
 ### The scenario
+
 We can imagine that we’re a media company that have a lot of websites shipped across the world that are maintained by different teams. We love React but we’ve fallen in love with VueJs in the last years, so it became our standard library to develop the UI.
 
 Our product team wants to experiment with a new media website and the JAMstack fits in the solution, but we realized that the current frameworks for VueJS don’t have the necessary features that we need.
@@ -34,14 +37,17 @@ Then we discovered that GatsbyJS has what we need. But we have another problem, 
 Luckily one of our members recently read about Microfrontends and suggested it. We said, “why not, let’s give it a try”.
 
 ## What is Ara Framework?
+
 [Ara](https://github.com/ara-framework) is a framework to easily develop and integrate Micro-frontends using [Airbnb's Hypernova](Hypernova). We created a base architecture called Nova to server-side include Nova views. You can read more about it [here](https://ara-framework.github.io/website/docs/nova-architecture).
 
 ## Microfrontend (Nova)
+
 [Hypernova Lambda](https://github.com/ara-framework/hypernova-lambda) is an implementation of [Airbnb’s Hypernova](https://github.com/airbnb/hypernova) for AWS Lambda. Hypernova is service to server-side render JavaScript views that are hydrated on the browser to make them dynamic, it’s also known as universal rendering.
 
 In Ara Framework we commonly called Nova to the Hypernova services.
 
 ### Creating a Microfrontend (Nova)
+
 We need to install the [Ara CLI](https://github.com/ara-framework/ara-cli) to perform some common tasks such as generate nova services, run hypernova lambda locally and serve the client-side scripts.
 
 ```shell
@@ -96,12 +102,12 @@ The `src/components/Example.vue` file renders a basic view using the `title` pro
 
 ```vue
 <template>
-  <h1>{{title}}</h1>
+  <h1>{{ title }}</h1>
 </template>
 
 <script>
 export default {
-  props: ['title']
+  props: ["title"],
 }
 </script>
 ```
@@ -112,7 +118,7 @@ We can run the service using this command:
 yarn dev
 ```
 
-We can test the service making a ```POST``` request to ```http://localhost:3000/batch``` using the following payload:
+We can test the service making a `POST` request to `http://localhost:3000/batch` using the following payload:
 
 ```json
 {
@@ -129,25 +135,26 @@ The response should be something like:
 
 ```json
 {
-    "success": true,
-    "error": null,
-    "results": {
-        "uuid": {
-            "name": "Example",
-            "html": "<div data-hypernova-key=\"Example\" data-hypernova-id=\"cfd4b502-f9a4-4475-9168-233595ea4489\"><h1 data-server-rendered=\"true\">Ara Framework</h1></div>\n<script type=\"application/json\" data-hypernova-key=\"Example\" data-hypernova-id=\"cfd4b502-f9a4-4475-9168-233595ea4489\"><!--{\"title\":\"Ara Framework\"}--></script>",
-            "meta": {},
-            "duration": 11.534634,
-            "statusCode": 200,
-            "success": true,
-            "error": null
-        }
+  "success": true,
+  "error": null,
+  "results": {
+    "uuid": {
+      "name": "Example",
+      "html": "<div data-hypernova-key=\"Example\" data-hypernova-id=\"cfd4b502-f9a4-4475-9168-233595ea4489\"><h1 data-server-rendered=\"true\">Ara Framework</h1></div>\n<script type=\"application/json\" data-hypernova-key=\"Example\" data-hypernova-id=\"cfd4b502-f9a4-4475-9168-233595ea4489\"><!--{\"title\":\"Ara Framework\"}--></script>",
+      "meta": {},
+      "duration": 11.534634,
+      "statusCode": 200,
+      "success": true,
+      "error": null
     }
+  }
 }
 ```
 
 We can notice the response contains the generated HTML for the `Example` view.
 
 ### Implementing Hypernova Lambda
+
 First, we need to install hypernova-lambda.
 
 ```shell
@@ -157,13 +164,12 @@ yarn add hypernova-lambda
 We need to modify the entry point to use `hypernova-lambda`.
 
 ```js
+import { renderVue, Vue } from "hypernova-vue"
+import hypernova from "hypernova-lambda"
+import Example from "./components/Example.vue"
 
-import { renderVue, Vue } from 'hypernova-vue'
-import hypernova from 'hypernova-lambda'
-import Example from './components/Example.vue'
-
-const getComponent = (name) => {
-  if (name === 'Example') {
+const getComponent = name => {
+  if (name === "Example") {
     return renderVue(name, Vue.extend(Example))
   }
 }
@@ -262,7 +268,7 @@ Once the package is installed we can place a Nova view inside a React component.
 The Nova component requires the `name` and `data` props.
 
 ```jsx
-<Nova name="Example" data={{ title: 'Ara Framework' }} />
+<Nova name="Example" data={{ title: "Ara Framework" }} />
 ```
 
 We need to edit the file `src/pages/index.js`.
@@ -274,12 +280,12 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
-import { Nova } from 'nova-react-bridge'
+import { Nova } from "nova-react-bridge"
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <Nova name="Example" data={{ title: 'Ara Framework' }} />
+    <Nova name="Example" data={{ title: "Ara Framework" }} />
     <h1>Hi people</h1>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
@@ -296,15 +302,17 @@ export default IndexPage
 We also need to modify the client-side script in our Nova service to listen to the `NovaMount` event and mount the view. It’s located in `novas/global/src/client.js`.
 
 ```js
-import { renderInPlaceholder, Vue } from 'hypernova-vue'
-import Example from './components/Example.vue'
+import { renderInPlaceholder, Vue } from "hypernova-vue"
+import Example from "./components/Example.vue"
 
 const { document } = global
 
-document.addEventListener('NovaMount', (event) => {
-  const { detail: { name, id } } = event
+document.addEventListener("NovaMount", event => {
+  const {
+    detail: { name, id },
+  } = event
 
-  if (name === 'Example') {
+  if (name === "Example") {
     return renderInPlaceholder(name, Vue.extend(Example), id)
   }
 })
@@ -347,7 +355,7 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-        <script src="http://127.0.0.1:4568/assets/client.js"></script>
+        <script src="http://127.0.0.1:4568/assets/client.js" />
       </body>
     </html>
   )
@@ -378,18 +386,18 @@ I know the `Example` view is so simple, let’s make it more interactive.
 ```vue
 <template>
   <div>
-    <h1>{{title}}</h1>
-    <hr/>
+    <h1>{{ title }}</h1>
+    <hr />
     <div>
-      <input type="text" v-model="title" placeholder="Type Something">
+      <input type="text" v-model="title" placeholder="Type Something" />
     </div>
-    <br/>
+    <br />
   </div>
 </template>
 
 <script>
 export default {
-  props: ['title']
+  props: ["title"],
 }
 </script>
 ```
@@ -399,6 +407,7 @@ export default {
 We added an input control to change the heading text. So let’s go to generate our static website.
 
 ## Generating static website using GatsbyJS
+
 First, we need to build our GatsbyJS project:
 
 ```shell
@@ -434,6 +443,7 @@ Nova Static is a tool part of the Ara Framework that enables us to include Nova 
 7. Nova Static replaces the content of the HTML file with the new one.
 
 ### Installing Nova Static
+
 Nova Static is developed using Go, therefore we need to use in our CI/CD a container with GO installed.
 
 We can install the executable:
@@ -449,7 +459,6 @@ export PATH="$PATH:$GOPATH/bin"
 ```
 
 The executable should be available running the command `nova-static` , we’ll use it next.
-
 
 ### Running Nova Static
 
@@ -504,11 +513,11 @@ import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { Nova } from 'nova-react-bridge'
+import { Nova } from "nova-react-bridge"
 
 const SecondPage = () => (
   <Layout>
-    <Nova name="Example" data={{ title: 'Page 2' }} />
+    <Nova name="Example" data={{ title: "Page 2" }} />
     <SEO title="Page two" />
     <h1>Hi from the second page</h1>
     <p>Welcome to page 2</p>
@@ -528,6 +537,5 @@ We can notice the Nova views are mounted after navigating to another page as wel
 Nova services using AWS Lambda are good companions for implementing JAMStack architectures. We can use them to render HTML during build-time and include them into the pages generated by any static site generator (Jekyll, Next, Nuxt, etc).
 
 Nova Bridge gives us the flexibility to integrate Nova views at run-time. In this demo, we mounted VueJS views but we could delivery independent React views that are developed and deployed from other teams.
-
 
 Code: https://github.com/marconi1992/ara-gatsby-demo
