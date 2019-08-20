@@ -147,7 +147,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "rimraf": "^2.7.1",
-    "xhr-mock": "^2.4.1"
+    "xhr-mock": "^2.5.0"
   },
   "engines": {
     "node": ">=8.0.0"
