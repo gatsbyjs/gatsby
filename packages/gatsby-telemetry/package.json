@@ -33,7 +33,7 @@
     "cross-env": "^5.1.4",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
-    "jest-junit": "^6.1.0"
+    "jest-junit": "^6.4.0"
   },
   "files": [
     "lib",
