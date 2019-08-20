@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Excerpt is generated correctly from schema correctly loads an excerpt 1`] = `
+Object {
+  "excerpt": "This is excerpt. Some title a bit of a paragraph some content",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly loads an excerpt with excerpt_separator 1`] = `
+Object {
+  "excerpt": "This is excerpt.",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;
+
+exports[`Excerpt is generated correctly from schema correctly loads an excerpt with pruneLength 1`] = `
+Object {
+  "excerpt": "This is excerpt…",
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+}
+`;

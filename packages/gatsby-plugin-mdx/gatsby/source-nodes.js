@@ -15,6 +15,19 @@ const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
 
+/**
+ * Set of all Markdown node types which, when encountered, generate an extra to
+ * separate text.
+ *
+ * @type {Set<string>}
+ */
+const SpaceMarkdownNodeTypesSet = new Set([
+  `paragraph`,
+  `heading`,
+  `tableCell`,
+  `break`,
+])
+
 async function getCounts({ mdast }) {
   let counts = {}
 
@@ -130,20 +143,30 @@ module.exports = (
           },
         },
         async resolve(mdxNode, { pruneLength }) {
-          if (mdxNode.excerpt) {
-            return Promise.resolve(mdxNode.excerpt)
-          }
+          const excerptSeparator = pluginOptions.excerpt_separator
+          let isBeforeSeparator = true
           const { mdast } = await processMDX({ node: mdxNode })
-
           const excerptNodes = []
-          visit(mdast, node => {
-            if (node.type === `text` || node.type === `inlineCode`) {
-              excerptNodes.push(node.value)
+          visit(
+            mdast,
+            _ => isBeforeSeparator,
+            node => {
+              if (excerptSeparator && node.value === excerptSeparator) {
+                isBeforeSeparator = false
+              } else if (node.type === `text` || node.type === `inlineCode`) {
+                excerptNodes.push(node.value)
+              } else if (SpaceMarkdownNodeTypesSet.has(node.type)) {
+                // Add a space when encountering one of these node types.
+                excerptNodes.push(` `)
+              }
             }
-            return
-          })
+          )
 
-          return prune(excerptNodes.join(` `), pruneLength, `…`)
+          const excerptText = excerptNodes.join(``).trim()
+          if (excerptSeparator && !isBeforeSeparator) {
+            return excerptText
+          }
+          return prune(excerptText, pruneLength, `…`)
         },
       },
       headings: {
