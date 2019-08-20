@@ -545,15 +545,15 @@ module.exports = async (program: any) => {
       program.port
     )
     const isSuccessful = !messages.errors.length
-    // if (isSuccessful) {
-    // console.log(chalk.green(`Compiled successfully!`))
-    // }
-    // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
+        const urlToOpen =
+          process.platform === `win32`
+            ? urls.lanUrlForTerminal
+            : urls.localUrlForBrowser
+        Promise.resolve(openurl(urlToOpen)).catch(err =>
           console.log(
             `${chalk.yellow(
               `warn`
@@ -564,36 +564,6 @@ module.exports = async (program: any) => {
     }
 
     isFirstCompile = false
-
-    // If errors exist, only show errors.
-    // if (messages.errors.length) {
-    // // Only keep the first error. Others are often indicative
-    // // of the same problem, but confuse the reader with noise.
-    // if (messages.errors.length > 1) {
-    // messages.errors.length = 1
-    // }
-    // console.log(chalk.red("Failed to compile.\n"))
-    // console.log(messages.errors.join("\n\n"))
-    // return
-    // }
-
-    // Show warnings if no errors were found.
-    // if (messages.warnings.length) {
-    // console.log(chalk.yellow("Compiled with warnings.\n"))
-    // console.log(messages.warnings.join("\n\n"))
-
-    // // Teach some ESLint tricks.
-    // console.log(
-    // "\nSearch for the " +
-    // chalk.underline(chalk.yellow("keywords")) +
-    // " to learn more about each warning."
-    // )
-    // console.log(
-    // "To ignore, add " +
-    // chalk.cyan("// eslint-disable-next-line") +
-    // " to the line before.\n"
-    // )
-    // }
 
     done()
   })
