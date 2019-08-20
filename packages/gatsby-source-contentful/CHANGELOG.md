@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.20...gatsby-source-contentful@2.1.21) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@hapi](https://github.com/hapi)/joi to ^15.1.1 ([#16796](https://github.com/gatsbyjs/gatsby/issues/16796)) ([2cfc19c](https://github.com/gatsbyjs/gatsby/commit/2cfc19c))
+
 ## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.19...gatsby-source-contentful@2.1.20) (2019-08-16)
 
 **Note:** Version bump only for package gatsby-source-contentful

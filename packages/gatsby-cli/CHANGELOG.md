@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.32...gatsby-cli@2.7.33) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@hapi](https://github.com/hapi)/joi to ^15.1.1 ([#16796](https://github.com/gatsbyjs/gatsby/issues/16796)) ([2cfc19c](https://github.com/gatsbyjs/gatsby/commit/2cfc19c))
+
 ## [2.7.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.31...gatsby-cli@2.7.32) (2019-08-19)
 
 **Note:** Version bump only for package gatsby-cli
