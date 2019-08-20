@@ -48,7 +48,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "style-loader": "^0.21.0",
-    "webpack-cli": "^3.3.2",
+    "webpack-cli": "^3.3.7",
     "whatwg-fetch": "^3.0.0"
   },
   "engines": {
