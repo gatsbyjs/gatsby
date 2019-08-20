@@ -294,6 +294,7 @@ class Image extends React.Component {
 
     const isVisible =
       props.critical ||
+      props.loading == `eager` ||
       (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
 
     this.state = {
