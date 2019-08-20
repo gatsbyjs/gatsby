@@ -2,11 +2,11 @@
 title: Configuring CA Certificates
 ---
 
-For developers using a private (or corporate) package registry that requires a certificate from a certificate authority (CA), you may need to set your certificate in your npm, yarn, or node config.
+If you're using a private (typically a corporate) package registry that requires a certificate from a CA (certificate authority), you may need to setup the certificate in your `npm`, `yarn`, and `node` config.
 
 ## Common errors from misconfigured certificates
 
-This might be a problem if you are seeing errors like `unable to get local issuer certificate` in the console output while trying to install Gatsby plugins, particularly with plugins or themes that need to be built as native Node.js modules (eg. `gatsby-plugin-sharp`). It may happen after running `npm install` or `yarn install` in a fresh clone of a repository when trying to pull packages from a place besides a public registry and the certifcate has not been set in your config.
+If you're seeing errors like `unable to get local issuer certificate` in the console output while trying to install a Gatsby plugin, a misconfigured certificate might be the problem. This occurs particularly with plugins or themes that need to be built as native Node.js modules (eg. `gatsby-plugin-sharp`). It may happen when installing packages from a private registry (via `npm install` or `yarn install`) without an appropriately setup certificate in config.
 
 ## cafile config option
 
@@ -30,7 +30,7 @@ npm config ls -l
 yarn config set cafile "path-to-my-cert.pem"
 ```
 
-You can then check what the values in the yarn config with the following command:
+You can now check values in your yarn config with the following command:
 
 ```shell
 yarn config list
@@ -38,7 +38,7 @@ yarn config list
 
 ### Using Node.js
 
-Alternately, if you aren't using npm or yarn, you can configure the option for your installation of Node.js on your machine. Export the path to your certificate with the `NODE_EXTRA_CA_CERTS` variable:
+Alternatively, you can also configure this for Node.js on your machine. Export the path to your certificate with the `NODE_EXTRA_CA_CERTS` variable:
 
 ```shell
 export NODE_EXTRA_CA_CERTS=["path-to-my-cert.pem"]
