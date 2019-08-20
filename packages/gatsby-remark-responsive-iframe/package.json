@@ -20,7 +20,7 @@
     "cross-env": "^5.2.0",
     "remark": "^10.0.1",
     "remark-mdx": "^1.0.14",
-    "semver": "^6.0.0",
+    "semver": "^6.3.0",
     "unist-util-find": "^1.0.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe#readme",
