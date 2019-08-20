@@ -1,6 +1,6 @@
 {
   "extends": ["config:base", ":disablePeerDependencies"],
-  "includePaths": ["starters/**", "themes/**"],
+  "includePaths": ["starters/**", "themes/**", "packages/**"],
   "major": {
     "enabled": false
   },
