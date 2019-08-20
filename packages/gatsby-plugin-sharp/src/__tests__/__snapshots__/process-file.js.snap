@@ -5,37 +5,3 @@ Array [
   Promise {},
 ]
 `;
-
-exports[`processFile should offload sharp transforms to the cloud 2`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      "https://example.com/image-service",
-      Object {
-        "body": Object {
-          "file": "mypath/file.jpg",
-          "options": Object {
-            "stripMetadata": true,
-          },
-          "transforms": Array [
-            Object {
-              "args": Object {
-                "height": 100,
-                "width": 100,
-              },
-              "outputPath": "myoutputpath/1234/file.jpg",
-            },
-          ],
-        },
-        "json": true,
-      },
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Promise {},
-    },
-  ],
-}
-`;

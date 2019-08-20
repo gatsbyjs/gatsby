@@ -46,6 +46,10 @@ See the [library of official and community plugins](/plugins/)
 - [GraphQL Summit Open Source Lightning Talk on Gatsby — Kyle Mathews](https://youtu.be/y588qNiCZZo)
 - [Talk on GatsbyJS @ ViennaJS — Gerald Bauer](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
 
+## Livestreams
+
+- [Learn with Jason](https://www.youtube.com/playlist?list=PLCU2qJekvcN0RuMHCnjMYAKlpSKQ_e1hO)
+
 ## Gatsby tutorials
 
 - [Official tutorial](/tutorial/)

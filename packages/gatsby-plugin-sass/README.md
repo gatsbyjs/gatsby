@@ -85,7 +85,7 @@ plugins: [
 
 ### SASS Precision
 
-SASS defaults to [5 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. if you use Bootstrap), you may configure it as follows:
+SASS defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
 
 #### Bootstrap 4
 
@@ -125,6 +125,25 @@ plugins: [
 
 Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
 Any file with the `module` extension will use CSS Modules.
+
+## SASS & CSS Modules file Regexes
+
+To override the file regex for SASS or CSS modules,
+
+```javascript
+// in gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      // Override the file regex for SASS
+      sassRuleTest: /\.global\.s(a|c)ss$/,
+      // Override the file regex for CSS modules
+      sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
+    },
+  },
+]
+```
 
 ### PostCSS plugins
 

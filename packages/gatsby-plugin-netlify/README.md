@@ -3,13 +3,7 @@
 Automatically generates a `_headers` file and a `_redirects` file at the root of the public folder to configure
 [HTTP headers](https://www.netlify.com/docs/headers-and-basic-auth/) and [redirects](https://www.netlify.com/docs/redirects/) on Netlify.
 
-Notably, you can immediately enable HTTP/2 server push of critical Gatsby assets
-through the `Link` headers.
-
-By default, the plugin will add HTTP/2 assets to server push the critical Gatsby
-scripts (ones that have the `preload` attribute already). It will also add some
-basic security headers. You can easily add or replace headers through the plugin
-config.
+By default, the plugin will add some basic security headers. You can easily add or replace headers through the plugin config.
 
 ## Install
 

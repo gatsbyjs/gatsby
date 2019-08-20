@@ -291,7 +291,7 @@
   type: agency
   image: images/brew-digital.jpg
   description: >-
-    Hi, We are Brew, a digital marketing agency in Birmingham UK. We work with companies of all sizes delivering websites, apps, marketing campaigns, data integrations, social campaigns and PPC. 
+    Hi, We are Brew, a digital marketing agency in Birmingham UK. We work with companies of all sizes delivering websites, apps, marketing campaigns, data integrations, social campaigns and PPC.
 
     We love Gatsby and we would love to work with you on your next project, drop us a message if there is anything we can help with.
   location: Birmingham UK
@@ -319,4 +319,14 @@
   github: "https://github.com/k3rn31p4nic"
   image: images/sankarsan-kampa.jpg
   for_hire: true
+  portfolio: true
+- name: Erno Salo
+  type: individual
+  description: >-
+    Hey! I'm Erno Salo also known as Endormi on GitHub and Twitter.
+    I'm a Full Stack Developer, Open Source Contributor and I enjoy building web applications that help make a difference in the world.
+  website: "https://endormi.io/"
+  github: "https://github.com/endormi"
+  image: images/endormi.png
+  for_hire: false
   portfolio: true
