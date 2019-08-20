@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "asciidoctor": "^2.0.0"
+    "asciidoctor": "^2.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
