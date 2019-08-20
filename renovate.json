@@ -4,8 +4,6 @@
   "major": {
     "enabled": false
   },
-  "prHourlyLimit": 10,
-  "prConcurrentLimit": 10,
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
