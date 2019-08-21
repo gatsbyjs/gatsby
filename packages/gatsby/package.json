@@ -43,7 +43,7 @@
     "compression": "^1.7.4",
     "convert-hrtime": "^2.0.0",
     "copyfiles": "^1.2.0",
-    "core-js": "^2.5.0",
+    "core-js": "^2.6.9",
     "cors": "^2.8.5",
     "css-loader": "^1.0.0",
     "debug": "^3.1.0",
