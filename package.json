@@ -20,7 +20,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
     "flow-bin": "^0.105.2",
-    "fs-extra": "^7.0.0",
+    "fs-extra": "^7.0.1",
     "glob": "^7.1.1",
     "husky": "2.3.0",
     "ignore": "^5.1.4",
