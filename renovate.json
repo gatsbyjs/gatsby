@@ -2,8 +2,9 @@
   "extends": ["config:base", ":disablePeerDependencies"],
   "includePaths": ["starters/**", "themes/**", "packages/**", "www"],
   "major": {
-    "enabled": false
+    "masterIssueApproval": true
   },
+  "masterIssue": true,
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
