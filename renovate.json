@@ -1,6 +1,6 @@
 {
   "extends": ["config:base", ":disablePeerDependencies"],
-  "includePaths": ["starters/**", "themes/**", "packages/**", "www"],
+  "includePaths": ["package.json", "starters/**", "themes/**", "packages/**", "www"],
   "major": {
     "masterIssueApproval": true
   },
