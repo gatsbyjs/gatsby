@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.12...gatsby-plugin-sharp@2.2.13) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency async to ^2.6.3 ([#16806](https://github.com/gatsbyjs/gatsby/issues/16806)) ([54e8461](https://github.com/gatsbyjs/gatsby/commit/54e8461))
+
 ## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.11...gatsby-plugin-sharp@2.2.12) (2019-08-16)
 
 ### Bug Fixes
