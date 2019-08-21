@@ -2,6 +2,7 @@ const fs = require(`fs`)
 const workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const slash = require(`slash`)
+const glob = require(`glob`)
 const _ = require(`lodash`)
 
 const getResourcesFromHTML = require(`./get-resources-from-html`)
@@ -35,7 +36,10 @@ const getAssetsForChunks = chunks => {
   return _.compact(files)
 }
 
-exports.onPostBuild = (args, pluginOptions) => {
+exports.onPostBuild = (
+  args,
+  { precachePages: precachePagesGlobs = [], appendScript = null, workboxConfig }
+) => {
   const { pathPrefix } = args
   const rootDir = `public`
 
@@ -52,9 +56,43 @@ exports.onPostBuild = (args, pluginOptions) => {
   // from the correct location.
   const omitPrefix = path => path.slice(pathPrefix.length)
 
-  const criticalFilePaths = getResourcesFromHTML(
-    `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
-  ).map(omitPrefix)
+  const precachePages = []
+  precachePagesGlobs.forEach(page => {
+    const matches = glob.sync(`${process.cwd()}/${rootDir}${page}`)
+    matches.forEach(path => {
+      const isDirectory = fs.lstatSync(path).isDirectory()
+      let precachePath
+
+      if (isDirectory) {
+        precachePath = `${path}/index.html`
+      } else if (path.endsWith(`.html`)) {
+        precachePath = path
+      } else {
+        return
+      }
+
+      if (precachePages.indexOf(precachePath) === -1) {
+        precachePages.push(precachePath)
+      }
+    })
+  })
+
+  console.log(`precachePages`, precachePages)
+
+  const criticalFilePaths = _.uniq([
+    ...getResourcesFromHTML(
+      `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
+    ),
+    ...(() => {
+      console.log(
+        `mapped to GRFH`,
+        precachePages.map(page => getResourcesFromHTML(page))
+      )
+      return precachePages.map(page => getResourcesFromHTML(page)).flat()
+    })(),
+  ]).map(omitPrefix)
+
+  console.log(`criticalFilePaths`, criticalFilePaths)
 
   const globPatterns = files.concat([
     `offline-plugin-app-shell-fallback/index.html`,
@@ -108,7 +146,7 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const combinedOptions = {
     ...options,
-    ...pluginOptions.workboxConfig,
+    ...workboxConfig,
   }
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
@@ -129,10 +167,10 @@ exports.onPostBuild = (args, pluginOptions) => {
 
       fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
 
-      if (pluginOptions.appendScript) {
+      if (appendScript !== null) {
         let userAppend
         try {
-          userAppend = fs.readFileSync(pluginOptions.appendScript, `utf8`)
+          userAppend = fs.readFileSync(appendScript, `utf8`)
         } catch {
           throw new Error(`Couldn't find the specified offline inject script`)
         }
