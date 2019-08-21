@@ -36,7 +36,7 @@
     "bluebird": "^3.5.0",
     "browserslist": "3.2.8",
     "cache-manager": "^2.9.0",
-    "cache-manager-fs-hash": "^0.0.6",
+    "cache-manager-fs-hash": "^0.0.7",
     "chalk": "^2.3.2",
     "chokidar": "2.1.6",
     "common-tags": "^1.4.0",
