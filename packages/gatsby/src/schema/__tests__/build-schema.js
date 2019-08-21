@@ -804,6 +804,165 @@ describe(`Build schema`, () => {
       )
     })
 
+    it(`does not merge plugin-defined type with type defined by theme`, async () => {
+      createTypes(
+        `type PluginDefined implements Node { foo: Int, baz: PluginDefinedNested }
+         type PluginDefinedNested { foo: Int }`,
+        {
+          name: `gatsby-theme-random`,
+        }
+      )
+      createTypes(
+        `type PluginDefined implements Node { bar: Int, qux: PluginDefinedNested }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `some-other-gatsby-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const nestedFields = schema.getType(`PluginDefinedNested`).getFields()
+      const fields = schema.getType(`PluginDefined`).getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(report.warn).toHaveBeenCalledWith(
+        `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
+          `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
+          `\`gatsby-theme-random\`.`
+      )
+      expect(report.warn).toHaveBeenCalledWith(
+        `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
+          `\`PluginDefined\`, which has already been defined by the plugin ` +
+          `\`gatsby-theme-random\`.`
+      )
+    })
+
+    it(`merges theme-defined type with plugin-defined type`, async () => {
+      createTypes(
+        `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
+         type PluginDefinedNested { foo: Int }`,
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      createTypes(
+        `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `gatsby-theme-random`,
+        }
+      )
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `bar`,
+        `qux`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `sdl`,
+          plugin: `gatsby-theme-random`,
+          infer: false,
+        })
+      )
+    })
+
+    it(`does not merge theme-defined type with type owned by other theme`, async () => {
+      createTypes(
+        `type PluginDefined implements Node { foo: Int, baz: PluginDefinedNested }
+         type PluginDefinedNested { foo: Int }`,
+        {
+          name: `gatsby-theme-first`,
+        }
+      )
+      createTypes(
+        `type PluginDefined implements Node { bar: Int, qux: PluginDefinedNested }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `gatsby-theme-second`,
+        }
+      )
+      const schema = await buildSchema()
+      const nestedFields = schema.getType(`PluginDefinedNested`).getFields()
+      const fields = schema.getType(`PluginDefined`).getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(report.warn).toHaveBeenCalledWith(
+        `Plugin \`gatsby-theme-second\` tried to define the GraphQL type ` +
+          `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
+          `\`gatsby-theme-first\`.`
+      )
+      expect(report.warn).toHaveBeenCalledWith(
+        `Plugin \`gatsby-theme-second\` tried to define the GraphQL type ` +
+          `\`PluginDefined\`, which has already been defined by the plugin ` +
+          `\`gatsby-theme-first\`.`
+      )
+    })
+
+    it(`prefers user-defined type over theme-defined type`, async () => {
+      createTypes(
+        `type PluginDefined implements Node @infer { bar: String, baz: PluginDefinedNested }
+         type PluginDefinedNested { bar: String }`,
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      createTypes(
+        `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `gatsby-theme-random`,
+        }
+      )
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`bar`])
+      expect(nestedFields.bar.type.toString()).toBe(`String`)
+      expect(Object.keys(fields)).toEqual([
+        `bar`,
+        `qux`,
+        `baz`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(fields.bar.type.toString()).toBe(`String`)
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `sdl`,
+          plugin: `default-site-plugin`,
+          infer: true,
+        })
+      )
+    })
+
     it(`displays error message for reserved Node interface`, () => {
       const typeDefs = [
         `interface Node { foo: Boolean }`,

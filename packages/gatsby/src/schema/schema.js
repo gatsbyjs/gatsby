@@ -299,11 +299,15 @@ const mergeTypes = ({
   parentSpan,
 }) => {
   // Only allow user or plugin owning the type to extend already existing type.
+  // Themes are also allowed to modify plugin-owned types, but not types already
+  // modified by another plugin.
   const typeOwner = typeComposer.getExtension(`plugin`)
   if (
     !plugin ||
+    plugin.name === typeOwner ||
     plugin.name === `default-site-plugin` ||
-    plugin.name === typeOwner
+    (plugin.name.startsWith(`gatsby-theme-`) &&
+      !typeOwner.startsWith(`gatsby-theme-`))
   ) {
     typeComposer.merge(type)
     if (isNamedTypeComposer(type)) {
