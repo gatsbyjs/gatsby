@@ -3639,7 +3639,7 @@
     - Ready made Components
     - Responsive Design
     - Syntax Highlight in Code.
-- url: https://gastby-starter-organization.netlify.com/
+- url: https://gatsby-starter-organization.netlify.com/
   repo: https://github.com/geocine/gatsby-starter-organization
   description: A Gatsby starter template for organization pages. Using the Gatsby theme "@geocine/gatsby-theme-organization"
   tags:
