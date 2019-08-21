@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "styletron-engine-atomic": "^1.1.0",
-    "styletron-react": "^5.0.1"
+    "styletron-engine-atomic": "^1.4.0",
+    "styletron-react": "^5.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

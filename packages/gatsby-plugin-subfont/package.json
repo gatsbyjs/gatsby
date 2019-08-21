@@ -26,7 +26,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "shell-escape": "^0.2.0",
-    "subfont": "^3.6.1"
+    "subfont": "^3.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
