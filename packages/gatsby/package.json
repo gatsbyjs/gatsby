@@ -60,7 +60,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.14.3",
     "event-source-polyfill": "^1.0.8",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "express-graphql": "^0.7.1",
     "fast-levenshtein": "^2.0.6",
     "file-loader": "^1.1.11",
