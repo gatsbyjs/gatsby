@@ -1,6 +1,6 @@
 const path = require(`path`)
 const debug = require(`debug`)(`gatsby:component-shadowing`)
-const nodeFS = require(`fs`)
+const fs = require(`fs`)
 const _ = require(`lodash`)
 
 const pathWithoutExtension = fullPath => {
@@ -81,14 +81,11 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         }
 
         // This is the shadowing algorithm.
-        const builtComponentPath = this.resolveComponentPath(
-          {
-            matchingTheme: theme.themeName,
-            themes: this.themes,
-            component,
-          },
-          { fs: nodeFS, pathResolve: path.resolve }
-        )
+        const builtComponentPath = this.resolveComponentPath({
+          matchingTheme: theme.themeName,
+          themes: this.themes,
+          component,
+        })
 
         return resolver.doResolve(
           resolver.hooks.describedRelative,
@@ -102,13 +99,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // check the cache, the user's project, and finally the theme files
-  resolveComponentPath(
-    { matchingTheme: theme, themes: ogThemes, component },
-    { fs, pathResolve }
-  ) {
+  resolveComponentPath({ matchingTheme: theme, themes: ogThemes, component }) {
     // don't include matching theme in possible shadowing paths
     const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
-    return [path.join(pathResolve(`.`), `src`, theme)]
+    return [path.join(path.resolve(`.`), `src`, theme)]
       .concat(
         Array.from(themes)
           .reverse()
