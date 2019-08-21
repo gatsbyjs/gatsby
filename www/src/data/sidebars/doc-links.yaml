@@ -26,6 +26,8 @@
               link: /docs/gatsby-on-windows/
             - title: Gatsby on Linux
               link: /docs/gatsby-on-linux/
+            - title: Configuring CA Certificates
+              link: /docs/configuring-ca-certificates/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
