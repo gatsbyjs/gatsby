@@ -35,7 +35,7 @@
     "lint-staged": "^8.1.7",
     "markdown-magic": "^0.2.1",
     "npm-run-all": "4.1.5",
-    "plop": "^1.8.1",
+    "plop": "^1.9.1",
     "prettier": "1.17.1",
     "rimraf": "^2.6.1",
     "svgo": "1.2.2",
