@@ -7027,3 +7027,12 @@
     - Portfolio
     - Consulting
   featured: false
+- title: Golfonaut
+  description: >
+    Golfonaut - Golf application for Apple Watch
+  main_url: https://golfonaut.io
+  url: https://golfonaut.io
+  categories:
+    - App
+    - Sports
+  featured: false
