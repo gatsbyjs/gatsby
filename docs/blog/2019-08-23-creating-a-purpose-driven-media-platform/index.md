@@ -1,6 +1,6 @@
 ---
 title: "Creating a purpose-driven media platform"
-date: 2019-08-12
+date: 2019-08-23
 author: Clearleft
 excerpt: "How do you design and build a new publishing platform on a very tight deadline?"
 tags:
