@@ -283,8 +283,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-{{ checksum "yarn.lock" }}
             - yarn-packages-v1-
       - run:
           name: "Install dependencies"
@@ -292,7 +291,7 @@ jobs:
       - save_cache:
           paths:
             - "%LOCALAPPDATA%/Yarn/config/global"
-          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v1-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
           command: yarn jest
