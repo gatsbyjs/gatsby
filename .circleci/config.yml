@@ -283,17 +283,18 @@ jobs:
       - checkout
       # - restore_cache:
       #     keys:
-      # - run:
-      #     name: "Install project dependencies"
-      #     command: dotnet.exe restore
-      # - save_cache:
-      #     paths:
-      #       - C:\Users\circleci\.nuget\packages
+      #       - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      #       - yarn-packages-v1-{{ .Branch }}-
+      #       - yarn-packages-v1-
       - run:
           name: "Install dependencies"
-          command: yarn install
+          command: yarn bootstrap
+      # - save_cache:
+      #     paths:
+      #       - ~/.cache/yarn
+      #     key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
-          name: "Test the executable"
+          name: "Run Tests"
           command: yarn test
 
 workflows:
