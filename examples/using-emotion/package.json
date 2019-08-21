@@ -21,7 +21,7 @@
   "main": "n/a",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build",
+    "build": "gatsby build && gatsby clean",
     "serve": "gatsby serve",
     "start": "npm run develop"
   }

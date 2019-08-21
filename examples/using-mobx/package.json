@@ -4,7 +4,7 @@
   "private": true,
   "description": "Gatsby example site that shows use of mobx",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build && gatsby clean",
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
     "lint": "eslint **/*.{js,jsx} --quiet -o linterrors.txt --ignore-path .gitignore",

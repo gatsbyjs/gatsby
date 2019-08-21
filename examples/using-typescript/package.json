@@ -7,7 +7,7 @@
   "scripts": {
     "start": "gatsby develop",
     "develop": "gatsby develop",
-    "build": "gatsby build",
+    "build": "gatsby build && gatsby clean",
     "type-check": "tsc --noEmit",
     "lint": "tslint --project ."
   },

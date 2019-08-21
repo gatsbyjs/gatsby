@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build && gatsby clean",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "test": "jest"

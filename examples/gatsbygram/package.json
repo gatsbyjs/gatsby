@@ -45,7 +45,7 @@
     "test": "CYPRESS_SUPPORT=y start-server-and-test develop http://localhost:8000 cy:run",
     "develop": "gatsby develop",
     "dev": "gatsby develop",
-    "build": "gatsby build",
+    "build": "gatsby build && gatsby clean",
     "start": "npm run develop",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "cy:open": "cypress open",

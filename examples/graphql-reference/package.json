@@ -33,6 +33,6 @@
     "dev": "gatsby develop -o",
     "develop": "gatsby develop",
     "start": "npm run develop",
-    "build": "gatsby build"
+    "build": "gatsby build && gatsby clean",
   }
 }
