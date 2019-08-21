@@ -291,10 +291,10 @@ jobs:
       #       - C:\Users\circleci\.nuget\packages
       - run:
           name: "Install dependencies"
-          command: npm install
+          command: yarn install
       - run:
           name: "Test the executable"
-          command: npm test
+          command: yarn test
 
 workflows:
   version: 2
