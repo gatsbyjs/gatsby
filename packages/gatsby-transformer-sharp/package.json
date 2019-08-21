@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.5",
-    "fs-extra": "^7.0.0",
+    "fs-extra": "^7.0.1",
     "potrace": "^2.1.1",
     "probe-image-size": "^4.0.0",
     "semver": "^5.6.0",
