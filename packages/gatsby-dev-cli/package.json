@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "chokidar": "^1.7.0",
-    "configstore": "^3.1.0",
+    "configstore": "^3.1.2",
     "del": "^3.0.0",
     "execa": "^1.0.0",
     "find-yarn-workspace-root": "^1.2.1",
