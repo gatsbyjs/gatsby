@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-source-unsplash",
+  "name": "gatsby-source-remote-images",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
