@@ -1,3 +1,6 @@
+orbs:
+  win: circleci/windows@1.0.0
+
 executors:
   node:
     parameters:
