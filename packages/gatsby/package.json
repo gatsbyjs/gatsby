@@ -52,7 +52,7 @@
     "devcert-san": "^0.3.3",
     "dotenv": "^4.0.0",
     "eslint": "^5.16.0",
-    "eslint-config-react-app": "^3.0.0",
+    "eslint-config-react-app": "^3.0.8",
     "eslint-loader": "^2.2.1",
     "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-graphql": "^3.0.3",
