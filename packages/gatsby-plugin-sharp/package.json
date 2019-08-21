@@ -15,7 +15,7 @@
     "got": "^8.3.2",
     "imagemin": "^6.0.0",
     "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-pngquant": "^6.0.0",
+    "imagemin-pngquant": "^6.0.1",
     "imagemin-webp": "^5.0.0",
     "lodash": "^4.17.14",
     "mini-svg-data-uri": "^1.0.0",
