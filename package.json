@@ -8,7 +8,7 @@
     "babel-jest": "^24.0.0",
     "chalk": "^2.4.2",
     "chokidar": "^1.7.0",
-    "cross-env": "^5.1.4",
+    "cross-env": "^5.2.0",
     "danger": "^8.0.0",
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.13.0",
