@@ -23,7 +23,7 @@
     "fs-extra": "^7.0.0",
     "glob": "^7.1.1",
     "husky": "2.3.0",
-    "ignore": "^5.0.5",
+    "ignore": "^5.1.4",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
