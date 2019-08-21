@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.6...gatsby-page-utils@0.0.7) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency chokidar to v2.1.6 ([#16832](https://github.com/gatsbyjs/gatsby/issues/16832)) ([dbcf65f](https://github.com/gatsbyjs/gatsby/commit/dbcf65f))
+
 ## [0.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.5...gatsby-page-utils@0.0.6) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-page-utils
