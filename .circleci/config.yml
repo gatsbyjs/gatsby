@@ -294,7 +294,7 @@ jobs:
           key: yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
-          command: yarn jest
+          command: yarn test
 
 workflows:
   version: 2
