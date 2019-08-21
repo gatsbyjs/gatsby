@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.17...gatsby-source-wordpress@3.1.18) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency better-queue to ^3.8.10 ([#16824](https://github.com/gatsbyjs/gatsby/issues/16824)) ([6834344](https://github.com/gatsbyjs/gatsby/commit/6834344))
+
 ## [3.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.16...gatsby-source-wordpress@3.1.17) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-source-wordpress

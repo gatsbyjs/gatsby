@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.21...gatsby-source-contentful@2.1.22) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency base64-img to ^1.0.4 ([#16813](https://github.com/gatsbyjs/gatsby/issues/16813)) ([ea39f67](https://github.com/gatsbyjs/gatsby/commit/ea39f67))
+
 ## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.20...gatsby-source-contentful@2.1.21) (2019-08-20)
 
 ### Bug Fixes
