@@ -39,7 +39,7 @@
     "cache-manager-fs-hash": "^0.0.7",
     "chalk": "^2.4.2",
     "chokidar": "2.1.6",
-    "common-tags": "^1.4.0",
+    "common-tags": "^1.8.0",
     "compression": "^1.7.4",
     "convert-hrtime": "^2.0.0",
     "copyfiles": "^1.2.0",
