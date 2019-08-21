@@ -33,7 +33,7 @@
     "babel-preset-gatsby": "^0.2.10",
     "better-opn": "0.1.4",
     "better-queue": "^3.8.10",
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.5",
     "browserslist": "3.2.8",
     "cache-manager": "^2.10.0",
     "cache-manager-fs-hash": "^0.0.7",
