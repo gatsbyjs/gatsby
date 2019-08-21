@@ -1,4 +1,3 @@
-import test from "ava"
 import * as docgen from "react-docgen"
 import displayNameHandler, {
   createDisplayNameHandler,
@@ -16,135 +15,137 @@ function parse(source, handler) {
   return docgen.parse(code, findAllComponentDefinitions, [handler])[0]
 }
 
-test(`Explicitly set displayName as member of React.createClass`, () => {
-  const doc = parse(
-    `
+describe(`DisplayNameHandler`, () => {
+  it(`Explicitly set displayName as member of React.createClass`, () => {
+    const doc = parse(
+      `
     var MyComponent = React.createClass({ displayName: 'foo' });
   `,
-    displayNameHandler
-  )
+      displayNameHandler
+    )
 
-  expect(doc).toEqual({ displayName: `foo` })
-})
+    expect(doc).toEqual({ displayName: `foo` })
+  })
 
-test(`Explicitly set displayName as static class member`, () => {
-  const doc = parse(
-    `
+  it(`Explicitly set displayName as static class member`, () => {
+    const doc = parse(
+      `
     class MyComponent { static displayName = 'foo'; render() {} }
   `,
-    displayNameHandler
-  )
+      displayNameHandler
+    )
 
-  expect(doc).toEqual({ displayName: `foo` })
-})
+    expect(doc).toEqual({ displayName: `foo` })
+  })
 
-test(`Infer displayName from function declaration/expression name`, () => {
-  {
-    const doc = parse(
-      `
+  it(`Infer displayName from function declaration/expression name`, () => {
+    {
+      const doc = parse(
+        `
       function MyComponent() { return <div />; }
     `,
-      displayNameHandler
-    )
+        displayNameHandler
+      )
 
-    expect(doc).toEqual({ displayName: `MyComponent` })
-  }
-  {
-    const doc = parse(
-      `
+      expect(doc).toEqual({ displayName: `MyComponent` })
+    }
+    {
+      const doc = parse(
+        `
       var x = function MyComponent() { return <div />; }
     `,
-      displayNameHandler
-    )
+        displayNameHandler
+      )
 
-    expect(doc).toEqual({ displayName: `MyComponent` })
-  }
-})
+      expect(doc).toEqual({ displayName: `MyComponent` })
+    }
+  })
 
-test(`Infer displayName from class declaration/expression name`, () => {
-  {
-    const doc = parse(
-      `
+  it(`Infer displayName from class declaration/expression name`, () => {
+    {
+      const doc = parse(
+        `
       class MyComponent { render() {} }
     `,
-      displayNameHandler
-    )
+        displayNameHandler
+      )
 
-    expect(doc).toEqual({ displayName: `MyComponent` })
-  }
-  {
-    const doc = parse(
-      `
+      expect(doc).toEqual({ displayName: `MyComponent` })
+    }
+    {
+      const doc = parse(
+        `
       var x = class MyComponent { render() {} }
     `,
-      displayNameHandler
-    )
+        displayNameHandler
+      )
 
-    expect(doc).toEqual({ displayName: `MyComponent` })
-  }
-})
+      expect(doc).toEqual({ displayName: `MyComponent` })
+    }
+  })
 
-test(`Infer displayName from variable declaration name`, () => {
-  const doc = parse(
-    `
+  it(`Infer displayName from variable declaration name`, () => {
+    const doc = parse(
+      `
     var Foo = React.createClass({});
   `,
-    displayNameHandler
-  )
-  expect(doc).toEqual({ displayName: `Foo` })
-})
+      displayNameHandler
+    )
+    expect(doc).toEqual({ displayName: `Foo` })
+  })
 
-test(`Infer displayName from assignment`, () => {
-  const doc = parse(
-    `
+  it(`Infer displayName from assignment`, () => {
+    const doc = parse(
+      `
     var Foo = {};
     Foo.Bar = () => <div />
   `,
-    displayNameHandler
-  )
-
-  expect(doc).toEqual({ displayName: `Foo.Bar` })
-})
-
-test(`Infer displayName from file name`, () => {
-  const doc = parse(
-    `
-    module.exports = () => <div />;
-  `,
-    createDisplayNameHandler(`foo/bar/MyComponent.js`)
-  )
-  expect(doc).toEqual({ displayName: `MyComponent` })
-})
-
-test(`Infer displayName from file path`, () => {
-  {
-    const doc = parse(
-      `
-      module.exports = () => <div />;
-    `,
-      createDisplayNameHandler(`foo/MyComponent/index.js`)
+      displayNameHandler
     )
 
-    expect(doc).toEqual({ displayName: `MyComponent` })
-  }
-  {
+    expect(doc).toEqual({ displayName: `Foo.Bar` })
+  })
+
+  it(`Infer displayName from file name`, () => {
     const doc = parse(
       `
-      module.exports = () => <div />;
-    `,
-      createDisplayNameHandler(`foo/my-component/index.js`)
-    )
-
-    expect(doc).toEqual({ displayName: `MyComponent` })
-  }
-})
-
-test(`Use default if displayName cannot be inferred`, () => {
-  const doc = parse(
-    `
     module.exports = () => <div />;
   `,
-    displayNameHandler
-  )
-  expect(doc).toEqual({ displayName: `UnknownComponent` })
+      createDisplayNameHandler(`foo/bar/MyComponent.js`)
+    )
+    expect(doc).toEqual({ displayName: `MyComponent` })
+  })
+
+  it(`Infer displayName from file path`, () => {
+    {
+      const doc = parse(
+        `
+      module.exports = () => <div />;
+    `,
+        createDisplayNameHandler(`foo/MyComponent/index.js`)
+      )
+
+      expect(doc).toEqual({ displayName: `MyComponent` })
+    }
+    {
+      const doc = parse(
+        `
+      module.exports = () => <div />;
+    `,
+        createDisplayNameHandler(`foo/my-component/index.js`)
+      )
+
+      expect(doc).toEqual({ displayName: `MyComponent` })
+    }
+  })
+
+  it(`Use default if displayName cannot be inferred`, () => {
+    const doc = parse(
+      `
+    module.exports = () => <div />;
+  `,
+      displayNameHandler
+    )
+    expect(doc).toEqual({ displayName: `UnknownComponent` })
+  })
 })
