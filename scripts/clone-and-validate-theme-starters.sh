@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e # bail on errors
 CLONE=$1
 IS_CI="${CI:-false}"
 BASE=$(pwd)
