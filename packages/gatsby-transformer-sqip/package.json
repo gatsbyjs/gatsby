@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "bluebird": "^3.5.4",
+    "bluebird": "^3.5.5",
     "fs-extra": "^4.0.2",
     "gatsby-plugin-sharp": "^2.2.13",
     "md5-file": "^4.0.0",

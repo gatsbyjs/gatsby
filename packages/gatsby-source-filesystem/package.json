@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "better-queue": "^3.8.10",
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.5",
     "chokidar": "2.1.6",
     "file-type": "^10.2.0",
     "fs-extra": "^5.0.0",
