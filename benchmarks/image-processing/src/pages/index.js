@@ -20,7 +20,7 @@ const IndexPage = ({ data }) => (
 export default IndexPage
 
 export const query = graphql`
-  query MyQuery {
+  query {
     allRemoteImage {
       totalCount
       nodes {
