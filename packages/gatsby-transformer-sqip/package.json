@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.5",
-    "fs-extra": "^4.0.2",
+    "fs-extra": "^4.0.3",
     "gatsby-plugin-sharp": "^2.2.13",
     "md5-file": "^4.0.0",
     "mini-svg-data-uri": "^1.0.0",
@@ -21,7 +21,7 @@
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.2.0",
-    "debug": "^3.1.0"
+    "debug": "^3.2.6"
   },
   "peerDependencies": {
     "gatsby": "^2.0.0",
