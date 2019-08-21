@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.0",
-    "chokidar": "2.1.2",
+    "chokidar": "2.1.6",
     "fs-exists-cached": "^1.0.0",
     "glob": "^7.1.1",
     "lodash": "^4.17.14",
