@@ -54,7 +54,7 @@
     "eslint": "^5.16.0",
     "eslint-config-react-app": "^3.0.0",
     "eslint-loader": "^2.2.1",
-    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-graphql": "^3.0.3",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.0.3",
