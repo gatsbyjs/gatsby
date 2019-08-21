@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Link /> matches active snapshot 1`] = `
+<div>
+  <a
+    aria-current="page"
+    class="link is-active"
+    href="/active"
+    style="color: black; text-decoration: underline;"
+  >
+    link
+  </a>
+</div>
+`;
+
+exports[`<Link /> matches basic snapshot 1`] = `
+<div>
+  <a
+    class="link"
+    href="/"
+    style="color: black;"
+  >
+    link
+  </a>
+</div>
+`;
+
+exports[`<Link /> matches partially active snapshot 1`] = `
+<div>
+  <a
+    class="link"
+    href="/active/nested"
+    style="color: black;"
+  >
+    link
+  </a>
+</div>
+`;

@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformer-react-doc-gen: onCreateNode Complex example should handle members should handle type unions 1`] = `
+Object {
+  "elements": Array [
+    Object {
+      "name": "ObjectType",
+      "type": "NameExpression",
+      "typeDef___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}] line 12",
+    },
+    Object {
+      "name": "Object",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+  ],
+  "type": "UnionType",
+}
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode Complex example should handle typedefs should handle type applications 1`] = `
+Object {
+  "children": Array [
+    "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3--DocumentationJSComponentDescription--comment.description",
+  ],
+  "commentNumber": null,
+  "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3--DocumentationJSComponentDescription--comment.description",
+  "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3",
+  "internal": Object {
+    "contentDigest": "content-digest",
+    "type": "DocumentationJs",
+  },
+  "level": 1,
+  "name": "ready",
+  "optional": false,
+  "parent": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}] line 12",
+  "type": Object {
+    "applications": Array [
+      Object {
+        "name": "any",
+        "type": "NameExpression",
+        "typeDef___NODE": null,
+      },
+    ],
+    "expression": Object {
+      "name": "Promise",
+      "type": "NameExpression",
+      "typeDef___NODE": null,
+    },
+    "type": "TypeApplication",
+  },
+}
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: description content 1`] = `
+"A pretty cool jsdoc example
+"
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: example 1`] = `
+Object {
+  "description": "const apple = require('apple')
+apple()",
+  "highlighted": "<span class=\\"token keyword\\">const</span> apple <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'apple'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"token function\\">apple</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>",
+  "raw": "const apple = require('apple')
+apple()",
+}
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: param description 1`] = `
+"A nice crispy apple
+"
+`;
+
+exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: param name 1`] = `"paramName"`;

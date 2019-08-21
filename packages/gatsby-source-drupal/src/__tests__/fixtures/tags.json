@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "type": "taxonomy_term--tags",
+      "id": "tag-1",
+      "attributes": {
+        "id": 11,
+        "uuid": "tag-1",
+        "langcode": "en",
+        "name": "Tag #1",
+        "description": null,
+        "weight": 0,
+        "changed": 1523031646,
+        "default_langcode": true,
+        "path": {
+          "alias": null,
+          "pid": null,
+          "langcode": "en"
+        }
+      }
+    }
+  ],
+  "links": {
+    "next": {
+      "href": "http://fixture/jsonapi/taxonomy_term/tags-2"
+    }
+  }
+}

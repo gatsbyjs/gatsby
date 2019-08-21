@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add page data dependency lets you add both a node and connection in one action 1`] = `
+Object {
+  "connections": Object {
+    "MarkdownRemark": Array [
+      "/hi/",
+    ],
+  },
+  "nodes": Object {
+    "SuperCoolNode": Array [
+      "/hi/",
+    ],
+  },
+}
+`;
