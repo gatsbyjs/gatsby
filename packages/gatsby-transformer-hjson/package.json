@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "bluebird": "^3.5.5",
-    "hjson": "^3.1.0"
+    "hjson": "^3.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

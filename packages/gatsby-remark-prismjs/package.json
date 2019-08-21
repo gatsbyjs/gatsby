@@ -9,14 +9,14 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "parse-numeric-range": "^0.0.2",
-    "unist-util-visit": "^1.3.0"
+    "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.2.0",
-    "prismjs": "^1.15.0",
+    "prismjs": "^1.17.1",
     "remark": "^9.0.0"
   },
   "peerDependencies": {
