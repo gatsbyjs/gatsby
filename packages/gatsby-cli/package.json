@@ -18,7 +18,7 @@
     "chalk": "^2.4.2",
     "ci-info": "^2.0.0",
     "clipboardy": "^1.2.3",
-    "common-tags": "^1.4.0",
+    "common-tags": "^1.8.0",
     "configstore": "^4.0.0",
     "convert-hrtime": "^2.0.0",
     "core-js": "^2.6.9",
