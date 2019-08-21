@@ -64,7 +64,7 @@
     "express-graphql": "^0.7.1",
     "fast-levenshtein": "^2.0.6",
     "file-loader": "^1.1.11",
-    "flat": "^4.0.0",
+    "flat": "^4.1.0",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^2.7.34",
