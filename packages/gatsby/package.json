@@ -77,7 +77,7 @@
     "glob": "^7.1.1",
     "got": "8.3.2",
     "graphql": "^14.4.2",
-    "graphql-compose": "^6.3.2",
+    "graphql-compose": "^6.3.5",
     "graphql-playground-middleware-express": "^1.7.10",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
