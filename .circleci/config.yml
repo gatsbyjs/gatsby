@@ -283,15 +283,15 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - yarn-packages-v1-{{ checksum "yarn.lock" }}
-            - yarn-packages-v1-
+            - yarn-packages-v2-{{ checksum "yarn.lock" }}
+            - yarn-packages-v2-
       - run:
           name: "Install dependencies"
           command: yarn bootstrap
       - save_cache:
           paths:
-            - "%LOCALAPPDATA%/Yarn/config/global"
-          key: yarn-packages-v1-{{ checksum "yarn.lock" }}
+            - C:\Users\circleci\AppData\Local\Yarn\Cache
+          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
           command: yarn jest
