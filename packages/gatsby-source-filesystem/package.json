@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0",
     "better-queue": "^3.8.7",
     "bluebird": "^3.5.0",
-    "chokidar": "2.1.2",
+    "chokidar": "2.1.6",
     "file-type": "^10.2.0",
     "fs-extra": "^5.0.0",
     "gatsby-core-utils": "^1.0.5",
