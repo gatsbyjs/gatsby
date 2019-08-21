@@ -27,7 +27,7 @@
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
-    "jest-junit": "^6.1.0",
+    "jest-junit": "^6.4.0",
     "jest-serializer-path": "^0.1.15",
     "joi": "^14.3.1",
     "js-yaml": "^3.13.1",
