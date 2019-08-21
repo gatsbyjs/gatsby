@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.16...gatsby-source-drupal@3.2.17) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
 ## [3.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.15...gatsby-source-drupal@3.2.16) (2019-08-21)
 
 **Note:** Version bump only for package gatsby-source-drupal

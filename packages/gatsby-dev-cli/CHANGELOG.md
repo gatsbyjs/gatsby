@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.9...gatsby-dev-cli@2.5.10) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency fs-extra to ^4.0.3 ([#16876](https://github.com/gatsbyjs/gatsby/issues/16876)) ([2cc762d](https://github.com/gatsbyjs/gatsby/commit/2cc762d))
+
 ## [2.5.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.8...gatsby-dev-cli@2.5.9) (2019-08-21)
 
 ### Bug Fixes

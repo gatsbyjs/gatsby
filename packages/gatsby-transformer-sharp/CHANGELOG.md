@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.7...gatsby-transformer-sharp@2.2.8) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- update dependency fs-extra to ^7.0.1 ([#16878](https://github.com/gatsbyjs/gatsby/issues/16878)) ([f008fed](https://github.com/gatsbyjs/gatsby/commit/f008fed))
+
 ## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.6...gatsby-transformer-sharp@2.2.7) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

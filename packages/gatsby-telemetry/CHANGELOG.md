@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.15...gatsby-telemetry@1.1.16) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- update dependency envinfo to ^5.12.1 ([#16861](https://github.com/gatsbyjs/gatsby/issues/16861)) ([f0ab6cf](https://github.com/gatsbyjs/gatsby/commit/f0ab6cf))
+
 ## [1.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.14...gatsby-telemetry@1.1.15) (2019-08-21)
 
 ### Bug Fixes

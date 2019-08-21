@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.13...gatsby-remark-images@3.1.14) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency cheerio to ^1.0.0-rc.3 ([#16831](https://github.com/gatsbyjs/gatsby/issues/16831)) ([55bee35](https://github.com/gatsbyjs/gatsby/commit/55bee35))
+
 ## [3.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.12...gatsby-remark-images@3.1.13) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-remark-images

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.7...gatsby-page-utils@0.0.8) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
 ## [0.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.6...gatsby-page-utils@0.0.7) (2019-08-21)
 
 ### Bug Fixes

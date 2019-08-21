@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.4...gatsby-graphiql-explorer@0.2.5) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency css-loader to ^1.0.1 ([#16858](https://github.com/gatsbyjs/gatsby/issues/16858)) ([2d3536f](https://github.com/gatsbyjs/gatsby/commit/2d3536f))
+
 ## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.3...gatsby-graphiql-explorer@0.2.4) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-graphiql-explorer

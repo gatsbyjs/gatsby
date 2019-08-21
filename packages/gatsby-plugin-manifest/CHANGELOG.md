@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.6...gatsby-plugin-manifest@2.2.7) (2019-08-21)
+
+### Bug Fixes
+
+- **gatsby:** Fix tracing so that everything happens under one span ([#16893](https://github.com/gatsbyjs/gatsby/issues/16893)) ([f8cae16](https://github.com/gatsbyjs/gatsby/commit/f8cae16))
+
 ## [2.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.5...gatsby-plugin-manifest@2.2.6) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-plugin-manifest
