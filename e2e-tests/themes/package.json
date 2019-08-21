@@ -1,8 +1,0 @@
-{
-  "private": true,
-  "workspaces": [
-    "gatsby-theme-about",
-    "production-runtime",
-    "development-runtime"
-  ]
-}

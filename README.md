@@ -1,173 +1,89 @@
 <p align="center">
-  <a href="https://gatsbyjs.org">
+  <a href="https://www.gatsbyjs.org">
     <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
   </a>
 </p>
 <h1 align="center">
-  Gatsby v2
+  Starter for the official Gatsby blog core theme
 </h1>
 
-<h3 align="center">
-  ⚛️ 📄 :rocket:
-</h3>
-<h3 align="center">
-  Fast in every way that matters
-</h3>
-<p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
-</p>
-<p align="center">
-  <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
-  </a>
-  <a href="https://circleci.com/gh/gatsbyjs/gatsby">
-    <img src="https://circleci.com/gh/gatsbyjs/gatsby.svg?style=shield" alt="Current CircleCI build status." />
-  </a>
-  <a href="https://www.npmjs.org/package/gatsby">
-    <img src="https://img.shields.io/npm/v/gatsby.svg" alt="Current npm package version." />
-  </a>
-  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
-    <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
-  </a>
-  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
-    <img src="https://img.shields.io/npm/dt/gatsby.svg" alt="Total downloads on npm." />
-  </a>
-  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
-    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
-  </a>
-</p>
+Quickly get started using the Gatsby blog core theme! This starter creates a new Gatsby site that is preconfigured to work with the [official Gatsby blog core theme](https://www.npmjs.com/package/gatsby-theme-blog-core), allowing you to get started creating a child theme quickly.
 
-<h3 align="center">
-  <a href="https://gatsbyjs.org/docs/">Quickstart</a>
-  <span> · </span>
-  <a href="https://gatsbyjs.org/tutorial/">Tutorial</a>
-  <span> · </span>
-  <a href="https://gatsbyjs.org/plugins/">Plugins</a>
-  <span> · </span>
-  <a href="https://gatsbyjs.org/starters/">Starters</a>
-  <span> · </span>
-  <a href="https://gatsbyjs.org/showcase/">Showcase</a>
-  <span> · </span>
-  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
-  <span> · </span>
-  Support: <a href="https://spectrum.chat/gatsby-js">Spectrum</a>
-  <span> & </span>
-  <a href="https://gatsby.dev/discord">Discord</a>
-</h3>
+## 🚀 Quick start
 
-Gatsby is a modern web framework for blazing fast websites.
+1.  **Create a Gatsby site.**
 
-- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
-  limitations. Gatsby sites are fully functional React apps so you can create high-quality,
-  dynamic web apps, from blogs to e-commerce sites to user dashboards.
+    Use the Gatsby CLI to create a new site, specifying the blog theme starter.
 
-- **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
-  built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
-  whether the data is coming from the same backend.
+    ```sh
+    # create a new Gatsby site using the blog theme starter
+    gatsby new my-themed-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme-core
+    ```
 
-- **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
-  files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
-  to load your data, then develop using Gatsby’s uniform GraphQL interface.
+2.  **Start developing.**
 
-- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-  splitting, image optimization, inlining critical styles, lazy-loading, and prefetching resources,
-  and more to ensure your site is fast — no manual tuning required.
+    Navigate into your new site’s directory and start it up.
 
-- **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
-  site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
-  hosted entirely free on services like GitHub Pages and Netlify.
+    ```sh
+    cd my-themed-blog/
+    gatsby develop
+    ```
 
-[**Learn how to use Gatsby for your next project.**](https://gatsbyjs.org/docs/)
+3.  **Open the code and start customizing!**
 
-## What’s In This Document
+    Your site is now running at `http://localhost:8000`!
 
-- [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
-- [Learning Gatsby](#-learning-gatsby)
-- [Migration Guides](#-migration-guides)
-- [How to Contribute](#-how-to-contribute)
-- [License](#memo-license)
-- [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
+    To get started, check out the guide to [using the Gatsby blog theme starter](http://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](http://gatsbyjs.org/tutorial/using-a-theme).
 
-## 🚀 Get Up and Running in 5 Minutes
+## 🧐 What's inside?
 
-You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
+Here are the top-level files and directories you'll see in a site created using the blog theme starter:
 
-1. **Install the Gatsby CLI.**
+```
+gatsby-starter-blog-theme-core
+├── content
+│ ├── assets
+│ │ └── avatar.png
+│ └── posts
+│ ├── hello-world.mdx
+│ └── my-second-post.mdx
+├── .gitignore
+├── .prettierrc
+├── gatsby-config.js
+├── LICENSE
+├── package-lock.json
+├── package.json
+└── README.md
+```
 
-   ```shell
-   npm install -g gatsby-cli
+1.  **`/content`**: A content folder holding assets that the theme expects to exist. This will vary from theme to theme -- this starter is set up to get you started with the blog theme, which expects an image asset for your avatar, and blog post content. Replace the avatar image file, delete the demo posts, and add your own!
 
-   ```
+2.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 
-2. **Create a Gatsby site from a Gatsby starter.**
+3.  **`.prettierrc`**: This file tells [Prettier](https://prettier.io/) which configuration it should use to lint files.
 
-   Get your Gatsby blog set up in a single command:
+4.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. When using themes, it's where you'll include the theme plugin, and any customization options the theme provides.
 
-   ```sh
-   # create a new Gatsby site using the default starter
-   gatsby new my-blazing-fast-site
-   ```
+5.  **`LICENSE`**: Gatsby is licensed under the MIT license.
 
-3. **Start the site in `develop` mode.**
+6.  **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
 
-   Next, move into your new site’s directory and start it up:
+7.  **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
 
-   ```sh
-   cd my-blazing-fast-site/
-   gatsby develop
-   ```
-
-4. **Open the source code and start editing!**
-
-   Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
-
-At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.org/plugins/) and [the official tutorial](https://gatsbyjs.org/tutorial/).
+8.  **`README.md`**: A text file containing useful reference information about your project.
 
 ## 🎓 Learning Gatsby
 
-Full documentation for Gatsby lives [on the website](https://gatsbyjs.org/).
+Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/).
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+Here are some places to start:
 
-- **To dive straight into code samples head [to our documentation](https://gatsbyjs.org/docs/).** In particular, check out the “<i>Guides</i>”, “<i>API Reference</i>”, and “<i>Advanced Tutorials</i>” sections in the sidebar.
+### Themes
 
-We welcome suggestions for improving our docs. See the [“how to contribute”](https://gatsbyjs.org/contributing/how-to-contribute/) documentation for more details.
+- To learn more about Gatsby themes specifically, we recommend checking out the [theme docs](https://www.gatsbyjs.org/docs/themes/).
 
-**Start Learning Gatsby: [Follow the Tutorial](https://gatsbyjs.org/tutorial/) · [Read the Docs](https://gatsbyjs.org/docs/)**
+### General
 
-## 💼 Migration Guides
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v2 to your site without starting from scratch!
-
-- [Migrate a Gatsby site from v1 to v2](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/)
-- Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://gatsbyjs.org/docs/migrating-from-v0-to-v1/)
-
-## ❗ Code of Conduct
-
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://gatsbyjs.org/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
-
-## 🤝 How to Contribute
-
-Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
-
-Check out our [**Contributing Guide**](https://gatsbyjs.org/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
-
-### A note on how this repository is organized
-
-This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
-
-### Contributing to Gatsby v1
-
-We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
-
-## :memo: License
-
-Licensed under the [MIT License](./LICENSE).
-
-## 💜 Thanks to Our Contributors and Sponsors
-
-Thanks to our many contributors and sponsors as well as the companies sponsoring
-our testing and hosting infrastructure: [Circle CI](https://circleci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).
+- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Reference Guides_ and _Gatsby API_ sections in the sidebar.

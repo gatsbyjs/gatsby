@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`create-path should create unix paths 1`] = `
-Array [
-  "/b/c/de/",
-  "/bee/",
-  "/b/d/c/",
-]
-`;
