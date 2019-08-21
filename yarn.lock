@@ -15089,9 +15089,10 @@ markdown-link@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/markdown-link/-/markdown-link-0.1.1.tgz#32c5c65199a6457316322d1e4229d13407c8c7cf"
 
-markdown-magic@^0.1.25:
-  version "0.1.25"
-  resolved "https://registry.yarnpkg.com/markdown-magic/-/markdown-magic-0.1.25.tgz#d044d90632b85ff1576a047da152852d53a8e55a"
+markdown-magic@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/markdown-magic/-/markdown-magic-0.2.1.tgz#756d8669d34186ed2da0f7f5d7fc409a18778438"
+  integrity sha512-jSqdrmdyAajNQ3x92DoL6aFbnIrhEdrYefOjGlVFUK+nL5KUc3haL+CwKlS9VWnpewuEcN/OX0xnVpmI9kEiLg==
   dependencies:
     commander "^2.9.0"
     deepmerge "^1.3.0"
