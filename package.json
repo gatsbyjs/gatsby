@@ -41,7 +41,7 @@
     "svgo": "1.2.2",
     "ts-jest": "^22",
     "typescript": "^2.3.2",
-    "yargs": "^10.0.3"
+    "yargs": "^10.1.2"
   },
   "engines": {
     "yarn": "^1.2.1",
