@@ -5192,11 +5192,11 @@ bluebird@2.9.34:
   version "2.9.34"
   resolved "http://registry.npmjs.org/bluebird/-/bluebird-2.9.34.tgz#2f7b4ec80216328a9fddebdf69c8d4942feff7d8"
 
-bluebird@^3.0.5, bluebird@^3.5.4, bluebird@^3.5.5:
+bluebird@^3.0.5, bluebird@^3.5.5:
   version "3.5.5"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
 
-bluebird@^3.5.0, bluebird@^3.5.1, bluebird@^3.5.2:
+bluebird@^3.5.0, bluebird@^3.5.1:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.2.tgz#1be0908e054a751754549c270489c1505d4ab15a"
 
