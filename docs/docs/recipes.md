@@ -683,42 +683,9 @@ query MyPokemonQuery {
 
 ## 6. Querying data
 
-### Using a Page Query
+### Querying data with a Page Query
 
 You can use the `graphql` tag to query data in the pages of your Gatsby site. This gives you access to anything included in Gatsby's data layer, such as site metadata, source plugins, images, and more.
-
-### Deploying to Netlify
-
-Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
-
-#### Prerequisites
-
-- A [Gatsby site](/docs/quick-start) with a single component `index.js`
-- The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
-- The [Gatsby CLI](/docs/gatsby-cli) installed
-
-#### Directions
-
-1. Build your gatsby application using `gatsby build`
-
-2. Login into netlify using `netlify login`
-
-3. Run the command `netlify build`. Select the "Create & configure a new site" option.
-
-4. Choose a custom website name if you want or press enter to receive a random one.
-
-5. Choose your [Team](/docs/teams/).
-
-6. Change the deploy path to `public/`
-
-7. Make sure that everything looks fine before deploying to production using `netlify deploy --prod`
-
-#### Additional resources
-
-- [Hosting on Netlify](/docs/hosting-on-netlify)
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
-
-## Querying data
 
 #### Directions
 
@@ -766,7 +733,7 @@ export default IndexPage
 - [More on querying data in pages with GraphQL](/docs/page-query/)
 - [MDN on Tagged Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) like the ones used in GraphQL
 
-### The StaticQuery Component
+### Querying data with the StaticQuery Component
 
 `StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/), such as a header, navigation, or any other child component.
 
@@ -1526,16 +1493,20 @@ export const pageQuery = graphql`
 
 ## 8. Transforming data
 
-Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more). `gatsby-transformer-plugin` can transform Markdown files to HTML.
+Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
-### Prerequisites
+### Transforming Markdown into HTML
+
+The `gatsby-transformer-remark` plugin can transform Markdown files to HTML.
+
+#### Prerequisites
 
 - A Gatsby site with `gatsby-config.js` and an `index.js` page
 - A Markdown file saved in your Gatsby site `src` directory
 - A source plugin installed, such as `gatsby-source-filesystem`
 - The `gatsby-transformer-remark` plugin installed
 
-### Directions
+#### Directions
 
 1. Add the transformer plugin in your `gatsby-config.js`:
 
@@ -1570,7 +1541,7 @@ export const query = graphql`
 
 3. Restart the development server and open GraphiQL at `http://localhost:8000/___graphql`. Explore the fields available on the `MarkdownRemark` node.
 
-### Additional resources
+#### Additional resources
 
 - [Tutorial on transforming Markdown to HTML](/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
 - Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)
@@ -1624,3 +1595,34 @@ gatsby build && gatsby serve
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/preparing-for-deployment/)
 - Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
+
+### Deploying to Netlify
+
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Build your gatsby application using `gatsby build`
+
+2. Login into netlify using `netlify login`
+
+3. Run the command `netlify build`. Select the "Create & configure a new site" option.
+
+4. Choose a custom website name if you want or press enter to receive a random one.
+
+5. Choose your [Team](/docs/teams/).
+
+6. Change the deploy path to `public/`
+
+7. Make sure that everything looks fine before deploying to production using `netlify deploy --prod`
+
+#### Additional resources
+
+- [Hosting on Netlify](/docs/hosting-on-netlify)
+- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
