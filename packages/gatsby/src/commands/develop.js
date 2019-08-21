@@ -79,17 +79,18 @@ const waitJobsFinished = () =>
     onEndJob()
   })
 
-async function startServer(program) {
+async function startServer(program, { activity }) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const workerPool = WorkerPool.create()
-  const createIndexHtml = async () => {
+  const createIndexHtml = async ({ activity }) => {
     try {
       await buildHTML.buildPages({
         program,
         stage: `develop-html`,
         pagePaths: [`/`],
         workerPool,
+        activity,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
@@ -107,13 +108,14 @@ async function startServer(program) {
     }
   }
 
-  await createIndexHtml()
+  await createIndexHtml({ activity })
 
   const devConfig = await webpackConfig(
     program,
     directory,
     `develop`,
-    program.port
+    program.port,
+    { parentSpan: activity.span }
   )
 
   const compiler = webpack(devConfig)
@@ -375,7 +377,10 @@ module.exports = async (program: any) => {
   queryUtil.startListening(queryQueue.createDevelopQueue())
   queryWatcher.startWatchDeletePage()
 
-  const [compiler] = await startServer(program)
+  activity = report.activityTimer(`start webpack server`)
+  activity.start()
+  const [compiler] = await startServer(program, { activity })
+  activity.end()
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>

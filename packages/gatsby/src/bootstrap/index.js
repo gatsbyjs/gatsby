@@ -117,7 +117,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   const apis = await getLatestAPIs()
 
-  activity = report.activityTimer(`load plugins`)
+  activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory, apis)
   activity.end()
@@ -153,7 +153,9 @@ module.exports = async (args: BootstrapArgs) => {
     activity.end()
   }
 
-  activity = report.activityTimer(`initialize cache`)
+  activity = report.activityTimer(`initialize cache`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
   // Check if any plugins have been updated since our last run. If so
   // we delete the cache is there's likely been changes
@@ -365,9 +367,13 @@ module.exports = async (args: BootstrapArgs) => {
    */
 
   // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
+  activity = report.activityTimer(`onPreBootstrap`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
+  await apiRunnerNode(`onPreBootstrap`, {
+    parentSpan: activity.span,
+  })
   activity.end()
 
   // Source nodes
@@ -451,7 +457,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await extractQueries()
+  await extractQueries({ parentSpan: activity.span })
   activity.end()
 
   // Write out files.
