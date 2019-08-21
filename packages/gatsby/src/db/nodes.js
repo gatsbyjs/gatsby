@@ -2,7 +2,6 @@
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const { run: runQuery } = require(`./nodes-query`)
-// const { findRootNodeAncestor } = require(`../db/node-tracking`)
 
 interface NodeStore {
   getNodes: () => Array<any>;
@@ -13,7 +12,6 @@ interface NodeStore {
   getNodeAndSavePathDependency: (id: string, path: string) => any | undefined;
   // XXX(freiksenet): types
   runQuery: (...args: any) => any | undefined;
-  // findRootNodeAncestor: (...args: any) => any | undefined;
 
   // internal
   updateNodesByType: (
