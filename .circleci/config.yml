@@ -301,75 +301,75 @@ workflows:
   build-test:
     jobs:
       - windows_unit_tests
-  #     - bootstrap
-  #     - lint:
-  #         requires:
-  #           - bootstrap
-  #     - unit_tests_node8:
-  #         <<: *ignore_docs
-  #         requires:
-  #           - bootstrap
-  #     - unit_tests_node10:
-  #         <<: *ignore_docs
-  #         requires:
-  #           - lint
-  #           - unit_tests_node8
-  #     - unit_tests_node12:
-  #         <<: *ignore_docs
-  #         requires:
-  #           - lint
-  #           - unit_tests_node8
-  #     - unit_tests_www
-  #     - integration_tests_long_term_caching:
-  #         <<: *e2e-test-workflow
-  #     - integration_tests_gatsby_pipeline:
-  #         <<: *e2e-test-workflow
-  #     - e2e_tests_path-prefix:
-  #         <<: *e2e-test-workflow
-  #     - e2e_tests_gatsby-image:
-  #         <<: *e2e-test-workflow
-  #     - e2e_tests_development_runtime:
-  #         <<: *e2e-test-workflow
-  #     - e2e_tests_production_runtime:
-  #         <<: *e2e-test-workflow
-  #     - themes_e2e_tests_production_runtime:
-  #         <<: *e2e-test-workflow
-  #     - themes_e2e_tests_development_runtime:
-  #         <<: *e2e-test-workflow
-  #     - starters_validate:
-  #         <<: *ignore_master
-  #     - starters_publish:
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #     - manual_www_approval:
-  #         type: approval
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #     - build_www:
-  #         context: build_www
-  #         requires:
-  #           - manual_www_approval
-  #     - deploy_www:
-  #         requires:
-  #           - build_www
-  #         context: build_www
-  # www_deploy:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 2,6,10,14,18,22 * * *"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - build_www:
-  #         # Check CircleCI web ui for context details (env vars)
-  #         context: build_www
-  #     - deploy_www:
-  #         requires:
-  #           - build_www
-  #         context: build_www
+      - bootstrap
+      - lint:
+          requires:
+            - bootstrap
+      - unit_tests_node8:
+          <<: *ignore_docs
+          requires:
+            - bootstrap
+      - unit_tests_node10:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - unit_tests_node8
+      - unit_tests_node12:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - unit_tests_node8
+      - unit_tests_www
+      - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
+      - e2e_tests_path-prefix:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
+      - starters_publish:
+          filters:
+            branches:
+              only:
+                - master
+      - manual_www_approval:
+          type: approval
+          filters:
+            branches:
+              only:
+                - master
+      - build_www:
+          context: build_www
+          requires:
+            - manual_www_approval
+      - deploy_www:
+          requires:
+            - build_www
+          context: build_www
+  www_deploy:
+    triggers:
+      - schedule:
+          cron: "0 2,6,10,14,18,22 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build_www:
+          # Check CircleCI web ui for context details (env vars)
+          context: build_www
+      - deploy_www:
+          requires:
+            - build_www
+          context: build_www
