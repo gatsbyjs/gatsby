@@ -281,18 +281,18 @@ jobs:
       shell: powershell.exe
     steps:
       - checkout
-      # - restore_cache:
-      #     keys:
-      #       - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      #       - yarn-packages-v1-{{ .Branch }}-
-      #       - yarn-packages-v1-
+      - restore_cache:
+          keys:
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
       - run:
           name: "Install dependencies"
           command: yarn bootstrap
-      # - save_cache:
-      #     paths:
-      #       - ~/.cache/yarn
-      #     key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
           command: yarn jest
