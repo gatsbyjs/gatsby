@@ -38,6 +38,9 @@ describe(`GraphQL field extensions`, () => {
         internal: { type: `Test` },
         somedate: `2019-09-13`,
         otherdate: `2019-09-13`,
+        nested: {
+          onemoredate: `2019-09-26`,
+        },
       },
       {
         id: `test3`,
@@ -1563,6 +1566,95 @@ describe(`GraphQL field extensions`, () => {
       it.todo(`proxies to field on linked in node`)
       it.todo(`proxies to nested field on linked in node`)
     })
+  })
+
+  it(`link extension accepts return type argument`, async () => {
+    dispatch(
+      createFieldExtension({
+        name: `reduce`,
+        args: {
+          to: `String!`,
+        },
+        extend(options, fieldConfig) {
+          return {
+            async resolve(source, args, context, info) {
+              const { getValueAt } = require(`../../../utils/get-value-at`)
+              const resolver =
+                fieldConfig.resolve || context.defaultFieldResolver
+              const fieldValue = await resolver(source, args, context, info)
+              if (fieldValue == null) return null
+              return getValueAt(fieldValue, options.to)
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes(`
+        type Test implements Node @dontInfer {
+          fieldFromParent: Date @link(from: "parent", on: "AnotherTest") @reduce(to: "date") @dateformat(formatString: "MM/DD/YYYY")
+        }
+        type AnotherTest implements Node @dontInfer {
+          fieldsFromChildren: [Date] @link(from: "children", on: "[Test!]!") @reduce(to: "somedate") @dateformat(formatString: "DD/MM/YYYY")
+          nestedFieldsFromChildren: [Date] @link(from: "children", on: "[Test!]!") @reduce(to: "nested.onemoredate") @dateformat(formatString: "DD/MM/YYYY")
+        }
+      `)
+    )
+    const query = `
+      {
+        allTest {
+          nodes {
+            id
+            fieldFromParent
+          }
+        }
+        allAnotherTest {
+          nodes {
+            id
+            fieldsFromChildren
+            nestedFieldsFromChildren
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allTest: {
+        nodes: [
+          {
+            id: `test1`,
+            fieldFromParent: `01/01/2019`,
+          },
+          {
+            id: `test2`,
+            fieldFromParent: `Invalid date`,
+          },
+          {
+            id: `test3`,
+            fieldFromParent: null,
+          },
+          {
+            id: `test4`,
+            fieldFromParent: null,
+          },
+        ],
+      },
+      allAnotherTest: {
+        nodes: [
+          {
+            id: `test5`,
+            fieldsFromChildren: [`01/09/2019`],
+            nestedFieldsFromChildren: [`30/07/2019`],
+          },
+          {
+            id: `test6`,
+            fieldsFromChildren: [`13/09/2019`],
+            nestedFieldsFromChildren: [`26/09/2019`],
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
   })
 })
 

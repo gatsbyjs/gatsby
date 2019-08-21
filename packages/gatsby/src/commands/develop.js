@@ -215,7 +215,7 @@ async function startServer(program) {
   const { developMiddleware } = store.getState().config
 
   if (developMiddleware) {
-    developMiddleware(app)
+    developMiddleware(app, program)
   }
 
   // Set up API proxy.

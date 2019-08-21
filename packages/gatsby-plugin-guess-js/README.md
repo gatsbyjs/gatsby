@@ -36,8 +36,11 @@ module.exports = {
       options: {
         // Find the view id in the GA admin in a section labeled "views"
         GAViewID: `VIEW_ID`,
-        // Add JWT token to perform authentication on deployment builds
-        jwt: GA_JWT
+        // Add a JWT to get data from GA
+        jwt: {
+          client_email: `GOOGLE_SERVICE_ACCOUNT_EMAIL`,
+          private_key: `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`,
+        },
         minimumThreshold: 0.03,
         // The "period" for fetching analytic data.
         period: {
@@ -82,4 +85,26 @@ module.exports = {
 
 ### How to get a JWT token?
 
-[Here](https://2ality.com/2015/10/google-analytics-api.html)
+> Excerpt from https://2ality.com/2015/10/google-analytics-api.html
+
+Go to the Google Developers Console:
+
+- Create a new project (e.g. myproject).
+- In section “APIs & auth → Credentials”, execute “Add credentials → Service account”.
+  - Download the resulting JSON file (e.g. “myproject-3126e4caac6a.json”).
+  - Put that file into a directory node_modules that is inside one of the parent directories of the script that we’ll create later. That means that you can keep it out of the repository with analytics.js. For example, the following path is perfectly fine:
+    `\$HOME/node_modules/myproject-3126e4caac6a.json`
+    - The credentials that you created have an email address (which is displayed in the user interface and stored inside the JSON file). Copy that email address.
+
+Go to the Admin panel in Google Analytics:
+
+- Analytics has three scopes:
+  - Account
+  - Property
+  - View
+- Create a new user in scope “Property”, via “User Management”.
+  - That user has the email address that you copied previously.
+  - Its permissions are “Read & Analyze”.
+- In scope “View”, go to “View Settings” and write down the “View ID” (e.g. 97675673) for later.
+
+> This JWT will only be valid for a finite amount of time. If you would like to generate a token that will not expire, please follow further instructions in https://2ality.com/2015/10/google-analytics-api.html
