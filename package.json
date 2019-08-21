@@ -110,5 +110,10 @@
   ],
   "resolutions": {
     "write-file-atomic": "2.4.1"
+  },
+  "comments": {
+    "resolutions": {
+      "write-file-atomic": "Jest bug on windows: https://github.com/facebook/jest/issues/4444"
+    }
   }
 }
