@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-faker@2.1.2...gatsby-source-faker@2.1.3) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-source-faker
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-faker@2.1.1...gatsby-source-faker@2.1.2) (2019-07-12)
 
 ### Bug Fixes

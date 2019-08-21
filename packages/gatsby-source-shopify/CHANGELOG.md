@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.2...gatsby-source-shopify@3.0.3) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency chalk to ^2.4.2 ([#16830](https://github.com/gatsbyjs/gatsby/issues/16830)) ([3c89607](https://github.com/gatsbyjs/gatsby/commit/3c89607))
+- update dependency graphql-request to ^1.8.2 ([#16886](https://github.com/gatsbyjs/gatsby/issues/16886)) ([1e6c29a](https://github.com/gatsbyjs/gatsby/commit/1e6c29a))
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.1...gatsby-source-shopify@3.0.2) (2019-08-21)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.0...gatsby-source-shopify@3.0.1) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 # [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@2.2.2...gatsby-source-shopify@3.0.0) (2019-08-13)
 
 **Note:** Version bump only for package gatsby-source-shopify

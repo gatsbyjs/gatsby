@@ -265,7 +265,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       try {
         // most systems
         trueComponentPath = slash(trueCasePathSync(page.component))
-      } catch {
+      } catch (e) {
         // systems where user doesn't have access to /
         const commonDir = getCommonDir(
           store.getState().program.directory,
