@@ -1,5 +1,6 @@
 ---
 title: Recipes
+tableOfContentsDepth: 2
 ---
 
 <!-- Basic template for a Gatsby recipe:
