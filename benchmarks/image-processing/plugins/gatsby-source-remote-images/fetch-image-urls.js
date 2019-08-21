@@ -7,7 +7,7 @@ const path = require(`path`)
 const baseUrl = `http://www.splashbase.co/api/v1/images/`
 
 const s = new Sema(
-  10, // Allow 4 concurrent async calls
+  10, // Allow 10 concurrent async calls
   {
     capacity: 100, // Prealloc space for 100 tokens
   }
