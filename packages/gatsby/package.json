@@ -37,7 +37,7 @@
     "browserslist": "3.2.8",
     "cache-manager": "^2.10.0",
     "cache-manager-fs-hash": "^0.0.7",
-    "chalk": "^2.3.2",
+    "chalk": "^2.4.2",
     "chokidar": "2.1.6",
     "common-tags": "^1.4.0",
     "compression": "^1.7.4",
