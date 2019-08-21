@@ -12,7 +12,7 @@
     "bluebird": "^3.5.5",
     "body-parser": "^1.19.0",
     "gatsby-source-filesystem": "^2.1.12",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "tiny-async-pool": "^1.0.4"
   },
   "devDependencies": {

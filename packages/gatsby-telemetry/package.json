@@ -17,13 +17,13 @@
     "fs-extra": "^7.0.1",
     "git-up": "4.0.1",
     "is-docker": "1.1.0",
-    "lodash": "^4.17.14",
-    "node-fetch": "2.3.0",
+    "lodash": "^4.17.15",
+    "node-fetch": "2.6.0",
     "resolve-cwd": "^2.0.0",
-    "source-map": "^0.5.7",
+    "source-map": "^0.7.3",
     "stack-trace": "^0.0.10",
     "stack-utils": "1.0.2",
-    "uuid": "3.3.2"
+    "uuid": "3.3.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
