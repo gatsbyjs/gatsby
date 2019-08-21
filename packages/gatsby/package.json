@@ -61,7 +61,7 @@
     "eslint-plugin-react": "^7.14.3",
     "event-source-polyfill": "^1.0.8",
     "express": "^4.17.1",
-    "express-graphql": "^0.7.1",
+    "express-graphql": "^0.9.0",
     "fast-levenshtein": "^2.0.6",
     "file-loader": "^1.1.11",
     "flat": "^4.1.0",
