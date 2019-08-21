@@ -51,11 +51,6 @@ exports.onPostBuild = (
   ])
   const appFile = files.find(file => file.startsWith(`app-`))
 
-  // Remove the custom prefix (if any) so Workbox can find the files.
-  // This is added back at runtime (see modifyUrlPrefix) in order to serve
-  // from the correct location.
-  const omitPrefix = path => path.slice(pathPrefix.length)
-
   const precachePages = []
   precachePagesGlobs.forEach(page => {
     const matches = glob.sync(`${process.cwd()}/${rootDir}${page}`)
@@ -77,22 +72,13 @@ exports.onPostBuild = (
     })
   })
 
-  console.log(`precachePages`, precachePages)
-
   const criticalFilePaths = _.uniq([
     ...getResourcesFromHTML(
-      `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
+      `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
+      pathPrefix
     ),
-    ...(() => {
-      console.log(
-        `mapped to GRFH`,
-        precachePages.map(page => getResourcesFromHTML(page))
-      )
-      return precachePages.map(page => getResourcesFromHTML(page)).flat()
-    })(),
-  ]).map(omitPrefix)
-
-  console.log(`criticalFilePaths`, criticalFilePaths)
+    ...precachePages.map(page => getResourcesFromHTML(page, pathPrefix)).flat(),
+  ])
 
   const globPatterns = files.concat([
     `offline-plugin-app-shell-fallback/index.html`,
