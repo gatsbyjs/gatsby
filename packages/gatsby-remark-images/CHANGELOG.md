@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.12...gatsby-remark-images@3.1.13) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.11...gatsby-remark-images@3.1.12) (2019-08-16)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.10...gatsby-remark-images@3.1.11) (2019-08-13)
+
+### Features
+
+- **gatsby-remark-images:** Add markdownCaptions option ([#16574](https://github.com/gatsbyjs/gatsby/issues/16574)) ([a72cbaf](https://github.com/gatsbyjs/gatsby/commit/a72cbaf))
+
+## [3.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.9...gatsby-remark-images@3.1.10) (2019-08-11)
+
+### Features
+
+- **gatsby-remark-images:** Add support for native lazy loading ([#16448](https://github.com/gatsbyjs/gatsby/issues/16448)) ([47d8032](https://github.com/gatsbyjs/gatsby/commit/47d8032))
+
+## [3.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.8...gatsby-remark-images@3.1.9) (2019-08-11)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** Allow alt to be returned as caption ([#16518](https://github.com/gatsbyjs/gatsby/issues/16518)) ([f09e82f](https://github.com/gatsbyjs/gatsby/commit/f09e82f))
+
+## [3.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.7...gatsby-remark-images@3.1.8) (2019-08-08)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 ## [3.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.6...gatsby-remark-images@3.1.7) (2019-07-20)
 
 **Note:** Version bump only for package gatsby-remark-images

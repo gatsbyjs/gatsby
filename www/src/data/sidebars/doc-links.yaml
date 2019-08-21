@@ -5,11 +5,11 @@
     - title: Introduction
       link: /docs/
     - title: Quick Start
-      link: /docs/quick-start
+      link: /docs/quick-start/
     - title: Recipes
       link: /docs/recipes/
     - title: Plugin Library
-      link: /plugins
+      link: /plugins/
     - title: Starter Library
       link: /starters/
     - title: Awesome Gatsby Resources
@@ -26,6 +26,8 @@
               link: /docs/gatsby-on-windows/
             - title: Gatsby on Linux
               link: /docs/gatsby-on-linux/
+            - title: Configuring CA Certificates
+              link: /docs/configuring-ca-certificates/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
@@ -44,14 +46,14 @@
             - title: Deploying to Heroku
               link: /docs/deploying-to-heroku/
               breadcrumbTitle: Heroku
-            - title: Deploying to Now
-              link: /docs/deploying-to-now/
-              breadcrumbTitle: Now
+            - title: Deploying to ZEIT Now
+              link: /docs/deploying-to-zeit-now/
+              breadcrumbTitle: ZEIT Now
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
-            - title: Hosting on Netlify
-              link: /docs/hosting-on-netlify/
+            - title: Deploying to Netlify
+              link: /docs/deploying-to-netlify/
               breadcrumbTitle: Netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/
@@ -66,6 +68,8 @@
               breadcrumbTitle: GitHub Pages
             - title: Multi-Core Builds
               link: /docs/multi-core-builds/
+            - title: Asset Prefix
+              link: /docs/asset-prefix/
         - title: Custom Configuration
           link: /docs/customization/
           items:
@@ -184,6 +188,8 @@
               link: /docs/adding-markdown-pages/
             - title: Adding a List of Markdown Blog Posts
               link: /docs/adding-a-list-of-markdown-blog-posts/
+            - title: Using GraphQL Playground
+              link: /docs/using-graphql-playground/
         - title: Plugins
           link: /docs/plugins/
           items:
@@ -229,19 +235,19 @@
           link: /docs/themes/
           items:
             - title: What are Gatsby Themes?
-              link: /docs/themes/what-are-gatsby-themes
+              link: /docs/themes/what-are-gatsby-themes/
             - title: Using a Gatsby Theme
-              link: /docs/themes/using-a-gatsby-theme
+              link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
-              link: /docs/themes/using-multiple-gatsby-themes
+              link: /docs/themes/using-multiple-gatsby-themes/
             - title: Building Themes
-              link: /docs/themes/building-themes
+              link: /docs/themes/building-themes/
             - title: Converting a Starter
-              link: /docs/themes/converting-a-starter
+              link: /docs/themes/converting-a-starter/
             - title: Theme Composition
-              link: /docs/themes/theme-composition
+              link: /docs/themes/theme-composition/
             - title: Conventions
-              link: /docs/themes/conventions
+              link: /docs/themes/conventions/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -351,7 +357,7 @@
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
             - title: Building a Contact Form
-              link: /docs/building-a-contact-form
+              link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
               link: /docs/add-404-page/
               breadcrumbTitle: 404 Page
@@ -383,7 +389,7 @@
                   link: /docs/adding-page-transitions-with-plugin-page-transitions/
                   breadcrumbTitle: gatsby-plugin-page-transitions
             - title: Making Your Site Accessible
-              link: /docs/making-your-site-accessible
+              link: /docs/making-your-site-accessible/
             - title: Routing
               link: /docs/routing/
               items:
@@ -395,10 +401,13 @@
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+                - title: Client-only Routes & User Authentication
+                  link: /docs/client-only-routes-and-user-authentication/
+                  breadcrumbTitle: Client Routes & User Auth
             - title: Client Data Fetching
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
-              link: /docs/using-client-side-only-packages
+              link: /docs/using-client-side-only-packages/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -424,6 +433,8 @@
             - title: Optimizing Site Performance with Guess.js
               link: /docs/optimizing-site-performance-with-guessjs/
               breadcrumbTitle: Guess.js
+            - title: Scaling Issues
+              link: /docs/scaling-issues/
         - title: Localization and Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
@@ -496,6 +507,8 @@
           link: /docs/querying-with-graphql/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
+        - title: Theme Shadowing
+          link: /docs/how-shadowing-works
     - title: Gatsby Internals
       link: /docs/gatsby-internals/
       items:
@@ -598,7 +611,7 @@
                 - title: Answering IT/Security Questions
                   link: /docs/answering-it-security/
                 - title: Setting Up Gatsby Without Gatsby New
-                  link: /docs/setting-up-gatsby-without-gatsby-new
+                  link: /docs/setting-up-gatsby-without-gatsby-new/
         - title: Best Practices for Orgs*
           link: /docs/best-practices-for-orgs/
           items:

@@ -1,4 +1,4 @@
-const visit = require("unist-util-visit");
+const visit = require(`unist-util-visit`)
 
 // parse mdast-utils-toc object to JSON object:
 //
@@ -24,29 +24,29 @@ const visit = require("unist-util-visit");
 //
 function getItems(node, current) {
   if (!node) {
-    return {};
-  } else if (node.type === "paragraph") {
+    return {}
+  } else if (node.type === `paragraph`) {
     visit(node, item => {
-      if (item.type === "link") {
-        current.url = item.url;
+      if (item.type === `link`) {
+        current.url = item.url
       }
-      if (item.type === "text") {
-        current.title = item.value;
+      if (item.type === `text`) {
+        current.title = item.value
       }
-    });
-    return current;
+    })
+    return current
   } else {
-    if (node.type === "list") {
-      current.items = node.children.map(i => getItems(i, {}));
-      return current;
-    } else if (node.type === "listItem") {
-      const heading = getItems(node.children[0], {});
+    if (node.type === `list`) {
+      current.items = node.children.map(i => getItems(i, {}))
+      return current
+    } else if (node.type === `listItem`) {
+      const heading = getItems(node.children[0], {})
       if (node.children.length > 1) {
-        getItems(node.children[1], heading);
+        getItems(node.children[1], heading)
       }
-      return heading;
+      return heading
     }
   }
-  return {};
+  return {}
 }
-module.exports = getItems;
+module.exports = getItems

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.5...gatsby-source-graphql@2.1.6) (2019-08-20)
+
+### Bug Fixes
+
+- update apollo graphql packages ([#16794](https://github.com/gatsbyjs/gatsby/issues/16794)) ([09f68f8](https://github.com/gatsbyjs/gatsby/commit/09f68f8))
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.4...gatsby-source-graphql@2.1.5) (2019-08-09)
+
+### Bug Fixes
+
+- **gatsby:** Make root plural fields non nullable ([#15321](https://github.com/gatsbyjs/gatsby/issues/15321)) ([2c79309](https://github.com/gatsbyjs/gatsby/commit/2c79309))
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.3...gatsby-source-graphql@2.1.4) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-source-graphql:** incorrect capitalization of Bearer ([#16468](https://github.com/gatsbyjs/gatsby/issues/16468)) ([37c7389](https://github.com/gatsbyjs/gatsby/commit/37c7389))
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.2...gatsby-source-graphql@2.1.3) (2019-07-20)
 
 **Note:** Version bump only for package gatsby-source-graphql

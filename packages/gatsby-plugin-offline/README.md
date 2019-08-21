@@ -21,10 +21,10 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Overriding options
 
-When adding this plugin to your `gatsby-config.js`, you can pass in options to
+When adding this plugin to your `gatsby-config.js`, you can pass in options (via the `options` key) to
 override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
 
-The default config is as follows. Warning: you can break the offline support by
+The default config is as follows. Warning: You can break the offline support by
 changing these options, so tread carefully.
 
 ```javascript
@@ -100,3 +100,7 @@ curl https://www.yourdomain.tld
 ```
 
 Alternatively you can have a look at the `/public/index.html` file in your project folder.
+
+### App shell and server logs
+
+Server logs (like from [Netlify analytics](https://www.netlify.com/products/analytics/)) may show a large number of pageviews to a route like `/offline-plugin-app-shell-fallback/index.html`, this is a result of `gatsby-plugin-offline` adding an [app shell](https://developers.google.com/web/fundamentals/architecture/app-shell) to the page. The app shell is a minimal amount of user interface that can be cached offline for reliable performance loading on repeat visits. The shell can be loaded from the cache, and the content of the site loaded into the shell by the service worker.

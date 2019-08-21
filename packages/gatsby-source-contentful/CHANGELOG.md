@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.21...gatsby-source-contentful@2.1.22) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency base64-img to ^1.0.4 ([#16813](https://github.com/gatsbyjs/gatsby/issues/16813)) ([ea39f67](https://github.com/gatsbyjs/gatsby/commit/ea39f67))
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.20...gatsby-source-contentful@2.1.21) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@hapi](https://github.com/hapi)/joi to ^15.1.1 ([#16796](https://github.com/gatsbyjs/gatsby/issues/16796)) ([2cfc19c](https://github.com/gatsbyjs/gatsby/commit/2cfc19c))
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.19...gatsby-source-contentful@2.1.20) (2019-08-16)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.18...gatsby-source-contentful@2.1.19) (2019-08-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.17...gatsby-source-contentful@2.1.18) (2019-08-06)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.16...gatsby-source-contentful@2.1.17) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.15...gatsby-source-contentful@2.1.16) (2019-07-30)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.14...gatsby-source-contentful@2.1.15) (2019-07-22)
 
 **Note:** Version bump only for package gatsby-source-contentful

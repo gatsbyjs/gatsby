@@ -2,7 +2,7 @@
 title: "Celebrate Hacktoberfest with Gatsby!"
 date: 2018-10-09
 author: "Amberley Romo"
-tags: ["hacktoberfest", "open source"]
+tags: ["hacktoberfest", "open-source"]
 ---
 
 Happy October, everyone! We’re stoked, because October means… Hacktoberfest!
@@ -26,7 +26,14 @@ Check out the complete participation details and rules over at the [Hacktoberfes
 
 We couldn’t be more excited about Hacktoberfest -- it’s right up our alley! Back in August, we were excited to celebrate hitting 1,000 contributors! (As of this writing, it’s 1,197 😄)
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">We&#39;ve hit 1000 contributors! Thank you for your trust and shared loved for what we&#39;re building together. <a href="https://t.co/41j5fx9cF2">pic.twitter.com/41j5fx9cF2</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/1027876829615595520?ref_src=twsrc%5Etfw">August 10, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    We&#39;ve hit 1000 contributors! Thank you for your trust and shared loved
+    for what we&#39;re building together.{" "}
+    <a href="https://t.co/41j5fx9cF2">pic.twitter.com/41j5fx9cF2</a>
+  </p>
+  &mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/1027876829615595520?ref_src=twsrc%5Etfw">August 10, 2018</a>
+</blockquote>
 
 Gatsby is a great project to contribute to because you can learn about Gatsby while tackling a list of carefully curated issues, prepared especially for Hacktoberfest.
 
@@ -37,7 +44,16 @@ Our Hacktoberfest goals are:
 
 Plus, if you’ve never contributed to Gatsby before, after your very first PR is merged, you can redeem some [free Gatsby swag](/contributing/contributor-swag/)! (_Note: Not Hacktoberfest related. We do this always!_)
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for the t-shirt! If there are any developers out there that haven’t tried out Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a></p>&mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    Thanks{" "}
+    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for
+    the t-shirt! If there are any developers out there that haven’t tried out
+    Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s
+    awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a>
+  </p>
+  &mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a>
+</blockquote>
 
 We so appreciate everyone who puts in the time to contribute to making Gatsby, and the whole open source community, even better 💜.
 

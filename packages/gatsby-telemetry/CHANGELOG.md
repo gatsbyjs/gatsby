@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.14...gatsby-telemetry@1.1.15) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency boxen to ^3.2.0 ([#16826](https://github.com/gatsbyjs/gatsby/issues/16826)) ([c2bc229](https://github.com/gatsbyjs/gatsby/commit/c2bc229))
+
+## [1.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.13...gatsby-telemetry@1.1.14) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.12...gatsby-telemetry@1.1.13) (2019-08-19)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.11...gatsby-telemetry@1.1.12) (2019-08-16)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.9...gatsby-telemetry@1.1.11) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Add back fix and fix files in package.j… ([#16297](https://github.com/gatsbyjs/gatsby/issues/16297)) ([9d32f3c](https://github.com/gatsbyjs/gatsby/commit/9d32f3c))
+
+## [1.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.8...gatsby-telemetry@1.1.9) (2019-08-01)
+
+### Bug Fixes
+
+- **telemerty:** always show the telemetry notification, fixes… ([#16294](https://github.com/gatsbyjs/gatsby/issues/16294)) ([8db4f4c](https://github.com/gatsbyjs/gatsby/commit/8db4f4c))
+
+## [1.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.7...gatsby-telemetry@1.1.8) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Don't display analytics notification if opted out ([#16258](https://github.com/gatsbyjs/gatsby/issues/16258)) ([2b3a150](https://github.com/gatsbyjs/gatsby/commit/2b3a150))
+
 ## [1.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.6...gatsby-telemetry@1.1.7) (2019-07-23)
 
 **Note:** Version bump only for package gatsby-telemetry

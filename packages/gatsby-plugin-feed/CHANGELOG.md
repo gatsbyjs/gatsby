@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.6...gatsby-plugin-feed@2.3.7) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@hapi](https://github.com/hapi)/joi to ^15.1.1 ([#16796](https://github.com/gatsbyjs/gatsby/issues/16796)) ([2cfc19c](https://github.com/gatsbyjs/gatsby/commit/2cfc19c))
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.5...gatsby-plugin-feed@2.3.6) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-feed:** Fixes URL in warning message ([#16148](https://github.com/gatsbyjs/gatsby/issues/16148)) ([8ca2ef8](https://github.com/gatsbyjs/gatsby/commit/8ca2ef8))
+
 ## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.4...gatsby-plugin-feed@2.3.5) (2019-07-20)
 
 **Note:** Version bump only for package gatsby-plugin-feed

@@ -9,7 +9,7 @@ const conflictFieldPrefix = `wordpress_`
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 /**
- * Validate the GraphQL naming convetions & protect specific fields.
+ * Validate the GraphQL naming conventions & protect specific fields.
  *
  * @param {any} key
  * @returns the valid name
@@ -478,6 +478,7 @@ exports.downloadMediaFiles = async ({
   getNode,
   _auth,
   reporter,
+  keepMediaSizes,
 }) =>
   Promise.all(
     entities.map(async e => {
@@ -534,7 +535,9 @@ exports.downloadMediaFiles = async ({
 
       if (fileNodeID) {
         e.localFile___NODE = fileNodeID
-        delete e.media_details.sizes
+        if (!keepMediaSizes) {
+          delete e.media_details.sizes
+        }
       }
 
       return e

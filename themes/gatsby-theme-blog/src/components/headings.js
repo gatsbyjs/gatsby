@@ -28,6 +28,7 @@ const heading = Tag => props => (
       ":hover a": {
         visibility: `visible`,
       },
+      pointerEvents: `painted`,
     }}
   >
     <a

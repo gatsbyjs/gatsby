@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.24...gatsby-plugin-mdx@1.0.25) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.23...gatsby-plugin-mdx@1.0.24) (2019-08-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Raise error if MDXRenderer receives un… ([#16555](https://github.com/gatsbyjs/gatsby/issues/16555)) ([aa03d44](https://github.com/gatsbyjs/gatsby/commit/aa03d44))
+
+## [1.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.22...gatsby-plugin-mdx@1.0.23) (2019-08-06)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** fix filter by heading depth ([#16344](https://github.com/gatsbyjs/gatsby/issues/16344)) ([234863c](https://github.com/gatsbyjs/gatsby/commit/234863c))
+
+## [1.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.21...gatsby-plugin-mdx@1.0.22) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Replaces to-style with style-to-object ([#16062](https://github.com/gatsbyjs/gatsby/issues/16062)) ([a4947ef](https://github.com/gatsbyjs/gatsby/commit/a4947ef))
+
+## [1.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.20...gatsby-plugin-mdx@1.0.21) (2019-08-01)
+
+### Features
+
+- **docs:** Clarify gatsby-plugin-mdx requirements for gatsby-source-filesystem ([#15604](https://github.com/gatsbyjs/gatsby/issues/15604)) ([d08323c](https://github.com/gatsbyjs/gatsby/commit/d08323c))
+
+## [1.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.19...gatsby-plugin-mdx@1.0.20) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.18...gatsby-plugin-mdx@1.0.19) (2019-07-30)
+
+### Bug Fixes
+
+- **deps:** add missing deps to gatsby-plugin-mdx ([#16207](https://github.com/gatsbyjs/gatsby/issues/16207)) ([2db54b3](https://github.com/gatsbyjs/gatsby/commit/2db54b3))
+
+## [1.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.17...gatsby-plugin-mdx@1.0.18) (2019-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ## [1.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.16...gatsby-plugin-mdx@1.0.17) (2019-07-25)
 
 ### Bug Fixes
