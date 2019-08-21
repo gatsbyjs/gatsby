@@ -13,7 +13,7 @@
     "fs-extra": "^7.0.0",
     "gatsby-core-utils": "^1.0.5",
     "got": "^8.3.2",
-    "imagemin": "^6.0.0",
+    "imagemin": "^6.1.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^6.0.0",
     "imagemin-webp": "^5.0.0",
