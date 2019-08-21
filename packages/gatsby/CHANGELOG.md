@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.73](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.72...gatsby@2.13.73) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency babel-plugin-add-module-exports to ^0.3.3([#16810](https://github.com/gatsbyjs/gatsby/issues/16810)) ([6378994](https://github.com/gatsbyjs/gatsby/commit/6378994))
+- update dependency better-queue to ^3.8.10 ([#16824](https://github.com/gatsbyjs/gatsby/issues/16824)) ([6834344](https://github.com/gatsbyjs/gatsby/commit/6834344))
+- update dependency cache-manager-fs-hash to ^0.0.7 ([#16829](https://github.com/gatsbyjs/gatsby/issues/16829)) ([3ceb6db](https://github.com/gatsbyjs/gatsby/commit/3ceb6db))
+- update dependency chokidar to v2.1.6 ([#16832](https://github.com/gatsbyjs/gatsby/issues/16832)) ([dbcf65f](https://github.com/gatsbyjs/gatsby/commit/dbcf65f))
+- update dependency compression to ^1.7.4 ([#16836](https://github.com/gatsbyjs/gatsby/issues/16836)) ([2e60499](https://github.com/gatsbyjs/gatsby/commit/2e60499))
+
+## [2.13.72](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.71...gatsby@2.13.72) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@hapi](https://github.com/hapi)/joi to ^15.1.1 ([#16796](https://github.com/gatsbyjs/gatsby/issues/16796)) ([2cfc19c](https://github.com/gatsbyjs/gatsby/commit/2cfc19c))
+- update dependency [@reach](https://github.com/reach)/router to ^1.2.1 ([#16797](https://github.com/gatsbyjs/gatsby/issues/16797)) ([f3554bc](https://github.com/gatsbyjs/gatsby/commit/f3554bc))
+- update dependency address to v1.1.0 ([#16802](https://github.com/gatsbyjs/gatsby/issues/16802)) ([503f1b3](https://github.com/gatsbyjs/gatsby/commit/503f1b3))
+- update dependency autoprefixer to ^9.6.1 ([#16807](https://github.com/gatsbyjs/gatsby/issues/16807)) ([780c62a](https://github.com/gatsbyjs/gatsby/commit/780c62a))
+
+## [2.13.71](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.70...gatsby@2.13.71) (2019-08-20)
+
+### Bug Fixes
+
+- **gatsby:** keep all page-data files in public ([#16766](https://github.com/gatsbyjs/gatsby/issues/16766)) ([a573f9f](https://github.com/gatsbyjs/gatsby/commit/a573f9f))
+
+## [2.13.70](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.69...gatsby@2.13.70) (2019-08-20)
+
+### Features
+
+- **gatsby:** Add meta tag for development ([#16743](https://github.com/gatsbyjs/gatsby/issues/16743)) ([d0e24d2](https://github.com/gatsbyjs/gatsby/commit/d0e24d2))
+
+## [2.13.69](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.68...gatsby@2.13.69) (2019-08-20)
+
+### Bug Fixes
+
+- **telemetry:** only look at websocket updates when we have active clients. ([#16750](https://github.com/gatsbyjs/gatsby/issues/16750)) ([164cd5b](https://github.com/gatsbyjs/gatsby/commit/164cd5b))
+
+## [2.13.68](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.67...gatsby@2.13.68) (2019-08-19)
+
+### Bug Fixes
+
+- **gatsby:** remove finally to enable ie11 + firefox support ([#16734](https://github.com/gatsbyjs/gatsby/issues/16734)) ([a4c97e3](https://github.com/gatsbyjs/gatsby/commit/a4c97e3))
+
+### Features
+
+- **gatsby:** Allow specifying type on link extension ([#16680](https://github.com/gatsbyjs/gatsby/issues/16680)) ([f9bbb55](https://github.com/gatsbyjs/gatsby/commit/f9bbb55))
+
+## [2.13.67](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.66...gatsby@2.13.67) (2019-08-16)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.66](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.65...gatsby@2.13.66) (2019-08-16)
+
+### Bug Fixes
+
+- **gatsby:** don't break if an ancestor directory is inaccessible ([#15876](https://github.com/gatsbyjs/gatsby/issues/15876)) ([cac4246](https://github.com/gatsbyjs/gatsby/commit/cac4246))
+
 ## [2.13.65](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.64...gatsby@2.13.65) (2019-08-16)
 
 ### Bug Fixes

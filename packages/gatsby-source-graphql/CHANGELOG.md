@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.5...gatsby-source-graphql@2.1.6) (2019-08-20)
+
+### Bug Fixes
+
+- update apollo graphql packages ([#16794](https://github.com/gatsbyjs/gatsby/issues/16794)) ([09f68f8](https://github.com/gatsbyjs/gatsby/commit/09f68f8))
+
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.4...gatsby-source-graphql@2.1.5) (2019-08-09)
 
 ### Bug Fixes

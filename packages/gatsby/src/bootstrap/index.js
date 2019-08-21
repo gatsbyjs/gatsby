@@ -145,9 +145,8 @@ module.exports = async (args: BootstrapArgs) => {
     )
     activity.start()
     await del([
-      `public/*.{html,css}`,
       `public/**/*.{html,css}`,
-      `!public/page-data/404.html`,
+      `!public/page-data/**/*`,
       `!public/static`,
       `!public/static/**/*.{html,css}`,
     ])
