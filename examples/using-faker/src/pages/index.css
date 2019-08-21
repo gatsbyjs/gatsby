@@ -1,0 +1,24 @@
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "address . email"
+    "summary summary .";
+}
+
+.address-section {
+  grid-area: address;
+}
+
+.email-section {
+  grid-area: email;
+}
+
+.summary-section {
+  grid-area: summary;
+  margin-top: 20px;
+}
+
+.company-section {
+  margin-top: 30px;
+}

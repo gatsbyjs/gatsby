@@ -1,0 +1,20 @@
+{
+  "name": "using-excel",
+  "private": true,
+  "description": "Gatsby example site using using-excel",
+  "author": "SheetJS <dev@sheetjs.com>",
+  "dependencies": {
+    "gatsby": "^2.0.0",
+    "gatsby-source-filesystem": "^2.0.1",
+    "gatsby-transformer-excel": "^2.1.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "gatsby-example-using-styled-components",
+  "private": true,
+  "description": "Gatsby example site using the styled components plugin",
+  "version": "2.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.10.0",
+    "gatsby": "^2.0.91",
+    "gatsby-plugin-google-analytics": "^2.0.10",
+    "gatsby-plugin-offline": "^2.0.21",
+    "gatsby-plugin-react-helmet": "^3.0.5",
+    "gatsby-plugin-styled-components": "^3.0.4",
+    "lodash": "^4.17.14",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-helmet": "^5.2.0",
+    "slash": "^2.0.0",
+    "styled-components": "^4.1.3"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop"
+  }
+}

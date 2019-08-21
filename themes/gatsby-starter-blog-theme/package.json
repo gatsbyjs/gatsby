@@ -1,0 +1,16 @@
+{
+  "name": "gatsby-starter-blog-theme",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build"
+  },
+  "dependencies": {
+    "gatsby": "^2.13.73",
+    "gatsby-theme-blog": "^1.0.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  }
+}

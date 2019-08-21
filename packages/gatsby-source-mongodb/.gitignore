@@ -1,0 +1,4 @@
+/*.js
+!index.js
+yarn.lock
+tests

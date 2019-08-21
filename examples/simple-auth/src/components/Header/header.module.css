@@ -1,0 +1,44 @@
+.header {
+  background-color: rebeccapurple;
+}
+
+.header__wrap {
+  align-items: baseline;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 auto;
+  max-width: 640px;
+  padding: 1rem 0;
+}
+
+.header__heading {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header__nav {
+  font-size: 1.25rem;
+  margin-top: 0;
+  text-align: right;
+}
+
+.header__link {
+  color: white;
+  font-weight: bold;
+  margin-left: 0.75rem;
+  margin-top: 0;
+  padding: 0.25rem;
+  text-decoration: none;
+}
+
+.header__link--home {
+  font-size: 2rem;
+  margin-left: -0.25rem;
+}
+
+.header__link:hover,
+.header__link:active,
+.header__link:focus {
+  background: white;
+  color: rebeccapurple;
+}
