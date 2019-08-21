@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "async": "^2.6.3",
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.5",
     "fs-extra": "^7.0.0",
     "gatsby-core-utils": "^1.0.5",
     "got": "^8.3.2",
