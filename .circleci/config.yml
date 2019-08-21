@@ -291,7 +291,7 @@ jobs:
           command: yarn bootstrap
       - save_cache:
           paths:
-            - ~/.cache/yarn
+            - "%LOCALAPPDATA%/Yarn/config/global"
           key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: "Run Tests"
