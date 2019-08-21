@@ -83,7 +83,9 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program).catch(err => {
+  const stats = await buildProductionBundle(program, {
+    parentSpan: activity.span,
+  }).catch(err => {
     report.panic(handleWebpackError(`build-javascript`, err))
   })
   activity.end()
@@ -119,7 +121,9 @@ module.exports = async function build(program: BuildArgs) {
     activity.end()
   }
 
-  activity = report.activityTimer(`run page queries`)
+  activity = report.activityTimer(`run page queries`, {
+    parentSpan: buildSpan,
+  })
   activity.start()
   await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()

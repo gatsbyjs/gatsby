@@ -20,6 +20,22 @@ require(`../../db/__tests__/fixtures/ensure-loki`)()
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 // XXX(freiksenet): Expand
 describe(`Kitchen sink schema test`, () => {
   let schema

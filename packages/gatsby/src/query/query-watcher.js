@@ -95,9 +95,9 @@ const handleQuery = (
   return false
 }
 
-const updateStateAndRunQueries = isFirstRun => {
+const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
   const snapshot = getQueriesSnapshot()
-  return queryCompiler().then(queries => {
+  return queryCompiler({ parentSpan }).then(queries => {
     // If there's an error while extracting queries, the queryCompiler returns false
     // or zero results.
     // Yeah, should probably be an error but don't feel like threading the error
@@ -184,14 +184,14 @@ const clearInactiveComponents = () => {
   })
 }
 
-exports.extractQueries = () => {
+exports.extractQueries = ({ parentSpan } = {}) => {
   // Remove template components that point to not existing page templates.
   // We need to do this, because components data is cached and there might
   // be changes applied when development server isn't running. This is needed
   // only in initial run, because during development state will be adjusted.
   clearInactiveComponents()
 
-  return updateStateAndRunQueries(true).then(() => {
+  return updateStateAndRunQueries(true, { parentSpan }).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
     if (process.env.NODE_ENV !== `production`) {
