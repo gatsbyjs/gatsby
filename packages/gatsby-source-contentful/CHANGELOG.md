@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.22...gatsby-source-contentful@2.1.23) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- update dependency chalk to ^2.4.2 ([#16830](https://github.com/gatsbyjs/gatsby/issues/16830)) ([3c89607](https://github.com/gatsbyjs/gatsby/commit/3c89607))
+- update dependency contentful to ^6.1.3 ([#16838](https://github.com/gatsbyjs/gatsby/issues/16838)) ([53f67a7](https://github.com/gatsbyjs/gatsby/commit/53f67a7))
+- update dependency fs-extra to ^4.0.3 ([#16876](https://github.com/gatsbyjs/gatsby/issues/16876)) ([2cc762d](https://github.com/gatsbyjs/gatsby/commit/2cc762d))
+
 ## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.21...gatsby-source-contentful@2.1.22) (2019-08-21)
 
 ### Bug Fixes

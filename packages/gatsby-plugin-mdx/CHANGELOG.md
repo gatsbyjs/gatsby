@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.25...gatsby-plugin-mdx@1.0.26) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency fs-extra to ^7.0.1 ([#16878](https://github.com/gatsbyjs/gatsby/issues/16878)) ([f008fed](https://github.com/gatsbyjs/gatsby/commit/f008fed))
+
 ## [1.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.24...gatsby-plugin-mdx@1.0.25) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

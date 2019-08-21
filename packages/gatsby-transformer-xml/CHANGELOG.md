@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.4...gatsby-transformer-xml@2.1.5) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
 ## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.3...gatsby-transformer-xml@2.1.4) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-transformer-xml

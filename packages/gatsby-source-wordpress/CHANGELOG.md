@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.18...gatsby-source-wordpress@3.1.19) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
 ## [3.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.17...gatsby-source-wordpress@3.1.18) (2019-08-21)
 
 ### Bug Fixes

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.15...gatsby-transformer-remark@2.6.16) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- **gatsby:** Fix tracing so that everything happens under one span ([#16893](https://github.com/gatsbyjs/gatsby/issues/16893)) ([f8cae16](https://github.com/gatsbyjs/gatsby/commit/f8cae16))
+
 ## [2.6.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.14...gatsby-transformer-remark@2.6.15) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-transformer-remark

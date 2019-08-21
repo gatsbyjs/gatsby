@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.13...gatsby-plugin-sharp@2.2.14) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- update dependency fs-extra to ^7.0.1 ([#16878](https://github.com/gatsbyjs/gatsby/issues/16878)) ([f008fed](https://github.com/gatsbyjs/gatsby/commit/f008fed))
+- **gatsby:** Fix tracing so that everything happens under one span ([#16893](https://github.com/gatsbyjs/gatsby/issues/16893)) ([f8cae16](https://github.com/gatsbyjs/gatsby/commit/f8cae16))
+
 ## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.12...gatsby-plugin-sharp@2.2.13) (2019-08-20)
 
 ### Bug Fixes

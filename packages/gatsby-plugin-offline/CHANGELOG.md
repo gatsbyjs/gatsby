@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.7...gatsby-plugin-offline@2.2.8) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency cheerio to ^1.0.0-rc.3 ([#16831](https://github.com/gatsbyjs/gatsby/issues/16831)) ([55bee35](https://github.com/gatsbyjs/gatsby/commit/55bee35))
+
 ## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.6...gatsby-plugin-offline@2.2.7) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-plugin-offline

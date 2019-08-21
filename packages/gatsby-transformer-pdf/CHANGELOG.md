@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-pdf@1.1.3...gatsby-transformer-pdf@1.1.4) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
 ## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-pdf@1.1.2...gatsby-transformer-pdf@1.1.3) (2019-08-20)
 
 **Note:** Version bump only for package gatsby-transformer-pdf
