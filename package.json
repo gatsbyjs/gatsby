@@ -109,6 +109,6 @@
     "packages/*"
   ],
   "resolutions": {
-    "write-file-atomic": "2.4.1"
+    "write-file-atomic": "2.4.2"
   }
 }
