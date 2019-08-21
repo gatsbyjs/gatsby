@@ -72,6 +72,12 @@ exports.onPostBuild = (
     })
   })
 
+  Array.prototype.flat =
+    Array.prototype.flat ||
+    function() {
+      return [].concat(...this)
+    }
+
   const criticalFilePaths = _.uniq([
     ...getResourcesFromHTML(
       `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
