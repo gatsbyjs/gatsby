@@ -25,9 +25,7 @@ exports.sourceNodes = (
   const clientOptions = pluginOptions.clientOptions || { useNewUrlParser: true }
   const connectionURL = pluginOptions.connectionString
     ? `${pluginOptions.connectionString}/${dbName}${connectionExtraParams}`
-    : `mongodb://${authUrlPart}${serverOptions.address}:${
-        serverOptions.port
-      }/${dbName}${connectionExtraParams}`
+    : `mongodb://${authUrlPart}${serverOptions.address}:${serverOptions.port}/${dbName}${connectionExtraParams}`
   const mongoClient = new MongoClient(connectionURL, clientOptions)
   return mongoClient
     .connect()

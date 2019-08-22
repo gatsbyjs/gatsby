@@ -204,9 +204,7 @@ const resolveFluid = (image, options) => {
 
   // If the users didn't set a default sizes, we'll make one.
   if (!options.sizes) {
-    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${
-      options.maxWidth
-    }px`
+    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
   }
 
   // Create sizes (in width) for the image. If the max width of the container
