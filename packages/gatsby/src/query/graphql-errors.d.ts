@@ -1,1 +1,1 @@
-type RelayGraphQLError = Error & { validationErrors?: Object };
+type RelayGraphQLError = Error & { validationErrors?: Object }

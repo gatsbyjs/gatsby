@@ -1,6 +1,5 @@
 type BootstrapArgs = {
-  directory: string,
-  prefixPaths?: boolean,
-  parentSpan: Object,
+  directory: string
+  prefixPaths?: boolean
+  parentSpan: Object
 }
-

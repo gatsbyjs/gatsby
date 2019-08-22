@@ -1,11 +1,8 @@
-import {
-  GraphQLOutputType,
-} from 'graphql';
-import {Node} from '../../index';
+import { GraphQLOutputType } from "graphql"
+import { Node } from "../../index"
 
 type IDOrNode = string | { id: string }
 type TypeOrTypeName = string | GraphQLOutputType
-
 
 /**
  * Optional page dependency information.
@@ -15,36 +12,36 @@ type TypeOrTypeName = string | GraphQLOutputType
  * @property {string} [connectionType] Mark this dependency as a connection
  */
 interface PageDependencies {
-  path: string;
-  connectionType?: string;
+  path: string
+  connectionType?: string
 }
 
 interface QueryArguments {
-  type: TypeOrTypeName;
-  query: { filter: Object, sort?: Object };
-  firstOnly?: boolean;
+  type: TypeOrTypeName
+  query: { filter: Object; sort?: Object }
+  firstOnly?: boolean
 }
 
 export interface NodeModel {
   getNodeById(
-    arg1: { id: IDOrNode, type?: TypeOrTypeName },
+    arg1: { id: IDOrNode; type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
-  ): any | null;
+  ): any | null
   getNodesByIds(
-    arg1: { ids: Array<IDOrNode>, type?: TypeOrTypeName },
+    arg1: { ids: Array<IDOrNode>; type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
-  ): Array<any>;
+  ): Array<any>
   getAllNodes(
     arg1: { type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
-  ): Array<any>;
+  ): Array<any>
   runQuery(
     args: QueryArguments,
     pageDependencies?: PageDependencies
-  ): Promise<any>;
-  getTypes(): Array<string>;
+  ): Promise<any>
+  getTypes(): Array<string>
   trackPageDependencies<nodeOrNodes extends Node | Node[]>(
     result: nodeOrNodes,
     pageDependencies?: PageDependencies
-  ): nodeOrNodes;
+  ): nodeOrNodes
 }

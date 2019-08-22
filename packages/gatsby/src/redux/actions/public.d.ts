@@ -1,6 +1,6 @@
 export interface Job {
   // The id of the job
-  id: string,
+  id: string
 }
 
 export interface Page {
@@ -8,14 +8,14 @@ export interface Page {
    * The path of the page
    * Any valid URL. Must start with a forward slash
    */
-  path: string,
+  path: string
   /**
    * Path that Reach Router uses to match the page on the client side.
    * @see {@link docs on matchPath|/docs/gatsby-internals-terminology/#matchpath}
    */
-  matchPath: string,
+  matchPath: string
   // The absolute path to the component for this page
-  component: string,
+  component: string
   /**
    * Context data for this page. Passed as props
    * to the component `this.props.pageContext` as well as to the graphql query
@@ -31,38 +31,37 @@ export interface Page {
    *   },
    * })
    */
-  context?: Object,
-  internalComponentName: string,
-  componentChunkName: string,
-  updatedAt: number,
+  context?: Object
+  internalComponentName: string
+  componentChunkName: string
+  updatedAt: number
 }
 
 export interface ActionOptions {
-  traceId: string | null,
-  parentSpan: Object | null,
-  followsSpan: Object | null,
+  traceId: string | null
+  parentSpan: Object | null
+  followsSpan: Object | null
 }
-
 
 export interface CreateNodeInput {
   // the target node object
-  node: Object,
+  node: Object
   /**
    * @deprecated
    * the name for the field
    */
-  fieldName?: string,
+  fieldName?: string
   /**
    * @deprecated
    * the value for the field
    */
-  fieldValue?: string,
+  fieldValue?: string
   /**
    * the name for the field
    */
-  name?: string,
+  name?: string
   /**
    * the value for the field
    */
-  value: any,
+  value: any
 }
