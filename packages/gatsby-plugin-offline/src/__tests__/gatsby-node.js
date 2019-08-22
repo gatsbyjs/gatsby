@@ -3,14 +3,15 @@ const fs = require(`fs`)
 
 describe(`getPrecachePages`, () => {
   const gatsbyNode = rewire(`../gatsby-node`)
+  const getPrecachePages = gatsbyNode.__get__(`getPrecachePages`)
 
   it(`correctly matches pages`, () => {
     const base = `${__dirname}/fixtures/public`
 
-    const allPages = gatsbyNode.getPrecachePages([`**/*`], base)
+    const allPages = getPrecachePages([`**/*`], base)
     expect(allPages).toMatchSnapshot()
 
-    const dir1Pages = gatsbyNode.getPrecachePages([`/dir1/*`], base)
+    const dir1Pages = getPrecachePages([`/dir1/*`], base)
     expect(dir1Pages).toMatchSnapshot()
   })
 })
