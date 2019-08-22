@@ -244,7 +244,7 @@ const prompt = {
    * @param {ReadlineOptions} rlOpts Options to override readline interface
    * with
    */
-  new: async (rlOpts: ?ReadlineOptions) => {
+  new: (rlOpts: ?ReadlineOptions) => {
     const [rl, done] = create(rlOpts)
     return {
       ask: ask(rl),
