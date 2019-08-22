@@ -133,7 +133,7 @@ exports.onPostBuild = (args, pluginOptions) => {
         let userAppend
         try {
           userAppend = fs.readFileSync(pluginOptions.appendScript, `utf8`)
-        } catch {
+        } catch (e) {
           throw new Error(`Couldn't find the specified offline inject script`)
         }
         fs.appendFileSync(`public/sw.js`, `\n` + userAppend)
