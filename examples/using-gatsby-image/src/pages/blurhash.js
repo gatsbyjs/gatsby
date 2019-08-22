@@ -40,7 +40,7 @@ const BlurHash = ({ data, location }) => (
     </p>
     <p>
       This technique is the default behavior when querying for an image with
-      QraphQL and providing a fragment like <code>GatsbyImageSharpFixed</code>.
+      GraphQL and providing a fragment like <code>GatsbyImageSharpFixed</code>.
       If you don’t want to use the blur-up effect, choose a fragment with{` `}
       <code>noBase64</code> at the end.
     </p>
