@@ -29,30 +29,17 @@ const readStats = () => {
   }
 }
 
-const getAssetsForChunks = chunks => {
+function getAssetsForChunks(chunks) {
   const files = _.flatten(
     chunks.map(chunk => readStats().assetsByChunkName[chunk])
   )
   return _.compact(files)
 }
 
-exports.onPostBuild = (
-  args,
-  { precachePages: precachePagesGlobs = [], appendScript = null, workboxConfig }
-) => {
-  const { pathPrefix } = args
-  const rootDir = `public`
-
-  // Get exact asset filenames for app and offline app shell chunks
-  const files = getAssetsForChunks([
-    `app`,
-    `webpack-runtime`,
-    `component---node-modules-gatsby-plugin-offline-app-shell-js`,
-  ])
-  const appFile = files.find(file => file.startsWith(`app-`))
-
+function getPrecachePages(globs, rootDir) {
   const precachePages = []
-  precachePagesGlobs.forEach(page => {
+
+  globs.forEach(page => {
     const matches = glob.sync(`${process.cwd()}/${rootDir}${page}`)
     matches.forEach(path => {
       const isDirectory = fs.lstatSync(path).isDirectory()
@@ -72,12 +59,31 @@ exports.onPostBuild = (
     })
   })
 
+  return precachePages
+}
+
+exports.onPostBuild = (
+  args,
+  { precachePages: precachePagesGlobs = [], appendScript = null, workboxConfig }
+) => {
+  const { pathPrefix } = args
+  const rootDir = `public`
+
+  // Get exact asset filenames for app and offline app shell chunks
+  const files = getAssetsForChunks([
+    `app`,
+    `webpack-runtime`,
+    `component---node-modules-gatsby-plugin-offline-app-shell-js`,
+  ])
+  const appFile = files.find(file => file.startsWith(`app-`))
+
   Array.prototype.flat =
     Array.prototype.flat ||
     function() {
       return [].concat(...this)
     }
 
+  const precachePages = getPrecachePages(precachePagesGlobs, rootDir)
   const criticalFilePaths = _.uniq([
     ...getResourcesFromHTML(
       `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
