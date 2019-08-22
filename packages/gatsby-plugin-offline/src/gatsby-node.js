@@ -1,11 +1,12 @@
-const fs = require(`fs`)
-const workboxBuild = require(`workbox-build`)
+// use `let` to workaround https://github.com/jhnns/rewire/issues/144
+let fs = require(`fs`)
+let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const slash = require(`slash`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
-const getResourcesFromHTML = require(`./get-resources-from-html`)
+let getResourcesFromHTML = require(`./get-resources-from-html`)
 
 exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {

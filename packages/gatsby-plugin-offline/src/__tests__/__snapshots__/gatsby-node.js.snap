@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getPrecachePages correctly matches pages 1`] = `
+Array [
+  "/home/david/Code/gatsby/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/index.html",
+  "/home/david/Code/gatsby/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir2/index.html",
+  "/home/david/Code/gatsby/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/index.html",
+  "/home/david/Code/gatsby/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/test.html",
+]
+`;
+
+exports[`getPrecachePages correctly matches pages 2`] = `
+Array [
+  "/home/david/Code/gatsby/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/page1.html",
+  "/home/david/Code/gatsby/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/page2.html",
+]
+`;
