@@ -18,10 +18,10 @@
     "find-yarn-workspace-root": "^1.2.1",
     "fs-extra": "^4.0.3",
     "is-absolute": "^0.2.6",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "request": "2.88.0",
     "signal-exit": "^3.0.2",
-    "verdaccio": "^3.11.1",
+    "verdaccio": "^3.12.3",
     "yargs": "^8.0.2"
   },
   "devDependencies": {

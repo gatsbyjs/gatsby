@@ -28,8 +28,8 @@
     "bluebird": "^3.5.5",
     "fs-exists-cached": "^1.0.0",
     "gatsby-page-utils": "^0.0.8",
-    "glob": "^7.1.1",
-    "lodash": "^4.17.14",
+    "glob": "^7.1.4",
+    "lodash": "^4.17.15",
     "micromatch": "^3.1.10"
   },
   "devDependencies": {
