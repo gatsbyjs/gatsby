@@ -72,7 +72,7 @@
     }
   },
   "scripts": {
-    "bootstrap": "npm-run-all -s check-versions lerna-prepare",
+    "bootstrap": "npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
     "check-versions": "babel-node scripts/check-versions.js",
     "check-repo-fields": "babel-node scripts/check-repo-fields.js",
     "format": "npm run format:code && npm run format:other && npm run format:svg",
