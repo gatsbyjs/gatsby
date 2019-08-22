@@ -147,7 +147,7 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
 }
 
 /**
- * This (internal) function will prompt the user with a specific question.
+ * This function will prompt the user with a specific question.
  * @param {readline.Interface} rl The readline interface to use for the prompts
  * @returns {(query, cb, askOpts: AskOptions) => void} Call this interface to generate the prompt
  * * `query`: The question to ask the user
