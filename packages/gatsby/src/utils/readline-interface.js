@@ -100,7 +100,7 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
    * Call `done()` to break down the readline interface
    */
   const done = () => {
-    stdin.setRawMode(isRaw)
+    rl.setRaw(isRaw)
     rl.removeAllListeners()
     rl.pause()
     rl.close()
@@ -112,7 +112,7 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
   })
 
   rl.setRaw = (rawMode = true) => {
-    stdin.setRawMode(rawMode)
+    if (rl.input.isTTY) stdin.setRawMode(rawMode)
   }
 
   rl.listen = keypress => {
@@ -141,6 +141,8 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
     }
   }
 
+  rl.isTTY = () => rl.input.isTTY
+
   rl.resume()
 
   return [rl, done]
@@ -164,6 +166,9 @@ const ask = (rl: readline.Interface) => (
   cb: (answer: any) => void,
   askOpts: ?KeyInOptions = {}
 ) => {
+  if (askOpts && askOpts.single) {
+    if (!rl.isTTY) askOpts.single = false
+  }
   const opts: AskOpts = {
     single: false,
     ...askOpts,
