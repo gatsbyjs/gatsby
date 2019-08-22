@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.2.4...gatsby-transformer-excel@2.2.5) (2019-08-22)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and… ([#16948](https://github.com/gatsbyjs/gatsby/issues/16948)) ([1c34c9b](https://github.com/gatsbyjs/gatsby/commit/1c34c9b))
+
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@2.2.3...gatsby-transformer-excel@2.2.4) (2019-08-22)
 
 **Note:** Version bump only for package gatsby-transformer-excel
