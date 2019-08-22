@@ -1,10 +1,8 @@
 /* @flow */
 const readline = require(`readline`)
+const MuteStream = require(`mute-stream`)
 
 type ReadlineOptions = {
-  input: NodeJS.ReadStream,
-  output: NodeJS.WriteStream,
-  terminal: boolean,
   historySize: ?number,
   prompt: ?string,
   crlfDelay: ?number,
@@ -12,65 +10,232 @@ type ReadlineOptions = {
   escapeCodeTimeout: ?number,
 }
 
-const defaultIntfcOpts: ReadlineOptions = {
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false,
+type InternalOptions = {
+  input: NodeJS.ReadStream,
+  output: NodeJS.WriteStreamm,
+  terminal: boolean,
+  ...ReadlineOptions,
+}
+
+type AskOpts = {
+  single: ?boolean,
+  validInput: ?(string[]),
+  defaultValue: ?string,
+  returnBoolean: ?{
+    trueValue: string,
+  },
 }
 
 /**
- * Spins up and returns a readline interface
- * @param {ReadlineOptions} opts
+ * Collection of various readline utility functions
  */
-function create(opts: ?ReadlineOptions) {
-  const rlOpts = {
-    ...defaultIntfcOpts,
-    ...opts,
-  }
-
-  const stdin = rlOpts.input
-  const stdout = rlOpts.output
-
-  if (!stdin || (stdin !== process.stdin && !stdin.isTTY)) {
-    throw new Error(`Invalid stream passed`)
-  }
-  if (!stdout || (stdout !== process.stdout && !stdout.isTTY)) {
-    throw new Error(`Invalid output passed`)
-  }
-
-  const rl = readline.createInterface({
-    ...defaultIntfcOpts,
-    ...opts,
-  })
-
-  // const isRaw = stdin.isRaw
-  // if (stdin.isTTY) stdin.setRawMode(true)
-
-  // Save a reference to the original
-  // close function, so we can call it later
-  const rlClose = rl.close
-
-  const close = () => {
-    // if (stdin.isTTY) stdin.setRawMode(isRaw)
-    rl.pause()
-    rlClose()
-  }
-  // Overloading the close interface, so we
-  // can inject some custom behavior
-  rl.close = close
-
-  // rl.resume()
-
-  return rl
+const RlUtil = {
+  showCursor(rl) {
+    rl.output.write(`\x1B[?25h`)
+  },
+  hideCursor(rl) {
+    rl.output.write(`\x1B[?25l`)
+  },
+  cursorHome(rl) {
+    readline.cursorTo(rl.output, 0)
+  },
+  cursorUp(rl, n = -1) {
+    readline.moveCursor(rl.output, 0, n)
+  },
+  cursorDown(rl, n = 1) {
+    readline.moveCursor(rl.output, 0, n)
+  },
+  cursorLeft(rl, n = -1) {
+    readline.moveCursor(rl.output, n, 0)
+  },
+  cursorRight(rl, n = 1) {
+    readline.moveCursor(rl.output, n, 0)
+  },
+  clearLine(rl) {
+    readline.clearLine(rl.output, 0)
+  },
+  clearScreen(rl) {
+    readline.cursorTo(rl.output, 0, 0)
+    readline.clearScreenDown(rl.output)
+  },
+  ceol(rl) {
+    readline.clearLine(rl.output, 1)
+  },
+  ceos(rl) {
+    readline.clearScreenDown(rl.output)
+  },
 }
 
-// const ask = rl => (query: any, cb: (answer: any) => void) => {
-//   rl.setPrompt(query)
-//   rl.prompt()
-//   rl.on(`line`, input => {
-//     cb(input.trim())
-//   })
-// }
+/**
+ * Spins up and returns a readline interface, for tty IO ONLY!
+ * Using this function will give you nearly a barebones readline interface
+ * @param {ReadlineOptions} opts Readline option overrides
+ * @returns {[readline.Interface, done]} Returns a tuple containing the readline
+ * interface, and the teardown method
+ */
+const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
+  const stdin = process.stdin
+  const stdout = process.stdout
+  const msIn = new MuteStream()
+  const msOut = new MuteStream()
+  const isRaw = stdin.isRaw
+
+  const defaultPrompt = (opts && opts.prompt) || ``
+  let promptLnCount = defaultPrompt.split(`\n`).length
+
+  stdin.pipe(msIn)
+  msOut.pipe(stdout)
+  msIn.unmute()
+  msOut.unmute()
+
+  const rlOpts: InternalOptions = {
+    ...opts,
+    input: msIn,
+    output: msOut,
+    terminal: true,
+  }
+  const rl = readline.createInterface(rlOpts)
+
+  /**
+   * Call `done()` to break down the readline interface
+   */
+  const done = () => {
+    stdin.setRawMode(isRaw)
+    rl.removeAllListeners()
+    rl.pause()
+    rl.close()
+  }
+
+  rl.on(`SIGINT`, () => {
+    done()
+    process.exit()
+  })
+
+  rl.setRaw = (rawMode = true) => {
+    stdin.setRawMode(rawMode)
+  }
+
+  rl.listen = keypress => {
+    rl.setRaw()
+    readline.emitKeypressEvents(rl.input, rl)
+    rl.input.unmute()
+    rl.input.on(`keypress`, keypress)
+  }
+
+  rl._setPrompt = rl.setPrompt
+  rl.setPrompt = (newPrompt: string) => {
+    promptLnCount = newPrompt.split(`\n`).length
+    rl._setPrompt(newPrompt)
+  }
+
+  rl.resetPrompt = () => {
+    rl.setPrompt(defaultPrompt)
+  }
+
+  rl.clearPrompt = (offset = 0) => {
+    RlUtil.cursorHome(rl)
+    RlUtil.cursorUp(rl, offset)
+    for (let x = 0; x < promptLnCount; ++x) {
+      RlUtil.clearLine(rl)
+      RlUtil.cursorUp(rl)
+    }
+  }
+
+  rl.resume()
+
+  return [rl, done]
+}
+
+/**
+ * This (internal) function will prompt the user with a specific question.
+ * @param {readline.Interface} rl The readline interface to use for the prompts
+ * @returns {(query, cb, askOpts: AskOptions) => void} Call this interface to generate the prompt
+ * * `query`: The question to ask the user
+ * * `cb`: The function to pass the answer to
+ * * `askOpts`: A collection of options to refine the experience of the prompts
+ * * * `single`: boolean; accept only single characters for input
+ * * * `validInput`: string[]; collection of valid inputs.  If not defined, any input is considered valid
+ * * * `defaultInput`: string; Value to choose if the user enters a null value (return key)
+ * * * `returnBoolean`: { trueValue: string }; If defined, then `cb()` will be called with a boolean value.
+ * If input matches `trueValue` then `cb(true)`, otherwise `cb(false)`.
+ */
+const ask = (rl: readline.Interface) => (
+  query: any,
+  cb: (answer: any) => void,
+  askOpts: ?KeyInOptions = {}
+) => {
+  const opts: AskOpts = {
+    single: false,
+    ...askOpts,
+  }
+
+  RlUtil.showCursor(rl)
+
+  const validateInput = (input): void => {
+    let good = true
+    let answer = input.toString()
+    let sensitivity = `i`
+    if (input.length === 0) {
+      answer = opts.defaultValue || ``
+    }
+    if (opts.validInput) {
+      good = opts.validInput.some(val =>
+        new RegExp(`^${answer}$`, sensitivity).test(val.toString())
+      )
+    }
+    if (good) {
+      if (opts.returnBoolean) {
+        if (
+          new RegExp(`^${answer}$`, sensitivity).test(
+            opts.returnBoolean.trueValue,
+            sensitivity
+          )
+        ) {
+          answer = true
+        } else {
+          answer = false
+        }
+      }
+      cb(answer)
+    }
+    return good
+  }
+
+  const onKeypress = (chunk, key): void => {
+    if (key.ctrl && key.name === `c`) {
+      rl.emit(`SIGINT`)
+    } else if (key.name === `return` && opts.single) {
+      chunk = opts.defaultValue || ``
+      key.name = chunk
+    } else if (key.ctrl || key.alt) {
+      return void 0
+    }
+    if (opts.single) {
+      if (validateInput(chunk)) {
+        rl.output.unmute()
+        rl.output.write(`${chunk}\n`)
+        rl.input.removeListener(`keypress`, onKeypress)
+      } else {
+        return void 0
+      }
+    }
+    return key
+  }
+
+  rl.setPrompt(query)
+  rl.listen(onKeypress)
+  rl.prompt()
+  if (opts.single) {
+    rl.output.mute()
+  } else {
+    rl.on(`line`, data => {
+      if (!validateInput(data)) {
+        rl.clearPrompt(2)
+        rl.prompt()
+      }
+    })
+  }
+}
 
 const prompt = {
   /**
@@ -80,11 +245,10 @@ const prompt = {
    * with
    */
   new: async (rlOpts: ?ReadlineOptions) => {
-    const rl = create(rlOpts)
+    const [rl, done] = create(rlOpts)
     return {
-      // ask: ask(rl),
-      ask: rl.question,
-      done: rl.close,
+      ask: ask(rl),
+      done,
     }
   },
   /**
@@ -97,17 +261,15 @@ const prompt = {
   once: (
     query: string,
     cb: (answer: any) => void,
+    askOpts: ?AskOpts,
     rlOpts: ?ReadlineOptions
   ) => {
-    const rl = create(rlOpts)
-    rl.question(query, answer => {
-      rl.close()
+    const [rl, done] = create(rlOpts)
+    const _cb = answer => {
       cb(answer)
-    })
-    // ask(rl)(query, answer => {
-    //   cb(answer)
-    //   rl.close()
-    // })
+      done()
+    }
+    ask(rl)(query, _cb, askOpts)
   },
 }
 
