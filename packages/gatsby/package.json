@@ -23,7 +23,7 @@
     "@reach/router": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
-    "address": "1.1.0",
+    "address": "1.1.1",
     "autoprefixer": "^9.6.1",
     "axios": "^0.19.0",
     "babel-core": "7.0.0-bridge.0",
@@ -79,7 +79,7 @@
     "gatsby-telemetry": "^1.1.17",
     "glob": "^7.1.4",
     "got": "8.3.2",
-    "graphql": "^14.4.2",
+    "graphql": "^14.5.0",
     "graphql-compose": "^6.3.5",
     "graphql-playground-middleware-express": "^1.7.12",
     "invariant": "^2.2.4",
@@ -186,7 +186,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^14.4.2"
+    "graphql": "^14.5.0"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
