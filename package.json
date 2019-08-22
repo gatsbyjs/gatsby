@@ -1,10 +1,10 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/node": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
     "@lerna/prompt": "3.13.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "babel-jest": "^24.9.0",
     "chalk": "^2.4.2",
     "chokidar": "^1.7.0",
