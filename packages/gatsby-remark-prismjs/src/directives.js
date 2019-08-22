@@ -45,11 +45,7 @@ const stripComment = line =>
    */
   line.replace(
     new RegExp(
-      `\\s*(${HIGHLIGHTED_JSX_COMMENT_START}|${PRISMJS_COMMENT_OPENING_SPAN_TAG}${
-        COMMENT_START.source
-      })\\s*${DIRECTIVE.source}\\s*(${HIGHLIGHTED_JSX_COMMENT_END}|${
-        COMMENT_END.source
-      }${PRISMJS_COMMENT_CLOSING_SPAN_TAG})`
+      `\\s*(${HIGHLIGHTED_JSX_COMMENT_START}|${PRISMJS_COMMENT_OPENING_SPAN_TAG}${COMMENT_START.source})\\s*${DIRECTIVE.source}\\s*(${HIGHLIGHTED_JSX_COMMENT_END}|${COMMENT_END.source}${PRISMJS_COMMENT_CLOSING_SPAN_TAG})`
     ),
     ``
   )

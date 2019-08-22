@@ -120,9 +120,7 @@ function getGraphQLTag(path) {
     return { ast, text, hash, isGlobal }
   } catch (err) {
     throw new Error(
-      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${
-        err.message
-      }`
+      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${err.message}`
     )
   }
 }

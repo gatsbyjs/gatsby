@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-offline",
   "description": "Gatsby plugin which sets up a site to be able to run offline",
-  "version": "2.2.7",
+  "version": "2.2.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,8 +9,8 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "cheerio": "^1.0.0-rc.3",
-    "idb-keyval": "^3.1.0",
-    "lodash": "^4.17.14",
+    "idb-keyval": "^3.2.0",
+    "lodash": "^4.17.15",
     "slash": "^3.0.0",
     "workbox-build": "^4.3.1"
   },
