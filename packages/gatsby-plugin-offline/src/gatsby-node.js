@@ -36,11 +36,11 @@ function getAssetsForChunks(chunks) {
   return _.compact(files)
 }
 
-function getPrecachePages(globs, rootDir) {
+function getPrecachePages(globs, base) {
   const precachePages = []
 
   globs.forEach(page => {
-    const matches = glob.sync(`${process.cwd()}/${rootDir}${page}`)
+    const matches = glob.sync(base + page)
     matches.forEach(path => {
       const isDirectory = fs.lstatSync(path).isDirectory()
       let precachePath
@@ -83,7 +83,11 @@ exports.onPostBuild = (
       return [].concat(...this)
     }
 
-  const precachePages = getPrecachePages(precachePagesGlobs, rootDir)
+  const precachePages = getPrecachePages(
+    precachePagesGlobs,
+    `${process.cwd()}/${rootDir}`
+  )
+
   const criticalFilePaths = _.uniq([
     ...getResourcesFromHTML(
       `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
