@@ -17,7 +17,7 @@
     "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.2.0",
-    "graphql": "^14.4.2"
+    "graphql": "^14.5.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/graphql-skip-limit#readme",
   "keywords": [
