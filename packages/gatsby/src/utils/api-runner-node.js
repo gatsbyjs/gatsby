@@ -274,9 +274,7 @@ module.exports = async (api, args = {}, pluginSource) =>
     if (api === `setFieldsOnGraphQLNodeType`) {
       id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
     } else if (api === `onCreateNode`) {
-      id = `${api}${apiRunInstance.startTime}${
-        args.node.internal.contentDigest
-      }${args.traceId}`
+      id = `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${args.traceId}`
     } else if (api === `preprocessSource`) {
       id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
     } else if (api === `onCreatePage`) {
@@ -286,9 +284,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       // `parentSpan` field that can be quite large. So we omit it
       // before calling stringify
       const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
-      id = `${api}|${apiRunInstance.startTime}|${
-        apiRunInstance.traceId
-      }|${argsJson}`
+      id = `${api}|${apiRunInstance.startTime}|${apiRunInstance.traceId}|${argsJson}`
     }
     apiRunInstance.id = id
 
