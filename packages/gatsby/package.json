@@ -96,6 +96,7 @@
     "mitt": "^1.1.2",
     "mkdirp": "^0.5.1",
     "moment": "^2.21.0",
+    "mute-stream": "^0.0.8",
     "name-all-modules-plugin": "^1.0.1",
     "normalize-path": "^2.1.1",
     "null-loader": "^0.1.1",
