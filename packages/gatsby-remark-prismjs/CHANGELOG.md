@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.7...gatsby-remark-prismjs@3.3.8) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 ## [3.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.6...gatsby-remark-prismjs@3.3.7) (2019-08-22)
 
 **Note:** Version bump only for package gatsby-remark-prismjs
