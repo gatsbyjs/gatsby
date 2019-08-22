@@ -79,17 +79,18 @@ const waitJobsFinished = () =>
     onEndJob()
   })
 
-async function startServer(program) {
+async function startServer(program, { activity }) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const workerPool = WorkerPool.create()
-  const createIndexHtml = async () => {
+  const createIndexHtml = async ({ activity }) => {
     try {
       await buildHTML.buildPages({
         program,
         stage: `develop-html`,
         pagePaths: [`/`],
         workerPool,
+        activity,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
@@ -107,13 +108,14 @@ async function startServer(program) {
     }
   }
 
-  await createIndexHtml()
+  await createIndexHtml({ activity })
 
   const devConfig = await webpackConfig(
     program,
     directory,
     `develop`,
-    program.port
+    program.port,
+    { parentSpan: activity.span }
   )
 
   const compiler = webpack(devConfig)
@@ -160,7 +162,7 @@ async function startServer(program) {
         schema,
         graphiql: false,
         context: withResolverContext({}, schema, schemaCustomization.context),
-        formatError(err) {
+        customFormatErrorFn(err) {
           return {
             ...formatError(err),
             stack: err.stack ? err.stack.split(`\n`) : [],
@@ -241,9 +243,7 @@ async function startServer(program) {
               if (response) {
                 res.writeHead(response.statusCode, response.headers)
               } else {
-                const message = `Error when trying to proxy request "${
-                  req.originalUrl
-                }" to "${proxiedUrl}"`
+                const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
                 report.error(message, err)
                 res.sendStatus(500)
@@ -290,9 +290,7 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${
-            program.port
-          } as there's already a process listening on that port.`
+          `Unable to start Gatsby on port ${program.port} as there's already a process listening on that port.`
         )
         return
       }
@@ -375,7 +373,10 @@ module.exports = async (program: any) => {
   queryUtil.startListening(queryQueue.createDevelopQueue())
   queryWatcher.startWatchDeletePage()
 
-  const [compiler] = await startServer(program)
+  activity = report.activityTimer(`start webpack server`)
+  activity.start()
+  const [compiler] = await startServer(program, { activity })
+  activity.end()
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -519,9 +520,7 @@ module.exports = async (program: any) => {
           chalk.yellow(`is deprecated. Please use`),
           chalk.cyan(fixMap[api].newName),
           chalk.yellow(
-            `instead. For migration instructions, see ${
-              fixMap[api].docsLink
-            }\nCheck the following files:`
+            `instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`
           )
         )
         console.log()
