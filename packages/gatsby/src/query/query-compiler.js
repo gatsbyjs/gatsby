@@ -88,12 +88,7 @@ class Runner {
    * @param {GraphQLSchema} schema
    * @param $3 {}
    */
-  constructor(
-    base: string,
-    additional: string[],
-    schema: GraphQLSchema,
-    { parentSpan } = {}
-  ) {
+  constructor(base, additional, schema, { parentSpan } = {}) {
     this.base = base
     this.additional = additional
     this.schema = schema
@@ -385,9 +380,7 @@ export { Runner, resolveThemes }
  * @param $0
  * @returns {Promise<Map<string, RootQuery>>}
  */
-export default async function compile({ parentSpan } = {}): Promise<
-  Map<string, RootQuery>
-> {
+export default async function compile({ parentSpan } = {}) {
   // TODO: swap plugins to themes
   const { program, schema, themes, flattenedPlugins } = store.getState()
 
