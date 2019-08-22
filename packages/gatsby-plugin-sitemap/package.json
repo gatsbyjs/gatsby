@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.0.0",
     "minimatch": "^3.0.4",
     "pify": "^3.0.0",
-    "sitemap": "^1.12.0"
+    "sitemap": "^1.13.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

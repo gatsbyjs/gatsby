@@ -12,8 +12,8 @@
     "normalize-path": "^2.1.1",
     "npm-package-arg": "^6.1.0",
     "recursive-readdir": "^2.2.2",
-    "unist-util-map": "^1.0.3",
-    "urijs": "^1.19.0"
+    "unist-util-map": "^1.0.5",
+    "urijs": "^1.19.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

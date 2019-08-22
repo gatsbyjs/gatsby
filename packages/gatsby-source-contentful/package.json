@@ -20,8 +20,8 @@
     "gatsby-source-filesystem": "^2.1.12",
     "is-online": "^7.0.0",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.14",
-    "qs": "^6.4.0"
+    "lodash": "^4.17.15",
+    "qs": "^6.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
