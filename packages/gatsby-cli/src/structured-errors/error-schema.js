@@ -6,7 +6,7 @@ const Position = Joi.object().keys({
 })
 
 const errorSchema = Joi.object().keys({
-  id: Joi.string(),
+  errorCode: Joi.string(),
   text: Joi.string(),
   stack: Joi.array().items(Joi.object({}).unknown()),
   level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
