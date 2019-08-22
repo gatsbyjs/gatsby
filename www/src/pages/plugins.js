@@ -25,9 +25,7 @@ class Plugins extends Component {
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            minHeight: `calc(100vh - (${sizes.headerHeight} + ${
-              sizes.bannerHeight
-            }))`,
+            minHeight: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
           }}
         >
           <div

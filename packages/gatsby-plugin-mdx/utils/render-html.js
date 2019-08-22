@@ -91,9 +91,7 @@ class MdxHtmlBuilderWebpackPlugin {
 
         if (typeof render !== `function`) {
           throw new Error(
-            `Export from '${
-              self.entry
-            }'  must be a function that returns a htmlString value.`
+            `Export from '${self.entry}'  must be a function that returns a htmlString value.`
           )
         }
         // use function here
