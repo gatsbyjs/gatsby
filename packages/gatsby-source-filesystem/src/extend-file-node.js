@@ -14,9 +14,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
       description: `Copy file to static directory and return public url to it`,
       resolve: (file, fieldArgs, context) => {
         const details = getNodeAndSavePathDependency(file.id, context.path)
-        const fileName = `${file.name}-${file.internal.contentDigest}${
-          details.ext
-        }`
+        const fileName = `${file.name}-${file.internal.contentDigest}${details.ext}`
 
         const publicPath = path.join(
           process.cwd(),
@@ -29,9 +27,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
           fs.copy(details.absolutePath, publicPath, err => {
             if (err) {
               console.error(
-                `error copying file from ${
-                  details.absolutePath
-                } to ${publicPath}`,
+                `error copying file from ${details.absolutePath} to ${publicPath}`,
                 err
               )
             }

@@ -3697,3 +3697,18 @@
   features:
     - Pages and components are classes.
     - A skeleton SCSS project added with prefixing
+- url: https://brevifolia-gatsby-forestry.netlify.com/
+  repo: https://github.com/kendallstrautman/brevifolia-gatsby-forestry
+  description: A minimal starter blog built with Gatsby & Forestry CMS
+  tags:
+    - CMS:Forestry.io
+    - Blog
+    - Markdown
+    - Styling:SCSS
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
+    - Minimalist, responsive design & typography
+    - Create new markdown posts dynamically
+    - Configured to work automatically with Forestry CMS
+    - Customizable 'info' page
+    - Simple layout & scss architecture, easily extensible

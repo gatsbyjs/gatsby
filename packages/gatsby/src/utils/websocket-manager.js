@@ -96,9 +96,7 @@ const getCachedStaticQueryResults = (
     const fileResult = fs.readFileSync(filePath, `utf-8`)
     if (fileResult === `undefined`) {
       console.log(
-        `Error loading a result for the StaticQuery in "${
-          staticQueryComponent.componentPath
-        }". Query was not run and no cached result was found.`
+        `Error loading a result for the StaticQuery in "${staticQueryComponent.componentPath}". Query was not run and no cached result was found.`
       )
       return
     }

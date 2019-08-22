@@ -1,6 +1,12 @@
 {
   "extends": ["config:base", ":disablePeerDependencies"],
-  "includePaths": ["starters/**", "themes/**", "packages/**", "www"],
+  "includePaths": [
+    "package.json",
+    "starters/**",
+    "themes/**",
+    "packages/**",
+    "www"
+  ],
   "major": {
     "masterIssueApproval": true
   },
@@ -9,5 +15,13 @@
   "rangeStrategy": "bump",
   "bumpVersion": null,
   "semanticCommitScope": null,
-  "prHourlyLimit": 0
+  "prHourlyLimit": 0,
+  "packageRules": [
+    {
+      "updateTypes": ["minor"],
+      "groupName": "minor updates in packages except react, babel and eslint",
+      "excludePackagePatterns": ["^react", "^@babel/", "^eslint"],
+      "paths": ["packages/**"]
+    }
+  ]
 }
