@@ -13,7 +13,7 @@ executors:
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: circleci/node
+      - image: cypress/browsers:chrome69
 
   restore_cache: &restore_cache
     restore_cache:
