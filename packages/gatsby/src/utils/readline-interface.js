@@ -34,6 +34,9 @@ type KeypressKey = {
   shift: boolean,
 }
 
+type CanListen = "input"
+type ListenerTypes = "all" | "input"
+
 /**
  * Collection of various readline utility functions
  */
@@ -90,6 +93,9 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
   const msOut = new MuteStream()
   const isRaw = stdin.isRaw
   const isTTY = stdin.isTTY
+  const listeners = {
+    input: {},
+  }
 
   const defaultPrompt = (opts && opts.prompt) || ``
   let promptLnCount = defaultPrompt.split(`\n`).length
@@ -112,7 +118,7 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
    */
   const done = () => {
     rl.setRaw(isRaw)
-    rl.removeAllListeners()
+    rl.removeListeners()
     rl.pause()
     rl.close()
   }
@@ -132,7 +138,38 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
       rl.setRaw()
       readline.emitKeypressEvents(rl.input, rl)
       rl.input.unmute()
-      rl.input.on(`keypress`, keypress)
+      rl.addListener(`input`, `keypress`, keypress)
+    }
+  }
+
+  rl.addListener = (type: CanListen, event: string, handler: Function) => {
+    if (!listeners[type][event]) listeners[type][event] = []
+    rl[type].on(event, handler)
+    listeners[type][event].push(handler)
+  }
+
+  rl.removeListeners = (type: ListenerTypes = `all`) => {
+    const removeInputListeners = () => {
+      Object.keys(listeners.input).forEach(event => {
+        while (listeners.input[event].length > 0) {
+          const func = listeners.input[event].pop()
+          if (func) rl.input.removeListener(event, func)
+        }
+      })
+    }
+    const removeAll = () => {
+      removeInputListeners()
+      rl.removeAllListeners()
+    }
+    switch (type) {
+      case `all`: {
+        removeAll()
+        break
+      }
+      case `input`: {
+        removeInputListeners()
+        break
+      }
     }
   }
 
@@ -232,7 +269,7 @@ const ask = (rl: readline.Interface) => (
       if (validateInput(chunk)) {
         rl.output.unmute()
         rl.output.write(`${chunk}\n`)
-        rl.input.removeListener(`keypress`, onKeypress)
+        rl.removeListeners(`input`)
       } else {
         return void 0
       }
