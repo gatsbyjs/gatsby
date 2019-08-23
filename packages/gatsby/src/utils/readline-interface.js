@@ -131,9 +131,13 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
    * Call `done()` to break down the readline interface
    */
   const done = () => {
+    if (rl.input.unmute) rl.input.unmute()
+    if (rl.output.unmute) rl.output.unmute()
     rl.setRaw(isRaw)
     rl.removeRlListeners(`all`)
     rl.pause()
+    rl.input.end()
+    rl.output.end()
     rl.close()
   }
 
@@ -218,6 +222,11 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
     }
   }
 
+  rl._write = rl.write
+  rl.write = data => {
+    stdout.write(data)
+  }
+
   rl.isTTY = isTTY && stdin.setRawMode
 
   rl.resume()
@@ -267,15 +276,9 @@ const ask = (rl: readline.Interface) => (
     }
     if (good) {
       if (opts.returnBoolean) {
-        if (
-          new RegExp(`^${answer}$`, sensitivity).test(
-            opts.returnBoolean.trueValue
-          )
-        ) {
-          answer = true
-        } else {
-          answer = false
-        }
+        answer = new RegExp(`^${answer}$`, sensitivity).test(
+          opts.returnBoolean.trueValue
+        )
       }
       cb(answer)
     }
@@ -294,7 +297,7 @@ const ask = (rl: readline.Interface) => (
     if (opts.single) {
       if (validateInput(chunk)) {
         rl.output.unmute()
-        rl.output.write(`${chunk}\n`)
+        rl.write(`${chunk}\n`)
         rl.removeRlListeners(`input`)
       } else {
         return void 0
