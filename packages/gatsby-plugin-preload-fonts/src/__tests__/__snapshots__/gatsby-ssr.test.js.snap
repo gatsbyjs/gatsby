@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-ssr accepts boolean \`crossOrigin\` in plugin config 1`] = `
+Array [
+  <link
+    as="font"
+    href="/path/to/font.otf"
+    rel="preload"
+  />,
+]
+`;
+
+exports[`gatsby-ssr accepts function \`crossOrigin\` in plugin config 1`] = `
+Array [
+  <link
+    as="font"
+    href="/path/to/font.otf"
+    rel="preload"
+  />,
+]
+`;
+
+exports[`gatsby-ssr accepts function \`crossOrigin\` in plugin config 2`] = `
+Array [
+  <link
+    as="font"
+    crossOrigin="use-credentials"
+    href="/path/to/another.woff"
+    rel="preload"
+  />,
+]
+`;
+
+exports[`gatsby-ssr accepts string \`crossOrigin\` in plugin config 1`] = `
+Array [
+  <link
+    as="font"
+    crossOrigin="use-credentials"
+    href="/path/to/font.otf"
+    rel="preload"
+  />,
+]
+`;
+
+exports[`gatsby-ssr generates a <link> tag for each asset 1`] = `
+Array [
+  <link
+    as="font"
+    crossOrigin="anonymous"
+    href="/path/to/font.otf"
+    rel="preload"
+  />,
+  <link
+    as="font"
+    crossOrigin="anonymous"
+    href="/path/to/another.ttf"
+    rel="preload"
+  />,
+  <link
+    as="font"
+    crossOrigin="anonymous"
+    href="/path/to/another/font.woff"
+    rel="preload"
+  />,
+]
+`;
