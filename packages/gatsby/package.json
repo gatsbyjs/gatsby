@@ -10,12 +10,12 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/parser": "^7.0.0",
-    "@babel/polyfill": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
-    "@babel/traverse": "^7.0.0",
+    "@babel/code-frame": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/parser": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/runtime": "^7.5.5",
+    "@babel/traverse": "^7.5.5",
     "@gatsbyjs/relay-compiler": "2.0.0-printer-fix.2",
     "@hapi/joi": "^15.1.1",
     "@mikaelkristiansson/domready": "^1.0.9",
@@ -142,8 +142,8 @@
     "yaml-loader": "^0.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
+    "@babel/cli": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.2.0",
     "documentation": "^10.1.0",
