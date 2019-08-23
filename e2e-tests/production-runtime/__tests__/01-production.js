@@ -1,6 +1,3 @@
-// TODO: put this in .eslintrc or equivalent
-/* globals page */
-
 const GatsbyPuppeteer = require(`../gatsby-puppeteer`)
 const g = new GatsbyPuppeteer({ page, origin: `http://localhost:9000` })
 
@@ -72,16 +69,16 @@ describe(`Production build tests`, () => {
     await g.waitForAPI(`onRouteUpdate`)
 
     // `bar` is set in gatsby-node createPages
-    expect(await g.textContent(`path-context-foo`)).toContain(`bar`)
+    expect(await g.text(`path-context-foo`)).toContain(`bar`)
   })
 
   it(`Uses env vars`, async () => {
     await g.goto(`/env-vars`)
     await g.waitForAPI(`onRouteUpdate`)
 
-    expect(await g.textContent(`process.env`)).toBe(`{}`)
-    expect(await g.textContent(`process.env.EXISTING_VAR`)).toBe(`"foo bar"`)
-    expect(await g.innerHTML(`process.env.NOT_EXISTING_VAR`)).toBe(``)
+    expect(await g.text(`process.env`)).toBe(`{}`)
+    expect(await g.text(`process.env.EXISTING_VAR`)).toBe(`"foo bar"`)
+    expect(await g.html(`process.env.NOT_EXISTING_VAR`)).toBe(``)
   })
 
   describe(`Supports unicode characters in urls`, () => {
@@ -89,9 +86,7 @@ describe(`Production build tests`, () => {
       await g.goto(`/안녕/`)
       await g.waitForAPI(`onRouteUpdate`)
 
-      expect(await g.textContent(`page-2-message`)).toBe(
-        `Hi from the second page`
-      )
+      expect(await g.text(`page-2-message`)).toBe(`Hi from the second page`)
     })
     it(`Can navigate on client`, async () => {
       await g.goto(`/`)
@@ -99,9 +94,7 @@ describe(`Production build tests`, () => {
       await g.click(`page-with-unicode-path`)
       await g.waitForAPI(`onRouteUpdate`)
 
-      expect(await g.textContent(`page-2-message`)).toBe(
-        `Hi from the second page`
-      )
+      expect(await g.text(`page-2-message`)).toBe(`Hi from the second page`)
     })
   })
 })

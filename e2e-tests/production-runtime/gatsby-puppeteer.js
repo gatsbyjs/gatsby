@@ -12,6 +12,10 @@ class GatsbyPuppeteer {
     return await this.page.goto(this.origin + path)
   }
 
+  async navigate(path) {
+    return await this.page.evaluate(path => window.___navigate(path), path)
+  }
+
   async initAPIHandler() {
     await this.page.evaluate(() => {
       if (
@@ -76,12 +80,20 @@ class GatsbyPuppeteer {
     )
   }
 
-  async textContent(selector) {
+  async text(selector) {
     return await this.prop(selector, `textContent`)
   }
 
-  async innerHTML(selector) {
+  async html(selector) {
     return await this.prop(selector, `innerHTML`)
+  }
+
+  async changeFocus() {
+    await this.page.evaluate(() => document.querySelector(`a`).focus())
+  }
+
+  async getFocusedID() {
+    return await this.page.evaluate(() => document.activeElement.id)
   }
 }
 
