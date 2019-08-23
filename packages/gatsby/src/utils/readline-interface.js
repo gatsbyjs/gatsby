@@ -89,6 +89,7 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
   const msIn = new MuteStream()
   const msOut = new MuteStream()
   const isRaw = stdin.isRaw
+  const isTTY = stdin.isTTY
 
   const defaultPrompt = (opts && opts.prompt) || ``
   let promptLnCount = defaultPrompt.split(`\n`).length
@@ -122,14 +123,17 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
   })
 
   rl.setRaw = (rawMode = true) => {
-    if (rl.input.isTTY) stdin.setRawMode(rawMode)
+    if (rl.isTTY) stdin.setRawMode(rawMode)
   }
 
-  rl.listen = keypress => {
-    rl.setRaw()
-    readline.emitKeypressEvents(rl.input, rl)
-    rl.input.unmute()
-    rl.input.on(`keypress`, keypress)
+  rl.listen = (keypress: (chunk: string, key: KeypressKey) => void) => {
+    // Can only listen for keypress on tty input streams
+    if (rl.isTTY) {
+      rl.setRaw()
+      readline.emitKeypressEvents(rl.input, rl)
+      rl.input.unmute()
+      rl.input.on(`keypress`, keypress)
+    }
   }
 
   rl._setPrompt = rl.setPrompt
@@ -151,7 +155,7 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
     }
   }
 
-  rl.isTTY = () => rl.input.isTTY
+  rl.isTTY = isTTY && stdin.setRawMode
 
   rl.resume()
 
