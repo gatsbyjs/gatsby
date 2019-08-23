@@ -1,4 +1,4 @@
-const GatsbyPuppeteer = require(`../gatsby-puppeteer`)
+const GatsbyPuppeteer = require(`./lib/gatsby-puppeteer`)
 const g = new GatsbyPuppeteer({ page, origin: `http://localhost:9000` })
 
 describe(`Production build tests`, () => {

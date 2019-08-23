@@ -1,4 +1,5 @@
 require(`./production`)
 require(`./accessibility`)
 require(`./client-only-paths`)
+require(`./compilation-hash`)
 require(`./env-vars`)

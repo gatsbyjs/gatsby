@@ -95,6 +95,10 @@ class GatsbyPuppeteer {
   async getFocusedID() {
     return await this.page.evaluate(() => document.activeElement.id)
   }
+
+  async compilationHash() {
+    return await page.evaluate(() => window.___webpackCompilationHash)
+  }
 }
 
 module.exports = GatsbyPuppeteer
