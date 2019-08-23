@@ -2,16 +2,16 @@
 
 exports[`getPrecachePages correctly matches pages 1`] = `
 Array [
-  "/dir1/index.html",
-  "/dir2/index.html",
-  "/index.html",
-  "/test.html",
+  "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/index.html",
+  "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir2/index.html",
+  "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/index.html",
+  "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/test.html",
 ]
 `;
 
 exports[`getPrecachePages correctly matches pages 2`] = `
 Array [
-  "/dir1/page1.html",
-  "/dir1/page2.html",
+  "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/page1.html",
+  "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/page2.html",
 ]
 `;
