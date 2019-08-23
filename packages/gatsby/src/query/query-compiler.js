@@ -110,7 +110,7 @@ class Runner {
 
     activity.end(messages.length === 0)
 
-    report.clearStatefulMessage(`query-extraction`)
+    // report.clearStatefulMessage(`query-extraction`)
 
     // console.log(messages)
     messages.forEach(msg => {

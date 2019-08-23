@@ -195,7 +195,7 @@ const reporter: Reporter = {
   //   }
   // },
 
-  clearStatefulMessage: reporterActions.clearStatefulLogs,
+  // clearStatefulMessage: reporterActions.clearStatefulLogs,
 
   // clearStatefulMessage(group) {
   //   reporterActions.clearStatefulLogs(group)
