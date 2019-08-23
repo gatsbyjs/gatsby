@@ -26,6 +26,14 @@ type AskOpts = {
   },
 }
 
+type KeypressKey = {
+  sequence: string,
+  name: string,
+  ctrl: boolean,
+  meta: boolean,
+  shift: boolean,
+}
+
 /**
  * Collection of various readline utility functions
  */
@@ -68,7 +76,9 @@ const RlUtil = {
 
 /**
  * Spins up and returns a readline interface, for tty IO ONLY!
- * Using this function will give you nearly a barebones readline interface
+ * Using this function will give you a nearly barebones readline interface
+ * It does, however, manage the IO streams for you, and provides some readline
+ * overloads for utility functions
  * @param {ReadlineOptions} opts Readline option overrides
  * @returns {[readline.Interface, done]} Returns a tuple containing the readline
  * interface, and the teardown method
