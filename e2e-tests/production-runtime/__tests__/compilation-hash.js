@@ -15,6 +15,10 @@ function createMockCompilationHash() {
     .join(``)
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 describe(`Webpack Compilation Hash tests`, () => {
   it(`should render properly`, async () => {
     await g.goto(`/`)
@@ -47,17 +51,13 @@ describe(`Webpack Compilation Hash tests`, () => {
     overwriteWebpackCompilationHash(mockHash)
 
     await g.click(`compilation-hash`)
+
+    // Wait for the page to automatically reload
+    await sleep(500)
     await g.waitForAPI(`onRouteUpdate`)
 
     // Navigate into a non-prefetched page
-    try {
-      // The page should reload about here which can cause
-      // the click to fail the first time
-      await g.click(`deep-link-page`)
-    } catch {
-      await g.waitForAPI(`onRouteUpdate`)
-      await g.click(`deep-link-page`)
-    }
+    await g.click(`deep-link-page`)
     await g.waitForAPI(`onRouteUpdate`)
 
     // If the window compilation hash has changed, we know the

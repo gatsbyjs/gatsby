@@ -106,7 +106,17 @@ class GatsbyPuppeteer {
   }
 
   async compilationHash() {
-    return await page.evaluate(() => window.___webpackCompilationHash)
+    return await this.page.evaluate(() => window.___webpackCompilationHash)
+  }
+
+  async lifecycleCallCount(action) {
+    return await this.page.evaluate(
+      action =>
+        window.___PageComponentLifecycleCallsLog.filter(
+          entry => entry.action === action
+        ).length,
+      action
+    )
   }
 }
 
