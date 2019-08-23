@@ -102,3 +102,7 @@ See the [library of official and community plugins](/plugins/)
 ### Hashnode Community
 
 [Gatsby community on Hashnode](https://hashnode.com/n/gatsby) is a place where you can read discussions about Gatsby projects, read articles and tutorials and ask the rest of the Hashnode community Gatsby-related questions.
+
+### Reddit Community
+
+[Gatsby community on Reddit](https://www.reddit.com/r/gatsbyjs) is a place where you can read news about Gatsby, interact with other Gatsby developers and get advice on Gatsby-related Questions.
