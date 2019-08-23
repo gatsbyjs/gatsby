@@ -10,6 +10,12 @@ describe(`Production build tests`, () => {
     await g.waitForAPI(`onRouteUpdate`)
   })
 
+  if (process.env.TEST_PLUGIN_OFFLINE) {
+    it(`should activate the service worker`, async () => {
+      await g.waitForAPI(`onServiceWorkerActive`)
+    })
+  }
+
   it(`should navigate back after a reload`, async () => {
     await g.click(`page2`)
     await g.waitForAPI(`onRouteUpdate`)

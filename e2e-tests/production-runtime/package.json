@@ -26,7 +26,9 @@
     "serve": "gatsby serve",
     "start": "npm run develop",
     "test": "npm run build && npm run jest",
-    "jest": "jest"
+    "test:offline": "npm run build:offline && npm run jest:offline",
+    "jest": "jest",
+    "jest:offline": "TEST_PLUGIN_OFFLINE=y jest"
   },
   "devDependencies": {
     "fs-extra": "^7.0.1",
