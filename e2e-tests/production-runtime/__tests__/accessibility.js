@@ -4,7 +4,7 @@ const g = new GatsbyPuppeteer({ page, origin: `http://localhost:9000` })
 describe(`Focus management`, () => {
   const FOCUS_WRAPPER_ID = `gatsby-focus-wrapper`
 
-  it(`focuseses router wrapper after navigation to regular page (from index)`, async () => {
+  it(`focuses router wrapper after navigation to regular page (from index)`, async () => {
     await g.goto(`/`)
     await g.waitForAPI(`onRouteUpdate`)
 
