@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.7...gatsby-source-graphql@2.1.8) (2019-08-23)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and… ([#16960](https://github.com/gatsbyjs/gatsby/issues/16960)) ([d6bd515](https://github.com/gatsbyjs/gatsby/commit/d6bd515))
+
 ## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.6...gatsby-source-graphql@2.1.7) (2019-08-22)
 
 **Note:** Version bump only for package gatsby-source-graphql

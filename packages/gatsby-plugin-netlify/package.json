@@ -13,15 +13,15 @@
     }
   ],
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.0.0",
     "fs-extra": "^4.0.3",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.15",
     "webpack-assets-manifest": "^3.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
     "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.2.0"
   },
