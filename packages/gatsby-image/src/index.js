@@ -475,12 +475,25 @@ class Image extends React.Component {
       const imageVariants = fluid
       const image = getCurrentSrcData(fluid)
 
+      let maxWidth
+      let maxHeight
+      if (image.presentationHeight || image.presentationWidth) {
+        maxWidth = image.presentationWidth
+          ? `${image.presentationWidth}px`
+          : `${image.aspectRatio * image.presentationHeight}px`
+        maxHeight = image.presentationHeight
+          ? `${image.presentationHeight}px`
+          : `${image.aspectRatio * image.presentationWidth}px`
+      }
+
       return (
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
           style={{
             position: `relative`,
             overflow: `hidden`,
+            height: maxHeight,
+            width: maxWidth,
             ...style,
           }}
           ref={this.handleRef}
