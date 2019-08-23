@@ -19,12 +19,9 @@ const constructError = ({ details }) => {
   }
 
   if (`id` in structuredError) {
-    // TO-DO: decide on the name - errorCode makes sense right now
-    // as it's used only for errors, but maybe this should be more general
-    // and applicable to any message type.
-    // After that go through the code and rename `id` to decided name
-    // in call sites.
-    structuredError.errorCode = structuredError.id
+    // this is hacky - we should change reporter.error calls to use `code` instead of `id`
+    // but for sake of speed - I'll use this for now
+    structuredError.code = structuredError.id
     delete structuredError.id
   }
 

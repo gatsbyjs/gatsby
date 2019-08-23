@@ -44,7 +44,7 @@ const Error = ({ details }) => (
           <Box marginRight={1}>
             <Color black bgRed>
               {` ${details.level} `}
-              {details.errorCode ? `#${details.errorCode} ` : ``}
+              {details.code ? `#${details.code} ` : ``}
             </Color>
             <Color red>{details.type ? ` ` + details.type : ``}</Color>
           </Box>
