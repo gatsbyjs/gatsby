@@ -83,7 +83,14 @@ describe(`Production build tests`, () => {
     await page.goBack()
     await waitForAPI(`onRouteUpdate`)
 
-    await getTestElement(`page2`)
+    expect(await getTestElement(`page2`)).toBeDefined()
     expect(path()).toBe(`/`)
+  })
+
+  it(`should work when visiting a page with direct URL entry or an external link`, async () => {
+    await goto(`/page-2/`)
+    await waitForAPI(`onRouteUpdate`)
+    expect(await getTestElement(`index-link`)).toBeDefined()
+    expect(path()).toBe(`/page-2/`)
   })
 })
