@@ -7,7 +7,7 @@
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.9.0",
     "chalk": "^2.4.2",
-    "chokidar": "^1.7.0",
+    "chokidar": "^3.0.2",
     "cross-env": "^5.2.0",
     "danger": "^8.0.0",
     "eslint": "^5.16.0",
