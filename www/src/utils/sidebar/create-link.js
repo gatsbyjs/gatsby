@@ -61,9 +61,7 @@ const createLink = ({
               top: bulletOffsetTop,
               height: bulletSize,
               position: `absolute`,
-              transition: `all ${transition.speed.default} ${
-                transition.curve.default
-              }`,
+              transition: `all ${transition.speed.default} ${transition.curve.default}`,
               width: bulletSize,
             },
             "&:before": {

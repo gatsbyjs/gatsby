@@ -73,13 +73,7 @@ class BlogPostsIndex extends React.Component {
                     marginBottom: space[6],
                     marginLeft: 0,
                     marginRight: 0,
-                    transition: `transform ${transition.speed.default} ${
-                      transition.curve.default
-                    },  box-shadow ${transition.speed.default} ${
-                      transition.curve.default
-                    }, padding ${transition.speed.default} ${
-                      transition.curve.default
-                    }`,
+                    transition: `transform ${transition.speed.default} ${transition.curve.default},  box-shadow ${transition.speed.default} ${transition.curve.default}, padding ${transition.speed.default} ${transition.curve.default}`,
                     "&:hover": {
                       transform: `translateY(-${space[1]})`,
                       boxShadow: shadows.overlay,

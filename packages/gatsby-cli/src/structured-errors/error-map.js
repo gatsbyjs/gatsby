@@ -46,9 +46,7 @@ const errorMap = {
         ? `\n\nDid you mean to use ` + `"${context.closestFragment}"?`
         : ``
 
-      return `There was an error in your GraphQL query:\n\nThe fragment "${
-        context.fragmentName
-      }" does not exist.${closetFragment}`
+      return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.${closetFragment}`
     },
     type: `GRAPHQL`,
     level: `ERROR`,
@@ -61,34 +59,26 @@ const errorMap = {
   // Config errors
   "10123": {
     text: context =>
-      `We encountered an error while trying to load your site's ${
-        context.configName
-      }. Please fix the error and try again.`,
+      `We encountered an error while trying to load your site's ${context.configName}. Please fix the error and try again.`,
     type: `CONFIG`,
     level: `ERROR`,
   },
   "10124": {
     text: context =>
-      `It looks like you were trying to add the config file? Please rename "${
-        context.nearMatch
-      }" to "${context.configName}.js"`,
+      `It looks like you were trying to add the config file? Please rename "${context.nearMatch}" to "${context.configName}.js"`,
     type: `CONFIG`,
     level: `ERROR`,
   },
   "10125": {
     text: context =>
-      `Your ${
-        context.configName
-      } file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`,
+      `Your ${context.configName} file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`,
     type: `CONFIG`,
     level: `ERROR`,
   },
   "10126": {
     text: context =>
       `${context.path}/${context.configName} cannot export a function.` +
-      `\n\nA ${
-        context.configName
-      } exported as a Function can only be used as a theme and not run directly.` +
+      `\n\nA ${context.configName} exported as a Function can only be used as a theme and not run directly.` +
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
       `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
       `\nare not supported in the root gatsby-config.`,
@@ -98,9 +88,7 @@ const errorMap = {
   // Plugin errors
   "11321": {
     text: context =>
-      `"${context.pluginName}" threw an error while running the ${
-        context.api
-      } lifecycle:\n\n${context.message}`,
+      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}`,
     type: `PLUGIN`,
     level: `ERROR`,
   },
@@ -128,9 +116,7 @@ const errorMap = {
   },
   "11324": {
     text: context =>
-      `${
-        context.message
-      }\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      `${context.message}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
     level: `ERROR`,
   },
   "11325": {
@@ -163,16 +149,12 @@ const errorMap = {
   },
   "11327": {
     text: context =>
-      `You have an empty file in the "src/pages" directory at "${
-        context.relativePath
-      }". Please remove it or make it a valid component`,
+      `You have an empty file in the "src/pages" directory at "${context.relativePath}". Please remove it or make it a valid component`,
     level: `ERROR`,
   },
   "11328": {
     text: context =>
-      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${
-        context.fileName
-      }`,
+      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${context.fileName}`,
     level: `ERROR`,
   },
   // invalid or deprecated APIs
@@ -180,13 +162,9 @@ const errorMap = {
     text: context =>
       [
         stripIndent(`
-          Your plugins must export known APIs from their gatsby-${
-            context.exportType
-          }.js.
+          Your plugins must export known APIs from their gatsby-${context.exportType}.js.
       
-          See https://www.gatsbyjs.org/docs/${
-            context.exportType
-          }-apis/ for the list of Gatsby ${context.exportType} APIs.
+          See https://www.gatsbyjs.org/docs/${context.exportType}-apis/ for the list of Gatsby ${context.exportType} APIs.
         `),
       ]
         .concat([``].concat(context.errors))

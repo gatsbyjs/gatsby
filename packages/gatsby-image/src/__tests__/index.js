@@ -78,8 +78,8 @@ const setup = (
       alt={`Alt text for the image`}
       crossOrigin={`anonymous`}
       draggable={true}
-      {...fluid && { fluid: fluidShapeMock }}
-      {...!fluid && { fixed: fixedShapeMock }}
+      {...(fluid && { fluid: fluidShapeMock })}
+      {...(!fluid && { fixed: fixedShapeMock })}
       onLoad={onLoad}
       onError={onError}
       itemProp={`item-prop-for-the-image`}
@@ -105,8 +105,8 @@ const setupImages = (
       title={`Title for the image`}
       alt={`Alt text for the image`}
       crossOrigin={`anonymous`}
-      {...fluidImages && { fluid: fluidImagesShapeMock }}
-      {...!fluidImages && { fixed: fixedImagesShapeMock }}
+      {...(fluidImages && { fluid: fluidImagesShapeMock })}
+      {...(!fluidImages && { fixed: fixedImagesShapeMock })}
       onLoad={onLoad}
       onError={onError}
       itemProp={`item-prop-for-the-image`}

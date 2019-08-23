@@ -653,7 +653,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=root data-host=server></span></span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=root data-host=server></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
     },
   ],
   "position": Object {
@@ -693,7 +693,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=server></span></span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=server></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
     },
   ],
   "position": Object {
@@ -733,7 +733,7 @@ Object {
         },
       },
       "type": "html",
-      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=localhost></span></span><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"bash\\"><pre class=\\"language-bash\\"><code class=\\"language-bash\\"><span class=\\"command-line-prompt\\"><span data-user=alice data-host=localhost></span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">'test'</span>\`\`\`</code></pre></div>",
     },
   ],
   "position": Object {

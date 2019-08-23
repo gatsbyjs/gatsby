@@ -132,7 +132,7 @@ const link = (options = {}, fieldConfig) => async (
     return fieldValue
   }
 
-  const returnType = getNullableType(info.returnType)
+  const returnType = getNullableType(options.type || info.returnType)
   const type = getNamedType(returnType)
 
   if (options.by === `id`) {

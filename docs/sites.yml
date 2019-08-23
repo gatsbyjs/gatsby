@@ -6957,3 +6957,95 @@
   built_by: Mill3
   built_by_url: https://mill3.studio/en/
   featured: false
+- title: Zellement
+  main_url: https://www.zellement.com
+  url: https://www.zellement.com
+  description: >
+    Online portfolio of Dan Farrow from Nottingham, UK.
+  categories:
+    - Portfolio
+  built_by: Zellement
+  built_by_url: https://www.zellement.com
+  featured: false
+- title: Fullstack HQ
+  url: https://fullstackhq.com/
+  main_url: https://fullstackhq.com/
+  description: >
+    Get immediate access to a battle-tested team of designers and developers on a pay-as-you-go monthly subscription.
+  categories:
+    - Agency
+    - Consulting
+    - Freelance
+    - Marketing
+    - Portfolio
+    - Web Development
+    - App
+    - Business
+    - Design
+    - JavaScript
+    - Technology
+    - User Experience
+    - Web Development
+    - eCommerce
+    - WordPress
+  built_by: Fullstack HQ
+  built_by_url: https://fullstackhq.com/
+  featured: false
+- title: Cantas
+  main_url: https://www.cantas.co.jp
+  url: https://www.cantas.co.jp
+  description: >
+    Cantas is digital marketing company in Japan.
+  categories:
+    - Business
+    - Agency
+  built_by: Cantas
+  built_by_url: https://www.cantas.co.jp
+  featured: false
+- title: Sheringham Shantymen
+  main_url: https://www.shantymen.com/
+  url: https://www.shantymen.com/
+  description: >
+    The Sheringham Shantymen are a sea shanty singing group that raise money for the RNLI in the UK.
+  categories:
+    - Music
+    - Community
+    - Entertainment
+    - Nonprofit
+  built_by: Zellement
+  built_by_url: https://www.zellement.com/
+  featured: false
+- title: Ronald Langeveld
+  description: >
+    Ronald Langeveld's blog and Web Development portfolio website.
+  main_url: "https://www.ronaldlangeveld.com"
+  url: "https://www.ronaldlangeveld.com"
+  categories:
+    - Blog
+    - Web Development
+    - Freelance
+    - Portfolio
+    - Consulting
+  featured: false
+- title: Golfonaut
+  description: >
+    Golfonaut - Golf application for Apple Watch
+  main_url: https://golfonaut.io
+  url: https://golfonaut.io
+  categories:
+    - App
+    - Sports
+  featured: false
+- title: Anton Sten - UX Lead/Design
+  url: https://www.antonsten.com
+  main_url: https://www.antonsten.com
+  description: Anton Sten leads UX for design-driven companies.
+  categories:
+    - User Experience
+    - Blog
+    - Freelance
+    - Portfolio
+    - Consulting
+    - Agency
+    - Design
+  featured: false

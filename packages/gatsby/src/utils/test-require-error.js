@@ -11,7 +11,7 @@ export default (moduleName, err) => {
   }
 
   const regex = new RegExp(
-    `Error: Cannot find module\\s.${moduleName.replace(
+    `Error:\\s(\\S+\\s)?[Cc]annot find module\\s.${moduleName.replace(
       /[-/\\^$*+?.()|[\]{}]/g,
       `\\$&`
     )}`

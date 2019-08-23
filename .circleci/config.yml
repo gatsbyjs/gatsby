@@ -1,3 +1,6 @@
+orbs:
+  win: circleci/windows@1.0.0
+
 executors:
   node:
     parameters:
@@ -272,10 +275,32 @@ jobs:
           no_output_timeout: 2h
           working_directory: ~/project/www
 
+  windows_unit_tests:
+    executor:
+      name: win/vs2019
+      shell: powershell.exe
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-v2-{{ checksum "yarn.lock" }}
+            - yarn-packages-v2-
+      - run:
+          name: "Install dependencies"
+          command: yarn bootstrap
+      - save_cache:
+          paths:
+            - C:\Users\circleci\AppData\Local\Yarn\Cache
+          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
+      - run:
+          name: "Run Tests"
+          command: yarn test
+
 workflows:
   version: 2
   build-test:
     jobs:
+      - windows_unit_tests
       - bootstrap
       - lint:
           requires:
@@ -332,7 +357,6 @@ workflows:
           requires:
             - build_www
           context: build_www
-
   www_deploy:
     triggers:
       - schedule:
