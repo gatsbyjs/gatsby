@@ -10,17 +10,13 @@ const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
     image={data.coverImage.localFile.childImageSharp.fluid}
-    imageTitle={`“${data.coverImage.title}” by ${
-      data.coverImage.credit
-    } (via unsplash.com)`}
+    imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
     <FloatingImage
       imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
       imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
-      title={`“${data.floatingImage.title}” by ${
-        data.floatingImage.credit
-      } (via unsplash.com)`}
+      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
 
     <p>
@@ -46,9 +42,7 @@ const BlurUp = ({ data, location }) => (
     </p>
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
-      title={`“${data.fullWidthImage.title}” by ${
-        data.fullWidthImage.credit
-      } (via unsplash.com)`}
+      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
 )

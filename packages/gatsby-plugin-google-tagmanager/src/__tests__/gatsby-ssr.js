@@ -81,9 +81,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         },
       }
 
-      const datalayerFuncAsString = oneLine`${
-        pluginOptions.defaultDataLayer.value
-      }`
+      const datalayerFuncAsString = oneLine`${pluginOptions.defaultDataLayer.value}`
 
       onRenderBody(mocks, pluginOptions)
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
