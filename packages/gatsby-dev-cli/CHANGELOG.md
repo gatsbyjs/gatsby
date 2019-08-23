@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.13...gatsby-dev-cli@2.5.14) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency chokidar to v3 ([#16975](https://github.com/gatsbyjs/gatsby/issues/16975)) ([816d475](https://github.com/gatsbyjs/gatsby/commit/816d475))
+
 ## [2.5.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.12...gatsby-dev-cli@2.5.13) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-dev-cli
