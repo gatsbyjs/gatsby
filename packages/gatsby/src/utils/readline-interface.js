@@ -35,7 +35,16 @@ type KeypressKey = {
 }
 
 type CanListen = "input"
-type ListenerTypes = "all" | "input"
+type ListenerTypes = "all" | "input" | "rl"
+
+type ListenerCache = {
+  rl: {
+    line: Function[],
+  },
+  input: {
+    keypress: Function[],
+  },
+}
 
 /**
  * Collection of various readline utility functions
@@ -93,8 +102,13 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
   const msOut = new MuteStream()
   const isRaw = stdin.isRaw
   const isTTY = stdin.isTTY
-  const listeners = {
-    input: {},
+  const listeners: ListenerCache = {
+    input: {
+      keypress: [],
+    },
+    rl: {
+      line: [],
+    },
   }
 
   const defaultPrompt = (opts && opts.prompt) || ``
@@ -230,7 +244,7 @@ const ask = (rl: readline.Interface) => (
 
   RlUtil.showCursor(rl)
 
-  const validateInput = (input): void => {
+  const validateInput = (input): boolean => {
     let good = true
     let answer = input.toString()
     let sensitivity = `i`
@@ -259,7 +273,7 @@ const ask = (rl: readline.Interface) => (
     return good
   }
 
-  const onKeypress = (chunk, key): void => {
+  const onKeypress = (chunk: string, key: KeypressKey): KeypressKey => {
     if (key.ctrl && key.name === `c`) {
       rl.emit(`SIGINT`)
     } else if (key.name === `return` && opts.single) {
