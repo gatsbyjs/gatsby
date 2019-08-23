@@ -55,8 +55,12 @@ async function getTestElement(selector) {
   return await page.$(`[data-testid="${selector}"]`)
 }
 
-async function clickTestElement(selector) {
-  return (await getTestElement(selector)).click()
+async function click(elementHandle) {
+  return await elementHandle.click()
+}
+
+async function html(elementHandle) {
+  return await page.evaluate(element => element.innerHTML, elementHandle)
 }
 
 const ORIGIN = `http://localhost:9000`
@@ -78,7 +82,7 @@ describe(`Production build tests`, () => {
   })
 
   it(`should navigate back after a reload`, async () => {
-    await clickTestElement(`page2`)
+    await click(await getTestElement(`page2`))
     await waitForAPI(`onRouteUpdate`)
     expect(path()).toBe(`/page-2/`)
 
@@ -102,10 +106,77 @@ describe(`Production build tests`, () => {
     await goto(`/`)
     await waitForAPI(`onRouteUpdate`)
 
-    await clickTestElement(`404`)
+    await click(await getTestElement(`404`))
     await waitForAPI(`onRouteUpdate`)
 
     expect(path()).toBe(`/page-3/`)
     expect(await getTestElement(`404`)).toBeDefined()
+  })
+
+  it(`should show 404 page when directly entering an invalid URL`, async () => {
+    await goto(`/non-existent-page/`)
+    await waitForAPI(`onRouteUpdate`)
+
+    expect(await getTestElement(`404`)).toBeDefined()
+  })
+
+  it(`should navigate back after a 404 from a direct link entry`, async () => {
+    await goto(`/`)
+    await waitForAPI(`onRouteUpdate`)
+
+    await goto(`/non-existent-page/`)
+    await waitForAPI(`onRouteUpdate`)
+
+    await page.goBack()
+    await waitForAPI(`onRouteUpdate`)
+    expect(await getTestElement(`index-link`)).toBeDefined()
+  })
+
+  it(`should pass pathContext to props`, async () => {
+    await goto(`/path-context`)
+    await waitForAPI(`onRouteUpdate`)
+
+    // `bar` is set in gatsby-node createPages
+    expect(await html(await getTestElement(`path-context-foo`))).toContain(
+      `bar`
+    )
+  })
+
+  it(`Uses env vars`, async () => {
+    await goto(`/env-vars`)
+    await waitForAPI(`onRouteUpdate`)
+
+    expect(await html(await getTestElement(`process.env`))).toContain(`{}`)
+    expect(
+      await html(await getTestElement(`process.env.EXISTING_VAR`))
+    ).toContain(`foo bar`)
+    expect(
+      await html(await getTestElement(`process.env.NOT_EXISTING_VAR`))
+    ).toBe(``)
+  })
+
+  describe(`Supports unicode characters in urls`, () => {
+    // it(`Can navigate directly`, () => {
+    //   cy.visit(`/안녕/`, {
+    //     // Cypress seems to think it's 404
+    //     // even if it's not. 404 page doesn't have
+    //     // `page-2-message` element so the test will fail on
+    //     // assertion. Using failOnStatusCode here
+    //     // only to workaround cypress weirdness
+    //     failOnStatusCode: false,
+    //   }).waitForRouteChange()
+    //   cy.getTestElement(`page-2-message`)
+    //     .invoke(`text`)
+    //     .should(`equal`, `Hi from the second page`)
+    // })
+    // it(`Can navigate on client`, () => {
+    //   cy.visit(`/`).waitForRouteChange()
+    //   cy.getTestElement(`page-with-unicode-path`)
+    //     .click()
+    //     .waitForRouteChange()
+    //   cy.getTestElement(`page-2-message`)
+    //     .invoke(`text`)
+    //     .should(`equal`, `Hi from the second page`)
+    // })
   })
 })
