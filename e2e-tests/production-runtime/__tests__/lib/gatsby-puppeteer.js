@@ -88,6 +88,15 @@ class GatsbyPuppeteer {
     return await this.prop(selector, `innerHTML`)
   }
 
+  async css(selector, property) {
+    const element = await this.get(selector)
+    return await this.page.evaluate(
+      (element, property) => getComputedStyle(element)[property],
+      element,
+      property
+    )
+  }
+
   async changeFocus() {
     await this.page.evaluate(() => document.querySelector(`a`).focus())
   }
