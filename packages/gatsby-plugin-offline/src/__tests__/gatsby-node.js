@@ -9,10 +9,10 @@ describe(`getPrecachePages`, () => {
     const base = `${__dirname}/fixtures/public`
 
     const allPages = getPrecachePages([`**/*`], base)
-    expect(allPages).toMatchSnapshot()
+    expect(allPages.map(page => page.replace(base, ``))).toMatchSnapshot()
 
     const dir1Pages = getPrecachePages([`/dir1/*`], base)
-    expect(dir1Pages).toMatchSnapshot()
+    expect(dir1Pages.map(page => page.replace(base, ``))).toMatchSnapshot()
   })
 })
 
