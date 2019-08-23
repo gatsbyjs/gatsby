@@ -132,6 +132,9 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
     if (rl.isTTY) stdin.setRawMode(rawMode)
   }
 
+  /**
+   * Listen for keypress events, to read each keystroke
+   */
   rl.listen = (keypress: (chunk: string, key: KeypressKey) => void) => {
     // Can only listen for keypress on tty input streams
     if (rl.isTTY) {
