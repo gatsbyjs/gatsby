@@ -243,7 +243,7 @@ exports.createPages = ({ actions }) => {
 
 4. Create a React component to serve as the template for your page that was used in `createPage`
 
-```javascript:title=src/templates/dog-template.js
+```jsx:title=src/templates/dog-template.js
 import React from "react"
 
 export default ({ pageContext: { dog } }) => (
