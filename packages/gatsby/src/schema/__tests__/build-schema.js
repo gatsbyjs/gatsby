@@ -125,7 +125,16 @@ describe(`Build schema`, () => {
       expect(fields[`withArgs`].args[0]).toBeDefined()
       expect(fields[`withArgs`].args[0].name).toEqual(`what`)
       expect(fields[`withArgs`].args[0].type).toBe(GraphQLBoolean)
-      expect(fields[`withArgs`].resolve({}, { what: true })).toBe(true)
+      expect(
+        await fields[`withArgs`].resolve(
+          {},
+          { what: true },
+          withResolverContext({ schema }),
+          {
+            fieldName: `withArgs`,
+          }
+        )
+      ).toBe(true)
     })
 
     it(`allows adding array of types`, async () => {
@@ -930,20 +939,20 @@ describe(`Build schema`, () => {
       const fields = type.getFields()
       expect(fields[`name`].resolve).toBeDefined()
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          withResolverContext({}, schema),
+          withResolverContext({ schema }),
           {
             fieldName: `name`,
           }
         )
       ).toEqual(`Hello Mikhail`)
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          withResolverContext({}, schema),
+          withResolverContext({ schema }),
           {
             fieldName: `name`,
           }
@@ -976,7 +985,7 @@ describe(`Build schema`, () => {
       const fields = type.getFields()
       expect(fields[`name`].resolve).toBeDefined()
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
           withResolverContext({}, schema),
@@ -986,7 +995,7 @@ describe(`Build schema`, () => {
         )
       ).toEqual(`Hello Mikhail`)
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
           withResolverContext({}, schema),

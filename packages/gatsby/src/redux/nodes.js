@@ -21,7 +21,7 @@ exports.getNodes = getNodes
 /** Get node by id from store.
  *
  * @param {string} id
- * @returns {Object}
+ * @returns {Object}g
  */
 const getNode = id => store.getState().nodes.get(id)
 

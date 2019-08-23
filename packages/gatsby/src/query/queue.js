@@ -82,10 +82,10 @@ const createDevelopQueue = getRunner => {
   return queue
 }
 
-const pushJob = (queue, job) =>
+const pushJob = (queue, job, activity) =>
   new Promise((resolve, reject) =>
     queue
-      .push(job)
+      .push({ ...job, activity })
       .on(`finish`, resolve)
       .on(`failed`, reject)
   )
@@ -95,12 +95,12 @@ const pushJob = (queue, job) =>
  * they're all finished processing (or rejects if one or more jobs
  * fail)
  */
-const processBatch = async (queue, jobs) => {
+const processBatch = async (queue, jobs, activity) => {
   let numJobs = jobs.length
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job))
+  const runningJobs = jobs.map(job => pushJob(queue, job, activity))
   return await Promise.all(runningJobs)
 }
 

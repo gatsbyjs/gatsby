@@ -24,15 +24,18 @@ type QueryJob = {
 module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   const { program, webpackCompilationHash } = store.getState()
 
-  const graphql = (query, context) => graphqlRunner.query(query, context)
+  const graphql = (query, context, args) =>
+    graphqlRunner.query(query, context, args)
 
   // Run query
   let result
   // Nothing to do if the query doesn't exist.
-  if (!queryJob.query || queryJob.query === ``) {
+  if (!queryJob.query || queryJob.query.text === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context)
+    result = await graphql(queryJob.query, queryJob.context, {
+      parentSpan: queryJob.activity.span,
+    })
   }
 
   // If there's a graphql error then log the error. If we're building, also

@@ -7,6 +7,7 @@ const withResolverContext = ({
   context,
   customContext,
   nodeModel,
+  parentSpan,
 }) => {
   const nodeStore = require(`../db/nodes`)
   const createPageDependency = require(`../redux/actions/add-page-dependency`)
@@ -24,6 +25,7 @@ const withResolverContext = ({
     ...(context || {}),
     ...(customContext || {}),
     defaultFieldResolver,
+    parentSpan,
     nodeModel: nodeModel.withContext({
       path: context ? context.path : undefined,
     }),

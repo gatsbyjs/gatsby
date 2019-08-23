@@ -400,13 +400,14 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphqlRunner(store, report)
-
   // Collect pages.
   activity = report.activityTimer(`createPages`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
+  const graphqlRunner = createGraphqlRunner(store, report, {
+    parentSpan: activity.span,
+  })
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
     traceId: `initial-createPages`,

@@ -21,7 +21,7 @@ const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
-const { findOne, findManyPaginated } = require(`./resolvers`)
+const { findOne, findManyPaginated, tracingResolver } = require(`./resolvers`)
 const {
   processFieldExtensions,
   internalExtensionNames,
@@ -164,6 +164,7 @@ const updateSchemaComposer = async ({
     parentSpan: activity.span,
   })
   await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
+  await addTracingToResolvers({ schemaComposer, parentSpan: activity.span })
   activity.end()
 }
 
@@ -729,6 +730,25 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
     traceId: `initial-createResolvers`,
     parentSpan,
   })
+}
+
+const addTracingToResolvers = ({ schemaComposer }) => {
+  for (const typeName of schemaComposer.keys()) {
+    const tc = schemaComposer.getAnyTC(typeName)
+    if (
+      tc instanceof ObjectTypeComposer ||
+      tc instanceof InterfaceTypeComposer
+    ) {
+      tc.getFieldNames().forEach(fieldName => {
+        const field = tc.getFieldConfig(fieldName)
+        if (field.resolve) {
+          tc.extendField(fieldName, {
+            resolve: tracingResolver(field.resolve),
+          })
+        }
+      })
+    }
+  }
 }
 
 const determineSearchableFields = ({ schemaComposer, typeComposer }) => {

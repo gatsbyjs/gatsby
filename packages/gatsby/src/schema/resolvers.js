@@ -289,18 +289,50 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
   }, [])
 
 const defaultFieldResolver = (source, args, context, info) => {
-  if (!source || typeof source !== `object`) return null
-
-  if (info.from) {
-    if (info.fromNode) {
-      const node = context.nodeModel.findRootNodeAncestor(source)
-      if (!node) return null
-      return getValueAt(node, info.from)
+  if (source && (_.isObject(source) || typeof source === `function`)) {
+    if (info.from) {
+      if (info.fromNode) {
+        const node = context.nodeModel.findRootNodeAncestor(source)
+        if (!node) return null
+        return getValueAt(node, info.from)
+      }
+      return getValueAt(source, info.from)
     }
-    return getValueAt(source, info.from)
-  }
 
-  return source[info.fieldName]
+    const property = source[info.fieldName]
+    if (typeof property === `function`) {
+      return source[info.fieldName](args, context, info)
+    }
+    return property
+  } else {
+    return undefined
+  }
+}
+
+const tracingResolver = (resolver = defaultFieldResolver) => async (
+  parent,
+  args,
+  context,
+  info
+) => {
+  let activity
+  if (context.spanTracker) {
+    activity = context.spanTracker.createActivity(
+      info.path,
+      `GraphQL Resolver`,
+      {
+        tags: {
+          resolverName: `${info.parentType.name}.${info.fieldName}`,
+        },
+      }
+    )
+    activity.start()
+  }
+  const result = await resolver(parent, args, context, info)
+  if (activity) {
+    activity.done()
+  }
+  return result
 }
 
 module.exports = {
@@ -312,4 +344,5 @@ module.exports = {
   distinct,
   group,
   paginate,
+  tracingResolver,
 }

@@ -162,16 +162,19 @@ const reportStats = (queue, activity) => {
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
   reportStats(queue, activity)
-  await queryQueue.processBatch(queue, queryJobs)
+  await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
 const createStaticQueryJob = (state, queryId) => {
   const component = state.staticQueryComponents.get(queryId)
-  const { hash, id, query, componentPath } = component
+  const { name, hash, id, query, componentPath } = component
   return {
     id: hash,
     hash,
-    query,
+    query: {
+      name,
+      text: query,
+    },
     componentPath,
     context: { path: id },
   }
@@ -188,10 +191,13 @@ const processStaticQueries = async (queryIds, { state, activity }) => {
 const createPageQueryJob = (state, page) => {
   const component = state.components.get(page.componentPath)
   const { path, componentPath, context } = page
-  const { query } = component
+  const { name, query } = component
   return {
     id: path,
-    query,
+    query: {
+      name,
+      text: query,
+    },
     isPage: true,
     componentPath,
     context: {
