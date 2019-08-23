@@ -206,8 +206,7 @@ const ask = (rl: readline.Interface) => (
       if (opts.returnBoolean) {
         if (
           new RegExp(`^${answer}$`, sensitivity).test(
-            opts.returnBoolean.trueValue,
-            sensitivity
+            opts.returnBoolean.trueValue
           )
         ) {
           answer = true
