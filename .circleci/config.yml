@@ -103,7 +103,7 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: yarn bootstrap
+      - run: yarn bootstrap -- concurrency=2
       - persist_to_workspace:
           root: packages
           paths:
