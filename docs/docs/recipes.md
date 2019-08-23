@@ -259,7 +259,7 @@ export default ({ pageContext: { dog } }) => (
 
 - Tutorial section on [programmatically creating pages from data](/tutorial/part-seven/)
 - Reference guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- [Example repo for this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-createPage)
+- [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-createPage) for this recipe
 
 ## 2. Styling with CSS
 
@@ -637,6 +637,13 @@ This is my first Gatsby post written in Markdown!
 }
 ```
 
+<iframe
+  title="Query for all markdown"
+  src="https://q4xpb.sse.codesandbox.io/___graphql?explorerIsOpen=false&query=%7B%0A%20%20allMarkdownRemark%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+  width="600"
+  height="300"
+/>
+
 4. Add the JavaScript code to generate pages from Markdown posts at build time by copying the GraphQL query into `gatsby-node.js` and looping through the results:
 
 ```js:title=gatsby-node.js
@@ -710,11 +717,11 @@ export const pageQuery = graphql`
 
 #### Additional resources
 
-- [Inspect Gatsby's data layer in GraphiQL](/docs/introducing-graphiql/)
 - [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
 - [Creating and modifying pages](/docs/creating-and-modifying-pages/)
 - [Adding Markdown pages](/docs/adding-markdown-pages/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
+- [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
 
 ### Pulling data from an external source and creating pages without GraphQL
 
