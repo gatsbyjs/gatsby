@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "cypress": "^3.1.0",
     "gatsby": "^2.0.118",
     "gatsby-plugin-manifest": "^2.0.17",
     "gatsby-plugin-offline": "^2.0.23",
@@ -26,22 +25,16 @@
     "format": "prettier --write '**/*.js'",
     "serve": "gatsby serve",
     "start": "npm run develop",
-    "test": "npm run build && npm run start-server-and-test && npm run test-env-vars",
-    "test:offline": "npm run build:offline && yarn start-server-and-test:offline && npm run test-env-vars",
-    "test-env-vars": " node __tests__/env-vars.js",
-    "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
-    "start-server-and-test:offline": "start-server-and-test serve http://localhost:9000 cy:run:offline",
-    "cy:open": "cypress open",
-    "cy:open:offline": "npm run cy:open -- --env TEST_PLUGIN_OFFLINE=y",
-    "cy:run": "npm run cy:run:normal && npm run cy:run:slow",
-    "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y",
-    "cy:run:normal": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome",
-    "cy:run:slow": "CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
+    "test": "npm run build && npm run jest",
+    "jest": "jest"
   },
   "devDependencies": {
     "fs-extra": "^7.0.1",
     "is-ci": "^2.0.0",
+    "jest": "^24.9.0",
+    "jest-puppeteer": "^4.3.0",
     "prettier": "^1.14.3",
+    "puppeteer": "^1.19.0",
     "start-server-and-test": "^1.7.1"
   },
   "repository": {
