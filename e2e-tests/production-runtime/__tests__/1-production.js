@@ -52,7 +52,11 @@ async function waitForAPI(api) {
 }
 
 async function getTestElement(selector) {
-  return await page.$(`[data-testid=${selector}]`)
+  return await page.$(`[data-testid="${selector}"]`)
+}
+
+async function clickTestElement(selector) {
+  return (await getTestElement(selector)).click()
 }
 
 const ORIGIN = `http://localhost:9000`
@@ -74,7 +78,7 @@ describe(`Production build tests`, () => {
   })
 
   it(`should navigate back after a reload`, async () => {
-    ;(await getTestElement(`page2`)).click()
+    await clickTestElement(`page2`)
     await waitForAPI(`onRouteUpdate`)
     expect(path()).toBe(`/page-2/`)
 
@@ -92,5 +96,16 @@ describe(`Production build tests`, () => {
     await waitForAPI(`onRouteUpdate`)
     expect(await getTestElement(`index-link`)).toBeDefined()
     expect(path()).toBe(`/page-2/`)
+  })
+
+  it(`should show 404 page when clicking a link to a non-existent page route`, async () => {
+    await goto(`/`)
+    await waitForAPI(`onRouteUpdate`)
+
+    await clickTestElement(`404`)
+    await waitForAPI(`onRouteUpdate`)
+
+    expect(path()).toBe(`/page-3/`)
+    expect(await getTestElement(`404`)).toBeDefined()
   })
 })
