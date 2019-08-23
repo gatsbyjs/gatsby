@@ -4,6 +4,7 @@ module.exports = {
     port: 9000,
   },
   launch: {
+    // TODO: determine if CI
     headless: false,
   },
 }
