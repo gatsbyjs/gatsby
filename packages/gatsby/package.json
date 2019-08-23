@@ -149,7 +149,7 @@
     "documentation": "^10.1.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "rimraf": "^2.7.1",
+    "rimraf": "^3.0.0",
     "xhr-mock": "^2.5.0"
   },
   "engines": {
