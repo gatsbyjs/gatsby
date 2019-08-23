@@ -7,7 +7,7 @@ const firstPage = () => {
     id: `page1`,
     parent: null,
     children: [],
-    internal: { type: `SitePage`, contentDigest: `0`, $counter: 0 },
+    internal: { type: `SitePage`, contentDigest: `0`, counter: 0 },
     keep: `Page`,
     fields: {
       oldKey: `value`,
@@ -20,7 +20,7 @@ const secondPage = () => {
     id: `page2`,
     parent: null,
     children: [],
-    internal: { type: `SitePage`, contentDigest: `0`, $counter: 1 },
+    internal: { type: `SitePage`, contentDigest: `0`, counter: 1 },
     fields: {
       key: `value`,
     },

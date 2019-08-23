@@ -9,8 +9,8 @@ Object {
     },
     "id": "hi",
     "internal": Object {
-      "$counter": Any<Number>,
       "contentDigest": "hasdfljds",
+      "counter": Any<Number>,
       "fieldOwners": Object {
         "joy": "test",
       },
@@ -30,8 +30,8 @@ Object {
     "children": Array [],
     "id": "hi",
     "internal": Object {
-      "$counter": Any<Number>,
       "contentDigest": "hasdfljds",
+      "counter": Any<Number>,
       "owner": "tests",
       "type": "Test",
     },
@@ -51,8 +51,8 @@ Object {
     "children": Array [],
     "id": "hi",
     "internal": Object {
-      "$counter": Any<Number>,
       "contentDigest": "hasdfljds",
+      "counter": Any<Number>,
       "owner": "tests",
       "type": "Test",
     },

@@ -300,7 +300,7 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
-      await this.nodeStore.updateNodesByType(
+      await this.nodeStore.saveResolvedNodes(
         type.name,
         async node => {
           this.trackInlineObjectsInRootNode(node)
@@ -313,12 +313,11 @@ class LocalNodeModel {
             queryFields,
             actualFieldsToResolve
           )
-          const newNode = {
-            ...node,
-            _$resolved: _.merge(node._$resolved || {}, resolvedFields),
-          }
-
-          return newNode
+          const mergedResolved = _.merge(
+            node.__gatsby_resolved || {},
+            resolvedFields
+          )
+          return mergedResolved
         },
         nodeTypeNames
       )

@@ -87,7 +87,7 @@ function handleMany(siftArgs, nodes, sort, resolvedFields) {
           dottedFields[field] ||
           dottedFieldKeys.some(key => field.startsWith(key))
         ) {
-          return `_$resolved.${field}`
+          return `__gatsby_resolved.${field}`
         } else {
           return field
         }
@@ -100,6 +100,37 @@ function handleMany(siftArgs, nodes, sort, resolvedFields) {
   return result
 }
 
+// Converts a nested mongo args object into a dotted notation. acc
+// (accumulator) must be a reference to an empty object. The converted
+// fields will be added to it. E.g
+//
+// {
+//   internal: {
+//     type: {
+//       $eq: "TestNode"
+//     },
+//     content: {
+//       $regex: new MiniMatch(v)
+//     }
+//   },
+//   id: {
+//     $regex: newMiniMatch(v)
+//   }
+// }
+//
+// After execution, acc would be:
+//
+// {
+//   "internal.type": {
+//     $eq: "TestNode"
+//   },
+//   "internal.content": {
+//     $regex: new MiniMatch(v)
+//   },
+//   "id": {
+//     $regex: // as above
+//   }
+// }
 const toDottedFields = (filter, acc = {}, path = []) => {
   Object.keys(filter).forEach(key => {
     const value = filter[key]
@@ -115,6 +146,7 @@ const toDottedFields = (filter, acc = {}, path = []) => {
   return acc
 }
 
+// Like above, but doesn't handle $elemMatch
 const objectToDottedField = (obj, path = []) => {
   let result = {}
   Object.keys(obj).forEach(key => {
@@ -140,14 +172,14 @@ const liftResolvedFields = (args, resolvedFields) => {
   Object.keys(args).forEach(key => {
     const value = args[key]
     if (dottedFields[key]) {
-      finalArgs[`_$resolved.${key}`] = value
+      finalArgs[`__gatsby_resolved.${key}`] = value
     } else if (
       dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
       value.$elemMatch
     ) {
-      finalArgs[`_$resolved.${key}`] = value
+      finalArgs[`__gatsby_resolved.${key}`] = value
     } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
-      finalArgs[`_$resolved.${key}`] = value
+      finalArgs[`__gatsby_resolved.${key}`] = value
     } else {
       finalArgs[key] = value
     }

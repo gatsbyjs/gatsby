@@ -250,7 +250,7 @@ const runQueuedQueries = () => {
  *
  * For what constitutes a dirty query, see `calcQueries`
  */
-const startListeningToDevelopQueue = queue => {
+const startListeningToDevelopQueue = () => {
   // We use a queue to process batches of queries so that they are
   // processed consecutively
   let graphqlRunner = null
@@ -275,6 +275,8 @@ const startListeningToDevelopQueue = queue => {
     `DELETE_NODES`,
     `SET_SCHEMA_COMPOSER`,
     `SET_SCHEMA`,
+    `ADD_FIELD_TO_NODE`,
+    `ADD_CHILD_NODE_TO_PARENT_NODE`,
   ].forEach(eventType => {
     emitter.on(eventType, event => {
       graphqlRunner = null

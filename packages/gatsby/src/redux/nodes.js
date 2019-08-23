@@ -83,21 +83,19 @@ exports.getNodeAndSavePathDependency = (id, path) => {
   return node
 }
 
-exports.updateNodesByType = async (typeName, updater) => {
+exports.saveResolvedNodes = async (typeName, resolver, nodeTypeNames) => {
   const nodes = store.getState().nodesByType.get(typeName)
-  const processedNodes = new Map()
+  const resolvedNodes = new Map()
   if (nodes) {
     for (const node of nodes.values()) {
-      const processedNode = await updater(node)
-      if (processedNode && processedNode._$resolved) {
-        processedNodes.set(node.id, processedNode._$resolved)
-      }
+      const resolved = await resolver(node)
+      resolvedNodes.set(node.id, resolved)
     }
     store.dispatch({
       type: `SET_RESOLVED_NODES`,
       payload: {
         key: typeName,
-        nodes: processedNodes,
+        nodes: resolvedNodes,
       },
     })
   }
@@ -120,7 +118,7 @@ const getNodesAndResolvedNodes = typeName => {
 
 function* resolvedNodesIterator(nodes, resolvedNodes) {
   for (const node of nodes.values()) {
-    node._$resolved = resolvedNodes.get(node.id)
+    node.__gatsby_resolved = resolvedNodes.get(node.id)
     yield node
   }
 }

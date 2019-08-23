@@ -30,10 +30,10 @@ describe(`Create and update nodes`, () => {
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
     expect(action).toMatchSnapshot({
-      payload: { internal: { $counter: expect.any(Number) } },
+      payload: { internal: { counter: expect.any(Number) } },
     })
     expect(fromMapToObject(nodeReducer(undefined, action))).toMatchSnapshot({
-      hi: { internal: { $counter: expect.any(Number) } },
+      hi: { internal: { counter: expect.any(Number) } },
     })
   })
 
@@ -148,7 +148,7 @@ describe(`Create and update nodes`, () => {
 
     state = nodeReducer(state, addFieldAction)
     expect(fromMapToObject(state)).toMatchSnapshot({
-      hi: { internal: { $counter: expect.any(Number) } },
+      hi: { internal: { counter: expect.any(Number) } },
     })
   })
 

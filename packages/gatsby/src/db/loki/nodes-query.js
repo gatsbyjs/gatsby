@@ -158,6 +158,7 @@ const toDottedFields = (filter, acc = {}, path = []) => {
   return acc
 }
 
+// Like above, but doesn't handle $elemMatch
 const objectToDottedField = (obj, path = []) => {
   let result = {}
   Object.keys(obj).forEach(key => {
@@ -210,14 +211,14 @@ const liftResolvedFields = (args, resolvedFields) => {
   Object.keys(args).forEach(key => {
     const value = args[key]
     if (dottedFields[key]) {
-      finalArgs[`_$resolved.${key}`] = value
+      finalArgs[`__gatsby_resolved.${key}`] = value
     } else if (
       dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
       value.$elemMatch
     ) {
-      finalArgs[`_$resolved.${key}`] = value
+      finalArgs[`__gatsby_resolved.${key}`] = value
     } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
-      finalArgs[`_$resolved.${key}`] = value
+      finalArgs[`__gatsby_resolved.${key}`] = value
     } else {
       finalArgs[key] = value
     }
@@ -323,7 +324,7 @@ async function runQuery(args) {
     return []
   }
   const chain = table.chain()
-  chain.simplesort(`internal.$counter`)
+  chain.simplesort(`internal.counter`)
   ensureFieldIndexes(nodeTypeNames[0], lokiArgs, sortFields || [])
 
   chain.find(lokiArgs, firstOnly)
@@ -338,7 +339,7 @@ async function runQuery(args) {
         dottedFields[field] ||
         dottedFieldKeys.some(key => field.startsWith(key))
       ) {
-        return [`_$resolved.${field}`, order]
+        return [`__gatsby_resolved.${field}`, order]
       } else {
         return [field, order]
       }

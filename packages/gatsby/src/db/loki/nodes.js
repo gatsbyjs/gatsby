@@ -25,7 +25,7 @@ function createNodeTypeCollection(type) {
   // into a transaction
   const options = {
     unique: [`id`],
-    indices: [`id`, `internal.$counter`],
+    indices: [`id`, `internal.counter`],
     disableMeta: true,
   }
   const coll = getDb().addCollection(collName, options)
@@ -135,7 +135,7 @@ function getNodesByType(typeName) {
   if (!coll) return []
   return coll
     .chain()
-    .simplesort(`internal.$counter`)
+    .simplesort(`internal.counter`)
     .data()
 }
 
@@ -293,13 +293,18 @@ function deleteNodes(nodes) {
   }
 }
 
-const updateNodesByType = async (typeName, updater, nodeTypeNames) => {
+const saveResolvedNodes = async (typeName, resolver, nodeTypeNames) => {
   for (const typeName of nodeTypeNames) {
     const nodes = getNodesByType(typeName)
-    const updated = await Promise.all(nodes.map(node => updater(node)))
+    const resolved = await Promise.all(
+      nodes.map(async node => {
+        node.__gatsby_resolved = await resolver(node)
+        return node
+      })
+    )
     const nodeColl = getNodeTypeCollection(typeName)
     if (nodeColl) {
-      nodeColl.update(updated)
+      nodeColl.update(resolved)
     }
   }
 }
@@ -405,6 +410,6 @@ module.exports = {
 
   reducer,
 
-  updateNodesByType,
+  saveResolvedNodes,
   ensureFieldIndexes,
 }

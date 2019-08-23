@@ -522,6 +522,8 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   return deleteNodesAction
 }
 
+// We add a counter to internal to make sure we maintain insertion order for
+// backends that don't do that out of the box
 let NODE_COUNTER = 0
 
 const typeOwners = {}
@@ -619,7 +621,7 @@ const createNode = (
   }
 
   NODE_COUNTER++
-  node.internal.$counter = NODE_COUNTER
+  node.internal.counter = NODE_COUNTER
 
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
