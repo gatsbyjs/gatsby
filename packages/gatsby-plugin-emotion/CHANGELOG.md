@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.2...gatsby-plugin-emotion@4.1.3) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@emotion](https://github.com/emotion)/babel-preset-css-prop to ^10.0.14 ([#16795](https://github.com/gatsbyjs/gatsby/issues/16795)) ([82dac42](https://github.com/gatsbyjs/gatsby/commit/82dac42))
+
 ## [4.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.1...gatsby-plugin-emotion@4.1.2) (2019-07-12)
 
 ### Bug Fixes

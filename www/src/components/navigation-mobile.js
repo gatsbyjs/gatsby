@@ -126,9 +126,7 @@ const styles = {
         height: 32,
         margin: `0 auto`,
         "& path, & line, & polygon": {
-          transition: `all ${transition.speed.default} ${
-            transition.curve.default
-          }`,
+          transition: `all ${transition.speed.default} ${transition.curve.default}`,
         },
       },
     },
