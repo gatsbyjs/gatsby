@@ -6094,10 +6094,10 @@ date-fns@1.30.1, date-fns@^1.27.2, date-fns@^1.30.1:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
 
-date-fns@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0.tgz#52f05c6ae1fe0e395670082c72b690ab781682d0"
-  integrity sha512-nGZDA64Ktq5uTWV4LEH3qX+foV4AguT5qxwRlJDzJtf57d4xLNwtwrfb7SzKCoikoae8Bvxf0zdaEG/xWssp/w==
+date-fns@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.1.tgz#c5f30e31d3294918e6b6a82753a4e719120e203d"
+  integrity sha512-C14oTzTZy8DH1Eq8N78owrCWvf3+cnJw88BTK/N3DYWVxDJuJzPaNdplzYxDYuuXXGvqBcO4Vy5SOrwAooXSWw==
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -9000,10 +9000,10 @@ graphql-type-json@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.2.4.tgz#545af27903e40c061edd30840a272ea0a49992f9"
 
-graphql@^14.5.0:
-  version "14.5.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.0.tgz#4801e6460942c9c591944617f6dd224a9e531520"
-  integrity sha512-wnGcTD181L2xPnIwHHjx/moV4ulxA2Kms9zcUY+B/SIrK+2N+iOC6WNgnR2zVTmg1Z8P+CZq5KXibTnatg3WUw==
+graphql@^14.5.2:
+  version "14.5.2"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.2.tgz#70e729167beb0472d9ddb9fcf933bb3a0ce64fc5"
+  integrity sha512-lq+7NLqdxQxglXHfHRH0Qkr6xOAvMtozxWOhxpX5tJXlN8SnKf55/zW0qbF7V7U0fh6sXenoJqaF2lP6Bp3NAQ==
   dependencies:
     iterall "^1.2.2"
 
@@ -13050,10 +13050,10 @@ moment@^2.10.6, moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
 
-mongodb@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.3.0.tgz#3ec6fa6260405b16fe76cc37b5d09684d13d8c11"
-  integrity sha512-QYa8YEN5uiJyIFdnn1vmBtiSveyygmQghsaL/RDnHqUzjGvkYe0vRg6UikCKba06cg6El/Lu7qzOYnR3vMhwlA==
+mongodb@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.3.1.tgz#31947e3050872d325415694f89119f37d2107a91"
+  integrity sha512-Q92LLlPUTBj/Z4DyeznwPJjvgOYUcxZsBfek3Ba9mVhzH41n70vSubo+BmemI98kOefHTSncrTyb3OaxdLSgDw==
   dependencies:
     bson "^1.1.1"
     require_optional "^1.0.1"
@@ -15243,7 +15243,7 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-puppeteer@^1.18.1:
+puppeteer@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.19.0.tgz#e3b7b448c2c97933517078d7a2c53687361bebea"
   integrity sha512-2S6E6ygpoqcECaagDbBopoSOPDv0pAZvTbnBgUY+6hq0/XDFDOLEMNlHF/SKJlzcaZ9ckiKjKDuueWI3FN/WXw==
