@@ -106,7 +106,7 @@ const debouncedWriteAll = _.debounce(
   async () => {
     const activity = reporter.activityTimer(`write out requires`, {
       id: `requires-writer`,
-      dontShowSuccess: true,
+      // dontShowSuccess: true,
     })
     activity.start()
     const didRequiresChange = await writeAll(store.getState())

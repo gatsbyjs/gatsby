@@ -81,7 +81,7 @@ const waitJobsFinished = () =>
 
 async function startServer(program) {
   const indexHTMLActivity = report.activityTimer(`building index.html`, {
-    dontShowSuccess: true,
+    // dontShowSuccess: true,
   })
   indexHTMLActivity.start()
   const directory = program.directory
@@ -118,7 +118,7 @@ async function startServer(program) {
   // report.stateUpdate(`webpack`, `IN_PROGRESS`)
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
-    dontShowSuccess: true,
+    // dontShowSuccess: true,
     id: `webpack-develop`,
   })
   webpackActivity.start()
@@ -199,7 +199,7 @@ async function startServer(program) {
 
     if (enableRefresh && authorizedRefresh) {
       const activity = report.activityTimer(`Refreshing source data`, {
-        dontShowSuccess: true,
+        // dontShowSuccess: true,
       })
       activity.start()
       sourceNodes({
@@ -579,7 +579,7 @@ module.exports = async (program: any) => {
       // webpackActivity = null
     }
     webpackActivity = report.activityTimer(`Re-building development bundle`, {
-      dontShowSuccess: true,
+      // dontShowSuccess: true,
       id: `webpack-develop`,
     })
     webpackActivity.start()
@@ -628,7 +628,7 @@ module.exports = async (program: any) => {
       const errors = handleWebpackError(`develop`, stats.compilation.errors)
 
       errors.forEach(error => {
-        report.statefulMessage({
+        report.error({
           ...error,
           group: `webpack-errors`,
         })

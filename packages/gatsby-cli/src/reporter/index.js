@@ -180,20 +180,20 @@ const reporter: Reporter = {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
 
-  statefulMessage(payload) {
-    const error = constructError({ details: payload })
-    reporterActions.createStatefulLog(error)
-    // dispatch({
-    //   type: `STATEFUL_LOG`,
-    //   payload: error,
-    // })
-    if (error.panicOnBuild) {
-      trackError(`BUILD_PANIC`, { error })
-      if (process.env.gatsby_executing_command === `build`) {
-        prematureEnd()
-      }
-    }
-  },
+  // statefulMessage(payload) {
+  //   const error = constructError({ details: payload })
+  //   reporterActions.createStatefulLog(error)
+  //   // dispatch({
+  //   //   type: `STATEFUL_LOG`,
+  //   //   payload: error,
+  //   // })
+  //   if (error.panicOnBuild) {
+  //     trackError(`BUILD_PANIC`, { error })
+  //     if (process.env.gatsby_executing_command === `build`) {
+  //       prematureEnd()
+  //     }
+  //   }
+  // },
 
   clearStatefulMessage: reporterActions.clearStatefulLogs,
 
@@ -240,15 +240,15 @@ const reporter: Reporter = {
   //   //   },
   //   // })
   // },
-  // createPendingActivity: reporterActions.createPendingActivity,
-  pendingActivity: (id: string) => {
-    reporterActions.startActivity({
-      id,
-      status: `NOT_STARTED`,
-      type: `pending`,
-      dontShowSuccess: true,
-    })
-  },
+  pendingActivity: reporterActions.createPendingActivity,
+  // pendingActivity: (id: string) => {
+  //   reporterActions.startActivity({
+  //     id,
+  //     status: `NOT_STARTED`,
+  //     type: `pending`,
+  //     dontShowSuccess: true,
+  //   })
+  // },
   completeActivity: (id: string, status: string = `SUCCESS`) => {
     reporterActions.endActivity({ id, status })
     // dispatch({

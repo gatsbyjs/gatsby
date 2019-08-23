@@ -1,5 +1,5 @@
 // @flow
-
+const uuidv4 = require(`uuid/v4`)
 const convertHrtime = require(`convert-hrtime`)
 const { trackCli } = require(`gatsby-telemetry`)
 
@@ -31,6 +31,7 @@ const actions = {
     activity_current,
     activity_total,
     activity_type,
+    activity_uuid,
   }) => {
     return {
       type: `LOG`,
@@ -49,64 +50,65 @@ const actions = {
         activity_current,
         activity_total,
         activity_type,
+        activity_uuid,
         timestamp: new Date().toJSON(),
       },
     }
   },
-  createStatefulLog: ({
-    level,
-    text,
-    statusText,
-    duration,
-    group,
-    code,
-    type,
-    filePath,
-    location,
-    docsUrl,
-    context,
-    activity_current,
-    activity_total,
-    activity_type,
-  }) => {
-    return {
-      type: `STATEFUL_LOG`,
-      payload: {
-        level,
-        text,
-        statusText,
-        duration,
-        group,
-        code,
-        type,
-        filePath,
-        location,
-        docsUrl,
-        context,
-        activity_current,
-        activity_total,
-        activity_type,
-        timestamp: new Date().toJSON(),
-      },
-    }
-  },
+  // createStatefulLog: ({
+  //   level,
+  //   text,
+  //   statusText,
+  //   duration,
+  //   group,
+  //   code,
+  //   type,
+  //   filePath,
+  //   location,
+  //   docsUrl,
+  //   context,
+  //   activity_current,
+  //   activity_total,
+  //   activity_type,
+  // }) => {
+  //   return {
+  //     type: `STATEFUL_LOG`,
+  //     payload: {
+  //       level,
+  //       text,
+  //       statusText,
+  //       duration,
+  //       group,
+  //       code,
+  //       type,
+  //       filePath,
+  //       location,
+  //       docsUrl,
+  //       context,
+  //       activity_current,
+  //       activity_total,
+  //       activity_type,
+  //       timestamp: new Date().toJSON(),
+  //     },
+  //   }
+  // },
   clearStatefulLogs: group => {
     return {
       type: `CLEAR_STATEFUL_LOG`,
       payload: group,
     }
   },
-  // createPendingActivity: id => {
-  //   return {
-  //     type: `STRUCTURED_ACTIVITY_START`,
-  //     payload: {
-  //       id,
-  //       type: `pending`,
-  //       status: `NOT_STARTED`,
-  //       dontShowSuccess: true,
-  //     },
-  //   }
-  // },
+  createPendingActivity: id => {
+    return {
+      type: `ACTIVITY_PENDING`,
+      payload: {
+        id,
+        type: `pending`,
+        status: `NOT_STARTED`,
+        dontShowSuccess: true,
+      },
+    }
+  },
   // completeActivity: (id, status) => {
   //   return {
   //     type: `STRUCTURED_ACTIVITY_END`,
@@ -141,6 +143,7 @@ const actions = {
       type: `ACTIVITY_START`,
       payload: {
         id,
+        uuid: uuidv4(),
         text,
         type,
         dontShowSuccess,
@@ -162,46 +165,59 @@ const actions = {
     if (!activity) {
       return null
     }
-
-    let duration = 0
-    if (activity.status === `IN_PROGRESS`) {
-      duration = getElapsedTimeMS(activity)
-      trackCli(`ACTIVITY_DURATION`, {
-        name: activity.name,
-        duration,
-      })
-    }
-
     const actionsToEmit = []
-
-    if (!activity.dontShowSuccess) {
-      actionsToEmit.push(
-        actions.createLog({
-          text: activity.text,
-          level: `ACTIVITY_${status}`,
+    if (activity.type === `pending`) {
+      actionsToEmit.push({
+        type: `ACTIVITY_CANCEL`,
+        payload: {
+          id,
+          status: `CANCELLED`,
+        },
+      })
+      return actionsToEmit
+    } else {
+      let duration = 0
+      if (activity.status === `IN_PROGRESS`) {
+        duration = getElapsedTimeMS(activity)
+        trackCli(`ACTIVITY_DURATION`, {
+          name: activity.name,
           duration,
-          statusText:
-            activity.statusText ||
-            (status === `SUCCESS` && activity.type === `progress`
-              ? `${activity.current}/${activity.total} ${(
-                  activity.total / duration
-                ).toFixed(2)}/s`
-              : undefined),
-          activity_current: activity.current,
-          activity_total: activity.total,
-          activity_type: activity.type,
         })
-      )
-    }
+      }
 
-    actionsToEmit.push({
-      type: `ACTIVITY_END`,
-      payload: {
-        id,
-        status,
-        duration,
-      },
-    })
+      // const actionsToEmit = []
+
+      actionsToEmit.push({
+        type: `ACTIVITY_END`,
+        payload: {
+          uuid: activity.uuid,
+          id,
+          status,
+          duration,
+        },
+      })
+
+      if (!activity.dontShowSuccess) {
+        actionsToEmit.push(
+          actions.createLog({
+            text: activity.text,
+            level: `ACTIVITY_${status}`,
+            duration,
+            statusText:
+              activity.statusText ||
+              (status === `SUCCESS` && activity.type === `progress`
+                ? `${activity.current}/${activity.total} ${(
+                    activity.total / duration
+                  ).toFixed(2)}/s`
+                : undefined),
+            activity_uuid: activity.uuid,
+            activity_current: activity.current,
+            activity_total: activity.total,
+            activity_type: activity.type,
+          })
+        )
+      }
+    }
 
     const logsState = getStore().getState().logs
     const generatedGlobalStatus = Object.keys(logsState.activities).reduce(
@@ -233,9 +249,15 @@ const actions = {
   },
 
   updateActivity: ({ id, ...rest }) => {
+    const activity = getActivity(id)
+    if (!activity) {
+      return null
+    }
+
     return {
       type: `ACTIVITY_UPDATE`,
       payload: {
+        uuid: activity.uuid,
         id,
         ...rest,
       },

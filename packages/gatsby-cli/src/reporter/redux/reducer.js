@@ -30,7 +30,10 @@ module.exports = (
         [id]: action.payload,
       },
     }
-  } else if (action.type === `ACTIVITY_UPDATE`) {
+  } else if (
+    action.type === `ACTIVITY_UPDATE` ||
+    action.type === `ACTIVITY_PENDING`
+  ) {
     const { id, ...rest } = action.payload
     const activity = state.activities[id]
 
@@ -44,7 +47,10 @@ module.exports = (
         },
       },
     }
-  } else if (action.type === `ACTIVITY_END`) {
+  } else if (
+    action.type === `ACTIVITY_END` ||
+    action.type === `ACTIVITY_CANCEL`
+  ) {
     const { id, status, duration } = action.payload
     const activity = state.activities[id]
     if (!activity) {
@@ -56,6 +62,16 @@ module.exports = (
       ...activity,
       status,
       duration,
+    }
+
+    if (id === `query-running`) {
+      process.stdout.write(
+        `\nFINISHING query-running ${JSON.stringify(activities[id])}\n\n`
+      )
+
+      if (activities[id].status === `SUCCESS`) {
+        const b = 4
+      }
     }
 
     state = {

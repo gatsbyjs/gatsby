@@ -100,7 +100,7 @@ class Runner {
     const activity = report.activityTimer(`extract queries from components`, {
       // parentSpan: bootstrapSpan,
       id: `query-extraction`,
-      dontShowSuccess: !isFirstRun,
+      // dontShowSuccess: !isFirstRun,
     })
     activity.start()
     const messages = []
@@ -114,7 +114,7 @@ class Runner {
 
     // console.log(messages)
     messages.forEach(msg => {
-      report.statefulMessage({
+      report.panicOnBuild({
         ...msg,
         group: `query-extraction`,
         panicOnBuild: true,

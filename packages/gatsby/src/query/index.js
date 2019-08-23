@@ -286,16 +286,18 @@ const runQueuedQueries = () => {
  * For what constitutes a dirty query, see `calcQueries`
  */
 const startListening = queue => {
+  // console.info(`started listening`)
   // We use a queue to process batches of queries so that they are
   // processed consecutively
   listenerQueue = new Queue((queryJobs, callback) => {
+    // console.info(`doing work`)
     let activity
 
     if (queryJobs.length) {
       // console.log(`create progress`)
       activity = report.createProgress(`run queries`, queryJobs.length, 0, {
         id: `query-running`,
-        dontShowSuccess: true,
+        // dontShowSuccess: true,
       })
       activity.start()
     } else {
