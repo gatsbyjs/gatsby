@@ -458,7 +458,7 @@ class ContextualNodeModel {
 
   trackPageDependencies(result, pageDependencies) {
     const fullDependencies = {
-      path: this.path,
+      path: this.context.path,
       ...(pageDependencies || {}),
     }
 
