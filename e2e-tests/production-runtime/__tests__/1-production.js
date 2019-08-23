@@ -46,13 +46,23 @@ async function initAPIHandler() {
   })
 }
 
-function goto(path) {
-  return page.goto(`http://localhost:9000${path}`)
+async function waitForAPI(api) {
+  await initAPIHandler()
+  return await page.evaluate(api => window.___waitForAPI(api), api)
 }
 
-async function waitForAPI(api) {
-  initAPIHandler()
-  return await page.evaluate(api => window.___waitForAPI(api), api)
+async function getTestElement(selector) {
+  return await page.$(`[data-testid=${selector}]`)
+}
+
+const ORIGIN = `http://localhost:9000`
+
+async function goto(path) {
+  return await page.goto(ORIGIN + path)
+}
+
+function path() {
+  return page.url().replace(ORIGIN, ``)
 }
 
 describe(`Production build tests`, () => {
@@ -61,5 +71,19 @@ describe(`Production build tests`, () => {
   it(`should render properly`, async () => {
     await goto(`/`)
     await waitForAPI(`onRouteUpdate`)
+  })
+
+  it(`should navigate back after a reload`, async () => {
+    ;(await getTestElement(`page2`)).click()
+    await waitForAPI(`onRouteUpdate`)
+    expect(path()).toBe(`/page-2/`)
+
+    await page.reload()
+    await waitForAPI(`onRouteUpdate`)
+    await page.goBack()
+    await waitForAPI(`onRouteUpdate`)
+
+    await getTestElement(`page2`)
+    expect(path()).toBe(`/`)
   })
 })
