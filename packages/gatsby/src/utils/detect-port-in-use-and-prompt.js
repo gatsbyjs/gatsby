@@ -11,7 +11,7 @@ const readlinePort = port => {
         resolve(answer)
       },
       {
-        single: false,
+        single: true,
         validInput: [`Y`, `n`],
         defaultValue: `y`,
         returnBoolean: {
