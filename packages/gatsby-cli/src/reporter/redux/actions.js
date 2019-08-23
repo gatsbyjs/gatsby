@@ -28,6 +28,9 @@ const actions = {
     location,
     docsUrl,
     context,
+    activity_current,
+    activity_total,
+    activity_type,
   }) => {
     return {
       type: `LOG`,
@@ -43,6 +46,9 @@ const actions = {
         location,
         docsUrl,
         context,
+        activity_current,
+        activity_total,
+        activity_type,
         timestamp: new Date().toJSON(),
       },
     }
@@ -59,6 +65,9 @@ const actions = {
     location,
     docsUrl,
     context,
+    activity_current,
+    activity_total,
+    activity_type,
   }) => {
     return {
       type: `STATEFUL_LOG`,
@@ -74,6 +83,9 @@ const actions = {
         location,
         docsUrl,
         context,
+        activity_current,
+        activity_total,
+        activity_type,
         timestamp: new Date().toJSON(),
       },
     }
@@ -175,6 +187,9 @@ const actions = {
                   activity.total / duration
                 ).toFixed(2)}/s`
               : undefined),
+          activity_current: activity.current,
+          activity_total: activity.total,
+          activity_type: activity.type,
         })
       )
     }
