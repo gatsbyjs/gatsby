@@ -13,7 +13,7 @@ jest.mock(`../prepare/cache`, () => {
       }
     }),
     save: jest.fn(),
-    getPath: () => `/font-preload-cache.json`,
+    cacheFile: `/font-preload-cache.json`,
   }
 })
 jest.mock(`../prepare/fetch-routes`, () => jest.fn())

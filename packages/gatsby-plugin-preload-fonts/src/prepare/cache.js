@@ -1,14 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-module.exports.getPath = getPath
-module.exports.load = load
-module.exports.save = save
-
-function getPath() {
-  return path.join(cacheDir, `font-preload-cache.json`)
-}
-
 function createEmptyCache() {
   return {
     timestamp: Date.now(),
@@ -18,6 +10,7 @@ function createEmptyCache() {
 }
 
 const cacheDir = process.cwd()
+const cacheFile = path.join(cacheDir, `font-preload-cache.json`)
 
 let cache
 try {
@@ -35,7 +28,7 @@ function load() {
   if (cache) return cache
 
   try {
-    const json = fs.readFileSync(getPath(), `utf-8`)
+    const json = fs.readFileSync(cacheFile, `utf-8`)
     cache = JSON.parse(json)
     return cache
   } catch (err) {
@@ -45,6 +38,10 @@ function load() {
 
 function save(data) {
   const json = JSON.stringify(data)
-  fs.writeFileSync(getPath(), json, `utf-8`)
+  fs.writeFileSync(cacheFile, json, `utf-8`)
   cache = data
 }
+
+module.exports.load = load
+module.exports.save = save
+module.exports.cacheFile = cacheFile

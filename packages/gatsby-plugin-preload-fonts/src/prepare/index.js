@@ -9,7 +9,7 @@ const { blue, green, bold, dim } = require(`chalk`)
 
 const createLogger = require(`./logger`)
 const fetchRoutes = require(`./fetch-routes`)
-const { load, save, getPath: getCachePath } = require(`./cache`)
+const { load, save, cacheFile } = require(`./cache`)
 const { ellipses } = require(`./utils`)
 
 const {
@@ -63,7 +63,7 @@ export async function main() {
       const { pathname } = new URL(page.url())
 
       if (!Object.prototype.hasOwnProperty.call(cache.assets, pathname)) {
-        cache.assets[pathname] = {}
+        cache.assets[pathname] = Object.create(null)
       }
       cache.assets[pathname][req.url()] = true
       bar.interrupt(green(ellipses(` found ${req.url()}`, 80)))
@@ -100,11 +100,9 @@ export async function main() {
       font requirements has been generated; make sure to
       add ${bold(`\`gatsby-plugin-preload-fonts\``)} to your app config
 
-        - ${dim(`output`)} ${bold(getCachePath())}
+        - ${dim(`output`)} ${bold(cacheFile)}
 
 `)
 }
 
-if (process.env.NODE_ENV !== `test`) {
-  main().then(process.exit.bind(0))
-}
+if (process.env.NODE_ENV !== `test`) main()
