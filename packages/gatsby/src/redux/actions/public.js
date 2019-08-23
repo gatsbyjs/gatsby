@@ -359,6 +359,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
       !fileContent.includes(`exports.default`) &&
+      !fileContent.includes(`exports["default"]`) &&
       // this check only applies to js and ts, not mdx
       /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
