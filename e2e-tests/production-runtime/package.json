@@ -27,8 +27,8 @@
     "start": "npm run develop",
     "test": "npm run build && npm run jest",
     "test:offline": "npm run build:offline && npm run jest:offline",
-    "jest": "jest --runInBand __tests__/index.js",
-    "jest:offline": "TEST_PLUGIN_OFFLINE=y jest --runInBand __tests__/index.js"
+    "jest": "jest __tests__/index.js",
+    "jest:offline": "TEST_PLUGIN_OFFLINE=y jest __tests__/index.js"
   },
   "devDependencies": {
     "fs-extra": "^7.0.1",
