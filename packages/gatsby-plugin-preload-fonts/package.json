@@ -39,7 +39,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages\\gatsby-plugin-preload-fonts"
+    "directory": "packages/gatsby-plugin-preload-fonts"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/__mocks__",
