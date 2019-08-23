@@ -4,6 +4,22 @@ const { build } = require(`../..`)
 const { actions } = require(`../../../redux/actions`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 describe(`merges explicit and inferred type definitions`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })

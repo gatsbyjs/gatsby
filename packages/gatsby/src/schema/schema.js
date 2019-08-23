@@ -108,19 +108,39 @@ const updateSchemaComposer = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  await addTypes({ schemaComposer, parentSpan, types })
+  let activity = report.activityTimer(`Add explicit types`, {
+    parentSpan: parentSpan,
+  })
+  activity.start()
+  await addTypes({ schemaComposer, parentSpan: activity.span, types })
+  activity.end()
+
+  activity = report.activityTimer(`Add inferred types`, {
+    parentSpan: parentSpan,
+  })
+  activity.start()
   await addInferredTypes({
     schemaComposer,
     nodeStore,
     typeConflictReporter,
     typeMapping,
-    parentSpan,
+    parentSpan: activity.span,
   })
-  await printTypeDefinitions({ config: printConfig, schemaComposer })
+  activity.end()
+
+  activity = report.activityTimer(`Processing types`, {
+    parentSpan: parentSpan,
+  })
+  activity.start()
+  await printTypeDefinitions({
+    config: printConfig,
+    schemaComposer,
+    parentSpan: activity.span,
+  })
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
-    parentSpan,
+    parentSpan: activity.span,
   })
   await Promise.all(
     Array.from(new Set(schemaComposer.values())).map(typeComposer =>
@@ -129,14 +149,22 @@ const updateSchemaComposer = async ({
         typeComposer,
         fieldExtensions,
         nodeStore,
-        parentSpan,
+        parentSpan: activity.span,
       })
     )
   )
-  checkQueryableInterfaces({ schemaComposer })
-  await addConvenienceChildrenFields({ schemaComposer, parentSpan })
-  await addThirdPartySchemas({ schemaComposer, thirdPartySchemas, parentSpan })
-  await addCustomResolveFunctions({ schemaComposer, parentSpan })
+  checkQueryableInterfaces({ schemaComposer, parentSpan: activity.span })
+  await addConvenienceChildrenFields({
+    schemaComposer,
+    parentSpan: activity.span,
+  })
+  await addThirdPartySchemas({
+    schemaComposer,
+    thirdPartySchemas,
+    parentSpan: activity.span,
+  })
+  await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
+  activity.end()
 }
 
 const processTypeComposer = async ({

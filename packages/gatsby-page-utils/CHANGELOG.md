@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.10...gatsby-page-utils@0.0.11) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency chokidar to v3 ([#16975](https://github.com/gatsbyjs/gatsby/issues/16975)) ([816d475](https://github.com/gatsbyjs/gatsby/commit/816d475))
+
+## [0.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.9...gatsby-page-utils@0.0.10) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.8...gatsby-page-utils@0.0.9) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.7...gatsby-page-utils@0.0.8) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
+## [0.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.6...gatsby-page-utils@0.0.7) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency chokidar to v2.1.6 ([#16832](https://github.com/gatsbyjs/gatsby/issues/16832)) ([dbcf65f](https://github.com/gatsbyjs/gatsby/commit/dbcf65f))
+
+## [0.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.5...gatsby-page-utils@0.0.6) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-page-utils
+
 ## [0.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.4...gatsby-page-utils@0.0.5) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-page-utils

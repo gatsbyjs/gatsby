@@ -226,6 +226,7 @@ module.exports = {
       options: {
         feeds: [
           {
+            title: `GatsbyJS`,
             query: `
               {
                 allMdx(
