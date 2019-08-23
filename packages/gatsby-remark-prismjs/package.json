@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-prismjs",
   "description": "Adds syntax highlighting to code blocks at build time using PrismJS",
-  "version": "3.3.8",
+  "version": "3.3.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,7 +14,7 @@
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
-    "babel-preset-gatsby-package": "^0.2.2",
+    "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.0",
     "prismjs": "^1.17.1",
     "remark": "^9.0.0"

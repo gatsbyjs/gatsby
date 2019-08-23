@@ -1,7 +1,7 @@
 {
   "name": "gatsby-telemetry",
   "description": "Gatsby Telemetry",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -29,7 +29,7 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "babel-jest": "^24.9.0",
-    "babel-preset-gatsby-package": "^0.2.2",
+    "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.0",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.7...gatsby-plugin-feed@2.3.8) (2019-08-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-feed:** respect custom options and require title in config ([#16814](https://github.com/gatsbyjs/gatsby/issues/16814)) ([92df1cf](https://github.com/gatsbyjs/gatsby/commit/92df1cf))
+
 ## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.6...gatsby-plugin-feed@2.3.7) (2019-08-20)
 
 ### Bug Fixes
