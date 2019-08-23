@@ -132,7 +132,7 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
    */
   const done = () => {
     rl.setRaw(isRaw)
-    rl.removeListeners()
+    rl.removeRlListeners(`all`)
     rl.pause()
     rl.close()
   }
@@ -155,36 +155,45 @@ const create = (opts: ?ReadlineOptions): [readline.Interface, () => void] => {
       rl.setRaw()
       readline.emitKeypressEvents(rl.input, rl)
       rl.input.unmute()
-      rl.addListener(`input`, `keypress`, keypress)
+      rl.addRlListener(`input`, `keypress`, keypress)
     }
   }
 
-  rl.addListener = (type: CanListen, event: string, handler: Function) => {
+  rl.addRlListener = (type: CanListen, event: string, handler: Function) => {
+    if (!listeners[type]) listeners[type] = {}
     if (!listeners[type][event]) listeners[type][event] = []
-    rl[type].on(event, handler)
+    if (type === `rl`) {
+      rl.on(event, handler)
+    } else {
+      rl[type].on(event, handler)
+    }
     listeners[type][event].push(handler)
   }
 
-  rl.removeListeners = (type: ListenerTypes = `all`) => {
-    const removeInputListeners = () => {
-      Object.keys(listeners.input).forEach(event => {
-        while (listeners.input[event].length > 0) {
-          const func = listeners.input[event].pop()
-          if (func) rl.input.removeListener(event, func)
+  rl.removeRlListeners = (type: ListenerTypes = `all`) => {
+    const removeType = (_type: ListenerTypes) => {
+      Object.keys(listeners[_type]).forEach(event => {
+        while (listeners[_type][event].length > 0) {
+          const func = listeners[_type][event].pop()
+          if (func) {
+            if (_type === `rl`) {
+              rl.removeListener(event, func)
+            } else {
+              rl[_type].removeListener(event, func)
+            }
+          }
         }
       })
     }
-    const removeAll = () => {
-      removeInputListeners()
-      rl.removeAllListeners()
-    }
     switch (type) {
       case `all`: {
-        removeAll()
+        Object.keys(listeners).forEach(_type => removeType(_type))
+        rl.removeAllListeners()
         break
       }
+      case `rl`:
       case `input`: {
-        removeInputListeners()
+        removeType(type)
         break
       }
     }
@@ -286,12 +295,21 @@ const ask = (rl: readline.Interface) => (
       if (validateInput(chunk)) {
         rl.output.unmute()
         rl.output.write(`${chunk}\n`)
-        rl.removeListeners(`input`)
+        rl.removeRlListeners(`input`)
       } else {
         return void 0
       }
     }
     return key
+  }
+
+  const onData = data => {
+    if (validateInput(data)) {
+      rl.removeRlListeners(`rl`)
+    } else {
+      rl.clearPrompt(2)
+      rl.prompt()
+    }
   }
 
   rl.setPrompt(query)
@@ -300,12 +318,7 @@ const ask = (rl: readline.Interface) => (
   if (opts.single) {
     rl.output.mute()
   } else {
-    rl.on(`line`, data => {
-      if (!validateInput(data)) {
-        rl.clearPrompt(2)
-        rl.prompt()
-      }
-    })
+    rl.addRlListener(`rl`, `line`, onData)
   }
 }
 
