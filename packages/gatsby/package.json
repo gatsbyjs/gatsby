@@ -84,7 +84,7 @@
     "graphql-playground-middleware-express": "^1.7.12",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
-    "is-relative-url": "^2.0.0",
+    "is-relative-url": "^3.0.0",
     "is-wsl": "^1.1.0",
     "jest-worker": "^23.2.0",
     "json-loader": "^0.5.7",
