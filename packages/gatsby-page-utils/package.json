@@ -27,7 +27,7 @@
     "glob": "^7.1.4",
     "lodash": "^4.17.15",
     "micromatch": "^3.1.10",
-    "slash": "^1.0.0"
+    "slash": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
