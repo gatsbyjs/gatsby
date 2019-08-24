@@ -17,7 +17,7 @@
     "gatsby-remark-copy-linked-files": "^2.1.11",
     "gatsby-remark-images": "^3.1.18",
     "gatsby-remark-smartypants": "^2.1.5",
-    "gatsby-source-filesystem": "^2.1.17",
+    "gatsby-source-filesystem": "^2.1.18",
     "gatsby-transformer-sharp": "^2.2.12",
     "remark-slug": "^5.1.2"
   },
