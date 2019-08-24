@@ -76,6 +76,7 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+  afterProcessDelay: process.env.GATSBY_DELAY_DOWNLOAD || 0,
 })
 
 // when the queue is empty we stop the progressbar
