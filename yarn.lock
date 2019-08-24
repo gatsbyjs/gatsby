@@ -9019,10 +9019,10 @@ graphql-type-json@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.2.4.tgz#545af27903e40c061edd30840a272ea0a49992f9"
 
-graphql@^14.5.2:
-  version "14.5.2"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.2.tgz#70e729167beb0472d9ddb9fcf933bb3a0ce64fc5"
-  integrity sha512-lq+7NLqdxQxglXHfHRH0Qkr6xOAvMtozxWOhxpX5tJXlN8SnKf55/zW0qbF7V7U0fh6sXenoJqaF2lP6Bp3NAQ==
+graphql@^14.5.3:
+  version "14.5.3"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.3.tgz#e025851cc413e153220f4edbbb25d49f55104fa0"
+  integrity sha512-W8A8nt9BsMg0ZK2qA3DJIVU6muWhxZRYLTmc+5XGwzWzVdUdPVlAAg5hTBjiTISEnzsKL/onasu6vl3kgGTbYg==
   dependencies:
     iterall "^1.2.2"
 

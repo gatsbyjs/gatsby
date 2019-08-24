@@ -79,7 +79,7 @@
     "gatsby-telemetry": "^1.1.18",
     "glob": "^7.1.4",
     "got": "8.3.2",
-    "graphql": "^14.5.2",
+    "graphql": "^14.5.3",
     "graphql-compose": "^6.3.5",
     "graphql-playground-middleware-express": "^1.7.12",
     "invariant": "^2.2.4",
@@ -186,7 +186,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^14.5.2"
+    "graphql": "^14.5.3"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
