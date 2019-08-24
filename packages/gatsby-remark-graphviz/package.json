@@ -20,7 +20,7 @@
     "hast-util-to-html": "^4.0.1",
     "mdast-util-to-hast": "^3.0.4",
     "remark": "^9.0.0",
-    "rimraf": "^2.7.1",
+    "rimraf": "^3.0.0",
     "unist-util-find": "^1.0.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz#readme",

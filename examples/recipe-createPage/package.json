@@ -1,8 +1,22 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "recipe-create-page",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "A simple starter to get up and developing quickly with Gatsby",
   "version": "0.1.0",
+  "author": "@gatsbyjs",
+  "dependencies": {
+    "gatsby": "^2.13.73",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.1"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  },
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
@@ -12,17 +26,9 @@
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
   },
-  "dependencies": {
-    "gatsby": "^2.13.80",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
-  },
-  "devDependencies": {
-    "prettier": "^1.18.2"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
