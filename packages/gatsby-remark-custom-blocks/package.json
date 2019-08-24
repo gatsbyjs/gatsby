@@ -15,7 +15,7 @@
     "@babel/core": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.0",
-    "rimraf": "^2.7.1",
+    "rimraf": "^3.0.0",
     "unist-util-find": "^1.0.1"
   },
   "files": [
