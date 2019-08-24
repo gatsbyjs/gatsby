@@ -86,7 +86,7 @@
     "is-relative": "^1.0.0",
     "is-relative-url": "^3.0.0",
     "is-wsl": "^2.1.0",
-    "jest-worker": "^23.2.0",
+    "jest-worker": "^24.9.0",
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
