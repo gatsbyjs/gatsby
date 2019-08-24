@@ -40,7 +40,7 @@
     "prettier": "1.18.2",
     "rimraf": "^3.0.0",
     "svgo": "1.3.0",
-    "ts-jest": "^22",
+    "ts-jest": "^24",
     "typescript": "^3.5.3",
     "yargs": "^10.1.2"
   },
