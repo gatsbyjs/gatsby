@@ -22,7 +22,7 @@
     "configstore": "^5.0.0",
     "convert-hrtime": "^2.0.0",
     "core-js": "^2.6.9",
-    "envinfo": "^5.12.1",
+    "envinfo": "^7.3.1",
     "execa": "^0.11.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
