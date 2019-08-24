@@ -18,7 +18,7 @@
     "fs-extra": "^4.0.3",
     "gatsby-plugin-sharp": "^2.2.17",
     "gatsby-source-filesystem": "^2.1.16",
-    "is-online": "^7.0.0",
+    "is-online": "^8.2.0",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
     "qs": "^6.8.0"
