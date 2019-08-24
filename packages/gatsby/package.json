@@ -78,7 +78,7 @@
     "gatsby-react-router-scroll": "^2.1.6",
     "gatsby-telemetry": "^1.1.18",
     "glob": "^7.1.4",
-    "got": "8.3.2",
+    "got": "9.6.0",
     "graphql": "^14.5.3",
     "graphql-compose": "^6.3.5",
     "graphql-playground-middleware-express": "^1.7.12",
