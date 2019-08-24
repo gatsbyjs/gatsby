@@ -12,7 +12,7 @@
     "bluebird": "^3.5.5",
     "boxen": "^3.2.0",
     "ci-info": "2.0.0",
-    "configstore": "^4.0.0",
+    "configstore": "^5.0.0",
     "envinfo": "^5.12.1",
     "fs-extra": "^7.0.1",
     "git-up": "4.0.1",
