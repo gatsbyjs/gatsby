@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.17...gatsby-remark-images@3.1.18) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency is-relative-url to v3 ([#17038](https://github.com/gatsbyjs/gatsby/issues/17038)) ([ff9ae84](https://github.com/gatsbyjs/gatsby/commit/ff9ae84))
+- update dependency slash to v3 ([#17019](https://github.com/gatsbyjs/gatsby/issues/17019)) ([c81f45c](https://github.com/gatsbyjs/gatsby/commit/c81f45c))
+
 ## [3.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.16...gatsby-remark-images@3.1.17) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-remark-images

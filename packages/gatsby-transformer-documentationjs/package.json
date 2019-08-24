@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-documentationjs",
   "description": "Gatsby transformer plugin which uses Documentation.js to extract JavaScript documentation",
-  "version": "4.1.6",
+  "version": "4.1.7",
   "author": "Kyle Mathews",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

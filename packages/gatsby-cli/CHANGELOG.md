@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.39...gatsby-cli@2.7.40) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency clipboardy to v2 ([#17014](https://github.com/gatsbyjs/gatsby/issues/17014)) ([3296de9](https://github.com/gatsbyjs/gatsby/commit/3296de9))
+- update dependency configstore to v5 ([#17024](https://github.com/gatsbyjs/gatsby/issues/17024)) ([17e07cc](https://github.com/gatsbyjs/gatsby/commit/17e07cc))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency hosted-git-info to v3 ([#17034](https://github.com/gatsbyjs/gatsby/issues/17034)) ([db3a945](https://github.com/gatsbyjs/gatsby/commit/db3a945))
+
 ## [2.7.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.38...gatsby-cli@2.7.39) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-cli

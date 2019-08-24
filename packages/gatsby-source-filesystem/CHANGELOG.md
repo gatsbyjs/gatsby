@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.16...gatsby-source-filesystem@2.1.17) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency file-type to v12 ([#17030](https://github.com/gatsbyjs/gatsby/issues/17030)) ([f538563](https://github.com/gatsbyjs/gatsby/commit/f538563))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+
 ## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.15...gatsby-source-filesystem@2.1.16) (2019-08-23)
 
 ### Bug Fixes
