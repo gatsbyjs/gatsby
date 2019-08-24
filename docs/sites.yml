@@ -7061,6 +7061,20 @@
     - Open Source
   built_by: Rashmi AP
   built_by_url: http://rashmiap.me
+- title: OpenSourceRepos - Blogs for open source repositories
+  main_url: https://opensourcerepos.com
+  url: https://opensourcerepos.com
+  featured: false
+  description: >
+    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the github repository. Out main aim to is to help more developers contribute to open source projects.
+  source_url: https://github.com/opensourcerepos/blogs
+  categories:
+    - Open Source
+    - Design
+    - Design System
+    - Blog
+  built_by: OpenSourceRepos Team
+  built_by_url: https://opensourcerepos.com
 - title: Sheelah Brennan - Front-End/UX Engineer
   main_url: https://sheelahb.com
   url: https://sheelahb.com
