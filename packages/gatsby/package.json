@@ -52,7 +52,7 @@
     "del": "^3.0.0",
     "detect-port": "^1.3.0",
     "devcert-san": "^0.3.3",
-    "dotenv": "^4.0.0",
+    "dotenv": "^8.1.0",
     "eslint": "^5.16.0",
     "eslint-config-react-app": "^4.0.1",
     "eslint-loader": "^2.2.1",
@@ -79,12 +79,12 @@
     "gatsby-telemetry": "^1.1.18",
     "glob": "^7.1.4",
     "got": "8.3.2",
-    "graphql": "^14.5.2",
+    "graphql": "^14.5.3",
     "graphql-compose": "^6.3.5",
     "graphql-playground-middleware-express": "^1.7.12",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
-    "is-relative-url": "^2.0.0",
+    "is-relative-url": "^3.0.0",
     "is-wsl": "^2.1.0",
     "jest-worker": "^23.2.0",
     "json-loader": "^0.5.7",
@@ -120,7 +120,7 @@
     "shallow-compare": "^1.2.2",
     "sift": "^5.1.0",
     "signal-exit": "^3.0.2",
-    "slash": "^1.0.0",
+    "slash": "^3.0.0",
     "socket.io": "^2.2.0",
     "stack-trace": "^0.0.10",
     "string-similarity": "^1.2.2",
@@ -146,7 +146,7 @@
     "@babel/runtime": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.0",
-    "documentation": "^10.1.0",
+    "documentation": "^12.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "rimraf": "^3.0.0",
@@ -186,7 +186,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^14.5.2"
+    "graphql": "^14.5.3"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
