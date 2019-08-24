@@ -61,7 +61,7 @@ actions.replaceComponentQuery = ({ query, componentPath }) => {
  * components, it calls this to store the query with its component.
  * @private
  *
- * @param {any} args
+ * @param {*} args
  * @param {Plugin | null} [plugin]
  */
 actions.replaceStaticQuery = (args, plugin = null) => {

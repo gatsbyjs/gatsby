@@ -246,8 +246,8 @@ async function getJWToken(_auth, url) {
 /**
  * Fetch the data from specified route url, using the auth provided.
  *
- * @param {any} route
- * @param {any} createNode
+ * @param {*} route
+ * @param {*} createNode
  */
 async function fetchData({
   route,
@@ -371,7 +371,7 @@ async function fetchData({
 /**
  * Get the pages of data
  *
- * @param {any} url
+ * @param {*} url
  * @param {number} [page=1]
  * @returns
  */
@@ -470,7 +470,7 @@ Pages to be requested : ${totalPages}`)
  * Check a route against the whitelist or blacklist
  * to determine validity.
  *
- * @param {any} routePath
+ * @param {*} routePath
  * @param {Array} routeList
  * @returns {boolean}
  */
@@ -481,8 +481,8 @@ function checkRouteList(routePath, routeList) {
 /**
  * Extract valid routes and format its data.
  *
- * @param {any} allRoutes
- * @param {any} url
+ * @param {*} allRoutes
+ * @param {*} url
  * @returns
  */
 function getValidRoutes({
@@ -655,7 +655,7 @@ function getValidRoutes({
 /**
  * Extract the raw entity type from fullPath
  *
- * @param {any} full path to extract raw entity from
+ * @param {*} full path to extract raw entity from
  */
 const getRawEntityType = fullPath =>
   fullPath.substring(fullPath.lastIndexOf(`/`) + 1, fullPath.length)
@@ -663,8 +663,8 @@ const getRawEntityType = fullPath =>
 /**
  * Extract the route path for an endpoint
  *
- * @param {any} baseUrl The base site URL that should be removed
- * @param {any} fullPath The full path to retrieve the route path from
+ * @param {*} baseUrl The base site URL that should be removed
+ * @param {*} fullPath The full path to retrieve the route path from
  */
 const getRoutePath = (baseUrl, fullPath) => {
   const baseUrlObj = new URL(baseUrl)
@@ -693,8 +693,8 @@ const useApiUrl = (apiUrl, endpointURL) => {
  * Method of constructing full URL depends on wether it's hosted on wordpress.com
  * or not as wordpress.com have slightly different (custom) REST structure
  *
- * @param {any} baseUrl The base site URL that should be prepended to full path
- * @param {any} fullPath The full path to build URL from
+ * @param {*} baseUrl The base site URL that should be prepended to full path
+ * @param {*} fullPath The full path to build URL from
  * @param {boolean} _hostingWPCOM Is hosted on wordpress.com
  */
 const buildFullUrl = (baseUrl, fullPath, _hostingWPCOM) => {
@@ -707,7 +707,7 @@ const buildFullUrl = (baseUrl, fullPath, _hostingWPCOM) => {
 /**
  * Extract the route manufacturer
  *
- * @param {any} route
+ * @param {*} route
  */
 const getManufacturer = route =>
   route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
@@ -715,7 +715,7 @@ const getManufacturer = route =>
 /**
  * Build a cookie header string from an object of key value pairs
  *
- * @param {any} cookies
+ * @param {*} cookies
  */
 const getCookieString = cookies =>
   Object.entries(cookies)

@@ -1,7 +1,7 @@
 /**
  * Handles HTTP Exceptions (axios)
  *
- * @param {any} e
+ * @param {*} e
  */
 function httpExceptionHandler(e) {
   const {

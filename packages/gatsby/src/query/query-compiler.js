@@ -86,7 +86,7 @@ class Runner {
    * @param {string} base
    * @param {string[]} additional
    * @param {GraphQLSchema} schema
-   * @param $3 {}
+   * @param $3.parentSpan
    */
   constructor(base, additional, schema, { parentSpan } = {}) {
     this.base = base

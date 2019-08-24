@@ -11,7 +11,7 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 /**
  * Validate the GraphQL naming conventions & protect specific fields.
  *
- * @param {any} key
+ * @param {*} key
  * @returns the valid name
  */
 function getValidKey({ key, verbose = false }) {

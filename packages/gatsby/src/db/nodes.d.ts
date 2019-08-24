@@ -1,8 +1,8 @@
 interface NodeStore {
-  getNodes: () => Array<any>
+  getNodes: () => any[]
   getNode: (id: string) => any | undefined
-  getNodesByType: (type: string) => Array<any>
-  getTypes: () => Array<string>
+  getNodesByType: (type: string) => any[]
+  getTypes: () => string[]
   hasNodeChanged: (id: string, digest: string) => boolean
   getNodeAndSavePathDependency: (id: string, path: string) => any | undefined
   // XXX(freiksenet): types

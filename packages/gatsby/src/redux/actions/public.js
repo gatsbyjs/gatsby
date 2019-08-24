@@ -371,7 +371,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @param {object} options
  * @param {object} options.node the node object
  * @param {Plugin} plugin
- * @param {any} args
+ * @param {*} args
  * @example
  * deleteNode({node: node})
  */

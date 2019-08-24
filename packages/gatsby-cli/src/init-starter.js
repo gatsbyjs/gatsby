@@ -19,7 +19,7 @@ const isTTY = require(`./util/is-tty`)
 
 /**
  * @param {string} cmd
- * @param {any} options
+ * @param {*} options
  */
 const spawn = (cmd, options) => {
   const [file, ...args] = cmd.split(/\s+/)
@@ -29,7 +29,7 @@ const spawn = (cmd, options) => {
 /**
  * @param {string} file
  * @param {string[]} args
- * @param {any} options
+ * @param {*} options
  */
 const spawnWithArgs = (file, args, options) =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
@@ -161,7 +161,7 @@ const copy = async (starterPath, rootPath) => {
 
 /**
  * Clones starter from URI.
- * @param {any} hostInfo
+ * @param {*} hostInfo
  * @param {string} rootPath
  * @returns {Promise<void>}
  */

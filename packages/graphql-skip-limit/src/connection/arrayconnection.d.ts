@@ -6,6 +6,6 @@ export function connectionFromArray<T>(
 ): Connection<T>
 
 export function connectionFromPromisedArray<T>(
-  dataPromise: Promise<Array<T>>,
+  dataPromise: Promise<T[]>,
   args: ConnectionArguments
 ): Promise<Connection<T>>

@@ -3,7 +3,7 @@ type LoaderResolver<T extends Object> = (options?: T) => LoaderSpec
 
 type Condition = string | RegExp | RegExp[]
 
-type Rule = {
+interface Rule {
   test?: Condition
   use: LoaderSpec[]
   exclude?: Condition
@@ -27,7 +27,10 @@ type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
 /**
  * Configuration options for `createUtils`
  */
-export type WebpackUtilsOptions = { stage: Stage; program: any }
+export interface WebpackUtilsOptions {
+  stage: Stage;
+  program: any
+}
 
 /**
  * Utils that produce webpack `loader` objects
@@ -42,7 +45,7 @@ export interface LoaderUtils {
   css: LoaderResolver<any>
   postcss: LoaderResolver<{
     browsers?: string[]
-    plugins?: Array<any> | ((loader: any) => Array<any>)
+    plugins?: any[] | ((loader: any) => any[])
   }>
 
   file: LoaderResolver<any>
@@ -60,7 +63,7 @@ export interface LoaderUtils {
 /**
  * Utils that produce webpack rule objects
  */
-export type RuleUtils = {
+export interface RuleUtils {
   /**
    * Handles JavaScript compilation via babel
    */
@@ -77,7 +80,7 @@ export type RuleUtils = {
   eslint: RuleFactory<any>
 }
 
-export type PluginUtils = BuiltinPlugins & {
+export interface PluginUtils extends BuiltinPlugins {
   extractText: PluginFactory
   uglify: PluginFactory
   moment: PluginFactory
@@ -87,7 +90,7 @@ export type PluginUtils = BuiltinPlugins & {
 /**
  * webpack atoms namespace
  */
-export type WebpackUtils = {
+export interface WebpackUtils {
   loaders: LoaderUtils
 
   rules: RuleUtils

@@ -1,7 +1,7 @@
 /**
  * A type designed to be exposed as `PageInfo` over GraphQL.
  */
-export type PageInfo = {
+export interface PageInfo {
   hasPreviousPage: boolean | null
   hasNextPage: boolean | null
 }
@@ -9,7 +9,7 @@ export type PageInfo = {
 /**
  * A type designed to be exposed as a `Connection` over GraphQL.
  */
-export type Connection<T> = {
+export interface Connection<T> {
   edges: Array<Edge<T>>
   pageInfo: PageInfo
 }
@@ -17,7 +17,7 @@ export type Connection<T> = {
 /**
  * A type designed to be exposed as a `Edge` over GraphQL.
  */
-export type Edge<T> = {
+export interface Edge<T> {
   node: T
   next: T
   previous: T
@@ -26,7 +26,7 @@ export type Edge<T> = {
 /**
  * A type describing the arguments a connection field receives in GraphQL.
  */
-export type ConnectionArguments = {
+export interface ConnectionArguments {
   skip?: number | null
   limit?: number | null
 }

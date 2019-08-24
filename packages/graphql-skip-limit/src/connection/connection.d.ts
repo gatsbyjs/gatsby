@@ -5,7 +5,7 @@ import {
   Thunk,
 } from "graphql"
 
-export type ConnectionConfig = {
+export interface ConnectionConfig {
   name?: string | null
   nodeType: GraphQLObjectType
   resolveNode?: GraphQLFieldResolver<any, any> | null
@@ -13,7 +13,7 @@ export type ConnectionConfig = {
   connectionFields?: Thunk<GraphQLFieldConfigMap<any, any>> | null
 }
 
-export type GraphQLConnectionDefinitions = {
+export interface GraphQLConnectionDefinitions {
   edgeType: GraphQLObjectType
   connectionType: GraphQLObjectType
 }

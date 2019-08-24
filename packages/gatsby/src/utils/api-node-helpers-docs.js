@@ -65,7 +65,7 @@ const GatsbyCache = {
   /**
    * Cache value
    * @param {string} key Cache key
-   * @param {any} value Value to be cached
+   * @param {*} value Value to be cached
    * @returns {Promise<any>} Promise resolving to cached value
    * @example
    * await cache.set(`unique-key`, value)

@@ -7,9 +7,9 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 /**
  * Create the Graph QL Node
  *
- * @param {any} ent
- * @param {any} type
- * @param {any} createNode
+ * @param {*} ent
+ * @param {*} type
+ * @param {*} createNode
  */
 async function createGraphQLNode(
   ent,
@@ -38,8 +38,8 @@ exports.createGraphQLNode = createGraphQLNode
 /**
  * Add fields recursively
  *
- * @param {any} ent
- * @param {any} newEnt
+ * @param {*} ent
+ * @param {*} newEnt
  * @returns the new node
  */
 function recursiveAddFields(ent, newEnt) {
@@ -68,7 +68,7 @@ exports.recursiveAddFields = recursiveAddFields
 /**
  * Validate the GraphQL naming convetions & protect specific fields.
  *
- * @param {any} key
+ * @param {*} key
  * @returns the valid name
  */
 function getValidKey({ key, verbose = false }) {

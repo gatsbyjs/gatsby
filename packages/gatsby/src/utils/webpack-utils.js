@@ -14,7 +14,7 @@ const eslintConfig = require(`./eslint-config`)
  * A factory method that produces an atoms namespace
  * @param {Object} $0
  * @param {Stage} $0.stage
- * @param {any} $0.program
+ * @param {*} $0.program
  * @returns {Promise<WebpackUtilsOptions>}
  */
 module.exports = async ({ stage, program }) => {

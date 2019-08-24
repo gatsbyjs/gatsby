@@ -9,15 +9,15 @@ export interface ActivityArgs {
   parentSpan?: Object
 }
 
-type LogMessageType = (format: string, ...args: Array<any>) => void
+type LogMessageType = (format: string, ...args: any[]) => void
 
 export interface Reporter {
   stripIndent: Function
   format: Object
   setVerbose(isVerbose: boolean): void
   setNoColor(isNoColor: boolean): void
-  panic(...args: Array<any>): void
-  panicOnBuild(...args: Array<any>): void
+  panic(...args: any[]): void
+  panicOnBuild(...args: any[]): void
   error(errorMeta: string | Object, error?: Object): void
   uptime(prefix: string): void
   success: LogMessageType

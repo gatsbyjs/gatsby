@@ -1,4 +1,4 @@
-type QueryJob = {
+interface QueryJob {
   id: string
   hash?: string
   query: string

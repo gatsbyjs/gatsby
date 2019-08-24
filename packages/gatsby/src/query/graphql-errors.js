@@ -120,7 +120,7 @@ function getCodeFrame(query, line, column) {
 }
 
 /**
- * @param {any} def
+ * @param {*} def
  * @param {string} extractedMessage
  * @param {Error} error
  */
@@ -136,8 +136,8 @@ function getCodeFrameFromRelayError(def, extractedMessage, error) {
 
 /**
  * @param {string} filePath
- * @param {any} def
- * @param {any} otherDef
+ * @param {*} def
+ * @param {*} otherDef
  */
 export function multipleRootQueriesError(filePath, def, otherDef) {
   let name = def.name.value
@@ -203,7 +203,7 @@ export function multipleRootQueriesError(filePath, def, otherDef) {
 /**
  * @param {GraphQLError[]} errors
  * @param {string} filePath
- * @param {any} doc
+ * @param {*} doc
  * @returns {string}
  */
 export function graphqlValidationError(errors, filePath, doc) {

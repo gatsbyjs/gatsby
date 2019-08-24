@@ -30,16 +30,16 @@ export interface NodeModel {
   getNodesByIds(
     arg1: { ids: Array<IDOrNode>; type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
-  ): Array<any>
+  ): any[]
   getAllNodes(
     arg1: { type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
-  ): Array<any>
+  ): any[]
   runQuery(
     args: QueryArguments,
     pageDependencies?: PageDependencies
   ): Promise<any>
-  getTypes(): Array<string>
+  getTypes(): string[]
   trackPageDependencies<nodeOrNodes extends Node | Node[]>(
     result: nodeOrNodes,
     pageDependencies?: PageDependencies

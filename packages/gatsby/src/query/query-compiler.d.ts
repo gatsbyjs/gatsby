@@ -1,4 +1,4 @@
-type RootQuery = {
+interface RootQuery {
   name: string
   path: string
   text: string
