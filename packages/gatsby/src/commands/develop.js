@@ -160,7 +160,7 @@ async function startServer(program, { activity }) {
         schema,
         graphiql: false,
         context: withResolverContext({}, schema, schemaCustomization.context),
-        formatError(err) {
+        customFormatErrorFn(err) {
           return {
             ...formatError(err),
             stack: err.stack ? err.stack.split(`\n`) : [],

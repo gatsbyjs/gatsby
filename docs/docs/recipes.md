@@ -130,204 +130,6 @@ export default () => (
 
 > **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
 
-### Creating pages with `createPage`
-
-Using Gatsby's [`createPages` API](/docs/actions/#createPage), you can create pages dynamically from a variety of data sources, including Markdown or Wordpress content.
-
-This recipe shows how to create pages from Markdown files on your local filesystem using Gatsby's GraphQL data layer.
-
-#### Prerequisites
-
-- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
-- The [Gatsby CLI](/docs/gatsby-cli) installed
-- The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
-- The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
-- A `gatsby-node.js` file
-
-#### Directions
-
-1. In `gatsby-config.js`, configure `gatsby-transformer-remark` along with `gatsby-source-filesystem` to pull in Markdown files from a source folder. This would be in addition to any previous `gatsby-source-filesystem` entries, such as for images:
-
-```js:title=gatsby-config.js
-module.exports = {
-  plugins: [
-    `gatsby-transformer-remark`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `content`,
-        path: `${__dirname}/src/content`,
-      },
-    },
-  ]
-```
-
-2. Add a Markdown post to `src/content`, including frontmatter for the title, date, and path, with some initial content for the body of the post:
-
-```markdown:title=src/content/my-first-post.md
----
-title: My First Post
-date: 2019-07-10
-path: /my-first-post
----
-
-This is my first Gatsby post written in Markdown!
-```
-
-3. Add the JavaScript code to generate pages from Markdown posts at build time with a GraphQL query in `gatsby-node.js`:
-
-```js:title=gatsby-node.js
-const path = require(`path`)
-
-exports.createPages = async ({ actions, graphql }) => {
-  const { createPage } = actions
-
-  const blogPostTemplate = path.resolve(`src/templates/post.js`)
-
-  const result = await graphql(`
-    {
-      allMarkdownRemark(
-        sort: { order: DESC, fields: [frontmatter___date] }
-        limit: 1000
-      ) {
-        edges {
-          node {
-            frontmatter {
-              path
-            }
-          }
-        }
-      }
-    }
-  `)
-  if (result.errors) {
-    console.log(result.errors)
-    throw new Error("Things broke, see console output above")
-  }
-
-  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    createPage({
-      path: node.frontmatter.path,
-      component: blogPostTemplate,
-      context: {}, // additional data can be passed via context
-    })
-  })
-}
-```
-
-4. Add a post template in `src/templates`, including a GraphQL query for generating pages dynamically from Markdown content at build time:
-
-```jsx:title=src/templates/post.js
-import React from "react"
-import { graphql } from "gatsby"
-
-export default function Template({ data }) {
-  const { markdownRemark } = data // data.markdownRemark holds your post data
-  const { frontmatter, html } = markdownRemark
-  return (
-    <div className="blog-post">
-      <h1>{frontmatter.title}</h1>
-      <h2>{frontmatter.date}</h2>
-      <div
-        className="blog-post-content"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    </div>
-  )
-}
-
-export const pageQuery = graphql`
-  query($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        path
-        title
-      }
-    }
-  }
-`
-```
-
-5. Run `gatsby develop` to start the development server. View your post in the browser: `http://localhost:8000/my-first-post`
-
-#### Additional resources
-
-- [Inspect Gatsby's data layer in GraphiQL](/docs/introducing-graphiql/)
-- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
-- [Creating and modifying pages](/docs/creating-and-modifying-pages/)
-- [Adding Markdown pages](/docs/adding-markdown-pages/)
-- [Adding a list of Markdown blog posts](/docs/adding-a-list-of-markdown-blog-posts/)
-- [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
-
-### Creating pages from data without GraphQL
-
-You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins. In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data/) can be found on GitHub.
-
-#### Prerequisites
-
-- A Gatsby Site with a `gatsby-node.js` file
-- The [Gatsby CLI](/docs/gatsby-cli) installed
-- The [axios](https://www.npmjs.com/package/axios) package installed through npm
-
-#### Directions
-
-1. In `gatsby-node.js`, add the JavaScript code to fetch data from the PokéAPI and programmatically create an index page:
-
-```js:title=gatsby-node.js
-const axios = require("axios")
-
-const get = endpoint => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
-
-const getPokemonData = names =>
-  Promise.all(
-    names.map(async name => {
-      const { data: pokemon } = await get(`/pokemon/${name}`)
-      return { ...pokemon }
-    })
-  )
-exports.createPages = async ({ actions: { createPage } }) => {
-  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
-
-  // Create a page that lists Pokémon.
-  createPage({
-    path: `/`,
-    component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
-  })
-}
-```
-
-2. Create a template to display Pokémon on the homepage:
-
-```js:title=src/templates/all-pokemon.js
-import React from "react"
-
-export default ({ pageContext: { allPokemon } }) => (
-  <div>
-    <h1>Behold, the Pokémon!</h1>
-    <ul>
-      {allPokemon.map(pokemon => (
-        <li key={pokemon.id}>
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-          <p>{pokemon.name}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-)
-```
-
-3. Run `gatsby develop` to fetch the data, build pages, and start the development server.
-4. View your homepage in a browser: `http://localhost:8000`
-
-#### Additional resources
-
-- [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
-- More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- When and how to [Query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
-
 ### Creating a layout component
 
 It's common to wrap pages with a React layout component, which makes it possible to share markup, styles, and functionality across multiple pages.
@@ -368,6 +170,96 @@ export default () => (
 
 - Create a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
 - Styling with [Layout Components](/docs/layout-components/)
+
+### Creating pages programmatically with createPage
+
+You can create pages programmatically in the `gatsby-node.js` file with helper methods Gatsby provides.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- A `gatsby-node.js` file
+
+#### Directions
+
+1. In `gatsby-node.js`, add an export for `createPages`
+
+```javascript:title=gatsby-node.js
+// highlight-start
+exports.createPages = ({ actions }) => {
+  // ...
+}
+// highlight-end
+```
+
+2. Destructure the `createPage` action from the available actions so it can be called by itself, and add or get data
+
+```javascript:title=gatsby-node.js
+exports.createPages = ({ actions }) => {
+  // highlight-start
+  const { createPage } = actions
+  // pull in or use whatever data
+  const dogData = [
+    {
+      name: "Fido",
+      breed: "Sheltie",
+    },
+    {
+      name: "Sparky",
+      breed: "Corgi",
+    },
+  ]
+  // highlight-end
+}
+```
+
+3. Loop through the data in `gatsby-node.js` and provide the path, template, and context (data that will be passed in the props' pageContext) to `createPage` for each invocation
+
+```javascript:title=gatsby-node.js
+exports.createPages = ({ actions }) => {
+  const { createPage } = actions
+
+  const dogData = [
+    {
+      name: "Fido",
+      breed: "Sheltie",
+    },
+    {
+      name: "Sparky",
+      breed: "Corgi",
+    },
+  ]
+  // highlight-start
+  dogData.forEach(dog => {
+    createPage({
+      path: `/${dog.name}`,
+      component: require.resolve(`./src/templates/dog-template.js`),
+      context: { dog },
+    })
+  })
+  // highlight-end
+}
+```
+
+4. Create a React component to serve as the template for your page that was used in `createPage`
+
+```jsx:title=src/templates/dog-template.js
+import React from "react"
+
+export default ({ pageContext: { dog } }) => (
+  <section>
+    {dog.name} - {dog.breed}
+  </section>
+)
+```
+
+5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at `http://localhost:8000/Fido`) to see the data you passed it displayed on the page
+
+#### Additional resources
+
+- Tutorial section on [programmatically creating pages from data](/tutorial/part-seven/)
+- Reference guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-createPage) for this recipe
 
 ## 2. Styling with CSS
 
@@ -446,7 +338,7 @@ export default () => (
 
 4. Run `gatsby develop` to see the changes
 
-#### Related Links
+#### Additional resources
 
 - [More on Using Styled Components](/docs/styled-components/)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
@@ -517,7 +409,7 @@ body {
 }
 ```
 
-#### Additional Resources
+#### Additional resources
 
 - [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
 - [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
@@ -628,7 +520,11 @@ yarn workspace example develop
 
 Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their source (e.g. the `gatsby-source-filesystem` plugin fetches data from the file system, the `gatsby-source-wordpress` plugin fetches data from the WordPress API, etc). You can also source the data yourself.
 
-### Creating source nodes
+### Adding data to GraphQL
+
+Gatsby's [GraphQL data layer](/docs/querying-with-graphql/) uses nodes to model chunks of data. Gatsby source plugins add source nodes that you can query for, but you can also create source nodes yourself. To add custom data to the GraphQL data layer yourself, Gatsby provides methods you can leverage.
+
+This recipe shows you how to add custom data using `createNode()`.
 
 #### Directions
 
@@ -680,6 +576,221 @@ query MyPokemonQuery {
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
 - The createNode function [documentation](/docs/actions/#createNode)
+
+### Sourcing Markdown data and creating pages with GraphQL
+
+You can source Markdown data and use Gatsby's [`createPages` API](/docs/actions/#createPage) to create pages dynamically.
+
+This recipe shows how to create pages from Markdown files on your local filesystem using Gatsby's GraphQL data layer.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
+- The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
+- A `gatsby-node.js` file
+
+#### Directions
+
+1. In `gatsby-config.js`, configure `gatsby-transformer-remark` along with `gatsby-source-filesystem` to pull in Markdown files from a source folder. This would be in addition to any previous `gatsby-source-filesystem` entries, such as for images:
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/src/content`,
+      },
+    },
+  ]
+```
+
+2. Add a Markdown post to `src/content`, including frontmatter for the title, date, and path, with some initial content for the body of the post:
+
+```markdown:title=src/content/my-first-post.md
+---
+title: My First Post
+date: 2019-07-10
+path: /my-first-post
+---
+
+This is my first Gatsby post written in Markdown!
+```
+
+3. Start up the development server with `gatsby develop`, navigate to the GraphiQL explorer at `http://localhost:8000/___graphql`, and write a query to get all markdown data:
+
+```graphql
+{
+  allMarkdownRemark {
+    edges {
+      node {
+        frontmatter {
+          path
+        }
+      }
+    }
+  }
+}
+```
+
+<iframe
+  title="Query for all markdown"
+  src="https://q4xpb.sse.codesandbox.io/___graphql?explorerIsOpen=false&query=%7B%0A%20%20allMarkdownRemark%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+  width="600"
+  height="300"
+/>
+
+4. Add the JavaScript code to generate pages from Markdown posts at build time by copying the GraphQL query into `gatsby-node.js` and looping through the results:
+
+```js:title=gatsby-node.js
+const path = require(`path`)
+
+exports.createPages = async ({ actions, graphql }) => {
+  const { createPage } = actions
+
+  const result = await graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
+          }
+        }
+      }
+    }
+  `)
+  if (result.errors) {
+    console.error(result.errors)
+  }
+
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    createPage({
+      path: node.frontmatter.path,
+      component: path.resolve(`src/templates/post.js`),
+    })
+  })
+}
+```
+
+5. Add a post template in `src/templates`, including a GraphQL query for generating pages dynamically from Markdown content at build time:
+
+```jsx:title=src/templates/post.js
+import React from "react"
+import { graphql } from "gatsby"
+
+export default function Template({ data }) {
+  const { markdownRemark } = data // data.markdownRemark holds your post data
+  const { frontmatter, html } = markdownRemark
+  return (
+    <div className="blog-post">
+      <h1>{frontmatter.title}</h1>
+      <h2>{frontmatter.date}</h2>
+      <div
+        className="blog-post-content"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </div>
+  )
+}
+
+export const pageQuery = graphql`
+  query($path: String!) {
+    markdownRemark(frontmatter: { path: { eq: $path } }) {
+      html
+      frontmatter {
+        date(formatString: "MMMM DD, YYYY")
+        path
+        title
+      }
+    }
+  }
+`
+```
+
+6. Run `gatsby develop` to restart the development server. View your post in the browser: `http://localhost:8000/my-first-post`
+
+#### Additional resources
+
+- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
+- [Creating and modifying pages](/docs/creating-and-modifying-pages/)
+- [Adding Markdown pages](/docs/adding-markdown-pages/)
+- [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
+- [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
+
+### Pulling data from an external source and creating pages without GraphQL
+
+You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](/docs/why-gatsby-uses-graphql/). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
+
+In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data/) can be found on GitHub.
+
+#### Prerequisites
+
+- A Gatsby Site with a `gatsby-node.js` file
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [axios](https://www.npmjs.com/package/axios) package installed through npm
+
+#### Directions
+
+1. In `gatsby-node.js`, add the JavaScript code to fetch data from the PokéAPI and programmatically create an index page:
+
+```js:title=gatsby-node.js
+const axios = require("axios")
+
+const get = endpoint => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
+
+const getPokemonData = names =>
+  Promise.all(
+    names.map(async name => {
+      const { data: pokemon } = await get(`/pokemon/${name}`)
+      return { ...pokemon }
+    })
+  )
+exports.createPages = async ({ actions: { createPage } }) => {
+  const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
+
+  // Create a page that lists Pokémon.
+  createPage({
+    path: `/`,
+    component: require.resolve("./src/templates/all-pokemon.js"),
+    context: { allPokemon },
+  })
+}
+```
+
+2. Create a template to display Pokémon on the homepage:
+
+```js:title=src/templates/all-pokemon.js
+import React from "react"
+
+export default ({ pageContext: { allPokemon } }) => (
+  <div>
+    <h1>Behold, the Pokémon!</h1>
+    <ul>
+      {allPokemon.map(pokemon => (
+        <li key={pokemon.id}>
+          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+          <p>{pokemon.name}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+)
+```
+
+3. Run `gatsby develop` to fetch the data, build pages, and start the development server.
+4. View your homepage in a browser: `http://localhost:8000`
+
+#### Additional resources
+
+- [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
+- More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- When and how to [query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
 
 ## 6. Querying data
 
@@ -1103,7 +1214,7 @@ export const pageQuery = graphql`
 
 Fragments can be nested inside other fragments, and multiple fragments can be used in the same query.
 
-#### Additional Resources
+#### Additional resources
 
 - [Simple example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
 - [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
@@ -1387,7 +1498,7 @@ return (
 
 5. Run `gatsby develop`, to generate images from files in the filesystem (if not done already) and cache them
 
-#### Additional Resources
+#### Additional resources
 
 - [Example repository illustrating these examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
 - [Gatsby Image API](/docs/gatsby-image/)
@@ -1483,7 +1594,7 @@ export const pageQuery = graphql`
 
 4. Run `gatsby develop`, which will generate images for files sourced in the filesystem
 
-#### Additional Resources
+#### Additional resources
 
 - [Example repository using this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
 - [Featured images with frontmatter](/docs/working-with-images-in-markdown/#featured-images-with-frontmatter-metadata)
@@ -1589,7 +1700,7 @@ gatsby build --prefix-paths
 gatsby build && gatsby serve
 ```
 
-#### Additional Resources
+#### Additional resources
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
 - Learn about [performance optimization](/docs/performance/)

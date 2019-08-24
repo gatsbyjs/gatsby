@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.79...gatsby@2.13.80) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency @gatsbyjs/relay-compiler to v2.0.0-prin… ([#16986](https://github.com/gatsbyjs/gatsby/issues/16986)) ([25f0318](https://github.com/gatsbyjs/gatsby/commit/25f0318))
+
+## [2.13.79](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.78...gatsby@2.13.79) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency chokidar to v3 ([#16975](https://github.com/gatsbyjs/gatsby/issues/16975)) ([816d475](https://github.com/gatsbyjs/gatsby/commit/816d475))
+
+## [2.13.78](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.77...gatsby@2.13.78) (2019-08-23)
+
+### Bug Fixes
+
+- **gatsby:** update check for default exports ([#16979](https://github.com/gatsbyjs/gatsby/issues/16979)) ([d16474d](https://github.com/gatsbyjs/gatsby/commit/d16474d))
+
+## [2.13.77](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.76...gatsby@2.13.77) (2019-08-23)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and… ([#16960](https://github.com/gatsbyjs/gatsby/issues/16960)) ([d6bd515](https://github.com/gatsbyjs/gatsby/commit/d6bd515))
+
+## [2.13.76](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.75...gatsby@2.13.76) (2019-08-22)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and… ([#16948](https://github.com/gatsbyjs/gatsby/issues/16948)) ([1c34c9b](https://github.com/gatsbyjs/gatsby/commit/1c34c9b))
+- **gatsby:** Remove deprecation warning from express-graphql ([#16956](https://github.com/gatsbyjs/gatsby/issues/16956)) ([58ed3ca](https://github.com/gatsbyjs/gatsby/commit/58ed3ca))
+
 ## [2.13.75](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.74...gatsby@2.13.75) (2019-08-22)
 
 **Note:** Version bump only for package gatsby
