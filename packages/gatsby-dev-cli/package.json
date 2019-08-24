@@ -17,7 +17,7 @@
     "execa": "^1.0.0",
     "find-yarn-workspace-root": "^1.2.1",
     "fs-extra": "^4.0.3",
-    "is-absolute": "^0.2.6",
+    "is-absolute": "^1.0.0",
     "lodash": "^4.17.15",
     "request": "2.88.0",
     "signal-exit": "^3.0.2",
