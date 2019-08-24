@@ -3718,9 +3718,9 @@
   tags:
     - Firebase
     - SEO
-    - Dynamic pages from firestore collections
     - Styling:SCSS
-    - Firebase Authentication
+    - Authentication
+    - PWA
   features:
     - Authentication with Firebase
     - Programmatically create pages from a firestore collection
