@@ -7088,3 +7088,15 @@
     - Freelance
     - Portfolio
   built_by: Sheelah Brennan
+- title: Delinx.Digital - Web and Mobile Development Agency based in Sofia, Bulgaria
+  main_url: https://delinx.digital
+  url: https://delinx.digital/solutions
+  description: >
+    Delinx.digital is a software development oriented digital agency based in Sofia, Bulgaria. We develop bespoke software solutions using  WordPress, WooCommerce, Shopify, eCommerce, React.js, Node.js, PHP, Laravel and many other technologies.
+  categories:
+    - Agency
+    - Web Development
+    - Design
+    - eCommerce
+    - WordPress
+  featured: false
