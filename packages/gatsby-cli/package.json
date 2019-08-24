@@ -19,7 +19,7 @@
     "ci-info": "^2.0.0",
     "clipboardy": "^2.1.0",
     "common-tags": "^1.8.0",
-    "configstore": "^4.0.0",
+    "configstore": "^5.0.0",
     "convert-hrtime": "^2.0.0",
     "core-js": "^2.6.9",
     "envinfo": "^5.12.1",
