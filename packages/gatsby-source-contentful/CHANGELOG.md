@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.27...gatsby-source-contentful@2.1.28) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-online to v8 ([#17037](https://github.com/gatsbyjs/gatsby/issues/17037)) ([fef7a8c](https://github.com/gatsbyjs/gatsby/commit/fef7a8c))
+
 ## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.26...gatsby-source-contentful@2.1.27) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-source-contentful

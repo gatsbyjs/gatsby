@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.10...gatsby-remark-copy-linked-files@2.1.11) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-relative-url to v3 ([#17038](https://github.com/gatsbyjs/gatsby/issues/17038)) ([ff9ae84](https://github.com/gatsbyjs/gatsby/commit/ff9ae84))
+
 ## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.9...gatsby-remark-copy-linked-files@2.1.10) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files

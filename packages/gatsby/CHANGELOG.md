@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.81](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.80...gatsby@2.13.81) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency dotenv to v8 ([#17027](https://github.com/gatsbyjs/gatsby/issues/17027)) ([f92295e](https://github.com/gatsbyjs/gatsby/commit/f92295e))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-relative-url to v3 ([#17038](https://github.com/gatsbyjs/gatsby/issues/17038)) ([ff9ae84](https://github.com/gatsbyjs/gatsby/commit/ff9ae84))
+- update dependency is-wsl to v2 ([#17039](https://github.com/gatsbyjs/gatsby/issues/17039)) ([bfed424](https://github.com/gatsbyjs/gatsby/commit/bfed424))
+- update dependency jest-worker to v24 ([#17040](https://github.com/gatsbyjs/gatsby/issues/17040)) ([bd089a4](https://github.com/gatsbyjs/gatsby/commit/bd089a4))
+- update dependency slash to v3 ([#17019](https://github.com/gatsbyjs/gatsby/issues/17019)) ([c81f45c](https://github.com/gatsbyjs/gatsby/commit/c81f45c))
+
 ## [2.13.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.79...gatsby@2.13.80) (2019-08-23)
 
 ### Bug Fixes
