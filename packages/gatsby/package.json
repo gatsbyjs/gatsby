@@ -49,7 +49,7 @@
     "cors": "^2.8.5",
     "css-loader": "^1.0.1",
     "debug": "^3.2.6",
-    "del": "^3.0.0",
+    "del": "^5.1.0",
     "detect-port": "^1.3.0",
     "devcert-san": "^0.3.3",
     "dotenv": "^8.1.0",
