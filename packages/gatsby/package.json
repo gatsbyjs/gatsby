@@ -146,7 +146,7 @@
     "@babel/runtime": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.0",
-    "documentation": "^10.1.0",
+    "documentation": "^12.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "rimraf": "^3.0.0",
