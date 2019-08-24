@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "bluebird": "^3.5.5",
-    "fs-extra": "^4.0.3",
+    "fs-extra": "^8.1.0",
     "gatsby-plugin-sharp": "^2.2.17",
     "md5-file": "^4.0.0",
     "mini-svg-data-uri": "^1.1.3",
