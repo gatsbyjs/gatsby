@@ -21,7 +21,7 @@
     "lodash": "^4.17.15",
     "request": "2.88.0",
     "signal-exit": "^3.0.2",
-    "verdaccio": "^3.12.3",
+    "verdaccio": "^4.2.2",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
