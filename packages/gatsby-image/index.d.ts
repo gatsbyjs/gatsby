@@ -1,34 +1,34 @@
 import * as React from "react"
 
 export interface FixedObject {
-  width: number
-  height: number
-  src: string
-  srcSet: string
-  base64?: string
-  tracedSVG?: string
-  srcWebp?: string
-  srcSetWebp?: string
-  media?: string
+  width?: number | null
+  height?: number | null
+  src?: string | null
+  srcSet?: string | null
+  base64?: string | null
+  tracedSVG?: string | null
+  srcWebp?: string | null
+  srcSetWebp?: string | null
+  media?: string | null
 }
 
 export interface FluidObject {
-  aspectRatio: number
-  src: string
-  srcSet: string
-  sizes: string
-  base64?: string
-  tracedSVG?: string
-  srcWebp?: string
-  srcSetWebp?: string
-  media?: string
+  aspectRatio?: number | null
+  src?: string | null
+  srcSet?: string | null
+  sizes?: string | null
+  base64?: string | null
+  tracedSVG?: string | null
+  srcWebp?: string | null
+  srcSetWebp?: string | null
+  media?: string | null
 }
 
 interface GatsbyImageProps {
   resolutions?: FixedObject
   sizes?: FluidObject
-  fixed?: FixedObject | FixedObject[]
-  fluid?: FluidObject | FluidObject[]
+  fixed?: FixedObject | FixedObject[] | null
+  fluid?: FluidObject | FluidObject[] | null
   fadeIn?: boolean
   title?: string
   alt?: string
