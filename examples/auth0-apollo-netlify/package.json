@@ -1,0 +1,96 @@
+{
+  "name": "auth0-apollo-netlify",
+  "description": "A starter to make JAMstack apps",
+  "version": "1.0.0",
+  "author": "omonk",
+  "dependencies": {
+    "apollo-boost": "^0.4.3",
+    "apollo-server-lambda": "^2.8.1",
+    "babel-eslint": "^10.0.2",
+    "babel-plugin-styled-components": "^1.10.1",
+    "eslint": "^6.2.1",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-config-react-app": "^5.0.1",
+    "eslint-config-xo-react": "^0.20.0",
+    "eslint-config-xo-space": "^0.21.0",
+    "eslint-plugin-flowtype": "^4.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-tap": "^2.0.1",
+    "gatsby": "^2.13.71",
+    "gatsby-image": "^2.2.9",
+    "gatsby-plugin-env-variables": "^1.0.1",
+    "gatsby-plugin-offline": "^2.0.16",
+    "gatsby-plugin-playground": "^1.0.6",
+    "gatsby-plugin-react-helmet": "^3.0.2",
+    "gatsby-plugin-styled-components": "^3.1.0",
+    "gatsby-plugin-typography": "^2.3.5",
+    "gatsby-source-graphql": "^2.1.0",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
+    "husky": "^3.0.4",
+    "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.6.0",
+    "lint-staged": "^9.2.3",
+    "react": "^16.8.6",
+    "react-apollo": "^3.0.1",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.0",
+    "react-styled-flexboxgrid": "^3.1.0",
+    "react-typography": "^0.16.19",
+    "react-use-auth": "^0.4.1",
+    "styled-components": "^4.3.2",
+    "styled-reset": "^3.0.2",
+    "typography": "^0.16.19",
+    "typography-theme-moraga": "^0.16.19",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "keywords": [
+    "gatsby",
+    "auth0",
+    "apollo",
+    "netlify"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "develop": "gatsby develop",
+    "develop:clean": "gatsby clean && gatsby develop",
+    "start": "run-p start:**",
+    "start:develop": "yarn run develop",
+    "start:lambda": "netlify-lambda serve ./src/handlers --babelrc false --config ./webpack.config.js",
+    "build": "run-p build:**",
+    "build:app": "gatsby build",
+    "build:lambda": "netlify-lambda build ./src/handlers ./src/handlers --babelrc false --config ./webpack.config.js",
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "eslint . --ext .js",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+  },
+  "devDependencies": {
+    "netlify-lambda": "^1.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "1.18.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omonk/traveling-ink"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --config .prettierrc --write",
+      "git add"
+    ],
+    "*.*": [
+      "prettier --config .prettierrc --write",
+      "git add"
+    ]
+  }
+}

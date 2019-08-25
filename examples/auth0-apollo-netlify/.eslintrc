@@ -1,0 +1,20 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "xo-space/esnext",
+    "xo-react/space",
+    "react-app",
+    "prettier"
+  ],
+  "rules": {
+    "new-cap": 0,
+    "camelcase": 0,
+    "react/prop-types": 0,
+    "react/require-default-props": 0,
+    "react/jsx-tag-spacing": 0,
+    "capitalized-comments": 0,
+    "react/jsx-fragments": 0,
+    "react/jsx-sort-props": 1
+  }
+}
