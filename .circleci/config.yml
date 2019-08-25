@@ -241,9 +241,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: www_public_dir_1
+          key: www_public_dir_2
       - restore_cache:
-          key: www_cache_dir_1
+          key: www_cache_dir_2
       - run:
           command: yarn
           working_directory: ~/project/www
@@ -252,11 +252,11 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: www_public_dir_1_{{ epoch }}
+          key: www_public_dir_2_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: www_cache_dir_1_{{ epoch }}
+          key: www_cache_dir_2_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
