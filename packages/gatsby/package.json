@@ -27,7 +27,7 @@
     "autoprefixer": "^9.6.1",
     "axios": "^0.19.0",
     "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^0.3.3",
     "babel-plugin-dynamic-import-node": "^1.2.0",
