@@ -448,6 +448,9 @@ so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
 
+You can also expose any custom component to every mdx file using
+`MDXProvider`. See [Shortcodes](#shortcodes)
+
 ##### Related
 
 - [MDX components](https://mdxjs.com/getting-started/#mdxprovider)
