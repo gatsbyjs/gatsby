@@ -1,12 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": [
-    "eslint:recommended",
-    "xo-space/esnext",
-    "xo-react/space",
-    "react-app",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "react-app", "prettier"],
   "rules": {
     "new-cap": 0,
     "camelcase": 0,
