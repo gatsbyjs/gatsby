@@ -1,17 +1,16 @@
 # Auth0 Apollo Netlify Example
 
-This example uses Auth0, client side requests to an authenticated Apollo server and Netlify functions.
+Authenticate your GraphQL server with Apollo and Netlify functions, backed with Auth0 for authentication.
 
 Client side authentication is done with [Swizec's](https://github.com/Swizec) brilliant [useAuth](https://github.com/Swizec/useAuth) hook! Please read through the documentation there to understand the app flow!
 
-All requests to the Apollo server are authed using `jsonwebtoken` and `jwks-rsa` modules. This means that all requests require prior authentication, you can change to use directives if you prefer.
+All requests to the Apollo server are authed "server" side using `jsonwebtoken` and `jwks-rsa` modules. This means that all requests require prior authentication on the client, you can change to use directives if you prefer.
 
 ## Stack
 
 - Gatsby
 - Apollo
 - Auth0
-- Styled Components
 
 ## Requirements
 
