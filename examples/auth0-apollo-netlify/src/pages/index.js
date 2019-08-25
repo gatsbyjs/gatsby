@@ -8,7 +8,12 @@ export default () => {
       <Grid>
         <Row>
           <Col>
-            <h1>Hello there 👋</h1>
+            <h1>
+              Hello there{' '}
+              <span role="img" aria-label="wave emoji">
+                👋
+              </span>
+            </h1>
           </Col>
         </Row>
       </Grid>

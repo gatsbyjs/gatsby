@@ -63,7 +63,7 @@ _env*ac
 *.jar
 *.zip
 node_modules/
-./handlers-build
+handlers-build/
 public/
 src/auth/
 
