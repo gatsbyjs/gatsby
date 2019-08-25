@@ -9,6 +9,6 @@
     "react/jsx-tag-spacing": 0,
     "capitalized-comments": 0,
     "react/jsx-fragments": 0,
-    "react/jsx-sort-props": 1
+    "react/jsx-sort-props": 0
   }
 }
