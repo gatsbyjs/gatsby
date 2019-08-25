@@ -57,3 +57,8 @@ There are two playgrounds available in this project:
 
 - Gatsby at `http://localhost:8888/__playground`, this is exclusively for gatsby data
 - ApolloServer at `http://localhost:8888/.netlify/functions/graphql-server/__playground` - this is for your Apollo data, currently you need a valid jwt to access.
+
+## Useful Resources / Shout outs
+
+- [useAuth](https://github.com/Swizec/useAuth)
+- [Auth0 blog post](https://auth0.com/blog/develop-modern-apps-with-react-graphql-apollo-and-add-authentication/) walkthrough detailing how to create a secure GraphQL server
