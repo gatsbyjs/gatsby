@@ -6,7 +6,7 @@ import Head from './Head';
 import Header from './Header';
 import theme from '../utils/theme';
 
-const Layout = ({ children, title = 'Gtasby Auth0 Apollo' }) => {
+const Layout = ({ children, title = 'Gatsby Auth0 Apollo' }) => {
   return (
     <>
       <Head title={title} />
