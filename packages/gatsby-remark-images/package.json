@@ -25,7 +25,7 @@
     "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.0",
     "hast-util-to-html": "^6.0.2",
-    "mdast-util-to-hast": "^6.0.1"
+    "mdast-util-to-hast": "^6.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images#readme",
   "keywords": [
