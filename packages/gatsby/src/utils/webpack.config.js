@@ -468,13 +468,30 @@ module.exports = async (
   }
 
   if (stage === `build-javascript`) {
+    const componentsCount = store.getState().components.size
+
     config.optimization = {
       runtimeChunk: {
         name: `webpack-runtime`,
       },
       splitChunks: {
         name: false,
+        chunks: `all`,
         cacheGroups: {
+          default: false,
+          vendors: false,
+          commons: {
+            name: `commons`,
+            chunks: `all`,
+            // if a chunk is used more than half the components count,
+            // we can assume it's pretty global
+            minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
+          },
+          react: {
+            name: `commons`,
+            chunks: `all`,
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          },
           // Only create one CSS file to avoid
           // problems with code-split CSS loading in different orders
           // causing inconsistent/non-determanistic styling
