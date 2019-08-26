@@ -48,11 +48,22 @@ const BlurHash = ({ data, location }) => (
       integers. Their default values are "false", "5" and "5" respectively and
       both "componentX" and "componentY" could go from 1 to 9, being 1 super
       blurry and 9 little blurry. You'd end up with a query with these arguments
-      like: <br /><br />
-      <a href="https://github.com/woltapp/blurhash/blob/master/Algorithm.md" target="_blank">More information about Blurhash algorithm</a>
+      like: <br />
+      <br />
+      <a
+        href="https://github.com/woltapp/blurhash/blob/master/Algorithm.md"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        More information about Blurhash algorithm
+      </a>
       <br />
       <br />
-      <code>{`fluid(maxHeight: 500, quality: 90, blurhashed: { componentX: 9, componentY: 9 })`} ...</code>
+      <code>
+        {`fluid(maxHeight: 500, quality: 90, blurhashed: { componentX: 9, componentY: 9 })`}
+        {` `}
+        ...
+      </code>
     </p>
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
