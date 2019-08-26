@@ -23,7 +23,13 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
 
-module.exports = async (program, directory, suppliedStage) => {
+module.exports = async (
+  program,
+  directory,
+  suppliedStage,
+  port,
+  { parentSpan } = {}
+) => {
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
@@ -314,7 +320,7 @@ module.exports = async (program, directory, suppliedStage) => {
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
         configRules.push({
-          include: /node_modules/,
+          include: /node_modules\/react-dom/,
           test: /\.jsx?$/,
           use: {
             loader: require.resolve(`./webpack-hmr-hooks-patch`),
@@ -560,6 +566,7 @@ module.exports = async (program, directory, suppliedStage) => {
     rules,
     loaders,
     plugins,
+    parentSpan,
   })
 
   return getConfig()

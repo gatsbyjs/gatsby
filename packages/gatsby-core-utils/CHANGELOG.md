@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.5...gatsby-core-utils@1.0.6) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.4...gatsby-core-utils@1.0.5) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.3...gatsby-core-utils@1.0.4) (2019-08-06)
+
+### Bug Fixes
+
+- **www:** replace \n into newlines for guess ([#16382](https://github.com/gatsbyjs/gatsby/issues/16382)) ([44dbafb](https://github.com/gatsbyjs/gatsby/commit/44dbafb))
+
 ## [1.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.2...gatsby-core-utils@1.0.3) (2019-07-12)
 
 **Note:** Version bump only for package gatsby-core-utils

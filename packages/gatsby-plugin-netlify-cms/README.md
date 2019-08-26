@@ -178,6 +178,12 @@ bar).
 Customize the value of the `favicon` tag in your CMS HTML (shows in the browser
 bar).
 
+### `includeRobots`
+
+(_optional_, type: `boolean`, default: `false`)
+
+By default, the CMS page is not indexed by crawlers. Use this to add a `meta` tag to invite robots to index the CMS page.
+
 ## Example
 
 Here is the plugin with example values for all options (note that no option is
@@ -193,6 +199,7 @@ plugins: [
       publicPath: `admin`,
       htmlTitle: `Content Manager`,
       htmlFavicon: `path/to/favicon`,
+      includeRobots: false,
     },
   },
 ]

@@ -25,9 +25,7 @@ exports.sourceNodes = (
   const clientOptions = pluginOptions.clientOptions || { useNewUrlParser: true }
   const connectionURL = pluginOptions.connectionString
     ? `${pluginOptions.connectionString}/${dbName}${connectionExtraParams}`
-    : `mongodb://${authUrlPart}${serverOptions.address}:${
-        serverOptions.port
-      }/${dbName}${connectionExtraParams}`
+    : `mongodb://${authUrlPart}${serverOptions.address}:${serverOptions.port}/${dbName}${connectionExtraParams}`
   const mongoClient = new MongoClient(connectionURL, clientOptions)
   return mongoClient
     .connect()
@@ -66,6 +64,10 @@ exports.sourceNodes = (
     })
 }
 
+function idToString(id) {
+  return id.hasOwnProperty(`toHexString`) ? id.toHexString() : String(id)
+}
+
 function createNodes(
   db,
   pluginOptions,
@@ -87,7 +89,7 @@ function createNodes(
       }
 
       documents.forEach(({ _id, ...item }) => {
-        const id = _id.toHexString()
+        const id = idToString(_id)
 
         // only call recursive function to preserve relations represented by objectids if pluginoption set.
         if (preserveObjectIds) {

@@ -5,8 +5,8 @@ import Img from "gatsby-image"
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
-import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
-import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
+import FeaturedSitesIcon from "../../assets/icons/featured-sites-icons.svg"
+import { ShowcaseIcon } from "../../assets/icons"
 import {
   colors,
   space,
@@ -186,9 +186,7 @@ class FeaturedSites extends Component {
                       fontWeight: `bold`,
                       color: colors.text.header,
                       fontFamily: fonts.header,
-                      transition: `box-shadow ${transition.speed.slow} ${
-                        transition.curve.default
-                      }, transform .3s ${transition.curve.default}`,
+                      transition: `box-shadow ${transition.speed.slow} ${transition.curve.default}, transform .3s ${transition.curve.default}`,
                       "&:hover": { ...styles.screenshotHover },
                     },
                   }}
@@ -249,9 +247,7 @@ class FeaturedSites extends Component {
                   textAlign: `center`,
                   "&&": {
                     border: 0,
-                    transition: `all ${transition.speed.default} ${
-                      transition.curve.default
-                    }`,
+                    transition: `all ${transition.speed.default} ${transition.curve.default}`,
                     "&:hover": {
                       background: colors.white,
                       transform: `translateY(-${space[1]})`,

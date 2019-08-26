@@ -35,25 +35,25 @@ class BlogPostsIndex extends React.Component {
             <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
           <Container>
-            <h1
+            <div
               css={{
-                marginTop: 0,
-                marginBottom: space[8],
-                [mediaQueries.md]: {
-                  marginTop: 0,
-                  position: `absolute`,
-                  width: 1,
-                  height: 1,
-                  padding: 0,
-                  overflow: `hidden`,
-                  clip: `rect(0,0,0,0)`,
-                  whiteSpace: `nowrap`,
-                  clipPath: `inset(50%)`,
+                ...pullIntoGutter,
+                display: `flex`,
+                justifyContent: `space-between`,
+                borderBottom: `1px solid ${colors.ui.border.subtle}`,
+                marginBottom: `${space[6]}`,
+                paddingBottom: `${space[6]}`,
+                [breakpointGutter]: {
+                  paddingBottom: 0,
+                  border: 0,
                 },
               }}
             >
-              Blog
-            </h1>
+              <h1 css={{ marginBottom: 0 }}>Blog</h1>
+              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
+                View all Tags <TagsIcon />
+              </Button>
+            </div>
             {allMdx.edges.map(({ node }, index) => (
               <BlogPostPreviewItem
                 post={node}
@@ -73,13 +73,7 @@ class BlogPostsIndex extends React.Component {
                     marginBottom: space[6],
                     marginLeft: 0,
                     marginRight: 0,
-                    transition: `transform ${transition.speed.default} ${
-                      transition.curve.default
-                    },  box-shadow ${transition.speed.default} ${
-                      transition.curve.default
-                    }, padding ${transition.speed.default} ${
-                      transition.curve.default
-                    }`,
+                    transition: `transform ${transition.speed.default} ${transition.curve.default},  box-shadow ${transition.speed.default} ${transition.curve.default}, padding ${transition.speed.default} ${transition.curve.default}`,
                     "&:hover": {
                       transform: `translateY(-${space[1]})`,
                       boxShadow: shadows.overlay,
@@ -97,24 +91,6 @@ class BlogPostsIndex extends React.Component {
               />
             ))}
             <Pagination context={this.props.pageContext} />
-            <div
-              css={{
-                background: colors.ui.background,
-                ...pullIntoGutter,
-                paddingBottom: space[6],
-                borderBottom: `1px solid ${colors.ui.border.subtle}`,
-                display: `flex`,
-                flexFlow: `row nowrap`,
-                justifyContent: `flex-end`,
-                [breakpointGutter]: {
-                  border: 0,
-                },
-              }}
-            >
-              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
-                View all Tags <TagsIcon />
-              </Button>
-            </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
           <FooterLinks />

@@ -361,14 +361,14 @@ export default ({ data }) => {
 
 export const query = graphql`
   query {
-    mobileImage(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
+    mobileImage: file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         fluid(maxWidth: 1000, quality: 100) {
           ...GatsbyImageSharpFluid
         }
       }
     }
-    desktopImage(
+    desktopImage: file(
       relativePath: { eq: "blog/avatars/kyle-mathews-desktop.jpeg" }
     ) {
       childImageSharp {
@@ -435,4 +435,4 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
   to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
   to [import the gif directly](/docs/adding-images-fonts-files).
 - Lazy loading behavior is dependent on `IntersectionObserver` which is not available
-  in some fairly common browsers including Safari and IE. A polyfill is recommended.
+  in IE. A polyfill is recommended.

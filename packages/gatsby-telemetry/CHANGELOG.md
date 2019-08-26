@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.18...gatsby-telemetry@1.1.19) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency configstore to v5 ([#17024](https://github.com/gatsbyjs/gatsby/issues/17024)) ([17e07cc](https://github.com/gatsbyjs/gatsby/commit/17e07cc))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-docker to v2 ([#17036](https://github.com/gatsbyjs/gatsby/issues/17036)) ([930a043](https://github.com/gatsbyjs/gatsby/commit/930a043))
+
+## [1.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.17...gatsby-telemetry@1.1.18) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.16...gatsby-telemetry@1.1.17) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.15...gatsby-telemetry@1.1.16) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- update dependency envinfo to ^5.12.1 ([#16861](https://github.com/gatsbyjs/gatsby/issues/16861)) ([f0ab6cf](https://github.com/gatsbyjs/gatsby/commit/f0ab6cf))
+
+## [1.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.14...gatsby-telemetry@1.1.15) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency boxen to ^3.2.0 ([#16826](https://github.com/gatsbyjs/gatsby/issues/16826)) ([c2bc229](https://github.com/gatsbyjs/gatsby/commit/c2bc229))
+
+## [1.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.13...gatsby-telemetry@1.1.14) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.12...gatsby-telemetry@1.1.13) (2019-08-19)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.11...gatsby-telemetry@1.1.12) (2019-08-16)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.9...gatsby-telemetry@1.1.11) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Add back fix and fix files in package.j… ([#16297](https://github.com/gatsbyjs/gatsby/issues/16297)) ([9d32f3c](https://github.com/gatsbyjs/gatsby/commit/9d32f3c))
+
+## [1.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.8...gatsby-telemetry@1.1.9) (2019-08-01)
+
+### Bug Fixes
+
+- **telemerty:** always show the telemetry notification, fixes… ([#16294](https://github.com/gatsbyjs/gatsby/issues/16294)) ([8db4f4c](https://github.com/gatsbyjs/gatsby/commit/8db4f4c))
+
+## [1.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.7...gatsby-telemetry@1.1.8) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Don't display analytics notification if opted out ([#16258](https://github.com/gatsbyjs/gatsby/issues/16258)) ([2b3a150](https://github.com/gatsbyjs/gatsby/commit/2b3a150))
+
+## [1.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.6...gatsby-telemetry@1.1.7) (2019-07-23)
+
+**Note:** Version bump only for package gatsby-telemetry
+
 ## [1.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.5...gatsby-telemetry@1.1.6) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-telemetry

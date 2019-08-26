@@ -96,9 +96,7 @@ class Accordion extends React.Component {
               ? presets.activeSectionBackground
               : false,
           position: `relative`,
-          transition: `all ${transition.speed.fast} ${
-            transition.curve.default
-          }`,
+          transition: `all ${transition.speed.fast} ${transition.curve.default}`,
           marginTop:
             item.level === 0 && disableAccordions && !isSingle
               ? `${space[4]} !important`

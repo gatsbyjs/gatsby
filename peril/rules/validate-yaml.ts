@@ -118,7 +118,7 @@ const getCreatorsSchema = async () => {
           .required(),
         description: Joi.string(),
         location: Joi.string(),
-        // need to explicitely allow `null` to not fail on github: null fields
+        // need to explicitly allow `null` to not fail on github: null fields
         github: Joi.string()
           .uri(uriOptions)
           .allow(null),
@@ -205,9 +205,7 @@ export const validateYaml = async () => {
     )
   } catch (e) {
     warn(
-      `## "docs/categories.yml" is not valid YAML file:\n\n\`\`\`${
-        e.message
-      }\n\`\`\``
+      `## "docs/categories.yml" is not valid YAML file:\n\n\`\`\`${e.message}\n\`\`\``
     )
     return
   }

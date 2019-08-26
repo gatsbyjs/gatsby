@@ -1,7 +1,24 @@
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
+const withResolverContext = require(`../../context`)
 const { isDate, looksLikeADate } = require(`../date`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
 
 // Timestamps grabbed from https://github.com/moment/moment/blob/2e2a5b35439665d4b0200143d808a7c26d6cd30f/src/test/moment/is_valid.js
 
@@ -80,20 +97,6 @@ describe(`isDate`, () => {
     }
   )
 
-  it.skip.each([
-    `2018-08-31T23:25:16.019345123+02:00`,
-    `2018-08-31T23:25:16.019345123Z`,
-  ])(`should return true for nanosecond precision: %s`, dateString => {
-    expect(isDate(dateString)).toBeTruthy()
-  })
-
-  it.skip.each([`2018-08-31T23:25:16.012345678901+02:00`])(
-    `should return false for precision beyond 9 digits: %s`,
-    dateString => {
-      expect(isDate(dateString)).toBeFalsy()
-    }
-  )
-
   it.each([
     `2010-00-00`,
     `2010-01-00`,
@@ -123,32 +126,6 @@ describe(`isDate`, () => {
     `2012-04-01T00:basketball`,
   ])(`should return false for invalid ISO 8601: %s`, dateString => {
     expect(isDate(dateString)).toBeFalsy()
-  })
-
-  it.skip.each([
-    1371065286,
-    1379066897.0,
-    1379066897.7,
-    1379066897.0,
-    1379066897.07,
-    1379066897.17,
-    1379066897.0,
-    1379066897.007,
-    1379066897.017,
-    1379066897.157,
-    `1371065286`,
-    `1379066897.`,
-    `1379066897.0`,
-    `1379066897.7`,
-    `1379066897.00`,
-    `1379066897.07`,
-    `1379066897.17`,
-    `1379066897.000`,
-    `1379066897.007`,
-    `1379066897.017`,
-    `1379066897.157`,
-  ])(`should return true for unix timestamps: %s`, dateString => {
-    expect(isDate(dateString)).toBeTruthy()
   })
 })
 
@@ -217,27 +194,6 @@ describe(`looksLikeADate`, () => {
     `should return true for ISO 8601 ordinal dates: %s`,
     dateString => {
       expect(looksLikeADate(dateString)).toBeTruthy()
-    }
-  )
-
-  it.skip.each([
-    `2018-08-31T23:25:16.019345+02:00`,
-    `2018-08-31T23:25:16.019345Z`,
-  ])(`should return true for microsecond precision: %s`, dateString => {
-    expect(looksLikeADate(dateString)).toBeTruthy()
-  })
-
-  it.skip.each([
-    `2018-08-31T23:25:16.019345123+02:00`,
-    `2018-08-31T23:25:16.019345123Z`,
-  ])(`should return true for nanosecond precision: %s`, dateString => {
-    expect(looksLikeADate(dateString)).toBeTruthy()
-  })
-
-  it.skip.each([`2018-08-31T23:25:16.012345678901+02:00`])(
-    `should return false for precision beyond 9 digits: %s`,
-    dateString => {
-      expect(looksLikeADate(dateString)).toBeFalsy()
     }
   )
 
@@ -449,7 +405,7 @@ describe(`dateResolver`, () => {
       await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
-        {},
+        withResolverContext({}, schema),
         {
           fieldName: `date`,
         }
@@ -474,7 +430,7 @@ describe(`dateResolver`, () => {
       await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
-        {},
+        withResolverContext({}, schema),
         {
           fieldName: `date`,
         }

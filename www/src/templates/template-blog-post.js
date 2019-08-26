@@ -1,8 +1,6 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
@@ -21,6 +19,7 @@ import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
 import Avatar from "../components/avatar"
+import PrevAndNext from "../components/prev-and-next"
 import FooterLinks from "../components/shared/footer-links"
 
 class BlogPostTemplate extends React.Component {
@@ -30,23 +29,6 @@ class BlogPostTemplate extends React.Component {
       data: { mdx: post },
       location: { href },
     } = this.props
-    const prevNextLinkStyles = {
-      "&&": {
-        borderBottom: 0,
-        color: colors.gatsby,
-        fontFamily: fonts.header,
-        fontSize: fontSizes[3],
-        fontWeight: `bold`,
-        lineHeight: lineHeights.dense,
-      },
-    }
-    const prevNextLabelStyles = {
-      color: colors.text.secondary,
-      fontSize: fontSizes[2],
-      fontWeight: `normal`,
-      marginBottom: space[2],
-      marginTop: 0,
-    }
     const BioLine = ({ children }) => (
       <p
         css={{
@@ -84,9 +66,7 @@ class BlogPostTemplate extends React.Component {
               <title>{post.frontmatter.title}</title>
               <link
                 rel="author"
-                href={`https://gatsbyjs.org${
-                  post.frontmatter.author.fields.slug
-                }`}
+                href={`https://gatsbyjs.org${post.frontmatter.author.fields.slug}`}
               />
               <meta
                 name="description"
@@ -104,17 +84,13 @@ class BlogPostTemplate extends React.Component {
               {post.frontmatter.image && (
                 <meta
                   property="og:image"
-                  content={`https://gatsbyjs.org${
-                    post.frontmatter.image.childImageSharp.resize.src
-                  }`}
+                  content={`https://gatsbyjs.org${post.frontmatter.image.childImageSharp.resize.src}`}
                 />
               )}
               {post.frontmatter.image && (
                 <meta
                   name="twitter:image"
-                  content={`https://gatsbyjs.org${
-                    post.frontmatter.image.childImageSharp.resize.src
-                  }`}
+                  content={`https://gatsbyjs.org${post.frontmatter.image.childImageSharp.resize.src}`}
                 />
               )}
               <meta property="og:type" content="article" />
@@ -170,9 +146,7 @@ class BlogPostTemplate extends React.Component {
                     <span
                       css={{
                         borderBottom: `1px solid ${colors.link.border}`,
-                        transition: `all ${transition.speed.fast} ${
-                          transition.curve.default
-                        }`,
+                        transition: `all ${transition.speed.fast} ${transition.curve.default}`,
                         "&:hover": { borderColor: colors.link.hoverBorder },
                       }}
                     >
@@ -241,52 +215,20 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           <Container>
-            <div
-              css={{
-                [mediaQueries.sm]: { display: `flex`, width: `100%` },
-              }}
-            >
-              <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
-                {prev && (
-                  <Link to={prev.fields.slug} css={prevNextLinkStyles}>
-                    <h4 css={prevNextLabelStyles}>Previous</h4>
-                    <span
-                      css={{
-                        [mediaQueries.md]: {
-                          marginLeft: `-${space[4]}`,
-                        },
-                      }}
-                    >
-                      <ArrowBackIcon style={{ verticalAlign: `sub` }} />
-                      {prev.frontmatter.title}
-                    </span>
-                  </Link>
-                )}
-              </div>
-              <div
-                css={{
-                  textAlign: `right`,
-                  marginTop: space[5],
-                  [mediaQueries.sm]: { marginTop: 0, width: `50%` },
-                }}
-              >
-                {next && (
-                  <Link to={next.fields.slug} css={prevNextLinkStyles}>
-                    <h4 css={prevNextLabelStyles}>Next</h4>
-                    <span
-                      css={{
-                        [mediaQueries.md]: {
-                          marginRight: `-${space[4]}`,
-                        },
-                      }}
-                    >
-                      {next.frontmatter.title}
-                      <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
-                    </span>
-                  </Link>
-                )}
-              </div>
-            </div>
+            <PrevAndNext
+              prev={
+                prev && {
+                  title: prev.frontmatter.title,
+                  link: prev.fields.slug,
+                }
+              }
+              next={
+                next && {
+                  title: next.frontmatter.title,
+                  link: next.fields.slug,
+                }
+              }
+            />
           </Container>
           <FooterLinks />
         </div>

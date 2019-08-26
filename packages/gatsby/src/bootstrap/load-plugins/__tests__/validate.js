@@ -1,6 +1,7 @@
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panicOnBuild: jest.fn(),
+    error: jest.fn(),
     warn: jest.fn(),
   }
 })
@@ -13,6 +14,10 @@ const {
   handleMultipleReplaceRenderers,
   warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
+
+beforeEach(() => {
+  Object.keys(reporter).forEach(key => reporter[key].mockReset())
+})
 
 describe(`collatePluginAPIs`, () => {
   const MOCK_RESULTS = {
@@ -55,7 +60,7 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    let result = collatePluginAPIs({ apis, flattenedPlugins })
+    let result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
     expect(result).toMatchSnapshot()
   })
 
@@ -82,7 +87,7 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    let result = collatePluginAPIs({ apis, flattenedPlugins })
+    let result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
     expect(result).toMatchSnapshot()
   })
 })
@@ -90,7 +95,7 @@ describe(`collatePluginAPIs`, () => {
 describe(`handleBadExports`, () => {
   it(`Does nothing when there are no bad exports`, async () => {
     handleBadExports({
-      apis: {
+      currentAPIs: {
         node: [`these`, `can`, `be`],
         browser: [`anything`, `as there`],
         ssr: [`are no`, `bad errors`],
@@ -103,26 +108,162 @@ describe(`handleBadExports`, () => {
     })
   })
 
-  it(`Calls reporter.panicOnBuild when bad exports are detected`, async () => {
+  it(`Calls structured error with reporter.error when bad exports are detected`, async () => {
+    const exportName = `foo`
     handleBadExports({
-      apis: {
+      currentAPIs: {
         node: [``],
         browser: [``],
-        ssr: [`notFoo`, `bar`],
+        ssr: [``],
+      },
+      latestAPIs: {
+        node: {},
+        browser: {},
+        ssr: {},
       },
       badExports: {
         node: [],
         browser: [],
         ssr: [
           {
-            exportName: `foo`,
+            exportName,
             pluginName: `default-site-plugin`,
           },
         ],
       },
     })
 
-    expect(reporter.panicOnBuild.mock.calls.length).toBe(1)
+    expect(reporter.error).toHaveBeenCalledTimes(1)
+    expect(reporter.error).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: `11329`,
+        context: expect.objectContaining({
+          exportType: `ssr`,
+          errors: [
+            expect.stringContaining(`"${exportName}" which is not a known API`),
+          ],
+        }),
+      })
+    )
+  })
+
+  it(`adds info on plugin if a plugin API error`, () => {
+    const exportName = `foo`
+    const pluginName = `gatsby-source-contentful`
+    const pluginVersion = `2.1.0`
+    handleBadExports({
+      currentAPIs: {
+        node: [``],
+        browser: [``],
+        ssr: [``],
+      },
+      latestAPIs: {
+        node: {},
+        browser: {},
+        ssr: {},
+      },
+      badExports: {
+        node: [],
+        browser: [],
+        ssr: [
+          {
+            exportName,
+            pluginName,
+            pluginVersion,
+          },
+        ],
+      },
+    })
+
+    expect(reporter.error).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: expect.objectContaining({
+          errors: [
+            expect.stringContaining(
+              `${pluginName}@${pluginVersion} is using the API "${exportName}"`
+            ),
+          ],
+        }),
+      })
+    )
+  })
+
+  it(`Adds fixes to context if newer API introduced in Gatsby`, () => {
+    const version = `2.2.0`
+
+    handleBadExports({
+      currentAPIs: {
+        node: [``],
+        browser: [``],
+        ssr: [``],
+      },
+      latestAPIs: {
+        browser: {},
+        ssr: {},
+        node: {
+          validatePluginOptions: {
+            version,
+          },
+        },
+      },
+      badExports: {
+        browser: [],
+        ssr: [],
+        node: [
+          {
+            exportName: `validatePluginOptions`,
+            pluginName: `gatsby-source-contentful`,
+          },
+        ],
+      },
+    })
+
+    expect(reporter.error).toHaveBeenCalledTimes(1)
+    expect(reporter.error).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: expect.objectContaining({
+          fixes: [`npm install gatsby@^${version}`],
+        }),
+      })
+    )
+  })
+
+  it(`adds fixes if close match/typo`, () => {
+    ;[
+      [`modifyWebpackConfig`, `onCreateWebpackConfig`],
+      [`createPagesss`, `createPages`],
+    ].forEach(([typoOrOldAPI, newAPI]) => {
+      handleBadExports({
+        currentAPIs: {
+          node: [newAPI],
+          browser: [``],
+          ssr: [``],
+        },
+        latestAPIs: {
+          browser: {},
+          ssr: {},
+          node: {},
+        },
+        badExports: {
+          browser: [],
+          ssr: [],
+          node: [
+            {
+              exportName: typoOrOldAPI,
+              pluginName: `default-site-plugin`,
+            },
+          ],
+        },
+      })
+
+      expect(reporter.error).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            fixes: [`Rename "${typoOrOldAPI}" -> "${newAPI}"`],
+          }),
+        })
+      )
+    })
   })
 })
 

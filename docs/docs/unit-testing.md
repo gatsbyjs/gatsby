@@ -40,7 +40,7 @@ module.exports = {
     ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
   },
-  testPathIgnorePatterns: [`node_modules`, `.cache`],
+  testPathIgnorePatterns: [`node_modules`, `.cache`, `public`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
   globals: {
     __PATH_PREFIX__: ``,
@@ -239,7 +239,7 @@ module.exports = {
       "<rootDir>/__mocks__/file-mock.js",
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  testPathIgnorePatterns: ["node_modules", ".cache"],
+  testPathIgnorePatterns: ["node_modules", ".cache", "public"],
   transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
   globals: {
     __PATH_PREFIX__: "",
@@ -272,7 +272,7 @@ though remember you may need to install the Babel 7 versions. See
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).
 
-For an example encapsulating all of these techniques--and a full unit test suite with [react-testing-library][react-testing-library], check out the [using-jest][using-jest] example.
+For an example encapsulating all of these techniques--and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
 
 [using-jest]: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest
-[react-testing-library]: https://github.com/kentcdodds/react-testing-library
+[react-testing-library]: https://github.com/testing-library/react-testing-library

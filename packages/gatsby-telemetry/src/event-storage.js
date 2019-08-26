@@ -14,6 +14,8 @@ const isTruthy = require(`./is-truthy`)
  * to continue even when working offline.
  */
 module.exports = class EventStorage {
+  analyticsApi =
+    process.env.GATSBY_TELEMETRY_API || `https://analytics.gatsbyjs.com/events`
   constructor() {
     try {
       this.config = new Configstore(`gatsby`, {}, { globalConfigPath: true })
@@ -41,6 +43,10 @@ module.exports = class EventStorage {
     this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE)
     this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
     this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED)
+  }
+
+  isTrackingDisabled() {
+    return this.disabled
   }
 
   addEvent(event) {
@@ -75,7 +81,7 @@ module.exports = class EventStorage {
 
   async submitEvents(events) {
     try {
-      const res = await fetch(`https://analytics.gatsbyjs.com/events`, {
+      const res = await fetch(this.analyticsApi, {
         method: `POST`,
         headers: { "content-type": `application/json` },
         body: JSON.stringify(events),

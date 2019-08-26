@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.10...gatsby-plugin-google-analytics@2.1.11) (2019-08-24)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.9...gatsby-plugin-google-analytics@2.1.10) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.8...gatsby-plugin-google-analytics@2.1.9) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.7...gatsby-plugin-google-analytics@2.1.8) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.6...gatsby-plugin-google-analytics@2.1.7) (2019-08-06)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.5...gatsby-plugin-google-analytics@2.1.6) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Fix broken script ([#16223](https://github.com/gatsbyjs/gatsby/issues/16223)) ([4ff5321](https://github.com/gatsbyjs/gatsby/commit/4ff5321))
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.4...gatsby-plugin-google-analytics@2.1.5) (2019-07-30)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** enable more options. ([#15280](https://github.com/gatsbyjs/gatsby/issues/15280)) ([b3ed9be](https://github.com/gatsbyjs/gatsby/commit/b3ed9be))
+
 ## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.3...gatsby-plugin-google-analytics@2.1.4) (2019-07-12)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

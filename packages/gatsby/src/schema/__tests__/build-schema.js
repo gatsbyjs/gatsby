@@ -15,11 +15,27 @@ const {
   buildUnionType,
   buildInterfaceType,
 } = require(`../types/type-builders`)
+const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = require(`./fixtures/node-model`)
 
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => report.warn.mockClear())
 
@@ -913,7 +929,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -923,7 +939,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -959,7 +975,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -969,7 +985,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -1105,7 +1121,7 @@ describe(`Build schema`, () => {
         await fields[`date`].resolve(
           { date: new Date(2019, 10, 10) },
           { formatString: `YYYY` },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `date`,
           }
@@ -1115,7 +1131,7 @@ describe(`Build schema`, () => {
         await fields[`date`].resolve(
           { date: new Date(2010, 10, 10) },
           { formatString: `YYYY` },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `date`,
           }

@@ -3,6 +3,22 @@ const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const nodes = [
   {
     id: `id1`,
@@ -588,7 +604,7 @@ describe(`merges explicit and inferred type definitions`, () => {
           links: {
             type: `[Test!]!`,
             extensions: {
-              link: true,
+              link: {},
             },
           },
         },

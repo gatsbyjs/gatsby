@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.1.6...gatsby-plugin-google-tagmanager@2.1.7) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.1.5...gatsby-plugin-google-tagmanager@2.1.6) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.1.4...gatsby-plugin-google-tagmanager@2.1.5) (2019-08-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-tagmanager:** fix custom dataLayer name ([#16304](https://github.com/gatsbyjs/gatsby/issues/16304)) ([6d097a5](https://github.com/gatsbyjs/gatsby/commit/6d097a5))
+
 ## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-tagmanager@2.1.3...gatsby-plugin-google-tagmanager@2.1.4) (2019-07-12)
 
 ### Bug Fixes

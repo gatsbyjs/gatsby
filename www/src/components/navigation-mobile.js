@@ -1,13 +1,13 @@
 import React from "react"
 import { Link } from "gatsby"
-import SvgDefs from "../assets/svg-defs"
 import {
   BlogIcon,
   DocsIcon,
   TutorialIcon,
   PluginsIcon,
   ShowcaseIcon,
-} from "../assets/mobile-nav-icons"
+  SvgDefs,
+} from "../assets/icons"
 import {
   colors,
   transition,
@@ -126,9 +126,7 @@ const styles = {
         height: 32,
         margin: `0 auto`,
         "& path, & line, & polygon": {
-          transition: `all ${transition.speed.default} ${
-            transition.curve.default
-          }`,
+          transition: `all ${transition.speed.default} ${transition.curve.default}`,
         },
       },
     },

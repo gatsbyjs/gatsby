@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.24...gatsby-source-wordpress@3.1.25) (2019-08-24)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.23...gatsby-source-wordpress@3.1.24) (2019-08-24)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.22...gatsby-source-wordpress@3.1.23) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.21...gatsby-source-wordpress@3.1.22) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.20...gatsby-source-wordpress@3.1.21) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.19...gatsby-source-wordpress@3.1.20) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.18...gatsby-source-wordpress@3.1.19) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
+## [3.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.17...gatsby-source-wordpress@3.1.18) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency better-queue to ^3.8.10 ([#16824](https://github.com/gatsbyjs/gatsby/issues/16824)) ([6834344](https://github.com/gatsbyjs/gatsby/commit/6834344))
+
+## [3.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.16...gatsby-source-wordpress@3.1.17) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.15...gatsby-source-wordpress@3.1.16) (2019-08-16)
+
+### Features
+
+- **gatsby-source-wordpress:** Add keepMediaDetails ([#15862](https://github.com/gatsbyjs/gatsby/issues/15862)) ([1b89f31](https://github.com/gatsbyjs/gatsby/commit/1b89f31))
+
+## [3.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.14...gatsby-source-wordpress@3.1.15) (2019-08-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.13...gatsby-source-wordpress@3.1.14) (2019-08-06)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.12...gatsby-source-wordpress@3.1.13) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.11...gatsby-source-wordpress@3.1.12) (2019-07-30)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.10...gatsby-source-wordpress@3.1.11) (2019-07-22)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** WordPress does not properly enco… ([#15835](https://github.com/gatsbyjs/gatsby/issues/15835)) ([f4af142](https://github.com/gatsbyjs/gatsby/commit/f4af142))
+
+## [3.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.9...gatsby-source-wordpress@3.1.10) (2019-07-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [3.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.8...gatsby-source-wordpress@3.1.9) (2019-07-15)
 
 **Note:** Version bump only for package gatsby-source-wordpress

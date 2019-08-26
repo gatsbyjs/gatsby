@@ -81,9 +81,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         },
       }
 
-      const datalayerFuncAsString = oneLine`${
-        pluginOptions.defaultDataLayer.value
-      }`
+      const datalayerFuncAsString = oneLine`${pluginOptions.defaultDataLayer.value}`
 
       onRenderBody(mocks, pluginOptions)
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
@@ -123,6 +121,29 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       }
 
       expect(() => onRenderBody(mocks, pluginOptions)).toThrow()
+    })
+
+    it(`should add a renamed dataLayer`, () => {
+      const dataLayerName = `TEST_DATA_LAYER_NAME`
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        includeInDevelopment: true,
+        defaultDataLayer: {
+          type: `object`,
+          value: { pageCategory: `home` },
+        },
+        dataLayerName,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        `window.${dataLayerName}`
+      )
     })
   })
 })

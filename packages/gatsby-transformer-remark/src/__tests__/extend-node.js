@@ -1,8 +1,24 @@
 const { graphql } = require(`gatsby/graphql`)
 const { onCreateNode } = require(`../gatsby-node`)
 const extendNodeType = require(`../extend-node-type`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
-const { createContentDigest } = require(`gatsby/utils`)
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
 
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
@@ -134,7 +150,7 @@ Where oh where is my little pony?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
       expect(node.excerptAst).toMatchObject({
         children: [
           {
@@ -169,7 +185,7 @@ date: "2017-09-18T23:19:51.246Z"
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(``)
+      expect(node.excerpt).toBe(``)
       expect(node.excerptAst).toMatchObject({
         children: [],
         data: { quirksMode: false },
@@ -198,7 +214,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
       expect(node.excerptAst).toMatchObject({
         children: [
           {
@@ -241,7 +257,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: PLAIN)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
@@ -252,8 +268,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: HTML)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where <strong>is</strong> my little pony?</p>`
+      expect(node.excerpt).toBe(
+        `<p>Where oh where <strong>is</strong> my little pony?</p>\n`
       )
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -265,7 +281,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: MARKDOWN)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where **is** my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where **is** my little pony?\n`)
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
@@ -332,6 +348,65 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     }
   )
 
+  describe(`when plugins options has a excerpt_separator defined`, () => {
+    bootstrapTest(
+      `correctly prunes length to default value`,
+      content,
+      `excerpt
+        excerptAst
+        frontmatter {
+            title
+        }
+        `,
+      node => {
+        expect(node).toMatchSnapshot()
+        expect(node.excerpt.length).toBe(139)
+        expect(node.excerptAst.children.length).toBe(1)
+        expect(node.excerptAst.children[0].children.length).toBe(1)
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(139)
+      },
+      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    )
+
+    bootstrapTest(
+      `correctly prunes length to provided parameter`,
+      content,
+      `excerpt(pruneLength: 50)
+        excerptAst(pruneLength: 50)
+        frontmatter {
+            title
+        }
+        `,
+      node => {
+        expect(node).toMatchSnapshot()
+        expect(node.excerpt.length).toBe(46)
+        expect(node.excerptAst.children.length).toBe(1)
+        expect(node.excerptAst.children[0].children.length).toBe(1)
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(46)
+      },
+      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    )
+
+    bootstrapTest(
+      `correctly prunes length to provided parameter with truncate`,
+      content,
+      `excerpt(pruneLength: 50, truncate: true)
+        excerptAst(pruneLength: 50, truncate: true)
+        frontmatter {
+            title
+        }
+        `,
+      node => {
+        expect(node).toMatchSnapshot()
+        expect(node.excerpt.length).toBe(50)
+        expect(node.excerptAst.children.length).toBe(1)
+        expect(node.excerptAst.children[0].children.length).toBe(1)
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(50)
+      },
+      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    )
+  })
+
   bootstrapTest(
     `given an html format, it correctly maps nested markdown to html`,
     `---
@@ -348,7 +423,7 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -444,7 +519,7 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       }
       `,
     node => {
-      expect(node.excerpt).toMatch(`Where oh where is that pony?`)
+      expect(node.excerpt).toBe(`Where oh where is that pony?`)
     },
     {}
   )
@@ -459,7 +534,7 @@ date: "2017-09-18T23:19:51.246Z"
  My pony likes space on the left and right! `,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`My pony likes space on the left and right!`)
+      expect(node.excerpt).toBe(`My pony likes space on the left and right!`)
     },
     {}
   )
@@ -476,7 +551,7 @@ My pony is little.
 Little is my pony.`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`My pony is little. Little is my pony.`)
+      expect(node.excerpt).toBe(`My pony is little. Little is my pony.`)
     },
     {}
   )
@@ -495,7 +570,7 @@ date: "2017-09-18T23:19:51.246Z"
 It's pony time.`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `Ponies: The Definitive Guide What time is it? It's pony time.`
       )
     },
@@ -514,7 +589,7 @@ date: "2017-09-18T23:19:51.246Z"
 | My Little Pony | Me, Duh  |`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`Pony Owner My Little Pony Me, Duh`)
+      expect(node.excerpt).toBe(`Pony Owner My Little Pony Me, Duh`)
     },
     {}
   )
@@ -531,7 +606,7 @@ don't fix it.`,
     // ^ Explicit syntax for trailing spaces to not get accidentally trimmed.
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`If my pony ain't broke, don't fix it.`)
+      expect(node.excerpt).toBe(`If my pony ain't broke, don't fix it.`)
     },
     {}
   )
@@ -550,7 +625,7 @@ date: "2017-09-18T23:19:51.246Z"
 Pony express had nothing on my little pony.`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `Pony express Pony express had nothing on my little pony.`
       )
     },
@@ -573,7 +648,7 @@ Where is my <code>pony</code> named leo?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where is my <code>pony</code> named leo?</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -628,7 +703,7 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where oh where is that pony? Is he in the stable…</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -671,8 +746,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>`
+      expect(node.excerpt).toBe(
+        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>\n`
       )
       expect(node.excerptAst).toMatchObject({
         children: [

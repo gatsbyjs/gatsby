@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.17...gatsby-source-filesystem@2.1.18) (2019-08-24)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Use forward slashes on relative… ([#17048](https://github.com/gatsbyjs/gatsby/issues/17048)) ([799f657](https://github.com/gatsbyjs/gatsby/commit/799f657))
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.16...gatsby-source-filesystem@2.1.17) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency file-type to v12 ([#17030](https://github.com/gatsbyjs/gatsby/issues/17030)) ([f538563](https://github.com/gatsbyjs/gatsby/commit/f538563))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.15...gatsby-source-filesystem@2.1.16) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency chokidar to v3 ([#16975](https://github.com/gatsbyjs/gatsby/issues/16975)) ([816d475](https://github.com/gatsbyjs/gatsby/commit/816d475))
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.14...gatsby-source-filesystem@2.1.15) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.13...gatsby-source-filesystem@2.1.14) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.12...gatsby-source-filesystem@2.1.13) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.11...gatsby-source-filesystem@2.1.12) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.10...gatsby-source-filesystem@2.1.11) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency better-queue to ^3.8.10 ([#16824](https://github.com/gatsbyjs/gatsby/issues/16824)) ([6834344](https://github.com/gatsbyjs/gatsby/commit/6834344))
+- update dependency chokidar to v2.1.6 ([#16832](https://github.com/gatsbyjs/gatsby/issues/16832)) ([dbcf65f](https://github.com/gatsbyjs/gatsby/commit/dbcf65f))
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.9...gatsby-source-filesystem@2.1.10) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.8...gatsby-source-filesystem@2.1.9) (2019-08-06)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.7...gatsby-source-filesystem@2.1.8) (2019-08-01)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.6...gatsby-source-filesystem@2.1.7) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Move GraphQL definition for Fil… ([#16041](https://github.com/gatsbyjs/gatsby/issues/16041)) ([36eae6b](https://github.com/gatsbyjs/gatsby/commit/36eae6b))
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.5...gatsby-source-filesystem@2.1.6) (2019-07-22)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.4...gatsby-source-filesystem@2.1.5) (2019-07-12)
 
 ### Bug Fixes
