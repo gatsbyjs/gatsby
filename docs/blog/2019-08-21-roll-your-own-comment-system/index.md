@@ -9,7 +9,7 @@ tags:
 canonicalLink: https://www.taniarascia.com/add-comments-to-static-site/
 ---
 
-A while ago, I [migrated my site from WordPress to Gatsby](https://www.taniarascia.com/migrating-from-wordpress-to-gatsby/), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments/) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse - truly egregious buzzfeed-esque ads embedded between all the comments. I decided it immediately had to go.
+A while ago, I [migrated my site from WordPress to Gatsby](/blog/2019-03-21-migrating-from-wordpress-to-gatsby/), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments/) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse - truly egregious buzzfeed-esque ads embedded between all the comments. I decided it immediately had to go.
 
 I had no comments for a bit, but I felt like I had no idea what the reception of my articles was without having any place for people to leave comments. Occasionally people will leave useful critiques or tips on tutorials that can help future visitors as well, so I wanted to try adding something very simple back in.
 
@@ -79,11 +79,11 @@ You could probably get more fancy with it and add website, email, upvotes and ot
 
 ## API
 
-In [the article](/node-express-postgresql-heroku/), I document how to set up an Express server and make a Postgres pool connection, so I assume you already know how to do all that. I'm just going to write out the simple functions, without including any of the error handling, validation, and brute force rate limiting that the article goes into.
+In [the article](https://www.taniarascia.com/node-express-postgresql-heroku/), I document how to set up an Express server and make a Postgres pool connection, so I assume you already know how to do all that. I'm just going to write out the simple functions, without including any of the error handling, validation, and brute force rate limiting that the article goes into.
 
 ### Get all comments
 
-First, I want a `GET` query that will just return everything, ordered by date. This is just for me to have, so I can easily review all comments.
+First, I want a `GET` query that will just return everything to Node.js, ordered by date. This is just for me to have, so I can easily review all comments.
 
 ```js
 const getComments = (request, response) => {
@@ -203,9 +203,8 @@ Again, for the front end I'm using React as an example, but the concept is the s
 
 > Sorry, I'm not using hooks yet. It's okay, deep breath. We'll get through this.
 
-<div class="filename">PostTemplate.js</div>
 
-```jsx
+```jsx:title=templates/post.js
 class PostTemplate {
   ...
   async componentDidMount() {
@@ -224,9 +223,8 @@ class PostTemplate {
 
 In this case, that will be a `Comments` component.
 
-<div class="filename">PostTemplate.js</div>
 
-```jsx
+```jsx:title=templates/post.js
 render() {
   return (
     <div>
@@ -238,9 +236,8 @@ render() {
 
 The `Comments` component will contain both the form to submit a comment, and the list of existing comments if there are any. So in state, I'll save the comments list, and an object to store new comment state for the form.
 
-<div class="filename">Comments.js</div>
 
-```jsx
+```jsx:title=components/comments.js
 import React, { Component } from "react"
 import moment from "moment"
 
@@ -267,9 +264,8 @@ I'll admit this code is not the most pristine I've ever seen, but as I mentioned
 
 When a comment is submitted, I'll use `fetch` once again, this time with the `post` method. If everything went through correctly, append the new comment to the comments array, and reset the new comment.
 
-<div class="filename">Comments.js</div>
 
-```jsx
+```jsx:title=components/comments.js
 onSubmitComment = async event => {
   event.preventDefault()
 
@@ -311,9 +307,8 @@ onSubmitComment = async event => {
 
 I'll also have an `onChange` handler for the form.
 
-<div class="filename">Comments.js</div>
 
-```jsx
+```jsx:title=components/comments.js
 handleChange = event => {
   const { newComment } = this.state
   const { name, value } = event.target
@@ -326,18 +321,16 @@ handleChange = event => {
 
 We can start the render lifecycle now.
 
-<div class="filename">Comments.js</div>
 
-```jsx
+```jsx:title=components/comments.js
 render() {
   const { submitting, success, error, comments, newComment: { name, text } } = this.state
 ```
 
 I made some simple error or success messages to show after submnitting the form.
 
-<div class="filename">Comments.js</div>
 
-```jsx
+```jsx:title=components/comments.js
 const showError = () =>
   error && (
     <div className="error">
@@ -355,11 +348,12 @@ const showSuccess = () =>
 
 The comment form only consists of name and comment in my case, as I decided to go the [Sivers](https://sivers.org/) route and only allow comment replies by yours truly on the site.
 
-<div class="filename">Comments.js</div>
 
-```jsx
+```jsx:title=components/comments.js
 const commentForm = () => (
   <form id="new-comment" onSubmit={this.onSubmitComment}>
+      <label for="name">
+      Name:
     <input
       type="text"
       name="name"
@@ -370,6 +364,9 @@ const commentForm = () => (
       placeholder="Name"
       required
     />
+    </label>
+    <label for="text">
+    Comment
     <textarea
       rows="2"
       cols="5"
@@ -380,6 +377,7 @@ const commentForm = () => (
       placeholder="Comment"
       required
     />
+    </label>
     <button type="submit" disabled={!name || !text || text.length < 20 || submitting}>
       Submit
     </button>
@@ -391,9 +389,8 @@ Finally, we'll display the form and the comments. I decided to either display th
 
 After that, it's just a matter of looping through the comments and displaying them. I've made comment replies incredibly simple - only one reply allowed per post, and no nesting.
 
-<div class="filename">Comments.js</div>
 
-```jsx
+```jsx:title=components/comments.js
 return (
   <section id="comments">
     {success || error ? showError() || showSuccess() : commentForm()}
@@ -418,7 +415,7 @@ return (
               {child && (
                 <div className="comment reply">
                   <header>
-                    <h2>{child.name}</h2>
+                    <h3>{child.name}</h3>
                     <div className="comment-date">
                       {moment(child.date).fromNow()}
                     </div>
@@ -438,3 +435,5 @@ return (
 You'll probably also want to add in some anti-spam moderation system, like adding a `moderated` column to the comments, setting it to `false` by default, and manually setting it to `true` if you approve the comment.
 
 I hope this helps out someone who wants a simple, free system for their own personal site. I like reinventing the wheel and making things from scratch. It's fun, and I learn a lot.
+
+For more information on building contact forms with Gatsby, check out the [docs reference guides](/docs/building-a-contact-form/).
