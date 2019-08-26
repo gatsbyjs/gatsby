@@ -19,7 +19,7 @@ import FileParser from "./file-parser"
 import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
 import {
   graphqlError,
-  graphqlValidationError,
+  // graphqlValidationError,
   multipleRootQueriesError,
 } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"

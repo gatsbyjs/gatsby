@@ -2,7 +2,7 @@ import { onLogAaction } from "../../redux/index"
 import stripAnsi from "strip-ansi"
 import _ from "lodash"
 
-const reporterActions = require(`../../redux/actions`)
+// const reporterActions = require(`../../redux/actions`)
 const { getLocalGatsbyVersion } = require(`../../../util/version`)
 
 process.send({

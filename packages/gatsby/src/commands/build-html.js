@@ -2,7 +2,7 @@
 const Promise = require(`bluebird`)
 const webpack = require(`webpack`)
 const fs = require(`fs-extra`)
-const convertHrtime = require(`convert-hrtime`)
+// const convertHrtime = require(`convert-hrtime`)
 const { chunk } = require(`lodash`)
 const webpackConfig = require(`../utils/webpack.config`)
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -62,9 +62,9 @@ const renderHTMLQueue = (
       gatsby_log_level: process.env.gatsby_log_level,
     })
 
-    const start = process.hrtime()
+    // const start = process.hrtime()
     const segments = chunk(pages, 50)
-    let finished = 0
+    // let finished = 0
 
     Promise.map(
       segments,
@@ -77,7 +77,7 @@ const renderHTMLQueue = (
               envVars,
             })
             .then(() => {
-              finished += pageSegment.length
+              // finished += pageSegment.length
               if (activity) {
                 activity.tick(pageSegment.length)
                 // activity.setStatus(

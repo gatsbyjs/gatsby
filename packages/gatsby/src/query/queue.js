@@ -2,7 +2,7 @@ const Queue = require(`better-queue`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
 const websocketManager = require(`../utils/websocket-manager`)
-const report = require(`gatsby-cli/lib/reporter`)
+// const report = require(`gatsby-cli/lib/reporter`)
 
 const createBaseOptions = () => {
   return {
@@ -114,7 +114,7 @@ const processBatch = async (queue, jobs, activity) => {
       return v
     })
   )
-  await Promise.all(runningJobs)
+  return Promise.all(runningJobs)
 
   // queryRunningActivity.done()
 }
