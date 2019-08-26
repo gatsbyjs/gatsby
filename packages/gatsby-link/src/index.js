@@ -79,6 +79,9 @@ class GatsbyLink extends React.Component {
   }
 
   componentWillUnmount() {
+    if (!this.io) {
+      return
+    }
     const { instance, el } = this.io
 
     instance.unobserve(el)
