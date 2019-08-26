@@ -10,6 +10,7 @@ import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
 import FuturaParagraph from "../components/futura-paragraph"
 import Button from "../components/button"
+import HomepageLogoBanner from "../components/homepage/homepage-logo-banner"
 import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
@@ -117,6 +118,7 @@ class IndexRoute extends React.Component {
           >
             <Diagram />
           </div>
+          <HomepageLogoBanner />
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container withSidebar={false}>

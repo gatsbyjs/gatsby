@@ -56,7 +56,7 @@ export const Name = styled(`h3`)`
   }
 `
 
-const Icon = styled(`span`)`
+export const Icon = styled(`span`)`
   display: block;
 
   ${mediaQueries.md} {
