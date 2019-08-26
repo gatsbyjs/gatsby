@@ -3,7 +3,7 @@ module.exports = (
     messages: [],
     activities: {},
     statefulMessages: [],
-    status: `IN_PROGRESS`,
+    status: ``,
   },
   action
 ) => {
@@ -70,7 +70,7 @@ module.exports = (
       // )
 
       if (activities[id].status === `SUCCESS`) {
-        const b = 4
+        // const b = 4
       }
     }
 

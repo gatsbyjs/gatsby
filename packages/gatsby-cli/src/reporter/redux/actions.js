@@ -174,7 +174,6 @@ const actions = {
           status: `CANCELLED`,
         },
       })
-      return actionsToEmit
     } else {
       let duration = 0
       if (activity.status === `IN_PROGRESS`) {

@@ -86,6 +86,7 @@ module.exports = async function build(program: BuildArgs) {
   )
   activity.start()
   const stats = await buildProductionBundle(program).catch(err => {
+    activity.end(false)
     report.panic(handleWebpackError(`build-javascript`, err))
   })
   activity.end()
@@ -157,6 +158,7 @@ module.exports = async function build(program: BuildArgs) {
       id = `95312`
     }
 
+    activity.done(false)
     report.panic({
       id,
       error: err,
