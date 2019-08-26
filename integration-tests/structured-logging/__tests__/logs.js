@@ -1,7 +1,5 @@
-const fs = require(`fs`)
 const { spawn } = require(`child_process`)
 const path = require(`path`)
-const util = require(`util`)
 
 jest.setTimeout(100000)
 
@@ -47,12 +45,11 @@ describe(`Activity`, () => {
   })
 
   it(`emits start, update and end for a successful activity`, async () => {
-    const activityEvents = events.filter(event => {
-      return (
+    const activityEvents = events.filter(
+      event =>
         event.type === `LOG_ACTION` &&
         event.action.payload.id === `Successful activity`
-      )
-    })
+    )
 
     // console.log(util.inspect(activityEvents, { depth: null }))
 
@@ -64,7 +61,7 @@ describe(`Activity`, () => {
         action: expect.objectContaining({
           type: `ACTIVITY_START`,
           payload: expect.objectContaining({
-            id: "Successful activity",
+            id: `Successful activity`,
             uuid: activityUuid,
             total: 100,
           }),
@@ -75,7 +72,7 @@ describe(`Activity`, () => {
         action: expect.objectContaining({
           type: `ACTIVITY_UPDATE`,
           payload: expect.objectContaining({
-            id: "Successful activity",
+            id: `Successful activity`,
             uuid: activityUuid,
             current: 50,
           }),
@@ -86,9 +83,9 @@ describe(`Activity`, () => {
         action: expect.objectContaining({
           type: `ACTIVITY_END`,
           payload: expect.objectContaining({
-            id: "Successful activity",
+            id: `Successful activity`,
             uuid: activityUuid,
-            status: "SUCCESS",
+            status: `SUCCESS`,
           }),
         }),
       }),
@@ -96,12 +93,11 @@ describe(`Activity`, () => {
   })
 
   it(`emits start, update and end for a failed activity`, async () => {
-    const activityEvents = events.filter(event => {
-      return (
+    const activityEvents = events.filter(
+      event =>
         event.type === `LOG_ACTION` &&
         event.action.payload.id === `Failing activity`
-      )
-    })
+    )
 
     // console.log(util.inspect(activityEvents, { depth: null }))
 
@@ -113,7 +109,7 @@ describe(`Activity`, () => {
         action: expect.objectContaining({
           type: `ACTIVITY_START`,
           payload: expect.objectContaining({
-            id: "Failing activity",
+            id: `Failing activity`,
             uuid: activityUuid,
             total: 100,
           }),
@@ -124,7 +120,7 @@ describe(`Activity`, () => {
         action: expect.objectContaining({
           type: `ACTIVITY_UPDATE`,
           payload: expect.objectContaining({
-            id: "Failing activity",
+            id: `Failing activity`,
             uuid: activityUuid,
             current: 75,
           }),
@@ -135,9 +131,9 @@ describe(`Activity`, () => {
         action: expect.objectContaining({
           type: `ACTIVITY_END`,
           payload: expect.objectContaining({
-            id: "Failing activity",
+            id: `Failing activity`,
             uuid: activityUuid,
-            status: "FAILED",
+            status: `FAILED`,
           }),
         }),
       }),
@@ -153,14 +149,13 @@ describe(`Activity`, () => {
     }
 
     it(`emits LOG_ACTION for ${level}`, async () => {
-      const event = events.find(e => {
-        return (
+      const event = events.find(
+        e =>
           e.type === `LOG_ACTION` &&
           e.action.type === `LOG` &&
           mapActionToLevel[level] === e.action.payload.level &&
           level === e.action.payload.text
-        )
-      })
+      )
       expect(event).toBeDefined()
     })
   })

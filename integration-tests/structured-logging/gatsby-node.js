@@ -1,8 +1,7 @@
-const sleep = timeout => {
-  return new Promise(resolve => {
+const sleep = timeout =>
+  new Promise(resolve => {
     setTimeout(resolve, timeout)
   })
-}
 
 exports.createPages = async ({ reporter }) => {
   const successfulActivity = reporter.createProgress(
