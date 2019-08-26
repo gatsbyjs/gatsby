@@ -19,7 +19,7 @@ for folder in $GLOB; do
   # sync to read-only clones
   # clone, delete files in the clone, and copy (new) files over
   # this handles file deletions, additions, and changes seamlessly
-  git clone --depth 1 https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR
+  git clone --depth 1 https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git $CLONE_DIR &> /dev/null
   cd $CLONE_DIR
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. .
