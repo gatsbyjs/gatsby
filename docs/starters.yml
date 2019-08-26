@@ -3712,3 +3712,19 @@
     - Configured to work automatically with Forestry CMS
     - Customizable 'info' page
     - Simple layout & scss architecture, easily extensible
+- url: https://gatsby-firebase-starter.netlify.com/
+  repo: https://github.com/ovidiumihaibelciug/gatsby-firebase-starter
+  description: Starter / Project Boilerplate for Authentication and creating Dynamic pages from collections with Firebase and Gatsby.js
+  tags:
+    - Firebase
+    - SEO
+    - Styling:SCSS
+    - Authentication
+    - PWA
+  features:
+    - Authentication with Firebase
+    - Programmatically create pages from a firestore collection
+    - Protected Routes with Authorization
+    - Email verification
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
