@@ -882,7 +882,6 @@ some other text
     node => {
       expect(node).toMatchSnapshot()
       expect(console.warn).toBeCalled()
-      expect(node.tableOfContents).toBe(null)
     }
   )
 
