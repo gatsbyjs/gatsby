@@ -139,8 +139,13 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
+// Clamp number between 1 and 9 for safety
+function clamp(n) {
+  return Math.min(9, Math.max(1, n))
+}
+
 // Get blurhashed and transform to base64
-async function fileBlurhashedToBase64(
+async function blurHashImage(
   absolutePath,
   width,
   height,
@@ -148,6 +153,8 @@ async function fileBlurhashedToBase64(
   componentY
 ) {
   // Load image
+  const clampedX = clamp(componentX)
+  const clampedY = clamp(componentY)
   const image = await loadImage(absolutePath, width, height)
   const canvas = createCanvas(width, height)
   const ctx = canvas.getContext(`2d`)
@@ -158,8 +165,8 @@ async function fileBlurhashedToBase64(
     imageData.data,
     imageData.width,
     imageData.height,
-    componentX,
-    componentY
+    clampedX,
+    clampedY
   )
   const pixels = blurhash.decode(blurhashed, width, height)
   // Set in canvas to get Base64
@@ -178,12 +185,12 @@ async function generateBase64({ file, args, reporter }) {
   })
   // Decide to return blurhashed or continue to normal base64 function
   if (options.blurhashed) {
-    const blurHashedBase64 = await fileBlurhashedToBase64(
+    const blurHashedBase64 = await blurHashImage(
       file.absolutePath,
       args.width,
       args.height,
-      options.componentX,
-      options.componentY
+      options.blurhashed.componentX,
+      options.blurhashed.componentY
     )
     return {
       src: blurHashedBase64,
@@ -435,8 +442,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     const base64Height = Math.max(1, Math.round((base64Width * height) / width))
     const base64Args = {
       blurhashed: options.blurhashed,
-      componentX: options.componentX,
-      componentY: options.componentY,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -566,8 +571,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
     const base64Args = {
       // height is adjusted accordingly with respect to the aspect ratio
       blurhashed: options.blurhashed,
-      componentX: options.componentX,
-      componentY: options.componentY,
       width: base64Width,
       height: base64Height,
       duotone: options.duotone,

@@ -10,6 +10,16 @@ const {
 const sharp = require(`./safe-sharp`)
 const { Potrace } = require(`potrace`)
 
+const BlurHashType = new GraphQLInputObjectType({
+  name: `BlurHash`,
+  fields: () => {
+    return {
+      componentX: { type: GraphQLInt, defaultValue: 5 },
+      componentY: { type: GraphQLInt, defaultValue: 5 },
+    }
+  },
+})
+
 const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
   values: {
@@ -87,6 +97,7 @@ const PotraceType = new GraphQLInputObjectType({
 })
 
 module.exports = {
+  BlurHashType,
   ImageFormatType,
   ImageFitType,
   ImageCropFocusType,

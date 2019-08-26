@@ -10,17 +10,13 @@ const BlurHash = ({ data, location }) => (
   <Layout
     location={location}
     image={data.coverImage.localFile.childImageSharp.fluid}
-    imageTitle={`“${data.coverImage.title}” by ${
-      data.coverImage.credit
-    } (via unsplash.com)`}
+    imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Blur Hash</PageTitle>
     <FloatingImage
       imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
       imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
-      title={`“${data.floatingImage.title}” by ${
-        data.floatingImage.credit
-      } (via unsplash.com)`}
+      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
 
     <p>
@@ -58,9 +54,7 @@ const BlurHash = ({ data, location }) => (
     </p>
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
-      title={`“${data.fullWidthImage.title}” by ${
-        data.fullWidthImage.credit
-      } (via unsplash.com)`}
+      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
 )
@@ -76,7 +70,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 720, blurhashed: true, componentX: 9, componentY: 9) {
+          fluid(maxWidth: 720, blurhashed: { componentX: 9, componentY: 9 }) {
             ...GatsbyImageSharpFluid
           }
         }
@@ -85,7 +79,7 @@ export const query = graphql`
     floatingImageMobile: unsplashImagesYaml(title: { eq: "Owl looking left" }) {
       localFile {
         childImageSharp {
-          fixed(width: 120, blurhashed: true, componentX: 7, componentY: 7) {
+          fixed(width: 120, blurhashed: { componentX: 7, componentY: 7 }) {
             ...GatsbyImageSharpFixed
           }
         }
@@ -96,7 +90,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fixed(width: 200, blurhashed: true, componentX: 3, componentY: 6) {
+          fixed(width: 200, blurhashed: {}) {
             ...GatsbyImageSharpFixed
           }
         }
@@ -107,7 +101,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600, blurhashed: true, componentX: 3, componentY: 8) {
+          fluid(maxWidth: 600, blurhashed: { componentX: 2, componentY: 8 }) {
             ...GatsbyImageSharpFluid
           }
         }

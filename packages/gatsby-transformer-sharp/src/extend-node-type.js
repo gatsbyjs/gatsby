@@ -24,6 +24,7 @@ const path = require(`path`)
 const DEFAULT_PNG_COMPRESSION_SPEED = 4
 
 const {
+  BlurHashType,
   ImageFormatType,
   ImageCropFocusType,
   DuotoneGradientType,
@@ -117,9 +118,8 @@ const fixedNodeType = ({
       },
     }),
     args: {
-      // Blurhashed
       blurhashed: {
-        type: GraphQLBoolean,
+        type: BlurHashType,
         defaultValue: false,
       },
       componentX: {
@@ -279,9 +279,8 @@ const fluidNodeType = ({
       },
     }),
     args: {
-      // Blurhashed
       blurhashed: {
-        type: GraphQLBoolean,
+        type: BlurHashType,
         defaultValue: false,
       },
       componentX: {
@@ -481,9 +480,8 @@ module.exports = ({
         },
       }),
       args: {
-        // Blurhashed
         blurhashed: {
-          type: GraphQLBoolean,
+          type: BlurHashType,
           defaultValue: false,
         },
         componentX: {
