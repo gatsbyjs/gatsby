@@ -133,16 +133,21 @@ module.exports = async function build(program: BuildArgs) {
   await waitJobsFinished()
 
   await db.saveState()
-
-  activity = report.activityTimer(`Building static HTML for pages`, {
-    parentSpan: buildSpan,
-  })
+  const pagePaths = [...store.getState().pages.keys()]
+  activity = report.createProgress(
+    `Building static HTML for pages`,
+    pagePaths.length,
+    0,
+    {
+      parentSpan: buildSpan,
+    }
+  )
   activity.start()
   try {
     await buildHTML.buildPages({
       program,
       stage: `build-html`,
-      pagePaths: [...store.getState().pages.keys()],
+      pagePaths,
       activity,
       workerPool,
     })
@@ -160,7 +165,7 @@ module.exports = async function build(program: BuildArgs) {
       },
     })
   }
-  activity.end()
+  activity.done()
 
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,

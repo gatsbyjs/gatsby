@@ -79,11 +79,12 @@ const renderHTMLQueue = (
             .then(() => {
               finished += pageSegment.length
               if (activity) {
-                activity.setStatus(
-                  `${finished}/${pages.length} ${(
-                    finished / convertHrtime(process.hrtime(start)).seconds
-                  ).toFixed(2)} pages/second`
-                )
+                activity.tick(pageSegment.length)
+                // activity.setStatus(
+                //   `${finished}/${pages.length} ${(
+                //     finished / convertHrtime(process.hrtime(start)).seconds
+                //   ).toFixed(2)} pages/second`
+                // )
               }
               resolve()
             })
