@@ -8,7 +8,7 @@ Gatsby example that uses JSON files and YAML files as a means of sourcing data.
 
 ## Routes
 
-Bellow are listed the routes generated via GATSBY API
+Below are listed the routes generated via GATSBY API
 
 - /page1
 - /page2

@@ -2,68 +2,31 @@
 title: Sourcing Content from JSON or YAML
 ---
 
-## Table of Contents
-
-- [Introduction](#Introduction)
-- [Setup](#Setup)
-- [Directly importing data with YAML](#Directly-importing-data-with-YAML)
-- [Directly importing data with JSON](#Directly-importing-data-with-JSON)
-- [Building a Gatsby site sourced from YAML](#Building-a-Gatsby-site-sourced-from-YAML)
-- [Adding necessary dependencies](#Adding-necessary-dependencies)
-- [Adding Content](#Adding-some-content)
-- [Gatsby Config](#Gatsby-configuration)
-- [Gatsby Template](#Gatsby-Template)
-- [Joining the pieces](#Joining-the-pieces)
-- [Using Gatsby without GraphQL](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/)
-
 ## Introduction
 
-As you come across Gatsby and start discovering the extent of it's possibilities, sometimes you might wonder about the basic things.
-
-Things like how to import a JSON file or a YAML file directly into a page or a component.
-
-Or even how to create a Gatsby site directly from a YAML file.
-
-And that's what you'll build while following this tutorial.
-
-## Prerequisites
-
-Before we go through the details and code, you should be familiar with the basics of Gatsby.
-
-Check out the [tutorial](https://www.gatsbyjs.org/tutorial/) and brush up on the [documentation](https://www.gatsbyjs.org/docs/).
-In addition to this, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
-
-Otherwise just skip this part and move onto the next part.
+As you work with Gatsby and discover the extent of its possibilities, you might have questions about sourcing data from a JSON or YAML file directly into a page or component. This guide will cover approaches for those techniques, as well as architecting a Gatsby site from a YAML file.
 
 ## Setup
 
 You'll start by creating a new Gatsby site based on the official _hello world starter_.
 
-Open up a terminal and run the following command.
+To play with sourcing data from a JSON or YAML file, you can start by creating a new Gatsby site based on the official [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
+
+Open up a terminal and run the following command:
 
 ```bash
 gatsby new gatsby-YAML-JSON-at-buildtime https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-After the process is complete, some additional packages are needed.
-
-Change directories to the newly created Gatsby website and issue the following command:
-
-```bash
-npm install --save uuid
-```
-
-This package is used to ensure uniqueness with React prop keys.
-
 ## Directly importing data with YAML
 
-Starting from YAML, if you want to see how to do it using JSON, instead jump to the [next section](#Directly-importing-data-with-JSON).
+This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#Directly-importing-data-with-JSON).
 
 ### Adding the YAML content
 
-Create a folder called `content` and inside, add a file called `My-YAML-Content.yaml` with the following content inside:
+Create a folder called `content` and inside, add a file called `My-YAML-Content.yaml` with the following content:
 
-```yaml
+```yaml:title=content/My-YAML-Content.yaml
 title: YAML content used at build time with Gatsby
 content:
   - item:
@@ -73,10 +36,14 @@ content:
       oat cake. Powder cake jujubes oat cake. Lemon drops tootsie roll marshmallow halvah
       carrot cake.
   - item:
-      Spicy jalapeno bacon ipsum dolor amet t-bone burgdoggen short loin kevin flank.
-      Filet mignon frankfurter spare ribs, sausage corned beef picanha beef ribs pork belly kevin cupim porchetta alcatra hamburger.
-      Picanha brisket shankle buffalo tri-tip. Doner prosciutto meatloaf ribeye kevin kielbasa jowl beef ribs flank burgdoggen venison.
-      Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!
+      Doggo ipsum borkdrive much ruin diet you are doing me the shock the neighborhood pupper doggorino length boy many pats, boofers heckin shooberino wrinkler.
+      Very good spot very jealous pupper very hand that feed shibe smol, shoob.
+      Long bois pupper doggo you are doin me a concern big ol yapper, smol boof most angery pupper I have ever seen puggorino.
+      Mlem blep wow very biscit dat tungg tho wow very biscit, thicc ur givin me a spook.
+      Many pats heckin you are doing me the shock corgo ur givin me a spook very hand that feed shibe shooberino, big ol pupper doge pats borkdrive.
+      Such treat what a nice floof super chub such treat, smol thicc.
+      Puggorino very good spot most angery pupper I have ever seen you are doing me the shock big ol pupper porgo corgo shoober, heckin good boys lotsa pats noodle horse very taste wow thicc.
+      What a nice floof long doggo blep length boy borking doggo, much ruin diet floofs borkf.
   - item: 192.33
   - item: 111111
 ```
@@ -96,8 +63,8 @@ const YAMLbuildtime = () => (
   <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
     <h1>{YAMLData.title}</h1>
     <ul>
-      {YAMLData.content.map(data => {
-        return <li key={`content_item_${uuid.v4()}`}>{data.item}</li>
+      {YAMLData.content.map((data, index) => {
+        return <li key={`content_item_${index}`}>{data.item}</li>
       })}
     </ul>
   </div>
@@ -105,17 +72,17 @@ const YAMLbuildtime = () => (
 export default YAMLbuildtime
 ```
 
-The above code imports YAML source data and renders it in a functional stateless React component, that when rendered by Gatsby, and without any extra configuration will display a page sourced from a YAML file.
+The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional stateless React component.
 
 ## Directly importing data with JSON
 
-In this part you'll use JSON as a datasource.
+In addition to (or instead of) sourcing from YAML, you can use JSON as a data source in a Gatsby site.
 
 ### Adding the JSON content
 
 Create a folder named `content` if it doesn't exist, and then add a new file inside called `My-JSON-Content.json` with the following content inside:
 
-```json
+```json:title=content/My-JSON-Content.json
 {
   "title": "JSON content used at build time with Gatsby",
   "content": [
@@ -123,10 +90,7 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
       "item": "Cupcake ipsum dolor. Sit amet marshmallow topping cheesecake muffin. Halvah croissant candy canes bonbon candy. Apple pie jelly beans topping carrot cake danish tart cake cheesecake. Muffin danish chocolate soufflé pastry icing bonbon oat cake. Powder cake jujubes oat cake. Lemon drops tootsie roll marshmallow halvah carrot cake."
     },
     {
-      "item": "Spicy jalapeno bacon ipsum dolor amet t-bone burgdoggen short loin kevin flank.
-      Filet mignon frankfurter spare ribs, sausage corned beef picanha beef ribs pork belly kevin cupim porchetta alcatra hamburger.
-      Picanha brisket shankle buffalo tri-tip. Doner prosciutto meatloaf ribeye kevin kielbasa jowl beef ribs flank burgdoggen venison.
-      Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!"
+      "item": "Doggo ipsum borkdrive much ruin diet you are doing me the shock the neighborhood pupper doggorino length boy many pats, boofers heckin shooberino wrinkler. Very good spot very jealous pupper very hand that feed shibe smol, shoob. Long bois pupper doggo you are doin me a concern big ol yapper, smol boof most angery pupper I have ever seen puggorino. Mlem blep wow very biscit dat tungg tho wow very biscit, thicc ur givin me a spook. Many pats heckin you are doing me the shock corgo ur givin me a spook very hand that feed shibe shooberino, big ol pupper doge pats borkdrive. Such treat what a nice floof super chub such treat, smol thicc. Puggorino very good spot most angery pupper I have ever seen you are doing me the shock big ol pupper porgo corgo shoober, heckin good boys lotsa pats noodle horse very taste wow thicc. What a nice floof long doggo blep length boy borking doggo, much ruin diet floofs borkf."
     },
     {
       "item": 192.33
@@ -140,21 +104,20 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
 
 ### Importing JSON into the page component
 
-Now that you have something that needs to be shown, all that's missing is a page to show it.
+Now that you have JSON data that needs to be shown, all that's missing is a page to consume it.
 
 Add a new file called `json-at-buildtime.js` inside the `pages` folder with the following code:
 
 ```jsx:title=src/pages/json-at-buildtime.js
 import React from "react"
-import uuid from "uuid"
 import JSONData from "../../content/My-JSON-Content.json"
 
 const JSONbuildtime = () => (
   <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
     <h1>{JSONData.title}</h1>
     <ul>
-      {JSONData.content.map(data => {
-        return <li key={`content_item_${uuid.v4()}`}>{data.item}</li>
+      {JSONData.content.map((data, index) => {
+        return <li key={`content_item_${index}`}>{data.item}</li>
       })}
     </ul>
   </div>
@@ -162,21 +125,19 @@ const JSONbuildtime = () => (
 export default JSONbuildtime
 ```
 
-The only thing different in this case, is the file import. Instead of the YAML file, this time you're importing directly a JSON file into the page component.
+Similar to the YAML example above, this code snippet shows how to import a JSON file for sourcing data. When imported, the data can be iterated upon with the `Array.map` method and rendered in a React component.
 
-Once again out of the box and without any extra configuration the page will show the content.
+Out of the box and without any extra configuration, the page will show content sourced from a JSON file.
 
 ## Building a Gatsby site sourced from YAML
 
-In this section of the tutorial it will be described how it's possible to create a fully functional Gatsby site that's sourced from a YAML file.
+You can build a fully functional Gatsby site with a page structure sourced from a YAML file.
 
 ### Adding necessary dependencies
 
-Before proceeding you will need to add a extra dependency so that the file containing the site structure and it's contents can be loaded and interpreted safely.
+For this example, you will need to add an extra dependency so that the file containing the site structure and its contents can be loaded and interpreted safely.
 
-Assuming you followed the steps described in the setup section of this tutorial.
-
-Open a new terminal and navigate to the folder containing the Gatsby site and issue the following command:
+Open your terminal, navigate to the folder containing the Gatsby site, and issue the following command:
 
 ```bash
 npm install --save js-yaml
@@ -188,7 +149,7 @@ This newly added package will be responsible for loading and parsing the YAML fi
 
 Create a folder named `content` if it doesn't exist, and then add a new file inside called `index.yaml` with the following contents:
 
-```yaml
+```yaml:title=content/index.yaml
 - path: "/page1"
   content:
     - item: one item
@@ -226,8 +187,8 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
   content:
     - item:
         Lorem ipsum dolor amet mustache knausgaard +1, blue bottle waistcoat tbh
-        semiotics artisan synth stumptown gastropub swag. Brunch raclette
-        vexillologist post-ironic glossier ennui milkshake godard pour-over blog tumblr
+        semiotics artisan synth stumptown gastropub cornhole celiac swag. Brunch raclette
+        vexillologist post-ironic glossier ennui XOXO mlkshk godard pour-over blog tumblr
         humblebrag. Blue bottle put a bird on it twee prism biodiesel brooklyn. Blue
         bottle ennui tbh succulents.
   links:
@@ -240,11 +201,14 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
         Cheese triangles cheese strings cheese slices cheesy feet taleggio cottage cheese when the cheese comes out everybody's happy gouda.
         Feta cauliflower cheese babybel cheese on toast monterey jack.
     - item:
-        Bacon ipsum dolor amet short ribs brisket venison rump drumstick pig sausage
-        prosciutto chicken spare ribs salami picanha doner. Kevin capicola sausage,
-        buffalo bresaola venison turkey shoulder picanha ham pork tri-tip meatball meatloaf
-        ribeye. Doner spare ribs andouille bacon sausage. Ground round jerky brisket
-        pastrami shank.
+        Doggo ipsum borkdrive much ruin diet you are doing me the shock the neighborhood pupper doggorino length boy many pats, boofers heckin shooberino wrinkler.
+        Very good spot very jealous pupper very hand that feed shibe smol, shoob.
+        Long bois pupper doggo you are doin me a concern big ol yapper, smol boof most angery pupper I have ever seen puggorino.
+        Mlem blep wow very biscit dat tungg tho wow very biscit, thicc ur givin me a spook.
+        Many pats heckin you are doing me the shock corgo ur givin me a spook very hand that feed shibe shooberino, big ol pupper doge pats borkdrive.
+        Such treat what a nice floof super chub such treat, smol thicc.
+        Puggorino very good spot most angery pupper I have ever seen you are doing me the shock big ol pupper porgo corgo shoober, heckin good boys lotsa pats noodle horse very taste wow thicc.
+        What a nice floof long doggo blep length boy borking doggo, much ruin diet floofs borkf.
   links:
     - to: "/page1"
 ```
@@ -259,7 +223,7 @@ The code block above creates a YAML object in which:
 
 Now that the site structure and contents exists, we need to tell Gatsby to generate the appropriate pages and display the contents for each one.
 
-If you don't have one, create the `gatsby-node.js` file with the following code inside:
+If you don't already have one, create a `gatsby-node.js` file at the root of the project. Add the following code inside the file:
 
 ```jsx:title=gatsby-node.js
 const fs = require("fs")
@@ -282,14 +246,14 @@ exports.createPages = ({ actions }) => {
 
 Breaking down this code excerpt into smaller parts:
 
-1. The `js-yaml` package installed earlier is imported.
-2. The `index.yaml` file is loaded and the content parsed.
-3. Through the use of Gatsby's [`createPage()` API](/docs/actions/#createPage), the parsed file will be used to create some pages programmatically.
-4. The `context` property will pass your data into the page as a special prop named `pageContext`, allowing it to be consumed. You can read more about `context` in [creating and modifying pages](/docs/creating-and-modifying-pages/).
+1. Import the `js-yaml` package you installed earlier.
+2. Load the `index.yaml` file and parse the content.
+3. Using Gatsby's [`createPage()` API](/docs/actions/#createPage), create some pages programmatically from the parsed file.
+4. Use the `context` property to pass your data into the page as a special prop named `pageContext`, allowing it to be consumed. You can read more about `context` in [creating and modifying pages](/docs/creating-and-modifying-pages/).
 
 ### Review of the steps so far
 
-Doing a quick review of what you have done so far:
+For a quick review of what this doc has covered:
 
 1. Created a new Gatsby website based on a starter.
 2. Added some dependencies to safely load and parse a YAML file.
@@ -298,13 +262,12 @@ Doing a quick review of what you have done so far:
 
 ### Gatsby template
 
-The last step needed is to create a template that will host the content.
+To complete the process of rendering the sourced content, you'll need to create a template.
 
 Create a file called `basicTemplate.js` in the `src/templates/` folder and add the following:
 
 ```jsx:title=src/templates/basicTemplate.js
 import React from "react"
-import uuid from "uuid"
 import { Link } from "gatsby"
 const basicTemplate = props => {
   const { pageContext } = props
@@ -318,9 +281,9 @@ const basicTemplate = props => {
         })}
       </ul>
       <ul>
-        {links.map(item => {
+        {links.map((item, index) => {
           return (
-            <li key={uuid.v4()}>
+            <li key={`link_${index}`}>
               <Link to={item.to}>{item.to}</Link>
             </li>
           )

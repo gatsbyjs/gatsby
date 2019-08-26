@@ -1,5 +1,5 @@
 import React from "react"
-import uuid from "uuid"
+
 import { Link } from "gatsby"
 const basicTemplate = props => {
   const { pageContext } = props
@@ -8,13 +8,13 @@ const basicTemplate = props => {
   return (
     <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
       <ul>
-        {pageContent.map(data => (
-          <li key={uuid.v4()}>{data.item}</li>
+        {pageContent.map((data, index) => (
+          <li key={`content_item_${index}`}>{data.item}</li>
         ))}
       </ul>
       <ul>
-        {links.map(item => (
-          <li key={uuid.v4()}>
+        {links.map((item, index) => (
+          <li key={`link_${index}`}>
             <Link to={item.to}>{item.to}</Link>
           </li>
         ))}
