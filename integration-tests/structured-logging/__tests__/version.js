@@ -19,6 +19,7 @@ describe(`VERSION`, () => {
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       env: {
         ...process.env,
+        NODE_ENV: `production`,
         ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
       },
     })

@@ -23,6 +23,7 @@ describe(`Successful Build`, () => {
       // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
       env: {
         ...process.env,
+        NODE_ENV: `production`,
         ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
       },
     })
@@ -99,6 +100,7 @@ describe(`Failing Build`, () => {
       // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
       env: {
         ...process.env,
+        NODE_ENV: `production`,
         ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
       },
     })
