@@ -37,7 +37,7 @@ Perhaps the variable name has a typo?
 Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
   )
 
-async function parseToAst(filePath, fileStr, messages) {
+async function parseToAst(filePath, fileStr, messages = []) {
   let ast
 
   // Preprocess and attempt to parse source; return an AST if we can, log an
@@ -340,7 +340,7 @@ async function findGraphQLTags(
 const cache = {}
 
 export default class FileParser {
-  async parseFile(file: string, messages): Promise<?DocumentNode> {
+  async parseFile(file: string, messages = []): Promise<?DocumentNode> {
     let text
     try {
       text = await fs.readFile(file, `utf8`)
