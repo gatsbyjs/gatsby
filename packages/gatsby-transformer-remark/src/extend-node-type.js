@@ -294,7 +294,9 @@ module.exports = (
                 .replace(/\/\//g, `/`)
             }
             if (node.children) {
-              node.children = node.children.map(node => addSlugToUrl(node))
+              node.children = node.children
+                .map(node => addSlugToUrl(node))
+                .filter(Boolean)
             }
 
             return node
