@@ -12,6 +12,7 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
+const getLatestAPIs = require(`../utils/get-latest-apis`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -114,9 +115,11 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  activity = report.activityTimer(`load plugins`)
+  const apis = await getLatestAPIs()
+
+  activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory)
+  const flattenedPlugins = await loadPlugins(config, program.directory, apis)
   activity.end()
 
   telemetry.decorateEvent(`BUILD_END`, {
@@ -142,16 +145,17 @@ module.exports = async (args: BootstrapArgs) => {
     )
     activity.start()
     await del([
-      `public/*.{html,css}`,
       `public/**/*.{html,css}`,
-      `!public/page-data/404.html`,
+      `!public/page-data/**/*`,
       `!public/static`,
       `!public/static/**/*.{html,css}`,
     ])
     activity.end()
   }
 
-  activity = report.activityTimer(`initialize cache`)
+  activity = report.activityTimer(`initialize cache`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
   // Check if any plugins have been updated since our last run. If so
   // we delete the cache is there's likely been changes
@@ -363,9 +367,13 @@ module.exports = async (args: BootstrapArgs) => {
    */
 
   // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
+  activity = report.activityTimer(`onPreBootstrap`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
+  await apiRunnerNode(`onPreBootstrap`, {
+    parentSpan: activity.span,
+  })
   activity.end()
 
   // Source nodes
@@ -449,7 +457,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await extractQueries()
+  await extractQueries({ parentSpan: activity.span })
   activity.end()
 
   // Write out files.

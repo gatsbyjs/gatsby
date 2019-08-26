@@ -33,9 +33,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
         "&&": {
           borderBottom: `none`,
           color: colors.text.header,
-          transition: `all ${transition.speed.default} ${
-            transition.curve.default
-          }`,
+          transition: `all ${transition.speed.default} ${transition.curve.default}`,
           "&:hover": { ...styles.screenshotHover },
           "&:hover ~ .meta > .featured-site": {
             transform: `translateY(-${space[1]})`,

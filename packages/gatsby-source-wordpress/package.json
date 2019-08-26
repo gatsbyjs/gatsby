@@ -1,31 +1,31 @@
 {
   "name": "gatsby-source-wordpress",
   "description": "Gatsby source plugin for building websites using the Wordpress CMS as a data source.",
-  "version": "3.1.14",
+  "version": "3.1.25",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "bundledDependencies": [],
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
+    "@babel/runtime": "^7.5.5",
     "axios": "^0.19.0",
-    "better-queue": "^3.8.6",
-    "bluebird": "^3.5.0",
+    "better-queue": "^3.8.10",
+    "bluebird": "^3.5.5",
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
-    "gatsby-source-filesystem": "^2.1.9",
+    "gatsby-source-filesystem": "^2.1.18",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "minimatch": "^3.0.4",
-    "qs": "^6.4.0"
+    "qs": "^6.8.0"
   },
   "deprecated": false,
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.2",
-    "cross-env": "^5.1.4"
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "babel-preset-gatsby-package": "^0.2.3",
+    "cross-env": "^5.2.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
   "keywords": [

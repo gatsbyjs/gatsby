@@ -21,6 +21,22 @@ const {
 const { scheduleJob } = require(`../scheduler`)
 scheduleJob.mockResolvedValue(Promise.resolve())
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
     duotone: false,

@@ -1,7 +1,24 @@
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
+const withResolverContext = require(`../../context`)
 const { isDate, looksLikeADate } = require(`../date`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
 
 // Timestamps grabbed from https://github.com/moment/moment/blob/2e2a5b35439665d4b0200143d808a7c26d6cd30f/src/test/moment/is_valid.js
 
@@ -388,7 +405,7 @@ describe(`dateResolver`, () => {
       await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
-        {},
+        withResolverContext({}, schema),
         {
           fieldName: `date`,
         }
@@ -413,7 +430,7 @@ describe(`dateResolver`, () => {
       await fields[`testDate`].resolve(
         { date: dateString },
         { formatString: `MMM DD, YYYY` },
-        {},
+        withResolverContext({}, schema),
         {
           fieldName: `date`,
         }

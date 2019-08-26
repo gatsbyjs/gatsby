@@ -2,6 +2,22 @@ const { store } = require(`../../redux`)
 const { build, rebuildWithSitePage } = require(`..`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const firstPage = {
   id: `page1`,
   parent: null,

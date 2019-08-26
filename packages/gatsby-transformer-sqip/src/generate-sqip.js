@@ -23,7 +23,12 @@ module.exports = async function generateSqip(options) {
 
   debug({ options })
 
-  const { name } = parse(absolutePath)
+  const { name, ext } = parse(absolutePath)
+
+  if (!ext.match(/(jpe?g|png|gif)$/)) {
+    debug(`Unsupported file type ${name} (${contentDigest})`)
+    return null
+  }
 
   const sqipOptions = {
     numberOfPrimitives,
@@ -91,9 +96,7 @@ module.exports = async function generateSqip(options) {
 
         await cache.set(cacheKey, primitiveData)
       } catch (err) {
-        err.message = `Unable to generate SQIP for ${name} (${contentDigest}-${optionsHash})\n${
-          err.message
-        }`
+        err.message = `Unable to generate SQIP for ${name} (${contentDigest}-${optionsHash})\n${err.message}`
 
         throw err
       }

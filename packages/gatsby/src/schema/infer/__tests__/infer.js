@@ -2,16 +2,35 @@
 
 const { graphql } = require(`graphql`)
 const nodeStore = require(`../../../db/nodes`)
-const { LocalNodeModel } = require(`../../node-model`)
 const path = require(`path`)
 const slash = require(`slash`)
 const { store } = require(`../../../redux`)
-const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
+const withResolverContext = require(`../../context`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+const report = require(`gatsby-cli/lib/reporter`)
+afterEach(() => {
+  report.error.mockClear()
+})
 
 const makeNodes = () => [
   {
@@ -132,14 +151,7 @@ describe(`GraphQL type inference`, () => {
       }
       `,
       undefined,
-      {
-        path: `/`,
-        nodeModel: new LocalNodeModel({
-          schema,
-          nodeStore,
-          createPageDependency,
-        }),
-      }
+      withResolverContext({ path: `/` }, schema)
     )
   }
 
@@ -511,14 +523,7 @@ describe(`GraphQL type inference`, () => {
         }
       `,
       undefined,
-      {
-        path: `/`,
-        nodeModel: new LocalNodeModel({
-          schema,
-          nodeStore,
-          createPageDependency,
-        }),
-      }
+      withResolverContext({ path: `/` }, schema)
     )
 
     expect(result).toMatchSnapshot()

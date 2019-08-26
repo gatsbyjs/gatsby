@@ -221,9 +221,9 @@ Excellent! As explained in Part 7 of the tutorial, this `createPages` export is 
 
 Before you can create the blog posts, however, you need to specify a template to build the pages.
 
-In your `src` directory, create a directory called `templates` and in the newly created `templates` folder, create a filed named `blog-posts.js`. In that new file, paste the following:
+In your `src` directory, create a directory called `templates` and in the newly created `templates` folder, create a filed named `blog-post.js`. In that new file, paste the following:
 
-```jsx:title=src/tempates/blog-posts.js
+```jsx:title=src/tempates/blog-post.js
 import React from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
@@ -256,7 +256,7 @@ export const query = graphql`
 
 What is this file doing? After importing your dependencies, it constructs the layout of the post with JSX. It wraps everything in the `Layout` component, so the style is the same throughout the site. Then, it simply adds the post title and the post content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
 
-Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-posts.js` template when the page is created in `gatsby-node.js`. To accomplish this, add the following code to the `gatsby-node.js` file:
+Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-post.js` template when the page is created in `gatsby-node.js`. To accomplish this, add the following code to the `gatsby-node.js` file:
 
 ```js:title=gatsby-node.js
 const path = require(`path`)

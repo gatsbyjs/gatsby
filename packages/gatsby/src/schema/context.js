@@ -1,4 +1,5 @@
 const { LocalNodeModel } = require(`./node-model`)
+const { defaultFieldResolver } = require(`./resolvers`)
 
 const withResolverContext = (context, schema, customContext) => {
   const nodeStore = require(`../db/nodes`)
@@ -7,6 +8,7 @@ const withResolverContext = (context, schema, customContext) => {
   return {
     ...context,
     ...customContext,
+    defaultFieldResolver,
     nodeModel: new LocalNodeModel({
       nodeStore,
       schema,

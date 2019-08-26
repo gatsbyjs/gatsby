@@ -434,9 +434,7 @@ module.exports = ({
         const dimensions = imageSize.sync(
           toArray(fs.readFileSync(details.absolutePath))
         )
-        const imageName = `${details.name}-${image.internal.contentDigest}${
-          details.ext
-        }`
+        const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`
         const publicPath = path.join(
           process.cwd(),
           `public`,
@@ -448,9 +446,7 @@ module.exports = ({
           fsExtra.copy(details.absolutePath, publicPath, err => {
             if (err) {
               console.error(
-                `error copying file from ${
-                  details.absolutePath
-                } to ${publicPath}`,
+                `error copying file from ${details.absolutePath} to ${publicPath}`,
                 err
               )
             }
