@@ -1,5 +1,5 @@
 const reporter = require(`../index.js`)
-const reporterInstance = require(`../reporters`)
+const reporterActions = require(`../redux/actions`)
 
 // TODO: report.error now DOES return something. Get rid of this spying mocking stuff
 
@@ -11,15 +11,15 @@ const reporterInstance = require(`../reporters`)
 
 // We can then use the returned structuredError for snapshots.
 jest
-  .spyOn(reporterInstance, `error`)
-  .mockImplementation(structuredError => structuredError)
+  .spyOn(reporterActions, `createLog`)
+  .mockImplementation(structuredLog => structuredLog)
 
 // We don't care about this
 reporter.log = jest.fn()
 
-describe.skip(`report.error`, () => {
+describe(`report.error`, () => {
   beforeEach(() => {
-    reporterInstance.error.mockClear()
+    reporterActions.createLog.mockClear()
   })
 
   it(`handles "String, Error" signature correctly`, () => {
@@ -27,7 +27,7 @@ describe.skip(`report.error`, () => {
       `Error string passed to reporter`,
       new Error(`Message from new Error`)
     )
-    const generatedError = reporterInstance.error.mock.calls[0][0]
+    const generatedError = reporterActions.createLog.mock.calls[0][0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -35,7 +35,7 @@ describe.skip(`report.error`, () => {
 
   it(`handles "Error" signature correctly`, () => {
     reporter.error(new Error(`Message from new Error`))
-    const generatedError = reporterInstance.error.mock.calls[0][0]
+    const generatedError = reporterActions.createLog.mock.calls[0][0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -47,10 +47,10 @@ describe.skip(`report.error`, () => {
       new Error(`Message 2 from new Error`),
       new Error(`Message 3 from new Error`),
     ])
-    expect(reporterInstance.error).toHaveBeenCalledTimes(3)
+    expect(reporterActions.createLog).toHaveBeenCalledTimes(3)
 
     // get final generated object
-    const generatedError = reporterInstance.error.mock.calls[2][0]
+    const generatedError = reporterActions.createLog.mock.calls[2][0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -60,7 +60,7 @@ describe.skip(`report.error`, () => {
     reporter.error({
       id: `95312`,
     })
-    const generatedError = reporterInstance.error.mock.calls[0][0]
+    const generatedError = reporterActions.createLog.mock.calls[0][0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -68,7 +68,7 @@ describe.skip(`report.error`, () => {
 
   it(`handles "String" signature correctly`, () => {
     reporter.error(`Error created in Jest`)
-    const generatedError = reporterInstance.error.mock.calls[0][0]
+    const generatedError = reporterActions.createLog.mock.calls[0][0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
