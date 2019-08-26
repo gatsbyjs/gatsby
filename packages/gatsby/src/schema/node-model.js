@@ -61,13 +61,7 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({
-    schema,
-    schemaComposer,
-    nodeStore,
-    createPageDependency,
-    preparedNodesCache,
-  }) {
+  constructor({ schema, schemaComposer, nodeStore, createPageDependency }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.nodeStore = nodeStore
