@@ -6,6 +6,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.12",
+    "@loadable/component": "^5.10.2",
     "@mdx-js/mdx": "^1.0.14",
     "@mdx-js/react": "^1.0.6",
     "@reach/skip-nav": "^0.1.1",

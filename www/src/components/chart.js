@@ -1,5 +1,5 @@
 import React from "react"
-import ReactHighcharts from "react-highcharts"
+import loadable from "@loadable/component"
 import { radii } from "../utils/presets"
 
 const dateToUTC = date => {
@@ -57,6 +57,8 @@ const highchartsOptions = {
   },
 }
 
+const LazyHighChart = loadable(() => import(`react-highcharts`))
+
 const DateChart = props => {
   const seriesData = JSON.parse(props.seriesData || props[`series-data`])
   const yAxisLabel = props.yAxisLabel || props[`y-axis-label`]
@@ -97,7 +99,7 @@ const DateChart = props => {
   }
   return (
     <div className="gatsby-highcharts">
-      <ReactHighcharts
+      <LazyHighChart
         config={{
           ...highchartsOptions,
           ...config,
