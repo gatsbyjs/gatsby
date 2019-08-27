@@ -51,7 +51,7 @@ const LogoGroup = styled(`div`)`
   grid-auto-columns: auto;
   grid-gap: ${space[8]};
   align-items: center;
-  overflow-x: auto;
+  overflow-x: scroll;
   padding-left: ${space[3]};
   padding-bottom: ${space[1]};
   ${mediaQueries.xxl} {
@@ -94,7 +94,7 @@ const HomepageLogoBanner = () => {
       <LogoGroup>
         {data.allFile.edges.map(({ node: image }) => (
           <Img
-            alt={`Logo for ${image.base.split(`.`)[0]}`}
+            alt={`${image.base.split(`.`)[0]}`}
             fixed={image.childImageSharp.fixed}
             key={image.base}
             style={{ opacity: 0.5 }}
