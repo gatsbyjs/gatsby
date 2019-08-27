@@ -98,13 +98,13 @@ const actions = {
       payload: group,
     }
   },
-  createPendingActivity: id => {
+  createPendingActivity: (id, status = `NOT_STARTED`) => {
     return {
       type: `ACTIVITY_PENDING`,
       payload: {
         id,
         type: `pending`,
-        status: `NOT_STARTED`,
+        status,
         dontShowSuccess: true,
       },
     }

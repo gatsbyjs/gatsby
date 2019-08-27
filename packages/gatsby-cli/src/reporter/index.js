@@ -64,6 +64,11 @@ let isVerbose = false
 
 const prematureEnd = () => {
   const { activities } = getStore().getState().logs
+  // hack so at least one activity is surely failed, so
+  // we are guaranteed to generate FAILED status
+  // if none of activity did explicitly fail
+  reporterActions.createPendingActivity(`panic`, `FAILED`)
+
   Object.keys(activities).forEach(activityId => {
     const activity = activities[activityId]
     if (
