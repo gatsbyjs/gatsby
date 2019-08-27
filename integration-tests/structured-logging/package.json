@@ -1,15 +1,15 @@
 {
-  "name": "gatsby-starter-hello-world",
-  "description": "Gatsby hello world starter",
+  "name": "structured-logging-tests",
+  "description": "structured logging tests",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "test": "jest --config=../jest.config.js long-term-caching/",
+    "test": "jest --config=jest.config.js",
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "2.13.59-dev-1566822783150",
+    "gatsby": "^2.13.59",
     "gray-percentage": "^2.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
