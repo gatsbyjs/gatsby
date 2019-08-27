@@ -30,4 +30,8 @@ exports.createPages = async ({ reporter }) => {
   reporter.warn(`warn`)
   reporter.log(`log`)
   reporter.error(`error`)
+
+  if (process.env.PANIC_ON_BUILD) {
+    reporter.panic(`Your house is on fire`)
+  }
 }
