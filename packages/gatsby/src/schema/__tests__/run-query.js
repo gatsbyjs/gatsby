@@ -1,4 +1,4 @@
-const nodesQuery = require(`../../db/nodes-query`)
+const { runQuery: nodesQuery } = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
@@ -169,7 +169,7 @@ async function runQuery(queryArgs) {
     gqlComposer: sc,
     nodeTypeNames: [gqlType.name],
   }
-  return await nodesQuery.run(args)
+  return await nodesQuery(args)
 }
 
 async function runFilter(filter) {

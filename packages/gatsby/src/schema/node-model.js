@@ -68,6 +68,7 @@ class LocalNodeModel {
     this.createPageDependency = createPageDependency
 
     this._rootNodeMap = new WeakMap()
+    this._trackedRootNodes = new Set()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
@@ -341,13 +342,10 @@ class LocalNodeModel {
    * @param {Node} node Root Node
    */
   trackInlineObjectsInRootNode(node) {
-    return addRootNodeToInlineObject(
-      this._rootNodeMap,
-      node,
-      node.id,
-      true,
-      true
-    )
+    if (!this._trackedRootNodes.has(node.id)) {
+      addRootNodeToInlineObject(this._rootNodeMap, node, node.id, true, true)
+      this._trackedRootNodes.add(node.id)
+    }
   }
 
   /**
@@ -637,7 +635,10 @@ function resolveField(
   const withResolverContext = require(`./context`)
   return gqlField.resolve(
     node,
-    {},
+    gqlField.args.reduce((acc, arg) => {
+      acc[arg.name] = arg.defaultValue
+      return acc
+    }, {}),
     withResolverContext({
       schema,
       schemaComposer,

@@ -96,7 +96,7 @@ const addInferredType = ({
     ignoreFields: [
       ...getNodeInterface({ schemaComposer }).getFieldNames(),
       `$loki`,
-      `counter`,
+      `__gatsby_resolved`,
     ],
   })
 

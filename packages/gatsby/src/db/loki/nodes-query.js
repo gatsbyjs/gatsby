@@ -12,6 +12,11 @@ const {
   getNode,
   getNodesByType,
 } = require(`./nodes`)
+const {
+  toDottedFields,
+  objectToDottedField,
+  liftResolvedFields,
+} = require(`../common/query`)
 const { getValueAt } = require(`../../utils/get-value-at`)
 const { runSiftOnNodes } = require(`../../redux/run-sift`)
 
@@ -112,70 +117,6 @@ function toMongoArgs(gqlFilter, lastFieldType) {
   return mongoArgs
 }
 
-// Converts a nested mongo args object into a dotted notation. acc
-// (accumulator) must be a reference to an empty object. The converted
-// fields will be added to it. E.g
-//
-// {
-//   internal: {
-//     type: {
-//       $eq: "TestNode"
-//     },
-//     content: {
-//       $regex: new MiniMatch(v)
-//     }
-//   },
-//   id: {
-//     $regex: newMiniMatch(v)
-//   }
-// }
-//
-// After execution, acc would be:
-//
-// {
-//   "internal.type": {
-//     $eq: "TestNode"
-//   },
-//   "internal.content": {
-//     $regex: new MiniMatch(v)
-//   },
-//   "id": {
-//     $regex: // as above
-//   }
-// }
-const toDottedFields = (filter, acc = {}, path = []) => {
-  Object.keys(filter).forEach(key => {
-    const value = filter[key]
-    const nextValue = _.isPlainObject(value) && value[Object.keys(value)[0]]
-    if (key === `$elemMatch`) {
-      acc[path.join(`.`)] = { [`$elemMatch`]: toDottedFields(value) }
-    } else if (_.isPlainObject(nextValue)) {
-      toDottedFields(value, acc, path.concat(key))
-    } else {
-      acc[path.concat(key).join(`.`)] = value
-    }
-  })
-  return acc
-}
-
-// Like above, but doesn't handle $elemMatch
-const objectToDottedField = (obj, path = []) => {
-  let result = {}
-  Object.keys(obj).forEach(key => {
-    const value = obj[key]
-    if (_.isPlainObject(value)) {
-      const pathResult = objectToDottedField(value, path.concat(key))
-      result = {
-        ...result,
-        ...pathResult,
-      }
-    } else {
-      result[path.concat(key).join(`.`)] = value
-    }
-  })
-  return result
-}
-
 // The query language that Gatsby has used since day 1 is `sift`. Both
 // sift and loki are mongo-like query languages, but they have some
 // subtle differences. One is that in sift, a nested filter such as
@@ -203,28 +144,6 @@ const fixNeTrue = filter =>
     }
     return acc
   }, {})
-
-const liftResolvedFields = (args, resolvedFields) => {
-  const dottedFields = objectToDottedField(resolvedFields)
-  const dottedFieldKeys = Object.keys(dottedFields)
-  const finalArgs = {}
-  Object.keys(args).forEach(key => {
-    const value = args[key]
-    if (dottedFields[key]) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else if (
-      dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
-      value.$elemMatch
-    ) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else {
-      finalArgs[key] = value
-    }
-  })
-  return finalArgs
-}
 
 // Converts graphQL args to a loki filter
 const convertArgs = (gqlArgs, gqlType, resolvedFields) =>
@@ -310,10 +229,7 @@ async function runQuery(args) {
     resolvedFields = {},
     nodeTypeNames,
   } = args
-  // Clone args as for some reason graphql-js removes the constructor
-  // from nested objects which breaks a check in sift.js.
-  const gqlArgs = JSON.parse(JSON.stringify(queryArgs))
-  const lokiArgs = convertArgs(gqlArgs, gqlType, resolvedFields)
+  const lokiArgs = convertArgs(queryArgs, gqlType, resolvedFields)
 
   let sortFields
   if (queryArgs.sort) {

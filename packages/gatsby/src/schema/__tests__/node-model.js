@@ -14,10 +14,13 @@ describe(`NodeModel`, () => {
   const createPageDependency = jest.fn()
 
   describe(`normal node tests`, () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
-        actions.createNode(node, { name: `test` })(store.dispatch)
+        actions.createNode(
+          { ...node, internal: { ...node.internal } },
+          { name: `test` }
+        )(store.dispatch)
       )
 
       const types = `
@@ -472,6 +475,18 @@ describe(`NodeModel`, () => {
             filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
           firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(1)
+      expect(resolveOtherTitleMock.mock.calls.length).toBe(1)
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
+          },
+          firstOnly: true,
           type: `Test`,
         },
         { path: `/` }

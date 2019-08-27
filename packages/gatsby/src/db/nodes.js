@@ -1,7 +1,8 @@
 /* @flow */
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
-const { run: runQuery } = require(`./nodes-query`)
+const lokiRunQuery = require(`./loki/nodes-query`)
+const { runSift: siftRunQuery } = require(`../redux/run-sift`)
 
 interface NodeStore {
   getNodes: () => Array<any>;
@@ -10,18 +11,26 @@ interface NodeStore {
   getTypes: () => Array<string>;
   hasNodeChanged: (id: string, digest: string) => boolean;
   getNodeAndSavePathDependency: (id: string, path: string) => any | undefined;
-  // XXX(freiksenet): types
-  runQuery: (...args: any) => any | undefined;
+  runQuery: (args: {
+    gqlType: GraphQLType,
+    queryArgs: Object,
+    firstOnly: boolean,
+    resolvedFields: Object,
+    nodeTypeNames: Array<string>,
+  }) => any | undefined;
 }
 
 const backend = process.env.GATSBY_DB_NODES || `redux`
 let nodesDb: NodeStore
+let runQuery
 switch (backend) {
   case `redux`:
     nodesDb = require(`../redux/nodes`)
+    runQuery = siftRunQuery
     break
   case `loki`:
     nodesDb = require(`./loki/nodes`)
+    runQuery = lokiRunQuery
     break
   default:
     throw new Error(
