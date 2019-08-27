@@ -5,7 +5,8 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "test": "jest --config=jest.config.js",
+    "test-comment": "We use --runInBand to ensure we don't spawn multiple gatsby processes concurrently",
+    "test": "jest --config=jest.config.js --runInBand",
     "serve": "gatsby serve"
   },
   "dependencies": {

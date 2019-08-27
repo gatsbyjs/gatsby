@@ -15,15 +15,17 @@ exports.createPages = async ({ reporter }) => {
   await sleep(500)
   successfulActivity.done()
 
-  const unsuccessfulActivity = reporter.createProgress(
-    `Failing activity`,
-    100,
-    0
-  )
-  unsuccessfulActivity.start()
-  await sleep(500)
-  unsuccessfulActivity.tick(75)
-  unsuccessfulActivity.done(false)
+  if (process.env.FAILING_ACTIVITY) {
+    const unsuccessfulActivity = reporter.createProgress(
+      `Failing activity`,
+      100,
+      0
+    )
+    unsuccessfulActivity.start()
+    await sleep(500)
+    unsuccessfulActivity.tick(75)
+    unsuccessfulActivity.done(false)
+  }
 
   reporter.info(`info`)
   reporter.success(`success`)

@@ -17,12 +17,13 @@ describe(`Activity`, () => {
 
   beforeAll(async done => {
     gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-      //   stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+      // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
       env: {
         ...process.env,
         NODE_ENV: `development`,
         ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
+        FAILING_ACTIVITY: true,
       },
     })
 
@@ -44,7 +45,7 @@ describe(`Activity`, () => {
     gatsbyProcess.kill()
   })
 
-  it.skip(`emits actions with a timestamp`)
+  it.todo(`emits actions with a timestamp`)
 
   it(`emits start, update and end for a successful activity`, async () => {
     const activityEvents = events.filter(
