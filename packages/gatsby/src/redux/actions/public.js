@@ -27,7 +27,7 @@ const findChildren = initialChildren => {
   const traversedNodes = new Set()
 
   while (queue.length > 0) {
-    const currentChild = getNode(queue.shift())
+    const currentChild = getNode(queue.pop())
     if (traversedNodes.has(currentChild.id)) {
       continue
     }
@@ -35,7 +35,7 @@ const findChildren = initialChildren => {
     const newChildren = currentChild.children
     if (_.isArray(newChildren) && newChildren.length > 0) {
       children.push(...newChildren)
-      queue.unshift(...newChildren)
+      queue.push(...newChildren)
     }
   }
   return children
