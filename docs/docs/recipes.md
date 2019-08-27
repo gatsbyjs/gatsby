@@ -1752,7 +1752,7 @@ Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application withou
 
 1. Login into Now CLI using `now login`
 
-2. Move into the directory of your Gatsby.js application
+2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
 
 3. Run `now` to deploy it
 
