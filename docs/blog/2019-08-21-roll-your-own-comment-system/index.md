@@ -51,11 +51,11 @@ The front end is written for React, but if you know how to make a form and an AP
 
 ## Database
 
-In the `comments_api` database, I created a `comments` table, with `ID`, `name`, `date`, and `text`, which are all obvious. The `slug` refers to the article URL - so for `https://example.com/how-to-bake-a-cake`, the slug would be `how-to-bake-a-cake`. Finally, I added `parent_comment_id` in case you want to have the ability to reply to comments.
+The first step assumes we'll be setting up a Postgres database called `comments_api` with a `comments` table.
+
+In the `comments_api` database, I created a `comments` table, with `ID`, `name`, `date`, and `text`. The `slug` refers to the article URL - so for `https://example.com/how-to-bake-a-cake`, the slug would be `how-to-bake-a-cake`. Finally, I added `parent_comment_id` in case you want to have the ability to reply to comments.
 
 ```sql
--- Not necessary to make a database in Heroku because it will create one for you,
--- but leaving the detail here just in case/for setting it up locally.
 CREATE DATABASE comments_api;
 
 \c comments;
@@ -79,7 +79,49 @@ You could probably get more fancy with it and add website, email, upvotes and ot
 
 ## API
 
-In [the article](https://www.taniarascia.com/node-express-postgresql-heroku/), I document how to set up an Express server and make a Postgres pool connection, so I assume you already know how to do all that. I'm just going to write out the simple functions, without including any of the error handling, validation, and brute force rate limiting that the article goes into.
+In [Create and Deploy a Node.js, Express, & PostgreSQL REST API](https://www.taniarascia.com/node-express-postgresql-heroku/), I document how to set up an Express server and make a Postgres pool connection.
+
+The aforementioned article goes much deeper into production level concerns of a Node.js server, such as error handling, validation, and brute force rate limiting.
+
+In our simplified, development example setup, we'll require `express`, a Node.js server, plus `bodyParser` and `cors` to allow our app to parse and request the data, and `pg` to create a Postgres pool connection.
+
+> This article is using default values for the Postgres connection - `user` as username, `password` as password, etc.
+
+```js
+const express = require("express")
+const bodyParser = require("body-parser")
+const cors = require("cors")
+const { Pool } = require("pg")
+const connectionString = `postgresql://user:password@localhost:5432/comments`
+
+const pool = new Pool({ connectionString })
+
+const app = express()
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
+
+// These are the functions we will be creating
+const getComments = () => {}
+const getCommentsBySlug = () => {}
+const createComment = () => {}
+const updateComment = () => {}
+const deleteComment = () => {}
+
+app.get("/comments", getComments)
+app.get("/comments/:slug", getCommentsBySlug)
+app.post("/comments", createComment)
+app.put("/comments/:id", updateComment)
+app.delete("/comments/:id", deleteComment)
+
+// Start server
+app.listen(3002, () => {
+  console.log(`Server listening`)
+})
+```
+
+Remember that this example is simply for demonstration purposes and development.
 
 ### Get all comments
 
@@ -203,7 +245,6 @@ Again, for the front end I'm using React as an example, but the concept is the s
 
 > Sorry, I'm not using hooks yet. It's okay, deep breath. We'll get through this.
 
-
 ```jsx:title=templates/post.js
 class PostTemplate {
   ...
@@ -223,7 +264,6 @@ class PostTemplate {
 
 In this case, that will be a `Comments` component.
 
-
 ```jsx:title=templates/post.js
 render() {
   return (
@@ -235,7 +275,6 @@ render() {
 ```
 
 The `Comments` component will contain both the form to submit a comment, and the list of existing comments if there are any. So in state, I'll save the comments list, and an object to store new comment state for the form.
-
 
 ```jsx:title=components/comments.js
 import React, { Component } from "react"
@@ -263,7 +302,6 @@ class Comments extends Component {
 I'll admit this code is not the most pristine I've ever seen, but as I mentioned, I wrote the thing in a day, so feel free to refactor and write however you want.
 
 When a comment is submitted, I'll use `fetch` once again, this time with the `post` method. If everything went through correctly, append the new comment to the comments array, and reset the new comment.
-
 
 ```jsx:title=components/comments.js
 onSubmitComment = async event => {
@@ -307,7 +345,6 @@ onSubmitComment = async event => {
 
 I'll also have an `onChange` handler for the form.
 
-
 ```jsx:title=components/comments.js
 handleChange = event => {
   const { newComment } = this.state
@@ -321,14 +358,12 @@ handleChange = event => {
 
 We can start the render lifecycle now.
 
-
 ```jsx:title=components/comments.js
 render() {
   const { submitting, success, error, comments, newComment: { name, text } } = this.state
 ```
 
 I made some simple error or success messages to show after submnitting the form.
-
 
 ```jsx:title=components/comments.js
 const showError = () =>
@@ -347,7 +382,6 @@ const showSuccess = () =>
 ```
 
 The comment form only consists of name and comment in my case, as I decided to go the [Sivers](https://sivers.org/) route and only allow comment replies by yours truly on the site.
-
 
 ```jsx:title=components/comments.js
 const commentForm = () => (
@@ -388,7 +422,6 @@ const commentForm = () => (
 Finally, we'll display the form and the comments. I decided to either display the form or a success/error message. A visitor won't be able to leave two comments in a row without reloading the page.
 
 After that, it's just a matter of looping through the comments and displaying them. I've made comment replies incredibly simple - only one reply allowed per post, and no nesting.
-
 
 ```jsx:title=components/comments.js
 return (
