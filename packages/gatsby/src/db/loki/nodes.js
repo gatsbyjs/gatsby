@@ -293,7 +293,7 @@ function deleteNodes(nodes) {
   }
 }
 
-const saveResolvedNodes = async (typeName, resolver, nodeTypeNames) => {
+const saveResolvedNodes = async (nodeTypeNames, resolver) => {
   for (const typeName of nodeTypeNames) {
     const nodes = getNodesByType(typeName)
     const resolved = await Promise.all(

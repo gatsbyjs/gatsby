@@ -295,27 +295,23 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
-      await this.nodeStore.saveResolvedNodes(
-        type.name,
-        async node => {
-          this.trackInlineObjectsInRootNode(node)
-          const resolvedFields = await resolveRecursive(
-            this,
-            this.schemaComposer,
-            this.schema,
-            node,
-            type,
-            queryFields,
-            actualFieldsToResolve
-          )
-          const mergedResolved = _.merge(
-            node.__gatsby_resolved || {},
-            resolvedFields
-          )
-          return mergedResolved
-        },
-        nodeTypeNames
-      )
+      await this.nodeStore.saveResolvedNodes(nodeTypeNames, async node => {
+        this.trackInlineObjectsInRootNode(node)
+        const resolvedFields = await resolveRecursive(
+          this,
+          this.schemaComposer,
+          this.schema,
+          node,
+          type,
+          queryFields,
+          actualFieldsToResolve
+        )
+        const mergedResolved = _.merge(
+          node.__gatsby_resolved || {},
+          resolvedFields
+        )
+        return mergedResolved
+      })
       this._preparedNodesCache.set(
         typeName,
         _.merge(

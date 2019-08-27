@@ -83,21 +83,23 @@ exports.getNodeAndSavePathDependency = (id, path) => {
   return node
 }
 
-exports.saveResolvedNodes = async (typeName, resolver, nodeTypeNames) => {
-  const nodes = store.getState().nodesByType.get(typeName)
-  const resolvedNodes = new Map()
-  if (nodes) {
-    for (const node of nodes.values()) {
-      const resolved = await resolver(node)
-      resolvedNodes.set(node.id, resolved)
+exports.saveResolvedNodes = async (nodeTypeNames, resolver) => {
+  for (const typeName of nodeTypeNames) {
+    const nodes = store.getState().nodesByType.get(typeName)
+    const resolvedNodes = new Map()
+    if (nodes) {
+      for (const node of nodes.values()) {
+        const resolved = await resolver(node)
+        resolvedNodes.set(node.id, resolved)
+      }
+      store.dispatch({
+        type: `SET_RESOLVED_NODES`,
+        payload: {
+          key: typeName,
+          nodes: resolvedNodes,
+        },
+      })
     }
-    store.dispatch({
-      type: `SET_RESOLVED_NODES`,
-      payload: {
-        key: typeName,
-        nodes: resolvedNodes,
-      },
-    })
   }
 }
 
