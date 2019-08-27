@@ -256,15 +256,24 @@ export default (pagePath, callback) => {
         return null
       }
 
+      const getAssetType = name =>
+        name && (name.startsWith(`https://`) || name.startsWith(`http://`))
+          ? `url`
+          : `local`
+
       chunks = chunks.map(chunk => {
         if (chunk === `/`) {
           return null
         }
-        return { rel: `preload`, name: chunk }
+        return { rel: `preload`, name: chunk, type: getAssetType(chunk) }
       })
 
       namedChunkGroups[s].assets.forEach(asset =>
-        chunks.push({ rel: `preload`, name: asset })
+        chunks.push({
+          rel: `preload`,
+          name: asset,
+          type: getAssetType(asset.name),
+        })
       )
 
       const childAssets = namedChunkGroups[s].childAssets
@@ -272,7 +281,7 @@ export default (pagePath, callback) => {
         chunks = merge(
           chunks,
           childAssets[rel].map(chunk => {
-            return { rel, name: chunk }
+            return { rel, name: chunk, type: getAssetType(chunk) }
           })
         )
       }
@@ -281,7 +290,8 @@ export default (pagePath, callback) => {
     })
   )
     .filter(s => isObject(s))
-    .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
+    .sort((s1, s2) => (s1.rel === `preload` ? -1 : 1)) // given priority to preload
+    .sort((s1, s2) => (s1.type === `url` ? -1 : 1)) // given priority to url's because normally they are cdn links that other scripts depend on them
 
   scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
 
@@ -291,6 +301,9 @@ export default (pagePath, callback) => {
   const styles = scriptsAndStyles.filter(
     style => style.name && style.name.endsWith(`.css`)
   )
+
+  const getPathFromAsset = asset =>
+    `${asset.type !== `url` ? __PATH_PREFIX__ + `/` : ``}${asset.name}`
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
@@ -317,7 +330,7 @@ export default (pagePath, callback) => {
           as="script"
           rel={script.rel}
           key={script.name}
-          href={`${__PATH_PREFIX__}/${script.name}`}
+          href={getPathFromAsset(script)}
         />
       )
     })
@@ -347,7 +360,7 @@ export default (pagePath, callback) => {
             as="style"
             rel={style.rel}
             key={style.name}
-            href={`${__PATH_PREFIX__}/${style.name}`}
+            href={getPathFromAsset(style)}
           />
         )
       } else {
@@ -400,10 +413,10 @@ export default (pagePath, callback) => {
   const bodyScripts = scripts
     .filter(s => s.rel !== `prefetch`)
     .map(s => {
-      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-        1,
-        -1
-      )}`
+      const scriptPath = getPathFromAsset({
+        ...s,
+        name: JSON.stringify(s.name).slice(1, -1),
+      })
       return <script key={scriptPath} src={scriptPath} async />
     })
 
