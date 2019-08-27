@@ -11,7 +11,7 @@ This quick start is intended for intermediate to advanced developers. For a gent
   lessonTitle="Quick Start with Gatsby: Create, Develop, and Build Gatsby Sites From the Command Line"
 />
 
-### Install the Gatsby CLI.
+### Install the Gatsby CLI
 
 ```shell
 npm install -g gatsby-cli
@@ -23,23 +23,23 @@ npm install -g gatsby-cli
 gatsby new gatsby-site
 ```
 
-### Change directories into site folder.
+### Change directories into site folder
 
 ```shell
 cd gatsby-site
 ```
 
-### Start development server.
+### Start the development server
 
 ```shell
 gatsby develop
 ```
 
-Gatsby will start a hot-reloading development environment accessible by default at `localhost:8000`.
+Gatsby will start a hot reloading development environment accessible by default at `localhost:8000`.
 
 Try editing the JavaScript pages in `src/pages`. Saved changes will live reload in the browser.
 
-### Create a production build.
+### Create a production build
 
 ```shell
 gatsby build
@@ -47,7 +47,7 @@ gatsby build
 
 Gatsby will perform an optimized production build for your site, generating static HTML and per-route JavaScript code bundles.
 
-### Serve the production build locally.
+### Serve the production build locally
 
 ```shell
 gatsby serve
