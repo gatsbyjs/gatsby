@@ -23,6 +23,8 @@ const Remark = require(`remark`)
 const { Potrace } = require(`potrace`)
 const queryString = require(`query-string`)
 const cheerio = require(`cheerio`)
+const toHAST = require(`mdast-util-to-hast`)
+const hastToHTML = require(`hast-util-to-html`)
 
 const plugin = require(`../`)
 
@@ -70,6 +72,10 @@ const createPluginOptions = (content, imagePaths = `/`) => {
       return {
         dir: dirName,
       }
+    },
+    compiler: {
+      parseString: remark.parse.bind(remark),
+      generateHTML: node => hastToHTML(toHAST(node)),
     },
   }
 }
@@ -530,5 +536,54 @@ describe(`showCaptions`, () => {
     const $ = cheerio.load(node.value)
     expect($(`figcaption`).html()).toEqual(`my image`)
     expect(node.value).toMatchSnapshot()
+  })
+})
+
+describe(`markdownCaptions`, () => {
+  it(`display title in markdown as caption when showCaptions === true && markdownCaptions === true`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some _title_")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+      markdownCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).html()).toEqual(`<p>some <em>title</em></p>`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display title in text as caption when showCaptions === true && markdownCaptions === false`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some _title_")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: true,
+      markdownCaptions: false,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).html()).toEqual(`some _title_`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`display nothing as caption when showCaptions === false && markdownCaptions === true`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some _title_")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      showCaptions: false,
+      markdownCaptions: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`figcaption`).length).toBe(0)
   })
 })

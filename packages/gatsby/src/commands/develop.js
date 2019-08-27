@@ -87,13 +87,14 @@ async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const workerPool = WorkerPool.create()
-  const createIndexHtml = async () => {
+  const createIndexHtml = async ({ activity }) => {
     try {
       await buildHTML.buildPages({
         program,
         stage: `develop-html`,
         pagePaths: [`/`],
         workerPool,
+        activity,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
@@ -111,7 +112,7 @@ async function startServer(program) {
     }
   }
 
-  await createIndexHtml()
+  await createIndexHtml({ activity: indexHTMLActivity })
 
   indexHTMLActivity.end()
 
@@ -127,7 +128,8 @@ async function startServer(program) {
     program,
     directory,
     `develop`,
-    program.port
+    program.port,
+    { parentSpan: webpackActivity.span }
   )
 
   const compiler = webpack(devConfig)
@@ -174,7 +176,7 @@ async function startServer(program) {
         schema,
         graphiql: false,
         context: withResolverContext({}, schema, schemaCustomization.context),
-        formatError(err) {
+        customFormatErrorFn(err) {
           return {
             ...formatError(err),
             stack: err.stack ? err.stack.split(`\n`) : [],
@@ -234,7 +236,7 @@ async function startServer(program) {
   const { developMiddleware } = store.getState().config
 
   if (developMiddleware) {
-    developMiddleware(app)
+    developMiddleware(app, program)
   }
 
   // Set up API proxy.
@@ -260,9 +262,7 @@ async function startServer(program) {
               if (response) {
                 res.writeHead(response.statusCode, response.headers)
               } else {
-                const message = `Error when trying to proxy request "${
-                  req.originalUrl
-                }" to "${proxiedUrl}"`
+                const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
                 report.error(message, err)
                 res.sendStatus(500)
@@ -309,9 +309,7 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${
-            program.port
-          } as there's already a process listening on that port.`
+          `Unable to start Gatsby on port ${program.port} as there's already a process listening on that port.`
         )
         return
       }
@@ -550,9 +548,7 @@ module.exports = async (program: any) => {
           chalk.yellow(`is deprecated. Please use`),
           chalk.cyan(fixMap[api].newName),
           chalk.yellow(
-            `instead. For migration instructions, see ${
-              fixMap[api].docsLink
-            }\nCheck the following files:`
+            `instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`
           )
         )
         console.log()

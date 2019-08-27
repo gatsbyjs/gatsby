@@ -33,9 +33,11 @@ const doBuildRenderer = async (program, webpackConfig) => {
   return outputFile
 }
 
-const buildRenderer = async (program, stage) => {
+const buildRenderer = async (program, stage, { parentSpan }) => {
   const { directory } = program
-  const config = await webpackConfig(program, directory, stage, null)
+  const config = await webpackConfig(program, directory, stage, null, {
+    parentSpan,
+  })
   return await doBuildRenderer(program, config)
 }
 
@@ -78,7 +80,7 @@ const renderHTMLQueue = (
             })
             .then(() => {
               // finished += pageSegment.length
-              if (activity) {
+              if (activity && activity.tick) {
                 activity.tick(pageSegment.length)
                 // activity.setStatus(
                 //   `${finished}/${pages.length} ${(
@@ -121,7 +123,9 @@ const buildPages = async ({
   activity,
   workerPool,
 }) => {
-  const rendererPath = await buildRenderer(program, stage)
+  const rendererPath = await buildRenderer(program, stage, {
+    parentSpan: activity.span,
+  })
   await doBuildPages({ rendererPath, pagePaths, activity, workerPool })
   await deleteRenderer(rendererPath)
 }

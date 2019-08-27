@@ -1,4 +1,3 @@
-import "core-js/modules/es7.promise.finally"
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findMatchPath, cleanPath } from "./find-path"
@@ -20,7 +19,6 @@ const doFetch = (url, method = `GET`) =>
   new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(method, url, true)
-    req.withCredentials = true
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
         resolve(req)
@@ -88,7 +86,10 @@ const loadPageDataJson = loadObj => {
 }
 
 const doesConnectionSupportPrefetch = () => {
-  if (`connection` in navigator) {
+  if (
+    `connection` in navigator &&
+    typeof navigator.connection !== `undefined`
+  ) {
     if ((navigator.connection.effectiveType || ``).includes(`2g`)) {
       return false
     }
@@ -221,8 +222,14 @@ export class BaseLoader {
           return pageResources
         })
       })
-      .finally(() => {
+      // prefer duplication with then + catch over .finally to prevent problems in ie11 + firefox
+      .then(response => {
         this.inFlightDb.delete(pagePath)
+        return response
+      })
+      .catch(err => {
+        this.inFlightDb.delete(pagePath)
+        throw err
       })
 
     this.inFlightDb.set(pagePath, inFlight)

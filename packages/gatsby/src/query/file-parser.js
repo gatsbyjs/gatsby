@@ -37,7 +37,11 @@ Perhaps the variable name has a typo?
 Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
   )
 
-async function parseToAst(filePath, fileStr, messages = []) {
+async function parseToAst(
+  filePath,
+  fileStr,
+  { parentSpan, messages = [] } = {}
+) {
   let ast
 
   // Preprocess and attempt to parse source; return an AST if we can, log an
@@ -45,6 +49,7 @@ async function parseToAst(filePath, fileStr, messages = []) {
   const transpiled = await apiRunnerNode(`preprocessSource`, {
     filename: filePath,
     contents: fileStr,
+    parentSpan: parentSpan,
   })
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
@@ -118,10 +123,10 @@ const warnForGlobalTag = file =>
 async function findGraphQLTags(
   file,
   text,
-  messages
+  { parentSpan, messages } = {}
 ): Promise<Array<DefinitionNode>> {
   return new Promise((resolve, reject) => {
-    parseToAst(file, text, messages)
+    parseToAst(file, text, { parentSpan, messages })
       .then(ast => {
         let queries = []
         if (!ast) {
@@ -340,6 +345,10 @@ async function findGraphQLTags(
 const cache = {}
 
 export default class FileParser {
+  constructor({ parentSpan } = {}) {
+    this.parentSpan = parentSpan
+  }
+
   async parseFile(file: string, messages = []): Promise<?DocumentNode> {
     let text
     try {
@@ -373,7 +382,10 @@ export default class FileParser {
     try {
       let astDefinitions =
         cache[hash] ||
-        (cache[hash] = await findGraphQLTags(file, text, messages))
+        (cache[hash] = await findGraphQLTags(file, text, {
+          parentSpan: this.parentSpan,
+          messages,
+        }))
 
       // If any AST definitions were extracted, report success.
       // This can mean there is none or there was a babel error when
@@ -395,9 +407,7 @@ export default class FileParser {
         level: `ERROR`,
         // group: `query-extraction`,
         text: context =>
-          `There was a problem parsing the GraphQL query in file: ${
-            context.file
-          }`,
+          `There was a problem parsing the GraphQL query in file: ${context.file}`,
         context: {
           file,
         },

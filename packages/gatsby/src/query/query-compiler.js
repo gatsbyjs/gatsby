@@ -81,10 +81,16 @@ class Runner {
   errors: string[]
   fragmentsDir: string
 
-  constructor(base: string, additional: string[], schema: GraphQLSchema) {
+  constructor(
+    base: string,
+    additional: string[],
+    schema: GraphQLSchema,
+    { parentSpan } = {}
+  ) {
     this.base = base
     this.additional = additional
     this.schema = schema
+    this.parentSpan = parentSpan
   }
 
   // reportError(message) {
@@ -177,7 +183,7 @@ class Runner {
 
     files = _.uniq(files)
 
-    let parser = new FileParser()
+    let parser = new FileParser({ parentSpan: this.parentSpan })
 
     return await parser.parseFiles(files, messages)
   }
@@ -412,9 +418,9 @@ class Runner {
 }
 export { Runner, resolveThemes }
 
-export default async function compile(
-  isFirstRun
-): Promise<Map<string, RootQuery>> {
+export default async function compile({ parentSpan } = {}): Promise<
+  Map<string, RootQuery>
+> {
   // TODO: swap plugins to themes
   const { program, schema, themes, flattenedPlugins } = store.getState()
 
@@ -429,10 +435,11 @@ export default async function compile(
             }
           })
     ),
-    schema
+    schema,
+    { parentSpan }
   )
 
-  const queries = await runner.compileAll(isFirstRun)
+  const queries = await runner.compileAll()
 
   return queries
 }

@@ -4,6 +4,7 @@ exports[`gatsby-remark-autolink-headers adds id to a markdown header 1`] = `
 Object {
   "children": Array [
     Object {
+      "children": Array [],
       "data": Object {
         "hChildren": Array [
           Object {
@@ -69,6 +70,7 @@ exports[`gatsby-remark-autolink-headers adds id to a markdown header with custom
 Object {
   "children": Array [
     Object {
+      "children": Array [],
       "data": Object {
         "hChildren": Array [
           Object {
@@ -134,6 +136,7 @@ exports[`gatsby-remark-autolink-headers adds id to a markdown header with custom
 Object {
   "children": Array [
     Object {
+      "children": Array [],
       "data": Object {
         "hChildren": Array [
           Object {
@@ -247,6 +250,7 @@ exports[`gatsby-remark-autolink-headers maintain case of markdown header for id 
 Object {
   "children": Array [
     Object {
+      "children": Array [],
       "data": Object {
         "hChildren": Array [
           Object {
@@ -312,6 +316,7 @@ exports[`gatsby-remark-autolink-headers maintain case of markdown header for id 
 Object {
   "children": Array [
     Object {
+      "children": Array [],
       "data": Object {
         "hChildren": Array [
           Object {
@@ -377,6 +382,7 @@ exports[`gatsby-remark-autolink-headers maintain case of markdown header for id 
 Object {
   "children": Array [
     Object {
+      "children": Array [],
       "data": Object {
         "hChildren": Array [
           Object {

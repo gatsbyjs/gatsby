@@ -22,9 +22,7 @@ const stripComment = line =>
    */
   line.replace(
     new RegExp(
-      `\\s*(${COMMENT_START.source})\\s*${DIRECTIVE.source}\\s*(${
-        COMMENT_END.source
-      })`
+      `\\s*(${COMMENT_START.source})\\s*${DIRECTIVE.source}\\s*(${COMMENT_END.source})`
     ),
     ``
   )

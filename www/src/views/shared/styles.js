@@ -26,9 +26,7 @@ const styles = {
   },
   withTitleHover: {
     "& .title": {
-      transition: `box-shadow ${transition.speed.slow} ${
-        transition.curve.default
-      }, transform ${transition.speed.slow} ${transition.curve.default}`,
+      transition: `box-shadow ${transition.speed.slow} ${transition.curve.default}, transform ${transition.speed.slow} ${transition.curve.default}`,
     },
     "&:hover .title": {
       boxShadow: `inset 0 -1px 0px 0px ${colors.lavender}`,
@@ -81,11 +79,7 @@ const styles = {
     paddingLeft: space[6],
     overflow: `hidden`,
     fontFamily: fonts.header,
-    transition: `width ${transition.speed.default} ${
-      transition.curve.default
-    }, background-color ${transition.speed.default} ${
-      transition.curve.default
-    }`,
+    transition: `width ${transition.speed.default} ${transition.curve.default}, background-color ${transition.speed.default} ${transition.curve.default}`,
     width: `6.8rem`,
     "&::placeholder": {
       color: colors.lilac,

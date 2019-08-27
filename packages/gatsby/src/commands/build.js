@@ -69,7 +69,9 @@ module.exports = async function build(program: BuildArgs) {
   //   state: store.getState(),
   // })
   // activity.end()
-  const { pageQueryIds } = await queryUtil.initialProcessQueries()
+  const { pageQueryIds } = await queryUtil.initialProcessQueries({
+    parentSpan: buildSpan,
+  })
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -85,7 +87,9 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program).catch(err => {
+  const stats = await buildProductionBundle(program, {
+    parentSpan: activity.span,
+  }).catch(err => {
     activity.end(false)
     report.panic(handleWebpackError(`build-javascript`, err))
   })

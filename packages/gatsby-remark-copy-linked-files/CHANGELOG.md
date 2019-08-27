@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.12...gatsby-remark-copy-linked-files@2.1.13) (2019-08-26)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.11...gatsby-remark-copy-linked-files@2.1.12) (2019-08-25)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.10...gatsby-remark-copy-linked-files@2.1.11) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-relative-url to v3 ([#17038](https://github.com/gatsbyjs/gatsby/issues/17038)) ([ff9ae84](https://github.com/gatsbyjs/gatsby/commit/ff9ae84))
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.9...gatsby-remark-copy-linked-files@2.1.10) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.8...gatsby-remark-copy-linked-files@2.1.9) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.7...gatsby-remark-copy-linked-files@2.1.8) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency cheerio to ^1.0.0-rc.3 ([#16831](https://github.com/gatsbyjs/gatsby/issues/16831)) ([55bee35](https://github.com/gatsbyjs/gatsby/commit/55bee35))
+- update dependency fs-extra to ^4.0.3 ([#16876](https://github.com/gatsbyjs/gatsby/issues/16876)) ([2cc762d](https://github.com/gatsbyjs/gatsby/commit/2cc762d))
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.6...gatsby-remark-copy-linked-files@2.1.7) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.5...gatsby-remark-copy-linked-files@2.1.6) (2019-08-15)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
 ## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.1.4...gatsby-remark-copy-linked-files@2.1.5) (2019-08-10)
 
 ### Features

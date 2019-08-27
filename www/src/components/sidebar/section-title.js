@@ -34,9 +34,7 @@ const Chevron = ({ isExpanded }) => (
         marginLeft: `auto`,
         marginRight: `auto`,
         transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,
-        transition: `transform ${transition.speed.fast} ${
-          transition.curve.default
-        }`,
+        transition: `transform ${transition.speed.fast} ${transition.curve.default}`,
       }}
     />
   </span>

@@ -14,6 +14,8 @@ import { itemListFeatures } from "../utils/sidebar/item-list"
 import { getFeaturesData } from "../utils/get-csv-features-data"
 import { space } from "../utils/presets"
 
+import { graphql } from "gatsby"
+
 class FeatureComparison extends Component {
   render() {
     const {

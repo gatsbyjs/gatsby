@@ -1,5 +1,5 @@
 const uuidv4 = require(`uuid/v4`)
-const { buildSchema, printSchema } = require(`graphql`)
+const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
   makeRemoteExecutableSchema,
   transformSchema,
