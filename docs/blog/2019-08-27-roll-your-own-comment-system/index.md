@@ -1,6 +1,6 @@
 ---
 title: Roll Your Own Comment System
-date: 2019-08-21
+date: 2019-08-27
 author: Tania Rascia
 excerpt: "I wanted a simple, custom, ad-free solution to comments on my Gatsby blog, so I designed my own. Here's how I did it!"
 tags:
