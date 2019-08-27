@@ -577,7 +577,7 @@ query MyPokemonQuery {
 - Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
 - The createNode function [documentation](/docs/actions/#createNode)
 
-### Sourcing Markdown data and creating pages with GraphQL
+### Sourcing Markdown data for blog posts and pages with GraphQL
 
 You can source Markdown data and use Gatsby's [`createPages` API](/docs/actions/#createPage) to create pages dynamically.
 
