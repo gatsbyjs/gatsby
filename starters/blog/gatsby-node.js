@@ -33,7 +33,9 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Create blog posts pages.
-  const posts = result.data.allMarkdownRemark.edges.filter( post => post.node.frontmatter.published === true )
+  const posts = result.data.allMarkdownRemark.edges.filter( (post) => {
+    post.node.frontmatter.published !== false
+  })
 
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
