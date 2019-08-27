@@ -44,6 +44,8 @@ describe(`Activity`, () => {
     gatsbyProcess.kill()
   })
 
+  it.skip(`emits actions with a timestamp`)
+
   it(`emits start, update and end for a successful activity`, async () => {
     const activityEvents = events.filter(
       event =>

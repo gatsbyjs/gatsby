@@ -23,6 +23,11 @@ const iface = {
       return
     }
 
+    action = {
+      ...action,
+      timestamp: new Date().toJSON(),
+    }
+
     store.dispatch(action)
     onLogActionListeners.forEach(fn => fn(action))
   },
