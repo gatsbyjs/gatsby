@@ -2,6 +2,7 @@
 
 const semver = require(`semver`)
 const { isCI } = require(`ci-info`)
+const signalExit = require(`signal-exit`)
 const reporterActions = require(`./redux/actions`)
 
 let inkExists = false
@@ -62,7 +63,7 @@ const addMessage = level => text => reporterActions.createLog({ level, text })
 
 let isVerbose = false
 
-const prematureEnd = () => {
+const prematureEnd = (exit = true) => {
   const { activities } = getStore().getState().logs
   // hack so at least one activity is surely failed, so
   // we are guaranteed to generate FAILED status
@@ -80,8 +81,14 @@ const prematureEnd = () => {
     }
   })
   // process.stdout.write(`EXITING wat\n`)
-  process.exit(1)
+  if (exit) {
+    process.exit(1)
+  }
 }
+
+signalExit(code => {
+  if (code !== 0) prematureEnd(false)
+})
 
 /**
  * Reporter module.

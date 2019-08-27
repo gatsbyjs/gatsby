@@ -42,6 +42,7 @@
     "redux": "^4.0.0",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.3.0",
+    "signal-exit": "^3.0.2",
     "source-map": "0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^5.2.0",
