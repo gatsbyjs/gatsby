@@ -9,7 +9,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "2.14.0-dev-1566920203533",
+    "gatsby": "^2.14.0",
     "gray-percentage": "^2.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
