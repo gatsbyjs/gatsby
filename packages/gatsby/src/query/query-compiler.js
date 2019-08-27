@@ -114,25 +114,12 @@ class Runner {
     let nodes = await this.parseEverything(messages)
     const results = await this.write(nodes, messages)
 
-    activity.end(messages.length === 0)
-
-    // report.clearStatefulMessage(`query-extraction`)
-
-    // console.log(messages)
-    messages.forEach(msg => {
-      report.panicOnBuild({
-        ...msg,
-        group: `query-extraction`,
-        panicOnBuild: true,
-      })
-    })
-
-    // console.log('message count', messages.length)
-
-    // report.stateUpdate(
-    //   `queryExtraction`,
-    //   messages.length === 0 ? `SUCCESS` : `FAILED`
-    // )
+    if (messages.length !== 0) {
+      console.log(messages)
+      activity.panicOnBuild(messages)
+    } else {
+      activity.end()
+    }
 
     return results
   }

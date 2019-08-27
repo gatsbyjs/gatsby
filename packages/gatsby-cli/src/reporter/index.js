@@ -45,17 +45,7 @@ const { getErrorFormatter } = require(`./errors`)
 const { /*dispatch,*/ getStore } = require(`./redux`)
 const constructError = require(`../structured-errors/construct-error`)
 
-// const getElapsedTimeMS = activity => {
-//   const elapsed = process.hrtime(activity.startTime)
-//   return convertHrtime(elapsed)[`seconds`].toFixed(3)
-// }
-
-// const getActivity = name => getStore().getState().logs.activities[name]
-
 const errorFormatter = getErrorFormatter()
-// const { trackCli } = require(`gatsby-telemetry`)
-
-// const convertHrtime = require(`convert-hrtime`)
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
 
@@ -77,7 +67,6 @@ const prematureEnd = (exit = true) => {
       activity.status === `NOT_STARTED`
     ) {
       reporter.completeActivity(activityId, `INTERRUPTED`)
-      // process.stdout.write(`INTERRUPTING ${activityId}\n`)
     }
   })
   // process.stdout.write(`EXITING wat\n`)
@@ -130,13 +119,13 @@ const reporter: Reporter = {
    * @param {*} args
    */
   panic(...args) {
-    const error = this.error(...args)
+    const error = reporter.error(...args)
     trackError(`GENERAL_PANIC`, { error })
     prematureEnd()
   },
 
   panicOnBuild(...args) {
-    const error = this.error(...args)
+    const error = reporter.error(...args)
     trackError(`BUILD_PANIC`, { error })
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
@@ -192,44 +181,12 @@ const reporter: Reporter = {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
 
-  // statefulMessage(payload) {
-  //   const error = constructError({ details: payload })
-  //   reporterActions.createStatefulLog(error)
-  //   // dispatch({
-  //   //   type: `STATEFUL_LOG`,
-  //   //   payload: error,
-  //   // })
-  //   if (error.panicOnBuild) {
-  //     trackError(`BUILD_PANIC`, { error })
-  //     if (process.env.gatsby_executing_command === `build`) {
-  //       prematureEnd()
-  //     }
-  //   }
-  // },
-
-  // clearStatefulMessage: reporterActions.clearStatefulLogs,
-
-  // clearStatefulMessage(group) {
-  //   reporterActions.clearStatefulLogs(group)
-  //   // dispatch({
-  //   //   type: `CLEAR_STATEFUL_LOG`,
-  //   //   payload,
-  //   // })
-  // },
-
   verbose: text => {
     if (isVerbose) {
       reporterActions.createLog({
         level: `DEBUG`,
         text,
       })
-      // dispatch({
-      //   type: `LOG`,
-      //   payload: {
-      //     level: `DEBUG`,
-      //     text,
-      //   },
-      // })
     }
   },
 
@@ -238,63 +195,11 @@ const reporter: Reporter = {
   warn: addMessage(`WARNING`),
   log: addMessage(`LOG`),
 
-  // pendingActivity(id: string) {
-  //   reporterActions.createPendingActivity(id)
-
-  //   // dispatch({
-  //   //   type: `STRUCTURED_ACTIVITY_START`,
-  //   //   payload: {
-  //   //     id,
-  //   //     name: id,
-  //   //     type: `pending`,
-  //   //     state: `NOT_STARTED`,
-  //   //     dontShowSuccess: true,
-  //   //   },
-  //   // })
-  // },
   pendingActivity: reporterActions.createPendingActivity,
-  // pendingActivity: (id: string) => {
-  //   reporterActions.startActivity({
-  //     id,
-  //     status: `NOT_STARTED`,
-  //     type: `pending`,
-  //     dontShowSuccess: true,
-  //   })
-  // },
+
   completeActivity: (id: string, status: string = `SUCCESS`) => {
     reporterActions.endActivity({ id, status })
-    // dispatch({
-    //   type: `STRUCTURED_ACTIVITY_END`,
-    //   payload: {
-    //     id,
-    //     state,
-    //     // elapsedTime: (duration / 1000).toFixed(3),
-    //   },
-    // })
   },
-  // completeActivity: reporterActions.completeActivity,
-
-  // completeActivity: (id: string, state: string = `SUCCESS`) {
-  //   dispatch({
-  //     type: `STRUCTURED_ACTIVITY_END`,
-  //     payload: {
-  //       id,
-  //       state,
-  //       // elapsedTime: (duration / 1000).toFixed(3),
-  //     },
-  //   })
-
-  // dispatch({
-  //   type: `STRUCTURED_ACTIVITY_START`,
-  //   payload: {
-  //     id,
-  //     name: id,
-  //     type: `pending`,
-  //     state: `NOT_STARTED`,
-  //     dontShowSuccess: true,
-  //   },
-  // })
-  // },
 
   /**
    * Time an activity.
@@ -322,57 +227,31 @@ const reporter: Reporter = {
           type: `spinner`,
           dontShowSuccess,
         })
-
-        // dispatch({
-        //   type: `STRUCTURED_ACTIVITY_START`,
-        //   payload: {
-        //     id,
-        //     name,
-        //     type: `spinner`,
-        //     dontShowSuccess,
-        //   },
-        // })
       },
       setStatus: statusText => {
         reporterActions.setActivityStatusText({
           id,
           statusText,
         })
-        // dispatch({
-        //   type: `STRUCTURED_ACTIVITY_UPDATE`,
-        //   payload: {
-        //     id,
-        //     name,
-        //     status,
-        //   },
-        // })
       },
-      end(success = true) {
+      panicOnBuild(...args) {
+        span.finish()
+
+        console.log()
+        reporterActions.endActivity({
+          id,
+          status: `FAILED`,
+        })
+
+        reporter.panicOnBuild(...args)
+      },
+      end() {
         span.finish()
 
         reporterActions.endActivity({
           id,
-          status: success ? `SUCCESS` : `FAILED`,
+          status: `SUCCESS`,
         })
-
-        // let activity = getActivity(id)
-        // if (activity) {
-        //   const duration = getElapsedTimeMS(activity)
-
-        //   trackCli(`ACTIVITY_DURATION`, {
-        //     name: name,
-        //     duration,
-        //   })
-
-        //   dispatch({
-        //     type: `STRUCTURED_ACTIVITY_END`,
-        //     payload: {
-        //       state: success ? `SUCCESS` : `FAILED`,
-        //       id,
-        //       elapsedTime: (duration / 1000).toFixed(3),
-        //     },
-        //   })
-        // }
       },
       span,
     }
@@ -398,7 +277,6 @@ const reporter: Reporter = {
       id = text
     }
     const span = tracer.startSpan(text, spanArgs)
-    // let hasStarted = false
 
     return {
       start: () => {
@@ -410,77 +288,35 @@ const reporter: Reporter = {
           current: start,
           total,
         })
-
-        // if (hasStarted) {
-        //   return
-        // }
-
-        // hasStarted = true
-
-        // dispatch({
-        //   type: `STRUCTURED_ACTIVITY_START`,
-        //   payload: {
-        //     id,
-        //     name,
-        //     type: `progress`,
-        //     current: start,
-        //     total,
-        //     dontShowSuccess,
-        //   },
-        // })
       },
       setStatus: statusText => {
         reporterActions.setActivityStatusText({
           id,
           statusText,
         })
-        // dispatch({
-        //   type: `STRUCTURED_ACTIVITY_UPDATE`,
-        //   payload: {
-        //     id,
-        //     status,
-        //   },
-        // })
       },
       tick: (increment = 1) => {
         reporterActions.activityTick({ id, increment })
-        // dispatch({
-        //   type: `STRUCTURED_ACTIVITY_TICK`,
-        //   payload: {
-        //     id,
-        //     increment,
-        //   },
-        // })
       },
-      done: (success = true) => {
+      panicOnBuild(...args) {
+        span.finish()
+
+        reporterActions.endActivity({
+          id,
+          status: `FAILED`,
+        })
+
+        reporter.panicOnBuild(...args)
+      },
+      done: () => {
         span.finish()
         reporterActions.endActivity({
           id,
-          status: success ? `SUCCESS` : `FAILED`,
+          status: `SUCCESS`,
         })
-
-        // let activity = getActivity(id)
-        // if (activity) {
-        //   const duration = getElapsedTimeMS(activity)
-        //   dispatch({
-        //     type: `STRUCTURED_ACTIVITY_END`,
-        //     payload: {
-        //       state: success ? `SUCCESS` : `FAILED`,
-        //       id,
-        //       elapsedTime: (duration / 1000).toFixed(3),
-        //     },
-        //   })
-        // }
       },
       set total(value) {
         reporterActions.setActivityTotal({ id, total: value })
-        // dispatch({
-        //   type: `STRUCTURED_ACTIVITY_UPDATE`,
-        //   payload: {
-        //     id,
-        //     total: value,
-        //   },
-        // })
       },
       span,
     }

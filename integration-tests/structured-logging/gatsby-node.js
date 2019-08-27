@@ -24,7 +24,7 @@ exports.createPages = async ({ reporter }) => {
     unsuccessfulActivity.start()
     await sleep(500)
     unsuccessfulActivity.tick(75)
-    unsuccessfulActivity.done(false)
+    unsuccessfulActivity.panicOnBuild(`Your car is on fire`)
   }
 
   reporter.info(`info`)
