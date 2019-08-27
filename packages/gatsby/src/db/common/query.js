@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const { getNamedType } = require(`graphql`)
 
 const getQueryFields = ({ filter, sort, group, distinct }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
