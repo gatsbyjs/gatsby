@@ -28,7 +28,7 @@ const findChildren = initialChildren => {
 
   while (queue.length > 0) {
     const currentChild = getNode(queue.pop())
-    if (traversedNodes.has(currentChild.id)) {
+    if (!currentChild || traversedNodes.has(currentChild.id)) {
       continue
     }
     traversedNodes.add(currentChild.id)
