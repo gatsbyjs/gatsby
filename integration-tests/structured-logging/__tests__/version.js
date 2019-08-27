@@ -1,6 +1,8 @@
 const { spawn } = require(`child_process`)
 const path = require(`path`)
 
+jest.setTimeout(100000)
+
 const gatsbyBin = path.join(
   `node_modules`,
   `gatsby`,
@@ -33,7 +35,7 @@ describe(`VERSION`, () => {
         resolve()
       })
     })
-  }, 10000)
+  })
 
   // afterEach(async () => {})
 

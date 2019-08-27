@@ -39,7 +39,20 @@ describe(`Panic`, () => {
     })
   })
 
-  it(`emits FAILURE and a LOG`, async () => {
+  it(`emits SET_STATUS FAILURE`, async () => {
+    expect(events).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: `LOG_ACTION`,
+          action: expect.objectContaining({
+            type: `SET_STATUS`,
+            payload: `FAILED`,
+          }),
+        }),
+      ])
+    )
+  })
+  it(`emits LOG`, async () => {
     expect(events).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -50,13 +63,6 @@ describe(`Panic`, () => {
               level: `ERROR`,
               text: `Your house is on fire`,
             }),
-          }),
-        }),
-        expect.objectContaining({
-          type: `LOG_ACTION`,
-          action: expect.objectContaining({
-            type: `SET_STATUS`,
-            payload: `FAILED`,
           }),
         }),
       ])
