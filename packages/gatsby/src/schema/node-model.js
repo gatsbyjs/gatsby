@@ -444,6 +444,10 @@ class ContextualNodeModel {
     return this.nodeModel.findRootNodeAncestor(...args)
   }
 
+  createPageDependency(...args) {
+    return this.nodeModel.createPageDependency(...args)
+  }
+
   trackPageDependencies(result, pageDependencies) {
     const fullDependencies = {
       path: this.context.path,
