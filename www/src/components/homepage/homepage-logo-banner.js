@@ -79,9 +79,6 @@ const HomepageLogoBanner = () => {
               fixed(quality: 75, height: 36) {
                 ...GatsbyImageSharpFixed_tracedSVG
               }
-              fluid {
-                ...GatsbyImageSharpFluid_tracedSVG
-              }
             }
           }
         }
@@ -94,7 +91,7 @@ const HomepageLogoBanner = () => {
       <Title>
         <Name>Trusted by</Name>
       </Title>
-      <LogoGroup css={{}}>
+      <LogoGroup>
         {data.allFile.edges.map(({ node: image }) => (
           <Img
             alt={`Logo for ${image.base.split(`.`)[0]}`}
