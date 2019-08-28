@@ -112,7 +112,7 @@ module.exports = async function(content) {
 
   const source = fileNode && fileNode.sourceInstanceName
 
-  let mdxNode;
+  let mdxNode
   try {
     mdxNode = await createMDXNode({
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
