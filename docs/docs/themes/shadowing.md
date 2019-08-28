@@ -13,7 +13,7 @@ If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio
 
 ### Theme file structure
 
-You can look at the `gatsby-theme-blog`'s file structure to determine the file path for shadowing.
+You can look at the `gatsby-theme-blog`'s file structure to determine the file path for the file you want to shadow.
 
 ```txt
 ├── gatsby-config.js
