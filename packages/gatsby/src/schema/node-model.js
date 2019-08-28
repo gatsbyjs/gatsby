@@ -499,7 +499,7 @@ const getQueryFields = ({ filter, sort, group, distinct }) => {
     distinct = []
   }
 
-  return merge(
+  return _.merge(
     filterFields,
     ...sortFields.map(pathToObject),
     ...group.map(pathToObject),
@@ -529,22 +529,6 @@ const dropQueryOperators = filter =>
     }
     return acc
   }, {})
-
-const mergeObjects = (obj1, obj2) =>
-  Object.keys(obj2).reduce((acc, key) => {
-    const value = obj2[key]
-    if (typeof value === `object` && value && acc[key]) {
-      acc[key] = mergeObjects(acc[key], value)
-    } else {
-      acc[key] = value
-    }
-    return acc
-  }, obj1)
-
-const merge = (...objects) => {
-  const [first, ...rest] = objects.filter(Boolean)
-  return rest.reduce((acc, obj) => mergeObjects(acc, obj), { ...first })
-}
 
 async function resolveRecursive(
   nodeModel,
@@ -673,23 +657,16 @@ const determineResolvableFields = (schemaComposer, schema, type, fields) => {
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
-      } else if (_.isEmpty(innerResolved) && needsResolve) {
-        fieldsToResolve[fieldName] = true
       }
-    } else if (needsResolve) {
+    }
+
+    if (!fieldsToResolve[fieldName] && needsResolve) {
       fieldsToResolve[fieldName] = true
     }
   })
   return fieldsToResolve
 }
 
-/**
- * Add link between passed data and Node. This function shouldn't be used
- * directly. Use higher level `trackInlineObjectsInRootNode`
- * @see trackInlineObjectsInRootNode
- * @param {(Object|Array)} data Inline object or array
- * @param {string} nodeId Id of node that contains data passed in first parameter
- */
 const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
@@ -700,9 +677,7 @@ const addRootNodeToInlineObject = (
 
   if (isPlainObject || _.isArray(data)) {
     _.each(data, (o, key) => {
-      if (isNode && key === `internal`) {
-        return
-      } else {
+      if (!isNode || key !== `internal`) {
         addRootNodeToInlineObject(rootNodeMap, o, nodeId)
       }
     })
