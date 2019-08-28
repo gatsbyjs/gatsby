@@ -1,14 +1,13 @@
 const fromPaths = new Set()
 
-module.exports = (state = [], action) => {
+module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `CREATE_REDIRECT`: {
-      if (!fromPaths.has(action.payload.fromPath)) {
+      if (!state.has(action.payload.fromPath)) {
         // Add redirect only if it wasn't yet added to prevent duplicates
-        fromPaths.add(action.payload.fromPath)
-        state.push(action.payload)
-        return state
+        state.set(action.payload.fromPath, action.payload)
       }
+
       return state
     }
 
