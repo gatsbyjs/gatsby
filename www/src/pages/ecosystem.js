@@ -1,70 +1,55 @@
-import React, { Component } from "react"
+import React from "react"
 import { graphql } from "gatsby"
-
+import { EcosystemIcon } from "../assets/icons"
+import FooterLinks from "../components/shared/footer-links"
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
-import FooterLinks from "../components/shared/footer-links"
-
-import { EcosystemIcon } from "../assets/icons"
 import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"
 
-class EcosystemPage extends Component {
-  render() {
+const EcosystemPage = props => {
+  const {
+    location,
+    data: {
+      allStartersYaml: { edges: startersData },
+      allNpmPackage: { edges: pluginsData },
+    },
+  } = props
+  const starters = startersData.map(item => {
     const {
-      location,
-      data: {
-        allStartersYaml: { edges: startersData },
-        allNpmPackage: { edges: pluginsData },
-      },
-    } = this.props
-
-    const starters = startersData.map(item => {
-      const {
-        node: {
-          fields: {
-            starterShowcase: { slug, name, description, stars },
-          },
-          childScreenshot: {
-            screenshotFile: {
-              childImageSharp: { fixed: thumbnail },
-            },
+      node: {
+        fields: {
+          starterShowcase: { slug, name, description, stars },
+        },
+        childScreenshot: {
+          screenshotFile: {
+            childImageSharp: { fixed: thumbnail },
           },
         },
-      } = item
-
-      return {
-        slug: `/starters${slug}`,
-        name,
-        description,
-        stars,
-        thumbnail,
-      }
-    })
-
-    const plugins = pluginsData.map(item => item.node)
-
-    const pageTitle = `Ecosystem`
-    const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
-
-    return (
-      <Layout
-        location={location}
-        pageTitle={pageTitle}
-        pageIcon={EcosystemIcon}
-      >
-        <EcosystemBoard
-          icons={boardIcons}
-          starters={starters}
-          plugins={plugins}
-        />
-        <FooterLinks />
-      </Layout>
-    )
-  }
+      },
+    } = item
+    return {
+      slug: `/starters${slug}`,
+      name,
+      description,
+      stars,
+      thumbnail,
+    }
+  })
+  const plugins = pluginsData.map(item => item.node)
+  const pageTitle = `Ecosystem`
+  const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
+  return (
+    <Layout location={location} pageTitle={pageTitle} pageIcon={EcosystemIcon}>
+      <EcosystemBoard
+        icons={boardIcons}
+        starters={starters}
+        plugins={plugins}
+      />
+      <FooterLinks />
+    </Layout>
+  )
 }
-
 export default EcosystemPage
-
 export const ecosystemQuery = graphql`
   query EcosystemQuery(
     $featuredStarters: [String]!

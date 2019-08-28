@@ -1,36 +1,33 @@
-import React from "react"
+import React, { Component } from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
-
 import Layout from "../components/layout"
-import { colors, space, mediaQueries, fontWeights } from "../utils/presets"
+import Button from "../components/button"
+import Diagram from "../components/diagram"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
-import Diagram from "../components/diagram"
-import FuturaParagraph from "../components/futura-paragraph"
-import Button from "../components/button"
-import HomepageLogoBanner from "../components/homepage/homepage-logo-banner"
-import HomepageFeatures from "../components/homepage/homepage-features"
-import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
-import HomepageBlog from "../components/homepage/homepage-blog"
-import HomepageNewsletter from "../components/homepage/homepage-newsletter"
-import HomepageSection from "../components/homepage/homepage-section"
 import FooterLinks from "../components/shared/footer-links"
+import FuturaParagraph from "../components/futura-paragraph"
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import HomepageBlog from "../components/homepage/homepage-blog"
+import HomepageSection from "../components/homepage/homepage-section"
 import {
   setupScrollersObserver,
   unobserveScrollers,
 } from "../utils/scrollers-observer"
+import HomepageFeatures from "../components/homepage/homepage-features"
+import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
+import HomepageNewsletter from "../components/homepage/homepage-newsletter"
+import { colors, space, mediaQueries, fontWeights } from "../utils/presets"
+import HomepageLogoBanner from "../components/homepage/homepage-logo-banner"
 
-class IndexRoute extends React.Component {
+class IndexRoute extends Component {
   componentDidMount() {
     setupScrollersObserver()
   }
-
   componentWillUnmount() {
     unobserveScrollers()
   }
-
   combineEcosystemFeaturedItems = ({ starters, plugins, numFeatured = 3 }) =>
     new Array(numFeatured)
       .fill(undefined)
@@ -38,7 +35,6 @@ class IndexRoute extends React.Component {
         (merged, _, index) => merged.concat([starters[index], plugins[index]]),
         []
       )
-
   render() {
     const {
       data: {
@@ -47,7 +43,6 @@ class IndexRoute extends React.Component {
         allNpmPackage: { edges: pluginsData },
       },
     } = this.props
-
     const starters = startersData.map(item => {
       const {
         node: {
@@ -61,7 +56,6 @@ class IndexRoute extends React.Component {
           },
         },
       } = item
-
       return {
         slug: `/starters${slug}`,
         name,
@@ -71,20 +65,15 @@ class IndexRoute extends React.Component {
         type: `Starter`,
       }
     })
-
     const plugins = pluginsData.map(item => {
       item.node.type = `Plugin`
-
       return item.node
     })
-
     const ecosystemFeaturedItems = this.combineEcosystemFeaturedItems({
       plugins,
       starters,
     })
-
     const posts = postsData.map(item => item.node)
-
     return (
       <Layout location={this.props.location}>
         <Helmet>
@@ -111,9 +100,7 @@ class IndexRoute extends React.Component {
               borderBottom: `1px solid ${colors.purple[10]}`,
               borderTop: `1px solid ${colors.purple[10]}`,
               background: colors.purple[5],
-              [mediaQueries.xl]: {
-                padding: space[8],
-              },
+              [mediaQueries.xl]: { padding: space[8] },
             }}
           >
             <Diagram />
@@ -142,18 +129,11 @@ class IndexRoute extends React.Component {
               </section>
             </Container>
           </div>
-
           <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
-
           <HomepageBlog posts={posts} />
-
           <HomepageNewsletter />
-
           <HomepageSection
-            css={{
-              paddingTop: `0 !important`,
-              paddingBottom: `0 !important`,
-            }}
+            css={{ paddingTop: `0 !important`, paddingBottom: `0 !important` }}
           />
         </main>
         <FooterLinks />
@@ -161,9 +141,7 @@ class IndexRoute extends React.Component {
     )
   }
 }
-
 export default IndexRoute
-
 export const pageQuery = graphql`
   query IndexRouteQuery(
     $featuredStarters: [String]!

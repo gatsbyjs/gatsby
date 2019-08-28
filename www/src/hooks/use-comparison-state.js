@@ -5,7 +5,6 @@ export default function useComparisonState(initialState) {
     return { ...state, ...selected }
   }
   const [selected, dispatch] = React.useReducer(setSelected, initialState)
-
   let comparators = []
   let hasSelected = false
   for (const [key, value] of Object.entries(selected)) {
@@ -14,6 +13,5 @@ export default function useComparisonState(initialState) {
       hasSelected = true
     }
   }
-
   return [selected, dispatch, comparators, hasSelected]
 }
