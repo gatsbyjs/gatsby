@@ -383,7 +383,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 ### Using Google Fonts
 
-Hosting your own [Google fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
+Hosting your own [Google Fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
 
 #### Prerequisites
 
@@ -401,7 +401,7 @@ Hosting your own [Google fonts](https://fonts.google.com/) locally within a proj
 import "yourchosenfont"
 ```
 
-3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS module, or CSS-in-JS.
+3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
@@ -1686,7 +1686,7 @@ module.exports = {
 }
 ```
 
-There are a few reasons to do this--for instance, hosting a blog built with Gatsby on a domain with another site not built on Gatsby. The main site would direct to `example.com`, and the Gatsby site with a path prefix could live at `example.com/blog`.
+There are a few reasons to do this -- for instance, hosting a blog built with Gatsby on a domain with another site not built on Gatsby. The main site would direct to `example.com`, and the Gatsby site with a path prefix could live at `example.com/blog`.
 
 4. With a path prefix set in `gatsby-config.js`, run `gatsby build` with the `--prefix-paths` flag to automatically add the prefix to the beginning of all Gatsby site URLs and `<Link>` tags.
 
@@ -1721,7 +1721,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 1. Build your gatsby application using `gatsby build`
 
-2. Login into netlify using `netlify login`
+2. Login into Netlify using `netlify login`
 
 3. Run the command `netlify build`. Select the "Create & configure a new site" option.
 
