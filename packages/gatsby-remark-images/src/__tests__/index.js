@@ -605,10 +605,7 @@ describe(`disableBgImageOnAlpha`, () => {
 
     const node = nodes.pop()
     expect(node.type).toBe(`html`)
-    // const $ = cheerio.load(node.value)
-    // expect($(`figcaption`).text()).toEqual(`some title`)
     expect(node.value).toMatchSnapshot()
-    // expect(node.value).not.toMatch(`<html>`)
   })
 
   it(`disables background image on transparent images when disableBgImageOnAlpha === true`, async () => {
@@ -622,9 +619,6 @@ describe(`disableBgImageOnAlpha`, () => {
 
     const node = nodes.pop()
     expect(node.type).toBe(`html`)
-    // const $ = cheerio.load(node.value)
-    // expect($(`figcaption`).text()).toEqual(`some title`)
     expect(node.value).toMatchSnapshot()
-    // expect(node.value).not.toMatch(`<html>`)
   })
 })
