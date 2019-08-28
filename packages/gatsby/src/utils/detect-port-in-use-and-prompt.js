@@ -6,7 +6,7 @@ const detectPortInUseAndPrompt = async port => {
   let foundPort = port
   const detectedPort = await detectPort(port).catch(err => report.panic(err))
   if (port !== detectedPort) {
-    process.stdout.write(`\nSomething is already running at port ${port}\n`)
+    report.log(`\nSomething is already running at port ${port}`)
     const response = await prompts({
       type: `confirm`,
       name: `newPort`,
@@ -16,9 +16,10 @@ const detectPortInUseAndPrompt = async port => {
     if (response.newPort) {
       foundPort = detectedPort
     } else {
-      return Promise.reject(`USER_REJECTED`)
+      throw new Error(`USER_REJECTED`)
     }
   }
+
   return foundPort
 }
 

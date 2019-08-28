@@ -230,9 +230,7 @@ async function startServer(program) {
               if (response) {
                 res.writeHead(response.statusCode, response.headers)
               } else {
-                const message = `Error when trying to proxy request "${
-                  req.originalUrl
-                }" to "${proxiedUrl}"`
+                const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
                 report.error(message, err)
                 res.sendStatus(500)
@@ -279,9 +277,7 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${
-            program.port
-          } as there's already a process listening on that port.`
+          `Unable to start Gatsby on port ${program.port} as there's already a process listening on that port.`
         )
         return
       }
@@ -322,18 +318,11 @@ module.exports = async (program: any) => {
   try {
     program.port = await detectPortInUseAndPrompt(port)
   } catch (e) {
-    switch (e) {
-      case `USER_REJECTED`: {
-        // If port was already taken, and user said don't pick new
-        // port, then exit the process
-        process.exit(0)
-        break
-      }
-      default: {
-        // Unknown exception occurred.  Rethrow error
-        throw e
-      }
+    if (e.message === `USER_REJECTED`) {
+      process.exit(0)
     }
+
+    throw e
   }
 
   // Check if https is enabled, then create or get SSL cert.
@@ -524,9 +513,7 @@ module.exports = async (program: any) => {
           chalk.yellow(`is deprecated. Please use`),
           chalk.cyan(fixMap[api].newName),
           chalk.yellow(
-            `instead. For migration instructions, see ${
-              fixMap[api].docsLink
-            }\nCheck the following files:`
+            `instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`
           )
         )
         console.log()
