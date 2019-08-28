@@ -10,7 +10,7 @@ React.
 
 ## Install
 
-`npm install --save gatsby-plugin-preact preact@beta`
+`npm install --save gatsby-plugin-preact preact@next`
 
 ## How to use
 
