@@ -1,11 +1,13 @@
-const _ = require(`lodash`)
+const fromPaths = new Set()
 
 module.exports = (state = [], action) => {
   switch (action.type) {
     case `CREATE_REDIRECT`: {
-      if (!state.some(redirect => _.isEqual(redirect, action.payload))) {
+      if (!fromPaths.has(action.payload.fromPath)) {
         // Add redirect only if it wasn't yet added to prevent duplicates
-        return [...state, action.payload]
+        fromPaths.add(action.payload.fromPath)
+        state.push(action.payload)
+        return state
       }
       return state
     }

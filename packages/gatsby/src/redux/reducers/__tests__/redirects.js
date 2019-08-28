@@ -5,8 +5,8 @@ describe(`redirects`, () => {
     const action = {
       type: `CREATE_REDIRECT`,
       payload: {
-        fromPath: `/page1`,
-        toPath: `/page1/`,
+        fromPath: `/page-internal`,
+        toPath: `/page-internal/`,
       },
     }
 
@@ -14,8 +14,8 @@ describe(`redirects`, () => {
 
     expect(state).toEqual([
       {
-        fromPath: `/page1`,
-        toPath: `/page1/`,
+        fromPath: `/page-internal`,
+        toPath: `/page-internal/`,
       },
     ])
   })
@@ -24,7 +24,7 @@ describe(`redirects`, () => {
     const action = {
       type: `CREATE_REDIRECT`,
       payload: {
-        fromPath: `/page1`,
+        fromPath: `/page-external`,
         toPath: `https://example.com`,
       },
     }
@@ -33,7 +33,7 @@ describe(`redirects`, () => {
 
     expect(state).toEqual([
       {
-        fromPath: `/page1`,
+        fromPath: `/page-external`,
         toPath: `https://example.com`,
       },
     ])
@@ -49,7 +49,7 @@ describe(`redirects`, () => {
 
   protocolArr.forEach(([protocol, toPath], index) => {
     it(`lets you redirect using ${protocol}`, () => {
-      const fromPath = `/page${index}`
+      const fromPath = `/page-protocol-${index}`
       const action = {
         type: `CREATE_REDIRECT`,
         payload: {
