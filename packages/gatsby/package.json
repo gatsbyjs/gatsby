@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.13.83",
+  "version": "2.14.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -23,7 +23,7 @@
     "@reach/router": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
-    "address": "1.1.1",
+    "address": "1.1.2",
     "autoprefixer": "^9.6.1",
     "axios": "^0.19.0",
     "babel-core": "7.0.0-bridge.0",
