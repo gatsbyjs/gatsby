@@ -2,6 +2,22 @@ const { build } = require(`../..`)
 const { store } = require(`../../../redux`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const nodes = [
   {
     id: `parent`,

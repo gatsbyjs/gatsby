@@ -12,6 +12,13 @@ require(`../../../db/__tests__/fixtures/ensure-loki`)()
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()
 report.panic = jest.fn()
+report.activityTimer = jest.fn(() => {
+  return {
+    start: jest.fn(),
+    setStatus: jest.fn(),
+    end: jest.fn(),
+  }
+})
 afterEach(() => {
   report.error.mockClear()
   report.panic.mockClear()

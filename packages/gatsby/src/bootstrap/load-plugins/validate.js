@@ -61,15 +61,11 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
 
     if (isDefaultPlugin) {
       errors.push(
-        `- Your local gatsby-${exportType}.js is using the API "${
-          entry.exportName
-        }" which ${message}.`
+        `- Your local gatsby-${exportType}.js is using the API "${entry.exportName}" which ${message}.`
       )
     } else {
       errors.push(
-        `- The plugin ${entry.pluginName}@${
-          entry.pluginVersion
-        } is using the API "${entry.exportName}" which ${message}.`
+        `- The plugin ${entry.pluginName}@${entry.pluginVersion} is using the API "${entry.exportName}" which ${message}.`
       )
     }
 
@@ -215,9 +211,7 @@ const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
     flattenedPlugins.forEach((fp, i) => {
       if (ignorable.includes(fp.name)) {
         messages.push(
-          `Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: ${
-            fp.name
-          }`
+          `Duplicate replaceRenderer found, skipping gatsby-ssr.js for plugin: ${fp.name}`
         )
         flattenedPlugins[i].skipSSR = true
       }

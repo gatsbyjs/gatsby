@@ -48,14 +48,16 @@ async function onCreateNode(
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
-        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> JSON`),
+        obj.id ? String(obj.id) : createNodeId(`${node.id} [${i}] >>> JSON`),
         getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
-      parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> JSON`),
+      parsedContent.id
+        ? String(parsedContent.id)
+        : createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
     )
   }

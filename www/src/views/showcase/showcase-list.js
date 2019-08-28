@@ -90,11 +90,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     css={{
                       "&&": {
                         display: `none`,
-                        transition: `background ${transition.speed.slow} ${
-                          transition.curve.default
-                        }, transform ${transition.speed.slow} ${
-                          transition.curve.default
-                        }`,
+                        transition: `background ${transition.speed.slow} ${transition.curve.default}, transform ${transition.speed.slow} ${transition.curve.default}`,
                         [mediaQueries.lg]: {
                           alignItems: `center`,
                           background: colors.accent,

@@ -359,6 +359,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
       !fileContent.includes(`exports.default`) &&
+      !fileContent.includes(`exports["default"]`) &&
       // this check only applies to js and ts, not mdx
       /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
@@ -402,9 +403,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${
-        page.path
-      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
     )
   }
 

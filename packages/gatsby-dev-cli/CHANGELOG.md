@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.15...gatsby-dev-cli@2.5.16) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency del to v5 ([#17026](https://github.com/gatsbyjs/gatsby/issues/17026)) ([47b2d86](https://github.com/gatsbyjs/gatsby/commit/47b2d86))
+
+## [2.5.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.14...gatsby-dev-cli@2.5.15) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency configstore to v5 ([#17024](https://github.com/gatsbyjs/gatsby/issues/17024)) ([17e07cc](https://github.com/gatsbyjs/gatsby/commit/17e07cc))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-absolute to v1 ([#17035](https://github.com/gatsbyjs/gatsby/issues/17035)) ([9c3d1f9](https://github.com/gatsbyjs/gatsby/commit/9c3d1f9))
+
+## [2.5.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.13...gatsby-dev-cli@2.5.14) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency chokidar to v3 ([#16975](https://github.com/gatsbyjs/gatsby/issues/16975)) ([816d475](https://github.com/gatsbyjs/gatsby/commit/816d475))
+
+## [2.5.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.12...gatsby-dev-cli@2.5.13) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.11...gatsby-dev-cli@2.5.12) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.10...gatsby-dev-cli@2.5.11) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.9...gatsby-dev-cli@2.5.10) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency fs-extra to ^4.0.3 ([#16876](https://github.com/gatsbyjs/gatsby/issues/16876)) ([2cc762d](https://github.com/gatsbyjs/gatsby/commit/2cc762d))
+
+## [2.5.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.8...gatsby-dev-cli@2.5.9) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency configstore to ^3.1.2 ([#16837](https://github.com/gatsbyjs/gatsby/issues/16837)) ([5979677](https://github.com/gatsbyjs/gatsby/commit/5979677))
+
+## [2.5.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.7...gatsby-dev-cli@2.5.8) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 ## [2.5.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.6...gatsby-dev-cli@2.5.7) (2019-07-22)
 
 **Note:** Version bump only for package gatsby-dev-cli
