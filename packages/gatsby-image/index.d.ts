@@ -1,10 +1,10 @@
 import * as React from "react"
 
 export interface FixedObject {
-  width?: number | null
-  height?: number | null
-  src?: string | null
-  srcSet?: string | null
+  width: number
+  height: number
+  src: string
+  srcSet: string
   base64?: string | null
   tracedSVG?: string | null
   srcWebp?: string | null
@@ -13,10 +13,10 @@ export interface FixedObject {
 }
 
 export interface FluidObject {
-  aspectRatio?: number | null
-  src?: string | null
-  srcSet?: string | null
-  sizes?: string | null
+  aspectRatio: number
+  src: string
+  srcSet: string
+  sizes: string
   base64?: string | null
   tracedSVG?: string | null
   srcWebp?: string | null
