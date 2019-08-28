@@ -40,7 +40,8 @@ const waitJobsFinished = () =>
   })
 
 module.exports = async function build(program: BuildArgs) {
-  report.pendingActivity({ id: `build` })
+  const buildActivity = report.phantomActivity(`build`)
+  buildActivity.start()
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
 
@@ -57,18 +58,6 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
-  // const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  // const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
-
-  // let activity = report.activityTimer(`run static queries`, {
-  //   parentSpan: buildSpan,
-  // })
-  // activity.start()
-  // await queryUtil.processStaticQueries(staticQueryIds, {
-  //   activity,
-  //   state: store.getState(),
-  // })
-  // activity.end()
   const { pageQueryIds } = await queryUtil.initialProcessQueries({
     parentSpan: buildSpan,
   })
@@ -125,11 +114,6 @@ module.exports = async function build(program: BuildArgs) {
     activity.end()
   }
 
-  // activity = report.activityTimer(`run page queries`)
-  // activity.start()
-  // await queryUtil.processPageQueries(pageQueryIds, { activity })
-  // activity.end()
-
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
@@ -181,5 +165,5 @@ module.exports = async function build(program: BuildArgs) {
   buildSpan.finish()
   await stopTracer()
   workerPool.end()
-  report.completeActivity(`build`)
+  buildActivity.end()
 }

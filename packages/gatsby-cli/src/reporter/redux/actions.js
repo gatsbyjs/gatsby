@@ -142,24 +142,26 @@ const actions = {
         },
       })
 
-      actionsToEmit.push(
-        actions.createLog({
-          text: activity.text,
-          level: `ACTIVITY_${status}`,
-          duration,
-          statusText:
-            activity.statusText ||
-            (status === `SUCCESS` && activity.type === `progress`
-              ? `${activity.current}/${activity.total} ${(
-                  activity.total / duration
-                ).toFixed(2)}/s`
-              : undefined),
-          activity_uuid: activity.uuid,
-          activity_current: activity.current,
-          activity_total: activity.total,
-          activity_type: activity.type,
-        })
-      )
+      if (activity.type !== `hidden`) {
+        actionsToEmit.push(
+          actions.createLog({
+            text: activity.text,
+            level: `ACTIVITY_${status}`,
+            duration,
+            statusText:
+              activity.statusText ||
+              (status === `SUCCESS` && activity.type === `progress`
+                ? `${activity.current}/${activity.total} ${(
+                    activity.total / duration
+                  ).toFixed(2)}/s`
+                : undefined),
+            activity_uuid: activity.uuid,
+            activity_current: activity.current,
+            activity_total: activity.total,
+            activity_type: activity.type,
+          })
+        )
+      }
     }
 
     const logsState = getStore().getState().logs

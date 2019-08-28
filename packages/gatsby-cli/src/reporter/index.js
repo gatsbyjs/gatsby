@@ -39,7 +39,6 @@ const { stripIndent } = require(`common-tags`)
 const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
-// const convertHrtime = require(`convert-hrtime`)
 
 const { getErrorFormatter } = require(`./errors`)
 const { /*dispatch,*/ getStore } = require(`./redux`)
@@ -250,6 +249,52 @@ const reporter: Reporter = {
         })
 
         reporter.panicOnBuild(...args)
+      },
+      end() {
+        span.finish()
+
+        reporterActions.endActivity({
+          id,
+          status: `SUCCESS`,
+        })
+      },
+      span,
+    }
+  },
+
+  /**
+   * Create an Activity that is not visible to the user
+   *
+   * During the lifecycle of the Gatsby process, sometimes we need to do some
+   * async work and wait for it to complete. A typical example of this is a job.
+   * This work should set the status of the process to `in progress` while running and
+   * `complete` (or `failure`) when complete. Activities do just this! However, they
+   * are visible to the user. So this function can be used to create a _hidden_ activity
+   * that while not displayed in the CLI, still triggers a change in process status.
+   *
+   * @param {string} name - Name of activity.
+   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
+   * @returns {ActivityTracker} The activity tracker.
+   */
+  phantomActivity(
+    text: string,
+    activityArgs: ActivityArgs = {}
+  ): ActivityTracker {
+    let { parentSpan, id } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    if (!id) {
+      id = text
+    }
+
+    const span = tracer.startSpan(text, spanArgs)
+
+    return {
+      start: () => {
+        reporterActions.startActivity({
+          id,
+          text,
+          type: `hidden`,
+        })
       },
       end() {
         span.finish()

@@ -18,7 +18,7 @@ const useTerminalResize = () => {
   return sizes
 }
 
-const Develop = ({ pagesCount, appName, errorCount, working }) => {
+const Develop = ({ pagesCount, appName, errorCount, working, status }) => {
   const [width] = useTerminalResize()
 
   return (
@@ -26,6 +26,8 @@ const Develop = ({ pagesCount, appName, errorCount, working }) => {
       <Box textWrap={`truncate`}>{`—`.repeat(width)}</Box>
       <Box height={1} flexDirection="row">
         <Color>{pagesCount} pages</Color>
+        <Box flexGrow={1} />
+        <Color>{status}</Color>
         <Box flexGrow={1} />
         <Color>{appName}</Color>
       </Box>
@@ -37,6 +39,7 @@ const ConnectedDevelop = connect(state => {
   return {
     pagesCount: state.pages ? state.pages.size : 0,
     appName: state.program.sitePackageJson.name || ``,
+    status: state.logs.status,
   }
 })(Develop)
 
