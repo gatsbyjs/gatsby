@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@mdx-js/react": "^1.4.0",
-    "gatsby": "^2.14.1",
+    "gatsby": "^2.14.2",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
