@@ -98,7 +98,7 @@ user-site
 
 ## Any source file is shadowable
 
-Component Shadowing isn’t restricted to React components; you can override any JavaScript, Markdown, MDX, or CSS file in the `src` directory. This gives you fine-grained control of all functionality, content, and styling that a theme provides.
+Component shadowing isn’t restricted to React components; you can override any JavaScript, Markdown, MDX, or CSS file in the `src` directory. This gives you fine-grained control of all functionality, content, and styling that a theme provides.
 
 If you wanted to shadow a CSS file in `gatsby-theme-awesome-css` that's found at `src/styles/bio.css` you can do so by creating `user-site/src/gatsby-theme-awesome-css/styles/bio.css`
 
