@@ -2,7 +2,6 @@
 title: Shadowing
 ---
 
-# Shadowing
 
 Gatsby Themes introduce a concept called Shadowing. This feature allows users to override a component, or any other file, in the `src` directory to customize it.
 
