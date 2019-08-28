@@ -23,6 +23,7 @@ const Container = styled(`div`)`
   box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[10]};
   border-radius: ${radii[2]}px;
   margin-top: ${space[8]};
+  margin-bottom: ${space[8]};
   padding: calc(${space[6]} * 1.2);
   padding-bottom: calc(${rhythm(space[6] * 1.2)} + ${stripedBorderHeight});
   position: relative;

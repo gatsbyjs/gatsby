@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
-
+// import { DiscussionEmbed } from 'disqus-react'; <= Discus component
 import Layout from "../components/layout"
 import {
   colors,
@@ -47,6 +47,18 @@ class BlogPostTemplate extends React.Component {
         <link rel="canonical" href={post.frontmatter.canonicalLink} />
       )
     }
+    /*
+    Configs for Disqus component replace temp data with actual data if using
+
+    const disqusShortname = 'example'; // this will be in the discus acct under mangement settings
+    const disqusConfig = {
+		  url: 'http://www.example.com/example-thread', // Link to post this is for discus
+		  identifier: 'something-unique-12345', // Post ID if want or can make your own
+		  title: 'Example Thread', // Post title
+		  category_id: '123456', // Post ID if want or can make your own
+      shortname: 'example' // can be anything
+    };
+    */
     return (
       <Layout location={this.props.location}>
         <Container>
@@ -200,6 +212,10 @@ class BlogPostTemplate extends React.Component {
             </section>
             <TagsSection tags={post.frontmatter.tags} />
             <EmailCaptureForm />
+            {/*
+            Disqus chat feature because why not let our readers comment on our post? 
+            <DiscussionEmbed shortname={ disqusShortname } config={ disqusConfig } />
+            */}
           </main>
         </Container>
         <div
