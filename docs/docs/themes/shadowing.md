@@ -212,4 +212,4 @@ This provides a nice interface to extend an object if you want to change a coupl
 
 ## How Much Shadowing is too Much Shadowing?
 
-If you’ve found yourself shadowing a large amount of components in a particular theme it might make sense to use a fork instead.
+If you find yourself shadowing a large number of components in a particular theme it might make sense to fork and modify the theme instead.
