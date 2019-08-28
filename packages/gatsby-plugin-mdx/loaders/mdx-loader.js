@@ -112,15 +112,16 @@ module.exports = async function(content) {
 
   const source = fileNode && fileNode.sourceInstanceName
 
+  let mdxNode;
   try {
-    const mdxNode = await createMDXNode({
+    mdxNode = await createMDXNode({
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
       node: fileNode,
       content,
     })
   } catch (e) {
     return callback(e)
-  }  
+  }
 
   // get the default layout for the file source group, or if it doesn't
   // exist, the overall default layout
