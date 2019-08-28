@@ -610,9 +610,7 @@ describe(`disableBgImageOnAlpha`, () => {
     expect(node.value).toMatchSnapshot()
     // expect(node.value).not.toMatch(`<html>`)
   })
-})
 
-describe(`disableBgImageOnAlpha`, () => {
   it(`disables background image on transparent images when disableBgImageOnAlpha === true`, async () => {
     const imagePath = `images/my-image.jpeg`
     const content = `![some alt](./${imagePath} "some title")`
