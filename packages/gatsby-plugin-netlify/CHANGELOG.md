@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.9...gatsby-plugin-netlify@2.1.10) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+
 ## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.8...gatsby-plugin-netlify@2.1.9) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-plugin-netlify
