@@ -16,20 +16,13 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   ])
 
   const attachCode = `
-  if (ga) {
+  if(ga){
     ga('require', 'linker');
     ga('linker:autoLink', ['gatsbyjs.com']);
   }`
-
   // use with the `allowLinker` option of gatsby-plugin-google-analytics
   setPostBodyComponents([
-    <script
-      key="ga-linker"
-      dangerouslySetInnerHTML={{
-        __html: attachCode,
-      }}
-    />,
+    <script key="ga-linker" dangerouslySetInnerHTML={{ __html: attachCode }} />,
   ])
 }
-
 export const wrapRootElement = wrapRoot
