@@ -80,9 +80,7 @@ const waitJobsFinished = () =>
   })
 
 async function startServer(program) {
-  const indexHTMLActivity = report.activityTimer(`building index.html`, {
-    // dontShowSuccess: true,
-  })
+  const indexHTMLActivity = report.activityTimer(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
@@ -119,7 +117,6 @@ async function startServer(program) {
   // report.stateUpdate(`webpack`, `IN_PROGRESS`)
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
-    // dontShowSuccess: true,
     id: `webpack-develop`,
   })
   webpackActivity.start()
@@ -200,9 +197,7 @@ async function startServer(program) {
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      const activity = report.activityTimer(`Refreshing source data`, {
-        // dontShowSuccess: true,
-      })
+      const activity = report.activityTimer(`Refreshing source data`, {})
       activity.start()
       sourceNodes({
         webhookBody: req.body,
@@ -333,7 +328,7 @@ async function startServer(program) {
 
 module.exports = async (program: any) => {
   initTracer(program.openTracingConfigFile)
-  report.pendingActivity(`webpack-develop`)
+  report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -575,7 +570,6 @@ module.exports = async (program: any) => {
       // webpackActivity = null
     }
     webpackActivity = report.activityTimer(`Re-building development bundle`, {
-      // dontShowSuccess: true,
       id: `webpack-develop`,
     })
     webpackActivity.start()

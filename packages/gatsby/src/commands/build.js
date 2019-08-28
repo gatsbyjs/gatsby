@@ -40,7 +40,7 @@ const waitJobsFinished = () =>
   })
 
 module.exports = async function build(program: BuildArgs) {
-  report.pendingActivity(`build`)
+  report.pendingActivity({ id: `build` })
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
 

@@ -14,10 +14,7 @@ const ConnectedCLI = connect(state => {
     state.program.status === `BOOTSTRAP_FINISHED`
   return {
     logs: state.logs,
-    // pageCount: state.pages ? state.pages.size : 0,
     showStatusBar,
-    // command: state.program ? state.program._ : ``,
-    // bootstrapFinished: state.program ? state.program.status : ``,
   }
 })(CLI)
 

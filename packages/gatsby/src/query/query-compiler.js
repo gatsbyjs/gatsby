@@ -106,7 +106,6 @@ class Runner {
     const activity = report.activityTimer(`extract queries from components`, {
       // parentSpan: bootstrapSpan,
       id: `query-extraction`,
-      // dontShowSuccess: !isFirstRun,
     })
     activity.start()
     const messages = []

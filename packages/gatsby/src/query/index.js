@@ -297,7 +297,6 @@ const startListening = queue => {
       // console.log(`create progress`)
       activity = report.createProgress(`run queries`, queryJobs.length, 0, {
         id: `query-running`,
-        // dontShowSuccess: true,
       })
       activity.start()
     } else {
@@ -310,11 +309,6 @@ const startListening = queue => {
         tick: () => {},
       }
     }
-    // const activity = report.createProgress(`run queries`, queryJobs.length, 0, {
-    //   id: `query-running`,
-    //   dontShowSuccess: true,
-    // })
-    // activity.start()
 
     const onFinish = (...arg) => {
       // console.log(`onFinish`, args)
@@ -337,7 +331,7 @@ const startListening = queue => {
   // })
 
   emitter.on(`API_RUNNING_START`, () => {
-    report.pendingActivity(`query-running`)
+    report.pendingActivity({ id: `query-running` })
     // report.stateUpdate(`queryRunning`, `NOT_STARTED`)
   })
 

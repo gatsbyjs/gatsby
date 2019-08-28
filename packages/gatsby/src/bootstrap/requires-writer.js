@@ -90,9 +90,6 @@ const preferDefault = m => m && m.default || m
       .then(() => fs.move(tmp, destination, { overwrite: true }))
   }
 
-  // reporter.pendingActivity(`webpack-develop`)
-  // reporter.stateUpdate(`webpack`, `NOT_STARTED`)
-
   await Promise.all([
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
@@ -106,12 +103,11 @@ const debouncedWriteAll = _.debounce(
   async () => {
     const activity = reporter.activityTimer(`write out requires`, {
       id: `requires-writer`,
-      // dontShowSuccess: true,
     })
     activity.start()
     const didRequiresChange = await writeAll(store.getState())
     if (didRequiresChange) {
-      reporter.pendingActivity(`webpack-develop`)
+      reporter.pendingActivity({ id: `webpack-develop` })
     }
     activity.end()
   },
@@ -129,30 +125,22 @@ const debouncedWriteAll = _.debounce(
  */
 const startListener = () => {
   emitter.on(`CREATE_PAGE`, () => {
-    // console.log(`on CREATE_PAGE`)
-    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
-    reporter.pendingActivity(`requires-writer`)
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
   emitter.on(`CREATE_PAGE_END`, () => {
-    // console.log(`on CREATE_PAGE_END`)
-    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
-    reporter.pendingActivity(`requires-writer`)
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
   emitter.on(`DELETE_PAGE`, () => {
-    // console.log(`on DELETE_PAGE`)
-    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
-    reporter.pendingActivity(`requires-writer`)
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
   emitter.on(`DELETE_PAGE_BY_PATH`, () => {
-    // console.log(`on DELETE_PAGE_BY_PATH`)
-    // reporter.stateUpdate(`requiresWriter`, `NOT_STARTED`)
-    reporter.pendingActivity(`requires-writer`)
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 }

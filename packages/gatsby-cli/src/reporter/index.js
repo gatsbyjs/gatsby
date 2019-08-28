@@ -53,13 +53,8 @@ const addMessage = level => text => reporterActions.createLog({ level, text })
 
 let isVerbose = false
 
-const prematureEnd = (exit = true) => {
+const interuptActivities = () => {
   const { activities } = getStore().getState().logs
-  // hack so at least one activity is surely failed, so
-  // we are guaranteed to generate FAILED status
-  // if none of activity did explicitly fail
-  reporterActions.createPendingActivity(`panic`, `FAILED`)
-
   Object.keys(activities).forEach(activityId => {
     const activity = activities[activityId]
     if (
@@ -69,14 +64,26 @@ const prematureEnd = (exit = true) => {
       reporter.completeActivity(activityId, `INTERRUPTED`)
     }
   })
+}
+
+const prematureEnd = () => {
+  // hack so at least one activity is surely failed, so
+  // we are guaranteed to generate FAILED status
+  // if none of activity did explicitly fail
+  reporterActions.createPendingActivity({
+    id: `panic`,
+    status: `FAILED`,
+  })
+
+  interuptActivities()
+
   // process.stdout.write(`EXITING wat\n`)
-  if (exit) {
-    process.exit(1)
-  }
+  process.exit(1)
 }
 
 signalExit(code => {
-  if (code !== 0) prematureEnd(false)
+  if (code !== 0) prematureEnd()
+  else interuptActivities()
 })
 
 /**
@@ -211,7 +218,7 @@ const reporter: Reporter = {
     text: string,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    let { parentSpan, dontShowSuccess, id } = activityArgs
+    let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
       id = text
@@ -225,7 +232,6 @@ const reporter: Reporter = {
           id,
           text,
           type: `spinner`,
-          dontShowSuccess,
         })
       },
       setStatus: statusText => {
@@ -271,7 +277,7 @@ const reporter: Reporter = {
     start = 0,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    let { parentSpan, dontShowSuccess, id } = activityArgs
+    let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
     if (!id) {
       id = text
@@ -284,7 +290,6 @@ const reporter: Reporter = {
           id,
           text,
           type: `progress`,
-          dontShowSuccess,
           current: start,
           total,
         })
