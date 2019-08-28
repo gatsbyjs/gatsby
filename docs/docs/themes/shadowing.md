@@ -9,7 +9,7 @@ A practical use case is when you've installed `gatsby-theme-blog` and want to cu
 
 ## Shadowing Example
 
-If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio` component which is used in the `BlogPost` template. If you’d like to change the `Bio` component you can do so with Component Shadowing.
+If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio` component which is used in the `BlogPost` template. If you’d like to change the `Bio` component you can do so with component shadowing.
 
 ### Theme file structure
 
