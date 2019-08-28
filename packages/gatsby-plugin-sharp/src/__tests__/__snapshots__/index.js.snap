@@ -102,6 +102,18 @@ exports[`gatsby-plugin-sharp queueImageResizing should process immediately when 
 }
 `;
 
+exports[`gatsby-plugin-sharp stats determines if the image is transparent, based on the presence and use of alpha channel 1`] = `
+Object {
+  "isTransparent": false,
+}
+`;
+
+exports[`gatsby-plugin-sharp stats determines if the image is transparent, based on the presence and use of alpha channel 2`] = `
+Object {
+  "isTransparent": true,
+}
+`;
+
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
 Object {
   "aspectRatio": 1,
