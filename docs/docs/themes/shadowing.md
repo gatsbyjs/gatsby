@@ -116,7 +116,7 @@ In addition to overriding files, you can _extend_ any JavaScript file in the `sr
 
 This means that you can import the component you’re shadowing and then render it. Consider a scenario where you have a custom Card component that you want to wrap the author’s bio in.
 
-Before component extending was added this meant you had to copy over the entire component implementation from the theme to wrap it with your Card. It might look something like:
+Without extending the component, you would have to manually copy over the entire component implementation from the theme to wrap it with your custom shadowed component. It might look something like:
 
 ```js:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
