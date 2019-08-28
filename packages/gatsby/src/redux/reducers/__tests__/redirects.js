@@ -5,38 +5,48 @@ describe(`redirects`, () => {
     const action = {
       type: `CREATE_REDIRECT`,
       payload: {
-        fromPath: `/page1`,
-        toPath: `/page1/`,
+        fromPath: `/page-internal`,
+        toPath: `/page-internal/`,
       },
     }
 
     let state = reducer(undefined, action)
 
-    expect(state).toEqual([
-      {
-        fromPath: `/page1`,
-        toPath: `/page1/`,
-      },
-    ])
+    expect(state).toEqual(
+      new Map([
+        [
+          `/page-internal`,
+          {
+            fromPath: `/page-internal`,
+            toPath: `/page-internal/`,
+          },
+        ],
+      ])
+    )
   })
 
   it(`lets you redirect to an external url`, () => {
     const action = {
       type: `CREATE_REDIRECT`,
       payload: {
-        fromPath: `/page1`,
+        fromPath: `/page-external`,
         toPath: `https://example.com`,
       },
     }
 
     let state = reducer(undefined, action)
 
-    expect(state).toEqual([
-      {
-        fromPath: `/page1`,
-        toPath: `https://example.com`,
-      },
-    ])
+    expect(state).toEqual(
+      new Map([
+        [
+          `/page-external`,
+          {
+            fromPath: `/page-external`,
+            toPath: `https://example.com`,
+          },
+        ],
+      ])
+    )
   })
 
   const protocolArr = [
@@ -49,7 +59,7 @@ describe(`redirects`, () => {
 
   protocolArr.forEach(([protocol, toPath], index) => {
     it(`lets you redirect using ${protocol}`, () => {
-      const fromPath = `/page${index}`
+      const fromPath = `/page-protocol-${index}`
       const action = {
         type: `CREATE_REDIRECT`,
         payload: {
@@ -58,12 +68,17 @@ describe(`redirects`, () => {
         },
       }
 
-      expect(reducer(undefined, action)).toEqual([
-        {
-          fromPath,
-          toPath,
-        },
-      ])
+      expect(reducer(undefined, action)).toEqual(
+        new Map([
+          [
+            fromPath,
+            {
+              fromPath,
+              toPath,
+            },
+          ],
+        ])
+      )
     })
   })
 })
