@@ -109,6 +109,7 @@
     "pnp-webpack-plugin": "^1.5.0",
     "postcss-flexbugs-fixes": "^3.3.1",
     "postcss-loader": "^2.1.6",
+    "prompts": "^2.1.0",
     "prop-types": "^15.7.2",
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^4.2.3",
