@@ -49,7 +49,7 @@ In this case, the file to shadow is `gatsby-theme-blog/src/components/bio.js`.
 
 Component shadowing relies on a mirrored file structure to determine which component will be rendered. In order to override the Bio component in `gatsby-theme-blog`, create a file named `user-site/src/gatsby-theme-blog/components/bio.js`.
 
-Any file that lives in the `src/gatsby-theme-blog` directory of the user’s site will be used instead of a file with the same name in the theme’s src directory: `gatsby-theme-blog/src`.
+Any file that lives in the `src/gatsby-theme-blog` directory of the user’s site will be used instead of a file with the same name located in the theme’s src directory: `gatsby-theme-blog/src`.
 
 This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rendered in place of `gatsby-theme-blog/src/components/bio.js`:
 
