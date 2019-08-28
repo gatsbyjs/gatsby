@@ -1,5 +1,3 @@
-const fromPaths = new Set()
-
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `CREATE_REDIRECT`: {
