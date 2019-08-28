@@ -3,7 +3,7 @@ title: Shadowing
 ---
 
 
-Gatsby Themes introduce a concept called Shadowing. This feature allows users to override a component, or any other file, in the `src` directory to customize it.
+Gatsby themes introduce a concept called "shadowing". This feature allows users to override a component, or any other file, in the `src` directory to customize it.
 
 A practical use case is when you've installed `gatsby-theme-blog` and want to customize the author Bio component to add a link to their personal website. Component Shadowing lets you replace the theme’s original file, `gatsby-theme-blog/src/components/bio.js`, with your own to implement any changes you need.
 
