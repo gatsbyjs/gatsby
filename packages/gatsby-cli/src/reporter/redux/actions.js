@@ -39,7 +39,7 @@ const verySpecialDebounce = (fn, waitingTime) => {
     if (waitingEnough) {
       if (lastCalledStatus !== lastActualledCalledStatus) {
         lastActualledCalledStatus = status
-        return fn(status)
+        fn(status)
       }
     } else {
       timeoutHandle = setTimeout(
