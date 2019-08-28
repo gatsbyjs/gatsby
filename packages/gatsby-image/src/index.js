@@ -283,16 +283,17 @@ class Image extends React.Component {
     // already in the browser cache so it's cheap to just show directly.
     this.seenBefore = isBrowser && inImageCache(props)
 
-    this.addNoScript = !(props.critical && !props.fadeIn)
+    const isCritical = props.loading === `eager` || props.critical
+
+    this.addNoScript = !(isCritical && !props.fadeIn)
     this.useIOSupport =
       !hasNativeLazyLoadSupport &&
       hasIOSupport &&
-      !props.critical &&
+      !isCritical &&
       !this.seenBefore
 
     const isVisible =
-      props.critical ||
-      props.loading === `eager` ||
+      isCritical ||
       (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
 
     this.state = {
@@ -311,7 +312,7 @@ class Image extends React.Component {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
-    if (this.props.critical) {
+    if (isCritical) {
       const img = this.imageRef.current
       if (img && img.complete) {
         this.handleImageLoaded()
