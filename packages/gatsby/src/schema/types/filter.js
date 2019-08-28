@@ -58,6 +58,8 @@ const convert = ({
     }
 
     if (type instanceof GraphQLInputObjectType) {
+      // Input type composers has names `FooInput`, get the type associated
+      // with it
       const typeComposer = schemaComposer.getAnyTC(
         type.name.replace(/Input$/, ``)
       )

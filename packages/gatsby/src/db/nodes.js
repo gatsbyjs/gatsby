@@ -38,8 +38,7 @@ switch (backend) {
     )
 }
 
-module.exports = { ...nodesDb, runQuery }
-module.exports.backend = backend
+module.exports = { ...nodesDb, runQuery, backend }
 
 /**
  * Get content for a node from the plugin that created it.

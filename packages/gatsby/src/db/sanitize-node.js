@@ -1,8 +1,8 @@
 const _ = require(`lodash`)
 
 /**
- * Make node serializable
- * @param {(Object|Array)} node to sanitize
+ * Make data serializable
+ * @param {(Object|Array)} data to sanitize
  */
 const sanitizeNode = (data, isNode = true) => {
   const isPlainObject = _.isPlainObject(data)
