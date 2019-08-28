@@ -21,6 +21,9 @@ const iface = {
     if (Array.isArray(action)) {
       action.forEach(item => iface.dispatch(item))
       return
+    } else if (typeof action === `function`) {
+      action(iface.dispatch)
+      return
     }
 
     action = {

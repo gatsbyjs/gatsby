@@ -2,9 +2,9 @@
 const uuidv4 = require(`uuid/v4`)
 const convertHrtime = require(`convert-hrtime`)
 const { trackCli } = require(`gatsby-telemetry`)
-
 const { bindActionCreators } = require(`redux`)
 const { dispatch, getStore } = require(`./index`)
+const signalExit = require(`signal-exit`)
 
 const getActivity = id => getStore().getState().logs.activities[id]
 
@@ -12,6 +12,52 @@ const getElapsedTimeMS = activity => {
   const elapsed = process.hrtime(activity.startTime)
   return convertHrtime(elapsed)[`seconds`].toFixed(3)
 }
+
+const verySpecialDebounce = (fn, waitingTime) => {
+  let lastInvocationTime = 0
+  let lastCalledStatus = undefined
+  let lastActualledCalledStatus = undefined
+  let timeoutHandle = undefined
+
+  signalExit(() => {
+    if (timeoutHandle) {
+      clearTimeout(timeoutHandle)
+      if (lastCalledStatus !== lastActualledCalledStatus) {
+        fn(lastCalledStatus)
+      }
+    }
+  })
+
+  const debounceHandler = status => {
+    clearTimeout(timeoutHandle)
+    timeoutHandle = null
+    const currentTime = Date.now()
+    const waitingEnough = currentTime - lastInvocationTime > waitingTime
+    lastInvocationTime = currentTime
+    lastCalledStatus = status
+
+    if (waitingEnough) {
+      if (lastCalledStatus !== lastActualledCalledStatus) {
+        lastActualledCalledStatus = status
+        return fn(status)
+      }
+    } else {
+      timeoutHandle = setTimeout(
+        () => debounceHandler(status),
+        currentTime - lastInvocationTime
+      )
+    }
+  }
+
+  return debounceHandler
+}
+
+const debouncedSetStatus = verySpecialDebounce((dispatchFN, status) => {
+  dispatchFN({
+    type: `SET_STATUS`,
+    payload: status,
+  })
+}, 1000)
 
 const actions = {
   createLog: ({
@@ -69,12 +115,7 @@ const actions = {
       },
     }
   },
-  setStatus: status => {
-    return {
-      type: `SET_STATUS`,
-      payload: status,
-    }
-  },
+  setStatus: status => dispatch => debouncedSetStatus(dispatch, status),
   startActivity: ({
     id,
     text,
