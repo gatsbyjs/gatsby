@@ -38,8 +38,8 @@ const sanitizeNode = (data, isNode = true) => {
 }
 
 /**
- * @param {Object} data
- * @returns {Object} data without undefined values
+ * @param {Object|Array} data
+ * @returns {Object|Array} data without undefined values
  */
 const omitUndefined = data => {
   const isPlainObject = _.isPlainObject(data)
