@@ -45,7 +45,7 @@ You can look at the `gatsby-theme-blog`'s file structure to determine the file p
 
 ### Customizing the `Bio` component
 
-The file to shadow is found at `gatsby-theme-blog/src/components/bio.js`.
+In this case, the file to shadow is `gatsby-theme-blog/src/components/bio.js`.
 
 Component Shadowing uses a naming convention to determine which component will be rendered. In order to override the Bio component in `gatsby-theme-blog`, create a file named `user-site/src/gatsby-theme-blog/components/bio.js`.
 
