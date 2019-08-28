@@ -15,7 +15,7 @@ here for education purposes.
 
 ```javascript
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: "gatsby-theme-minimal",
       options: {},
