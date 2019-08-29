@@ -52,12 +52,13 @@ const verySpecialDebounce = (fn, waitingTime) => {
   return debounceHandler
 }
 
-const debouncedSetStatus = verySpecialDebounce(status => {
-  dispatch({
-    type: `SET_STATUS`,
-    payload: status,
-  })
-}, 1000)
+const debouncedSetStatus = status =>
+  verySpecialDebounce(dispatchFn => {
+    dispatchFn({
+      type: `SET_STATUS`,
+      payload: status,
+    })
+  }, 1000)
 
 const actions = {
   createLog: ({
@@ -106,14 +107,22 @@ const actions = {
     }
   },
   createPendingActivity: ({ id, status = `NOT_STARTED` }) => {
-    return {
+    const actionsToEmit = []
+
+    if (getStore().getState().logs.status !== `IN_PROGRESS`) {
+      actionsToEmit.push(actions.setStatus(`IN_PROGRESS`))
+    }
+
+    actionsToEmit.push({
       type: `ACTIVITY_PENDING`,
       payload: {
         id,
         type: `pending`,
         status,
       },
-    }
+    })
+
+    return actionsToEmit
   },
   setStatus: status => debouncedSetStatus(status),
   startActivity: ({
