@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.3...gatsby@2.14.4) (2019-08-29)
+
+### Bug Fixes
+
+- **gatsby:** revert redirects map to array ([#17168](https://github.com/gatsbyjs/gatsby/issues/17168)) ([b553891](https://github.com/gatsbyjs/gatsby/commit/b553891))
+
 ## [2.14.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.2...gatsby@2.14.3) (2019-08-29)
 
 ### Bug Fixes
