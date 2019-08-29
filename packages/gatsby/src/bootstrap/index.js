@@ -81,7 +81,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
 
   const onEndJob = () => {
-    if (store.getState().jobs.active.length === 0) {
+    if (activityForJobs && store.getState().jobs.active.length === 0) {
       activityForJobs.end()
       activityForJobs = null
     }
