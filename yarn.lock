@@ -8215,10 +8215,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@^0.106.2:
-  version "0.106.2"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.106.2.tgz#624db7c04b00879ac14853434817c7bc5e1419db"
-  integrity sha512-pALWFKf+AQiX4VfSEdxruj2bSMigsrAcg8djV6Hue2y3FJyiA/Z42UkEv6zEvSIpDj1EL+cRBvJNUx6L2+gdTQ==
+flow-bin@^0.106.3:
+  version "0.106.3"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.106.3.tgz#87b5647bc23ae0efceabb6c50490c02a8478960c"
+  integrity sha512-QDwmhsMmiASmwgr6r2WTz9RPsN0pb84PY0whz0JqFaBX7/Fx2wj2MOtjbR2yv+qWZnozP9U40Jd9LLt8rC3WSQ==
 
 flow-parser@0.*:
   version "0.105.2"
