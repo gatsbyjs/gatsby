@@ -20,6 +20,8 @@ function createMockCompilationHash() {
 
 describe(`Webpack Compilation Hash tests`, () => {
   it(`should render properly`, async () => {
+    console.log(await browser.version())
+
     await g.goto(`/`)
     await g.waitForAPI(`onRouteUpdate`)
   })
@@ -51,15 +53,12 @@ describe(`Webpack Compilation Hash tests`, () => {
 
     await g.click(`compilation-hash`)
 
-    // Wait in case page reloads automatically
+    // Wait for page to reload
     await sleep(500)
     await g.waitForAPI(`onRouteUpdate`)
 
     // Navigate into a non-prefetched page
     await g.click(`deep-link-page`)
-
-    // Wait in case page reloads automatically
-    await sleep(500)
     await g.waitForAPI(`onRouteUpdate`)
 
     // If the window compilation hash has changed, we know the
