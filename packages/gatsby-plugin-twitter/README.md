@@ -3,7 +3,7 @@
 Loads the Twitter JavaScript for embedding tweets, timelines, share and follow
 buttons. Lets you add tweets to markdown and in other places.
 
-Note: when copying the embed code, just copy the blockquote section and not the
+Note: when copying the embedded code, just copy the blockquote section and not the
 script.
 
 ## Install
