@@ -78,11 +78,9 @@ exports.onPostBuild = (
   ])
   const appFile = files.find(file => file.startsWith(`app-`))
 
-  Array.prototype.flat =
-    Array.prototype.flat ||
-    function() {
-      return [].concat(...this)
-    }
+  function flat(arr) {
+    return Array.prototype.flat ? arr.flat() : [].concat(...arr)
+  }
 
   const precachePages = getPrecachePages(
     precachePagesGlobs,
@@ -94,7 +92,7 @@ exports.onPostBuild = (
       `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
       pathPrefix
     ),
-    ...precachePages.map(page => getResourcesFromHTML(page, pathPrefix)).flat(),
+    ...flat(precachePages.map(page => getResourcesFromHTML(page, pathPrefix))),
   ])
 
   const globPatterns = files.concat([
