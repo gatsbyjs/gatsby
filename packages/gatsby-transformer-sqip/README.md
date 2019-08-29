@@ -103,7 +103,7 @@ The height of the input image, which is used to generate the preview. By default
 
 #### Sharp
 
-##### `grayscale`: GraphQLBoolean, default: `false`
+##### `greyscale`: GraphQLBoolean, default: `false`
 
 Uses Sharp's greyscale to convert the source image to 8-bit greyscale, 256 shades of grey, e.g.
 
