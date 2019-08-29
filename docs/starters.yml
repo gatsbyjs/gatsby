@@ -3728,3 +3728,22 @@
     - Email verification
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for offline support out of the box
+- url: https://gatsby-starter-dot.netlify.com/
+  repo: https://github.com/chronisp/gatsby-starter
+  description: Gatsby Starter for creating portfolio & blog.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Netlify
+    - Portfolio
+    - Redux
+    - SEO
+    - Styling:Material
+  features:
+    - Extensible & responsive design using Material UI (palette, typography & breakpoints configuration)
+    - Blog integration with Contentful CMS (GraphQL queries)
+    - Redux (connect actions & props easily using custom HOF)
+    - Support for Netlify deployment
+    - SEO
+    - Prettier code styling
