@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.17...gatsby-dev-cli@2.5.18) (2019-08-29)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** typo ([#17176](https://github.com/gatsbyjs/gatsby/issues/17176)) ([b0e9eaf](https://github.com/gatsbyjs/gatsby/commit/b0e9eaf))
+- **gatsby-dev-cli:** typo ([#17177](https://github.com/gatsbyjs/gatsby/issues/17177)) ([a092f0e](https://github.com/gatsbyjs/gatsby/commit/a092f0e))
+
 ## [2.5.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.16...gatsby-dev-cli@2.5.17) (2019-08-28)
 
 ### Bug Fixes
