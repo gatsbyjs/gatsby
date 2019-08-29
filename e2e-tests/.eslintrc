@@ -1,5 +1,6 @@
 {
   "globals": {
-    "page": "readonly"
+    "page": "readonly",
+    "browser": "readonly"
   }
 }
