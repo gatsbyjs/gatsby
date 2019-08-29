@@ -15,7 +15,6 @@ describe(`Scroll behaviour`, () => {
     // it to store scroll position
     await sleep(100)
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-    await sleep(100)
 
     await g.click(`below-the-fold`)
     await g.waitForAPI(`onRouteUpdate`)
@@ -46,48 +45,39 @@ describe(`Scroll behaviour`, () => {
     await g.click(`long-page`)
     await g.waitForAPI(`onRouteUpdate`)
 
-    // cy.getTestElement(`below-the-fold`)
-    //   .scrollIntoView({
-    //     // this is weird hack - seems like Cypress in run mode doesn't update scroll correctly
-    //     duration: 100,
-    //   })
-    //   .wait(500) // allow ScrollContext to update scroll position store
-    //   .storeScrollPosition(`middle-of-the-page`)
-    //   .click()
-    //   .waitForRouteChange()
+    const scrollPos = []
 
-    // cy.getTestElement(`long-page`)
-    //   .click()
-    //   .waitForRouteChange()
+    await sleep(100)
+    await g.scrollTo(`below-the-fold`)
+    scrollPos[0] = await page.evaluate(() => window.scrollY)
+    await g.click(`below-the-fold`)
+    await g.waitForAPI(`onRouteUpdate`)
 
-    // cy.getTestElement(`even-more-below-the-fold`)
-    //   .scrollIntoView({
-    //     // this is weird hack - seems like Cypress in run mode doesn't update scroll correctly
-    //     duration: 100,
-    //   })
-    //   .wait(500) // allow ScrollContext to update scroll position store
-    //   .storeScrollPosition(`bottom-of-the-page`)
-    //   .click()
-    //   .waitForRouteChange()
+    await g.click(`long-page`)
+    await g.waitForAPI(`onRouteUpdate`)
 
-    // cy.go(`back`).waitForRouteChange()
+    await sleep(100)
+    await g.scrollTo(`even-more-below-the-fold`)
+    scrollPos[1] = await page.evaluate(() => window.scrollY)
+    await g.click(`even-more-below-the-fold`)
+    await g.waitForAPI(`onRouteUpdate`)
 
-    // cy.location(`pathname`)
-    //   .should(`equal`, `/long-page/`)
-    //   .wait(500)
-    //   // we went back in hitsory 1 time, so we should end up at the bottom of the page
-    //   .shouldMatchScrollPosition(`bottom-of-the-page`)
-    //   .shouldNotMatchScrollPosition(`middle-of-the-page`)
+    await page.goBack()
+    await g.waitForAPI(`onRouteUpdate`)
 
-    // cy.go(`back`).waitForRouteChange()
-    // cy.go(`back`).waitForRouteChange()
+    expect(g.path()).toBe(`/long-page/`)
+    expect(await page.evaluate(() => window.scrollY)).toBe(scrollPos[1])
+    expect(await page.evaluate(() => window.scrollY)).not.toBe(scrollPos[0])
 
-    // cy.location(`pathname`)
-    //   .should(`equal`, `/long-page/`)
-    //   .wait(500)
-    //   // we went back in hitsory 2 more times, so we should end up in the middle of the page
-    //   // instead of at the bottom
-    //   .shouldMatchScrollPosition(`middle-of-the-page`)
-    //   .shouldNotMatchScrollPosition(`bottom-of-the-page`)
+    await page.goBack()
+    await g.waitForAPI(`onRouteUpdate`)
+    await page.goBack()
+    await g.waitForAPI(`onRouteUpdate`)
+
+    expect(g.path()).toBe(`/long-page/`)
+    // we went back in hitsory 2 more times, so we should end up in the middle of the page
+    // instead of at the bottom
+    expect(await page.evaluate(() => window.scrollY)).toBe(scrollPos[0])
+    expect(await page.evaluate(() => window.scrollY)).not.toBe(scrollPos[1])
   })
 })

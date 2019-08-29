@@ -72,6 +72,14 @@ class GatsbyPuppeteer {
     return await (await this.get(selector)).click()
   }
 
+  async scrollTo(selector) {
+    const element = await this.get(selector)
+    return await this.page.evaluate(
+      element => element.scrollIntoView(),
+      element
+    )
+  }
+
   async prop(selector, property) {
     return await this.page.evaluate(
       (element, property) => element[property],
