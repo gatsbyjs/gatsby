@@ -64,16 +64,6 @@ module.exports = (
       duration,
     }
 
-    if (id === `query-running`) {
-      // process.stdout.write(
-      //   `\nFINISHING query-running ${JSON.stringify(activities[id])}\n\n`
-      // )
-
-      if (activities[id].status === `SUCCESS`) {
-        // const b = 4
-      }
-    }
-
     state = {
       ...state,
       activities,
