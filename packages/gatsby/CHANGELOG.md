@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.2...gatsby@2.14.3) (2019-08-29)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.12 ([#17103](https://github.com/gatsbyjs/gatsby/issues/17103)) ([41f60b7](https://github.com/gatsbyjs/gatsby/commit/41f60b7))
+
+## [2.14.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.1...gatsby@2.14.2) (2019-08-28)
+
+### Bug Fixes
+
+- **gatsby:** Release stdio streams when exiting `gatsby develop` ([#16714](https://github.com/gatsbyjs/gatsby/issues/16714)) ([280cf7f](https://github.com/gatsbyjs/gatsby/commit/280cf7f))
+
+## [2.14.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.0...gatsby@2.14.1) (2019-08-28)
+
+**Note:** Version bump only for package gatsby
+
+# [2.14.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.83...gatsby@2.14.0) (2019-08-26)
+
+### Bug Fixes
+
+- update dependency address to v1.1.2 ([#17083](https://github.com/gatsbyjs/gatsby/issues/17083)) ([1f9664a](https://github.com/gatsbyjs/gatsby/commit/1f9664a))
+
+### Features
+
+- **gatsby:** add better splitchunks config ([#17093](https://github.com/gatsbyjs/gatsby/issues/17093)) ([fc93b7b](https://github.com/gatsbyjs/gatsby/commit/fc93b7b))
+
+## [2.13.83](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.82...gatsby@2.13.83) (2019-08-25)
+
+### Bug Fixes
+
+- update dependency babel-eslint to ^10.0.3 ([#17071](https://github.com/gatsbyjs/gatsby/issues/17071)) ([28a7daf](https://github.com/gatsbyjs/gatsby/commit/28a7daf))
+
+## [2.13.82](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.81...gatsby@2.13.82) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency del to v5 ([#17026](https://github.com/gatsbyjs/gatsby/issues/17026)) ([47b2d86](https://github.com/gatsbyjs/gatsby/commit/47b2d86))
+
+## [2.13.81](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.80...gatsby@2.13.81) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency dotenv to v8 ([#17027](https://github.com/gatsbyjs/gatsby/issues/17027)) ([f92295e](https://github.com/gatsbyjs/gatsby/commit/f92295e))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-relative-url to v3 ([#17038](https://github.com/gatsbyjs/gatsby/issues/17038)) ([ff9ae84](https://github.com/gatsbyjs/gatsby/commit/ff9ae84))
+- update dependency is-wsl to v2 ([#17039](https://github.com/gatsbyjs/gatsby/issues/17039)) ([bfed424](https://github.com/gatsbyjs/gatsby/commit/bfed424))
+- update dependency jest-worker to v24 ([#17040](https://github.com/gatsbyjs/gatsby/issues/17040)) ([bd089a4](https://github.com/gatsbyjs/gatsby/commit/bd089a4))
+- update dependency slash to v3 ([#17019](https://github.com/gatsbyjs/gatsby/issues/17019)) ([c81f45c](https://github.com/gatsbyjs/gatsby/commit/c81f45c))
+
+## [2.13.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.79...gatsby@2.13.80) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency @gatsbyjs/relay-compiler to v2.0.0-prin… ([#16986](https://github.com/gatsbyjs/gatsby/issues/16986)) ([25f0318](https://github.com/gatsbyjs/gatsby/commit/25f0318))
+
 ## [2.13.79](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.78...gatsby@2.13.79) (2019-08-23)
 
 ### Bug Fixes

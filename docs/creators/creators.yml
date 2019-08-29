@@ -331,3 +331,13 @@
   image: images/endormi.png
   for_hire: false
   portfolio: true
+- name: Twteam
+  type: agency
+  description: >-
+    Twteam is a Swiss-based software agency specialized in web development with React and Gatsby. 
+    This technology stack makes it possible to develop smart and cost-efficient WebApps for small and medium-sized businesses.
+  location: Switzerland
+  website: "https://twteam.ch"
+  image: images/twteam.jpg
+  for_hire: true
+  portfolio: false

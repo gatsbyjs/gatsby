@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.16...gatsby-dev-cli@2.5.17) (2019-08-28)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** Minor typo fix in comment ([#17149](https://github.com/gatsbyjs/gatsby/issues/17149)) ([2aa76a6](https://github.com/gatsbyjs/gatsby/commit/2aa76a6))
+
+## [2.5.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.15...gatsby-dev-cli@2.5.16) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency del to v5 ([#17026](https://github.com/gatsbyjs/gatsby/issues/17026)) ([47b2d86](https://github.com/gatsbyjs/gatsby/commit/47b2d86))
+
+## [2.5.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.14...gatsby-dev-cli@2.5.15) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency configstore to v5 ([#17024](https://github.com/gatsbyjs/gatsby/issues/17024)) ([17e07cc](https://github.com/gatsbyjs/gatsby/commit/17e07cc))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-absolute to v1 ([#17035](https://github.com/gatsbyjs/gatsby/issues/17035)) ([9c3d1f9](https://github.com/gatsbyjs/gatsby/commit/9c3d1f9))
+
 ## [2.5.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.13...gatsby-dev-cli@2.5.14) (2019-08-23)
 
 ### Bug Fixes

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.0.7...gatsby-transformer-react-docgen@5.0.8) (2019-08-29)
+
+### Bug Fixes
+
+- update dependency react-docgen-displayname-handler to ^2.1.3 ([#17081](https://github.com/gatsbyjs/gatsby/issues/17081)) ([a87cf60](https://github.com/gatsbyjs/gatsby/commit/a87cf60))
+
+## [5.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.0.6...gatsby-transformer-react-docgen@5.0.7) (2019-08-25)
+
+### Bug Fixes
+
+- update dependency react-docgen-displayname-handler to ^2.1.2 ([#17069](https://github.com/gatsbyjs/gatsby/issues/17069)) ([c5d5e1a](https://github.com/gatsbyjs/gatsby/commit/c5d5e1a))
+
 ## [5.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.0.5...gatsby-transformer-react-docgen@5.0.6) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-transformer-react-docgen
