@@ -266,7 +266,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: www_public_dir_1
+          key: v1_www_public_dir
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
