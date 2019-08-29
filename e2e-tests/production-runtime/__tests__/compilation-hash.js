@@ -12,7 +12,8 @@ function getRandomInt(min, max) {
 
 function createMockCompilationHash() {
   return new Array(20)
-    .map(a => getRandomInt(0, 16))
+    .fill(null)
+    .map(() => getRandomInt(0, 16))
     .map(k => k.toString(16))
     .join(``)
 }
