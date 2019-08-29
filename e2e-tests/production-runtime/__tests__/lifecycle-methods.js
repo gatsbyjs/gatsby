@@ -1,7 +1,7 @@
 const GatsbyPuppeteer = require(`./lib/gatsby-puppeteer`)
 const g = new GatsbyPuppeteer({ page, origin: `http://localhost:9000` })
 
-describe(`Production build tests`, () => {
+describe(`Lifecycle methods`, () => {
   it(`should remount when navigating to different template`, async () => {
     await g.goto(`/`)
     await g.waitForAPI(`onRouteUpdate`)
