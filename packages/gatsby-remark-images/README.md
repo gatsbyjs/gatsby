@@ -58,6 +58,8 @@ plugins: [
 | `tracedSVG`            | `false` | Use traced SVGs for placeholder images instead of the "blur up" effect. Pass `true` for traced SVGs with the default settings (seen [here][3]), or an object of options to override the defaults. For example, pass `{ color: "#F00", turnPolicy: "TURNPOLICY_MAJORITY" }` to change the color of the trace to red and the turn policy to TURNPOLICY_MAJORITY. See [`node-potrace` parameter documentation][4] for a full listing and explanation of the available options.                                                                                                                                                        |
 | `loading`              | `lazy`  | Set the browser's native lazy loading attribute. One of `lazy`, `eager` or `auto`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
+| `test` | `test` | Set the browser's native test loading attribute. One of `lazy`, `eager` or `auto`. |
+
 ## dynamic wrapperStyle example
 
 ```
