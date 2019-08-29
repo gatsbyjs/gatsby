@@ -16143,10 +16143,10 @@ relay-runtime@2.0.0:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
 
-remark-custom-blocks@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/remark-custom-blocks/-/remark-custom-blocks-2.4.1.tgz#cea921ef5dc94f997aea9e7991bae9b090ccddc6"
-  integrity sha512-fbdBHFh2XKHTLO1g26sMwyEGZ+0U6tG0bcHyLm0O4mqMJuAlu4xpl9EluxN1rqku+Wpx+WnGsTIBpyNCBx5uGA==
+remark-custom-blocks@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/remark-custom-blocks/-/remark-custom-blocks-2.4.2.tgz#028607d66ee2073547609e9ac7ba3a7de70357bb"
+  integrity sha512-muyoRvKqTsrackpGiLE9GGC7YbMJeuv0CJQrUeXhZ21QWpmsj1nsB7QdwJHs/fKNbaCLS7Wj46xNGMktKuwABA==
   dependencies:
     space-separated-tokens "^1.1.1"
 
