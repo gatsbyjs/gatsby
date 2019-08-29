@@ -17,6 +17,7 @@ of a container. Some ways you can use `<img />` won't work with gatsby-image._
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
 ## Table of Contents
+
 - [Problem](#problem)
 - [Solution](#solution)
 - [Install](#install)
