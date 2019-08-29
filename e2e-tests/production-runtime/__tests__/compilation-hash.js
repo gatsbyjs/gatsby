@@ -50,12 +50,15 @@ describe(`Webpack Compilation Hash tests`, () => {
 
     await g.click(`compilation-hash`)
 
-    // Wait for the page to automatically reload
+    // Wait in case page reloads automatically
     await sleep(500)
     await g.waitForAPI(`onRouteUpdate`)
 
     // Navigate into a non-prefetched page
     await g.click(`deep-link-page`)
+
+    // Wait in case page reloads automatically
+    await sleep(500)
     await g.waitForAPI(`onRouteUpdate`)
 
     // If the window compilation hash has changed, we know the
