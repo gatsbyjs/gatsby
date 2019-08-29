@@ -52,8 +52,8 @@ const verySpecialDebounce = (fn, waitingTime) => {
   return debounceHandler
 }
 
-const debouncedSetStatus = verySpecialDebounce((dispatchFN, status) => {
-  dispatchFN({
+const debouncedSetStatus = verySpecialDebounce(status => {
+  dispatch({
     type: `SET_STATUS`,
     payload: status,
   })
@@ -115,7 +115,7 @@ const actions = {
       },
     }
   },
-  setStatus: status => dispatch => debouncedSetStatus(dispatch, status),
+  setStatus: status => debouncedSetStatus(status),
   startActivity: ({
     id,
     text,
