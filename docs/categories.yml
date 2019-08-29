@@ -15,6 +15,7 @@ starter:
   - CMS:Wordpress
   - CMS:sanity.io
   - CMS:Forestry.io
+  - CMS:AgilityCMS
   - CMS:Other
   - Disqus
   - Documentation
