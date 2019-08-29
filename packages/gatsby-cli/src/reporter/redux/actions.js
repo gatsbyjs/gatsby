@@ -13,6 +13,27 @@ const getElapsedTimeMS = activity => {
   return convertHrtime(elapsed)[`seconds`].toFixed(3)
 }
 
+const getGlobalStatus = (id, status) => {
+  const { logs } = getStore().getState()
+
+  const currentActivities = [id, ...Object.keys(logs.activities)]
+
+  return currentActivities.reduce((generatedStatus, activityId) => {
+    const activityStatus =
+      activityId === id ? status : logs.activities[activityId].status
+
+    if (activityStatus === `IN_PROGRESS` || activityStatus === `NOT_STARTED`) {
+      return `IN_PROGRESS`
+    } else if (
+      activityStatus === `FAILED` &&
+      generatedStatus !== `IN_PROGRESS`
+    ) {
+      return `FAILED`
+    }
+    return generatedStatus
+  }, `SUCCESS`)
+}
+
 const verySpecialDebounce = (fn, waitingTime) => {
   let lastInvocationTime = 0
   let lastCalledStatus = undefined
@@ -109,8 +130,12 @@ const actions = {
   createPendingActivity: ({ id, status = `NOT_STARTED` }) => {
     const actionsToEmit = []
 
-    if (getStore().getState().logs.status !== `IN_PROGRESS`) {
-      actionsToEmit.push(actions.setStatus(`IN_PROGRESS`))
+    const logsState = getStore().getState().logs
+
+    const globalStatus = getGlobalStatus(id, status)
+
+    if (globalStatus !== logsState.status) {
+      actionsToEmit.push(actions.setStatus(globalStatus))
     }
 
     actionsToEmit.push({
@@ -135,8 +160,12 @@ const actions = {
   }) => {
     const actionsToEmit = []
 
-    if (getStore().getState().logs.status !== `IN_PROGRESS`) {
-      actionsToEmit.push(actions.setStatus(`IN_PROGRESS`))
+    const logsState = getStore().getState().logs
+
+    const globalStatus = getGlobalStatus(id, status)
+
+    if (globalStatus !== logsState.status) {
+      actionsToEmit.push(actions.setStatus(globalStatus))
     }
 
     actionsToEmit.push({
@@ -215,29 +244,11 @@ const actions = {
     }
 
     const logsState = getStore().getState().logs
-    const generatedGlobalStatus = Object.keys(logsState.activities).reduce(
-      (generatedStatus, activityId) => {
-        const activityStatus =
-          activityId === id ? status : logsState.activities[activityId].status
 
-        if (
-          activityStatus === `IN_PROGRESS` ||
-          activityStatus === `NOT_STARTED`
-        ) {
-          return `IN_PROGRESS`
-        } else if (
-          activityStatus === `FAILED` &&
-          generatedStatus !== `IN_PROGRESS`
-        ) {
-          return `FAILED`
-        }
-        return generatedStatus
-      },
-      `SUCCESS`
-    )
+    const globalStatus = getGlobalStatus(id, status)
 
-    if (generatedGlobalStatus !== logsState.status) {
-      actionsToEmit.push(actions.setStatus(generatedGlobalStatus))
+    if (globalStatus !== logsState.status) {
+      actionsToEmit.push(actions.setStatus(globalStatus))
     }
 
     return actionsToEmit
