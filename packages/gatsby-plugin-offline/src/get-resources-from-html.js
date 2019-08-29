@@ -41,6 +41,8 @@ module.exports = (htmlPath, pathPrefix) => {
     // Don't cache XML files, or external resources (beginning with // or http)
     const blackListRegex = /(\.xml$|^\/\/|^http)/
 
+    // check resource URLs from header tags start with the correct prefix
+    // (these are not page URLs)
     if (!blackListRegex.test(url) && url.startsWith(pathPrefix)) {
       criticalFilePaths.push(url.replace(/^\//, ``))
     }
