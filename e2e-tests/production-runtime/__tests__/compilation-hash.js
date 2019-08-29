@@ -1,5 +1,7 @@
 const GatsbyPuppeteer = require(`./lib/gatsby-puppeteer`)
 const g = new GatsbyPuppeteer({ page, origin: `http://localhost:9000` })
+
+const sleep = require(`./lib/sleep`)
 const { overwriteWebpackCompilationHash } = require(`./lib/compilation-hash`)
 
 function getRandomInt(min, max) {
@@ -13,10 +15,6 @@ function createMockCompilationHash() {
     .map(a => getRandomInt(0, 16))
     .map(k => k.toString(16))
     .join(``)
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 describe(`Webpack Compilation Hash tests`, () => {

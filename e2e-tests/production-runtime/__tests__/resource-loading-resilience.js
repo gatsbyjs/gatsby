@@ -1,5 +1,7 @@
 const GatsbyPuppeteer = require(`./lib/gatsby-puppeteer`)
 const g = new GatsbyPuppeteer({ page, origin: `http://localhost:9000` })
+
+const sleep = require(`./lib/sleep`)
 const {
   restoreAllBlockedResources,
   blockAssetsForChunk,
@@ -7,10 +9,6 @@ const {
 } = require(`./lib/block-resources`)
 
 const ROUTE_UPDATE_TIMEOUT = 500
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 async function waitOrSleep(canFail) {
   if (canFail) {
