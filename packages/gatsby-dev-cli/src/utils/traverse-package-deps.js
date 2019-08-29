@@ -19,7 +19,7 @@ const path = require(`path`)
 
 /**
  * Compile final list of packages to watch
- * This will include packages explictely defined packages and all their dependencies
+ * This will include packages explicitly defined packages and all their dependencies
  * Also creates dependency graph that is used later to determine which packages
  * would need to be published when their dependencies change
  * @param {Object} $0
