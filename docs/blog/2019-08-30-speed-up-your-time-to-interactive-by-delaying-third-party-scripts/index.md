@@ -12,9 +12,9 @@ Gatsby does many things to get a website visible as fast as possible. But gettin
 
 The one this article focuses on is "[Time to interactive](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive)", which is the time it takes for all your initial scripts to run. This one is particularly interesting for a couple of reasons:
 
-* It's not super noticable when you use a website on desktop
-* async scripts are counted towards this number (Even though they're async, they're still loaded in sequence after a page load)
-* It's a very important part of [Google's performance ranking](https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md). It's 5 times more important than the "[first meaningful paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)", e.g. when something shows up on the screen. **5 times!**
+- It's not super noticable when you use a website on desktop
+- async scripts are counted towards this number (Even though they're async, they're still loaded in sequence after a page load)
+- It's a very important part of [Google's performance ranking](https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md). It's 5 times more important than the "[first meaningful paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)", e.g. when something shows up on the screen. **5 times!**
 
 These together might mean that you have a website that _feels_ fast, but Google will give you a penalty because it's slow.
 
@@ -37,33 +37,35 @@ This way, your "Time to interactive" won't take these scripts into account, and 
 Wanting to improve the performance rating of my own site, I [forked](https://github.com/Kilian/gatsby-plugin-segment-js) the gatsby-plugin-segment-js repository and set to work.
 
 ## Updating gatsby-plugin-segment-js
+
 The way the solution by Dave works is as follows:
 
-* Wait for the user to scroll
-* Do a setTimeout for 1 second
-* Wrap the call in a [requestIdleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback), if available
-* Then load the script
+- Wait for the user to scroll
+- Do a setTimeout for 1 second
+- Wrap the call in a [requestIdleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback), if available
+- Then load the script
 
 Adding the scroll timeout as mentioned in the Marketing examples blog post was quickly done. In Gatsby however, all subsequent pages are loaded without a page refresh. This meant that potentially, people could click through your site, never scroll, and the plugin would never get loaded. To make the technique work for Gatsby, the script also needed to load onRouteChange.
 
 This led to an interesting set of requirements:
 
-* The scripts should load only once
-* They should load either after a scroll action, or after a page update
-* To prevent jank there is a time delay before the load actually happens
+- The scripts should load only once
+- They should load either after a scroll action, or after a page update
+- To prevent jank there is a time delay before the load actually happens
 
 Due to this time delay, it could happen that you load a new page, the countdown starts, and during this countdown, you also scroll. At that point in time, the scripts haven't loaded yet so the scroll event listener would _also_ trigger a new load.
 
 To work around this, I added two locks to the Gatsby plugin:
 
-* `segmentSnippetLoaded`, `false` by default and set to `true` after it's loaded.
-* `segmentSnippetLoading`, `true` only between when the load function has been called and when it has finished.
+- `segmentSnippetLoaded`, `false` by default and set to `true` after it's loaded.
+- `segmentSnippetLoading`, `true` only between when the load function has been called and when it has finished.
 
-Then, either on scroll or onRouteChange, we only call the load function if segmentSnippetLoaded is not true, and in the load function, we only continue if segmentSnippetLoading is not true. This prevents the function from being called at all after the first time the script has been loaded.  If the function is called twice but we're still in the countdown time, nothing happens.
+Then, either on scroll or onRouteChange, we only call the load function if segmentSnippetLoaded is not true, and in the load function, we only continue if segmentSnippetLoading is not true. This prevents the function from being called at all after the first time the script has been loaded. If the function is called twice but we're still in the countdown time, nothing happens.
 
 After implementing this on my own website, my performance score shot back up from 63 to 94 and I had an over 60% decrease in the time to interactive. Pretty good for a few lines of code.
 
 There is currently a [PR](https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/19) open to add a `delayLoad` option to gatsby-plugin-segment-js to enable this feature. Alternatively, you can build it from [my fork](https://github.com/Kilian/gatsby-plugin-segment-js).
 
 ## In closing
+
 If you work on a laptop or desktop with a good internet connection, the time to interactive is not so noticable as "time before you see something on your screen", but it can have a big impact on your performance rating and because of that on your SEO. You should be extra careful when adding third party scripts to your page, and the best way to do that is to run Google Lighthouse. If you notice your Gatsby site has a bad performance score, make sure to check the Time to interactive value. If it's very high, try loading scripts only after a user has interacted with your website.
