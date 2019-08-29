@@ -80,7 +80,7 @@ Create a page path from a file path. It returns the page path.
 
 #### validatePath
 
-Validate a file path. It verifies that it doesn't contains specific characters or strings. It returns `true` if path is valid otherwise it returns `false`.
+Validate a file path. It verifies that the path doesn't contain specific characters or strings. It returns `true` if the path is valid otherwise it returns `false`.
 
 | property | description | type   |
 | -------- | ----------- | ------ |
