@@ -158,7 +158,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   // Check if any plugins have been updated since our last run. If so
-  // we delete the cache is there's likely been changes
+  // we delete the cache as there's likely been changes
   // since the previous run.
   //
   // We do this by creating a hash of all the version numbers of installed
