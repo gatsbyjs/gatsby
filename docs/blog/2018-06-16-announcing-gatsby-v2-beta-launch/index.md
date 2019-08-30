@@ -46,7 +46,7 @@ Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gats
 
 The [v2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2) details everything else we're planning for v2. Improvements include:
 
-- Additional build optimisations
+- Additional build optimizations
 - Better error messaging
 - PostCSS configuration updates
 
