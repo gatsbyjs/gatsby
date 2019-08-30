@@ -1,8 +1,6 @@
 /* @flow */
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
-const lokiRunQuery = require(`./loki/nodes-query`)
-const { runSift: siftRunQuery } = require(`../redux/run-sift`)
 
 interface NodeStore {
   getNodes: () => Array<any>;
