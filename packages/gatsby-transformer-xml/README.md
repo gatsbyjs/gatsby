@@ -1,6 +1,6 @@
 # gatsby-transformer-xml
 
-Parses XML files. It supports attributes also
+Parses XML files. It also supports attributes 
 
 ## Install
 
