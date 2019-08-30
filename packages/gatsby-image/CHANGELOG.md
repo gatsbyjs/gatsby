@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.14...gatsby-image@2.2.15) (2019-08-30)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix loading="eager" & critical ([#17148](https://github.com/gatsbyjs/gatsby/issues/17148)) ([43536e0](https://github.com/gatsbyjs/gatsby/commit/43536e0))
+
 ## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.13...gatsby-image@2.2.14) (2019-08-24)
 
 **Note:** Version bump only for package gatsby-image
