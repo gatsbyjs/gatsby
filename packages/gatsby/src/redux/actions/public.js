@@ -10,7 +10,7 @@ const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
+const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
@@ -521,6 +521,10 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   return deleteNodesAction
 }
 
+// We add a counter to internal to make sure we maintain insertion order for
+// backends that don't do that out of the box
+let NODE_COUNTER = 0
+
 const typeOwners = {}
 /**
  * Create a new node.
@@ -615,6 +619,9 @@ const createNode = (
     node.internal = {}
   }
 
+  NODE_COUNTER++
+  node.internal.counter = NODE_COUNTER
+
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -673,7 +680,7 @@ const createNode = (
     )
   }
 
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   const oldNode = getNode(node.id)
 
@@ -906,7 +913,7 @@ actions.createNodeField = (
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   return {
     type: `ADD_FIELD_TO_NODE`,

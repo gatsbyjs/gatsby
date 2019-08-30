@@ -4,7 +4,7 @@ const withResolverContext = require(`../../context`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
 const { dispatch } = store
-const { actions } = require(`../../../redux/actions/restricted`)
+const { actions } = require(`../../../redux/actions`)
 const { createTypes } = actions
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -101,7 +101,8 @@ describe(`Define parent-child relationships with field extensions`, () => {
       },
     ]
     nodes.forEach(node => {
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      node.internal.contentDigest = `0`
+      actions.createNode(node, { name: `test` })(store.dispatch)
     })
   })
 
@@ -122,7 +123,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childChild).toBeDefined()
     expect(parentFields.childChild.resolve).toBeDefined()
@@ -151,7 +152,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childChild).toBeUndefined()
     expect(parentFields.childAnotherChild).toBeUndefined()
@@ -201,7 +202,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childrenChild).toBeDefined()
     expect(parentFields.childrenChild.resolve).toBeDefined()
@@ -418,7 +419,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childChild).toBeDefined()
     expect(parentFields.childChild.resolve).toBeDefined()
@@ -875,16 +876,23 @@ describe(`Define parent-child relationships with field extensions`, () => {
 
 const buildSchema = async () => {
   await build({})
-  return store.getState().schema
+  const {
+    schemaCustomization: { composer: schemaComposer },
+    schema,
+  } = store.getState()
+  return { schema, schemaComposer }
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema()
+  const { schema, schemaComposer } = await buildSchema()
   const results = await graphql(
     schema,
     query,
     undefined,
-    withResolverContext({}, schema)
+    withResolverContext({
+      schema,
+      schemaComposer,
+    })
   )
   expect(results.errors).toBeUndefined()
   return results.data
