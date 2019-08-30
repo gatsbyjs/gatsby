@@ -26,11 +26,11 @@ let runQuery
 switch (backend) {
   case `redux`:
     nodesDb = require(`../redux/nodes`)
-    runQuery = siftRunQuery
+    runQuery = require(`../redux/run-sift`).runSift
     break
   case `loki`:
     nodesDb = require(`./loki/nodes`)
-    runQuery = lokiRunQuery
+    runQuery = require(`./loki/nodes-query`)
     break
   default:
     throw new Error(
