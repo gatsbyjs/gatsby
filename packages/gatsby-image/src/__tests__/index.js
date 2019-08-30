@@ -118,6 +118,21 @@ const setupImages = (
   return container
 }
 
+Object.defineProperty(
+  navigator,
+  `connection`,
+  (function(_value = {}) {
+    return {
+      get: function _get() {
+        return _value
+      },
+      set: function _set(v) {
+        _value = v
+      },
+    }
+  })(navigator.connection)
+)
+
 describe(`<Image />`, () => {
   it(`should render fixed size images`, () => {
     const component = setup()
@@ -215,5 +230,53 @@ describe(`<Image />`, () => {
 
     expect(onLoadMock).toHaveBeenCalledTimes(1)
     expect(onErrorMock).toHaveBeenCalledTimes(1)
+  })
+
+  it(`should NOT have srcSet attribute when Save-Data is enabled`, () => {
+    window.navigator.connection.saveData = true
+
+    const imageTag = setup().querySelector(`picture img`)
+
+    expect(imageTag.getAttribute(`srcSet`)).toBeFalsy()
+  })
+
+  it(`should NOT have source element when Save-Data is enabled`, () => {
+    window.navigator.connection.saveData = true
+
+    const sourceTag = setup().querySelector(`picture source`)
+
+    expect(sourceTag).toBeNull()
+  })
+
+  it(`should have srcSet attribute when Save-Data is disabled`, () => {
+    window.navigator.connection.saveData = false
+
+    const imageTag = setup().querySelector(`picture img`)
+
+    expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
+  })
+
+  it(`should have source element when Save-Data is disabled`, () => {
+    window.navigator.connection.saveData = false
+
+    const sourceTag = setup().querySelector(`picture source`)
+
+    expect(sourceTag).not.toBeNull()
+  })
+
+  it(`should have srcSet attribute when Save-Data is undefined`, () => {
+    window.navigator.connection = {}
+
+    const sourceTag = setup().querySelector(`picture source`)
+
+    expect(sourceTag).not.toBeNull()
+  })
+
+  it(`should have source element when Save-Data is undefined`, () => {
+    window.navigator.connection = {}
+
+    const sourceTag = setup().querySelector(`picture source`)
+
+    expect(sourceTag).not.toBeNull()
   })
 })

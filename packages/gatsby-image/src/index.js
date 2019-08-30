@@ -82,6 +82,10 @@ const hasNativeLazyLoadSupport =
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
+// Save-Data support: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/save-data/#detecting_the_save-data_setting
+const hasSaveDataEnabled = () =>
+  `connection` in navigator && navigator.connection.saveData === true
+
 const isBrowser = typeof window !== `undefined`
 const hasIOSupport = isBrowser && window.IntersectionObserver
 
@@ -415,7 +419,11 @@ class Image extends React.Component {
 
     if (fluid) {
       const imageVariants = fluid
-      const image = imageVariants[0]
+      const image = { ...imageVariants[0] }
+
+      if (hasSaveDataEnabled()) {
+        delete image.srcSet
+      }
 
       return (
         <Tag
@@ -476,7 +484,7 @@ class Image extends React.Component {
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {generateImageSources(imageVariants)}
+              {image.srcSet && generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
@@ -515,7 +523,11 @@ class Image extends React.Component {
 
     if (fixed) {
       const imageVariants = fixed
-      const image = imageVariants[0]
+      const image = { ...imageVariants[0] }
+
+      if (hasSaveDataEnabled()) {
+        delete image.srcSet
+      }
 
       const divStyle = {
         position: `relative`,
@@ -574,7 +586,7 @@ class Image extends React.Component {
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {generateImageSources(imageVariants)}
+              {image.srcSet && generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
