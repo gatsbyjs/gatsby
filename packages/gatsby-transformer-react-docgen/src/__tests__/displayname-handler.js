@@ -1,4 +1,5 @@
 import * as docgen from "react-docgen"
+import path from "path"
 import displayNameHandler, {
   createDisplayNameHandler,
 } from "../displayname-handler"
@@ -111,7 +112,7 @@ describe(`DisplayNameHandler`, () => {
       `
     module.exports = () => <div />;
   `,
-      createDisplayNameHandler(`foo/bar/MyComponent.js`)
+      createDisplayNameHandler(path.join(`foo`, `bar`, `MyComponent.js`))
     )
     expect(doc).toEqual({ displayName: `MyComponent` })
   })
@@ -122,7 +123,7 @@ describe(`DisplayNameHandler`, () => {
         `
       module.exports = () => <div />;
     `,
-        createDisplayNameHandler(`foo/MyComponent/index.js`)
+        createDisplayNameHandler(path.join(`foo`, `MyComponent`, `index.js`))
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
@@ -132,7 +133,7 @@ describe(`DisplayNameHandler`, () => {
         `
       module.exports = () => <div />;
     `,
-        createDisplayNameHandler(`foo/my-component/index.js`)
+        createDisplayNameHandler(path.join(`foo`, `my-component`, `index.js`))
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
