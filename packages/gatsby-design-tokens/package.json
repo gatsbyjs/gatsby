@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gatsby Design Tokens",
   "main": "index.js",
   "author": "Florian Kissling <flo@gatsbyjs.com>",
@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-design-tokens#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.2",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.0"
   },
   "engines": {
