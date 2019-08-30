@@ -93,4 +93,4 @@ Determines if path should be ignored regarding of a ignore pattern passed as par
 | property | description                       | type    |
 | -------- | --------------------------------- | ------- |
 | path     | File path                         | String  |
-| ignore   | A pattern to match with file path | (Object | String | Array) |
+| ignore   | A pattern to match with file path | (Object \| String \| Array) |
