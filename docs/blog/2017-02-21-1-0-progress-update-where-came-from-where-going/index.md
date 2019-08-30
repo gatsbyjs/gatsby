@@ -255,7 +255,7 @@ during development and at build time and writes out a JSON file with the result
 of the query. This JSON file is then injected into the React component as props.
 
 Because we know at build-time what data is needed for every page, we can easily
-pre-fetch page data meaning even very complex, data-heavy pages load almost
+pre-fetch page data meaning, even very complex data-heavy pages load almost
 instantly.
 
 This pattern of _colocating_ your queries next to your views is copied from the
