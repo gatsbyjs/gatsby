@@ -175,7 +175,7 @@ This is particularly helpful for teams of people collaborating on a site with
 pages with very different technical and business requirements. Different parts
 of the site can evolve independently of each other.
 
-One client I'm working with on Gatsby 1.0 (a stealth startup in San Francisco)
+One client who is working with Gatsby 1.0 (a stealth startup in San Francisco)
 is using Gatsby to build both their marketing site _and_ SaaS app within the
 _same Gatsby codebase_.
 
