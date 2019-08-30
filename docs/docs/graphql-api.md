@@ -2,8 +2,17 @@
 title: GraphQL API
 ---
 
-import { graphql } from "gatsby"
+import { GraphqlFragmentQuery } from "../../www/src/components/api-reference/doc-static-queries"
+import APIReference from "../../www/src/components/api-reference"
 
 This doc is the API reference for GraphQL features built into Gatsby, as well as methods and procedures for customizing GraphQL for your site's needs.
 
-export const pageQuery = graphql`query { allFile(filter: {relativePath: {in: ["gatsby-transformer-sharp/src/fragments.js"]}}) { nodes { relativePath childrenDocumentationJs { name description { id childMdx { rawBody } } codeLocation { start { line } end { line } } } } } }`
+## Native Gatsby Fragments
+
+Some fragments come native with Gatsby, including fragments for returning data relevant for optimized images.
+
+### Image Sharp Fragments
+
+<GraphqlFragmentQuery>
+  {data => <APIReference docs={data.allFile.nodes[0].childrenDocumentationJs} /> }
+</GraphqlFragmentQuery>
