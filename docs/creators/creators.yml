@@ -94,7 +94,7 @@
 - name: Ste O'Neill
   type: individual
   description: >-
-    Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
+    Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously. I'm currently working on a Gatsby.js course, so keep an eye on my website for a sneak peek!
   location: "Leeds, England"
   website: "https://steoneill.dev"
   github: "https://github.com/steoneill"

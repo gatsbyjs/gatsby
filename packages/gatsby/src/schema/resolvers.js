@@ -39,7 +39,8 @@ const distinct = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const values = edges.reduce((acc, { node }) => {
-    const value = getValueAt(node, field)
+    const value =
+      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
     return value != null
       ? acc.concat(value instanceof Date ? value.toISOString() : value)
       : acc
@@ -51,7 +52,8 @@ const group = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const groupedResults = edges.reduce((acc, { node }) => {
-    const value = getValueAt(node, field)
+    const value =
+      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
     const values = Array.isArray(value) ? value : [value]
     values
       .filter(value => value != null)

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.6...graphql-skip-limit@2.1.7) (2019-08-29)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17178](https://github.com/gatsbyjs/gatsby/issues/17178)) ([77dad68](https://github.com/gatsbyjs/gatsby/commit/77dad68))
+
 ## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.5...graphql-skip-limit@2.1.6) (2019-08-24)
 
 **Note:** Version bump only for package graphql-skip-limit

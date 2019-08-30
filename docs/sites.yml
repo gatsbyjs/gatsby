@@ -7113,6 +7113,13 @@
     - Technology
     - Marketing
   featured: false
+- title: Hayato KAJIYAMA - Portfolio
+  main_url: "https://hyakt.dev"
+  url: "https://hyakt.dev"
+  source_url: "https://github.com/hyakt/hyakt.github.io"
+  featured: false
+  categories:
+    - Portfolio
 - title: Skirtcraft - Unisex Skirts with Large Pockets
   main_url: https://skirtcraft.com
   url: https://skirtcraft.com/products

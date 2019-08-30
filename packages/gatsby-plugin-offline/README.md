@@ -110,11 +110,7 @@ plugins: [
 ]
 ```
 
-# <<<<<<< HEAD
-
 In version 3, Workbox is also upgraded to version 4 so you may need to update your `workboxConfig` if any of those changes apply to you. Please see the [docs on Google Developers](https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v3) for more information.
-
-> > > > > > > offline-plugin-custom-code
 
 ## Overriding Workbox configuration
 

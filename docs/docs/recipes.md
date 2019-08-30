@@ -1723,7 +1723,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 2. Login into Netlify using `netlify login`
 
-3. Run the command `netlify build`. Select the "Create & configure a new site" option.
+3. Run the command `netlify init`. Select the "Create & configure a new site" option.
 
 4. Choose a custom website name if you want or press enter to receive a random one.
 

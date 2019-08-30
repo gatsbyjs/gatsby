@@ -18,38 +18,42 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-const firstPage = {
-  id: `page1`,
-  parent: null,
-  children: [],
-  internal: { type: `SitePage` },
-  keep: `Page`,
-  fields: {
-    oldKey: `value`,
-  },
+const firstPage = () => {
+  return {
+    id: `page1`,
+    parent: null,
+    children: [],
+    internal: { type: `SitePage`, contentDigest: `0`, counter: 0 },
+    keep: `Page`,
+    fields: {
+      oldKey: `value`,
+    },
+  }
 }
 
-const secondPage = {
-  id: `page2`,
-  parent: null,
-  children: [],
-  internal: { type: `SitePage` },
-  fields: {
-    key: `value`,
-  },
-  context: {
-    key: `value`,
-  },
+const secondPage = () => {
+  return {
+    id: `page2`,
+    parent: null,
+    children: [],
+    internal: { type: `SitePage`, contentDigest: `0`, counter: 1 },
+    fields: {
+      key: `value`,
+    },
+    context: {
+      key: `value`,
+    },
+  }
 }
 
-const nodes = [firstPage]
+const nodes = () => [firstPage()]
 
 describe(`build and update schema`, () => {
   let schema
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
+    nodes().forEach(node =>
       store.dispatch({ type: `CREATE_NODE`, payload: node })
     )
 
@@ -79,7 +83,7 @@ describe(`build and update schema`, () => {
     expect(inputFields).toEqual(initialFields)
 
     // Rebuild Schema
-    store.dispatch({ type: `CREATE_NODE`, payload: secondPage })
+    store.dispatch({ type: `CREATE_NODE`, payload: secondPage() })
     await rebuildWithSitePage({})
     schema = store.getState().schema
 
@@ -121,7 +125,7 @@ describe(`build and update schema`, () => {
     expect(inputFields).toEqual([`oldKey`])
 
     // Rebuild Schema
-    store.dispatch({ type: `CREATE_NODE`, payload: secondPage })
+    store.dispatch({ type: `CREATE_NODE`, payload: secondPage() })
     await rebuildWithSitePage({})
     schema = store.getState().schema
 
