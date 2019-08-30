@@ -250,7 +250,7 @@ async function startServer(program, { activity }) {
 
   await apiRunnerNode(`onCreateDevServer`, { app })
 
-  // In case nothing before handled hot-update - send 404.
+  // In case nothing is handled before hot-update - send 404.
   // This fixes "Unexpected token < in JSON at position 0" runtime
   // errors after restarting development server and
   // cause automatic hard refresh in the browser.
