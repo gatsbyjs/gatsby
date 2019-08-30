@@ -3728,7 +3728,6 @@
     - Email verification
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for offline support out of the box
-    
 - url: https://agility-gatsby-starter.netlify.com
   repo: https://github.com/agility/agility-gatsby-starter
   description: Get started with Gatsby and Agility CMS using a minimal blog.
