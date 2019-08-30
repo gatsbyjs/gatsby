@@ -395,8 +395,12 @@ module.exports = async (program: any) => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let lanUrlForConfig, lanUrlForTerminal
+    let prettyHost = host,
+      lanUrlForConfig,
+      lanUrlForTerminal
     if (isUnspecifiedHost) {
+      prettyHost = `localhost`
+
       try {
         // This can only return an IPv4 address
         lanUrlForConfig = address.ip()
@@ -422,8 +426,8 @@ module.exports = async (program: any) => {
     // TODO collect errors (GraphQL + Webpack) in Redux so we
     // can clear terminal and print them out on every compile.
     // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(host)
-    const localUrlForBrowser = formatUrl(host)
+    const localUrlForTerminal = prettyPrintUrl(prettyHost)
+    const localUrlForBrowser = formatUrl(prettyHost)
     return {
       lanUrlForConfig,
       lanUrlForTerminal,
@@ -529,7 +533,6 @@ module.exports = async (program: any) => {
       }
     })
   }
-
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
@@ -548,11 +551,7 @@ module.exports = async (program: any) => {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
       if (program.open) {
-        const urlToOpen =
-          process.platform === `win32`
-            ? urls.lanUrlForTerminal
-            : urls.localUrlForBrowser
-        Promise.resolve(openurl(urlToOpen)).catch(err =>
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
           console.log(
             `${chalk.yellow(
               `warn`
