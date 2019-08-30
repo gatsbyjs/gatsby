@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.18...gatsby-telemetry@1.1.19) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency configstore to v5 ([#17024](https://github.com/gatsbyjs/gatsby/issues/17024)) ([17e07cc](https://github.com/gatsbyjs/gatsby/commit/17e07cc))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-docker to v2 ([#17036](https://github.com/gatsbyjs/gatsby/issues/17036)) ([930a043](https://github.com/gatsbyjs/gatsby/commit/930a043))
+
 ## [1.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.17...gatsby-telemetry@1.1.18) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-telemetry

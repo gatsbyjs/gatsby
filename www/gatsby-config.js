@@ -13,7 +13,10 @@ const dynamicPlugins = []
 if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
   // pick data from 3 months ago
   const startDate = new Date()
-  startDate.setMonth(startDate.getMonth() - 3)
+  // temporary lower guess to use 2 days of data to lower guess data
+  // real fix is to move gatsby-plugin-guess to aot mode
+  // startDate.setMonth(startDate.getMonth() - 3)
+  startDate.setDate(startDate.getDate() - 2)
   dynamicPlugins.push({
     resolve: `gatsby-plugin-guess-js`,
     options: {

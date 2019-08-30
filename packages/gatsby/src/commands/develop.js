@@ -12,7 +12,6 @@ const graphqlPlayground = require(`graphql-playground-middleware-express`)
 const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
 const { formatError } = require(`graphql`)
 const got = require(`got`)
-const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
@@ -52,16 +51,6 @@ const requiresWriter = require(`../bootstrap/requires-writer`)
 setTimeout(() => {
   syncStaticDir()
 }, 10000)
-
-const rlInterface = rl.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-// Quit immediately on hearing ctrl-c
-rlInterface.on(`SIGINT`, () => {
-  process.exit()
-})
 
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
@@ -328,6 +317,16 @@ module.exports = async (program: any) => {
     )
   }
 
+  try {
+    program.port = await detectPortInUseAndPrompt(port)
+  } catch (e) {
+    if (e.message === `USER_REJECTED`) {
+      process.exit(0)
+    }
+
+    throw e
+  }
+
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
   // Scoped names are converted from @npm/package-name to npm--package-name
@@ -340,7 +339,6 @@ module.exports = async (program: any) => {
     })
   }
 
-  program.port = await detectPortInUseAndPrompt(port, rlInterface)
   // Start bootstrap process.
   const { graphqlRunner } = await bootstrap(program)
 

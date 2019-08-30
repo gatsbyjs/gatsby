@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.5...gatsby-transformer-json@2.2.6) (2019-08-25)
+
+### Bug Fixes
+
+- **gatsby-transformer-json:** Coerce id field to always be a String ([#17072](https://github.com/gatsbyjs/gatsby/issues/17072)) ([47486f3](https://github.com/gatsbyjs/gatsby/commit/47486f3))
+
 ## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.2.4...gatsby-transformer-json@2.2.5) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-transformer-json
