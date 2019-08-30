@@ -198,7 +198,7 @@ module.exports = async (args: BootstrapArgs) => {
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       // Attempt to empty dir if remove fails,
-      // like when directory is mount point
+      // like when directory is at mount point
       await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
