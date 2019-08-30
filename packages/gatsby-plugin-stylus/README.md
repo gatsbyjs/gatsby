@@ -49,7 +49,7 @@ module.exports = {
 
 PostCSS is also included to handle some default optimizations like autoprefixing
 and common cross-browser flexbox bugs. Normally you don't need to think about it, but if
-you'd prefer to add additional postprocessing to your Stylus output you can sepecify plugins
+you'd prefer to add additional postprocessing to your Stylus output you can specify plugins
 in the plugin options
 
 ```javascript
