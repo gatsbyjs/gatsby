@@ -10,9 +10,9 @@
     "@babel/code-frame": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "@babel/types": "^7.5.5",
+    "ast-types": "^0.12.4",
     "common-tags": "^1.8.0",
-    "react-docgen": "^5.0.0-beta.1",
-    "react-docgen-displayname-handler": "^2.1.3"
+    "react-docgen": "^5.0.0-beta.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
