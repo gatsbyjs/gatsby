@@ -67,7 +67,7 @@ exports.onPostBuild = (
   args,
   { precachePages: precachePagesGlobs = [], appendScript = null, workboxConfig }
 ) => {
-  const { pathPrefix } = args
+  const { pathPrefix, reporter } = args
   const rootDir = `public`
 
   // Get exact asset filenames for app and offline app shell chunks
@@ -82,18 +82,14 @@ exports.onPostBuild = (
     return Array.prototype.flat ? arr.flat() : [].concat(...arr)
   }
 
-  const precachePages = getPrecachePages(
-    precachePagesGlobs,
-    `${process.cwd()}/${rootDir}`
-  )
+  const precachePages = [
+    `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
+    ...getPrecachePages(precachePagesGlobs, `${process.cwd()}/${rootDir}`),
+  ]
 
-  const criticalFilePaths = _.uniq([
-    ...getResourcesFromHTML(
-      `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-      pathPrefix
-    ),
-    ...flat(precachePages.map(page => getResourcesFromHTML(page, pathPrefix))),
-  ])
+  const criticalFilePaths = _.uniq(
+    flat(precachePages.map(page => getResourcesFromHTML(page, pathPrefix)))
+  )
 
   const globPatterns = files.concat([
     `offline-plugin-app-shell-fallback/index.html`,
@@ -178,8 +174,10 @@ exports.onPostBuild = (
         fs.appendFileSync(`public/sw.js`, `\n` + userAppend)
       }
 
-      console.log(
-        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
+      reporter.info(
+        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`,
+        `The following pages will be precached:`,
+        precachePages
       )
     })
 }
