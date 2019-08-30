@@ -15,7 +15,7 @@ I know that there are as many choices for IDE editors and personal preferences a
 
 ## Enough Talk, Let's get Started
 
-First thing to do is [download VS Code](https://code.visualstudio.com/download) for your given OS platform. Ater opening the Editor and getting comfortable with the various screens, you'll notice one of the main views is the [Extensions tab](https://marketplace.visualstudio.com/VSCode). This is where the rubber meets the road, as these extensions **really enhance** the capabilities and productivity you'll realize using VS Code.
+First thing to do is [download VS Code](https://code.visualstudio.com/download) for your given OS platform. After opening the Editor and getting comfortable with the various screens, you'll notice one of the main views is the [Extensions tab](https://marketplace.visualstudio.com/VSCode). This is where the rubber meets the road, as these extensions **really enhance** the capabilities and productivity you'll realize using VS Code.
 
 ## Let's Talk Extensions
 
@@ -82,4 +82,4 @@ You may want to browse through the [VS Code Updates page](https://code.visualstu
 
 A great way to contribute is to browse the [open issues on GitHub](https://github.com/gatsbyjs/gatsby/issues), and find some that look interesting! Armed with some of the techniques I've shown here today, authoring these fixes, features, and more will be a breeze thanks to some of the great features of VS Code.
 
-Do you use an Extension that I missed in this tutorial? Send send a message to [@mikelax on Twitter](https://twitter.com/mikelax) to let me know.
+Do you use an Extension that I missed in this tutorial? Send a message to [@mikelax on Twitter](https://twitter.com/mikelax) to let me know.
