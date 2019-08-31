@@ -34,6 +34,12 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85902": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   "85907": {
     text: context =>
       `There was an error in your GraphQL query:\n\n${context.message}`,
@@ -163,7 +169,7 @@ const errorMap = {
       [
         stripIndent(`
           Your plugins must export known APIs from their gatsby-${context.exportType}.js.
-      
+
           See https://www.gatsbyjs.org/docs/${context.exportType}-apis/ for the list of Gatsby ${context.exportType} APIs.
         `),
       ]
