@@ -11,11 +11,7 @@ const server = http.createServer((request, response) =>
         headers: [
           {
             key: `Access-Control-Allow-Origin`,
-            value: `http://localhost:9000`,
-          },
-          {
-            key: `Access-Control-Allow-Credentials`,
-            value: true,
+            value: `*`,
           },
         ],
       },

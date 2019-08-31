@@ -7,8 +7,7 @@ import BreadcrumbDivider from "./breadcrumb-divider"
 import BreadcrumbHome from "./breadcrumb-home"
 
 export default ({ links }) => {
-  const { basePath = `/`, homeText, breadcrumbSeparator } = useOptions()
-  const baseBreadcrumbText = basePath.replace(/^\//, ``)
+  const { homeText, breadcrumbSeparator } = useOptions()
 
   return (
     <nav
@@ -21,16 +20,9 @@ export default ({ links }) => {
       })}
     >
       <BreadcrumbHome text={homeText} />
-      <BreadcrumbDivider text={breadcrumbSeparator} />
-
-      <Styled.a as={Link} to={basePath}>
-        {baseBreadcrumbText}
-      </Styled.a>
       {links.map(link => (
         <>
-          {baseBreadcrumbText.length ? (
-            <BreadcrumbDivider text={breadcrumbSeparator} />
-          ) : null}
+          <BreadcrumbDivider text={breadcrumbSeparator} />
           <Styled.a as={Link} to={link.url} key={link.url}>
             {link.name}
           </Styled.a>

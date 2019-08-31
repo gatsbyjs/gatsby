@@ -8,12 +8,6 @@ module.exports = function MDXRenderer({
   children,
   ...props
 }) {
-  if (!children) {
-    throw new Error(
-      `MDXRenderer expected to receive an MDX String in children. Instead, it received: ${children}`
-    )
-  }
-
   const mdxComponents = useMDXComponents(components)
   const mdxScope = useMDXScope(scope)
 

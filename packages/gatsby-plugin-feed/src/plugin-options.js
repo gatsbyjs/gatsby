@@ -4,7 +4,7 @@ import Joi from "@hapi/joi"
 const feed = Joi.object({
   output: Joi.string().required(),
   query: Joi.string().required(),
-  title: Joi.string(),
+  title: Joi.string().required(),
   serialize: Joi.func(),
   match: Joi.string(),
 }).unknown(true)

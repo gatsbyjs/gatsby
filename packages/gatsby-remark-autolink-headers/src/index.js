@@ -60,6 +60,7 @@ module.exports = (
         type: `link`,
         url: `#${id}`,
         title: null,
+        children: [],
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,

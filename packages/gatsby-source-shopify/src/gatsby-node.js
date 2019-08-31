@@ -1,7 +1,9 @@
 import { pipe } from "lodash/fp"
 import chalk from "chalk"
 import { forEach } from "p-iteration"
-import { createClient, printGraphQLError, queryAll, queryOnce } from "./lib"
+import { printGraphQLError, queryAll, queryOnce } from "./lib"
+import { createClient } from "./create-client"
+
 import {
   ArticleNode,
   BlogNode,
@@ -12,8 +14,9 @@ import {
   ProductVariantNode,
   ProductMetafieldNode,
   ShopPolicyNode,
-  ProductTypeNode,
   PageNode,
+} from "./nodes"
+import {
   SHOP,
   CONTENT,
   NODE_TO_ENDPOINT_MAPPING,
@@ -22,16 +25,14 @@ import {
   COLLECTION,
   PRODUCT,
   SHOP_POLICY,
-  PRODUCT_TYPE,
   PAGE,
-} from "./nodes"
+} from "./constants"
 import {
   ARTICLES_QUERY,
   BLOGS_QUERY,
   COLLECTIONS_QUERY,
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
-  PRODUCT_TYPES_QUERY,
   PAGES_QUERY,
 } from "./queries"
 
@@ -98,7 +99,6 @@ export const sourceNodes = async (
               createNode(await ProductOptionNode(imageArgs)(option))
             )
         }),
-        createNodes(PRODUCT_TYPE, PRODUCT_TYPES_QUERY, ProductTypeNode, args),
         createShopPolicies(args),
       ])
     }

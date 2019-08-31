@@ -52,9 +52,7 @@ module.exports = {
       locString ? `\n\nFile: ${chalk.blue(locString)}` : ``
     }${
       details.docsUrl
-        ? `\n\nSee our docs page for more info on this error: ${
-            details.docsUrl
-          }`
+        ? `\n\nSee our docs page for more info on this error: ${details.docsUrl}`
         : ``
     }`
 

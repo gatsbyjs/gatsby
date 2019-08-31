@@ -25,15 +25,15 @@ const Footer = ({ previous, next }) => (
       >
         <li>
           {previous && (
-            <Styled.a as={Link} to={previous.node.slug} rel="prev">
-              ← {previous.node.title}
+            <Styled.a as={Link} to={previous.slug} rel="prev">
+              ← {previous.title}
             </Styled.a>
           )}
         </li>
         <li>
           {next && (
-            <Styled.a as={Link} to={next.node.slug} rel="next">
-              {next.node.title} →
+            <Styled.a as={Link} to={next.slug} rel="next">
+              {next.title} →
             </Styled.a>
           )}
         </li>

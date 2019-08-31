@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.1.4...gatsby-plugin-postcss@2.1.5) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.1.3...gatsby-plugin-postcss@2.1.4) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.1.2...gatsby-plugin-postcss@2.1.3) (2019-08-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-postcss:** Always ensure postcss.config.js is loaded ([#16521](https://github.com/gatsbyjs/gatsby/issues/16521)) ([14179b0](https://github.com/gatsbyjs/gatsby/commit/14179b0)), closes [#10861](https://github.com/gatsbyjs/gatsby/issues/10861)
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@2.1.1...gatsby-plugin-postcss@2.1.2) (2019-07-12)
 
 ### Bug Fixes

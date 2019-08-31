@@ -1,4 +1,3 @@
-import "core-js/modules/es7.promise.finally"
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findMatchPath, cleanPath } from "./find-path"
@@ -20,7 +19,6 @@ const doFetch = (url, method = `GET`) =>
   new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(method, url, true)
-    req.withCredentials = true
     req.onreadystatechange = () => {
       if (req.readyState == 4) {
         resolve(req)
@@ -224,8 +222,14 @@ export class BaseLoader {
           return pageResources
         })
       })
-      .finally(() => {
+      // prefer duplication with then + catch over .finally to prevent problems in ie11 + firefox
+      .then(response => {
         this.inFlightDb.delete(pagePath)
+        return response
+      })
+      .catch(err => {
+        this.inFlightDb.delete(pagePath)
+        throw err
       })
 
     this.inFlightDb.set(pagePath, inFlight)

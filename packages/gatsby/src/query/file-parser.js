@@ -37,7 +37,7 @@ Perhaps the variable name has a typo?
 Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
   )
 
-async function parseToAst(filePath, fileStr) {
+async function parseToAst(filePath, fileStr, { parentSpan } = {}) {
   let ast
 
   // Preprocess and attempt to parse source; return an AST if we can, log an
@@ -45,6 +45,7 @@ async function parseToAst(filePath, fileStr) {
   const transpiled = await apiRunnerNode(`preprocessSource`, {
     filename: filePath,
     contents: fileStr,
+    parentSpan: parentSpan,
   })
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
@@ -97,9 +98,13 @@ const warnForGlobalTag = file =>
       file
   )
 
-async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
+async function findGraphQLTags(
+  file,
+  text,
+  { parentSpan } = {}
+): Promise<Array<DefinitionNode>> {
   return new Promise((resolve, reject) => {
-    parseToAst(file, text)
+    parseToAst(file, text, { parentSpan })
       .then(ast => {
         let queries = []
         if (!ast) {
@@ -318,6 +323,10 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
 const cache = {}
 
 export default class FileParser {
+  constructor({ parentSpan } = {}) {
+    this.parentSpan = parentSpan
+  }
+
   async parseFile(file: string): Promise<?DocumentNode> {
     let text
     try {
@@ -339,7 +348,10 @@ export default class FileParser {
 
     try {
       let astDefinitions =
-        cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
+        cache[hash] ||
+        (cache[hash] = await findGraphQLTags(file, text, {
+          parentSpan: this.parentSpan,
+        }))
 
       // If any AST definitions were extracted, report success.
       // This can mean there is none or there was a babel error when

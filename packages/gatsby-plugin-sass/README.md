@@ -85,7 +85,7 @@ plugins: [
 
 ### SASS Precision
 
-SASS defaults to [10 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. if you use Bootstrap), you may configure it as follows:
+SASS defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
 
 #### Bootstrap 4
 
