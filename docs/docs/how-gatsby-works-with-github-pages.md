@@ -77,3 +77,52 @@ After running `npm run deploy` you should see your website at `username.github.i
 If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is _not_ at the root of the domain like with repository sites.
 
 **Note**: Don't forget to add your [CNAME](https://help.github.com/articles/troubleshooting-custom-domains/#github-repository-setup-errors) file to the `static` directory.
+
+### Deploying to GitHub pages from Travis CI
+
+When using `gh-pages` npm module to deploy from a Travis CI (or other build systems), we need to configure it with proper credentials so that `gh-pages` is able to push the new branch.
+
+#### Step 1 - obtain a GitHub token
+
+To push changes from the CI system to GitHub you'll need to authenticate, a good way for doing this is using GitHub developer tokens.
+
+In GitHub go to your account settings -> Developer settings -> Personal access tokens, and create a new token that provides the `repo` access permissions.
+
+In Travis's configuration for the repository add a new secret environment variable of the name `GH_TOKEN` with the value of the token obtained from GitHub and make sure you DO NOT toggle the "display in build logs" setting as the token should remain secret, or else others would be able to push to your repository.
+
+#### Step 2 - deploy run script 
+
+Update the Gatsby project's `package.json` to also include a `deploy` run script which invokes `gh-pages` with two important command argumnets:
+
+1. `-d public` - specifies the directory in which the built files exist and will be pushed as a source to GitHub pages
+2. `-r URL` - the GitHub repository URL, including the use of a GitHub token to be able to to push changes to the `gh-pages` branch, in the form of `https://$GH_TOKEN@github.com/<github username>/<github repository name>.git` 
+
+Here's an example:
+
+```json
+  "scripts": {
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public -r https://$GH_TOKEN@github.com/lirantal/dockly.git"
+  }
+```
+
+#### Step 3 - Update .travis.yml for 
+
+The following `.travis.yml` configuration provides a reference:
+
+```yaml
+language: node_js
+before_script:
+  - npm install -g gatsby
+node_js:
+  - "10"
+deploy:
+  provider: script
+  script: cd docs/ && yarn install && yarn run deploy
+  skip_cleanup: true
+  on:
+    branch: master
+```
+
+To break-down the important bits here for deploying the Gatsby website from Travis to GitHub pages:
+1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
+2. `deploy` will only fire when the build runs on the `master` branch, in which case it will fire off the `script`, which in this case is a Gatsby site located in the `docs/` directory, in which it needs to install all the website dependencies and run the deploy script as was set in the previous step.
