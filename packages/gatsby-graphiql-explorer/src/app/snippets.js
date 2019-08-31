@@ -63,4 +63,19 @@ ${getQuery(arg, 6)}
 `,
 }
 
-export default [pageQuery, staticHook, staticQuery]
+const createPagesQuery = {
+  name: `createPages`,
+  language: `JavaScript`,
+  codeMirrorMode: `jsx`,
+  options: [],
+  generate: arg => `exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const result = await graphql(\`
+${getQuery(arg, 4)}
+  \`)
+}
+
+`,
+}
+
+export default [pageQuery, staticHook, staticQuery, createPagesQuery]
