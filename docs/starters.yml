@@ -3747,3 +3747,20 @@
     - Support for Netlify deployment
     - SEO
     - Prettier code styling
+- url: https://bonneville.netlify.com/
+  repo: https://github.com/bagseye/bonneville
+  description: A starter blog template for Gatsby.
+  tags:
+    - Blog
+    - Minimal
+    - Markdown
+    - Pagination
+    - SEO
+    - Styling:SCSS
+  features:
+    - Bare-bones starter.
+    - Ready made Components
+    - Simple Design
+    - SEO
+
+    
