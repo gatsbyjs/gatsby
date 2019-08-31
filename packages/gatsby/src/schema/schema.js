@@ -290,6 +290,8 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
   })
 }
 
+const GATSBY_THEME = /^(?:@\w+\/)?gatsby-theme-/
+
 const mergeTypes = ({
   schemaComposer,
   typeComposer,
@@ -306,8 +308,7 @@ const mergeTypes = ({
     !plugin ||
     plugin.name === typeOwner ||
     plugin.name === `default-site-plugin` ||
-    (plugin.name.startsWith(`gatsby-theme-`) &&
-      !typeOwner.startsWith(`gatsby-theme-`))
+    (plugin.name.match(GATSBY_THEME) && !typeOwner.match(GATSBY_THEME))
   ) {
     typeComposer.merge(type)
     if (isNamedTypeComposer(type)) {
