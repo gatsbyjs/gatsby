@@ -270,7 +270,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
+- [gatsby-plugin-styled-components, styled-components and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
 
 #### Directions
 
