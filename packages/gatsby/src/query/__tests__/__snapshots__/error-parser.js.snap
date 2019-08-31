@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Windows uppercase folders error 1`] = `
+Object {
+  "context": Object {
+    "sourceMessage": "Error: RelayParser: Encountered duplicated definitions for one or more documents: each document must have a unique name. Duplicated documents:
+
+Warning: Windows users may be able to fix this error by renaming all directories to lowercase in the file path.",
+  },
+  "filePath": "test.js",
+  "id": "85902",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;
+
 exports[`totally vague one 1`] = `
 Object {
   "context": Object {
