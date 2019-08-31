@@ -1,7 +1,11 @@
-const getQuery = arg => {
+const getQuery = (arg, spaceCount) => {
   const { operationDataList } = arg
   const { query } = operationDataList[0]
-  return query
+  const anonymousQuery = query.replace(/query\s.+{/gim, `{`)
+  return (
+    ` `.repeat(spaceCount) +
+    anonymousQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
+  )
 }
 
 const pageQuery = {
@@ -15,8 +19,9 @@ import { graphql } from "gatsby"
 export default ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
 
 export const query = graphql\`
-${getQuery(arg)}
+${getQuery(arg, 2)}
 \`
+
 `,
 }
 
@@ -29,11 +34,12 @@ const staticHook = {
 import { useStaticQuery, graphql } from "gatsby"
 
 export default () => {
-const data = useStaticQuery(graphql\`
-  ${getQuery(arg)}
-\`)
-return <pre>{JSON.stringify(data, null, 4)}</pre>
+  const data = useStaticQuery(graphql\`
+${getQuery(arg, 4)}
+  \`)
+  return <pre>{JSON.stringify(data, null, 4)}</pre>
 }
+
 `,
 }
 
@@ -48,11 +54,12 @@ import { StaticQuery, graphql } from "gatsby"
 export default () => (
   <StaticQuery
     query={graphql\`
-      ${getQuery(arg)}
+${getQuery(arg, 6)}
     \`}
     render={data => <pre>{JSON.stringify(data, null, 4)}</pre>}
   ></StaticQuery>
 )
+
 `,
 }
 
