@@ -24,22 +24,6 @@ const errorParser = ({ message, filePath, location }) => {
         }
       },
     },
-    // Warn users about a possible Windows-specific error resulting from uppercase folders:
-    // "Error: RelayParser: Encountered duplicated definitions for one or more documents:
-    // each document must have a unique name. Duplicated documents:"
-    {
-      regex: /Error: RelayParser: Encountered duplicated.*/gm,
-      cb: match => {
-        return {
-          id: `85902`,
-          context: {
-            sourceMessage:
-              match[0] +
-              `\n\nWarning: Windows users may be able to fix this error by renaming all directories to lowercase in the file path.`,
-          },
-        }
-      },
-    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,
