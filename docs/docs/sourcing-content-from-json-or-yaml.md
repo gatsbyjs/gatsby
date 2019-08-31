@@ -56,7 +56,6 @@ Add a new file called `yml-at-buildtime.js` inside the `pages` folder, with the 
 
 ```jsx:title=src/pages/yml-at-buildtime.js
 import React from "react"
-import uuid from "uuid"
 import YAMLData from "../../content/My-YAML-Content.yaml"
 
 const YAMLbuildtime = () => (
@@ -276,8 +275,8 @@ const basicTemplate = props => {
   return (
     <div style={{ maxWidth: `960px`, margin: `1.45rem` }}>
       <ul>
-        {pageContent.map(data => {
-          return <li key={uuid.v4()}>{data.item}</li>
+        {pageContent.map((data, index) => {
+          return <li key={`content_item_${index}`}>{data.item}</li>
         })}
       </ul>
       <ul>
