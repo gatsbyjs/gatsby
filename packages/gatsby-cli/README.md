@@ -1,4 +1,5 @@
 # gatsby-cli
+[![npm version](https://badge.fury.io/js/gatsby-cli.svg)](https://badge.fury.io/js/gatsby-cli)
 
 The Gatsby command line interface (CLI). It is used to perform common functionality, such as creating a Gatsby application based on a starter, spinning up a hot-reloading local development server, and more!
 
@@ -20,6 +21,14 @@ You can also use the `package.json` script variant of these commands, typically 
 ```
 
 ## Commands
+1. [new](#new)
+2. [develop](#develop)
+3. [build](#build)
+4. [serve](#serve)
+5. [clean](#clean)
+6. [plugin](#plugin)
+7. [info](#info)
+8. [repl](#repl)
 
 ### `new`
 
