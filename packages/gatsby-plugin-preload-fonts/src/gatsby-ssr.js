@@ -1,4 +1,5 @@
 const React = require(`react`)
+const { URL } = require(`url`)
 
 const { load: loadCache } = require(`./prepare/cache`)
 
@@ -25,9 +26,21 @@ exports.onRenderBody = (
   const props = getLinkProps({ crossOrigin, pathname })
 
   const assets = Object.keys(cache.assets[pathname])
+
   setHeadComponents(
-    assets.map(href => (
-      <link key={href} rel="preload" href={href} as="font" {...props} />
-    ))
+    assets.map(href => {
+      let assetProps
+
+      try {
+        new URL(href)
+        assetProps = props
+      } catch (e) {
+        assetProps = {}
+      }
+
+      return (
+        <link key={href} as="font" href={href} rel="preload" {...assetProps} />
+      )
+    })
   )
 }
