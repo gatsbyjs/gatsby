@@ -3751,11 +3751,10 @@
   repo: https://github.com/JohnJKerr/gatsby-creative
   description: Gatsby implementation of the Start Bootstrap Creative template
   tags:
+    - Gallery
     - Portfolio
     - Styling:Bootstrap
     - Styling:SCSS
-    - Agency
-    - Freelance
   features:
     - Start Bootstrap Creative template converted to React/Gatsby
     - React Scrollspy used to track page position
