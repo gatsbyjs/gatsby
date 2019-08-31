@@ -67,13 +67,15 @@ export async function main() {
         cache.assets[pathname] = Object.create(null)
       }
 
-      if (req.url().startsWith(devServer)) {
-        cache.assets[pathname][req.url().slice(devServer.length)] = true
-      } else {
-        cache.assets[pathname][req.url()] = true
-      }
+      const isSelfHosted = req.url().startsWith(devServer)
 
-      bar.interrupt(green(ellipses(` found ${req.url()}`, 80)))
+      const fontUrl = isSelfHosted
+        ? req.url().slice(devServer.length)
+        : req.url()
+
+      cache.assets[pathname][fontUrl] = true
+
+      bar.interrupt(green(ellipses(` found ${fontUrl}`, 80)))
     }
   })
 
