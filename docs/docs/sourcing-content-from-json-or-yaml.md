@@ -2,15 +2,9 @@
 title: Sourcing Content from JSON or YAML
 ---
 
-## Introduction
+As you work with Gatsby, you might want to source data from a JSON or YAML file directly into a page or component. This guide will cover approaches for those techniques, as well as architecting a Gatsby site from a YAML file.
 
-As you work with Gatsby and discover the extent of its possibilities, you might have questions about sourcing data from a JSON or YAML file directly into a page or component. This guide will cover approaches for those techniques, as well as architecting a Gatsby site from a YAML file.
-
-## Setup
-
-You'll start by creating a new Gatsby site based on the official _hello world starter_.
-
-To play with sourcing data from a JSON or YAML file, you can start by creating a new Gatsby site based on the official [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
+To follow along with the JSON or YAML data sourcing tips outlined in this guide, you can start by creating a new Gatsby site based on the official [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
 
 Open up a terminal and run the following command:
 
@@ -18,13 +12,13 @@ Open up a terminal and run the following command:
 gatsby new gatsby-YAML-JSON-at-buildtime https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-## Directly importing data with YAML
+## Directly import data with YAML
 
 This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#Directly-importing-data-with-JSON).
 
-### Adding the YAML content
+### Add the YAML content
 
-Create a folder called `content` and inside, add a file called `My-YAML-Content.yaml` with the following content:
+In your Gatsby project folder, create a directory called `content` and inside, add a file called `My-YAML-Content.yaml` with the following content:
 
 ```yaml:title=content/My-YAML-Content.yaml
 title: YAML content used at build time with Gatsby
@@ -48,7 +42,7 @@ content:
   - item: 111111
 ```
 
-### Importing YAML into the page component
+### Import YAML into the page component
 
 Now that you have something you want to show, the only thing missing is to create a page that will consume the data.
 
@@ -73,13 +67,13 @@ export default YAMLbuildtime
 
 The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional stateless React component.
 
-## Directly importing data with JSON
+## Directly import data with JSON
 
 In addition to (or instead of) sourcing from YAML, you can use JSON as a data source in a Gatsby site.
 
-### Adding the JSON content
+### Add the JSON content
 
-Create a folder named `content` if it doesn't exist, and then add a new file inside called `My-JSON-Content.json` with the following content inside:
+In your Gatsby project folder, create a directory named `content` if it doesn't exist, and then add a new file inside called `My-JSON-Content.json` with the following content:
 
 ```json:title=content/My-JSON-Content.json
 {
@@ -101,7 +95,7 @@ Create a folder named `content` if it doesn't exist, and then add a new file ins
 }
 ```
 
-### Importing JSON into the page component
+### Import JSON into the page component
 
 Now that you have JSON data that needs to be shown, all that's missing is a page to consume it.
 
@@ -128,11 +122,11 @@ Similar to the YAML example above, this code snippet shows how to import a JSON 
 
 Out of the box and without any extra configuration, the page will show content sourced from a JSON file.
 
-## Building a Gatsby site sourced from YAML
+## Build a Gatsby site sourced from YAML
 
-You can build a fully functional Gatsby site with a page structure sourced from a YAML file.
+You can also build a fully functional Gatsby site with a page structure sourced from a YAML file.
 
-### Adding necessary dependencies
+### Add necessary dependencies
 
 For this example, you will need to add an extra dependency so that the file containing the site structure and its contents can be loaded and interpreted safely.
 
@@ -144,7 +138,7 @@ npm install --save js-yaml
 
 This newly added package will be responsible for loading and parsing the YAML file safely.
 
-### Adding some content
+### Add some content
 
 Create a folder named `content` if it doesn't exist, and then add a new file inside called `index.yaml` with the following contents:
 
@@ -218,9 +212,9 @@ The code block above creates a YAML object in which:
 - The `contents` list holds some data to be displayed.
 - The `links` list holds some endpoints to other pages.
 
-### Gatsby configuration
+### Configure Gatsby pages
 
-Now that the site structure and contents exists, we need to tell Gatsby to generate the appropriate pages and display the contents for each one.
+Once the dynamic site structure and content exists, you need to tell Gatsby to generate the appropriate pages and display the contents for each one.
 
 If you don't already have one, create a `gatsby-node.js` file at the root of the project. Add the following code inside the file:
 
@@ -250,20 +244,11 @@ Breaking down this code excerpt into smaller parts:
 3. Using Gatsby's [`createPage()` API](/docs/actions/#createPage), create some pages programmatically from the parsed file.
 4. Use the `context` property to pass your data into the page as a special prop named `pageContext`, allowing it to be consumed. You can read more about `context` in [creating and modifying pages](/docs/creating-and-modifying-pages/).
 
-### Review of the steps so far
+### Create a template
 
-For a quick review of what this doc has covered:
+To complete the process of rendering the sourced content, you'll need to create a template for producing dynamic pages from data.
 
-1. Created a new Gatsby website based on a starter.
-2. Added some dependencies to safely load and parse a YAML file.
-3. Created the file and folder structure to house the contents to be displayed.
-4. Extended Gatsby's default configuration through `gatsby-node.js` to fetch the data and create some pages programmatically at build time.
-
-### Gatsby template
-
-To complete the process of rendering the sourced content, you'll need to create a template.
-
-Create a file called `basicTemplate.js` in the `src/templates/` folder and add the following:
+To match the component referenced in `gatsby-config.js`, create a file called `basicTemplate.js` in the `src/templates/` folder and add the following:
 
 ```jsx:title=src/templates/basicTemplate.js
 import React from "react"
@@ -294,9 +279,9 @@ const basicTemplate = props => {
 export default basicTemplate
 ```
 
-### Joining the pieces
+### Join the pieces
 
-After all these steps are complete, you should have the following file and folder structure:
+After parsing a YAML file into data and configuring Gatsby to produce pages with a template, you should have the following file and folder structure:
 
 ```
   |gatsby-YAML-JSON-at-buildtime

@@ -158,7 +158,7 @@
                   breadcrumbTitle: Drupal
             - title: Sourcing Content from JSON or YAML
               link: /docs/sourcing-content-from-json-or-yaml/
-              breadcrumbTitle: Sourcing from JSON or YAML
+              breadcrumbTitle: JSON or YAML
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           breadcrumbTitle: Querying with GraphQL
