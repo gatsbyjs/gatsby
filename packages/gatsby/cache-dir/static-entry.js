@@ -173,17 +173,17 @@ export default (pagePath, callback) => {
 
   class RouteHandler extends React.Component {
     render() {
+      const Page = syncRequires.components[componentChunkName]
+
       const props = {
         ...this.props,
         ...pageData.result,
         // pathContext was deprecated in v2. Renamed to pageContext
         pathContext: pageData.result ? pageData.result.pageContext : undefined,
+        Page,
       }
 
-      const pageElement = createElement(
-        syncRequires.components[componentChunkName],
-        props
-      )
+      const pageElement = createElement(Page, props)
 
       const wrappedPage = apiRunner(
         `wrapPageElement`,
