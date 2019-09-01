@@ -7153,3 +7153,14 @@
   built_by: Emeruche "Cole" Ikenna
   built_by_url: https://twitter.com/cole_ruche
   featured: false
+- title: Mr & Mrs Wilkinson
+  url: https://thewilkinsons.netlify.com/
+  main_url: https://thewilkinsons.netlify.com/
+  source_url: https://github.com/davemullenjnr/the-wilkinsons
+  description: >
+    A one-page wedding photography showcase using Gatsby Image and featuring a lovely hero and intro section.
+  categories:
+    - Photography
+  built_by: Dave Mullen Jnr
+  built_by_url: https://davemullenjnr.co.uk
+  featured: false
