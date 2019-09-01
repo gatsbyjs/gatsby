@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.10...gatsby-source-mongodb@2.1.11) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.9...gatsby-source-mongodb@2.1.10) (2019-08-29)
 
 **Note:** Version bump only for package gatsby-source-mongodb
