@@ -126,13 +126,7 @@ const link = (options = {}, fieldConfig) => async (
     fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
-  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
-  if (
-    Array.isArray(fieldValue) &&
-    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
-  ) {
-    return fieldValue
-  }
+  if (fieldValue == null) return null
 
   const returnType = getNullableType(options.type || info.returnType)
   const type = getNamedType(returnType)
@@ -194,13 +188,7 @@ const fileByPath = (options = {}, fieldConfig) => async (
     fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
-  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
-  if (
-    Array.isArray(fieldValue) &&
-    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
-  ) {
-    return fieldValue
-  }
+  if (fieldValue == null) return null
 
   const findLinkedFileNode = relativePath => {
     // Use the parent File node to create the absolute path to
