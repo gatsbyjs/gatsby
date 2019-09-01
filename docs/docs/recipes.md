@@ -410,7 +410,7 @@ body {
   font-family: 'Your Chosen Font';
 }
 ```
-*NOTE: So for our example, this would be `font-family: 'Source Sans Pro';`*
+*NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`*
 
 #### Additional resources
 
