@@ -407,10 +407,11 @@ import "typeface-your-chosen-font"
 
 ```css:title=src/components/layout.css
 body {
-  font-family: 'Your Chosen Font';
+  font-family: "Your Chosen Font";
 }
 ```
-*NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`*
+
+_NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`_
 
 #### Additional resources
 
