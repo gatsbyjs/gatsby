@@ -290,7 +290,7 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
   })
 }
 
-const GATSBY_THEME = /^(?:@\w+\/)?gatsby-theme-/
+const GATSBY_THEME = /^(?:@[\w-]+\/)?gatsby-theme-/
 
 const mergeTypes = ({
   schemaComposer,
