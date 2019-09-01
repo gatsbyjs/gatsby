@@ -10,7 +10,7 @@
     "@babel/code-frame": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "@babel/types": "^7.5.5",
-    "ast-types": "^0.12.4",
+    "ast-types": "^0.13.2",
     "common-tags": "^1.8.0",
     "react-docgen": "^5.0.0-beta.1"
   },
@@ -18,7 +18,7 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.2.1",
     "lodash": "^4.17.15"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-react-docgen#readme",

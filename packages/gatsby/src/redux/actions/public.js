@@ -21,18 +21,23 @@ const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
 
-const findChildrenRecursively = (children = []) => {
-  children = children.concat(
-    ...children.map(child => {
-      const newChildren = getNode(child).children
-      if (_.isArray(newChildren) && newChildren.length > 0) {
-        return findChildrenRecursively(newChildren)
-      } else {
-        return []
-      }
-    })
-  )
+const findChildren = initialChildren => {
+  const children = [...initialChildren]
+  const queue = [...initialChildren]
+  const traversedNodes = new Set()
 
+  while (queue.length > 0) {
+    const currentChild = getNode(queue.pop())
+    if (!currentChild || traversedNodes.has(currentChild.id)) {
+      continue
+    }
+    traversedNodes.add(currentChild.id)
+    const newChildren = currentChild.children
+    if (_.isArray(newChildren) && newChildren.length > 0) {
+      children.push(...newChildren)
+      queue.push(...newChildren)
+    }
+  }
   return children
 }
 
@@ -482,7 +487,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
     node &&
-    findChildrenRecursively(node.children)
+    findChildren(node.children)
       .map(getNode)
       .map(createDeleteAction)
 
@@ -510,7 +515,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
-    nodes.map(n => findChildrenRecursively(getNode(n).children))
+    nodes.map(n => findChildren(getNode(n).children))
   )
 
   const deleteNodesAction = {
@@ -752,7 +757,7 @@ const createNode = (
           payload: node,
         }
       }
-      deleteActions = findChildrenRecursively(oldNode.children)
+      deleteActions = findChildren(oldNode.children)
         .map(getNode)
         .map(createDeleteAction)
     }

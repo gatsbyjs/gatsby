@@ -7132,3 +7132,15 @@
   built_by: Joe Quarion
   built_by_url: https://github.com/jqrn
   featured: false
+- title: Cole Ruche
+  main_url: https://coleruche.com
+  url: https://coleruche.com
+  source_url: https://github.com/kingingcole/myblog
+  description: >
+    The personal website and blog for Emeruche "Cole" Ikenna, front-end web developer from Nigeria.
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Emeruche "Cole" Ikenna
+  built_by_url: https://twitter.com/cole_ruche
+  featured: false
