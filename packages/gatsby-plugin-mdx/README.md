@@ -73,13 +73,37 @@ module.exports = {
 }
 ```
 
-By default, this configuration will allow you to create pages
+By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
 Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
 and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
+
+To automatically create pages with `.mdx` from other sources, you also need
+to configure gatsby-plugin-page-creator.
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
+      },
+    },
+    `gatsby-plugin-mdx`,
+  ],
+}
+```
 
 ### Configuration
 
@@ -140,6 +164,12 @@ module.exports = {
       options: {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
       },
     },
     {
@@ -214,6 +244,12 @@ module.exports = {
       options: {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
       },
     },
   ],
