@@ -35,7 +35,7 @@ const errorParser = ({ message, filePath, location }) => {
           context: {
             sourceMessage:
               match[0] +
-              `\n\nWarning: Windows users may be able to fix this error by renaming all directories to lowercase in the file path.`,
+              `\n\nWarning: Windows users may be able to fix this error by renaming all directories to lowercase\nin the file path and also by installing package node-win-env using npm install -g node-win-env`,
           },
         }
       },

@@ -5,7 +5,8 @@ Object {
   "context": Object {
     "sourceMessage": "Error: RelayParser: Encountered duplicated definitions for one or more documents: each document must have a unique name. Duplicated documents:
 
-Warning: Windows users may be able to fix this error by renaming all directories to lowercase in the file path.",
+Warning: Windows users may be able to fix this error by renaming all directories to lowercase
+in the file path and also by installing package node-win-env using npm install -g node-win-env",
   },
   "filePath": "test.js",
   "id": "85902",
