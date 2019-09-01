@@ -16,6 +16,26 @@ of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
+## Table of Contents
+
+- [Problem](#problem)
+- [Solution](#solution)
+- [Install](#install)
+- [How to use](#how-to-use)
+- [Polyfilling object-fit/object-position for IE](#polyfilling-object-fitobject-position-for-ie)
+- [Types of Responsive Images](#two-types-of-responsive-images)
+- [Fragments](#fragments)
+  - [gatsby-transformer-sharp](#gatsby-transformer-sharp)
+  - [gatsby-source-contentful](#gatsby-source-contentful)
+  - [gatsby-source-datocms](#gatsby-source-datocms)
+  - [gatsby-source-sanity](#gatsby-source-sanity)
+- [Fixed Queries](#fixed-queries)
+- [Fluid Queries](#fluid-queries)
+- [Art directing multiple images](#art-directing-multiple-images)
+- [Gatsby Image Props](#gatsby-image-props)
+- [Image Processing Arguments](#image-processing-arguments)
+- [Other Stuff](#some-other-stuff-to-be-aware-of)
+
 ## Problem
 
 Large, unoptimized images dramatically slow down your site.
