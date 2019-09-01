@@ -393,21 +393,25 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 #### Directions
 
-1. Run `npm install --save yourchosenfont`, replacing `yourchosenfont` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+1. Run `npm install --save typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
 
-2. Add `import "yourchosenfont"` to a layout template, page component, or `gatsby-browser.js`.
+An example to load the popular 'Source Sans Pro' font would be: `npm install --save typeface-source-sans-pro`.
+
+2. Add `import "typeface-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
 
 ```jsx:title=src/components/layout.js
-import "yourchosenfont"
+import "typeface-your-chosen-font"
 ```
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-  font-family: yourchosenfont;
+  font-family: "Your Chosen Font";
 }
 ```
+
+_NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`_
 
 #### Additional resources
 
