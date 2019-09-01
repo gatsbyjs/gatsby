@@ -8,13 +8,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/babel-preset-css-prop": "^10.0.14"
+    "@emotion/babel-preset-css-prop": "^10.0.17"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [

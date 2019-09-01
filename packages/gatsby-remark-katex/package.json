@@ -15,7 +15,7 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.2.1",
     "katex": "^0.11.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-katex#readme",

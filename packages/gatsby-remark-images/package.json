@@ -14,7 +14,7 @@
     "lodash": "^4.17.15",
     "mdast-util-definitions": "^1.2.4",
     "potrace": "^2.1.2",
-    "query-string": "^6.8.2",
+    "query-string": "^6.8.3",
     "slash": "^3.0.0",
     "unist-util-select": "^1.5.0",
     "unist-util-visit-parents": "^2.1.2"
@@ -23,7 +23,7 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.2.1",
     "hast-util-to-html": "^6.0.2",
     "mdast-util-to-hast": "^6.0.2"
   },
