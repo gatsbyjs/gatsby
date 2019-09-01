@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.27...gatsby-source-wordpress@3.1.28) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [3.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.26...gatsby-source-wordpress@3.1.27) (2019-08-30)
 
 **Note:** Version bump only for package gatsby-source-wordpress
