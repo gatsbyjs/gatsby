@@ -7132,6 +7132,15 @@
   built_by: Joe Quarion
   built_by_url: https://github.com/jqrn
   featured: false
+- title: Vermarc Sport
+  main_url: https://www.vermarcsport.com/
+  url: https://www.vermarcsport.com/
+  description: >
+    Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
+  categories:
+    - eCommerce
+  built_by: BrikL
+  built_by_url: https://github.com/Brikl
 - title: Cole Ruche
   main_url: https://coleruche.com
   url: https://coleruche.com
