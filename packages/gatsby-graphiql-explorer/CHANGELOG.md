@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.9...gatsby-graphiql-explorer@0.2.10) (2019-09-02)
+
+### Features
+
+- **gatsby-graphiql-explorer:** Implement CodeExporter ([#17120](https://github.com/gatsbyjs/gatsby/issues/17120)) ([e723d76](https://github.com/gatsbyjs/gatsby/commit/e723d76))
+
 ## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.8...gatsby-graphiql-explorer@0.2.9) (2019-09-01)
 
 ### Bug Fixes
