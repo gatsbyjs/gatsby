@@ -20,6 +20,7 @@ You can also use the `package.json` script variant of these commands, typically 
 ```
 
 ## Commands
+
 1. [new](#new)
 2. [develop](#develop)
 3. [build](#build)
