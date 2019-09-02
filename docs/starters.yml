@@ -3728,6 +3728,21 @@
     - Email verification
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for offline support out of the box
+- url: https://gatsby-typescript-minimal.netlify.com/
+  repo: https://github.com/benbarber/gatsby-typescript-minimal
+  description: A minimal, bare-bones Typescript starter for Gatsby
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - SEO
+  features:
+    - Bare-bones starter
+    - TypeScript
+    - TSLint
+    - Prettier
+    - Styled Components
+    - Sitemap Generation
+    - Google Analytics
 - url: https://agility-gatsby-starter.netlify.com
   repo: https://github.com/agility/agility-gatsby-starter
   description: Get started with Gatsby and Agility CMS using a minimal blog.
