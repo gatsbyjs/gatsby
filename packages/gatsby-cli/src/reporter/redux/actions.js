@@ -199,6 +199,7 @@ const actions = {
         payload: {
           id,
           status: `CANCELLED`,
+          type: activity.type,
         },
       })
     } else {
@@ -218,6 +219,7 @@ const actions = {
           id,
           status,
           duration,
+          type: activity.type,
         },
       })
 

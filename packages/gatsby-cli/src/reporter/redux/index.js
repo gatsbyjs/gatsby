@@ -32,6 +32,15 @@ const iface = {
     }
 
     store.dispatch(action)
+
+    if (
+      action.type.startsWith(`ACTIVITY_`) &&
+      action.payload.type === `hidden`
+    ) {
+      // consumers (ipc, yurnalist, json logger) shouldn't have to
+      // deal with actions needed just for internal tracking of status
+      return
+    }
     onLogActionListeners.forEach(fn => fn(action))
   },
   onStoreSwap: fn => {
