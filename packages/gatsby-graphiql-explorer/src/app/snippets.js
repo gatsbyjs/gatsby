@@ -63,11 +63,73 @@ ${getQuery(arg, 6)}
 `,
 }
 
+const getDataNodeName = name => {
+  return name.startsWith("all") && name.length > 3
+    ? name.substring(3, 4).toLowerCase() + name.substring(4, name.length)
+    : null
+}
+
+const getFieldQuery = (root, enableComments) => {
+  const rootName = root.name.value
+  const dataNodeName = getDataNodeName(rootName)
+  let nodes
+
+  const comment = message => (enableComments ? `\n      // ${message}` : ``)
+
+  if (root.selectionSet) {
+    nodes = root.selectionSet.selections.find(
+      selection => selection.name.value === "nodes"
+    )
+
+    if (nodes && nodes.selectionSet) {
+      let hasId = false
+      let hasSlug = false
+      nodes.selectionSet.selections.forEach(field => {
+        if (field.name.value === "id") {
+          hasId = true
+        }
+        if (field.name.value === "slug") {
+          hasSlug = true
+        }
+      })
+
+      return `  result.data.${rootName}.${
+        nodes.name.value
+      }.forEach(${dataNodeName} => {
+    createPage({${comment(`set URL of the page`)}
+      path: ${
+        hasSlug
+          ? `\`/${dataNodeName}/\${${dataNodeName}.slug}/\``
+          : `\`/${dataNodeName}/\${${dataNodeName}.uniquePathField}/\``
+      },${comment(`set react template used to render page`)}
+      component: path.resolve(\`./src/templates/${dataNodeName}.js\`),${comment(
+        `provide variables that can be used in page query`
+      )}
+      context: {
+        ${hasId ? `id: ${dataNodeName}.id,` : ``}
+      },
+    })
+  })`
+    }
+
+    if (enableComments) {
+      return `  // could not find field 'nodes' on ${rootName}\n  // this should probably be queried directly from a page by using the '${pageQuery.name}'`
+    }
+    return null
+  }
+}
+
 const createPagesQuery = {
   name: `createPages`,
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
-  options: [],
+  options: [
+    {
+      id: "comments",
+      label: "Comments",
+      initial: false,
+    },
+  ],
   generate: arg => `const path = require(\`path\`)
   
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -85,20 +147,10 @@ ${getQuery(arg, 4)}
     return
   }
 
-  // Use result.data to create pages, snippet below is sample that need to be adjusted for shape of your query
-  result.data.allData.nodes.forEach(dataNode => {
-    createPage({
-      // set URL of the page
-      path: \`/my/url/\${dataNode.slug}\`,
-      // set react template used to render page
-      component: path.resolve(\`./src/templates/my-template.js\`),
-      // provide variables that can be used in page query to
-      // select node - id is great choice as it is unique
-      context: {
-        id: dataNode.id,
-      },
-    })
-  })
+${arg.operationDataList[0].operationDefinition.selectionSet.selections
+  .map(selection => getFieldQuery(selection, arg.options.comments))
+  .filter(fieldQuery => fieldQuery !== null)
+  .join("\n\n")}
 }
 
 `,
