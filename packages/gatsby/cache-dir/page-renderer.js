@@ -6,12 +6,12 @@ import { apiRunner } from "./api-runner-browser"
 // Renders page
 class PageRenderer extends React.Component {
   render() {
-    const Page = this.props.pageResources.component
+    const PageComponent = this.props.pageResources.component
 
     const props = {
       ...this.props,
       pathContext: this.props.pageContext,
-      Page,
+      PageComponent,
     }
 
     const [replacementElement] = apiRunner(`replaceComponentRenderer`, {
@@ -21,7 +21,7 @@ class PageRenderer extends React.Component {
 
     const pageElement =
       replacementElement ||
-      createElement(Page, {
+      createElement(PageComponent, {
         ...props,
         key: this.props.path || this.props.pageResources.page.path,
       })
