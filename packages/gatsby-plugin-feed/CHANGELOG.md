@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.10...gatsby-plugin-feed@2.3.11) (2019-09-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-feed:** replace title feed requirement with a warning ([#17107](https://github.com/gatsbyjs/gatsby/issues/17107)) ([e26a16b](https://github.com/gatsbyjs/gatsby/commit/e26a16b))
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.9...gatsby-plugin-feed@2.3.10) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.8...gatsby-plugin-feed@2.3.9) (2019-08-24)
 
 ### Bug Fixes

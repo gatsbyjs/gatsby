@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.12...gatsby-plugin-netlify-cms@4.1.13) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [4.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.11...gatsby-plugin-netlify-cms@4.1.12) (2019-08-29)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms
