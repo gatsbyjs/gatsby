@@ -73,10 +73,10 @@
     "directory": "packages/gatsby-cli"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\" && npm run showPostIntall",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"",
-    "postinstall": "node scripts/postinstall.js"
+    "showPostIntall": "node scripts/postinstall.js"
   },
   "yargs": {
     "boolean-negation": false
