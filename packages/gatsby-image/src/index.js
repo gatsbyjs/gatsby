@@ -523,7 +523,7 @@ class Image extends React.Component {
 
     if (fixed) {
       const imageVariants = fixed
-      const image = { ...imageVariants[0] }
+      const image = imageVariants[0]
 
       const divStyle = {
         position: `relative`,
