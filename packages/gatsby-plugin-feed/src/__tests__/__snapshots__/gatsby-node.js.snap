@@ -9,5 +9,3 @@ exports[`Test plugin feed default settings work properly 1`] = `"<?xml version=\
 exports[`Test plugin feed options validation throws when invalid plugin options 1`] = `[Error: [Config Validation]: "output" is required]`;
 
 exports[`Test plugin feed options validation throws when invalid plugin options 2`] = `[Error: [Config Validation]: "query" is required]`;
-
-exports[`Test plugin feed options validation throws when invalid plugin options 3`] = `[Error: [Config Validation]: "title" is required]`;
