@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.4.0",
-    "gatsby-plugin-mdx": "^1.0.34",
+    "gatsby-plugin-mdx": "^1.0.35",
     "gatsby-plugin-sharp": "^2.2.19",
     "gatsby-remark-copy-linked-files": "^2.1.14",
     "gatsby-remark-images": "^3.1.20",
