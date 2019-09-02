@@ -11,6 +11,12 @@ const GraphQLRunner = require(`./graphql-runner`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
+let activity = {
+  done: () => {
+    report.completeActivity(`query-running`)
+  },
+  tick: () => {},
+}
 const extractedQueryIds = new Set()
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
@@ -233,7 +239,7 @@ const runQueuedQueries = () => {
  *
  * For what constitutes a dirty query, see `calcQueries`
  */
-let activity
+
 const startListeningToDevelopQueue = () => {
   // We use a queue to process batches of queries so that they are
   // processed consecutively
@@ -265,7 +271,7 @@ const startListeningToDevelopQueue = () => {
     }
 
     return queryQueue
-      .processBatch(developQueue, queryJobs)
+      .processBatch(developQueue, queryJobs, activity)
       .then(() => onFinish(null))
       .catch(onFinish)
   })
