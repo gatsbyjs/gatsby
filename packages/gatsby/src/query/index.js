@@ -4,9 +4,10 @@ const _ = require(`lodash`)
 const Queue = require(`better-queue`)
 // const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
-const queryQueue = require(`./queue`)
 const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
+const queryQueue = require(`./queue`)
+const GraphQLRunner = require(`./graphql-runner`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
@@ -147,21 +148,8 @@ const groupQueryIds = queryIds => {
   }
 }
 
-// const reportStats = (queue, activity) => {
-//   const startQueries = process.hrtime()
-//   queue.on(`task_finish`, () => {
-//     const stats = queue.getStats()
-//     activity.setStatus(
-//       `${stats.total}/${stats.peak} ${(
-//         stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-//       ).toFixed(2)} queries/second`
-//     )
-//   })
-// }
-
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
-  // reportStats(queue, activity)
   await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
@@ -177,14 +165,6 @@ const createStaticQueryJob = (state, queryId) => {
   }
 }
 
-// const processStaticQueries = async (queryIds, { state, activityOpts }) => {
-//   state = state || store.getState()
-//   await processQueries(
-//     queryIds.map(id => createStaticQueryJob(state, id)),
-//     activityOpts
-//   )
-// }
-
 const initialProcessQueries = async () => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
@@ -197,26 +177,7 @@ const initialProcessQueries = async () => {
     ),
   ]
 
-  let activity
-  if (queryJobs.length) {
-    // console.log(`create progress`)
-    activity = report.createProgress(`run queries`, queryJobs.length, 0, {
-      id: `query-running`,
-    })
-    activity.start()
-  } else {
-    activity = {
-      done: () => {
-        report.completeActivity(`query-running`)
-      },
-      tick: () => {},
-      // setStatus: () => {},
-    }
-  }
-
   await processQueries(queryJobs, activity)
-  // activity.setStatus(`${queryJobs.length} queries`)
-  activity.done()
   return { pageQueryIds }
 }
 
@@ -235,19 +196,6 @@ const createPageQueryJob = (state, page) => {
     },
   }
 }
-
-// const processPageQueries = async (queryIds, { state, activityOpts }) => {
-//   state = state || store.getState()
-//   // Make sure we filter out pages that don't exist. An example is
-//   // /dev-404-page/, whose SitePage node is created via
-//   // `internal-data-bridge`, but the actual page object is only
-//   // created during `gatsby develop`.
-//   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
-//   await processQueries(
-//     pages.map(page => createPageQueryJob(state, page)),
-//     activityOpts
-//   )
-// }
 
 /////////////////////////////////////////////////////////////////////
 // Listener for gatsby develop
@@ -285,25 +233,26 @@ const runQueuedQueries = () => {
  *
  * For what constitutes a dirty query, see `calcQueries`
  */
-const startListening = queue => {
-  // console.info(`started listening`)
+let activity
+const startListeningToDevelopQueue = () => {
   // We use a queue to process batches of queries so that they are
   // processed consecutively
+  let graphqlRunner = null
+  const developQueue = queryQueue.createDevelopQueue(() => {
+    if (!graphqlRunner) {
+      graphqlRunner = new GraphQLRunner(store)
+    }
+    return graphqlRunner
+  })
   listenerQueue = new Queue((queryJobs, callback) => {
-    // console.info(`doing work`)
-    let activity
-
     if (queryJobs.length) {
-      // console.log(`create progress`)
       activity = report.createProgress(`run queries`, queryJobs.length, 0, {
         id: `query-running`,
       })
       activity.start()
     } else {
-      // console.log(`just complete activity`)
       activity = {
         done: () => {
-          // console.log(`completed activity`)
           report.completeActivity(`query-running`)
         },
         tick: () => {},
@@ -311,31 +260,35 @@ const startListening = queue => {
     }
 
     const onFinish = (...arg) => {
-      // console.log(`onFinish`, args)
       activity.done()
       return callback(...arg)
     }
 
-    queryQueue
-      .processBatch(queue, queryJobs, activity)
+    return queryQueue
+      .processBatch(developQueue, queryJobs)
       .then(() => onFinish(null))
       .catch(onFinish)
   })
 
-  // listenerQueue.on(`task_queued`, () => {
-  //   // report.stateUpdate(`queryRunning`, `IN_PROGRESS`)
-  // })
-
-  // listenerQueue.on(`batch_finish`, () => {
-  //   // report.stateUpdate(`queryRunning`, `SUCCESS`)
-  // })
-
   emitter.on(`API_RUNNING_START`, () => {
     report.pendingActivity({ id: `query-running` })
-    // report.stateUpdate(`queryRunning`, `NOT_STARTED`)
   })
 
   emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
+  ;[
+    `DELETE_CACHE`,
+    `CREATE_NODE`,
+    `DELETE_NODE`,
+    `DELETE_NODES`,
+    `SET_SCHEMA_COMPOSER`,
+    `SET_SCHEMA`,
+    `ADD_FIELD_TO_NODE`,
+    `ADD_CHILD_NODE_TO_PARENT_NODE`,
+  ].forEach(eventType => {
+    emitter.on(eventType, event => {
+      graphqlRunner = null
+    })
+  })
 }
 
 const enqueueExtractedQueryId = pathname => {
@@ -365,9 +318,7 @@ module.exports = {
   calcInitialDirtyQueryIds,
   groupQueryIds,
   initialProcessQueries,
-  // processStaticQueries,
-  // processPageQueries,
-  startListening,
+  startListeningToDevelopQueue,
   runQueuedQueries,
   enqueueExtractedQueryId,
   enqueueExtractedPageComponent,

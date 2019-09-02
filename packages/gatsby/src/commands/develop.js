@@ -12,7 +12,6 @@ const graphqlPlayground = require(`graphql-playground-middleware-express`)
 const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
 const { formatError } = require(`graphql`)
 const got = require(`got`)
-const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
@@ -40,7 +39,6 @@ const db = require(`../db`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
-const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
 const requiresWriter = require(`../bootstrap/requires-writer`)
 
@@ -52,16 +50,6 @@ const requiresWriter = require(`../bootstrap/requires-writer`)
 setTimeout(() => {
   syncStaticDir()
 }, 10000)
-
-const rlInterface = rl.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-// Quit immediately on hearing ctrl-c
-rlInterface.on(`SIGINT`, () => {
-  process.exit()
-})
 
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
@@ -169,10 +157,16 @@ async function startServer(program) {
     graphqlEndpoint,
     graphqlHTTP(() => {
       const { schema, schemaCustomization } = store.getState()
+
       return {
         schema,
         graphiql: false,
-        context: withResolverContext({}, schema, schemaCustomization.context),
+        context: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context: {},
+          customContext: schemaCustomization.context,
+        }),
         customFormatErrorFn(err) {
           return {
             ...formatError(err),
@@ -343,6 +337,16 @@ module.exports = async (program: any) => {
     )
   }
 
+  try {
+    program.port = await detectPortInUseAndPrompt(port)
+  } catch (e) {
+    if (e.message === `USER_REJECTED`) {
+      process.exit(0)
+    }
+
+    throw e
+  }
+
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
   // Scoped names are converted from @npm/package-name to npm--package-name
@@ -355,7 +359,6 @@ module.exports = async (program: any) => {
     })
   }
 
-  program.port = await detectPortInUseAndPrompt(port, rlInterface)
   // Start bootstrap process.
   const { graphqlRunner } = await bootstrap(program)
 
@@ -402,7 +405,7 @@ module.exports = async (program: any) => {
   await waitJobsFinished()
   requiresWriter.startListener()
   db.startAutosave()
-  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryUtil.startListeningToDevelopQueue()
   queryWatcher.startWatchDeletePage()
 
   let { compiler, webpackActivity } = await startServer(program)
@@ -424,8 +427,12 @@ module.exports = async (program: any) => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let lanUrlForConfig, lanUrlForTerminal
+    let prettyHost = host,
+      lanUrlForConfig,
+      lanUrlForTerminal
     if (isUnspecifiedHost) {
+      prettyHost = `localhost`
+
       try {
         // This can only return an IPv4 address
         lanUrlForConfig = address.ip()
@@ -451,8 +458,8 @@ module.exports = async (program: any) => {
     // TODO collect errors (GraphQL + Webpack) in Redux so we
     // can clear terminal and print them out on every compile.
     // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(host)
-    const localUrlForBrowser = formatUrl(host)
+    const localUrlForTerminal = prettyPrintUrl(prettyHost)
+    const localUrlForBrowser = formatUrl(prettyHost)
     return {
       lanUrlForConfig,
       lanUrlForTerminal,
