@@ -314,10 +314,10 @@ const Username = styled.h2`
 `
 
 const User = props => (
-  <UserWrapper>
+  <>
     <Avatar src={props.avatar} alt={props.username} />
     <Username>{props.username}</Username>
-  </UserWrapper>
+  </>
 )
 
 export default () => (
