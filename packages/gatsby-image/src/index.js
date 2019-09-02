@@ -82,12 +82,14 @@ const hasNativeLazyLoadSupport =
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
-// Save-Data support: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/save-data/#detecting_the_save-data_setting
-const hasSaveDataEnabled = () =>
-  `connection` in navigator && navigator.connection.saveData === true
-
 const isBrowser = typeof window !== `undefined`
 const hasIOSupport = isBrowser && window.IntersectionObserver
+
+// Save-Data support: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/save-data/#detecting_the_save-data_setting
+const hasSaveDataEnabled = () =>
+  isBrowser &&
+  `connection` in navigator &&
+  navigator.connection.saveData === true
 
 let io
 const listeners = new WeakMap()
