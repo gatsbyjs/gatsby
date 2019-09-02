@@ -7164,7 +7164,7 @@
   built_by: Dave Mullen Jnr
   built_by_url: https://davemullenjnr.co.uk
   featured: false
-  - title: Gopesh Gopinath - Full Stack Javascript Developer
+- title: Gopesh Gopinath - Full Stack Javascript Developer
   main_url: http://gopeshgopinath.com
   url: http://gopeshgopinath.com
   featured: false
@@ -7176,3 +7176,5 @@
     - Open Source
   built_by: Gopesh Gopinath
   built_by_url: http://gopeshgopinath.com
+
+  
