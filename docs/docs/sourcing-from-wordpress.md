@@ -9,6 +9,8 @@ WordPress is a free and open-source content management system (CMS). Let's say y
 _Note: this guide uses the `gatsby-starter-default` to provide you with the knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
 [this example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) to gain extra insights._
 
+_Note: If you are using Gastby v2 then use [`gatsby-starter-wordpress`](https://github.com/GatsbyCentral/gatsby-starter-wordpress) instead, follow the instructions [here](https://github.com/GatsbyCentral/gatsby-starter-wordpress)._
+
 ## Setup
 
 ### Quick start
@@ -135,3 +137,4 @@ created to support this guide.
 - [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
 - [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)
 - More [Gatsby blog posts about using Gatsby + Wordpress](/blog/tags/wordpress/)
+- [A Gastby v2 Starter for Wordpress maintained by GatsbyCentral](https://github.com/GatsbyCentral/gatsby-starter-wordpress)
