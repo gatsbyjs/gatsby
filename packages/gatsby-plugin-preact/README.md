@@ -10,7 +10,7 @@ React.
 
 ## Install
 
-`npm install --save gatsby-plugin-preact preact@beta`
+`npm install --save gatsby-plugin-preact preact@next`
 
 ## How to use
 
@@ -18,3 +18,9 @@ React.
 // In your gatsby-config.js
 plugins: [`gatsby-plugin-preact`]
 ```
+
+## Usage in a development environment
+
+Gastby development server currently has a hardcoded dependency on React-dom, therefore this plugin does not enable Preact in development.
+
+While Preact is designed to be a drop-in replacement, you should check that your production build works as expected before putting it live.

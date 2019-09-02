@@ -27,8 +27,8 @@ const {
   internalExtensionNames,
 } = require(`./extensions`)
 const { getPagination } = require(`./types/pagination`)
-const { getSortInput } = require(`./types/sort`)
-const { getFilterInput } = require(`./types/filter`)
+const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
+const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
 const { printTypeDefinitions } = require(`./print`)
 
@@ -181,6 +181,11 @@ const processTypeComposer = async ({
       fieldExtensions,
       parentSpan,
     })
+    await determineSearchableFields({
+      schemaComposer,
+      typeComposer,
+      parentSpan,
+    })
     if (typeComposer.hasInterface(`Node`)) {
       await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
       await addImplicitConvenienceChildrenFields({
@@ -199,6 +204,11 @@ const processTypeComposer = async ({
         schemaComposer,
         typeComposer,
         fieldExtensions,
+        parentSpan,
+      })
+      await determineSearchableFields({
+        schemaComposer,
+        typeComposer,
         parentSpan,
       })
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
@@ -359,7 +369,7 @@ const addExtensions = ({
     directives.forEach(({ name, args }) => {
       switch (name) {
         case `infer`:
-        case `dontInfer`:
+        case `dontInfer`: {
           typeComposer.setExtension(`infer`, name === `infer`)
           if (args.noDefaultResolvers != null) {
             typeComposer.setExtension(
@@ -368,6 +378,7 @@ const addExtensions = ({
             )
           }
           break
+        }
         case `mimeTypes`:
           typeComposer.setExtension(`mimeTypes`, args)
           break
@@ -686,6 +697,9 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                     originalResolver:
                       originalResolver || context.defaultFieldResolver,
                   })
+                tc.extendFieldExtensions(fieldName, {
+                  needsResolve: true,
+                })
               }
               tc.extendField(fieldName, newConfig)
             } else if (fieldTypeName) {
@@ -714,6 +728,40 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
     createResolvers,
     traceId: `initial-createResolvers`,
     parentSpan,
+  })
+}
+
+const determineSearchableFields = ({ schemaComposer, typeComposer }) => {
+  typeComposer.getFieldNames().forEach(fieldName => {
+    const field = typeComposer.getField(fieldName)
+    const extensions = typeComposer.getFieldExtensions(fieldName)
+    if (field.resolve) {
+      if (extensions.dateformat) {
+        typeComposer.extendFieldExtensions(fieldName, {
+          searchable: SEARCHABLE_ENUM.SEARCHABLE,
+          sortable: SORTABLE_ENUM.SORTABLE,
+          needsResolve: extensions.proxy ? true : false,
+        })
+      } else if (!_.isEmpty(field.args)) {
+        typeComposer.extendFieldExtensions(fieldName, {
+          searchable: SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE,
+          sortable: SORTABLE_ENUM.DEPRECATED_SORTABLE,
+          needsResolve: true,
+        })
+      } else {
+        typeComposer.extendFieldExtensions(fieldName, {
+          searchable: SEARCHABLE_ENUM.SEARCHABLE,
+          sortable: SORTABLE_ENUM.SORTABLE,
+          needsResolve: true,
+        })
+      }
+    } else {
+      typeComposer.extendFieldExtensions(fieldName, {
+        searchable: SEARCHABLE_ENUM.SEARCHABLE,
+        sortable: SORTABLE_ENUM.SORTABLE,
+        needsResolve: false,
+      })
+    }
   })
 }
 

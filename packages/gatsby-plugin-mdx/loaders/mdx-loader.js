@@ -99,7 +99,8 @@ module.exports = async function(content) {
 
   let fileNode = getNodes().find(
     node =>
-      node.internal.type === `File` && node.absolutePath === this.resourcePath
+      node.internal.type === `File` &&
+      node.absolutePath === slash(this.resourcePath)
   )
   let isFakeFileNode = false
   if (!fileNode) {
