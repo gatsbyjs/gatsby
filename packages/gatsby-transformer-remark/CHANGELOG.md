@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.20...gatsby-transformer-remark@2.6.21) (2019-09-02)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Don't produce invalid AST in TOC([#17080](https://github.com/gatsbyjs/gatsby/issues/17080)) ([6ba39ad](https://github.com/gatsbyjs/gatsby/commit/6ba39ad))
+
 ## [2.6.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.19...gatsby-transformer-remark@2.6.20) (2019-09-01)
 
 ### Bug Fixes
