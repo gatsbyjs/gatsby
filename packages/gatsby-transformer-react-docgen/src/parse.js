@@ -1,9 +1,8 @@
-import { codeFrameColumns } from "@babel/code-frame"
-import { parse, resolver, handlers } from "react-docgen"
+import { handlers, parse, resolver } from "react-docgen"
 import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
-
-import { cleanDoclets, parseDoclets, applyPropDoclets } from "./doclets"
-import { createDisplayNameHandler } from "react-docgen-displayname-handler"
+import { codeFrameColumns } from "@babel/code-frame"
+import { createDisplayNameHandler } from "./displayname-handler"
+import { applyPropDoclets, cleanDoclets, parseDoclets } from "./doclets"
 
 const defaultHandlers = [
   handlers.propTypeHandler,

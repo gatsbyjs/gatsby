@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.0...gatsby-plugin-offline@3.0.1) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+# [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.10...gatsby-plugin-offline@3.0.0) (2019-08-30)
+
+### Features
+
+- **gatsby-plugin-offline:** Allow appending custom scripts ([#11626](https://github.com/gatsbyjs/gatsby/issues/11626)) ([275344e](https://github.com/gatsbyjs/gatsby/commit/275344e))
+
 ## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.9...gatsby-plugin-offline@2.2.10) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-plugin-offline

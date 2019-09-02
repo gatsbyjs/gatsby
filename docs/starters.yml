@@ -3743,3 +3743,41 @@
     - Styled Components
     - Sitemap Generation
     - Google Analytics
+- url: https://agility-gatsby-starter.netlify.com
+  repo: https://github.com/agility/agility-gatsby-starter
+  description: Get started with Gatsby and Agility CMS using a minimal blog.
+  tags:
+    - CMS:Other
+    - Blog
+    - SEO
+  features:
+    - A bare-bones starter Blog to get you off and running with Agility CMS and Gatsby.
+- url: https://gatsby-starter-dot.netlify.com/
+  repo: https://github.com/chronisp/gatsby-starter
+  description: Gatsby Starter for creating portfolio & blog.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Netlify
+    - Portfolio
+    - Redux
+    - SEO
+    - Styling:Material
+  features:
+    - Extensible & responsive design using Material UI (palette, typography & breakpoints configuration)
+    - Blog integration with Contentful CMS (GraphQL queries)
+    - Redux (connect actions & props easily using custom HOF)
+    - Support for Netlify deployment
+    - SEO
+    - Prettier code styling
+- url: https://bonneville.netlify.com/
+  repo: https://github.com/bagseye/bonneville
+  description: A starter blog template for Gatsby
+  tags:
+    - Blog
+    - SEO
+  features:
+    - Extensible & responsive design
+    - Blog integration
+    - SEO
