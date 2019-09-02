@@ -3771,6 +3771,19 @@
     - Support for Netlify deployment
     - SEO
     - Prettier code styling
+- url: https://johnjkerr.github.io/gatsby-creative/
+  repo: https://github.com/JohnJKerr/gatsby-creative
+  description: Gatsby implementation of the Start Bootstrap Creative template
+  tags:
+    - Gallery
+    - Portfolio
+    - Styling:Bootstrap
+    - Styling:SCSS
+  features:
+    - Start Bootstrap Creative template converted to React/Gatsby
+    - React Scrollspy used to track page position
+    - React Bootstrap used to create modal portfolio carousel
+    - GitHub Actions deployment to GitHub Pages demonstrated
 - url: https://bonneville.netlify.com/
   repo: https://github.com/bagseye/bonneville
   description: A starter blog template for Gatsby
