@@ -151,7 +151,7 @@ const storedCodeExporterPaneState =
       ? false
       : true
     : window.localStorage
-    ? window.localStorage.getItem(`graphiql:graphiqlCodeExporterIsOpen`) !==
+    ? window.localStorage.getItem(`graphiql:graphiqlCodeExporterOpen`) !==
       `false`
     : false
 
