@@ -421,11 +421,7 @@ class Image extends React.Component {
 
     if (fluid) {
       const imageVariants = fluid
-      const image = { ...imageVariants[0] }
-
-      if (hasSaveDataEnabled()) {
-        delete image.srcSet
-      }
+      const image = imageVariants[0]
 
       return (
         <Tag
@@ -486,14 +482,16 @@ class Image extends React.Component {
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {image.srcSet && generateImageSources(imageVariants)}
+              {hasSaveDataEnabled()
+                ? null
+                : generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
                 sizes={image.sizes}
                 src={image.src}
                 crossOrigin={this.props.crossOrigin}
-                srcSet={image.srcSet}
+                srcSet={hasSaveDataEnabled() ? undefined : image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
@@ -526,10 +524,6 @@ class Image extends React.Component {
     if (fixed) {
       const imageVariants = fixed
       const image = { ...imageVariants[0] }
-
-      if (hasSaveDataEnabled()) {
-        delete image.srcSet
-      }
 
       const divStyle = {
         position: `relative`,
@@ -588,7 +582,9 @@ class Image extends React.Component {
           {/* Once the image is visible, start downloading the image */}
           {this.state.isVisible && (
             <picture>
-              {image.srcSet && generateImageSources(imageVariants)}
+              {hasSaveDataEnabled()
+                ? null
+                : generateImageSources(imageVariants)}
               <Img
                 alt={alt}
                 title={title}
@@ -597,7 +593,7 @@ class Image extends React.Component {
                 sizes={image.sizes}
                 src={image.src}
                 crossOrigin={this.props.crossOrigin}
-                srcSet={image.srcSet}
+                srcSet={hasSaveDataEnabled() ? undefined : image.srcSet}
                 style={imageStyle}
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
