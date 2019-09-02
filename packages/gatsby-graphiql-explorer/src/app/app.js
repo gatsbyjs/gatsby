@@ -151,8 +151,8 @@ const storedCodeExporterPaneState =
       ? false
       : true
     : window.localStorage
-    ? window.localStorage.getItem(`graphiql:graphiqlCodeExporterOpen`) !==
-      `false`
+    ? window.localStorage.getItem(`graphiql:graphiqlCodeExporterOpen`) ===
+      `true`
     : false
 
 class App extends React.Component {
