@@ -63,11 +63,10 @@ ${getQuery(arg, 6)}
 `,
 }
 
-const getDataNodeName = name => {
-  return name.startsWith("all") && name.length > 3
+const getDataNodeName = name =>
+  name.startsWith(`all`) && name.length > 3
     ? name.substring(3, 4).toLowerCase() + name.substring(4, name.length)
     : null
-}
 
 const getFieldQuery = (root, enableComments) => {
   const rootName = root.name.value
@@ -78,17 +77,17 @@ const getFieldQuery = (root, enableComments) => {
 
   if (root.selectionSet) {
     nodes = root.selectionSet.selections.find(
-      selection => selection.name.value === "nodes"
+      selection => selection.name.value === `nodes`
     )
 
     if (nodes && nodes.selectionSet) {
       let hasId = false
       let hasSlug = false
       nodes.selectionSet.selections.forEach(field => {
-        if (field.name.value === "id") {
+        if (field.name.value === `id`) {
           hasId = true
         }
-        if (field.name.value === "slug") {
+        if (field.name.value === `slug`) {
           hasSlug = true
         }
       })
@@ -125,8 +124,8 @@ const createPagesQuery = {
   codeMirrorMode: `jsx`,
   options: [
     {
-      id: "comments",
-      label: "Comments",
+      id: `comments`,
+      label: `Comments`,
       initial: false,
     },
   ],
@@ -150,7 +149,7 @@ ${getQuery(arg, 4)}
 ${arg.operationDataList[0].operationDefinition.selectionSet.selections
   .map(selection => getFieldQuery(selection, arg.options.comments))
   .filter(fieldQuery => fieldQuery !== null)
-  .join("\n\n")}
+  .join(`\n\n`)}
 }
 
 `,
