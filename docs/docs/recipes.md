@@ -1744,6 +1744,7 @@ Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application withou
 
 #### Prerequisites
 
+- A [ZEIT Now](https://zeit.co/signup) account
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
 - [Now CLI](https://zeit.co/download) package installed
 - [Gatsby CLI](/docs/gatsby-cli) installed
