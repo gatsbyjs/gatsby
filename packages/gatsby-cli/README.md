@@ -1,5 +1,4 @@
 # gatsby-cli
-[![npm version](https://badge.fury.io/js/gatsby-cli.svg)](https://badge.fury.io/js/gatsby-cli)
 
 The Gatsby command line interface (CLI). It is used to perform common functionality, such as creating a Gatsby application based on a starter, spinning up a hot-reloading local development server, and more!
 
