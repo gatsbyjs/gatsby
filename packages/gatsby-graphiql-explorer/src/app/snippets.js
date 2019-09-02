@@ -66,7 +66,7 @@ ${getQuery(arg, 6)}
 const getDataNodeName = name =>
   name.startsWith(`all`) && name.length > 3
     ? name.substring(3, 4).toLowerCase() + name.substring(4, name.length)
-    : null
+    : name
 
 const getFieldQuery = (root, enableComments) => {
   const rootName = root.name.value
