@@ -114,8 +114,8 @@ const getFieldQuery = (root, enableComments) => {
     if (enableComments) {
       return `  // could not find field 'nodes' on ${rootName}\n  // this should probably be queried directly from a page by using the '${pageQuery.name}'`
     }
-    return null
   }
+  return null
 }
 
 const createPagesQuery = {
