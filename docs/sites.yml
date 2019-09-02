@@ -7191,3 +7191,18 @@
   built_by: Gopesh Gopinath
   built_by_url: https://www.gopeshgopinath.com
   featured: false
+- title: Misael Taveras - FrontEnd Developer
+  url: https://taverasmisael.com
+  main_url: https://taverasmisael.com
+  source_url: https://github.com/taverasmisael/taverasmisael
+  description: >
+    Personal site and bloging about learning FrontEnd web development in spanish.
+  categories:
+    - Portfolio
+    - Open Source
+    - Blog
+    - JavaScript
+    - Web Development
+  built_by: Misael Taveras
+  built_by_url: https://taverasmisael.com
+  featured: false
