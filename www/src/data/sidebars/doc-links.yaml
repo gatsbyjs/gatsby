@@ -8,6 +8,9 @@
       link: /docs/quick-start/
     - title: Recipes
       link: /docs/recipes/
+      items:
+        - title: Sourcing from Contentful
+          link: /docs/recipe-sourcing-from-contentful
     - title: Plugin Library
       link: /plugins/
     - title: Starter Library
