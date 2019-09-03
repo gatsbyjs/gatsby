@@ -212,4 +212,4 @@ This provides a nice interface to extend an object if you want to change a coupl
 
 ## How Much Shadowing is too Much Shadowing?
 
-If you find yourself shadowing a large number of components in a particular theme it might make sense to fork and modify the theme instead.
+If you find yourself shadowing a large number of components in a particular theme it might make sense to fork and modify the theme instead. The official themes support this pattern using a set of `-core` parent themes. `gatsby-theme-blog` relies on `gatsby-theme-blog-core` so you can fork `gatsby-theme-blog` (or skip it completely) to render your own components without having to worry about dealing with any of the page creation or data sourcing logic.
