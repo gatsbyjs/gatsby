@@ -270,7 +270,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 #### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with an index page component
-- A `gatsby-browser.js` page 
+- A `gatsby-browser.js` page
 
 #### Directions
 
@@ -303,7 +303,7 @@ This approach is not the best fit if you are using CSS-in-JS for styling your si
 #### Additional resources
 
 - More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
-<!-- - [Live example on Using global CSS files]()
+  <!-- - [Live example on Using global CSS files]()
 
 ### Using Styled Components
 
