@@ -33,14 +33,12 @@ const getLanguage = file => {
 }
 
 module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
-  if (!directory) {
-    directory = path.dirname(markdownNode.fileAbsolutePath)
-  }
-
-  if (!fs.existsSync(directory)) {
-    throw Error(`Invalid directory specified "${directory}"`)
-  } else if (!directory.endsWith(`/`)) {
-    directory += `/`
+  if (directory) {
+    if (!fs.existsSync(directory)) {
+      throw Error(`Invalid directory specified "${directory}"`)
+    } else if (!directory.endsWith(`/`)) {
+      directory += `/`
+    }
   }
 
   visit(markdownAST, `inlineCode`, node => {
@@ -48,7 +46,9 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
     if (value.startsWith(`embed:`)) {
       const file = value.substr(6)
-      const snippetPath = normalizePath(path.join(directory, file))
+      const snippetPath = directory
+        ? normalizePath(`${directory}${file}`)
+        : path.join(path.dirname(markdownNode.fileAbsolutePath), file)
 
       if (!fs.existsSync(snippetPath)) {
         throw Error(`Invalid snippet specified; no such file "${snippetPath}"`)
