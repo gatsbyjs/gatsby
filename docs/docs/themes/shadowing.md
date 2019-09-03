@@ -114,7 +114,7 @@ The theme's `bio.css` file would then be replaced with your new CSS file.
 
 In addition to overriding files, you can _extend_ any JavaScript file in the `src` directory.
 
-This means that you can import the component you’re shadowing and then render it. Consider a scenario where you have a custom Card component that you want to wrap the author’s bio in.
+This means that you can import the component you’re shadowing and then render it. Consider a scenario where you have a custom `Card` component that you want to wrap the author’s bio in.
 
 Without extending the component, you would have to manually copy over the entire component implementation from the theme to wrap it with your custom shadowed component. It might look something like:
 
