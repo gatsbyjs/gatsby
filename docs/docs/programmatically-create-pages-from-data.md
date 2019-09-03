@@ -10,7 +10,7 @@ programmatically create pages.
 
 Though you can use any data source you'd like, this guide will show how to
 create pages from markdown files (following after the example introduced in
-[earlier guides] (/docs/adding-markdown-pages/)).
+[earlier guides](/docs/adding-markdown-pages/)).
 
 ### Creating Pages
 
