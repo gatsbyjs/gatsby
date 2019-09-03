@@ -286,9 +286,9 @@ p {
 }
 ```
 
-2. Import the global CSS file in the `gatsby-config.js` file such as the following:
+2. Import the global CSS file in the `gatsby-browser.js` file such as the following:
 
-```javascript:gatsby-config.js
+```javascript:gatsby-browser.js
 import "./src/styles/global.css"
 ```
 
