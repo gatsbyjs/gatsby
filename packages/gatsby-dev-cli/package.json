@@ -1,7 +1,7 @@
 {
   "name": "gatsby-dev-cli",
   "description": "CLI helpers for contributors working on Gatsby",
-  "version": "2.5.22",
+  "version": "2.5.23",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby-dev": "./dist/index.js"
