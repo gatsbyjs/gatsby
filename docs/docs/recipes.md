@@ -343,6 +343,49 @@ export default () => (
 - [More on Using Styled Components](/docs/styled-components/)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
 
+### Using CSS Modules
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with an index page component
+
+#### Directions
+
+1. Create a CSS module as `src/pages/index.module.css` and paste the following into the module:
+
+```css:title=src/components/index.module.css
+.heading {
+  margin: 2rem auto;
+  max-width: 500px;
+}
+```
+
+2. Import the CSS module as a JSX object `style` in the `index.js` file by modifying the page so it looks like the following:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+
+// highlight-start
+import style from "./index.module.css"
+
+export default () => (
+  <div className={style.heading}>
+    <h1>Using CSS Modules</h1>
+  </div>
+)
+// highlight-end
+```
+
+3. Run `gatsby develop` to see the changes.
+
+**Note:**
+Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module.
+
+#### Additional resources
+
+- More on [Using CSS Modules](/tutorial/part-two/#css-modules)
+- [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
+
 ### Adding a Local Font
 
 #### Prerequisites
