@@ -2,7 +2,7 @@
 title: Sourcing from SaaS Services
 ---
 
-There are many Gatsby plugins that integrate with SaaS services. You can search the [Gatsby plugins](https://www.gatsbyjs.org/plugins/) and [Gatsby starters](https://www.gatsbyjs.org/starters/) pages to find more hosted service integrations. Some examples include:
+There are many Gatsby plugins that integrate with SaaS services. You can search for more [Gatsby plugins](https://www.gatsbyjs.org/plugins/) and [Gatsby starters](https://www.gatsbyjs.org/starters/) that integrate with hosted services. Some examples include:
 
 - [Airtable](/packages/gatsby-source-airtable)
 - [AWS DynamoDB](/packages/gatsby-source-dynamodb)
@@ -12,6 +12,6 @@ There are many Gatsby plugins that integrate with SaaS services. You can search 
 - [Prismic](/packages/gatsby-source-prismic-graphql)
 - [Shopify](/packages/gatsby-source-shopify)
 
-These plugins will pull data from your hosted services and make it available to your Gatsby site via GraphQL.
+These plugins will pull data from a hosted service and make it available to your Gatsby site via GraphQL.
 
 You can also [write your own source plugin](/docs/creating-a-source-plugin/).
