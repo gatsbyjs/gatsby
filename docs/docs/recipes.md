@@ -265,6 +265,48 @@ export default ({ pageContext: { dog } }) => (
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
+### Using global styles in a layout component
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/) with an index page component
+
+#### Directions
+
+You can add global styles to a [shared layout component](https://www.gatsbyjs.org/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header.
+
+Create a new directory in your site at `/src/components`. Inside, create two files: `layout.css` and `layout.js`.
+
+Add the following to `layout.css`:
+
+```css:title=/src/components/layout.css
+body {
+  background: red;
+}
+```
+
+Edit the `layout.js` file:
+
+```jsx:title=/src/components/layout.js
+import React from "react"
+import "./layout.css"
+
+export default ({ children }) => <div>{children}</div>
+```
+
+Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
+
+```jsx:title=/src/pages/index.js
+import React from "react"
+import Layout from "../components/layout"
+export default () => <Layout>Hello world!</Layout>
+```
+
+#### Additional resources
+
+- [Standard Styling with Global CSS Files](https://www.gatsbyjs.org/docs/global-css/)
+- [More about layout components](https://www.gatsbyjs.org/tutorial/part-three)
+
 ### Using Styled Components
 
 #### Prerequisites
