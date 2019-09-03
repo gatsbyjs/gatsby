@@ -424,6 +424,84 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 - More on [importing assets into files](/docs/importing-assets-into-files/)
 
+### Using Emotion
+
+[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that suports both inline CSS styles and styled components.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+
+#### Directions
+
+Install the [Gatsby Emotion plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/) and Emotion packages.
+
+```shell
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+```
+
+Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
+
+```javascript:title=gatsby-config.js
+plugins: [
+  `gatsby-plugin-emotion`,
+],
+```
+
+Create a page in your gatsby site at `/src/pages/emotion-sample.js`. First, import the Emotion CSS and styled packages:
+
+`````jsx:title=/src/pages/emotion-sample.js
+import React from "react"
+import { css } from "@emotion/core"
+import styled from "@emotion/styled"
+
+export default () => (
+  <div>
+    <p>This page is using Emotion.</p>
+  </div>
+)
+```
+
+You can use Emotion's `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element:
+
+````jsx:title=/src/pages/emotion-sample.js
+export default () => (
+  <div>
+    <p
+      css={{
+        background: "pink",
+        color: "blue",
+      }}
+    >
+      This page is using Emotion.
+    </p>
+  </div>
+)
+```
+
+To write [styled components](https://emotion.sh/docs/styled), define them using Emotion's `styled` function.
+
+````jsx:title=/src/pages/emotion-sample.js
+const Content = styled.div`
+  text-align: center;
+  margin-top: 10px;
+  p {
+    font-weight: bold;
+  }
+`
+
+export default () => (
+  <Content>
+    <p>This page is using Emotion.</p>
+  </Content>
+)
+```
+
+#### Additional resources
+
+- [Using Emotion in Gatsby](/docs/emotion/)
+- [Emotion website](https://emotion.sh)
+
 ### Using Google Fonts
 
 Hosting your own [Google Fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
@@ -444,7 +522,7 @@ An example to load the popular 'Source Sans Pro' font would be: `npm install --s
 
 ```jsx:title=src/components/layout.js
 import "typeface-your-chosen-font"
-```
+`````
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
