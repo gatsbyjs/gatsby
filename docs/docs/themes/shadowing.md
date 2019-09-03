@@ -105,7 +105,7 @@ If you wanted to shadow a CSS file in `gatsby-theme-awesome-css` that's found at
 ```js:title=user-site/src/gatsby-theme-awesome-css/styles/bio.css
 .bio {
   border: 10px solid tomato;
-
+}
 ```
 
 The theme's `bio.css` file would then be replaced with your new CSS file.
