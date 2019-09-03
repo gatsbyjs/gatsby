@@ -20,7 +20,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.17",
     "@mdx-js/react": "^1.4.0",
-    "@theme-ui/prism": "^0.2.29",
+    "@theme-ui/prism": "^0.2.40",
     "@theme-ui/typography": "^0.2.34",
     "deepmerge": "^4.0.0",
     "gatsby-image": "^2.2.16",
