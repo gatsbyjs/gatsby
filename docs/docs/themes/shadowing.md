@@ -85,7 +85,7 @@ export default {
 }
 ```
 
-You’ll result in the following directory tree:
+Which will result in the following directory tree:
 
 ```txt
 user-site
