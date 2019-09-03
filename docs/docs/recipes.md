@@ -888,7 +888,6 @@ export const query = graphql`
 - [Example website](http://kevee.net/gatsby-source-contentful-recipe/)
 - [Code for the example](https://github.com/kevee/gatsby-source-contentful-recipe)
 
-
 ### Pulling data from an external source and creating pages without GraphQL
 
 You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](/docs/why-gatsby-uses-graphql/). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
