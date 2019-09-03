@@ -9,6 +9,7 @@ const customComparators = require(`./custom-comparators`)
 // implementation. See `custom-comparators.js` for why.
 loki.Comparators.lt = customComparators.ltHelper
 loki.Comparators.gt = customComparators.gtHelper
+loki.Comparators.aeq = customComparators.aeqHelper
 
 // Loki is a document store with the same semantics as mongo. This
 // means there are no tables or relationships. Just a bunch of

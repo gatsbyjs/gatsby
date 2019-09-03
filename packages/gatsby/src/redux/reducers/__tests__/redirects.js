@@ -1,6 +1,11 @@
-const reducer = require(`../redirects`)
+let reducer
 
 describe(`redirects`, () => {
+  beforeEach(() => {
+    jest.isolateModules(() => {
+      reducer = require(`../redirects`)
+    })
+  })
   it(`lets you redirect to an internal url`, () => {
     const action = {
       type: `CREATE_REDIRECT`,
@@ -12,17 +17,12 @@ describe(`redirects`, () => {
 
     let state = reducer(undefined, action)
 
-    expect(state).toEqual(
-      new Map([
-        [
-          `/page-internal`,
-          {
-            fromPath: `/page-internal`,
-            toPath: `/page-internal/`,
-          },
-        ],
-      ])
-    )
+    expect(state).toEqual([
+      {
+        fromPath: `/page-internal`,
+        toPath: `/page-internal/`,
+      },
+    ])
   })
 
   it(`lets you redirect to an external url`, () => {
@@ -36,17 +36,12 @@ describe(`redirects`, () => {
 
     let state = reducer(undefined, action)
 
-    expect(state).toEqual(
-      new Map([
-        [
-          `/page-external`,
-          {
-            fromPath: `/page-external`,
-            toPath: `https://example.com`,
-          },
-        ],
-      ])
-    )
+    expect(state).toEqual([
+      {
+        fromPath: `/page-external`,
+        toPath: `https://example.com`,
+      },
+    ])
   })
 
   const protocolArr = [
@@ -68,17 +63,12 @@ describe(`redirects`, () => {
         },
       }
 
-      expect(reducer(undefined, action)).toEqual(
-        new Map([
-          [
-            fromPath,
-            {
-              fromPath,
-              toPath,
-            },
-          ],
-        ])
-      )
+      expect(reducer(undefined, action)).toEqual([
+        {
+          fromPath,
+          toPath,
+        },
+      ])
     })
   })
 })

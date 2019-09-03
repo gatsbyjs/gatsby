@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.4...gatsby@2.15.5) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency webpack-dev-middleware to ^3.7.1 ([#17343](https://github.com/gatsbyjs/gatsby/issues/17343)) ([a578f4e](https://github.com/gatsbyjs/gatsby/commit/a578f4e))
+
+## [2.15.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.3...gatsby@2.15.4) (2019-09-03)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.2...gatsby@2.15.3) (2019-09-02)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.1...gatsby@2.15.2) (2019-09-01)
+
+### Bug Fixes
+
+- **gatsby:** fix an infinite loop in node child collection ([#17078](https://github.com/gatsbyjs/gatsby/issues/17078)) ([240b4f8](https://github.com/gatsbyjs/gatsby/commit/240b4f8))
+- **gatsby-cli:** Open Lan URL if Windows ([#16769](https://github.com/gatsbyjs/gatsby/issues/16769)) ([b2a2d6b](https://github.com/gatsbyjs/gatsby/commit/b2a2d6b))
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.15.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.0...gatsby@2.15.1) (2019-08-30)
+
+**Note:** Version bump only for package gatsby
+
+# [2.15.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.7...gatsby@2.15.0) (2019-08-30)
+
+### Features
+
+- **gatsby:** Materialization ([#16091](https://github.com/gatsbyjs/gatsby/issues/16091)) ([ac10d3d](https://github.com/gatsbyjs/gatsby/commit/ac10d3d))
+
+## [2.14.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.6...gatsby@2.14.7) (2019-08-30)
+
+**Note:** Version bump only for package gatsby
+
+## [2.14.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.5...gatsby@2.14.6) (2019-08-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.14.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.4...gatsby@2.14.5) (2019-08-29)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17178](https://github.com/gatsbyjs/gatsby/issues/17178)) ([77dad68](https://github.com/gatsbyjs/gatsby/commit/77dad68))
+
+## [2.14.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.3...gatsby@2.14.4) (2019-08-29)
+
+### Bug Fixes
+
+- **gatsby:** revert redirects map to array ([#17168](https://github.com/gatsbyjs/gatsby/issues/17168)) ([b553891](https://github.com/gatsbyjs/gatsby/commit/b553891))
+
+## [2.14.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.2...gatsby@2.14.3) (2019-08-29)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.12 ([#17103](https://github.com/gatsbyjs/gatsby/issues/17103)) ([41f60b7](https://github.com/gatsbyjs/gatsby/commit/41f60b7))
+
+## [2.14.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.1...gatsby@2.14.2) (2019-08-28)
+
+### Bug Fixes
+
+- **gatsby:** Release stdio streams when exiting `gatsby develop` ([#16714](https://github.com/gatsbyjs/gatsby/issues/16714)) ([280cf7f](https://github.com/gatsbyjs/gatsby/commit/280cf7f))
+
 ## [2.14.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.0...gatsby@2.14.1) (2019-08-28)
 
 **Note:** Version bump only for package gatsby

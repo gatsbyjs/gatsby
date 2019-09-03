@@ -7113,3 +7113,96 @@
     - Technology
     - Marketing
   featured: false
+- title: Hayato KAJIYAMA - Portfolio
+  main_url: "https://hyakt.dev"
+  url: "https://hyakt.dev"
+  source_url: "https://github.com/hyakt/hyakt.github.io"
+  featured: false
+  categories:
+    - Portfolio
+- title: Skirtcraft - Unisex Skirts with Large Pockets
+  main_url: https://skirtcraft.com
+  url: https://skirtcraft.com/products
+  source_url: https://github.com/jqrn/skirtcraft-web
+  description: >
+    Skirtcraft sells unisex skirts with large pockets, made in the USA. Site built with Typescript and styled-components, with Tumblr-sourced blog posts.
+  categories:
+    - eCommerce
+    - Blog
+  built_by: Joe Quarion
+  built_by_url: https://github.com/jqrn
+  featured: false
+- title: Vermarc Sport
+  main_url: https://www.vermarcsport.com/
+  url: https://www.vermarcsport.com/
+  description: >
+    Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
+  categories:
+    - eCommerce
+  built_by: BrikL
+  built_by_url: https://github.com/Brikl
+- title: Cole Ruche
+  main_url: https://coleruche.com
+  url: https://coleruche.com
+  source_url: https://github.com/kingingcole/myblog
+  description: >
+    The personal website and blog for Emeruche "Cole" Ikenna, front-end web developer from Nigeria.
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Emeruche "Cole" Ikenna
+  built_by_url: https://twitter.com/cole_ruche
+  featured: false
+- title: Abhith Rajan - Coder, Blogger, Biker, Full Stack Developer
+  main_url: https://www.abhith.net/
+  url: https://www.abhith.net/
+  source_url: https://github.com/Abhith/abhith.net
+  description: >
+    abhith.net is a portfolio website of Abhith Rajan, a full stack developer. Sharing blog posts, recommended videos, developer stories and services with the world through this site.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Open Source
+    - Technology
+  built_by: Abhith Rajan
+  built_by_url: https://github.com/Abhith
+  featured: false
+- title: Mr & Mrs Wilkinson
+  url: https://thewilkinsons.netlify.com/
+  main_url: https://thewilkinsons.netlify.com/
+  source_url: https://github.com/davemullenjnr/the-wilkinsons
+  description: >
+    A one-page wedding photography showcase using Gatsby Image and featuring a lovely hero and intro section.
+  categories:
+    - Photography
+  built_by: Dave Mullen Jnr
+  built_by_url: https://davemullenjnr.co.uk
+  featured: false
+- title: Gopesh Gopinath - Full Stack Javascript Developer
+  url: https://www.gopeshgopinath.com
+  main_url: https://www.gopeshgopinath.com
+  source_url: https://github.com/GopeshMedayil/gopeshgopinath.com
+  description: >
+    Gopesh Gopinath's Personal Portfolio Website
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Gopesh Gopinath
+  built_by_url: https://www.gopeshgopinath.com
+  featured: false
+- title: Misael Taveras - FrontEnd Developer
+  url: https://taverasmisael.com
+  main_url: https://taverasmisael.com
+  source_url: https://github.com/taverasmisael/taverasmisael
+  description: >
+    Personal site and bloging about learning FrontEnd web development in spanish.
+  categories:
+    - Portfolio
+    - Open Source
+    - Blog
+    - JavaScript
+    - Web Development
+  built_by: Misael Taveras
+  built_by_url: https://taverasmisael.com
+  featured: false

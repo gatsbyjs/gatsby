@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.7...gatsby-remark-custom-blocks@2.1.8) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.6...gatsby-remark-custom-blocks@2.1.7) (2019-08-29)
+
+### Bug Fixes
+
+- update dependency remark-custom-blocks to ^2.4.2 ([#17185](https://github.com/gatsbyjs/gatsby/issues/17185)) ([4ccf987](https://github.com/gatsbyjs/gatsby/commit/4ccf987))
+
 ## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.5...gatsby-remark-custom-blocks@2.1.6) (2019-08-24)
 
 **Note:** Version bump only for package gatsby-remark-custom-blocks
