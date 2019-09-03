@@ -112,7 +112,7 @@ The theme's `bio.css` file would then be replaced with your new CSS file.
 
 ## Extending shadowed files
 
-In addition to overriding files, you can _extend_ any JavaScript file in the `src` directory.
+In addition to overriding files, you can _extend_ shadowable files.
 
 This means that you can import the component you’re shadowing and then render it. Consider a scenario where you have a custom `Card` component that you want to wrap the author’s bio in.
 
