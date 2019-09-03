@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.41...gatsby-cli@2.7.42) (2019-09-01)
+
+### Bug Fixes
+
+- **gatsby-cli:** fix cloning repository with commithash ([#17263](https://github.com/gatsbyjs/gatsby/issues/17263)) ([b1717cf](https://github.com/gatsbyjs/gatsby/commit/b1717cf))
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [2.7.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.40...gatsby-cli@2.7.41) (2019-08-30)
 
 **Note:** Version bump only for package gatsby-cli

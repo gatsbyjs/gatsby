@@ -431,6 +431,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `fixedImages`          | `array`             | An array of objects returned from `fixed` queries. When combined with `media` keys, allows for art directing `fixed` images.                  |
 | `fluidImages`          | `array`             | An array of objects returned from `fluid` queries. When combined with `media` keys, allows for art directing `fluid` images.                  |
 | `draggable`            | `bool`              | Set the img tag draggable to either `false`, `true`                                                                                           |
+| `itemProp`             | `string`            | Add an [`itemprop` schema.org structured data attribute](https://schema.org/docs/gs.html#microdata_itemprop) on the image.                    |
 
 ## Image processing arguments
 

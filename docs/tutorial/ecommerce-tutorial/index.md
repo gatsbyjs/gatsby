@@ -446,7 +446,7 @@ export default SkuCard
 
 This component renders a neat card for each individual SKU, with the SKU name, nicely formatted pricing, and a "BUY ME" button. The button triggers the `redirectToCheckout()` function with the corresponding SKU ID.
 
-Lastly, we need to refactor our `Skus` component to initialise the Stripe.js client, and render `SkuCards` while handing down the Stripe.js client in the `props`:
+Lastly, we need to refactor our `Skus` component to initialize the Stripe.js client, and render `SkuCards` while handing down the Stripe.js client in the `props`:
 
 ```jsx:title=src/components/Products/Skus.js
 import React, { Component } from 'react'

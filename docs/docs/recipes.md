@@ -314,10 +314,10 @@ const Username = styled.h2`
 `
 
 const User = props => (
-  <UserWrapper>
+  <>
     <Avatar src={props.avatar} alt={props.username} />
     <Username>{props.username}</Username>
-  </UserWrapper>
+  </>
 )
 
 export default () => (
@@ -393,21 +393,25 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 #### Directions
 
-1. Run `npm install --save yourchosenfont`, replacing `yourchosenfont` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+1. Run `npm install --save typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
 
-2. Add `import "yourchosenfont"` to a layout template, page component, or `gatsby-browser.js`.
+An example to load the popular 'Source Sans Pro' font would be: `npm install --save typeface-source-sans-pro`.
+
+2. Add `import "typeface-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
 
 ```jsx:title=src/components/layout.js
-import "yourchosenfont"
+import "typeface-your-chosen-font"
 ```
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-  font-family: yourchosenfont;
+  font-family: "Your Chosen Font";
 }
 ```
+
+_NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`_
 
 #### Additional resources
 
@@ -1828,7 +1832,7 @@ gatsby build && gatsby serve
 
 ### Deploying to Netlify
 
-Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command-line interface.
 
 #### Prerequisites
 
@@ -1856,3 +1860,26 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+
+### Deploying to ZEIT Now
+
+Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application without leaving the command-line interface.
+
+#### Prerequisites
+
+- A [ZEIT Now](https://zeit.co/signup) account
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- [Now CLI](https://zeit.co/download) package installed
+- [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Login into Now CLI using `now login`
+
+2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
+
+3. Run `now` to deploy it
+
+#### Additional resources
+
+- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)
