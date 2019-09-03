@@ -110,10 +110,12 @@ const builtInFieldExtensions = {
         defaultValue: `id`,
       },
       from: `String`,
+      on: `String`,
     },
-    extend(args, fieldConfig) {
+    extend(args, fieldConfig, schemaComposer) {
+      const type = args.on && schemaComposer.typeMapper.getWrapped(args.on)
       return {
-        resolve: link(args, fieldConfig),
+        resolve: link({ ...args, type }, fieldConfig),
       }
     },
   },
@@ -225,7 +227,7 @@ const processFieldExtensions = ({
           const prevFieldConfig = typeComposer.getFieldConfig(fieldName)
           typeComposer.extendField(
             fieldName,
-            extend(extensions[name], prevFieldConfig)
+            extend(extensions[name], prevFieldConfig, schemaComposer)
           )
         }
       })

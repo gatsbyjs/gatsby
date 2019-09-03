@@ -975,7 +975,7 @@ In order to resolve this, you can manually change the `post_parent` value of the
 
 ### TypeError - `Cannot read property 'id' of undefined` with WordPress.com
 
-While there are other reasons this can occur (see issues), a very specific version of this issue occurs when a particlar tag, category, file (or any other referenced object) is referenced in a post but cannot be mapped to the list of related items to generate the proper node.
+While there are other reasons this can occur (see issues), a very specific version of this issue occurs when a particular tag, category, file (or any other referenced object) is referenced in a post but cannot be mapped to the list of related items to generate the proper node.
 
 This problem occurs because WordPress.com's API lacks the `X-WP-Total` and `X-WP-TotalPages` headers, which are used to determine the number of items and number of pages to pull from the API. Because of this, lower WordPress.com plans (Starter, Personal, and Premium) will not traverse the 2,...n pages and **will not be able to work with more than 100 items**.
 

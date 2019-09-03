@@ -217,16 +217,19 @@ class WebsocketManager {
           payload: this.pageResults.get(path),
         })
 
-        telemetry.trackCli(
-          `WEBSOCKET_PAGE_DATA_UPDATE`,
-          {
-            siteMeasurements: {
-              clientsCount: this.connectedClients,
-              paths: hashPaths(Array.from(this.activePaths)),
+        const clientsCount = this.connectedClients
+        if (clientsCount && clientsCount > 0) {
+          telemetry.trackCli(
+            `WEBSOCKET_PAGE_DATA_UPDATE`,
+            {
+              siteMeasurements: {
+                clientsCount,
+                paths: hashPaths(Array.from(this.activePaths)),
+              },
             },
-          },
-          { debounce: true }
-        )
+            { debounce: true }
+          )
+        }
       }
 
       s.on(`getDataForPath`, getDataForPath)
@@ -258,16 +261,19 @@ class WebsocketManager {
     this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
-      telemetry.trackCli(
-        `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
-        {
-          siteMeasurements: {
-            clientsCount: this.connectedClients,
-            paths: hashPaths(Array.from(this.activePaths)),
+      const clientsCount = this.connectedClients
+      if (clientsCount && clientsCount > 0) {
+        telemetry.trackCli(
+          `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
+          {
+            siteMeasurements: {
+              clientsCount,
+              paths: hashPaths(Array.from(this.activePaths)),
+            },
           },
-        },
-        { debounce: true }
-      )
+          { debounce: true }
+        )
+      }
     }
   }
 
@@ -276,16 +282,19 @@ class WebsocketManager {
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
-      telemetry.trackCli(
-        `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
-        {
-          siteMeasurements: {
-            clientsCount: this.connectedClients,
-            paths: hashPaths(Array.from(this.activePaths)),
+      const clientsCount = this.connectedClients
+      if (clientsCount && clientsCount > 0) {
+        telemetry.trackCli(
+          `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
+          {
+            siteMeasurements: {
+              clientsCount,
+              paths: hashPaths(Array.from(this.activePaths)),
+            },
           },
-        },
-        { debounce: true }
-      )
+          { debounce: true }
+        )
+      }
     }
   }
   emitError(id: string, message?: string) {

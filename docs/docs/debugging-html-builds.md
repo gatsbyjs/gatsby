@@ -9,7 +9,7 @@ Errors while building static HTML files generally happen for one of the followin
     defined". To fix this, find the offending code and either a) check before
     calling the code if window is defined so the code doesn't run while Gatsby is
     building (see code sample below) or b) if the code is in the render function
-    of a React.js component, move that code into `componentDidMount` which
+    of a React.js component, move that code into a [`componentDidMount` lifecycle](https://reactjs.org/docs/react-component.html#componentdidmount) or into a [`useEffect` hook](https://reactjs.org/docs/hooks-reference.html#useeffect), which
     ensures the code doesn't run unless it's in the browser.
 
 1.  Check that each of your JS files listed in your `pages` directory (and any
@@ -41,6 +41,12 @@ const module = require("module") // Error
 if (typeof window !== `undefined`) {
   const module = require("module")
 }
+```
+
+In case the module needs to be defined for the code to run, you can use a ternary operator
+
+```javascript
+const module = typeof window !== `undefined` ? require("module") : null
 ```
 
 ## Fixing third-party modules
