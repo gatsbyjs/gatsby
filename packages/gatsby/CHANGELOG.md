@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.4...gatsby@2.15.5) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency webpack-dev-middleware to ^3.7.1 ([#17343](https://github.com/gatsbyjs/gatsby/issues/17343)) ([a578f4e](https://github.com/gatsbyjs/gatsby/commit/a578f4e))
+
 ## [2.15.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.3...gatsby@2.15.4) (2019-09-03)
 
 **Note:** Version bump only for package gatsby
