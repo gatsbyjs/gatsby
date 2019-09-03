@@ -378,14 +378,13 @@ export default () => (
 
 3. Run `gatsby develop` to see the changes.
 
-**Note:** 
-Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module. 
+**Note:**
+Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module.
 
 #### Additional resources
 
 - More on [Using CSS Modules](/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
-
 
 ### Adding a Local Font
 
