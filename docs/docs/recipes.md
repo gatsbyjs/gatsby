@@ -1713,7 +1713,7 @@ gatsby build && gatsby serve
 
 ### Deploying to Netlify
 
-Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command-line interface.
 
 #### Prerequisites
 
@@ -1741,3 +1741,26 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+
+### Deploying to ZEIT Now
+
+Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application without leaving the command-line interface.
+
+#### Prerequisites
+
+- A [ZEIT Now](https://zeit.co/signup) account
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- [Now CLI](https://zeit.co/download) package installed
+- [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Login into Now CLI using `now login`
+
+2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
+
+3. Run `now` to deploy it
+
+#### Additional resources
+
+- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)
