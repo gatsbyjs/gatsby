@@ -164,7 +164,7 @@ This is a quick and efficient way to customize rendering without needing to worr
 
 ### Applying New Props
 
-In some cases there could be a component with different variants without an API to modify it outside of shadowing. With component extending you can import that component and then add your new prop to change it.
+In some cases components offer prop APIs to change their behavior. With component extending you can import that component and then add your new prop to change it.
 
 If `NewsletterButton` accepts a `variant` prop which changes the look and colors of the button, you can use it when you extend the component. Below, `NewsletterButton` is re-exported and `variant="link"` is added in the shadowed file to override its default value.
 
