@@ -201,8 +201,8 @@ Array [
 `;
 
 exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
-Array [
-  Object {
+Object {
+  "0": Object {
     "browserAPIs": Array [],
     "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "name": "dev-404-page",
@@ -216,7 +216,7 @@ Array [
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
-  Object {
+  "1": Object {
     "browserAPIs": Array [],
     "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "name": "load-babel-config",
@@ -230,122 +230,7 @@ Array [
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
-  Object {
-    "browserAPIs": Array [],
-    "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
-    "name": "internal-data-bridge",
-    "nodeAPIs": Array [
-      "sourceNodes",
-      "onCreatePage",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
-    "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
-    "name": "webpack-theme-component-shadowing",
-    "nodeAPIs": Array [
-      "onCreateWebpackConfig",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "c731052f-1e62-5905-9fb3-edc9057be8f1",
-    "name": "TEST",
-    "nodeAPIs": Array [],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
-    "name": "default-site-plugin",
-    "nodeAPIs": Array [],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "50782cff-54f0-5e5e-ac4d-70f7c9d11b7f",
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "231cc5e4-cec7-50f1-9743-ea1e0c77ab15",
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "a5a0208e-52d0-56bb-9929-d46a26428793",
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
+  "10": Object {
     "browserAPIs": Array [],
     "id": "0abfe120-1cb0-5ef4-898e-ec6eae8a584e",
     "name": "gatsby-plugin-page-creator",
@@ -361,7 +246,7 @@ Array [
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
-  Object {
+  "11": Object {
     "browserAPIs": Array [],
     "id": "bf2b7e77-94c8-5d2b-8daf-f7346153a307",
     "name": "gatsby-plugin-page-creator",
@@ -377,7 +262,7 @@ Array [
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
-  Object {
+  "12": Object {
     "browserAPIs": Array [],
     "id": "b67d0fe8-41da-56de-a067-35252583f808",
     "name": "gatsby-plugin-page-creator",
@@ -393,7 +278,7 @@ Array [
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
-  Object {
+  "13": Object {
     "browserAPIs": Array [],
     "id": "d0eb369c-9115-52f0-a521-061a47fe4a5d",
     "name": "gatsby-plugin-page-creator",
@@ -409,7 +294,7 @@ Array [
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
-  Object {
+  "14": Object {
     "browserAPIs": Array [],
     "id": "cc2293db-7635-5675-bb5e-05c41ff28688",
     "name": "gatsby-plugin-page-creator",
@@ -425,5 +310,120 @@ Array [
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
-]
+  "2": Object {
+    "browserAPIs": Array [],
+    "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
+    "name": "internal-data-bridge",
+    "nodeAPIs": Array [
+      "sourceNodes",
+      "onCreatePage",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  "3": Object {
+    "browserAPIs": Array [],
+    "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
+    "name": "prod-404",
+    "nodeAPIs": Array [
+      "onCreatePage",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  "4": Object {
+    "browserAPIs": Array [],
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "name": "webpack-theme-component-shadowing",
+    "nodeAPIs": Array [
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  "5": Object {
+    "browserAPIs": Array [],
+    "id": "c731052f-1e62-5905-9fb3-edc9057be8f1",
+    "name": "TEST",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  "6": Object {
+    "browserAPIs": Array [],
+    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  "7": Object {
+    "browserAPIs": Array [],
+    "id": "50782cff-54f0-5e5e-ac4d-70f7c9d11b7f",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  "8": Object {
+    "browserAPIs": Array [],
+    "id": "231cc5e4-cec7-50f1-9743-ea1e0c77ab15",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  "9": Object {
+    "browserAPIs": Array [],
+    "id": "a5a0208e-52d0-56bb-9929-d46a26428793",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+}
 `;

@@ -37,6 +37,12 @@ describe(`Load plugins`, () => {
 
     plugins = replaceFieldsThatCanVary(plugins)
 
-    expect(plugins).toMatchSnapshot()
+    expect(plugins).toMatchSnapshot(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: expect.any(String),
+        }),
+      ])
+    )
   })
 })
