@@ -448,7 +448,7 @@ plugins: [
 ],
 ```
 
-Create a page in your gatsby site at `/src/pages/emotion-sample.js`. First, import the Emotion CSS and styled packages:
+Create a page in your gatsby site at `/src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
 
 `````jsx:title=/src/pages/emotion-sample.js
 import React from "react"
@@ -479,7 +479,7 @@ export default () => (
 )
 ```
 
-To write [styled components](https://emotion.sh/docs/styled), define them using Emotion's `styled` function.
+To use [styled components](https://emotion.sh/docs/styled), define them using Emotion's `styled` function.
 
 ````jsx:title=/src/pages/emotion-sample.js
 const Content = styled.div`
@@ -501,6 +501,7 @@ export default () => (
 
 - [Using Emotion in Gatsby](/docs/emotion/)
 - [Emotion website](https://emotion.sh)
+- [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
 
 ### Using Google Fonts
 
