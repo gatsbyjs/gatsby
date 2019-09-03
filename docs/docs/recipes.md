@@ -347,8 +347,7 @@ export default () => (
 
 #### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/) with an index page component
-- An existing 
+- An existing [Gatsby site](/docs/quick-start/) with an index page component
 
 #### Directions
 
