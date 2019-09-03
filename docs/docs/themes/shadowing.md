@@ -1,5 +1,5 @@
 ---
-title: Shadowing
+title: Shadowing in Gatsby Themes
 ---
 
 
