@@ -146,12 +146,12 @@ export const routeThroughBrowserOrApp = (
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
-  if (pluginOptions.excludeRegex) {
+  if (pluginOptions.excludePattern) {
     console.log(
-      `pluginOptions.excludeRegex.test(destination.pathname)`,
-      pluginOptions.excludeRegex.test(destination.pathname)
+      `pluginOptions.excludePattern.test(destination.pathname)`,
+      pluginOptions.excludePattern.test(destination.pathname)
     )
-    if (pluginOptions.excludeRegex.test(destination.pathname)) {
+    if (pluginOptions.excludePattern.test(destination.pathname)) {
       return true
     }
   }
