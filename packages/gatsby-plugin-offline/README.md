@@ -19,20 +19,98 @@ in the service worker.
 plugins: [`gatsby-plugin-offline`]
 ```
 
-## Overriding options
+## Available options
 
-When adding this plugin to your `gatsby-config.js`, you can pass in options (via the `options` key) to
-override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
+As of `gatsby-plugin-offline` 3.0.0, the following options are available:
 
-The default config is as follows. Warning: You can break the offline support by
-changing these options, so tread carefully.
+- `appendScript` lets you specify a file to be appended at the end of the generated service worker (`sw.js`). For example:
+
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        appendScript: `src/custom-sw-code.js`,
+      },
+    },
+  ]
+  ```
+
+  ```javascript:title=src/custom-sw-code.js
+  // show a notification after 15 seconds (the notification
+  // permission must be granted first)
+  setTimeout(() => {
+    self.registration.showNotification("Hello, world!")
+  }, 15000)
+
+  // register a custom navigation route
+  const customRoute = new workbox.routing.NavigationRoute(({ event }) => {
+    // ...
+  })
+  workbox.routing.registerRoute(customRoute)
+  ```
+
+- `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
+
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        workboxConfig: {
+          importWorkboxFrom: `cdn`,
+        },
+      },
+    },
+  ]
+  ```
+
+## Upgrading from 2.x
+
+To upgrade from 2.x to 3.x, move any existing options into the `workboxConfig` option. If you haven't specified any options, you have nothing to do.
+
+For example, here is a 2.x config:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      importWorkboxFrom: `cdn`,
+    },
+  },
+]
+```
+
+Here is the equivalent 3.x config:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      workboxConfig: {
+        importWorkboxFrom: `cdn`,
+      },
+    },
+  },
+]
+```
+
+In version 3, Workbox is also upgraded to version 4 so you may need to update your `workboxConfig` if any of those changes apply to you. Please see the [docs on Google Developers](https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v3) for more information.
+
+## Overriding Workbox configuration
+
+When adding this plugin to your `gatsby-config.js`, you can use the option `workboxConfig` to override the default Workbox config. To see the full list of options, see [this article on Google Developers](https://developers.google.com/web/tools/workbox/modules/workbox-build#full_generatesw_config).
+
+The default `workboxConfig` is as follows. Note that some of these options are configured automatically, e.g. `globPatterns`. If you're not sure about what all of these options mean, it's best to leave them as-is - otherwise, you may end up causing errors on your site, causing old files to be remain cached, or even breaking offline support.
 
 ```javascript
 const options = {
   importWorkboxFrom: `local`,
   globDirectory: rootDir,
   globPatterns,
-  modifyUrlPrefix: {
+  modifyURLPrefix: {
     // If `pathPrefix` is configured by user, we should replace
     // the default prefix with `pathPrefix`.
     "/": `${pathPrefix}/`,
@@ -40,23 +118,28 @@ const options = {
   cacheId: `gatsby-plugin-offline`,
   // Don't cache-bust JS or CSS files, and anything in the static directory,
   // since these files have unique URLs and their contents will never change
-  dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
+  dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
   runtimeCaching: [
     {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `cacheFirst`,
+      handler: `CacheFirst`,
+    },
+    {
+      // page-data.json files are not content hashed
+      urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+      handler: `NetworkFirst`,
     },
     {
       // Add runtime caching of various other page resources
       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `staleWhileRevalidate`,
+      handler: `StaleWhileRevalidate`,
     },
     {
       // Google Fonts CSS (doesn't end in .css so we need to specify it)
       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `staleWhileRevalidate`,
+      handler: `StaleWhileRevalidate`,
     },
   ],
   skipWaiting: true,
