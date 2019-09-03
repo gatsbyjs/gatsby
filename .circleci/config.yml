@@ -230,7 +230,7 @@ jobs:
       - <<: *persist_cache
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
-      - run: git config --global user.name "Gatsby Bot"
+      - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
 
