@@ -24,7 +24,7 @@ plugins: [`gatsby-plugin-catch-links`]
 
 ## Plugin Options
 
-**`excludeRegex`** [Regular Expression][optional]
+**`excludePattern`** [Regular Expression][optional]
 
 Regular expression for paths to be excluded from being handled by this plugin.
 
