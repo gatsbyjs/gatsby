@@ -33,13 +33,6 @@ const getLanguage = file => {
 }
 
 module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
-  // if (!directory) {
-  //   throw Error(`Required option "directory" not specified`)
-  // } else if (!fs.existsSync(directory)) {
-  //   throw Error(`Invalid directory specified "${directory}"`)
-  // } else if (!directory.endsWith(`/`)) {
-  //   directory += `/`
-  // }
   if (directory) {
     if (!fs.existsSync(directory)) {
       throw Error(`Invalid directory specified "${directory}"`)
