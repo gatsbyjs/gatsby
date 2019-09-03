@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gatsby Design Tokens",
   "main": "index.js",
   "author": "Florian Kissling <flo@gatsbyjs.com>",
@@ -20,7 +20,7 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "babel-preset-gatsby-package": "^0.2.3",
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.1"
   },
   "engines": {
     "node": ">=8.0.0"
