@@ -5,7 +5,7 @@ sources in a uniform way with GraphQL. For this to work, a GraphQL Schema must
 be generated that defines the shape of the data.
 
 Gatsby is able to automatically infer a GraphQL Schema from your data, and in
-many cases this is really all you need. There are however situations when you
+many cases, this is really all you need. There are however situations when you
 either want to explicitly define the data shape, or add custom functionality to
 the query layer - this is what Gatsby's Schema Customization API provides.
 
@@ -208,7 +208,7 @@ Note that you don't need to explicitly provide the Node interface fields (`id`,
 
 #### Nested types
 
-So far we have only been dealing with scalar values (`String` and `Date`;
+So far, we have only been dealing with scalar values (`String` and `Date`;
 GraphQL also knows `ID`, `Int`, `Float`, `Boolean` and `JSON`). Fields can
 however also contain complex object values. To target those fields in GraphQL SDL, you
 can provide a full type definition for the nested type, which can be arbitrarily
@@ -366,10 +366,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 ```
 
 What is happening here is that we provide a custom field resolver that asks
-Gatsby's internal data store for the the full node object with the specified
+Gatsby's internal data store for the full node object with the specified
 `id` and `type`.
 
-Because creating foreign-key relations is such a common usecase, Gatsby
+Because creating foreign-key relations is such a common use case, Gatsby
 luckily also provides a much easier way to do this -- with the help of
 extensions or directives. It looks like this:
 

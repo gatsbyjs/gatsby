@@ -90,7 +90,7 @@ Validate a file path. It verifies that the path doesn't contain specific charact
 
 Determines if path should be ignored regarding of a ignore pattern passed as parameter. It returns `true` if the passed path should be ignored otherwise it returns `false`.
 
-| property | description                       | type    |
-| -------- | --------------------------------- | ------- |
-| path     | File path                         | String  |
-| ignore   | A pattern to match with file path | (Object | String | Array) |
+| property | description                       | type                        |
+| -------- | --------------------------------- | --------------------------- |
+| path     | File path                         | String                      |
+| ignore   | A pattern to match with file path | (Object \| String \| Array) |

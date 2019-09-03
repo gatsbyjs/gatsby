@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.23...gatsby-source-drupal@3.2.24) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [3.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.22...gatsby-source-drupal@3.2.23) (2019-08-24)
 
 **Note:** Version bump only for package gatsby-source-drupal
