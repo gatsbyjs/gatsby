@@ -322,15 +322,6 @@ export default (pagePath, callback) => {
       )
     })
 
-  headComponents.push(
-    <link
-      as="fetch"
-      rel="preload"
-      key="/app-data.json"
-      href="/app-data.json"
-      crossOrigin="anonymous"
-    />
-  )
   if (pageData) {
     headComponents.push(
       <link
