@@ -16,6 +16,26 @@ of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
+## Table of Contents
+
+- [Problem](#problem)
+- [Solution](#solution)
+- [Install](#install)
+- [How to use](#how-to-use)
+- [Polyfilling object-fit/object-position for IE](#polyfilling-object-fitobject-position-for-ie)
+- [Types of Responsive Images](#two-types-of-responsive-images)
+- [Fragments](#fragments)
+  - [gatsby-transformer-sharp](#gatsby-transformer-sharp)
+  - [gatsby-source-contentful](#gatsby-source-contentful)
+  - [gatsby-source-datocms](#gatsby-source-datocms)
+  - [gatsby-source-sanity](#gatsby-source-sanity)
+- [Fixed Queries](#fixed-queries)
+- [Fluid Queries](#fluid-queries)
+- [Art directing multiple images](#art-directing-multiple-images)
+- [Gatsby Image Props](#gatsby-image-props)
+- [Image Processing Arguments](#image-processing-arguments)
+- [Other Stuff](#some-other-stuff-to-be-aware-of)
+
 ## Problem
 
 Large, unoptimized images dramatically slow down your site.
@@ -411,6 +431,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `fixedImages`          | `array`             | An array of objects returned from `fixed` queries. When combined with `media` keys, allows for art directing `fixed` images.                  |
 | `fluidImages`          | `array`             | An array of objects returned from `fluid` queries. When combined with `media` keys, allows for art directing `fluid` images.                  |
 | `draggable`            | `bool`              | Set the img tag draggable to either `false`, `true`                                                                                           |
+| `itemProp`             | `string`            | Add an [`itemprop` schema.org structured data attribute](https://schema.org/docs/gs.html#microdata_itemprop) on the image.                    |
 
 ## Image processing arguments
 
@@ -435,4 +456,4 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
   to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
   to [import the gif directly](/docs/adding-images-fonts-files).
 - Lazy loading behavior is dependent on `IntersectionObserver` which is not available
-  in some fairly common browsers including Safari and IE. A polyfill is recommended.
+  in IE. A polyfill is recommended.

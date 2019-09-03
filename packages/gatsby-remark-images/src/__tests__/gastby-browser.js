@@ -17,9 +17,7 @@ const createImageElement = () => {
   return global.document.querySelector(`.${imageClass}`)
 }
 
-const defaultImageBoxShadowStyle = `inset 0px 0px 0px 400px ${
-  DEFAULT_OPTIONS.backgroundColor
-}`
+const defaultImageBoxShadowStyle = `inset 0px 0px 0px 400px ${DEFAULT_OPTIONS.backgroundColor}`
 
 test(`it sets the default box-shadow on img element`, () => {
   const pluginOptions = {}

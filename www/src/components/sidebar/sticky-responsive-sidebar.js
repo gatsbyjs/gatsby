@@ -87,9 +87,7 @@ class StickyResponsiveSidebar extends Component {
               size={15}
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
-                transition: `transform ${transition.speed.fast} ${
-                  transition.curve.default
-                }`,
+                transition: `transform ${transition.speed.fast} ${transition.curve.default}`,
               }}
             />
             <ChevronSvg
@@ -97,9 +95,7 @@ class StickyResponsiveSidebar extends Component {
               cssProps={{
                 transform: `translate(${5 -
                   iconOffset}px, -5px) rotate(270deg)`,
-                transition: `transform ${transition.speed.fast} ${
-                  transition.curve.default
-                }`,
+                transition: `transform ${transition.speed.fast} ${transition.curve.default}`,
               }}
             />
           </div>
@@ -136,9 +132,7 @@ const styles = {
   },
   sidebar: {
     height: `100%`,
-    transition: `transform ${transition.speed.slow} ${
-      transition.curve.default
-    }`,
+    transition: `transform ${transition.speed.slow} ${transition.curve.default}`,
     boxShadow: shadows.dialog,
     [mediaQueries.md]: {
       transform: `none !important`,

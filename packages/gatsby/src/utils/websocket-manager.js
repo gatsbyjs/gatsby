@@ -96,9 +96,7 @@ const getCachedStaticQueryResults = (
     const fileResult = fs.readFileSync(filePath, `utf-8`)
     if (fileResult === `undefined`) {
       console.log(
-        `Error loading a result for the StaticQuery in "${
-          staticQueryComponent.componentPath
-        }". Query was not run and no cached result was found.`
+        `Error loading a result for the StaticQuery in "${staticQueryComponent.componentPath}". Query was not run and no cached result was found.`
       )
       return
     }
@@ -217,16 +215,19 @@ class WebsocketManager {
           payload: this.pageResults.get(path),
         })
 
-        telemetry.trackCli(
-          `WEBSOCKET_PAGE_DATA_UPDATE`,
-          {
-            siteMeasurements: {
-              clientsCount: this.connectedClients,
-              paths: hashPaths(Array.from(this.activePaths)),
+        const clientsCount = this.connectedClients
+        if (clientsCount && clientsCount > 0) {
+          telemetry.trackCli(
+            `WEBSOCKET_PAGE_DATA_UPDATE`,
+            {
+              siteMeasurements: {
+                clientsCount,
+                paths: hashPaths(Array.from(this.activePaths)),
+              },
             },
-          },
-          { debounce: true }
-        )
+            { debounce: true }
+          )
+        }
       }
 
       s.on(`getDataForPath`, getDataForPath)
@@ -258,16 +259,19 @@ class WebsocketManager {
     this.staticQueryResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
-      telemetry.trackCli(
-        `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
-        {
-          siteMeasurements: {
-            clientsCount: this.connectedClients,
-            paths: hashPaths(Array.from(this.activePaths)),
+      const clientsCount = this.connectedClients
+      if (clientsCount && clientsCount > 0) {
+        telemetry.trackCli(
+          `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
+          {
+            siteMeasurements: {
+              clientsCount,
+              paths: hashPaths(Array.from(this.activePaths)),
+            },
           },
-        },
-        { debounce: true }
-      )
+          { debounce: true }
+        )
+      }
     }
   }
 
@@ -276,16 +280,19 @@ class WebsocketManager {
     this.pageResults.set(data.id, data)
     if (this.isInitialised) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
-      telemetry.trackCli(
-        `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
-        {
-          siteMeasurements: {
-            clientsCount: this.connectedClients,
-            paths: hashPaths(Array.from(this.activePaths)),
+      const clientsCount = this.connectedClients
+      if (clientsCount && clientsCount > 0) {
+        telemetry.trackCli(
+          `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
+          {
+            siteMeasurements: {
+              clientsCount,
+              paths: hashPaths(Array.from(this.activePaths)),
+            },
           },
-        },
-        { debounce: true }
-      )
+          { debounce: true }
+        )
+      }
     }
   }
   emitError(id: string, message?: string) {

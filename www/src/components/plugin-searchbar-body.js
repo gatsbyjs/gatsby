@@ -273,9 +273,7 @@ class Search extends Component {
           <div
             css={{
               [mediaQueries.md]: {
-                height: `calc(100vh - ${sizes.headerHeight} - ${
-                  sizes.bannerHeight
-                } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+                height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
               },
             }}
@@ -353,9 +351,7 @@ const Result = ({ hit, pathname, query }) => {
           fontWeight: `400`,
           padding: `${space[5]} ${space[6]}`,
           position: `relative`,
-          transition: `all ${transition.speed.default} ${
-            transition.curve.default
-          }`,
+          transition: `all ${transition.speed.default} ${transition.curve.default}`,
           zIndex: selected ? 1 : false,
           "&:hover": {
             background: selected ? colors.ui.hover : colors.white,
