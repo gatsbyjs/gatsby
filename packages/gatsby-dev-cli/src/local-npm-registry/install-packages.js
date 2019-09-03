@@ -82,8 +82,8 @@ const installPackages = async ({ packagesToInstall, yarnWorkspaceRoot }) => {
     await promisifiedSpawn(installCmd)
 
     console.log(`Installation complete`)
-  } catch {
-    console.error(`Installation failed`)
+  } catch (error) {
+    console.error(`Installation failed`, error)
   }
 }
 
