@@ -70,7 +70,7 @@ user-site
 
 ## Shadowing parent themes
 
-Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui`. If you want to customize any of its implementation you can do so with shadowing as well.
+Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui`. If you want to customize the implementation of any parent themes you can do so with shadowing as well.
 
 To do so, create a file named `user-site/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js`.
 
