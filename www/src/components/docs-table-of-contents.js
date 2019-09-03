@@ -37,9 +37,7 @@ function createItems(items, location, depth, maxDepth) {
             "&&": {
               color: colors.grey[60],
               border: 0,
-              transition: `all ${transition.speed.fast} ${
-                transition.curve.default
-              }`,
+              transition: `all ${transition.speed.fast} ${transition.curve.default}`,
               ":hover": {
                 color: colors.link.color,
                 borderBottom: `1px solid ${colors.link.hoverBorder}`,

@@ -245,9 +245,7 @@ class CreatorTemplate extends Component {
                           marginBottom: space[6],
                           borderBottom: `none`,
                           lineHeight: 0,
-                          transition: `all ${transition.speed.default} ${
-                            transition.curve.default
-                          }`,
+                          transition: `all ${transition.speed.default} ${transition.curve.default}`,
                         },
                       }}
                       to={site.node.fields.slug}

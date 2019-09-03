@@ -72,9 +72,7 @@ export const onRenderBody = (
   ${
     typeof pluginOptions.anonymize !== `undefined` &&
     pluginOptions.anonymize === true
-      ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${
-          pluginOptions.trackingId
-        }',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
+      ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${pluginOptions.trackingId}',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
       : ``
   }
   if(${
@@ -121,9 +119,7 @@ export const onRenderBody = (
       }
       ${Object.keys(knownOptions.general).reduce((gaSetCommands, option) => {
         if (typeof pluginOptions[option] === knownOptions.general[option]) {
-          gaSetCommands += `ga('set', '${option}', '${
-            pluginOptions[option]
-          }');\n`
+          gaSetCommands += `ga('set', '${option}', '${pluginOptions[option]}');\n`
         }
         return gaSetCommands
       }, ``)}
