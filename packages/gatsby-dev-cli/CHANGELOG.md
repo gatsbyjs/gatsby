@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.19...gatsby-dev-cli@2.5.20) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency execa to v2 ([#17029](https://github.com/gatsbyjs/gatsby/issues/17029)) ([59d3472](https://github.com/gatsbyjs/gatsby/commit/59d3472))
+
 ## [2.5.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.18...gatsby-dev-cli@2.5.19) (2019-09-01)
 
 ### Bug Fixes
