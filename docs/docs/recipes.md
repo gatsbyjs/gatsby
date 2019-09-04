@@ -782,7 +782,6 @@ export const pageQuery = graphql`
 
 The screenshots and examples in this recipe were set up with a new Contentful space with a "News" content model that includes "Title" and "Body" fields.
 
-**Note:** Per [this issue](https://github.com/gatsbyjs/gatsby/issues/15344#issuecomment-520151776), you should create and publish at least one piece of media in your Contentful space to avoid build errors.
 
 #### Directions
 
