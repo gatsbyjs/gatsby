@@ -20,7 +20,7 @@ npm install -g gatsby-cli
 ### Create a new site.
 
 ```shell
-gatsby new gatsby-site
+npx gatsby new gatsby-site
 ```
 
 ### Change directories into site folder.
