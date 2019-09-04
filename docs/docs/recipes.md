@@ -861,7 +861,7 @@ The static page created above has a unique path for navigating to a particular p
 #### Aditional resources
 
 - [Getting Started with Wordpress and Gatsby](https://www.gatsbyjs.org/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
-- More on [Sourcing from Wordpress](https://www.gatsbyjs.org/docs/sourcing-from-wordpress/)
+- More on [Sourcing from Wordpress](/docs/sourcing-from-wordpress/)
 - [Live example on Sourcing from Wordpress](https://watch-learn.com/series/gatsbyjs-wordpress)
 
 ### Pulling data from an external source and creating pages without GraphQL
