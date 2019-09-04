@@ -57,7 +57,7 @@ If you use the `preview` key, you won't have to publish to see the changes you'v
 
 ## How Does It Work
 
-The Gatsby Source Plugin downloads all the Pages on the Agility CMS Sitemap, as well as any Shared Content that's referenced on the *sharedContent* property on of the gatsby-config.js file.
+The Gatsby Source Plugin downloads all the Pages on the Agility CMS Sitemap, as well as any Shared Content that's referenced on the `sharedContent` property on of the `gatsby-config.js` file.
 
 All of those pages and content are then made available in GraphQL to the React Components you will write to render those pages.
 
