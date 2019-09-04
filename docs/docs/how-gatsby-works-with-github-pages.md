@@ -80,7 +80,8 @@ If you use a [custom domain](https://help.github.com/articles/using-a-custom-dom
 
 ### Deploying to GitHub pages from a CI server
 
-When using `gh-pages` npm module to deploy from a Travis CI (or other build systems), we need to configure it with proper credentials so that `gh-pages` is able to push the new branch.
+When we want to deploy our website through `gh-pages` through a CI server, in this example, we'll use Travis CI (any build system will suffice). We want to use [gh-pages npm module](https://www.npmjs.com/package/gh-pages) to do our deploy. We need to configure it with proper credentials so that `gh-pages` is able to push the new branch.
+
 
 #### Step 1 - obtain a GitHub token
 
