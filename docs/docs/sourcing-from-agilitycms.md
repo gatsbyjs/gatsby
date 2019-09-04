@@ -46,7 +46,7 @@ gatsby develop
 The site is just a starter, but it has a bunch of interesting features that you can use to build from.  Let's hook this code up to your new Agility CMS instance that you just created.
 
 ## Hook it up to your Agility CMS instance
-Edit the **gatsby-config.js** file and repace the *guid* and *apiKey* with yours.  
+Edit the `gatsby-config.js` file and repace the `guid` and `apiKey` with yours.  
 
 You can find your API keys on the Getting Started page in the Agility CMS Content Manager.
 
