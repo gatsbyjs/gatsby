@@ -2280,23 +2280,23 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@mdx-js/mdx@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.4.2.tgz#cacd0eb91b9b42e1577092be1176c8dc6241c761"
-  integrity sha512-8vEpXgRvL6U59hP3IrSSB3bdnTFVBJAk17MQeY05TmPBMy5XyI0x9YpOPIgy2u1ypoWAYEjEEELvQrsInNioyQ==
+"@mdx-js/mdx@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.4.3.tgz#875dbb21c73e30522e057a0935dddc112e1c8626"
+  integrity sha512-dAnf51fSf1Se/RH+Hq1r8haiZOb2j+seY4VhJjsfBUqewieJyOfJEgzrr/PXw0nQ+TFgSUN6w2joMxUNCnrtIQ==
   dependencies:
     "@babel/core" "7.5.5"
     "@babel/plugin-syntax-jsx" "7.2.0"
     "@babel/plugin-syntax-object-rest-spread" "7.2.0"
-    "@mdx-js/util" "^1.4.2"
-    babel-plugin-apply-mdx-type-prop "^1.4.2"
-    babel-plugin-extract-import-names "^1.4.2"
+    "@mdx-js/util" "^1.4.3"
+    babel-plugin-apply-mdx-type-prop "^1.4.3"
+    babel-plugin-extract-import-names "^1.4.3"
     camelcase-css "2.0.1"
     detab "2.0.2"
     hast-util-raw "5.0.1"
     lodash.uniq "4.5.0"
     mdast-util-to-hast "6.0.2"
-    remark-mdx "^1.4.2"
+    remark-mdx "^1.4.3"
     remark-parse "7.0.1"
     remark-squeeze-paragraphs "3.0.4"
     style-to-object "0.2.3"
@@ -2304,15 +2304,15 @@
     unist-builder "1.0.4"
     unist-util-visit "2.0.0"
 
-"@mdx-js/react@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.4.2.tgz#53ba636e19048ac1c804ca4480af429bf362cbeb"
-  integrity sha512-9RWAQzkPcB5PhMzqwR54YXXDivUN+E/5ZsSCeutH+giLd8mcVAXemfaoaNTv8skMgGVmXw6MhyUG9pmj1c2X1g==
+"@mdx-js/react@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.4.3.tgz#16fbbcea3c3719396288dd02c411f932f5175656"
+  integrity sha512-+YAPmaB8VcRC6fuIEy/UyFNkQ6O4MX90rdqBzzwqceb7i/jl2FI2pJyKnxLER/0UcyGvQoMw+Q/SCmdDUNtsAA==
 
-"@mdx-js/util@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.4.2.tgz#89d0dfec9d5b7fa607ef9f43e649067764b45e08"
-  integrity sha512-jN4Yw6XiLJY3RvmuXBnhV7xPTij4RY/ZondVH8uGlubKAeLk9Z54bwzLG9ci2BAaeNtbky3vegF3++02Aa4yxA==
+"@mdx-js/util@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.4.3.tgz#596820a17a4ef1170c38a11a0bc93855d3b52d30"
+  integrity sha512-GxyOBspTtwO4XqA+ask3q+HIKhARpmg7XZ3NNAJqgVfw8CnGpIEGFNv3XkZFXETjJVKdbCxSsQNR9TPMTzF0fA==
 
 "@mikaelkristiansson/domready@^1.0.9":
   version "1.0.9"
@@ -3789,13 +3789,13 @@ babel-plugin-add-module-exports@^0.3.3:
   optionalDependencies:
     chokidar "^2.0.4"
 
-babel-plugin-apply-mdx-type-prop@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-apply-mdx-type-prop/-/babel-plugin-apply-mdx-type-prop-1.4.2.tgz#d1a425a6041ed1b88020a5b8c87a671dc7815a0d"
-  integrity sha512-GF/HLwEWttF//yCN2SFId5otrBxXJKxOaWHx3jaOSbq+E7yTJlW2eDgfo05e9pq3fmEEqE2AE0OtkBhAbzkQxQ==
+babel-plugin-apply-mdx-type-prop@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-apply-mdx-type-prop/-/babel-plugin-apply-mdx-type-prop-1.4.3.tgz#7069712b89b53532389eef77bd8ab3ae2a468e0a"
+  integrity sha512-nS5+S0f891TxT0Zv2n2ZF6skojuU1hEumHUHK6zRUYQNCL92s+c40PdUl/Qnm1C0eRt/tvd8ubY7aDCIz5LuhA==
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0"
-    "@mdx-js/util" "^1.4.2"
+    "@mdx-js/util" "^1.4.3"
 
 babel-plugin-dev-expression@^0.2.2:
   version "0.2.2"
@@ -3831,10 +3831,10 @@ babel-plugin-emotion@^10.0.17:
     find-root "^1.1.0"
     source-map "^0.5.7"
 
-babel-plugin-extract-import-names@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-extract-import-names/-/babel-plugin-extract-import-names-1.4.2.tgz#0fc985fc22a87e84630377dca4bd5f8777cfadaa"
-  integrity sha512-uqXPZ7wr7j1uPfh8XGaCJ2Y9KoCx2zYbqVoXJJT67q+iCWxREWIUwVxuesXayO9GnreBfSpAwiFSnYzpx5RrKQ==
+babel-plugin-extract-import-names@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-extract-import-names/-/babel-plugin-extract-import-names-1.4.3.tgz#6e81f86288c69a332dd3b165e38ea046406d5faf"
+  integrity sha512-82dthmUNKI0Bvty7KtKVGbE5StAmm9ZyPQV30FUoutDFivYuVbRV1oBHFCQDSREDURufJq0qHc3v3GiNoDxDhg==
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0"
 
@@ -16308,16 +16308,16 @@ remark-math@^1.0.6:
   dependencies:
     trim-trailing-lines "^1.1.0"
 
-remark-mdx@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/remark-mdx/-/remark-mdx-1.4.2.tgz#1f7ef12629876a78983c3ea3e3d0af21874f0f43"
-  integrity sha512-hLqbAm90iIYQz6f48TNPRQop5lhjsr8U0+duKkhSyqUbPW1LC4f+NixFnKdsb//ugh9nxZUBpqbJYwyDaDTTCw==
+remark-mdx@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/remark-mdx/-/remark-mdx-1.4.3.tgz#53daefb0617d9535b85ce2b0cffe4a3afe18f7d3"
+  integrity sha512-y2VptrmhvptbK3UTA5h6r2OilA/ohuUNyEULKaGAAtc+J2Mt40YN1D2zEECHsMGzkka7j63rOmpiZSTndY6nMQ==
   dependencies:
     "@babel/core" "7.5.5"
     "@babel/helper-plugin-utils" "7.0.0"
     "@babel/plugin-proposal-object-rest-spread" "7.5.5"
     "@babel/plugin-syntax-jsx" "7.2.0"
-    "@mdx-js/util" "^1.4.2"
+    "@mdx-js/util" "^1.4.3"
     is-alphabetical "1.0.3"
     remark-parse "7.0.1"
     unified "8.3.2"
@@ -18106,26 +18106,26 @@ stylehacks@^4.0.0:
     postcss "^6.0.0"
     postcss-selector-parser "^3.0.0"
 
-styletron-engine-atomic@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/styletron-engine-atomic/-/styletron-engine-atomic-1.4.0.tgz#fad82091396c02d92c4f64ff299b054054da23ad"
-  integrity sha512-JpJ8KF8i2FAb/ZGXdsiwpipgPiyn+mkatP9o5bnqfyijDrlNpfxGDEnW+nYxi0JDKvV7yqiPabVOD2ahi/CaDQ==
+styletron-engine-atomic@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/styletron-engine-atomic/-/styletron-engine-atomic-1.4.1.tgz#142276348df3b1e52ded99002bb630b3e1bc06a2"
+  integrity sha512-G/v9iyAYVKPirXpxqiON7CBZ3Os9kr60Xb5UX2/DvJtAsHIjaj6HjSeus6D5YTYlGiVgBh+okwq1R3VB+wH39g==
   dependencies:
     inline-style-prefixer "^5.1.0"
-    styletron-standard "^3.0.0"
+    styletron-standard "^3.0.1"
 
-styletron-react@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/styletron-react/-/styletron-react-5.2.0.tgz#670f276782fc65a64d9af3ae8f50da2935869ee4"
-  integrity sha512-UX7Yvz7pUe9s0VRoShMAoFi9KJLfJMbbNFrwiK6rmjtjjA69yfrA75gGrb/BjUO003t3K/MDHInUg/uJb90PQQ==
+styletron-react@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/styletron-react/-/styletron-react-5.2.1.tgz#80386bbcb1a0491106d87097b3c0ff638c791faf"
+  integrity sha512-knVqjIb9c01PtBg8+bsoQ52X7mzMCVkU/vy0ze46oW6ExYSHnRpnedfQk+76zxEV6u57ncA0ouMSpk3SE9V1Eg==
   dependencies:
     prop-types "^15.6.0"
-    styletron-standard "^3.0.0"
+    styletron-standard "^3.0.1"
 
-styletron-standard@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/styletron-standard/-/styletron-standard-3.0.0.tgz#a6d75b4e1390331186ab6b01c69df391f1c7c277"
-  integrity sha512-Rmx7os4JiowVaQz/51xJdyPNZ3pEdbyU00i8vFFbUPxPbmR1pcO70ZmiazOzFZz0W43tF2IcUlfE/GncNi1WqQ==
+styletron-standard@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/styletron-standard/-/styletron-standard-3.0.1.tgz#c0b412231582fd2c4ce4d8f7f96b2a10a7523420"
+  integrity sha512-d35UYM4aCf4GDNv7o4ZC8YGkCyGS4Yp4SmbyKOxLxI7JcMJ2hLs+PTwcL41HW65WzZXy6XLDR/H5Fr3919ReoQ==
   dependencies:
     csstype "2.6.5"
     inline-style-prefixer "^5.1.0"
