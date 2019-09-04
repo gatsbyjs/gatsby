@@ -27,7 +27,7 @@ Make sure you have Gatsby CLI tools installed (we are using npm here...)
 npm install -g gatsby-cli
 ```
 
-Go ahead and clone the Agility CMS Gatsby Starter repo on from GitHub that has all the code you need to get started.
+Go ahead and clone the [Agility CMS Gatsby Starter](https://github.com/agility/agility-gatsby-starter) repo on from GitHub that has all the code you need to get started.
 ```shell
 git clone https://github.com/agility/agility-gatsby-starter.git
 ```
