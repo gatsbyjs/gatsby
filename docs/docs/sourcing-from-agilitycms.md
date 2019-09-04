@@ -6,7 +6,7 @@ This guide takes you through the steps involved in setting up a Gatsby site that
 
 ## What is Agility CMS? What makes it different?
 
-[Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that let's you easily define your custom content types and relationships easily.  This is called Content Architecture, and you can reuse this content for your websites and apps.
+[Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that let's you define your custom content types and relationships.  This is called Content Architecture, and you can reuse this content for your websites and apps.
 
 In addition, Agility CMS provides a page routing API, which allows you to offload control of the sitemap to the content editors.
 
