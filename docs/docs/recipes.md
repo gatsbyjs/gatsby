@@ -426,7 +426,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 ### Using Emotion
 
-[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that suports both inline CSS styles and styled components.
+[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components.
 
 #### Prerequisites
 
