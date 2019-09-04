@@ -10,7 +10,7 @@ With a plugin and
 2. Create a Private App in your store by navigating to **Apps**, then "Manage private apps"
 3. Create a new private app and enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api). Make sure to also grant access to read product and customer tags.
 
-## Setup the Gatsby Shopify source
+## Set up the Gatsby Shopify source
 
 1. Install the `gatsby-source-shopify` plugin.
 
