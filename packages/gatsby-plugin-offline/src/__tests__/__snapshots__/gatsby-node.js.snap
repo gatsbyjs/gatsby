@@ -11,6 +11,7 @@ Array [
 
 exports[`getPrecachePages correctly matches pages 2`] = `
 Array [
+  "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/index.html",
   "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/page1.html",
   "<PROJECT_ROOT>/packages/gatsby-plugin-offline/src/__tests__/fixtures/public/dir1/page2.html",
 ]

@@ -46,7 +46,7 @@ function getPrecachePages(globs, base) {
       const isDirectory = fs.lstatSync(path).isDirectory()
       let precachePath
 
-      if (isDirectory) {
+      if (isDirectory && fs.existsSync(`${path}/index.html`)) {
         precachePath = `${path}/index.html`
       } else if (path.endsWith(`.html`)) {
         precachePath = path
@@ -82,9 +82,13 @@ exports.onPostBuild = (
     return Array.prototype.flat ? arr.flat() : [].concat(...arr)
   }
 
+  const offlineShellPath = `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
   const precachePages = [
-    `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`,
-    ...getPrecachePages(precachePagesGlobs, `${process.cwd()}/${rootDir}`),
+    offlineShellPath,
+    ...getPrecachePages(
+      precachePagesGlobs,
+      `${process.cwd()}/${rootDir}`
+    ).filter(page => page !== offlineShellPath),
   ]
 
   const criticalFilePaths = _.uniq(
@@ -92,6 +96,7 @@ exports.onPostBuild = (
   )
 
   const globPatterns = files.concat([
+    // criticalFilePaths doesn't include HTML pages (we only need this one)
     `offline-plugin-app-shell-fallback/index.html`,
     ...criticalFilePaths,
   ])
@@ -175,9 +180,9 @@ exports.onPostBuild = (
       }
 
       reporter.info(
-        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`,
-        `The following pages will be precached:`,
-        precachePages
+        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.\n` +
+          `The following pages will be precached:\n` +
+          precachePages.join(`\n`)
       )
     })
 }
