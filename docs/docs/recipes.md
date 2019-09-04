@@ -265,6 +265,46 @@ export default ({ pageContext: { dog } }) => (
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
+### Using global CSS files without a Layout component
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with an index page component
+- A `gatsby-browser.js` page
+
+#### Directions
+
+1. Create a global CSS file as `src/styles/global.css` and paste the following into the file:
+
+```css:title=src/styles/styles/global.css
+html {
+  background-color: lavenderblush;
+}
+
+p {
+  color: peachpuff;
+}
+```
+
+2. Import the global CSS file in the `gatsby-browser.js` file such as the following:
+
+```javascript:gatsby-browser.js
+import "./src/styles/global.css"
+```
+
+**Note:**
+You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
+
+3. Run `gatsby-develop` to observe the global styling being applied across your site.
+
+**Note:**
+This approach is not the best fit if you are using CSS-in-JS for styling your site, in which case a layout page with all the shared components should be used. This is covered in the next recipe.
+
+#### Additional resources
+
+- More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
+  <!-- - [Live example on Using global CSS files]()
+
 ### Using Styled Components
 
 #### Prerequisites
