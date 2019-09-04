@@ -16,7 +16,7 @@ All content is available through the Agility CMS Fetch or Preview API.
 ## Getting Started
 
 ### Create A Free Agility Account
-It only takes a minute to create an Agility CMS account, and it's free forever. [Sign up here](https://account.agilitycms.com/sign-up?product=agility-free).  
+Create an Agility CMS account with the Free Plan (this plan is free forever). [Sign up to Agility CMS](https://account.agilitycms.com/sign-up?product=agility-free).  
 
 Once your account is created, we'll need to grab your GUID and API Keys.
 
