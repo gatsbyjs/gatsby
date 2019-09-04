@@ -4,10 +4,11 @@ title: Building an e-commerce site with Shopify
 
 With a plugin and
 
-## Prerequisites
+## Setting up your Shopify account
 
-1. A [Shopify account](https://www.shopify.com)
-2. A private app on your Shopify store that has the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api) enabled. Make sure to also grant access to read product and customer tags.
+1. Create a new [Shopify account](https://www.shopify.com) and store if you don't have one.
+2. Create a Private App in your store by navigating to **Apps**, then "Manage private apps"
+3. Create a new private app and enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api). Make sure to also grant access to read product and customer tags.
 
 ## Setup
 
