@@ -53,24 +53,22 @@ module.exports = {
 
 ### Example 1: Specify that code snippet files are under the root directory
 
-```js
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 {
   resolve: `gatsby-remark-embed-snippet`,
   options: {
-    directory: `.`
+    directory: `${__dirname}`
   }
 },
 ```
 
 ### Example 2: Specify that code snippet files are under a directory called `snippets`
 
-```js
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 {
   resolve: `gatsby-remark-embed-snippet`,
   options: {
-    directory: `./snippets/`
+    directory: `${__dirname}/snippets/`
   }
 },
 ```
@@ -144,7 +142,7 @@ Use `directory` plugin option to tell `gatsby-remark-embed-snippet` plugin that 
 {
   resolve: `gatsby-remark-embed-snippet`,
   options: {
-    directory: `./snippets/`,
+    directory: `${__dirname}/snippets/`,
   },
 },
 ```
