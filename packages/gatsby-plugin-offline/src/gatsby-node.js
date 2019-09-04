@@ -182,7 +182,9 @@ exports.onPostBuild = (
       reporter.info(
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.\n` +
           `The following pages will be precached:\n` +
-          precachePages.join(`\n`)
+          precachePages
+            .map(path => path.replace(`${process.cwd()}/public`, ``))
+            .join(`\n`)
       )
     })
 }
