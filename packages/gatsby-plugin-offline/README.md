@@ -36,6 +36,8 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   ]
   ```
 
+  Note: while essential resources of specified pages will be precached, such as JavaScript and CSS, non-essential resources such as fonts and images will not be included. Instead, these will be cached at runtime when a user visits a given page that includes these resources.
+
 - `appendScript` lets you specify a file to be appended at the end of the generated service worker (`sw.js`). For example:
 
   ```javascript:title=gatsby-config.js
