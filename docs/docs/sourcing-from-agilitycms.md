@@ -68,7 +68,7 @@ Check out the Jumbotron component, which is used to render the Jumbotron module.
 
 And here is the code used to render it.  Notice that the `title` and `subTitle` fields are available as properties the `item.fields` object.
 
-``` javascript
+```javascript:title=/src/modules/Jumbotron.js
 import React, { Component } from 'react';
 import { graphql, StaticQuery } from "gatsby"
 
