@@ -53,7 +53,8 @@ module.exports = {
 
 ### Example 1: Specify that code snippet files are under the root directory
 
-```javascript:title=gatsby-config.js
+```js
+// In gatsby-config.js
 {
   resolve: `gatsby-remark-embed-snippet`,
   options: {
@@ -64,7 +65,8 @@ module.exports = {
 
 ### Example 2: Specify that code snippet files are under a directory called `snippets`
 
-```javascript:title=gatsby-config.js
+```js
+// In gatsby-config.js
 {
   resolve: `gatsby-remark-embed-snippet`,
   options: {
