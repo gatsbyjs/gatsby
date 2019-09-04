@@ -66,7 +66,7 @@ Check out the Jumbotron component, which is used to render the Jumbotron module.
 ![Alt Text](https://res.cloudinary.com/practicaldev/image/fetch/s--OQKoH_Nv--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/mjv2brybc17iyqdoy25u.png "Agility CMS - Example Module - Jumbotron")
 
 
-And here is the code used to render it.  Notice that the *title* and *subTitle* fields are available as properties the *item.fields* object.
+And here is the code used to render it.  Notice that the `title` and `subTitle` fields are available as properties the `item.fields` object.
 
 ``` javascript
 import React, { Component } from 'react';
