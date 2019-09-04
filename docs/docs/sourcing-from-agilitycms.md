@@ -34,7 +34,7 @@ git clone https://github.com/agility/agility-gatsby-starter.git
 
 Resolve any dependencies
 
-```
+```shell
 npm install
 ```
 
