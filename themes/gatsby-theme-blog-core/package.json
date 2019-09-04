@@ -17,13 +17,13 @@
     "gatsby-remark-copy-linked-files": "^2.1.15",
     "gatsby-remark-images": "^3.1.20",
     "gatsby-remark-smartypants": "^2.1.7",
-    "gatsby-source-filesystem": "^2.1.19",
+    "gatsby-source-filesystem": "^2.1.20",
     "gatsby-transformer-sharp": "^2.2.13",
     "remark-slug": "^5.1.2"
   },
   "devDependencies": {
     "@mdx-js/react": "^1.4.2",
-    "gatsby": "^2.15.5",
+    "gatsby": "^2.15.6",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
