@@ -871,7 +871,7 @@ module.exports = {
 }
 ```
 
-3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks. If you have a Drupal content type named "Page," it will appear as `allNodePage`. To query all "Page" nodes for their title and body, you could use a query like:
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
 
 ```graphql
 {
