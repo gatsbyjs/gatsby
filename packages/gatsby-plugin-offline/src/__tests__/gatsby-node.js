@@ -71,7 +71,14 @@ describe(`onPostBuild`, () => {
 
   it(`appends to sw.js`, async () => {
     await gatsbyNode.onPostBuild(
-      { pathPrefix: `` },
+      {
+        pathPrefix: ``,
+        reporter: {
+          info(message) {
+            console.log(message)
+          },
+        },
+      },
       { appendScript: `${__dirname}/fixtures/custom-sw-code.js` }
     )
 
