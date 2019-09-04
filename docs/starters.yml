@@ -3712,3 +3712,85 @@
     - Configured to work automatically with Forestry CMS
     - Customizable 'info' page
     - Simple layout & scss architecture, easily extensible
+- url: https://gatsby-firebase-starter.netlify.com/
+  repo: https://github.com/ovidiumihaibelciug/gatsby-firebase-starter
+  description: Starter / Project Boilerplate for Authentication and creating Dynamic pages from collections with Firebase and Gatsby.js
+  tags:
+    - Firebase
+    - SEO
+    - Styling:SCSS
+    - Authentication
+    - PWA
+  features:
+    - Authentication with Firebase
+    - Programmatically create pages from a firestore collection
+    - Protected Routes with Authorization
+    - Email verification
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://gatsby-typescript-minimal.netlify.com/
+  repo: https://github.com/benbarber/gatsby-typescript-minimal
+  description: A minimal, bare-bones Typescript starter for Gatsby
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - SEO
+  features:
+    - Bare-bones starter
+    - TypeScript
+    - TSLint
+    - Prettier
+    - Styled Components
+    - Sitemap Generation
+    - Google Analytics
+- url: https://agility-gatsby-starter.netlify.com
+  repo: https://github.com/agility/agility-gatsby-starter
+  description: Get started with Gatsby and Agility CMS using a minimal blog.
+  tags:
+    - CMS:Other
+    - Blog
+    - SEO
+  features:
+    - A bare-bones starter Blog to get you off and running with Agility CMS and Gatsby.
+- url: https://gatsby-starter-dot.netlify.com/
+  repo: https://github.com/chronisp/gatsby-starter
+  description: Gatsby Starter for creating portfolio & blog.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Netlify
+    - Portfolio
+    - Redux
+    - SEO
+    - Styling:Material
+  features:
+    - Extensible & responsive design using Material UI (palette, typography & breakpoints configuration)
+    - Blog integration with Contentful CMS (GraphQL queries)
+    - Redux (connect actions & props easily using custom HOF)
+    - Support for Netlify deployment
+    - SEO
+    - Prettier code styling
+- url: https://johnjkerr.github.io/gatsby-creative/
+  repo: https://github.com/JohnJKerr/gatsby-creative
+  description: Gatsby implementation of the Start Bootstrap Creative template
+  tags:
+    - Gallery
+    - Portfolio
+    - Styling:Bootstrap
+    - Styling:SCSS
+  features:
+    - Start Bootstrap Creative template converted to React/Gatsby
+    - React Scrollspy used to track page position
+    - React Bootstrap used to create modal portfolio carousel
+    - GitHub Actions deployment to GitHub Pages demonstrated
+- url: https://bonneville.netlify.com/
+  repo: https://github.com/bagseye/bonneville
+  description: A starter blog template for Gatsby
+  tags:
+    - Blog
+    - SEO
+  features:
+    - Extensible & responsive design
+    - Blog integration
+    - SEO

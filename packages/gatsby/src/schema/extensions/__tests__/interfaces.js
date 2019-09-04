@@ -7,7 +7,7 @@ const {
 } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
 const { dispatch } = store
-const { actions } = require(`../../../redux/actions/restricted`)
+const { actions } = require(`../../../redux/actions`)
 const { createTypes } = actions
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -39,36 +39,36 @@ describe(`Queryable Node interfaces`, () => {
     const nodes = [
       {
         id: `test1`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         foo: `foo`,
         bar: `bar`,
         date: new Date(`2019-01-01`),
       },
       {
         id: `anothertest1`,
-        internal: { type: `AnotherTest` },
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         foo: `foooo`,
         baz: `baz`,
         date: new Date(`2018-01-01`),
       },
       {
         id: `tbtest1`,
-        internal: { type: `TBTest` },
+        internal: { type: `TBTest`, contentDigest: `0` },
         foo: `foo`,
         bar: `bar`,
         date: new Date(`2019-01-01`),
       },
       {
         id: `anotherbttest1`,
-        internal: { type: `AnotherTBTest` },
+        internal: { type: `AnotherTBTest`, contentDigest: `0` },
         foo: `foooo`,
         baz: `baz`,
         date: new Date(`2018-01-01`),
       },
     ]
-    nodes.forEach(node => {
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    })
+    nodes.forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
     dispatch(
       createTypes(`
         interface TestInterface @nodeInterface {
@@ -91,7 +91,7 @@ describe(`Queryable Node interfaces`, () => {
   })
 
   it(`adds root query fields for interface with @nodeInterface extension`, async () => {
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
     expect(rootQueryFields.testInterface).toBeDefined()
     expect(rootQueryFields.allTestInterface).toBeDefined()
@@ -114,7 +114,7 @@ describe(`Queryable Node interfaces`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
     expect(rootQueryFields.wrongInterface).toBeUndefined()
     expect(rootQueryFields.allWrongInterface).toBeUndefined()
@@ -348,7 +348,7 @@ describe(`Queryable Node interfaces`, () => {
         }
       `)
     )
-    await buildSchema()
+    await build({})
     expect(report.panic).toBeCalledTimes(1)
     expect(report.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must have a field ` +
@@ -382,16 +382,23 @@ describe(`Queryable Node interfaces`, () => {
 
 const buildSchema = async () => {
   await build({})
-  return store.getState().schema
+  const {
+    schemaCustomization: { composer: schemaComposer },
+    schema,
+  } = store.getState()
+  return { schema, schemaComposer }
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema()
+  const { schema, schemaComposer } = await buildSchema()
   const results = await graphql(
     schema,
     query,
     undefined,
-    withResolverContext({}, schema)
+    withResolverContext({
+      schema,
+      schemaComposer,
+    })
   )
   expect(results.errors).toBeUndefined()
   return results.data

@@ -134,7 +134,7 @@ Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ dir
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
-  __experimentalThemes: [`theme`],
+  plugins: [`theme`],
 }
 ```
 
