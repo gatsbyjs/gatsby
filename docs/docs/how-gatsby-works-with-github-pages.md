@@ -113,7 +113,7 @@ The following `.travis.yml` configuration provides a reference:
 ```yaml
 language: node_js
 before_script:
-  - npm install -g gatsby
+  - npm install -g gatsby-cli
 node_js:
   - "10"
 deploy:
