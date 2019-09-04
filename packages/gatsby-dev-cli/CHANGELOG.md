@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.22...gatsby-dev-cli@2.5.23) (2019-09-03)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.21...gatsby-dev-cli@2.5.22) (2019-09-03)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.20...gatsby-dev-cli@2.5.21) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency verdaccio to v4 ([#17020](https://github.com/gatsbyjs/gatsby/issues/17020)) ([b05f060](https://github.com/gatsbyjs/gatsby/commit/b05f060))
+
+## [2.5.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.19...gatsby-dev-cli@2.5.20) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency execa to v2 ([#17029](https://github.com/gatsbyjs/gatsby/issues/17029)) ([59d3472](https://github.com/gatsbyjs/gatsby/commit/59d3472))
+
 ## [2.5.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.18...gatsby-dev-cli@2.5.19) (2019-09-01)
 
 ### Bug Fixes
