@@ -21,6 +21,15 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ## Commands
 
+1. [new](#new)
+2. [develop](#develop)
+3. [build](#build)
+4. [serve](#serve)
+5. [clean](#clean)
+6. [plugin](#plugin)
+7. [info](#info)
+8. [repl](#repl)
+
 ### `new`
 
 `gatsby new gatsby-site`

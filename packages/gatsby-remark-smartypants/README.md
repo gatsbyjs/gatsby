@@ -23,7 +23,7 @@ plugins: [
 
 ### Options
 
-Valid `remark-smartypants` options may passed to the plugin. For more on vaild
+Valid `remark-smartypants` options may passed to the plugin. For more on valid
 options refer to the
 [remark-smartypants API](https://github.com/wooorm/retext-smartypants#api) .
 

@@ -7015,6 +7015,18 @@
   built_by: Zellement
   built_by_url: https://www.zellement.com/
   featured: false
+- title: WP Spark
+  main_url: https://wpspark.io/
+  url: https://wpspark.io/
+  description: >
+    Create blazing fast website with WordPress and our Gatsby themes.
+  categories:
+    - Agency
+    - Community
+    - Blog
+    - WordPress
+  built_by: wpspark
+  built_by_url: https://wpspark.io/
 - title: Ronald Langeveld
   description: >
     Ronald Langeveld's blog and Web Development portfolio website.
@@ -7190,4 +7202,19 @@
     - Open Source
   built_by: Gopesh Gopinath
   built_by_url: https://www.gopeshgopinath.com
+  featured: false
+- title: Misael Taveras - FrontEnd Developer
+  url: https://taverasmisael.com
+  main_url: https://taverasmisael.com
+  source_url: https://github.com/taverasmisael/taverasmisael
+  description: >
+    Personal site and bloging about learning FrontEnd web development in spanish.
+  categories:
+    - Portfolio
+    - Open Source
+    - Blog
+    - JavaScript
+    - Web Development
+  built_by: Misael Taveras
+  built_by_url: https://taverasmisael.com
   featured: false

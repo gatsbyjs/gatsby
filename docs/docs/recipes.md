@@ -265,6 +265,46 @@ export default ({ pageContext: { dog } }) => (
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
+### Using global CSS files without a Layout component
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with an index page component
+- A `gatsby-browser.js` page
+
+#### Directions
+
+1. Create a global CSS file as `src/styles/global.css` and paste the following into the file:
+
+```css:title=src/styles/styles/global.css
+html {
+  background-color: lavenderblush;
+}
+
+p {
+  color: peachpuff;
+}
+```
+
+2. Import the global CSS file in the `gatsby-browser.js` file such as the following:
+
+```javascript:gatsby-browser.js
+import "./src/styles/global.css"
+```
+
+**Note:**
+You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
+
+3. Run `gatsby-develop` to observe the global styling being applied across your site.
+
+**Note:**
+This approach is not the best fit if you are using CSS-in-JS for styling your site, in which case a layout page with all the shared components should be used. This is covered in the next recipe.
+
+#### Additional resources
+
+- More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
+  <!-- - [Live example on Using global CSS files]() -->
+
 ### Using Styled Components
 
 #### Prerequisites
@@ -342,6 +382,49 @@ export default () => (
 
 - [More on Using Styled Components](/docs/styled-components/)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
+
+### Using CSS Modules
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with an index page component
+
+#### Directions
+
+1. Create a CSS module as `src/pages/index.module.css` and paste the following into the module:
+
+```css:title=src/components/index.module.css
+.heading {
+  margin: 2rem auto;
+  max-width: 500px;
+}
+```
+
+2. Import the CSS module as a JSX object `style` in the `index.js` file by modifying the page so it looks like the following:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+
+// highlight-start
+import style from "./index.module.css"
+
+export default () => (
+  <div className={style.heading}>
+    <h1>Using CSS Modules</h1>
+  </div>
+)
+// highlight-end
+```
+
+3. Run `gatsby develop` to see the changes.
+
+**Note:**
+Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module.
+
+#### Additional resources
+
+- More on [Using CSS Modules](/tutorial/part-two/#css-modules)
+- [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
 ### Adding a Local Font
 
@@ -1713,7 +1796,7 @@ gatsby build && gatsby serve
 
 ### Deploying to Netlify
 
-Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command-line interface.
 
 #### Prerequisites
 
@@ -1741,3 +1824,26 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+
+### Deploying to ZEIT Now
+
+Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application without leaving the command-line interface.
+
+#### Prerequisites
+
+- A [ZEIT Now](https://zeit.co/signup) account
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- [Now CLI](https://zeit.co/download) package installed
+- [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Login into Now CLI using `now login`
+
+2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
+
+3. Run `now` to deploy it
+
+#### Additional resources
+
+- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)
