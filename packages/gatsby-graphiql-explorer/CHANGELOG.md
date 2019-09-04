@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.10...gatsby-graphiql-explorer@0.2.11) (2019-09-04)
+
+### Bug Fixes
+
+- **gatsby-graphiql-explorer:** Add missing dep ([#17366](https://github.com/gatsbyjs/gatsby/issues/17366)) ([9b68f7e](https://github.com/gatsbyjs/gatsby/commit/9b68f7e))
+
 ## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.9...gatsby-graphiql-explorer@0.2.10) (2019-09-02)
 
 ### Features

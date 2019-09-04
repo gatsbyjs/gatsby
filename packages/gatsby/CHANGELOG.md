@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.5...gatsby@2.15.6) (2019-09-04)
+
+### Features
+
+- **gatsby:** enable page-creator on all themes ([#16698](https://github.com/gatsbyjs/gatsby/issues/16698)) ([7398da4](https://github.com/gatsbyjs/gatsby/commit/7398da4))
+
 ## [2.15.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.4...gatsby@2.15.5) (2019-09-03)
 
 ### Bug Fixes
