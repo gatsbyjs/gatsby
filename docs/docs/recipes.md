@@ -770,6 +770,100 @@ export const pageQuery = graphql`
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
 
+### Sourcing from Wordpress
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` and `gatsby-node.js` file
+- An existing template component such as `src/templates/post.js`
+
+#### Directions
+
+1. Install the `gatsby-source-wordpress` plugin by running the following command:
+
+```shell
+npm install gatsby-source-wordpress
+```
+
+2. Configure the plugin by modifying the `gatsby-config.js` file such that it looks like the following:
+
+```JS:title=gatsby-config.js
+module.exports = {
+  ...
+  plugins: [
+    ...,
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        // your wordpress source
+        baseUrl: `wpexample.com`,
+        protocol: `https`,
+        // is it hosted on wordpress.com, or self-hosted?
+        hostingWPCOM: false,
+        // does your site use the Advanced Custom Fields Plugin?
+        useACF: false
+      }
+    },
+  ]
+}
+```
+
+**Note**
+Refer to the [plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
+
+3. Create a static page for your Wordpress posts by pasting the following sample code in `gatsby-node.js` file:
+
+```JS:title=gatsby-node.js
+const path = require(`path`)
+const slash = require(`slash`)
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  // query content for WordPress posts
+  const result = await graphql(`
+    query {
+      allWordpressPost {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
+    }
+  `)
+
+  const postTemplate = path.resolve(`./src/templates/post.js`)
+  result.data.allWordpressPost.edges.forEach(edge => {
+    createPage({
+      // will be the url for the page
+      path: edge.node.slug,
+      // specify the component template of your choice
+      component: slash(postTemplate),
+      // In the ^template's GraphQL query, 'id' will be available
+      // as a GraphQL variable to query for this posts's data.
+      context: {
+        id: edge.node.id,
+      },
+    })
+  })
+}
+```
+
+4. Open the `GraphiQL IDE` at at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
+
+5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
+
+**Note**
+The static page created above has a unique path for navigating to a particular post, a template component for the posts, and a sample GraphQL query to query your Wordpress content.
+
+#### Aditional resources
+
+- [Getting Started with Wordpress and Gatsby](https://www.gatsbyjs.org/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
+- More on [Sourcing from Wordpress](https://www.gatsbyjs.org/docs/sourcing-from-wordpress/)
+- [Live example on Sourcing from Wordpress](https://watch-learn.com/series/gatsbyjs-wordpress)
+
 ### Pulling data from an external source and creating pages without GraphQL
 
 You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](/docs/why-gatsby-uses-graphql/). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
