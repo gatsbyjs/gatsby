@@ -156,6 +156,9 @@
                 - title: Sourcing from Drupal
                   link: /docs/sourcing-from-drupal/
                   breadcrumbTitle: Drupal
+            - title: Sourcing Content from JSON or YAML
+              link: /docs/sourcing-content-from-json-or-yaml/
+              breadcrumbTitle: JSON or YAML
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           breadcrumbTitle: Querying with GraphQL
@@ -385,9 +388,6 @@
                 - title: Adding Page Transitions with gatsby-plugin-transition-link
                   link: /docs/adding-page-transitions-with-plugin-transition-link/
                   breadcrumbTitle: gatsby-plugin-transition-link
-                - title: Adding Page Transitions with gatsby-plugin-page-transitions*
-                  link: /docs/adding-page-transitions-with-plugin-page-transitions/
-                  breadcrumbTitle: gatsby-plugin-page-transitions
             - title: Making Your Site Accessible
               link: /docs/making-your-site-accessible/
             - title: Routing

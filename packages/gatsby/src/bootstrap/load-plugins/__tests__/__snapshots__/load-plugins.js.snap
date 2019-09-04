@@ -4,7 +4,7 @@ exports[`Load plugins Load plugins for a site 1`] = `
 Array [
   Object {
     "browserAPIs": Array [],
-    "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
+    "id": "",
     "name": "dev-404-page",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -18,7 +18,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
+    "id": "",
     "name": "load-babel-config",
     "nodeAPIs": Array [
       "onPreBootstrap",
@@ -32,7 +32,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
+    "id": "",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
@@ -47,7 +47,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
+    "id": "",
     "name": "prod-404",
     "nodeAPIs": Array [
       "onCreatePage",
@@ -61,7 +61,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "id": "",
     "name": "webpack-theme-component-shadowing",
     "nodeAPIs": Array [
       "onCreateWebpackConfig",
@@ -75,7 +75,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "id": "",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -87,7 +87,103 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "cc2293db-7635-5675-bb5e-05c41ff28688",
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -108,7 +204,7 @@ exports[`Load plugins Loads plugins defined with an object but without an option
 Array [
   Object {
     "browserAPIs": Array [],
-    "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
+    "id": "",
     "name": "dev-404-page",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -122,7 +218,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
+    "id": "",
     "name": "load-babel-config",
     "nodeAPIs": Array [
       "onPreBootstrap",
@@ -136,7 +232,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
+    "id": "",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
       "sourceNodes",
@@ -151,7 +247,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
+    "id": "",
     "name": "prod-404",
     "nodeAPIs": Array [
       "onCreatePage",
@@ -165,7 +261,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "id": "",
     "name": "webpack-theme-component-shadowing",
     "nodeAPIs": Array [
       "onCreateWebpackConfig",
@@ -179,7 +275,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "c731052f-1e62-5905-9fb3-edc9057be8f1",
+    "id": "",
     "name": "TEST",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -191,7 +287,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "id": "",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -203,7 +299,119 @@ Array [
   },
   Object {
     "browserAPIs": Array [],
-    "id": "cc2293db-7635-5675-bb5e-05c41ff28688",
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "__TEST__/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",

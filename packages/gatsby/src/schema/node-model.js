@@ -13,7 +13,6 @@ const {
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
-type IDOrNode = string | { id: string }
 type TypeOrTypeName = string | GraphQLOutputType
 
 /**
@@ -36,11 +35,11 @@ interface QueryArguments {
 
 export interface NodeModel {
   getNodeById(
-    { id: IDOrNode, type?: TypeOrTypeName },
+    { id: string, type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
   ): any | null;
   getNodesByIds(
-    { ids: Array<IDOrNode>, type?: TypeOrTypeName },
+    { ids: Array<string>, type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
   ): Array<any>;
   getAllNodes(
@@ -458,15 +457,8 @@ class ContextualNodeModel {
   }
 }
 
-const getNodeById = (nodeStore, id) => {
-  // This is for cases when the `id` has already been resolved
-  // to a full Node for the input filter, and is also in the selection
-  // set. E.g. `{ foo(parent: { id: { eq: 1 } } ) { parent { id } } }`.
-  if (_.isPlainObject(id) && id.id) {
-    return id
-  }
-  return id != null ? nodeStore.getNode(id) : null
-}
+const getNodeById = (nodeStore, id) =>
+  id != null ? nodeStore.getNode(id) : null
 
 const toNodeTypeNames = (schema, gqlTypeName) => {
   const gqlType =
