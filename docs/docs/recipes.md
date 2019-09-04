@@ -845,7 +845,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 - A [Gatsby site](/docs/quick-start)
 - A [Drupal](http://drupal.org) site
-- The [JSON:API module](https://www.drupal.org/project/jsonapi) enabled on the Drupal site
+- The [JSON:API module](https://www.drupal.org/project/jsonapi) installed and enabled on the Drupal site
 
 #### Directions
 
@@ -864,14 +864,14 @@ module.exports = {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://your-website/`,
-        apiBase: `api` // optional, defaults to `jsonapi`
-      }
-    }
-  ]
-};
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
+  ],
+}
 ```
 
-3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks. If you have a Drupal content type named "Page," it will appear as `allNodePage`. To query all node pages, you could use a query like:
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks. If you have a Drupal content type named "Page," it will appear as `allNodePage`. To query all "Page" nodes for their title and body, you could use a query like:
 
 ```graphql
 {
