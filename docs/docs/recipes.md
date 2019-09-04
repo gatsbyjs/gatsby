@@ -303,7 +303,7 @@ This approach is not the best fit if you are using CSS-in-JS for styling your si
 #### Additional resources
 
 - More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
-  <!-- - [Live example on Using global CSS files]()
+  <!-- - [Live example on Using global CSS files]() -->
 
 ### Using Styled Components
 
