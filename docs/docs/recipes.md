@@ -311,11 +311,13 @@ import "./src/styles/global.css"
 
 #### Directions
 
-You can add global styles to a [shared layout component](https://www.gatsbyjs.org/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header.
+You can add global styles to a [shared layout component](/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
 
-Create a new directory in your site at `/src/components`. Inside, create two files: `layout.css` and `layout.js`.
+1. If you don't already have one, create a new directory in your site at `/src/components`. 
 
-Add the following to `layout.css`:
+2. Inside the components directory, create two files: `layout.css` and `layout.js`.
+
+3. Add the following to `layout.css`:
 
 ```css:title=/src/components/layout.css
 body {
@@ -323,7 +325,7 @@ body {
 }
 ```
 
-Edit the `layout.js` file:
+4. Edit `layout.js` to import the CSS file and output layout markup:
 
 ```jsx:title=/src/components/layout.js
 import React from "react"
@@ -332,18 +334,19 @@ import "./layout.css"
 export default ({ children }) => <div>{children}</div>
 ```
 
-Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
+5. Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
 
 ```jsx:title=/src/pages/index.js
 import React from "react"
 import Layout from "../components/layout"
+
 export default () => <Layout>Hello world!</Layout>
 ```
 
 #### Additional resources
 
-- [Standard Styling with Global CSS Files](https://www.gatsbyjs.org/docs/global-css/)
-- [More about layout components](https://www.gatsbyjs.org/tutorial/part-three)
+- [Standard Styling with Global CSS Files](/docs/global-css/)
+- [More about layout components](/tutorial/part-three)
 
 ### Using Styled Components
 
