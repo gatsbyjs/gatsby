@@ -45,6 +45,9 @@ const FooterLinks = props => (
       <Link to="/accessibility-statement">Accessibility Statement</Link>
     </li>
     <li>
+      <Link to="/contributing/code-of-conduct/">Code of Conduct</Link>
+    </li>
+    <li>
       <a href="/guidelines/logo/">Logo &amp; Assets</a>
     </li>
     <li>
