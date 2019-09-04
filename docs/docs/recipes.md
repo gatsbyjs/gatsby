@@ -851,7 +851,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 1. Install the `gatsby-source-drupal` plugin.
 
-```shell
+```
 npm install --save gatsby-source-drupal
 ```
 
