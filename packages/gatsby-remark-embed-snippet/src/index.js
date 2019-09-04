@@ -39,8 +39,6 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
   if (!fs.existsSync(directory)) {
     throw Error(`Invalid directory specified "${directory}"`)
-  } else if (!directory.endsWith(`/`)) {
-    directory += `/`
   }
 
   visit(markdownAST, `inlineCode`, node => {
