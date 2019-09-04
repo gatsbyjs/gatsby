@@ -89,7 +89,7 @@ To push changes from the CI system to GitHub, you'll need to authenticate. We re
 
 In GitHub go to your account settings -> Developer settings -> Personal access tokens, and create a new token that provides the `repo` access permissions.
 
-In Travis's configuration for the repository add a new secret environment variable of the name `GH_TOKEN` with the value of the token obtained from GitHub and make sure you DO NOT toggle the "display in build logs" setting as the token should remain secret, or else others would be able to push to your repository.
+In Travis's configuration for the repository add a new secret environment variable of the name `GH_TOKEN` with the value of the token obtained from GitHub. Make sure you DO NOT toggle the "display in build logs" setting as the token should remain secret. Or else others would be able to push to your repository.
 
 #### Step 2 - deploy run script 
 
