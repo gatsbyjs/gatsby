@@ -126,4 +126,4 @@ deploy:
 
 To break-down the important bits here for deploying the Gatsby website from Travis to GitHub pages:
 1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
-2. `deploy` will only fire when the build runs on the `master` branch, in which case it will fire off the `script`, which in this case is a Gatsby site located in the `docs/` directory, in which it needs to install all the website dependencies and run the deploy script as was set in the previous step.
+2. `deploy` will only fire when the build runs on the master branch, in which case it will fire off the  deploy script. Our Gatsby site is located in the docs/ directory. We'll first need to install all the website dependencies and run the deploy script as was set in the previous step.
