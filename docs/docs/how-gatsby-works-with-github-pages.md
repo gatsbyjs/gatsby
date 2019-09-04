@@ -78,7 +78,7 @@ If you use a [custom domain](https://help.github.com/articles/using-a-custom-dom
 
 **Note**: Don't forget to add your [CNAME](https://help.github.com/articles/troubleshooting-custom-domains/#github-repository-setup-errors) file to the `static` directory.
 
-### Deploying to GitHub pages from Travis CI
+### Deploying to GitHub pages from a CI server
 
 When using `gh-pages` npm module to deploy from a Travis CI (or other build systems), we need to configure it with proper credentials so that `gh-pages` is able to push the new branch.
 
