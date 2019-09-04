@@ -21,7 +21,7 @@
     "progress": "^2.0.3",
     "read-chunk": "^3.2.0",
     "valid-url": "^1.0.9",
-    "xstate": "^3.3.3"
+    "xstate": "^4.6.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
