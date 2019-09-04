@@ -13,6 +13,10 @@ test.each([
           new ShadowRealm({
             extensions: [`.wasm`, `.mjs`, `.js`, `.json`],
             themes: [],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/non-usage`
+            ),
           }),
         ],
       },
@@ -38,6 +42,10 @@ test.each([
                 ),
               },
             ],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/basic-shadowing`
+            ),
           }),
         ],
       },
@@ -64,6 +72,10 @@ test.each([
                 ),
               },
             ],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/css-shadowing`
+            ),
           }),
         ],
       },
@@ -96,6 +108,10 @@ test.each([
                 ),
               },
             ],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/ts-shadowing`
+            ),
           }),
         ],
       },
@@ -138,6 +154,10 @@ test.each([
                 ),
               },
             ],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/dot-shadowing`
+            ),
           }),
         ],
       },
@@ -152,7 +172,7 @@ test.each([
   const oldCwd = process.cwd()
   const newCwd = context
   process.chdir(newCwd)
-  // console.log(process.cwd())
+
   webpack(config, (err, stats) => {
     // start error handling
     if (err) {
@@ -176,7 +196,7 @@ test.each([
       hash: true,
     })
     const moduleNames = statsJSON.modules.map(({ name }) => name)
-    console.log(moduleNames)
+
     if (Array.isArray(shadowPath)) {
       shadowPath.forEach(aShadowPath => {
         expect(moduleNames.includes(aShadowPath)).toBe(true)

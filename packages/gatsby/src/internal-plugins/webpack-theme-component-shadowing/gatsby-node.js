@@ -4,7 +4,7 @@ exports.onCreateWebpackConfig = (
   { store, stage, getConfig, rules, loaders, actions },
   pluginOptions
 ) => {
-  const { themes, flattenedPlugins } = store.getState()
+  const { themes, flattenedPlugins, program } = store.getState()
 
   actions.setWebpackConfig({
     resolve: {
@@ -19,6 +19,7 @@ exports.onCreateWebpackConfig = (
                   themeName: plugin.name,
                 }
               }),
+          projectRoot: program.directory,
         }),
       ],
     },
