@@ -48,7 +48,7 @@ The site is just a starter, but it has a bunch of interesting features that you 
 ## Hook it up to your Agility CMS instance
 Edit the **gatsby-config.js** file and repace the *guid* and *apiKey* with yours.  
 
-You can find your API keys on the Getting Started page in the Agility Content Manager.
+You can find your API keys on the Getting Started page in the Agility CMS Content Manager.
 
 ![alt text](https://help.agilitycms.com/hc/article_attachments/360037700311/Screen_Shot_2019-09-04_at_9.12.15_AM.png "Agility CMS - Dashboard - API Keys")
 
