@@ -839,6 +839,61 @@ export default ({ pageContext: { allPokemon } }) => (
 - More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 - When and how to [query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
 
+### Sourcing content from Drupal
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- A [Drupal](http://drupal.org) site
+- The [JSON:API module](https://www.drupal.org/project/jsonapi) enabled on the Drupal site
+
+#### Directions
+
+1. Install the `gatsby-source-drupal` plugin.
+
+```shell
+npm install --save gatsby-source-drupal
+```
+
+2. Edit your `gatsby-config.js` file to enable the plugin and configure it.
+
+```javascript:title=/gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://your-website/`,
+        apiBase: `api` // optional, defaults to `jsonapi`
+      }
+    }
+  ]
+};
+```
+
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks. If you have a Drupal content type named "Page," it will appear as `allNodePage`. To query all node pages, you could use a query like:
+
+```graphql
+{
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+#### Additional Resources
+
+- [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
+- [More on sourcing from Drupal](/docs/sourcing-from-drupal)
+- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
+
 ## 6. Querying data
 
 ### Querying data with a Page Query
