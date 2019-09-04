@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.11...gatsby-remark-responsive-iframe@2.2.12) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
 ## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.10...gatsby-remark-responsive-iframe@2.2.11) (2019-09-01)
 
 ### Bug Fixes
