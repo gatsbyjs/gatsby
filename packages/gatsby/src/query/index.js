@@ -11,12 +11,6 @@ const GraphQLRunner = require(`./graphql-runner`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
-let activity = {
-  done: () => {
-    report.completeActivity(`query-running`)
-  },
-  tick: () => {},
-}
 const extractedQueryIds = new Set()
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
@@ -171,6 +165,28 @@ const createStaticQueryJob = (state, queryId) => {
   }
 }
 
+/**
+ * Creates activity object which:
+ *  - creates actual progress activity if there are any queries that need to be run
+ *  - creates activity-like object that just cancels pending activity if there are no queries to run
+ */
+const createQueryRunningActivity = queryJobs => {
+  if (queryJobs.length) {
+    const activity = report.createProgress(`run queries`, queryJobs.length, 0, {
+      id: `query-running`,
+    })
+    activity.start()
+    return activity
+  } else {
+    return {
+      done: () => {
+        report.completeActivity(`query-running`)
+      },
+      tick: () => {},
+    }
+  }
+}
+
 const initialProcessQueries = async () => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
@@ -183,7 +199,10 @@ const initialProcessQueries = async () => {
     ),
   ]
 
+  const activity = createQueryRunningActivity(queryJobs)
+
   await processQueries(queryJobs, activity)
+  activity.done()
   return { pageQueryIds }
 }
 
@@ -251,19 +270,7 @@ const startListeningToDevelopQueue = () => {
     return graphqlRunner
   })
   listenerQueue = new Queue((queryJobs, callback) => {
-    if (queryJobs.length) {
-      activity = report.createProgress(`run queries`, queryJobs.length, 0, {
-        id: `query-running`,
-      })
-      activity.start()
-    } else {
-      activity = {
-        done: () => {
-          report.completeActivity(`query-running`)
-        },
-        tick: () => {},
-      }
-    }
+    const activity = createQueryRunningActivity(queryJobs)
 
     const onFinish = (...arg) => {
       activity.done()
