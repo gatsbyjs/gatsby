@@ -53,7 +53,7 @@ You can find your API keys on the Getting Started page in the Agility CMS Conten
 ![alt text](https://help.agilitycms.com/hc/article_attachments/360037700311/Screen_Shot_2019-09-04_at_9.12.15_AM.png "Agility CMS - Dashboard - API Keys")
 
 
-If you use the "preview" key, you won't have to publish to see the changes you've made show up. If you use the "fetch" key, make sure you've published any content you wish to see changed.
+If you use the `preview` key, you won't have to publish to see the changes you've made show up. If you use the `fetch` key, make sure you've published any content you wish to see changed.
 
 ## How Does It Work
 
