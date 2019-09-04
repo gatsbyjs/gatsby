@@ -434,13 +434,13 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 #### Directions
 
-Install the [Gatsby Emotion plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/) and Emotion packages.
+1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
 
 ```shell
 npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 ```
 
-Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
+2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -448,9 +448,9 @@ plugins: [
 ],
 ```
 
-Create a page in your gatsby site at `/src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
+3. Create a page in your gatsby site at `/src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
 
-`````jsx:title=/src/pages/emotion-sample.js
+```jsx:title=/src/pages/emotion-sample.js
 import React from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
@@ -462,9 +462,9 @@ export default () => (
 )
 ```
 
-You can use Emotion's `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element:
+4. You can use Emotion's `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element:
 
-````jsx:title=/src/pages/emotion-sample.js
+```jsx:title=/src/pages/emotion-sample.js
 export default () => (
   <div>
     <p
@@ -479,9 +479,9 @@ export default () => (
 )
 ```
 
-To use [styled components](https://emotion.sh/docs/styled), define them using Emotion's `styled` function.
+5. To use [styled components](https://emotion.sh/docs/styled), define them using Emotion's `styled` function.
 
-````jsx:title=/src/pages/emotion-sample.js
+```jsx:title=/src/pages/emotion-sample.js
 const Content = styled.div`
   text-align: center;
   margin-top: 10px;
@@ -523,7 +523,6 @@ An example to load the popular 'Source Sans Pro' font would be: `npm install --s
 
 ```jsx:title=src/components/layout.js
 import "typeface-your-chosen-font"
-`````
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
