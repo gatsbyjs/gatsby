@@ -108,9 +108,12 @@ async function overlayDuotone(
     .toBuffer()
 
   return await originalImage
-    .overlayWith(duotoneWithTransparency, {
-      raw: { width: info.width, height: info.height, channels: 4 },
-    })
+    .composite([
+      {
+        input: duotoneWithTransparency,
+        raw: { width: info.width, height: info.height, channels: 4 },
+      },
+    ])
     .toBuffer({ resolveWithObject: true })
     .then(({ data, info }) =>
       sharp(data, {
