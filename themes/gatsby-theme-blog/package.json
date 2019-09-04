@@ -23,7 +23,7 @@
     "@theme-ui/prism": "^0.2.40",
     "@theme-ui/typography": "^0.2.40",
     "deepmerge": "^4.0.0",
-    "gatsby-image": "^2.2.16",
+    "gatsby-image": "^2.2.17",
     "gatsby-plugin-emotion": "^4.1.5",
     "gatsby-plugin-feed": "^2.3.11",
     "gatsby-plugin-react-helmet": "^3.1.6",
