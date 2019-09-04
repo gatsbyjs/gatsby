@@ -105,6 +105,10 @@ const bootstrapTest = (
         additionalParameters,
         pluginOptions,
       }).then(result => {
+        if (result.errors) {
+          done.fail(result.errors)
+        }
+
         try {
           test(result.data.listNode[0])
           done()
@@ -882,7 +886,6 @@ some other text
     node => {
       expect(node).toMatchSnapshot()
       expect(console.warn).toBeCalled()
-      expect(node.tableOfContents).toBe(null)
     }
   )
 

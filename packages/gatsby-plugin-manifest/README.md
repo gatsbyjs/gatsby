@@ -146,7 +146,7 @@ The default site language should be configured in your root plugin options. Any 
 
 The [`lang` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
 
-Using localization requires name based cache busting when using a unique icon in automatic mode for a specific locale. This is automatically enabled if you provide and `icon` in a specific locale without uniquely defining `icons`. If you're using icon creation in hybrid or manual mode for your locales, remember to provide unique icon paths.
+Using localization requires name-based cache busting when using a unique icon in automatic mode for a specific locale. This is automatically enabled if you provide an `icon` in a specific locale without uniquely defining `icons`. If you're using icon creation in hybrid or manual mode for your locales, remember to provide unique icon paths.
 
 ```js
 // in gatsby-config.js
