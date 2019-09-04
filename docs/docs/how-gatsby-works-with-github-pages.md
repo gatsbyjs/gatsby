@@ -85,7 +85,7 @@ When we want to deploy our website through `gh-pages` through a CI server, in th
 
 #### Step 1 - obtain a GitHub token
 
-To push changes from the CI system to GitHub you'll need to authenticate, a good way for doing this is using GitHub developer tokens.
+To push changes from the CI system to GitHub, you'll need to authenticate. We recommend using GitHub developer tokens.
 
 In GitHub go to your account settings -> Developer settings -> Personal access tokens, and create a new token that provides the `repo` access permissions.
 
