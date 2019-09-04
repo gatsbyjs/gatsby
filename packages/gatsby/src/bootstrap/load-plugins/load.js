@@ -149,6 +149,7 @@ module.exports = (config = {}, rootDir = null) => {
           pluginOptions: {
             plugins: [],
           },
+          resolve: `__TEST__`,
         }
       }
 
@@ -193,6 +194,22 @@ module.exports = (config = {}, rootDir = null) => {
     },
   })
 
+  // the order of all of these page-creators matters. The "last plugin wins",
+  // so the user's site comes last, and each page-creator instance has to
+  // match the plugin definition order before that. This works fine for themes
+  // because themes have already been added in the proper order to the plugins
+  // array
+  plugins.forEach(plugin => {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-page-creator`),
+        options: {
+          path: slash(path.join(plugin.resolve, `src/pages`)),
+          pathCheck: false,
+        },
+      })
+    )
+  })
   const program = store.getState().program
   plugins.push(
     processPlugin({
