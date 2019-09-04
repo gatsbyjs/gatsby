@@ -782,9 +782,7 @@ export const pageQuery = graphql`
 
 The screenshots and examples in this recipe were set up with a new Contentful space with a "News" content model that includes "Title" and "Body" fields.
 
-
 #### Directions
-
 
 1. Install the `gatsby-source-contentful` plugin in your Gatsby site:
 
@@ -808,8 +806,7 @@ plugins: [
 
 3. Run `gatsby develop` and make sure the site compiled successfully.
 
-
-4. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. For example, a site with a `News` content type and two fields produces an `allContentfulNews` node type in GraphQL.
+4) Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. For example, a site with a `News` content type and two fields produces an `allContentfulNews` node type in GraphQL.
 
 ![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
 
@@ -832,8 +829,7 @@ To query for news articles from Contentful, use the following GraphQL query:
 
 Contentful nodes also include several metadata fields like `createdAt` or `node_locale`.
 
-
-5. To source Contentful data in your Gatsby site, create a page component with a GraphQL query and some code  to iterate over news articles from your sample space:
+5. To source Contentful data in your Gatsby site, create a page component with a GraphQL query and some code to iterate over news articles from your sample space:
 
 ```jsx
 import React from "react"
