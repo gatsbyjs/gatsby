@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.1...gatsby-plugin-offline@3.0.2) (2019-09-04)
+
+### Features
+
+- **gatsby-plugin-offline:** Allow precaching custom pages ([#16877](https://github.com/gatsbyjs/gatsby/issues/16877)) ([12b5f75](https://github.com/gatsbyjs/gatsby/commit/12b5f75))
+
 ## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.0...gatsby-plugin-offline@3.0.1) (2019-09-01)
 
 ### Bug Fixes
