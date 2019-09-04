@@ -523,6 +523,7 @@ An example to load the popular 'Source Sans Pro' font would be: `npm install --s
 
 ```jsx:title=src/components/layout.js
 import "typeface-your-chosen-font"
+```
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
