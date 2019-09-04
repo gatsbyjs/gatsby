@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.4.3",
-    "gatsby-plugin-mdx": "^1.0.37",
+    "gatsby-plugin-mdx": "^1.0.38",
     "gatsby-plugin-sharp": "^2.2.19",
-    "gatsby-remark-copy-linked-files": "^2.1.15",
+    "gatsby-remark-copy-linked-files": "^2.1.16",
     "gatsby-remark-images": "^3.1.20",
     "gatsby-remark-smartypants": "^2.1.7",
     "gatsby-source-filesystem": "^2.1.21",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@mdx-js/react": "^1.4.3",
-    "gatsby": "^2.15.6",
+    "gatsby": "^2.15.7",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
