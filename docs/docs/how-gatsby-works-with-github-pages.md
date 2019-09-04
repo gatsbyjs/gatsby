@@ -93,7 +93,7 @@ In Travis's configuration for the repository add a new secret environment variab
 
 #### Step 2 - deploy run script 
 
-Update the Gatsby project's `package.json` to also include a `deploy` run script which invokes `gh-pages` with two important command argumnets:
+Update the Gatsby project's `package.json` to also include a `deploy` run script which invokes `gh-pages` with two important command arguments:
 
 1. `-d public` - specifies the directory in which the built files exist and will be pushed as a source to GitHub pages
 2. `-r URL` - the GitHub repository URL, including the use of a GitHub token to be able to to push changes to the `gh-pages` branch, in the form of `https://$GH_TOKEN@github.com/<github username>/<github repository name>.git` 
