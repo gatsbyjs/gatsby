@@ -875,10 +875,10 @@ export const query = graphql`
 
 #### Additional resources
 
-- [Building a Site with React and Contentful](https://www.gatsbyjs.org/blog/2018-1-25-building-a-site-with-react-and-contentful/)
-- [More on Sourcing from Contentful](https://www.gatsbyjs.org/docs/sourcing-from-contentful/)
-- [Contentful source plugin](https://www.gatsbyjs.org/packages/gatsby-source-contentful/)
-- [Long-text field types returned as objects](https://www.gatsbyjs.org/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
+- [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful/)
+- [More on Sourcing from Contentful](/docs/sourcing-from-contentful/)
+- [Contentful source plugin](/packages/gatsby-source-contentful/)
+- [Long-text field types returned as objects](/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
 
 ##### Live example
 
