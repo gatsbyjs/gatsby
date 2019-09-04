@@ -39,7 +39,7 @@ npm install
 ```
 
 Run it in development mode!
-```
+```shell
 gatsby develop
 ```
 
