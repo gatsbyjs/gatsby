@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.21...gatsby-telemetry@1.1.22) (2019-09-03)
+
+### Features
+
+- **telemetry:** Refactor and test CI detection and add support for heroku and now ([#17314](https://github.com/gatsbyjs/gatsby/issues/17314)) ([3e26ebd](https://github.com/gatsbyjs/gatsby/commit/3e26ebd))
+
 ## [1.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.20...gatsby-telemetry@1.1.21) (2019-09-01)
 
 ### Bug Fixes
