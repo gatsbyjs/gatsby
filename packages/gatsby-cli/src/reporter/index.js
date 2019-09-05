@@ -13,7 +13,12 @@ try {
 
 if (!process.env.gatsby_logger) {
   // process.env.gatsby_logger = `yurnalist`
-  if (inkExists && semver.satisfies(process.version, `>=8`) && !isCI) {
+  if (
+    inkExists &&
+    semver.satisfies(process.version, `>=8`) &&
+    !isCI &&
+    typeof jest === `undefined`
+  ) {
     process.env.gatsby_logger = `ink`
   } else {
     process.env.gatsby_logger = `yurnalist`
