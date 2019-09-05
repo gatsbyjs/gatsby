@@ -31,7 +31,7 @@ Clone the [Agility CMS Gatsby Starter](https://github.com/agility/agility-gatsby
 git clone https://github.com/agility/agility-gatsby-starter.git
 ```
 
-Resolve any dependencies
+Install the dependencies:
 
 ```shell
 npm install
