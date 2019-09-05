@@ -68,4 +68,52 @@ describe(`requires-writer`, () => {
       )
     })
   })
+
+  describe(`matchPath`, () => {
+    let matchPaths = []
+
+    beforeEach(() => {
+      mockFsExtra.writeFile.mockImplementation((file, buffer) => {
+        if (file.includes(`match-paths.json`)) {
+          matchPaths = JSON.parse(String(buffer))
+        }
+
+        return Promise.resolve()
+      })
+    })
+
+    it(`should sort matchPaths by specificity`, async () => {
+      const pages = generatePagesState([
+        {
+          path: `/`,
+        },
+        {
+          path: `/app/`,
+          matchPath: `/app/*`,
+        },
+        {
+          path: `/app/projects/`,
+          matchPath: `/app/projects/*`,
+        },
+        {
+          path: `/app/clients/`,
+          matchPath: `/app/clients/*`,
+        },
+        {
+          path: `/app/login/`,
+        },
+      ])
+
+      await requiresWriter.writeAll({
+        pages,
+        program,
+      })
+
+      expect(matchPaths[0].path).toBe(pages.get(`/app/clients/`).path)
+      expect(matchPaths[matchPaths.length - 1].path).toBe(
+        pages.get(`/app/`).path
+      )
+      expect(matchPaths).toMatchSnapshot()
+    })
+  })
 })
