@@ -37,7 +37,7 @@ Install the dependencies:
 npm install
 ```
 
-Run it in development mode!
+Once you've the infrastructure set up, run the site in development mode:
 ```shell
 gatsby develop
 ```
