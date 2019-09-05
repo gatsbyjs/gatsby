@@ -531,7 +531,7 @@ plugins: [
 ],
 ```
 
-3. Create a page in your gatsby site at `/src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
+3. Create a page in your gatsby site at `src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
 
 ```jsx:title=/src/pages/emotion-sample.js
 import React from "react"
