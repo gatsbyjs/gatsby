@@ -835,7 +835,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const postTemplate = path.resolve(`./src/templates/post.js`)
   result.data.allWordpressPost.edges.forEach(edge => {
     createPage({
-      // will be the url for the page
+      // `path` will be the url for the page
       path: edge.node.slug,
       // specify the component template of your choice
       component: slash(postTemplate),
