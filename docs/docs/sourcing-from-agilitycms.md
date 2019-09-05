@@ -12,7 +12,7 @@ In addition, Agility CMS provides a page routing API, which allows you to offloa
 
 All content is available through the Agility CMS Fetch or Preview API.
 
-## Getting Started
+## Getting started
 
 ### Create a free Agility account
 Create an Agility CMS account with the Free Plan (this plan is free forever). [Sign up to Agility CMS](https://account.agilitycms.com/sign-up?product=agility-free).  
