@@ -111,6 +111,7 @@ async function overlayDuotone(
     .composite([
       {
         input: duotoneWithTransparency,
+        blend: `over`,
         raw: { width: info.width, height: info.height, channels: 4 },
       },
     ])
