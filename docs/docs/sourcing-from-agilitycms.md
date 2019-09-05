@@ -85,4 +85,4 @@ export default class Jumbotron extends Component {
 }
 ```
 
-When we add new modules and content definitions to Agility CMS, the components we use to render those modules will automatically get the strongly typed data delivered to those modules as props.  
+When you add new modules and content definitions to Agility CMS, the components used to render those modules will automatically receive the strongly typed data delivered to those modules as props.  
