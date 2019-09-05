@@ -3,7 +3,7 @@ const path = require(`path`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
 
-module.exports = htmlPath => {
+module.exports = (htmlPath, pathPrefix) => {
   // load index.html to pull scripts/links necessary for proper offline reload
   let html
   try {
@@ -41,10 +41,15 @@ module.exports = htmlPath => {
     // Don't cache XML files, or external resources (beginning with // or http)
     const blackListRegex = /(\.xml$|^\/\/|^http)/
 
-    if (!blackListRegex.test(url)) {
+    // check resource URLs from header tags start with the correct prefix
+    // (these are not page URLs)
+    if (!blackListRegex.test(url) && url.startsWith(pathPrefix)) {
       criticalFilePaths.push(url.replace(/^\//, ``))
     }
   })
 
-  return _.uniq(criticalFilePaths)
+  // Remove the custom prefix (if any) so Workbox can find the files.
+  // This is added back at runtime (see modifyUrlPrefix in gatsby-node.js) in
+  // order to serve from the correct location.
+  return _.uniq(criticalFilePaths).map(url => url.slice(pathPrefix.length))
 }
