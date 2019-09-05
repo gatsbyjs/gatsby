@@ -31,8 +31,7 @@ for folder in $GLOB; do
     yarn import # generate a new yarn.lock file based on package-lock.json
   fi
 
-  git add .
-  git commit --message "$COMMIT_MESSAGE"
+  git diff-index --quiet HEAD || git commit -am "$COMMIT_MESSAGE"
   git push origin master
 
   cd $BASE
