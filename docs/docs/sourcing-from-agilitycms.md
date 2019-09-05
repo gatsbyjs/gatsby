@@ -12,7 +12,6 @@ In addition, Agility CMS provides a page routing API, which allows you to offloa
 
 All content is available through the Agility CMS Fetch or Preview API.
 
-
 ## Getting Started
 
 ### Create A Free Agility Account
