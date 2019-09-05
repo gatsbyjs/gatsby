@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const { store, emitter } = require(`../redux/`)
+const { match } = require(`@reach/router/lib/utils`)
 import { joinPath } from "gatsby-core-utils"
 
 let lastHash = null
@@ -18,23 +19,54 @@ const getComponents = pages =>
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
     .value()
+
 /**
  * Get all dynamic routes and sort them by most specific at the top
  * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
  */
 const getMatchPaths = pages => {
-  const filteredPaths = []
+  const createMatchPathEntry = (page, index) => {
+    return {
+      ...page,
+      index,
+      score: page.matchPath.split(`/`).length,
+    }
+  }
+
+  const matchPathPages = []
   pages.forEach((page, index) => {
     if (page.matchPath) {
-      filteredPaths.push({
-        ...page,
-        index,
-        score: page.matchPath.split(`/`).length,
-      })
+      matchPathPages.push(createMatchPathEntry(page, index))
     }
   })
 
-  return filteredPaths
+  // Pages can live in matchPaths, to keep them working without doing another network request
+  // we save them in matchPath. Our sorting will put them above /* as we always add a slash to the end
+  // of static paths.
+  // More info in https://github.com/gatsbyjs/gatsby/issues/16097
+  // small speedup: don't bother traversing when no matchPaths found.
+  if (matchPathPages.length) {
+    pages.forEach((page, index) => {
+      const isInsideMatchPath = !!matchPathPages.find(
+        pageWithMatchPath =>
+          !page.matchPath && match(pageWithMatchPath.matchPath, page.path)
+      )
+
+      if (isInsideMatchPath) {
+        matchPathPages.push(
+          createMatchPathEntry(
+            {
+              ...page,
+              matchPath: page.path,
+            },
+            index
+          )
+        )
+      }
+    })
+  }
+
+  return matchPathPages
     .sort((a, b) => {
       // The higher the score, the higher the specificity of our matchPath
       const order = b.score - a.score
