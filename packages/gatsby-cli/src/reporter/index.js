@@ -70,7 +70,7 @@ const interuptActivities = () => {
   })
 }
 
-const prematureEnd = () => {
+const prematureEnd = (code = 1) => {
   // hack so at least one activity is surely failed, so
   // we are guaranteed to generate FAILED status
   // if none of activity did explicitly fail
@@ -82,11 +82,11 @@ const prematureEnd = () => {
   interuptActivities()
 
   // process.stdout.write(`EXITING wat\n`)
-  process.exit(1)
+  process.exit(code)
 }
 
 signalExit(code => {
-  if (code !== 0) prematureEnd()
+  if (code !== 0) prematureEnd(code)
   else interuptActivities()
 })
 
