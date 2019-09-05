@@ -108,7 +108,6 @@ class Runner {
     const results = await this.write(nodes, messages)
 
     if (messages.length !== 0) {
-      console.log(messages)
       activity.panicOnBuild(messages)
     } else {
       activity.end()
