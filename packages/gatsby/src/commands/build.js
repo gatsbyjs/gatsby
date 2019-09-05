@@ -40,17 +40,17 @@ const waitJobsFinished = () =>
   })
 
 module.exports = async function build(program: BuildArgs) {
-  const buildActivity = report.phantomActivity(`build`)
-  buildActivity.start()
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
+  const buildActivity = report.phantomActivity(`build`)
+  buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
   signalExit(() => {
     telemetry.trackCli(`BUILD_END`)
   })
 
-  const buildSpan = tracer.startSpan(`build`)
+  const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
   const { graphqlRunner } = await bootstrap({

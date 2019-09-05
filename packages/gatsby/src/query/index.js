@@ -170,10 +170,11 @@ const createStaticQueryJob = (state, queryId) => {
  *  - creates actual progress activity if there are any queries that need to be run
  *  - creates activity-like object that just cancels pending activity if there are no queries to run
  */
-const createQueryRunningActivity = queryJobs => {
+const createQueryRunningActivity = (queryJobs, parentSpan) => {
   if (queryJobs.length) {
     const activity = report.createProgress(`run queries`, queryJobs.length, 0, {
       id: `query-running`,
+      parentSpan,
     })
     activity.start()
     return activity
@@ -187,7 +188,7 @@ const createQueryRunningActivity = queryJobs => {
   }
 }
 
-const initialProcessQueries = async () => {
+const initialProcessQueries = async ({ parentSpan } = {}) => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
   const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
@@ -199,7 +200,7 @@ const initialProcessQueries = async () => {
     ),
   ]
 
-  const activity = createQueryRunningActivity(queryJobs)
+  const activity = createQueryRunningActivity(queryJobs, parentSpan)
 
   await processQueries(queryJobs, activity)
   activity.done()

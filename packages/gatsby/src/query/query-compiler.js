@@ -101,13 +101,7 @@ class Runner {
   //   }
   // }
 
-  async compileAll(isFirstRun) {
-    // report.stateUpdate(`queryExtraction`, `IN_PROGRESS`)
-    const activity = report.activityTimer(`extract queries from components`, {
-      // parentSpan: bootstrapSpan,
-      id: `query-extraction`,
-    })
-    activity.start()
+  async compileAll(activity) {
     const messages = []
 
     let nodes = await this.parseEverything(messages)
@@ -410,6 +404,12 @@ export default async function compile({ parentSpan } = {}): Promise<
   // TODO: swap plugins to themes
   const { program, schema, themes, flattenedPlugins } = store.getState()
 
+  const activity = report.activityTimer(`extract queries from components`, {
+    parentSpan,
+    id: `query-extraction`,
+  })
+  activity.start()
+
   const runner = new Runner(
     program.directory,
     resolveThemes(
@@ -422,10 +422,10 @@ export default async function compile({ parentSpan } = {}): Promise<
           })
     ),
     schema,
-    { parentSpan }
+    { parentSpan: activity.span }
   )
 
-  const queries = await runner.compileAll()
+  const queries = await runner.compileAll(activity)
 
   return queries
 }
