@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.12...gatsby-transformer-sharp@2.2.13) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.11...gatsby-transformer-sharp@2.2.12) (2019-08-24)
 
 ### Bug Fixes

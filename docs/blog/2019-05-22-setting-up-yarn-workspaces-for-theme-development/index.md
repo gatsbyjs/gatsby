@@ -101,7 +101,7 @@ In the example site, create a `gatsby-config.js` file and add the theme.
 
 ```js:title=example/gatsby-config.js
 module.exports = {
-  __experimentalThemes: ["gatsby-theme-example-workspaces"],
+  plugins: ["gatsby-theme-example-workspaces"],
 }
 ```
 

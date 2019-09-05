@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.4...gatsby-plugin-flow@1.1.5) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [1.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.3...gatsby-plugin-flow@1.1.4) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-plugin-flow
