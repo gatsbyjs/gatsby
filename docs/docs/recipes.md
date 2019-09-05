@@ -940,7 +940,7 @@ npm install --save gatsby-source-drupal
 
 2. Edit your `gatsby-config.js` file to enable the plugin and configure it.
 
-```javascript:title=/gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
