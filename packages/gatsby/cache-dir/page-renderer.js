@@ -1,6 +1,5 @@
 import React, { createElement } from "react"
 import PropTypes from "prop-types"
-import { match } from "@reach/router/lib/utils"
 import { publicLoader } from "./loader"
 import { apiRunner } from "./api-runner-browser"
 
@@ -10,15 +9,6 @@ class PageRenderer extends React.Component {
     const props = {
       ...this.props,
       pathContext: this.props.pageContext,
-    }
-
-    if (this.props.pageContext.matchPath) {
-      const { params } = match(
-        this.props.pageContext.matchPath,
-        this.props.location.pathname
-      )
-      props.pageContext.params = params
-      props.pathContext.params = params
     }
 
     const [replacementElement] = apiRunner(`replaceComponentRenderer`, {
