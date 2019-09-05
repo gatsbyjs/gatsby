@@ -331,6 +331,17 @@
   image: images/endormi.png
   for_hire: false
   portfolio: true
+- name: WP Spark
+  type: company
+  description: >-
+    We help agencies and companies with JAMStack tools. This includes web
+    development using Static Site Generators, Headless CMS, CI / CD and CDN
+    setup.
+  website: "https://wpspark.io/"
+  github: "https://github.com/wpspark/"
+  image: images/wp-spark.jpg
+  for_hire: false
+  portfolio: true
 - name: Twteam
   type: agency
   description: >-
