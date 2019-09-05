@@ -526,9 +526,9 @@ npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
 
 ```javascript:title=gatsby-config.js
-plugins: [
-  `gatsby-plugin-emotion`,
-],
+module.exports = {
+  plugins: [`gatsby-plugin-emotion`],
+}
 ```
 
 3. Create a page in your gatsby site at `/src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
