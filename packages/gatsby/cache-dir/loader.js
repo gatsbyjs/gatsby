@@ -1,6 +1,6 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
-import { setMatchPaths, findPath } from "./find-path"
+import { setMatchPaths, findPath, findMatchPath } from "./find-path"
 
 const preferDefault = m => (m && m.default) || m
 
