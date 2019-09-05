@@ -74,7 +74,7 @@ const getMatchPaths = pages => {
         return order
       }
 
-      // if specificty is the same we use the array index
+      // if specificity is the same we use the array index
       return b.index - a.index
     })
     .map(({ path, matchPath }) => {
