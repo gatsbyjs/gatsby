@@ -533,7 +533,7 @@ plugins: [
 
 3. Create a page in your gatsby site at `src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
 
-```jsx:title=/src/pages/emotion-sample.js
+```jsx:title=src/pages/emotion-sample.js
 import React from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
@@ -547,7 +547,7 @@ export default () => (
 
 4. You can use Emotion's `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element:
 
-```jsx:title=/src/pages/emotion-sample.js
+```jsx:title=src/pages/emotion-sample.js
 export default () => (
   <div>
     <p
@@ -564,7 +564,7 @@ export default () => (
 
 5. To use [styled components](https://emotion.sh/docs/styled), define them using Emotion's `styled` function.
 
-```jsx:title=/src/pages/emotion-sample.js
+```jsx:title=src/pages/emotion-sample.js
 const Content = styled.div`
   text-align: center;
   margin-top: 10px;
