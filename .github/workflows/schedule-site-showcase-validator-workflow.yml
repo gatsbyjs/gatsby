@@ -1,5 +1,5 @@
 on:
-  schedules:
+  schedule:
     - cron: 0 0 * * *
 name: Site Showcase Validator workflow
 jobs:

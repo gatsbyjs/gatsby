@@ -301,7 +301,7 @@ import "./src/styles/global.css"
 #### Additional resources
 
 - More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
-  <!-- - [Live example on Using global CSS files]()
+  <!-- - [Live example on Using global CSS files]() -->
 
 ### Using global styles in a layout component
 
