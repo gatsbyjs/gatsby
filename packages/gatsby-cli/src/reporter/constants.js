@@ -11,7 +11,7 @@ export const DEBUG = `DEBUG`
 export const SUCCESS = `SUCCESS`
 export const INFO = `INFO`
 export const WARNING = `WARNING`
-export const LOG = `LOG`
+// export const LOG = `LOG`
 
 export const ACTIVITY_START = `ACTIVITY_START`
 export const ACTIVITY_SUCCESS = `ACTIVITY_SUCCESS`
