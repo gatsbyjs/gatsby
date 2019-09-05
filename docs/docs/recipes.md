@@ -849,7 +849,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-4. Open the `GraphiQL IDE` at at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
+4. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
 
 5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
 
