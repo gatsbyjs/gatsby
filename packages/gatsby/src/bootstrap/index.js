@@ -468,16 +468,7 @@ module.exports = async (args: BootstrapArgs) => {
   await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
   activity.end()
 
-  // Extract queries
-  // activity = report.activityTimer(`extract queries from components`, {
-  //   parentSpan: bootstrapSpan,
-  //   id: `query-extraction`,
-  // })
-  // activity.start()
-  // console.log('before')
   await extractQueries({ parentSpan: bootstrapSpan })
-  // console.log('after')
-  // activity.end()
 
   // Write out files.
   activity = report.activityTimer(`write out requires`, {
