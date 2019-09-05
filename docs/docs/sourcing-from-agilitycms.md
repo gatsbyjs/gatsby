@@ -49,7 +49,6 @@ Edit the `gatsby-config.js` file and repace the `guid` and `apiKey` with yours.
 
 You can find your API keys on the Getting Started page in the Agility CMS Content Manager.
 
-
 ![Agility CMS - Dashboard - API Keys](./images/agilitycms-api-keys.png)
 
 If you use the `preview` key, you won't have to publish to see the changes you've made show up. If you use the `fetch` key, make sure you've published any content you wish to see changed.
