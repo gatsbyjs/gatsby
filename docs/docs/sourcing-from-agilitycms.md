@@ -19,7 +19,7 @@ Create an Agility CMS account with the Free Plan (this plan is free forever). [S
 
 Once your account is created, you'll need to grab your GUID and API Keys.
 
-### Get the Code
+### Get the code
 
 Make sure you have the Gatsby CLI installed:
 ```shell
