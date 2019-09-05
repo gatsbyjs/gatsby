@@ -562,19 +562,11 @@ module.exports = async (program: any) => {
 
   // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
   //   console.log(`set invalid`, args, this)
-  //   // compiling
-  //   // report.stateUpdate({
-  //   //   id: `webpack`,
-  //   //   status: `working`,
-  //   // })
   // })
 
   compiler.hooks.watchRun.tapAsync(`log compiling2`, function(args, done) {
-    // report.stateUpdate(`webpack`, `IN_PROGRESS`)
-
     if (webpackActivity) {
       webpackActivity.end()
-      // webpackActivity = null
     }
     webpackActivity = report.activityTimer(`Re-building development bundle`, {
       id: `webpack-develop`,
@@ -583,16 +575,6 @@ module.exports = async (program: any) => {
 
     done()
   })
-
-  // compiler.hooks.beforeCompile.tapAsync(`log compiling3`, function(args, done) {
-  //   console.log(`set beforeCompile`)
-  //   done()
-  //   // compiling
-  //   // report.stateUpdate({
-  //   //   id: `webpack`,
-  //   //   status: `working`,
-  //   // })
-  // })
 
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
@@ -612,50 +594,18 @@ module.exports = async (program: any) => {
     )
     const isSuccessful = !messages.errors.length
 
-    // report.clearStatefulMessage({ group: `webpack-errors` })
-    // report.stateUpdate(`webpack`, isSuccessful ? `SUCCESS` : `FAILED`)
+    // if (messages.errors.length > 0) {
+    //   const handleWebpackError = require(`../utils/webpack-error-parser`)
+    //   const errors = handleWebpackError(`develop`, stats.compilation.errors)
 
-    // TODO: Would be nice to copy (at least some) of friendly-errors-webpack-plugin
-    // error/warning enhancing
-
-    // report.clearStatefulMessage(`webpack-errors`)
-    if (messages.errors.length > 0) {
-      const handleWebpackError = require(`../utils/webpack-error-parser`)
-      // const constructError = require(`gatsby-cli/lib/structured-errors`)
-      const errors = handleWebpackError(`develop`, stats.compilation.errors)
-
-      errors.forEach(error => {
-        report.error({
-          ...error,
-          group: `webpack-errors`,
-        })
-      })
-
-      // console.log(test)
-      // report.statefulMessage({
-      //   type: `error`,
-      //   id: `webpack-errors`,
-      //   text: messages.errors.join(`\n`),
-      // })
-    }
-    // else {
-    //   report.clearStatefulMessage({ group: `webpack-errors` })
-    // }
-
-    // if (messages.warnings.length > 0) {
-    //   report.statefulMessage({
-    //     type: `warn`,
-    //     id: `webpack-warnings`,
-    //     text: messages.warnings.join(`\n`),
+    //   errors.forEach(error => {
+    //     report.error({
+    //       ...error,
+    //       group: `webpack-errors`,
+    //     })
     //   })
-    // } else {
-    //   report.clearStatefulMessage({ id: `webpack-warnings` })
     // }
 
-    // if (isSuccessful) {
-    // console.log(chalk.green(`Compiled successfully!`))
-    // }
-    // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
@@ -673,7 +623,20 @@ module.exports = async (program: any) => {
     isFirstCompile = false
 
     if (webpackActivity) {
-      webpackActivity.end(isSuccessful)
+      if (isSuccessful) {
+        webpackActivity.end()
+      } else {
+        const handleWebpackError = require(`../utils/webpack-error-parser`)
+        const errors = handleWebpackError(`develop`, stats.compilation.errors)
+        webpackActivity.panicOnBuild(errors)
+
+        // errors.forEach(error => {
+        //   report.error({
+        //     ...error,
+        //     group: `webpack-errors`,
+        //   })
+        // })
+      }
       webpackActivity = null
     }
 
