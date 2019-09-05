@@ -6,21 +6,15 @@ const signalExit = require(`signal-exit`)
 const reporterActions = require(`./redux/actions`)
 
 const {
-  VERSION,
-  LOG_ACTION,
   DEBUG,
   SUCCESS,
   INFO,
   WARNING,
   LOG,
-  ACTIVITY_SUCCESS,
-  ACTIVITY_FAILED,
-  ACTIVITY_INTERRUPTED,
   IN_PROGRESS,
   NOT_STARTED,
   INTERRUPTED,
   FAILED,
-  SUCCESS,
   SPINNER,
   HIDDEN,
   PROGRESS,
