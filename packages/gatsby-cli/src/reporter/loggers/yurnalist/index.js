@@ -1,4 +1,13 @@
 import { onLogAaction } from "../../redux/index"
+import {
+  STATEFUL_LOG,
+  LOG,
+  ACTIVITY_START,
+  SPINNER,
+  PROGRESS,
+  ACTIVITY_UPDATE,
+  ACTIVITY_END,
+} from "../../constants"
 
 const { createReporter } = require(`yurnalist`)
 const ProgressBar = require(`progress`)
@@ -22,8 +31,8 @@ const levelToYurnalist = {
 
 onLogAaction(action => {
   switch (action.type) {
-    case `STATEFUL_LOG`:
-    case `LOG`: {
+    case STATEFUL_LOG:
+    case LOG: {
       const yurnalistMethod = levelToYurnalist[action.payload.level]
       if (!yurnalistMethod) {
         process.stdout.write(`NO "${action.payload.level}" method\n`)
@@ -39,8 +48,8 @@ onLogAaction(action => {
       }
       break
     }
-    case `ACTIVITY_START`: {
-      if (action.payload.type === `spinner`) {
+    case ACTIVITY_START: {
+      if (action.payload.type === SPINNER) {
         const spinner = yurnalist.activity()
         spinner.tick(action.payload.text)
         const activity = {
@@ -68,7 +77,7 @@ onLogAaction(action => {
           },
         }
         activities[action.payload.id] = activity
-      } else if (action.payload.type === `progress`) {
+      } else if (action.payload.type === PROGRESS) {
         const fmt = text =>
           ` [:bar] :current/:total :elapsed s :percent ${text}`
         const bar = new ProgressBar(fmt(action.payload.text), {
@@ -97,21 +106,14 @@ onLogAaction(action => {
       }
       break
     }
-    case `ACTIVITY_UPDATE`: {
+    case ACTIVITY_UPDATE: {
       const activity = activities[action.payload.name]
       if (activity && activity.update) {
         activity.update(action.payload)
       }
       break
     }
-    // case `STRUCTURED_ACTIVITY_TICK`: {
-    //   const activity = activities[action.payload.name]
-    //   if (activity && activity.tick) {
-    //     activity.tick()
-    //   }
-    //   break
-    // }
-    case `ACTIVITY_END`: {
+    case ACTIVITY_END: {
       const activity = activities[action.payload.id]
       if (activity) {
         if (activity.end) {

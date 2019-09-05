@@ -4,6 +4,24 @@ const convertHrtime = require(`convert-hrtime`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { bindActionCreators } = require(`redux`)
 const { dispatch, getStore } = require(`./index`)
+const {
+  SET_STATUS,
+  LOG,
+  CLEAR_STATEFUL_LOG,
+  ACTIVITY_START,
+  ACTIVITY_PENDING,
+  ACTIVITY_CANCEL,
+  ACTIVITY_END,
+  ACTIVITY_UPDATE,
+  PENDING,
+  PROGRESS,
+  IN_PROGRESS,
+  NOT_STARTED,
+  FAILED,
+  SUCCESS,
+  CANCELLED,
+  HIDDEN,
+} = require(`../constants`)
 const signalExit = require(`signal-exit`)
 
 const getActivity = id => getStore().getState().logs.activities[id]
@@ -22,16 +40,13 @@ const getGlobalStatus = (id, status) => {
     const activityStatus =
       activityId === id ? status : logs.activities[activityId].status
 
-    if (activityStatus === `IN_PROGRESS` || activityStatus === `NOT_STARTED`) {
-      return `IN_PROGRESS`
-    } else if (
-      activityStatus === `FAILED` &&
-      generatedStatus !== `IN_PROGRESS`
-    ) {
-      return `FAILED`
+    if (activityStatus === IN_PROGRESS || activityStatus === NOT_STARTED) {
+      return IN_PROGRESS
+    } else if (activityStatus === FAILED && generatedStatus !== IN_PROGRESS) {
+      return FAILED
     }
     return generatedStatus
-  }, `SUCCESS`)
+  }, SUCCESS)
 }
 
 const verySpecialDebounce = (fn, waitingTime) => {
@@ -76,7 +91,7 @@ const verySpecialDebounce = (fn, waitingTime) => {
 const debouncedSetStatus = status =>
   verySpecialDebounce(dispatchFn => {
     dispatchFn({
-      type: `SET_STATUS`,
+      type: SET_STATUS,
       payload: status,
     })
   }, 1000)
@@ -100,7 +115,7 @@ const actions = {
     activity_uuid,
   }) => {
     return {
-      type: `LOG`,
+      type: LOG,
       payload: {
         level,
         text,
@@ -123,11 +138,11 @@ const actions = {
   },
   clearStatefulLogs: group => {
     return {
-      type: `CLEAR_STATEFUL_LOG`,
+      type: CLEAR_STATEFUL_LOG,
       payload: group,
     }
   },
-  createPendingActivity: ({ id, status = `NOT_STARTED` }) => {
+  createPendingActivity: ({ id, status = NOT_STARTED }) => {
     const actionsToEmit = []
 
     const logsState = getStore().getState().logs
@@ -139,10 +154,10 @@ const actions = {
     }
 
     actionsToEmit.push({
-      type: `ACTIVITY_PENDING`,
+      type: ACTIVITY_PENDING,
       payload: {
         id,
-        type: `pending`,
+        type: PENDING,
         status,
       },
     })
@@ -150,14 +165,7 @@ const actions = {
     return actionsToEmit
   },
   setStatus: status => debouncedSetStatus(status),
-  startActivity: ({
-    id,
-    text,
-    type,
-    status = `IN_PROGRESS`,
-    current,
-    total,
-  }) => {
+  startActivity: ({ id, text, type, status = IN_PROGRESS, current, total }) => {
     const actionsToEmit = []
 
     const logsState = getStore().getState().logs
@@ -169,7 +177,7 @@ const actions = {
     }
 
     actionsToEmit.push({
-      type: `ACTIVITY_START`,
+      type: ACTIVITY_START,
       payload: {
         id,
         uuid: uuidv4(),
@@ -193,18 +201,18 @@ const actions = {
       return null
     }
     const actionsToEmit = []
-    if (activity.type === `pending`) {
+    if (activity.type === PENDING) {
       actionsToEmit.push({
-        type: `ACTIVITY_CANCEL`,
+        type: ACTIVITY_CANCEL,
         payload: {
           id,
-          status: `CANCELLED`,
+          status: CANCELLED,
           type: activity.type,
         },
       })
     } else {
       let duration = 0
-      if (activity.status === `IN_PROGRESS`) {
+      if (activity.status === IN_PROGRESS) {
         duration = getElapsedTimeMS(activity)
         trackCli(`ACTIVITY_DURATION`, {
           name: activity.name,
@@ -213,7 +221,7 @@ const actions = {
       }
 
       actionsToEmit.push({
-        type: `ACTIVITY_END`,
+        type: ACTIVITY_END,
         payload: {
           uuid: activity.uuid,
           id,
@@ -223,15 +231,16 @@ const actions = {
         },
       })
 
-      if (activity.type !== `hidden`) {
+      if (activity.type !== HIDDEN) {
         actionsToEmit.push(
           actions.createLog({
             text: activity.text,
+            // TODO: Move to constants
             level: `ACTIVITY_${status}`,
             duration,
             statusText:
               activity.statusText ||
-              (status === `SUCCESS` && activity.type === `progress`
+              (status === SUCCESS && activity.type === PROGRESS
                 ? `${activity.current}/${activity.total} ${(
                     activity.total / duration
                   ).toFixed(2)}/s`
@@ -263,7 +272,7 @@ const actions = {
     }
 
     return {
-      type: `ACTIVITY_UPDATE`,
+      type: ACTIVITY_UPDATE,
       payload: {
         uuid: activity.uuid,
         id,

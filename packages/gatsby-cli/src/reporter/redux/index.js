@@ -1,6 +1,8 @@
 const Redux = require(`redux`)
 const reducer = require(`./reducer`)
 
+const { HIDDEN, SET_LOGS } = require(`../constants`)
+
 let store = Redux.createStore(
   Redux.combineReducers({
     logs: reducer,
@@ -33,10 +35,8 @@ const iface = {
 
     store.dispatch(action)
 
-    if (
-      action.type.startsWith(`ACTIVITY_`) &&
-      action.payload.type === `hidden`
-    ) {
+    // TODO: Move to constants
+    if (action.type.startsWith(`ACTIVITY_`) && action.payload.type === HIDDEN) {
       // consumers (ipc, yurnalist, json logger) shouldn't have to
       // deal with actions needed just for internal tracking of status
       return
@@ -51,7 +51,7 @@ const iface = {
   },
   setStore: s => {
     s.dispatch({
-      type: `SET_LOGS`,
+      type: SET_LOGS,
       payload: store.getState().logs,
     })
     store = s

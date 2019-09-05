@@ -2,6 +2,16 @@ import React from "react"
 import { Box, Color } from "ink"
 import stripAnsi from "strip-ansi"
 
+import {
+  ACTIVITY_SUCCESS,
+  SUCCESS,
+  WARNING,
+  DEBUG,
+  INFO,
+  ACTIVITY_FAILED,
+  ACTIVITY_INTERRUPTED,
+} from "../../../constants"
+
 const ColorSwitcher = ({ hideColors, children, ...props }) => {
   if (hideColors) {
     return stripAnsi(children)
@@ -16,18 +26,18 @@ const createLabel = (text, color) => (...props) => (
 
 const getLabel = level => {
   switch (level) {
-    case `ACTIVITY_SUCCESS`:
-    case `SUCCESS`:
+    case ACTIVITY_SUCCESS:
+    case SUCCESS:
       return createLabel(`success`, `green`)
-    case `WARNING`:
+    case WARNING:
       return createLabel(`warn`, `yellow`)
-    case `DEBUG`:
+    case DEBUG:
       return createLabel(`verbose`, `gray`)
-    case `INFO`:
+    case INFO:
       return createLabel(`info`, `blue`)
-    case `ACTIVITY_FAILED`:
+    case ACTIVITY_FAILED:
       return createLabel(`failed`, `red`)
-    case `ACTIVITY_INTERRUPTED`:
+    case ACTIVITY_INTERRUPTED:
       return createLabel(`not finished`, `gray`)
 
     default:

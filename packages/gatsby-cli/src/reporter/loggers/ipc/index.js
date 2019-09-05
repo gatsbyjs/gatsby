@@ -2,11 +2,11 @@ import { onLogAaction } from "../../redux/index"
 import stripAnsi from "strip-ansi"
 import _ from "lodash"
 
-// const reporterActions = require(`../../redux/actions`)
+const { VERSION, LOG_ACTION } = require(`../../constants`)
 const { getLocalGatsbyVersion } = require(`../../../util/version`)
 
 process.send({
-  type: `VERSION`,
+  type: VERSION,
   gatsby: getLocalGatsbyVersion(),
 })
 
@@ -23,7 +23,7 @@ onLogAaction(action => {
   }
 
   process.send({
-    type: `LOG_ACTION`,
+    type: LOG_ACTION,
     action: sanitizedAction,
   })
 })
