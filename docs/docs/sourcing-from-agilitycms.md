@@ -64,7 +64,7 @@ Check out the component called "Jumbotron".  This is an example of how to displa
 ![Agility CMS - Example Module - Jumbotron](./images/agilitycms-jumbotron.png)
 
 
-And here is the code used to render it.  Notice that the `title` and `subTitle` fields are available as properties the `item.fields` object.
+And here is the code used to render it.  Notice that the `title` and `subTitle` fields are available as properties of the `item.fields` object.
 
 ```javascript:title=/src/modules/Jumbotron.js
 import React, { Component } from 'react';
