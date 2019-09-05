@@ -211,13 +211,27 @@ module.exports = (config = {}, rootDir = null) => {
     )
   })
   const program = store.getState().program
+
+  // default options for gatsby-plugin-page-creator
+  let pageCreatorOptions = {
+    path: slash(path.join(program.directory, `src/pages`)),
+    pathCheck: false,
+  }
+
+  if (config.plugins) {
+    const pageCreatorPlugin = config.plugins.find(
+      plugin => plugin.resolve === `gatsby-plugin-page-creator`
+    )
+    if (pageCreatorPlugin) {
+      // override the options if there are any user specified options
+      pageCreatorOptions = pageCreatorPlugin.options
+    }
+  }
+
   plugins.push(
     processPlugin({
       resolve: require.resolve(`gatsby-plugin-page-creator`),
-      options: {
-        path: slash(path.join(program.directory, `src/pages`)),
-        pathCheck: false,
-      },
+      options: pageCreatorOptions,
     })
   )
 
