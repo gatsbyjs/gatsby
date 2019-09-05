@@ -809,7 +809,7 @@ module.exports = {
 
 > > **Note:** Refer to the [`gatsby-source-wordpress` plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
 
-3. Create a static page for your Wordpress posts by pasting the following sample code in `gatsby-node.js` file:
+3. Create dynamic pages for your Wordpress posts by pasting the following sample code in `gatsby-node.js`:
 
 ```JS:title=gatsby-node.js
 const path = require(`path`)
