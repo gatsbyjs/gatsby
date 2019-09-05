@@ -243,6 +243,8 @@
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
               link: /docs/themes/using-multiple-gatsby-themes/
+            - title: Shadowing
+              link: /docs/themes/shadowing/
             - title: Building Themes
               link: /docs/themes/building-themes/
             - title: Converting a Starter
