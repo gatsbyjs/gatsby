@@ -54,7 +54,7 @@ You can find your API keys on the Getting Started page in the Agility CMS Conten
 
 If you use the `preview` key, you won't have to publish to see the changes you've made show up. If you use the `fetch` key, make sure you've published any content you wish to see changed.
 
-## How Does It Work
+## How it works
 
 The Gatsby Source Plugin downloads all the Pages on the Agility CMS Sitemap, as well as any Shared Content that's referenced on the `sharedContent` property on of the `gatsby-config.js` file.
 
