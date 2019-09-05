@@ -199,7 +199,8 @@ module.exports = (config = {}, rootDir = null) => {
   // match the plugin definition order before that. This works fine for themes
   // because themes have already been added in the proper order to the plugins
   // array
-  plugins.forEach(plugin => {
+  // also, skip the default "plugin"
+  plugins.slice(0, -1).forEach(plugin => {
     plugins.push(
       processPlugin({
         resolve: require.resolve(`gatsby-plugin-page-creator`),
