@@ -594,18 +594,6 @@ module.exports = async (program: any) => {
     )
     const isSuccessful = !messages.errors.length
 
-    // if (messages.errors.length > 0) {
-    //   const handleWebpackError = require(`../utils/webpack-error-parser`)
-    //   const errors = handleWebpackError(`develop`, stats.compilation.errors)
-
-    //   errors.forEach(error => {
-    //     report.error({
-    //       ...error,
-    //       group: `webpack-errors`,
-    //     })
-    //   })
-    // }
-
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
@@ -629,13 +617,6 @@ module.exports = async (program: any) => {
         const handleWebpackError = require(`../utils/webpack-error-parser`)
         const errors = handleWebpackError(`develop`, stats.compilation.errors)
         webpackActivity.panicOnBuild(errors)
-
-        // errors.forEach(error => {
-        //   report.error({
-        //     ...error,
-        //     group: `webpack-errors`,
-        //   })
-        // })
       }
       webpackActivity = null
     }
