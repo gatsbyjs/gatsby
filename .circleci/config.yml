@@ -231,7 +231,7 @@ jobs:
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "admin@gatsbyjs.com"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
 
   build_www:
@@ -319,7 +319,10 @@ workflows:
           requires:
             - lint
             - unit_tests_node8
-      - unit_tests_www
+      - unit_tests_www:
+          requires:
+            - lint
+            - unit_tests_node8
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:

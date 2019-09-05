@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.11...gatsby-graphiql-explorer@0.2.12) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.10...gatsby-graphiql-explorer@0.2.11) (2019-09-04)
+
+### Bug Fixes
+
+- **gatsby-graphiql-explorer:** Add missing dep ([#17366](https://github.com/gatsbyjs/gatsby/issues/17366)) ([9b68f7e](https://github.com/gatsbyjs/gatsby/commit/9b68f7e))
+
+## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.9...gatsby-graphiql-explorer@0.2.10) (2019-09-02)
+
+### Features
+
+- **gatsby-graphiql-explorer:** Implement CodeExporter ([#17120](https://github.com/gatsbyjs/gatsby/issues/17120)) ([e723d76](https://github.com/gatsbyjs/gatsby/commit/e723d76))
+
+## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.8...gatsby-graphiql-explorer@0.2.9) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.2.7...gatsby-graphiql-explorer@0.2.8) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-graphiql-explorer

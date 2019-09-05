@@ -1,61 +1,124 @@
 const chokidar = require(`chokidar`)
 const fs = require(`fs`)
 const path = require(`path`)
-const { Machine } = require(`xstate`)
+const { Machine, interpret } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
 
 /**
  * Create a state machine to manage Chokidar's not-ready/ready states.
  */
-const createFSMachine = () =>
-  Machine({
-    key: `emitFSEvents`,
-    parallel: true,
-    strict: true,
-    states: {
-      CHOKIDAR: {
-        initial: `CHOKIDAR_NOT_READY`,
-        states: {
-          CHOKIDAR_NOT_READY: {
-            on: {
-              CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
-              BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
+const createFSMachine = (
+  { actions: { createNode, deleteNode }, getNode, createNodeId, reporter },
+  pluginOptions
+) => {
+  // For every path that is reported before the 'ready' event, we throw them
+  // into a queue and then flush the queue when 'ready' event arrives.
+  // After 'ready', we handle the 'add' event without putting it into a queue.
+  let pathQueue = []
+  const flushPathQueue = () => {
+    let queue = pathQueue.slice()
+    pathQueue = null
+    return Promise.all(queue.map(createAndProcessNode))
+  }
+
+  const createAndProcessNode = path => {
+    const fileNodePromise = createFileNode(
+      path,
+      createNodeId,
+      pluginOptions
+    ).then(fileNode => {
+      createNode(fileNode)
+      return null
+    })
+    return fileNodePromise
+  }
+
+  const fsMachine = Machine(
+    {
+      id: `fs`,
+      type: `parallel`,
+      states: {
+        BOOTSTRAP: {
+          initial: `BOOTSTRAPPING`,
+          states: {
+            BOOTSTRAPPING: {
+              on: {
+                BOOTSTRAP_FINISHED: `BOOTSTRAPPED`,
+              },
+            },
+            BOOTSTRAPPED: {
+              type: `final`,
             },
           },
-          CHOKIDAR_WATCHING: {
-            on: {
-              BOOTSTRAP_FINISHED: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
-              CHOKIDAR_READY: `CHOKIDAR_WATCHING`,
+        },
+        CHOKIDAR: {
+          initial: `NOT_READY`,
+          states: {
+            NOT_READY: {
+              on: {
+                CHOKIDAR_READY: `READY`,
+                CHOKIDAR_ADD: { actions: `queueNodeProcessing` },
+              },
+              exit: `flushPathQueue`,
+            },
+            READY: {
+              on: {
+                CHOKIDAR_ADD: { actions: `createAndProcessNode` },
+              },
             },
           },
-          CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED: {
-            on: {
-              CHOKIDAR_READY: `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`,
-            },
+          // TODO: those two were not restricted to READY state, but maybe they should? or even maybe it should queue in NOT_READY?
+          on: {
+            CHOKIDAR_CHANGE: { actions: `createAndProcessNode` },
+            CHOKIDAR_UNLINK: { actions: `deleteNode` },
           },
         },
       },
     },
-  })
+    {
+      actions: {
+        createAndProcessNode(_, { pathType, path }, { state }) {
+          if (state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+            reporter.info(`added ${pathType} at ${path}`)
+          }
+          createAndProcessNode(path).catch(err => reporter.error(err))
+        },
+        deleteNode(_, { pathType, path }, { state }) {
+          if (state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+            reporter.info(`${pathType} deleted at ${path}`)
+          }
+          const node = getNode(createNodeId(path))
+          // It's possible the node was never created as sometimes tools will
+          // write and then immediately delete temporary files to the file system.
+          if (node) {
+            deleteNode({ node })
+          }
+        },
+        flushPathQueue(_, { resolve, reject }) {
+          flushPathQueue().then(resolve, reject)
+        },
+        queueNodeProcessing(_, { path }) {
+          pathQueue.push(path)
+        },
+      },
+    }
+  )
+  return interpret(fsMachine).start()
+}
 
-exports.sourceNodes = (
-  { actions, getNode, createNodeId, reporter, emitter },
-  pluginOptions
-) => {
-  const { createNode, createTypes, deleteNode } = actions
-
+exports.sourceNodes = (api, pluginOptions) => {
   const typeDefs = `
     type File implements Node @infer {
       birthtime: Date @deprecated(reason: "Use \`birthTime\` instead")
       birthtimeMs: Float @deprecated(reason: "Use \`birthTime\` instead")
     }
   `
-  createTypes(typeDefs)
+  api.actions.createTypes(typeDefs)
 
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
-    reporter.panic(`
+    api.reporter.panic(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
 
 ${pluginOptions.path}
@@ -72,16 +135,12 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     pluginOptions.path = path.resolve(process.cwd(), pluginOptions.path)
   }
 
-  const fsMachine = createFSMachine()
-  let currentState = fsMachine.initialState
+  const fsMachine = createFSMachine(api, pluginOptions)
 
   // Once bootstrap is finished, we only let one File node update go through
   // the system at a time.
-  emitter.on(`BOOTSTRAP_FINISHED`, () => {
-    currentState = fsMachine.transition(
-      currentState.value,
-      `BOOTSTRAP_FINISHED`
-    )
+  api.emitter.on(`BOOTSTRAP_FINISHED`, () => {
+    fsMachine.send(`BOOTSTRAP_FINISHED`)
   })
 
   const watcher = chokidar.watch(pluginOptions.path, {
@@ -99,93 +158,29 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     ],
   })
 
-  const createAndProcessNode = path => {
-    const fileNodePromise = createFileNode(
-      path,
-      createNodeId,
-      pluginOptions
-    ).then(fileNode => {
-      createNode(fileNode)
-      return null
-    })
-    return fileNodePromise
-  }
-
-  // For every path that is reported before the 'ready' event, we throw them
-  // into a queue and then flush the queue when 'ready' event arrives.
-  // After 'ready', we handle the 'add' event without putting it into a queue.
-  let pathQueue = []
-  const flushPathQueue = () => {
-    let queue = pathQueue.slice()
-    pathQueue = []
-    return Promise.all(queue.map(createAndProcessNode))
-  }
-
   watcher.on(`add`, path => {
-    if (currentState.value.CHOKIDAR !== `CHOKIDAR_NOT_READY`) {
-      if (
-        currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
-      ) {
-        reporter.info(`added file at ${path}`)
-      }
-      createAndProcessNode(path).catch(err => reporter.error(err))
-    } else {
-      pathQueue.push(path)
-    }
+    fsMachine.send({ type: `CHOKIDAR_ADD`, pathType: `file`, path })
   })
 
   watcher.on(`change`, path => {
-    if (
-      currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
-    ) {
-      reporter.info(`changed file at ${path}`)
-    }
-    createAndProcessNode(path).catch(err => reporter.error(err))
+    fsMachine.send({ type: `CHOKIDAR_CHANGE`, pathType: `file`, path })
   })
 
   watcher.on(`unlink`, path => {
-    if (
-      currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
-    ) {
-      reporter.info(`file deleted at ${path}`)
-    }
-    const node = getNode(createNodeId(path))
-    // It's possible the file node was never created as sometimes tools will
-    // write and then immediately delete temporary files to the file system.
-    if (node) {
-      deleteNode({ node })
-    }
+    fsMachine.send({ type: `CHOKIDAR_UNLINK`, pathType: `file`, path })
   })
 
   watcher.on(`addDir`, path => {
-    if (currentState.value.CHOKIDAR !== `CHOKIDAR_NOT_READY`) {
-      if (
-        currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
-      ) {
-        reporter.info(`added directory at ${path}`)
-      }
-      createAndProcessNode(path).catch(err => reporter.error(err))
-    } else {
-      pathQueue.push(path)
-    }
+    fsMachine.send({ type: `CHOKIDAR_ADD`, pathType: `directory`, path })
   })
 
   watcher.on(`unlinkDir`, path => {
-    if (
-      currentState.value.CHOKIDAR === `CHOKIDAR_WATCHING_BOOTSTRAP_FINISHED`
-    ) {
-      reporter.info(`directory deleted at ${path}`)
-    }
-    const node = getNode(createNodeId(path))
-    if (node) {
-      deleteNode({ node })
-    }
+    fsMachine.send({ type: `CHOKIDAR_UNLINK`, pathType: `directory`, path })
   })
 
   return new Promise((resolve, reject) => {
     watcher.on(`ready`, () => {
-      currentState = fsMachine.transition(currentState.value, `CHOKIDAR_READY`)
-      flushPathQueue().then(resolve, reject)
+      fsMachine.send({ type: `CHOKIDAR_READY`, resolve, reject })
     })
   })
 }
