@@ -21,7 +21,7 @@ Once your account is created, you'll need to grab your GUID and API Keys.
 
 ### Get the Code
 
-Make sure you have Gatsby CLI tools installed (we are using npm here...)
+Make sure you have the Gatsby CLI installed:
 ```shell
 npm install -g gatsby-cli
 ```
