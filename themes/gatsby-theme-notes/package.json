@@ -44,6 +44,6 @@
     "gatsby-source-filesystem": "^2.1.21",
     "is-present": "^1.0.0",
     "react-feather": "^1.1.6",
-    "theme-ui": "^0.2.40"
+    "theme-ui": "^0.2.41"
   }
 }
