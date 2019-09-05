@@ -59,7 +59,7 @@ The Gatsby Source Plugin downloads all the Pages on the Agility CMS Sitemap, as 
 
 All of those pages and content are then made available in GraphQL to the React Components you will write to render those pages.
 
-Check out the component called "Jumbotron".  This is a simple example of how to display a styled heading and sub-heading with content that comes from Agility CMS.  Here is the Module that provides this content being edited in the Agility CMS Content Manager:
+Check out the component called "Jumbotron".  This is an example of how to display a styled heading and sub-heading with content that comes from Agility CMS.  Here is the Module that provides this content being edited in the Agility CMS Content Manager:
 
 ![Agility CMS - Example Module - Jumbotron](./images/agilitycms-jumbotron.png)
 
