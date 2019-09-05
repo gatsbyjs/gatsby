@@ -791,7 +791,6 @@ npm install gatsby-source-wordpress
 module.exports = {
   ...
   plugins: [
-    ...,
     {
       resolve: `gatsby-source-wordpress`,
       options: {
