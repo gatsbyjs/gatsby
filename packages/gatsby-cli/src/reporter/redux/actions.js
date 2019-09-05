@@ -113,6 +113,7 @@ const actions = {
     activity_total,
     activity_type,
     activity_uuid,
+    stack,
   }) => {
     return {
       type: LOG,
@@ -133,6 +134,7 @@ const actions = {
         activity_type,
         activity_uuid,
         timestamp: new Date().toJSON(),
+        stack,
       },
     }
   },
