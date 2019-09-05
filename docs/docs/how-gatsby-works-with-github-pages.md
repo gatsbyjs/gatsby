@@ -82,7 +82,6 @@ If you use a [custom domain](https://help.github.com/articles/using-a-custom-dom
 
 When we want to deploy our website through `gh-pages` through a CI server, in this example, we'll use Travis CI (any build system will suffice). We want to use [gh-pages npm module](https://www.npmjs.com/package/gh-pages) to do our deploy. We need to configure it with proper credentials so that `gh-pages` is able to push the new branch.
 
-
 #### Step 1 - obtain a GitHub token
 
 To push changes from the CI system to GitHub, you'll need to authenticate. We recommend using GitHub developer tokens.
@@ -91,12 +90,12 @@ In GitHub go to your account settings -> Developer settings -> Personal access t
 
 In Travis's configuration for the repository add a new secret environment variable of the name `GH_TOKEN` with the value of the token obtained from GitHub. Make sure you DO NOT toggle the "display in build logs" setting as the token should remain secret. Or else others would be able to push to your repository.
 
-#### Step 2 - deploy run script 
+#### Step 2 - deploy run script
 
 Update the Gatsby project's `package.json` to also include a `deploy` run script which invokes `gh-pages` with two important command arguments:
 
 1. `-d public` - specifies the directory in which the built files exist and will be pushed as a source to GitHub pages
-2. `-r URL` - the GitHub repository URL, including the use of the secret GitHub token (as a secret environment variable)  to be able to push changes to the `gh-pages` branch, in the form of `https://$GH_TOKEN@github.com/<github username>/<github repository name>.git` 
+2. `-r URL` - the GitHub repository URL, including the use of the secret GitHub token (as a secret environment variable) to be able to push changes to the `gh-pages` branch, in the form of `https://$GH_TOKEN@github.com/<github username>/<github repository name>.git`
 
 Here's an example:
 
@@ -106,7 +105,7 @@ Here's an example:
   }
 ```
 
-#### Step 3 - Update .travis.yml for 
+#### Step 3 - Update .travis.yml for
 
 The following `.travis.yml` configuration provides a reference:
 
@@ -125,5 +124,6 @@ deploy:
 ```
 
 To break-down the important bits here for deploying the Gatsby website from Travis to GitHub pages:
+
 1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
-2. `deploy` will only fire when the build runs on the master branch, in which case it will fire off the  deploy script. Our Gatsby site is located in the docs/ directory. We'll first need to install all the website dependencies and run the deploy script as was set in the previous step.
+2. `deploy` will only fire when the build runs on the master branch, in which case it will fire off the deploy script. Our Gatsby site is located in the docs/ directory. We'll first need to install all the website dependencies and run the deploy script as was set in the previous step.
