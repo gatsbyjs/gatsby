@@ -127,7 +127,7 @@ exports.replaceComponentRenderer = true
 /**
  * Allow a plugin to wrap the page element.
  *
- * This is useful for setting wrapper component around pages that won't get
+ * This is useful for setting wrapper components around pages that won't get
  * unmounted on page changes. For setting Provider components, use [wrapRootElement](#wrapRootElement).
  *
  * _Note:_
