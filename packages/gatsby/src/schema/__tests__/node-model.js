@@ -117,14 +117,6 @@ describe(`NodeModel`, () => {
         nodeModel.getNodeById({ id: `person4` }, { path: `/` })
         expect(createPageDependency).not.toHaveBeenCalled()
       })
-
-      it(`handles already resolved id`, () => {
-        const result = nodeModel.getNodeById({
-          id: { id: `person1`, name: `Person1` },
-        })
-        expect(result.id).toBe(`person1`)
-        expect(result.name).toBe(`Person1`)
-      })
     })
 
     describe(`getNodesByIds`, () => {
@@ -202,23 +194,6 @@ describe(`NodeModel`, () => {
       it(`does not create page dependencies when no matching nodes found`, () => {
         nodeModel.getNodesByIds({ ids: [`person4`, `post4`] }, { path: `/` })
         expect(createPageDependency).not.toHaveBeenCalled()
-      })
-
-      it(`handles already resolved ids`, () => {
-        const result = nodeModel.getNodesByIds({
-          ids: [
-            { id: `person1`, name: `Person1` },
-            `person2`,
-            { id: `post1`, frontmatter: { published: false } },
-          ],
-        })
-        expect(result.length).toBe(3)
-        expect(result[0].id).toBe(`person1`)
-        expect(result[0].name).toBe(`Person1`)
-        expect(result[1].id).toBe(`person2`)
-        expect(result[1].name).toBe(`Person2`)
-        expect(result[2].id).toBe(`post1`)
-        expect(result[2].frontmatter.published).toBe(false)
       })
     })
 
