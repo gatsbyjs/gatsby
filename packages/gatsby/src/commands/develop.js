@@ -68,7 +68,7 @@ const waitJobsFinished = () =>
   })
 
 async function startServer(program) {
-  const indexHTMLActivity = report.activityTimer(`building index.html`, {})
+  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
