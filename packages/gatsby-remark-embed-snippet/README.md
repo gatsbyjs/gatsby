@@ -151,7 +151,7 @@ Use `directory` plugin option to tell `gatsby-remark-embed-snippet` plugin that 
 
 Add the following syntax to the Markdown file `my-first-post.md` to embed `javascript-code.js` and `html-code.html` as code snippets:
 
-`my-first-post.md`:
+**`my-first-post.md`:**
 
 ```md
 # Sample JavaScript 2
