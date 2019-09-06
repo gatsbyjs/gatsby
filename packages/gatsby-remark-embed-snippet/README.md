@@ -225,8 +225,7 @@ html {
 ```html
 <html>
   <body>
-    <h1>me</h1>
-    <!-- highlight-line -->
+    <h1>highlight me<!-- highlight-line --></h1>
     <p>
       <!-- highlight-next-line -->
       And me
