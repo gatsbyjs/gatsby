@@ -21,6 +21,10 @@ const { emitter } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
+const {
+  validatePluginOptions,
+  formatOptionsError,
+} = require(`./validate-plugin-options`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -228,19 +232,12 @@ const runAPI = (plugin, api, args) => {
            * it validates plugin options and (optionally) mutates them
            */
           if (api === `validatePluginOptions`) {
-            if (res) {
-              let resChain = Promise.resolve(res)
-              if (res.validate) {
-                resChain = res.validate(plugin.pluginOptions, {
-                  abortEarly: false,
-                  allowUnknown: true,
-                })
-              }
-              return resChain.then(options => {
+            return validatePluginOptions(res, plugin.pluginOptions).then(
+              options => {
                 plugin.pluginOptions = options
                 return options
-              })
-            }
+              }
+            )
           }
           return res
         })
@@ -370,16 +367,7 @@ module.exports = async (api, args = {}, pluginSource) =>
         })
 
         if (api === `validatePluginOptions`) {
-          reporter.panic({
-            id: `11329`,
-            context: Object.assign({}, plugin, {
-              errors: [].concat(
-                err.details
-                  ? err.details.map(detail => detail.message)
-                  : err.message || err
-              ),
-            }),
-          })
+          reporter.panic(formatOptionsError(err, plugin))
 
           return null
         }

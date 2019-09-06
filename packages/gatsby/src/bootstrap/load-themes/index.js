@@ -5,6 +5,32 @@ const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
 const preferDefault = require(`../prefer-default`)
 const getConfigFile = require(`../get-config-file`)
+const {
+  validatePluginOptions,
+  formatOptionsError,
+} = require(`../../utils/validate-plugin-options`)
+const reporter = require(`gatsby-cli/lib/reporter`)
+const Joi = require(`@hapi/joi`)
+
+const getPluginOptions = theme => {
+  const options = theme.options || {}
+  try {
+    const { validatePluginOptions: validateAPI } = require(path.join(
+      theme.themeDir,
+      `gatsby-node.js`
+    ))
+    const res = validateAPI({
+      validator: Joi,
+    })
+    return validatePluginOptions(res, options).catch(e => {
+      reporter.panic(formatOptionsError(e, theme))
+
+      return null
+    })
+  } catch (e) {
+    return options
+  }
+}
 
 // get the gatsby-config file for a theme
 const resolveTheme = async themeSpec => {
@@ -17,11 +43,19 @@ const resolveTheme = async themeSpec => {
     // in this case - let's return partial entry
     return { themeName, themeSpec }
   }
+
   const theme = await preferDefault(getConfigFile(themeDir, `gatsby-config`))
   // if theme is a function, call it with the themeConfig
   let themeConfig = theme
   if (_.isFunction(theme)) {
-    themeConfig = theme(themeSpec.options || {})
+    // options may need to be mutated via validatePluginOptions API
+    // we do a hacky implementation here to mutate and provide the options
+    const options = await getPluginOptions({
+      themeDir,
+      name: themeName,
+      options: themeSpec.options,
+    })
+    themeConfig = theme(options)
   }
   return { themeName, themeConfig, themeSpec, themeDir }
 }
