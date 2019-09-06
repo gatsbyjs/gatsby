@@ -40,7 +40,7 @@ module.exports = {
     ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
   },
-  testPathIgnorePatterns: [`node_modules`, `.cache`, `public`],
+  testPathIgnorePatterns: [`node_modules`, `.cache`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
   globals: {
     __PATH_PREFIX__: ``,
@@ -165,13 +165,13 @@ start with a simple snapshot test to check that everything is working.
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
-preference. In this guide, we will use the `__tests__` folder convention. Let's create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
+preference. In this guide, we will use the `__tests__` folder convention. Let's create a test for our header component. Create a `header.js` file in `__tests__/`:
 
-```js:title=src/components/__tests__/header.js
+```js:title=__tests__/header.js
 import React from "react"
 import renderer from "react-test-renderer"
 
-import Header from "../header"
+import Header from "../src/components/header"
 
 describe("Header", () => {
   it("renders correctly", () => {
@@ -239,7 +239,7 @@ module.exports = {
       "<rootDir>/__mocks__/file-mock.js",
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  testPathIgnorePatterns: ["node_modules", ".cache", "public"],
+  testPathIgnorePatterns: ["node_modules", ".cache"],
   transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
   globals: {
     __PATH_PREFIX__: "",
