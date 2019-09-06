@@ -7,9 +7,8 @@ class Post extends Component {
     const post = this.props.data.wordpressPost
 
     return (
-      <Layout>
-        <h1>{post.title }<h1/>
-        <div>{post.content}<div/>
+        <h1>{post.title }</h1>
+        <div>{post.content}</div>
     )
   }
 }
