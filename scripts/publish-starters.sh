@@ -14,6 +14,7 @@ for folder in $GLOB; do
   cd $BASE
 
   NAME=$(cat $folder/package.json | jq -r '.name')
+  IS_WORKSPACE=$(cat $folder/package.json | jq -r '.workspaces')
   CLONE_DIR="__${NAME}__clone__"
   
   # sync to read-only clones
@@ -25,12 +26,16 @@ for folder in $GLOB; do
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. .
 
-  rm -rf yarn.lock
-  yarn import # generate a new yarn.lock file based on package-lock.json
+  if [ "$IS_WORKSPACE" = null ]; then
+    rm -rf yarn.lock
+    yarn import # generate a new yarn.lock file based on package-lock.json
+  fi
 
-  git add .
-  git commit --message "$COMMIT_MESSAGE"
-  git push origin master
+  if [ -n "$(git status --porcelain)" ]; then
+    git add .
+    git commit -m "$COMMIT_MESSAGE"
+    git push origin master
+  fi
 
   cd $BASE
 done
