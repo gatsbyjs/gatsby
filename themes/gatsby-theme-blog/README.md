@@ -29,12 +29,12 @@ npm install --save gatsby-theme-blog
 
 ### Theme options
 
-| Key           | Default value     | Description                                                                                               |
-| ------------- | ----------------- | --------------------------------------------------------------------------------------------------------- |
-| `basePath`    | `/`               | Root url for all blog posts                                                                               |
-| `contentPath` | `/content/posts`  | Location of blog posts                                                                                    |
-| `assetPath`   | `/content/assets` | Location of assets                                                                                        |
-| `mdx`         | `true`            | Configure `gatsby-plugin-mdx` (if your website already is using the plugin pass `false` to turn this off) |
+| Key           | Default value    | Description                                                                                               |
+| ------------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
+| `basePath`    | `/`              | Root url for all blog posts                                                                               |
+| `contentPath` | `content/posts`  | Location of blog posts                                                                                    |
+| `assetPath`   | `content/assets` | Location of assets                                                                                        |
+| `mdx`         | `true`           | Configure `gatsby-plugin-mdx` (if your website already is using the plugin pass `false` to turn this off) |
 
 #### Example usage
 

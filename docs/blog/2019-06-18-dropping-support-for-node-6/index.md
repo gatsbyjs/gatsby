@@ -4,8 +4,7 @@ date: 2019-06-18
 author: Dustin Schau
 excerpt: "We're dropping support for Node 6 in minor releases of core Gatsby packages. Learn more about why this decision was made."
 tags:
-  - core
-  - deprecation
+  - releases
 ---
 
 Effective in Gatsby v2.10.0, we are making a potentially breaking change and dropping support for Node 6. We don't take this decision lightly, and realize that there is _potential_ for breaking applications by not following [semantic versioning][semver] _strictly_ and releasing a new major version of Gatsby (v3.0.0).

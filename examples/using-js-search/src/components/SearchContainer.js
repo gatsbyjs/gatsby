@@ -211,7 +211,7 @@ class Search extends Component {
                     </tr>
                   )
                 })}
-                 {/* eslint-enable */}
+                {/* eslint-enable */}
               </tbody>
             </table>
           </div>

@@ -2,11 +2,6 @@
 title: MDX Plugins
 ---
 
-## Table of contents
-
-- [Gatsby remark plugins](#gatsby-remark-plugins)
-- [remark plugins](#remark-plugins)
-
 ## Gatsby remark plugins
 
 `gatsby-plugin-mdx` is compatible with all of the [gatsby-remark
@@ -79,7 +74,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        mdPlugins: [capitalize, emoji],
+        remarkPlugins: [capitalize, emoji],
       },
     },
   ],

@@ -57,8 +57,13 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
-exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
-  const activity = reporter.activityTimer(`Build manifest and related icons`)
+exports.onPostBootstrap = async (
+  { reporter, parentSpan },
+  { localize, ...manifest }
+) => {
+  const activity = reporter.activityTimer(`Build manifest and related icons`, {
+    parentSpan,
+  })
   activity.start()
 
   let cache = new Map()

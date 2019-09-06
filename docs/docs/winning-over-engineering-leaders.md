@@ -53,7 +53,7 @@ You may find that your engineering leaders and managers have some concerns about
 
 ### Our site uses a lot of dynamic content and components. Didn't you say Gatsby creates static sites?
 
-> Y, but there's more to it. Gatsby statically generates HTML content using React DOM and server-side APIs – it's an important part of how Gatsby delivers exceptional speed and better security. However, this static HTML content can then be enhanced with client-side JavaScript via React hydration. You can learn more about this in Dustin Schau's blog post [Beyond Static: Building Dynamic apps with Gatsby](/blog/2018-10-15-beyond-static-intro/).
+> Yes, but there's more to it. Gatsby statically generates HTML content using React DOM and server-side APIs – it's an important part of how Gatsby delivers exceptional speed and better security. However, this static HTML content can then be enhanced with client-side JavaScript via React hydration. You can learn more about this in Dustin Schau's blog post [Beyond Static: Building Dynamic apps with Gatsby](/blog/2018-10-15-beyond-static-intro/).
 
 ### Our content team and other less-technical members of my organization need to be able to make site updates. Are they going to be able to work with a Gatsby site?
 

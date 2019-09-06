@@ -132,6 +132,18 @@ export const PRODUCTS_QUERY = `
                 }
               }
             }
+            metafields(first: 250) {
+              edges {
+                node {
+                  description
+                  id
+                  key
+                  namespace
+                  value
+                  valueType
+                }
+              }
+            }
             onlineStoreUrl
             options {
               id
@@ -204,22 +216,6 @@ export const SHOP_POLICIES_QUERY = `
         id
         title
         url
-      }
-    }
-  }
-`
-
-export const PRODUCT_TYPES_QUERY = `
-  query GetProductTypes($first: Int!) {
-    shop {
-      productTypes(first: $first) {
-        pageInfo {
-          hasNextPage
-        }
-        edges {
-          cursor
-          node
-        }
       }
     }
   }

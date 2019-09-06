@@ -9,13 +9,15 @@ import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
 import StarterScreenshot from "../views/starter/screenshot"
 import StarterSource from "../views/starter/source"
+import StarterInstallation from "../views/starter/installation"
 import StarterDetails from "../views/starter/details"
 import FooterLinks from "../components/shared/footer-links"
 
-const getFallbackScreenshot = fallback => {
-  return {
-    childScreenshot: fallback,
+const getScreenshot = (data, fallback) => {
+  if (!data.screenshotFile || !data.screenshotFile.childImageSharp) {
+    return fallback
   }
+  return data.screenshotFile
 }
 
 class StarterTemplate extends React.Component {
@@ -28,10 +30,10 @@ class StarterTemplate extends React.Component {
       url: demoUrl,
       repo: repoUrl,
       fields: { starterShowcase },
-      childScreenshot = getFallbackScreenshot(fallback),
+      childScreenshot,
     } = startersYaml
 
-    const screenshot = childScreenshot.screenshotFile
+    const screenshot = getScreenshot(childScreenshot, fallback)
 
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
@@ -114,6 +116,7 @@ class StarterTemplate extends React.Component {
               <StarterScreenshot imageSharp={screenshot} repoName={repoName} />
             </div>
             <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
+            <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
             <StarterDetails
               startersYaml={startersYaml}
               allDeps={allDeps}

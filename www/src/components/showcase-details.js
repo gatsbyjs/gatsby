@@ -20,8 +20,8 @@ import ShareMenu from "../components/share-menu"
 
 import MdArrowUpward from "react-icons/lib/md/arrow-upward"
 import MdLink from "react-icons/lib/md/link"
-import FeaturedIcon from "../assets/featured-detailpage-featuredicon.svg"
-import FeatherIcon from "../assets/showcase-feather.svg"
+import FeaturedIcon from "../assets/icons/featured-sites-icons.svg"
+import FeatherIcon from "../assets/icons/showcase-feather.svg"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const gutter = space[6]
@@ -254,17 +254,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
                 <meta
                   property="og:image"
-                  content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
-                  }`}
+                  content={`https://www.gatsbyjs.org${data.sitesYaml.childScreenshot.screenshotFile.childImageSharp.resize.src}`}
                 />
                 <meta
                   name="twitter:image"
-                  content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
-                  }`}
+                  content={`https://www.gatsbyjs.org${data.sitesYaml.childScreenshot.screenshotFile.childImageSharp.resize.src}`}
                 />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta
@@ -370,6 +364,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       src={FeaturedIcon}
                       alt="icon"
                       css={{
+                        width: 20,
+                        height: 20,
                         marginBottom: 0,
                         marginRight: 10,
                       }}
@@ -474,10 +470,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       }}
                       url={data.sitesYaml.main_url}
                       title={data.sitesYaml.title}
-                      image={`https://www.gatsbyjs.org${
-                        data.sitesYaml.childScreenshot.screenshotFile
-                          .childImageSharp.resize.src
-                      }`}
+                      image={`https://www.gatsbyjs.org${data.sitesYaml.childScreenshot.screenshotFile.childImageSharp.resize.src}`}
                     />
                   </div>
                 </div>

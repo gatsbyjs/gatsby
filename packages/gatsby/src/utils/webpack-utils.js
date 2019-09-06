@@ -305,9 +305,7 @@ module.exports = async ({
    * and packages that depend on `gatsby`
    */
   {
-    let js = (
-      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
-    ) => {
+    let js = ({ modulesThatUseGatsby = [], ...options } = {}) => {
       return {
         test: /\.(js|mjs|jsx)$/,
         include: modulePath => {
@@ -326,7 +324,7 @@ module.exports = async ({
         use: [
           loaders.js({
             ...options,
-            configFile: false,
+            configFile: true,
             compact: true,
           }),
         ],
@@ -342,9 +340,7 @@ module.exports = async ({
    * Excludes modules that use Gatsby since the `rules.js` already transpiles those
    */
   {
-    let dependencies = (
-      { modulesThatUseGatsby } = { modulesThatUseGatsby: [] }
-    ) => {
+    let dependencies = ({ modulesThatUseGatsby = [] } = {}) => {
       const jsOptions = {
         babelrc: false,
         configFile: false,
@@ -396,7 +392,7 @@ module.exports = async ({
     let eslint = schema => {
       return {
         enforce: `pre`,
-        test: /\.(jsx?|tsx?)$/,
+        test: /\.jsx?$/,
         exclude: vendorRegex,
         use: [loaders.eslint(schema)],
       }

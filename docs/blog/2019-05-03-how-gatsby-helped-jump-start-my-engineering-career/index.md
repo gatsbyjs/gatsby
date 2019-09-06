@@ -4,9 +4,9 @@ date: 2019-05-03
 author: Sam Bhagwat
 excerpt: "Ahmed Alahmady left medical school to pursue a career in coding. Learn how the Gatsby stack is solely responsible for the career Ahmed has now."
 tags:
-  - github
   - react
   - graphql
+  - learning-to-code
 ---
 
 _When I met Ahmed Alahmady in March 2018 at a React Dallas meetup, I was incredibly impressed by his perseverance and dedication to programming. We caught up recently to discuss Ahmed’s progression in Gatsby, life, and career._

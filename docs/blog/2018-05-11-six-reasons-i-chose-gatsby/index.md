@@ -3,7 +3,7 @@ title: Six Reasons I Chose Gatsby
 date: 2018-05-11
 author: Ray Gesualdo
 excerpt: "Spoiler alert: I'm a big fan of Gatsby."
-tags: ["react", "graphql", "plugins"]
+tags: ["react", "graphql", "plugins", "developer-experience"]
 canonicalLink: https://www.raygesualdo.com/posts/six-reasons-i-chose-gatsby/
 publishedAt: raygesualdo.com
 ---

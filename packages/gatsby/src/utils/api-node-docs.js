@@ -209,6 +209,7 @@ exports.setFieldsOnGraphQLNodeType = true
  * generated schema, e.g. to customize added third-party types, use the
  * [`createResolvers`](/docs/node-apis/#createResolvers) API.
  *
+ * @gatsbyVersion 2.12.0
  * @param {object} $0
  * @param {object} $0.actions
  * @param {object} $0.actions.createTypes
@@ -278,6 +279,7 @@ exports.createSchemaCustomization = true
  *
  * For fuller examples, see [`using-type-definitions`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions).
  *
+ * @gatsbyVersion 2.2.0
  * @param {object} $0
  * @param {GraphQLSchema} $0.intermediateSchema Current GraphQL schema
  * @param {function} $0.createResolvers Add custom resolvers to GraphQL field configs

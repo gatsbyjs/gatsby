@@ -1,6 +1,7 @@
 ---
 title: Creating nested layout components
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Welcome to part three!
@@ -215,7 +216,7 @@ But try navigating to `/about/`, or `/contact/`. The content on those pages stil
 
 The content of all three of your pages is centered thanks to this single shared layout component!
 
-### ✋ Add a site title.
+### ✋ Add a site title
 
 1. Add the following line to your new layout component:
 
@@ -234,7 +235,7 @@ If you go to any of your three pages, you'll see the same title added, e.g. the 
 
 ![with-title](with-title.png)
 
-### ✋ Add navigation links between pages.
+### ✋ Add navigation links between pages
 
 1. Copy the following into your layout component file:
 

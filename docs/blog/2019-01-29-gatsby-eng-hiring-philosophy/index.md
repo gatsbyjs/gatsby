@@ -2,6 +2,7 @@
 title: Gatsby Inc's Product & Engineering Hiring Philosophy
 date: 2019-02-07
 author: Sam Bhagwat
+tags: ["gatsby-inc"]
 ---
 
 > "A strong team is the most important element of a company’s ability to achieve success.

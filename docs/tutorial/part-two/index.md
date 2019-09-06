@@ -1,6 +1,7 @@
 ---
 title: Introduction to Styling in Gatsby
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 <!-- Idea: Create a glossary to refer to. A lot of these terms get jumbled -->

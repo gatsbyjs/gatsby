@@ -63,7 +63,7 @@ class ClientSearch extends Component {
     selectedSanitizer === `Case Sensitive`
       ? (dataToSearch.sanitizer = new JsSearch.CaseSensitiveSanitizer())
       : (dataToSearch.sanitizer = new JsSearch.LowerCaseSanitizer())
-    
+
     termFrequency === true
       ? (dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex(`isbn`))
       : (dataToSearch.searchIndex = new JsSearch.UnorderedSearchIndex())

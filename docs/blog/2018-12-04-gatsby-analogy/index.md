@@ -3,7 +3,7 @@ title: 5 analogies that explain what Gatsby can do for you
 date: 2018-12-04
 author: Amberley Romo
 tags:
-  - gatsby concepts
+  - core-concepts
 ---
 
 Gatsby does an incredible amount of cool stuff for you, automatically. This makes Gatsby an incredibly powerful, versatile tool. However, this broad depth of functionality can make it difficult to explain what Gatsby does in a concise and approachable way.

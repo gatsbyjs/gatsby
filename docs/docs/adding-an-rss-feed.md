@@ -63,7 +63,7 @@ The good news is you can accommodate these scenarios and more in `gatsby-config.
 
 To customize the default feed schema (a.k.a. structure) output by the plugin to work with your website's content, you can start with the following code:
 
-```js:title=gatsby.config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -140,7 +140,7 @@ To see your feed in action, run `gatsby build && gatsby serve` and you can then 
 
 If creating a RSS feed for a podcast you probably will want to include iTunes RSS blocks. They take the format of `itunes:author` which GraphQL does not read. Here's an example of how to implement iTunes RSS blocks using this plugin:
 
-```js:title=gatsby.config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -183,3 +183,7 @@ module.exports = {
 ## Happy blogging!
 
 With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
+
+## More resources
+
+[Jason Lengstorf and Amberley Romo livestream building an RSS feed powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ).

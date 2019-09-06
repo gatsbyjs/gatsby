@@ -2,7 +2,7 @@
 title: "Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity"
 date: 2018-12-26
 author: swyx
-tags: ["apps"]
+tags: ["gatsby-for-apps"]
 excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality and get up and running incredibly quickly with Netlify - here's how.
 ---
 

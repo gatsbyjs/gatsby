@@ -1,11 +1,5 @@
 const moment = require(`moment`)
-const {
-  GraphQLString,
-  GraphQLBoolean,
-  GraphQLScalarType,
-  Kind,
-  defaultFieldResolver,
-} = require(`graphql`)
+const { GraphQLScalarType, Kind } = require(`graphql`)
 const { oneLine } = require(`common-tags`)
 
 const ISO_8601_FORMAT = [
@@ -216,14 +210,13 @@ const formatDate = ({
   return normalizedDate
 }
 
-const getDateResolver = (defaults, prevFieldConfig) => {
-  const resolver = prevFieldConfig.resolve || defaultFieldResolver
-  const { locale, formatString } = defaults
+const getDateResolver = (options = {}, fieldConfig) => {
+  const { locale, formatString, fromNow, difference } = options
   return {
     args: {
-      ...prevFieldConfig.args,
+      ...fieldConfig.args,
       formatString: {
-        type: GraphQLString,
+        type: `String`,
         description: oneLine`
         Format the date using Moment.js' date tokens, e.g.
         \`date(formatString: "YYYY MMMM DD")\`.
@@ -232,27 +225,34 @@ const getDateResolver = (defaults, prevFieldConfig) => {
         defaultValue: formatString,
       },
       fromNow: {
-        type: GraphQLBoolean,
+        type: `Boolean`,
         description: oneLine`
         Returns a string generated with Moment.js' \`fromNow\` function`,
+        defaultValue: fromNow,
       },
       difference: {
-        type: GraphQLString,
+        type: `String`,
         description: oneLine`
         Returns the difference between this date and the current time.
         Defaults to "milliseconds" but you can also pass in as the
         measurement "years", "months", "weeks", "days", "hours", "minutes",
         and "seconds".`,
+        defaultValue: difference,
       },
       locale: {
-        type: GraphQLString,
+        type: `String`,
         description: oneLine`
         Configures the locale Moment.js will use to format the date.`,
         defaultValue: locale,
       },
     },
     async resolve(source, args, context, info) {
-      const date = await resolver(source, args, context, info)
+      const resolver = fieldConfig.resolve || context.defaultFieldResolver
+      const date = await resolver(source, args, context, {
+        ...info,
+        from: options.from || info.from,
+        fromNode: options.from ? options.fromNode : info.fromNode,
+      })
       if (date == null) return null
 
       return Array.isArray(date)

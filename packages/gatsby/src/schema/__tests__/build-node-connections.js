@@ -4,36 +4,53 @@ const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
 const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 
 jest.mock(`../../redux/actions/add-page-dependency`)
 const createPageDependency = require(`../../redux/actions/add-page-dependency`)
 
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const makeNodes = () => [
   {
     id: `p1`,
-    internal: { type: `Parent` },
+    internal: { type: `Parent`, contentDigest: `0` },
     hair: `red`,
     children: [`c1`, `c2`, `r1`],
   },
   {
     id: `r1`,
-    internal: { type: `Relative` },
+    internal: { type: `Relative`, contentDigest: `0` },
     hair: `black`,
     children: [],
     parent: `p1`,
   },
   {
     id: `c1`,
-    internal: { type: `Child` },
+    internal: { type: `Child`, contentDigest: `0` },
     hair: `brown`,
     children: [],
     parent: `p1`,
   },
   {
     id: `c2`,
-    internal: { type: `Child` },
+    internal: { type: `Child`, contentDigest: `0` },
     hair: `blonde`,
     children: [],
     parent: `p1`,
@@ -44,7 +61,7 @@ describe(`build-node-connections`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
 
     const schemaComposer = createSchemaComposer()
@@ -60,6 +77,7 @@ describe(`build-node-connections`, () => {
     let { data, errors } = await graphql(schema, query, undefined, {
       ...context,
       nodeModel: new LocalNodeModel({
+        schemaComposer,
         schema,
         nodeStore,
         createPageDependency,

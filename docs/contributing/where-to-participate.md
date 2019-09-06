@@ -9,7 +9,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - [Submitting new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 - Submitting new documentation; titles in the side navigation on [docs](/docs) which are lighter in color on gatsbyjs.org are stubs and need contributions
 - Tweeting about things you [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby) (make sure to use the hashtag and/or @ mention us!)
-- Submitting documentation updates, enhancements, designs, or bugfixes
+- Submitting documentation updates, enhancements, designs, or bug fixes
 - Submitting spelling or grammar fixes
 - Adding unit or functional tests
 - Triaging [GitHub issues](https://github.com/gatsbyjs/gatsby/issues) -- especially determining whether an issue still persists or is reproducible

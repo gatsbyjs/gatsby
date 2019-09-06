@@ -2,7 +2,7 @@
 title: "Delivering Modern Website Experiences: The Journey to a Content Mesh"
 date: 2018-10-04
 author: "Sam Bhagwat"
-tags: ["headless-cms", "content-mesh"]
+tags: ["headless-cms", "content-mesh", "core-concepts"]
 ---
 
 The CMS was born to make content sites _possible_. Now, it’s being reimagined to make them _incredible_.

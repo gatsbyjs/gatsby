@@ -4,10 +4,9 @@ date: 2019-06-28
 author: Caitlin Cashin
 excerpt: "Learn how Mediacurrent transformed their development process with Gatsby."
 tags:
-  - case study
   - case-studies
   - drupal
-  - agency
+  - agencies
 ---
 
 In our recent webinar, [Gatsby for Agencies and Teams: Better, Faster, Smarter](https://www.gatsbyjs.com/gatsby-for-agencies/), Ben Robertson talked with us about adopting Gatsby at Mediacurrent and how it transformed their development process. Ben is a front-end developer at Mediacurrent where he has established front-end development best practices and led Drupal development projects.
@@ -21,7 +20,11 @@ In our recent webinar, [Gatsby for Agencies and Teams: Better, Faster, Smarter](
 One of the things that excited Ben about working at Mediacurrent was their component-driven approach to building client sites. Rather than creating libraries of page templates, web page designs were broken down into their component parts which were then built completely outside of Drupal in HTML, CSS, and JavaScript. Meanwhile, the client’s style guide would be generated using [KSS-node](https://github.com/kss-node/kss-node) which could then be incorporated into a basic Drupal structure. Once that structure was in place, individual component files were imported wherever they were needed.
 
 <Pullquote>
-“I thought this was an awesome workflow. It gave us a single source of truth for each component. The same template was used by both front-end and back-end developers. We could reuse that same component anywhere it was needed, and it let the front-enders focus more on front-end specific concerns like semantics and richer interactivity and accessibility.”
+  “I thought this was an awesome workflow. It gave us a single source of truth
+  for each component. The same template was used by both front-end and back-end
+  developers. We could reuse that same component anywhere it was needed, and it
+  let the front-enders focus more on front-end specific concerns like semantics
+  and richer interactivity and accessibility.”
 </Pullquote>
 
 Or at least, that’s what the component-driven workflows were supposed to do…
@@ -43,13 +46,20 @@ Gatsby’s use of GraphQL turned integration into a smooth, direct process. The 
 Performance also became a low-effort task, thanks to Gatsby. Because Gatsby sites are static HTML, the Mediacurrent team no longer had to worry about their PHP or server performance. Plus, Gatsby’s built-in pre-loading and pre-fetching capabilities blew the CMS’s performance-enhancement tools out of the water.
 
 <Pullquote>
-“It's incredible. Like incredibly fast and incredibly easy to set up.“
+  “It's incredible. Like incredibly fast and incredibly easy to set up.“
 </Pullquote>
 
 The front-end and back-end teams experienced new levels of productivity. They no longer had to waste time passing integration problems back and forth or troubleshooting esoteric CMS issues. With Gatsby, the front-end team could focus on the front end and the back-end team could focus on the back end, and any new issues that appeared could be pretty clearly identified as belonging to one or the other.
 
 <Pullquote>
-“With the Gatsby site, if something is running slow on the front-end, you know that it's a front-end problem because, for the most part, everything is rendered in real-time. You can't get away with saying, ‘Oh, the user shouldn't have uploaded that large of an image,’ or, ‘Drupal didn't concatenate my JavaScript in the right order.’ But on the flip side, if something is not available in the API, you know for a fact it's a back-end issue. **The separation lets back-enders do what they like and excel at it, and it lets front-enders do what they like and excel at it.**”
+  “With the Gatsby site, if something is running slow on the front-end, you know
+  that it's a front-end problem because, for the most part, everything is
+  rendered in real-time. You can't get away with saying, ‘Oh, the user shouldn't
+  have uploaded that large of an image,’ or, ‘Drupal didn't concatenate my
+  JavaScript in the right order.’ But on the flip side, if something is not
+  available in the API, you know for a fact it's a back-end issue. **The
+  separation lets back-enders do what they like and excel at it, and it lets
+  front-enders do what they like and excel at it.**”
 </Pullquote>
 
 ## Looking Ahead: New Opportunities for the Team, New Opportunities for the Agency

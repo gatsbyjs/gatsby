@@ -4,6 +4,11 @@ title: Building Themes
 
 The quickest way to get up and running with a workspace for building themes is to use the official [`gatsby-starter-theme-workspace`](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace) starter.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-the-gatsby-theme-workspace-starter-to-begin-building-a-new-theme"
+  lessonTitle="Use the Gatsby Theme Workspace Starter to Begin Building a New Theme"
+/>
+
 To get started, run:
 
 ```shell
@@ -44,7 +49,7 @@ For Gatsby theme development, that means you can keep multiple themes and exampl
 
 The `package.json` in the root of the new project is primarily responsible for setting up the yarn workspaces. In this case, there are two workspaces, `gatsby-theme-minimal` and `example`.
 
-```json:title=my-theme/gatsby-config.js
+```json:title=my-theme/package.json
 {
   "name": "gatsby-starter-theme-workspace",
   "private": true,
@@ -89,10 +94,18 @@ Watch the new [Egghead course on Authoring Gatsby Themes](https://egghead.io/cou
 
 Check out the [tutorial for building a Gatsby theme](/tutorial/building-a-theme). The step-by-step tutorial goes into much more detail than this docs guide. It was written as a companion to the [Egghead theme authoring course](https://egghead.io/courses/gatsby-theme-authoring), so they can be used together!
 
+### Theme API reference
+
+Check out the [Theme API documentation](/docs/theme-api/).
+
+### Accessibility
+
+A Gatsby theme is a Gatsby site, therefore building with accessibility in mind is critical. Check out these [tips on making your sites (and themes!) accessible](/docs/making-your-site-accessible/).
+
 ### Read through source code
 
 Check out how some existing themes are built:
 
 - The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog)
 - The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes)
-- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (\_You might also be interested in the [Apollo case study on themes](https://www.gatsbyjs.org/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog.)
+- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](https://www.gatsbyjs.org/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)

@@ -3,8 +3,7 @@ title: Modern publications with Gatsby & Ghost
 date: 2019-01-14T08:00:00+00:00
 author: John O’Nolan
 tags:
-  - Ghost
-  - publishing platform
+  - ghost
 image: "./images/ghost-headless-feature-image.png"
 showImageInArticle: true
 ---

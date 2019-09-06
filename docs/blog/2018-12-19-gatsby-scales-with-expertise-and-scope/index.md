@@ -4,8 +4,6 @@ date: 2019-01-03
 author: LekoArts
 canonicalLink: "https://www.lekoarts.de/en/blog/how-gatsby-scales-with-your-expertise-and-scope"
 publishedAt: lekoarts.de
-tags:
-  - gatsby
 ---
 
 _This blog post was originally posted on the [LekoArts Blog](https://www.lekoarts.de/en/blog/how-gatsby-scales-with-your-expertise-and-scope)_

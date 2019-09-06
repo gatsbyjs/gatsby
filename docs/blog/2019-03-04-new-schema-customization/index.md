@@ -2,7 +2,7 @@
 title: New schema customization API in Gatsby
 date: 2019-03-04
 author: Mikhail Novikov
-tags: ["schema", "graphql"]
+tags: ["graphql", "releases"]
 ---
 
 Today we are releasing a preview of a new core Gatsby API - Schema Customization. It gives Gatsby users much better control over the inferred schema, solving many common issues that people have had with their data sources. In addition to adding the new API, we rewrote big chunks of schema generation code from scratch. This gives us a great long-term foundation that will let us make Gatsby GraphQL better in the future.
@@ -189,7 +189,7 @@ createResolvers({
 
 Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower level access functions (`getNodeById`, `getAllNodes`), full node querying is available in `runQuery`.
 
-You can also see [using-type-definitions example](https://github.com/gatsbyjs/gatsby/tree/schema-refactor-new/examples/using-type-definitions) in the Gatsby repository.
+You can also see [using-type-definitions example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions) in the Gatsby repository.
 
 # Other niceties
 

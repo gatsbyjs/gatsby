@@ -68,7 +68,7 @@ const argsWhitelist = [
  * @param {String} file
  * @param {Transform[]} transforms
  */
-exports.processFile = (file, transforms, options = {}) => {
+exports.processFile = (file, contentDigest, transforms, options = {}) => {
   let pipeline
   try {
     // adds gatsby cloud image service to gatsby-sharp
@@ -82,6 +82,7 @@ exports.processFile = (file, transforms, options = {}) => {
             .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
               body: {
                 file,
+                hash: contentDigest,
                 transforms,
                 options,
               },

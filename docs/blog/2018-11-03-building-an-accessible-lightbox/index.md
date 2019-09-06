@@ -2,7 +2,7 @@
 title: "Building a custom, accessible image lightbox"
 date: 2018-12-20
 author: "Sergiy Dybskiy"
-tags: ["lightbox", "gatsby-image", "accessibility"]
+tags: ["cutting-edge-experiences", "gatsby-image", "accessibility"]
 canonicalLink: "https://416serg.me/building-a-custom-accessible-image-lightbox-in-gatsbyjs"
 ---
 

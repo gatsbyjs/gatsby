@@ -35,7 +35,7 @@ or rebuild your site after changing them.
 
 ## Defining Environment Variables
 
-#### Client-side JavaScript
+### Client-side JavaScript
 
 For Project Env Vars that you want to access in client-side browser JavaScript, you can define
 an environment config file, `.env.development` and/or `.env.production`, in your root folder.
@@ -50,7 +50,7 @@ browser JavaScript.
 GATSBY_API_URL=https://dev.example.com/api
 ```
 
-#### Server-side Node.js
+### Server-side Node.js
 
 Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`.
 OS Env Vars will already be available when Node is running, so you can add environment variables the
