@@ -14,6 +14,19 @@ const isItemActive = (activeItemParents, item) => {
 }
 
 class Item extends React.PureComponent {
+  constructor(props, context) {
+    super(props, context)
+    this.itemRef = React.createRef()
+  }
+
+  componentDidMount() {
+    if (this.itemRef.current) {
+      this.itemRef.current.scrollIntoView({
+        block: `center`,
+      })
+    }
+  }
+
   render() {
     const {
       activeItemLink,
@@ -55,7 +68,7 @@ class Item extends React.PureComponent {
             disableAccordions={disableAccordions}
           />
         ) : (
-          <li>
+          <li ref={item.link === location.pathname ? this.itemRef : false}>
             {createLink({
               isActive: item.link === activeItemLink.link,
               item,

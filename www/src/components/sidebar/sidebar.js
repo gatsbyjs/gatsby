@@ -59,7 +59,6 @@ class SidebarBody extends Component {
     this._toggleSection = this._toggleSection.bind(this)
     this.state = { ...this._getInitialState(props) }
     this.scrollRef = React.createRef()
-    this.initialScrollRef = React.createRef()
   }
 
   componentDidMount() {
@@ -69,11 +68,6 @@ class SidebarBody extends Component {
       const key = this.props.sidebarKey
       const initialState = this.state
       const localState = this._readLocalStorage(key)
-      if (this.initialScrollRef.current) {
-        this.initialScrollRef.current.scrollIntoView({
-          block: `center`,
-        })
-      }
       if (localState) {
         const bar = Object.keys(initialState.openSectionHash).filter(function(
           key
@@ -269,7 +263,6 @@ class SidebarBody extends Component {
                 activeItemLink={activeItemLink}
                 activeItemParents={activeItemParents}
                 isActive={item.link === location.pathname}
-                itemRef={this.initialScrollRef}
                 isExpanded={openSectionHash[item.title]}
                 item={item}
                 key={index}
