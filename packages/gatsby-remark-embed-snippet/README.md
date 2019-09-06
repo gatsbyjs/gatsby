@@ -7,11 +7,7 @@ Embeds the contents of specified files as code snippets.
 **Note**: This plugin depends on [gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/) and [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/) plugins
 
 ```shell
-# npm
 npm install --save gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer-remark
-
-# yarn
-yarn add gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer-remark
 ```
 
 ## Configuration
