@@ -84,7 +84,7 @@ It's also possible to deploy your website to `gh-pages` through a CI server. Thi
 
 You can use the [gh-pages npm module](https://www.npmjs.com/package/gh-pages) to deploy. But first, you need to configure it with proper credentials so that `gh-pages` is able to push a new branch.
 
-#### Step 1 - obtain a GitHub token
+#### Obtain a GitHub token for authenticating with CI
 
 To push changes from the CI system to GitHub, you'll need to authenticate. It's recommended to use [GitHub developer tokens](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line).
 
