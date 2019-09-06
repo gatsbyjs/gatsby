@@ -225,9 +225,8 @@ html {
 ```html
 <html>
   <body>
-    <!-- prettier-ignore -->
     <h1>highlight me</h1>
-    <!-- highlight-line -->
+    <!-- highlight-line --><!-- prettier-ignore -->
     <p>
       <!-- highlight-next-line -->
       And me
