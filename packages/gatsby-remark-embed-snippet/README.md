@@ -126,7 +126,7 @@ The resulting HTML generated from the Markdown file above would look something l
 
 ## Sample Usage II
 
-Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code-snippets inside the markdown file `my-first-post.md`.
+Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code snippets inside the Markdown file `my-first-post.md`.
 
 ```none
 .
