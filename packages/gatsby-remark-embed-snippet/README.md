@@ -1,6 +1,6 @@
 # gatsby-remark-embed-snippet
 
-Embeds the contents of specified files as code-snippets.
+Embeds the contents of specified files as code snippets.
 
 ## Installation
 
