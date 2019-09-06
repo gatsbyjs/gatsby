@@ -3794,7 +3794,7 @@
     - Extensible & responsive design
     - Blog integration
     - SEO
-- url: https://crock.github.io/gatsby-starter-headless-wordpress
+- url: https://gatsby-starter-headless-wp.netlify.com
   repo: https://github.com/crock/gatsby-starter-headless-wordpress
   description: A starter Gatsby site to quickly implement a site for headless WordPress
   tags:
