@@ -13,7 +13,7 @@ class Homepage extends Component {
               <Link to={node.slug}>
                 <h2>{node.title}</h2>
               </Link>
-              <h3>{node.excerpt}<h3/>
+              <h3>{node.excerpt}</h3>
             </div>
           ))}
         </div>
@@ -24,7 +24,7 @@ class Homepage extends Component {
             <Link to={node.slug}>
               <h2>{node.title}</h2>
             </Link>
-            <h3>{node.excerpt}<h3/>
+            <h3>{node.excerpt}</h3>
           </div>
         ))}
     )
