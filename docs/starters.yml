@@ -3697,3 +3697,15 @@
   features:
     - Pages and components are classes.
     - A skeleton SCSS project added with prefixing
+- url: https://portfolio-by-mohan.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby_starter_portfolio
+  description: An Official Starter for Gatsby Tech Blog Theme
+  tags:
+    - Hasura
+    - SEO
+    - Blog
+  features:
+    - Styling using Styled-Components
+    - Search using ElasticLunr
+    - Theme by gatsby-tech-blog-theme
+    - Deployed in Netlify
