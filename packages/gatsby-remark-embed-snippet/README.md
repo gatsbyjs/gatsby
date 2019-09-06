@@ -88,7 +88,7 @@ Suppose you have the following file/folder structure and you want to embed `java
 │       └── html-code.html
 ```
 
-Add the following syntax to the markdown file `index.md` to embed `javascript-code.js` and `html-code.html` as code-snippets:
+Add the following syntax to the Markdown file `index.md` to embed `javascript-code.js` and `html-code.html` as code snippets:
 
 `index.md`:
 
