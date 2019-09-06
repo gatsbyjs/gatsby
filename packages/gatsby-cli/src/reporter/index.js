@@ -182,7 +182,6 @@ const reporter: Reporter = {
       }
     }
 
-    if (error) this.log(errorFormatter.render(error))
     const structuredError = constructError({ details })
     if (structuredError) {
       reporterActions.createLog(structuredError)

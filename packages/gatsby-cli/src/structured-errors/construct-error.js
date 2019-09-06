@@ -2,6 +2,7 @@ const Joi = require(`@hapi/joi`)
 const stackTrace = require(`stack-trace`)
 const errorSchema = require(`./error-schema`)
 const { errorMap, defaultError } = require(`./error-map`)
+const { sanitizeStructuredStackTrace } = require(`../reporter/errors`)
 
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
@@ -14,7 +15,9 @@ const constructError = ({ details }) => {
     ...details,
     ...result,
     text: result.text(details.context),
-    stack: details.error ? stackTrace.parse(details.error) : [],
+    stack: details.error
+      ? sanitizeStructuredStackTrace(stackTrace.parse(details.error))
+      : null,
     docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
   }
 
