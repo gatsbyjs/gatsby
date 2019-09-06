@@ -12,6 +12,7 @@ guide](https://emotion.sh/docs/migrating-to-emotion-10#incremental-migration) fo
 ## What this plugin does
 
 This plugin lets you leverage Emotion's server-side rendering (SSR) on the following Emotion APIs:
+
 - `css` component prop from `@emotion/core` with the `jsx` babel transformation
 - `styled` function with `@emotion/styled`
 
