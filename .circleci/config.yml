@@ -305,8 +305,7 @@ workflows:
       - lint:
           requires:
             - bootstrap
-      - themes_e2e_tests_production_runtime:
-          <<: *e2e-test-workflow
+      - themes_e2e_tests_production_runtime
   www_deploy:
     triggers:
       - schedule:
