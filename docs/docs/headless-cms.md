@@ -5,7 +5,7 @@ overview: true
 
 A _headless CMS_ is content management software that enables Writers to produce and organize content, while providing Web Developers with structured data that can be displayed using a separate system on the front-end of a website or app.
 
-A traditional, monolithic CMS is responsible for both the backend management of content, and serving that content to end users. In contrast, a headless CMS is decoupled from frontend concerns, which frees Web Developers to build rich experiences for end users, using the best technology available.
+A traditional, monolithic CMS is responsible for both the backend management of content, and serving that content to end users. In contrast, a headless CMS is decoupled from frontend concerns, which frees developers to build rich experiences for end users, using the best technology available.
 
 Many content management systems (CMS) now support a “headless” mode, which is perfect for Gatsby sites.
 
