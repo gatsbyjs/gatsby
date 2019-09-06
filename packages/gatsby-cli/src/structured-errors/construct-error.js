@@ -15,14 +15,10 @@ const constructError = ({ details }) => {
     ...result,
     text: result.text(details.context),
     stack: details.error ? stackTrace.parse(details.error) : [],
-<<<<<<< HEAD
     docsUrl:
       typeof result.docsUrl === `function`
         ? result.docsUrl(details.context)
         : result.docsUrl || `https://gatsby.dev/issue-how-to`,
-=======
-    docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
->>>>>>> 212007a65ce00eb2f838a700bb0b4408e47f718b
   }
 
   // validate

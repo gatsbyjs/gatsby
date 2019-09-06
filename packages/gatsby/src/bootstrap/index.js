@@ -20,11 +20,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
-<<<<<<< HEAD
-const nodeTracking = require(`../db/node-tracking`)
 const Joi = require(`@hapi/joi`)
-=======
->>>>>>> 212007a65ce00eb2f838a700bb0b4408e47f718b
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
