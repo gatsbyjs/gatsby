@@ -90,7 +90,7 @@ Suppose you have the following file/folder structure and you want to embed `java
 
 Add the following syntax to the Markdown file `index.md` to embed `javascript-code.js` and `html-code.html` as code snippets:
 
-`index.md`:
+**`index.md`:**
 
 ```md
 # Sample JavaScript
