@@ -17,7 +17,7 @@ yarn add gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer-re
 ## Configuration
 
 > **Important**: _You must add `gatsby-remark-embed-snippet` before `gatsby-remark-prismjs` in your plugins array!_
-> Otherwise, this plugin will not work because the code-snippet files first need to be inlined before it can be transformed into code blocks.
+> Otherwise, this plugin will not work because the code snippet files first need to be inlined before they can be transformed into code blocks.
 > For more information, see [gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/).
 
 To use `gatsby-remark-embed-snippet` plugin:
