@@ -300,12 +300,11 @@ workflows:
   version: 2
   build-test:
     jobs:
-      - windows_unit_tests
       - bootstrap
-      - lint:
+      - e2e_tests_production_runtime:
+          <<: *ignore_docs
           requires:
             - bootstrap
-      - themes_e2e_tests_production_runtime
   www_deploy:
     triggers:
       - schedule:
