@@ -137,7 +137,7 @@ Suppose you have the following file/folder structure and you want to embed `java
 │   └── html-code.html
 ```
 
-Use `directory` plugin option to tell `gatsby-remark-embed-snippet` plugin that code-snippet files are located under a directory called `snippets`:
+Use `directory` plugin option to tell `gatsby-remark-embed-snippet` plugin that code snippet files are located under a directory called `snippets`:
 
 ```js
 // gatsby-config.js
