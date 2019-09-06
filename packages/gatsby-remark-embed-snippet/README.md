@@ -185,7 +185,7 @@ The resulting HTML generated from the markdown file above would look something l
 </div>
 ```
 
-## Code-snippet syntax highlighting
+## Code snippet syntax highlighting
 
 ### Highlighting Lines
 
