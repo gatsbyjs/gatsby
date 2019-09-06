@@ -99,7 +99,7 @@ Update the Gatsby project's `package.json` to also include a `deploy` run script
 1. `-d public` - specifies the directory in which the built files exist and will be pushed as a source to GitHub pages
 2. `-r URL` - the GitHub repository URL, including the use of the secret GitHub token (as a secret environment variable) to be able to push changes to the `gh-pages` branch, in the form of `https://$GH_TOKEN@github.com/<github username>/<github repository name>.git`
 
-Here's an example:
+Here's an example (be sure to update the user and repo names to your own):
 
 ```json
   "scripts": {
