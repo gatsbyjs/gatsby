@@ -40,7 +40,6 @@ class Item extends React.PureComponent {
       ui,
       isSingle,
       disableAccordions,
-      itemRef,
     } = this.props
 
     const isParentOfActiveItem = isItemActive(activeItemParents, item)
