@@ -9,13 +9,13 @@ const waitForAPIOptions = {
   timeout: 3000,
 }
 
-const runTests = () => {
-  it(`Loads index`, () => {
+const runTests = (tag = `Default`) => {
+  it(`Loads index - ${tag}`, () => {
     cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`dom-marker`).contains(`index`)
   })
 
-  it(`Navigates to second page`, () => {
+  it(`Navigates to second page - ${tag}`, () => {
     cy.getTestElement(`page2`).click()
     cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
       .location(`pathname`)
@@ -23,7 +23,7 @@ const runTests = () => {
     cy.getTestElement(`dom-marker`).contains(`page-2`)
   })
 
-  it(`Navigates to 404 page`, () => {
+  it(`Navigates to 404 page - ${tag}`, () => {
     cy.getTestElement(`404`).click()
     cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
       .location(`pathname`)
@@ -31,7 +31,7 @@ const runTests = () => {
     cy.getTestElement(`dom-marker`).contains(`404`)
   })
 
-  it(`Loads 404`, () => {
+  it(`Loads 404 - ${tag}`, () => {
     cy.visit(`/page-3/`, {
       failOnStatusCode: false,
     }).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
@@ -55,12 +55,15 @@ describe(`Every resources available`, () => {
 })
 
 const runBlockedScenario = (scenario, args) => {
-  it(`Block resources`, () => {
-    cy.task(`restoreAllBlockedResources`).then(() => {
-      cy.task(scenario, args).then(() => {
-        runTests()
+  describe(`Block resources`, () => {
+    before(done => {
+      cy.task(`restoreAllBlockedResources`).then(() => {
+        cy.task(scenario, args).then(() => {
+          done()
+        })
       })
     })
+    runTests(scenario)
   })
 }
 
