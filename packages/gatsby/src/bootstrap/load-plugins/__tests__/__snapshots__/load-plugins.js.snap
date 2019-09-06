@@ -512,7 +512,7 @@ Array [
       "ignore": Array [
         "___Test___.(js|ts)?(x)",
       ],
-      "path": "___TEST___",
+      "path": "___TEST___/src/pages",
       "plugins": Array [],
     },
     "resolve": "",
@@ -654,7 +654,7 @@ Array [
       "ignore": Array [
         "___Test___.(js|ts)?(x)",
       ],
-      "path": "___TEST___",
+      "path": "___TEST___/src/pages",
       "plugins": Array [],
     },
     "resolve": "",

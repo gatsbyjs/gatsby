@@ -58,7 +58,7 @@ describe(`Load plugins`, () => {
         {
           resolve: `gatsby-plugin-page-creator`,
           options: {
-            path: `___TEST___`,
+            path: `___TEST___/src/pages`,
             ignore: [`___Test___.(js|ts)?(x)`],
           },
         },
