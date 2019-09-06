@@ -27,6 +27,7 @@ class Item extends React.PureComponent {
       ui,
       isSingle,
       disableAccordions,
+      itemRef,
     } = this.props
 
     const isParentOfActiveItem = isItemActive(activeItemParents, item)
@@ -62,6 +63,7 @@ class Item extends React.PureComponent {
               onLinkClick,
               ui,
               level: item.level,
+              ref: itemRef,
             })}
           </li>
         )}
