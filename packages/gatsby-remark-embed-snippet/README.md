@@ -102,7 +102,7 @@ Add the following syntax to the Markdown file `index.md` to embed `javascript-co
 `embed:html-code.html`
 ```
 
-The resulting HTML generated from the markdown file above would look something like this:
+The resulting HTML generated from the Markdown file above would look something like this:
 
 ```html
 <h1>Sample JavaScript</h1>
