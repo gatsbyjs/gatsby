@@ -1,9 +1,13 @@
 ---
-title: Sourcing from Headless CMSs
+title: What is a Headless CMS and how to source content from one
 overview: true
 ---
 
-Many content management systems (CMS) now support a “headless” mode, which is perfect for Gatsby sites. A headless CMS allows content creators to manage their content through a familiar admin interface, but allows developers to access the content via API endpoints, allowing for a fully customized frontend experience.
+A _headless CMS_ is content management software that enables writers to produce and organize content, while providing developers with structured data that can be displayed using a separate system on the frontend of a website or app.
+
+A traditional, monolithic CMS is responsible for both the backend management of content, and serving that content to end users. In contrast, a headless CMS is decoupled from frontend concerns, which frees developers to build rich experiences for end users, using the best technology available.
+
+Many content management systems (CMS) now support a “headless” or “decoupled” mode, which is perfect for Gatsby sites.
 
 Through use of [source plugins](/plugins/?=source), Gatsby has support for dozens of headless CMS options, allowing your content team the comfort and familiarity of its preferred admin interface, and your development team the improved developer experience and performance gains of using Gatsby, GraphQL, and React to build the frontend.
 
