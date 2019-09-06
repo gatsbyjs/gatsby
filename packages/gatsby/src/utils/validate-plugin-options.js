@@ -1,4 +1,4 @@
-exports.validatePluginOptions = (res, options) => {
+exports.validatePluginOptions = (res, options = {}) => {
   let chain = Promise.resolve(res)
   if (res && res.validate) {
     chain = res.validate(options, {
