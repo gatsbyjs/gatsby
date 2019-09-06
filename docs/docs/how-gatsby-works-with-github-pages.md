@@ -86,7 +86,7 @@ You can use the [gh-pages npm module](https://www.npmjs.com/package/gh-pages) to
 
 #### Step 1 - obtain a GitHub token
 
-To push changes from the CI system to GitHub, you'll need to authenticate. We recommend using GitHub developer tokens.
+To push changes from the CI system to GitHub, you'll need to authenticate. It's recommended to use [GitHub developer tokens](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line).
 
 In GitHub go to your account settings -> Developer settings -> Personal access tokens, and create a new token that provides the `repo` access permissions.
 
