@@ -76,7 +76,6 @@ class Item extends React.PureComponent {
               onLinkClick,
               ui,
               level: item.level,
-              ref: itemRef,
             })}
           </li>
         )}
