@@ -24,6 +24,10 @@ Array [
 exports[`requires-writer matchPath should have static pages that live inside a matchPath 1`] = `
 Array [
   Object {
+    "matchPath": "/app/clients/static",
+    "path": "/app/clients/static",
+  },
+  Object {
     "matchPath": "/app/login/",
     "path": "/app/login/",
   },

@@ -26,10 +26,15 @@ const getComponents = pages =>
  */
 const getMatchPaths = pages => {
   const createMatchPathEntry = (page, index) => {
+    let score = page.matchPath.replace(/\/$/, ``).split(`/`).length
+    if (!page.matchPath.includes(`*`)) {
+      score += 1
+    }
+
     return {
       ...page,
       index,
-      score: page.matchPath.split(`/`).length,
+      score,
     }
   }
 
@@ -41,8 +46,8 @@ const getMatchPaths = pages => {
   })
 
   // Pages can live in matchPaths, to keep them working without doing another network request
-  // we save them in matchPath. Our sorting will put them above /* as we always add a slash to the end
-  // of static paths.
+  // we save them in matchPath. Our sorting will put them above dynamic routes
+  // as we add a static bonus point to static routes
   // More info in https://github.com/gatsbyjs/gatsby/issues/16097
   // small speedup: don't bother traversing when no matchPaths found.
   if (matchPathPages.length) {

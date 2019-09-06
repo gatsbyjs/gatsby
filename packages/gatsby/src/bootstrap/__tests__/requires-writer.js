@@ -130,6 +130,9 @@ describe(`requires-writer`, () => {
           matchPath: `/app/clients/*`,
         },
         {
+          path: `/app/clients/static`,
+        },
+        {
           path: `/app/login/`,
         },
       ])
@@ -139,7 +142,7 @@ describe(`requires-writer`, () => {
         program,
       })
 
-      expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
+      expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
       expect(matchPaths).toMatchSnapshot()
     })
   })
