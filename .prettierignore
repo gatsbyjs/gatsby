@@ -32,3 +32,5 @@ coverage
 
 # forestry files
 .forestry/**/*
+
+packages/gatsby-remark-embed-snippet/README.md
