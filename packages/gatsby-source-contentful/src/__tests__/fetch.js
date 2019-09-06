@@ -45,10 +45,11 @@ jest.mock(`../plugin-options`, () => {
 global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
 
 const contentful = require(`contentful`)
+const Joi = require(`@hapi/joi`)
 const fetchData = require(`../fetch`)
 const {
   formatPluginOptionsForCLI,
-  createPluginConfig,
+  getValidOptions,
 } = require(`../plugin-options`)
 
 const options = {
@@ -58,7 +59,7 @@ const options = {
   environment: `env`,
 }
 
-const pluginConfig = createPluginConfig(options)
+const { value: pluginConfig } = getValidOptions(Joi).validate(options)
 
 let realProcess
 beforeAll(() => {
@@ -101,10 +102,10 @@ it(`calls contentful.createClient with expected params`, async () => {
 
 it(`calls contentful.createClient with expected params and default fallbacks`, async () => {
   await fetchData({
-    pluginConfig: createPluginConfig({
+    pluginConfig: getValidOptions(Joi).validate({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
-    }),
+    }).value,
     reporter,
   })
   expect(reporter.panic).not.toBeCalled()

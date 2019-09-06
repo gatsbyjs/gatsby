@@ -1,9 +1,10 @@
 // disable output coloring for tests
 process.env.FORCE_COLOR = 0
+const Joi = require(`@hapi/joi`)
 
 const {
   maskText,
-  validateOptions,
+  getValidOptions,
   formatPluginOptionsForCLI,
 } = require(`../plugin-options`)
 
@@ -85,134 +86,68 @@ describe(`Options validation`, () => {
     reporter.panic.mockClear()
   })
 
+  afterEach(() => {
+    expect.hasAssertions()
+  })
+
+  const schema = getValidOptions(Joi)
+
   it(`Passes with valid options`, () => {
-    validateOptions(
-      {
-        reporter,
-      },
-      {
+    expect(
+      schema.validate({
         spaceId: `spaceId`,
         accessToken: `accessToken`,
         localeFilter: locale => locale.code === `de`,
         downloadLocal: false,
-      }
-    )
-
-    expect(reporter.panic).not.toBeCalled()
+      })
+    ).resolves.toEqual(expect.any(Object))
   })
 
-  it(`Fails with missing required options`, () => {
-    validateOptions(
-      {
-        reporter,
-      },
-      {}
-    )
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
-      )
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" is required`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" is required`)
-    )
+  it(`Fails with missing required options`, async () => {
+    try {
+      await schema.validate({})
+    } catch (e) {
+      expect(e.name).toBe(`ValidationError`)
+    }
   })
 
-  it(`Fails with empty options`, () => {
-    validateOptions(
-      {
-        reporter,
-      },
-      {
+  it(`Fails with empty options`, async () => {
+    try {
+      await schema.validate({
         environment: ``,
         host: ``,
         accessToken: ``,
         spaceId: ``,
-      }
-    )
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
+      })
+    } catch (e) {
+      expect(e.details).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            message: expect.stringContaining(`is not allowed to be empty`),
+          }),
+        ])
       )
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"environment" is not allowed to be empty`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"host" is not allowed to be empty`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" is not allowed to be empty`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"spaceId" is not allowed to be empty`)
-    )
+    }
   })
 
-  it(`Fails with options of wrong types`, () => {
-    validateOptions(
-      {
-        reporter,
-      },
-      {
+  it(`Fails with options of wrong types`, async () => {
+    try {
+      await schema.validate({
         environment: 1,
         host: [],
         accessToken: true,
         spaceId: {},
         localeFilter: `yup`,
         downloadLocal: 5,
-      }
-    )
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
+      })
+    } catch (e) {
+      expect(e.details).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            message: expect.stringContaining(`must be a`),
+          }),
+        ])
       )
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"environment" must be a string`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"host" must be a string`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" must be a string`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"spaceId" must be a string`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"localeFilter" must be a Function`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"downloadLocal" must be a boolean`)
-    )
-  })
-
-  it(`Fails with undefined option keys`, () => {
-    validateOptions(
-      {
-        reporter,
-      },
-      {
-        spaceId: `spaceId`,
-        accessToken: `accessToken`,
-        wat: true,
-      }
-    )
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
-      )
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"wat" is not allowed`)
-    )
+    }
   })
 })

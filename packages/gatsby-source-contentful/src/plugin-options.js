@@ -12,7 +12,7 @@ const defaultOptions = {
 
 const maskedFields = [`accessToken`, `spaceId`]
 
-const validateOptions = ({ validator: Joi }) =>
+const getValidOptions = Joi =>
   Joi.object().keys({
     accessToken: Joi.string()
       .required()
@@ -89,4 +89,4 @@ const maskText = input => {
   )}`
 }
 
-export { defaultOptions, validateOptions, formatPluginOptionsForCLI, maskText }
+export { defaultOptions, getValidOptions, formatPluginOptionsForCLI, maskText }

@@ -26,6 +26,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "@hapi/joi": "^15.1.1",
     "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.1.4"
   },
