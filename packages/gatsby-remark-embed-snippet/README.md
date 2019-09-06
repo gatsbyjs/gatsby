@@ -77,7 +77,7 @@ module.exports = {
 
 ## Sample Usage I
 
-Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code-snippets inside the markdown file `index.md`.
+Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code snippets inside the Markdown file `index.md`.
 
 ```none
 .
