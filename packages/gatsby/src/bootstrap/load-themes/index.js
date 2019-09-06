@@ -19,6 +19,8 @@ const getPluginOptions = theme => {
       theme.themeDir,
       `gatsby-node.js`
     ))
+    // note: this is fairly naive; it doesn't pass the additional API options
+    // that other APIs have available (and e.g. that a plugin implementing this API) would have
     const res = validateAPI({
       validator: Joi,
     })
