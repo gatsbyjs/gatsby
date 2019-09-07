@@ -7,7 +7,6 @@ tags:
 - case-studies
 - agencies
   - building-websites-faster
-  - learned
   - drupal
 canonicalLink: https://www.thirdandgrove.com/building-new-site-with-drupal-and-gatsby/
 ---
