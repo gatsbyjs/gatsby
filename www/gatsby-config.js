@@ -185,7 +185,7 @@ module.exports = {
                 sh: `bash`,
                 terminal: `bash`,
                 es6: `js`,
-                gql: `js`,
+                gql: `graphql`,
                 ml: `fsharp`,
                 mdx: `markdown`,
                 styl: `stylus`,
