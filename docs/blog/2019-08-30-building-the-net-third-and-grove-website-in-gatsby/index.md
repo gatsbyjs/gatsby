@@ -5,7 +5,7 @@ author: Grant Glidewell
 excerpt: "How we built our new website with a modern front end for Drupal using Gatsby"
 tags:
   - tag
-  - website
+- case-studies
   - third
   - grove
   - build
