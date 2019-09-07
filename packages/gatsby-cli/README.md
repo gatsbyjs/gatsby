@@ -34,7 +34,7 @@ You can also use the `package.json` script variant of these commands, typically 
 
 `gatsby new <my-gatsby-site> [<gatsby-starter>]`
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/)
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/starters/)
 for more.
 
 ### `develop`
