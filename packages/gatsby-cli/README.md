@@ -32,7 +32,7 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-`gatsby new <my-gatsby-site>`
+`gatsby new <my-gatsby-site> [<gatsby-starter>]`
 
 See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/)
 for more.
