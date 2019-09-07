@@ -512,7 +512,7 @@ Array [
       "ignore": Array [
         "___Test___.(js|ts)?(x)",
       ],
-      "path": "___TEST___/src/pages",
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/bootstrap/load-plugins/__tests__/src/pages",
       "plugins": Array [],
     },
     "resolve": "",
@@ -651,10 +651,8 @@ Array [
       "createPagesStatefully",
     ],
     "pluginOptions": Object {
-      "ignore": Array [
-        "___Test___.(js|ts)?(x)",
-      ],
-      "path": "___TEST___/src/pages",
+      "path": "/src/pages",
+      "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "",

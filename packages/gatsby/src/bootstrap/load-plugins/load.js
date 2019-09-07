@@ -222,7 +222,7 @@ module.exports = (config = {}, rootDir = null) => {
     const pageCreatorPlugin = config.plugins.find(
       plugin =>
         plugin.resolve === `gatsby-plugin-page-creator` &&
-        plugin.options.path.match(/src\/pages$/)
+        plugin.options.path === slash(path.join(program.directory, `src/pages`))
     )
     if (pageCreatorPlugin) {
       // override the options if there are any user specified options
