@@ -8,15 +8,15 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
-    "@babel/types": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
+    "@babel/types": "^7.6.1",
     "ast-types": "^0.12.4",
     "common-tags": "^1.8.0",
     "react-docgen": "^5.0.0-beta.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
     "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.1",
     "lodash": "^4.17.15"
