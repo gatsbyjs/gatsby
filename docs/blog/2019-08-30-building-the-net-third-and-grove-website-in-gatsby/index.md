@@ -7,7 +7,6 @@ tags:
   - tag
 - case-studies
 - agencies
-  - grove
   - build
   - lessons
   - learned
