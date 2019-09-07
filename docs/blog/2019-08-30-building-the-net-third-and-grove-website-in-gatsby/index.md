@@ -32,7 +32,7 @@ I, being a React developer, advocate for the use of a non-opinionated library. B
 
 We chose Gatsby because it’s the best we’ve seen at doing what it does. We can develop in React; we get the load speed of a static page and the benefits of using React on the page; and an excellent development experience along the way. I’ll share some of the good parts along with pain points and the solutions we came up with.
 
-## What we love about TAGV5
+## What we love about Third And Grove v5 (TAGV5)
 
 We love how our new brand is portrayed on the site but we’ll focus on the benefits of the technologies we used.
 
