@@ -28,7 +28,7 @@ It’s worth pausing to talk about UX and velocity. The more we work with our cl
 
 There are a lot of options available to build headlessly against Drupal. Angular, React, Vue, all viable options. Each has its strengths and would create an end result that we could be proud of.
 
-I, being a React developer, advocate for the use of a non-opinionated library. But there were concerns about SEO and load speeds. Those concerns can be mitigated a few different ways, but one way that abstracts that complexity is to use a static site generator. But we don't want a static site, we want to option of building everything in React and maintaining the excellent client experience a React application can provide. Enter Gatsby.
+I, being a React developer, advocate for the use of a non-opinionated library. But there were concerns about SEO and load speeds. Those concerns can be mitigated a few different ways, but one way that abstracts that complexity is to use a static site generator. But we don't want a static site, we want the option of building everything in React and maintaining the excellent client experience a React application can provide. Enter Gatsby.
 
 We chose Gatsby because it’s the best we’ve seen at doing what it does. We can develop in React, we get the load speed of a static page, the benefits of using react on the page, and an excellent development experience along the way. I’ll share some of the good parts along with pain points and the solutions we came up with.
 
