@@ -6,7 +6,7 @@ excerpt: "How we built our new website with a modern front end for Drupal using 
 tags:
   - tag
 - case-studies
-  - third
+- agencies
   - grove
   - build
   - lessons
