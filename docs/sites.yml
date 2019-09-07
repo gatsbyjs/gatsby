@@ -7205,3 +7205,16 @@
   built_by: Misael Taveras
   built_by_url: https://taverasmisael.com
   featured: false
+- title: Le Reacteur
+  url: https://www.lereacteur.io/
+  main_url: https://www.lereacteur.io/
+  description: >
+    Le Reacteur is the first coding bootcamp dedicated to web and mobile apps development (iOS/Android). We offer intensive sessions to train students in a short time (10 weeks). Our goal is to pass on to our students in less than 3 months what they would have learned in 2 years. To achieve this ambitious challenge, our training is based on learning JavaScript (Node.js, Express, ReactJS, React Native).
+  categories:
+    - JavaScript
+    - Learning
+    - Mobile Development
+    - Web Development
+  built_by: Farid Safi
+  built_by_url: https://twitter.com/FaridSafi
+  featured: false
