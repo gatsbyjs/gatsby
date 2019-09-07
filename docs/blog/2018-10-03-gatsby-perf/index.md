@@ -4,7 +4,7 @@ author: Dustin Schau
 date: 2018-10-03
 image: images/rocket.jpg
 showImageInArticle: false
-tags: ["performance", "v2", "lighthouse", "webpagetest"]
+tags: ["performance", "v2", "lighthouse"]
 ---
 
 We say it all the time: Gatsby sites are blazing fast.
@@ -22,7 +22,8 @@ And what are some simple, meaningful metrics to _know_ if your site is blazing f
 Let's get to it.
 
 <Pullquote>
-At the BBC, 10% of users are lost for every additional second the site takes to load.
+  At the BBC, 10% of users are lost for every additional second the site takes
+  to load.
 </Pullquote>
 
 ## Measuring Speed
@@ -38,7 +39,7 @@ Lighthouse measures your site's speed and performance on a variety of meaningful
 Our baseline is going to be Gatsby v1. I've created a [repository][gatsby-v1-repo] that I've then [deployed to Netlify][gatsby-v1-netlify]. To use Lighthouse, simply open up Chrome's Developer Tools and navigate to the Audits tab, like so:
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/lighthouse.mp4"></source>
+  <source type="video/mp4" src="/lighthouse.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -86,7 +87,8 @@ Gatsby v2 set out to build upon this solid foundation, while focusing on improve
 It's not 🚀 science. Shipping less JavaScript to your end users makes your application faster to load, parse, and use. Think _hard_ whether that slick launch animation and heavy above the fold hero image are actually _meaningful_ to the quality experience your users want. Every additional byte of JavaScript has an associated parse and evaluation time that you're forwarding along to your end users.
 
 <Pullquote citation="Addy Osmani">
-As much as I love JavaScript, it’s always the most expensive part of your site.
+  As much as I love JavaScript, it’s always the most expensive part of your
+  site.
 </Pullquote>
 
 To that end, Gatsby v2 ships 31% less JavaScript in its client runtime. While we'd _love_ to brag about this, most of the credit goes to smart optimizations in libraries we rely upon: React--upgrading from 15 to 16--and @reach/router--swapped in place of react-router. Much like performance optimizations, build upgrades, etc. are available for free in something like [create-react-app][create-react-app], these upgrades in Gatsby v2 are available _for free_ simply by updating to Gatsby v2 by following the [migration guide][migration-guide]. The power of opinionated, optimized toolsets that internalize smart defaults!

@@ -1,21 +1,33 @@
 const Joi = require(`@hapi/joi`)
 
 const stripTrailingSlash = chain => chain.replace(/(\w)\/+$/, `$1`)
+// only add leading slash on relative urls
+const addLeadingSlash = chain =>
+  chain.when(Joi.string().uri({ relativeOnly: true }), {
+    then: chain.replace(/^([^/])/, `/$1`),
+  })
 
 export const gatsbyConfigSchema = Joi.object()
   .keys({
     __experimentalThemes: Joi.array(),
-    polyfill: Joi.boolean(),
+    polyfill: Joi.boolean().default(true),
     assetPrefix: stripTrailingSlash(
       Joi.string().uri({
         allowRelative: true,
       })
     ),
-    pathPrefix: stripTrailingSlash(
-      Joi.string().uri({
-        allowRelative: true,
-        relativeOnly: true,
-      })
+    pathPrefix: addLeadingSlash(
+      stripTrailingSlash(
+        Joi.string()
+          .uri({
+            allowRelative: true,
+            relativeOnly: true,
+          })
+          .default(``)
+          // removes single / value
+          .allow(``)
+          .replace(/^\/$/, ``)
+      )
     ),
     siteMetadata: Joi.object({
       siteUrl: stripTrailingSlash(Joi.string()).uri(),
@@ -35,10 +47,12 @@ export const gatsbyConfigSchema = Joi.object()
         allowRelative: true,
         relativeOnly: true,
       }),
-      pathPrefix: Joi.string().uri({
-        allowRelative: true,
-        relativeOnly: true,
-      }),
+      pathPrefix: Joi.string()
+        .uri({
+          allowRelative: true,
+          relativeOnly: true,
+        })
+        .default(``),
     }),
     {
       then: Joi.object({

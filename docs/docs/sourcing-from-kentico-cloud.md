@@ -120,41 +120,49 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
 Now that you have a pretty way to define the path for your pages, you can create the pages programmatically:
 
 ```javascript:title=gatsby-node.js
-const path = require(`path`);
+const path = require(`path`) // highlight-line
 
-exports.onCreateNode ... // As above
+exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
+  if (node.internal.type === `KenticoCloudItemArticle`) {
+    createNodeField({
+      node,
+      name: `slug`,
+      value: node.elements.url_pattern.value,
+    })
+  }
+}
 
-exports.createPages = ({ graphql, actions }) => {
-    const { createPage } = actions;
+// highlight-start
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
 
-    return new Promise((resolve, reject) => {
-      graphql(`
-      {
-        allKenticoCloudItemArticle {
-          edges {
-            node {
-              fields {
-                slug
-              }
+  // Query data from Kentico
+  const result = await graphql(`
+    {
+      allKenticoCloudItemArticle {
+        edges {
+          node {
+            fields {
+              slug
             }
           }
         }
       }
-      `).then(result => {
-        result.data.allKenticoCloudItemArticle.edges.forEach(({ node }) => {
-            console.log(node.fields.slug);
-            createPage({
-                path: node.fields.slug,
-                component: path.resolve(`src/templates/article.js`),
-                context: {
-                    slug: node.fields.slug,
-                }
-            })
-        });
-        resolve();
-    });
-  });
+    }
+  `)
+
+  // Create pages
+  result.data.allKenticoCloudItemArticle.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: path.resolve(`src/templates/article.js`),
+      context: {
+        slug: node.fields.slug,
+      },
+    })
+  })
 }
+// highlight-end
 ```
 
 Now create a basic template to display each article with a title and the body that you pull with a GraphQL query:

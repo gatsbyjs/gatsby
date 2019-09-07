@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const loki = require(`@stefanprobst/lokijs`)
+const loki = require(`lokijs`)
 const uuidv4 = require(`uuid/v4`)
 const customComparators = require(`./custom-comparators`)
 
@@ -9,6 +9,7 @@ const customComparators = require(`./custom-comparators`)
 // implementation. See `custom-comparators.js` for why.
 loki.Comparators.lt = customComparators.ltHelper
 loki.Comparators.gt = customComparators.gtHelper
+loki.Comparators.aeq = customComparators.aeqHelper
 
 // Loki is a document store with the same semantics as mongo. This
 // means there are no tables or relationships. Just a bunch of
@@ -127,7 +128,7 @@ function saveState() {
 
 /**
  * Returns a reference to the database. If undefined, the db has not been
- * initalized yet. Call `start()`
+ * initialized yet. Call `start()`
  *
  * @returns {Object} database, or undefined
  */

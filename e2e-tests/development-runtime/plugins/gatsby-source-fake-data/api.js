@@ -101,3 +101,5 @@ We welcome any and all contributions! 💪
     return writeFile(this.dbFilePath, [])
   },
 }
+
+module.exports.getNode = getNode

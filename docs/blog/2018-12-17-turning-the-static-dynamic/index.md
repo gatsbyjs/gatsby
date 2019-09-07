@@ -2,7 +2,7 @@
 title: "Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity"
 date: 2018-12-26
 author: swyx
-tags: ["apps"]
+tags: ["gatsby-for-apps"]
 excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality and get up and running incredibly quickly with Netlify - here's how.
 ---
 
@@ -374,7 +374,7 @@ export function handler(event, context, callback) {
       statusCode: 200,
       body: JSON.stringify({
         msg:
-          "auth-hello - no authentication detected. Note that netlify-lambda doesnt locally emulate Netlify Identity.",
+          "auth-hello - no authentication detected. Note that netlify-lambda doesn't locally emulate Netlify Identity.",
       }),
     })
   }

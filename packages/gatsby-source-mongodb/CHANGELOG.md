@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.10...gatsby-source-mongodb@2.1.11) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.9...gatsby-source-mongodb@2.1.10) (2019-08-29)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.8...gatsby-source-mongodb@2.1.9) (2019-08-24)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.7...gatsby-source-mongodb@2.1.8) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.6...gatsby-source-mongodb@2.1.7) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.5...gatsby-source-mongodb@2.1.6) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.4...gatsby-source-mongodb@2.1.5) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.3...gatsby-source-mongodb@2.1.4) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-source-mongodb:** work with \_id types that are not O… ([#16331](https://github.com/gatsbyjs/gatsby/issues/16331)) ([d226fd5](https://github.com/gatsbyjs/gatsby/commit/d226fd5))
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.2...gatsby-source-mongodb@2.1.3) (2019-07-12)
 
 ### Bug Fixes

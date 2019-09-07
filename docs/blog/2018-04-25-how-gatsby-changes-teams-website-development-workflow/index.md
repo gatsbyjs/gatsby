@@ -3,7 +3,7 @@ title: How Gatsby Changes Teams' Website Development Workflow
 date: 2018-04-25
 author: "Sam Bhagwat"
 excerpt: Gatsby is more than just a new website framework -- it changes the way your team works together.
-tags: ["collaboration"]
+tags: ["gatsby-for-teams"]
 ---
 
 Gatsby is more than just a new website framework -- creating websites in Gatsby is a fundamentally different paradigm than in a CMS-specific framework.

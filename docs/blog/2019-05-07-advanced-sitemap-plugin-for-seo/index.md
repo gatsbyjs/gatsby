@@ -6,8 +6,8 @@ excerpt: "Ghost migrated their docs site to Gatsby and built an automatic XML si
 tags:
   - ghost
   - seo
-  - sitemap
-  - headless cms
+  - plugins
+  - headless-cms
 ---
 
 In recent months, I’ve been working on projects for [Ghost](https://ghost.org/) with a JAMstack approach and using the Gatsby framework to build websites. It’s been an exciting journey that began when we rebuilt our [docs](https://docs.ghost.org/) site from the ground up – now we’re migrating all of our sites to use the same technology.
@@ -25,7 +25,10 @@ The plugin generates an organised sitemap that is accessible to both humans and 
 <figure>
   <img alt="Advanced sitemaps" src="./images/advanced_sitemaps.png" />
   <figcaption>
-    Demo: <a href="https://docs.ghost.org/sitemap.xml">https://docs.ghost.org/sitemap.xml</a>
+    Demo:{" "}
+    <a href="https://docs.ghost.org/sitemap.xml">
+      https://docs.ghost.org/sitemap.xml
+    </a>
   </figcaption>
 </figure>
 
@@ -38,7 +41,8 @@ Rebuilding our docs site using Gatsby was a huge success. We saw major improveme
 <figure>
   <img alt="SEO performance" src="./images/seo_results.png" />
   <figcaption>
-    In 6 months organic search impressions have increased by 235% & organic traffic is up 120%
+    In 6 months organic search impressions have increased by 235% & organic
+    traffic is up 120%
   </figcaption>
 </figure>
 
@@ -49,5 +53,13 @@ This success can be attributed to having improved content and meta data, a light
 Rather than making the sitemap plugin platform specific, it was built to work with any Gatsby project. You could be using Ghost as a Headless CMS, or any other software to build your site, and use the plugin for free.
 
 <pullquote>
-  Visit the <a href="/packages/gatsby-plugin-advanced-sitemap/?=sitemap">Gatsby plugin library</a> page to get started, or download directly from <a href="https://github.com/tryghost/gatsby-plugin-advanced-sitemap">GitHub</a>!
+  Visit the{" "}
+  <a href="/packages/gatsby-plugin-advanced-sitemap/?=sitemap">
+    Gatsby plugin library
+  </a>{" "}
+  page to get started, or download directly from{" "}
+  <a href="https://github.com/tryghost/gatsby-plugin-advanced-sitemap">
+    GitHub
+  </a>
+  !
 </pullquote>

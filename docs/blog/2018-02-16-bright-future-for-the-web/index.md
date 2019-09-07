@@ -3,7 +3,7 @@ title: Gatsby And The JAMstack - A Bright Future For The Web
 date: 2018-02-16
 image: "bright-future.jpg"
 author: "Ryan Wiemer"
-tags: ["markdown", "JAMstack", "netlify", "contentful"]
+tags: ["markdown", "jamstack", "netlify", "contentful"]
 ---
 
 _This article was originally published on

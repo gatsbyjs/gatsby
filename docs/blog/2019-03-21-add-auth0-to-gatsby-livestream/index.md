@@ -5,10 +5,10 @@ author: Jason Lengstorf
 excerpt: >
   A common challenge while building apps is setting up authentication. In this video, Jason Lengstorf and Ado Kukic build a Gatsby app using Auth0 to create a login-protected dashboard.
 tags:
-  - apps
   - authentication
   - livestream
-  - tutorials
+  - getting-started
+  - apps
 ---
 
 A common challenge when building apps is setting up authentication. If our apps have user-specific data, we need a way to secure that data and identify our users so they can access their own information.
@@ -19,9 +19,16 @@ We regularly get questions about how to add authentication to Gatsby, and while 
 
 On a recent livestream, [Ado Kukic](https://twitter.com/KukicAdo) helped me create an example for setting up auth for a Gatsby account page.
 
-<iframe id="ytplayer" title="Adding auth to Gatsby apps livestream on YouTube" type="text/html" width="720" height="405"
-src="https://www.youtube.com/embed/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
-frameborder="0" allowfullscreen />
+<iframe
+  id="ytplayer"
+  title="Adding auth to Gatsby apps livestream on YouTube"
+  type="text/html"
+  width="720"
+  height="405"
+  src="https://www.youtube.com/embed/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
+  frameborder="0"
+  allowfullscreen
+/>
 
 **This is part of the [Learn With Jason series](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx), which [streams live on Twitch][twitch] every Thursday at 9 am Pacific.**
 

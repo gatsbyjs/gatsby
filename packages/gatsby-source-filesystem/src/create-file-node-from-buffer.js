@@ -4,7 +4,7 @@ const fileType = require(`file-type`)
 
 const { createFileNode } = require(`./create-file-node`)
 const { createFilePath } = require(`./utils`)
-const { createContentDigest } = require(`gatsby/utils`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const cacheId = hash => `create-file-node-from-buffer-${hash}`
 
 /********************

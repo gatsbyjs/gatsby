@@ -4,7 +4,7 @@ date: 2019-06-17
 author: Marisa Morby
 excerpt: "In this post I outline the high level tasks and goals of product managers at Gatsby"
 tags:
-  - product management
+  - gatsby-inc
 ---
 
 Our goal with product management at Gatsby is to create an ongoing and iterative product discovery and development process that allows us to ship customer value quickly and with confidence in our product–market fit. There are a lot of ways to break down product development and management.

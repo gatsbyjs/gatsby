@@ -2,7 +2,7 @@
 title: "Getting Started with Gatsby Themes and MDX"
 date: 2019-02-26
 author: Katie Fujihara
-tags: ["themes", "tutorials"]
+tags: ["themes", "getting-started"]
 ---
 
 > _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
@@ -134,7 +134,7 @@ Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ dir
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
-  __experimentalThemes: [`theme`],
+  plugins: [`theme`],
 }
 ```
 

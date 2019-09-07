@@ -18,7 +18,7 @@ import {
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
-import FeaturedIcon from "../../assets/featured-sites-icons--white.svg"
+import FeaturedIcon from "../../assets/icons/featured-sites-icons--white.svg"
 
 const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)
@@ -90,11 +90,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     css={{
                       "&&": {
                         display: `none`,
-                        transition: `background ${transition.speed.slow} ${
-                          transition.curve.default
-                        }, transform ${transition.speed.slow} ${
-                          transition.curve.default
-                        }`,
+                        transition: `background ${transition.speed.slow} ${transition.curve.default}, transform ${transition.speed.slow} ${transition.curve.default}`,
                         [mediaQueries.lg]: {
                           alignItems: `center`,
                           background: colors.accent,

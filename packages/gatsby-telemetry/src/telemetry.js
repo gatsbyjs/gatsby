@@ -1,7 +1,7 @@
 const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
-const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
-const ci = require(`ci-info`)
+const { cleanPaths } = require(`./error-helpers`)
+const ci = require(`./ci`)
 const os = require(`os`)
 const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
@@ -21,10 +21,16 @@ module.exports = class AnalyticsTracker {
 
   constructor() {
     try {
-      this.componentVersion = require(`../package.json`).version
-      this.installedGatsbyVersion = this.getGatsbyVersion()
-      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      if (this.store.isTrackingDisabled()) {
+        this.trackingEnabled = false
+      }
+
       this.defaultTags = this.getTagsFromEnv()
+
+      // These may throw and should be last
+      this.componentVersion = require(`../package.json`).version
+      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      this.installedGatsbyVersion = this.getGatsbyVersion()
     } catch (e) {
       // ignore
     }
@@ -119,12 +125,30 @@ module.exports = class AnalyticsTracker {
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
 
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  captureBuildError(type, tags = {}) {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    const decoration = this.metadataCache[type]
+    delete this.metadataCache[type]
+    const eventType = `BUILD_ERROR_${type}`
+
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  formatErrorAndStoreEvent(eventType, tags) {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
         const { error, ...restOfTags } = tags
         error.forEach(err => {
-          this.captureError(type, { error: err, ...restOfTags })
+          this.formatErrorAndStoreEvent(eventType, {
+            error: err,
+            ...restOfTags,
+          })
         })
         return
       }
@@ -142,23 +166,7 @@ module.exports = class AnalyticsTracker {
       delete tags.error
     }
 
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
-  }
-
-  captureBuildError(type, tags = {}) {
-    if (!this.isTrackingEnabled()) {
-      return
-    }
-    const decoration = this.metadataCache[type]
-    delete this.metadataCache[type]
-    const eventType = `BUILD_ERROR_${type}`
-
-    if (tags.error) {
-      // `error` ought to have been `errors` but is `error` in the database
-      tags.error = sanitizeErrors(tags.error)
-    }
-
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+    this.buildAndStoreEvent(eventType, tags)
   }
 
   buildAndStoreEvent(eventType, tags) {
@@ -199,7 +207,7 @@ module.exports = class AnalyticsTracker {
     }
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
-      if (!ci.isCI) {
+      if (!ci.isCI()) {
         showAnalyticsNotification()
       }
       enabled = true
@@ -220,8 +228,8 @@ module.exports = class AnalyticsTracker {
       release: os.release(),
       cpus: (cpus && cpus.length > 0 && cpus[0].model) || undefined,
       arch: os.arch(),
-      ci: ci.isCI,
-      ciName: (ci.isCI && ci.name) || process.env.CI_NAME || undefined,
+      ci: ci.isCI(),
+      ciName: ci.getCIName(),
       docker: isDocker(),
     }
     this.osInfo = osInfo

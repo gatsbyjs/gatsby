@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import Container from "../components/container"
 import Rotator from "../components/rotator"
 import { Link } from "gatsby"
-import logo from "../monogram.svg"
+import logo from "../assets/monogram.svg"
 import { rhythm } from "../utils/typography"
 import { colors, space, sizes, fontSizes } from "../utils/presets"
 import FooterLinks from "../components/shared/footer-links"
@@ -25,9 +25,7 @@ class Plugins extends Component {
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            minHeight: `calc(100vh - (${sizes.headerHeight} + ${
-              sizes.bannerHeight
-            }))`,
+            minHeight: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
           }}
         >
           <div

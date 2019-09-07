@@ -1,5 +1,11 @@
 const utils = require(`../webpack-utils`)
 
+jest.mock(`babel-preset-gatsby/package.json`, () => {
+  return {
+    version: `1.0.0`,
+  }
+})
+
 let config
 beforeAll(async () => {
   config = await utils({

@@ -2,7 +2,7 @@ import React from "react"
 import { colors, space, mediaQueries, fonts } from "../../utils/presets"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
-import { NetlifyIcon } from "../../assets/logos"
+import { NetlifyIcon } from "../../assets/vendor-logos/netlify.svg"
 
 const Source = ({ startersYaml, repoUrl }) => (
   <div

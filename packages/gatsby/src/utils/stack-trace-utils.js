@@ -9,7 +9,12 @@ const gatsbyLocation = path.dirname(require.resolve(`gatsby/package.json`))
 const getNonGatsbyCallSite = () =>
   stackTrace
     .get()
-    .find(callSite => !callSite.getFileName().includes(gatsbyLocation))
+    .find(
+      callSite =>
+        callSite &&
+        callSite.getFileName() &&
+        !callSite.getFileName().includes(gatsbyLocation)
+    )
 
 const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
   const callSite = getNonGatsbyCallSite()

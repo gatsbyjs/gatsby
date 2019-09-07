@@ -20,5 +20,6 @@ export const onRenderBody = ({
     helmet.noscript.toComponent(),
     helmet.script.toComponent(),
     helmet.style.toComponent(),
+    helmet.base.toComponent(),
   ])
 }

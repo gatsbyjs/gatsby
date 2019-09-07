@@ -5,7 +5,7 @@ author: Caitlin Cashin
 excerpt: "Learn how to participate in the Gatsby Theme Jam contest and win a trip to Gatsby Days."
 tags:
   - themes
-  - Gatsby Days
+  - gatsby-days
   - contest
 ---
 

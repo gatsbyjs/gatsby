@@ -3,8 +3,9 @@ title: "Delicious Simplicity ❤️ Gatsby: Building Happily Ever After"
 date: 2019-06-08
 author: Michelle Gienow
 tags:
-  - case study
-  - developer experience
+  - case-studies
+  - building-sites-faster
+  - developer-experience
   - enterprise
 ---
 
@@ -17,8 +18,8 @@ He was drawn to the idea of headless CMS (content management systems) decoupled 
 Brian was especially intrigued by JS and Node and React. “The code samples always gave me such envy—short, succinct, clean and well-organized,” Brian says. “I thought, I would really love to interact with this everyday. Here was the problem, though. I loved JavaScript, but it wasn’t a solution to any of our problems. At least not a complete one.”
 
 <Pullquote>
-I really started to trust that I had found the solution.
-That Gatsby could be The One.
+  I really started to trust that I had found the solution. That Gatsby could be
+  The One.
 </Pullquote>
 
 So Brian kept trying, and not finding, a better way to develop projects and manage client content. “Eventually, Gatsby came along and I did the same test drive,” Brian says. “But this time I kept going down the road and there was no dead end. It just kept being even better than I had hoped, and I really started to trust that I had found the solution. That Gatsby could be The One.”
@@ -30,7 +31,8 @@ There was only one potential hurdle to true romance: convincing the Delicious Si
 “Once I got hands on with Gatsby, I was shocked how quickly I managed to pick things up. The syntax was just so intuitive, which made it easy to digest,” he says. There were definitely some growing pains -- the team had little experience with React or Node, and some of the devs found the new component-based way of thinking overwhelming to grasp at first. But they eventually fell in love with Gatsby and now don’t want to work in anything else.
 
 <Pullquote>
-What we are able to produce with the same people now is of massively higher value thanks to Gatsby’s tech stack.
+  What we are able to produce with the same people now is of massively higher
+  value thanks to Gatsby’s tech stack.
 </Pullquote>
 
 “The stuff we are doing now! Building functional React components that hook into APIs -- making not just websites, but web apps!” Brian says. “I heard my team saying, ‘I never thought I would do this, I feel like a real developer now, not just a themer!’”

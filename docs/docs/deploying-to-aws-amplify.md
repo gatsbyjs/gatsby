@@ -32,3 +32,9 @@ AWS Amplify is a combination of client library, CLI toolchain, and a Console for
 
 - [Publishing Your Next Gatsby Site to AWS With AWS Amplify](/blog/2018-08-24-gatsby-aws-hosting/)
 - If you want more control over hosting on AWS you can also [deploy your Gatsby.js Site to AWS S3](/docs/deploying-to-s3-cloudfront/).
+
+### More resources
+
+Jason Lengstorf and Nader Dabit livestream building a site & deploying with AWS Amplify:
+
+`youtube: i9HG8CV-_dQ`

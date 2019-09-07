@@ -43,7 +43,7 @@ async function main() {
 
   await Promise.all(
     packages.map(async pkg => {
-      // If this is the main gastby package we don't want to override
+      // If this is the main gatsby package we don't want to override
       if (pkg.name === MAIN_PKG_NAME || pkg.private) {
         // eslint complains if we don't consistently return the same type
         return Promise.resolve()

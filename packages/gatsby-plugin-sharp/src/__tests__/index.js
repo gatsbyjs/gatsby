@@ -21,6 +21,22 @@ const {
 const { scheduleJob } = require(`../scheduler`)
 scheduleJob.mockResolvedValue(Promise.resolve())
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
     duotone: false,
@@ -355,6 +371,24 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(fluidSvg).toMatchSnapshot()
+    })
+  })
+
+  describe(`duotone`, () => {
+    const args = {
+      maxWidth: 100,
+      width: 100,
+      duotone: { highlight: `#ffffff`, shadow: `#cccccc`, opacity: 50 },
+    }
+
+    it(`fixed`, async () => {
+      let result = await fixed({ file, args })
+      expect(result).toMatchSnapshot()
+    })
+
+    it(`fluid`, async () => {
+      let result = await fluid({ file, args })
+      expect(result).toMatchSnapshot()
     })
   })
 })

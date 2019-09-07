@@ -1,5 +1,6 @@
 ---
 title: Glossary
+disableTableOfContents: true
 ---
 
 import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"

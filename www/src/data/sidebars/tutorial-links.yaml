@@ -8,8 +8,6 @@
       link: /tutorial/part-zero/
       ui: steps
       items:
-        - title: Overview of core technologies
-          link: /tutorial/part-zero/#overview-of-core-technologies
         - title: Familiarize with the command line
           link: /tutorial/part-zero/#familiarize-yourself-with-the-command-line
         - title: Install Node.js and npm
@@ -22,6 +20,8 @@
           link: /tutorial/part-zero/#create-a-gatsby-site
         - title: Set up a code editor
           link: /tutorial/part-zero/#set-up-a-code-editor
+        - title: Overview of core technologies
+          link: /tutorial/part-zero/#overview-of-core-technologies
     - title: 1. Get to know Gatsby building blocks
       link: /tutorial/part-one/
       ui: steps
@@ -114,9 +114,11 @@
       link: /tutorial/theme-tutorials/
       items:
         - title: Using a Theme
-          link: /tutorial/using-a-theme
+          link: /tutorial/using-a-theme/
         - title: Using Multiple Themes Together
           link: /tutorial/using-multiple-themes-together/
+        - title: Building a Theme
+          link: /tutorial/building-a-theme/
     - title: Additional Tutorials
       link: /tutorial/additional-tutorials/
       items:
@@ -131,6 +133,8 @@
         - title: Adding Images to a WordPress Site
           link: /tutorial/wordpress-image-tutorial/
         - title: Using the Prismic with GraphQL Source Plugin
-          link: /tutorial/prismic-source-graphql-tutorial
+          link: /tutorial/prismic-source-graphql-tutorial/
         - title: Writing Documentation with Docz
           link: /tutorial/writing-documentation-with-docz/
+        - title: Making a Blog with Netlify CMS
+          link: /tutorial/blog-netlify-cms-tutorial/

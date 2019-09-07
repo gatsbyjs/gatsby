@@ -68,14 +68,6 @@ exports.onRouteUpdateDelayed = true
  * exports.onRouteUpdate = ({ location, prevLocation }) => {
  *   console.log('new pathname', location.pathname)
  *   console.log('old pathname', prevLocation ? prevLocation.pathname : null)
- *
- *   // Track pageview with google analytics
- *   window.ga(
- *     `set`,
- *     `page`,
- *     location.pathname + location.search + location.hash,
- *   )
- *   window.ga(`send`, `pageview`)
  * }
  */
 exports.onRouteUpdate = true

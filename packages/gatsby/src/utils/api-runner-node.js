@@ -6,9 +6,8 @@ const { bindActionCreators } = require(`redux`)
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
 const getCache = require(`./get-cache`)
-const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
-const createContentDigest = require(`./create-content-digest`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
   buildUnionType,
@@ -245,15 +244,6 @@ module.exports = async (api, args = {}, pluginSource) =>
       apiSpan.setTag(key, value)
     })
 
-    // Check that the API is documented.
-    // "FAKE_API_CALL" is used when code needs to trigger something
-    // to happen once the the API queue is empty. Ideally of course
-    // we'd have an API (returning a promise) for that. But this
-    // works nicely in the meantime.
-    if (!apiList[api] && api !== `FAKE_API_CALL`) {
-      reporter.panic(`api: "${api}" is not a valid Gatsby api`)
-    }
-
     const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
 
@@ -284,9 +274,7 @@ module.exports = async (api, args = {}, pluginSource) =>
     if (api === `setFieldsOnGraphQLNodeType`) {
       id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
     } else if (api === `onCreateNode`) {
-      id = `${api}${apiRunInstance.startTime}${
-        args.node.internal.contentDigest
-      }${args.traceId}`
+      id = `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${args.traceId}`
     } else if (api === `preprocessSource`) {
       id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
     } else if (api === `onCreatePage`) {
@@ -296,9 +284,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       // `parentSpan` field that can be quite large. So we omit it
       // before calling stringify
       const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
-      id = `${api}|${apiRunInstance.startTime}|${
-        apiRunInstance.traceId
-      }|${argsJson}`
+      id = `${api}|${apiRunInstance.startTime}|${apiRunInstance.traceId}|${argsJson}`
     }
     apiRunInstance.id = id
 

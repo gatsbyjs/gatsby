@@ -15,8 +15,8 @@ import {
   fonts,
   fontWeights,
 } from "../utils/presets"
-import logo from "../monogram.svg"
-import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
+import logo from "../assets/monogram.svg"
+import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 

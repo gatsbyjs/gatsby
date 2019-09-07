@@ -146,7 +146,7 @@ The default site language should be configured in your root plugin options. Any 
 
 The [`lang` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
 
-Using localization requires name based cache busting when using a unique icon in automatic mode for a specific locale. This is automatically enabled if you provide and `icon` in a specific locale without uniquely defining `icons`. If you're using icon creation in hybrid or manual mode for your locales, rememmber to provide unique icon paths.
+Using localization requires name-based cache busting when using a unique icon in automatic mode for a specific locale. This is automatically enabled if you provide an `icon` in a specific locale without uniquely defining `icons`. If you're using icon creation in hybrid or manual mode for your locales, remember to provide unique icon paths.
 
 ```js
 // in gatsby-config.js
@@ -263,7 +263,7 @@ module.exports = {
 
 #### Disable or configure "[cache busting](https://www.keycdn.com/support/what-is-cache-busting)"
 
-Cache Busting allows your updated icon to be quickly/easily visible to your sites visitors. HTTP caches could otherwise keep an old icon around for days and weeks. Cache busting can only done in 'automatic' and 'hybrid' modes.
+Cache Busting allows your updated icon to be quickly/easily visible to your site's visitors. HTTP caches could otherwise keep an old icon around for days and weeks. Cache busting can only be done in 'automatic' and 'hybrid' modes.
 
 Cache busting works by calculating a unique "digest" of the provided icon and modifying links or file names of generated images with that unique digest. If you ever update your icon, the digest will change and caches will be busted.
 

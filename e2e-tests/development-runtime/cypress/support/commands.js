@@ -1,4 +1,4 @@
-import "cypress-testing-library/add-commands"
+import "@testing-library/cypress/add-commands"
 
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy

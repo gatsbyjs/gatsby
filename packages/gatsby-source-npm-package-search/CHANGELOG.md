@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.7...gatsby-source-npm-package-search@2.1.8) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.6...gatsby-source-npm-package-search@2.1.7) (2019-08-29)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17178](https://github.com/gatsbyjs/gatsby/issues/17178)) ([77dad68](https://github.com/gatsbyjs/gatsby/commit/77dad68))
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.5...gatsby-source-npm-package-search@2.1.6) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.4...gatsby-source-npm-package-search@2.1.5) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency got to v8.3.2 ([#16881](https://github.com/gatsbyjs/gatsby/issues/16881)) ([ac583b1](https://github.com/gatsbyjs/gatsby/commit/ac583b1))
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.3...gatsby-source-npm-package-search@2.1.4) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency algoliasearch to ^3.33.0 ([#16804](https://github.com/gatsbyjs/gatsby/issues/16804)) ([0c1f580](https://github.com/gatsbyjs/gatsby/commit/0c1f580))
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.2...gatsby-source-npm-package-search@2.1.3) (2019-08-06)
+
+### Bug Fixes
+
+- **www:** fallback to github & unpkg to get README.md ([#16322](https://github.com/gatsbyjs/gatsby/issues/16322)) ([f38b40d](https://github.com/gatsbyjs/gatsby/commit/f38b40d))
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.1...gatsby-source-npm-package-search@2.1.2) (2019-07-12)
 
 **Note:** Version bump only for package gatsby-source-npm-package-search

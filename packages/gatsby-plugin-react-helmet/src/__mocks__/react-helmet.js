@@ -7,6 +7,7 @@ const helmet = {
   noscript: { toComponent: () => `noscript-component` },
   script: { toComponent: () => `script-component` },
   style: { toComponent: () => `style-component` },
+  base: { toComponent: () => `base-component` },
 }
 
 module.exports = {
