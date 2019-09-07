@@ -4380,19 +4380,6 @@
   categories:
     - Blog
     - WordPress
-- title: On Earth Right Now
-  main_url: https://oern.tv
-  url: https://oern.tv
-  source_url: https://github.com/cadejscroggins/oern.tv
-  description: >
-    A curated list of live video feeds from around the world—built with GatsbyJS.
-  categories:
-    - Directory
-    - Entertainment
-    - Gallery
-  built_by: Cade Scroggins
-  built_by_url: https://cadejs.com
-  featured: false
 - title: Oliver Gomes Portfolio
   main_url: https://oliver-gomes.github.io/v4/
   url: https://oliver-gomes.github.io/v4/
