@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.19...gatsby-plugin-sharp@2.2.20) (2019-09-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** convert "overlayWith" to "composite" ([#17392](https://github.com/gatsbyjs/gatsby/issues/17392)) ([49913ba](https://github.com/gatsbyjs/gatsby/commit/49913ba)), closes [#17162](https://github.com/gatsbyjs/gatsby/issues/17162)
+
 ## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.18...gatsby-plugin-sharp@2.2.19) (2019-09-01)
 
 ### Bug Fixes

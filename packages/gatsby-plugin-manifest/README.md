@@ -263,7 +263,7 @@ module.exports = {
 
 #### Disable or configure "[cache busting](https://www.keycdn.com/support/what-is-cache-busting)"
 
-Cache Busting allows your updated icon to be quickly/easily visible to your sites visitors. HTTP caches could otherwise keep an old icon around for days and weeks. Cache busting can only done in 'automatic' and 'hybrid' modes.
+Cache Busting allows your updated icon to be quickly/easily visible to your site's visitors. HTTP caches could otherwise keep an old icon around for days and weeks. Cache busting can only be done in 'automatic' and 'hybrid' modes.
 
 Cache busting works by calculating a unique "digest" of the provided icon and modifying links or file names of generated images with that unique digest. If you ever update your icon, the digest will change and caches will be busted.
 

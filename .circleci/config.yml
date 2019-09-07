@@ -319,7 +319,10 @@ workflows:
           requires:
             - lint
             - unit_tests_node8
-      - unit_tests_www
+      - unit_tests_www:
+          requires:
+            - lint
+            - unit_tests_node8
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:

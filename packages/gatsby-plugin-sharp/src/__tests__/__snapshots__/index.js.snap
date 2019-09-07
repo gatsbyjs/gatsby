@@ -10,6 +10,38 @@ Object {
 }
 `;
 
+exports[`gatsby-plugin-sharp duotone fixed 1`] = `
+Object {
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
+  "height": 100,
+  "originalName": undefined,
+  "src": "/static/1234/59dbf/test.png",
+  "srcSet": "/static/1234/59dbf/test.png 1x",
+  "tracedSVG": undefined,
+  "width": 100,
+}
+`;
+
+exports[`gatsby-plugin-sharp duotone fluid 1`] = `
+Object {
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
+  "density": 72,
+  "originalImg": "/static/1234/59dbf/test.png",
+  "originalName": undefined,
+  "presentationHeight": 100,
+  "presentationWidth": 100,
+  "sizes": "(max-width: 100px) 100vw, 100px",
+  "src": "/static/1234/59dbf/test.png",
+  "srcSet": "/static/1234/51d83/test.png 25w,
+/static/1234/851fc/test.png 50w,
+/static/1234/59dbf/test.png 100w",
+  "srcSetType": "image/png",
+  "tracedSVG": undefined,
+}
+`;
+
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
