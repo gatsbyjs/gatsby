@@ -3,7 +3,7 @@ title: Schema connections
 ---
 
 > This documentation isn't up to date with latest
-> [schema customization changes](/docs/schema-customization). Help Gatsby by
+> [schema customization changes](/docs/docs/schema-customization.md). Help Gatsby by
 > making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
 
 ## What are schema connections?
