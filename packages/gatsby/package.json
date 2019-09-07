@@ -33,7 +33,7 @@
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-remove-graphql-queries": "^2.7.6",
     "babel-preset-gatsby": "^0.2.12",
-    "better-opn": "0.1.4",
+    "better-opn": "1.0.0",
     "better-queue": "^3.8.10",
     "bluebird": "^3.5.5",
     "browserslist": "3.2.8",
