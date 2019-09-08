@@ -14,12 +14,6 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
-export interface StaticQueryProps {
-  query: any
-  render?: RenderCallback
-  children?: RenderCallback
-}
-
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
