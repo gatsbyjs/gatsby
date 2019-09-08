@@ -180,7 +180,7 @@ module.exports = {
             options: {
               aliases: {
                 console: `bash`,
-                dosini: `bash`,
+                dosini: `ini`,
                 env: `bash`,
                 sh: `bash`,
                 terminal: `bash`,
@@ -190,7 +190,7 @@ module.exports = {
                 mdx: `markdown`,
                 styl: `stylus`,
                 gitignore: `none`,
-                htaccess: `none`,
+                htaccess: `apacheconf`,
                 flowchart: `none`,
               },
             },
