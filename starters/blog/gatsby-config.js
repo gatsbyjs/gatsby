@@ -53,6 +53,15 @@ module.exports = {
         //trackingId: `ADD YOUR TRACKING ID HERE`,
       },
     },
+    {
+      resolve: 'gatsby-plugin-fathom',
+      options: {
+        // Fathom server URL. Defaults to `cdn.usefathom.com`
+        // trackingUrl: 'your-fathom-instance.com',
+
+        // siteId: 'ADD YOUR SITE ID HERE'
+      }
+    },
     `gatsby-plugin-feed`,
     {
       resolve: `gatsby-plugin-manifest`,
