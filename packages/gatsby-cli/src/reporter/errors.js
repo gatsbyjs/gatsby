@@ -100,14 +100,7 @@ const sanitizeStructuredStackTrace = stack => {
   // then sanitize individual call site objects to make sure we don't
   // emit objects with extra fields that won't be handled by consumers
   stack = stack.map(callSite =>
-    _.pick(callSite, [
-      `columnNumber`,
-      `fileName`,
-      `functionName`,
-      `lineNumber`,
-      `methodName`,
-      `typeName`,
-    ])
+    _.pick(callSite, [`fileName`, `functionName`, `columnNumber`, `lineNumber`])
   )
 
   return stack
