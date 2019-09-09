@@ -288,9 +288,9 @@ module.exports = (
       if (imageStats && imageStats.isTransparent) removeBgImage = true
     }
 
-    const bgImage = removeBgImage ? `` : ` background-image: url('${placeholderImageData}');`
-      ? ` background-image: url('${placeholderImageData}');`
-      : ``
+    const bgImage = removeBgImage
+      ? ``
+      : ` background-image: url('${placeholderImageData}');`
 
     let rawHTML = `
   <span
