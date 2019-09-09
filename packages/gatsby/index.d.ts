@@ -52,7 +52,9 @@ export interface StaticQueryProps<T = any> {
  * @see https://www.gatsbyjs.org/docs/static-query/
  */
 
-export class StaticQuery<T = any> extends React.Component<StaticQueryProps<T>> {}
+export class StaticQuery<T = any> extends React.Component<
+  StaticQueryProps<T>
+> {}
 
 /**
  * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
