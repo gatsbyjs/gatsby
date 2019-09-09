@@ -1,6 +1,6 @@
 ---
 title: Building The New Third And Grove Website In Gatsby
-date: 2019-08-30
+date: 2019-09-12
 author: Grant Glidewell
 excerpt: "How we built our new website with a modern front end for Drupal using Gatsby"
 tags:
