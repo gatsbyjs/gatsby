@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.44...gatsby-cli@2.7.45) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix mapping stack trace to source file after dependency upgrade ([#17445](https://github.com/gatsbyjs/gatsby/issues/17445)) ([f38d8c7](https://github.com/gatsbyjs/gatsby/commit/f38d8c7))
+
 ## [2.7.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.43...gatsby-cli@2.7.44) (2019-09-03)
 
 **Note:** Version bump only for package gatsby-cli

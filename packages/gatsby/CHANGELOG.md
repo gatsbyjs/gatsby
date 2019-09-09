@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.9...gatsby@2.15.10) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix mapping stack trace to source file after dependency upgrade ([#17445](https://github.com/gatsbyjs/gatsby/issues/17445)) ([f38d8c7](https://github.com/gatsbyjs/gatsby/commit/f38d8c7))
+- **gatsby:** Handle Windows drive letter casing correctly ([#17492](https://github.com/gatsbyjs/gatsby/issues/17492)) ([beddfb8](https://github.com/gatsbyjs/gatsby/commit/beddfb8))
+- **gatsby:** Use concrete type resolver on interface fields ([#17284](https://github.com/gatsbyjs/gatsby/issues/17284)) ([fd72133](https://github.com/gatsbyjs/gatsby/commit/fd72133))
+
 ## [2.15.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.8...gatsby@2.15.9) (2019-09-05)
 
 **Note:** Version bump only for package gatsby
