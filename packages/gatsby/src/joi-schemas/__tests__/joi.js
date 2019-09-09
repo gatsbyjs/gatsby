@@ -102,7 +102,7 @@ describe(`gatsby config`, () => {
   })
 })
 
-describe.only(`node schema`, () => {
+describe(`node schema`, () => {
   it(`allows correct nodes`, async () => {
     const node = {
       id: `foo`,
