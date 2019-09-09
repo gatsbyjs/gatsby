@@ -10,13 +10,13 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "@babel/preset-typescript": "^7.3.3",
-    "@babel/runtime": "^7.5.5",
+    "@babel/preset-typescript": "^7.6.0",
+    "@babel/runtime": "^7.6.0",
     "babel-plugin-remove-graphql-queries": "^2.7.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
     "babel-preset-gatsby-package": "^0.2.3",
     "cross-env": "^5.2.1"
   },
