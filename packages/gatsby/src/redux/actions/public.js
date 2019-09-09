@@ -557,7 +557,8 @@ const typeOwners = {}
  * to add your node id, instead use the action creator `createParentChildLink`.
  * @param {Object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
- * and Gatsby core.
+ * and Gatsby core. Only fields described below are allowed in `internal` object.
+ * Using any type of custom fields will result in validation errors.
  * @param {string} node.internal.mediaType An optional field to indicate to
  * transformer plugins that your node has raw content they can transform.
  * Use either an official media type (we use mime-db as our source
