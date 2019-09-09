@@ -14,7 +14,7 @@ exports[`disableBgImageOnAlpha disables background image on transparent images w
   >
     <span
     class=\\"gatsby-resp-image-background-image\\"
-    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-size: cover; display: block;\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; display: block;\\"
   ></span>
   <img
         class=\\"gatsby-resp-image-image\\"
