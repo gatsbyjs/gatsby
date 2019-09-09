@@ -7229,3 +7229,17 @@
   built_by: Somo
   built_by_url: https://www.somoglobal.com
   featured: false
+- title: Third and Grove
+  url: https://www.thirdandgrove.com
+  main_url: https://www.thirdandgrove.com
+  source_url: https://github.com/thirdandgrove/tagd8_gatsby
+  description: >
+    A digital agency slaying the mundane one pixel at a time.
+  categories:
+    - Agency
+    - Marketing
+    - Open Source
+    - Technology
+  built_by: Third and Grove
+  built_by_url: https://www.thirdandgrove.com
+  featured: false
