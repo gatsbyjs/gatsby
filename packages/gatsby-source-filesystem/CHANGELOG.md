@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.21...gatsby-source-filesystem@2.1.22) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Queue all operations which happ… ([#17404](https://github.com/gatsbyjs/gatsby/issues/17404)) ([ad74957](https://github.com/gatsbyjs/gatsby/commit/ad74957))
+
 ## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.20...gatsby-source-filesystem@2.1.21) (2019-09-04)
 
 **Note:** Version bump only for package gatsby-source-filesystem

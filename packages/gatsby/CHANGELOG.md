@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.11...gatsby@2.15.12) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** move default-site-plugin lower than plugin page-creation ([#17409](https://github.com/gatsbyjs/gatsby/issues/17409)) ([4af8a59](https://github.com/gatsbyjs/gatsby/commit/4af8a59))
+
 ## [2.15.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.10...gatsby@2.15.11) (2019-09-09)
 
 ### Bug Fixes
