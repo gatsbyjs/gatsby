@@ -1,6 +1,6 @@
 describe(`focus management`, () => {
   it(`Focus router wrapper after navigation to regular page (from index)`, () => {
-    cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, { timeout: 5000 })
+    cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, { timeout: 10000 })
 
     cy.changeFocus()
     cy.assertRouterWrapperFocus(false)

@@ -26,6 +26,8 @@
               link: /docs/gatsby-on-windows/
             - title: Gatsby on Linux
               link: /docs/gatsby-on-linux/
+            - title: Configuring CA Certificates
+              link: /docs/configuring-ca-certificates/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
@@ -126,7 +128,7 @@
             - title: Sourcing From Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
-            - title: Sourcing from SaaS Services*
+            - title: Sourcing from SaaS Services
               link: /docs/sourcing-from-saas-services/
               breadcrumbTitle: From SaaS Services
             - title: Sourcing from Private APIs
@@ -154,6 +156,9 @@
                 - title: Sourcing from Drupal
                   link: /docs/sourcing-from-drupal/
                   breadcrumbTitle: Drupal
+            - title: Sourcing Content from JSON or YAML
+              link: /docs/sourcing-content-from-json-or-yaml/
+              breadcrumbTitle: JSON or YAML
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           breadcrumbTitle: Querying with GraphQL
@@ -238,6 +243,8 @@
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
               link: /docs/themes/using-multiple-gatsby-themes/
+            - title: Shadowing
+              link: /docs/themes/shadowing/
             - title: Building Themes
               link: /docs/themes/building-themes/
             - title: Converting a Starter
@@ -383,9 +390,6 @@
                 - title: Adding Page Transitions with gatsby-plugin-transition-link
                   link: /docs/adding-page-transitions-with-plugin-transition-link/
                   breadcrumbTitle: gatsby-plugin-transition-link
-                - title: Adding Page Transitions with gatsby-plugin-page-transitions*
-                  link: /docs/adding-page-transitions-with-plugin-page-transitions/
-                  breadcrumbTitle: gatsby-plugin-page-transitions
             - title: Making Your Site Accessible
               link: /docs/making-your-site-accessible/
             - title: Routing

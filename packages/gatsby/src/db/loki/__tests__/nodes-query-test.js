@@ -28,7 +28,7 @@ if (process.env.GATSBY_DB_NODES === `loki`) {
       },
     })
     const queryArgs = { filter: { foo: { eq: `bar` } } }
-    const args = { gqlType, queryArgs }
+    const args = { gqlType, queryArgs, nodeTypeNames: [gqlType.name] }
     return await Promise.all(_.map(new Array(n), () => runQuery(args)))
   }
 

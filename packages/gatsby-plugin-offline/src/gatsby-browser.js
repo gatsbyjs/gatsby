@@ -55,7 +55,7 @@ exports.onServiceWorkerActive = ({
   })
 }
 
-exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {
+function setPathResources(path, getResourceURLsForPathname) {
   // do nothing if the SW has just updated, since we still have old pages in
   // memory which we don't want to be whitelisted
   if (window.___swUpdated) return
@@ -66,13 +66,23 @@ exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {
     if (serviceWorker.controller === null) {
       // if SW is not installed, we need to record any prefetches
       // that happen so we can then add them to SW cache once installed
-      prefetchedPathnames.push(pathname)
+      prefetchedPathnames.push(path)
     } else {
+      const resources = getResourceURLsForPathname(path)
       serviceWorker.controller.postMessage({
         gatsbyApi: `setPathResources`,
-        path: pathname,
-        resources: getResourceURLsForPathname(pathname),
+        path,
+        resources,
       })
     }
   }
+}
+
+exports.onRouteUpdate = ({ location, getResourceURLsForPathname }) => {
+  const pathname = location.pathname.replace(__PATH_PREFIX__, ``)
+  setPathResources(pathname, getResourceURLsForPathname)
+}
+
+exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {
+  setPathResources(pathname, getResourceURLsForPathname)
 }

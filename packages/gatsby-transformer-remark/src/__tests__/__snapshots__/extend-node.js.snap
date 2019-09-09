@@ -593,7 +593,14 @@ Object {
   "frontmatter": Object {
     "title": "my little pony",
   },
-  "tableOfContents": null,
+  "tableOfContents": "<ul>
+<li>
+<p></p>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>",
 }
 `;
 

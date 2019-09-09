@@ -3640,6 +3640,7 @@
     - Responsive Design
     - Syntax Highlight in Code.
 - url: https://gastby-starter-organization.netlify.com/
+- url: https://gatsby-starter-organization.netlify.com/
   repo: https://github.com/geocine/gatsby-starter-organization
   description: A Gatsby starter template for organization pages. Using the Gatsby theme "@geocine/gatsby-theme-organization"
   tags:
@@ -3709,3 +3710,111 @@
     - Search using ElasticLunr
     - Theme by gatsby-tech-blog-theme
     - Deployed in Netlify
+- url: https://brevifolia-gatsby-forestry.netlify.com/
+  repo: https://github.com/kendallstrautman/brevifolia-gatsby-forestry
+  description: A minimal starter blog built with Gatsby & Forestry CMS
+  tags:
+    - CMS:Forestry.io
+    - Blog
+    - Markdown
+    - Styling:SCSS
+  features:
+    - Blog post listing with previews (image + summary) for each blog post
+    - Minimalist, responsive design & typography
+    - Create new markdown posts dynamically
+    - Configured to work automatically with Forestry CMS
+    - Customizable 'info' page
+    - Simple layout & scss architecture, easily extensible
+- url: https://gatsby-firebase-starter.netlify.com/
+  repo: https://github.com/ovidiumihaibelciug/gatsby-firebase-starter
+  description: Starter / Project Boilerplate for Authentication and creating Dynamic pages from collections with Firebase and Gatsby.js
+  tags:
+    - Firebase
+    - SEO
+    - Styling:SCSS
+    - Authentication
+    - PWA
+  features:
+    - Authentication with Firebase
+    - Programmatically create pages from a firestore collection
+    - Protected Routes with Authorization
+    - Email verification
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://gatsby-typescript-minimal.netlify.com/
+  repo: https://github.com/benbarber/gatsby-typescript-minimal
+  description: A minimal, bare-bones Typescript starter for Gatsby
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - SEO
+  features:
+    - Bare-bones starter
+    - TypeScript
+    - TSLint
+    - Prettier
+    - Styled Components
+    - Sitemap Generation
+    - Google Analytics
+- url: https://agility-gatsby-starter.netlify.com
+  repo: https://github.com/agility/agility-gatsby-starter
+  description: Get started with Gatsby and Agility CMS using a minimal blog.
+  tags:
+    - CMS:Other
+    - Blog
+    - SEO
+  features:
+    - A bare-bones starter Blog to get you off and running with Agility CMS and Gatsby.
+- url: https://gatsby-starter-dot.netlify.com/
+  repo: https://github.com/chronisp/gatsby-starter
+  description: Gatsby Starter for creating portfolio & blog.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Netlify
+    - Portfolio
+    - Redux
+    - SEO
+    - Styling:Material
+  features:
+    - Extensible & responsive design using Material UI (palette, typography & breakpoints configuration)
+    - Blog integration with Contentful CMS (GraphQL queries)
+    - Redux (connect actions & props easily using custom HOF)
+    - Support for Netlify deployment
+    - SEO
+    - Prettier code styling
+- url: https://johnjkerr.github.io/gatsby-creative/
+  repo: https://github.com/JohnJKerr/gatsby-creative
+  description: Gatsby implementation of the Start Bootstrap Creative template
+  tags:
+    - Gallery
+    - Portfolio
+    - Styling:Bootstrap
+    - Styling:SCSS
+  features:
+    - Start Bootstrap Creative template converted to React/Gatsby
+    - React Scrollspy used to track page position
+    - React Bootstrap used to create modal portfolio carousel
+    - GitHub Actions deployment to GitHub Pages demonstrated
+- url: https://bonneville.netlify.com/
+  repo: https://github.com/bagseye/bonneville
+  description: A starter blog template for Gatsby
+  tags:
+    - Blog
+    - SEO
+  features:
+    - Extensible & responsive design
+    - Blog integration
+    - SEO
+- url: https://gatsby-starter-headless-wp.netlify.com
+  repo: https://github.com/crock/gatsby-starter-headless-wordpress
+  description: A starter Gatsby site to quickly implement a site for headless WordPress
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Wordpress
+  features:
+    - New Header
+    - Responsive
+    - Sidebar that displays recent blog posts
