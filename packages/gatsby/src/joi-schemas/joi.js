@@ -97,6 +97,7 @@ export const nodeSchema = Joi.object()
         content: Joi.string().allow(``),
         description: Joi.string(),
         ignoreType: Joi.boolean(),
+        counter: Joi.number(),
       })
       .unknown(false), // Don't allow non-standard fields
   })
