@@ -19,7 +19,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog#readme",
   "dependencies": {
     "@emotion/core": "^10.0.17",
-    "@mdx-js/react": "^1.4.4",
+    "@mdx-js/react": "^1.4.5",
     "@theme-ui/prism": "^0.2.40",
     "@theme-ui/typography": "^0.2.40",
     "deepmerge": "^4.0.0",
