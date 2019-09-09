@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.45...gatsby-cli@2.7.46) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-cli:** added effective condition to check empty path ([#17482](https://github.com/gatsbyjs/gatsby/issues/17482)) ([693fa58](https://github.com/gatsbyjs/gatsby/commit/693fa58))
+
 ## [2.7.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.44...gatsby-cli@2.7.45) (2019-09-09)
 
 ### Bug Fixes

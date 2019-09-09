@@ -100,8 +100,7 @@ describe(`tests`, () => {
       expect(api.actions.createNode).toBeCalled()
     })
 
-    // change event doesn't queue currently - this need to be fixed
-    it.skip(`queues node creation from changed files`, async () => {
+    it(`queues node creation from changed files`, async () => {
       const api = createApi()
       const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
       // allow microtasks execution
@@ -138,8 +137,7 @@ describe(`tests`, () => {
       expect(api.actions.createNode).toBeCalled()
     })
 
-    // unlink event doesn't queue currently - this need to be fixed
-    it.skip(`queues node deletion from deleted files`, async () => {
+    it(`queues node deletion from deleted files`, async () => {
       const api = createApi()
       const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
       // allow microtasks execution
@@ -157,8 +155,7 @@ describe(`tests`, () => {
       expect(api.actions.deleteNode).toBeCalled()
     })
 
-    // unlinkDir event doesn't queue currently - this need to be fixed
-    it.skip(`queues node deletion from deleted directories`, async () => {
+    it(`queues node deletion from deleted directories`, async () => {
       const api = createApi()
       const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
       // allow microtasks execution
