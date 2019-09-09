@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.10...gatsby@2.15.11) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** Allow overriding options for default instance of gatsby-plugin-page-creator ([#17420](https://github.com/gatsbyjs/gatsby/issues/17420)) ([9bdeda4](https://github.com/gatsbyjs/gatsby/commit/9bdeda4))
+
 ## [2.15.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.9...gatsby@2.15.10) (2019-09-09)
 
 ### Bug Fixes
