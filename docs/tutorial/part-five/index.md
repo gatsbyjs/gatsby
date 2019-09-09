@@ -75,20 +75,21 @@ module.exports = {
 }
 ```
 
-Save that and restart the gatsby development server. Then open up GraphiQL
-again.
+Save that and restart the gatsby development server. Then open up GraphiQL again.
 
-If you bring up the autocomplete window, you'll see:
+In the explorer pane, you'll see `allFile` and `file` available as selections:
 
 ![graphiql-filesystem](graphiql-filesystem.png)
 
-Hit <kbd>Enter</kbd> on `allFile` then type <kbd>Ctrl + Enter</kbd> to run a
-query.
+Click the `allFile` dropdown. Position your cursor after `allFile` in the query area, and then type <kbd>Ctrl + Enter</kbd>. This will pre-fill a query for the `id` of each file. Press "Play" to run the query:
 
 ![filesystem-query](filesystem-query.png)
 
-Delete the `id` from the query and bring up the autocomplete again (<kbd>Ctrl +
-Space</kbd>).
+In the Explorer pane, the `id` field has automatically been selected. Make selections for more fields by checking the field's corresponding checkbox. Press "Play" to run the query again, with the new fields:
+
+![filesystem-explorer-options](filesystem-explorer-options.png)
+
+Alternatively, you can add fields by using the autocomplete shortcut (<kbd>Ctrl + Space</kbd>). This will show queryable fields on the `File` nodes.
 
 ![filesystem-autocomplete](filesystem-autocomplete.png)
 
@@ -97,8 +98,8 @@ each time to re-run the query. You'll see something like this:
 
 ![allfile-query](allfile-query.png)
 
-The result is an array of File "nodes" (node is a fancy name for an object in a
-"graph"). Each File object has the fields you queried for.
+The result is an array of `File` "nodes" (node is a fancy name for an object in a
+"graph"). Each `File` node object has the fields you queried for.
 
 ## Build a page with a GraphQL query
 
