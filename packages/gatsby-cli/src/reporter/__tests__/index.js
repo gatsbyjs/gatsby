@@ -17,15 +17,10 @@ jest
 // We don't care about this
 reporter.log = jest.fn()
 
-const getErrorMessageCount = fn =>
-  fn.mock.calls.reduce((count, [object]) => {
-    if (object.level === `ERROR`) {
-      return count + 1
-    }
-    return count
-  }, 0)
-
-// const errorMessageCount = reporterActions.createLog
+const getErrorMessages = fn =>
+  fn.mock.calls
+    .map(([firstArg]) => firstArg)
+    .filter(structuredMessage => structuredMessage.level === `ERROR`)
 
 describe(`report.error`, () => {
   beforeEach(() => {
@@ -37,7 +32,8 @@ describe(`report.error`, () => {
       `Error string passed to reporter`,
       new Error(`Message from new Error`)
     )
-    const generatedError = reporterActions.createLog.mock.calls[0][0]
+    const generatedError = getErrorMessages(reporterActions.createLog)[0]
+
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -45,7 +41,7 @@ describe(`report.error`, () => {
 
   it(`handles "Error" signature correctly`, () => {
     reporter.error(new Error(`Message from new Error`))
-    const generatedError = reporterActions.createLog.mock.calls[0][0]
+    const generatedError = getErrorMessages(reporterActions.createLog)[0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -57,10 +53,13 @@ describe(`report.error`, () => {
       new Error(`Message 2 from new Error`),
       new Error(`Message 3 from new Error`),
     ])
-    expect(getErrorMessageCount(reporterActions.createLog)).toEqual(3)
+
+    const generatedErrors = getErrorMessages(reporterActions.createLog)
+
+    expect(generatedErrors.length).toEqual(3)
 
     // get final generated object
-    const generatedError = reporterActions.createLog.mock.calls[2][0]
+    const generatedError = generatedErrors[2]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -70,13 +69,13 @@ describe(`report.error`, () => {
     reporter.error({
       id: `95312`,
     })
-    const generatedError = reporterActions.createLog.mock.calls[0][0]
+    const generatedError = getErrorMessages(reporterActions.createLog)[0]
     expect(generatedError).toMatchSnapshot()
   })
 
   it(`handles "String" signature correctly`, () => {
     reporter.error(`Error created in Jest`)
-    const generatedError = reporterActions.createLog.mock.calls[0][0]
+    const generatedError = getErrorMessages(reporterActions.createLog)[0]
     expect(generatedError).toMatchSnapshot()
   })
 })
