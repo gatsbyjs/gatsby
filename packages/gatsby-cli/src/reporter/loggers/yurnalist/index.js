@@ -1,12 +1,9 @@
 import { onLogAaction } from "../../redux/index"
 import {
-  STATEFUL_LOG,
-  LOG,
-  ACTIVITY_START,
-  SPINNER,
-  PROGRESS,
-  ACTIVITY_UPDATE,
-  ACTIVITY_END,
+  Actions,
+  LogLevels,
+  ActivityLogLevels,
+  ActivityTypes,
 } from "../../constants"
 
 const { createReporter } = require(`yurnalist`)
@@ -18,21 +15,21 @@ const yurnalist = createReporter({ emoji: true, verbose: true })
 const activities = {}
 
 const levelToYurnalist = {
-  LOG: yurnalist.log.bind(yurnalist),
-  WARNING: yurnalist.warn.bind(yurnalist),
-  ERROR: yurnalist.error.bind(yurnalist),
-  INFO: yurnalist.info.bind(yurnalist),
-  SUCCESS: yurnalist.success.bind(yurnalist),
-  ACTIVITY_SUCCESS: yurnalist.success.bind(yurnalist),
-  ACTIVITY_FAILED: text => {
+  [LogLevels.Log]: yurnalist.log.bind(yurnalist),
+  [LogLevels.Warning]: yurnalist.warn.bind(yurnalist),
+  [LogLevels.Error]: yurnalist.error.bind(yurnalist),
+  [LogLevels.Info]: yurnalist.info.bind(yurnalist),
+  [LogLevels.Success]: yurnalist.success.bind(yurnalist),
+  [ActivityLogLevels.Success]: yurnalist.success.bind(yurnalist),
+  [ActivityLogLevels.Failed]: text => {
     yurnalist.log(`${chalk.red(`failed`)} ${text}`)
   },
 }
 
 onLogAaction(action => {
   switch (action.type) {
-    case STATEFUL_LOG:
-    case LOG: {
+    case Actions.StatefulLog:
+    case Actions.Log: {
       const yurnalistMethod = levelToYurnalist[action.payload.level]
       if (!yurnalistMethod) {
         process.stdout.write(`NO "${action.payload.level}" method\n`)
@@ -48,8 +45,8 @@ onLogAaction(action => {
       }
       break
     }
-    case ACTIVITY_START: {
-      if (action.payload.type === SPINNER) {
+    case ActivityLogLevels.Start: {
+      if (action.payload.type === ActivityTypes.Spinner) {
         const spinner = yurnalist.activity()
         spinner.tick(action.payload.text)
         const activity = {
@@ -77,7 +74,7 @@ onLogAaction(action => {
           },
         }
         activities[action.payload.id] = activity
-      } else if (action.payload.type === PROGRESS) {
+      } else if (action.payload.type === ActivityTypes.Progress) {
         const fmt = text =>
           ` [:bar] :current/:total :elapsed s :percent ${text}`
         const bar = new ProgressBar(fmt(action.payload.text), {
@@ -106,14 +103,14 @@ onLogAaction(action => {
       }
       break
     }
-    case ACTIVITY_UPDATE: {
+    case ActivityLogLevels.Update: {
       const activity = activities[action.payload.name]
       if (activity && activity.update) {
         activity.update(action.payload)
       }
       break
     }
-    case ACTIVITY_END: {
+    case ActivityLogLevels.End: {
       const activity = activities[action.payload.id]
       if (activity) {
         if (activity.end) {

@@ -1,15 +1,4 @@
-const {
-  SET_STATUS,
-  LOG,
-  ACTIVITY_START,
-  ACTIVITY_UPDATE,
-  ACTIVITY_PENDING,
-  ACTIVITY_END,
-  ACTIVITY_CANCEL,
-  SET_LOGS,
-  STATEFUL_LOG,
-  CLEAR_STATEFUL_LOG,
-} = require(`../constants`)
+const { Actions, ActivityLogLevels } = require(`../constants`)
 
 module.exports = (
   state = {
@@ -20,12 +9,12 @@ module.exports = (
   },
   action
 ) => {
-  if (action.type === SET_STATUS) {
+  if (action.type === Actions.SetStatus) {
     state = {
       ...state,
       status: action.payload,
     }
-  } else if (action.type === LOG) {
+  } else if (action.type === Actions.Log) {
     if (!action.payload.text) {
       action.payload.text = `\u2800`
     }
@@ -34,7 +23,7 @@ module.exports = (
       ...state,
       messages: [...state.messages, action.payload],
     }
-  } else if (action.type === ACTIVITY_START) {
+  } else if (action.type === ActivityLogLevels.Start) {
     const { id } = action.payload
     state = {
       ...state,
@@ -44,8 +33,8 @@ module.exports = (
       },
     }
   } else if (
-    action.type === ACTIVITY_UPDATE ||
-    action.type === ACTIVITY_PENDING
+    action.type === ActivityLogLevels.Update ||
+    action.type === ActivityLogLevels.Pending
   ) {
     const { id, ...rest } = action.payload
     const activity = state.activities[id]
@@ -60,7 +49,10 @@ module.exports = (
         },
       },
     }
-  } else if (action.type === ACTIVITY_END || action.type === ACTIVITY_CANCEL) {
+  } else if (
+    action.type === ActivityLogLevels.End ||
+    action.type === ActivityLogLevels.Cancel
+  ) {
     const { id, status, duration } = action.payload
     const activity = state.activities[id]
     if (!activity) {
@@ -78,14 +70,14 @@ module.exports = (
       ...state,
       activities,
     }
-  } else if (action.type === SET_LOGS) {
+  } else if (action.type === Actions.SetLogs) {
     state = action.payload
-  } else if (action.type === STATEFUL_LOG) {
+  } else if (action.type === Actions.StatefulLog) {
     state = {
       ...state,
       statefulMessages: [...state.statefulMessages, action.payload],
     }
-  } else if (action.type === CLEAR_STATEFUL_LOG) {
+  } else if (action.type === Actions.ClearStatefulLog) {
     state = {
       ...state,
       statefulMessages: state.statefulMessages.filter(

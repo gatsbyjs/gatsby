@@ -5,22 +5,10 @@ const { trackCli } = require(`gatsby-telemetry`)
 const { bindActionCreators } = require(`redux`)
 const { dispatch, getStore } = require(`./index`)
 const {
-  SET_STATUS,
-  LOG,
-  CLEAR_STATEFUL_LOG,
-  ACTIVITY_START,
-  ACTIVITY_PENDING,
-  ACTIVITY_CANCEL,
-  ACTIVITY_END,
-  ACTIVITY_UPDATE,
-  PENDING,
-  PROGRESS,
-  IN_PROGRESS,
-  NOT_STARTED,
-  FAILED,
-  SUCCESS,
-  CANCELLED,
-  HIDDEN,
+  Actions,
+  ActivityLogLevels,
+  ActivityStatuses,
+  ActivityTypes,
 } = require(`../constants`)
 const signalExit = require(`signal-exit`)
 
@@ -40,13 +28,19 @@ const getGlobalStatus = (id, status) => {
     const activityStatus =
       activityId === id ? status : logs.activities[activityId].status
 
-    if (activityStatus === IN_PROGRESS || activityStatus === NOT_STARTED) {
-      return IN_PROGRESS
-    } else if (activityStatus === FAILED && generatedStatus !== IN_PROGRESS) {
-      return FAILED
+    if (
+      activityStatus === ActivityStatuses.InProgress ||
+      activityStatus === ActivityStatuses.NotStarted
+    ) {
+      return ActivityStatuses.InProgress
+    } else if (
+      activityStatus === ActivityStatuses.Failed &&
+      generatedStatus !== ActivityStatuses.InProgress
+    ) {
+      return ActivityStatuses.Failed
     }
     return generatedStatus
-  }, SUCCESS)
+  }, ActivityStatuses.Success)
 }
 
 const verySpecialDebounce = (fn, waitingTime) => {
@@ -91,7 +85,7 @@ const verySpecialDebounce = (fn, waitingTime) => {
 const debouncedSetStatus = status =>
   verySpecialDebounce(dispatchFn => {
     dispatchFn({
-      type: SET_STATUS,
+      type: Actions.SetStatus,
       payload: status,
     })
   }, 1000)
@@ -116,7 +110,7 @@ const actions = {
     stack,
   }) => {
     return {
-      type: LOG,
+      type: Actions.Log,
       payload: {
         level,
         text,
@@ -140,11 +134,11 @@ const actions = {
   },
   clearStatefulLogs: group => {
     return {
-      type: CLEAR_STATEFUL_LOG,
+      type: Actions.ClearStatefulLog,
       payload: group,
     }
   },
-  createPendingActivity: ({ id, status = NOT_STARTED }) => {
+  createPendingActivity: ({ id, status = ActivityStatuses.NotStarted }) => {
     const actionsToEmit = []
 
     const logsState = getStore().getState().logs
@@ -156,10 +150,10 @@ const actions = {
     }
 
     actionsToEmit.push({
-      type: ACTIVITY_PENDING,
+      type: ActivityLogLevels.Pending,
       payload: {
         id,
-        type: PENDING,
+        type: ActivityTypes.Pending,
         status,
       },
     })
@@ -167,7 +161,14 @@ const actions = {
     return actionsToEmit
   },
   setStatus: status => debouncedSetStatus(status),
-  startActivity: ({ id, text, type, status = IN_PROGRESS, current, total }) => {
+  startActivity: ({
+    id,
+    text,
+    type,
+    status = ActivityStatuses.InProgress,
+    current,
+    total,
+  }) => {
     const actionsToEmit = []
 
     const logsState = getStore().getState().logs
@@ -179,7 +180,7 @@ const actions = {
     }
 
     actionsToEmit.push({
-      type: ACTIVITY_START,
+      type: ActivityLogLevels.Start,
       payload: {
         id,
         uuid: uuidv4(),
@@ -203,18 +204,18 @@ const actions = {
       return null
     }
     const actionsToEmit = []
-    if (activity.type === PENDING) {
+    if (activity.type === ActivityTypes.Pending) {
       actionsToEmit.push({
-        type: ACTIVITY_CANCEL,
+        type: ActivityLogLevels.Cancel,
         payload: {
           id,
-          status: CANCELLED,
+          status: ActivityStatuses.Cancelled,
           type: activity.type,
         },
       })
     } else {
       let duration = 0
-      if (activity.status === IN_PROGRESS) {
+      if (activity.status === ActivityStatuses.InProgress) {
         duration = getElapsedTimeMS(activity)
         trackCli(`ACTIVITY_DURATION`, {
           name: activity.name,
@@ -223,7 +224,7 @@ const actions = {
       }
 
       actionsToEmit.push({
-        type: ACTIVITY_END,
+        type: ActivityLogLevels.End,
         payload: {
           uuid: activity.uuid,
           id,
@@ -233,16 +234,16 @@ const actions = {
         },
       })
 
-      if (activity.type !== HIDDEN) {
+      if (activity.type !== ActivityTypes.Hidden) {
         actionsToEmit.push(
           actions.createLog({
             text: activity.text,
-            // TODO: Move to constants
-            level: `ACTIVITY_${status}`,
+            level: ActivityLogLevels[status.toUpperCase()],
             duration,
             statusText:
               activity.statusText ||
-              (status === SUCCESS && activity.type === PROGRESS
+              (status === ActivityStatuses.Success &&
+              activity.type === ActivityTypes.Progress
                 ? `${activity.current}/${activity.total} ${(
                     activity.total / duration
                   ).toFixed(2)}/s`
@@ -274,7 +275,7 @@ const actions = {
     }
 
     return {
-      type: ACTIVITY_UPDATE,
+      type: ActivityLogLevels.Update,
       payload: {
         uuid: activity.uuid,
         id,

@@ -5,20 +5,7 @@ const { isCI } = require(`ci-info`)
 const signalExit = require(`signal-exit`)
 const reporterActions = require(`./redux/actions`)
 
-const {
-  DEBUG,
-  SUCCESS,
-  INFO,
-  WARNING,
-  LOG,
-  IN_PROGRESS,
-  NOT_STARTED,
-  INTERRUPTED,
-  FAILED,
-  SPINNER,
-  HIDDEN,
-  PROGRESS,
-} = require(`./constants`)
+const { LogLevels, ActivityStatuses, ActivityTypes } = require(`./constants`)
 
 let inkExists = false
 try {
@@ -76,8 +63,11 @@ const interuptActivities = () => {
   const { activities } = getStore().getState().logs
   Object.keys(activities).forEach(activityId => {
     const activity = activities[activityId]
-    if (activity.status === IN_PROGRESS || activity.status === NOT_STARTED) {
-      reporter.completeActivity(activityId, INTERRUPTED)
+    if (
+      activity.status === ActivityStatuses.InProgress ||
+      activity.status === ActivityStatuses.NotStarted
+    ) {
+      reporter.completeActivity(activityId, ActivityStatuses.Interrupted)
     }
   })
 }
@@ -88,7 +78,7 @@ const prematureEnd = (code = 1) => {
   // if none of activity did explicitly fail
   reporterActions.createPendingActivity({
     id: `panic`,
-    status: FAILED,
+    status: ActivityStatuses.Failed,
   })
 
   interuptActivities()
@@ -206,20 +196,20 @@ const reporter: Reporter = {
   verbose: text => {
     if (isVerbose) {
       reporterActions.createLog({
-        level: DEBUG,
+        level: LogLevels.Debug,
         text,
       })
     }
   },
 
-  success: addMessage(SUCCESS),
-  info: addMessage(INFO),
-  warn: addMessage(WARNING),
-  log: addMessage(LOG),
+  success: addMessage(LogLevels.Success),
+  info: addMessage(LogLevels.Info),
+  warn: addMessage(LogLevels.Warning),
+  log: addMessage(LogLevels.Log),
 
   pendingActivity: reporterActions.createPendingActivity,
 
-  completeActivity: (id: string, status: string = SUCCESS) => {
+  completeActivity: (id: string, status: string = ActivityStatuses.Success) => {
     reporterActions.endActivity({ id, status })
   },
 
@@ -246,7 +236,7 @@ const reporter: Reporter = {
         reporterActions.startActivity({
           id,
           text,
-          type: SPINNER,
+          type: ActivityTypes.Spinner,
         })
       },
       setStatus: statusText => {
@@ -261,7 +251,7 @@ const reporter: Reporter = {
         console.log()
         reporterActions.endActivity({
           id,
-          status: FAILED,
+          status: ActivityStatuses.Failed,
         })
 
         reporter.panicOnBuild(...args)
@@ -271,7 +261,7 @@ const reporter: Reporter = {
 
         reporterActions.endActivity({
           id,
-          status: SUCCESS,
+          status: ActivityStatuses.Success,
         })
       },
       span,
@@ -309,7 +299,7 @@ const reporter: Reporter = {
         reporterActions.startActivity({
           id,
           text,
-          type: HIDDEN,
+          type: ActivityTypes.Hidden,
         })
       },
       end() {
@@ -317,7 +307,7 @@ const reporter: Reporter = {
 
         reporterActions.endActivity({
           id,
-          status: SUCCESS,
+          status: ActivityStatuses.Success,
         })
       },
       span,
@@ -350,7 +340,7 @@ const reporter: Reporter = {
         reporterActions.startActivity({
           id,
           text,
-          type: PROGRESS,
+          type: ActivityTypes.Progress,
           current: start,
           total,
         })
@@ -369,7 +359,7 @@ const reporter: Reporter = {
 
         reporterActions.endActivity({
           id,
-          status: FAILED,
+          status: ActivityStatuses.Failed,
         })
 
         reporter.panicOnBuild(...args)
@@ -378,7 +368,7 @@ const reporter: Reporter = {
         span.finish()
         reporterActions.endActivity({
           id,
-          status: SUCCESS,
+          status: ActivityStatuses.Success,
         })
       },
       set total(value) {

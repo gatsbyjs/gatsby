@@ -2,15 +2,7 @@ import React from "react"
 import { Box, Color } from "ink"
 import stripAnsi from "strip-ansi"
 
-import {
-  ACTIVITY_SUCCESS,
-  SUCCESS,
-  WARNING,
-  DEBUG,
-  INFO,
-  ACTIVITY_FAILED,
-  ACTIVITY_INTERRUPTED,
-} from "../../../constants"
+import { ActivityLogLevels, LogLevels } from "../../../constants"
 
 const ColorSwitcher = ({ hideColors, children, ...props }) => {
   if (hideColors) {
@@ -26,18 +18,18 @@ const createLabel = (text, color) => (...props) => (
 
 const getLabel = level => {
   switch (level) {
-    case ACTIVITY_SUCCESS:
-    case SUCCESS:
+    case ActivityLogLevels.Success:
+    case LogLevels.Success:
       return createLabel(`success`, `green`)
-    case WARNING:
+    case LogLevels.Warning:
       return createLabel(`warn`, `yellow`)
-    case DEBUG:
+    case LogLevels.Debug:
       return createLabel(`verbose`, `gray`)
-    case INFO:
+    case LogLevels.Info:
       return createLabel(`info`, `blue`)
-    case ACTIVITY_FAILED:
+    case ActivityLogLevels.Failed:
       return createLabel(`failed`, `red`)
-    case ACTIVITY_INTERRUPTED:
+    case ActivityLogLevels.Interrupted:
       return createLabel(`not finished`, `gray`)
 
     default:
