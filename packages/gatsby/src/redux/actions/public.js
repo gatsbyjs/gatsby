@@ -22,10 +22,9 @@ const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
 const isWindows = platform() === `win32`
-const delimiter = isWindows ? `\\` : `/`
 
 function getRelevantFilePathSegments(filePath) {
-  return filePath.split(delimiter).filter(s => s !== ``)
+  return filePath.split(`/`).filter(s => s !== ``)
 }
 
 const findChildren = initialChildren => {
@@ -295,7 +294,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       if (isWindows) {
         const segments = getRelevantFilePathSegments(page.component)
         page.component =
-          segments.shift().toUpperCase() + delimiter + segments.join(delimiter)
+          segments.shift().toUpperCase() + `/` + segments.join(`/`)
       }
 
       if (trueComponentPath !== page.component) {
