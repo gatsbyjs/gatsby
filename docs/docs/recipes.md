@@ -292,18 +292,61 @@ p {
 import "./src/styles/global.css"
 ```
 
-**Note:**
-You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
+> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
 
 3. Run `gatsby-develop` to observe the global styling being applied across your site.
 
-**Note:**
-This approach is not the best fit if you are using CSS-in-JS for styling your site, in which case a layout page with all the shared components should be used. This is covered in the next recipe.
+> **Note:** This approach is not the best fit if you are using CSS-in-JS for styling your site, in which case a layout page with all the shared components should be used. This is covered in the next recipe.
 
 #### Additional resources
 
 - More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
   <!-- - [Live example on Using global CSS files]() -->
+
+### Using global styles in a layout component
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/) with an index page component
+
+#### Directions
+
+You can add global styles to a [shared layout component](/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
+
+1. If you don't already have one, create a new directory in your site at `/src/components`.
+
+2. Inside the components directory, create two files: `layout.css` and `layout.js`.
+
+3. Add the following to `layout.css`:
+
+```css:title=/src/components/layout.css
+body {
+  background: red;
+}
+```
+
+4. Edit `layout.js` to import the CSS file and output layout markup:
+
+```jsx:title=/src/components/layout.js
+import React from "react"
+import "./layout.css"
+
+export default ({ children }) => <div>{children}</div>
+```
+
+5. Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
+
+```jsx:title=/src/pages/index.js
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => <Layout>Hello world!</Layout>
+```
+
+#### Additional resources
+
+- [Standard Styling with Global CSS Files](/docs/global-css/)
+- [More about layout components](/tutorial/part-three)
 
 ### Using Styled Components
 
