@@ -46,15 +46,19 @@ const Deprecated = ({ definition }) => {
   return null
 }
 
-const APILink = ({ definition, githubPath }) => {
-  if (definition.codeLocation && githubPath) {
+const APILink = ({ definition, relativeFilePath }) => {
+  if (definition.codeLocation && relativeFilePath) {
     return (
       <a
         css={{
           ...linkStyles,
           display: `inline-flex !important`,
         }}
-        href={`${githubPath}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
+        href={`https://github.com/gatsbyjs/gatsby/blob/${
+          process.env.COMMIT_SHA
+        }/packages/${relativeFilePath}#L${
+          definition.codeLocation.start.line
+        }-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
         <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
@@ -65,7 +69,7 @@ const APILink = ({ definition, githubPath }) => {
 
   if (
     definition.codeLocation &&
-    !githubPath &&
+    !relativeFilePath &&
     !Array.isArray(definition.codeLocation)
   ) {
     return (
@@ -74,7 +78,11 @@ const APILink = ({ definition, githubPath }) => {
           ...linkStyles,
           display: `inline-flex !important`,
         }}
-        href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${definition.codeLocation.file}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
+        href={`https://github.com/gatsbyjs/gatsby/blob/${
+          process.env.COMMIT_SHA
+        }/packages/${definition.codeLocation.file}#L${
+          definition.codeLocation.start.line
+        }-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
         <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
@@ -85,7 +93,7 @@ const APILink = ({ definition, githubPath }) => {
 
   if (
     definition.codeLocation &&
-    !githubPath &&
+    !relativeFilePath &&
     Array.isArray(definition.codeLocation)
   ) {
     return (
@@ -105,7 +113,9 @@ const APILink = ({ definition, githubPath }) => {
           {definition.codeLocation.map((loc, index) => (
             <LinkBox
               key={`${loc.file}${loc.start.line}-${loc.end.line}`}
-              href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${loc.file}#L${loc.start.line}-L${loc.end.line}`}
+              href={`https://github.com/gatsbyjs/gatsby/blob/${
+                process.env.COMMIT_SHA
+              }/packages/${loc.file}#L${loc.start.line}-L${loc.end.line}`}
               aria-label={`View source #${index + 1} on GitHub`}
             >
               {index + 1}
@@ -166,7 +176,7 @@ const Description = ({ definition }) => {
 
 const DocBlock = ({
   definition,
-  githubPath = null,
+  relativeFilePath = null,
   level = 0,
   linkableTitle = false,
   title = null,
@@ -220,7 +230,10 @@ const DocBlock = ({
           )}
         </div>
         {level === 0 && (
-          <APILink githubPath={githubPath} definition={definition} />
+          <APILink
+            relativeFilePath={relativeFilePath}
+            definition={definition}
+          />
         )}
         {definition.optional && <Optional />}
       </Header>

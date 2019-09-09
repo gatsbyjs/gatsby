@@ -15,7 +15,8 @@ The following guide walks through some examples to showcase the API.
 > created by automatic type inference, developers optimizing builds for larger
 > sites, and anyone interested in customizing Gatsby's schema generation.
 > As such, the guide assumes that you're somewhat familiar with GraphQL types
-> and with using Gatsby's Node APIs.
+> and with using Gatsby's Node APIs. For a higher level approach to using
+> Gatsby with GraphQL, refer to the [API reference](/docs/graphql-api/).
 
 ## Explicitly defining data types
 

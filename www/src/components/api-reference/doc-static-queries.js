@@ -16,14 +16,26 @@ export const DocumentationAndApiFragment = graphql`
   }
 `
 
-// list fragments in transformer sharp
-export const GraphqlFragmentQuery = ({ children }) => (
+// data for the graphql-api page
+export const GraphqlApiQuery = ({ children }) => (
   <StaticQuery
     query={graphql`
-      query GraphqlFragmentQuery {
-        allFile(
+      query FragmentsQuery {
+        transformerSharp: allFile(
           filter: {
             relativePath: { in: ["gatsby-transformer-sharp/src/fragments.js"] }
+          }
+        ) {
+          nodes {
+            relativePath
+            childrenDocumentationJs {
+              ...DocFragment
+            }
+          }
+        }
+        contentfulFragments: allFile(
+          filter: {
+            relativePath: { in: ["gatsby-source-contentful/src/fragments.js"] }
           }
         ) {
           nodes {
