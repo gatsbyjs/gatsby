@@ -23,12 +23,12 @@
     "@theme-ui/prism": "^0.2.40",
     "@theme-ui/typography": "^0.2.40",
     "deepmerge": "^4.0.0",
-    "gatsby-image": "^2.2.17",
-    "gatsby-plugin-emotion": "^4.1.5",
-    "gatsby-plugin-feed": "^2.3.11",
-    "gatsby-plugin-react-helmet": "^3.1.6",
+    "gatsby-image": "^2.2.18",
+    "gatsby-plugin-emotion": "^4.1.6",
+    "gatsby-plugin-feed": "^2.3.12",
+    "gatsby-plugin-react-helmet": "^3.1.7",
     "gatsby-plugin-theme-ui": "^0.2.41",
-    "gatsby-plugin-twitter": "^2.1.5",
+    "gatsby-plugin-twitter": "^2.1.6",
     "gatsby-theme-blog-core": "^1.0.2",
     "mdx-utils": "0.2.0",
     "react-helmet": "^5.2.1",
@@ -39,7 +39,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.15.11",
+    "gatsby": "^2.15.12",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
