@@ -288,7 +288,7 @@ module.exports = (
       if (imageStats && imageStats.isTransparent) removeBgImage = true
     }
 
-    const bgImage = !removeBgImage
+    const bgImage = removeBgImage ? `` : ` background-image: url('${placeholderImageData}');`
       ? ` background-image: url('${placeholderImageData}');`
       : ``
 
