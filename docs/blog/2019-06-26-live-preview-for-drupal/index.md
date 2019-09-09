@@ -39,7 +39,7 @@ Here's how it works:
 
 ### Step 1: Sign Up for Gatsby Preview Beta
 
-You will need to sign up for a Gatsby Preview beta account, so this is a meta beta. You can sign up for a [Gatsby Preview 14 day trial here](https://www.gatsbyjs.com/preview/?_ga=2.156650491.1704520703.1561474285-32798346.1550767689) and get more information on the [Gatsby blog](/blog/2019-03-22-introducing-gatsby-preview-beta/).
+You will need to sign up for a Gatsby Preview account, so this is a meta beta. You can sign up for a [Gatsby Preview 14 day trial here](https://www.gatsbyjs.com/preview/?_ga=2.156650491.1704520703.1561474285-32798346.1550767689) and get more information on the [Gatsby blog](/blog/2019-03-22-introducing-gatsby-preview-beta/).
 
 ### Step 2: Install Gatsby Source Drupal
 
