@@ -522,6 +522,15 @@ const dropQueryOperators = filter =>
     return acc
   }, {})
 
+const getFields = (schema, type, node) => {
+  if (!isAbstractType(type)) {
+    return type.getFields()
+  }
+
+  const concreteType = type.resolveType(node)
+  return schema.getType(concreteType).getFields()
+}
+
 async function resolveRecursive(
   nodeModel,
   schemaComposer,
@@ -531,7 +540,7 @@ async function resolveRecursive(
   queryFields,
   fieldsToResolve
 ) {
-  const gqlFields = type.getFields()
+  const gqlFields = getFields(schema, type, node)
   let resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
