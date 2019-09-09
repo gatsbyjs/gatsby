@@ -11,10 +11,10 @@ const errorSchema = Joi.object().keys({
   stack: Joi.array()
     .items(
       Joi.object().keys({
-        fileName: Joi.string(),
-        functionName: Joi.string(),
-        lineNumber: Joi.number(),
-        columnNumber: Joi.number(),
+        fileName: Joi.string().allow(null),
+        functionName: Joi.string().allow(null),
+        lineNumber: Joi.number().allow(null),
+        columnNumber: Joi.number().allow(null),
       })
     )
     .allow(null),
