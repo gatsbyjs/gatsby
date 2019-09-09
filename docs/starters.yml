@@ -3794,6 +3794,24 @@
     - Extensible & responsive design
     - Blog integration
     - SEO
+- url: https://gatsby-starter-i18next-sanity.netlify.com/en
+  repo: https://github.com/johannesspohr/gatsby-starter-i18next-sanity
+  description: A basic starter which integrates translations with i18next and localized sanity input.
+  tags:
+    - I18n
+    - Localized
+    - CMS:sanity.io
+    - I18next
+    - Sitemap
+  features:
+    - Showcases advanced i18n techniques with i18next and sanity.io
+    - Correct URLs for the languages (language in the path, translated slugs)
+    - Multilanguage content from sanity
+    - Snippets translation
+    - Optimized bundle size (don't ship all translations at once)
+    - Alternate links to other languages
+    - Sitemap with language information
+    - Localized 404 pages
 - url: https://gatsby-skeleton.netlify.com/
   repo: https://github.com/msallent/gatsby-skeleton
   description: Gatsby starter with TypeScript and all sort of linting
