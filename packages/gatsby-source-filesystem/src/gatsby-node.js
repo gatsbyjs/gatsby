@@ -39,7 +39,7 @@ const createFSMachine = (
   let pathQueue = []
   const flushPathQueue = () => {
     let queue = pathQueue.slice()
-    pathQueue = null
+    pathQueue = []
     return Promise.all(
       // eslint-disable-next-line consistent-return
       queue.map(({ op, path }) => {
@@ -76,12 +76,18 @@ const createFSMachine = (
           states: {
             NOT_READY: {
               on: {
-                CHOKIDAR_READY: `READY`,
-                CHOKIDAR_ADD: { actions: `queueNodeProcessing` },
-                CHOKIDAR_CHANGE: { actions: `queueNodeProcessing` },
-                CHOKIDAR_UNLINK: { actions: `queueNodeDeleting` },
+                CHOKIDAR_READY: `FLUSHING`,
               },
-              exit: `flushPathQueue`,
+            },
+            FLUSHING: {
+              invoke: {
+                src: `flushPathQueue`,
+                onDone: [
+                  { target: `READY`, cond: `isPathQueueEmpty` },
+                  { target: `FLUSHING` },
+                ],
+                // TODO: onError ?
+              },
             },
             READY: {
               on: {
@@ -90,6 +96,11 @@ const createFSMachine = (
                 CHOKIDAR_UNLINK: { actions: `deletePathNode` },
               },
             },
+          },
+          on: {
+            CHOKIDAR_ADD: { actions: `queueNodeProcessing` },
+            CHOKIDAR_CHANGE: { actions: `queueNodeProcessing` },
+            CHOKIDAR_UNLINK: { actions: `queueNodeDeleting` },
           },
         },
       },
@@ -108,15 +119,20 @@ const createFSMachine = (
           }
           deletePathNode(path)
         },
-        flushPathQueue(_, { resolve, reject }) {
-          flushPathQueue().then(resolve, reject)
-        },
         queueNodeDeleting(_, { path }) {
           pathQueue.push({ op: `delete`, path })
         },
         queueNodeProcessing(_, { path }) {
           pathQueue.push({ op: `upsert`, path })
         },
+      },
+      guards: {
+        isPathQueueEmpty() {
+          return pathQueue.length === 0
+        },
+      },
+      services: {
+        flushPathQueue,
       },
     }
   )
@@ -196,7 +212,15 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 
   return new Promise((resolve, reject) => {
     watcher.on(`ready`, () => {
-      fsMachine.send({ type: `CHOKIDAR_READY`, resolve, reject })
+      const { unsubscribe } = fsMachine.subscribe(state => {
+        // TODO: decide when to reject
+        if (state.matches(`CHOKIDAR.READY`)) {
+          unsubscribe()
+          resolve()
+        }
+      })
+
+      fsMachine.send({ type: `CHOKIDAR_READY` })
     })
   })
 }
