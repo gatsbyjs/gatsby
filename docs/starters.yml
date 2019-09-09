@@ -3794,6 +3794,27 @@
     - Extensible & responsive design
     - Blog integration
     - SEO
+- url: https://nehalem.netlify.com/
+  repo: https://github.com/nehalist/gatsby-starter-nehalem
+  description: A starter for the Gatsby Nehalem Theme
+  tags:
+    - Blog
+    - Language:TypeScript
+    - Markdown
+    - Search
+    - SEO
+  features:
+    - Fully responsive
+    - Highly optimized (Lighthouse score ~400)
+    - SEO optimized (with open graph, Twitter Card, JSON-LD, RSS and sitemap)
+    - Syntax highlighting
+    - Search functionality
+    - Multi navigations
+    - Static pages
+    - Fully typed with TypeScript
+    - Tagging
+    - Theming
+    - Customizable
 - url: https://gatsby-starter-headless-wp.netlify.com
   repo: https://github.com/crock/gatsby-starter-headless-wordpress
   description: A starter Gatsby site to quickly implement a site for headless WordPress
