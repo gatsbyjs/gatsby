@@ -8,7 +8,7 @@ const {
 const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
-const { createTypes } = actions
+const { createTypes, createFieldExtension } = actions
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
@@ -374,6 +374,118 @@ describe(`Queryable Node interfaces`, () => {
       },
       test: {
         id: `test1`,
+      },
+    }
+    expect(results).toEqual(expected)
+  })
+
+  it(`uses concrete type resolvers when filtering on interface fields`, async () => {
+    const nodes = [
+      {
+        id: `author1`,
+        internal: { type: `AuthorYaml` },
+        name: `Author 1`,
+        birthday: new Date(Date.UTC(1978, 8, 26)),
+      },
+      {
+        id: `author2`,
+        internal: { type: `AuthorJson` },
+        name: `Author 2`,
+        birthday: new Date(Date.UTC(1978, 8, 26)),
+      },
+      {
+        id: `post1`,
+        internal: { type: `ThisPost` },
+        author: `author1`,
+      },
+      {
+        id: `post2`,
+        internal: { type: `ThatPost` },
+        author: `author2`,
+      },
+    ]
+    nodes.forEach(node =>
+      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    )
+    dispatch(
+      createFieldExtension({
+        name: `echo`,
+        args: {
+          value: `String!`,
+        },
+        extend(options) {
+          return {
+            resolve() {
+              return options.value
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes(`
+        interface Post @nodeInterface {
+          id: ID!
+          author: Author @link
+        }
+        type ThisPost implements Node & Post {
+          author: Author @link
+        }
+        type ThatPost implements Node & Post {
+          author: Author @link
+        }
+        interface Author @nodeInterface {
+          id: ID!
+          name: String
+          echo: String @echo(value: "Interface")
+        }
+        type AuthorJson implements Node & Author {
+          name: String
+          echo: String @echo(value: "Concrete Type")
+        }
+        type AuthorYaml implements Node & Author {
+          name: String
+          echo: String @echo(value: "Another Concrete Type")
+        }
+      `)
+    )
+    const query = `
+      {
+        allPost(
+          filter: {
+            author: {
+              echo: {
+                in: ["Concrete Type", "Another Concrete Type"]
+              }
+            }
+          }
+        ) {
+          nodes {
+            author {
+              name
+              echo
+            }
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allPost: {
+        nodes: [
+          {
+            author: {
+              name: `Author 1`,
+              echo: `Another Concrete Type`,
+            },
+          },
+          {
+            author: {
+              name: `Author 2`,
+              echo: `Concrete Type`,
+            },
+          },
+        ],
       },
     }
     expect(results).toEqual(expected)

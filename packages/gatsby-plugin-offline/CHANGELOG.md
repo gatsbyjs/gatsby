@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.3...gatsby-plugin-offline@3.0.4) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** set path resources on route update to ensure initial page is cached ([#17408](https://github.com/gatsbyjs/gatsby/issues/17408)) ([556c4cf](https://github.com/gatsbyjs/gatsby/commit/556c4cf))
+
 ## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.2...gatsby-plugin-offline@3.0.3) (2019-09-05)
 
 ### Bug Fixes

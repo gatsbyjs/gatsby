@@ -51,4 +51,24 @@ describe(`Load plugins`, () => {
 
     expect(plugins).toMatchSnapshot()
   })
+
+  it(`Overrides the options for gatsby-plugin-page-creator`, async () => {
+    const config = {
+      plugins: [
+        {
+          resolve: `gatsby-plugin-page-creator`,
+          options: {
+            path: `${__dirname}/src/pages`,
+            ignore: [`___Test___.(js|ts)?(x)`],
+          },
+        },
+      ],
+    }
+
+    let plugins = await loadPlugins(config)
+
+    plugins = replaceFieldsThatCanVary(plugins)
+
+    expect(plugins).toMatchSnapshot()
+  })
 })
