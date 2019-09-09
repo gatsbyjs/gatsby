@@ -183,17 +183,6 @@ module.exports = (config = {}, rootDir = null) => {
     })
   }
 
-  // Add the site's default "plugin" i.e. gatsby-x files in root of site.
-  plugins.push({
-    resolve: slash(process.cwd()),
-    id: createPluginId(`default-site-plugin`),
-    name: `default-site-plugin`,
-    version: createFileContentHash(process.cwd(), `gatsby-*`),
-    pluginOptions: {
-      plugins: [],
-    },
-  })
-
   // the order of all of these page-creators matters. The "last plugin wins",
   // so the user's site comes last, and each page-creator instance has to
   // match the plugin definition order before that. This works fine for themes
@@ -210,6 +199,18 @@ module.exports = (config = {}, rootDir = null) => {
       })
     )
   })
+
+  // Add the site's default "plugin" i.e. gatsby-x files in root of site.
+  plugins.push({
+    resolve: slash(process.cwd()),
+    id: createPluginId(`default-site-plugin`),
+    name: `default-site-plugin`,
+    version: createFileContentHash(process.cwd(), `gatsby-*`),
+    pluginOptions: {
+      plugins: [],
+    },
+  })
+
   const program = store.getState().program
 
   // default options for gatsby-plugin-page-creator

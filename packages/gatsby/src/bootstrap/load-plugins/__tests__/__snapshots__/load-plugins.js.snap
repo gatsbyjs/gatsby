@@ -76,18 +76,6 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "default-site-plugin",
-    "nodeAPIs": Array [],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -168,13 +156,9 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "",
@@ -288,18 +272,6 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "default-site-plugin",
-    "nodeAPIs": Array [],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -396,13 +368,9 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "",
