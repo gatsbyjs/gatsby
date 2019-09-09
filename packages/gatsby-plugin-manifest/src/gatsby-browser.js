@@ -13,14 +13,17 @@ exports.onRouteUpdate = function({ location }, pluginOptions) {
 }
 
 function getManifestForPathname(pathname, localizedApps) {
-  let suffix = ``
-  if (Array.isArray(localizedApps)) {
-    const appOptions = localizedApps.find(app =>
-      RegExp(`^${app.start_url}.*`, `i`).test(pathname)
-    )
-    if (appOptions) {
-      suffix = `_${appOptions.lang}`
-    }
+  const defaultFilename = `manifest.webmanifest`
+  if (!Array.isArray(localizedApps)) {
+    return defaultFilename
   }
-  return `manifest${suffix}.webmanifest`
+
+  const appOptions = localizedApps.find(app =>
+    RegExp(`^${app.start_url}.*`, `i`).test(pathname)
+  )
+  if (!appOptions) {
+    return defaultFilename
+  }
+
+  return `manifest_${appOptions.lang}.webmanifest`
 }
