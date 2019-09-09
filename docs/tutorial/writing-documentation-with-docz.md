@@ -170,7 +170,7 @@ module.exports = {
         // Your options here
       },
     },
-    //hightlight-end
+    //highlight-end
     // Your plugins go here
   ],
 }
