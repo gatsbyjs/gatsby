@@ -84,4 +84,4 @@ Modern web development frameworks like React and Angular are the latest step tra
 
 In the next blog post, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial), we’ll move on to the final piece of the changing content landscape puzzle.
 
-We'll discuss how growing smartphone usage both in the US and globally has made mobile performance crucial -- as well as suddenly easier to optimize in the Headless CMS world. We’ll also explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.
+We'll discuss how growing smartphone usage both in the US and globally has made mobile performance crucial -- as well as suddenly easier to optimize in the [headless CMS](/docs/headless-cms/) world. We’ll also explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.
