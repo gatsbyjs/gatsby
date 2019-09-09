@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.45...gatsby-cli@2.7.46) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-cli:** added effective condition to check empty path ([#17482](https://github.com/gatsbyjs/gatsby/issues/17482)) ([693fa58](https://github.com/gatsbyjs/gatsby/commit/693fa58))
+
+## [2.7.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.44...gatsby-cli@2.7.45) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix mapping stack trace to source file after dependency upgrade ([#17445](https://github.com/gatsbyjs/gatsby/issues/17445)) ([f38d8c7](https://github.com/gatsbyjs/gatsby/commit/f38d8c7))
+
+## [2.7.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.43...gatsby-cli@2.7.44) (2019-09-03)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.42...gatsby-cli@2.7.43) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency execa to v2 ([#17029](https://github.com/gatsbyjs/gatsby/issues/17029)) ([59d3472](https://github.com/gatsbyjs/gatsby/commit/59d3472))
+
+## [2.7.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.41...gatsby-cli@2.7.42) (2019-09-01)
+
+### Bug Fixes
+
+- **gatsby-cli:** fix cloning repository with commithash ([#17263](https://github.com/gatsbyjs/gatsby/issues/17263)) ([b1717cf](https://github.com/gatsbyjs/gatsby/commit/b1717cf))
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.7.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.40...gatsby-cli@2.7.41) (2019-08-30)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.7.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.39...gatsby-cli@2.7.40) (2019-08-24)
 
 ### Bug Fixes

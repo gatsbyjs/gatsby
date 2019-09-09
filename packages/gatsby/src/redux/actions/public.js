@@ -4,13 +4,14 @@ const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { platform } = require(`os`)
 const path = require(`path`)
 const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
+const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
@@ -20,19 +21,29 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
+const isWindows = platform() === `win32`
 
-const findChildrenRecursively = (children = []) => {
-  children = children.concat(
-    ...children.map(child => {
-      const newChildren = getNode(child).children
-      if (_.isArray(newChildren) && newChildren.length > 0) {
-        return findChildrenRecursively(newChildren)
-      } else {
-        return []
-      }
-    })
-  )
+function getRelevantFilePathSegments(filePath) {
+  return filePath.split(`/`).filter(s => s !== ``)
+}
 
+const findChildren = initialChildren => {
+  const children = [...initialChildren]
+  const queue = [...initialChildren]
+  const traversedNodes = new Set()
+
+  while (queue.length > 0) {
+    const currentChild = getNode(queue.pop())
+    if (!currentChild || traversedNodes.has(currentChild.id)) {
+      continue
+    }
+    traversedNodes.add(currentChild.id)
+    const newChildren = currentChild.children
+    if (_.isArray(newChildren) && newChildren.length > 0) {
+      children.push(...newChildren)
+      queue.push(...newChildren)
+    }
+  }
   return children
 }
 
@@ -280,6 +291,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
       }
 
+      if (isWindows) {
+        const segments = getRelevantFilePathSegments(page.component)
+        page.component =
+          segments.shift().toUpperCase() + `/` + segments.join(`/`)
+      }
+
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
           const markers = page.component
@@ -403,7 +420,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      `Attempting to create page "${
+        page.path
+      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
     )
   }
 
@@ -482,7 +501,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
     node &&
-    findChildrenRecursively(node.children)
+    findChildren(node.children)
       .map(getNode)
       .map(createDeleteAction)
 
@@ -510,7 +529,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
-    nodes.map(n => findChildrenRecursively(getNode(n).children))
+    nodes.map(n => findChildren(getNode(n).children))
   )
 
   const deleteNodesAction = {
@@ -520,6 +539,10 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   }
   return deleteNodesAction
 }
+
+// We add a counter to internal to make sure we maintain insertion order for
+// backends that don't do that out of the box
+let NODE_COUNTER = 0
 
 const typeOwners = {}
 /**
@@ -615,6 +638,9 @@ const createNode = (
     node.internal = {}
   }
 
+  NODE_COUNTER++
+  node.internal.counter = NODE_COUNTER
+
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -673,7 +699,7 @@ const createNode = (
     )
   }
 
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   const oldNode = getNode(node.id)
 
@@ -745,7 +771,7 @@ const createNode = (
           payload: node,
         }
       }
-      deleteActions = findChildrenRecursively(oldNode.children)
+      deleteActions = findChildren(oldNode.children)
         .map(getNode)
         .map(createDeleteAction)
     }
@@ -906,7 +932,7 @@ actions.createNodeField = (
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   return {
     type: `ADD_FIELD_TO_NODE`,
