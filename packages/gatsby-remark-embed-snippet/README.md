@@ -189,7 +189,7 @@ You can also specify specific lines for Prism to highlight using
 `highlight-line` and `highlight-next-line` comments. You can also specify a
 range of lines to highlight, relative to a `highlight-range` comment.
 
-**JavaScript example:**
+**JavaScript example**:
 
 ```js
 import React from "react"
@@ -206,7 +206,7 @@ ReactDOM.render(
 )
 ```
 
-**CSS example:**
+**CSS example**:
 
 ```css
 html {
@@ -220,12 +220,13 @@ html {
 }
 ```
 
-**HTML example:**
+**HTML example**:
 
 ```html
 <html>
   <body>
-    <h1>highlight me</h1><!-- highlight-line -->
+    <h1>highlight me</h1>
+    <!-- highlight-line -->
     <p>
       <!-- highlight-next-line -->
       And me
@@ -234,7 +235,7 @@ html {
 </html>
 ```
 
-**YAML example:**
+**YAML example**:
 
 ```yaml
 foo: "highlighted" # highlight-line
@@ -248,7 +249,7 @@ quz: "highlighted"
 
 It's also possible to specify a range of lines to be hidden.
 
-**JavaScript example:**
+**JavaScript example**:
 
 ```js
 // hide-range{1-2}
