@@ -3794,3 +3794,14 @@
     - Extensible & responsive design
     - Blog integration
     - SEO
+- url: https://gatsby-starter-headless-wp.netlify.com
+  repo: https://github.com/crock/gatsby-starter-headless-wordpress
+  description: A starter Gatsby site to quickly implement a site for headless WordPress
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Wordpress
+  features:
+    - New Header
+    - Responsive
+    - Sidebar that displays recent blog posts
