@@ -4,6 +4,7 @@ const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { platform } = require(`os`)
 const path = require(`path`)
 const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
@@ -20,6 +21,11 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
+const isWindows = platform() === `win32`
+
+function getRelevantFilePathSegments(filePath) {
+  return filePath.split(`/`).filter(s => s !== ``)
+}
 
 const findChildren = initialChildren => {
   const children = [...initialChildren]
@@ -283,6 +289,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         )
 
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
+      }
+
+      if (isWindows) {
+        const segments = getRelevantFilePathSegments(page.component)
+        page.component =
+          segments.shift().toUpperCase() + `/` + segments.join(`/`)
       }
 
       if (trueComponentPath !== page.component) {
