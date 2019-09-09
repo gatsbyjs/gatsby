@@ -17,6 +17,16 @@ jest
 // We don't care about this
 reporter.log = jest.fn()
 
+const getErrorMessageCount = fn =>
+  fn.mock.calls.reduce((count, [object]) => {
+    if (object.level === `ERROR`) {
+      return count + 1
+    }
+    return count
+  }, 0)
+
+// const errorMessageCount = reporterActions.createLog
+
 describe(`report.error`, () => {
   beforeEach(() => {
     reporterActions.createLog.mockClear()
@@ -47,7 +57,7 @@ describe(`report.error`, () => {
       new Error(`Message 2 from new Error`),
       new Error(`Message 3 from new Error`),
     ])
-    expect(reporterActions.createLog).toHaveBeenCalledTimes(3)
+    expect(getErrorMessageCount(reporterActions.createLog)).toEqual(3)
 
     // get final generated object
     const generatedError = reporterActions.createLog.mock.calls[2][0]
@@ -61,16 +71,12 @@ describe(`report.error`, () => {
       id: `95312`,
     })
     const generatedError = reporterActions.createLog.mock.calls[0][0]
-    expect(generatedError).toMatchSnapshot({
-      stack: expect.any(Array),
-    })
+    expect(generatedError).toMatchSnapshot()
   })
 
   it(`handles "String" signature correctly`, () => {
     reporter.error(`Error created in Jest`)
     const generatedError = reporterActions.createLog.mock.calls[0][0]
-    expect(generatedError).toMatchSnapshot({
-      stack: expect.any(Array),
-    })
+    expect(generatedError).toMatchSnapshot()
   })
 })

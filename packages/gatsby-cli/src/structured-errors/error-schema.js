@@ -8,7 +8,16 @@ const Position = Joi.object().keys({
 const errorSchema = Joi.object().keys({
   code: Joi.string(),
   text: Joi.string(),
-  stack: Joi.array().items(Joi.object({}).unknown()),
+  stack: Joi.array()
+    .items(
+      Joi.object().keys({
+        fileName: Joi.string(),
+        functionName: Joi.string(),
+        lineNumber: Joi.number(),
+        columnNumber: Joi.number(),
+      })
+    )
+    .allow(null),
   level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
   type: Joi.string().valid([`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`]),
   filePath: Joi.string(),
