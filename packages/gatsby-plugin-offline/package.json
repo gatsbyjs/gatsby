@@ -34,7 +34,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.100"
+    "gatsby": "^2.4.0"
   },
   "repository": {
     "type": "git",
