@@ -222,10 +222,11 @@ html {
 
 **HTML example**:
 
+<!-- prettier-ignore-start -->
 ```html
 <html>
   <body>
-    <h1>highlight me</h1><!-- highlight-line -->
+    <h1>highlight me</h1> <!-- highlight-line -->
     <p>
       <!-- highlight-next-line -->
       And me
@@ -233,6 +234,7 @@ html {
   </body>
 </html>
 ```
+<!-- prettier-ignore-end -->
 
 **YAML example**:
 
