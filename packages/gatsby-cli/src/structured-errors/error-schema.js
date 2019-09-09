@@ -11,7 +11,7 @@ const errorSchema = Joi.object().keys({
   stack: Joi.array()
     .items(
       Joi.object().keys({
-        fileName: Joi.string().allow(null),
+        fileName: Joi.string(),
         functionName: Joi.string().allow(null),
         lineNumber: Joi.number().allow(null),
         columnNumber: Joi.number().allow(null),
