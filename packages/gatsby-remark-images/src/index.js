@@ -290,12 +290,12 @@ module.exports = (
 
     const bgImage = removeBgImage
       ? ``
-      : ` background-image: url('${placeholderImageData}');`
+      : ` background-image: url('${placeholderImageData}'); background-size: cover;`
 
     let rawHTML = `
   <span
     class="${imageBackgroundClass}"
-    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0;${bgImage} background-size: cover; display: block;"
+    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0;${bgImage} display: block;"
   ></span>
   ${imageTag}
   `.trim()
