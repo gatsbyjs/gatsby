@@ -127,7 +127,7 @@ While it's inevitable that bugs come with any platform you choose to build on, G
 
 ---
 
-**Q:** Is there some sort of change list or changelog? I have had problems finding one in the past, for gatsby and it's packages. — Everspace
+**Q:** Is there some sort of change list or changelog? I have had problems finding one in the past, for gatsby and its packages. — Everspace
 
 **A:** There are per-package changelogs maintained in each package, for example [Gatsby's](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/CHANGELOG.md).
 
@@ -223,7 +223,7 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 **Q:** What is one thing that Gatsby is capable of doing that might surprise some people? — ctlee
 
-**A:** Gatsby can be used to build fully dynamic sites, which surprises some people because of it's label as a "static site generator". It's fully equipped to be a powerful alternative to create-react-app and other similar solutions with the addition of easy pre-rendering and perf baked in.
+**A:** Gatsby can be used to build fully dynamic sites, which surprises some people because of its label as a "static site generator". It's fully equipped to be a powerful alternative to create-react-app and other similar solutions with the addition of easy pre-rendering and perf baked in.
 
 — biscarch
 

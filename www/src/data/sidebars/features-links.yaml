@@ -3,73 +3,22 @@
   disableAccordions: true
   disableExpandAll: true
   items:
-    - title: Introduction
-      link: /features/#introduction
-    - title: Legend
-      link: /features/#legend
-    - title: Performance
+    - title: Overview
+      link: /features/
+    - title: Gatsby vs JAMstack frameworks
+      link: /features/jamstack/
       items:
-        - title: Static content
-          link: /features/#static-content
-        - title: CDN
-          link: /features/#cdn
-        - title: AMP support
-          link: /features/#amp-support
-        - title: Offline access
-          link: /features/#offline-access
-        - title: Prefetch linked pages
-          link: /features/#prefetch-linked-pages
-        - title: Page caching
-          link: /features/#page-caching
-        - title: No extraneous code fetching
-          link: /features/#no-extraneous-code-fetching
-        - title: Progressive image loading
-          link: /features/#progressive-image-loading
-        - title: Responsive image loading
-          link: /features/#responsive-image-loading
-        - title: Inlines critical CSS
-          link: /features/#inlines-critical-css
-        - title: Font self-hosting
-          link: /features/#font-self-hosting
-    - title: Developer Experience
+        # some common comparisons people also looked at on npmtrends.com
+        - title: Gatsby vs Next
+          link: /features/jamstack/gatsby-vs-nextjs/
+        - title: Gatsby vs Jekyll vs Hugo
+          link: /features/jamstack/gatsby-vs-jekyll-vs-hugo/
+        - title: Gatsby vs Nuxt
+          link: /features/jamstack/gatsby-vs-nuxtjs/
+    - title: Gatsby vs Traditional CMS
+      link: /features/cms/
       items:
-        - title: Serverless
-          link: /features/#serverless
-        - title: Export as Code
-          link: /features/#export-as-code
-        - title: Refresh or link to preview
-          link: /features/#refresh-or-link-to-preview
-        - title: Hot reload content
-          link: /features/#hot-reload-content
-        - title: Hot reload code
-          link: /features/#hot-reload-code
-        - title: Componentization
-          link: /features/#componentization
-        - title: One-way data binding
-          link: /features/#one-way-data-binding
-        - title: Declarative API data queries (GraphQL)
-          link: /features/#declarative-api-data-queries-(graphql)
-        - title: Declarative UI
-          link: /features/#declarative-ui
-        - title: Asset pipelines
-          link: /features/#asset-pipelines
-        - title: CSS Extensions (eg Sass)
-          link: /features/#css-extensions-(eg-sass)
-        - title: Advanced JavaScript syntax
-          link: /features/#advanced-javascript-syntax
-    - title: Ecosystem
-      items:
-        - title: Component ecosystem
-          link: /features/#component-ecosystem
-        - title: Hosted option
-          link: /features/#hosted-option
-        - title: Theme ecosystem
-          link: /features/#theme-ecosystem
-    - title: Design
-      items:
-        - title: Programmatic Design
-          link: /features/#programmatic-design
-        - title: Design systems
-          link: /features/#design-systems
-        - title: Component library
-          link: /features/#component-library
+        - title: Gatsby vs WordPress
+          link: /features/cms/gatsby-vs-wordpress/
+        - title: Gatsby vs Drupal
+          link: /features/cms/gatsby-vs-drupal/

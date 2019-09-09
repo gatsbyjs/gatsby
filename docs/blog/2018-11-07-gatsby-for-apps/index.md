@@ -231,7 +231,7 @@ We can't wait to see what you build.
 [gatsby-graphql]: /docs/querying-with-graphql/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
 [authentication-data]: /tutorial/authentication-tutorial/
-[client-only-routes]: /docs/building-apps-with-gatsby/#client-only-routes--user-authentication
+[client-only-routes]: /docs/client-only-routes-and-user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
 [cdm]: https://reactjs.org/docs/react-component.html#componentdidmount

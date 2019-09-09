@@ -10,7 +10,7 @@ If you've ever created a Gatsby site completely from scratch, you know that ther
 
 One existing way to quickly create Gatsby sites with similar functionality is to use "[Gatsby starters](/docs/starters/)". Starters are essentially Gatsby sites with pre-configured functionality for a particular purpose. You download an entire Gatsby site, pre-built for a particular purpose (e.g. blogging, portfolio site, etc) and customize from there.
 
-These traditional starters take a first step toward reducing the level of effort involved in creating a new Gatsby site. But there are two main problems with traditional starters:
+These traditional starters take a first step toward reducing the level of effort involved in creating a new Gatsby site. However, there are two main problems with traditional starters:
 
 - Sites created from a traditional starter have basically been "ejected" from the starter -- They maintain no connection to the starter, and begin to diverge immediately. If the starter is updated later, there's no easy way to pull upstream changes into an existing project.
 - If you created multiple sites using the same starter, and later wanted to make the same update to all of those sites, you'd have to do them individually, site-by-site.
@@ -27,7 +27,7 @@ Themes solve the problems that traditional starters experience:
 
 > A Gatsby theme is effectively a composable Gatsby config. They provide a higher-level approach to working with Gatsby that abstracts away the complex or repetitive parts into a reusable package.
 
-## What's Next?
+## What's next?
 
 - [Using a Gatsby Theme](/docs/themes/using-a-gatsby-theme)
 - [Using Multiple Gatsby Themes](/docs/themes/using-multiple-gatsby-themes)

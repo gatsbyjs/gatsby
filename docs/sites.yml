@@ -517,15 +517,6 @@
   categories:
     - Blog
     - Web Development
-- title: Chocolate Free
-  main_url: "https://chocolate-free.com/"
-  url: "https://chocolate-free.com/"
-  source_url: "https://github.com/Khaledgarbaya/chocolate-free-website"
-  featured: false
-  description: "A full time foodie \U0001F60D a forever Parisian \"patisserie\" lover and \U0001F382 \U0001F369 \U0001F370 \U0001F36A explorer and finally an under construction #foodblogger #foodblog"
-  categories:
-    - Blog
-    - Food
 - title: Code Bushi
   main_url: "https://codebushi.com/"
   url: "https://codebushi.com/"
@@ -4389,19 +4380,6 @@
   categories:
     - Blog
     - WordPress
-- title: On Earth Right Now
-  main_url: https://oern.tv
-  url: https://oern.tv
-  source_url: https://github.com/cadejscroggins/oern.tv
-  description: >
-    A curated list of live video feeds from around the world—built with GatsbyJS.
-  categories:
-    - Directory
-    - Entertainment
-    - Gallery
-  built_by: Cade Scroggins
-  built_by_url: https://cadejs.com
-  featured: false
 - title: Oliver Gomes Portfolio
   main_url: https://oliver-gomes.github.io/v4/
   url: https://oliver-gomes.github.io/v4/
@@ -4963,9 +4941,14 @@
   main_url: https://www.attejuvonen.fi/
   source_url: https://github.com/baobabKoodaa/blog
   description: >
-    A blog with streamlined design and smooth UX
+    Tech-oriented personal blog covering topics like AI, data, voting, game theory, infosec and software development.
   categories:
     - Blog
+    - Data
+    - JavaScript
+    - Programming
+    - Science
+    - Security
     - Technology
     - Web Development
   featured: false
@@ -5145,18 +5128,6 @@
     - Travel
     - Photography
   built_by: Zuyet Awarmatik
-- title: nikodemdeja.pl
-  main_url: https://nikodemdeja.pl
-  url: https://nikodemdeja.pl
-  source_url: https://github.com/Norem80/nikodemdeja.pl
-  description: >
-    Portfolio of Nikodem Deja
-  categories:
-    - Portfolio
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: manuvel.be
   url: https://www.manuvel.be
   main_url: https://www.manuvel.be
@@ -5233,18 +5204,6 @@
     - eCommerce
   built_by: WEBhart
   built_by_url: https://www.web-hart.com
-- title: blog.nikodemdeja.pl
-  main_url: https://blog.nikodemdeja.pl
-  url: https://blog.nikodemdeja.pl
-  source_url: https://github.com/Norem80/blog.nikodemdeja.pl
-  description: >
-    Personal blog of Nikodem Deja
-  categories:
-    - Blog
-    - Open Source
-  built_by: Nikodem Deja
-  built_by_url: https://nikodemdeja.pl
-  featured: false
 - title: Pella Windows and Doors
   main_url: https://www.pella.com
   url: https://www.pella.com
@@ -6820,3 +6779,453 @@
     - Gallery
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: DIA Supermercados
+  main_url: https://dia.com.br
+  url: https://dia.com.br
+  description: >-
+    Brazilian retailer subsidiary, with more than 1,100 stores in Brazil, focusing on low prices and exclusive DIA Products.
+  categories:
+    - Business
+  built_by: CloudDog
+  built_by_url: https://clouddog.com.br
+  featured: false
+- title: AntdSite
+  main_url: https://antdsite.yvescoding.org
+  url: https://antdsite.yvescoding.org
+  description: >-
+    A static docs generator based on Ant Design and GatsbyJs.
+  categories:
+    - Documentation
+  built_by: Yves Wang
+  built_by_url: https://antdsite.yvescoding.org
+- title: Fourpost
+  url: https://www.fourpost.com
+  main_url: https://www.fourpost.com
+  description: >
+    Fourpost is a shopping destination for today’s family that combines the best brands and experiences under one roof.
+  categories:
+    - Retail
+    - Marketing
+  built_by: Fourpost
+  built_by_url: https://github.com/fourpost
+  featured: false
+- title: ReactStudy Blog
+  url: https://elated-lewin-51cf0d.netlify.com
+  main_url: https://elated-lewin-51cf0d.netlify.com
+  description: >
+    Belong to your own blog by gatsby
+  categories:
+    - Blog
+  built_by: 97thjingba
+  built_by_url: https://github.com/97thjingba
+  featured: false
+- title: George
+  main_url: https://kind-mestorf-5a2bc0.netlify.com
+  url: https://kind-mestorf-5a2bc0.netlify.com
+  description: >
+    shiny new web built with Gatsby
+  categories:
+    - Blog
+    - Portfolio
+    - Gallery
+    - Landing Page
+    - Design
+    - Web Development
+    - Open Source
+    - Science
+  built_by: George Davituri
+  featured: false
+
+- title: CEO amp
+  main_url: https://www.ceoamp.com
+  url: https://www.ceoamp.com
+  description: >
+    CEO amp is an executive training programme to amplify a CEO's voice in the media. This site was built with Gatsby v2, Styled-Components, TypeScript and React Spring.
+  categories:
+    - Consulting
+    - Entrepreneurship
+    - Marketing
+    - Landing Page
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+  featured: false
+- title: QuantumBlack
+  main_url: https://www.quantumblack.com/
+  url: https://www.quantumblack.com/
+  description: >
+    We help companies use data to make distinctive, sustainable and significant improvements to their performance.
+  categories:
+    - Technology
+    - Consulting
+    - Data
+    - Design
+  built_by: Richard Westenra
+  built_by_url: https://www.richardwestenra.com/
+  featured: false
+- title: Coffeeshop Creative
+  url: https://www.coffeeshopcreative.ca
+  main_url: https://www.coffeeshopcreative.ca
+  description: >
+    Marketing site for a Toronto web design and videography studio.
+  categories:
+    - Marketing
+    - Agency
+    - Design
+    - Video
+    - Web Development
+  built_by: Michael Uloth
+  built_by_url: https://www.michaeluloth.com
+  featured: false
+- title: Daily Hacker News
+  url: https://dailyhn.com
+  main_url: https://dailyhn.com
+  description: >
+    Daily Hacker News presents the top five stories from Hacker News daily.
+  categories:
+    - Entertainment
+    - Design
+    - Web Development
+    - Technology
+    - Science
+  built_by: Joeri Smits
+  built_by_url: https://joeri.dev
+  featured: false
+- title: Grüne Dresden
+  main_url: https://ltw19dresden.de
+  url: https://ltw19dresden.de
+  description: >
+    This site was built for the Green Party in Germany (Bündnis 90/Die Grünen) for their local election in Dresden, Saxony. The site was built with Gatsby v2 and Styled-Components.
+  categories:
+    - Government
+    - Nonprofit
+  built_by: Jacob Herper
+  built_by_url: https://herper.io
+- title: Gratsy
+  url: https://gratsy.com/
+  main_url: https://gratsy.com/
+  description: >
+    Gratsy: Feedback To Give Back
+  categories:
+    - Agency
+    - Marketing
+    - Landing Page
+  built_by: Whalar
+  built_by_url: https://whalar.com/
+  featured: false
+- title: deepThreads
+  main_url: https://deepthreads.com
+  url: https://deepthreads.com/
+  description: >
+    deepThreads is a shiny new website built with Gatsby v2.  We make art using deep learning along with print on demand providers to create some cool stuff!
+  categories:
+    - eCommerce
+  built_by: Kyle Kitlinski
+  built_by_url: http://github.com/k-kit
+  featured: false
+- title: Smoopit
+  main_url: https://smoopit.com
+  url: https://smoopit.com/
+  description: >
+    Smoopit helps you schedule meetings without the extra effort of checking your availability or back-and-forth emails.
+  categories:
+    - Business
+    - Productivity
+  built_by: Chandra Bhushan
+  built_by_url: https://github.com/chandu2304
+  featured: false
+- title: Mill3 Studio
+  main_url: https://mill3.studio/en/
+  url: https://mill3.studio/en/
+  description: >
+    Our agency specializes in the analysis, strategy and development of digital products.
+  categories:
+    - Agency
+    - Portfolio
+  built_by: Mill3
+  built_by_url: https://mill3.studio/en/
+  featured: false
+- title: Zellement
+  main_url: https://www.zellement.com
+  url: https://www.zellement.com
+  description: >
+    Online portfolio of Dan Farrow from Nottingham, UK.
+  categories:
+    - Portfolio
+  built_by: Zellement
+  built_by_url: https://www.zellement.com
+  featured: false
+- title: Fullstack HQ
+  url: https://fullstackhq.com/
+  main_url: https://fullstackhq.com/
+  description: >
+    Get immediate access to a battle-tested team of designers and developers on a pay-as-you-go monthly subscription.
+  categories:
+    - Agency
+    - Consulting
+    - Freelance
+    - Marketing
+    - Portfolio
+    - Web Development
+    - App
+    - Business
+    - Design
+    - JavaScript
+    - Technology
+    - User Experience
+    - Web Development
+    - eCommerce
+    - WordPress
+  built_by: Fullstack HQ
+  built_by_url: https://fullstackhq.com/
+  featured: false
+- title: Cantas
+  main_url: https://www.cantas.co.jp
+  url: https://www.cantas.co.jp
+  description: >
+    Cantas is digital marketing company in Japan.
+  categories:
+    - Business
+    - Agency
+  built_by: Cantas
+  built_by_url: https://www.cantas.co.jp
+  featured: false
+- title: Sheringham Shantymen
+  main_url: https://www.shantymen.com/
+  url: https://www.shantymen.com/
+  description: >
+    The Sheringham Shantymen are a sea shanty singing group that raise money for the RNLI in the UK.
+  categories:
+    - Music
+    - Community
+    - Entertainment
+    - Nonprofit
+  built_by: Zellement
+  built_by_url: https://www.zellement.com/
+  featured: false
+- title: WP Spark
+  main_url: https://wpspark.io/
+  url: https://wpspark.io/
+  description: >
+    Create blazing fast website with WordPress and our Gatsby themes.
+  categories:
+    - Agency
+    - Community
+    - Blog
+    - WordPress
+  built_by: wpspark
+  built_by_url: https://wpspark.io/
+- title: Ronald Langeveld
+  description: >
+    Ronald Langeveld's blog and Web Development portfolio website.
+  main_url: "https://www.ronaldlangeveld.com"
+  url: "https://www.ronaldlangeveld.com"
+  categories:
+    - Blog
+    - Web Development
+    - Freelance
+    - Portfolio
+    - Consulting
+  featured: false
+- title: Golfonaut
+  description: >
+    Golfonaut - Golf application for Apple Watch
+  main_url: https://golfonaut.io
+  url: https://golfonaut.io
+  categories:
+    - App
+    - Sports
+  featured: false
+- title: Anton Sten - UX Lead/Design
+  url: https://www.antonsten.com
+  main_url: https://www.antonsten.com
+  description: Anton Sten leads UX for design-driven companies.
+  categories:
+    - User Experience
+    - Blog
+    - Freelance
+    - Portfolio
+    - Consulting
+    - Agency
+    - Design
+  featured: false
+- title: Rashmi AP - Front-end Developer
+  main_url: http://rashmiap.me
+  url: http://rashmiap.me
+  featured: false
+  description: >
+    Rashmi AP's Personal Portfolio Website
+  source_url: https://github.com/rashmiap/personal-website-react
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Rashmi AP
+  built_by_url: http://rashmiap.me
+- title: OpenSourceRepos - Blogs for open source repositories
+  main_url: https://opensourcerepos.com
+  url: https://opensourcerepos.com
+  featured: false
+  description: >
+    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the github repository. Out main aim to is to help more developers contribute to open source projects.
+  source_url: https://github.com/opensourcerepos/blogs
+  categories:
+    - Open Source
+    - Design
+    - Design System
+    - Blog
+  built_by: OpenSourceRepos Team
+  built_by_url: https://opensourcerepos.com
+- title: Sheelah Brennan - Front-End/UX Engineer
+  main_url: https://sheelahb.com
+  url: https://sheelahb.com
+  featured: false
+  description: >
+    Sheelah Brennan's web development blog
+  categories:
+    - Blog
+    - Web Development
+    - Design
+    - Freelance
+    - Portfolio
+  built_by: Sheelah Brennan
+- title: Delinx.Digital - Web and Mobile Development Agency based in Sofia, Bulgaria
+  main_url: https://delinx.digital
+  url: https://delinx.digital/solutions
+  description: >
+    Delinx.digital is a software development oriented digital agency based in Sofia, Bulgaria. We develop bespoke software solutions using  WordPress, WooCommerce, Shopify, eCommerce, React.js, Node.js, PHP, Laravel and many other technologies.
+  categories:
+    - Agency
+    - Web Development
+    - Design
+    - eCommerce
+    - WordPress
+  featured: false
+- title: Cameron Nuckols - Articles, Book Notes, and More
+  main_url: https://nucks.co
+  url: https://nucks.co
+  description: >
+    This site hosts all of Cameron Nuckols's writing on entrepreneurship, startups, money, fitness, self-education, and self-improvement.
+  categories:
+    - Blog
+    - Entrepreneurship
+    - Business
+    - Productivity
+    - Technology
+    - Marketing
+  featured: false
+- title: Hayato KAJIYAMA - Portfolio
+  main_url: "https://hyakt.dev"
+  url: "https://hyakt.dev"
+  source_url: "https://github.com/hyakt/hyakt.github.io"
+  featured: false
+  categories:
+    - Portfolio
+- title: Skirtcraft - Unisex Skirts with Large Pockets
+  main_url: https://skirtcraft.com
+  url: https://skirtcraft.com/products
+  source_url: https://github.com/jqrn/skirtcraft-web
+  description: >
+    Skirtcraft sells unisex skirts with large pockets, made in the USA. Site built with Typescript and styled-components, with Tumblr-sourced blog posts.
+  categories:
+    - eCommerce
+    - Blog
+  built_by: Joe Quarion
+  built_by_url: https://github.com/jqrn
+  featured: false
+- title: Vermarc Sport
+  main_url: https://www.vermarcsport.com/
+  url: https://www.vermarcsport.com/
+  description: >
+    Vermarc Sport offers a wide range of cycle clothing, cycling jerseys, bib shorts, rain gear and accessories, as well for the summer, the mid-season (autumn / spring) and the winter.
+  categories:
+    - eCommerce
+  built_by: BrikL
+  built_by_url: https://github.com/Brikl
+- title: Cole Ruche
+  main_url: https://coleruche.com
+  url: https://coleruche.com
+  source_url: https://github.com/kingingcole/myblog
+  description: >
+    The personal website and blog for Emeruche "Cole" Ikenna, front-end web developer from Nigeria.
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Emeruche "Cole" Ikenna
+  built_by_url: https://twitter.com/cole_ruche
+  featured: false
+- title: Abhith Rajan - Coder, Blogger, Biker, Full Stack Developer
+  main_url: https://www.abhith.net/
+  url: https://www.abhith.net/
+  source_url: https://github.com/Abhith/abhith.net
+  description: >
+    abhith.net is a portfolio website of Abhith Rajan, a full stack developer. Sharing blog posts, recommended videos, developer stories and services with the world through this site.
+  categories:
+    - Portfolio
+    - Blog
+    - Programming
+    - Open Source
+    - Technology
+  built_by: Abhith Rajan
+  built_by_url: https://github.com/Abhith
+  featured: false
+- title: Mr & Mrs Wilkinson
+  url: https://thewilkinsons.netlify.com/
+  main_url: https://thewilkinsons.netlify.com/
+  source_url: https://github.com/davemullenjnr/the-wilkinsons
+  description: >
+    A one-page wedding photography showcase using Gatsby Image and featuring a lovely hero and intro section.
+  categories:
+    - Photography
+  built_by: Dave Mullen Jnr
+  built_by_url: https://davemullenjnr.co.uk
+  featured: false
+- title: Gopesh Gopinath - Full Stack Javascript Developer
+  url: https://www.gopeshgopinath.com
+  main_url: https://www.gopeshgopinath.com
+  source_url: https://github.com/GopeshMedayil/gopeshgopinath.com
+  description: >
+    Gopesh Gopinath's Personal Portfolio Website
+  categories:
+    - Portfolio
+    - Open Source
+  built_by: Gopesh Gopinath
+  built_by_url: https://www.gopeshgopinath.com
+  featured: false
+- title: Misael Taveras - FrontEnd Developer
+  url: https://taverasmisael.com
+  main_url: https://taverasmisael.com
+  source_url: https://github.com/taverasmisael/taverasmisael
+  description: >
+    Personal site and bloging about learning FrontEnd web development in spanish.
+  categories:
+    - Portfolio
+    - Open Source
+    - Blog
+    - JavaScript
+    - Web Development
+  built_by: Misael Taveras
+  built_by_url: https://taverasmisael.com
+  featured: false
+- title: Le Reacteur
+  url: https://www.lereacteur.io/
+  main_url: https://www.lereacteur.io/
+  description: >
+    Le Reacteur is the first coding bootcamp dedicated to web and mobile apps development (iOS/Android). We offer intensive sessions to train students in a short time (10 weeks). Our goal is to pass on to our students in less than 3 months what they would have learned in 2 years. To achieve this ambitious challenge, our training is based on learning JavaScript (Node.js, Express, ReactJS, React Native).
+  categories:
+    - JavaScript
+    - Learning
+    - Mobile Development
+    - Web Development
+  built_by: Farid Safi
+  built_by_url: https://twitter.com/FaridSafi
+  featured: false
+- title: Cinch
+  url: https://www.cinch.co.uk
+  main_url: https://www.cinch.co.uk
+  description: >
+    Cinch is a hub for car supermarkets and dealers to show off their stock. The site only lists second-hand cars that are seven years old or younger, with less than 70,000 miles on the clock.
+  categories:
+    - Entrepreneurship
+    - Business
+  built_by: Somo
+  built_by_url: https://www.somoglobal.com
+  featured: false

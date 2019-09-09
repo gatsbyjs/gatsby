@@ -1,6 +1,6 @@
-const mdxLoader = require("./mdx-loader");
-const prettier = require("prettier");
-const c = require("js-combinatorics");
+const mdxLoader = require(`./mdx-loader`)
+const prettier = require(`prettier`)
+const c = require(`js-combinatorics`)
 
 function genMDXFile(input) {
   const code = {
@@ -19,22 +19,22 @@ array: [1,2,3]
     
 a bit of a paragraph
     
-some content`
-  };
+some content`,
+  }
 
   return {
     name:
       Object.entries(input)
         .filter(([k, v]) => !!v) // eslint-disable-line no-unused-vars
         .map(([k, v]) => k) // eslint-disable-line no-unused-vars
-        .join("-") || "body",
+        .join(`-`) || `body`,
     content: [
-      input.frontmatter ? code.frontmatter : "",
-      input.layout ? code.defaultLayout : "",
-      input.namedExports ? code.namedExports : "",
-      code.body
-    ].join("\n\n")
-  };
+      input.frontmatter ? code.frontmatter : ``,
+      input.layout ? code.defaultLayout : ``,
+      input.namedExports ? code.namedExports : ``,
+      code.body,
+    ].join(`\n\n`),
+  }
 }
 
 // generate a table of all possible combinations of genMDXfile input
@@ -47,49 +47,49 @@ const fixtures = c
   .map(({ name, content }) => [
     name,
     {
-      internal: { type: "File" },
-      sourceInstanceName: "webpack-test-fixtures",
-      absolutePath: `/fake/${name}`
+      internal: { type: `File` },
+      sourceInstanceName: `webpack-test-fixtures`,
+      absolutePath: `/fake/${name}`,
     },
-    content
-  ]);
+    content,
+  ])
 
-describe("mdx-loader", () => {
+describe(`mdx-loader`, () => {
   expect.addSnapshotSerializer({
     print(val /*, serialize */) {
-      return prettier.format(val, { parser: "babylon" });
+      return prettier.format(val, { parser: `babylon` })
     },
     test() {
-      return true;
-    }
-  });
+      return true
+    },
+  })
   test.each(fixtures)(
-    "snapshot with %s",
+    `snapshot with %s`,
     async (filename, fakeGatsbyNode, content) => {
       const loader = mdxLoader.bind({
         async() {
           return (err, result) => {
-            expect(err).toBeNull();
-            expect(result).toMatchSnapshot();
-          };
+            expect(err).toBeNull()
+            expect(result).toMatchSnapshot()
+          }
         },
         query: {
           getNodes() {
-            return fixtures.map(([, node]) => node);
+            return fixtures.map(([, node]) => node)
           },
           pluginOptions: {},
           cache: {
             get() {
-              return false;
+              return false
             },
             set() {
-              return;
-            }
-          }
+              return
+            },
+          },
         },
-        resourcePath: fakeGatsbyNode.absolutePath
-      });
-      await loader(content);
+        resourcePath: fakeGatsbyNode.absolutePath,
+      })
+      await loader(content)
     }
-  );
-});
+  )
+})

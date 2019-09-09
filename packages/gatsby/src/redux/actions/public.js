@@ -4,34 +4,46 @@ const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { platform } = require(`os`)
 const path = require(`path`)
 const fs = require(`fs`)
-const truePath = require(`true-case-path`)
+const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
+const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
+const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 
 const actions = {}
+const isWindows = platform() === `win32`
 
-const findChildrenRecursively = (children = []) => {
-  children = children.concat(
-    ...children.map(child => {
-      const newChildren = getNode(child).children
-      if (_.isArray(newChildren) && newChildren.length > 0) {
-        return findChildrenRecursively(newChildren)
-      } else {
-        return []
-      }
-    })
-  )
+function getRelevantFilePathSegments(filePath) {
+  return filePath.split(`/`).filter(s => s !== ``)
+}
 
+const findChildren = initialChildren => {
+  const children = [...initialChildren]
+  const queue = [...initialChildren]
+  const traversedNodes = new Set()
+
+  while (queue.length > 0) {
+    const currentChild = getNode(queue.pop())
+    if (!currentChild || traversedNodes.has(currentChild.id)) {
+      continue
+    }
+    traversedNodes.add(currentChild.id)
+    const newChildren = currentChild.children
+    if (_.isArray(newChildren) && newChildren.length > 0) {
+      children.push(...newChildren)
+      queue.push(...newChildren)
+    }
+  }
   return children
 }
 
@@ -244,7 +256,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   // check if we've processed this component path
-  // before, before running the expensive "truePath"
+  // before, before running the expensive "trueCasePath"
   // operation
   //
   // Skip during testing as the paths don't exist on disk.
@@ -260,7 +272,31 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
       // linux CI/CD pipeline
-      const trueComponentPath = slash(truePath(page.component))
+      let trueComponentPath
+      try {
+        // most systems
+        trueComponentPath = slash(trueCasePathSync(page.component))
+      } catch (e) {
+        // systems where user doesn't have access to /
+        const commonDir = getCommonDir(
+          store.getState().program.directory,
+          page.component
+        )
+
+        // using `path.win32` to force case insensitive relative path
+        const relativePath = slash(
+          path.win32.relative(commonDir, page.component)
+        )
+
+        trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
+      }
+
+      if (isWindows) {
+        const segments = getRelevantFilePathSegments(page.component)
+        page.component =
+          segments.shift().toUpperCase() + `/` + segments.join(`/`)
+      }
+
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
           const markers = page.component
@@ -275,18 +311,19 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
           report.warn(
             stripIndent`
-            ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
+          ${name} created a page with a component path that doesn't match the casing of the actual file. This may work locally, but will break on systems which are case-sensitive, e.g. most CI/CD pipelines.
 
-            page.component:     "${page.component}"
-            path in filesystem: "${trueComponentPath}"
-                                 ${markers}
-          `
+          page.component:     "${page.component}"
+          path in filesystem: "${trueComponentPath}"
+                               ${markers}
+        `
           )
           hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
 
         page.component = trueComponentPath
       }
+
       pageComponentCache[originalPageComponent] = page.component
     }
   }
@@ -339,6 +376,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
       !fileContent.includes(`exports.default`) &&
+      !fileContent.includes(`exports["default"]`) &&
       // this check only applies to js and ts, not mdx
       /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
@@ -382,9 +420,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${
-        page.path
-      }", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
     )
   }
 
@@ -463,7 +499,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
     node &&
-    findChildrenRecursively(node.children)
+    findChildren(node.children)
       .map(getNode)
       .map(createDeleteAction)
 
@@ -491,7 +527,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
-    nodes.map(n => findChildrenRecursively(getNode(n).children))
+    nodes.map(n => findChildren(getNode(n).children))
   )
 
   const deleteNodesAction = {
@@ -501,6 +537,10 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   }
   return deleteNodesAction
 }
+
+// We add a counter to internal to make sure we maintain insertion order for
+// backends that don't do that out of the box
+let NODE_COUNTER = 0
 
 const typeOwners = {}
 /**
@@ -596,6 +636,9 @@ const createNode = (
     node.internal = {}
   }
 
+  NODE_COUNTER++
+  node.internal.counter = NODE_COUNTER
+
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -654,7 +697,7 @@ const createNode = (
     )
   }
 
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   const oldNode = getNode(node.id)
 
@@ -726,7 +769,7 @@ const createNode = (
           payload: node,
         }
       }
-      deleteActions = findChildrenRecursively(oldNode.children)
+      deleteActions = findChildren(oldNode.children)
         .map(getNode)
         .map(createDeleteAction)
     }
@@ -887,7 +930,7 @@ actions.createNodeField = (
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   return {
     type: `ADD_FIELD_TO_NODE`,

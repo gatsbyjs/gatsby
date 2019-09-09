@@ -57,6 +57,11 @@ plugins: [
       // at startup. If your application encounters timeout errors during
       // startup, try decreasing this number.
       paginationSize: 250,
+
+      // List of collections you want to fetch.
+      // Possible values are: 'shop' and 'content'.
+      // Defaults to ['shop', 'content'].
+      includeCollections: ["shop", "content"],
     },
   },
 ]
@@ -109,7 +114,6 @@ The following data types are available:
 | **Product**        | Represents an individual item for sale in a Shopify store.                                                            |
 | **ProductOption**  | Custom product property names.                                                                                        |
 | **ProductVariant** | Represents a different version of a product, such as differing sizes or differing colors.                             |
-| **ProductType**    | Represents a category of products.                                                                                    |
 | **ShopPolicy**     | Policy that a merchant has configured for their store, such as their refund or privacy policy.                        |
 
 For each data type listed above, `shopify${typeName}` and

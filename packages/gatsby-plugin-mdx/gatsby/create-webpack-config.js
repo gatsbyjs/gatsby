@@ -1,92 +1,92 @@
-const path = require("path");
-const escapeStringRegexp = require("escape-string-regexp");
-const defaultOptions = require("../utils/default-options");
+const path = require(`path`)
+const escapeStringRegexp = require(`escape-string-regexp`)
+const defaultOptions = require(`../utils/default-options`)
 
 module.exports = (
   { stage, loaders, actions, plugins, cache, ...other },
   pluginOptions
 ) => {
-  const options = defaultOptions(pluginOptions);
+  const options = defaultOptions(pluginOptions)
   const testPattern = new RegExp(
-    options.extensions.map(ext => `${escapeStringRegexp(ext)}$`).join("|")
-  );
+    options.extensions.map(ext => `${escapeStringRegexp(ext)}$`).join(`|`)
+  )
   actions.setWebpackConfig({
     module: {
       rules: [
         {
           test: /\.js$/,
           include: cache.directory,
-          use: [loaders.js()]
+          use: [loaders.js()],
         },
         {
           test: /\.js$/,
-          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
-          use: [loaders.js()]
+          include: path.dirname(require.resolve(`gatsby-plugin-mdx`)),
+          use: [loaders.js()],
         },
 
         {
           test: /mdx-components\.js$/,
-          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
+          include: path.dirname(require.resolve(`gatsby-plugin-mdx`)),
           use: [
             loaders.js(),
             {
               loader: path.join(
-                "gatsby-plugin-mdx",
-                "loaders",
-                "mdx-components"
+                `gatsby-plugin-mdx`,
+                `loaders`,
+                `mdx-components`
               ),
               options: {
-                plugins: options.mdxPlugins
-              }
-            }
-          ]
+                plugins: options.mdxPlugins,
+              },
+            },
+          ],
         },
         {
           test: /mdx-scopes\.js$/,
-          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
+          include: path.dirname(require.resolve(`gatsby-plugin-mdx`)),
           use: [
             loaders.js(),
             {
-              loader: path.join("gatsby-plugin-mdx", "loaders", "mdx-scopes"),
+              loader: path.join(`gatsby-plugin-mdx`, `loaders`, `mdx-scopes`),
               options: {
-                cache: cache
-              }
-            }
-          ]
+                cache: cache,
+              },
+            },
+          ],
         },
         {
           test: /mdx-wrappers\.js$/,
-          include: path.dirname(require.resolve("gatsby-plugin-mdx")),
+          include: path.dirname(require.resolve(`gatsby-plugin-mdx`)),
           use: [
             loaders.js(),
             {
-              loader: path.join("gatsby-plugin-mdx", "loaders", "mdx-wrappers"),
+              loader: path.join(`gatsby-plugin-mdx`, `loaders`, `mdx-wrappers`),
               options: {
-                store: other.store
-              }
-            }
-          ]
+                store: other.store,
+              },
+            },
+          ],
         },
         {
           test: testPattern,
           use: [
             loaders.js(),
             {
-              loader: path.join("gatsby-plugin-mdx", "loaders", "mdx-loader"),
+              loader: path.join(`gatsby-plugin-mdx`, `loaders`, `mdx-loader`),
               options: {
                 cache: cache,
                 ...other,
-                pluginOptions: options
-              }
-            }
-          ]
-        }
-      ]
+                pluginOptions: options,
+              },
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       plugins.define({
-        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`
-      })
-    ]
-  });
-};
+        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`,
+      }),
+    ],
+  })
+}

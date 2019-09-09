@@ -94,7 +94,7 @@
 - name: Ste O'Neill
   type: individual
   description: >-
-    Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously.
+    Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously. I'm currently working on a Gatsby.js course, so keep an eye on my website for a sneak peek!
   location: "Leeds, England"
   website: "https://steoneill.dev"
   github: "https://github.com/steoneill"
@@ -291,7 +291,7 @@
   type: agency
   image: images/brew-digital.jpg
   description: >-
-    Hi, We are Brew, a digital marketing agency in Birmingham UK. We work with companies of all sizes delivering websites, apps, marketing campaigns, data integrations, social campaigns and PPC. 
+    Hi, We are Brew, a digital marketing agency in Birmingham UK. We work with companies of all sizes delivering websites, apps, marketing campaigns, data integrations, social campaigns and PPC.
 
     We love Gatsby and we would love to work with you on your next project, drop us a message if there is anything we can help with.
   location: Birmingham UK
@@ -319,4 +319,48 @@
   github: "https://github.com/k3rn31p4nic"
   image: images/sankarsan-kampa.jpg
   for_hire: true
+  portfolio: true
+- name: Erno Salo
+  type: individual
+  description: >-
+    Hey! I'm Erno Salo also known as Endormi on GitHub and Twitter.
+    I'm a Full Stack Developer, Open Source Contributor and I enjoy building web applications that help make a difference in the world.
+    I currently live in Helsinki, Finland.
+  website: "https://endormi.io/"
+  github: "https://github.com/endormi"
+  image: images/endormi.png
+  for_hire: false
+  portfolio: true
+- name: WP Spark
+  type: company
+  description: >-
+    We help agencies and companies with JAMStack tools. This includes web
+    development using Static Site Generators, Headless CMS, CI / CD and CDN
+    setup.
+  website: "https://wpspark.io/"
+  github: "https://github.com/wpspark/"
+  image: images/wp-spark.jpg
+  for_hire: false
+  portfolio: true
+- name: Twteam
+  type: agency
+  description: >-
+    Twteam is a Swiss-based software agency specialized in web development with React and Gatsby.
+    This technology stack makes it possible to develop smart and cost-efficient WebApps for small and medium-sized businesses.
+  location: Switzerland
+  website: "https://twteam.ch"
+  image: images/twteam.jpg
+  for_hire: true
+  portfolio: false
+- name: Somo
+  type: agency
+  image: images/somo.jpg
+  description: >-
+    We are one of the fastest growing independent agencies in the UK. We love solving problems and making an impact with the work we create.
+    Through our Rapid, Actionable Innovation engine we create digital products and experiences your customers and employees will love.
+  location: London, UK
+  website: "https://www.somoglobal.com"
+  github: "https://github.com/SomoGlobal"
+  for_hire: true
+  hiring: false # we are though!
   portfolio: true

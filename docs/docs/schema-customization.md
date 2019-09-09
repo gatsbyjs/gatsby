@@ -5,7 +5,7 @@ sources in a uniform way with GraphQL. For this to work, a GraphQL Schema must
 be generated that defines the shape of the data.
 
 Gatsby is able to automatically infer a GraphQL Schema from your data, and in
-many cases this is really all you need. There are however situations when you
+many cases, this is really all you need. There are however situations when you
 either want to explicitly define the data shape, or add custom functionality to
 the query layer - this is what Gatsby's Schema Customization API provides.
 
@@ -208,7 +208,7 @@ Note that you don't need to explicitly provide the Node interface fields (`id`,
 
 #### Nested types
 
-So far we have only been dealing with scalar values (`String` and `Date`;
+So far, we have only been dealing with scalar values (`String` and `Date`;
 GraphQL also knows `ID`, `Int`, `Float`, `Boolean` and `JSON`). Fields can
 however also contain complex object values. To target those fields in GraphQL SDL, you
 can provide a full type definition for the nested type, which can be arbitrarily
@@ -319,6 +319,10 @@ Gatsby's automatic type inference has one trick up its sleeve: for every field
 that ends in `___NODE` it will interpret the field value as an `id` and create a
 foreign-key relation.
 
+> Note: Before the introduction of the Schema Customization APIs in Gatsby v2.2,
+> there were two mechanisms to create links between node types: a plugin author would use the `___NODE`
+> fieldname convention (for plugins), and a user would define [mappings](/docs/gatsby-config/#mapping-node-types) between fields in their `gatsby-config.js`. Both users and plugin authors can now use the `@link` extension described below.
+
 Creating foreign-key relations with the `createTypes` action,
 i.e. without relying on type inference and the `___NODE` field naming
 convention, requires a bit of manual setup.
@@ -346,7 +350,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             //   type: "AuthorJson",
             // })
             // But since we are using the author email as foreign key,
-            // we can use `runQuery`, or simply get all author nodes
+            // we can use `runQuery`, or get all author nodes
             // with `getAllNodes` and manually find the linked author
             // node:
             return context.nodeModel
@@ -362,10 +366,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 ```
 
 What is happening here is that we provide a custom field resolver that asks
-Gatsby's internal data store for the the full node object with the specified
+Gatsby's internal data store for the full node object with the specified
 `id` and `type`.
 
-Because creating foreign-key relations is such a common usecase, Gatsby
+Because creating foreign-key relations is such a common use case, Gatsby
 luckily also provides a much easier way to do this -- with the help of
 extensions or directives. It looks like this:
 
@@ -382,12 +386,12 @@ type AuthorJson implements Node {
 }
 ```
 
-You simply provide a `@link` directive on a field and Gatsby will internally
+You provide a `@link` directive on a field and Gatsby will internally
 add a resolver that is quite similar to the one we wrote manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
-optional `from` argument allows getting the foreign-keys from the specified
-field, which is especially helpful when adding a field for back-linking.
+optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`.
+In other words, you `link` **on** `from` **to** `by`. This makes `from` especially helpful when adding a field for back-linking.
 
 > Note that when using `createTypes` to fix type inference for a foreign-key field
 > created by a plugin, the underlying data will probably live on a field with
@@ -576,7 +580,12 @@ exports.createSchemaCustomization = ({ actions }) => {
           sanitize: "Boolean",
         },
         resolve(source, args, context, info) {
-          const fieldValue = source[info.fieldName]
+          const fieldValue = context.defaultFieldResolver(
+            source,
+            args,
+            context,
+            info
+          )
           const shouldSanitize =
             args.sanitize != null ? args.sanitize : options.sanitize
           const processor = remark().use(html, { sanitize: shouldSanitize })
@@ -635,6 +644,8 @@ extend(options, prevFieldConfig) {
 If multiple field extensions are added to a field, resolvers are processed in this order:
 first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field
 extension resolvers execute from left to right.
+
+Finally, note that in order to get the current fieldValue, we use `context.defaultFieldResolver`.
 
 ## createResolvers API
 
@@ -927,16 +938,98 @@ all team members, we can write:
 export const query = graphql`
   {
     allTeamMembers {
-      ... on Author {
+      ... on AuthorJson {
         fullName
       }
-      ... on Contributor {
+      ... on ContributorJson {
         fullName
       }
     }
   }
 `
 ```
+
+### Queryable interfaces with the `@nodeInterface` extension
+
+Since Gatsby 2.13.22, we can achieve the same thing as above by adding the `@nodeInterface`
+extension to the `TeamMember` interface. This will treat the interface like a normal
+top-level type that implements the `Node` interface, and thus automatically add root
+query fields for the interface.
+
+```js:title=gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    interface TeamMember @nodeInterface {
+      id: ID!
+      name: String!
+      firstName: String!
+      email: String!
+    }
+
+    type AuthorJson implements Node & TeamMember {
+      name: String!
+      firstName: String!
+      email: String!
+      joinedAt: Date
+    }
+
+    type ContributorJson implements Node & TeamMember {
+      name: String!
+      firstName: String!
+      email: String!
+      receivedSwag: Boolean
+    }
+  `
+  createTypes(typeDefs)
+}
+```
+
+When querying, use inline fragments for the fields that are specific to the types
+implementing the interface (i.e. fields that are not shared):
+
+```js
+export const query = graphql`
+  {
+    allTeamMember {
+      nodes {
+        name
+        firstName
+        email
+        __typeName
+        ... on AuthorJson {
+          joinedAt
+        }
+        ... on ContributorJson {
+          receivedSwag
+        }
+        ... on Node {
+          parent {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+Including the `__typeName` introspection field allows to check the node type when iterating
+over the query results in your component:
+
+```js
+data.allTeamMember.nodes.map(node => {
+  switch (node.__typeName) {
+    case `AuthorJson`:
+      return <Author {...node} />
+    case `ContributorJson`:
+      return <Contributor {...node} />
+  }
+})
+```
+
+> Note: All types implementing an interface with the `@nodeInterface` extension
+> must also implement the `Node` interface.
 
 ## Extending third-party types
 

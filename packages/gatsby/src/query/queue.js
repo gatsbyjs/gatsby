@@ -1,7 +1,9 @@
 const Queue = require(`better-queue`)
+const { store } = require(`../redux`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
 const websocketManager = require(`../utils/websocket-manager`)
+const GraphQLRunner = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
@@ -11,14 +13,15 @@ const createBaseOptions = () => {
 }
 
 const createBuildQueue = () => {
+  const graphqlRunner = new GraphQLRunner(store)
   const handler = (queryJob, callback) =>
-    queryRunner(queryJob)
+    queryRunner(graphqlRunner, queryJob)
       .then(result => callback(null, result))
       .catch(callback)
   return new Queue(handler, createBaseOptions())
 }
 
-const createDevelopQueue = () => {
+const createDevelopQueue = getRunner => {
   let queue
   const processing = new Set()
   const waiting = new Map()
@@ -50,7 +53,7 @@ const createDevelopQueue = () => {
   }
 
   const handler = (queryJob, callback) => {
-    queryRunner(queryJob).then(
+    queryRunner(getRunner(), queryJob).then(
       result => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({

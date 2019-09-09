@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.13](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.12...babel-preset-gatsby@0.2.13) (2019-09-09)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.2.12](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.11...babel-preset-gatsby@0.2.12) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [0.2.11](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.10...babel-preset-gatsby@0.2.11) (2019-08-23)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.2.10](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.9...babel-preset-gatsby@0.2.10) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency babel-plugin-macros to ^2.6.1 ([#16811](https://github.com/gatsbyjs/gatsby/issues/16811)) ([fc5fb41](https://github.com/gatsbyjs/gatsby/commit/fc5fb41))
+
+## [0.2.9](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.8...babel-preset-gatsby@0.2.9) (2019-08-20)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 ## [0.2.8](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.7...babel-preset-gatsby@0.2.8) (2019-07-25)
 
 ### Bug Fixes

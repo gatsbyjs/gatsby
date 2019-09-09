@@ -119,6 +119,7 @@ function runJobs(
   try {
     const promises = processFile(
       job.inputPath,
+      job.contentDigest,
       jobs.map(job => job.job),
       pluginOptions
     ).map(promise =>

@@ -1,4 +1,8 @@
-const { GraphQLObjectType, GraphQLSchema } = require(`gatsby/graphql`)
+const {
+  GraphQLObjectType,
+  GraphQLNonNull,
+  GraphQLSchema,
+} = require(`gatsby/graphql`)
 const {
   visitSchema,
   VisitSchemaKind,
@@ -37,7 +41,7 @@ class NamespaceUnderFieldTransform {
       name: query.name,
       fields: {
         [this.fieldName]: {
-          type: nestedType,
+          type: new GraphQLNonNull(nestedType),
           resolve: (parent, args, context, info) => {
             if (this.resolver) {
               return this.resolver(parent, args, context, info)

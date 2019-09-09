@@ -618,8 +618,8 @@ work.
 ```js
 // NOTE: I'm using async/await to simplify the code since it's now natively supported
 // in Node 8.x. This means that our function will return a promise
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions
   const postTemplate = path.resolve("./src/templates/post.js")
 
   // Using async await. Query will likely be very similar to your pageQuery in index.js
@@ -637,8 +637,8 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   `)
 
   if (result.errors) {
-    console.log(result.errors)
-    throw new Error("Things broke, see console output above")
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
   }
 
   // Create blog posts pages.

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.11...gatsby-plugin-feed@2.3.12) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.10...gatsby-plugin-feed@2.3.11) (2019-09-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-feed:** replace title feed requirement with a warning ([#17107](https://github.com/gatsbyjs/gatsby/issues/17107)) ([e26a16b](https://github.com/gatsbyjs/gatsby/commit/e26a16b))
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.9...gatsby-plugin-feed@2.3.10) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.8...gatsby-plugin-feed@2.3.9) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.7...gatsby-plugin-feed@2.3.8) (2019-08-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-feed:** respect custom options and require title in config ([#16814](https://github.com/gatsbyjs/gatsby/issues/16814)) ([92df1cf](https://github.com/gatsbyjs/gatsby/commit/92df1cf))
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.6...gatsby-plugin-feed@2.3.7) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@hapi](https://github.com/hapi)/joi to ^15.1.1 ([#16796](https://github.com/gatsbyjs/gatsby/issues/16796)) ([2cfc19c](https://github.com/gatsbyjs/gatsby/commit/2cfc19c))
+
 ## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.5...gatsby-plugin-feed@2.3.6) (2019-07-30)
 
 ### Bug Fixes

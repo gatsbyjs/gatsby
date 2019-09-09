@@ -22,6 +22,9 @@ module.exports = Machine(
       NEW_PAGE_CREATED: {
         actions: `setPage`,
       },
+      PAGE_CONTEXT_MODIFIED: {
+        actions: `rerunPageQuery`,
+      },
       QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
       QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
     },
@@ -76,6 +79,14 @@ module.exports = Machine(
       isNotBootstrapping: context => !context.isInBootstrap,
     },
     actions: {
+      rerunPageQuery: (_ctx, event) => {
+        const queryUtil = require(`../../query`)
+        // Wait a bit as calling this function immediately triggers
+        // an Action call which Redux squawks about.
+        setTimeout(() => {
+          queryUtil.enqueueExtractedQueryId(event.path)
+        }, 0)
+      },
       runPageComponentQueries: (context, event) => {
         const queryUtil = require(`../../query`)
         // Wait a bit as calling this function immediately triggers

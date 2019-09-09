@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-netlify-cms",
   "description": "A Gatsby plugin which generates the Netlify CMS single page app",
-  "version": "4.1.6",
+  "version": "4.1.14",
   "author": "Shawn Erquhart <shawn@erquh.art>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,18 +10,18 @@
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
     "html-webpack-exclude-assets-plugin": "^0.0.7",
     "html-webpack-plugin": "^3.2.0",
-    "lodash": "^4.17.14",
-    "mini-css-extract-plugin": "^0.4.1",
-    "netlify-identity-widget": "^1.4.11",
-    "webpack": "^4.16.0"
+    "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "^0.8.0",
+    "netlify-identity-widget": "^1.5.5",
+    "webpack": "^4.39.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.2",
-    "cross-env": "^5.1.4",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "babel-preset-gatsby-package": "^0.2.4",
+    "cross-env": "^5.2.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms#readme",
   "keywords": [

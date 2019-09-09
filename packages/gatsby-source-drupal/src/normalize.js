@@ -9,6 +9,7 @@ const nodeFromData = (datum, createNodeId) => {
     id: createNodeId(datum.id),
     drupal_id: datum.id,
     parent: null,
+    drupal_parent_menu_item: attributes.parent,
     children: [],
     ...attributes,
     ...preservedId,

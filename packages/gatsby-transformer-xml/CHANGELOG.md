@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.8...gatsby-transformer-xml@2.1.9) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.7...gatsby-transformer-xml@2.1.8) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.6...gatsby-transformer-xml@2.1.7) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.5...gatsby-transformer-xml@2.1.6) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.4...gatsby-transformer-xml@2.1.5) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.3...gatsby-transformer-xml@2.1.4) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-transformer-xml
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-xml@2.1.2...gatsby-transformer-xml@2.1.3) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-transformer-xml

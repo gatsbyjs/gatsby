@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.7...gatsby-remark-code-repls@3.0.8) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.6...gatsby-remark-code-repls@3.0.7) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.5...gatsby-remark-code-repls@3.0.6) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.4...gatsby-remark-code-repls@3.0.5) (2019-08-22)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and… ([#16948](https://github.com/gatsbyjs/gatsby/issues/16948)) ([1c34c9b](https://github.com/gatsbyjs/gatsby/commit/1c34c9b))
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.3...gatsby-remark-code-repls@3.0.4) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.2...gatsby-remark-code-repls@3.0.3) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
 ## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.1...gatsby-remark-code-repls@3.0.2) (2019-07-12)
 
 ### Bug Fixes
