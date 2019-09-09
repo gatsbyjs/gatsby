@@ -345,10 +345,22 @@
 - name: Twteam
   type: agency
   description: >-
-    Twteam is a Swiss-based software agency specialized in web development with React and Gatsby. 
+    Twteam is a Swiss-based software agency specialized in web development with React and Gatsby.
     This technology stack makes it possible to develop smart and cost-efficient WebApps for small and medium-sized businesses.
   location: Switzerland
   website: "https://twteam.ch"
   image: images/twteam.jpg
   for_hire: true
   portfolio: false
+- name: Somo
+  type: agency
+  image: images/somo.jpg
+  description: >-
+    We are one of the fastest growing independent agencies in the UK. We love solving problems and making an impact with the work we create.
+    Through our Rapid, Actionable Innovation engine we create digital products and experiences your customers and employees will love.
+  location: London, UK
+  website: "https://www.somoglobal.com"
+  github: "https://github.com/SomoGlobal"
+  for_hire: true
+  hiring: false # we are though!
+  portfolio: true
