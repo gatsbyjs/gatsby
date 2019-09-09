@@ -7,8 +7,8 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const stackTrace = require(`stack-trace`)
 const { SourceMapConsumer } = require(`source-map`)
 
-module.exports = function prepareStackTrace(error, source) {
-  const map = new SourceMapConsumer(readFileSync(source, `utf8`))
+module.exports = async function prepareStackTrace(error, source) {
+  const map = await new SourceMapConsumer(readFileSync(source, `utf8`))
   const stack = stackTrace
     .parse(error)
     .map(frame => wrapCallSite(map, frame))

@@ -9,7 +9,7 @@ This plugin provides several features beyond manifest configuration to make your
 - [Favicon support](https://www.w3.org/2005/10/howto-favicon)
 - Legacy icon support (iOS)[^1]
 - [Cache busting](https://www.keycdn.com/support/what-is-cache-busting)
-- Localization - Provides unqiue manifests for path-based localization ([Gatsby Example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n))
+- Localization - Provides unique manifests for path-based localization ([Gatsby Example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n))
 
 Each of these features has extensive configuration available so you are always in control.
 
@@ -109,7 +109,7 @@ Add the following line to the plugin options
   ], // Add or remove icon sizes as desired
 ```
 
-If you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you include a high resolution icon from which to generate smaller icons. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example `gatsby-config.js`:
+If you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you include a high-resolution icon from which to generate smaller icons. But unlike automatic mode, you provide the `icons` array config and icons are generated based on the sizes defined in your config. Here's an example `gatsby-config.js`:
 
 The hybrid option allows the most flexibility while still not requiring you to create all icon sizes manually.
 
@@ -138,7 +138,7 @@ In the manual mode, you are responsible for defining the entire web app manifest
 
 #### Localization configuration
 
-Localization allows you to create unique manifests for each localized version of your site. As many languages as you want are supported. Localization requires unique paths for each language (e.g. if your default about page is at `/about`, the german(`de`) version would be `/de/about`)
+Localization allows you to create unique manifests for each localized version of your site. As many languages as you want are supported. Localization requires unique paths for each language (e.g. if your default about page is at `/about`, the German (`de`) version would be `/de/about`)
 
 The default site language should be configured in your root plugin options. Any additional languages should be defined in the `localize` array. The root settings will be used as defaults if not overridden in a locale. Any configuration option available in the root is also available in the `localize` array.
 
@@ -407,7 +407,7 @@ When in automatic mode the following json array is injected into the manifest co
 
 Currently this feature only covers older versions of [iOS Safari](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html).
 
-Internet Explorer is the only other major browser that doesn't support the web app manifest, and it's market share is so small no one has contributed support.
+Internet Explorer is the only other major browser that doesn't support the web app manifest, and its market share is so small no one has contributed support.
 
 ### Additional resources
 
@@ -430,7 +430,7 @@ dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sh
   Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
 ```
 
-To fix this, you'll need to update all Gatsby plugins in the current project that depend on the `sharp` package. Here's a list of official plugins that you might need to update in case your projects uses them:
+To fix this, you'll need to update all Gatsby plugins in the current project that depend on the `sharp` package. Here's a list of official plugins that you might need to update in case your projects use them:
 
 - `gatsby-plugin-sharp`
 - `gatsby-plugin-manifest`
