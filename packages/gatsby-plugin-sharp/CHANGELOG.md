@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.20...gatsby-plugin-sharp@2.2.21) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.19...gatsby-plugin-sharp@2.2.20) (2019-09-05)
 
 ### Bug Fixes

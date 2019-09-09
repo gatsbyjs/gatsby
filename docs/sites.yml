@@ -7218,3 +7218,14 @@
   built_by: Farid Safi
   built_by_url: https://twitter.com/FaridSafi
   featured: false
+- title: Cinch
+  url: https://www.cinch.co.uk
+  main_url: https://www.cinch.co.uk
+  description: >
+    Cinch is a hub for car supermarkets and dealers to show off their stock. The site only lists second-hand cars that are seven years old or younger, with less than 70,000 miles on the clock.
+  categories:
+    - Entrepreneurship
+    - Business
+  built_by: Somo
+  built_by_url: https://www.somoglobal.com
+  featured: false
