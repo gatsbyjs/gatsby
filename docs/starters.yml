@@ -3794,3 +3794,17 @@
     - Extensible & responsive design
     - Blog integration
     - SEO
+- url: https://gatsby-skeleton.netlify.com/
+  repo: https://github.com/msallent/gatsby-skeleton
+  description: Gatsby starter with TypeScript and all sort of linting
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - SEO
+  features:
+    - TypeScript
+    - Styled-Components
+    - ESLint
+    - Prettier
+    - Stylelint
+    - SEO
