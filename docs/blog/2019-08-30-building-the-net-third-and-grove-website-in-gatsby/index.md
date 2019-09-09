@@ -4,10 +4,10 @@ date: 2019-08-30
 author: Grant Glidewell
 excerpt: "How we built our new website with a modern front end for Drupal using Gatsby"
 tags:
-- case-studies
-- agencies
-  - building-websites-faster
-  - drupal
+  - case-studies
+  - agencies
+    - building-websites-faster
+    - drupal
 canonicalLink: https://www.thirdandgrove.com/building-new-site-with-drupal-and-gatsby/
 ---
 
