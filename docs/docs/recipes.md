@@ -958,11 +958,7 @@ export const query = graphql`
 - [More on Sourcing from Contentful](/docs/sourcing-from-contentful/)
 - [Contentful source plugin](/packages/gatsby-source-contentful/)
 - [Long-text field types returned as objects](/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
-
-##### Live example
-
-- [Example website](http://kevee.net/gatsby-source-contentful-recipe/)
-- [Code for the example](https://github.com/kevee/gatsby-source-contentful-recipe)
+- [Example repository for this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-contentful)
 
 ### Pulling data from an external source and creating pages without GraphQL
 
