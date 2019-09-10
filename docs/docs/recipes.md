@@ -971,6 +971,44 @@ module.exports = {
 }
 ```
 
+4. To use your Drupal data in your Gatsby site, create a new page in your Gatsby site at `src/pages/drupal.js`. This page will list all Drupal "Page" nodes.
+
+```jsx:title=src/pages/drupal.js
+import React from "react"
+import { graphql } from "gatsby"
+
+const DrupalPage = ({ data }) => (
+  <div>
+    <h1>Drupal pages</h1>
+    {data.allNodePage.edges.map(({ node }) => (
+      <>
+        <h2>{node.title}</h2>
+        <div>
+          {node.body.value}
+        </div>
+      </>
+    ))}
+  </div>
+)
+
+export default DrupalPage
+
+export const query = graphql`
+  {
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+
 #### Additional Resources
 
 - [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
