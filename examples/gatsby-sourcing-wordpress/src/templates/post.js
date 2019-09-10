@@ -9,6 +9,7 @@ class Post extends Component {
     return (
         <h1>{post.title }</h1>
         <div>{post.content}</div>
+        </>
     )
   }
 }
