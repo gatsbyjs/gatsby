@@ -535,8 +535,6 @@ module.exports = {
 
 ```jsx:title=src/pages/emotion-sample.js
 import React from "react"
-import { css } from "@emotion/core"
-import styled from "@emotion/styled"
 
 export default () => (
   <div>
