@@ -3865,6 +3865,19 @@
     - New Header
     - Responsive
     - Sidebar that displays recent blog posts
+- url: https://gatsby-advanced-blog-starter.netlify.com
+  repo: https://github.com/aman29271/gatsby-advanced-blog-starter
+  description: A pre-built Gatsby Starter Tech-blog
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Highly Optimised
+    - Image optimised with blur-up effect
+    - Responsive
+    - Code  highlighting
+    - tagging
+    - Sass compiled
 - url: https://anubhavsrivastava.github.io/gatsby-starter-casual
   repo: https://github.com/anubhavsrivastava/gatsby-starter-casual
   description: Multi page starter based on the Casual site template by startbootstrap for portfolio
