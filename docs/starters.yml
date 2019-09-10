@@ -3865,13 +3865,12 @@
     - New Header
     - Responsive
     - Sidebar that displays recent blog posts
-- url: https://https://gatsby-advanced-blog-starter.netlify.com
+- url: https://gatsby-advanced-blog-starter.netlify.com
   repo: https://github.com/aman29271/gatsby-advanced-blog-starter
   description: A pre-built Gatsby Starter Tech-blog
   tags:
     - Blog
     - Markdown
-    - Tech
   features:
     - Highly Optimised
     - Image optimised with blur-up effect
