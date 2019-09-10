@@ -14,25 +14,46 @@ guide](https://emotion.sh/docs/migrating-to-emotion-10#incremental-migration) fo
 This plugin lets you leverage Emotion's server-side rendering (SSR) on the following Emotion APIs:
 
 - `css` React component prop from `@emotion/core` with the `jsx` babel transformation:
-```jsx
-import { css } from '@emotion/core'
 
-const Header = () => <h2 css={css`color: hotpink;`}>Welcome</h2>    // ✅ SSR
+```jsx
+import { css } from "@emotion/core"
+
+const Header = () => (
+  <h2
+    css={css`
+      color: hotpink;
+    `}
+  >
+    Welcome
+  </h2>
+) // ✅ SSR
 ```
-- `styled` function with `@emotion/styled`:
-```jsx
-import styled from '@emotion/styled'
 
-const Header = styled.h2`color: hotpink;`   // ✅ SSR
+- `styled` function with `@emotion/styled`:
+
+```jsx
+import styled from "@emotion/styled"
+
+const Header = styled.h2`
+  color: hotpink;
+` // ✅ SSR
 ```
 
 NOTE: Unlike the APIs mentioned above, the `css` function from `emotion` **will not leverage SSR using this plugin**:
+
 ```jsx
-import { css } from 'emotion'
+import { css } from "emotion"
 
-const Header = () => <h2 className={css`color: hotpink;`}>Welcome</h2>    // ✖ SSR
+const Header = () => (
+  <h2
+    className={css`
+      color: hotpink;
+    `}
+  >
+    Welcome
+  </h2>
+) // ✖ SSR
 ```
-
 
 ## Install
 
