@@ -55,8 +55,8 @@
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
-    "@mdx-js/mdx": "^1.4.4",
-    "@mdx-js/react": "^1.4.4",
+    "@mdx-js/mdx": "^1.4.5",
+    "@mdx-js/react": "^1.4.5",
     "jest": "^24.9.0",
     "js-combinatorics": "^0.5.4",
     "react-test-renderer": "^16.9.0"

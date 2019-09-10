@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "documentation": "^12.1.1",
+    "documentation": "^12.1.2",
     "prismjs": "^1.17.1"
   },
   "devDependencies": {
