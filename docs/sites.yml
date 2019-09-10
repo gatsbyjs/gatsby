@@ -7218,3 +7218,37 @@
   built_by: Farid Safi
   built_by_url: https://twitter.com/FaridSafi
   featured: false
+- title: Cinch
+  url: https://www.cinch.co.uk
+  main_url: https://www.cinch.co.uk
+  description: >
+    Cinch is a hub for car supermarkets and dealers to show off their stock. The site only lists second-hand cars that are seven years old or younger, with less than 70,000 miles on the clock.
+  categories:
+    - Entrepreneurship
+    - Business
+  built_by: Somo
+  built_by_url: https://www.somoglobal.com
+  featured: false
+- title: NuBrakes
+  url: https://nubrakes.com/
+  main_url: https://nubrakes.com/
+  description: >
+    NuBrakes is the mobile brake repair company that comes to you! We perform brake pad, caliper, and rotor replacement at your office, apartment or home!
+  categories:
+    - Business
+    - Entrepreneurship
+  featured: false
+- title: Third and Grove
+  url: https://www.thirdandgrove.com
+  main_url: https://www.thirdandgrove.com
+  source_url: https://github.com/thirdandgrove/tagd8_gatsby
+  description: >
+    A digital agency slaying the mundane one pixel at a time.
+  categories:
+    - Agency
+    - Marketing
+    - Open Source
+    - Technology
+  built_by: Third and Grove
+  built_by_url: https://www.thirdandgrove.com
+  featured: false
