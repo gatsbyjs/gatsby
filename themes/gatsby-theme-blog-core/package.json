@@ -11,7 +11,7 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.4.4",
+    "@mdx-js/mdx": "^1.4.5",
     "gatsby-plugin-mdx": "^1.0.40",
     "gatsby-plugin-sharp": "^2.2.21",
     "gatsby-remark-copy-linked-files": "^2.1.18",
@@ -22,7 +22,7 @@
     "remark-slug": "^5.1.2"
   },
   "devDependencies": {
-    "@mdx-js/react": "^1.4.4",
+    "@mdx-js/react": "^1.4.5",
     "gatsby": "^2.15.12",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
