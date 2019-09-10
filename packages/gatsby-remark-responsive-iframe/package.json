@@ -19,7 +19,7 @@
     "babel-preset-gatsby-package": "^0.2.4",
     "cross-env": "^5.2.1",
     "remark": "^10.0.1",
-    "remark-mdx": "^1.4.4",
+    "remark-mdx": "^1.4.5",
     "semver": "^6.3.0",
     "unist-util-find": "^1.0.1"
   },

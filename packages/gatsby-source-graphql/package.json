@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "apollo-link": "1.2.12",
-    "apollo-link-http": "^1.5.15",
+    "apollo-link": "1.2.13",
+    "apollo-link-http": "^1.5.16",
     "graphql-tools": "^3.1.1",
     "invariant": "^2.2.4",
     "node-fetch": "^1.7.3",
