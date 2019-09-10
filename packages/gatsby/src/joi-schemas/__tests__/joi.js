@@ -1,4 +1,4 @@
-const { gatsbyConfigSchema } = require(`../joi`)
+const { gatsbyConfigSchema, nodeSchema } = require(`../joi`)
 
 describe(`gatsby config`, () => {
   it(`returns empty pathPrefix when not set`, async () => {
@@ -99,5 +99,59 @@ describe(`gatsby config`, () => {
     } catch (err) {
       expect(err.message).toMatchSnapshot()
     }
+  })
+})
+
+describe(`node schema`, () => {
+  it(`allows correct nodes`, async () => {
+    const node = {
+      id: `foo`,
+      internal: {
+        type: `Type`,
+        contentDigest: `bar`,
+
+        // this is added by gatsby
+        owner: `gatsby-source-foo`,
+      },
+    }
+
+    const { error } = nodeSchema.validate(node)
+    expect(error).toBeFalsy()
+  })
+
+  it(`force id type`, async () => {
+    const node = {
+      id: 5,
+      internal: {
+        type: `Type`,
+        contentDigest: `bar`,
+
+        // this is added by gatsby
+        owner: `gatsby-source-foo`,
+      },
+    }
+
+    const { error } = nodeSchema.validate(node)
+    expect(error).toBeTruthy()
+    expect(error.message).toMatchSnapshot()
+  })
+
+  it(`doesn't allow unknown internal fields`, async () => {
+    const node = {
+      id: `foo`,
+      internal: {
+        type: `Type`,
+        contentDigest: `bar`,
+
+        customField: `this should cause failure`,
+
+        // this is added by gatsby
+        owner: `gatsby-source-foo`,
+      },
+    }
+
+    const { error } = nodeSchema.validate(node)
+    expect(error).toBeTruthy()
+    expect(error.message).toMatchSnapshot()
   })
 })

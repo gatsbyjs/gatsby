@@ -19,6 +19,7 @@ const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
+const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -95,6 +96,7 @@ const pascalCase = _.flow(
 )
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
+const hasErroredBecauseOfNodeValidation = new Set()
 const pageComponentCache = {}
 const fileOkCache = {}
 
@@ -557,7 +559,8 @@ const typeOwners = {}
  * to add your node id, instead use the action creator `createParentChildLink`.
  * @param {Object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
- * and Gatsby core.
+ * and Gatsby core. Only fields described below are allowed in `internal` object.
+ * Using any type of custom fields will result in validation errors.
  * @param {string} node.internal.mediaType An optional field to indicate to
  * transformer plugins that your node has raw content they can transform.
  * Use either an official media type (we use mime-db as our source
@@ -670,9 +673,31 @@ const createNode = (
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
-    console.log(chalk.bold.red(`The new node didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(node)
+    if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
+      const errorObj = {
+        id: `11467`,
+        context: {
+          validationErrorMessage: result.error.message,
+          node,
+        },
+      }
+
+      const possiblyCodeFrame = getNonGatsbyCodeFrame()
+      if (possiblyCodeFrame) {
+        errorObj.context.codeFrame = possiblyCodeFrame.codeFrame
+        errorObj.filePath = possiblyCodeFrame.fileName
+        errorObj.location = {
+          start: {
+            line: possiblyCodeFrame.line,
+            column: possiblyCodeFrame.column,
+          },
+        }
+      }
+
+      report.error(errorObj)
+      hasErroredBecauseOfNodeValidation.add(result.error.message)
+    }
+
     return { type: `VALIDATION_ERROR`, error: true }
   }
 
