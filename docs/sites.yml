@@ -7228,6 +7228,19 @@
   built_by: Somo
   built_by_url: https://www.somoglobal.com
   featured: false
+- title: Recetas El Universo
+  description: >-
+    Recipes and videos with the best of Ecuadorian cuisine. 
+    Collectable recipes from Diario El Universo.
+  main_url: "https://recetas-eu.netlify.com/"
+  url: "https://recetas-eu.netlify.com/"
+  featured: false
+  categories:
+    - Blog
+    - WordPress
+    - Food
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
 - title: NuBrakes
   url: https://nubrakes.com/
   main_url: https://nubrakes.com/
