@@ -3682,7 +3682,6 @@
   repo: https://github.com/ksmorano/gatsby-hasura-starter
   description: A boilerplate for a Gatsby app paired with a Hasura project as the backend.
   tags:
-    - Hasura
     - Styling:Bulma
   features:
     - Demonstrates both query and mutation from the linked Hasura project.
@@ -3809,11 +3808,8 @@
   repo: https://github.com/johannesspohr/gatsby-starter-i18next-sanity
   description: A basic starter which integrates translations with i18next and localized sanity input.
   tags:
-    - I18n
-    - Localized
+    - i18n
     - CMS:sanity.io
-    - I18next
-    - Sitemap
   features:
     - Showcases advanced i18n techniques with i18next and sanity.io
     - Correct URLs for the languages (language in the path, translated slugs)
