@@ -6,6 +6,7 @@ class Page extends Component {
     const StaticPage = this.props.data.wordpressPage
 
     return (
+        <>
         <h1>{StaticPage.title }</h1>
         <div>{StaticPage.content}</div/>
         </>
