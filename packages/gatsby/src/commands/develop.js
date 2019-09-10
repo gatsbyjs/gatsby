@@ -362,41 +362,10 @@ module.exports = async (program: any) => {
   // Start bootstrap process.
   const { graphqlRunner } = await bootstrap(program)
 
-  // report.stateUpdate({
-  //   id: `webpack`,
-  //   status: `working`,
-  // })
-
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
-  // const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  // const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
-
-  // report.stateUpdate(`queryRunning`, `IN_PROGRESS`)
-  // // let activity = report.activityTimer(`run static queries`)
-  // // activity.start()
-  // await queryUtil.processStaticQueries(staticQueryIds, {
-  //   activityOpts: {
-  //     label: `run static queries`,
-  //   },
-  //   state: store.getState(),
-  // })
-  // // activity.end()
-
-  // // activity = report.activityTimer(`run page queries`)
-  // // activity.start()
-  // await queryUtil.processPageQueries(pageQueryIds, {
-  //   activityOpts: {
-  //     label: `run page queries`,
-  //   },
-  // })
-
-  // report.stateUpdate(`queryRunning`, `SUCCESS`)
   await queryUtil.initialProcessQueries()
-  // activity = report.activityTimer(`run page queries`)
-
-  // activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -620,36 +589,6 @@ module.exports = async (program: any) => {
       }
       webpackActivity = null
     }
-
-    // If errors exist, only show errors.
-    // if (messages.errors.length) {
-    // // Only keep the first error. Others are often indicative
-    // // of the same problem, but confuse the reader with noise.
-    // if (messages.errors.length > 1) {
-    // messages.errors.length = 1
-    // }
-    // console.log(chalk.red("Failed to compile.\n"))
-    // console.log(messages.errors.join("\n\n"))
-    // return
-    // }
-
-    // Show warnings if no errors were found.
-    // if (messages.warnings.length) {
-    // console.log(chalk.yellow("Compiled with warnings.\n"))
-    // console.log(messages.warnings.join("\n\n"))
-
-    // // Teach some ESLint tricks.
-    // console.log(
-    // "\nSearch for the " +
-    // chalk.underline(chalk.yellow("keywords")) +
-    // " to learn more about each warning."
-    // )
-    // console.log(
-    // "To ignore, add " +
-    // chalk.cyan("// eslint-disable-next-line") +
-    // " to the line before.\n"
-    // )
-    // }
 
     done()
   })

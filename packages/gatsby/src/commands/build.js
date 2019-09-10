@@ -57,9 +57,15 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
-  const { pageQueryIds } = await queryUtil.initialProcessQueries({
+  const {
+    pageQueryIds,
+    processPageQueries,
+    processStaticQueries,
+  } = queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
   })
+
+  await processStaticQueries()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -104,6 +110,8 @@ module.exports = async function build(program: BuildArgs) {
       [...store.getState().pages.keys()],
       pageQueryIds
     )
+
+    console.log({ cleanPagePaths })
     await pageDataUtil.updateCompilationHashes(
       { publicDir, workerPool },
       cleanPagePaths,
@@ -112,6 +120,8 @@ module.exports = async function build(program: BuildArgs) {
 
     activity.end()
   }
+
+  await processPageQueries()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
