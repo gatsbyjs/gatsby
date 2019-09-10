@@ -1008,7 +1008,6 @@ export const query = graphql`
 }
 ```
 
-
 #### Additional Resources
 
 - [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
