@@ -79,7 +79,7 @@ function setPathResources(path, getResourceURLsForPathname) {
 }
 
 exports.onRouteUpdate = ({ location, getResourceURLsForPathname }) => {
-  const pathname = location.pathname.replace(__PATH_PREFIX__, ``)
+  const pathname = location.pathname.replace(__BASE_PATH__, ``)
   setPathResources(pathname, getResourceURLsForPathname)
 }
 
