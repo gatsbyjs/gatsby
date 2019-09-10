@@ -509,7 +509,7 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 ### Using Emotion
 
-[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components.
+[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components. You can use each styling feature individually or together in the same file.
 
 #### Prerequisites
 
@@ -545,9 +545,12 @@ export default () => (
 )
 ```
 
-4. You can use Emotion's `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element:
+3. After importing Emotion's `css` core package, you can use the `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element inside a component:
 
 ```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import { css } from "@emotion/core"
+
 export default () => (
   <div>
     <p
@@ -562,9 +565,12 @@ export default () => (
 )
 ```
 
-5. To use [styled components](https://emotion.sh/docs/styled), define them using Emotion's `styled` function.
+4. To use Emotion's [styled components](https://emotion.sh/docs/styled), import the package and define them using the `styled` function.
 
 ```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import styled from "@emotion/styled"
+
 const Content = styled.div`
   text-align: center;
   margin-top: 10px;
