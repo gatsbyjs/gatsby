@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "date-fns": "^2.0.1",
+    "date-fns": "^2.1.0",
     "fs-extra": "^8.1.0",
     "graphql-request": "^1.8.2",
     "progress": "^2.0.3",
