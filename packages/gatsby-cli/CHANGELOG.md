@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.46...gatsby-cli@2.7.47) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix node internal validation ([#17511](https://github.com/gatsbyjs/gatsby/issues/17511)) ([97a720d](https://github.com/gatsbyjs/gatsby/commit/97a720d))
+
 ## [2.7.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.45...gatsby-cli@2.7.46) (2019-09-09)
 
 ### Bug Fixes

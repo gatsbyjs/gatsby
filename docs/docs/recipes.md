@@ -270,7 +270,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 #### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with an index page component
-- A `gatsby-browser.js` page
+- A `gatsby-browser.js` file
 
 #### Directions
 
@@ -282,7 +282,7 @@ html {
 }
 
 p {
-  color: peachpuff;
+  color: maroon;
 }
 ```
 
@@ -301,7 +301,6 @@ import "./src/styles/global.css"
 #### Additional resources
 
 - More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
-  <!-- - [Live example on Using global CSS files]() -->
 
 ### Using global styles in a layout component
 
@@ -437,7 +436,7 @@ export default () => (
 1. Create a CSS module as `src/pages/index.module.css` and paste the following into the module:
 
 ```css:title=src/components/index.module.css
-.heading {
+.feature {
   margin: 2rem auto;
   max-width: 500px;
 }
@@ -452,9 +451,9 @@ import React from "react"
 import style from "./index.module.css"
 
 export default () => (
-  <div className={style.heading}>
+  <section className={style.feature}>
     <h1>Using CSS Modules</h1>
-  </div>
+  </section>
 )
 // highlight-end
 ```

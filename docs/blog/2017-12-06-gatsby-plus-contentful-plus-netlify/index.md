@@ -94,7 +94,7 @@ repo.
 
 # Solution: Contentful + Gatsby
 
-Contentful is a hosted headless CMS with a fantastic user experience. It’s
+Contentful is a hosted [headless CMS](/docs/headless-cms/) with a fantastic user experience. It’s
 similar to having a backend like Wordpress, but you are fully responsible for
 the frontend layer. The beauty of Contentful is threefold.
 
