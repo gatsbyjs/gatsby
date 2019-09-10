@@ -5,7 +5,6 @@ author: Hashim Warren
 excerpt: "Impossible Foods needed a website with new functionality, that could withstand surges in traffic. These challenges and requirements led the Impossible Foods team to adopt a Content Mesh approach to their website architecture."
 tags:
   - case-studies
-  
 ---
 
 Impossible Foods’ mission is to restore biodiversity and reduce the impact of climate change by transforming the global food system. The company is doing that by releasing plant-based foods that taste more like beef, chicken, and fish than what consumers have come to expect from traditional meat alternatives.
@@ -20,10 +19,9 @@ Impossible Foods needed a website with new functionality, that could withstand s
 
 ##The Content Mesh Approach for Ecommerce
 
-
 The development team created reusable components in Gatsby and sourced content from “modules” created within Contentful. They also connected the site to Shopify to power the checkout experience, as well as display in-stock products, descriptions, and prices. Content producers were now free to create and update content on the site, simply by using the editing experience with Contentful and Shopify. This new workflow dramatically reduced the turnaround time for new announcements to be published on the website.
 
-The Impossible Foods team raved that their new architecture enables their content strategy to keep pace with the acceleration of their business. 
+The Impossible Foods team raved that their new architecture enables their content strategy to keep pace with the acceleration of their business.
 
 ##Learn More About Gatsby and Ecommerce
 
