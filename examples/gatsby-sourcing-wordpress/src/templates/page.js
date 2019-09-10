@@ -8,6 +8,7 @@ class Page extends Component {
     return (
         <h1>{StaticPage.title }</h1>
         <div>{StaticPage.content}</div/>
+        </>
     )
   }
 }
