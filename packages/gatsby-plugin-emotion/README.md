@@ -26,7 +26,7 @@ const Header = () => (
   >
     Welcome
   </h2>
-) // ✅ SSR
+)
 ```
 
 - `styled` function with `@emotion/styled`:
@@ -36,10 +36,10 @@ import styled from "@emotion/styled"
 
 const Header = styled.h2`
   color: hotpink;
-` // ✅ SSR
+`
 ```
 
-NOTE: Unlike the APIs mentioned above, the `css` function from `emotion` **will not leverage SSR using this plugin**:
+**Note**: Unlike the APIs mentioned above, the `css` function from `emotion` **will not render styles via SSR with this plugin**. The styles defined with this function will be rendered on the client instead:
 
 ```jsx
 import { css } from "emotion"
@@ -48,11 +48,11 @@ const Header = () => (
   <h2
     className={css`
       color: hotpink;
-    `}
+    `} /* ❌ : SSR not working, will be rendered on client instead  */
   >
     Welcome
   </h2>
-) // ✖ SSR
+)
 ```
 
 ## Install
