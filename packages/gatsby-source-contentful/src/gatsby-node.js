@@ -6,7 +6,7 @@ const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
-
+const { createClient } = require(`contentful`)
 const conflictFieldPrefix = `contentful`
 
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
@@ -46,8 +46,8 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  const { createNode, deleteNode, touchNode } = actions
-
+  const { createNode, deleteNode, touchNode, setPluginStatus } = actions
+  const client = createClient({space: pluginOptions.get('spaceId'), accessToken: pluginOptions.get('accessToken')})
   const online = await isOnline()
 
   // If the user knows they are offline, serve them cached result
@@ -78,16 +78,53 @@ exports.sourceNodes = async (
 
   const pluginConfig = createPluginConfig(pluginOptions)
 
-  const {
+  const createSyncToken = () =>
+    `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+      `environment`
+    )}-${pluginConfig.get(`host`)}`
+
+  // Get sync token if it exists.
+  let syncToken
+  let previousSyncData
+  if (
+    !pluginConfig.get(`forceFullSync`) &&
+    store.getState().status.plugins &&
+    store.getState().status.plugins[`gatsby-source-contentful`] &&
+    store.getState().status.plugins[`gatsby-source-contentful`][
+      createSyncToken()
+    ]
+  ) {
+    const state = store.getState().status.plugins[`gatsby-source-contentful`][
+      createSyncToken()
+    ]
+
+    syncToken = state.syncToken
+    previousSyncData = state.syncToken
+  }
+
+  let {
     currentSyncData,
     contentTypeItems,
     defaultLocale,
     locales,
     space,
   } = await fetchData({
+    syncToken,
     reporter,
     pluginConfig,
   })
+
+  // compare data between currentSyncData and previousSyncData and update it
+  previousSyncData.entries.filter(entry => _.findIndex(currentSyncData.deletedEntries, (o) => o.sys.id === entry.sys.id))
+
+  previousSyncData.assets.filter(asset => _.findIndex(currentSyncData.deletedAssets, (o) => o.sys.id === asset.sys.id))
+
+  // order is important here, fresh data first 
+  currentSyncData.entries = _.uniqBy(currentSyncData.entries.concat(previousSyncData.entries), 'sys.id')
+
+  currentSyncData.assets = _.uniqBy(currentSyncData.assets.concat(previousSyncData.assets), 'sys.id')
+  // TODO run link resolution on the up to date data
+   
 
   const entryList = normalize.buildEntryList({
     currentSyncData,
@@ -141,6 +178,13 @@ exports.sourceNodes = async (
   reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
   console.timeEnd(`Fetch Contentful data`)
 
+  // Update syncToken
+  const nextSyncToken = currentSyncData.nextSyncToken
+
+  // Store our sync state for the next sync.
+  const newState = {}
+  newState[createSyncToken()] = { nextSyncToken, currentSyncData }
+  setPluginStatus(newState)
   // Create map of resolvable ids so we can check links against them while creating
   // links.
   const resolvable = normalize.buildResolvableSet({
