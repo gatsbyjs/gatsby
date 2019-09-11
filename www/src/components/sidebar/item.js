@@ -67,7 +67,9 @@ class Item extends React.PureComponent {
             disableAccordions={disableAccordions}
           />
         ) : (
-          <li ref={item.link === location.pathname ? this.activeItemRef : false}>
+          <li
+            ref={item.link === location.pathname ? this.activeItemRef : false}
+          >
             {createLink({
               isActive: item.link === activeItemLink.link,
               item,
