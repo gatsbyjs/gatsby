@@ -111,7 +111,6 @@ module.exports = async function build(program: BuildArgs) {
       pageQueryIds
     )
 
-    console.log({ cleanPagePaths })
     await pageDataUtil.updateCompilationHashes(
       { publicDir, workerPool },
       cleanPagePaths,
@@ -175,4 +174,6 @@ module.exports = async function build(program: BuildArgs) {
   await stopTracer()
   workerPool.end()
   buildActivity.end()
+
+  await require(`fs-extra`).writeJSON(`./logs.json`, store.getState().logs)
 }
