@@ -3654,22 +3654,6 @@
     - Blog
   built_by: Logicwind
   built_by_url: "https://www.logicwind.com"
-- title: npm-bookmarks
-  url: https://npm-bookmarks.netlify.com
-  main_url: https://npm-bookmarks.netlify.com
-  source_url: https://github.com/crstnio/npm-bookmarks
-  description: >
-    A site to collect personal favorites of NPM packages – sorted by downloads count with a tags filter and search by title. Fork it and bookmark your favorite packages!
-  categories:
-    - Directory
-    - JavaScript
-    - Library
-    - Open Source
-    - Programming
-    - Web Development
-  built_by: crstnio
-  built_by_url: https://github.com/crstnio/
-  featured: false
 - title: Waterscapes
   main_url: "https://waterscap.es"
   url: "https://waterscap.es/lake-monteynard/"
