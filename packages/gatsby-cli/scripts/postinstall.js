@@ -1,6 +1,16 @@
-const createCli = require('../lib/create-cli');
+const chalk = require('chalk');
 
-console.log('\033[1;32mSuccess!\n\033[0m');
-console.log('\033[1;36mWelcome to the Gatsby CLI! Please visit \033[7;36mhttps://www.gatsbyjs.org/docs/gatsby-cli/\033[m \033[1;36mfor more information.\033[0m\n');
+const showSuccessMessage = () => {
+    console.log(chalk.green('Success!\n'));
+    console.log(chalk.cyan('Welcome to the Gatsby CLI! Please visit ') + 
+        chalk.bgCyan('https://www.gatsbyjs.org/docs/gatsby-cli/') + 
+        chalk.cyan(' for more information.\n'));
+}
 
-createCli('--help');
+try{
+    const createCli = require('../lib/create-cli');
+    showSuccessMessage();
+    createCli('--help');
+}catch(e){
+    showSuccessMessage();
+}

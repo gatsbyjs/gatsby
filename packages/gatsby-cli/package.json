@@ -59,7 +59,8 @@
     "ink-spinner": "^3.0.1"
   },
   "files": [
-    "lib"
+    "lib",
+    "scripts"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
   "keywords": [
@@ -73,10 +74,10 @@
     "directory": "packages/gatsby-cli"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore \"**/__tests__\" && npm run showPostIntall",
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\" && npm run showPostInstall",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"",
-    "showPostIntall": "node scripts/postinstall.js"
+    "showPostInstall": "node scripts/postinstall.js"
   },
   "yargs": {
     "boolean-negation": false
