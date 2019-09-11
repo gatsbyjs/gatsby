@@ -166,9 +166,9 @@ const runSuiteForPage = (label, pagePath) => {
   })
 }
 
-// runSuiteForPage(`Index`, `/`)
+runSuiteForPage(`Index`, `/`)
 runSuiteForPage(`Page-2`, `/page-2/`)
-// runSuiteForPage(`404`, `/404.html`)
+runSuiteForPage(`404`, `/404.html`)
 
 describe(`Cleanup`, () => {
   it(`Restore resources`, () => {
