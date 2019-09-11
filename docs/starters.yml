@@ -3891,3 +3891,15 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
+- url: https://gatsby-starter-ts-hello-world.netlify.com
+  repo: https://github.com/hdorgeval/gatsby-starter-ts-hello-world
+  description: TypeScript version of official hello world
+  tags:
+    - Language:TypeScript
+  features:
+    - TypeScript
+    - ESLint
+    - Type checking
+    - no boilerplate
+    - Great for advanced users
+    - VSCode ready
