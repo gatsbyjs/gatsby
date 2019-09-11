@@ -38,13 +38,13 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Arguments
 
-- **`site-name` :**  Your Gatsby site name along with the path should be pass here`
+- **`site-name` :** Your Gatsby site name along with the path should be pass here`
 
-- **`starter-url` :**  Mention the gatsby starter pack url or local path here. 
-  See the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) for more.   
+- **`starter-url` :** Mention the gatsby starter pack url or local path here.
+  See the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) for more.
   `Default` starter pack is [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default).
 
-> **NOTE :** Dont pass `.` or `./` or ` ` *(space)*  in the `site-name`. It will throw error of specifying name and it will stop the operation
+> **NOTE :** Dont pass `.` or `./` or `` _(space)_ in the `site-name`. It will throw error of specifying name and it will stop the operation
 
 #### Examples
 
@@ -52,14 +52,13 @@ gatsby new [<site-name> [<starter-url>]]
 
 - `gatsby new MY_AWESOME_GATSBY_BLOG_SITE https://github.com/gatsbyjs/gatsby-starter-blog` : It will create a gatbsy site with name `MY_AWESOME_GATSBY_BLOG_SITE` and using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/) starter pack
 
-- `gatsby new   https://github.com/gatsbyjs/gatsby-starter-blog` : It will result in error and will stop the command with a message : *It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project https://github.com/gatsbyjs/gatsby-starter-blog"*
+- `gatsby new https://github.com/gatsbyjs/gatsby-starter-blog` : It will result in error and will stop the command with a message : _It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project https://github.com/gatsbyjs/gatsby-starter-blog"_
 
 Refer [starters-docs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/starters.md) for more details
 
 #### Interactive prompting
 
 If you leave all the both of the argument, then CLI will then run a interactive shell asking for these inputs.
-
 
 ### `develop`
 
