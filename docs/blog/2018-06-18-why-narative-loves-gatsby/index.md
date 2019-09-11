@@ -33,7 +33,7 @@ Gatsby does not only allow us to deliver fast websites, it has also sped up our 
 
 # Separation between view and data layers
 
-Many popular CMS tools are tightly coupled to their source of data. Gatsby offers a clear separation between the data and view layer building on top of the Headless CMS principles. The advantage for Narative is that we can develop without CMS lock-in such as WordPress. If our team decides to go with a new view layer the migration would be less painful than migrating all the data as well. Often times flexibility in software means more complexity to manage but in this case the flexibility is in the right spots where it reduces complexity.
+Many popular CMS tools are tightly coupled to their source of data. Gatsby offers a clear separation between the data and view layer building on top of the [headless CMS](/docs/headless-cms/) principles. The advantage for Narative is that we can develop without CMS lock-in such as WordPress. If our team decides to go with a new view layer the migration would be less painful than migrating all the data as well. Often times flexibility in software means more complexity to manage but in this case the flexibility is in the right spots where it reduces complexity.
 
 We pass this flexibility on to our partners. They are able to manage their data while _our team is able to deliver an excellent product on top of their existing infrastructure. This has made our solutions to revamping legacy projects even stronger than before_.
 
