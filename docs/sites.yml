@@ -7214,7 +7214,7 @@
   featured: false
 - title: Recetas El Universo
   description: >-
-    Recipes and videos with the best of Ecuadorian cuisine. 
+    Recipes and videos with the best of Ecuadorian cuisine.
     Collectable recipes from Diario El Universo.
   main_url: "https://recetas-eu.netlify.com/"
   url: "https://recetas-eu.netlify.com/"
@@ -7247,4 +7247,14 @@
     - Technology
   built_by: Third and Grove
   built_by_url: https://www.thirdandgrove.com
+  featured: false
+- title: Le Bikini
+  url: https://lebikini.com
+  main_url: https://lebikini.com
+  description: >
+    New website for Toulouse's most iconic concert hall.
+  categories:
+    - Music
+  built_by: Antoine Rousseau
+  built_by_url: https://antoine.rousseau.im
   featured: false
