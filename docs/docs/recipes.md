@@ -873,15 +873,15 @@ The screenshots and examples in this recipe were set up with a new Contentful sp
 npm install --save gatsby-source-contentful
 ```
 
-2. Add the following plugin entry to your `gatsby-config.js` file. Use your own space ID and access token from the API keys section of your Contentful space. You may also use [environment variables](https://www.gatsbyjs.org/docs/environment-variables/) to store your space and token.
+2. Add the following plugin entry to your `gatsby-config.js` file. Use your own space ID and access token from the API keys section of your Contentful space. You should consider using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/) to store your space ID and token.
 
 ```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-contentful`,
     options: {
-      spaceId: `your_space_id`,
-      accessToken: `your_access_token`,
+      spaceId: `your_space_id`, // or process.env.CONTENTFUL_SPACE_ID
+      accessToken: `your_access_token`, // or process.env.CONTENTFUL_TOKEN
     },
   },
 ]
