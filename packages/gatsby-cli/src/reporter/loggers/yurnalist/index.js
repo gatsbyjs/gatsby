@@ -24,6 +24,9 @@ const levelToYurnalist = {
   [ActivityLogLevels.Failed]: text => {
     yurnalist.log(`${chalk.red(`failed`)} ${text}`)
   },
+  [ActivityLogLevels.Interrupted]: text => {
+    yurnalist.log(`${chalk.gray(`not finished`)} ${text}`)
+  },
 }
 
 onLogAaction(action => {
@@ -84,7 +87,7 @@ onLogAaction(action => {
           clear: true,
         })
 
-        activities[action.payload.name] = {
+        activities[action.payload.id] = {
           update: payload => {
             if (payload.total) {
               bar.total = payload.total
@@ -104,7 +107,7 @@ onLogAaction(action => {
       break
     }
     case Actions.UpdateActivity: {
-      const activity = activities[action.payload.name]
+      const activity = activities[action.payload.id]
       if (activity && activity.update) {
         activity.update(action.payload)
       }
