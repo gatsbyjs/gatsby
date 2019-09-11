@@ -70,67 +70,15 @@ Object {
 }
 `;
 
-exports[`gatsby-plugin-sharp queueImageResizing should process immediately when asked 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "args": Object {
-          "base64": true,
-          "duotone": false,
-          "grayscale": false,
-          "jpegProgressive": true,
-          "maxWidth": 800,
-          "pathPrefix": "",
-          "pngCompressionLevel": 9,
-          "pngCompressionSpeed": 4,
-          "quality": 50,
-          "sizeByPixelDensity": false,
-          "toFormat": "png",
-          "width": 3,
-        },
-        "inputPath": "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
-        "outputPath": "<PROJECT_ROOT>/public/static/1234/39ca0/test.png",
-      },
-      Object {
-        "addThirdPartySchema": [Function],
-        "createJob": [Function],
-        "createNode": [Function],
-        "createNodeField": [Function],
-        "createPage": [Function],
-        "createPageDependency": [Function],
-        "createParentChildLink": [Function],
-        "createRedirect": [Function],
-        "deleteComponentsDependencies": [Function],
-        "deleteNode": [Function],
-        "deleteNodes": [Function],
-        "deletePage": [Function],
-        "endJob": [Function],
-        "replaceComponentQuery": [Function],
-        "replaceStaticQuery": [Function],
-        "replaceWebpackConfig": [Function],
-        "setBabelOptions": [Function],
-        "setBabelPlugin": [Function],
-        "setBabelPreset": [Function],
-        "setJob": [Function],
-        "setPluginStatus": [Function],
-        "setWebpackConfig": [Function],
-        "touchNode": [Function],
-      },
-      Object {
-        "defaultQuality": 50,
-        "lazyImageGeneration": true,
-        "stripMetadata": true,
-        "useMozJpeg": false,
-      },
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Promise {},
-    },
-  ],
+exports[`gatsby-plugin-sharp stats determines if the image is transparent, based on the presence and use of alpha channel 1`] = `
+Object {
+  "isTransparent": false,
+}
+`;
+
+exports[`gatsby-plugin-sharp stats determines if the image is transparent, based on the presence and use of alpha channel 2`] = `
+Object {
+  "isTransparent": true,
 }
 `;
 

@@ -17,6 +17,7 @@ const {
   fixed,
   queueImageResizing,
   getImageSize,
+  stats,
 } = require(`../`)
 const { scheduleJob } = require(`../scheduler`)
 scheduleJob.mockResolvedValue(Promise.resolve())
@@ -389,6 +390,21 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`fluid`, async () => {
       let result = await fluid({ file, args })
       expect(result).toMatchSnapshot()
+    })
+  })
+
+  describe(`stats`, () => {
+    it(`determines if the image is transparent, based on the presence and use of alpha channel`, async () => {
+      const result = await stats({ file, args })
+      expect(result).toMatchSnapshot()
+      expect(result.isTransparent).toEqual(false)
+
+      const alphaResult = await stats({
+        file: getFileObject(path.join(__dirname, `images/alphatest.png`)),
+        args,
+      })
+      expect(alphaResult).toMatchSnapshot()
+      expect(alphaResult.isTransparent).toEqual(true)
     })
   })
 })

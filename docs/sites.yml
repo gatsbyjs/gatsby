@@ -6804,7 +6804,6 @@
   description: >
     Fourpost is a shopping destination for today’s family that combines the best brands and experiences under one roof.
   categories:
-    - Retail
     - Marketing
   built_by: Fourpost
   built_by_url: https://github.com/fourpost
@@ -7228,4 +7227,40 @@
     - Business
   built_by: Somo
   built_by_url: https://www.somoglobal.com
+  featured: false
+- title: Recetas El Universo
+  description: >-
+    Recipes and videos with the best of Ecuadorian cuisine. 
+    Collectable recipes from Diario El Universo.
+  main_url: "https://recetas-eu.netlify.com/"
+  url: "https://recetas-eu.netlify.com/"
+  featured: false
+  categories:
+    - Blog
+    - WordPress
+    - Food
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
+- title: NuBrakes
+  url: https://nubrakes.com/
+  main_url: https://nubrakes.com/
+  description: >
+    NuBrakes is the mobile brake repair company that comes to you! We perform brake pad, caliper, and rotor replacement at your office, apartment or home!
+  categories:
+    - Business
+    - Entrepreneurship
+  featured: false
+- title: Third and Grove
+  url: https://www.thirdandgrove.com
+  main_url: https://www.thirdandgrove.com
+  source_url: https://github.com/thirdandgrove/tagd8_gatsby
+  description: >
+    A digital agency slaying the mundane one pixel at a time.
+  categories:
+    - Agency
+    - Marketing
+    - Open Source
+    - Technology
+  built_by: Third and Grove
+  built_by_url: https://www.thirdandgrove.com
   featured: false
