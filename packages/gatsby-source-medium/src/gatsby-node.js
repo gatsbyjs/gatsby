@@ -1,7 +1,7 @@
 const axios = require(`axios`)
 
 const fetch = (username, limit = 100) => {
-  const url = `https://medium.com/${username}/latest?format=json&limit=${limit}`
+  const url = `https://medium.com/${username}/?format=json&limit=${limit}`
   return axios.get(url)
 }
 
