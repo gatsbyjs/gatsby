@@ -48,17 +48,31 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Examples
 
-- `gatsby new MY_AWESOME_GATSBY_SITE` : it will create a gatsby site with `MY_AWESOME_GATSBY_SITE` name in the current working directory using the default starter
+- create a gatsby site with `my-awesome-site` name in the current working directory using the default starter:
 
-- `gatsby new MY_AWESOME_GATSBY_BLOG_SITE https://github.com/gatsbyjs/gatsby-starter-blog` : It will create a gatbsy site with name `MY_AWESOME_GATSBY_BLOG_SITE` and using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/) starter pack
+```bash
+gatsby new my-awesome-site
+```
 
-- `gatsby new https://github.com/gatsbyjs/gatsby-starter-blog` : It will result in error and will stop the command with a message : _It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project https://github.com/gatsbyjs/gatsby-starter-blog"_
+- create a gatbsy site with name `my-awesome-blog-site` and using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/) starter pack:
+
+```bash
+gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
+```
+
+- If you leave all the both of the argument, then CLI will then run a interactive shell asking for these inputs:
+
+```bash
+gatsby new
+? What is your project called? › my-gatsby-project
+? What starter would you like to use? › - Use arrow-keys. Return to submit.
+❯  gatsby-starter-default
+   gatsby-starter-hello-world
+   gatsby-starter-blog
+   (Use a different starter)
+```
 
 Refer [starters-docs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/starters.md) for more details
-
-#### Interactive prompting
-
-If you leave all the both of the argument, then CLI will then run a interactive shell asking for these inputs.
 
 ### `develop`
 
