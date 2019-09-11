@@ -95,6 +95,7 @@ describe(`Options validation`, () => {
         accessToken: `accessToken`,
         localeFilter: locale => locale.code === `de`,
         downloadLocal: false,
+        proxy: {},
       }
     )
 
