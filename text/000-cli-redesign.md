@@ -12,7 +12,7 @@ We’re going to create a CLI style guide and then implement that style guide, w
 
 # Basic example
 
-Note: [Ink](https://www.npmjs.com/package/ink), an npm package that give us the use of React for CLIs, will make it easier to design the CLI with consistency. Just as React helps  web UIs have consistent design, Ink will provide the same thing for our CLI.
+Note: [Ink](https://www.npmjs.com/package/ink), an npm package that gives us the use of React for CLIs, will make it easier to design the CLI with consistency. Just as React helps web UIs have a consistent design, Ink will provide the same thing for our CLI.
 
 # Motivation
 ## Why are we doing this?
@@ -57,10 +57,10 @@ A related RFC is the [Error surveying & improvement RFC](https://github.com/gats
 - [ ]  If we clear the Gatsby CLI screen to only display success messages or error messages, people will save time in finding the right thing
 - [ ]  If people use a Gatsby CLI quiet mode, people will find and fix errors faster (quiet mode would make errors more discoverable)
 - [ ] If the Gatsby CLI suggests the correct spellings for misspelled Gatsby commands, people will save time and be happier. For example, when people need help, we could make it more easily discoverable so they don’t have to type multiple commands (e.g. `gatsby --help` then `gatsby build  --help`). Possible solution: provide help information for a variety of inputs `gatsby h`, `gatsby`, `gatsby help`, etc. and update our did-you-mean file to dogfood the correct commands
-- [ ] If we prevent same error message over and over again, people will be less confused and fix the error faster
+- [ ] If we prevent the same error message over and over again, people will be less confused and fix the error faster
 - [ ] Including createPages page count in output can help users optimize for speed and catch errors faster
 - [x] When people type the wrong thing in the browser (e.g. “localhost:8000/_ _ graphiql), we could either redirect to "correct" one or just support multiple different cases. This will help them spend less time looking for the right link.
-- [ ] Make sure that links to development site / graphiql are easily discoverable, which will also help make sure users can find the links without much scrolling. The problem is that errors / recompiling notices are getting appended endlessly so users need to scroll very far sometimes to get to those links. Possible solutions: If we would clear older errors / notices so the links are few lines away would fix it as well. Another option is for `gatsby develop` to be interactive (like `jest --watch`) where you can use commands while it's running and we could have command to open browser with development site / graphiql as part of the available commands. With ink we can make sure we don't add too much info at the bottom.
+- [ ] Make sure that links to development site / graphiql are easily discoverable, which will also help make sure users can find the links without much scrolling. The problem is that errors / recompiling notices are getting appended endlessly so users need to scroll very far sometimes to get to those links. Possible solutions: If we would clear older errors / notices so the links are few lines away would fix it as well. Another option is for `gatsby develop` to be interactive (like `jest --watch`) where you can use commands while it's running and we could have a command to open the browser with development site / graphiql as part of the available commands. With Ink we can make sure we don't add too much info at the bottom.
 - [ ] Offering suggestions for those who want to customize CLI commands, such as `gd` for `gatsby develop` could help people stick with gatsby because they can customize it, make it theirs, and get stuff done faster.
 - [ ] If we shorten the effort needed to input a starter URL into the `gatsby new` command, people will be happy because it’s easier. One idea is to link to starter library or give options of starter in the CLI. See WIP at https://github.com/gatsbyjs/gatsby/pull/14097
 Shortening the input needed is nice: you can take away the https://www before the starter name and it still worked
@@ -78,10 +78,10 @@ Shortening the input needed is nice: you can take away the https://www before th
 Things to keep doing well:
 - `gatsby new [project-name]` is easy!
 - Keep develop and build output easy to find
-- Keep list of all CLI information on docs site because it’s one click and searchable there
+- Keep a list of all CLI information on docs site because it’s one click and searchable there
 
 
-There will be many more proposed changes based off of the CLI style guide.
+There will be many more proposed changes based on the CLI style guide.
 
 # Drawbacks
 
