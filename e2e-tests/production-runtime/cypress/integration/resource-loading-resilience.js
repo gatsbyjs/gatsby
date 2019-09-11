@@ -9,41 +9,86 @@ const waitForAPIOptions = {
   timeout: 3000,
 }
 
-const runTests = (tag = `Default`) => {
-  it(`Loads index - ${tag}`, () => {
+const runTests = (
+  blockedPath = `Default`,
+  options = { alternate: false, link: false, stay: false }
+) => {
+  const shouldLink = options.alternate && options.link
+
+  it(`Loads index - ${blockedPath}`, () => {
+    const currentPath = `/`
+    const assertShouldBe =
+      blockedPath === currentPath && shouldLink ? `404` : `index`
     cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-    cy.getTestElement(`dom-marker`).contains(`index`)
+    cy.getTestElement(`dom-marker`).contains(assertShouldBe)
   })
 
-  it(`Navigates to second page - ${tag}`, () => {
-    cy.getTestElement(`page2`).click()
-    cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-      .location(`pathname`)
-      .should(`equal`, `/page-2/`)
-    cy.getTestElement(`dom-marker`).contains(`page-2`)
+  it(`Navigates to second page - ${blockedPath}`, () => {
+    const currentPath = `/`
+    const toPath = `/page-2/`
+    const isCurrentBlocked = currentPath === blockedPath
+    const toPathIsBlocked = toPath === blockedPath
+    if (isCurrentBlocked && options.alternate) {
+      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+      cy.getTestElement(`dom-marker`).contains(`404`)
+    } else if (toPathIsBlocked && options.stay) {
+      cy.getTestElement(`page2`).click()
+      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+      cy.getTestElement(`dom-marker`).contains(`index`)
+    } else {
+      const assertShouldBe =
+        toPath === blockedPath && shouldLink ? `404` : `page-2`
+      cy.getTestElement(`page2`).click()
+      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+      cy.getTestElement(`dom-marker`).contains(assertShouldBe)
+    }
   })
 
-  it(`Navigates to 404 page - ${tag}`, () => {
-    cy.getTestElement(`404`).click()
-    cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-      .location(`pathname`)
-      .should(`equal`, `/page-3/`)
-    cy.getTestElement(`dom-marker`).contains(`404`)
+  it(`Navigates to 404 page - ${blockedPath}`, () => {
+    cy.get(`[data-testid="dom-marker"]`)
+      .invoke(`text`)
+      .then(currentDom => {
+        const currentPath = `/page-2`
+        const toPath = `/404.html`
+        const isCurrentBlocked = currentPath === blockedPath
+        if (currentDom.includes(`page-2`)) {
+          if (isCurrentBlocked && options.alternate) {
+            cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+            cy.getTestElement(`dom-marker`).contains(`404`)
+          } else {
+            const assertShouldBe =
+              toPath === blockedPath && options.safeNotFound ? `page-2` : `404`
+            cy.getTestElement(`404`).click()
+            cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+            cy.getTestElement(`dom-marker`).contains(assertShouldBe)
+          }
+        } else {
+          cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+          cy.getTestElement(`dom-marker`).contains(currentDom)
+        }
+      })
   })
 
-  it(`Loads 404 - ${tag}`, () => {
+  it(`Loads 404 - ${blockedPath}`, () => {
     cy.visit(`/page-3/`, {
       failOnStatusCode: false,
     }).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`dom-marker`).contains(`404`)
   })
 
-  it(`Can navigate from 404 to index`, () => {
-    cy.getTestElement(`index`).click()
-    cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-      .location(`pathname`)
-      .should(`equal`, `/`)
-    cy.getTestElement(`dom-marker`).contains(`index`)
+  it(`Can navigate from 404 to index - ${blockedPath}`, () => {
+    const toPath = `/`
+    const assertShouldBe =
+      toPath === blockedPath && shouldLink ? `404` : `index`
+    if (toPath === blockedPath && options.stay) {
+      cy.getTestElement(`index`).click()
+      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+      cy.getTestElement(`dom-marker`).contains(`404`)
+    } else {
+      cy.getTestElement(`index`).click()
+      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+      cy.getTestElement(`dom-marker`).contains(assertShouldBe)
+    }
   })
 }
 
@@ -63,7 +108,7 @@ const runBlockedScenario = (scenario, args) => {
         })
       })
     })
-    runTests(scenario)
+    runTests(args.pagePath, args.options)
   })
 }
 
@@ -79,32 +124,51 @@ const runSuiteForPage = (label, pagePath) => {
       runBlockedScenario(`blockAssetsForPage`, {
         pagePath,
         filter: `page-data`,
+        options: {
+          alternate: true,
+          link: true,
+          safeNotFound: true,
+        },
       })
     })
     describe(`Missing "${label}" page page-template asset`, () => {
       runBlockedScenario(`blockAssetsForPage`, {
         pagePath,
         filter: `page-template`,
+        options: {
+          alternate: false,
+          link: true,
+          stay: true,
+          safeNotFound: true,
+        },
       })
     })
     describe(`Missing "${label}" page extra assets`, () => {
       runBlockedScenario(`blockAssetsForPage`, {
         pagePath,
         filter: `extra`,
+        options: {
+          alternate: false,
+          link: false,
+        },
       })
     })
     describe(`Missing all "${label}" page assets`, () => {
       runBlockedScenario(`blockAssetsForPage`, {
         pagePath,
         filter: `all`,
+        options: {
+          alternate: false,
+          link: false,
+        },
       })
     })
   })
 }
 
-runSuiteForPage(`Index`, `/`)
+// runSuiteForPage(`Index`, `/`)
 runSuiteForPage(`Page-2`, `/page-2/`)
-runSuiteForPage(`404`, `/404.html`)
+// runSuiteForPage(`404`, `/404.html`)
 
 describe(`Cleanup`, () => {
   it(`Restore resources`, () => {
