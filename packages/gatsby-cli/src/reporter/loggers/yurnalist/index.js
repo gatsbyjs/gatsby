@@ -45,7 +45,7 @@ onLogAaction(action => {
       }
       break
     }
-    case ActivityLogLevels.Start: {
+    case Actions.StartActivity: {
       if (action.payload.type === ActivityTypes.Spinner) {
         const spinner = yurnalist.activity()
         spinner.tick(action.payload.text)
@@ -103,14 +103,14 @@ onLogAaction(action => {
       }
       break
     }
-    case ActivityLogLevels.Update: {
+    case Actions.UpdateActivity: {
       const activity = activities[action.payload.name]
       if (activity && activity.update) {
         activity.update(action.payload)
       }
       break
     }
-    case ActivityLogLevels.End: {
+    case Actions.EndActivity: {
       const activity = activities[action.payload.id]
       if (activity) {
         if (activity.end) {

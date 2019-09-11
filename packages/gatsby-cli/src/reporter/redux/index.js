@@ -13,6 +13,18 @@ let store = Redux.createStore(
 const storeSwapListeners = []
 const onLogActionListeners = []
 
+const isInternalAction = action => {
+  if ([Actions.PendingActivity, Actions.CancelActivity].includes(action.type)) {
+    return true
+  }
+
+  if ([Actions.StartActivity, Actions.EndActivity].includes(action.type)) {
+    return action.payload.type === ActivityTypes.Hidden
+  }
+
+  return false
+}
+
 const iface = {
   getStore: () => store,
   dispatch: action => {
@@ -35,10 +47,7 @@ const iface = {
 
     store.dispatch(action)
 
-    if (
-      ActivityLogLevels[action.type] &&
-      action.payload.type === ActivityTypes.Hidden
-    ) {
+    if (isInternalAction(action)) {
       // consumers (ipc, yurnalist, json logger) shouldn't have to
       // deal with actions needed just for internal tracking of status
       return

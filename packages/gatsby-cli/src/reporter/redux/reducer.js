@@ -1,4 +1,4 @@
-const { Actions, ActivityLogLevels } = require(`../constants`)
+const { Actions } = require(`../constants`)
 
 module.exports = (
   state = {
@@ -23,7 +23,7 @@ module.exports = (
       ...state,
       messages: [...state.messages, action.payload],
     }
-  } else if (action.type === ActivityLogLevels.Start) {
+  } else if (action.type === Actions.StartActivity) {
     const { id } = action.payload
     state = {
       ...state,
@@ -33,8 +33,8 @@ module.exports = (
       },
     }
   } else if (
-    action.type === ActivityLogLevels.Update ||
-    action.type === ActivityLogLevels.Pending
+    action.type === Actions.UpdateActivity ||
+    action.type === Actions.PendingActivity
   ) {
     const { id, ...rest } = action.payload
     const activity = state.activities[id]
@@ -50,8 +50,8 @@ module.exports = (
       },
     }
   } else if (
-    action.type === ActivityLogLevels.End ||
-    action.type === ActivityLogLevels.Cancel
+    action.type === Actions.EndActivity ||
+    action.type === Actions.CancelActivity
   ) {
     const { id, status, duration } = action.payload
     const activity = state.activities[id]

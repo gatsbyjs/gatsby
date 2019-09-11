@@ -19,6 +19,12 @@ const getElapsedTimeMS = activity => {
   return convertHrtime(elapsed)[`seconds`].toFixed(3)
 }
 
+const ActivityStatusToLogLevel = {
+  [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
+  [ActivityStatuses.Failed]: ActivityLogLevels.Failed,
+  [ActivityStatuses.Success]: ActivityLogLevels.Success,
+}
+
 const getGlobalStatus = (id, status) => {
   const { logs } = getStore().getState()
 
@@ -150,7 +156,7 @@ const actions = {
     }
 
     actionsToEmit.push({
-      type: ActivityLogLevels.Pending,
+      type: Actions.PendingActivity,
       payload: {
         id,
         type: ActivityTypes.Pending,
@@ -180,7 +186,7 @@ const actions = {
     }
 
     actionsToEmit.push({
-      type: ActivityLogLevels.Start,
+      type: Actions.StartActivity,
       payload: {
         id,
         uuid: uuidv4(),
@@ -206,7 +212,7 @@ const actions = {
     const actionsToEmit = []
     if (activity.type === ActivityTypes.Pending) {
       actionsToEmit.push({
-        type: ActivityLogLevels.Cancel,
+        type: Actions.CancelActivity,
         payload: {
           id,
           status: ActivityStatuses.Cancelled,
@@ -224,7 +230,7 @@ const actions = {
       }
 
       actionsToEmit.push({
-        type: ActivityLogLevels.End,
+        type: Actions.EndActivity,
         payload: {
           uuid: activity.uuid,
           id,
@@ -238,7 +244,7 @@ const actions = {
         actionsToEmit.push(
           actions.createLog({
             text: activity.text,
-            level: ActivityLogLevels[status.toUpperCase()],
+            level: ActivityStatusToLogLevel[status],
             duration,
             statusText:
               activity.statusText ||
@@ -275,7 +281,7 @@ const actions = {
     }
 
     return {
-      type: ActivityLogLevels.Update,
+      type: Actions.UpdateActivity,
       payload: {
         uuid: activity.uuid,
         id,

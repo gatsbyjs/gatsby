@@ -6,6 +6,12 @@ export const Actions = {
   StatefulLog: `STATEFUL_LOG`,
   ClearStatefulLog: `CLEAR_STATEFUL_LOG`,
   SetLogs: `SET_LOGS`,
+
+  StartActivity: `ACTIVITY_START`,
+  EndActivity: `ACTIVITY_END`,
+  UpdateActivity: `ACTIVITY_UPDATE`,
+  PendingActivity: `ACTIVITY_PENDING`,
+  CancelActivity: `ACTIVITY_CANCEL`,
 }
 
 export const LogLevels = {
@@ -17,17 +23,10 @@ export const LogLevels = {
   Error: `ERROR`,
 }
 
-// TODO: These should be actions but are used as log levels as well
-// so this needs to be cleaned up across the board
 export const ActivityLogLevels = {
-  Start: `ACTIVITY_START`,
   Success: `ACTIVITY_SUCCESS`,
-  Pending: `ACTIVITY_PENDING`,
   Failed: `ACTIVITY_FAILED`,
   Interrupted: `ACTIVITY_INTERRUPTED`,
-  Cancel: `ACTIVITY_CANCEL`,
-  End: `ACTIVITY_END`,
-  Update: `ACTIVITY_UPDATE`,
 }
 
 export const ActivityStatuses = {
