@@ -1,7 +1,7 @@
 const Redux = require(`redux`)
 const reducer = require(`./reducer`)
 
-const { ActivityTypes, Actions, ActivityLogLevels } = require(`../constants`)
+const { ActivityTypes, Actions } = require(`../constants`)
 
 let store = Redux.createStore(
   Redux.combineReducers({
