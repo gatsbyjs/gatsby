@@ -46,7 +46,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
       if (!node.file) {
-        return Promise.resolve() 
+        return Promise.resolve()
       }
       const url = `http://${node.file.url.slice(2)}`
 
