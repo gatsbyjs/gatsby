@@ -29,7 +29,7 @@ const linkPrefetchStrategy = function(url) {
       link.setAttribute(`as`, `fetch`)
 
       if (new URL(url).origin !== window.location.origin) {
-        link.setAttribute(`crossorigin`, ``)
+        link.setAttribute(`crossorigin`, `anonymous`)
       }
     }
 
