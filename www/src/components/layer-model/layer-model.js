@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react"
+import React, { useState } from "react"
 import hex2rgba from "hex2rgba"
 
 import { space, colors, radii } from "../../utils/presets"
