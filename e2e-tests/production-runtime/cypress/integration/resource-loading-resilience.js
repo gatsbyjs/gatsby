@@ -138,7 +138,7 @@ const runSuiteForPage = (label, pagePath) => {
         options: {
           alternate: false,
           link: true,
-          stay: true,
+          stay: true && !Cypress.env(`TEST_PLUGIN_OFFLINE`),
           safeNotFound: true,
         },
       })
@@ -158,8 +158,8 @@ const runSuiteForPage = (label, pagePath) => {
         pagePath,
         filter: `all`,
         options: {
-          alternate: false,
-          link: false,
+          alternate: false || Cypress.env(`TEST_PLUGIN_OFFLINE`),
+          link: false || Cypress.env(`TEST_PLUGIN_OFFLINE`),
         },
       })
     })
