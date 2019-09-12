@@ -41,6 +41,10 @@ const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
 const queryWatcher = require(`../query/query-watcher`)
 const requiresWriter = require(`../bootstrap/requires-writer`)
+const {
+  reportWebpackWarnings,
+  structureWebpackErrors,
+} = require(`../utils/webpack-error-utils`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -580,11 +584,15 @@ module.exports = async (program: any) => {
     isFirstCompile = false
 
     if (webpackActivity) {
+      reportWebpackWarnings(stats)
+
       if (isSuccessful) {
         webpackActivity.end()
       } else {
-        const handleWebpackError = require(`../utils/webpack-error-parser`)
-        const errors = handleWebpackError(`develop`, stats.compilation.errors)
+        const errors = structureWebpackErrors(
+          `develop`,
+          stats.compilation.errors
+        )
         webpackActivity.panicOnBuild(errors)
       }
       webpackActivity = null

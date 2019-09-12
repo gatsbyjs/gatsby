@@ -9,7 +9,7 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const telemetry = require(`gatsby-telemetry`)
 
-const handleWebpackError = require(`../utils/webpack-error-parser`)
+const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 const runWebpack = compilerConfig =>
   new Promise((resolve, reject) => {
@@ -28,7 +28,9 @@ const doBuildRenderer = async (program, webpackConfig) => {
   // render-page.js is hard coded in webpack.config
   const outputFile = `${directory}/public/render-page.js`
   if (stats.hasErrors()) {
-    reporter.panic(handleWebpackError(`build-html`, stats.compilation.errors))
+    reporter.panic(
+      structureWebpackErrors(`build-html`, stats.compilation.errors)
+    )
   }
   return outputFile
 }

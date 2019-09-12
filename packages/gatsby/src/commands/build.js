@@ -16,7 +16,7 @@ const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
 const WorkerPool = require(`../utils/worker/pool`)
-const handleWebpackError = require(`../utils/webpack-error-parser`)
+const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 type BuildArgs = {
   directory: string,
@@ -84,7 +84,7 @@ module.exports = async function build(program: BuildArgs) {
   const stats = await buildProductionBundle(program, {
     parentSpan: activity.span,
   }).catch(err => {
-    activity.panicOnBuild(handleWebpackError(`build-javascript`, err))
+    activity.panicOnBuild(structureWebpackErrors(`build-javascript`, err))
   })
   activity.end()
 
