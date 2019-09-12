@@ -162,28 +162,26 @@ const ContentSource = ({ sourceIndex, setSourceIndex }) => (
     {sources[sourceIndex].content}
   </CodeWrapper>
 )
-const ContentLayerContent = ({ sourceIndex, setSourceIndex }) => {
-  return (
-    <LayerContentWrapper>
-      <ExampleWrapper>
-        <ContentSource
-          sourceIndex={sourceIndex}
-          setSourceIndex={setSourceIndex}
-        />
-      </ExampleWrapper>
-      <div>
-        <p>
-          <b>Content</b> is often organized in systems like databases, content
-          management systems, files, or external APIs.
-        </p>
-        <p>
-          Any source of data can be connected Gatsby through plugins or using
-          Gatsby's APIs.
-        </p>
-      </div>
-    </LayerContentWrapper>
-  )
-}
+const ContentLayerContent = ({ sourceIndex, setSourceIndex }) => (
+  <LayerContentWrapper>
+    <ExampleWrapper>
+      <ContentSource
+        sourceIndex={sourceIndex}
+        setSourceIndex={setSourceIndex}
+      />
+    </ExampleWrapper>
+    <div>
+      <p>
+        <b>Content</b> is often organized in systems like databases, content
+        management systems, files, or external APIs.
+      </p>
+      <p>
+        Any source of data can be connected Gatsby through plugins or using
+        Gatsby's APIs.
+      </p>
+    </div>
+  </LayerContentWrapper>
+)
 
 const BuildLayerContent = () => (
   <LayerContentWrapper>
