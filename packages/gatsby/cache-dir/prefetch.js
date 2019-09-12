@@ -24,11 +24,11 @@ const linkPrefetchStrategy = function(url) {
     link.setAttribute(`rel`, `prefetch`)
     link.setAttribute(`href`, url)
 
-    // Handle special json requirements
+    // Handle special JSON requirements
     if (/\.json$/.test(url)) {
       link.setAttribute(`as`, `fetch`)
 
-      if (new URL(url).origin !== document.location.origin) {
+      if (new URL(url).origin !== window.location.origin) {
         link.setAttribute(`crossorigin`, ``)
       }
     }
