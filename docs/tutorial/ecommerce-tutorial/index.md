@@ -114,6 +114,8 @@ If you're selling a simple product, like an eBook for example, you can create a 
 
 For Stripe Checkout to work without any backend component, you need to create a product listing in the Stripe Dashboard. This is required for Stripe to validate that the request coming from the frontend is legitimate and to charge the right amount for the selected product/SKU. To set this up, simply follow the steps in the [Stripe docs](https://stripe.com/docs/payments/checkout#configure).
 
+Note: You will need to create both test and live product SKUs in the Stripe admin. Make sure you toggle to 'Viewing test data' and then create your products for local development.
+
 #### Create a checkout component that loads StripeJS and redirects to the checkout
 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:

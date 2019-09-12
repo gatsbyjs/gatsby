@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`requires-writer matchPath should sort matchPaths by specificity 1`] = `
+Array [
+  Object {
+    "matchPath": "/app/clients/*",
+    "path": "/app/clients/",
+  },
+  Object {
+    "matchPath": "/app/projects/*",
+    "path": "/app/projects/",
+  },
+  Object {
+    "matchPath": "/app/*",
+    "path": "/app/",
+  },
+]
+`;
