@@ -143,6 +143,7 @@ const reporter: Reporter = {
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
     }
+    return error
   },
 
   error(errorMeta, error) {
@@ -254,7 +255,7 @@ const reporter: Reporter = {
           status: ActivityStatuses.Failed,
         })
 
-        reporter.panicOnBuild(...args)
+        return reporter.panicOnBuild(...args)
       },
       end() {
         span.finish()
@@ -362,7 +363,7 @@ const reporter: Reporter = {
           status: ActivityStatuses.Failed,
         })
 
-        reporter.panicOnBuild(...args)
+        return reporter.panicOnBuild(...args)
       },
       done: () => {
         span.finish()
