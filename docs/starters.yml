@@ -3903,3 +3903,24 @@
     - no boilerplate
     - Great for advanced users
     - VSCode ready
+- url: https://grommet-file.netlify.com/
+  repo: https://github.com/metinsenturk/gatsby-starter-grommet-file
+  description: Grommet-File is made with Grommet V2 and a blog starter
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - Portfolio
+    - Styling:Grommet
+  features:
+    - Responsive Design
+    - Pagination
+    - Page creation
+    - Content is Markdown files
+    - Google Analytics
+    - Grommet V2 User Interface
+    - Support for RSS feed
+    - SEO friendly
+    - Mobile and responsive
+    - Sitemap & Robots.txt generation
+    - Optimized images with gatsby-image
