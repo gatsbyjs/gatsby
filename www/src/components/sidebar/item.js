@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useRef } from "react"
+import React, { Fragment, useEffect, useRef } from "react"
 
 import Accordion from "./accordion"
 import createLink from "../../utils/sidebar/create-link"
@@ -15,16 +15,14 @@ const isItemActive = (activeItemParents, item) => {
 
 const Item = props => {
   const activeItemRef = useRef(false)
-  const [didScroll, setDidScroll] = useState(false)
 
   useEffect(() => {
-    if (!didScroll && activeItemRef.current) {
+    if (activeItemRef.current) {
       activeItemRef.current.scrollIntoView({
         block: `center`,
       })
-      setDidScroll(true)
     }
-  })
+  }, [])
 
   const {
     activeItemLink,
