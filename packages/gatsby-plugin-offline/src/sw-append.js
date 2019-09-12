@@ -3,8 +3,13 @@
 importScripts(`idb-keyval-iife.min.js`)
 
 const { NavigationRoute } = workbox.routing
+let offlineShellEnabled = true
 
 const navigationRoute = new NavigationRoute(async ({ event }) => {
+  if (!offlineShellEnabled) {
+    return await fetch(event.request)
+  }
+
   let { pathname } = new URL(event.request.url)
   pathname = pathname.replace(new RegExp(`^%pathPrefix%`), ``)
 
@@ -31,17 +36,25 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
 
 workbox.routing.registerRoute(navigationRoute)
 
-const messageApi = {
-  setPathResources(event, { path, resources }) {
+class MessageAPI {
+  static setPathResources(event, { path, resources }) {
     event.waitUntil(idbKeyval.set(`resources:${path}`, resources))
-  },
+  }
 
-  clearPathResources(event) {
+  static clearPathResources(event) {
     event.waitUntil(idbKeyval.clear())
-  },
+  }
+
+  static enableOfflineShell() {
+    offlineShellEnabled = true
+  }
+
+  static disableOfflineShell() {
+    offlineShellEnabled = false
+  }
 }
 
 self.addEventListener(`message`, event => {
   const { gatsbyApi } = event.data
-  if (gatsbyApi) messageApi[gatsbyApi](event, event.data)
+  if (gatsbyApi) MessageAPI[gatsbyApi](event, event.data)
 })
