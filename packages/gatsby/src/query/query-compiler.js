@@ -108,9 +108,15 @@ class Runner {
     const results = await this.write(nodes, messages)
 
     if (messages.length !== 0) {
-      activity.panicOnBuild(messages)
+      const errors = activity.panicOnBuild(messages)
+      if (process.env.gatsby_executing_command === `develop`) {
+        websocketManager.emitError(overlayErrorID, errors)
+      }
     } else {
       activity.end()
+      if (process.env.gatsby_executing_command === `develop`) {
+        websocketManager.emitError(overlayErrorID, null)
+      }
     }
 
     return results
@@ -197,10 +203,7 @@ class Runner {
                     : 0) + graphqlLocation.column,
               },
             }
-            return {
-              ...errorParser({ message: error.message, filePath, location }),
-              // panicOnBuild: true,
-            }
+            return errorParser({ message: error.message, filePath, location })
           })
         )
 
@@ -261,12 +264,7 @@ class Runner {
       })
 
       const filePath = namePathMap.get(docName)
-      // const structuredError = errorParser({ message, filePath })
-      messages.push({
-        ...errorParser({ message, filePath }),
-        // panicOnBuild: true,
-      })
-      // report.panicOnBuild(structuredError)
+      messages.push(errorParser({ message, filePath }))
 
       // report error to browser
       // TODO: move browser error overlay reporting to reporter
@@ -384,13 +382,13 @@ class Runner {
       compiledNodes.set(filePath, query)
     })
 
-    if (
-      process.env.gatsby_executing_command === `develop` &&
-      lastRunHadErrors
-    ) {
-      websocketManager.emitError(overlayErrorID, null)
-      lastRunHadErrors = false
-    }
+    // if (
+    //   process.env.gatsby_executing_command === `develop` &&
+    //   lastRunHadErrors
+    // ) {
+    //   websocketManager.emitError(overlayErrorID, null)
+    //   lastRunHadErrors = false
+    // }
 
     return compiledNodes
   }
