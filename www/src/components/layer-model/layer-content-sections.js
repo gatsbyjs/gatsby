@@ -9,6 +9,7 @@ import {
   radii,
   shadows,
   transition,
+  mediaQueries,
 } from "../../utils/presets"
 
 // Components for building sections used in the model
@@ -17,9 +18,15 @@ const LayerContentWrapper = ({ children }) => (
     css={{
       padding: `${space[4]} 0`,
       display: `grid`,
-      gridTemplateAreas: `"example content"`,
-      gridTemplateColumns: `1fr 1fr`,
-      gridGap: space[6],
+      gridTemplateRows: `1fr 1fr`,
+      gridTemplateAreas: `"example" "content"`,
+      gridGap: 0,
+      [mediaQueries.md]: {
+        gridTemplateRows: `1fr`,
+        gridTemplateAreas: `"example content"`,
+        gridTemplateColumns: `1fr 1fr`,
+        gridGap: space[6],
+      },
     }}
   >
     {children}
@@ -30,6 +37,10 @@ const ExampleWrapper = ({ children }) => (
   <div
     css={{
       borderRadius: radii[3],
+      maxWidth: 620,
+      [mediaQueries.md]: {
+        maxWidth: 300,
+      },
     }}
   >
     {children}
@@ -279,7 +290,6 @@ const AppLayerContent = () => (
           display: `flex`,
           flexDirection: `column`,
           height: `100%`,
-          padding: space[2],
         }}
       >
         <div
