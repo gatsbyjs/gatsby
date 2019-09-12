@@ -1,7 +1,15 @@
 import React from "react"
 import { Link } from "gatsby"
+import MdLoop from "react-icons/lib/md/loop"
 
-import { fontSizes, space, colors, radii } from "../../utils/presets"
+import {
+  fontSizes,
+  space,
+  colors,
+  radii,
+  shadows,
+  transition,
+} from "../../utils/presets"
 
 // Components for building sections used in the model
 const LayerContentWrapper = ({ children }) => (
@@ -9,7 +17,7 @@ const LayerContentWrapper = ({ children }) => (
     css={{
       padding: `${space[4]} 0`,
       display: `grid`,
-      gridTemplateAreas: `example content`,
+      gridTemplateAreas: `"example content"`,
       gridTemplateColumns: `1fr 1fr`,
       gridGap: space[6],
     }}
@@ -28,18 +36,64 @@ const ExampleWrapper = ({ children }) => (
   </div>
 )
 
-const CodeWrapper = ({ title, language, children }) => (
+const CodeWrapper = ({
+  title,
+  language,
+  rotateButton = false,
+  sourceIndex,
+  setSourceIndex,
+  children,
+}) => (
   <React.Fragment>
     {title && (
       <div
-        css={{ borderTopRightRadius: radii[3], borderTopLeftRadius: radii[3] }}
+        css={{
+          borderTopRightRadius: radii[3],
+          borderTopLeftRadius: radii[3],
+          display: `flex`,
+          alignItems: `center`,
+          justifyContent: `space-between`,
+        }}
         className="gatsby-code-title"
       >
         <div css={{ fontSize: fontSizes[0] }}>{title}</div>
+        {rotateButton && (
+          <button
+            css={{
+              backgroundColor: `transparent`,
+              border: `none`,
+              color: colors.grey[60],
+              cursor: `pointer`,
+              padding: `${space[2]} ${space[2]}`,
+              transition: `${transition.speed.default} ${
+                transition.curve.default
+              }`,
+              borderRadius: radii[2],
+              "&[disabled]": {
+                cursor: `not-allowed`,
+              },
+              ":not([disabled]):hover": {
+                backgroundColor: colors.purple[60],
+                boxShadow: shadows.raised,
+                color: colors.white,
+              },
+              ":active": {
+                boxShadow: shadows.floating,
+              },
+            }}
+            onClick={() =>
+              setSourceIndex(
+                sourceIndex === sources.length - 1 ? 0 : sourceIndex + 1
+              )
+            }
+          >
+            cycle <MdLoop size={16} />
+          </button>
+        )}
       </div>
     )}
     <div className="gatsby-highlight">
-      <pre css={{ marginBottom: 0 }} className={`language-${language}`}>
+      <pre className={`language-${language}`}>
         <code className={`language-${language}`}>{children}</code>
       </pre>
     </div>
@@ -47,28 +101,89 @@ const CodeWrapper = ({ title, language, children }) => (
 )
 
 // Content sections using the above components
-const ContentLayerContent = () => (
-  <LayerContentWrapper>
-    <ExampleWrapper>
-      <CodeWrapper title="site-data.yaml" language="yaml">
-        {`site:
+const sources = [
+  {
+    title: `site-data.yaml`,
+    language: `yaml`,
+    content: `site:
   title: Home
   description: Gatsby tips
-`}
-      </CodeWrapper>
-    </ExampleWrapper>
-    <div>
-      <p>
-        <b>Content</b> is often organized in systems like databases, content
-        management systems, files, or external APIs.
-      </p>
-      <p>
-        Any source of data can be connected Gatsby through plugins or using
-        Gatsby's APIs.
-      </p>
-    </div>
-  </LayerContentWrapper>
+`,
+  },
+  {
+    title: `site-data.json`,
+    language: `json`,
+    content: `{
+  "site": {
+    "title": "Home",
+    "description": "Gatsby tips"
+  }
+}
+`,
+  },
+  {
+    title: `gatsby-config.js (CMS)`,
+    language: `cms`,
+    content: `plugins: [
+  \`gatsby-source-contentful\`,
+  \`gatsby-source-wordpress\`,
+  \`gatsby-source-drupal\`,
+  ...
+]`,
+  },
+  {
+    title: `gatsby-config.js (SaaS)`,
+    language: `cms`,
+    content: `plugins: [
+  \`gatsby-source-airtable\`,
+  \`gatsby-source-shopify\`,
+  \`gatsby-source-firebase\`,
+  ...
+]`,
+  },
+  {
+    title: `SQL Database`,
+    language: `db`,
+    content: `+----+---------+-------------+
+| ID |  Title  |    Desc     |
++----+---------+-------------+
+|  1 | Home    | Gatsby tips |
++----+---------+-------------+`,
+  },
+]
+const ContentSource = ({ sourceIndex, setSourceIndex }) => (
+  <CodeWrapper
+    title={sources[sourceIndex].title}
+    language={sources[sourceIndex].language}
+    sourceIndex={sourceIndex}
+    setSourceIndex={setSourceIndex}
+    rotateButton={true}
+  >
+    {sources[sourceIndex].content}
+  </CodeWrapper>
 )
+const ContentLayerContent = ({ sourceIndex, setSourceIndex }) => {
+  return (
+    <LayerContentWrapper>
+      <ExampleWrapper>
+        <ContentSource
+          sourceIndex={sourceIndex}
+          setSourceIndex={setSourceIndex}
+        />
+      </ExampleWrapper>
+      <div>
+        <p>
+          <b>Content</b> is often organized in systems like databases, content
+          management systems, files, or external APIs.
+        </p>
+        <p>
+          Any source of data can be connected Gatsby through plugins or using
+          Gatsby's APIs.
+        </p>
+      </div>
+    </LayerContentWrapper>
+  )
+}
 
 const BuildLayerContent = () => (
   <LayerContentWrapper>
@@ -124,8 +239,8 @@ const DataLayerContent = () => (
         <Link to="/docs/glossary#build">build time</Link>.
       </p>
       <p>
-        Since all data is combined in the data layer, it's possible to query
-        multiple sources at the same time.
+        Since all data is combined in the data layer, it's even possible to
+        query multiple sources at the same time.
       </p>
     </div>
   </LayerContentWrapper>
@@ -134,7 +249,7 @@ const DataLayerContent = () => (
 const ViewLayerContent = () => (
   <LayerContentWrapper>
     <ExampleWrapper>
-      <CodeWrapper title="src/pages/homepage.js" language="javascript">
+      <CodeWrapper title="src/pages/homepage.js" language="jsx">
         {`export ({ data }) => (
   <div>
     <h1>{data.site.title}</h1>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useMemo, useCallback } from "react"
 import hex2rgba from "hex2rgba"
 
 import { space, colors, radii } from "../../utils/presets"
@@ -10,34 +10,6 @@ import {
   ViewLayerContent,
   AppLayerContent,
 } from "./layer-content-sections"
-
-const layers = [
-  {
-    title: `Content`,
-    baseColor: `orange`,
-    component: ContentLayerContent,
-  },
-  {
-    title: `Build`,
-    baseColor: `purple`,
-    component: BuildLayerContent,
-  },
-  {
-    title: `Data`,
-    baseColor: `magenta`,
-    component: DataLayerContent,
-  },
-  {
-    title: `View`,
-    baseColor: `blue`,
-    component: ViewLayerContent,
-  },
-  {
-    title: `App`,
-    baseColor: `yellow`,
-    component: AppLayerContent,
-  },
-]
 
 const Layer = ({ layer, onClick, selected, children }) => {
   const { baseColor, title } = layer
@@ -81,9 +53,36 @@ const Layer = ({ layer, onClick, selected, children }) => {
   )
 }
 
+const layers = [
+  {
+    title: `Content`,
+    baseColor: `orange`,
+    component: ContentLayerContent,
+  },
+  {
+    title: `Build`,
+    baseColor: `purple`,
+    component: BuildLayerContent,
+  },
+  {
+    title: `Data`,
+    baseColor: `magenta`,
+    component: DataLayerContent,
+  },
+  {
+    title: `View`,
+    baseColor: `blue`,
+    component: ViewLayerContent,
+  },
+  {
+    title: `App`,
+    baseColor: `yellow`,
+    component: AppLayerContent,
+  },
+]
 const ContentMeshModel = ({ initialLayer }) => {
   const [selected, setSelected] = useState(initialLayer)
-  const [content, setContent] = useState()
+  const [sourceIndex, setSourceIndex] = useState(0)
   return (
     <>
       <div
@@ -106,14 +105,17 @@ const ContentMeshModel = ({ initialLayer }) => {
               layer={layer}
               onClick={() => {
                 setSelected(layer.title)
-                setContent(layer.component)
               }}
               selected={selected === layer.title}
             />
           ))}
         </div>
       </div>
-      {content}
+      {layers.map(
+        layer =>
+          selected === layer.title &&
+          layer.component({ sourceIndex, setSourceIndex })
+      )}
     </>
   )
 }
