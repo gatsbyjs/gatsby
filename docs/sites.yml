@@ -2905,16 +2905,6 @@
   built_by: Crisp Studio
   built_by_url: https://crisp.studio
   featured: false
-- title: FOX Circus
-  main_url: "https://www.foxcircus.it/"
-  url: "https://www.foxcircus.it/"
-  categories:
-    - Event
-    - Conference
-    - Entertainment
-  built_by: Kframe Interactive SA
-  built_by_url: http://kframeinteractive.com
-  featured: false
 - title: Ramón Chancay
   description: >-
     Front-end / Back-end Developer in Guayaquil Ecuador.
