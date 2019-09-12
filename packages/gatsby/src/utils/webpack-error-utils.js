@@ -30,7 +30,7 @@ const transformWebpackError = (stage, webpackError) => {
   }
 }
 
-exports.transformWebpackErrors = (stage, webpackError) => {
+exports.structureWebpackErrors = (stage, webpackError) => {
   if (Array.isArray(webpackError)) {
     return webpackError.map(e => transformWebpackError(stage, e))
   }
