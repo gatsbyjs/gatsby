@@ -72,12 +72,6 @@ class JSONStore extends React.Component {
     // - page data for path changed
     // - static query results changed
 
-    // Always return false if we're missing resources.
-    const data = nextState.pageQueryData[normalizePagePath(nextState.path)]
-    if (!data) {
-      return false
-    }
-
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
