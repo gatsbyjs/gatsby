@@ -65,7 +65,6 @@ const validationRules = [
   VariablesInAllowedPositionRule,
 ]
 
-let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
 const resolveThemes = (themes = []) =>
@@ -92,14 +91,6 @@ class Runner {
     this.schema = schema
     this.parentSpan = parentSpan
   }
-
-  // reportError(message) {
-  //   const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
-  //   if (process.env.gatsby_executing_command === `develop`) {
-  //     websocketManager.emitError(overlayErrorID, queryErrorMessage)
-  //     lastRunHadErrors = true
-  //   }
-  // }
 
   async compileAll(activity) {
     const messages = []
@@ -381,14 +372,6 @@ class Runner {
 
       compiledNodes.set(filePath, query)
     })
-
-    // if (
-    //   process.env.gatsby_executing_command === `develop` &&
-    //   lastRunHadErrors
-    // ) {
-    //   websocketManager.emitError(overlayErrorID, null)
-    //   lastRunHadErrors = false
-    // }
 
     return compiledNodes
   }
