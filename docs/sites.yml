@@ -7258,3 +7258,14 @@
   built_by: Antoine Rousseau
   built_by_url: https://antoine.rousseau.im
   featured: false
+- title: Jimmy Truong's Portfolio
+  url: https://jimmytruong.ca
+  main_url: https://jimmytruong.ca
+  description: >
+    This porfolio is a complication of all projects done during my time at BCIT D3 (Digital Design and Development) program and after graduation.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Jimmy Truong
+  built_by_url: https://jimmytruong.ca
+  featured: false
