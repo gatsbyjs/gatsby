@@ -858,7 +858,6 @@ export const pageQuery = graphql`
 #### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` and `gatsby-node.js` file
-- An existing template component such as `src/templates/post.js`
 
 #### Directions
 
@@ -892,7 +891,49 @@ module.exports = {
 
 > > **Note:** Refer to the [`gatsby-source-wordpress` plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
 
-3. Create dynamic pages for your Wordpress posts by pasting the following sample code in `gatsby-node.js`:
+3. Create a template component such as `src/templates/post.js` with the following code in it:
+
+```JS:title=post.js
+import React, { Component } from "react"
+import { graphql } from "gatsby"
+import PropTypes from "prop-types"
+
+class Post extends Component {
+  render() {
+    const post = this.props.data.wordpressPost
+
+    return (
+      <>
+        <h1>{post.title}</h1>
+        <div>{post.content}</div>
+      </>
+    )
+  }
+}
+
+Post.propTypes = {
+  data: PropTypes.object.isRequired,
+  edges: PropTypes.array,
+}
+
+export default Post
+
+export const pageQuery = graphql`
+  query($id: String!) {
+    wordpressPost(id: { eq: $id }) {
+      title
+      content
+    site {
+      siteMetadata {
+        title
+        subtitle
+      }
+    }
+  }
+`
+```
+
+4. Create dynamic pages for your Wordpress posts by pasting the following sample code in `gatsby-node.js`:
 
 ```JS:title=gatsby-node.js
 const path = require(`path`)
@@ -932,9 +973,9 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-4. Run `gatsby-develop` to see the newly generated pages and navigate through them. 
+5. Run `gatsby-develop` to see the newly generated pages and navigate through them. 
 
-5. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
+6. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
 
 The dynamic pages created above in `gatsby-node.js` have unique paths for navigating to particular posts, using a template component for the posts and a sample GraphQL query to source WordPress post content.
 
