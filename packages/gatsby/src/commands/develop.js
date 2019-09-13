@@ -537,7 +537,7 @@ module.exports = async (program: any) => {
   //   console.log(`set invalid`, args, this)
   // })
 
-  compiler.hooks.watchRun.tapAsync(`log compiling2`, function(args, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function(args, done) {
     if (webpackActivity) {
       webpackActivity.end()
     }
