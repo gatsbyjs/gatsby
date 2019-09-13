@@ -23,10 +23,18 @@ export const onPreRenderHTML = ({
   replaceHeadComponents(filteredHeadComponents)
 }
 
-export const onRenderBody = ({ setHeadComponents }) => {
+export const onRenderBody = ({ pathname, setHeadComponents }) => {
+  if (pathname !== `/offline-plugin-app-shell-fallback/`) {
+    return
+  }
+
   setHeadComponents([
     <noscript key="disable-offline-shell">
-      <link rel="preload" href="/gatsby-plugin-offline:disableOfflineShell" />
+      <link
+        rel="preload"
+        as="fetch"
+        href="/.gatsby-plugin-offline:disableOfflineShell"
+      />
       <meta httpEquiv="refresh" content="0;url=" />
     </noscript>,
   ])
