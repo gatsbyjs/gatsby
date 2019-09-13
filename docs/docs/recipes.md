@@ -938,7 +938,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 > **Note:** The dynamic pages created above have unique paths for navigating to particular posts, a template component for the posts, and a sample GraphQL query to source your Wordpress post content.
 
-#### Aditional resources
+#### Additional resources
 
 - [Getting Started with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
 - More on [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
