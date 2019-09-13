@@ -38,11 +38,11 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Arguments
 
-- **`site-name` :** Your Gatsby site name along with the path should be pass here`
+| Argument | Description |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| site-name | Your Gatsby site name along with the path should be pass here |
+| starter-url | Mention the gatsby starter pack url or local path here. See the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) for more. `Default` starter pack is [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default). |
 
-- **`starter-url` :** Mention the gatsby starter pack url or local path here.
-  See the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) for more.
-  `Default` starter pack is [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default).
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
