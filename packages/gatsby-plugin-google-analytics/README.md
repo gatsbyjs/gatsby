@@ -147,3 +147,39 @@ This plugin also supports several optional General fields documented in [Google 
 - `transport`: string
 
 These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.
+
+## CustomTrackingEvent Function
+
+To allow custom events to be tracked, the plugin exposes a function to include in your project.
+
+To use it, simply import it and use it within your scripts, both within components and logic functions.
+
+```jsx
+import React
+import { CustomTrackingEvent } from 'gatsby-plugin-google-analytics'
+
+export default () => {
+  <div>
+    <button
+      onClick={e => {
+        // To stop the page reloading
+        e.preventDefault()
+        // Lets track that custom click
+        CustomTrackingEvent({
+          // string - required - The object that was interacted with (e.g.video)
+          category: "Special Button",
+          // string - required - Type of interaction (e.g. 'play')
+          action: "Click",
+          string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+          label: "Gatsby Plugin Example Campaign",
+          // number - optional - Numeric value associated with the event. (e.g. A product ID)
+          value: 43
+        })
+        //... Other logic here
+      }}
+    >
+      Tap that!
+    </button>
+  </div>
+}
+```
