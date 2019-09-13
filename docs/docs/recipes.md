@@ -941,7 +941,7 @@ exports.createPages = async ({ graphql, actions }) => {
 #### Aditional resources
 
 - [Getting Started with Wordpress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
-- More on [Sourcing from Wordpress](/docs/sourcing-from-wordpress/)
+- More on [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
 - [Live example on Sourcing from WordPress](/examples/gatsby-sourcing-wordpress/)
 
 ### Pulling data from an external source and creating pages without GraphQL
