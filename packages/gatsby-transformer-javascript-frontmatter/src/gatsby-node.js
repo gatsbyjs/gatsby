@@ -37,8 +37,13 @@ async function onCreateNode({
       `functionBind`,
       `functionSent`,
       `dynamicImport`,
-      `flow`,
     ],
+  }
+  
+  if (/^tsx?$/.test(node.extension)) {
+    options.plugins.push(`typescript`);
+  } else {
+    options.plugins.push(`flow`);
   }
 
   let exportsData, frontmatter, error
