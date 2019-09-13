@@ -1,6 +1,6 @@
 import React from "react"
 import { cleanup, fireEvent, render } from "@testing-library/react"
-import { OutboundLink } from "../"
+import { CustomTrackingEvent, OutboundLink } from "../"
 
 describe(`index.js`, () => {
   describe(`<OutboundLink />`, () => {
@@ -63,6 +63,42 @@ describe(`index.js`, () => {
       fireEvent.click(link)
 
       expect(props.onClick).toHaveBeenCalled()
+    })
+  })
+
+  describe(`CustomTrackingEvent()`, () => {
+    afterEach(cleanup)
+
+    const setup = props => {
+      const utils = render(
+        <button
+          onClick={e => {
+            e.preventDefault()
+            CustomTrackingEvent({
+              category: `event`,
+              action: `action`,
+              label: `label`,
+              value: `value`,
+            })
+          }}
+        >
+          tapthis
+        </button>
+      )
+
+      return Object.assign({}, utils, {
+        button: utils.getByText(`tapthis`),
+      })
+    }
+
+    it(`sends tracking event when clicked`, () => {
+      window.ga = jest.fn()
+
+      const { button } = setup()
+
+      fireEvent.click(button)
+
+      expect(window.ga).toHaveBeenCalled()
     })
   })
 })
