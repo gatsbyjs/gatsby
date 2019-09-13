@@ -53,4 +53,33 @@ OutboundLink.propTypes = {
   onClick: PropTypes.func,
 }
 
-export { OutboundLink }
+/**
+ * This allows the user to create custom events within their Gatsby projects.
+ * @param       {string} category Required - The object that was interacted with (e.g.video)
+ * @param       {string} action   Required - Type of interaction (e.g. 'play')
+ * @param       {string} label    Optional - Useful for categorizing events (e.g. 'Spring Campaign')
+ * @param       {string} value    Optional - Numeric value associated with the event. (e.g. A product ID)
+ *
+ * @link        https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events
+ */
+
+function CustomTrackingEvent({ category, action, label, value }) {
+  console.log(`ddd`)
+  if (window.ga) {
+    window.ga(`send`, `event`, {
+      eventCategory: category,
+      eventAction: action,
+      eventLabel: label,
+      value: value,
+    })
+  }
+}
+
+CustomTrackingEvent.propTypes = {
+  category: PropTypes.string.isRequired,
+  action: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  value: PropTypes.number,
+}
+
+export { OutboundLink, CustomTrackingEvent }
