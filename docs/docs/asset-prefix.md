@@ -28,6 +28,12 @@ When building with an `assetPrefix`, we require a `--prefix-paths` flag. If this
 gatsby build --prefix-paths
 ```
 
+And serve the app as follow
+
+```shell
+gatsby serve --prefix-paths
+```
+
 That's it! We now have an application that is ready to have its assets deployed from a CDN and its core files (e.g. HTML files) can be hosted on a separate domain.
 
 ## Building / Deploying
