@@ -543,7 +543,9 @@ export default () => (
 )
 ```
 
-3. After importing Emotion's `css` core package, you can use the `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element inside a component:
+3. If you don't already have one, create a page in your Gatsby site at `src/pages/emotion-sample.js`.
+
+Import Emotion's `css` core package. You can then use the `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element inside a component:
 
 ```jsx:title=src/pages/emotion-sample.js
 import React from "react"
