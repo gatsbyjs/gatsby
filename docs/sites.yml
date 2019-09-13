@@ -4876,6 +4876,7 @@
 - title: Gerald Martinez Dev
   main_url: https://gmartinez.dev/
   url: https://gmartinez.dev/
+  source_url: https://github.com/nephlin7/gmartinez.dev
   description: >
     Personal web site for show my skills and my works.
   categories:
@@ -7258,4 +7259,17 @@
     - Web Development
   built_by: Jimmy Truong
   built_by_url: https://jimmytruong.ca
+  featured: false
+- title: Quick Stop Nicaragua
+  main_url: https://quickstopnicaragua.com
+  url: https://quickstopnicaragua.com
+  description: >
+    Convenience Store Website
+  categories:
+    - CMS:Contentful
+    - Netlify
+    - PWA
+    - Food
+  built_by: Gerald Martinez
+  built_by_url: https://twitter.com/GeraldM_92
   featured: false
