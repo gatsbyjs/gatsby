@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/parser": "^7.5.5",
+    "@babel/parser": "^7.6.0",
     "@babel/runtime": "^7.6.0",
     "@babel/traverse": "^7.6.0",
     "bluebird": "^3.5.5"

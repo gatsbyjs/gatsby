@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
     "@babel/core": "^7.6.0",
-    "@babel/parser": "^7.5.5",
+    "@babel/parser": "^7.6.0",
     "@babel/polyfill": "^7.6.0",
     "@babel/runtime": "^7.6.0",
     "@babel/traverse": "^7.6.0",
