@@ -6,9 +6,12 @@ const { createProgress } = require(`./utils`)
 
 const toProcess = {}
 let totalJobs = 0
-const q = queue((task, callback) => {
-  task(callback)
-}, 1)
+const q = queue(
+  (task, callback) => {
+    task(callback)
+  },
+  process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL ? Number.MAX_SAFE_INTEGER : 1
+)
 
 let bar
 // when the queue is empty we stop the progressbar
