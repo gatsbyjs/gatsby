@@ -7,18 +7,16 @@ function getLinkProps({ crossOrigin, pathname }) {
   switch (typeof crossOrigin) {
     case `string`:
       return { crossOrigin }
-    case `boolean`:
-      return crossOrigin ? { crossOrigin: `anonymous` } : {}
     case `function`:
       return getLinkProps({ crossOrigin: crossOrigin(pathname), pathname })
     default:
-      return {}
+      return { crossOrigin: `anonymous` }
   }
 }
 
 exports.onRenderBody = (
   { setHeadComponents, pathname = `/` },
-  { crossOrigin = true }
+  { crossOrigin = `anonymous` } = {}
 ) => {
   const cache = loadCache()
   if (!cache.assets[pathname]) return
@@ -35,7 +33,7 @@ exports.onRenderBody = (
         new URL(href)
         assetProps = props
       } catch (e) {
-        assetProps = {}
+        assetProps = { crossOrigin: `anonymous` }
       }
 
       return (
