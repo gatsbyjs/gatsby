@@ -971,7 +971,9 @@ module.exports = {
 }
 ```
 
-4. To use your Drupal data in your Gatsby site, create a new page in your Gatsby site at `src/pages/drupal.js`. This page will list all Drupal "Page" nodes.
+4. To use your Drupal data, create a new page in your Gatsby site at `src/pages/drupal.js`. This page will list all Drupal "Page" nodes.
+
+_**Note:** the exact GraphQL schema will depend on your how Drupal instance is structured._
 
 ```jsx:title=src/pages/drupal.js
 import React from "react"
