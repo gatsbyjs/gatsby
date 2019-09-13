@@ -1,4 +1,4 @@
-# Using Wordpress With ACF
+# Using WordPress With Advanced Custom Fields (ACF)
 
 https://using-wordpress.gatsbyjs.org/
 
