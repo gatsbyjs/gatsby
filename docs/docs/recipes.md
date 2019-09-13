@@ -531,18 +531,6 @@ module.exports = {
 }
 ```
 
-3. Create a page in your gatsby site at `src/pages/emotion-sample.js`. Import the Emotion CSS and styled packages:
-
-```jsx:title=src/pages/emotion-sample.js
-import React from "react"
-
-export default () => (
-  <div>
-    <p>This page is using Emotion.</p>
-  </div>
-)
-```
-
 3. If you don't already have one, create a page in your Gatsby site at `src/pages/emotion-sample.js`.
 
 Import Emotion's `css` core package. You can then use the `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element inside a component:
