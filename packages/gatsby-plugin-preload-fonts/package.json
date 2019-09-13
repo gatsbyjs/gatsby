@@ -16,7 +16,7 @@
     "fs-extra": "^8.1.0",
     "graphql-request": "^1.8.2",
     "progress": "^2.0.3",
-    "puppeteer": "^1.19.0"
+    "puppeteer": "^1.20.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
