@@ -72,7 +72,7 @@ gatsby new
    (Use a different starter)
 ```
 
-Refer [starters-docs](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/starters.md) for more details
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more details.
 
 ### `develop`
 
