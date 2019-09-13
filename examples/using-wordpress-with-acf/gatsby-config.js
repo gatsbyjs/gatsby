@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `A sample site using gatsby-source-wordpress`,
+    title: `A sample site using gatsby-source-wordpress with Advanced Custom Fields`,
     subtitle: `Data fetched from a site hosted on wordpress.com`,
   },
   plugins: [
