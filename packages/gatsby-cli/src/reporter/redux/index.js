@@ -57,7 +57,7 @@ const iface = {
   onStoreSwap: fn => {
     storeSwapListeners.push(fn)
   },
-  onLogAaction: fn => {
+  onLogAction: fn => {
     onLogActionListeners.push(fn)
   },
   setStore: s => {

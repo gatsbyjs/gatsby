@@ -29,7 +29,7 @@ const levelToYurnalist = {
   },
 }
 
-onLogAaction(action => {
+onLogAction(action => {
   switch (action.type) {
     case Actions.StatefulLog:
     case Actions.Log: {
