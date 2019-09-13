@@ -936,7 +936,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
 
-> **Note:** The dynamic pages created above have unique paths for navigating to particular posts, a template component for the posts, and a sample GraphQL query to source your Wordpress post content.
+The dynamic pages created above in `gatsby-node.js` have unique paths for navigating to particular posts, using a template component for the posts and a sample GraphQL query to source WordPress post content.
 
 #### Additional resources
 
