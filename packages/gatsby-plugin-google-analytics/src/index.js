@@ -64,7 +64,6 @@ OutboundLink.propTypes = {
  */
 
 function CustomTrackingEvent({ category, action, label, value }) {
-  console.log(`ddd`)
   if (window.ga) {
     window.ga(`send`, `event`, {
       eventCategory: category,
