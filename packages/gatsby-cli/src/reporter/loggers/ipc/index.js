@@ -1,4 +1,4 @@
-import { onLogAaction } from "../../redux/index"
+import { onLogAction } from "../../redux/index"
 import stripAnsi from "strip-ansi"
 import _ from "lodash"
 
@@ -10,7 +10,7 @@ process.send({
   gatsby: getLocalGatsbyVersion(),
 })
 
-onLogAaction(action => {
+onLogAction(action => {
   const sanitizedAction = {
     ...action,
     payload: _.isPlainObject(action.payload)

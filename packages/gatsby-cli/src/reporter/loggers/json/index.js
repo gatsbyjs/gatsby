@@ -1,8 +1,8 @@
-import { onLogAaction } from "../../redux/index"
+import { onLogAction } from "../../redux/index"
 import stripAnsi from "strip-ansi"
 import _ from "lodash"
 
-onLogAaction(action => {
+onLogAction(action => {
   const sanitizedAction = {
     ...action,
     payload: _.isPlainObject(action.payload)
