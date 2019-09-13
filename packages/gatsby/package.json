@@ -79,7 +79,7 @@
     "gatsby-telemetry": "^1.1.23",
     "glob": "^7.1.4",
     "got": "8.3.2",
-    "graphql": "^14.5.4",
+    "graphql": "^14.5.5",
     "graphql-compose": "^6.3.5",
     "graphql-playground-middleware-express": "^1.7.12",
     "invariant": "^2.2.4",
@@ -133,7 +133,7 @@
     "util.promisify": "^1.0.0",
     "uuid": "^3.3.3",
     "v8-compile-cache": "^1.1.2",
-    "webpack": "~4.40.1",
+    "webpack": "~4.40.2",
     "webpack-dev-middleware": "^3.7.1",
     "webpack-dev-server": "^3.8.0",
     "webpack-hot-middleware": "^2.25.0",
@@ -187,7 +187,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^14.5.4"
+    "graphql": "^14.5.5"
   },
   "scripts": {
     "build": "npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
