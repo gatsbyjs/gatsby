@@ -11,7 +11,7 @@ Each of these sites need a prefix added to all paths on the site. So a link to
 
 In addition, links to various resources (JavaScript, CSS, images, and other static content) need the same prefix, so that the site continues to function correctly when served with the path prefix in place.
 
-Adding the path prefix is a two step process, as follows:
+Adding the path prefix is a three step process, as follows:
 
 ### Add to `gatsby-config.js`
 
@@ -25,13 +25,23 @@ module.exports = {
 
 ### Build
 
-The final step is to build your application with the `--prefix-paths` flag, like so:
+Next step is to build your application with the `--prefix-paths` flag, like so:
 
 ```shell
 gatsby build --prefix-paths
 ```
 
 If this flag is not passed, Gatsby will ignore your `pathPrefix` and build the site as if hosted from the root domain.
+
+### Serve
+
+The final step is to serve your application with the `--prefix-paths` flag, like so:
+
+```shell
+gatsby serve --prefix-paths
+```
+
+If this flag is not passed, Gatsby will ignore your `pathPrefix` and serve the site as if hosted from the root domain.
 
 ### In-app linking
 
