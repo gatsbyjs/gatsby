@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-ssr generates <link> tags with \`crossorigin\` prop for external fonts accepts boolean \`crossOrigin\` in plugin config 1`] = `
+exports[`gatsby-ssr generates <link> tags with \`crossorigin\` \`anonymous\` prop for self-hosted fonts 1`] = `
 Array [
   <link
     as="font"
-    href="https://foo.bar/path/to/font.otf"
+    crossOrigin="anonymous"
+    href="/font.otf"
     rel="preload"
   />,
 ]
@@ -14,6 +15,7 @@ exports[`gatsby-ssr generates <link> tags with \`crossorigin\` prop for external
 Array [
   <link
     as="font"
+    crossOrigin="anonymous"
     href="https://foo.bar/path/to/font.otf"
     rel="preload"
   />,
@@ -42,20 +44,11 @@ Array [
 ]
 `;
 
-exports[`gatsby-ssr generates <link> tags without \`crossorigin\` prop for self-hosted fonts 1`] = `
-Array [
-  <link
-    as="font"
-    href="/font.otf"
-    rel="preload"
-  />,
-]
-`;
-
 exports[`gatsby-ssr generates a <link> tag for each asset 1`] = `
 Array [
   <link
     as="font"
+    crossOrigin="anonymous"
     href="/path/to/font.otf"
     rel="preload"
   />,

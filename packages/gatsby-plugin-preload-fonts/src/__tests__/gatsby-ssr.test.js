@@ -46,20 +46,6 @@ describe(`gatsby-ssr`, () => {
   })
 
   describe(`generates <link> tags with \`crossorigin\` prop for external fonts`, () => {
-    it(`accepts boolean \`crossOrigin\` in plugin config`, () => {
-      setCachedAssets({
-        [`/foo`]: {
-          [`https://foo.bar/path/to/font.otf`]: true,
-        },
-      })
-
-      onRenderBody(
-        { setHeadComponents, pathname: `/foo` },
-        { crossOrigin: false }
-      )
-      expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
-    })
-
     it(`accepts string \`crossOrigin\` in plugin config`, () => {
       setCachedAssets({
         [`/foo`]: {
@@ -98,17 +84,14 @@ describe(`gatsby-ssr`, () => {
     })
   })
 
-  it(`generates <link> tags without \`crossorigin\` prop for self-hosted fonts`, () => {
+  it(`generates <link> tags with \`crossorigin\` \`anonymous\` prop for self-hosted fonts`, () => {
     setCachedAssets({
       [`/foo`]: {
         [`/font.otf`]: true,
       },
     })
 
-    onRenderBody(
-      { setHeadComponents, pathname: `/foo` },
-      { crossOrigin: false }
-    )
+    onRenderBody({ setHeadComponents, pathname: `/foo` })
 
     expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
   })
