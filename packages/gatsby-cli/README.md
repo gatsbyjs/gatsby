@@ -44,7 +44,7 @@ gatsby new [<site-name> [<starter-url>]]
   See the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) for more.
   `Default` starter pack is [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default).
 
-> **NOTE :** Dont pass `.` or `./` or `` _(space)_ in the `site-name`. It will throw error of specifying name and it will stop the operation
+> Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
 #### Examples
 
