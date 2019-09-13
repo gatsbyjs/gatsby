@@ -980,14 +980,16 @@ import { graphql } from "gatsby"
 const DrupalPage = ({ data }) => (
   <div>
     <h1>Drupal pages</h1>
-    {data.allNodePage.edges.map(({ node }) => (
-      <>
+    <ul>
+    {data.allNodePage.edges.map(({ node, index }) => (
+      <li key={index}>
         <h2>{node.title}</h2>
         <div>
           {node.body.value}
         </div>
-      </>
+      </li>
     ))}
+   </ul>
   </div>
 )
 
@@ -1007,7 +1009,7 @@ export const query = graphql`
   }
 }
 ```
-
+5. With the development server running, you can view the new page by visiting `http://localhost:8000/drupal`.
 #### Additional Resources
 
 - [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
