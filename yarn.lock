@@ -6492,10 +6492,10 @@ date-fns@^1.27.2, date-fns@^1.30.1:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
 
-date-fns@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.1.0.tgz#0d7e806c3cefe14a943532dbf968995ccfd46bd9"
-  integrity sha512-eKeLk3sLCnxB/0PN4t1+zqDtSs4jb4mXRSTZ2okmx/myfWyDqeO4r5nnmA5LClJiCwpuTMeK2v5UQPuE4uMaxA==
+date-fns@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.2.1.tgz#b3f79cf56760af106050c686f4c72586a3383ee9"
+  integrity sha512-4V1i5CnTinjBvJpXTq7sDHD4NY6JPcl15112IeSNNLUWQOQ+kIuCvRGOFZMQZNvkadw8F9QTyZxz59rIRU6K+w==
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -9280,7 +9280,7 @@ good-listener@^1.2.2:
   dependencies:
     delegate "^3.1.2"
 
-google-auth-library@^5.1.0, google-auth-library@^5.2.0:
+google-auth-library@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/google-auth-library/-/google-auth-library-5.2.0.tgz#fff161ec6ad8630c60b37324f78347e11712512b"
   integrity sha512-I2726rgOedQ06HgTvoNvBeRCzy5iFe6z3khwj6ugfRd1b0VHwnTYKl/3t2ytOTo7kKc6KivYIBsCIdZf2ep67g==
@@ -9310,7 +9310,7 @@ google-p12-pem@^2.0.0:
   dependencies:
     node-forge "^0.8.0"
 
-googleapis-common@^3.0.0:
+googleapis-common@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/googleapis-common/-/googleapis-common-3.1.0.tgz#592dbf4e1fa543090b2671a524dcdb09184ec15c"
   integrity sha512-abnogPoWqv0cU6O/EFpkerCVsaUsKEG6XpCm4P1YgK44PxIRcGtalDwijqUErkcivM1Xy5MNyf1PDkKTLEjOZA==
@@ -9322,13 +9322,13 @@ googleapis-common@^3.0.0:
     url-template "^2.0.8"
     uuid "^3.3.2"
 
-googleapis@^42.0.0:
-  version "42.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-42.0.0.tgz#17de1fc4494a49bc120152e6df87b8eca9a6bf0d"
-  integrity sha512-nQiKPDmzmMusnU8UOibmlC6hsgkm70SjqmLxSlBBb7i0z7/J6UPilSzo9tAMoHA8u3BUw3OXn13+p9YLmBH6Gg==
+googleapis@^43.0.0:
+  version "43.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-43.0.0.tgz#fcb1408fd1bd3f74eb9c4ca2b14ac7765ee0e50e"
+  integrity sha512-4b38mlTdDCA3KiyRTQmfPpeTxznC5ufgqx3AvKaEIoVm+iWeVLfwYs++/+OcGJJriH9bcs0gPbU7CR8DU6Oevg==
   dependencies:
-    google-auth-library "^5.1.0"
-    googleapis-common "^3.0.0"
+    google-auth-library "^5.2.0"
+    googleapis-common "^3.1.0"
 
 got@8.3.2, got@^8.3.1, got@^8.3.2:
   version "8.3.2"
@@ -9577,24 +9577,24 @@ gud@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
 
-guess-ga@^0.3.12:
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.3.12.tgz#96da5a2b73a7a237e9962feccf612f24f81370dc"
-  integrity sha512-S5WZSh4MOwDBRFOxe6wcdiowd4C8Bh489bApiA9nliiHg7KXf3xTSjk4tjsLfV7rAGaJ985bEDTQ1m5M61GPmA==
+guess-ga@^0.3.13:
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.3.13.tgz#8f581d6a2acad0cc95b6dd3964960e2b6c7fab27"
+  integrity sha512-jB8pmyepPC1QiZnPV/4IDviJsHxilZLtj8zUnRGWBLrqcNx5+6lDojSp4et+ZnVJmFB27+pXqIrYX6jX5Qv1ug==
   dependencies:
-    googleapis "^42.0.0"
+    googleapis "^43.0.0"
 
-guess-webpack@~0.3.12:
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.3.12.tgz#77c001618baaf9424de72ab9036fa7430154da5f"
-  integrity sha512-xqyQLVTKIUDJeOGP97OKse4E7BF8nTFX5YVj6kvW1IdS9dIwF3DeJliBA6tXmWCuoA8GgHOkZtRZB/iZUPxruA==
+guess-webpack@~0.3.13:
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.3.13.tgz#dfb31308a6888960fb0f651cf70952a75f1f75c6"
+  integrity sha512-zYSanpPvT+5D1QSBJSu8b8AJr2mQsveRggQdoGCHJcCSiK0hNalV3Pvygpgkk/YiCK6gL5H1sGJMfGKKGP2fVw==
   dependencies:
     chalk "^2.4.2"
     copy-webpack-plugin "^5.0.0"
     flat-cache "^2.0.0"
     google-oauth2-node "0.0.3"
-    googleapis "^42.0.0"
-    guess-ga "^0.3.12"
+    googleapis "^43.0.0"
+    guess-ga "^0.3.13"
     lodash.template "^4.4.0"
     rollup "^1.0.0"
     rollup-plugin-hypothetical "^2.1.0"
@@ -20139,10 +20139,10 @@ webpack@^4.14.0:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webpack@^4.39.3, webpack@~4.39.3:
-  version "4.39.3"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.3.tgz#a02179d1032156b713b6ec2da7e0df9d037def50"
-  integrity sha512-BXSI9M211JyCVc3JxHWDpze85CvjC842EvpRsVTc/d15YJGlox7GIDd38kJgWrb3ZluyvIjgenbLDMBQPDcxYQ==
+webpack@^4.40.0, webpack@~4.40.0:
+  version "4.40.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.40.0.tgz#b76f5fc2b76de5a58a7be61cb1dc3244e4a58572"
+  integrity sha512-qwDJehWHAbnSHwQT5S50OBx5nN2DD+bFhRf5IBs1unsEXAG+XG4r8Myt17j/fQBVfWIeSWRyEeTHUaPKaiFUNQ==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
