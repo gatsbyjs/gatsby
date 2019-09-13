@@ -174,6 +174,4 @@ module.exports = async function build(program: BuildArgs) {
   await stopTracer()
   workerPool.end()
   buildActivity.end()
-
-  await require(`fs-extra`).writeJSON(`./logs.json`, store.getState().logs)
 }
