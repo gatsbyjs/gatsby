@@ -155,6 +155,7 @@ function runJobs(
     )
 
     Promise.all(promises).then(() => {
+      console.log(`[gatsby-plugin-sharp] finishing job ${job.inputPath}`)
       boundActionCreators.endJob(
         { id: `processing image ${job.inputPath}` },
         { name: `gatsby-plugin-sharp` }

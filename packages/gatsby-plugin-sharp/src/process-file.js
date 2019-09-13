@@ -10,6 +10,7 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const { cpuCoreCount } = require(`gatsby-core-utils`)
 const got = require(`got`)
+const uuidv4 = require(`uuid/v4`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -43,6 +44,18 @@ const argsWhitelist = [
   `background`,
 ]
 
+let cloudEventsEmitter
+if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
+  const mitt = require(`mitt`)
+  cloudEventsEmitter = mitt()
+
+  process.on(`message`, msg => {
+    if (msg.type === `GATSBY_CLOUD_IMAGE_SERVICE`) {
+      cloudEventsEmitter.emit(`GATSBY_CLOUD_IMAGE_SERVICE_${msg.id}`, msg)
+    }
+  })
+}
+
 /**
  * @typedef {Object} TransformArgs
  * @property {number} height
@@ -75,12 +88,14 @@ exports.processFile = (file, contentDigest, transforms, options = {}) => {
     // this is an experimental api so it can be removed without any warnings
     if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
       let cloudPromise
+      const cloudJobID = uuidv4()
 
       return transforms.map(transform => {
         if (!cloudPromise) {
           cloudPromise = got
             .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
               body: {
+                id: cloudJobID,
                 file,
                 hash: contentDigest,
                 transforms,
@@ -88,12 +103,35 @@ exports.processFile = (file, contentDigest, transforms, options = {}) => {
               },
               json: true,
             })
+            .then(
+              () =>
+                new Promise((resolve, reject) => {
+                  console.log(`Sent request ${cloudJobID} / ${file}`)
+                  const eventToListenFor = `GATSBY_CLOUD_IMAGE_SERVICE_${cloudJobID}`
+                  const handler = msg => {
+                    cloudEventsEmitter.off(eventToListenFor, handler)
+                    console.log(
+                      `Got finish event ${cloudJobID} / ${file} - ${
+                        msg.err ? `ERROR` : `SUCCESS`
+                      }`
+                    )
+                    if (msg.err) {
+                      reject()
+                    } else {
+                      resolve()
+                    }
+                  }
+
+                  cloudEventsEmitter.on(eventToListenFor, handler)
+                })
+            )
             .then(() => transform)
 
           return cloudPromise
         }
 
-        return Promise.resolve(transform)
+        // actually wait for cloud promise so reporting is correct
+        return cloudPromise.then(() => transform)
       })
     }
 

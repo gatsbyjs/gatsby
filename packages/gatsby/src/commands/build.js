@@ -33,10 +33,14 @@ const waitJobsFinished = () =>
       if (store.getState().jobs.active.length === 0) {
         resolve()
         emitter.off(`END_JOB`, onEndJob)
+        return true
       }
+      return false
     }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
+    if (!onEndJob()) {
+      console.log(`[gatsby] waiting for jobs to finish`)
+      emitter.on(`END_JOB`, onEndJob)
+    }
   })
 
 module.exports = async function build(program: BuildArgs) {
