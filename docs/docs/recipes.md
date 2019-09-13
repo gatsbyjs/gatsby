@@ -853,7 +853,7 @@ export const pageQuery = graphql`
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
 
-### Sourcing from Wordpress
+### Sourcing from WordPress
 
 #### Prerequisites
 
@@ -932,9 +932,9 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-4. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
+4. Run `gatsby-develop` to see the newly generated pages and navigate through them. 
 
-5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
+5. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
 
 The dynamic pages created above in `gatsby-node.js` have unique paths for navigating to particular posts, using a template component for the posts and a sample GraphQL query to source WordPress post content.
 
