@@ -11,11 +11,21 @@ How has August been for all of you? It's been rainy here in Mumbai. Like [_reall
 
 (I need to get better at rhyming)
 
-This instalment features our work on materialisation, a healthier Gatsby repo with improved community engagement, better webpack chunking, a brand new Gatsby theme of the month and finally, Gatsby Days!
+This instalment features our work on materialisation, a healthier Gatsby repo with improved community engagement, some accessibility wins, better webpack chunking, a better offline experience in Gatsby, a brand new theme of the month and finally, Gatsby Days!
 
 Let's get this party started.
 
 ## Team Highlights
+
+The Gatsby team has had a busy month. We've made some exciting improvements:
+
+### Accessibility
+
+Marcy from the Gatsby team has been doing some incredible work in making Gatsby more accessible by default. A big part of making the web more accessible is teaching us to write more accessible apps! Back in June, Marcy conducted some user testing sessions for accessibility research. She wrote about it in her post, [What we learned from user testing of accessible client-side routing techniques with Fable Tech Labs](https://www.gatsbyjs.org/blog/2019-07-11-user-testing-accessible-client-routing/) which I consider canonical and required reading. In case you haven't read it already, please _do_ to learn how to make your client side web apps more accessible.
+
+Here is what Marcy had to say about her work:
+
+> Quote from Marcy
 
 ### GraphQL
 
@@ -23,21 +33,39 @@ Let's get this party started.
 - Materialisation
 - Schema snapshots feature added
 
-### GraphiQL Explorer now available in WPGraphQL
+### Offline
 
-### Enabled automatic dependency updates for the Gatsby repo
+### GraphiQL Explorer now available in WPGraphQL
 
 ### Optimized JavaScript bundle configuration
 
-### Diversity and Inclusion
+### Renovate
+
+Enabled automatic dependency updates for the Gatsby repo
 
 ## Community Highlights
 
-### Community engagement
+It's been a pretty busy month on the monorepo. We've merged in a _lot_ of your contributions and they've all been amazing. Let's go over some of the highlights!
 
-Open pull request count decreased to 41
+### GraphiQL Code Explorer
 
-### GraphiQL code explorer merged
+Back in June, Michal from the Gatsby core team worked on adding [GraphiQL Explorer](https://github.com/OneGraph/graphiql-explorer) to GraphiQL in Gatsby. One of the next steps he mentioned was the addition of code snippet generation using graphiql-code-exporter.
+
+Gatsby now includes Code Explorer in GraphiQL out of the box starting from v2.15.3, thanks to [Dan Kirkham](https://twitter.com/herecydev).
+
+![GraphiQL Code Explorer](./2019-09-13 08.05.19.gif)
+
+When you write a query in GraphiQL, this will automatically generate code for you! You can check out Dan's work on [the PR on GitHub](https://github.com/gatsbyjs/gatsby/pull/17120).
+
+### Notable PRs
+
+It's _really_ hard to pick out favourites from all the incredible contributions you folks make so apologies in advance if I missed anything (let [us](https://twitter.com/gatsbyjs) know on Twitter). Here are my favourites from the past month:
+
+- [Jeremy Albright](https://github.com/Js-Brecht) did some really solid work and fixed an issue where Gatsby CLI would leave your terminal in an inconsistent state in [#16714](https://github.com/gatsbyjs/gatsby/pull/16714)
+- [Nicolas Goutay](https://github.com/phacks) fixed a memory leak in IntersectionObservers (with help from [atomiks](https://github.com/atomiks)) in [#17056](https://github.com/gatsbyjs/gatsby/pull/17056)
+- [Benedikt Franke](https://github.com/spawnia) brought order to some chaos by making root plural fields non nullable in [#15321](https://github.com/gatsbyjs/gatsby/pull/15321)
+- [Mateusz Burzyński](https://github.com/Andarist) cleaned up several significant parts of Gatsby by refactoring some code paths over to XState in [#17192](https://github.com/gatsbyjs/gatsby/pull/17192)
+- [Matthew Miller](https://github.com/me4502) fixed an issue that could cause infinite loops in cyclic node trees in [#17078](https://github.com/gatsbyjs/gatsby/pull/17078)
 
 ## Gatsby Site of the month
 
