@@ -9584,10 +9584,10 @@ guess-ga@^0.4.1:
   dependencies:
     googleapis "^43.0.0"
 
-guess-webpack@~0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.1.tgz#f08a0b1abc1edcc3282022e166e491b54c04c6b1"
-  integrity sha512-S4egi6yu8ZIJQevnXTMxpctKb0Y3rpGgTqXaXe4EEi2HQCzXgjqW982sSFfxxJKAi/ihVMvVn1NzdXgS71pIGw==
+guess-webpack@~0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.2.tgz#3e2f34b43e9873b1b7626c1993461ce9ae8d6d0d"
+  integrity sha512-1iL51zFsuMiuY7o1gPbnMn1zW64vqJpa4lgXG1j7x/OXN7raaqS93qU9y3qWPghPK4Lp2wH8/EaDKTUG16EdQw==
   dependencies:
     chalk "^2.4.2"
     copy-webpack-plugin "^5.0.0"
@@ -15885,10 +15885,10 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-puppeteer@^1.19.0:
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.19.0.tgz#e3b7b448c2c97933517078d7a2c53687361bebea"
-  integrity sha512-2S6E6ygpoqcECaagDbBopoSOPDv0pAZvTbnBgUY+6hq0/XDFDOLEMNlHF/SKJlzcaZ9ckiKjKDuueWI3FN/WXw==
+puppeteer@^1.20.0:
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.20.0.tgz#e3d267786f74e1d87cf2d15acc59177f471bbe38"
+  integrity sha512-bt48RDBy2eIwZPrkgbcwHtb51mj2nKvHOPMaSH2IsWiv7lOG9k9zhaRzpDZafrk05ajMc3cu+lSQYYOfH2DkVQ==
   dependencies:
     debug "^4.1.0"
     extract-zip "^1.6.6"
@@ -20139,10 +20139,10 @@ webpack@^4.14.0:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webpack@^4.40.0, webpack@~4.40.0:
-  version "4.40.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.40.0.tgz#b76f5fc2b76de5a58a7be61cb1dc3244e4a58572"
-  integrity sha512-qwDJehWHAbnSHwQT5S50OBx5nN2DD+bFhRf5IBs1unsEXAG+XG4r8Myt17j/fQBVfWIeSWRyEeTHUaPKaiFUNQ==
+webpack@^4.40.1, webpack@~4.40.1:
+  version "4.40.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.40.1.tgz#26ec01fc9ee7ea5ab5ec1d4ab95cb185ac20c116"
+  integrity sha512-AAP7F9X1cVNnQl0ZsG52qF89tqCKS8lqVEnFOA0g/G25/VyH4CejwTbSD9aEDGStAIuH+l6W1yOYRZNOP0VE1g==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
