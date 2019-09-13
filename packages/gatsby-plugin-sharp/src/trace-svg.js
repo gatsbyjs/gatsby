@@ -1,4 +1,3 @@
-const { promisify } = require(`bluebird`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
@@ -106,8 +105,9 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
     })
 
     const svgToMiniDataURI = require(`mini-svg-data-uri`)
-    const potrace = require(`potrace`)
+    // const potrace = require(`potrace`)
     // const trace = promisify(potrace.trace)
+    const ImageTracer = {} // TODO
 
     function trace(path, options) {
       return new Promise((resolve, reject) => {
