@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.40...gatsby-plugin-mdx@1.0.41) (2019-09-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.39...gatsby-plugin-mdx@1.0.40) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.38...gatsby-plugin-mdx@1.0.39) (2019-09-05)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.37...gatsby-plugin-mdx@1.0.38) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.36...gatsby-plugin-mdx@1.0.37) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.35...gatsby-plugin-mdx@1.0.36) (2019-09-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** prevent crash when Markdown syntax error([#17135](https://github.com/gatsbyjs/gatsby/issues/17135)) ([ed97891](https://github.com/gatsbyjs/gatsby/commit/ed97891))
+
+## [1.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.34...gatsby-plugin-mdx@1.0.35) (2019-09-02)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.33...gatsby-plugin-mdx@1.0.34) (2019-09-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** fix slashes for Windows ([#17290](https://github.com/gatsbyjs/gatsby/issues/17290)) ([31c9cfa](https://github.com/gatsbyjs/gatsby/commit/31c9cfa))
+
 ## [1.0.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.32...gatsby-plugin-mdx@1.0.33) (2019-08-26)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

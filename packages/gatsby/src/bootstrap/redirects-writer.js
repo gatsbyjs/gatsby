@@ -12,9 +12,7 @@ const writeRedirects = async () => {
   let { program, redirects } = store.getState()
 
   // Filter for redirects that are meant for the browser.
-  const browserRedirects = Array.from(redirects.values()).filter(
-    r => r.redirectInBrowser
-  )
+  const browserRedirects = redirects.filter(r => r.redirectInBrowser)
 
   const newHash = crypto
     .createHash(`md5`)

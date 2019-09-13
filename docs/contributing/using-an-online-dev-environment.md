@@ -7,7 +7,7 @@ This page outlines how to use Gitpod, a free online dev environment, to contribu
 ## About Gitpod
 
 Gitpod makes contributions on GitHub easier, by allowing automated development environment setups. Instead of writing lengthy
-documentation of what to install and configure and letting every contributor go through this adventure, the setup is automated and reporoducible.
+documentation of what to install and configure and letting every contributor go through this adventure, the setup is automated and reproducible.
 
 Furthermore, Gitpod prebuilds any branch of a repository so that you don't need to wait for installation, cloning and building.
 

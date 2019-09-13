@@ -1,5 +1,6 @@
 const { graphql } = require(`graphql`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
@@ -27,9 +28,18 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 
 describe(`Query schema`, () => {
   let schema
+  let schemaComposer
 
   const runQuery = query =>
-    graphql(schema, query, undefined, withResolverContext({}, schema))
+    graphql(
+      schema,
+      query,
+      undefined,
+      withResolverContext({
+        schema,
+        schemaComposer,
+      })
+    )
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation(async (api, ...args) => {
@@ -134,7 +144,7 @@ describe(`Query schema`, () => {
 
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
 
     const typeDefs = [
@@ -157,6 +167,7 @@ describe(`Query schema`, () => {
 
     await build({})
     schema = store.getState().schema
+    schemaComposer = store.getState().schemaCustomization.composer
   })
 
   describe(`on children fields`, () => {

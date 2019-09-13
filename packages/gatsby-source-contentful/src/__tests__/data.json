@@ -1815,6 +1815,149 @@
             "en-US": "Shop for toys, games, educational aids"
           }
         }
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "rocybtov1ozk"
+            }
+          },
+          "id": "c5U1Lm7y197ZCNUI9USWPUV",
+          "type": "Entry",
+          "createdAt": "2019-09-09T06:54:07.673Z",
+          "updatedAt": "2019-09-09T06:58:04.316Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "publishedVersion": 11,
+          "publishedAt": "2019-09-09T06:58:04.316Z",
+          "firstPublishedAt": "2019-09-09T06:54:28.959Z",
+          "createdBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "updatedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "publishedCounter": 3,
+          "version": 12,
+          "publishedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "blogPost"
+            }
+          },
+          "contentful_id": "5U1Lm7y197ZCNUI9USWPUV"
+        },
+        "fields": {
+          "title": {
+            "en-US": "Post one"
+          },
+          "slug": {
+            "en-US": "post-one"
+          },
+          "author": {
+            "en-US": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "qYfB1lzHTNpofY3Oqvjpk"
+              }
+            }
+          }
+        }
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "rocybtov1ozk"
+            }
+          },
+          "id": "qYfB1lzHTNpofY3Oqvjpk",
+          "type": "Entry",
+          "createdAt": "2019-09-09T06:54:16.287Z",
+          "updatedAt": "2019-09-09T06:54:38.816Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "publishedVersion": 6,
+          "publishedAt": "2019-09-09T06:54:38.816Z",
+          "firstPublishedAt": "2019-09-09T06:54:22.644Z",
+          "createdBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "updatedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "publishedCounter": 2,
+          "version": 7,
+          "publishedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "author"
+            }
+          },
+          "contentful_id": "qYfB1lzHTNpofY3Oqvjpk"
+        },
+        "fields": {
+          "name": {
+            "en-US": "Fred"
+          },
+          "favouritePost": {
+            "en-US": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "c5U1Lm7y197ZCNUI9USWPUV"
+              }
+            }
+          }
+        }
       }
     ],
     "assets": [
@@ -2804,6 +2947,179 @@
           "required": false,
           "disabled": false,
           "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "rocybtov1ozk"
+          }
+        },
+        "id": "blogPost",
+        "type": "ContentType",
+        "createdAt": "2019-09-05T20:44:05.442Z",
+        "updatedAt": "2019-09-09T06:53:15.783Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 12,
+        "publishedAt": "2019-09-09T06:53:15.783Z",
+        "firstPublishedAt": "2019-09-05T20:44:49.375Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "publishedCounter": 6,
+        "version": 13,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        }
+      },
+      "displayField": "title",
+      "name": "Blog Post",
+      "description": "",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "slug",
+          "name": "Slug",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "author",
+          "name": "Author",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "author"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "rocybtov1ozk"
+          }
+        },
+        "id": "author",
+        "type": "ContentType",
+        "createdAt": "2019-09-09T06:52:36.276Z",
+        "updatedAt": "2019-09-09T06:52:53.557Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 2,
+        "publishedAt": "2019-09-09T06:52:53.557Z",
+        "firstPublishedAt": "2019-09-09T06:52:53.557Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 3,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        }
+      },
+      "displayField": "name",
+      "name": "Author",
+      "description": "",
+      "fields": [
+        {
+          "id": "name",
+          "name": "Name",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "favouritePost",
+          "name": "favouritePost",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "blogPost"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
         }
       ]
     }
