@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-example-using-wordpress",
+  "name": "gatsby-example-using-wordpress-with-acf",
   "private": true,
   "description": "Gatsby example site using the Wordpress source plugin",
   "version": "1.0.0-beta.6",
