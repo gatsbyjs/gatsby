@@ -20,4 +20,4 @@ Then configure via `gatsby-config.js`:
 ```
 
 In this example, all paths prefixed by `/app/` will render the route described
-in `src/pages/app.js`.
+in `src/pages/app.js`. (Check out the [`src/pages/app.js`](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/src/pages/app.js) in the "simple auth" example site.)
