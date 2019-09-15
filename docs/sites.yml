@@ -1911,18 +1911,6 @@
   built_by: Mahipat Jadav
   built_by_url: https://mojaave.com/
   featured: false
-- title: Cmsbased
-  main_url: https://www.cmsbased.net
-  url: https://www.cmsbased.net
-  description: >
-    mojaave.com is Mahipat's portfolio, I have developed it using Gatsby v2 and
-    Bootstrap, To get in touch with people looking for full-stack developer.
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Mahipat Jadav
-  built_by_url: "https://mojaave.com/"
-  featured: false
 - title: Insights
   main_url: "https://justaskusers.com/"
   url: "https://justaskusers.com/"
