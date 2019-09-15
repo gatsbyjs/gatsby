@@ -43,11 +43,11 @@ Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby com
 For the latest news about Gatsby,
 [follow **@gatsbyjs** on Twitter](https://twitter.com/gatsbyjs).
 
-### Core Maintainers Meeting
+### Community Maintainers Meeting
 
 The Gatsby Core team (official Gatsby employees who are working on Gatsby open-source) holds a weekly meeting where we encourage community members to share their projects, struggles, and successes directly with the Gatsby Core team. Additionally the Core team shares pertinent info and plans that are applicable to the community!
 
-This event is held on a recurring basis, every Wednesday at 8:45 AM Pacific Standard Time (PST).
+This event is held on a recurring basis, every Wednesday at 8:30 AM Pacific Standard Time (PST).
 
 [Add the recurring calendar invite here](https://gatsby.dev/core-maintainers)
 

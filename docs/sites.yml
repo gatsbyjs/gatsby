@@ -2905,16 +2905,6 @@
   built_by: Crisp Studio
   built_by_url: https://crisp.studio
   featured: false
-- title: FOX Circus
-  main_url: "https://www.foxcircus.it/"
-  url: "https://www.foxcircus.it/"
-  categories:
-    - Event
-    - Conference
-    - Entertainment
-  built_by: Kframe Interactive SA
-  built_by_url: http://kframeinteractive.com
-  featured: false
 - title: Ramón Chancay
   description: >-
     Front-end / Back-end Developer in Guayaquil Ecuador.
@@ -3654,22 +3644,6 @@
     - Blog
   built_by: Logicwind
   built_by_url: "https://www.logicwind.com"
-- title: npm-bookmarks
-  url: https://npm-bookmarks.netlify.com
-  main_url: https://npm-bookmarks.netlify.com
-  source_url: https://github.com/crstnio/npm-bookmarks
-  description: >
-    A site to collect personal favorites of NPM packages – sorted by downloads count with a tags filter and search by title. Fork it and bookmark your favorite packages!
-  categories:
-    - Directory
-    - JavaScript
-    - Library
-    - Open Source
-    - Programming
-    - Web Development
-  built_by: crstnio
-  built_by_url: https://github.com/crstnio/
-  featured: false
 - title: Waterscapes
   main_url: "https://waterscap.es"
   url: "https://waterscap.es/lake-monteynard/"
@@ -4902,6 +4876,7 @@
 - title: Gerald Martinez Dev
   main_url: https://gmartinez.dev/
   url: https://gmartinez.dev/
+  source_url: https://github.com/nephlin7/gmartinez.dev
   description: >
     Personal web site for show my skills and my works.
   categories:
@@ -6804,7 +6779,6 @@
   description: >
     Fourpost is a shopping destination for today’s family that combines the best brands and experiences under one roof.
   categories:
-    - Retail
     - Marketing
   built_by: Fourpost
   built_by_url: https://github.com/fourpost
@@ -7217,4 +7191,85 @@
     - Web Development
   built_by: Farid Safi
   built_by_url: https://twitter.com/FaridSafi
+  featured: false
+- title: Cinch
+  url: https://www.cinch.co.uk
+  main_url: https://www.cinch.co.uk
+  description: >
+    Cinch is a hub for car supermarkets and dealers to show off their stock. The site only lists second-hand cars that are seven years old or younger, with less than 70,000 miles on the clock.
+  categories:
+    - Entrepreneurship
+    - Business
+  built_by: Somo
+  built_by_url: https://www.somoglobal.com
+  featured: false
+- title: Recetas El Universo
+  description: >-
+    Recipes and videos with the best of Ecuadorian cuisine.
+    Collectable recipes from Diario El Universo.
+  main_url: "https://recetas-eu.netlify.com/"
+  url: "https://recetas-eu.netlify.com/"
+  featured: false
+  categories:
+    - Blog
+    - WordPress
+    - Food
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
+- title: NuBrakes
+  url: https://nubrakes.com/
+  main_url: https://nubrakes.com/
+  description: >
+    NuBrakes is the mobile brake repair company that comes to you! We perform brake pad, caliper, and rotor replacement at your office, apartment or home!
+  categories:
+    - Business
+    - Entrepreneurship
+  featured: false
+- title: Third and Grove
+  url: https://www.thirdandgrove.com
+  main_url: https://www.thirdandgrove.com
+  source_url: https://github.com/thirdandgrove/tagd8_gatsby
+  description: >
+    A digital agency slaying the mundane one pixel at a time.
+  categories:
+    - Agency
+    - Marketing
+    - Open Source
+    - Technology
+  built_by: Third and Grove
+  built_by_url: https://www.thirdandgrove.com
+  featured: false
+- title: Le Bikini
+  url: https://lebikini.com
+  main_url: https://lebikini.com
+  description: >
+    New website for Toulouse's most iconic concert hall.
+  categories:
+    - Music
+  built_by: Antoine Rousseau
+  built_by_url: https://antoine.rousseau.im
+  featured: false
+- title: Jimmy Truong's Portfolio
+  url: https://jimmytruong.ca
+  main_url: https://jimmytruong.ca
+  description: >
+    This porfolio is a complication of all projects done during my time at BCIT D3 (Digital Design and Development) program and after graduation.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Jimmy Truong
+  built_by_url: https://jimmytruong.ca
+  featured: false
+- title: Quick Stop Nicaragua
+  main_url: https://quickstopnicaragua.com
+  url: https://quickstopnicaragua.com
+  description: >
+    Convenience Store Website
+  categories:
+    - CMS:Contentful
+    - Netlify
+    - PWA
+    - Food
+  built_by: Gerald Martinez
+  built_by_url: https://twitter.com/GeraldM_92
   featured: false
