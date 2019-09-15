@@ -25,7 +25,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-emotion`,
       options: {
-        // Accepts all options defined by `babel-plugin-emotion` plugin.
+        // Perform server side rendering using Emotion's extractCricital API.
+        // Enable this option if Emotion is warning you about using potentially
+        // unsafe selectors when server side rendering.
+        useExtractCriticalSSR: false,
+
+        // All other options will be passed to `babel-plugin-emotion` plugin.
       },
     },
   ],
