@@ -17,7 +17,7 @@ Give a sample post,
 ```markdown
 ---
 title: My first blogpost!
-featuredImgUrl: https://imgur.com/fawdaw43de
+featuredImgUrl: https://images.unsplash.com/photo-1560237731-890b122a9b6c
 ---
 
 Hello World
@@ -31,7 +31,7 @@ By default, this is just a string as we haven't told Gatsby how to interpret it,
 
 In your gatsby-node file, we can do some processing to create file nodes for the `featuredImgUrl` frontmatter field.
 
-```js
+```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = async ({
@@ -66,7 +66,7 @@ Going step by step through the code:
 2. use `createRemoteFileNode` by passing in the various required fields and get a reference to it afterwards.
 3. if the node is created, attach it as a child of the original node. `___NODE` tells the graphql layer that the name before it is going to be a field on the parent node that links to another node. to do this, pass the id as the reference.
 
-And now since it is a file node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` class inside this newly created node.
+And now since it is a file node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` child node inside this newly created node.
 
 ## Usage in templates
 
@@ -88,7 +88,7 @@ query {
 }
 ```
 
-![Screenshot of GraphiQL with above query inserted](./foo.jpg)
+![Screenshot of GraphiQL with above query inserted](images/remote-file-node-graphiql-preview.png)
 
 We can then use gatsby-transformer-sharp to fill in the query for a fluid image here.
 
@@ -98,8 +98,8 @@ query {
     nodes {
       featuredImg {
         childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
+          fixed(width: 600) {
+            ...GatsbyImageSharpFixed
           }
         }
       }
@@ -108,7 +108,7 @@ query {
 }
 ```
 
-And finally, we can update the template for this blogpost to include this image:
+And finally, we can update the template for this blogpost to include this image. This template is based on the one in [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
 
 ```jsx
 import React from "react"
@@ -117,11 +117,11 @@ import { graphql } from "gatsby"
 
 const template = ({ data }) => {
   return (
-    <div>
-      <h1>{data.MarkdownRemark.frontmatter.title}</h1>
-      <Img fluid={data.MarkdownRemark.featuredImg.childImageSharp.fluid} />
-      <div dangerouslySetHTML={{ __html: data.MarkdownRemark.html }} />
-    </div>
+    <>
+      <h1>{data.markdownRemark.frontmatter.title}</h1>
+      <Img fixed={data.markdownRemark.featuredImg.childImageSharp.fixed} />
+      <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
+    </>
   )
 }
 
@@ -129,11 +129,15 @@ export default template
 
 export const query = graphql`
   query BlogPostQuery($slug: String) {
-    MarkdownRemark(fields: { slug: { eq: $slug } }) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      frontmatter {
+        title
+      }
+      html
       featuredImg {
         childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
+          fixed(width: 600) {
+            ...GatsbyImageSharpFixed
           }
         }
       }
@@ -144,4 +148,4 @@ export const query = graphql`
 
 and if you run `gatsby develop`, you'll see the remote file locally now.
 
-![Screenshot of rendered blopost with featured image](./foo2.jpg)
+![Screenshot of rendered blopost with featured image](images/remote-file-node-blogpost.png)
