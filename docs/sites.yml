@@ -7266,9 +7266,6 @@
   description: >
     Convenience Store Website
   categories:
-    - CMS:Contentful
-    - Netlify
-    - PWA
     - Food
   built_by: Gerald Martinez
   built_by_url: https://twitter.com/GeraldM_92
@@ -7279,9 +7276,6 @@
   description: >
     Full-Service Tour Operator and Destination Management Company (DMC)
   categories:
-    - CMS:Contentful
-    - Netlify
-    - PWA
     - Agency
     - Travel
   built_by: Gerald Martinez
