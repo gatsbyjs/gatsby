@@ -193,14 +193,15 @@ module.exports = async ({
 
     css: (options = {}) => {
       return {
-        loader: isSSR
-          ? require.resolve(`css-loader/locals`)
-          : require.resolve(`css-loader`),
+        loader: require.resolve(`css-loader`),
         options: {
+          onlyLocals: isSSR,
           sourceMap: !PRODUCTION,
-          camelCase: `dashesOnly`,
-          // https://github.com/webpack-contrib/css-loader/issues/406
-          localIdentName: `[name]--[local]--[hash:base64:5]`,
+          localsConvention: `dashesOnly`,
+          modules: {
+            // https://github.com/webpack-contrib/css-loader/issues/406
+            localIdentName: `[name]--[local]--[hash:base64:5]`,
+          },
           ...options,
         },
       }
