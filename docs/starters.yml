@@ -3909,15 +3909,13 @@
   repo: https://github.com/nirlom-team/gatsby-theme-cv
   description: Gatsby theme for building resume 
   tags:
-    - Resume
     - PWA
     - Portfolio
     - Onepage
-    - Website
+    - Landing Page
   features:
     - Fully Responsive
     - Build Using Bootstrap
     - Website fully Offline
     - Easy to set Meta info
     - Build Resume website easily
-    
