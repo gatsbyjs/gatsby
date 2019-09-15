@@ -3905,3 +3905,18 @@
     - Mobile and responsive
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
+- url: https://gatsby-theme-cv.netlify.com/
+  repo: https://github.com/nirlom-team/gatsby-theme-cv
+  description: Gatsby theme for building resume 
+  tags:
+    - Resume
+    - PWA
+    - Portfolio
+    - Onepage
+    - Website
+  features:
+    - Fully Responsive
+    - Build Using Bootstrap
+    - Website fully Offline
+    - Easy to set Meta info
+    - Build Resume website easily
