@@ -1898,18 +1898,14 @@
   main_url: "https://mojaave.com/"
   url: "https://mojaave.com"
   source_url: "https://github.com/mhjadav/mojaave"
-  main_url: https://mojaave.com/
-  url: https://mojaave.com
-  source_url: https://github.com/mhjadav/mojaave
   description: >
-    mojaave.com is Mahipat's portfolio, I have developed it using Gatsby v2 and Bootstrap, To get in touch with people looking for full stack developer.
+    mojaave.com is Mahipat's portfolio, I have developed it using Gatsby v2 and
+    Bootstrap, To get in touch with people looking for full-stack developer.
   categories:
     - Portfolio
-    - Software
-    - Web Dev
-    - Personal
+    - Web Development
   built_by: Mahipat Jadav
-  built_by_url: https://mojaave.com/
+  built_by_url: "https://mojaave.com/"
   featured: false
 - title: Insights
   main_url: "https://justaskusers.com/"
