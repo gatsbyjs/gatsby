@@ -18,7 +18,7 @@ const {
 } = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
-const { getNonGatsbyCodeFrame } = require(`./stack-trace-utils`)
+const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 
 // Bind action creators per plugin so we can auto-add
@@ -151,7 +151,7 @@ const runAPI = (plugin, api, args) => {
             `),
             ]
 
-            const possiblyCodeFrame = getNonGatsbyCodeFrame()
+            const possiblyCodeFrame = getNonGatsbyCodeFrameFormatted()
             if (possiblyCodeFrame) {
               warning.push(possiblyCodeFrame)
             }

@@ -1913,6 +1913,153 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       },
     },
   ],
+  Array [
+    Object {
+      "fields": Object {
+        "author": Object {
+          "en-US": Object {
+            "sys": Object {
+              "id": "qYfB1lzHTNpofY3Oqvjpk",
+              "linkType": "Entry",
+              "type": "Link",
+            },
+          },
+        },
+        "slug": Object {
+          "en-US": "post-one",
+        },
+        "title": Object {
+          "en-US": "Post one",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "blogPost",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "contentful_id": "5U1Lm7y197ZCNUI9USWPUV",
+        "createdAt": "2019-09-09T06:54:07.673Z",
+        "createdBy": Object {
+          "sys": Object {
+            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "linkType": "User",
+            "type": "Link",
+          },
+        },
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "firstPublishedAt": "2019-09-09T06:54:28.959Z",
+        "id": "c5U1Lm7y197ZCNUI9USWPUV",
+        "publishedAt": "2019-09-09T06:58:04.316Z",
+        "publishedBy": Object {
+          "sys": Object {
+            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "linkType": "User",
+            "type": "Link",
+          },
+        },
+        "publishedCounter": 3,
+        "publishedVersion": 11,
+        "space": Object {
+          "sys": Object {
+            "id": "rocybtov1ozk",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2019-09-09T06:58:04.316Z",
+        "updatedBy": Object {
+          "sys": Object {
+            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "linkType": "User",
+            "type": "Link",
+          },
+        },
+        "version": 12,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "favouritePost": Object {
+          "en-US": Object {
+            "sys": Object {
+              "id": "c5U1Lm7y197ZCNUI9USWPUV",
+              "linkType": "Entry",
+              "type": "Link",
+            },
+          },
+        },
+        "name": Object {
+          "en-US": "Fred",
+        },
+      },
+      "sys": Object {
+        "contentType": Object {
+          "sys": Object {
+            "id": "author",
+            "linkType": "ContentType",
+            "type": "Link",
+          },
+        },
+        "contentful_id": "qYfB1lzHTNpofY3Oqvjpk",
+        "createdAt": "2019-09-09T06:54:16.287Z",
+        "createdBy": Object {
+          "sys": Object {
+            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "linkType": "User",
+            "type": "Link",
+          },
+        },
+        "environment": Object {
+          "sys": Object {
+            "id": "master",
+            "linkType": "Environment",
+            "type": "Link",
+          },
+        },
+        "firstPublishedAt": "2019-09-09T06:54:22.644Z",
+        "id": "qYfB1lzHTNpofY3Oqvjpk",
+        "publishedAt": "2019-09-09T06:54:38.816Z",
+        "publishedBy": Object {
+          "sys": Object {
+            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "linkType": "User",
+            "type": "Link",
+          },
+        },
+        "publishedCounter": 2,
+        "publishedVersion": 6,
+        "space": Object {
+          "sys": Object {
+            "id": "rocybtov1ozk",
+            "linkType": "Space",
+            "type": "Link",
+          },
+        },
+        "type": "Entry",
+        "updatedAt": "2019-09-09T06:54:38.816Z",
+        "updatedBy": Object {
+          "sys": Object {
+            "id": "2cRG5PXyp1roAoTOywZTW6",
+            "linkType": "User",
+            "type": "Link",
+          },
+        },
+        "version": 7,
+      },
+    },
+  ],
 ]
 `;
 
@@ -1972,6 +2119,12 @@ Object {
       "name": "brand___NODE",
     },
   ],
+  "c5U1Lm7y197ZCNUI9USWPUV": Array [
+    Object {
+      "id": "qYfB1lzHTNpofY3Oqvjpk",
+      "name": "author___NODE",
+    },
+  ],
   "c651CQ8rLoIYCeY6G0QG22q": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
@@ -2008,6 +2161,12 @@ Object {
       "name": "product___NODE",
     },
   ],
+  "qYfB1lzHTNpofY3Oqvjpk": Array [
+    Object {
+      "id": "c5U1Lm7y197ZCNUI9USWPUV",
+      "name": "blog post___NODE",
+    },
+  ],
   "wtrHxeu3zEoEce2MokCSi": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
@@ -2030,6 +2189,8 @@ Set {
   "c4BqrajvA8E6qwgkieoqmqO",
   "c71mfnH4QKsSsQmgoaQuq6O",
   "c4L2GhTsJtCseMYM8Wia64i",
+  "c5U1Lm7y197ZCNUI9USWPUV",
+  "qYfB1lzHTNpofY3Oqvjpk",
   "c3wtvPBbBjiMKqKKga8I2Cu",
   "KTRF62Q4gg60q6WCsWKw8",
   "Xc0ny7GWsMEMCeASWO2um",
@@ -4295,6 +4456,138 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulRemarkTestContentTextNode",
       },
       "parent": "uuid-from-gatsby",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "6ea09658e67ecfc838a195ab96bd8ef9",
+        "type": "ContentfulContentType",
+      },
+      "name": "Blog Post",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "author___NODE": "uuid-from-gatsby",
+      "children": Array [],
+      "contentful_id": "c5U1Lm7y197ZCNUI9USWPUV",
+      "createdAt": "2019-09-09T06:54:07.673Z",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "972a70e0665af76f7bc8e053fa803826",
+        "type": "ContentfulBlogPost",
+      },
+      "node_locale": "en-US",
+      "parent": "Blog Post",
+      "slug": "post-one",
+      "title": "Post one",
+      "updatedAt": "2019-09-09T06:58:04.316Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "title",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "6ea09658e67ecfc838a195ab96bd8ef9",
+        "type": "ContentfulContentType",
+      },
+      "name": "Blog Post",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "author___NODE": "uuid-from-gatsby",
+      "children": Array [],
+      "contentful_id": "c5U1Lm7y197ZCNUI9USWPUV",
+      "createdAt": "2019-09-09T06:54:07.673Z",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "63156d744a2ae97f222299a400750d46",
+        "type": "ContentfulBlogPost",
+      },
+      "node_locale": "de",
+      "parent": "Blog Post",
+      "slug": "post-one",
+      "title": "Post one",
+      "updatedAt": "2019-09-09T06:58:04.316Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "name",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "feb97892424b0df5c4d78a7a36e6bb6c",
+        "type": "ContentfulContentType",
+      },
+      "name": "Author",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "blog post___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "children": Array [],
+      "contentful_id": "qYfB1lzHTNpofY3Oqvjpk",
+      "createdAt": "2019-09-09T06:54:16.287Z",
+      "favouritePost___NODE": "uuid-from-gatsby",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "55478da16d88e82dd0a94180aa966976",
+        "type": "ContentfulAuthor",
+      },
+      "name": "Fred",
+      "node_locale": "en-US",
+      "parent": "Author",
+      "updatedAt": "2019-09-09T06:54:38.816Z",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "displayField": "name",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "feb97892424b0df5c4d78a7a36e6bb6c",
+        "type": "ContentfulContentType",
+      },
+      "name": "Author",
+      "parent": null,
+    },
+  ],
+  Array [
+    Object {
+      "blog post___NODE": Array [
+        "uuid-from-gatsby",
+      ],
+      "children": Array [],
+      "contentful_id": "qYfB1lzHTNpofY3Oqvjpk",
+      "createdAt": "2019-09-09T06:54:16.287Z",
+      "favouritePost___NODE": "uuid-from-gatsby",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "60afe7cfb871c52d3e1c8b856f00be5b",
+        "type": "ContentfulAuthor",
+      },
+      "name": "Fred",
+      "node_locale": "de",
+      "parent": "Author",
+      "updatedAt": "2019-09-09T06:54:38.816Z",
     },
   ],
 ]
