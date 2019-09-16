@@ -91,7 +91,7 @@ And now since it is a file node, `gatsby-transformer-sharp` will pick it up and 
 
 Now that the images are being generated and available in GraphQL, let's use it in action.
 
-If you open GraphiQL and write a query on the markdown nodes, you can see a new node attached to any `MarkdownRemark` node that had a featured image
+If you open GraphiQL and write a query on the markdown nodes, you can see a new node attached to any `MarkdownRemark` node that had a featured image:
 
 ```graphql
 query {
