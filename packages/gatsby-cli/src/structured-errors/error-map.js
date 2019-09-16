@@ -71,6 +71,18 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85911": {
+    text: context =>
+      stripIndent(`
+        There was a problem parsing "${context.filePath}"; any GraphQL
+        fragments or queries in this file were not processed.
+
+        This may indicate a syntax error in the code, or it may be a file type
+        that Gatsby does not know how to parse.
+      `),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>

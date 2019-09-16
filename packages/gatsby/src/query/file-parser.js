@@ -88,21 +88,12 @@ async function parseToAst(
         componentPath: filePath,
         error,
       })
-      // report.error(
-      //   `There was a problem parsing "${filePath}"; any GraphQL ` +
-      //     `fragments or queries in this file were not processed. \n` +
-      //     `This may indicate a syntax error in the code, or it may be a file type ` +
-      //     `that Gatsby does not know how to parse.`
-      // )
 
       messages.push({
-        level: `ERROR`,
+        id: `85911`,
+        filePath,
         context: {
-          sourceMessage:
-            `There was a problem parsing "${filePath}"; any GraphQL ` +
-            `fragments or queries in this file were not processed. \n` +
-            `This may indicate a syntax error in the code, or it may be a file type ` +
-            `that Gatsby does not know how to parse.`,
+          filePath,
         },
       })
 
@@ -413,10 +404,7 @@ export default class FileParser {
         },
         error: err,
       })
-      // report.error(
-      //   `There was a problem parsing the GraphQL query in file: ${file}`,
-      //   err
-      // )
+
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: file,
       })
