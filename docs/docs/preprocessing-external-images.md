@@ -146,6 +146,6 @@ export const query = graphql`
 `
 ```
 
-and if you run `gatsby develop`, you'll see the remote file locally now.
+And if you run `gatsby develop`, you'll see the remote file locally now:
 
 ![Screenshot of rendered blopost with featured image](images/remote-file-node-blogpost.png)
