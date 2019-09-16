@@ -506,6 +506,79 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 - More on [importing assets into files](/docs/importing-assets-into-files/)
 
+### Using Emotion
+
+[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components. You can use each styling feature individually or together in the same file.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+
+#### Directions
+
+1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
+
+```shell
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+```
+
+2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-emotion`],
+}
+```
+
+3. If you don't already have one, create a page in your Gatsby site at `src/pages/emotion-sample.js`.
+
+Import Emotion's `css` core package. You can then use the `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element inside a component:
+
+```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import { css } from "@emotion/core"
+
+export default () => (
+  <div>
+    <p
+      css={{
+        background: "pink",
+        color: "blue",
+      }}
+    >
+      This page is using Emotion.
+    </p>
+  </div>
+)
+```
+
+4. To use Emotion's [styled components](https://emotion.sh/docs/styled), import the package and define them using the `styled` function.
+
+```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import styled from "@emotion/styled"
+
+const Content = styled.div`
+  text-align: center;
+  margin-top: 10px;
+  p {
+    font-weight: bold;
+  }
+`
+
+export default () => (
+  <Content>
+    <p>This page is using Emotion.</p>
+  </Content>
+)
+```
+
+#### Additional resources
+
+- [Using Emotion in Gatsby](/docs/emotion/)
+- [Emotion website](https://emotion.sh)
+- [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
+
 ### Using Google Fonts
 
 Hosting your own [Google Fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.

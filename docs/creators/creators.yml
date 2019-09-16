@@ -364,3 +364,15 @@
   for_hire: true
   hiring: false # we are though!
   portfolio: true
+- name: Gerald Martinez
+  type: individual
+  description: >-
+    I am a Front-End web Developer based in Nicaragua. Actually i'm
+    in love working with JAMstack.
+  location: Nicaragua
+  website: "https://gmartinez.dev/"
+  github: "https://github.com/nephlin7"
+  image: images/gerald-martinez.jpg
+  for_hire: false
+  hiring: false
+  portfolio: true

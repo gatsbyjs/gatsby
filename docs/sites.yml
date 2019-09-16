@@ -560,13 +560,6 @@
     - Design
     - Marketing
     - Portfolio
-- title: Design Systems Weekly
-  main_url: "https://designsystems.email/"
-  url: "https://designsystems.email/"
-  featured: false
-  categories:
-    - Education
-    - Web Development
 - title: Dalbinaco's Website
   main_url: "https://dlbn.co/en/"
   url: "https://dlbn.co/en/"
@@ -1068,12 +1061,6 @@
   categories:
     - Web Development
     - Agency
-- title: Fusion Media Group
-  main_url: "http://thefmg.com/"
-  url: "http://thefmg.com/"
-  featured: false
-  categories:
-    - Entertainment
 - title: Dovetail
   main_url: "https://dovetailapp.com/"
   url: "https://dovetailapp.com/"
@@ -2161,18 +2148,6 @@
     - Travel
   built_by: Lucas Vilela
   built_by_url: "https://madecomfy.com.au/"
-- title: How To Book Cheap Flights
-  description: >
-    A travel blog built with Gatsby and adopting the AMP technology.
-  main_url: "https://howtobookcheapflights.com"
-  url: "https://howtobookcheapflights.com"
-  source_url: "https://github.com/flaviolivolsi/howtobookcheapflights"
-  featured: false
-  categories:
-    - Travel
-    - Blog
-  built_by: Flavio Li Volsi
-  built_by_url: "http://github.com/flaviolivolsi"
 - title: Tiger Facility Services
   description: >
     Tiger Facility Services combines facility management expertise with state of the art software to offer a sustainable and customer oriented cleaning and facility service.
@@ -2812,17 +2787,6 @@
   built_by: Gabe Ragland
   built_by_url: https://twitter.com/gabe_ragland
   featured: false
-- title: Disrupting Nate
-  description: >
-    Ketogenic Diet, Podcasts, and Blockchain.
-  url: https://www.disruptingnate.com/
-  main_url: https://www.disruptingnate.com/
-  categories:
-    - Technology
-    - Podcast
-  built_by: Nathan Olmstead
-  built_by_url: https://twitter.com/disruptingnate
-  featured: false
 - title: Ambassador
   url: https://www.getambassador.io
   main_url: https://www.getambassador.io
@@ -2904,16 +2868,6 @@
     - Technology
   built_by: Crisp Studio
   built_by_url: https://crisp.studio
-  featured: false
-- title: FOX Circus
-  main_url: "https://www.foxcircus.it/"
-  url: "https://www.foxcircus.it/"
-  categories:
-    - Event
-    - Conference
-    - Entertainment
-  built_by: Kframe Interactive SA
-  built_by_url: http://kframeinteractive.com
   featured: false
 - title: Ramón Chancay
   description: >-
@@ -3654,22 +3608,6 @@
     - Blog
   built_by: Logicwind
   built_by_url: "https://www.logicwind.com"
-- title: npm-bookmarks
-  url: https://npm-bookmarks.netlify.com
-  main_url: https://npm-bookmarks.netlify.com
-  source_url: https://github.com/crstnio/npm-bookmarks
-  description: >
-    A site to collect personal favorites of NPM packages – sorted by downloads count with a tags filter and search by title. Fork it and bookmark your favorite packages!
-  categories:
-    - Directory
-    - JavaScript
-    - Library
-    - Open Source
-    - Programming
-    - Web Development
-  built_by: crstnio
-  built_by_url: https://github.com/crstnio/
-  featured: false
 - title: Waterscapes
   main_url: "https://waterscap.es"
   url: "https://waterscap.es/lake-monteynard/"
@@ -4626,19 +4564,6 @@
   built_by: Sascha Klapetz
   built_by_url: https://www.projectival.de/
   featured: false
-- title: Herman Starikov
-  url: https://starikov.dev
-  main_url: https://starikov.dev
-  source_url: https://github.com/Hermanya/hermanya.github.io
-  description: >
-    Web Developer specializing in React, Toronto Canada
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
-  built_by: Herman Starikov
-  built_by_url: https://github.com/Hermanya
-  featured: false
 - title: Hetzner Online Community
   main_url: https://community.hetzner.com
   url: https://community.hetzner.com
@@ -4902,6 +4827,7 @@
 - title: Gerald Martinez Dev
   main_url: https://gmartinez.dev/
   url: https://gmartinez.dev/
+  source_url: https://github.com/nephlin7/gmartinez.dev
   description: >
     Personal web site for show my skills and my works.
   categories:
@@ -7230,7 +7156,7 @@
   featured: false
 - title: Recetas El Universo
   description: >-
-    Recipes and videos with the best of Ecuadorian cuisine. 
+    Recipes and videos with the best of Ecuadorian cuisine.
     Collectable recipes from Diario El Universo.
   main_url: "https://recetas-eu.netlify.com/"
   url: "https://recetas-eu.netlify.com/"
@@ -7263,4 +7189,71 @@
     - Technology
   built_by: Third and Grove
   built_by_url: https://www.thirdandgrove.com
+  featured: false
+- title: Le Bikini
+  url: https://lebikini.com
+  main_url: https://lebikini.com
+  description: >
+    New website for Toulouse's most iconic concert hall.
+  categories:
+    - Music
+  built_by: Antoine Rousseau
+  built_by_url: https://antoine.rousseau.im
+  featured: false
+- title: Jimmy Truong's Portfolio
+  url: https://jimmytruong.ca
+  main_url: https://jimmytruong.ca
+  description: >
+    This porfolio is a complication of all projects done during my time at BCIT D3 (Digital Design and Development) program and after graduation.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Jimmy Truong
+  built_by_url: https://jimmytruong.ca
+  featured: false
+- title: Quick Stop Nicaragua
+  main_url: https://quickstopnicaragua.com
+  url: https://quickstopnicaragua.com
+  description: >
+    Convenience Store Website
+  categories:
+    - Food
+  built_by: Gerald Martinez
+  built_by_url: https://twitter.com/GeraldM_92
+  featured: false
+- title: XIEL
+  main_url: https://xiel.dev
+  url: https://xiel.dev
+  source_url: https://github.com/xiel/xiel
+  description: >
+    I'm a freelance front-end developer from Berlin who creates digital experiences that everyone likes to use.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Felix Leupold
+  built_by_url: https://twitter.com/xiel
+  featured: false
+- title: Nicaragua Best Guides
+  main_url: https://www.nicaraguasbestguides.com
+  url: https://www.nicaraguasbestguides.com
+  description: >
+    Full-Service Tour Operator and Destination Management Company (DMC)
+  categories:
+    - Agency
+    - Travel
+  built_by: Gerald Martinez
+  built_by_url: https://twitter.com/GeraldM_92
+  featured: false
+- title: Thoughts and Stuff
+  main_url: http://thoughtsandstuff.com
+  url: http://thoughtsandstuff.com
+  source_url: https://github.com/robmarshall/gatsby-tns
+  description: >
+    A simple easy to read blog. Minimalistic, focusing on content over branding. Includes RSS feed.
+  categories:
+    - Accessibility
+    - Blog
+    - WordPress
+  built_by: Robert Marshall
+  built_by_url: https://robertmarshall.dev
   featured: false
