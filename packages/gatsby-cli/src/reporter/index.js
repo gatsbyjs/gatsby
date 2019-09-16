@@ -48,7 +48,7 @@ const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 
 const { getErrorFormatter } = require(`./errors`)
-const { /*dispatch,*/ getStore } = require(`./redux`)
+const { getStore } = require(`./redux`)
 const constructError = require(`../structured-errors/construct-error`)
 
 const errorFormatter = getErrorFormatter()
