@@ -9,6 +9,21 @@ const waitForAPIOptions = {
   timeout: 3000,
 }
 
+function assertOnNavigate(
+  page = null,
+  locationAssert,
+  shouldLocationAssert,
+  assertShouldBe
+) {
+  if (page) {
+    cy.getTestElement(page).click()
+  }
+  cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+    .location(`pathname`)
+    .should(locationAssert, shouldLocationAssert)
+  cy.getTestElement(`dom-marker`).contains(assertShouldBe)
+}
+
 const runTests = (
   blockedPath = `Default`,
   options = { alternate: false, link: false, stay: false }
@@ -29,26 +44,15 @@ const runTests = (
     const isCurrentBlocked = currentPath === blockedPath
     const toPathIsBlocked = toPath === blockedPath
     if (isCurrentBlocked && options.alternate) {
-      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-        .location(`pathname`)
-        .should(`not`, `/page-2/`)
-      cy.getTestElement(`dom-marker`).contains(`404`)
+      assertOnNavigate(null, `not`, `/page-2/`, `404`)
     } else if (toPathIsBlocked && options.stay) {
-      cy.getTestElement(`page2`).click()
-      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-        .location(`pathname`)
-        .should(`not`, `/page-2/`)
-      cy.getTestElement(`dom-marker`).contains(`index`)
+      assertOnNavigate(`page2`, `not`, `/page-2/`, `index`)
     } else {
       const [assertShouldBe, locationAssert] =
         toPath === blockedPath && shouldLink
           ? [`404`, `not`]
           : [`page-2`, `equal`]
-      cy.getTestElement(`page2`).click()
-      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-        .location(`pathname`)
-        .should(locationAssert, `/page-2/`)
-      cy.getTestElement(`dom-marker`).contains(assertShouldBe)
+      assertOnNavigate(`page2`, locationAssert, `/page-2/`, assertShouldBe)
     }
   })
 
@@ -61,26 +65,16 @@ const runTests = (
         const isCurrentBlocked = currentPath === blockedPath
         if (currentDom.includes(`page-2`)) {
           if (isCurrentBlocked && options.alternate) {
-            cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-              .location(`pathname`)
-              .should(`not`, `/page-3/`)
-            cy.getTestElement(`dom-marker`).contains(`404`)
+            assertOnNavigate(null, `not`, `/page-3/`, `404`)
           } else {
             const [assertShouldBe, locationAssert] =
               toPath === blockedPath && options.safeNotFound
                 ? [`page-2`, `not`]
                 : [`404`, `equal`]
-            cy.getTestElement(`404`).click()
-            cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-              .location(`pathname`)
-              .should(locationAssert, `/page-3/`)
-            cy.getTestElement(`dom-marker`).contains(assertShouldBe)
+            assertOnNavigate(`404`, locationAssert, `/page-3/`, assertShouldBe)
           }
         } else {
-          cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-            .location(`pathname`)
-            .should(`not`, `/page-3/`)
-          cy.getTestElement(`dom-marker`).contains(currentDom)
+          assertOnNavigate(null, `not`, `/page-3/`, currentDom)
         }
       })
   })
@@ -98,21 +92,13 @@ const runTests = (
   it(`Can navigate from 404 to index - ${blockedPath}`, () => {
     const toPath = `/`
     if (toPath === blockedPath && options.stay) {
-      cy.getTestElement(`index`).click()
-      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-        .location(`pathname`)
-        .should(`equal`, `/page-3/`)
-      cy.getTestElement(`dom-marker`).contains(`404`)
+      assertOnNavigate(`index`, `equal`, `/page-3/`, `404`)
     } else {
       const [assertShouldBe, locationAssert] =
         toPath === blockedPath && shouldLink
           ? [`404`, `equal`]
           : [`index`, `not`]
-      cy.getTestElement(`index`).click()
-      cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-        .location(`pathname`)
-        .should(locationAssert, `/`)
-      cy.getTestElement(`dom-marker`).contains(assertShouldBe)
+      assertOnNavigate(`index`, locationAssert, `/`, assertShouldBe)
     }
   })
 }
