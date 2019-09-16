@@ -1,6 +1,6 @@
 ---
 title: Why Impossible Foods Chose Gatsby to Power Their Ecommerce Website Relaunch
-date: 2019-09-11
+date: 2019-09-16
 author: Hashim Warren
 excerpt: "Impossible Foods needed a website with new functionality, that could withstand surges in traffic. These challenges and requirements led the Impossible Foods team to adopt a Content Mesh approach to their website architecture."
 tags:
