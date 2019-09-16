@@ -15,13 +15,13 @@ GraphQL doesn't need to be installed in a new Gatsby site, it is already include
 
 ## Sourcing Data
 
-Data needs to be [sourced](/docs/content-and-data/) -- or added to the GraphQL schema -- to be queried and pulled into pages using GraphQL. Gatsby uses [source plugins](/plugins/?=gatsby-source) to pull in, or source, data.
+Data needs to be [sourced](/docs/content-and-data/) — or added to the GraphQL schema — to be queried and pulled into pages using GraphQL. Gatsby uses [source plugins](/plugins/?=gatsby-source) to pull in, or source, data.
 
 **Note**: GraphQL isn't necessary, you can still [use Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 
 Sourcing data with an existing plugin requires installing necessary packages and adding the plugin to the plugins array in the `gatsby-config` with any necessary configurations. To [source data from the filesystem](/docs/sourcing-from-the-filesystem/):
 
-```sh
+```shell
 npm install --save gatsby-source-filesystem
 ```
 
@@ -44,7 +44,7 @@ module.exports = {
 }
 ```
 
-You can also [create custom plugins](https://www.gatsbyjs.org/docs/creating-plugins/) to fit your own use cases and pull in data however you want.
+You can also [create custom plugins](/docs/creating-plugins/) to fit your own use cases and pull in data however you want.
 
 ## Querying for Data
 
