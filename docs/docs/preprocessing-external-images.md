@@ -23,7 +23,7 @@ featuredImgUrl: https://images.unsplash.com/photo-1560237731-890b122a9b6c
 Hello World
 ```
 
-We can have a frontmatter field for the url of the featured image we want to pull down and use as part of the site.
+You can have a frontmatter field for the url of the featured image we want to pull down and use as part of the site.
 
 By default, this is just a string as we haven't told Gatsby how to interpret it, but now we can add some code into `gatsby-node.js` to modify it.
 
@@ -34,6 +34,21 @@ In your gatsby-node file, we can do some processing to create file nodes for the
 ```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      frontmatter: Frontmatter
+    }
+
+    type Frontmatter {
+      title: String!
+      featuredImgUrl: String
+    }
+  `)
+}
+
 exports.onCreateNode = async ({
   node,
   actions: { createNode },
@@ -41,8 +56,11 @@ exports.onCreateNode = async ({
   cache,
   createNodeId,
 }) => {
-  // For all MarkdownRemark nodes, call createRemoteFileNode
-  if (node.internal.type === "MarkdownRemark") {
+  // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
+  if (
+    node.internal.type === "MarkdownRemark" &&
+    node.frontmatter.featuredImgUrl !== null
+  ) {
     let fileNode = await createRemoteFileNode({
       url: node.frontmatter.featuredImgUrl, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode we are going to create
@@ -62,9 +80,10 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1. Create an onCreateNode function so you can watch for when `MarkdownRemark` nodes are made.
-2. Use `createRemoteFileNode` by passing in the various required fields and get a reference to it afterwards.
-3. If the node is created, attach it as a child of the original node. `___NODE` tells the graphql layer that the name before it is going to be a field on the parent node that links to another node. To do this, pass the id as the reference.
+1. Define some types for `MarkdownRemark` using the Schema Customization API so if `featuredImgUrl` is not in a markdown file, it will return null.
+2. Create an onCreateNode function so you can watch for when `MarkdownRemark` nodes are made.
+3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to it afterwards.
+4. If the node is created, attach it as a child of the original node. `___NODE` tells the graphql layer that the name before it is going to be a field on the parent node that links to another node. To do this, pass the id as the reference.
 
 And now since it is a file node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` child node inside this newly created node.
 
@@ -72,7 +91,7 @@ And now since it is a file node, `gatsby-transformer-sharp` will pick it up and 
 
 Now that the images are being generated and available in GraphQL, let's use it in action.
 
-If you open GraphiQL and write a query on the markdown nodes, you can see a new
+If you open GraphiQL and write a query on the markdown nodes, you can see a new node attached to any `MarkdownRemark` node that had a featured image
 
 ```graphql
 query {
