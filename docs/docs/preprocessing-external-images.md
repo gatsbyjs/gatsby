@@ -2,17 +2,17 @@
 title: Preprocessing External Images
 ---
 
-Gatsby allows powerful image processing features through using the [`Sharp`](https://github.com/lovell/sharp/) library to automatically process images to be performant and have features like lazy-loading. That said, this only works if the image is a file node in the GraphQL layer.
+Gatsby allows powerful image processing features using the [`Sharp`](https://github.com/lovell/sharp/) library to automatically process images to be performant, with features like lazy-loading. That said, this only works if the image is a `File` node in the GraphQL layer.
 
-If you want the same ecosystem for files that are hosted online and not located in your repo, [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) has an API called `createRemoteFileNode` to solve this.
+If you want the same functionality for files that are remotely hosted online and not located in your Git repo, [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) has an API called `createRemoteFileNode` to solve this.
 
-This guide will walk you through how to use `createRemoteFileNode` process and get the same benefits of gatsby-transformer-sharp with externally sourced images.
+This guide will show you how to use the `createRemoteFileNode` process and get the same benefits of gatsby-transformer-sharp with externally sourced images.
 
 ## Setup
 
-A usecase that this technique can be useful is if you want to create a featured image in a blogpost, but the image is a url up on the web instead of a local file. This could be hosted somewhere like Imgur, S3, or anywhere up on the internet.
+A use case that this technique can support is if you want to create a featured image in a blog post with an image sourced from a URL out on the web, instead of a local file. This could be hosted somewhere like Imgur, S3, or anywhere on the internet.
 
-Give a sample post:
+Given a sample post:
 
 ```markdown
 ---
@@ -23,13 +23,13 @@ featuredImgUrl: https://images.unsplash.com/photo-1560237731-890b122a9b6c
 Hello World
 ```
 
-You can have a frontmatter field for the url of the featured image we want to pull down and use as part of the site.
+You can use a custom Frontmatter field for the URL of the featured image you want to pull down and use as part of the site. 
 
-By default, this is just a string as we haven't told Gatsby how to interpret it, but now we can add some code into `gatsby-node.js` to modify it.
+By default, this is a string value as you haven't told Gatsby yet how to interpret it. However, you can add some code into `gatsby-node.js` to modify it.
 
 ## Gatsby Node
 
-In your gatsby-node file, we can do some processing to create file nodes for the `featuredImgUrl` frontmatter field.
+In your `gatsby-node` file, you can do some processing to create file nodes for the custom `featuredImgUrl` Frontmatter field.
 
 ```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
@@ -80,18 +80,18 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1. Define some types for `MarkdownRemark` using the [Schema Customization API](/docs/schema-customization/) so if `featuredImgUrl` is not in a markdown file, it will return null.
+1. Define some types for `MarkdownRemark` using the [Schema Customization API](/docs/schema-customization/) so if `featuredImgUrl` is not in a Markdown file, it will return `null`.
 2. Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
-3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to it afterwards.
-4. If the node is created, attach it as a child of the original node. `___NODE` tells the graphql layer that the name before it is going to be a field on the parent node that links to another node. To do this, pass the id as the reference.
+3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
+4. If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference.
 
-And now since it is a file node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` child node inside this newly created node.
+And since it is a File Node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` child Node inside this newly created Node.
 
 ## Usage in templates
 
-Now that the images are being generated and available in GraphQL, let's use it in action.
+Now that the images are being generated and available in GraphQL, you can use them in action.
 
-If you open GraphiQL and write a query on the markdown nodes, you can see a new node attached to any `MarkdownRemark` node that had a featured image:
+If you open GraphiQL and write a query on the Markdown Nodes, you can see a new Node attached to any `MarkdownRemark` Node that had a featured image:
 
 ```graphql
 query {
@@ -109,7 +109,7 @@ query {
 
 ![Screenshot of GraphiQL with above query inserted](images/remote-file-node-graphiql-preview.png)
 
-We can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here.
+You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here.
 
 ```graphql
 query {
@@ -127,7 +127,7 @@ query {
 }
 ```
 
-And finally, we can update the template for this blogpost to include this image. This template is based on the one in the [Programmatically create pages from data](/tutorial/part-seven/) section of the Gatsby Tutorial.
+And finally, you can update the template for this blog post to include this image. This template is based on the one in the [Programmatically create pages from data](/tutorial/part-seven/) section of the Gatsby Tutorial.
 
 ```jsx
 import React from "react"
