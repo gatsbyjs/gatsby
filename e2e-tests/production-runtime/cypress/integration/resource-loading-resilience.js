@@ -30,16 +30,24 @@ const runTests = (
     const toPathIsBlocked = toPath === blockedPath
     if (isCurrentBlocked && options.alternate) {
       cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+        .location(`pathname`)
+        .should(`not`, `/page-2/`)
       cy.getTestElement(`dom-marker`).contains(`404`)
     } else if (toPathIsBlocked && options.stay) {
       cy.getTestElement(`page2`).click()
       cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+        .location(`pathname`)
+        .should(`not`, `/page-2/`)
       cy.getTestElement(`dom-marker`).contains(`index`)
     } else {
-      const assertShouldBe =
-        toPath === blockedPath && shouldLink ? `404` : `page-2`
+      const [assertShouldBe, locationAssert] =
+        toPath === blockedPath && shouldLink
+          ? [`404`, `not`]
+          : [`page-2`, `equal`]
       cy.getTestElement(`page2`).click()
       cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+        .location(`pathname`)
+        .should(locationAssert, `/page-2/`)
       cy.getTestElement(`dom-marker`).contains(assertShouldBe)
     }
   })
@@ -48,22 +56,30 @@ const runTests = (
     cy.get(`[data-testid="dom-marker"]`)
       .invoke(`text`)
       .then(currentDom => {
-        const currentPath = `/page-2`
+        const currentPath = `/page-2/`
         const toPath = `/404.html`
         const isCurrentBlocked = currentPath === blockedPath
         if (currentDom.includes(`page-2`)) {
           if (isCurrentBlocked && options.alternate) {
             cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+              .location(`pathname`)
+              .should(`not`, `/page-3/`)
             cy.getTestElement(`dom-marker`).contains(`404`)
           } else {
-            const assertShouldBe =
-              toPath === blockedPath && options.safeNotFound ? `page-2` : `404`
+            const [assertShouldBe, locationAssert] =
+              toPath === blockedPath && options.safeNotFound
+                ? [`page-2`, `not`]
+                : [`404`, `equal`]
             cy.getTestElement(`404`).click()
             cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+              .location(`pathname`)
+              .should(locationAssert, `/page-3/`)
             cy.getTestElement(`dom-marker`).contains(assertShouldBe)
           }
         } else {
           cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+            .location(`pathname`)
+            .should(`not`, `/page-3/`)
           cy.getTestElement(`dom-marker`).contains(currentDom)
         }
       })
@@ -72,21 +88,30 @@ const runTests = (
   it(`Loads 404 - ${blockedPath}`, () => {
     cy.visit(`/page-3/`, {
       failOnStatusCode: false,
-    }).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+    })
+      .waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+      .location(`pathname`)
+      .should(`equal`, `/page-3/`)
     cy.getTestElement(`dom-marker`).contains(`404`)
   })
 
   it(`Can navigate from 404 to index - ${blockedPath}`, () => {
     const toPath = `/`
-    const assertShouldBe =
-      toPath === blockedPath && shouldLink ? `404` : `index`
     if (toPath === blockedPath && options.stay) {
       cy.getTestElement(`index`).click()
       cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+        .location(`pathname`)
+        .should(`equal`, `/page-3/`)
       cy.getTestElement(`dom-marker`).contains(`404`)
     } else {
+      const [assertShouldBe, locationAssert] =
+        toPath === blockedPath && shouldLink
+          ? [`404`, `equal`]
+          : [`index`, `not`]
       cy.getTestElement(`index`).click()
       cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
+        .location(`pathname`)
+        .should(locationAssert, `/`)
       cy.getTestElement(`dom-marker`).contains(assertShouldBe)
     }
   })
