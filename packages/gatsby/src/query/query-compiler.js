@@ -19,7 +19,7 @@ import FileParser from "./file-parser"
 import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
 import { graphqlError, multipleRootQueriesError } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
-import errorParser from "./error-parser"
+import errorParser, { locInGraphQlToLocInFile } from "./error-parser"
 const websocketManager = require(`../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
@@ -172,23 +172,13 @@ class Runner {
       let errors = validate(this.schema, doc, validationRules)
 
       if (errors && errors.length) {
-        const locationOfGraphQLDocInSourceFile = doc.definitions[0].templateLoc
-
         messages.push(
           ...errors.map(error => {
-            const graphqlLocation = error.locations[0]
-            // get location of error relative to source file (not just graphql text)
             const location = {
-              start: {
-                line:
-                  graphqlLocation.line +
-                  locationOfGraphQLDocInSourceFile.start.line -
-                  1,
-                column:
-                  (graphqlLocation.line === 0
-                    ? locationOfGraphQLDocInSourceFile.start.column - 1
-                    : 0) + graphqlLocation.column,
-              },
+              start: locInGraphQlToLocInFile(
+                doc.definitions[0].templateLoc,
+                error.locations[0]
+              ),
             }
             return errorParser({ message: error.message, filePath, location })
           })

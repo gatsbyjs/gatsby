@@ -94,6 +94,42 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85914": {
+    text: context =>
+      `There was a problem reading the file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  // default parsing error
+  "85915": {
+    text: context =>
+      `There was a problem parsing the GraphQL query in file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85916": {
+    text: context =>
+      `String interpolation is not allowed in graphql tag:\n\n${context.codeFrame}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85917": {
+    text: context =>
+      `Unexpected empty graphql tag${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85918": {
+    text: context =>
+      stripIndent(`
+        GraphQL syntax error in query:\n\n${context.sourceMessage}${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }`),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>
