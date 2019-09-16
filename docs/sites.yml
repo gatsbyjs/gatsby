@@ -7221,6 +7221,18 @@
   built_by: Gerald Martinez
   built_by_url: https://twitter.com/GeraldM_92
   featured: false
+- title: XIEL
+  main_url: https://xiel.dev
+  url: https://xiel.dev
+  source_url: https://github.com/xiel/xiel
+  description: >
+    I'm a freelance front-end developer from Berlin who creates digital experiences that everyone likes to use.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Felix Leupold
+  built_by_url: https://twitter.com/xiel
+  featured: false
 - title: Nicaragua Best Guides
   main_url: https://www.nicaraguasbestguides.com
   url: https://www.nicaraguasbestguides.com
