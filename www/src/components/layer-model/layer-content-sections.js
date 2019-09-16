@@ -47,6 +47,15 @@ const ExampleWrapper = ({ children }) => (
   </div>
 )
 
+const pseudoProperties = {
+  boxShadow: shadows.floating,
+  color: colors.white,
+}
+// because CI linting gets mad about the spacing of this property:
+const transitionProperty = `${transition.speed.default} ${
+  transition.curve.default
+}`
+
 const CodeWrapper = ({
   title,
   language,
@@ -59,11 +68,12 @@ const CodeWrapper = ({
     {title && (
       <div
         css={{
-          borderTopRightRadius: radii[3],
-          borderTopLeftRadius: radii[3],
+          position: `relative`,
           display: `flex`,
           alignItems: `center`,
           justifyContent: `space-between`,
+          borderTopRightRadius: radii[3],
+          borderTopLeftRadius: radii[3],
         }}
         className="gatsby-code-title"
       >
@@ -71,25 +81,33 @@ const CodeWrapper = ({
         {rotateButton && (
           <button
             css={{
+              position: `absolute`,
+              right: space[3],
               backgroundColor: `transparent`,
               border: `none`,
               color: colors.grey[60],
               cursor: `pointer`,
               padding: `${space[2]} ${space[2]}`,
-              transition: `${transition.speed.default} ${
-                transition.curve.default
-              }`,
+              transition: transitionProperty,
               borderRadius: radii[2],
-              "&[disabled]": {
-                cursor: `not-allowed`,
+              whiteSpace: `nowrap`,
+              ":focus": {
+                ...pseudoProperties,
+                backgroundColor: colors.purple[40],
               },
-              ":not([disabled]):hover": {
-                backgroundColor: colors.purple[60],
-                boxShadow: shadows.raised,
-                color: colors.white,
+              ":hover": {
+                ...pseudoProperties,
+                backgroundColor: colors.purple[50],
               },
               ":active": {
-                boxShadow: shadows.floating,
+                ...pseudoProperties,
+                backgroundColor: colors.purple[60],
+              },
+              ":focus:before": {
+                content: `"cycle source "`,
+              },
+              ":hover::before": {
+                content: `"cycle source "`,
               },
             }}
             onClick={() =>
@@ -98,7 +116,7 @@ const CodeWrapper = ({
               )
             }
           >
-            cycle <MdLoop size={16} />
+            <MdLoop size={16} />
           </button>
         )}
       </div>
