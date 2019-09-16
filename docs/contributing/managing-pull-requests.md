@@ -97,7 +97,7 @@ We lint all code and documentation for consistency. You might find that your PR 
 
 If this is your PR and you have the code checked out on your machine, you can run:
 
-```bash
+```shell
 npm run format
 ```
 
