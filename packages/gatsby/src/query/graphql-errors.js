@@ -185,19 +185,6 @@ export function multipleRootQueriesError(
   )
 }
 
-export function graphqlValidationError(
-  errors: Array<GraphQLError>,
-  filePath: string,
-  doc: any
-): string {
-  if (!errors || !errors.length) return ``
-  let error = errors[0]
-  let { source, locations: [{ line, column }] = [{}] } = error
-  let query = source ? source.body : print(doc)
-
-  return formatError(error.message, filePath, getCodeFrame(query, line, column))
-}
-
 export function graphqlError(
   namePathMap: Map<string, string>,
   nameDefMap: Map<string, any>,

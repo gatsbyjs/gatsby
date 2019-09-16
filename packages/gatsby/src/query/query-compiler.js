@@ -17,11 +17,7 @@ import { store } from "../redux"
 const { boundActionCreators } = require(`../redux/actions`)
 import FileParser from "./file-parser"
 import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
-import {
-  graphqlError,
-  // graphqlValidationError,
-  multipleRootQueriesError,
-} from "./graphql-errors"
+import { graphqlError, multipleRootQueriesError } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
 import errorParser from "./error-parser"
 const websocketManager = require(`../utils/websocket-manager`)
@@ -181,7 +177,7 @@ class Runner {
         messages.push(
           ...errors.map(error => {
             const graphqlLocation = error.locations[0]
-            // get location of error relative to soure file (not just graphql text)
+            // get location of error relative to source file (not just graphql text)
             const location = {
               start: {
                 line:
@@ -198,7 +194,6 @@ class Runner {
           })
         )
 
-        // this.reportError(graphqlValidationError(errors, filePath))
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
