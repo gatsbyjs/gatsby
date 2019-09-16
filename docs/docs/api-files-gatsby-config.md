@@ -32,11 +32,11 @@ module.exports = {
 }
 ```
 
-You can then [access the title using GraphQL](/tutorial/part-four/#your-first-graphql-query) anywhere on your site.
+You can then [access the site title using GraphQL](/tutorial/part-four/#your-first-graphql-query) anywhere on your site.
 
 ### Plugins
 
-Plugins add new features to your Gatsby site. For example, some plugins fetch data from hosted services, or let you use CSS libraries. The [Gatsby plugin library](/plugins) helps you find the right plugin for your needs.
+Plugins add new features to your Gatsby site. For example, some plugins fetch data from hosted services, transform data formats, or resize images. The [Gatsby plugin library](/plugins) helps you find the right plugin for your needs.
 
 Installing a plugin using a package manager like `yarn` or `npm` **does not** enable it in your Gatsby site. To finish adding a plugin, first make sure your `gatsby-config.js` file has a `plugins` array:
 
