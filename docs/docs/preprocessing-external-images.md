@@ -127,7 +127,7 @@ query {
 }
 ```
 
-And finally, we can update the template for this blogpost to include this image. This template is based on the one in [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
+And finally, we can update the template for this blogpost to include this image. This template is based on the one in the [Programmatically create pages from data](/tutorial/part-seven/) section of the Gatsby Tutorial.
 
 ```jsx
 import React from "react"
