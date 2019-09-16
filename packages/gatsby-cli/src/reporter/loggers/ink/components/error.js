@@ -7,10 +7,10 @@ const File = ({ filePath, location }) => {
   const lineNumber = get(location, `start.line`)
 
   let locString = ``
-  if (lineNumber) {
+  if (typeof lineNumber !== `undefined`) {
     locString += `:${lineNumber}`
     const columnNumber = get(location, `start.column`)
-    if (columnNumber) {
+    if (typeof columnNumber !== `undefined`) {
       locString += `:${columnNumber}`
     }
   }
