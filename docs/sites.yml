@@ -4587,19 +4587,6 @@
   built_by: Sascha Klapetz
   built_by_url: https://www.projectival.de/
   featured: false
-- title: Herman Starikov
-  url: https://starikov.dev
-  main_url: https://starikov.dev
-  source_url: https://github.com/Hermanya/hermanya.github.io
-  description: >
-    Web Developer specializing in React, Toronto Canada
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
-  built_by: Herman Starikov
-  built_by_url: https://github.com/Hermanya
-  featured: false
 - title: Hetzner Online Community
   main_url: https://community.hetzner.com
   url: https://community.hetzner.com
