@@ -1,4 +1,4 @@
-const { stripIndent } = require(`common-tags`)
+const { stripIndent, stripIndents } = require(`common-tags`)
 
 const errorMap = {
   "": {
@@ -53,6 +53,21 @@ const errorMap = {
   },
   "85909": {
     text: context => context.sourceMessage,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85910": {
+    text: context =>
+      stripIndents(`
+        Multiple "root" queries found in file: "${context.name}" and "${context.otherName}".
+        Only the first ("${context.otherName}") will be registered.
+
+        Instead of:
+        ${context.beforeCodeFrame}
+
+        Do:
+        ${context.afterCodeFrame}
+      `),
     type: `GRAPHQL`,
     level: `ERROR`,
   },

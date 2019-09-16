@@ -131,12 +131,13 @@ export function multipleRootQueriesError(
     _.camelCase(otherName)
   )}`
 
-  return formatError(
-    `Multiple "root" queries found in file: "${name}" and "${otherName}". ` +
-      `Only the first ("${otherName}") will be registered.`,
+  return {
+    id: `85910`,
     filePath,
-    `  ${report.format.yellow(`Instead of:`)} \n\n` +
-      codeFrameColumns(
+    context: {
+      name,
+      otherName,
+      beforeCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${otherName} {
           bar {
@@ -159,9 +160,8 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
         }
-      ) +
-      `\n\n  ${report.format.green(`Do:`)} \n\n` +
-      codeFrameColumns(
+      ),
+      afterCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${unifiedName} {
           bar {
@@ -181,8 +181,9 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
         }
-      )
-  )
+      ),
+    },
+  }
 }
 
 export function graphqlError(

@@ -281,23 +281,15 @@ class Runner {
       let filePath = namePathMap.get(name) || ``
       if (compiledNodes.has(filePath)) {
         let otherNode = compiledNodes.get(filePath)
-        const newE = multipleRootQueriesError(
-          filePath,
-          nameDefMap.get(name),
-          otherNode && nameDefMap.get(otherNode.name)
+
+        messages.push(
+          multipleRootQueriesError(
+            filePath,
+            nameDefMap.get(name),
+            otherNode && nameDefMap.get(otherNode.name)
+          )
         )
 
-        messages.push({
-          level: `ERROR`,
-          error: newE,
-        })
-        // this.reportError(
-        //   multipleRootQueriesError(
-        //     filePath,
-        //     nameDefMap.get(name),
-        //     otherNode && nameDefMap.get(otherNode.name)
-        //   )
-        // )
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
