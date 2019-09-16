@@ -54,6 +54,8 @@ Data can be queried inside pages, components, or the `gatsby-node.js` file, usin
 - `StaticQuery`
 - `useStaticQuery`
 
+**Note**: Because of how Gatsby processes GraphQL queries, you can't mix page queries and static queries in the same file. You also can't have multiple page queries or static queries in one file.
+
 ### `pageQuery`
 
 You can have one page query per page. A page query can take GraphQL arguments for variables in your queries. A [page is made in Gatsby](/docs/page-creation/) by any React component in the `src/pages` folder, or by calling the `createPage` action and using a component in the `createPage` options -- meaning a `pageQuery` won't work in any component, only components that meet this criteria.
