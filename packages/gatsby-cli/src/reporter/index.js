@@ -249,7 +249,6 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        console.log()
         reporterActions.endActivity({
           id,
           status: ActivityStatuses.Failed,
