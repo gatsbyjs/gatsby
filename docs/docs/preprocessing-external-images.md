@@ -12,7 +12,7 @@ This guide will walk you through how to use `createRemoteFileNode` process and g
 
 A usecase that this technique can be useful is if you want to create a featured image in a blogpost, but the image is a url up on the web instead of a local file. This could be hosted somewhere like Imgur, S3, or anywhere up on the internet.
 
-Give a sample post,
+Give a sample post:
 
 ```markdown
 ---
@@ -23,7 +23,7 @@ featuredImgUrl: https://images.unsplash.com/photo-1560237731-890b122a9b6c
 Hello World
 ```
 
-we can have a frontmatter field for the url of the featured image we want to pull down and use as part of the site.
+We can have a frontmatter field for the url of the featured image we want to pull down and use as part of the site.
 
 By default, this is just a string as we haven't told Gatsby how to interpret it, but now we can add some code into `gatsby-node.js` to modify it.
 
