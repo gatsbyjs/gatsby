@@ -21,6 +21,10 @@ const constructError = ({ details }) => {
     docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
   }
 
+  if (!structuredError.context) {
+    structuredError.context = {}
+  }
+
   if (`id` in structuredError) {
     // this is hacky - we should change reporter.error calls to use `code` instead of `id`
     // but for sake of speed - I'll use this for now
