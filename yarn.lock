@@ -9577,24 +9577,24 @@ gud@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
 
-guess-ga@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.4.1.tgz#c3ab5e25636f8f32ae7bfc85f1893bfaa76ffdab"
-  integrity sha512-abmI2eUWdLLJpPaxBgL+hjBgd4Rdud+6oXnCg8UsUoKknebTB2GdomoUKKeN6vQmLPGac9IlcpEriwW8X6wUDQ==
+guess-ga@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.4.4.tgz#87b4ea06b0f260d67b71157628f150ac60ea00e3"
+  integrity sha512-D6oXvLudUzo10/Zqagkmsd45QKTp0rLvC3aZEjnWb4DiS381k3HBKc0a391KI8QozR70uhGdba2RumW+TSojQg==
   dependencies:
     googleapis "^43.0.0"
 
-guess-webpack@~0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.2.tgz#3e2f34b43e9873b1b7626c1993461ce9ae8d6d0d"
-  integrity sha512-1iL51zFsuMiuY7o1gPbnMn1zW64vqJpa4lgXG1j7x/OXN7raaqS93qU9y3qWPghPK4Lp2wH8/EaDKTUG16EdQw==
+guess-webpack@~0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.4.tgz#8b5cca59b24f1aade7d4d1e63877757e12d4f8eb"
+  integrity sha512-+PTRnG500NoiskykrK0oIK6ENlSRVuWdde8YBDzX6fUjiiCXK9+eMoBeXdoEPICSutrSz4+jJd8M8DeRxJ0lhg==
   dependencies:
     chalk "^2.4.2"
     copy-webpack-plugin "^5.0.0"
     flat-cache "^2.0.0"
     google-oauth2-node "0.0.3"
     googleapis "^43.0.0"
-    guess-ga "^0.4.1"
+    guess-ga "^0.4.4"
     lodash.template "^4.4.0"
     rollup "^1.0.0"
     rollup-plugin-hypothetical "^2.1.0"
@@ -19232,7 +19232,7 @@ unicode-trie@^0.3.0:
     pako "^0.2.5"
     tiny-inflate "^1.0.0"
 
-unified@8.3.2, unified@^8.3.2:
+unified@8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/unified/-/unified-8.3.2.tgz#aed69d0e577d6ef27268431c63a10faef60e63ab"
   integrity sha512-NDtUAXcd4c+mKppCbsZHzmhkKEQuhveZNBrFYmNgMIMk2K9bc8hmG3mLEGVtRmSNodobwyMePAnvIGVWZfPdzQ==
@@ -19277,6 +19277,17 @@ unified@^7.0.0:
     trough "^1.0.0"
     vfile "^3.0.0"
     x-is-string "^0.1.0"
+
+unified@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/unified/-/unified-8.4.0.tgz#5bb8a05c2a0b9dcc56152312ad8e4578a0d90af7"
+  integrity sha512-hQqeCrzqqS3vk8WbvbjYgaxe9WqmZF32Y3lz/kY5A8/5RdJbxoa4yOIAYpSEvqii9n2MTI2OL1+ByoVJYLhlUg==
+  dependencies:
+    bail "^1.0.0"
+    extend "^3.0.0"
+    is-plain-obj "^2.0.0"
+    trough "^1.0.0"
+    vfile "^4.0.0"
 
 union-value@^1.0.0:
   version "1.0.0"
