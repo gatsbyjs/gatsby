@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.11...gatsby-plugin-guess-js@1.1.12) (2019-09-16)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17623](https://github.com/gatsbyjs/gatsby/issues/17623)) ([5bafdff](https://github.com/gatsbyjs/gatsby/commit/5bafdff))
+
 ## [1.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.10...gatsby-plugin-guess-js@1.1.11) (2019-09-13)
 
 ### Bug Fixes
