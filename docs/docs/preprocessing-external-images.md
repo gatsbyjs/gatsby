@@ -4,7 +4,7 @@ title: Preprocessing External Images
 
 Gatsby allows powerful image processing features through using the [`Sharp`](https://github.com/lovell/sharp/) library to automatically process images to be performant and have features like lazy-loading. That said, this only works if the image is a file node in the GraphQL layer.
 
-That said, if you want the same ecosystem for files that are hosted online and not located in your repo, [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) has an API called `createRemoteFileNode` to solve this.
+If you want the same ecosystem for files that are hosted online and not located in your repo, [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) has an API called `createRemoteFileNode` to solve this.
 
 This guide will walk you through how to use `createRemoteFileNode` process and get the same benefits of gatsby-transformer-sharp with externally sourced images.
 
