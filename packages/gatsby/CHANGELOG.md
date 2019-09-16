@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.15...gatsby@2.15.16) (2019-09-16)
+
+### Bug Fixes
+
+- update dependency @babel/parser to ^7.6.0 ([#17620](https://github.com/gatsbyjs/gatsby/issues/17620)) ([2d942ed](https://github.com/gatsbyjs/gatsby/commit/2d942ed))
+
 ## [2.15.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.14...gatsby@2.15.15) (2019-09-13)
 
 ### Bug Fixes
