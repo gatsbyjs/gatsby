@@ -152,7 +152,7 @@ These fields can be specified in the plugin's `options` as shown in the [How to 
 
 To allow custom events to be tracked, the plugin exposes a function to include in your project.
 
-To use it, simply import it and use it within your scripts, both within components and logic functions.
+To use it, import the package and call the event within your components and business logic.
 
 ```jsx
 import React
