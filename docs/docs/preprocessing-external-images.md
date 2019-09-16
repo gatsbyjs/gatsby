@@ -63,8 +63,8 @@ exports.onCreateNode = async ({
 Going step by step through the code:
 
 1. Create an onCreateNode function so you can watch for when `MarkdownRemark` nodes are made.
-2. use `createRemoteFileNode` by passing in the various required fields and get a reference to it afterwards.
-3. if the node is created, attach it as a child of the original node. `___NODE` tells the graphql layer that the name before it is going to be a field on the parent node that links to another node. to do this, pass the id as the reference.
+2. Use `createRemoteFileNode` by passing in the various required fields and get a reference to it afterwards.
+3. If the node is created, attach it as a child of the original node. `___NODE` tells the graphql layer that the name before it is going to be a field on the parent node that links to another node. To do this, pass the id as the reference.
 
 And now since it is a file node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` child node inside this newly created node.
 
