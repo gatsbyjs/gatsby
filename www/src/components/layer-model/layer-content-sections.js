@@ -51,10 +51,8 @@ const pseudoProperties = {
   boxShadow: shadows.floating,
   color: colors.white,
 }
-// because CI linting gets mad about the spacing of this property:
-const transitionProperty = `${transition.speed.default} ${
-  transition.curve.default
-}`
+// prettier-ignore
+const transitionProperty = `${transition.speed.default} ${transition.curve.default}`
 
 const CodeWrapper = ({
   title,
