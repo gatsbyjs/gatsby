@@ -6,13 +6,13 @@ Use this plugin to simplify creating a “hybrid” Gatsby app with both statica
 
 Install:
 
-```
+```shell
 npm install --save gatsby-plugin-create-client-paths
 ```
 
 Then configure via `gatsby-config.js`:
 
-```
+```js
     {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] },
