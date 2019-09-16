@@ -74,7 +74,7 @@ Here you place your Google Analytics tracking id.
 
 ### `head`
 
-Where do you want to place the GA script? By putting `head` to `true`, it will be placed in the "<head>" of your website. By setting it to `false`, it will be placed in the "<body>". The default value resolves to `false`.
+Where do you want to place the GA script? By putting `head` to `true`, it will be placed in the "&lt;head&gt;" of your website. By setting it to `false`, it will be placed in the "&lt;body&gt;". The default value resolves to `false`.
 
 ### `anonymize`
 

@@ -63,7 +63,7 @@ The challenge for website teams is: how to achieve this without a lot of costly,
 
 The answer: choose a content mesh. A content mesh:
 
-- pulls in data from your headless CMS systems
+- pulls in data from your [headless CMS](/docs/headless-cms/) systems
 
 - enables you to develop in your preferred UI library while providing website tooling
 

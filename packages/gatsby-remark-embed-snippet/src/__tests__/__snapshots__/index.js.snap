@@ -448,6 +448,8 @@ Object {
 }
 `;
 
+exports[`gatsby-remark-embed-snippet should not error if missing optional config options 1`] = `[Function]`;
+
 exports[`gatsby-remark-embed-snippet should not modify non-embed inlineCode nodes 1`] = `
 Object {
   "children": Array [

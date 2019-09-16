@@ -88,7 +88,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    // TODO: deprecation message for old __experimentalThemes
+    report.warn(
+      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
+    )
     const themes = await loadThemes(config, { useLegacyThemes: true })
     config = themes.config
 
