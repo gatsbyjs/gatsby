@@ -88,6 +88,12 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85913": {
+    text: context =>
+      `There was a problem reading the file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>

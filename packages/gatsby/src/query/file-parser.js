@@ -344,16 +344,13 @@ export default class FileParser {
       text = await fs.readFile(file, `utf8`)
     } catch (err) {
       messages.push({
-        level: `ERROR`,
-        // group: `query-extraction`,
-        text: context =>
-          `There was a problem reading the file: ${context.file}`,
+        id: `85913`,
+        filePath: file,
         context: {
-          file,
+          filePath: file,
         },
         error: err,
       })
-      // report.error(`There was a problem reading the file: ${file}`, err)
 
       boundActionCreators.queryExtractionGraphQLError({
         componentPath: file,
