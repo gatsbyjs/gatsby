@@ -16,17 +16,14 @@ After the installation of the plugin has completed, navigate to your `gatsby-con
 
 ```diff:title=gatsby-config.js
 module.exports = {
-siteMetadata: {
-    title: 'Gatsby Default Starter',
-},
-plugins: [
-+ {
-+  resolve: `gatsby-plugin-typography`,
-+  options: {
-+    pathToConfigModule: `src/utils/typography`,
-+  }
-+ }
-],
+  plugins: [
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
 }
 ```
 
