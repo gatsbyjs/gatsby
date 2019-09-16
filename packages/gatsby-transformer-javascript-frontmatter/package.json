@@ -5,7 +5,7 @@
   "author": "Jacob Bolda <me@jacobbolda.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter#readme",
   "dependencies": {
-    "@babel/parser": "^7.5.5",
+    "@babel/parser": "^7.6.0",
     "@babel/runtime": "^7.6.0",
     "@babel/traverse": "^7.6.0",
     "bluebird": "^3.5.5"
