@@ -20,6 +20,7 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const GatsbyThemeComponentShadowingResolverPlugin = require(`../../internal-plugins/webpack-theme-component-shadowing`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -225,6 +226,45 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       return `A component must be set when creating a page`
     }
   }
+
+  // TODO: start shadowing implementation
+  const shadowingPlugin = new GatsbyThemeComponentShadowingResolverPlugin({
+    // TODO: extensions needs to be sourced from store somehow
+    extensions: [`.js`],
+    themes: store.getState().flattenedPlugins.map(aPlugin => {
+      return {
+        themeDir: aPlugin.pluginFilepath,
+        themeName: aPlugin.name,
+      }
+    }),
+    projectRoot: store.getState().program.directory,
+  })
+  const matchingThemes = shadowingPlugin.getMatchingThemesForPath(
+    page.component
+  )
+  if (matchingThemes.length > 1) {
+    throw new Error(
+      `Gatsby can't differentiate between themes ${matchingThemes
+        .map(theme => theme.themeName)
+        .join(` and `)} for path ${page.component}`
+    )
+  }
+
+  if (matchingThemes.length !== 1) {
+    // return callback()
+  } else {
+    const [theme] = matchingThemes
+    const [, component] = page.component.split(path.join(theme.themeDir, `src`))
+    const componentPath = shadowingPlugin.resolveComponentPath({
+      matchingTheme: theme.themeName,
+      themes: shadowingPlugin.themes,
+      component,
+    })
+    if (componentPath) {
+      page.component = componentPath
+    }
+  }
+  // TODO: end shadowing implementation
 
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
