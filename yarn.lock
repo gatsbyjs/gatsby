@@ -3475,6 +3475,14 @@ anymatch@^3.0.1:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+anymatch@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-3.1.0.tgz#e609350e50a9313b472789b2f14ef35808ee14d6"
+  integrity sha512-Ozz7l4ixzI7Oxj2+cw+p0tVUt27BpaJ+1+q1TCeANWxHpvyn2+Un+YamBdfKu0uh8xLodGhoa1v7595NhKDAuA==
+  dependencies:
+    normalize-path "^3.0.0"
+    picomatch "^2.0.4"
+
 apache-md5@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/apache-md5/-/apache-md5-1.1.2.tgz#ee49736b639b4f108b6e9e626c6da99306b41692"
@@ -5220,6 +5228,21 @@ chokidar@^2.0.2, chokidar@^2.0.4, chokidar@^2.1.8:
     upath "^1.1.1"
   optionalDependencies:
     fsevents "^1.2.7"
+
+chokidar@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.1.0.tgz#ff23d077682a90eadd209bfa76eb10ed6d359668"
+  integrity sha512-6vZfo+7W0EOlbSo0nhVKMz4yyssrwiPbBZ8wj1lq8/+l4ZhGZ2U4Md7PspvmijXp1a26D3B7AHEBmIB7aVtaOQ==
+  dependencies:
+    anymatch "^3.1.0"
+    braces "^3.0.2"
+    glob-parent "^5.0.0"
+    is-binary-path "^2.1.0"
+    is-glob "^4.0.1"
+    normalize-path "^3.0.0"
+    readdirp "^3.1.1"
+  optionalDependencies:
+    fsevents "^2.0.6"
 
 chownr@^1.0.1, chownr@^1.1.1, chownr@^1.1.2:
   version "1.1.2"
