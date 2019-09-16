@@ -255,6 +255,9 @@ export default ({ pageContext: { dog } }) => (
 
 5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at `http://localhost:8000/Fido`) to see the data you passed it displayed on the page
 
+```shell
+   gatsby develop
+```
 #### Additional resources
 
 - Tutorial section on [programmatically creating pages from data](/tutorial/part-seven/)
