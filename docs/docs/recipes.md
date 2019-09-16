@@ -994,6 +994,104 @@ export default ({ pageContext: { allPokemon } }) => (
 - More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 - When and how to [query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
 
+### Sourcing content from Drupal
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- A [Drupal](http://drupal.org) site
+- The [JSON:API module](https://www.drupal.org/project/jsonapi) installed and enabled on the Drupal site
+
+#### Directions
+
+1. Install the `gatsby-source-drupal` plugin.
+
+```
+npm install --save gatsby-source-drupal
+```
+
+2. Edit your `gatsby-config.js` file to enable the plugin and configure it.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://your-website/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
+  ],
+}
+```
+
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
+
+```graphql
+{
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+4. To use your Drupal data, create a new page in your Gatsby site at `src/pages/drupal.js`. This page will list all Drupal "Page" nodes.
+
+_**Note:** the exact GraphQL schema will depend on your how Drupal instance is structured._
+
+```jsx:title=src/pages/drupal.js
+import React from "react"
+import { graphql } from "gatsby"
+
+const DrupalPage = ({ data }) => (
+  <div>
+    <h1>Drupal pages</h1>
+    <ul>
+    {data.allNodePage.edges.map(({ node, index }) => (
+      <li key={index}>
+        <h2>{node.title}</h2>
+        <div>
+          {node.body.value}
+        </div>
+      </li>
+    ))}
+   </ul>
+  </div>
+)
+
+export default DrupalPage
+
+export const query = graphql`
+  {
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+5. With the development server running, you can view the new page by visiting `http://localhost:8000/drupal`.
+
+#### Additional Resources
+
+- [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
+- [More on sourcing from Drupal](/docs/sourcing-from-drupal)
+- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
+
 ## 6. Querying data
 
 ### Querying data with a Page Query
