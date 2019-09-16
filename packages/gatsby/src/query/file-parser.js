@@ -58,7 +58,6 @@ async function parseToAst(
         ast = tmp
         break
       } catch (error) {
-        // report.error(error)
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -66,12 +65,11 @@ async function parseToAst(
       }
     }
     if (ast === undefined) {
-      // report.error(`Failed to parse preprocessed file ${filePath}`)
       messages.push({
-        level: `ERROR`,
-
+        id: `85912`,
+        filePath,
         context: {
-          sourceMessage: `Failed to parse preprocessed file ${filePath}`,
+          filePath,
         },
       })
       boundActionCreators.queryExtractionGraphQLError({

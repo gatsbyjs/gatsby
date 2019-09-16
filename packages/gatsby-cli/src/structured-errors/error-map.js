@@ -83,6 +83,11 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85912": {
+    text: context => `Failed to parse preprocessed file ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>
