@@ -2148,18 +2148,6 @@
     - Travel
   built_by: Lucas Vilela
   built_by_url: "https://madecomfy.com.au/"
-- title: How To Book Cheap Flights
-  description: >
-    A travel blog built with Gatsby and adopting the AMP technology.
-  main_url: "https://howtobookcheapflights.com"
-  url: "https://howtobookcheapflights.com"
-  source_url: "https://github.com/flaviolivolsi/howtobookcheapflights"
-  featured: false
-  categories:
-    - Travel
-    - Blog
-  built_by: Flavio Li Volsi
-  built_by_url: "http://github.com/flaviolivolsi"
 - title: Tiger Facility Services
   description: >
     Tiger Facility Services combines facility management expertise with state of the art software to offer a sustainable and customer oriented cleaning and facility service.
