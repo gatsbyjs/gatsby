@@ -90,7 +90,7 @@ query {
 
 ![Screenshot of GraphiQL with above query inserted](images/remote-file-node-graphiql-preview.png)
 
-We can then use gatsby-transformer-sharp to fill in the query for a fluid image here.
+We can then use `gatsby-transformer-sharp` to fill in the query for a fluid image here.
 
 ```graphql
 query {
