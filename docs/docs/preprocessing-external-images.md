@@ -18,12 +18,13 @@ Given a sample post:
 ---
 title: My first blogpost!
 featuredImgUrl: https://images.unsplash.com/photo-1560237731-890b122a9b6c
+featuredImgAlt: Mountains with a starry sky
 ---
 
 Hello World
 ```
 
-You can use a custom Frontmatter field for the URL of the featured image you want to pull down and use as part of the site. 
+You can use a custom Frontmatter field for the URL of the featured image you want to pull down and use as part of the site.
 
 By default, this is a string value as you haven't told Gatsby yet how to interpret it. However, you can add some code into `gatsby-node.js` to modify it.
 
@@ -45,6 +46,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Frontmatter {
       title: String!
       featuredImgUrl: String
+      featuredImgAlt: String
     }
   `)
 }
@@ -80,7 +82,7 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1. Define some types for `MarkdownRemark` using the [Schema Customization API](/docs/schema-customization/) so if `featuredImgUrl` is not in a Markdown file, it will return `null`.
+1. Define some types for `MarkdownRemark` using the [Schema Customization API](/docs/schema-customization/) so if `featuredImgUrl` is not in a Markdown file, it will return `null`. As well, defining a field for alternative text, in this case `featuredImgAlt`, can improve accessibility as well as give context to the image even if it fails to load.
 2. Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
 3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
 4. If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference.
@@ -138,7 +140,10 @@ const template = ({ data }) => {
   return (
     <>
       <h1>{data.markdownRemark.frontmatter.title}</h1>
-      <Img fixed={data.markdownRemark.featuredImg.childImageSharp.fixed} />
+      <Img
+        fixed={data.markdownRemark.featuredImg.childImageSharp.fixed}
+        alt={data.markdownRemark.frontmatter.featuredImgAlt}
+      />
       <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
     </>
   )
@@ -151,6 +156,7 @@ export const query = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       frontmatter {
         title
+        featuredImgAlt
       }
       html
       featuredImg {
