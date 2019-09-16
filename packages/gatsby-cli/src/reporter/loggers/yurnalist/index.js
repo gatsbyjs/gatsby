@@ -31,7 +31,6 @@ const levelToYurnalist = {
 
 onLogAction(action => {
   switch (action.type) {
-    case Actions.StatefulLog:
     case Actions.Log: {
       const yurnalistMethod = levelToYurnalist[action.payload.level]
       if (!yurnalistMethod) {

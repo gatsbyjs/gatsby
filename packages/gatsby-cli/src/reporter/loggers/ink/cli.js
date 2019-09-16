@@ -14,7 +14,7 @@ const showProgress = process.stdout.isTTY && !isCI
 class CLI extends React.Component {
   render() {
     const {
-      logs: { messages, activities, statefulMessages },
+      logs: { messages, activities },
       showStatusBar,
     } = this.props
 
@@ -61,15 +61,6 @@ class CLI extends React.Component {
               startTime={activity.startTime}
             />
           ))}
-
-          {statefulMessages.map((msg, index) =>
-            // const message = statefulMessages[messageID]
-            msg.level === `ERROR` ? (
-              <Error details={msg} key={index} />
-            ) : (
-              <Message hideColors={true} key={index} {...msg} />
-            )
-          )}
         </Box>
         {showStatusBar && <Develop />}
       </Box>

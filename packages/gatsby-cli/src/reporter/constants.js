@@ -3,8 +3,6 @@ export const Actions = {
   LogAction: `LOG_ACTION`,
   SetStatus: `SET_STATUS`,
   Log: `LOG`,
-  StatefulLog: `STATEFUL_LOG`,
-  ClearStatefulLog: `CLEAR_STATEFUL_LOG`,
   SetLogs: `SET_LOGS`,
 
   StartActivity: `ACTIVITY_START`,

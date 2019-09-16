@@ -4,7 +4,6 @@ module.exports = (
   state = {
     messages: [],
     activities: {},
-    statefulMessages: [],
     status: ``,
   },
   action
@@ -72,18 +71,6 @@ module.exports = (
     }
   } else if (action.type === Actions.SetLogs) {
     state = action.payload
-  } else if (action.type === Actions.StatefulLog) {
-    state = {
-      ...state,
-      statefulMessages: [...state.statefulMessages, action.payload],
-    }
-  } else if (action.type === Actions.ClearStatefulLog) {
-    state = {
-      ...state,
-      statefulMessages: state.statefulMessages.filter(
-        msg => msg.group !== action.payload
-      ),
-    }
   }
 
   return state

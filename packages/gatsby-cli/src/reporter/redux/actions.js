@@ -138,12 +138,6 @@ const actions = {
       },
     }
   },
-  clearStatefulLogs: group => {
-    return {
-      type: Actions.ClearStatefulLog,
-      payload: group,
-    }
-  },
   createPendingActivity: ({ id, status = ActivityStatuses.NotStarted }) => {
     const actionsToEmit = []
 
