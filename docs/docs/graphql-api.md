@@ -83,7 +83,9 @@ const HomePage = ({ data }) => {
 
 ### `StaticQuery`
 
-Gatsby provides a `StaticQuery` component that can be used in any component to get data from GraphQL, where `pageQuery` is otherwise limited to page components. `StaticQuery` cannot take variables as arguments.
+StaticQuery is a built-in component for retrieving data from Gatsby’s data layer in non-page components, such as a header, navigation, or any other child component.
+
+You can only have one `StaticQuery` per page: in order to include the data you need from multiple sources, you can use one query with multiple [root fields](/docs/graphql-concepts/#query-fields). It cannot take variables as arguments.
 
 Also, refer to the [guide on querying data in components with static query](/docs/static-query/).
 
