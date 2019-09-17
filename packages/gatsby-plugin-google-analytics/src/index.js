@@ -63,7 +63,7 @@ OutboundLink.propTypes = {
  * @link https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events
  */
 function CustomTrackingEvent({ category, action, label, value }) {
-  if (window.ga) {
+  if (typeof window !== "undefined" && window.ga) {
     window.ga(`send`, `event`, {
       eventCategory: category,
       eventAction: action,
