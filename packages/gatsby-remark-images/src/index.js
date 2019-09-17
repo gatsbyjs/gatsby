@@ -10,7 +10,7 @@ const path = require(`path`)
 const queryString = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { fluid, traceSVG } = require(`gatsby-plugin-sharp`)
+const { fluid, stats, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -282,10 +282,20 @@ module.exports = (
     const imageCaption =
       options.showCaptions && getImageCaption(node, overWrites)
 
+    let removeBgImage = false
+    if (options.disableBgImageOnAlpha) {
+      const imageStats = await stats({ file: imageNode, reporter })
+      if (imageStats && imageStats.isTransparent) removeBgImage = true
+    }
+
+    const bgImage = removeBgImage
+      ? ``
+      : ` background-image: url('${placeholderImageData}'); background-size: cover;`
+
     let rawHTML = `
   <span
     class="${imageBackgroundClass}"
-    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${placeholderImageData}'); background-size: cover; display: block;"
+    style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0;${bgImage} display: block;"
   ></span>
   ${imageTag}
   `.trim()

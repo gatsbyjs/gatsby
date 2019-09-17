@@ -1,6 +1,7 @@
 const { buildObjectType } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
+const { actions } = require(`../../../redux/actions`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -19,57 +20,57 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-const nodes = [
-  {
-    id: `id1`,
-    internal: { type: `Test` },
-    foo: true,
-    inferDate: new Date(),
-    explicitDate: new Date(),
-    conflictType: 1,
-    conflictArray: [1],
-    conflictArrayType: [1],
-    conflictArrayReverse: 1,
-    conflictScalar: { foo: true },
-    conflictScalarReverse: 1,
-    conflictScalarArray: [{ foo: true }],
-    conflcitScalarArrayReverse: [1],
-    nested: {
-      foo: true,
-      conflict: 1,
-      nested: {
-        foo: true,
-        conflict: 1,
-        extraExtra: true,
-      },
-    },
-    nestedArray: [
-      {
-        foo: true,
-        conflict: 1,
-        extra: true,
-        nested: { foo: true, conflict: 1, extraExtraExtra: true },
-      },
-    ],
-  },
-  {
-    id: `id2`,
-    internal: { type: `ArrayTest` },
-    array: [{ foo: true }],
-  },
-  {
-    id: `id3`,
-    internal: { type: `LinkTest` },
-    link___NODE: `id1`,
-    links___NODE: [`id1`],
-  },
-]
-
 describe(`merges explicit and inferred type definitions`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
+
+    const nodes = [
+      {
+        id: `id1`,
+        internal: { type: `Test`, contentDigest: `0` },
+        foo: true,
+        inferDate: new Date(),
+        explicitDate: new Date(),
+        conflictType: 1,
+        conflictArray: [1],
+        conflictArrayType: [1],
+        conflictArrayReverse: 1,
+        conflictScalar: { foo: true },
+        conflictScalarReverse: 1,
+        conflictScalarArray: [{ foo: true }],
+        conflcitScalarArrayReverse: [1],
+        nested: {
+          foo: true,
+          conflict: 1,
+          nested: {
+            foo: true,
+            conflict: 1,
+            extraExtra: true,
+          },
+        },
+        nestedArray: [
+          {
+            foo: true,
+            conflict: 1,
+            extra: true,
+            nested: { foo: true, conflict: 1, extraExtraExtra: true },
+          },
+        ],
+      },
+      {
+        id: `id2`,
+        internal: { type: `ArrayTest`, contentDigest: `0` },
+        array: [{ foo: true }],
+      },
+      {
+        id: `id3`,
+        internal: { type: `LinkTest`, contentDigest: `0` },
+        link___NODE: `id1`,
+        links___NODE: [`id1`],
+      },
+    ]
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
   })
 

@@ -265,6 +265,88 @@ export default ({ pageContext: { dog } }) => (
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
+### Using global CSS files without a Layout component
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with an index page component
+- A `gatsby-browser.js` file
+
+#### Directions
+
+1. Create a global CSS file as `src/styles/global.css` and paste the following into the file:
+
+```css:title=src/styles/styles/global.css
+html {
+  background-color: lavenderblush;
+}
+
+p {
+  color: maroon;
+}
+```
+
+2. Import the global CSS file in the `gatsby-browser.js` file such as the following:
+
+```javascript:gatsby-browser.js
+import "./src/styles/global.css"
+```
+
+> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
+
+3. Run `gatsby-develop` to observe the global styling being applied across your site.
+
+> **Note:** This approach is not the best fit if you are using CSS-in-JS for styling your site, in which case a layout page with all the shared components should be used. This is covered in the next recipe.
+
+#### Additional resources
+
+- More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
+
+### Using global styles in a layout component
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/) with an index page component
+
+#### Directions
+
+You can add global styles to a [shared layout component](/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
+
+1. If you don't already have one, create a new directory in your site at `/src/components`.
+
+2. Inside the components directory, create two files: `layout.css` and `layout.js`.
+
+3. Add the following to `layout.css`:
+
+```css:title=/src/components/layout.css
+body {
+  background: red;
+}
+```
+
+4. Edit `layout.js` to import the CSS file and output layout markup:
+
+```jsx:title=/src/components/layout.js
+import React from "react"
+import "./layout.css"
+
+export default ({ children }) => <div>{children}</div>
+```
+
+5. Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
+
+```jsx:title=/src/pages/index.js
+import React from "react"
+import Layout from "../components/layout"
+
+export default () => <Layout>Hello world!</Layout>
+```
+
+#### Additional resources
+
+- [Standard Styling with Global CSS Files](/docs/global-css/)
+- [More about layout components](/tutorial/part-three)
+
 ### Using Styled Components
 
 #### Prerequisites
@@ -314,10 +396,10 @@ const Username = styled.h2`
 `
 
 const User = props => (
-  <UserWrapper>
+  <>
     <Avatar src={props.avatar} alt={props.username} />
     <Username>{props.username}</Username>
-  </UserWrapper>
+  </>
 )
 
 export default () => (
@@ -342,6 +424,49 @@ export default () => (
 
 - [More on Using Styled Components](/docs/styled-components/)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
+
+### Using CSS Modules
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with an index page component
+
+#### Directions
+
+1. Create a CSS module as `src/pages/index.module.css` and paste the following into the module:
+
+```css:title=src/components/index.module.css
+.feature {
+  margin: 2rem auto;
+  max-width: 500px;
+}
+```
+
+2. Import the CSS module as a JSX object `style` in the `index.js` file by modifying the page so it looks like the following:
+
+```jsx:title=src/pages/index.js
+import React from "react"
+
+// highlight-start
+import style from "./index.module.css"
+
+export default () => (
+  <section className={style.feature}>
+    <h1>Using CSS Modules</h1>
+  </section>
+)
+// highlight-end
+```
+
+3. Run `gatsby develop` to see the changes.
+
+**Note:**
+Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module.
+
+#### Additional resources
+
+- More on [Using CSS Modules](/tutorial/part-two/#css-modules)
+- [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
 ### Adding a Local Font
 
@@ -381,6 +506,79 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 - More on [importing assets into files](/docs/importing-assets-into-files/)
 
+### Using Emotion
+
+[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components. You can use each styling feature individually or together in the same file.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+
+#### Directions
+
+1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
+
+```shell
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+```
+
+2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-emotion`],
+}
+```
+
+3. If you don't already have one, create a page in your Gatsby site at `src/pages/emotion-sample.js`.
+
+Import Emotion's `css` core package. You can then use the `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element inside a component:
+
+```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import { css } from "@emotion/core"
+
+export default () => (
+  <div>
+    <p
+      css={{
+        background: "pink",
+        color: "blue",
+      }}
+    >
+      This page is using Emotion.
+    </p>
+  </div>
+)
+```
+
+4. To use Emotion's [styled components](https://emotion.sh/docs/styled), import the package and define them using the `styled` function.
+
+```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import styled from "@emotion/styled"
+
+const Content = styled.div`
+  text-align: center;
+  margin-top: 10px;
+  p {
+    font-weight: bold;
+  }
+`
+
+export default () => (
+  <Content>
+    <p>This page is using Emotion.</p>
+  </Content>
+)
+```
+
+#### Additional resources
+
+- [Using Emotion in Gatsby](/docs/emotion/)
+- [Emotion website](https://emotion.sh)
+- [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
+
 ### Using Google Fonts
 
 Hosting your own [Google Fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
@@ -393,21 +591,25 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 #### Directions
 
-1. Run `npm install --save yourchosenfont`, replacing `yourchosenfont` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+1. Run `npm install --save typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
 
-2. Add `import "yourchosenfont"` to a layout template, page component, or `gatsby-browser.js`.
+An example to load the popular 'Source Sans Pro' font would be: `npm install --save typeface-source-sans-pro`.
+
+2. Add `import "typeface-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
 
 ```jsx:title=src/components/layout.js
-import "yourchosenfont"
+import "typeface-your-chosen-font"
 ```
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-  font-family: yourchosenfont;
+  font-family: "Your Chosen Font";
 }
 ```
+
+_NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`_
 
 #### Additional resources
 
@@ -791,6 +993,104 @@ export default ({ pageContext: { allPokemon } }) => (
 - [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
 - More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 - When and how to [query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
+
+### Sourcing content from Drupal
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- A [Drupal](http://drupal.org) site
+- The [JSON:API module](https://www.drupal.org/project/jsonapi) installed and enabled on the Drupal site
+
+#### Directions
+
+1. Install the `gatsby-source-drupal` plugin.
+
+```
+npm install --save gatsby-source-drupal
+```
+
+2. Edit your `gatsby-config.js` file to enable the plugin and configure it.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://your-website/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
+  ],
+}
+```
+
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
+
+```graphql
+{
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+4. To use your Drupal data, create a new page in your Gatsby site at `src/pages/drupal.js`. This page will list all Drupal "Page" nodes.
+
+_**Note:** the exact GraphQL schema will depend on your how Drupal instance is structured._
+
+```jsx:title=src/pages/drupal.js
+import React from "react"
+import { graphql } from "gatsby"
+
+const DrupalPage = ({ data }) => (
+  <div>
+    <h1>Drupal pages</h1>
+    <ul>
+    {data.allNodePage.edges.map(({ node, index }) => (
+      <li key={index}>
+        <h2>{node.title}</h2>
+        <div>
+          {node.body.value}
+        </div>
+      </li>
+    ))}
+   </ul>
+  </div>
+)
+
+export default DrupalPage
+
+export const query = graphql`
+  {
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+5. With the development server running, you can view the new page by visiting `http://localhost:8000/drupal`.
+
+#### Additional Resources
+
+- [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
+- [More on sourcing from Drupal](/docs/sourcing-from-drupal)
+- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
 
 ## 6. Querying data
 
@@ -1709,7 +2009,7 @@ gatsby build && gatsby serve
 
 ### Deploying to Netlify
 
-Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command line interface.
+Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command-line interface.
 
 #### Prerequisites
 
@@ -1723,7 +2023,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 2. Login into Netlify using `netlify login`
 
-3. Run the command `netlify build`. Select the "Create & configure a new site" option.
+3. Run the command `netlify init`. Select the "Create & configure a new site" option.
 
 4. Choose a custom website name if you want or press enter to receive a random one.
 
@@ -1737,3 +2037,26 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+
+### Deploying to ZEIT Now
+
+Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application without leaving the command-line interface.
+
+#### Prerequisites
+
+- A [ZEIT Now](https://zeit.co/signup) account
+- A [Gatsby site](/docs/quick-start) with a single component `index.js`
+- [Now CLI](https://zeit.co/download) package installed
+- [Gatsby CLI](/docs/gatsby-cli) installed
+
+#### Directions
+
+1. Login into Now CLI using `now login`
+
+2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
+
+3. Run `now` to deploy it
+
+#### Additional resources
+
+- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)

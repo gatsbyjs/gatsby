@@ -39,11 +39,11 @@ Here's how it works:
 
 ### Step 1: Sign Up for Gatsby Preview Beta
 
-You will need to sign up for a Gatsby cloud preview beta account, so this is a meta beta. You can sign up for a [Gatsby cloud preview 14 day trial here](https://www.gatsbyjs.com/preview/?_ga=2.156650491.1704520703.1561474285-32798346.1550767689) and get more information on the [Gatsby blog](/blog/2019-03-22-introducing-gatsby-preview-beta/).
+You will need to sign up for a Gatsby Preview account, so this is a meta beta. You can sign up for a [Gatsby Preview 14 day trial here](https://www.gatsbyjs.com/preview/?_ga=2.156650491.1704520703.1561474285-32798346.1550767689) and get more information on the [Gatsby blog](/blog/2019-03-22-introducing-gatsby-preview-beta/).
 
-### Step 2: Turn on the Preview Flag in Gatsby Preview
+### Step 2: Install Gatsby Source Drupal
 
-The gatsby source plugin is available on [npm under the package name `gatsby-source-drupal-preview`](https://www.npmjs.com/package/gatsby-source-drupal-preview). Setup is exactly the same as the Drupal source plugin, however, you now have a `preview` flag to turn on in the options object:
+The gatsby source plugin is available on [npm under the package name `gatsby-source-drupal`](https://www.npmjs.com/package/gatsby-source-drupal).
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -52,14 +52,13 @@ module.exports = {
       resolve: `gatsby-source-drupal-preview`,
       options: {
         baseUrl: `...`,
-        preview: true,
       },
     },
   ],
 }
 ```
 
-Once that flag is turned on, the Gatsby plugin will listen for changes at a specific URL. In your Gatsby Cloud instance you'll need to copy the preview URL to your clipboard. Once you have that, the Gatsby side is set up to receive updates.
+Once your plugin is set up the Gatsby plugin will listen for changes at a specific URL. In your Gatsby Cloud instance you'll need to copy the preview URL to your clipboard. Once you have that, the Gatsby side is set up to receive updates.
 
 ### Step 3: Enable JSON API in Drupal
 

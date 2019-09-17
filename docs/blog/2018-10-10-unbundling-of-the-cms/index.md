@@ -31,7 +31,7 @@ Best-of-breed products have emerged to provide top-notch alternatives in each of
 
 One popular, paywalled, news site that currently stores all content and data in Drupal 7 is migrating to a microservices setup. They’ll handle stories in [Wordpress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), and user data in [Auth0](https://auth0.com/). They’re doing development in React and using [Segment](https://segment.com) for analytics, [Stripe](http://stripe.com) for payments and [Recurly](https://recurly.com/) for subscriptions.
 
-Another digital consumer brand moved from using Sitecore as a content and development platform to using [Contentful](https://www.contentful.com/) as a headless CMS, [Yotpo](https://www.yotpo.com/) for user-generated content -- primarily reviews, while development transitioned to React to provide a modern look and feel.
+Another digital consumer brand moved from using Sitecore as a content and development platform to using [Contentful](https://www.contentful.com/) as a [headless CMS](/docs/headless-cms/), [Yotpo](https://www.yotpo.com/) for user-generated content -- primarily reviews, while development transitioned to React to provide a modern look and feel.
 
 <figure>
   <img alt="The modularization of the CMS" height="400" src="./modular-cms-architecture.png" />
@@ -51,7 +51,7 @@ Enterprises who have purchased these CMS solutions are left asking themselves on
 <figure>
   <img alt="The modularization of the CMS" height="400" src="./headless-cms-landscape.png" />
   <figcaption>
-   The headless CMS landscape
+   The [headless CMS](/docs/headless-cms/) landscape
   </figcaption>
 </figure>
 
