@@ -13,7 +13,7 @@ Gatsby does many things to get a website visible as fast as possible. But gettin
 The one this article focuses on is "[Time to interactive](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive)", which is the time it takes for all your initial scripts to run. This one is particularly interesting for a couple of reasons:
 
 - It's not super noticable when you use a website on desktop
-- async scripts are counted towards this number (Even though they're async, they're still loaded in sequence after a page load)
+- Scripts loaded asynchronously are counted towards this number (even though they're async, they're still loaded in sequence after a page load)
 - It's a very important part of [Google's performance ranking](https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md). It's 5 times more important than the "[first meaningful paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)", e.g. when something shows up on the screen. **5 times!**
 
 These together might mean that you have a website that _feels_ fast, but Google will give you a penalty because it's slow.
