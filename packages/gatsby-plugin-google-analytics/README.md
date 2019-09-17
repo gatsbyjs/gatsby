@@ -183,3 +183,15 @@ export default () => {
   </div>
 }
 ```
+
+### All Fields Options
+
+- `category`: string - required
+- `action`: string - required
+- `label`: string
+- `value`: number
+- `nonInteraction`: bool
+- `transport`: string
+- `hitCallback`: function
+
+For more information on this, see the [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events) documentation.
