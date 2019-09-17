@@ -83,7 +83,7 @@ const HomePage = ({ data }) => {
 
 ### `StaticQuery`
 
-Gatsby provides a `StaticQuery` component that can be used in any component to get data from GraphQL. You can only have one `StaticQuery` per page, in order to include the data you need from multiple sources you can use one query with multiple root fields. It cannot take variables as arguments.
+Gatsby provides a `StaticQuery` component that can be used in any component to get data from GraphQL, where `pageQuery` is otherwise limited to page components. `StaticQuery` cannot take variables as arguments.
 
 Also, refer to the [guide on querying data in components with static query](/docs/static-query/).
 
