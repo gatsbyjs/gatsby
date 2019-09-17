@@ -107,7 +107,7 @@ Here's an example (be sure to update the user and repo names to your own):
   }
 ```
 
-#### Step 3 - Update .travis.yml for
+#### Update .travis.yml configuration
 
 The following `.travis.yml` configuration provides a reference:
 
