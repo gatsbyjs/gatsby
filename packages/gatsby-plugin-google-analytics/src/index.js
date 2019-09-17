@@ -73,11 +73,4 @@ function trackCustomEvent({ category, action, label, value }) {
   }
 }
 
-CustomTrackingEvent.propTypes = {
-  category: PropTypes.string.isRequired,
-  action: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  value: PropTypes.number,
-}
-
 export { OutboundLink, CustomTrackingEvent }
