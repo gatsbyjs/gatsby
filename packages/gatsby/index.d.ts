@@ -14,12 +14,6 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
-export interface StaticQueryProps {
-  query: any
-  render?: RenderCallback
-  children?: RenderCallback
-}
-
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
@@ -40,12 +34,12 @@ export interface PageRendererProps {
  */
 export class PageRenderer extends React.Component<PageRendererProps> {}
 
-type RenderCallback = (data: any) => React.ReactNode
+type RenderCallback<T = any> = (data: T) => React.ReactNode
 
-export interface StaticQueryProps {
+export interface StaticQueryProps<T = any> {
   query: any
-  render?: RenderCallback
-  children?: RenderCallback
+  render?: RenderCallback<T>
+  children?: RenderCallback<T>
 }
 
 /**
@@ -58,7 +52,9 @@ export interface StaticQueryProps {
  * @see https://www.gatsbyjs.org/docs/static-query/
  */
 
-export class StaticQuery extends React.Component<StaticQueryProps> {}
+export class StaticQuery<T = any> extends React.Component<
+  StaticQueryProps<T>
+> {}
 
 /**
  * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way

@@ -39,7 +39,6 @@ const db = require(`../db`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
-const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
 const requiresWriter = require(`../bootstrap/requires-writer`)
 
@@ -147,10 +146,16 @@ async function startServer(program, { activity }) {
     graphqlEndpoint,
     graphqlHTTP(() => {
       const { schema, schemaCustomization } = store.getState()
+
       return {
         schema,
         graphiql: false,
-        context: withResolverContext({}, schema, schemaCustomization.context),
+        context: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context: {},
+          customContext: schemaCustomization.context,
+        }),
         customFormatErrorFn(err) {
           return {
             ...formatError(err),
@@ -368,7 +373,7 @@ module.exports = async (program: any) => {
   await waitJobsFinished()
   requiresWriter.startListener()
   db.startAutosave()
-  queryUtil.startListening(queryQueue.createDevelopQueue())
+  queryUtil.startListeningToDevelopQueue()
   queryWatcher.startWatchDeletePage()
 
   activity = report.activityTimer(`start webpack server`)
@@ -393,8 +398,12 @@ module.exports = async (program: any) => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let lanUrlForConfig, lanUrlForTerminal
+    let prettyHost = host,
+      lanUrlForConfig,
+      lanUrlForTerminal
     if (isUnspecifiedHost) {
+      prettyHost = `localhost`
+
       try {
         // This can only return an IPv4 address
         lanUrlForConfig = address.ip()
@@ -420,8 +429,8 @@ module.exports = async (program: any) => {
     // TODO collect errors (GraphQL + Webpack) in Redux so we
     // can clear terminal and print them out on every compile.
     // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(host)
-    const localUrlForBrowser = formatUrl(host)
+    const localUrlForTerminal = prettyPrintUrl(prettyHost)
+    const localUrlForBrowser = formatUrl(prettyHost)
     return {
       lanUrlForConfig,
       lanUrlForTerminal,
@@ -527,7 +536,6 @@ module.exports = async (program: any) => {
       }
     })
   }
-
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
@@ -542,10 +550,6 @@ module.exports = async (program: any) => {
       program.port
     )
     const isSuccessful = !messages.errors.length
-    // if (isSuccessful) {
-    // console.log(chalk.green(`Compiled successfully!`))
-    // }
-    // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
@@ -561,36 +565,6 @@ module.exports = async (program: any) => {
     }
 
     isFirstCompile = false
-
-    // If errors exist, only show errors.
-    // if (messages.errors.length) {
-    // // Only keep the first error. Others are often indicative
-    // // of the same problem, but confuse the reader with noise.
-    // if (messages.errors.length > 1) {
-    // messages.errors.length = 1
-    // }
-    // console.log(chalk.red("Failed to compile.\n"))
-    // console.log(messages.errors.join("\n\n"))
-    // return
-    // }
-
-    // Show warnings if no errors were found.
-    // if (messages.warnings.length) {
-    // console.log(chalk.yellow("Compiled with warnings.\n"))
-    // console.log(messages.warnings.join("\n\n"))
-
-    // // Teach some ESLint tricks.
-    // console.log(
-    // "\nSearch for the " +
-    // chalk.underline(chalk.yellow("keywords")) +
-    // " to learn more about each warning."
-    // )
-    // console.log(
-    // "To ignore, add " +
-    // chalk.cyan("// eslint-disable-next-line") +
-    // " to the line before.\n"
-    // )
-    // }
 
     done()
   })

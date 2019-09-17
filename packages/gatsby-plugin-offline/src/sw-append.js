@@ -25,7 +25,8 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   }
 
   const offlineShell = `%pathPrefix%/offline-plugin-app-shell-fallback/index.html`
-  return await caches.match(offlineShell)
+  const offlineShellWithKey = workbox.precaching.getCacheKeyForURL(offlineShell)
+  return await caches.match(offlineShellWithKey)
 })
 
 workbox.routing.registerRoute(navigationRoute)

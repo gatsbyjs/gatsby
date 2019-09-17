@@ -6,6 +6,7 @@ const { buildSchema } = require(`../../schema`)
 const { LocalNodeModel } = require(`../../node-model`)
 const nodeStore = require(`../../../db/nodes`)
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -27,9 +28,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 
 const buildTestSchema = async nodes => {
   store.dispatch({ type: `DELETE_CACHE` })
-  for (const node of nodes) {
-    store.dispatch({ type: `CREATE_NODE`, payload: node })
-  }
+  nodes.forEach(node =>
+    actions.createNode(node, { name: `test` })(store.dispatch)
+  )
   const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
@@ -37,12 +38,17 @@ const buildTestSchema = async nodes => {
     types: [],
     thirdPartySchemas: [],
   })
-  return schema
+  return { schema, schemaComposer }
 }
 const queryResult = async (nodes, query) => {
-  const schema = await buildTestSchema(nodes)
+  const { schema, schemaComposer } = await buildTestSchema(nodes)
   return graphql(schema, query, undefined, {
-    nodeModel: new LocalNodeModel({ schema, nodeStore, createPageDependency }),
+    nodeModel: new LocalNodeModel({
+      schema,
+      nodeStore,
+      createPageDependency,
+      schemaComposer,
+    }),
   })
 }
 
@@ -51,7 +57,7 @@ describe(`GraphQL Input args`, () => {
     const nodes = [
       {
         id: `1`,
-        internal: { type: `Bar` },
+        internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         foo: null,
         bar: `baz`,
@@ -77,7 +83,7 @@ describe(`GraphQL Input args`, () => {
     const nodes = [
       {
         id: `1`,
-        internal: { type: `Bar` },
+        internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         foo: {},
         bar: `baz`,
@@ -101,7 +107,13 @@ describe(`GraphQL Input args`, () => {
 
   it(`filters out empty arrays`, async () => {
     const nodes = [
-      { id: `1`, internal: { type: `Bar` }, children: [], foo: [], bar: `baz` },
+      {
+        id: `1`,
+        internal: { type: `Bar`, contentDigest: `0` },
+        children: [],
+        foo: [],
+        bar: `baz`,
+      },
     ]
     const result = await queryResult(
       nodes,
@@ -123,7 +135,7 @@ describe(`GraphQL Input args`, () => {
     const nodes = [
       {
         id: `1`,
-        internal: { type: `Bar` },
+        internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         foo: [undefined, null, null],
         bar: `baz`,
@@ -149,12 +161,16 @@ describe(`GraphQL Input args`, () => {
     const nodes = [
       {
         id: `1`,
-        internal: { type: `Bar` },
+        internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         linked___NODE: `baz`,
         foo: `bar`,
       },
-      { id: `baz`, internal: { type: `Foo` }, children: [] },
+      {
+        id: `baz`,
+        internal: { type: `Foo`, contentDigest: `0` },
+        children: [],
+      },
     ]
     const result = await queryResult(
       nodes,
@@ -182,7 +198,7 @@ describe(`GraphQL Input args`, () => {
     const nodes = [
       {
         id: `1`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         parent: null,
         children: [],
         foo: {
@@ -192,7 +208,7 @@ describe(`GraphQL Input args`, () => {
         },
       },
     ]
-    const schema = await buildTestSchema(nodes)
+    const { schema } = await buildTestSchema(nodes)
     const fields = schema.getType(`TestFilterInput`).getFields()
 
     expect(Object.keys(fields.foo.type.getFields())[2]).toEqual(`foo_moo`)
@@ -206,14 +222,14 @@ describe(`GraphQL Input args`, () => {
     const nodes = [
       {
         id: `1`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         children: [],
         int32: 42,
         float: 2.5,
         longint: 3000000000,
       },
     ]
-    const schema = await buildTestSchema(nodes)
+    const { schema } = await buildTestSchema(nodes)
     const fields = schema.getType(`TestFilterInput`).getFields()
 
     expect(fields.int32.type.name).toBe(`IntQueryOperatorInput`)
