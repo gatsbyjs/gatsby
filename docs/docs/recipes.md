@@ -921,16 +921,18 @@ import { graphql } from "gatsby"
 const NewsPage = ({ data }) => (
   <div>
     <h1>News</h1>
-    {data.allContentfulNews.edges.map(({ node }) => (
-      <>
+    <ul>
+    {data.allContentfulNews.edges.map(({ node, index }) => (
+      <li key={index}>
         <h2>{node.title}</h2>
         <p>
           <strong>{node.createdAt}</strong>
           {" — "}
           {node.body.body}
         </p>
-      </>
+      </li>
     ))}
+    </ul>
   </div>
 )
 
