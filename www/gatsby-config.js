@@ -179,7 +179,6 @@ module.exports = {
             resolve: `gatsby-remark-prismjs`,
             options: {
               aliases: {
-                console: `bash`,
                 dosini: `ini`,
                 env: `bash`,
                 es6: `js`,
