@@ -97,8 +97,8 @@ class LocalNodeModel {
     } else if (!type) {
       result = node
     } else {
-      const nodeTypeNames = new Set(toNodeTypeNames(this.schema, type))
-      result = nodeTypeNames.has(node.internal.type) ? node : null
+      const nodeTypeNames = toNodeTypeNames(this.schema, type)
+      result = nodeTypeNames.includes(node.internal.type) ? node : null
     }
 
     if (result) {
@@ -128,8 +128,8 @@ class LocalNodeModel {
     if (!nodes.length || !type) {
       result = nodes
     } else {
-      const nodeTypeNames = new Set(toNodeTypeNames(this.schema, type))
-      result = nodes.filter(node => nodeTypeNames.has(node.internal.type))
+      const nodeTypeNames = toNodeTypeNames(this.schema, type)
+      result = nodes.filter(node => nodeTypeNames.includes(node.internal.type))
     }
 
     if (result) {
