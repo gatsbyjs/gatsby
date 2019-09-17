@@ -130,3 +130,5 @@ To break-down the important bits here for deploying the Gatsby website from Trav
 
 1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
 2. `deploy` will only fire when the build runs on the master branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
+
+Committing and pushing both the `.travis.yml` and `package.json` files to your base branch will be the final step in the process.
