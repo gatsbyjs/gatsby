@@ -165,7 +165,7 @@ export default () => {
         // To stop the page reloading
         e.preventDefault()
         // Lets track that custom click
-        CustomTrackingEvent({
+        trackCustomEvent({
           // string - required - The object that was interacted with (e.g.video)
           category: "Special Button",
           // string - required - Type of interaction (e.g. 'play')
