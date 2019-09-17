@@ -30,7 +30,7 @@ By default, this is a string value as you haven't told Gatsby yet how to interpr
 
 ## Gatsby Node
 
-In your `gatsby-node` file, you can do some processing to create file nodes for the custom `featuredImgUrl` Frontmatter field.
+In your `gatsby-node.js` file, you can do some processing to create file nodes for the custom `featuredImgUrl` Frontmatter field.
 
 ```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
