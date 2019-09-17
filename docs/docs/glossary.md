@@ -268,7 +268,7 @@ Routing is the mechanism for loading the correct content in a website or app bas
 
 ### Schema
 
-An exact representation of how data is stored in a system, like a database. In Gatsby, the GraphQL schema expresses all queryable data - or data components can ask Gatsby for.
+An exact representation of how data is stored in a system, such as tables and fields in a database or a JSON file structure. In Gatsby, the GraphQL schema expresses all queryable data - or data that components can ask about as part of Gatsby's data layer.
 
 ### Server-side
 
