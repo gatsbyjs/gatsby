@@ -272,6 +272,14 @@ const fluidNodeType = ({
         originalName: { type: GraphQLString },
         presentationWidth: { type: GraphQLInt },
         presentationHeight: { type: GraphQLInt },
+        maxHeight: {
+          type: GraphQLInt,
+          resolve: ({ fieldArgs }) => fieldArgs.maxHeight,
+        },
+        maxWidth: {
+          type: GraphQLInt,
+          resolve: ({ fieldArgs }) => fieldArgs.maxWidth,
+        },
       },
     }),
     args: {
