@@ -59,17 +59,33 @@ OutboundLink.propTypes = {
  * @param {string} action Required - Type of interaction (e.g. 'play')
  * @param {string} label Optional - Useful for categorizing events (e.g. 'Spring Campaign')
  * @param {string} value Optional - Numeric value associated with the event. (e.g. A product ID)
+ * @param {bool} nonInteraction Optional - If a hit is considered non-interactive.
+ * @param {string} transport Optional - How the events will be sent. The options are 'beacon', 'xhr', or 'image'.
  *
  * @link https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events
  */
-function trackCustomEvent({ category, action, label, value }) {
+function trackCustomEvent({
+  category,
+  action,
+  label,
+  value,
+  nonInteraction = true,
+  transport,
+}) {
   if (typeof window !== "undefined" && window.ga) {
-    window.ga(`send`, `event`, {
+    let trackingEventOptions = {
       eventCategory: category,
       eventAction: action,
       eventLabel: label,
       eventValue: value,
-    })
+      nonInteraction: nonInteraction,
+    }
+
+    if (transport) {
+      trackingEventOptions["transport"] = transport
+    }
+
+    window.ga(`send`, `event`, trackingEventOptions)
   }
 }
 
