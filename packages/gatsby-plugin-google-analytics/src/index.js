@@ -61,6 +61,7 @@ OutboundLink.propTypes = {
  * @param {string} value Optional - Numeric value associated with the event. (e.g. A product ID)
  * @param {bool} nonInteraction Optional - If a hit is considered non-interactive.
  * @param {string} transport Optional - How the events will be sent. The options are 'beacon', 'xhr', or 'image'.
+ * @param {func} hitCallback Optional - Function that gets called as soon as the hit has been successfully sent.
  *
  * @link https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events
  */
@@ -71,6 +72,7 @@ function trackCustomEvent({
   value,
   nonInteraction = true,
   transport,
+  hitCallback,
 }) {
   if (typeof window !== "undefined" && window.ga) {
     let trackingEventOptions = {
@@ -83,6 +85,12 @@ function trackCustomEvent({
 
     if (transport) {
       trackingEventOptions["transport"] = transport
+    }
+
+    if (hitCallback && typeof hitCallback === "function") {
+      trackingEventOptions["hitCallback"] = function() {
+        hitCallback()
+      }
     }
 
     window.ga(`send`, `event`, trackingEventOptions)
