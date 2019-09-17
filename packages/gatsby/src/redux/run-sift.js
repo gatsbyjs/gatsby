@@ -161,7 +161,7 @@ const runSiftOnNodes = (nodes, args, getNode) => {
 
     if (
       !node ||
-      (node.internal && !new Set(nodeTypeNames).has(node.internal.type))
+      (node.internal && !nodeTypeNames.includes(node.internal.type))
     ) {
       return []
     }
