@@ -242,10 +242,6 @@ class Runner {
       const filePath = namePathMap.get(docName)
       messages.push(errorParser({ message, filePath }))
 
-      // report error to browser
-      // TODO: move browser error overlay reporting to reporter
-      // this.reportError(formattedMessage)
-
       return false
     }
 
