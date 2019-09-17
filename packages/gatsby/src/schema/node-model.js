@@ -97,8 +97,8 @@ class LocalNodeModel {
     } else if (!type) {
       result = node
     } else {
-      const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      result = nodeTypeNames.includes(node.internal.type) ? node : null
+      const nodeTypeNames = new Set(toNodeTypeNames(this.schema, type))
+      result = nodeTypeNames.has(node.internal.type) ? node : null
     }
 
     if (result) {
@@ -128,8 +128,8 @@ class LocalNodeModel {
     if (!nodes.length || !type) {
       result = nodes
     } else {
-      const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      result = nodes.filter(node => nodeTypeNames.includes(node.internal.type))
+      const nodeTypeNames = new Set(toNodeTypeNames(this.schema, type))
+      result = nodes.filter(node => nodeTypeNames.has(node.internal.type))
     }
 
     if (result) {
@@ -157,10 +157,10 @@ class LocalNodeModel {
       result = this.nodeStore.getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodes = nodeTypeNames.reduce(
-        (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
-        []
-      )
+      const nodes = nodeTypeNames.reduce((acc, typeName) => {
+        acc.push(...this.nodeStore.getNodesByType(typeName))
+        return acc
+      }, [])
       result = nodes.filter(Boolean)
     }
 
@@ -389,9 +389,11 @@ class LocalNodeModel {
         this.createPageDependency({ path, connection: connectionType })
       } else {
         const nodes = Array.isArray(result) ? result : [result]
-        nodes
-          .filter(Boolean)
-          .map(node => this.createPageDependency({ path, nodeId: node.id }))
+        for (const node of nodes) {
+          if (node) {
+            this.createPageDependency({ path, nodeId: node.id })
+          }
+        }
       }
     }
 
