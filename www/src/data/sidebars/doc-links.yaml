@@ -119,6 +119,9 @@
         - title: Sourcing Content and Data
           link: /docs/content-and-data/
           items:
+            - title: Using Gatsby Without GraphQL
+              link: /docs/using-gatsby-without-graphql/
+              breadcrumbTitle: Gatsby Without GraphQL
             - title: Sourcing From the Filesystem
               link: /docs/sourcing-from-the-filesystem/
               breadcrumbTitle: From the Filesystem
@@ -156,9 +159,6 @@
             - title: Sourcing Content from JSON or YAML
               link: /docs/sourcing-content-from-json-or-yaml/
               breadcrumbTitle: JSON or YAML
-            - title: Using Gatsby Without GraphQL
-              link: /docs/using-gatsby-without-graphql/
-              breadcrumbTitle: Gatsby Without GraphQL
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           breadcrumbTitle: Querying with GraphQL

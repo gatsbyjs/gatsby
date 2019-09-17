@@ -22,28 +22,7 @@ Data needs to be [sourced](/docs/content-and-data/) — or added to the GraphQL 
 
 Sourcing data with an existing plugin requires installing necessary packages and adding the plugin to the plugins array in the `gatsby-config` with any optional configurations. To source data from the filesystem for use with GraphQL, such as Markdown files, images, and more, refer to the [filesystem data sourcing docs](/docs/sourcing-from-the-filesystem/) and [recipes](/docs/recipes/#5-sourcing-data).
 
-```shell
-npm install --save gatsby-source-filesystem
-```
-
-```js:title=gatsby-config.js
-module.exports = {
-  siteMetadata: {
-    title: `Your Site Name`,
-  },
-  plugins: [
-    // highlight-start
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `src`,
-        path: `${__dirname}/src/`,
-      },
-    },
-    // highlight-end
-  ],
-}
-```
+For instructions on installing plugins from npm, refer to the instructions in the docs on [using a plugin](/docs/using-a-plugin-in-your-site/).
 
 You can also [create custom plugins](/docs/creating-plugins/) to fit your own use cases and pull in data however you want.
 
@@ -126,7 +105,9 @@ The `StaticQuery` component takes two values as props in JSX:
       }
     }
   `}
-  render={data => ( //highlight-line
+  render={(
+    data //highlight-line
+  ) => (
     <header>
       <h1>{data.site.siteMetadata.title}</h1>
     </header>
