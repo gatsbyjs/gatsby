@@ -92,7 +92,7 @@ In GitHub go to your account settings -> Developer settings -> Personal access t
 
 In [Travis's settings for the repository](https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings), add a new secret environment variable of the name `GH_TOKEN` with the value of the token copied from GitHub. Make sure you **DO NOT toggle the "display in build logs" setting to on** as the token should remain secret. Otherwise, strangers would be able to push to your repository (a big security issue).
 
-#### Step 2 - deploy run script
+#### Add script to deploy to GitHub Pages via CI
 
 Update the Gatsby project's `package.json` to also include a `deploy` run script which invokes `gh-pages` with two important command-line arguments:
 
