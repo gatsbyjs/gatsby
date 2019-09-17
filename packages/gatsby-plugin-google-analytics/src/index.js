@@ -58,7 +58,7 @@ OutboundLink.propTypes = {
  * @param {string} category Required - The object that was interacted with (e.g.video)
  * @param {string} action Required - Type of interaction (e.g. 'play')
  * @param {string} label Optional - Useful for categorizing events (e.g. 'Spring Campaign')
- * @param {string} value Optional - Numeric value associated with the event. (e.g. A product ID)
+ * @param {integer} value Optional - Numeric value associated with the event. (e.g. A product ID)
  * @param {bool} nonInteraction Optional - If a hit is considered non-interactive.
  * @param {string} transport Optional - How the events will be sent. The options are 'beacon', 'xhr', or 'image'.
  * @param {func} hitCallback Optional - Function that gets called as soon as the hit has been successfully sent.

@@ -189,7 +189,7 @@ export default () => {
 - `category`: string - required
 - `action`: string - required
 - `label`: string
-- `value`: number
+- `value`: integer
 - `nonInteraction`: bool
 - `transport`: string
 - `hitCallback`: function
