@@ -889,7 +889,7 @@ plugins: [
 
 3. Run `gatsby develop` and make sure the site compiled successfully.
 
-4) Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. For example, a site with a `News` content type and two fields produces an `allContentfulNews` node type in GraphQL.
+4. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. For example, a site with a `News` content type and two fields produces an `allContentfulNews` node type in GraphQL.
 
 ![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
 
