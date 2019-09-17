@@ -931,6 +931,7 @@ export const pageQuery = graphql`
 
 - An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` and `gatsby-node.js` file
 - A WordPress instance, either self-hosted or on Wordpress.com
+
 #### Directions
 
 1. Install the `gatsby-source-wordpress` plugin by running the following command:
@@ -1045,7 +1046,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-5. Run `gatsby-develop` to see the newly generated pages and navigate through them. 
+5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
 
 6. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
 
