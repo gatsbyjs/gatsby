@@ -34,7 +34,7 @@ The SEO performance post included a tip from Dave of [ToDesktop](https://www.tod
 
 This way, your "Time to interactive" won't take these scripts into account, and the user won't need your support widget in the first second of a page anyway, so this works well for everyone. There is a downside: your [bounce rate](https://support.google.com/analytics/answer/1009409?hl=en) will become less accurate as the people that open your site, don't scroll and leave will never show up in your analytics.
 
-Wanting to improve the performance rating of my own site, I [forked](https://github.com/Kilian/gatsby-plugin-segment-js) the gatsby-plugin-segment-js repository and set to work.
+Wanting to improve the performance rating of my own site, I forked the [gatsby-plugin-segment-js](https://github.com/Kilian/gatsby-plugin-segment-js) repository and set to work.
 
 ## Updating gatsby-plugin-segment-js
 
