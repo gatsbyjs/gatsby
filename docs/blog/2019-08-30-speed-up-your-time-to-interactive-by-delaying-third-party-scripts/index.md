@@ -22,7 +22,7 @@ To get an overview of how your site scores, you can use Lighthouse, either in yo
 
 ## The performance metric
 
-While the other metrics are also important, it's performance we want to look at. By default, a Gatsby site will easily get a score in the 90s (out of a 100), but this can quickly become lower as you add more scripts to the page, especially third party scripts.
+While the other metrics are also important, the scope of this article is on performance. By default, a Gatsby site will easily get a score in the 90s (out of 100), but this can quickly become lower as you add more scripts to the page, especially third party scripts.
 
 Harry from [marketingexamples.com](https://marketingexamples.com/) linked me to a recent post of his on [SEO performance](https://marketingexamples.com/seo/performance) that mentioned the "Time to interactive" scoring and I decided to take another look at my website for [Polypane](https://polypane.rocks). I had checked it in the past and it had a good (90+) score, but I was pretty shocked when it came back with a suddenly had a score of 63!
 
