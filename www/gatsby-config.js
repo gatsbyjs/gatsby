@@ -188,7 +188,6 @@ module.exports = {
                 htaccess: `apacheconf`,
                 mdx: `markdown`,
                 ml: `fsharp`,
-                sh: `bash`,
                 styl: `stylus`,
                 terminal: `bash`,
               },
