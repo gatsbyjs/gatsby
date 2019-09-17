@@ -189,7 +189,6 @@ module.exports = {
                 mdx: `markdown`,
                 ml: `fsharp`,
                 styl: `stylus`,
-                terminal: `bash`,
               },
             },
           },
