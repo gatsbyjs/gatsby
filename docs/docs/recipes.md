@@ -858,7 +858,7 @@ export const pageQuery = graphql`
 #### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` and `gatsby-node.js` file
-
+- A WordPress instance, either self-hosted or on Wordpress.com
 #### Directions
 
 1. Install the `gatsby-source-wordpress` plugin by running the following command:
