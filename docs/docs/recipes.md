@@ -863,7 +863,7 @@ export const pageQuery = graphql`
 - One or more pieces of published content to [avoid build errors](https://github.com/gatsbyjs/gatsby/issues/15344#issuecomment-520151776)
 - The [space ID and content delivery API key](https://www.contentful.com/developers/docs/concepts/apis/#content-delivery-api) for your space
 
-The screenshots and examples in this recipe were set up with a new Contentful space with a "News" content model that includes "Title" and "Body" fields.
+The screenshots and examples in this recipe were set up with a new Contentful space with a "News" content model that includes a "Title" text field, and "Body" long text field.
 
 #### Directions
 
