@@ -60,7 +60,7 @@ To work around this, I added two locks to the Gatsby plugin:
 - `segmentSnippetLoaded`, `false` by default and set to `true` after it's loaded.
 - `segmentSnippetLoading`, `true` only between when the load function has been called and when it has finished.
 
-Then, either on scroll or onRouteChange, we only call the load function if segmentSnippetLoaded is not true, and in the load function, we only continue if segmentSnippetLoading is not true. This prevents the function from being called at all after the first time the script has been loaded. If the function is called twice but we're still in the countdown time, nothing happens.
+Then, either on `scroll` or `onRouteChange`, we only call the load function if `segmentSnippetLoaded` is not true, and in the load function, we only continue if `segmentSnippetLoading` is not true. This prevents the function from being called at all after the first time the script has been loaded. If the function is called twice but we're still in the countdown time, nothing happens.
 
 After implementing this on my own website, my performance score shot back up from 63 to 94 and I had an over 60% decrease in the time to interactive. Pretty good for a few lines of code.
 
