@@ -126,10 +126,10 @@ const runSift = (args: Object) => {
   let nodes
 
   if (nodeTypeNames.length > 1) {
-    nodes = nodeTypeNames.reduce(
-      (acc, typeName) => acc.concat(getNodesAndResolvedNodes(typeName)),
-      []
-    )
+    nodes = nodeTypeNames.reduce((acc, typeName) => {
+      acc.push(...getNodesAndResolvedNodes(typeName))
+      return acc
+    }, [])
   } else {
     nodes = getNodesAndResolvedNodes(nodeTypeNames[0])
   }
@@ -161,7 +161,7 @@ const runSiftOnNodes = (nodes, args, getNode) => {
 
     if (
       !node ||
-      (node.internal && !nodeTypeNames.includes(node.internal.type))
+      (node.internal && !new Set(nodeTypeNames).has(node.internal.type))
     ) {
       return []
     }
