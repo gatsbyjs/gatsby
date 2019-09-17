@@ -38,7 +38,7 @@ Wanting to improve the performance rating of my own site, I [forked](https://git
 
 ## Updating gatsby-plugin-segment-js
 
-The way the solution by Dave works is as follows:
+The way this solution works is as follows:
 
 - Wait for the user to scroll
 - Do a setTimeout for 1 second
