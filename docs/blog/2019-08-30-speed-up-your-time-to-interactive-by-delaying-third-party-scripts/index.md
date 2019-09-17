@@ -16,7 +16,7 @@ The one this article focuses on is "[Time to interactive](https://developers.goo
 - Scripts loaded asynchronously are counted towards this number (even though they're async, they're still loaded in sequence after a page load)
 - It's a very important part of [Google's performance ranking](https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md). Because of the user impact, it's 5 times more important than the "[first meaningful paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)", e.g. when something shows up on the screen. **5 times!**
 
-These together might mean that you have a website that _feels_ fast, but Google will give you a penalty because it's slow.
+These together might mean that you have a website that _feels_ fast under some circumstances, but Google will give you a penalty because it's slow.
 
 To get an overview of how your site scores, you can use Lighthouse, either in your Chrome developer tools by going to the "Audits" tab, or by going to [web.dev](https://web.dev/measure). This will test your site on a number of different metrics, such as accessibility, SEO (Search Engine Optimisation) and best practices, but the one we're interested in is "performance".
 
