@@ -606,6 +606,17 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
   }
 
+  let maxWidth
+  let maxHeight
+  if (options.maxHeight || options.maxWidth) {
+    maxWidth = options.maxWidth
+      ? `${options.maxWidth}px`
+      : `${options.aspectRatio * options.maxHeight}px`
+    maxHeight = options.maxHeight
+      ? `${options.maxHeight}px`
+      : `${options.aspectRatio * options.maxWidth}px`
+  }
+
   return {
     base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
@@ -618,6 +629,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
+    maxHeight,
+    maxWidth,
     tracedSVG,
   }
 }
