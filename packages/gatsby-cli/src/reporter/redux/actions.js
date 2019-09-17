@@ -218,7 +218,7 @@ const actions = {
       if (activity.status === ActivityStatuses.InProgress) {
         duration = getElapsedTimeMS(activity)
         trackCli(`ACTIVITY_DURATION`, {
-          name: activity.name,
+          name: activity.text,
           duration,
         })
       }
