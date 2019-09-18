@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.5...gatsby-plugin-preload-fonts@1.0.6) (2019-09-18)
+
+### Features
+
+- **gatsby-plugin-preload-fonts:** remove domain for self-hosted fonts ([#17235](https://github.com/gatsbyjs/gatsby/issues/17235)) ([5a107e9](https://github.com/gatsbyjs/gatsby/commit/5a107e9))
+
 ## [1.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.4...gatsby-plugin-preload-fonts@1.0.5) (2019-09-13)
 
 ### Bug Fixes
