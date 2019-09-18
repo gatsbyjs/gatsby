@@ -40,7 +40,7 @@ const getLabel = level => {
 export const Message = ({ level, hideColors, text, duration, statusText }) => {
   let message = text
   if (duration) {
-    message += ` - ${duration}s`
+    message += ` - ${duration.toFixed(3)}s`
   }
   if (statusText) {
     message += ` - ${statusText}`

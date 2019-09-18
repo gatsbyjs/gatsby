@@ -14,9 +14,12 @@ const signalExit = require(`signal-exit`)
 
 const getActivity = id => getStore().getState().logs.activities[id]
 
+/**
+ * @returns {Number} Milliseconds from activity start
+ */
 const getElapsedTimeMS = activity => {
   const elapsed = process.hrtime(activity.startTime)
-  return convertHrtime(elapsed)[`seconds`].toFixed(3)
+  return convertHrtime(elapsed).milliseconds
 }
 
 const ActivityStatusToLogLevel = {
@@ -214,14 +217,16 @@ const actions = {
         },
       })
     } else {
-      let duration = 0
+      let durationMS = 0
       if (activity.status === ActivityStatuses.InProgress) {
-        duration = getElapsedTimeMS(activity)
+        durationMS = getElapsedTimeMS(activity)
         trackCli(`ACTIVITY_DURATION`, {
           name: activity.text,
-          duration,
+          duration: Math.round(durationMS),
         })
       }
+
+      const durationS = durationMS / 1000
 
       actionsToEmit.push({
         type: Actions.EndActivity,
@@ -229,7 +234,7 @@ const actions = {
           uuid: activity.uuid,
           id,
           status,
-          duration,
+          duration: durationS,
           type: activity.type,
         },
       })
@@ -239,13 +244,13 @@ const actions = {
           actions.createLog({
             text: activity.text,
             level: ActivityStatusToLogLevel[status],
-            duration,
+            duration: durationS,
             statusText:
               activity.statusText ||
               (status === ActivityStatuses.Success &&
               activity.type === ActivityTypes.Progress
                 ? `${activity.current}/${activity.total} ${(
-                    activity.total / duration
+                    activity.total / durationS
                   ).toFixed(2)}/s`
                 : undefined),
             activity_uuid: activity.uuid,

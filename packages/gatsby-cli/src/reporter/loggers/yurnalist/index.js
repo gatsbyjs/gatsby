@@ -38,7 +38,7 @@ onLogAction(action => {
       } else {
         let message = action.payload.text
         if (action.payload.duration) {
-          message += ` - ${action.payload.duration}s`
+          message += ` - ${action.payload.duration.toFixed(3)}s`
         }
         if (action.payload.statusText) {
           message += ` - ${action.payload.statusText}`
