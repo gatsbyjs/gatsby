@@ -1,16 +1,20 @@
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
-const { run: runQuery } = require(`./nodes-query`)
-const { findRootNodeAncestor } = require(`../db/node-tracking`)
 
 const backend = process.env.GATSBY_DB_NODES || `redux`
+/**
+ * @type {NodeStore}
+ */
 let nodesDb
+let runQuery
 switch (backend) {
   case `redux`:
     nodesDb = require(`../redux/nodes`)
+    runQuery = require(`../redux/run-sift`).runSift
     break
   case `loki`:
     nodesDb = require(`./loki/nodes`)
+    runQuery = require(`./loki/nodes-query`)
     break
   default:
     throw new Error(
@@ -18,8 +22,7 @@ switch (backend) {
     )
 }
 
-module.exports = { ...nodesDb, runQuery, findRootNodeAncestor }
-module.exports.backend = backend
+module.exports = { ...nodesDb, runQuery, backend }
 
 /**
  * Get content for a node from the plugin that created it.

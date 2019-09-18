@@ -1,3 +1,5 @@
+import { GraphQLType } from "graphql"
+
 interface NodeStore {
   getNodes: () => any[]
   getNode: (id: string) => any | undefined
@@ -6,6 +8,12 @@ interface NodeStore {
   hasNodeChanged: (id: string, digest: string) => boolean
   getNodeAndSavePathDependency: (id: string, path: string) => any | undefined
   // XXX(freiksenet): types
-  runQuery: (...args: any[]) => any | undefined
+  runQuery: (args: {
+    gqlType: GraphQLType
+    queryArgs: Object
+    firstOnly: boolean
+    resolvedFields: Object
+    nodeTypeNames: Array<string>
+  }) => any | undefined
   findRootNodeAncestor: (...args: any[]) => any | undefined
 }

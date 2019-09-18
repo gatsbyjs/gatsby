@@ -44,4 +44,6 @@ export interface NodeModel {
     result: nodeOrNodes,
     pageDependencies?: PageDependencies
   ): nodeOrNodes
+  findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null
+  trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node
 }

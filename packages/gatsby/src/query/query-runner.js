@@ -1,10 +1,8 @@
-import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const path = require(`path`)
 const { store } = require(`../redux`)
-const withResolverContext = require(`../schema/context`)
 const { formatErrorDetails } = require(`./utils`)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
@@ -13,24 +11,13 @@ const resultHashes = {}
 
 // Run query
 /**
+ * @param graphqlRunner
  * @param {QueryJob} queryJob
  */
-module.exports = async queryJob => {
-  const {
-    schema,
-    schemaCustomization,
-    program,
-    webpackCompilationHash,
-  } = store.getState()
+module.exports = async (graphqlRunner, queryJob) => {
+  const { program, webpackCompilationHash } = store.getState()
 
-  const graphql = (query, context) =>
-    graphqlFunction(
-      schema,
-      query,
-      context,
-      withResolverContext(context, schema, schemaCustomization.context),
-      context
-    )
+  const graphql = (query, context) => graphqlRunner.query(query, context)
 
   // Run query
   let result

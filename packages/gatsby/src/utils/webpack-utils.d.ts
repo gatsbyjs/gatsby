@@ -28,7 +28,7 @@ type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
  * Configuration options for `createUtils`
  */
 export interface WebpackUtilsOptions {
-  stage: Stage;
+  stage: Stage
   program: any
 }
 

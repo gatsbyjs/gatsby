@@ -12,6 +12,11 @@ import {
   NETLIFY_HEADERS_FILENAME,
 } from "./constants"
 
+function getHeaderName(header) {
+  const matches = header.match(/^([^:]+):/)
+  return matches && matches[1]
+}
+
 function validHeaders(headers) {
   if (!headers || !_.isObject(headers)) {
     return false
@@ -21,7 +26,10 @@ function validHeaders(headers) {
     headers,
     (headersList, path) =>
       _.isArray(headersList) &&
-      _.every(headersList, header => _.isString(header))
+      _.every(
+        headersList,
+        header => _.isString(header) && getHeaderName(header)
+      )
   )
 }
 
@@ -95,6 +103,25 @@ function defaultMerge(...headers) {
   }
 
   return _.mergeWith({}, ...headers, unionMerge)
+}
+
+function headersMerge(userHeaders, defaultHeaders) {
+  const merged = {}
+  Object.keys(defaultHeaders).forEach(path => {
+    if (!userHeaders[path]) {
+      merged[path] = defaultHeaders[path]
+      return
+    }
+    const headersMap = {}
+    defaultHeaders[path].forEach(header => {
+      headersMap[getHeaderName(header)] = header
+    })
+    userHeaders[path].forEach(header => {
+      headersMap[getHeaderName(header)] = header // override if exists
+    })
+    merged[path] = Object.values(headersMap)
+  })
+  return merged
 }
 
 function transformLink(manifest, publicFolder, pathPrefix) {
@@ -216,7 +243,7 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
     return headers
   }
 
-  return defaultMerge(headers, SECURITY_HEADERS)
+  return headersMerge(headers, SECURITY_HEADERS)
 }
 
 const applyCachingHeaders = (

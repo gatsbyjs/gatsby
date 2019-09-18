@@ -17,7 +17,7 @@ This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-pe
 
 Open your Terminal and run the following command from the Gatsby CLI to create a new Gatsby site using [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog).
 
-```sh
+```shell
 gatsby new [your-project-name] https://github.com/thomaswangio/gatsby-personal-starter-blog
 ```
 
@@ -25,7 +25,7 @@ gatsby new [your-project-name] https://github.com/thomaswangio/gatsby-personal-s
 
 Once the Gatsby site is finished installing all the packages and dependencies, you can now go into the directory and run the site locally.
 
-```sh
+```shell
 cd [your-project-name]
 gatsby develop
 ```
@@ -56,7 +56,7 @@ You'll likely also want to edit the `README.md` and `package.json` files to incl
 
 Open [github.com](http://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
 
-```sh
+```shell
 git init
 git add .
 git commit -m "initial commit"
@@ -79,6 +79,10 @@ For the "Homepage URL" – you can use your Netlify subdomain, `[name-of-your-si
 Once you've configured an authentication provider then you'll be able to use Netlify CMS at your deployed site to add new posts.
 
 ![Netlify and GitHub Authorization](https://cdn.netlify.com/67edd5b656c432888d736cd40125cb61376905bb/c1cba/img/docs/github-oauth-config.png)
+
+Copy the credentials of your new app listed on [GitHub oAuth Apps](https://github.com/settings/developers) and install a new auth provider on Netlify using them.
+
+![Setting up access control](netlify-install-oauth-provider.png)
 
 #### Benefits of Netlify CMS, GitHub, and Netlify Workflow
 

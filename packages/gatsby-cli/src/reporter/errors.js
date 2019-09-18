@@ -53,7 +53,7 @@ function getErrorFormatter() {
  * @param {string} [errorStr='']
  * @param {string} [sourceMapFile]
  */
-function createErrorFromString(errorStr = ``, sourceMapFile) {
+async function createErrorFromString(errorStr = ``, sourceMapFile) {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
@@ -66,7 +66,7 @@ function createErrorFromString(errorStr = ``, sourceMapFile) {
 
   error.name = `WebpackError`
   try {
-    if (sourceMapFile) prepareStackTrace(error, sourceMapFile)
+    if (sourceMapFile) await prepareStackTrace(error, sourceMapFile)
   } catch (err) {
     // don't shadow a real error because of a parsing issue
   }

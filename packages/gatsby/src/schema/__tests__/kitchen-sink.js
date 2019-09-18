@@ -8,6 +8,7 @@ const {
   getNamedType,
 } = require(`graphql`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`../index`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -37,9 +38,20 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 // XXX(freiksenet): Expand
 describe(`Kitchen sink schema test`, () => {
   let schema
+  let schemaComposer
 
   const runQuery = query =>
-    graphql(schema, query, undefined, withResolverContext({}, schema))
+    graphql(
+      schema,
+      query,
+      undefined,
+      withResolverContext({
+        schema,
+        schemaComposer,
+        context: {},
+        customContext: {},
+      })
+    )
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation((api, ...args) => {
@@ -63,8 +75,9 @@ describe(`Kitchen sink schema test`, () => {
 
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
+
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
@@ -78,6 +91,7 @@ describe(`Kitchen sink schema test`, () => {
           code: String
           image: File @fileByRelativePath
         }
+
       `,
     })
     buildThirdPartySchemas().forEach(schema =>
@@ -88,6 +102,7 @@ describe(`Kitchen sink schema test`, () => {
     )
     await build({})
     schema = store.getState().schema
+    schemaComposer = store.getState().schemaCustomization.composer
   })
 
   it(`passes kitchen sink query`, async () => {
@@ -123,10 +138,10 @@ describe(`Kitchen sink schema test`, () => {
                 image {
                   childImageSharp {
                     id
-        					}
+                  }
                 }
                 _3invalidKey
-        			}
+              }
             }
           }
           filter: allPostsJson(filter: { likes: { eq: null } }, limit: 2) {
@@ -174,7 +189,7 @@ describe(`Kitchen sink schema test`, () => {
             }
           }
         }
-    `)
+      `)
     ).toMatchSnapshot()
   })
 
@@ -313,11 +328,24 @@ const mockCreateResolvers = ({ createResolvers }) => {
     Query: {
       likedEnough: {
         type: `[PostsJson]`,
-        resolve(parent, args, context) {
-          return context.nodeModel
-            .getAllNodes({ type: `PostsJson` })
-            .filter(post => post.likes != null && post.likes > 5)
-            .slice(0, 2)
+        async resolve(parent, args, context) {
+          const result = await context.nodeModel.runQuery({
+            type: `PostsJson`,
+            query: {
+              filter: {
+                likes: {
+                  ne: null,
+                  gt: 5,
+                },
+              },
+              sort: {
+                fields: [`likes`],
+                order: [`DESC`],
+              },
+            },
+            firstOnly: false,
+          })
+          return result.slice(0, 2)
         },
       },
     },

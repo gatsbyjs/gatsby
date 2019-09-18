@@ -5,7 +5,6 @@ const compression = require(`compression`)
 const express = require(`express`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
-const rl = require(`readline`)
 const onExit = require(`signal-exit`)
 const report = require(`gatsby-cli/lib/reporter`)
 
@@ -14,16 +13,6 @@ const telemetry = require(`gatsby-telemetry`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
-
-const rlInterface = rl.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-// Quit immediately on hearing ctrl-c
-rlInterface.on(`SIGINT`, () => {
-  process.exit()
-})
 
 onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
@@ -125,6 +114,14 @@ module.exports = async program => {
     })
   }
 
-  port = await detectPortInUseAndPrompt(port, rlInterface)
-  startListening()
+  try {
+    port = await detectPortInUseAndPrompt(port)
+    startListening()
+  } catch (e) {
+    if (e.message === `USER_REJECTED`) {
+      return
+    }
+
+    throw e
+  }
 }

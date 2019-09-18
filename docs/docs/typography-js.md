@@ -84,13 +84,13 @@ const typography = new Typography(
 -     baseLineHeight: 1.666,
 -     headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
 -     bodyFontFamily: ['Georgia', 'serif'],
-- }
+- },
 + funstonTheme
 );
 
 export default typography;
 ```
 
-After completing the above steps, you can start the development server using the command `npm run develop` and navigate to the local website `http://localhost:8000`. If all went well you should see the text on your website using the Funston typographic theme just installed.
+After completing the above steps, you can start the development server using the command `gatsby develop` and navigate to the local website `http://localhost:8000`. If all went well you should see the text on your website using the Funston typographic theme just installed.
 
 If you would like to find more themes to install into your project check out at the official [Typography.js](https://kyleamathews.github.io/typography.js/) website.

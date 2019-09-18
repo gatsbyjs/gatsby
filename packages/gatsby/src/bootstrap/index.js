@@ -18,7 +18,6 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
-const nodeTracking = require(`../db/node-tracking`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -84,7 +83,9 @@ module.exports = async args => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    // TODO: deprecation message for old __experimentalThemes
+    report.warn(
+      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
+    )
     const themes = await loadThemes(config, { useLegacyThemes: true })
     config = themes.config
 
@@ -242,11 +243,6 @@ module.exports = async args => {
     activity.end()
   }
 
-  // By now, our nodes database has been loaded, so ensure that we
-  // have tracked all inline objects
-  nodeTracking.trackDbNodes()
-
-  // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
   })
@@ -280,7 +276,7 @@ module.exports = async args => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include gatsby-browser.js files if they exists as they're
+    // Always include gatsby-browser.js files if they exist as they're
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
