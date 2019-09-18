@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-static-exports@2.2.8...gatsby-transformer-javascript-static-exports@2.2.9) (2019-09-16)
+
+### Bug Fixes
+
+- update dependency @babel/parser to ^7.6.0 ([#17620](https://github.com/gatsbyjs/gatsby/issues/17620)) ([2d942ed](https://github.com/gatsbyjs/gatsby/commit/2d942ed))
+
 ## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-static-exports@2.2.7...gatsby-transformer-javascript-static-exports@2.2.8) (2019-09-09)
 
 **Note:** Version bump only for package gatsby-transformer-javascript-static-exports

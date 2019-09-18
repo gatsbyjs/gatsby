@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.6...gatsby-plugin-offline@3.0.7) (2019-09-16)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ## [3.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.5...gatsby-plugin-offline@3.0.6) (2019-09-09)
 
 ### Bug Fixes
