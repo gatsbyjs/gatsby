@@ -2,7 +2,7 @@
 title: Managing Pull Requests
 ---
 
-If you'd like to help out managing PRs on the gatsby repo on GitHub, this document is for you. We'll go over conventions we prefer, what we like to check for on various types of pull requests, permissions and guidelines on how to leave feedback.
+If you'd like to help out managing PRs on the Gatsby repo on GitHub, this document is for you. We'll go over conventions the team prefers, what we check for on various types of pull requests, permissions, and guidelines on how to leave feedback.
 
 We have over 2,000 contributors and so much of what makes Gatsby great is contributed by folks like you.
 
@@ -10,7 +10,7 @@ Needless to say, we get a lot of PRs and we've been merging over a [100 contribu
 
 Let's talk a little about how we manage pull requests in the Gatsby repo.
 
-For an introduction on what Pull Requests are and how to file one, check out the contributing doc on [How to Open a Pull Request](/contributing/how-to-file-a-pull-request).
+For an introduction on what Pull Requests are and how to file one, check out the contributing doc on [How to Open a Pull Request](/contributing/how-to-open-a-pull-request).
 
 ## Verifying a Pull Request
 
