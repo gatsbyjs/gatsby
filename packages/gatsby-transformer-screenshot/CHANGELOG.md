@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.19...gatsby-transformer-screenshot@2.1.20) (2019-09-18)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17716](https://github.com/gatsbyjs/gatsby/issues/17716)) ([af39ae3](https://github.com/gatsbyjs/gatsby/commit/af39ae3))
+
 ## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.18...gatsby-transformer-screenshot@2.1.19) (2019-09-18)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot
