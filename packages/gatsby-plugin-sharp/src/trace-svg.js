@@ -7,6 +7,7 @@ const sharp = require(`./safe-sharp`)
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { reportError } = require(`./report-error`)
+import { accessSync } from "fs"
 
 exports.notMemoizedPrepareTraceSVGInputFile = async ({
   file,
@@ -60,6 +61,13 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
     pipeline.toFile(tmpFilePath, err => {
       if (err) {
         return reject(err)
+      }
+      console.log(`created   ${tmpFilePath}`)
+      try {
+        accessSync(tmpFilePath)
+        console.log(`success`)
+      } catch (e) {
+        console.log(`fail`)
       }
       return resolve()
     })
