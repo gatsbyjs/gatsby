@@ -32,8 +32,13 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dt/gatsby.svg" alt="Total downloads on npm." />
   </a>
+</p>
+<p align="center">
   <a href="https://gatsbyjs.org/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+  <a href="https://gitpod.io/from-referrer/">
+    <img src="https://img.shields.io/badge/setup-automated-blue?logo=gitpod" alt="Setup automated" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
     <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
