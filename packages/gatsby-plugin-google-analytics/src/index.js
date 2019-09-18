@@ -75,7 +75,7 @@ function trackCustomEvent({
   transport,
   hitCallback,
 }) {
-  if (typeof window !== "undefined" && window.ga) {
+  if (typeof window !== `undefined` && window.ga) {
     let trackingEventOptions = {
       eventCategory: category,
       eventAction: action,
@@ -85,11 +85,11 @@ function trackCustomEvent({
     }
 
     if (transport) {
-      trackingEventOptions["transport"] = transport
+      trackingEventOptions[`transport`] = transport
     }
 
-    if (hitCallback && typeof hitCallback === "function") {
-      trackingEventOptions["hitCallback"] = createFunctionWithTimeout(
+    if (hitCallback && typeof hitCallback === `function`) {
+      trackingEventOptions[`hitCallback`] = createFunctionWithTimeout(
         hitCallback
       )
     }
@@ -98,4 +98,4 @@ function trackCustomEvent({
   }
 }
 
-export { OutboundLink, CustomTrackingEvent }
+export { OutboundLink, trackCustomEvent }
