@@ -105,33 +105,38 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
     })
 
     const svgToMiniDataURI = require(`mini-svg-data-uri`)
-    // const potrace = require(`potrace`)
-    // const trace = promisify(potrace.trace)
-    const ImageTracer = {} // TODO
+    const ImageTracer = require(`imagetracerjs`)
 
     function trace(path, options) {
       return new Promise((resolve, reject) => {
-        try {
-          ImageTracer.imageToSVG(path, resolve, options)
-        } catch (e) {
-          reject(e)
-        }
+        ImageTracer.imageToSVG(
+          path,
+          (svgstr, err) => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(svgstr)
+            }
+          },
+          options
+        )
       })
     }
 
     // new/imagetrace
-    let options = {
+    let optionsSVG = {
       colorsampling: 0,
       numberofcolors: 2,
       pal: [{ r: 211, g: 211, b: 211, a: 255 }, { r: 0, g: 0, b: 0, a: 0 }],
+      node: true,
     }
 
-    options = { ...options, args }
+    optionsSVG = { ...optionsSVG, args }
 
     // `srcset` attribute rejects URIs with literal spaces
     const encodeSpaces = str => str.replace(/ /gi, `%20`)
 
-    return trace(tmpFilePath, options)
+    return trace(tmpFilePath, optionsSVG)
       .then(optimize)
       .then(svgToMiniDataURI)
       .then(encodeSpaces)
