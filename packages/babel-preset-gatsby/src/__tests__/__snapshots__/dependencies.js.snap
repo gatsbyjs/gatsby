@@ -4,20 +4,20 @@ exports[`dependencies should specify proper presets and plugins 1`] = `
 Object {
   "plugins": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-runtime/index.js",
       Object {
-        "absoluteRuntime": "<PROJECT_ROOT>/node_modules/@babel/runtime",
+        "absoluteRuntime": "<node_modules>/@babel/runtime/package.json",
         "corejs": false,
         "helpers": true,
         "regenerator": true,
         "useESModules": true,
       },
     ],
-    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    "<node_modules>/@babel/plugin-syntax-dynamic-import/index.js",
   ],
   "presets": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      "<node_modules>/@babel/preset-env/index.js",
       Object {
         "corejs": 2,
         "exclude": Array [
