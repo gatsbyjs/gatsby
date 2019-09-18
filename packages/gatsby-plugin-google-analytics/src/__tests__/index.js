@@ -74,7 +74,7 @@ describe(`index.js`, () => {
         <button
           onClick={e => {
             e.preventDefault()
-            CustomTrackingEvent({
+            trackCustomEvent({
               category: `event`,
               action: `action`,
               label: `label`,
