@@ -14,16 +14,18 @@ You can install the plugin and its peer dependencies into your project by runnin
 
 After the installation of the plugin has completed, navigate to your `gatsby-config.js` file located in the root of your project's directory and add the plugin to the configuration:
 
-```diff:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
+    // highlight-start
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
-  ],
+        pathToConfigModule: `src/utils/typography`
+      }
+    }
+    // highlight-end
+  ]
 }
 ```
 
