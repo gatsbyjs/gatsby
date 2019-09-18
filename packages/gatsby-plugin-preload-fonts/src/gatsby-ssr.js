@@ -29,7 +29,10 @@ exports.onRenderBody = (
     assets.map(href => {
       let assetProps
 
+      // External urls should get the props from the plugin configuration.
+      // Local urls will be forced with `crossOrigin: "anonymous"`
       try {
+        // check if URL is external, if not this constructor throws.
         new URL(href)
         assetProps = props
       } catch (e) {
