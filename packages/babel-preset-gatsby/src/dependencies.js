@@ -2,9 +2,8 @@
 // @see https://github.com/facebook/create-react-app/blob/master/packages/babel-preset-react-app/dependencies.js
 
 const path = require(`path`)
-const resolve = m => require.resolve(m)
 
-module.exports = function(api, options = {}) {
+module.exports = function(api, options = {}, resolve = require.resolve) {
   const absoluteRuntimePath = path.dirname(
     resolve(`@babel/runtime/package.json`)
   )

@@ -4,17 +4,17 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      "<node_modules>/@babel/plugin-proposal-class-properties/index.js",
       Object {
         "loose": true,
       },
     ],
-    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
-    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    "<node_modules>/babel-plugin-macros/index.js",
+    "<node_modules>/@babel/plugin-syntax-dynamic-import/index.js",
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-runtime/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<node_modules>/@babel/runtime/package.json",
         "corejs": false,
         "helpers": false,
         "regenerator": true,
@@ -22,16 +22,16 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-spread/index.js",
       Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<node_modules>/babel-plugin-dynamic-import-node/index.js",
   ],
   "presets": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      "<node_modules>/@babel/preset-env/index.js",
       Object {
         "corejs": 2,
         "exclude": Array [
@@ -46,7 +46,7 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      "<node_modules>/@babel/preset-react/index.js",
       Object {
         "development": false,
         "pragma": "React.createElement",
@@ -61,17 +61,17 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      "<node_modules>/@babel/plugin-proposal-class-properties/index.js",
       Object {
         "loose": true,
       },
     ],
-    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
-    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    "<node_modules>/babel-plugin-macros/index.js",
+    "<node_modules>/@babel/plugin-syntax-dynamic-import/index.js",
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-runtime/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<node_modules>/@babel/runtime/package.json",
         "corejs": false,
         "helpers": false,
         "regenerator": true,
@@ -79,14 +79,14 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-spread/index.js",
       Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<node_modules>/babel-plugin-dynamic-import-node/index.js",
     Array [
-      "<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+      "<node_modules>/babel-plugin-transform-react-remove-prop-types/index.js",
       Object {
         "removeImport": true,
       },
@@ -94,7 +94,7 @@ Object {
   ],
   "presets": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      "<node_modules>/@babel/preset-env/index.js",
       Object {
         "corejs": 2,
         "exclude": Array [
@@ -107,7 +107,7 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      "<node_modules>/@babel/preset-react/index.js",
       Object {
         "development": false,
         "pragma": "React.createElement",
@@ -122,17 +122,17 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      "<node_modules>/@babel/plugin-proposal-class-properties/index.js",
       Object {
         "loose": true,
       },
     ],
-    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
-    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    "<node_modules>/babel-plugin-macros/index.js",
+    "<node_modules>/@babel/plugin-syntax-dynamic-import/index.js",
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-runtime/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<node_modules>/@babel/runtime/package.json",
         "corejs": false,
         "helpers": false,
         "regenerator": true,
@@ -140,16 +140,16 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-spread/index.js",
       Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<node_modules>/babel-plugin-dynamic-import-node/index.js",
   ],
   "presets": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      "<node_modules>/@babel/preset-env/index.js",
       Object {
         "corejs": 2,
         "exclude": Array [
@@ -162,7 +162,7 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      "<node_modules>/@babel/preset-react/index.js",
       Object {
         "development": false,
         "pragma": "React.createElement",
@@ -177,17 +177,17 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      "<node_modules>/@babel/plugin-proposal-class-properties/index.js",
       Object {
         "loose": true,
       },
     ],
-    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
-    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    "<node_modules>/babel-plugin-macros/index.js",
+    "<node_modules>/@babel/plugin-syntax-dynamic-import/index.js",
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-runtime/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<node_modules>/@babel/runtime/package.json",
         "corejs": false,
         "helpers": true,
         "regenerator": true,
@@ -195,16 +195,16 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      "<node_modules>/@babel/plugin-transform-spread/index.js",
       Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<node_modules>/babel-plugin-dynamic-import-node/index.js",
   ],
   "presets": Array [
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      "<node_modules>/@babel/preset-env/index.js",
       Object {
         "corejs": 2,
         "exclude": Array [
@@ -217,7 +217,7 @@ Object {
       },
     ],
     Array [
-      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      "<node_modules>/@babel/preset-react/index.js",
       Object {
         "development": true,
         "pragma": "React.createElement",
