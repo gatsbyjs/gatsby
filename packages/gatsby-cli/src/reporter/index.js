@@ -72,7 +72,7 @@ const interuptActivities = () => {
   })
 }
 
-const prematureEnd = (code = 1) => {
+const prematureEnd = () => {
   // hack so at least one activity is surely failed, so
   // we are guaranteed to generate FAILED status
   // if none of activity did explicitly fail
@@ -82,13 +82,10 @@ const prematureEnd = (code = 1) => {
   })
 
   interuptActivities()
-
-  // process.stdout.write(`EXITING wat\n`)
-  process.exit(code)
 }
 
 signalExit(code => {
-  if (code !== 0) prematureEnd(code)
+  if (code !== 0) prematureEnd()
   else interuptActivities()
 })
 
@@ -135,6 +132,7 @@ const reporter: Reporter = {
     const error = reporter.error(...args)
     trackError(`GENERAL_PANIC`, { error })
     prematureEnd()
+    process.exit(1)
   },
 
   panicOnBuild(...args) {
@@ -142,6 +140,7 @@ const reporter: Reporter = {
     trackError(`BUILD_PANIC`, { error })
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
+      process.exit(1)
     }
     return error
   },
