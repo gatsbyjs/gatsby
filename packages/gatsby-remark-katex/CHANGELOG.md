@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@3.1.8...gatsby-remark-katex@3.1.9) (2019-09-18)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17716](https://github.com/gatsbyjs/gatsby/issues/17716)) ([af39ae3](https://github.com/gatsbyjs/gatsby/commit/af39ae3))
+
 ## [3.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@3.1.7...gatsby-remark-katex@3.1.8) (2019-09-09)
 
 **Note:** Version bump only for package gatsby-remark-katex
