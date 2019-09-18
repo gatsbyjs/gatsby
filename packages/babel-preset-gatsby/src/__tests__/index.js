@@ -1,28 +1,23 @@
 const preset = require(`../`)
-
-const noopResolve = m => `<node_modules>/${m}/index.js`
+const path = require(`path`)
 
 describe(`babel-preset-gatsby`, () => {
   it.each([`build-stage`, `develop`, `build-javascript`, `build-html`])(
     `should specify proper presets and plugins when stage is %s`,
     stage => {
-      expect(preset(null, { stage }, noopResolve)).toMatchSnapshot()
+      expect(preset(null, { stage })).toMatchSnapshot()
     }
   )
 
   it(`Allows to configure browser targets`, () => {
     const targets = `last 1 version`
-    const { presets } = preset(
-      null,
-      {
-        stage: `build-javascript`,
-        targets,
-      },
-      noopResolve
-    )
+    const { presets } = preset(null, {
+      stage: `build-javascript`,
+      targets,
+    })
 
     expect(presets[0]).toEqual([
-      `<node_modules>/@babel/preset-env/index.js`,
+      expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
         exclude: [`transform-typeof-symbol`],
         corejs: 2,

@@ -1,5 +1,7 @@
 const path = require(`path`)
 
+const resolve = m => require.resolve(m)
+
 const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
 
 const loadCachedConfig = () => {
@@ -24,14 +26,14 @@ const loadCachedConfig = () => {
   return pluginBabelConfig
 }
 
-module.exports = function preset(_, options = {}, resolve = require.resolve) {
+module.exports = function preset(_, options = {}) {
   let { targets = null } = options
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
   const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
   const pluginBabelConfig = loadCachedConfig()
   const absoluteRuntimePath = path.dirname(
-    resolve(`@babel/runtime/package.json`)
+    require.resolve(`@babel/runtime/package.json`)
   )
 
   if (!targets) {
