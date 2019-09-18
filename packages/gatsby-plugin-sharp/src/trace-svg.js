@@ -124,14 +124,13 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
     }
 
     // new/imagetrace
-    let optionsSVG = {
+    const optionsSVG = {
       colorsampling: 0,
       numberofcolors: 2,
       pal: [{ r: 211, g: 211, b: 211, a: 255 }, { r: 0, g: 0, b: 0, a: 0 }],
       node: true,
+      ...args,
     }
-
-    optionsSVG = { ...optionsSVG, args }
 
     // `srcset` attribute rejects URIs with literal spaces
     const encodeSpaces = str => str.replace(/ /gi, `%20`)
