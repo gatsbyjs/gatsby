@@ -66,7 +66,7 @@ describe(`index.js`, () => {
     })
   })
 
-  describe(`CustomTrackingEvent()`, () => {
+  describe(`trackCustomEvent()`, () => {
     afterEach(cleanup)
 
     const setup = props => {
