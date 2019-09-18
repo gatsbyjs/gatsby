@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.37...gatsby-source-contentful@2.1.38) (2019-09-18)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Fixing when assets are in draft state ([#17571](https://github.com/gatsbyjs/gatsby/issues/17571)) ([7e40c1e](https://github.com/gatsbyjs/gatsby/commit/7e40c1e))
+
 ## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.36...gatsby-source-contentful@2.1.37) (2019-09-18)
 
 **Note:** Version bump only for package gatsby-source-contentful
