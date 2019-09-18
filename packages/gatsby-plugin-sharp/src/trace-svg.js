@@ -1,3 +1,4 @@
+const { promisify } = require(`bluebird`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
@@ -105,22 +106,20 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
     })
 
     const svgToMiniDataURI = require(`mini-svg-data-uri`)
-    const ImageTracer = require(`imagetracerjs`)
+    const { imagedataToSVG } = require(`imagetracerjs`)
+    const { loadImage, createCanvas } = require(`canvas`)
+    const sizeOf = promisify(require(`image-size`))
 
-    function trace(path, options) {
-      return new Promise((resolve, reject) => {
-        ImageTracer.imageToSVG(
-          path,
-          (svgstr, err) => {
-            if (err) {
-              reject(err)
-            } else {
-              resolve(svgstr)
-            }
-          },
-          options
-        )
-      })
+    async function trace(path, options) {
+      const { width, height } = await sizeOf(path)
+      const image = await loadImage(path)
+
+      const canvas = createCanvas(width, height)
+      const context = canvas.getContext(`2d`)
+      context.drawImage(image, 0, 0)
+      const imageData = context.getImageData(0, 0, width, height)
+
+      return imagedataToSVG(imageData, options)
     }
 
     // new/imagetrace
@@ -129,7 +128,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
       numberofcolors: 2,
       pal: [{ r: 211, g: 211, b: 211, a: 255 }, { r: 0, g: 0, b: 0, a: 0 }],
       node: true,
-      ...args,
+      // ...args,
     }
 
     // `srcset` attribute rejects URIs with literal spaces
