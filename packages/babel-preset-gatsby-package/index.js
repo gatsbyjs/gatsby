@@ -8,7 +8,6 @@ function preset(context, options = {}) {
   const IS_TEST  = (BABEL_ENV || NODE_ENV) === `test`
 
   const browserConfig = {
-    useBuiltIns: false,
     targets: {
       browsers: IS_PRODUCTION
         ? [`last 4 versions`, `safari >= 7`, `ie >= 9`]
