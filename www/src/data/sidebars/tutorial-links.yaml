@@ -8,8 +8,6 @@
       link: /tutorial/part-zero/
       ui: steps
       items:
-        - title: Overview of core technologies
-          link: /tutorial/part-zero/#overview-of-core-technologies
         - title: Familiarize with the command line
           link: /tutorial/part-zero/#familiarize-yourself-with-the-command-line
         - title: Install Node.js and npm
@@ -22,6 +20,8 @@
           link: /tutorial/part-zero/#create-a-gatsby-site
         - title: Set up a code editor
           link: /tutorial/part-zero/#set-up-a-code-editor
+        - title: Overview of core technologies
+          link: /tutorial/part-zero/#overview-of-core-technologies
     - title: 1. Get to know Gatsby building blocks
       link: /tutorial/part-one/
       ui: steps

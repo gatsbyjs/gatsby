@@ -1,5 +1,6 @@
 const { build } = require(`../..`)
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -51,7 +52,7 @@ describe(`Filter input`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      actions.createNode({ ...node }, { name: `test` })(store.dispatch)
     )
   })
 

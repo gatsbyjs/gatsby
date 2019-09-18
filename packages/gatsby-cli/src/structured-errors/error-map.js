@@ -181,6 +181,21 @@ const errorMap = {
         .join(`\n`),
     level: `ERROR`,
   },
+  // node object didn't pass validation
+  "11467": {
+    text: context =>
+      [
+        `The new node didn't pass validation: ${context.validationErrorMessage}`,
+        `Failing node:`,
+        JSON.stringify(context.node, null, 4),
+        `Note: there might be more nodes that failed validation. Output is limited to one node per type of validation failure to limit terminal spam.`,
+        context.codeFrame,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/actions/#createNode`,
+  },
 }
 
 module.exports = { errorMap, defaultError: errorMap[``] }

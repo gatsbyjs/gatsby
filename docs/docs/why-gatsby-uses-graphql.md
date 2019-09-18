@@ -189,7 +189,7 @@ This gets the job done, but it has a few shortcomings that are going to get more
 1. The images and the product data are in different places in the source code.
 2. The image paths are absolute from the _built_ site, not the source code, which makes it confusing to know how to find them from the JSON.
 3. The images are unoptimized, and any optimization you do would have to be manual.
-4. To create a preview listing of all products, we’d need to pass _all_ of the product info in `context`, which will get unweildy as the number of products increases.
+4. To create a preview listing of all products, we’d need to pass _all_ of the product info in `context`, which will get unwieldy as the number of products increases.
 5. It’s not very obvious where data is coming from in the templates that render the pages, so updating the data might be confusing later.
 
 To overcome these limitations, Gatsby introduces GraphQL as a data management layer.
@@ -200,7 +200,7 @@ There’s a bit more up-front setup required to get data into GraphQL, but the b
 
 Using `data/products.json` as an example, by using GraphQL we’re able to solve all of the limitations from the previous section:
 
-1. The images can be colocated with the products in `data/images/`.
+1. The images can be collocated with the products in `data/images/`.
 2. Image paths in `data/products.json` can be relative to the JSON file.
 3. Gatsby can automatically optimize images for faster loading and better user experience.
 4. We no longer need to pass all product data into `context` when creating pages.

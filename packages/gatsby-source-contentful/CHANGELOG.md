@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.35...gatsby-source-contentful@2.1.36) (2019-09-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.34...gatsby-source-contentful@2.1.35) (2019-09-10)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Prevent TypeError if many-to-on… ([#17500](https://github.com/gatsbyjs/gatsby/issues/17500)) ([fde5de6](https://github.com/gatsbyjs/gatsby/commit/fde5de6))
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.33...gatsby-source-contentful@2.1.34) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.32...gatsby-source-contentful@2.1.33) (2019-09-05)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.31...gatsby-source-contentful@2.1.32) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.30...gatsby-source-contentful@2.1.31) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.29...gatsby-source-contentful@2.1.30) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.28...gatsby-source-contentful@2.1.29) (2019-08-24)
 
 **Note:** Version bump only for package gatsby-source-contentful

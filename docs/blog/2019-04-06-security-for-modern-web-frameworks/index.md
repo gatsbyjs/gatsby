@@ -65,9 +65,9 @@ So, you could have private-static content, private-dynamic content, public-stati
 
 ### Public Static Content
 
-This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](/docs/creating-a-source-plugin/). Whatever source platform you use, whether it be a GitHub repository or a headless CMS, that platform is charged with securing your content from unauthorized reads and writes.
+This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](/docs/creating-a-source-plugin/). Whatever source platform you use, whether it be a GitHub repository or a [headless CMS](/docs/headless-cms/), that platform is charged with securing your content from unauthorized reads and writes.
 
-If you are using a headless CMS, the static content is fetched at build time and Gatsby will need an API key to do so. For example, [gatsby-source-contentful](/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it in your code would mean anyone with access to your code repository could take your structured data and use it any way they want.
+If you are using a [headless CMS](/docs/headless-cms/), the static content is fetched at build time and Gatsby will need an API key to do so. For example, [gatsby-source-contentful](/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it in your code would mean anyone with access to your code repository could take your structured data and use it any way they want.
 
 Fortunately, this is an easy fix using [environment variables](/docs/environment-variables/). This means not committing your `accessToken` to the git repository where many can possibly access it. Instead it is stored securely on the build server and your Contentful config reads like this:
 
