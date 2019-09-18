@@ -9,7 +9,7 @@ tags:
   - case-studies
 ---
 
-_In [Part One](/blog/2019-06-08-delicious-simplicity-case-study-part-1/) of this two-part post, we met Brian Watson, founder of the LA-based design and development agency Delicious Simplicity. Brian described his search for a “happily ever after” solution to free his team from traditional CMS monoliths like WordPress and Drupal, and how he came to love Gatsby. So much so, in fact, that the agency refactored all their current projects to run on Gatsby._
+_In [Part One](/blog/2019-06-08-delicious-simplicity-case-study-part-1/) of this two-part post, we met Brian Webster, founder of the LA-based design and development agency Delicious Simplicity. Brian described his search for a “happily ever after” solution to free his team from traditional CMS monoliths like WordPress and Drupal, and how he came to love Gatsby. So much so, in fact, that the agency refactored all their current projects to run on Gatsby._
 
 _Then came the opportunity to build a brand new Gatsby-from-scratch project, adding in the content management capability of Gatsby’s newest superpower: [Gatsby Preview](https://www.gatsbyjs.com/preview/)._
 
