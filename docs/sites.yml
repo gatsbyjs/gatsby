@@ -7270,3 +7270,16 @@
   built_by: Ridvan Karadag
   built_by_url: http://www.rootvan.com
   featured: false
+- title: Fifteen Seconds Istanbul
+  url: https://fifteenseconds.istanbul/
+  main_url: https://fifteenseconds.istanbul/
+  description: >
+    Landing page of FifteenSeconds Istanbul Event
+  categories:
+    - Event
+    - Conference
+    - Business
+    - Landing Page
+  built_by: İbrahim Telman
+  built_by_url: https://github.com/ibrahimtelman/
+  featured: false
