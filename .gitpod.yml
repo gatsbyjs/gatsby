@@ -9,7 +9,7 @@ tasks:
       gatsby-dev --scan-once &&
       npx gatsby build &&
       cd ../.. &&
-      touch /tmp/done.txt
+      gp sync-done build
     command: >
       yarn run watch --scope={gatsby,gatsby-image,gatsby-link}
   - openMode: split-right
@@ -21,11 +21,8 @@ tasks:
       gatsby-dev
   - before: >
       cd ./examples/gatsbygram
-    init: |
-      until [ -f /tmp/done.txt ]
-      do
-          sleep 2
-      done
+    init: >
+      gp sync-await build
     command: >
       npx gatsby develop
 ports:
