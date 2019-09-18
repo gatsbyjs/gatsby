@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.17...gatsby-page-utils@0.0.18) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.16...gatsby-page-utils@0.0.17) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.15...gatsby-page-utils@0.0.16) (2019-09-02)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.14...gatsby-page-utils@0.0.15) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [0.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.13...gatsby-page-utils@0.0.14) (2019-08-30)
 
 **Note:** Version bump only for package gatsby-page-utils

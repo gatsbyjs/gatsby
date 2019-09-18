@@ -49,7 +49,7 @@ Repeat for every page and template that needs this layout.
 
 As mentioned earlier, Gatsby does not, by default, automatically wrap pages in a layout component. The "top level" component is the page itself. As a result, when the "top level" component changes between pages, React will re-render all children. This means that shared components like navigations will unmount and remount. This will break CSS transitions or React state within those shared components.
 
-If you need to set a wrapper component around page components that won't get unmounted on page changes, use the **`wrapPageElement`** [browser API](/docs/browser-apis/#wrapPageElement) or the [SSR equivalent](/docs/ssr-apis/#wrapPageElement).
+If you need to set a wrapper component around page components that won't get unmounted on page changes, use the **`wrapPageElement`** [browser API](/docs/browser-apis/#wrapPageElement) and the [SSR equivalent](/docs/ssr-apis/#wrapPageElement).
 
 Alternatively, you can prevent your layout component from unmounting by using [gatsby-plugin-layout](/packages/gatsby-plugin-layout/), which implements the `wrapPageElement` APIs for you.
 

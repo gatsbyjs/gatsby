@@ -31,7 +31,7 @@ To generate static files in the simplest way, write
 gatsby build
 ```
 
-Then in the `Public` directory will be files to copy to the server.
+Then in the `public` directory will be files to copy to the server.
 
 ## Adding a Path Prefix
 

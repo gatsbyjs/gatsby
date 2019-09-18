@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.22...gatsby-source-filesystem@2.1.23) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.21...gatsby-source-filesystem@2.1.22) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Queue all operations which happ… ([#17404](https://github.com/gatsbyjs/gatsby/issues/17404)) ([ad74957](https://github.com/gatsbyjs/gatsby/commit/ad74957))
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.20...gatsby-source-filesystem@2.1.21) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.19...gatsby-source-filesystem@2.1.20) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.18...gatsby-source-filesystem@2.1.19) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
 ## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.17...gatsby-source-filesystem@2.1.18) (2019-08-24)
 
 ### Bug Fixes
