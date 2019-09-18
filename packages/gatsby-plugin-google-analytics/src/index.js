@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { createFunctionWithTimeout } from "./utils"
 
 function OutboundLink(props) {
   return (
@@ -88,10 +89,9 @@ function trackCustomEvent({
     }
 
     if (hitCallback && typeof hitCallback === "function") {
-      trackingEventOptions["hitCallback"] = hitCallback
-      
-        hitCallback()
-      }
+      trackingEventOptions["hitCallback"] = createFunctionWithTimeout(
+        hitCallback
+      )
     }
 
     window.ga(`send`, `event`, trackingEventOptions)
