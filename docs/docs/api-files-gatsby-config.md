@@ -16,9 +16,29 @@ module.exports = {
 }
 ```
 
+An example `gatsby-config.js` file could look like this:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `Gatsby`,
+  },
+  plugins: [
+    `gatsby-transform-plugin`,
+    {
+      resolve: `gatsby-plugin-name`,
+      options: {
+        optionA: true,
+        optionB: `Another option`,
+      },
+    },
+  ],
+}
+```
+
 ## Configuration options
 
-There are many [different configuration options](/docs/gatsby-config) available, but this page will outline the most common ones.
+There are [many configuration options](/docs/gatsby-config) available, but this page will outline the most common ones.
 
 ### Site metadata
 
@@ -65,6 +85,25 @@ Many plugins have optional or required options to configure them. Instead of add
 ```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
+    {
+      resolve: `gatsby-plugin-name`,
+      options: {
+        optionA: true,
+        optionB: `Another option`,
+      },
+    },
+  ],
+}
+```
+
+### Mixed plugins
+
+You can add both plugins with options and without. Your site's config file could look like this:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-transform-plugin`,
     {
       resolve: `gatsby-plugin-name`,
       options: {
