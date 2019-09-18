@@ -88,7 +88,8 @@ function trackCustomEvent({
     }
 
     if (hitCallback && typeof hitCallback === "function") {
-      trackingEventOptions["hitCallback"] = function() {
+      trackingEventOptions["hitCallback"] = hitCallback
+      
         hitCallback()
       }
     }
