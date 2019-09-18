@@ -11,7 +11,7 @@ stores via the [Shopify Storefront API][shopify-storefront-api].
 
 ## Install
 
-```sh
+```shell
 npm install --save gatsby-source-shopify
 ```
 
