@@ -31,10 +31,10 @@ Marcy also presented a full-length workshop on [Accessibility in JavaScript Appl
 
 We've made a bunch of improvements to Gatsby's GraphQL layer recently. Here is a quick summary:
 
-- We now support abstract data interfaces. This means that you can  build Gatsby sites (or themes) that support the same query for multiple data sources. [Mikhail](https://twitter.com/freiksenet) from the core team talks more about this on [Learn With Jason](https://www.youtube.com/watch?v=ALspNtrOqDk)
-- Materialisation
+- We now support abstract data interfaces. This means that you can build Gatsby sites (or themes) that support the same query for multiple data sources. [Mikhail](https://twitter.com/freiksenet) from the core team talks more about this on [Learn With Jason](https://www.youtube.com/watch?v=ALspNtrOqDk)
+- Materialisation: This work included a major refactoring in Gatsby’s data layer. It restores support for a database storage backend within Gatsby, which speeds up builds for larger sites. Check it out in [#16091](https://github.com/gatsbyjs/gatsby/pull/16091).
 - [Stefan](https://github.com/stefanprobst) added the ability to snapshot your Gatsby schema in [gatsby-plugin-schema-snapshot](https://www.gatsbyjs.org/packages/gatsby-plugin-schema-snapshot/). This enables you to lock-down a project’s GraphQL schema.
-- GraphiQL Explorer is now available in the WPGraphiQL plugin for WordPress. Thanks to [Henrik](https://github.com/henrikwirth) for [adding this feature](https://github.com/wp-graphql/wp-graphiql/pull/16)
+- GraphiQL Explorer is now available in the WPGraphiQL plugin for WordPress. Thanks to [Henrik Wirth](https://github.com/henrikwirth) for adding this feature in [#16](https://github.com/wp-graphql/wp-graphiql/pull/16).
 
 ### gatsby-plugin-offline v3
 
@@ -50,7 +50,7 @@ Huge shoutout to the Next.js team since we picked this up from them!
 
 ### Renovate
 
-We recently enabled automatic dependency updates using [Renovate](https://renovatebot.com/). As of today, dependencies in all official Gatsby packages are completely up to date.
+We recently enabled automatic dependency updates using [Renovate](https://renovatebot.com/). As of today, dependencies in all official Gatsby packages are completely up to date (excluding major versions).
 
 This means faster resolution of bugs caused by upstream issues and also better security.
 
@@ -60,13 +60,13 @@ We'd like to thank [Rhys Arkins](https://twitter.com/rarkins) for all his help o
 
 It's been a pretty busy month on the monorepo. We've merged in a _lot_ of your contributions and they've all been amazing. Let's go over some of the highlights!
 
-### GraphiQL Code Explorer
+### GraphiQL Code Exporter
 
 Back in June, [Michal](https://twitter.com/mipiechowiak) from the Gatsby core team worked on adding [GraphiQL Explorer](https://github.com/OneGraph/graphiql-explorer) to GraphiQL in Gatsby. One of the next steps he mentioned was the addition of code snippet generation using graphiql-code-exporter.
 
-Gatsby now includes Code Explorer in GraphiQL out of the box starting from v2.15.3, thanks to [Dan Kirkham](https://twitter.com/herecydev).
+Gatsby now includes Code Exporter in GraphiQL out of the box starting from v2.15.3, thanks to [Dan Kirkham](https://twitter.com/herecydev).
 
-![GraphiQL Code Explorer](./2019-09-1308.05.19.gif)
+![GraphiQL Code Exporter](./2019-09-1308.05.19.gif)
 
 When you write a query in GraphiQL, this will automatically generate code for you! You can check out Dan's work on [the PR on GitHub](https://github.com/gatsbyjs/gatsby/pull/17120).
 
