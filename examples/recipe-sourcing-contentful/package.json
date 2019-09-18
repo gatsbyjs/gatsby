@@ -9,6 +9,7 @@
     "gatsby-image": "^2.2.18",
     "gatsby-plugin-offline": "^2.2.10",
     "gatsby-source-contentful": "^2.1.35",
+    "gatsby-transformer-remark": "^2.6.22",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
