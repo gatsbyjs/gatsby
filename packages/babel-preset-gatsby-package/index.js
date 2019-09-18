@@ -28,6 +28,7 @@ function preset(context, options = {}) {
         r(`@babel/preset-env`),
         Object.assign(
           {
+            corejs: 2,
             loose: true,
             debug: !!debug,
             useBuiltIns: `entry`,
