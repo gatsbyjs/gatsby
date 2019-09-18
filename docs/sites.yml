@@ -7259,7 +7259,7 @@
   featured: false
 - title: Tracli
   url: http://tracli.rootvan.com/
-  main_url: http://tracli.rootvan.com/
+  main_url: https://tracli.rootvan.com/
   source_url: https://github.com/ridvankaradag/tracli-landing
   description: >
     A command line app that tracks your time
