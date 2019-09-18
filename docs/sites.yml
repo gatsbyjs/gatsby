@@ -7257,3 +7257,16 @@
   built_by: Robert Marshall
   built_by_url: https://robertmarshall.dev
   featured: false
+- title: Tracli
+  url: https://tracli.rootvan.com/
+  main_url: https://tracli.rootvan.com/
+  source_url: https://github.com/ridvankaradag/tracli-landing
+  description: >
+    A command line app that tracks your time
+  categories:
+    - Productivity
+    - Technology
+    - Landing Page
+  built_by: Ridvan Karadag
+  built_by_url: http://www.rootvan.com
+  featured: false
