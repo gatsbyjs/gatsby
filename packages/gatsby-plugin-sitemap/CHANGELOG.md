@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.12...gatsby-plugin-sitemap@2.2.13) (2019-09-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** Removed redundant check for siteUrl ([#17683](https://github.com/gatsbyjs/gatsby/issues/17683)) ([1c4dc65](https://github.com/gatsbyjs/gatsby/commit/1c4dc65))
+
 ## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.11...gatsby-plugin-sitemap@2.2.12) (2019-09-09)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

@@ -30,7 +30,7 @@ npm install tailwindcss --save-dev
 To configure Tailwind, we'll need to add a Tailwind configuration file. Luckily, Tailwind has a built-in script to do this. Just run the following command:
 
 ```shell
-./node_modules/.bin/tailwind init
+npx tailwind init
 ```
 
 ### Option #1: PostCSS

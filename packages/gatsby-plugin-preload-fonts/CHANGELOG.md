@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.4...gatsby-plugin-preload-fonts@1.0.5) (2019-09-13)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17601](https://github.com/gatsbyjs/gatsby/issues/17601)) ([588cd8f](https://github.com/gatsbyjs/gatsby/commit/588cd8f))
+
 ## [1.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.3...gatsby-plugin-preload-fonts@1.0.4) (2019-09-10)
 
 **Note:** Version bump only for package gatsby-plugin-preload-fonts
