@@ -17,7 +17,7 @@ Array [
           "not android 4.4.3",
         ],
       },
-      "useBuiltIns": false,
+      "useBuiltIns": "entry",
     },
   ],
   Array [
@@ -47,7 +47,7 @@ Array [
           "not android 4.4.3",
         ],
       },
-      "useBuiltIns": false,
+      "useBuiltIns": "entry",
     },
   ],
   Array [
@@ -149,7 +149,7 @@ Array [
           "ie >= 9",
         ],
       },
-      "useBuiltIns": false,
+      "useBuiltIns": "entry",
     },
   ],
   Array [
