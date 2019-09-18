@@ -5,19 +5,19 @@ This repo is a small example Gatsby site that shows how to source data from Cont
 ## Setting up your Contentful space
 
 1. Install the [Contentful CLI](https://www.npmjs.com/package/contentful-cli)
-2. Login to Contentful with the CLI, it will help you create an account if you don't have one
+2. Login to Contentful with the CLI. It will help you create an account if you don't have one.
 
 ```
 contentful login
 ```
 
-3. Create a new space, this command will return a new space ID.
+3. Create a new space.
 
 ```
 contentful space create --name 'Gatsby example'
 ```
 
-4. Seed the new space with example blog content using the new space ID.
+4. Seed the new space with example blog content using the new space ID returned from the previous command.
 
 ```
 contentful space seed -s '[space ID]' -t blog
