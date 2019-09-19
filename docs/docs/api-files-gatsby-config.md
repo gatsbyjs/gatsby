@@ -38,7 +38,7 @@ module.exports = {
 
 ## Configuration options
 
-There are [many configuration options](/docs/gatsby-config) available, but this page will outline the most common ones.
+There are [many configuration options](/docs/gatsby-config) available, but the most common set site-wide metadata and enable plugins.
 
 ### Site metadata
 
