@@ -167,16 +167,15 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       postCssPlugins: [
-        require('tailwindcss'),
-        // require('./tailwind.config.js') // Load custom tailwindcss configuration 
-      ]
+        require("tailwindcss"),
+        // require('./tailwind.config.js') // Load custom tailwindcss configuration
+      ],
     },
-  }
+  },
 ]
 ```
 
 Learn here [how to customize your tailwindcss configuration](https://tailwindcss.com/docs/configuration#creating-your-configuration-file).
-
 
 ## Relative paths & url()
 
