@@ -506,6 +506,79 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 - More on [importing assets into files](/docs/importing-assets-into-files/)
 
+### Using Emotion
+
+[Emotion](https://emotion.sh) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components. You can use each styling feature individually or together in the same file.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+
+#### Directions
+
+1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
+
+```shell
+npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+```
+
+2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-emotion`],
+}
+```
+
+3. If you don't already have one, create a page in your Gatsby site at `src/pages/emotion-sample.js`.
+
+Import Emotion's `css` core package. You can then use the `css` prop to add [Emotion object styles](https://emotion.sh/docs/object-styles) to any element inside a component:
+
+```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import { css } from "@emotion/core"
+
+export default () => (
+  <div>
+    <p
+      css={{
+        background: "pink",
+        color: "blue",
+      }}
+    >
+      This page is using Emotion.
+    </p>
+  </div>
+)
+```
+
+4. To use Emotion's [styled components](https://emotion.sh/docs/styled), import the package and define them using the `styled` function.
+
+```jsx:title=src/pages/emotion-sample.js
+import React from "react"
+import styled from "@emotion/styled"
+
+const Content = styled.div`
+  text-align: center;
+  margin-top: 10px;
+  p {
+    font-weight: bold;
+  }
+`
+
+export default () => (
+  <Content>
+    <p>This page is using Emotion.</p>
+  </Content>
+)
+```
+
+#### Additional resources
+
+- [Using Emotion in Gatsby](/docs/emotion/)
+- [Emotion website](https://emotion.sh)
+- [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
+
 ### Using Google Fonts
 
 Hosting your own [Google Fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
@@ -920,6 +993,104 @@ export default ({ pageContext: { allPokemon } }) => (
 - [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
 - More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
 - When and how to [query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
+
+### Sourcing content from Drupal
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start)
+- A [Drupal](http://drupal.org) site
+- The [JSON:API module](https://www.drupal.org/project/jsonapi) installed and enabled on the Drupal site
+
+#### Directions
+
+1. Install the `gatsby-source-drupal` plugin.
+
+```
+npm install --save gatsby-source-drupal
+```
+
+2. Edit your `gatsby-config.js` file to enable the plugin and configure it.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://your-website/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
+  ],
+}
+```
+
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
+
+```graphql
+{
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+4. To use your Drupal data, create a new page in your Gatsby site at `src/pages/drupal.js`. This page will list all Drupal "Page" nodes.
+
+_**Note:** the exact GraphQL schema will depend on your how Drupal instance is structured._
+
+```jsx:title=src/pages/drupal.js
+import React from "react"
+import { graphql } from "gatsby"
+
+const DrupalPage = ({ data }) => (
+  <div>
+    <h1>Drupal pages</h1>
+    <ul>
+    {data.allNodePage.edges.map(({ node, index }) => (
+      <li key={index}>
+        <h2>{node.title}</h2>
+        <div>
+          {node.body.value}
+        </div>
+      </li>
+    ))}
+   </ul>
+  </div>
+)
+
+export default DrupalPage
+
+export const query = graphql`
+  {
+  allNodePage {
+    edges {
+      node {
+        title
+        body {
+          value
+        }
+      }
+    }
+  }
+}
+```
+
+5. With the development server running, you can view the new page by visiting `http://localhost:8000/drupal`.
+
+#### Additional Resources
+
+- [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
+- [More on sourcing from Drupal](/docs/sourcing-from-drupal)
+- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
 
 ## 6. Querying data
 
