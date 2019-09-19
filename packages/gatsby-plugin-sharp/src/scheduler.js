@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const { existsSync } = require(`fs`)
+const uuidv4 = require(`uuid/v4`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
 const { createProgress } = require(`./utils`)
@@ -69,9 +70,11 @@ exports.scheduleJob = async (
 
   if (!isQueued) {
     // Create image job
+    const jobId = uuidv4()
     boundActionCreators.createJob(
       {
-        id: `processing image ${job.inputPath}`,
+        id: jobId,
+        description: `processing image ${job.inputPath}`,
         imagesCount: 1,
       },
       { name: `gatsby-plugin-sharp` }
@@ -79,6 +82,7 @@ exports.scheduleJob = async (
 
     q.push(cb => {
       runJobs(
+        jobId,
         inputFileKey,
         boundActionCreators,
         pluginOptions,
@@ -92,6 +96,7 @@ exports.scheduleJob = async (
 }
 
 function runJobs(
+  jobId,
   inputFileKey,
   boundActionCreators,
   pluginOptions,
@@ -108,7 +113,7 @@ function runJobs(
   // Update job info
   boundActionCreators.setJob(
     {
-      id: `processing image ${job.inputPath}`,
+      id: jobId,
       imagesCount: jobs.length,
     },
     { name: `gatsby-plugin-sharp` }
@@ -146,7 +151,7 @@ function runJobs(
 
           boundActionCreators.setJob(
             {
-              id: `processing image ${job.inputPath}`,
+              id: jobId,
               imagesFinished,
             },
             { name: `gatsby-plugin-sharp` }
@@ -156,10 +161,7 @@ function runJobs(
 
     Promise.all(promises).then(() => {
       console.log(`[gatsby-plugin-sharp] finishing job ${job.inputPath}`)
-      boundActionCreators.endJob(
-        { id: `processing image ${job.inputPath}` },
-        { name: `gatsby-plugin-sharp` }
-      )
+      boundActionCreators.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
       cb()
     })
   } catch (err) {

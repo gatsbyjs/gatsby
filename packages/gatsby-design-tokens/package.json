@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Gatsby Design Tokens",
   "main": "index.js",
   "author": "Florian Kissling <flo@gatsbyjs.com>",
