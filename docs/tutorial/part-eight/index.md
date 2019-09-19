@@ -311,6 +311,7 @@ export default ({ data }) => {
         title={post.frontmatter.title}
         description={post.frontmatter.excerpt}
       />
+      // highlight-end
       <div>
         <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
