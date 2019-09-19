@@ -293,7 +293,7 @@ export default SEO
 
 The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work with in the rest of your project. Pretty cool, right?
 
-4.  Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to you `blog-posts.js` file like so:
+4.  Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-posts.js` file like so:
 
 ```jsx:title=blog-posts.js
 import React from "react"
