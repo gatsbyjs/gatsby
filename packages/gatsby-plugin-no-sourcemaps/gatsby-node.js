@@ -1,7 +1,7 @@
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   if (stage === `build-javascript`) {
     actions.setWebpackConfig({
-      devtool: false,
-    })
+      devtool: process.env.NODE_ENV === 'development' ? 'source-map' : false,
+    });
   }
 }
