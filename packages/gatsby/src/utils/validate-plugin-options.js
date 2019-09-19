@@ -1,9 +1,24 @@
+const Joi = require(`@hapi/joi`)
+
+const baseSchema = Joi.object().keys({
+  plugins: Joi.array(
+    Joi.alternatives(
+      Joi.string(),
+      Joi.object().keys({
+        resolve: Joi.string().required(),
+        options: Joi.object()
+          .keys()
+          .unknown(),
+      })
+    )
+  ),
+})
+
 exports.validatePluginOptions = (res, options = {}) => {
   let chain = Promise.resolve(res)
   if (res && res.validate) {
-    chain = res.validate(options, {
+    chain = baseSchema.concat(res).validate(options, {
       abortEarly: false,
-      allowUnknown: true,
     })
   }
   return chain
