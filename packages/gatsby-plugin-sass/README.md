@@ -17,6 +17,7 @@ plugins: [`gatsby-plugin-sass`]
 2. Write your stylesheets in Sass/SCSS and require or import them as normal.
 
 ```css:title="src/index.sass"
+// in src/index.sass
 html {
   background-color: rebeccapurple;
   p {
@@ -26,6 +27,7 @@ html {
 ```
 
 ```javascript
+// in gatsby-browser.js
 import("./src/index.sass")
 ```
 
@@ -104,7 +106,7 @@ plugins: [
 ]
 ```
 
-### Bootstrap 3 (with `bootstrap-sass`)
+#### Bootstrap 3 (with `bootstrap-sass`)
 
 See [`bootstrap-sass`](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision) for reference.
 
@@ -152,6 +154,31 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your Sass output you can specify plugins
 in the plugin options.
 
+#### TailwindCSS
+
+To be able to use [TailwindCSS](https://tailwindcss.com/) within your Sass/SCSS files, add the `tailwindcss` package into the `postCSSPlugins` parameter.
+Optionally you can add a corresponding configuration file (By default it will be `tailwind.config.js`).
+If you are adding a custom configuration, you will need to load it after `tailwindcss`.
+
+```js:title="gatsby-config.js"
+// in gatsby-config.js
+
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      postCssPlugins: [
+        require('tailwindcss'),
+        // require('./tailwind.config.js') // Load custom tailwindcss configuration 
+      ]
+    },
+  }
+]
+```
+
+Learn here [how to customize your tailwindcss configuration](https://tailwindcss.com/docs/configuration#creating-your-configuration-file).
+
+
 ## Relative paths & url()
 
 This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
@@ -160,10 +187,10 @@ Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) prov
 
 First:
 
-```javascript
-  npm install resolve-url-loader --save-dev
-  or
-  yarn add resolve-url-loader --dev
+```bash
+npm install resolve-url-loader --save-dev
+or
+yarn add resolve-url-loader --dev
 ```
 
 And then:
