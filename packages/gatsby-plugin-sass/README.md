@@ -16,8 +16,8 @@ plugins: [`gatsby-plugin-sass`]
 
 2. Write your stylesheets in Sass/SCSS and require or import them as normal.
 
-```css:title="src/index.sass"
-// in src/index.sass
+```scss
+// in src/index.scss
 html {
   background-color: rebeccapurple;
   p {
@@ -28,7 +28,7 @@ html {
 
 ```javascript
 // in gatsby-browser.js
-import("./src/index.sass")
+import("./src/index.scss")
 ```
 
 ## Other options
@@ -36,7 +36,7 @@ import("./src/index.sass")
 If you need to pass options to Sass use the plugins options, see [node-sass](https://github.com/sass/node-sass)/[dart-sass](https://github.com/sass/dart-sass) docs
 for all available options.
 
-```javascript
+```js
 // in gatsby-config.js
 plugins: [
   {
@@ -110,7 +110,7 @@ plugins: [
 
 See [`bootstrap-sass`](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision) for reference.
 
-```javascript
+```js
 // in gatsby-config.js
 plugins: [
   {
@@ -160,9 +160,8 @@ To be able to use [TailwindCSS](https://tailwindcss.com/) within your Sass/SCSS 
 Optionally you can add a corresponding configuration file (By default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-```js:title="gatsby-config.js"
+```javascript
 // in gatsby-config.js
-
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
