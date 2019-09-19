@@ -1,7 +1,7 @@
 const Joi = require(`@hapi/joi`)
 
 const baseSchema = Joi.object().keys({
-  plugins: Joi.array(
+  plugins: Joi.array().items(
     Joi.alternatives(
       Joi.string(),
       Joi.object().keys({

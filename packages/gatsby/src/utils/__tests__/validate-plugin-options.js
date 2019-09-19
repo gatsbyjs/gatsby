@@ -27,6 +27,37 @@ describe(`validating plugin options`, () => {
       })
     })
 
+    describe(`plugin validation`, () => {
+      test.each([
+        [
+          `validates string shape`,
+          [`gatsby-plugin-react-helmet`, `gatsby-plugin-yolo`],
+        ],
+        [
+          `validates object shape`,
+          [
+            {
+              resolve: `gatsby-plugin-remark`,
+              options: {
+                plugins: [],
+              },
+            },
+          ],
+        ],
+      ])(`%p`, (_, plugins) => {
+        expect(
+          validatePluginOptions(schema, {
+            ...defaultOpts,
+            plugins,
+          })
+        ).resolves.toEqual(
+          expect.objectContaining({
+            plugins,
+          })
+        )
+      })
+    })
+
     it(`does not bail on first error`, async () => {
       try {
         await validatePluginOptions(schema, {})
@@ -37,11 +68,17 @@ describe(`validating plugin options`, () => {
       }
     })
 
-    it(`does not bail on unknown keys`, () => {
+    it(`bails on unknown keys`, async () => {
       const extra = { d: `d` }
-      expect(
-        validatePluginOptions(schema, { ...defaultOpts, ...extra })
-      ).resolves.toEqual(expect.objectContaining(extra))
+      try {
+        await validatePluginOptions(schema, { ...defaultOpts, ...extra })
+      } catch (e) {
+        expect(e.details[0].message).toEqual(
+          expect.stringContaining(`is not allowed`)
+        )
+      } finally {
+        expect.hasAssertions()
+      }
     })
   })
 })
