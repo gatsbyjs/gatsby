@@ -130,10 +130,9 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
       return imagedataToSVG(imageData, options)
     }
 
-    // new/imagetrace
     const optionsSVG = {
       colorsampling: 0,
-      numberofcolors: 2,
+      colorquantcycles: 1,
       pal: [{ r: 211, g: 211, b: 211, a: 255 }, { r: 0, g: 0, b: 0, a: 0 }],
       node: true,
       // ...args,
