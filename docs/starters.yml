@@ -1,3 +1,11 @@
+- url: https://strategically-dot-co.netlify.com/
+  repo: https://github.com/strategically/starter
+  tags:
+    - Landing Page
+    - Netlify
+  features:
+- A simple landing page 
+- A simple contact page
 - url: https://authenticaysh.netlify.com/
   repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
   description: Full-featured Auth with AWS Amplify & AWS Cognito
