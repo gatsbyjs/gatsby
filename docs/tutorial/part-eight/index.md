@@ -306,7 +306,7 @@ export default ({ data }) => {
   const post = data.markdownRemark
   return (
     <Layout>
-      // highlight-next-line
+      // highlight-start
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.excerpt}
