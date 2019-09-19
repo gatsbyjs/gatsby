@@ -9,7 +9,7 @@ exports.onServiceWorkerActive = ({
   // if the SW has just updated then clear the path dependencies and don't cache
   // stuff, since we're on the old revision until we navigate to another page
   if (window.___swUpdated) {
-    serviceWorker.active.postMessage({ gatsbyAPI: `clearPathResources` })
+    serviceWorker.active.postMessage({ gatsbyApi: `clearPathResources` })
     return
   }
 
@@ -33,7 +33,7 @@ exports.onServiceWorkerActive = ({
     prefetchedResources.push(...resources)
 
     serviceWorker.active.postMessage({
-      gatsbyAPI: `setPathResources`,
+      gatsbyApi: `setPathResources`,
       path,
       resources,
     })
@@ -70,7 +70,7 @@ function setPathResources(path, getResourceURLsForPathname) {
     } else {
       const resources = getResourceURLsForPathname(path)
       serviceWorker.controller.postMessage({
-        gatsbyAPI: `setPathResources`,
+        gatsbyApi: `setPathResources`,
         path,
         resources,
       })
@@ -87,7 +87,7 @@ exports.onRouteUpdate = ({ location, getResourceURLsForPathname }) => {
     navigator.serviceWorker.controller !== null
   ) {
     navigator.serviceWorker.controller.postMessage({
-      gatsbyAPI: `enableOfflineShell`,
+      gatsbyApi: `enableOfflineShell`,
     })
   }
 }

@@ -56,7 +56,7 @@ const MessageAPI = {
 }
 
 self.addEventListener(`message`, event => {
-  const { gatsbyAPI: api } = event.data
+  const { gatsbyApi: api } = event.data
   if (api) MessageAPI[api](event, event.data)
 })
 
