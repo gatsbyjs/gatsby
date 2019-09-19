@@ -5,7 +5,6 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
-      "corejs": 2,
       "debug": false,
       "loose": true,
       "modules": "commonjs",
@@ -17,7 +16,7 @@ Array [
           "not android 4.4.3",
         ],
       },
-      "useBuiltIns": "entry",
+      "useBuiltIns": false,
     },
   ],
   Array [
@@ -35,7 +34,6 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
-      "corejs": 2,
       "debug": true,
       "loose": true,
       "modules": "commonjs",
@@ -47,7 +45,7 @@ Array [
           "not android 4.4.3",
         ],
       },
-      "useBuiltIns": "entry",
+      "useBuiltIns": false,
     },
   ],
   Array [
@@ -137,7 +135,6 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
-      "corejs": 2,
       "debug": false,
       "loose": true,
       "modules": "commonjs",
@@ -149,7 +146,7 @@ Array [
           "ie >= 9",
         ],
       },
-      "useBuiltIns": "entry",
+      "useBuiltIns": false,
     },
   ],
   Array [

@@ -8,6 +8,7 @@ function preset(context, options = {}) {
   const IS_TEST  = (BABEL_ENV || NODE_ENV) === `test`
 
   const browserConfig = {
+    useBuiltIns: false,
     targets: {
       browsers: IS_PRODUCTION
         ? [`last 4 versions`, `safari >= 7`, `ie >= 9`]
@@ -16,6 +17,8 @@ function preset(context, options = {}) {
   }
 
   const nodeConfig = {
+    corejs: 2,
+    useBuiltIns: `entry`,
     targets: {
       node: IS_PRODUCTION ? nodeVersion : `current`,
     },
@@ -27,10 +30,8 @@ function preset(context, options = {}) {
         r(`@babel/preset-env`),
         Object.assign(
           {
-            corejs: 2,
             loose: true,
             debug: !!debug,
-            useBuiltIns: `entry`,
             shippedProposals: true,
             modules: `commonjs`,
           },
