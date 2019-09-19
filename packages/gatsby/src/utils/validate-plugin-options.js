@@ -1,17 +1,9 @@
 const Joi = require(`@hapi/joi`)
 
+const { pluginSchema } = require(`../joi-schemas/joi`)
+
 const baseSchema = Joi.object().keys({
-  plugins: Joi.array().items(
-    Joi.alternatives(
-      Joi.string(),
-      Joi.object().keys({
-        resolve: Joi.string().required(),
-        options: Joi.object()
-          .keys()
-          .unknown(),
-      })
-    )
-  ),
+  plugins: Joi.array().items(pluginSchema),
 })
 
 exports.validatePluginOptions = (res, options = {}) => {

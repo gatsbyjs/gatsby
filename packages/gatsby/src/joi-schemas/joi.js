@@ -7,6 +7,16 @@ const addLeadingSlash = chain =>
     then: chain.replace(/^([^/])/, `/$1`),
   })
 
+export const pluginSchema = Joi.alternatives(
+  Joi.string(),
+  Joi.object().keys({
+    resolve: Joi.string().required(),
+    options: Joi.object()
+      .keys()
+      .unknown(),
+  })
+)
+
 export const gatsbyConfigSchema = Joi.object()
   .keys({
     __experimentalThemes: Joi.array(),
