@@ -36,22 +36,22 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
 
 workbox.routing.registerRoute(navigationRoute)
 
-class MessageAPI {
-  static setPathResources(event, { path, resources }) {
+const MessageAPI = {
+  setPathResources: (event, { path, resources }) => {
     event.waitUntil(idbKeyval.set(`resources:${path}`, resources))
-  }
+  },
 
-  static clearPathResources(event) {
+  clearPathResources: event => {
     event.waitUntil(idbKeyval.clear())
-  }
+  },
 
-  static enableOfflineShell() {
+  enableOfflineShell: () => {
     offlineShellEnabled = true
-  }
+  },
 
-  static disableOfflineShell() {
+  disableOfflineShell: () => {
     offlineShellEnabled = false
-  }
+  },
 }
 
 self.addEventListener(`message`, event => {
