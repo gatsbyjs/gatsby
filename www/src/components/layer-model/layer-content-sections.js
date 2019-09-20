@@ -13,8 +13,10 @@ import {
 } from "../../utils/presets"
 
 // Components for building sections used in the model
-const LayerContentWrapper = ({ children }) => (
+const LayerContentWrapper = ({ index, children }) => (
   <div
+    aria-labelledby={`tab${index}`}
+    role="tabpanel"
     css={{
       padding: `${space[4]} 0`,
       display: `grid`,
@@ -37,6 +39,7 @@ const ExampleWrapper = ({ children }) => (
   <div
     css={{
       borderRadius: radii[3],
+      overflow: `auto`,
     }}
   >
     {children}
@@ -178,8 +181,8 @@ const ContentSource = ({ sourceIndex, setSourceIndex }) => (
     {sources[sourceIndex].content}
   </CodeWrapper>
 )
-const ContentLayerContent = ({ sourceIndex, setSourceIndex }) => (
-  <LayerContentWrapper>
+const ContentLayerContent = ({ sourceIndex, setSourceIndex, index }) => (
+  <LayerContentWrapper key={`content-wrapper${index}`} index={index}>
     <ExampleWrapper>
       <ContentSource
         sourceIndex={sourceIndex}
@@ -199,8 +202,8 @@ const ContentLayerContent = ({ sourceIndex, setSourceIndex }) => (
   </LayerContentWrapper>
 )
 
-const BuildLayerContent = () => (
-  <LayerContentWrapper>
+const BuildLayerContent = ({ index }) => (
+  <LayerContentWrapper key={`content-wrapper${index}`} index={index}>
     <ExampleWrapper>
       <CodeWrapper title="src/pages/homepage.js" language="javascript">
         {`const query = graphql\`
@@ -232,8 +235,8 @@ const BuildLayerContent = () => (
   </LayerContentWrapper>
 )
 
-const DataLayerContent = () => (
-  <LayerContentWrapper>
+const DataLayerContent = ({ index }) => (
+  <LayerContentWrapper key={`content-wrapper${index}`} index={index}>
     <ExampleWrapper>
       <CodeWrapper title="GraphQL Response" language="json">
         {`data: {
@@ -260,8 +263,8 @@ const DataLayerContent = () => (
   </LayerContentWrapper>
 )
 
-const ViewLayerContent = () => (
-  <LayerContentWrapper>
+const ViewLayerContent = ({ index }) => (
+  <LayerContentWrapper key={`content-wrapper${index}`} index={index}>
     <ExampleWrapper>
       <CodeWrapper title="src/pages/homepage.js" language="jsx">
         {`export ({ data }) => (
@@ -287,8 +290,8 @@ const ViewLayerContent = () => (
   </LayerContentWrapper>
 )
 
-const AppLayerContent = () => (
-  <LayerContentWrapper>
+const AppLayerContent = ({ index }) => (
+  <LayerContentWrapper key={`content-wrapper${index}`} index={index}>
     <ExampleWrapper>
       <div
         css={{

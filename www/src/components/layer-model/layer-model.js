@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import hex2rgba from "hex2rgba"
 
 import { space, colors, radii } from "../../utils/presets"
@@ -11,11 +11,16 @@ import {
   AppLayerContent,
 } from "./layer-content-sections"
 
-const Layer = ({ layer, onClick, selected }) => {
+const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
   const { baseColor, title } = layer
 
   return (
     <button
+      key={`button${index}`}
+      id={`tab${index}`}
+      ref={buttonRef}
+      role="tab"
+      aria-selected={selected}
       onClick={onClick}
       css={{
         cursor: `pointer`,
@@ -82,9 +87,30 @@ const layers = [
     component: AppLayerContent,
   },
 ]
-const ContentMeshModel = ({ initialLayer = `Content` }) => {
+
+const LayerModel = ({ initialLayer = `Content` }) => {
   const [selected, setSelected] = useState(initialLayer)
   const [sourceIndex, setSourceIndex] = useState(0)
+  const refs = useRef(layers.map(() => React.createRef()))
+  function downHandler({ key }) {
+    const currentIndex = layers.findIndex(layer => layer.title === selected)
+    if (key === `ArrowLeft` && currentIndex !== 0) {
+      const targetIndex = currentIndex - 1
+      setSelected(layers[targetIndex].title)
+      refs.current[targetIndex].current.focus()
+    }
+    if (key === `ArrowRight` && currentIndex !== layers.length - 1) {
+      const targetIndex = currentIndex + 1
+      setSelected(layers[targetIndex].title)
+      refs.current[targetIndex].current.focus()
+    }
+  }
+  useEffect(() => {
+    window.addEventListener(`keydown`, downHandler)
+    return () => {
+      window.removeEventListener(`keydown`, downHandler)
+    }
+  }, [selected])
   return (
     <>
       <div
@@ -94,6 +120,7 @@ const ContentMeshModel = ({ initialLayer = `Content` }) => {
         }}
       >
         <div
+          role="tablist"
           css={{
             display: `grid`,
             gridTemplateColumns: `repeat(5, 1fr)`,
@@ -104,6 +131,8 @@ const ContentMeshModel = ({ initialLayer = `Content` }) => {
           {layers.map((layer, index) => (
             <Layer
               key={index}
+              buttonRef={refs.current[index]}
+              index={index}
               layer={layer}
               onClick={() => {
                 setSelected(layer.title)
@@ -114,12 +143,12 @@ const ContentMeshModel = ({ initialLayer = `Content` }) => {
         </div>
       </div>
       {layers.map(
-        layer =>
+        (layer, index) =>
           selected === layer.title &&
-          layer.component({ sourceIndex, setSourceIndex })
+          layer.component({ sourceIndex, setSourceIndex, index })
       )}
     </>
   )
 }
 
-export default ContentMeshModel
+export default LayerModel
