@@ -31,8 +31,10 @@ The following things need to be created:
 
 There are several changes to the repo that need to be made in order to support localization:
 
-* [ ] All text strings in `/www` need to be moved to `/docs` so they can be translated
-* [ ] All content in `/docs` need to be moved to `/docs/en`
+* [ ] Move all text strings in `/www` to `/docs` so they can be translated
+* [ ] Create a `translations/` directory
+* [ ] Make routes such as `/docs` redirect to `/en/docs`
+* [ ] Support routes for translations (such as `/es/docs`)
 * [ ] Support for right-to-left languages
 * [ ] Support for language-specific fonts
 * [ ] UI to toggle between languages
@@ -46,19 +48,17 @@ In addition to these crucial tasks, there are a few nice-to-haves:
 
 ### Project Organization
 
-The documentation of each language will be put in a folder under the top-level `/docs` directory in the monorepo:
+The documentation of each language will be put in a folder under the top-level `/translations` directory in the monorepo:
 
 ```
 |-- /docs
-    |-- /en
-        |-- /docs
-        |-- /blog
+    |-- /docs
+    |-- /blog
+|-- /translations
     |-- /es
         |-- /docs
         |-- /blog
 ```
-
-All content currently under `/docs` will need to be moved under an `/en` directory, and we will need to change routing logic so that `gatsbyjs.org/[content]` redirects to `gatsbyjs.org/en/[content]` (or possibly do automatic locale detection).
 
 The reason for doing this structure is so that all the documentation for each language can be under a single directory instead of being scattered across the `docs/` repository.
 
@@ -83,7 +83,7 @@ Another option that `gatsby-i18n` supports is to annotate each file with its lan
     |-- ...
 ```
 
-To prevent missing routes due to typos, we can also create a check in the build process to make sure that every file in a non-English subdirectory has an equivalent English one. This script could also verify the structure of documents (for example, that all translations have the same sequence of headings).
+To prevent missing routes due to typos, we can also create a check in the build process to make sure that every file in a translated subdirectory has an equivalent English one. This script could also verify the structure of documents (for example, that all translations have the same sequence of headings).
 
 ### Maintainers
 
@@ -116,11 +116,11 @@ maintainers:
 
 When accepted, a script should:
 
-* Create a new folder in the repo (e.g. `/docs/es`) with a template README and style guide
+* Create a new folder in the repo (e.g. `/translations/es`) with a template README and style guide
 * Edit `CODEOWNERS.md` adding the proposed maintainers (either directly or through creating a new team to the Gatsby org)
 * Create a new issue for tracking translation progress, and a new label (e.g. `translation-es`).
 
-The script should *not* copy over any files from the `/docs/en` directory. This should be done as contributors make new translations and to prevent the repo from becoming bloated with copies.
+The script should *not* copy over any files from the `/docs` directory. This should be done as contributors make new translations and to prevent the repo from becoming bloated with copies.
 
 ### Organizing work
 
@@ -132,11 +132,11 @@ Each language will have a "progress tracking issue" with the prioritized list of
 
 When a translation of a page is completed, we still need to ensure that the translation remains updated when the English source is changed. To do that, we use a bot similar to [React](https://github.com/reactjs/de.reactjs.org/pull/88), but adapted for Gatsby's monorepo.
 
-When a change is detected in the `/docs/en` directory, the bot should, for each language:
+When a change is detected in the `/docs` directory, the bot should, for each language:
 
 * Determine the time a pull request by the bot has occurred
-* Run `git diff` on `/docs/en` from that hash
-* Apply the patch on `/docs/[lang]` using `git patch` 
+* Run `git diff` on `/docs` from that hash
+* Apply the patch on `/translations/[lang]` using `git apply` 
 * Commit all the merge conflicts and create a pull request (or some other way to annotate which lines have changed)
 * Assign the issue to the language maintainers
 
@@ -184,8 +184,6 @@ But this has its own drawbacks as well. Each language is its own website and we 
 ## Adoption Strategy
 
 To test-drive the process, we can start with three languages or so, based on user interest in this RFC. We will have to manually set up those translations while we create the automation, but they should provide a test bed to make sure our checks work.
-
-The only thing we need to do before those languages are set up is move content over to `/docs/en` and handle the routing appropriately. Once that's done, the translations can start and we can divide up the other changes needed for the website.
 
 Once the automation work for setting up new translations is done, we can open up pull requests to create new language to more people.
 
