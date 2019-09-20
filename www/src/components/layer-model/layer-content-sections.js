@@ -106,6 +106,7 @@ const CodeWrapper = ({
               },
             }}
             onClick={() => setSourceIndex((sourceIndex + 1) % sources.length)}
+            aria-label="Update code source"
           >
             <MdLoop size={16} />
           </button>

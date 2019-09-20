@@ -19,6 +19,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       key={`button${index}`}
       id={`tab${index}`}
       ref={buttonRef}
+      tabIndex={selected ? 0 : -1}
       role="tab"
       aria-controls={`tabpanel${index}`}
       aria-selected={selected}
