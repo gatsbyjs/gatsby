@@ -37,7 +37,7 @@ const flattenPlugins = plugins => {
   return flattened
 }
 
-module.exports = async (config = {}, rootDir = null, latestAPIs = {}) => {
+module.exports = async (config = {}, rootDir = null) => {
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,
