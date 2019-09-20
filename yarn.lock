@@ -4068,9 +4068,10 @@ base64-js@^1.0.2, base64-js@^1.1.2, base64-js@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
 
-base64id@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/base64id/-/base64id-1.0.0.tgz#47688cb99bb6804f0e06d3e763b1c32e57d8e6b6"
+base64id@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/base64id/-/base64id-2.0.0.tgz#2770ac6bc47d312af97a8bf9a634342e0cd25cb6"
+  integrity sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==
 
 base@^0.11.1:
   version "0.11.2"
@@ -4207,9 +4208,10 @@ bl@^1.0.0:
     readable-stream "^2.3.5"
     safe-buffer "^5.1.1"
 
-blob@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/blob/-/blob-0.0.4.tgz#bcf13052ca54463f30f9fc7e95b9a47630a94921"
+blob@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/blob/-/blob-0.0.5.tgz#d680eeef25f8cd91ad533f5b01eed48e64caf683"
+  integrity sha512-gaqbzQPqOoamawKg0LGVd7SzLgXS+JH61oWprSLH+P+abTczqJbhTR8CmJ2u9/bUYNmHTGJx/UEmn6doAvvuig==
 
 bluebird@2.9.34:
   version "2.9.34"
@@ -7028,15 +7030,15 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-engine.io-client@~3.3.1:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-3.3.2.tgz#04e068798d75beda14375a264bb3d742d7bc33aa"
-  integrity sha512-y0CPINnhMvPuwtqXfsGuWE8BB66+B6wTtCofQDRecMQPYX3MYUZXFNKDhdrSe3EVjgOu4V3rxdeqN/Tr91IgbQ==
+engine.io-client@~3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-3.4.0.tgz#82a642b42862a9b3f7a188f41776b2deab643700"
+  integrity sha512-a4J5QO2k99CM2a0b12IznnyQndoEvtA4UAldhGzKqnHf42I3Qs2W5SPnDvatZRcMaNZs4IevVicBPayxYt6FwA==
   dependencies:
     component-emitter "1.2.1"
     component-inherit "0.0.3"
-    debug "~3.1.0"
-    engine.io-parser "~2.1.1"
+    debug "~4.1.0"
+    engine.io-parser "~2.2.0"
     has-cors "1.1.0"
     indexof "0.0.1"
     parseqs "0.0.5"
@@ -7045,27 +7047,28 @@ engine.io-client@~3.3.1:
     xmlhttprequest-ssl "~1.5.4"
     yeast "0.1.2"
 
-engine.io-parser@~2.1.0, engine.io-parser@~2.1.1:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/engine.io-parser/-/engine.io-parser-2.1.2.tgz#4c0f4cff79aaeecbbdcfdea66a823c6085409196"
+engine.io-parser@~2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/engine.io-parser/-/engine.io-parser-2.2.0.tgz#312c4894f57d52a02b420868da7b5c1c84af80ed"
+  integrity sha512-6I3qD9iUxotsC5HEMuuGsKA0cXerGz+4uGcXQEkfBidgKf0amsjrrtwcbwK/nzpZBxclXlV7gGl9dgWvu4LF6w==
   dependencies:
     after "0.8.2"
     arraybuffer.slice "~0.0.7"
     base64-arraybuffer "0.1.5"
-    blob "0.0.4"
+    blob "0.0.5"
     has-binary2 "~1.0.2"
 
-engine.io@~3.3.1:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-3.3.2.tgz#18cbc8b6f36e9461c5c0f81df2b830de16058a59"
-  integrity sha512-AsaA9KG7cWPXWHp5FvHdDWY3AMWeZ8x+2pUVLcn71qE5AtAzgGbxuclOytygskw8XGmiQafTmnI9Bix3uihu2w==
+engine.io@~3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-3.4.0.tgz#3a962cc4535928c252759a00f98519cb46c53ff3"
+  integrity sha512-XCyYVWzcHnK5cMz7G4VTu2W7zJS7SM1QkcelghyIk/FmobWBtXE7fwhBusEKvCSqc3bMh8fNFMlUkCKTFRxH2w==
   dependencies:
     accepts "~1.3.4"
-    base64id "1.0.0"
+    base64id "2.0.0"
     cookie "0.3.1"
-    debug "~3.1.0"
-    engine.io-parser "~2.1.0"
-    ws "~6.1.0"
+    debug "~4.1.0"
+    engine.io-parser "~2.2.0"
+    ws "^7.1.2"
 
 enhanced-resolve@4.1.0, enhanced-resolve@^4.1.0:
   version "4.1.0"
@@ -17399,17 +17402,17 @@ socket.io-adapter@~1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-1.1.1.tgz#2a805e8a14d6372124dd9159ad4502f8cb07f06b"
 
-socket.io-client@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-2.2.0.tgz#84e73ee3c43d5020ccc1a258faeeb9aec2723af7"
-  integrity sha512-56ZrkTDbdTLmBIyfFYesgOxsjcLnwAKoN4CiPyTVkMQj3zTUh0QAx3GbvIvLpFEOvQWu92yyWICxB0u7wkVbYA==
+socket.io-client@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-2.3.0.tgz#14d5ba2e00b9bcd145ae443ab96b3f86cbcc1bb4"
+  integrity sha512-cEQQf24gET3rfhxZ2jJ5xzAOo/xhZwK+mOqtGRg5IowZsMgwvHwnf/mCRapAAkadhM26y+iydgwsXGObBB5ZdA==
   dependencies:
     backo2 "1.0.2"
     base64-arraybuffer "0.1.5"
     component-bind "1.0.0"
     component-emitter "1.2.1"
-    debug "~3.1.0"
-    engine.io-client "~3.3.1"
+    debug "~4.1.0"
+    engine.io-client "~3.4.0"
     has-binary2 "~1.0.2"
     has-cors "1.1.0"
     indexof "0.0.1"
@@ -17428,17 +17431,26 @@ socket.io-parser@~3.3.0:
     debug "~3.1.0"
     isarray "2.0.1"
 
-socket.io@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-2.2.0.tgz#f0f633161ef6712c972b307598ecd08c9b1b4d5b"
-  integrity sha512-wxXrIuZ8AILcn+f1B4ez4hJTPG24iNgxBBDaJfT6MsyOhVYiTXWexGoPkd87ktJG8kQEcL/NBvRi64+9k4Kc0w==
+socket.io-parser@~3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-3.4.0.tgz#370bb4a151df2f77ce3345ff55a7072cc6e9565a"
+  integrity sha512-/G/VOI+3DBp0+DJKW4KesGnQkQPFmUCbA/oO2QGT6CWxU7hLGWqU3tyuzeSK/dqcyeHsQg1vTe9jiZI8GU9SCQ==
+  dependencies:
+    component-emitter "1.2.1"
+    debug "~4.1.0"
+    isarray "2.0.1"
+
+socket.io@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/socket.io/-/socket.io-2.3.0.tgz#cd762ed6a4faeca59bc1f3e243c0969311eb73fb"
+  integrity sha512-2A892lrj0GcgR/9Qk81EaY2gYhCBxurV0PfmmESO6p27QPrUK1J3zdns+5QPqvUYK2q657nSj0guoIil9+7eFg==
   dependencies:
     debug "~4.1.0"
-    engine.io "~3.3.1"
+    engine.io "~3.4.0"
     has-binary2 "~1.0.2"
     socket.io-adapter "~1.1.0"
-    socket.io-client "2.2.0"
-    socket.io-parser "~3.3.0"
+    socket.io-client "2.3.0"
+    socket.io-parser "~3.4.0"
 
 socketerrors@^0.3.0:
   version "0.3.0"
@@ -20167,7 +20179,7 @@ ws@^6.1.0, ws@^6.1.2, ws@^6.2.1:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.0.0:
+ws@^7.0.0, ws@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.1.2.tgz#c672d1629de8bb27a9699eb599be47aeeedd8f73"
   integrity sha512-gftXq3XI81cJCgkUiAVixA0raD9IVmXqsylCrjRygw4+UOOGzPoxnQ6r/CnVL9i+mDncJo94tSkyrtuuQVBmrg==
