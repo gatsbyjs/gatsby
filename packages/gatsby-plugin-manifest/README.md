@@ -416,6 +416,12 @@ manifest—https://developers.google.com/web/fundamentals/engage-and-retain/web-
 
 For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozilla docs https://developer.mozilla.org/en-US/docs/Web/Manifest.
 
+### Plugin options validation
+
+This plugin validates plugin options set in the `gatsby-config.js`. It validates the options used by the plugin and the entire WebAppManifest spec. To see the exact implemntation of the validator see [src/plugin-options.js](src/plugin-options.js).
+
+The WebAppManifest spec is not stable at the time of writing. This version of the validator adhears the [most recent](https://www.w3.org/TR/2019/WD-appmanifest-20190911/) version of the specification available.
+
 ## Troubleshooting
 
 ### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
