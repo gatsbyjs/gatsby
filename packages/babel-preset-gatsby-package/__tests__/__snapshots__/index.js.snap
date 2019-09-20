@@ -5,7 +5,6 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
-      "corejs": 2,
       "debug": false,
       "loose": true,
       "modules": "commonjs",
@@ -35,7 +34,6 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
-      "corejs": 2,
       "debug": true,
       "loose": true,
       "modules": "commonjs",
@@ -137,7 +135,6 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
-      "corejs": 2,
       "debug": false,
       "loose": true,
       "modules": "commonjs",
