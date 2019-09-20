@@ -17,6 +17,8 @@ function preset(context, options = {}) {
   }
 
   const nodeConfig = {
+    corejs: 2,
+    useBuiltIns: `entry`,
     targets: {
       node: IS_PRODUCTION ? nodeVersion : `current`,
     },
@@ -28,10 +30,8 @@ function preset(context, options = {}) {
         r(`@babel/preset-env`),
         Object.assign(
           {
-            corejs: 2,
             loose: true,
             debug: !!debug,
-            useBuiltIns: `entry`,
             shippedProposals: true,
             modules: `commonjs`,
           },
