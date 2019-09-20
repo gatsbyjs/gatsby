@@ -464,7 +464,7 @@
           link: /docs/browser-apis/
         - title: Gatsby SSR APIs
           link: /docs/ssr-apis/
-        - title: Files
+        - title: API Files
           link: /docs/api-files/
           items:
             - title: gatsby-config.js
