@@ -3920,7 +3920,7 @@
     - Styled-Components for all your styles.
     - Framer Motion for awesome animations.
     - gatsby-image and gatsby-transformer-sharp for optimized images.
-    - gatsby-plugin-manifest / SEO component for an SEO-friendly PWA.
+    - gatsby-plugin-manifest + SEO component for an SEO-friendly PWA.
     - Storybook with add-ons for showing off your awesome components.
     - Jest and React Testing library for snapshots and unit tests.
     - ESLint (with TSLint and Prettier) to make your code look its best.
