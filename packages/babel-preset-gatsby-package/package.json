@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",

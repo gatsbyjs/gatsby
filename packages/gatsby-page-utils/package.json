@@ -1,6 +1,6 @@
 {
   "name": "gatsby-page-utils",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
   "scripts": {
@@ -32,7 +32,7 @@
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
-    "babel-preset-gatsby-package": "^0.2.4",
+    "babel-preset-gatsby-package": "^0.2.5",
     "cross-env": "^5.2.1"
   },
   "peerDependencies": {
