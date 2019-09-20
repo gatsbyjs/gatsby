@@ -6,21 +6,14 @@ let matchPaths = []
 
 const trimPathname = rawPathname => {
   let pathname = decodeURIComponent(rawPathname)
-
-  if (__BASE_PATH__.length > 0) {
-    if (pathname.startsWith((__BASE_PATH__ + "/").replace(/\/+/g, "/"))) {
-      // Remove the pathPrefix from the pathname.
-      pathname = stripPrefix(pathname, __BASE_PATH__)
-    }
-  }
-
-  pathname = pathname
+  // Remove the pathPrefix from the pathname.
+  let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
     // Remove any hashfragment
     .split(`#`)[0]
     // Remove search query
     .split(`?`)[0]
 
-  return pathname
+  return trimmedPathname
 }
 
 /**
