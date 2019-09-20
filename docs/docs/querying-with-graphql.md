@@ -21,7 +21,7 @@ components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
 
-Data from any number of sources is made queryable in one unified layer:
+Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
 
 <LayerModel initialLayer="Data" />
 

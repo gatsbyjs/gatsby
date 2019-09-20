@@ -17,7 +17,7 @@ open source components, tutorials, and tooling that can be used seamlessly for
 building sites with Gatsby. Gatsby is built to behave almost exactly like a
 normal React application.
 
-The following model shows how data from a source can be queried by GraphQL for use inside components:
+The following model shows how data from a source can be queried by GraphQL for use inside components in the process of building a Gatsby site:
 
 <LayerModel initialLayer="View" />
 

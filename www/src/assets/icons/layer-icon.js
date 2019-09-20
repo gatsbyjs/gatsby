@@ -10,6 +10,8 @@ const LayerIcon = ({ name, fillColor = colors.grey[`50`] }) => {
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        focusable="false"
+        role="presentation"
       >
         <circle
           cx="16.703"
@@ -65,6 +67,8 @@ const LayerIcon = ({ name, fillColor = colors.grey[`50`] }) => {
         viewBox="0 0 37 37"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        focusable="false"
+        role="presentation"
       >
         <path
           d="M30.2955 12.3557C27.4818 16.5214 24.2529 20.3909 20.6584 23.905C12.243 32.3204 3.8995 37.6216 2.02247 35.7399C0.686096 34.4036 3.04575 29.7377 7.52069 24.157"
@@ -110,6 +114,8 @@ const LayerIcon = ({ name, fillColor = colors.grey[`50`] }) => {
         viewBox="0 0 33 38"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        focusable="false"
+        role="presentation"
       >
         <path
           d="M3.05107 27.5606L3.0281 27.5474L17.2549 2.90647L17.2779 2.91974L3.05107 27.5606Z"
@@ -216,6 +222,8 @@ const LayerIcon = ({ name, fillColor = colors.grey[`50`] }) => {
         viewBox="0 0 38 34"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        focusable="false"
+        role="presentation"
       >
         <path
           d="M21.4592 16.875C21.4592 18.3022 20.3022 19.4592 18.875 19.4592C17.4478 19.4592 16.2908 18.3022 16.2908 16.875C16.2908 15.4478 17.4478 14.2908 18.875 14.2908C20.3022 14.2908 21.4592 15.4478 21.4592 16.875Z"
@@ -244,6 +252,8 @@ const LayerIcon = ({ name, fillColor = colors.grey[`50`] }) => {
         viewBox="0 0 37 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        focusable="false"
+        role="presentation"
       >
         <path
           d="M33.7089 1.10376H3.92691C2.66167 1.10376 1.63599 2.12944 1.63599 3.39469V28.5949C1.63599 29.8601 2.66167 30.8858 3.92691 30.8858H33.7089C34.9742 30.8858 35.9999 29.8601 35.9999 28.5949V3.39469C35.9999 2.12944 34.9742 1.10376 33.7089 1.10376Z"
@@ -318,7 +328,7 @@ const LayerIcon = ({ name, fillColor = colors.grey[`50`] }) => {
       </svg>
     ),
   }
-  return <div>{icons[name]}</div>
+  return icons[name]
 }
 
 export default LayerIcon

@@ -101,11 +101,7 @@ const CodeWrapper = ({
                 content: `"cycle source "`,
               },
             }}
-            onClick={() =>
-              setSourceIndex(
-                sourceIndex === sources.length - 1 ? 0 : sourceIndex + 1
-              )
-            }
+            onClick={() => setSourceIndex((sourceIndex + 1) % sources.length)}
           >
             <MdLoop size={16} />
           </button>

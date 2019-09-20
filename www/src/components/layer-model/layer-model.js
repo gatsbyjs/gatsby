@@ -11,7 +11,7 @@ import {
   AppLayerContent,
 } from "./layer-content-sections"
 
-const Layer = ({ layer, onClick, selected, children }) => {
+const Layer = ({ layer, onClick, selected }) => {
   const { baseColor, title } = layer
 
   return (
@@ -36,19 +36,21 @@ const Layer = ({ layer, onClick, selected, children }) => {
         },
       }}
     >
-      <div
+      <span
         css={{
           padding: space[2],
+          display: `flex`,
+          flexDirection: `column`,
         }}
       >
-        <div css={{ height: 40 }}>
+        <span css={{ height: 40 }}>
           <LayerIcon
             name={title}
             fillColor={selected ? colors[baseColor][70] : colors.grey[50]}
           />
-        </div>
-        <div>{title}</div>
-      </div>
+        </span>
+        <span>{title}</span>
+      </span>
     </button>
   )
 }
@@ -80,7 +82,7 @@ const layers = [
     component: AppLayerContent,
   },
 ]
-const ContentMeshModel = ({ initialLayer }) => {
+const ContentMeshModel = ({ initialLayer = `Content` }) => {
   const [selected, setSelected] = useState(initialLayer)
   const [sourceIndex, setSourceIndex] = useState(0)
   return (
