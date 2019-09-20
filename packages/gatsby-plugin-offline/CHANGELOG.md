@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.7...gatsby-plugin-offline@3.0.8) (2019-09-20)
+
+### Features
+
+- **gatsby-plugin-offline:** "Magic" JS detection to make sites function correctly when JS is disabled retroactively ([#17590](https://github.com/gatsbyjs/gatsby/issues/17590)) ([e451815](https://github.com/gatsbyjs/gatsby/commit/e451815))
+
 ## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.6...gatsby-plugin-offline@3.0.7) (2019-09-16)
 
 **Note:** Version bump only for package gatsby-plugin-offline
