@@ -15,6 +15,7 @@ import {
 // Components for building sections used in the model
 const LayerContentWrapper = ({ index, children }) => (
   <div
+    id={`tabpanel${index}`}
     aria-labelledby={`tab${index}`}
     role="tabpanel"
     css={{

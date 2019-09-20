@@ -20,6 +20,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       id={`tab${index}`}
       ref={buttonRef}
       role="tab"
+      aria-controls={`tabpanel${index}`}
       aria-selected={selected}
       onClick={onClick}
       css={{
