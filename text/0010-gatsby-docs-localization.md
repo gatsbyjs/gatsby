@@ -31,7 +31,7 @@ The following things need to be created:
 
 There are several changes to the repo that need to be made in order to support localization:
 
-* [ ] Move all text strings in `/www` to `/docs` so they can be translated
+* [ ] Move all text strings in `/www` to `/docs` so they can be translated: https://github.com/gatsbyjs/gatsby/issues/17758
 * [ ] Create a `translations/` directory
 * [ ] Make routes such as `/docs` redirect to `/en/docs`
 * [ ] Support routes for translations (such as `/es/docs`)
