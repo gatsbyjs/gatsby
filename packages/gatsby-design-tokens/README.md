@@ -6,7 +6,7 @@ Design tokens originated at Salesforce—quoting the [Lightning Desing System De
 
 > Design tokens are the visual design atoms of the design system — specifically, they are named entities that store visual design attributes. We use them in place of hard-coded values (such as hex values for color or pixel values for spacing) in order to maintain a scalable and consistent visual system for UI development.
 
-Gatsby's design tokens are following the [System UI Theme Specification](https://system-ui.com/theme/).  
+Gatsby's design tokens are following the [System UI Theme Specification](https://system-ui.com/theme/).
 They are not fully complying to the design token abstraction and are (initially) primarily focused on CSS/JS development – i.e. a potential _output_ from design tokens.
 
 They also are a work-in-progress but we _do_ follow the [Semantic Versioning](https://semver.org/) specification. As such:
@@ -21,13 +21,13 @@ So to prevent your site from breaking due to a breaking change or looking dramat
 
 Using [npm](https://www.npmjs.com/):
 
-```console
+```shell
 npm install gatsby-design-tokens --save
 ```
 
 Using [Yarn](https://yarnpkg.com/):
 
-```console
+```shell
 yarn add gatsby-design-tokens
 ```
 
