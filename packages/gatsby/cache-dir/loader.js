@@ -144,8 +144,7 @@ export class BaseLoader {
     this.prefetchDisabled = apiRunner(`disableCorePrefetching`).some(a => a)
   }
 
-  loadPageDataJson(rawPath) {
-    const pagePath = cleanPath(rawPath)
+  loadPageDataJson(pagePath) {
     if (this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
     }
