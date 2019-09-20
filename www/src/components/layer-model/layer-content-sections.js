@@ -18,13 +18,13 @@ const LayerContentWrapper = ({ children }) => (
     css={{
       padding: `${space[4]} 0`,
       display: `grid`,
-      gridTemplateRows: `1fr 1fr`,
+      gridTemplateRows: `repeat(2, 1fr)`,
       gridTemplateAreas: `"example" "content"`,
       gridGap: 0,
-      [mediaQueries.md]: {
+      [mediaQueries.lg]: {
         gridTemplateRows: `1fr`,
         gridTemplateAreas: `"example content"`,
-        gridTemplateColumns: `1fr 1fr`,
+        gridTemplateColumns: `repeat(2, 1fr)`,
         gridGap: space[6],
       },
     }}
@@ -37,20 +37,12 @@ const ExampleWrapper = ({ children }) => (
   <div
     css={{
       borderRadius: radii[3],
-      maxWidth: 620,
-      [mediaQueries.md]: {
-        maxWidth: 300,
-      },
     }}
   >
     {children}
   </div>
 )
 
-const pseudoProperties = {
-  boxShadow: shadows.floating,
-  color: colors.white,
-}
 // prettier-ignore
 const transitionProperty = `${transition.speed.default} ${transition.curve.default}`
 
@@ -89,19 +81,20 @@ const CodeWrapper = ({
               transition: transitionProperty,
               borderRadius: radii[2],
               whiteSpace: `nowrap`,
-              ":focus": {
-                ...pseudoProperties,
-                backgroundColor: colors.purple[40],
+              ":focus, :hover, :active": {
+                boxShadow: shadows.floating,
+                color: colors.white,
               },
               ":hover": {
-                ...pseudoProperties,
+                backgroundColor: colors.purple[40],
+              },
+              ":focus": {
                 backgroundColor: colors.purple[50],
               },
               ":active": {
-                ...pseudoProperties,
                 backgroundColor: colors.purple[60],
               },
-              ":focus:before": {
+              ":focus::before": {
                 content: `"cycle source "`,
               },
               ":hover::before": {
