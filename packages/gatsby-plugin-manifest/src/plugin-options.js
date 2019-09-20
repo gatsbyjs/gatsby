@@ -11,6 +11,7 @@ const defaultConfig = {
 /* Descriptions copied from or based on documentation at https://developer.mozilla.org/en-US/docs/Web/Manifest */
 const platform = Joi.string()
   .required()
+  .empty(``)
   .description(`The platform on which the application can be found.`)
 
 const FingerPrint = Joi.object().keys({
@@ -32,6 +33,7 @@ const ImageResource = Joi.object().keys({
     `A hint as to the media type of the image. The purpose of this member is to allow a user agent to quickly ignore images with media types it does not support.`
   ),
   purpose: Joi.string()
+
     .valid(`badge`, `maskable`, `any`)
     .description(
       `Defines the purpose of the image, for example if the image is intended to serve some special purpose in the context of the host OS.`
@@ -47,6 +49,7 @@ const ExternalApplicationResource = Joi.object().keys({
     .description(`The URL at which the application can be found.`),
   id: Joi.string()
     .required()
+
     .description(
       `The ID used to represent the application on the specified platform.`
     ),
@@ -96,7 +99,7 @@ const WebAppManifest = Joi.object().keys({
       `The background_color member defines a placeholder background color for the application page to display before its stylesheet is loaded.`
     ),
   categories: Joi.array()
-    .items(Joi.string())
+    .items(Joi.string().empty(``))
     .optional()
     .description(
       `The categories member is an array of strings defining the names of categories that the application supposedly belongs to.`
@@ -127,7 +130,7 @@ const WebAppManifest = Joi.object().keys({
       `The iarc_rating_id member is a string that represents the International Age Rating Coalition (IARC) certification code of the web application.`
     ),
   icons: Joi.array()
-    .required()
+    .optional()
     .items(ImageResource)
     .description(
       `The icons member specifies an array of objects representing image files that can serve as application icons for different contexts.`
@@ -138,7 +141,7 @@ const WebAppManifest = Joi.object().keys({
       `The lang member is a string containing a single language tag.`
     ),
   name: Joi.string()
-    .required()
+    .optional()
     .description(
       `The name member is a string that represents the name of the web application as it is usually displayed to the user.`
     ),
@@ -222,7 +225,6 @@ const validOptions = Joi =>
             )
           )
           .description(`Used for localizing your WebAppManifest`),
-        icons: Joi.optional(),
         plugins: Joi.array(), // default gatsby object
       })
       .or(`icon`, `icons`)
