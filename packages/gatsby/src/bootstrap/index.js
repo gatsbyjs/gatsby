@@ -12,7 +12,6 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
-const getLatestAPIs = require(`../utils/get-latest-apis`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -116,11 +115,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  const apis = await getLatestAPIs()
-
   activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory, apis)
+  const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
   telemetry.decorateEvent(`BUILD_END`, {
