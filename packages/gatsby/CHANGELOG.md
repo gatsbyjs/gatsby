@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.18...gatsby@2.15.19) (2019-09-20)
+
+### Bug Fixes
+
+- **gatsby:** support `export { X as default }` syntax when checking if page template files have default export ([#17752](https://github.com/gatsbyjs/gatsby/issues/17752)) ([b785583](https://github.com/gatsbyjs/gatsby/commit/b785583))
+
 ## [2.15.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.17...gatsby@2.15.18) (2019-09-18)
 
 **Note:** Version bump only for package gatsby
