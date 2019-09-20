@@ -183,6 +183,42 @@ return (
 )
 ```
 
+## Query structure
+
+Queries are written in the same shape you want data returned in. How you source data will determine the names of fields that you can query on, based on the nodes they add to the GraphQL schema.
+
+For understanding the parts of a query refer to the [conceptual guide](/docs/graphql-concepts/#understanding-the-parts-of-a-query).
+
+### GraphQL query arguments
+
+GraphQL queries can take arguments to alter how the data is returned. The logic for these arguments is handled internally by Gatsby. Arguments can be passed in to fields at any level of the query.
+
+Different nodes can take different arguments based off of the nature of the node.
+
+The arguments you can pass to collections (like arrays or long lists of data - ex. `allFile`, or `allMdx`) are:
+
+- [`filter`](/docs/graphql-reference#filter)
+- [`limit`](/docs/graphql-reference#limit)
+- [`sort`](/docs/graphql-reference#sort)
+- [`skip`](/docs/graphql-reference#skip)
+
+The arguments you can pass to a `date` field are:
+
+- [`formatString`](/docs/graphql-reference#dates)
+- [`locale`](/docs/graphql-reference#dates)
+
+The arguments you can pass to an `excerpt` field are:
+
+- [`pruneLength`](/docs/graphql-reference#excerpt)
+- [`truncate`](/docs/graphql-reference#excerpt)
+
+### Graphql query operations
+
+Other built-in configurations can be used in queries
+
+- [`Alias`](/docs/graphql-reference#alias)
+- [`Group`](/docs/graphql-reference#group)
+
 ## Query fragments
 
 Fragments allow you to reuse parts of GraphQL queries. They also allow you to split up complex queries into smaller, easier to understand components.
