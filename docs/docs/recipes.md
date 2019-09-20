@@ -858,51 +858,67 @@ export const pageQuery = graphql`
 #### Prerequisites
 
 - A [Contentful account](https://www.contentful.com/)
-- A [Contentful space](https://www.contentful.com/faq/basics/#how-do-i-create-a-space)
-- One [Content model](https://www.contentful.com/developers/docs/concepts/data-model/)
-- One or more pieces of published content to [avoid build errors](https://github.com/gatsbyjs/gatsby/issues/15344#issuecomment-520151776)
-- The [space ID and content delivery API key](https://www.contentful.com/developers/docs/concepts/apis/#content-delivery-api) for your space
-
-The examples in this recipe use a Contentful space with a "News" content model that includes a "Title" text field, and "Body" long text field.
+- The [Contentful CLI](https://www.npmjs.com/package/contentful-cli) installed
 
 #### Directions
 
-1. Install the `gatsby-source-contentful` plugin in your Gatsby site:
+1. Login to Contentful with the CLI. It will help you create an account if you don't have one.
+
+```
+contentful login
+```
+
+2. Create a new space. Make sure to save the space ID given to you at the end of the command.
+
+```
+contentful space create --name 'Gatsby example'
+```
+
+3. Seed the new space with example blog content using the new space ID returned from the previous command.
+
+```
+contentful space seed -s '[space ID]' -t blog
+```
+
+4. Create a new access token for your space.
+
+```
+contentful space accesstoken create -s '[space ID]' --name 'Example token'
+```
+
+5. Install the `gatsby-source-contentful` plugin in your Gatsby site:
 
 ```shell
 npm install --save gatsby-source-contentful
 ```
 
-2. Add the following plugin entry to your `gatsby-config.js` file. Use your own space ID and access token from the API keys section of your Contentful space. You should consider using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/) to store your space ID and token.
+6. Edit the file `gatsby-config.js` to enable the `gatsby-source-contentful` plugin. You should consider using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/) to store your space ID and token.
 
 ```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-contentful`,
     options: {
-      spaceId: `your_space_id`, // or process.env.CONTENTFUL_SPACE_ID
-      accessToken: `your_access_token`, // or process.env.CONTENTFUL_TOKEN
+      spaceId: `[space ID]`, // or process.env.CONTENTFUL_SPACE_ID
+      accessToken: `[access token]`, // or process.env.CONTENTFUL_TOKEN
     },
   },
 ]
 ```
 
-3. Run `gatsby develop` and make sure the site compiled successfully.
+7. Run `gatsby develop` and make sure the site compiled successfully.
 
-4. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. For example, a site with a `News` content type and two fields produces an `allContentfulNews` node type in GraphQL.
+8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
 ![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
 
-To query for news articles from Contentful, use the following GraphQL query:
+To query for a Blog Posts titles from Contentful, use the following GraphQL query:
 
 ```graphql
 {
-  allContentfulNews {
+  allContentfulBlogPost {
     edges {
       node {
-        body {
-          body
-        }
         title
       }
     }
@@ -912,46 +928,39 @@ To query for news articles from Contentful, use the following GraphQL query:
 
 Contentful nodes also include several metadata fields like `createdAt` or `node_locale`.
 
-5. To source Contentful data in your Gatsby site, create a page component with a GraphQL query and some code to iterate over news articles from your sample space:
+9. To show a simple list of blog posts, create a new file in `/src/pages/blog.js`. This page will display all posts, sorted by updated date.
 
-```jsx
+```jsx:title=src/pages/blog.js
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 
-const NewsPage = ({ data }) => (
+const BlogPage = ({ data }) => (
   <div>
-    <h1>News</h1>
+    <h1>Blog</h1>
     <ul>
-    {data.allContentfulNews.edges.map(({ node, index }) => (
-      <li key={index}>
-        <h2>{node.title}</h2>
-        <p>
-          <strong>{node.createdAt}</strong>
-          {" — "}
-          {node.body.body}
-        </p>
-      </li>
-    ))}
+      {data.allContentfulBlogPost.edges.map(({ node, index }) => (
+        <li key={index}>
+          <Link to={`/blog/${node.slug}`}>{node.title}</Link>
+        </li>
+      ))}
     </ul>
   </div>
 )
 
-export default NewsPage
+export default BlogPage
 
 export const query = graphql`
   {
-    allContentfulNews(sort: { fields: [updatedAt] }) {
+    allContentfulBlogPost(sort: { fields: [updatedAt] }) {
       edges {
         node {
           title
-          body {
-            body
-          }
-          createdAt(formatString: "MMMM DD YYYY")
+          slug
         }
       }
     }
   }
+`
 ```
 
 #### Additional resources

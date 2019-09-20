@@ -29,7 +29,7 @@ contentful space seed -s '[space ID]' -t blog
 contentful space accesstoken create -s '[space ID]' --name 'Example token'
 ```
 
-6. Edit the file `gatsby-config.js` and add your space ID and access token to the following section. You should consider using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/) to store your space ID and token.
+6. Edit the file `gatsby-config.js` to enable the `gatsby-source-contentful` plugin. You should consider using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/) to store your space ID and token.
 
 ```
 plugins: [
