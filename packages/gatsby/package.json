@@ -122,7 +122,7 @@
     "sift": "^5.1.0",
     "signal-exit": "^3.0.2",
     "slash": "^3.0.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.3.0",
     "stack-trace": "^0.0.10",
     "string-similarity": "^1.2.2",
     "style-loader": "^0.23.1",
