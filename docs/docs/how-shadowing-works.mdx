@@ -237,7 +237,7 @@ When looking for a component we perform a search that occurs in two locations:
 
 ##### User's project
 
-In order to ensure that the user's project always takes precendence in terms of shadowing
+In order to ensure that the user's project always takes precedence in terms of shadowing
 it's prepended to the theme list when attempting to resolve the component. This ensures that
 `my-site/src/gatsby-theme-tomato/box.js` will take priority over any other theme that
 might want to shadow the same component.
@@ -395,7 +395,7 @@ We then know that if the issuer _matches_ one of these components that it's
 being extended. This means that a shadowed component is extending the same component
 from its parent.
 
-When this happens we return the next path, so here the original location of the theme:
+When this happens, we return the next path, so here the original location of the theme:
 `/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-tomato/src/box`.
 
 This means that when our shadowed file imports Box from a shadowed file we return the
