@@ -167,7 +167,7 @@
               link: /docs/why-gatsby-uses-graphql/
             - title: GraphQL Query Options Reference
               link: /docs/graphql-reference/
-            - title: Running Queries with GraphiQL
+            - title: Running Queries with the GraphiQL UI
               link: /docs/running-queries-with-graphiql/
             - title: Creating and Modifying Pages
               link: /docs/creating-and-modifying-pages/

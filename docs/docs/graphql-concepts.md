@@ -100,7 +100,7 @@ The diagram marks the word `query` as the "Operation Type", for Gatsby's uses th
 
 #### Query Fields
 
-The four words `site`, `id`, `siteMetadata`, and `title` are marked as "Fields". Any first level fields -- like `site` in the diagram -- are sometimes referred to as root level fields, though the name isn't important as all fields in GraphQL queries behave the same.
+The four words `site`, `id`, `siteMetadata`, and `title` are marked as "Fields". Any top-level fields -- like `site` in the diagram -- are sometimes referred to as **root level fields**, though the name doesn't signify functional significance as all fields in GraphQL queries behave the same.
 
 ## How to learn GraphQL
 
