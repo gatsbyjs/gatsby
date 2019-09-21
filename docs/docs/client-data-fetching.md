@@ -184,7 +184,7 @@ class ClientFetchingExample extends Component {
             </>
           ) : (
             <p>Oh noes, error fetching pupper :(</p>
-          )}
+          ))}
         </div>
        </div> {/* highlight-end */}
     )
