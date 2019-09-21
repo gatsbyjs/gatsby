@@ -3,6 +3,7 @@ import path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
+import { validOptions } from "./plugin-options"
 
 sharp.simd(true)
 
@@ -196,3 +197,5 @@ const makeManifest = async (cache, reporter, pluginOptions) => {
     JSON.stringify(manifest)
   )
 }
+
+exports.validatePluginOptions = ({ validator }) => validOptions(validator)
