@@ -7,14 +7,14 @@ To keep up with the latest bug fixes, security patches and minor releases from b
 In this guide you will learn how to upgrade Gatsby and its dependencies for minor or patch releases.
 
 ## Semantic versioning
-As many oother pacakages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
+As many other pacakages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
 
-This guide is ment to teach you how to upgrade Gatsby for minor or patch releases. For major changes you can refer to our [Release and Migrations](https://www.gatsbyjs.org/docs/releases-and-migration/) reference guide overview for the corresponding guide to upgrade.
+This guide is meant to teach you how to upgrade Gatsby for minor or patch releases. For major changes you can refer to our [Release and Migrations](https://www.gatsbyjs.org/docs/releases-and-migration/) reference guide overview for the corresponding guide to upgrade.
 
 ## Why you should upgrade Gatsby and its dependencies
 Every new version of every package comes with improvements on multiple categories from performance, accesibility, to security and bug fixes, among others, so it is important to upgrade both Gatsby and its dependencies to get the latest improvements in every one of these categories.
 
-Constantly upgrading your dependencies on minor or patches releases also helps you to make major upgrades easier and to identify possible deprecated functionality or APIs.
+Constantly upgrading your dependencies on minor or patches releases also helps you to make major upgrades easier and to identify possible soon to be deprecated functionality or APIs.
 
 ## How to identify possible upgrades
 Depending on your current setup, you can use one of yarn or npm to update your dependencies. You can run the outdated command to identify new releases for all your dependencies. Remember that you only have to use one of npm or yarn, not both of them. 
@@ -35,9 +35,9 @@ gatsby                             2.15.13  2.15.13  2.15.20
 ```
 
 
-## Indicate the kind of update you want
+## Configure your dependencies for upgrades
 
-Depending on wether you want to update Gatsby and its dependencies for minor or patch releases you will modify your `package.json` accordingly. If you only want to update for patch releases, you can add a tilde before the version of your package:
+Depending on whether you want to update Gatsby and its dependencies for minor or patch releases you need to modify your `package.json` accordingly. If you only want to update for patch releases, you can add a tilde before the version of your package:
 
 ```title=package.json
 "dependencies"{
@@ -58,7 +58,7 @@ For major updates follow up with the corresponding guide from the [Release and M
 In case that you are updating Gatsby, be sure to also update Gatsby related plugins, you can identify them because their name start with `gatsby-`, this only applies to plugins managed in the gatsbyjs/gatsby repo, for community plugins check beforehand if there is a new version you can upgrade to.
 
 ## Updating all your dependencies at once
-After adding the corresponding anotations into your `package.json` file, you can run the update to command in npm or the upgrade command if you are using yarn, remember that you only have to use one of yarn or npm:
+After adding the corresponding annotations into your `package.json` file, you can run the update to command in npm or the upgrade command if you are using yarn, remember that you only have to use one of yarn or npm:
 
 ```shell
 npm update
@@ -68,33 +68,36 @@ npm update
 yarn upgrade
 ```
 
-This will upgrade all your packages to the latest *wanted* version, this means, the latest patch in case that you specified that only patch updates were allowed, and so on for minor and major updates annotations.
+This will upgrade all your packages to the latest [wanted](https://docs.npmjs.com/cli/outdated) version, this means the latest patch in case that you specified that only patch updates were allowed, and so on for minor and major updates annotations.
 
-## Alternative ways to update your dependencies
+## Upgrade individual dependencies
 
 You can also update one package at the time with the install command in npm, or the add command in yarn, alongside the version that you want to install:
 
 ```shell
-npm install <pkg>@<version> --save
+npm install <package-name>@<version> --save
 ```
 
 ```shell
-yarn add <pkg>@<version>
+yarn add <package-name>@<version>
 ```
 
-You can specify the version in the following formats:
-- An specific version afther the @
-- An annotated versoin with *,^,~ to indicate that you want the latest major, minor or patch release respectively.
-- Usa and x instead of a number to indicate that you want the latest mayor (x), minor (<major>.x) or patch release (<major>.<minor>.x).
+You can specify the version you want to install or upgrade to, in the following formats:
+- An specific version after the @
+- An annotated version with *,^,~ to indicate that you want the latest major, minor or patch release respectively.
+- Use and x instead of a number to indicate that you want the latest mayor (x), minor (<major>.x) or patch release (<major>.<minor>.x).
 
 Remember to follow up with the corresponding guide from the [Release and Migrations](https://www.gatsbyjs.org/docs/releases-and-migration/) reference guide overview, for major upgrades.
+
+## Upgrade Interactively
 
 If you are using yarn you can also use the upgrade-interactive command to manually select which dependencies you want to update:
 
 ```shell
 yarn upgrade-interactive
 ```
-The same behavior can be accomplished in npm through the npm-check module. To do that, start by installing the module:
+
+The same behavior can be accomplished in npm through the [npm-check](https://www.npmjs.com/package/npm-check) module. To do that, start by installing the module:
 
 ```shell
 npm install npm-check --save-dev
@@ -118,7 +121,7 @@ npm run upgrade-interactive
 
 ## Related content
 
-Check out these related content for updates and major migrations:
+Check out these related guides for major upgrades of Gatsby:
 
 [Migrating from v0 to v1](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 
