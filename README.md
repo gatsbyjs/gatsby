@@ -72,9 +72,9 @@ Gatsby is a modern web framework for blazing-fast websites.
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
   to load your data, then develop using Gatsby’s uniform GraphQL interface.
 
-- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-  splitting, image optimization, inlining critical styles, lazy-loading, and prefetching resources,
-  and more to ensure your site is fast — no manual tuning required.
+- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates
+  code-splitting, image optimization, inlining critical styles, lazy-loading, and prefetching
+  resources, and more to ensure your site is fast — no manual tuning required.
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
