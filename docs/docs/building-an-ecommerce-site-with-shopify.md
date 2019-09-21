@@ -2,9 +2,9 @@
 title: Building an e-commerce site with Shopify
 ---
 
-In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). It will display a list of products on the home page, and create a page for every product in the store.
+In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
 
-If you are already comfortable with Gatsby and Shopify, you might want to check out the [Gatsby Shopify starter](https://www.gatsbyjs.org/starters/AlexanderProd/gatsby-shopify-starter/), which provides many of the same features as this sample site.
+If you are already comfortable with Gatsby and Shopify, you might want to check out the [Gatsby Shopify starter](https://www.gatsbyjs.org/starters/AlexanderProd/gatsby-shopify-starter/), which provides many of the same features as this example.
 
 ## Setting up your Shopify account
 
@@ -71,30 +71,32 @@ Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql
 }
 ```
 
-To add a simple listing of products to your site's homepage, edit `/src/pages/index.js`:
+To add a simple page listing all products, add a new file at `/src/pages/products.js`.
 
-```jsx:title=/src/pages/index.js
+```jsx:title=/src/pages/products.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 
-const IndexPage = ({ data }) => (
+const ProductsPage = ({ data }) => (
   <Layout>
     <h1>Products</h1>
-    {data.allShopifyProduct.edges.map(({ node }) => (
-      <div key={node.shopifyId}>
-        <h3>
-          <Link to={`/product/${node.handle}`}>{node.title}</Link>
-          {" - "}${node.priceRange.minVariantPrice.amount}
-        </h3>
-        <p>{node.description}</p>
-      </div>
-    ))}
+    <ul>
+      {data.allShopifyProduct.edges.map(({ node }) => (
+        <li key={node.shopifyId}>
+          <h3>
+            <Link to={`/product/${node.handle}`}>{node.title}</Link>
+            {" - "}${node.priceRange.minVariantPrice.amount}
+          </h3>
+          <p>{node.description}</p>
+        </li>
+      ))}
+    </ul>
   </Layout>
 )
 
-export default IndexPage
+export default ProductsPage
 
 export const query = graphql`
   {
@@ -119,9 +121,9 @@ export const query = graphql`
 
 ## Generating a page for each product
 
-You can [programatically create pages](/tutorial/part-seven/) in Gatsby for every product in your Shopify store. Since shopify already provides a `handle` field for use in URLs, you can use it to generate unique addresses for each product.
+You can [programatically create pages](/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
 
-Create a template for your product pages by adding a new file, `/src/templates/product.js`:
+Create a template for your product pages by adding a new file, `/src/templates/product.js`.
 
 ```jsx:title=/src/templates/product.js
 import React from "react"
@@ -175,6 +177,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   // Iterate over all products and create a new page using a template
+  // The product "handle" is generated automatically by Shopify
   result.data.allShopifyProduct.edges.forEach(({ node }) => {
     createPage({
       path: `/product/${node.handle}`,
