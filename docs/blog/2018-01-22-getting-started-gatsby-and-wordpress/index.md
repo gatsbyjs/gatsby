@@ -2,7 +2,7 @@
 title: Getting Started with Gatsby and WordPress
 date: 2018-01-22
 author: "Amberley Romo"
-tags: ["getting-started", "wordpress"]
+tags: ["getting-started", "WordPress"]
 ---
 
 _This post was originally published on
@@ -50,7 +50,7 @@ Same as above, we can make use of any of [Gatsby's browser APIs](/docs/browser-a
 
 I haven't needed to make use of any of these yet, but they provide a hook into [client runtime operations](/docs/gatsby-lifecycle-apis/) — for example, replacing the router component, as seen in [this example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-browser.js#L7).
 
-## Plugin: gatsby-source-wordpress
+## Plugin: gatsby-source-WordPress
 
 Having familiarized with the basic structure, my next step was getting my data successfully pulling from WordPress. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API.
 
@@ -70,7 +70,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
-        // your wordpress source
+        // your WordPress source
         baseUrl: `amberley.me`,
         protocol: `https`,
         // is it hosted on wordpress.com, or self-hosted?
@@ -105,7 +105,7 @@ _.each(result.data.allWordpressPost.edges, edge => {
     // specify the component template of your choice
     component: slash(postTemplate),
     // In the ^template's GraphQL query, 'id' will be available
-    // as a GraphQL variable to query for this posts's data.
+    // as a GraphQL variable to query for this post's data.
     context: {
       id: edge.node.id,
     },
