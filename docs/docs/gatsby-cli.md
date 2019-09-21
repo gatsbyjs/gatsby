@@ -26,10 +26,46 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-`gatsby new gatsby-site`
+```shell
+gatsby new [<site-name> [<starter-url>]]
+```
 
-See the [Gatsby starters docs](/docs/starters/)
-for a comprehensive list of starters to get started with Gatsby.
+#### Arguments
+
+| Argument    | Description                                                                                                                                                                                                                                         |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name along with the path should be pass here                                                                                                                                                                                       |
+| starter-url | Mention the gatsby starter pack url or local path here. See the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) for more. Default starter pack is [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default). |
+
+> Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
+
+#### Examples
+
+- create a gatsby site with `my-awesome-site` name in the current working directory using the default starter:
+
+```shell
+gatsby new my-awesome-site
+```
+
+- create a gatbsy site with name `my-awesome-blog-site` and using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/) starter pack:
+
+```shell
+gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
+```
+
+- If you leave all the both of the argument, then CLI will then run a interactive shell asking for these inputs:
+
+```shell
+gatsby new
+? What is your project called? › my-gatsby-project
+? What starter would you like to use? › - Use arrow-keys. Return to submit.
+❯  gatsby-starter-default
+   gatsby-starter-hello-world
+   gatsby-starter-blog
+   (Use a different starter)
+```
+
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more details.
 
 ### `develop`
 
