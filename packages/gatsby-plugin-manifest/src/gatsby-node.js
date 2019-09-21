@@ -3,7 +3,7 @@ import path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
-import validOptions from "./plugin-options"
+import { validOptions } from "./plugin-options"
 
 sharp.simd(true)
 

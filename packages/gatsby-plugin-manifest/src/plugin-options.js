@@ -10,7 +10,7 @@ const defaultConfig = {
 
 /* Descriptions copied from or based on documentation at https://developer.mozilla.org/en-US/docs/Web/Manifest */
 const platform = Joi.string()
-  .required()
+  .optional()
   .empty(``)
   .description(`The platform on which the application can be found.`)
 
@@ -24,11 +24,13 @@ const FingerPrint = Joi.object().keys({
 })
 const ImageResource = Joi.object().keys({
   sizes: Joi.string()
-    .required()
+    .optional()
     .description(`A string containing space-separated image dimensions`),
-  src: Joi.string().description(
-    `The path to the image file. If src is a relative URL, the base URL will be the URL of the manifest.`
-  ),
+  src: Joi.string()
+    .required()
+    .description(
+      `The path to the image file. If src is a relative URL, the base URL will be the URL of the manifest.`
+    ),
   type: Joi.string().description(
     `A hint as to the media type of the image. The purpose of this member is to allow a user agent to quickly ignore images with media types it does not support.`
   ),
@@ -42,7 +44,7 @@ const ImageResource = Joi.object().keys({
 })
 
 const ExternalApplicationResource = Joi.object().keys({
-  platform: platform,
+  platform: platform.required(),
   url: Joi.string()
     .uri()
     .required()
@@ -200,7 +202,7 @@ const WebAppManifest = Joi.object().keys({
     ),
 })
 
-const validOptions = Joi =>
+export const validOptions = Joi =>
   WebAppManifest.concat(
     Joi.object()
       .keys({
@@ -214,22 +216,20 @@ const validOptions = Joi =>
           .default(defaultConfig.cache_busting_mode),
         crossOrigin: Joi.string().default(defaultConfig.crossOrigin),
         include_favicon: Joi.boolean().default(defaultConfig.include_favicon),
-        icon_options: ImageResource,
+        icon_options: ImageResource.keys({
+          src: Joi.string().forbidden(),
+          sizes: Joi.string().forbidden(),
+        }),
+
         localize: Joi.array()
           .items(
-            WebAppManifest.concat(
-              Joi.object().keys({
-                lang: Joi.required(),
-                strt_url: Joi.required(),
-              })
-            )
+            WebAppManifest.keys({
+              lang: Joi.required(),
+              start_url: Joi.required(),
+            })
           )
           .description(`Used for localizing your WebAppManifest`),
-        plugins: Joi.array(), // default gatsby object
       })
       .or(`icon`, `icons`)
       .with(`localize`, `lang`)
-      .unknown(false)
   )
-
-export default validOptions
