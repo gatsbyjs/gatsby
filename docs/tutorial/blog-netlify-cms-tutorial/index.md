@@ -17,7 +17,7 @@ This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-pe
 
 Open your Terminal and run the following command from the Gatsby CLI to create a new Gatsby site using [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog).
 
-```sh
+```shell
 gatsby new [your-project-name] https://github.com/thomaswangio/gatsby-personal-starter-blog
 ```
 
@@ -25,7 +25,7 @@ gatsby new [your-project-name] https://github.com/thomaswangio/gatsby-personal-s
 
 Once the Gatsby site is finished installing all the packages and dependencies, you can now go into the directory and run the site locally.
 
-```sh
+```shell
 cd [your-project-name]
 gatsby develop
 ```
@@ -56,7 +56,7 @@ You'll likely also want to edit the `README.md` and `package.json` files to incl
 
 Open [github.com](http://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
 
-```sh
+```shell
 git init
 git add .
 git commit -m "initial commit"

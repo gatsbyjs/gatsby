@@ -8,19 +8,19 @@ For an overview of the project structure please refer to the [Gatsby documentati
 
 Make sure that you have the Gatsby CLI program installed:
 
-```sh
+```shell
 npm install --global gatsby-cli
 ```
 
 And run from your CLI:
 
-```sh
+```shell
 gatsby new gatsby-example-site
 ```
 
 Then you can run it by:
 
-```sh
+```shell
 cd gatsby-example-site
 gatsby develop
 ```

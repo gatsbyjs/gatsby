@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-```sh
+```shell
 mkdir my-site
 cd my-site
 yarn init
@@ -26,7 +26,7 @@ module.exports = {
 
 That's it, you can now run your gatsby site using
 
-```sh
+```shell
 yarn gatsby develop
 ```
 
