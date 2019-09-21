@@ -14,6 +14,10 @@ There are many options out there for adding comment functionality, several of th
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
 
+You can also [roll your own comment system](/blog/2019-08-27-roll-your-own-comment-system/), as Tania Rascia wrote on the Gatsby blog.
+
+## Using Disqus for comments
+
 In this guide, we'll show you how to implement Disqus on your blog as it has a number of nice features.
 
 - It is low maintenance, meaning [moderating your comments and maintaining your forum](https://help.disqus.com/moderation/moderating-101) is easy.
