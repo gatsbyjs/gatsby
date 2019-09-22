@@ -169,6 +169,15 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/path-prefix
 
+  e2e_tests_alternate_configuration:
+    <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: sshnoy
+      CYPRESS_RECORD_KEY: b9834fff-e457-455e-8171-49da595980e5
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/alternate-configuration
+
   e2e_tests_gatsby-image:
     <<: *e2e-executor
     environment:
@@ -326,6 +335,8 @@ workflows:
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
+      - e2e_tests_alternate_configuration:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
