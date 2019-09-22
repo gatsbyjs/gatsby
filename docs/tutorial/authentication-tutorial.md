@@ -258,9 +258,7 @@ import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
-  let noOnLoginPage = location.pathname !== `/app/login`
-
-  if (!isLoggedIn() && noOnLoginPage) {
+  if (!isLoggedIn() && location.pathname !== `/app/login`) {
     navigate("/app/login")
     return null
   }
