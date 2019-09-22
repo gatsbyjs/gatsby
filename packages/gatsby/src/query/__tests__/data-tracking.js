@@ -85,6 +85,7 @@ const getTypedNodeCreators = ({
   return {
     createSiteNode: typedNodeCreator(`Site`),
     createTestNode: typedNodeCreator(`Test`),
+    createTestBNode: typedNodeCreator(`TestB`),
     createNotUsedNode: typedNodeCreator(`NotUsed`),
   }
 }
@@ -627,6 +628,146 @@ describe(`query caching between builds`, () => {
       expect(pathsOfPagesWithQueriesThatRan).toEqual([])
       expect(staticQueriesThatRan).toEqual([])
     }, 999999)
+  })
+
+  describe(`Changing data used in multiple queries properly invalidates them`, () => {
+    let nodeChangeCounter = 1
+    beforeAll(() => {
+      setAPIhooks({
+        sourceNodes: (nodeApiContext, _pluginOptions) => {
+          const { createTestNode, createTestBNode } = getTypedNodeCreators(
+            nodeApiContext
+          )
+
+          createTestNode({
+            id: `test-1`,
+            slug: `foo`,
+            content: `Lorem ipsum.
+            
+            --edited
+            edited content #${nodeChangeCounter++}`,
+          })
+
+          // this node will not change
+          createTestBNode({
+            id: `test-b`,
+            slug: `foo`,
+            content: `Lorem ipsum.`,
+          })
+        },
+        createPages: () => {},
+      })
+      setPageQueries({})
+      setStaticQueries({
+        "all-test-query-1": `
+          {
+            allTest {
+              nodes {
+                slug
+              }
+            }
+          }
+        `,
+        "all-test-query-2": `
+          {
+            allTest {
+              nodes {
+                content
+              }
+            }
+          }
+        `,
+        "all-test-b-query-1": `
+          {
+            allTestB {
+              nodes {
+                slug
+              }
+            }
+          }
+        `,
+        "all-test-b-query-2": `
+          {
+            allTestB {
+              nodes {
+                content
+              }
+            }
+          }
+        `,
+        "single-test-1": `
+          {
+            test(slug: { eq: "foo"}) {
+              slug
+            }
+          }
+        `,
+        "single-test-2": `
+          {
+            test(slug: { eq: "foo"}) {
+              content
+            }
+          }
+        `,
+        "single-test-b-1": `
+          {
+            testB(slug: { eq: "foo"}) {
+              slug
+            }
+          }
+        `,
+        "single-test-b-2": `
+          {
+            testB(slug: { eq: "foo"}) {
+              content
+            }
+          }
+        `,
+      })
+    })
+
+    it(`should run all queries after clearing cache`, async () => {
+      const { staticQueriesThatRan } = await setup({
+        restart: true,
+        clearCache: true,
+      })
+
+      // on initial we want all queries to run
+      expect(staticQueriesThatRan).toEqual([
+        `all-test-b-query-1`,
+        `all-test-b-query-2`,
+        `all-test-query-1`,
+        `all-test-query-2`,
+        `single-test-1`,
+        `single-test-2`,
+        `single-test-b-1`,
+        `single-test-b-2`,
+      ])
+    }, 99999)
+
+    it(`should run only queries that use changed data (no restart)`, async () => {
+      const { staticQueriesThatRan } = await setup()
+
+      expect(staticQueriesThatRan).toEqual([
+        `all-test-query-1`,
+        `all-test-query-2`,
+        `single-test-1`,
+        `single-test-2`,
+      ])
+    }, 99999)
+
+    it(`should run only queries that use changed data (with restart)`, async () => {
+      const { staticQueriesThatRan } = await setup({
+        restart: true,
+      })
+
+      expect(staticQueriesThatRan).toEqual([
+        `all-test-query-1`,
+        `all-test-query-2`,
+        `single-test-1`,
+        `single-test-2`,
+      ])
+    }, 99999)
   })
 
   // this should be last test, it adds page that doesn't have queries (so it won't create any dependencies)
