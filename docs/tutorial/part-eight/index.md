@@ -172,7 +172,7 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2.  Make sure you have a `description` and an `author` configured inside your `siteMetadata`  object. Secondary, you have to add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Make sure you have a `description` and an `author` configured inside your `siteMetadata` object. Also, you have to add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
