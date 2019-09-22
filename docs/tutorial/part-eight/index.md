@@ -334,7 +334,7 @@ export const query = graphql`
 `
 ```
 
-The above example is based off the [Gatsby Starter Blog](/starters/gatsbyjs/gatsby-starter-blog/). You can see that by passing props to the `<SEO>` component, you can dynamically change the metadata for a post. In this case, the blog post `title` and `excerpt` (if it exists in the blog post markdown file) will be pulled in instead of the `title` and `description` properties of the `siteMetadata` object in your `gatsby-config.js` file.
+The above example is based off the [Gatsby Starter Blog](/starters/gatsbyjs/gatsby-starter-blog/). By passing props to the `<SEO>` component, you can dynamically change the metadata for a post. In this case, the blog post `title` and `excerpt` (if it exists in the blog post markdown file) will be used instead of the default `siteMetadata` properties in your `gatsby-config.js` file.
 
 Now, if you run the Lighthouse audit again as laid out above, you should get close to--if not a perfect-- 100 score!
 
