@@ -6,6 +6,7 @@ import Pullquote from "./src/components/shared/pullquote"
 import EggheadEmbed from "./src/components/shared/egghead-embed"
 import DateChart from "./src/components/chart"
 import CodeBlock from "./src/components/code-block"
+import { Accordion, Details, Summary } from "./src/components/accordion"
 
 const components = {
   GuideList,
@@ -13,6 +14,9 @@ const components = {
   DateChart,
   Pullquote,
   EggheadEmbed,
+  Accordion,
+  Details,
+  Summary,
   pre: CodeBlock,
 }
 

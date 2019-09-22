@@ -6,7 +6,15 @@ Throughout the Gatsby code, you'll see the below object fields and variables men
 
 ## Page
 
+<Accordion>
+
+<Details>
+
+<Summary>
+
 ### Page Object
+
+</Summary>
 
 created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation](/docs/page-creation)).
 
@@ -21,7 +29,15 @@ created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation]
 
 The above fields are explained below
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### path
+
+</Summary>
 
 The publicly accessible path in the web URL to access the page in question. E.g
 
@@ -29,11 +45,27 @@ The publicly accessible path in the web URL to access the page in question. E.g
 
 It is created when the page object is created (see [Page Creation](/docs/page-creation/))
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### Redux `pages` namespace
+
+</Summary>
 
 Contains a map of Page [path](#path) -> [Page object](#page-object).
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### matchPath
+
+</Summary>
 
 Think of this instead as `client matchPath`. It is ignored when creating pages during the build. But on the frontend, when resolving the page from the path ([find-path.js]()), it is used (via [reach router](https://github.com/reach/router/blob/master/src/lib/utils.js)) to find the matching page. Note that the [pages are sorted](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js#L38) so that those with matchPaths are at the end, so that explicit paths are matched first.
 
@@ -41,7 +73,15 @@ This is also used by [gatsby-plugin-create-client-paths](/packages/gatsby-plugin
 
 It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### jsonName
+
+</Summary>
 
 The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
 
@@ -49,7 +89,15 @@ The logical name for the page's query json result. The name is constructed durin
 
 The actual json file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### component
+
+</Summary>
 
 The path on disk to the JavaScript file containing the React component. E.g
 
@@ -57,7 +105,15 @@ The path on disk to the JavaScript file containing the React component. E.g
 
 Think of this as `componentPath` instead.
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### Redux `components` namespace
+
+</Summary>
 
 Mapping from `component` (path on disk) to its [Page object](#page-object). It is created every time a page is created (by listening to `CREATE_PAGE`).
 
@@ -75,7 +131,15 @@ Mapping from `component` (path on disk) to its [Page object](#page-object). It i
 
 Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### componentChunkName
+
+</Summary>
 
 The `[name]` portion of the webpack chunkFilename (`[name]-[contenthash].js`) (see [Production App webpack config](/docs/production-app/#webpack-config)). Its name is the concatenation of `component---` and the `component` name passed through [kebab-hash](https://www.npmjs.com/package/kebab-hash). E.g, the componentChunkName for component
 
@@ -87,19 +151,43 @@ is
 
 This is used extensively throughout Gatsby, but especially during [Code Splitting](/docs/how-code-splitting-works/).
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### internalComponentName
+
+</Summary>
 
 If the path is `/`, internalComponentName = `ComponentIndex`. Otherwise, for a path of `/blog/foo`, it would be `ComponentBlogFoo`.
 
 Created as part of page, but currently unused.
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### page.context
+
+</Summary>
 
 This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L153) and then is [passed to graphql](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js#L40) queries as the `context` parameter.
 
+</Details>
+
 ## Query
 
+<Details>
+
+<Summary>
+
 ### dataPath
+
+</Summary>
 
 Path to the page's query result. Relative to `/public/static/d/{modInt}`. Name is kebab hash on `path--${jsonName}`-`result->sha1->base64`. E.g
 
@@ -107,7 +195,15 @@ Path to the page's query result. Relative to `/public/static/d/{modInt}`. Name i
 
 Set after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) has finished.
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### Redux `jsonDataPaths` namespace (dataPaths)
+
+</Summary>
 
 Map of page [jsonName](#jsonname) to [dataPath](#datapath). Updated after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk). E.g
 
@@ -120,7 +216,15 @@ Map of page [jsonName](#jsonname) to [dataPath](#datapath). Updated after [Query
 
 This is also known via the `dataPaths` variable.
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### Query result file
+
+</Summary>
 
 `/public/static/d/621/${dataPath}`
 
@@ -179,12 +283,32 @@ export const pageQuery = graphql`
 `
 ```
 
+</Details>
+
 ## Webpack stuff
+
+<Details>
+
+<Summary>
 
 ### /.cache/async-requires.js
 
+</Summary>
+
 See [Write Out Pages](/docs/write-pages/).
+
+</Details>
+
+<Details>
+
+<Summary>
 
 ### .cache/data.json
 
+</Summary>
+
 See [Write Out Pages](/docs/write-pages/).
+
+</Details>
+
+</Accordion>

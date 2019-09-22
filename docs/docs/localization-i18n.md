@@ -12,7 +12,15 @@ This guide is a brief look at the options that exist for enhancing your Gatsby p
 
 There are a few React i18n packages out there. Several options include [react-intl](https://github.com/yahoo/react-intl), the community [Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n) and [react-i18next](https://github.com/i18next/react-i18next/). There are several factors to consider when choosing a package: Do you already use a similar package in another project? How well does the package meet the needs of your users? Are you or your team already familiar with a certain package? Is the package well documented and maintained?
 
+<Accordion>
+
+<Details>
+
+<Summary>
+
 ### gatsby-plugin-i18n
+
+</Summary>
 
 This plugin helps you use `react-intl`, `i18next` or any other i18n library with Gatsby. This plugin does not translate or format your content, but rather it creates routes for each language, allowing Google to more easily find the correct version of your site, and if you need to, designate alternative UI layouts.
 
@@ -26,19 +34,39 @@ URL - /**en**/about
 
 [gatsby-plugin-i18n on GitHub](https://github.com/angeloocana/gatsby-plugin-i18n)
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### react-intl
+
+</Summary>
 
 React-intl is a part of the FormatJS set of i18n libraries and provides support for over 150+ languages. It builds on JavaScript's [Internationalization API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) providing enhanced APIs and components. React-intl uses React context and HOCs (Higher Order Components) to provide translations allowing you to dynamically load language modules as you need them. There are also polyfill options available for older browsers that do not support the base JavaScript i18n API.
 
 More detailed information about react-intl's [APIs](https://github.com/formatjs/react-intl/blob/master/docs/API.md) and [components](https://github.com/formatjs/react-intl/blob/master/docs/Components.md), including [demos](https://github.com/formatjs/react-intl/tree/master/examples), are available in the [documentation](https://github.com/formatjs/react-intl/tree/master/docs).
 
+</Details>
+
+<Details>
+
+<Summary>
+
 ### react-i18next
+
+</Summary>
 
 React-i18next is an internationalization library built on the i18next framework. It uses components to make sure translations render correctly or to re-render your content when the user language changes.
 
 React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with Webpack.
 
 This framework also has experimental support for the React suspense API and React hooks.
+
+</Details>
+
+</Accordion>
 
 ## Other resources
 
