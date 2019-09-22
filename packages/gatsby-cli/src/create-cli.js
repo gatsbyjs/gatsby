@@ -1,8 +1,6 @@
 const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
-const report = require(`./reporter`)
-const didYouMean = require(`./did-you-mean`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 const clipboardy = require(`clipboardy`)
@@ -12,6 +10,10 @@ const {
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
 
+const createCliOptions = require(`./create-cli-options`)
+const didYouMean = require(`./did-you-mean`)
+const report = require(`./reporter`)
+
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
@@ -19,8 +21,10 @@ const handlerP = fn => (...args) => {
   )
 }
 
+const defaultHost = `localhost`
+const cliOptions = createCliOptions({ defaultHost })
+
 function buildLocalCommands(cli, isLocalSite) {
-  const defaultHost = `localhost`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
@@ -105,44 +109,14 @@ function buildLocalCommands(cli, isLocalSite) {
       `Start development server. Watches files, rebuilds, and hot reloads ` +
       `if something changes`,
     builder: _ =>
-      _.option(`H`, {
-        alias: `host`,
-        type: `string`,
-        default: defaultHost,
-        describe: `Set host. Defaults to ${defaultHost}`,
-      })
-        .option(`p`, {
-          alias: `port`,
-          type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
-        })
-        .option(`o`, {
-          alias: `open`,
-          type: `boolean`,
-          describe: `Open the site in your (default) browser for you.`,
-        })
-        .option(`S`, {
-          alias: `https`,
-          type: `boolean`,
-          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
-        })
-        .option(`c`, {
-          alias: `cert-file`,
-          type: `string`,
-          default: ``,
-          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
-        })
-        .option(`k`, {
-          alias: `key-file`,
-          type: `string`,
-          default: ``,
-          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
-        })
-        .option(`open-tracing-config-file`, {
-          type: `string`,
-          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
-        }),
+      _.option(`H`, cliOptions.host)
+        .option(`p`, cliOptions.port)
+        .option(`o`, cliOptions.open)
+        .option(`S`, cliOptions.https)
+        .option(`c`, cliOptions.certFile)
+        .option(`k`, cliOptions.keyFile)
+        .option(`open-tracing-config-file`, cliOptions.tracer)
+        .option(`f`, cliOptions.config),
     handler: handlerP(
       getCommandHandler(`develop`, (args, cmd) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
@@ -159,20 +133,10 @@ function buildLocalCommands(cli, isLocalSite) {
     command: `build`,
     desc: `Build a Gatsby project.`,
     builder: _ =>
-      _.option(`prefix-paths`, {
-        type: `boolean`,
-        default: false,
-        describe: `Build site with link paths prefixed (set pathPrefix in your gatsby-config.js).`,
-      })
-        .option(`no-uglify`, {
-          type: `boolean`,
-          default: false,
-          describe: `Build site without uglifying JS bundles (for debugging).`,
-        })
-        .option(`open-tracing-config-file`, {
-          type: `string`,
-          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
-        }),
+      _.option(`prefix-paths`, cliOptions.prefixPath)
+        .option(`no-uglify`, cliOptions.noUgly)
+        .option(`open-tracing-config-file`, cliOptions.tracer)
+        .option(`f`, cliOptions.config),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
@@ -185,28 +149,11 @@ function buildLocalCommands(cli, isLocalSite) {
     command: `serve`,
     desc: `Serve previously built Gatsby site.`,
     builder: _ =>
-      _.option(`H`, {
-        alias: `host`,
-        type: `string`,
-        default: defaultHost,
-        describe: `Set host. Defaults to ${defaultHost}`,
-      })
-        .option(`p`, {
-          alias: `port`,
-          type: `string`,
-          default: `9000`,
-          describe: `Set port. Defaults to 9000`,
-        })
-        .option(`o`, {
-          alias: `open`,
-          type: `boolean`,
-          describe: `Open the site in your (default) browser for you.`,
-        })
-        .option(`prefix-paths`, {
-          type: `boolean`,
-          default: false,
-          describe: `Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js).`,
-        }),
+      _.option(`H`, cliOptions.host)
+        .option(`p`, cliOptions.port)
+        .option(`o`, cliOptions.open)
+        .option(`prefix-paths`, cliOptions.prefixPath)
+        .option(`f`, cliOptions.config),
 
     handler: getCommandHandler(`serve`),
   })
@@ -214,13 +161,7 @@ function buildLocalCommands(cli, isLocalSite) {
   cli.command({
     command: `info`,
     desc: `Get environment information for debugging and issue reporting`,
-    builder: _ =>
-      _.option(`C`, {
-        alias: `clipboard`,
-        type: `boolean`,
-        default: false,
-        describe: `Automagically copy environment information to clipboard`,
-      }),
+    builder: _ => _.option(`C`, cliOptions.clipboard),
     handler: args => {
       try {
         const copyToClipboard =
@@ -334,19 +275,8 @@ module.exports = argv => {
     .usage(`Usage: $0 <command> [options]`)
     .alias(`h`, `help`)
     .alias(`v`, `version`)
-    .option(`verbose`, {
-      default: false,
-      type: `boolean`,
-      describe: `Turn on verbose output`,
-      global: true,
-    })
-    .option(`no-color`, {
-      alias: `no-colors`,
-      default: false,
-      type: `boolean`,
-      describe: `Turn off the color in output`,
-      global: true,
-    })
+    .option(`verbose`, cliOptions.verbose)
+    .option(`no-color`, cliOptions.noColor)
 
   buildLocalCommands(cli, isLocalSite)
 

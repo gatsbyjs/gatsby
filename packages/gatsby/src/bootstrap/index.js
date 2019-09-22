@@ -38,6 +38,7 @@ const { writeRedirects } = require(`./redirects-writer`)
 // require(`./log-line-function`)
 
 type BootstrapArgs = {
+  configFile: string,
   directory: string,
   prefixPaths?: boolean,
   parentSpan: Object,
@@ -71,7 +72,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   let config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+    getConfigFile(program.directory, args.configFile)
   )
 
   // The root config cannot be exported as a function, only theme configs

@@ -20,6 +20,8 @@ module.exports = async function getConfigFile(
   distance: number = 3
 ) {
   const configPath = path.join(rootDir, configName)
+  report.verbose(`using config file path ${configPath}`)
+
   let configModule
   try {
     configModule = require(configPath)

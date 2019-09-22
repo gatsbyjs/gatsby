@@ -64,11 +64,11 @@ const matchPathRouter = (matchPaths, options) => (req, res, next) => {
 module.exports = async program => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
-  let { prefixPaths, port, open, host } = program
+  let { prefixPaths, port, open, host, configFile } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
   const config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+    getConfigFile(program.directory, configFile)
   )
 
   const { pathPrefix: configPathPrefix } = config || {}
