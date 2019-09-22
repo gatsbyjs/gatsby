@@ -110,7 +110,12 @@ function buildLocalCommands(cli, isLocalSite) {
       `if something changes`,
     builder: _ =>
       _.option(`H`, cliOptions.host)
-        .option(`p`, cliOptions.port)
+        .option(`p`, {
+          alias: `port`,
+          type: `string`,
+          default: `8000`,
+          describe: `Set port. Defaults to 8000`,
+        })
         .option(`o`, cliOptions.open)
         .option(`S`, cliOptions.https)
         .option(`c`, cliOptions.certFile)
@@ -150,7 +155,12 @@ function buildLocalCommands(cli, isLocalSite) {
     desc: `Serve previously built Gatsby site.`,
     builder: _ =>
       _.option(`H`, cliOptions.host)
-        .option(`p`, cliOptions.port)
+        .option(`p`, {
+          alias: `port`,
+          type: `string`,
+          default: `9000`,
+          describe: `Set port. Defaults to 9000`,
+        })
         .option(`o`, cliOptions.open)
         .option(`prefix-paths`, cliOptions.prefixPath)
         .option(`f`, cliOptions.config),
