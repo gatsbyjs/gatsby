@@ -36,11 +36,15 @@ const popExtractedQueries = () => {
 }
 
 const findIdsWithoutDataDependencies = state => {
-  const allTrackedIds = new Set(
-    _.flatten([
-      ...state.componentDataDependencies.nodes.values(),
-      ...state.componentDataDependencies.connections.values(),
-    ])
+  const allTrackedIds = new Set()
+  const boundAddToTrackedIds = allTrackedIds.add.bind(allTrackedIds)
+  state.componentDataDependencies.nodes.forEach(dependenciesOnNode => {
+    dependenciesOnNode.forEach(boundAddToTrackedIds)
+  })
+  state.componentDataDependencies.connections.forEach(
+    dependenciesOnConnection => {
+      dependenciesOnConnection.forEach(boundAddToTrackedIds)
+    }
   )
 
   // Get list of paths not already tracked and run the queries for these

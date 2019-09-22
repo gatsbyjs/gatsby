@@ -23,7 +23,8 @@ function createPageDependency({ path, nodeId, connection }) {
   }
   if (
     connection &&
-    state.componentDataDependencies.connections.has(connection)
+    state.componentDataDependencies.connections.has(connection) &&
+    state.componentDataDependencies.connections.get(connection).has(path)
   ) {
     connectionDependencyExists = true
   }
