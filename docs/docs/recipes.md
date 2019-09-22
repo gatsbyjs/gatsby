@@ -502,6 +502,8 @@ body {
 
 By targeting the HTML `body` element, your font will apply to most text on the page. Additional CSS can target other elements, such as `button` or `textarea`.
 
+If fonts are not updating following steps above, make sure to replace the existing font-family in relevant CSS.
+
 #### Additional resources
 
 - More on [importing assets into files](/docs/importing-assets-into-files/)
