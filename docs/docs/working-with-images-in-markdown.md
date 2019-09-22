@@ -32,6 +32,12 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/images`,
+      },
+    },
   ],
 }
 ```
@@ -41,7 +47,7 @@ Then, in an example markdown file, add a field called `featuredImage`:
 ```md:title=src/pages/example-post.md
 ---
 title: My Amazing Post
-featuredImage: ./awesome-image.png
+featuredImage: ../images/awesome-image.png
 ---
 
 Content goes here!
@@ -163,6 +169,12 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/images`,
+      },
+    },
   ],
 }
 ```
@@ -170,5 +182,5 @@ module.exports = {
 With this configuration, you can use the default Markdown syntax for images. They will be processed by Sharp and appear as if you placed them in a `gatsby-image` component.
 
 ```md
-![Awesome image](./my-awesome-image.png)
+![Awesome image](../images/my-awesome-image.png)
 ```
