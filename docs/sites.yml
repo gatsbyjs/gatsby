@@ -7306,3 +7306,17 @@
   built_by: BBS
   built_by_url: https://big-boss-studio.com
   featured: false
+- title: Appes - Meant to evolve
+  main_url: https://appes.co
+  url: https://appes.co
+  description: >
+    Appes is all about apps and evolution. We help companies to build mobile and
+    web products.
+  categories:
+    - Agency
+    - Mobile Development
+    - Web Development
+    - Technology
+  built_by: Appes
+  built_by_url: https://appes.co
+  featured: false
