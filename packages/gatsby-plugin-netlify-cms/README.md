@@ -205,7 +205,7 @@ plugins: [
 
         config.plugins.push(
           plugins.define({
-            "process.env.MY_VAR": "my var value",
+            "process.env.MY_VAR": JSON.stringify("my var value"),
           })
         )
 
