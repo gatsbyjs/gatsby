@@ -1,6 +1,7 @@
 exports.registerServiceWorker = () => true
 
-const ignoredLinkRels = /\b(preconnect|prefetch|prerender|dns-prefetch)\b/
+// only cache relevant resources for this page
+const whiteListLinkRels = /^(stylesheet|preload)$/
 const prefetchedPathnames = []
 
 exports.onServiceWorkerActive = ({
@@ -25,7 +26,11 @@ exports.onServiceWorkerActive = ({
   const headerResources = [].slice
     .call(nodes)
     // don't include preconnect/prefetch/prerender resources
-    .filter(node => !ignoredLinkRels.test(node.getAttribute(`rel`)))
+    .filter(
+      node =>
+        node.tagName !== `LINK` ||
+        whiteListLinkRels.test(node.getAttribute(`rel`))
+    )
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
   // Loop over prefetched pages and add their resources to an array,
