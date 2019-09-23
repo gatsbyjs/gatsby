@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton } from "./buttons"
-import { formInput, formInputFocus } from "../../utils/styles"
+import { themedInput, formInputFocus } from "../../utils/styles"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
 import MdSentimentDissatisfied from "react-icons/lib/md/sentiment-dissatisfied"
@@ -59,7 +59,7 @@ const TextareaLabel = styled(`label`)`
 `
 
 const Textarea = styled(`textarea`)`
-  ${formInput}
+  ${themedInput}
   height: 5.5rem;
   margin: ${p => p.theme.space[1]} 0 ${p => p.theme.space[4]};
 `

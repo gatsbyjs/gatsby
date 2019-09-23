@@ -42,14 +42,7 @@ const PopularTagGrid = styled.div`
 `
 
 const PopularTagButton = ({ children, tag }) => (
-  <Button
-    small
-    secondary
-    to={`/blog/tags/${tag}`}
-    style={{
-      border: `1px solid ${colors.purple[20]}`,
-    }}
-  >
+  <Button small secondary to={`/blog/tags/${tag}`}>
     {tag}
     <TiArrowRight />
     {children}
@@ -162,18 +155,7 @@ class TagsPage extends React.Component {
                   value={filterQuery}
                   onChange={this.handleChange}
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    fill: colors.lilac,
-                    position: `absolute`,
-                    left: space[1],
-                    top: `50%`,
-                    width: space[4],
-                    height: space[4],
-                    pointerEvents: `none`,
-                    transform: `translateY(-50%)`,
-                  }}
-                />
+                <SearchIcon />
               </label>
             </div>
             <ul
