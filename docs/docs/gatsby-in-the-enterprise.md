@@ -1,5 +1,5 @@
 ---
-title: "Building with Gatsby in the Enterprise"
+title: "Building With Gatsby in the Enterprise"
 ---
 
 Some Gatsby advocates may be working inside “enterprise” software development organizations. Others may work at agencies which work closely with such organizations.
@@ -38,7 +38,7 @@ Depending on your type of your organization, not all of these challenges may app
 
 A somewhat complete list of potential areas that may have in-house, standard solutions: authentication, SSO, error logging, deployments, staging, hosting, security, CDN, middleware (data fetching), analytics, and internationalization/localization.
 
-These requirements tend to be in place to enable marketing, security, analytics, and operations teams to function effectively.
+These requirements tend to be in place to enable enable marketing, security, analytics, and operations teams to function effectively.
 
 **Solution 1: Dedicate a few days or weeks to build integrations.** If your company has these requirements, building integrations is quite feasible with Gatsby’s plugin system (and even well-documented, with many examples for each category of integration).
 
@@ -50,7 +50,7 @@ Depending on what your enterprise looks like, there can be different strategies 
 
 **Build consensus among developers.** If developers in your organization are influential, it can be helpful to build consensus among developers and engineering managers around Gatsby. If other developers aren’t familiar with Gatsby, holding “brown bag lunches” and workshops (going through the Tutorial tends to work well) can build excitement.
 
-**Execute a simple proof of concept.** Actually, having built something with Gatsby often changes the conversation — it becomes less of an abstract concept to others, and more of a concrete possible choice. Choosing a small project and building it with Gatsby can go a long way towards socializing Gatsby in your organization.
+**Execute a simple proof of concept.** Actually having built something with Gatsby often changes the conversation — it becomes less of an abstract concept to others, and more of a concrete possible choice. Choosing a small project and building it with Gatsby can go a long way towards socializing Gatsby in your organization.
 
 **Use the language of executives and managers.** Executives have different goals and objectives than developers. Read about the [Executive persona](/docs/winning-over-executives/) to see how to explain Gatsby in a way that executives find attractive.
 
@@ -68,7 +68,7 @@ One key to successfully completing a Gatsby project is having a pre-existing rel
 
 Adopting Gatsby in an enterprise can be more difficult than in small companies. However, there are lasting benefits for the company as well as the individuals guiding the change.
 
-Because technology choices are stickier in the enterprise, driving adoption of Gatsby may mean that you drive value for your company in a way that lasts for 5-10 years.
+Because technology choices are more sticky in the enterprise, driving adoption of Gatsby may mean that you drive value for your company in a way that lasts for 5-10 years.
 
 The benefits your company will derive, such as performance and the ability to rapidly iterate on its consumer-facing web presence and digital footprint, will provide significant benefits in the marketplace. Your company will be more likely to thrive _because of the work you did_.
 
