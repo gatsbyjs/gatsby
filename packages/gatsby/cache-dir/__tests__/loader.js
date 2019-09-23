@@ -66,7 +66,7 @@ describe(`Production loader`, () => {
         pagePath: `/mypage`,
         payload: defaultPayload,
       }
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(await prodLoader.loadPageDataJson(`/mypage`)).toEqual(expectation)
       expect(prodLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
@@ -81,7 +81,7 @@ describe(`Production loader`, () => {
         pagePath: `/mypage`,
         payload: defaultPayload,
       }
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(await prodLoader.loadPageDataJson(`/mypage`)).toEqual(expectation)
       expect(prodLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
@@ -97,7 +97,7 @@ describe(`Production loader`, () => {
         pagePath: `/mypage`,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
+      expect(await prodLoader.loadPageDataJson(`/mypage`)).toEqual(expectation)
       expect(prodLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
@@ -115,7 +115,7 @@ describe(`Production loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await prodLoader.loadPageDataJson(`/unknown-page`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
@@ -135,7 +135,7 @@ describe(`Production loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await prodLoader.loadPageDataJson(`/unknown-page`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
@@ -155,7 +155,7 @@ describe(`Production loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await prodLoader.loadPageDataJson(`/unknown-page`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
@@ -173,7 +173,7 @@ describe(`Production loader`, () => {
         pagePath: `/404.html`,
         notFound: true,
       }
-      expect(await prodLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
+      expect(await prodLoader.loadPageDataJson(`/unknown-page`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
@@ -189,7 +189,7 @@ describe(`Production loader`, () => {
         status: `error`,
         pagePath: `/error-page`,
       }
-      expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
+      expect(await prodLoader.loadPageDataJson(`/error-page`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
@@ -206,7 +206,7 @@ describe(`Production loader`, () => {
         retries: 3,
         pagePath: `/blocked-page`,
       }
-      expect(await prodLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
+      expect(await prodLoader.loadPageDataJson(`/blocked-page`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
@@ -236,7 +236,7 @@ describe(`Production loader`, () => {
         pagePath: `/blocked-page`,
         payload,
       }
-      expect(await prodLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
+      expect(await prodLoader.loadPageDataJson(`/blocked-page`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
@@ -248,8 +248,8 @@ describe(`Production loader`, () => {
 
       mockPageData(`/mypage`, 200, defaultPayload, true)
 
-      const expectation = await prodLoader.loadPageDataJson(`/mypage/`)
-      expect(await prodLoader.loadPageDataJson(`/mypage/`)).toBe(expectation)
+      const expectation = await prodLoader.loadPageDataJson(`/mypage`)
+      expect(await prodLoader.loadPageDataJson(`/mypage`)).toBe(expectation)
       expect(xhrCount).toBe(1)
     })
   })
