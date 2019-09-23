@@ -7049,7 +7049,7 @@
   url: https://skirtcraft.com/products
   source_url: https://github.com/jqrn/skirtcraft-web
   description: >
-    Skirtcraft sells unisex skirts with large pockets, made in the USA. Site built with Typescript and styled-components, with Tumblr-sourced blog posts.
+    Skirtcraft sells unisex skirts with large pockets, made in the USA. Site built with TypeScript and styled-components, with Tumblr-sourced blog posts.
   categories:
     - eCommerce
     - Blog
