@@ -2,6 +2,8 @@
 title: Querying Data with GraphQL
 ---
 
+import LayerModel from "../../www/src/components/layer-model"
+
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
 [GraphQL](http://graphql.org/).
@@ -18,6 +20,10 @@ Gatsby uses GraphQL to enable [page and StaticQuery
 components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
+
+Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
+
+<LayerModel initialLayer="Data" />
 
 ## Why is GraphQL so cool?
 
