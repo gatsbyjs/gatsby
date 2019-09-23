@@ -2999,7 +2999,7 @@
     - Minimal
 - url: https://gatsby-typescript-starter-default.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
-  description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
+  description: Simple gatsby starter using TypeScript and eslint instead of outdated tslint.
   tags:
     - Language:TypeScript
     - SEO
@@ -3907,7 +3907,7 @@
     - Optimized images with gatsby-image
 - url: https://eloquent-bartik-09a1e8.netlify.com
   repo: https://github.com/sagar7993/gatsby-wordpress-typescript-blog-boilerplate
-  description: A Gatsby starter template for a Wordpress blog, built using Typescript and Ant Design
+  description: A Gatsby starter template for a Wordpress blog, built using TypeScript and Ant Design
   tags:
     - Blog
     - CMS:Wordpress
