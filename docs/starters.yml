@@ -3905,6 +3905,42 @@
     - Mobile and responsive
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
+- url: https://eloquent-bartik-09a1e8.netlify.com
+  repo: https://github.com/sagar7993/gatsby-wordpress-typescript-blog-boilerplate
+  description: A Gatsby starter template for a Wordpress blog, built using Typescript and Ant Design
+  tags:
+    - Blog
+    - CMS:Wordpress
+    - CMS:Headless
+    - Language:TypeScript
+    - Pagination
+    - PWA
+    - SEO
+    - Portfolio
+    - Styling:SCSS
+  features:
+    - Typecsript
+    - Source content from Wordpress CMS
+    - Auto generated Pagination for your Wordpress Posts
+    - Auto generated Navigation for next and previous post at the end Post
+    - SASS stylesheets
+    - PWA with offline support
+    - Ant Design for UI components and theming
+    - Responsive Design
+    - Google Analytics
+    - Comments using Staticman
+    - Social widgets
+    - Instagram feed
+    - Pinterest pin-it button on hovering on images
+    - Twitter timeline and follow button
+    - Facebook timeline and like button
+    - SEO friendly
+    - Mobile optimized and responsive
+    - Sitemap & Robots.txt generation
+    - Optimized images with gatsby-image
+    - Git pre-commit and pre-push hooks using Husky
+    - TSLint formatting
+    - Excellent Lighthouse audit score
 - url: https://gatsby-starter-typescript-deluxe.netlify.com/
   repo: https://github.com/gojutin/gatsby-starter-typescript-deluxe
   description: A Gatsby starter with TypeScript, Storybook, Styled Components, Framer Motion, Jest, and more.
