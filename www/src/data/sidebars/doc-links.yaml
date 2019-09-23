@@ -490,6 +490,8 @@
           link: /docs/migrating-from-v1-to-v2/
         - title: Migrating from v0 to v1
           link: /docs/migrating-from-v0-to-v1/
+        - title: Upgrade Gatsby for minor or patch releases
+          link: /docs/upgrade-gatsby-and-dependencies/
     - title: Conceptual Guide
       link: /docs/conceptual-guide/
       items:
