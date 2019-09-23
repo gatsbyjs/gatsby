@@ -3905,3 +3905,27 @@
     - Mobile and responsive
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
+- url: https://gatsby-markdown-blog-starter.netlify.com/
+  repo: https://github.com/ammarjabakji/gatsby-markdown-blog-starter
+  description: GatsbyJS v2 starter for creating a markdown blog. Based on Gatsby Advanced Starter.
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - Gatsby v2 support
+    - Responsive Design
+    - Pagination
+    - Content is Markdown files
+    - Google Analytics
+    - Support for RSS feed
+    - SEO friendly
+    - Sitemap & Robots.txt generation
+    - Sass support
+    - Css Modules support
+    - Web App Manifest
+    - Offline support
+    - htaccess support
+    - Typography.js
+    - Integration with Social Media
