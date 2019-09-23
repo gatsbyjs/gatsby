@@ -29,6 +29,7 @@
 jest.mock(`fs-extra`, () => {
   return {
     outputFile: jest.fn(),
+    ensureDir: jest.fn(),
   }
 })
 
@@ -50,6 +51,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 let mockPersistedState = {}
+let lokiStorage = {}
 jest.mock(`../../redux/persist`, () => {
   return {
     readFromCache: () => mockPersistedState,
@@ -58,6 +60,17 @@ jest.mock(`../../redux/persist`, () => {
     },
   }
 })
+
+let mockedLokiFsAdapter = {
+  loadDatabase: (dbname, callback) => {
+    callback(lokiStorage[dbname])
+  },
+
+  saveDatabase: (dbname, dbstring, callback) => {
+    lokiStorage[dbname] = dbstring
+    callback(null)
+  },
+}
 
 let pluginOptions = {}
 
@@ -97,6 +110,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     jest.resetModules()
     if (clearCache) {
       mockPersistedState = {}
+      lokiStorage = {}
     }
   } else if (clearCache) {
     console.error(`Can't clear cache without restarting`)
@@ -122,7 +136,8 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   })
 
   const queryUtil = require(`../`)
-  const { store, saveState, emitter } = require(`../../redux`)
+  const { store, emitter } = require(`../../redux`)
+  const { saveState } = require(`../../db`)
   const reporter = require(`gatsby-cli/lib/reporter`)
   const queryRunner = require(`../query-runner`)
   const { boundActionCreators } = require(`../../redux/actions`)
@@ -138,6 +153,18 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     {}
   )
   const apiRunner = require(`../../utils/api-runner-node`)
+
+  if (restart) {
+    const { backend } = require(`../../db/nodes`)
+    if (backend === `loki`) {
+      const loki = require(`../../db/loki`)
+      const dbSaveFile = `${__dirname}/fixtures/loki.db`
+      await loki.start({
+        saveFile: dbSaveFile,
+        adapter: mockedLokiFsAdapter,
+      })
+    }
+  }
 
   queryRunner.mockClear()
 
@@ -189,7 +216,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()
 
-  saveState()
+  await saveState()
 
   if (restart) {
     require(`../../bootstrap/page-hot-reloader`)

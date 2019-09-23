@@ -61,10 +61,11 @@ function ensureNodeCollections(db) {
   })
 }
 
-function startFileDb(saveFile) {
+function startFileDb({ saveFile, adapter }) {
   return new Promise((resolve, reject) => {
     const dbOptions = {
       autoload: true,
+      adapter,
       autoloadCallback: err => {
         if (err) {
           reject(err)
@@ -94,14 +95,14 @@ async function startInMemory() {
  * the existing state has been loaded (if there was an existing
  * saveFile)
  */
-async function start({ saveFile } = {}) {
+async function start({ saveFile, adapter } = {}) {
   if (saveFile && !_.isString(saveFile)) {
     throw new Error(`saveFile must be a path`)
   }
   if (saveFile) {
     const saveDir = path.dirname(saveFile)
     await fs.ensureDir(saveDir)
-    await startFileDb(saveFile)
+    await startFileDb({ saveFile, adapter })
   } else {
     await startInMemory()
   }
