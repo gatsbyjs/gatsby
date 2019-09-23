@@ -3941,3 +3941,47 @@
     - Git pre-commit and pre-push hooks using Husky
     - TSLint formatting
     - Excellent Lighthouse audit score
+- url: https://gatsby-starter-typescript-deluxe.netlify.com/
+  repo: https://github.com/gojutin/gatsby-starter-typescript-deluxe
+  description: A Gatsby starter with TypeScript, Storybook, Styled Components, Framer Motion, Jest, and more.
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Storybook
+    - SEO
+    - Linting
+    - Testing
+  features:
+    - TypeScript for type-safe code.
+    - Styled-Components for all your styles.
+    - Framer Motion for awesome animations.
+    - gatsby-image and gatsby-transformer-sharp for optimized images.
+    - gatsby-plugin-manifest + SEO component for an SEO-friendly PWA.
+    - Storybook with add-ons for showing off your awesome components.
+    - Jest and React Testing library for snapshots and unit tests.
+    - ESLint (with TSLint and Prettier) to make your code look its best.
+    - React Axe and React A11y for accessibility so that your site is awesome for everyone.
+- url: https://gatsby-markdown-blog-starter.netlify.com/
+  repo: https://github.com/ammarjabakji/gatsby-markdown-blog-starter
+  description: GatsbyJS v2 starter for creating a markdown blog. Based on Gatsby Advanced Starter.
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - Gatsby v2 support
+    - Responsive Design
+    - Pagination
+    - Content is Markdown files
+    - Google Analytics
+    - Support for RSS feed
+    - SEO friendly
+    - Sitemap & Robots.txt generation
+    - Sass support
+    - Css Modules support
+    - Web App Manifest
+    - Offline support
+    - htaccess support
+    - Typography.js
+    - Integration with Social Media
