@@ -219,6 +219,7 @@ Other built-in configurations can be used in queries
 - [`Alias`](/docs/graphql-reference#alias)
 - [`Group`](/docs/graphql-reference#group)
 
+For examples, refer to the [Query recipes](/docs/recipes/#6-querying-data) and [GraphQL Query Options Reference Guide](/docs/graphql-reference/).
 ## Query fragments
 
 Fragments allow you to reuse parts of GraphQL queries. They also allow you to split up complex queries into smaller, easier to understand components.
