@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes#readme",
   "devDependencies": {
-    "gatsby": "^2.15.20",
+    "gatsby": "^2.15.21",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
