@@ -6,13 +6,13 @@ A big part of contributing to open source is submitting changes to a project: im
 
 ## What is a Pull Request (PR)?
 
-In case you aren't familiar, here's how the fine folks at GitHub [define a pull request](https://help.github.com/en/articles/about-pull-requests):
+In case you aren't familiar, here's how the folks at GitHub [define a pull request](https://help.github.com/en/articles/about-pull-requests):
 
 > Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 
-Gatsby uses the pull request process to review and test changes before they’re added to Gatsby’s GitHub repository. Anyone can open a pull request. The same process is used for all contributors, whether this is your first open source contribution or you’re a core member of the Gatsby team.
+Gatsby uses the PR process to review and test changes before they’re added to Gatsby’s GitHub repository. Anyone can open a pull request. The same process is used for all contributors, whether this is your first open source contribution or you’re a core member of the Gatsby team.
 
-Simply put, when someone wants to contribute to Gatsby, they open a request to _pull_ their code into ours. Depending on the type of change, we like to categorize pull requests (or PRs for short) into:
+When someone wants to contribute to Gatsby, they open a request to _pull_ their code into the repo. Depending on the type of change, PRs are categorized into:
 
 - [Documentation](#documentation)
 - [Code](#code-changes)
@@ -27,7 +27,7 @@ We typically recommend [opening an issue](/contributing/how-to-file-an-issue/) b
 
 For some changes, such as typo fixes or broken links, it may be appropriate to open a small PR by itself. This is somewhat subjective so if you have any questions, [feel free to ask us](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).
 
-The Gatsby team uses the triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests/), if you're interested in learning more about how that works.
+The Gatsby core team uses a triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests/), if you're interested in learning more about how that works.
 
 ## Opening PRs in Gatsby
 
@@ -36,7 +36,8 @@ For any kind of change to files in the Gatsby repo, you can follow the below ste
 Some PRs can be done completely from the [GitHub UI](https://help.github.com/en/articles/creating-a-pull-request). To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), you can fork the repo and install parts of it to run on your local machine.
 
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
-- Follow the instructions for the part of the project you want to change. (See specifics below)
+- Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
+- Follow the instructions for the part of the project you want to change. (See specific sections below.)
 - [Create a branch in Git](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) to isolate your changes:
 
   ```bash
@@ -80,6 +81,40 @@ There are specific pages about contributing to various parts of the Gatsby ecosy
 
 For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog and website contributions](/contributing/blog-and-website-contributions/).
 
+## Update your fork with the latest Gatsby changes
+
+The Gatsby GitHub repo is very active, so it's likely you'll need to update your fork with the latest changes to be able to merge in your code. This requires adding Gatsby as an [upstream remote](https://help.github.com/en/articles/configuring-a-remote-for-a-fork):
+
+- Set Gatsby's repo URL as a remote source. The name of the remote is arbitrary; this example uses `upstream`.
+  ```bash
+  git remote set-url upstream git@github.com:gatsbyjs/gatsby.git
+  ```
+  - _Note: this syntax [uses SSH: you can also use `https`](https://help.github.com/en/articles/which-remote-url-should-i-use) and your username/password._
+- You can also verify the remote name and URL at any time:
+  ```bash
+  git remote -v
+  ```
+- Fetch the latest changes from Gatsby:
+  ```bash
+  git fetch upstream master
+  ```
+- In the branch you want to update, merge any changes from Gatsby into your fork:
+  ```bash
+  git merge upstream master
+  ```
+  - If there are any [merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github), you'll want to address those to get a clean merge.
+- Once your branch is in good working order, push the changes to your fork:
+  ```bash
+  git push origin head
+  ```
+
+For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
+
+_**Note:** as a member of the Gatsby repo, you can also clone it directly and push to feature branches._
+
 ## Additional resources
 
 - [Creating a pull request](https://help.github.com/en/articles/creating-a-pull-request) from GitHub
+- [Configuring a remote for a fork](https://help.github.com/en/articles/configuring-a-remote-for-a-fork)
+- [Which remote URL should I use?](https://help.github.com/en/articles/which-remote-url-should-i-use)
+- [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
