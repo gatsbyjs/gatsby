@@ -9,14 +9,14 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 ## Setting up your Shopify account
 
 1. Create a new [Shopify account](https://www.shopify.com) and store if you don't have one.
-2. Create a Private App in your store by navigating to **Apps**, then "Manage private apps"
+2. Create a private app in your store by navigating to `Apps`, then `Manage private apps`.
 3. Create a new private app and enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api). Make sure to also grant access to read product and customer tags.
 
 ## Set up the Gatsby Shopify plugin
 
 1. If you do not already have one ready, [create a Gatsby site](https://www.gatsbyjs.org/docs/quick-start).
 
-2. Install the `gatsby-source-shopify` plugin and `shopify-buy` package.
+2. Install the [`gatsby-source-shopify`](/packages/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
 
 ```shell
 npm install --save gatsby-source-shopify shopify-buy
