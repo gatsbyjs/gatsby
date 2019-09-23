@@ -128,9 +128,9 @@
             - title: Sourcing From Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
-            - title: Sourcing from SaaS Services
-              link: /docs/sourcing-from-saas-services/
-              breadcrumbTitle: From SaaS Services
+            - title: Sourcing from Hosted Services
+              link: /docs/sourcing-from-hosted-services/
+              breadcrumbTitle: From Hosted Services
             - title: Sourcing from Private APIs
               link: /docs/sourcing-from-private-apis/
               breadcrumbTitle: From Private APIs

@@ -123,7 +123,7 @@ createRedirect({
 
 You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
 
-```sh
+```shell
 # my manually set redirects
 /home              /
 /blog/my-post.php  /blog/my-post

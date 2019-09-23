@@ -193,6 +193,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/sourcing-from-netlify-cms/`,
     isPermanent: true,
   })
+  createRedirect({
+    fromPath: `/docs/sourcing-from-saas-services/`,
+    toPath: `/docs/sourcing-from-hosted-services/`,
+    isPermanent: true,
+  })
 
   createRedirect({
     fromPath: `/starter-showcase/`, // Moved "Starter Showcase" index page from /starter-showcase to /starters

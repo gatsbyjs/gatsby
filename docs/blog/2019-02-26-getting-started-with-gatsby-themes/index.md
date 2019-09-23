@@ -38,7 +38,7 @@ Tidy up your _package.json_ file and create workspaces which includes the projec
 
 Next, you want to create your _site_ directory and your _packages_ directory within your _gatsby-theme_ project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we will call it _theme_. Then you will want to `yarn init` the _theme_ directory and the _site_ directory.
 
-```sh
+```shell
 mkdir site
 mkdir packages
 cd packages
@@ -167,7 +167,7 @@ You will need to add `gatsby` CLI scripts and specify your newly created `theme`
 
 Now, you can make sure _site_ is linked to _theme_.
 
-```sh
+```shell
 yarn
 yarn workspaces info
 ```
@@ -193,7 +193,7 @@ Your workspace info should look similar to this:
 
 Now that we've set up the site's _package.json_ we can run the workspace:
 
-```sh
+```shell
 yarn workspace site develop
 ```
 
@@ -208,7 +208,7 @@ Your website content goes in _index.mdx_.
 
 Now, rerun the development server and see your new content:
 
-```sh
+```shell
 yarn workspace site develop
 ```
 
