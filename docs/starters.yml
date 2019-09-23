@@ -3905,7 +3905,7 @@
     - Mobile and responsive
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
-- url: http://eloquent-bartik-09a1e8.netlify.com
+- url: https://eloquent-bartik-09a1e8.netlify.com
   repo: https://github.com/sagar7993/gatsby-wordpress-typescript-blog-boilerplate
   description: A Gatsby starter template for a Wordpress blog, built using Typescript and Ant Design
   tags:
