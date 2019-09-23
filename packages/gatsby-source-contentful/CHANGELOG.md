@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.39...gatsby-source-contentful@2.1.40) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.38...gatsby-source-contentful@2.1.39) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.37...gatsby-source-contentful@2.1.38) (2019-09-18)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Fixing when assets are in draft state ([#17571](https://github.com/gatsbyjs/gatsby/issues/17571)) ([7e40c1e](https://github.com/gatsbyjs/gatsby/commit/7e40c1e))
+
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.36...gatsby-source-contentful@2.1.37) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.35...gatsby-source-contentful@2.1.36) (2019-09-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.34...gatsby-source-contentful@2.1.35) (2019-09-10)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Prevent TypeError if many-to-on… ([#17500](https://github.com/gatsbyjs/gatsby/issues/17500)) ([fde5de6](https://github.com/gatsbyjs/gatsby/commit/fde5de6))
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.33...gatsby-source-contentful@2.1.34) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.32...gatsby-source-contentful@2.1.33) (2019-09-05)
 
 **Note:** Version bump only for package gatsby-source-contentful

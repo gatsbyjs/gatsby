@@ -59,6 +59,6 @@ site of someone who installed and used your theme from npm.
 
 You can run the example with:
 
-```sh
+```shell
 yarn workspace example develop
 ```
