@@ -7283,3 +7283,14 @@
   built_by: İbrahim Telman
   built_by_url: https://github.com/ibrahimtelman/
   featured: false
+- title: spon.io
+  url: https://www.spon.io
+  main_url: https://www.spon.io
+  source_url: https://github.com/magicspon/spon.io
+  description: >
+    Portfolio for frontend web developer, based in Bristol UK
+  categories:
+    - Portfolio
+  built_by: Dave Stockley
+  built_by_url: https://www.spon.io
+  featured: false

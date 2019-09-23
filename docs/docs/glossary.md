@@ -50,11 +50,11 @@ Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli/), for 
 
 ### Client-side
 
-Client-side refers to operations that are performed by the the user's browser in a [client–server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) in a computer network. In Gatsby, this is important when [working with packages](/docs/using-client-side-only-packages/) that rely on objects in the [browser DOM](#dom), such as `window` or `navigator`. See also: [server-side](#server-side), [frontend](#frontend), and [backend](#backend).
+Client-side refers to operations that are performed by the user's browser in a [client–server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) in a computer network. In Gatsby, this is important when [working with packages](/docs/using-client-side-only-packages/) that rely on objects in the [browser DOM](#dom), such as `window` or `navigator`. See also: [server-side](#server-side), [frontend](#frontend), and [backend](#backend).
 
 ### CMS
 
-Content Management System: an application where you can manage your content and have it saved to a database or file for accessing later. Examples of Content Management Systems include Wordpress, Drupal, Contentful, and Netlify CMS.
+Content Management System: an application where you can manage your content and have it saved to a database or file for accessing later. Examples of Content Management Systems include WordPress, Drupal, Contentful, and Netlify CMS.
 
 ### Command Line
 
@@ -90,7 +90,7 @@ A database is a structured collection of data or content. Often a [CMS](#cms) wi
 
 ### Decoupled
 
-Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [frontend](#frontend) from the [backend](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless Wordpress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled/).
+Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [frontend](#frontend) from the [backend](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless WordPress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled/).
 
 ### Deploy
 
@@ -118,7 +118,7 @@ Gatsby supports two environments by default, the [development environment](#deve
 
 ### Environment Variables
 
-[Environment Variables](/docs/environment-variables/) allow you to customise the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment.
+[Environment Variables](/docs/environment-variables/) allow you to customize the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment.
 
 ## F
 
@@ -144,7 +144,7 @@ A [query](#query) language that allows you to pull data into your website or app
 
 ### HTML
 
-A markup language that every web browser is able to understand. It stands for HyperText Markup Language. [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) gives your web content a universal informational structure, defining things like headings, paragraphs, and more. It is also key to providing an accessible website.
+A markup language that every web browser is able to understand. It stands for Hypertext Markup Language. [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) gives your web content a universal informational structure, defining things like headings, paragraphs, and more. It is also key to providing an accessible website.
 
 ### Headless CMS
 
@@ -298,7 +298,7 @@ A [component](#component) that is [programmatically](#programmatically) turned i
 
 ### Theme
 
-A Gatsby theme is like a Wordpress theme that is composable (with other themes), extendable (with more logic), and replaceable ([shadowing](/blog/2019-04-29-component-shadowing/)). Gatsby themes can have any facet of a Gatsby app packaged inside of them, and can also offer any amount of knobs to turn features on or off.
+A Gatsby theme is like a WordPress theme that is composable (with other themes), extendable (with more logic), and replaceable ([shadowing](/blog/2019-04-29-component-shadowing/)). Gatsby themes can have any facet of a Gatsby app packaged inside of them, and can also offer any number of knobs to turn features on or off.
 
 ### Transformer
 

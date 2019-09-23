@@ -3925,3 +3925,27 @@
     - Jest and React Testing library for snapshots and unit tests.
     - ESLint (with TSLint and Prettier) to make your code look its best.
     - React Axe and React A11y for accessibility so that your site is awesome for everyone.
+- url: https://gatsby-markdown-blog-starter.netlify.com/
+  repo: https://github.com/ammarjabakji/gatsby-markdown-blog-starter
+  description: GatsbyJS v2 starter for creating a markdown blog. Based on Gatsby Advanced Starter.
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - Gatsby v2 support
+    - Responsive Design
+    - Pagination
+    - Content is Markdown files
+    - Google Analytics
+    - Support for RSS feed
+    - SEO friendly
+    - Sitemap & Robots.txt generation
+    - Sass support
+    - Css Modules support
+    - Web App Manifest
+    - Offline support
+    - htaccess support
+    - Typography.js
+    - Integration with Social Media
