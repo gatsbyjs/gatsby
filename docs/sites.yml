@@ -7294,3 +7294,15 @@
   built_by: Dave Stockley
   built_by_url: https://www.spon.io
   featured: false
+- title: BBS
+  url: https://big-boss-studio.com
+  main_url: https://big-boss-studio.com
+  description: >
+    For 11 years, we help great brands in their digital transformation, offering all our expertise for their needs. Technical consulting, UX, design, technical integration and maintenance.
+  categories:
+    - Agency
+    - JavaScript
+    - Web Development
+  built_by: BBS
+  built_by_url: https://big-boss-studio.com
+  featured: false
