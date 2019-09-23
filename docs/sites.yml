@@ -7307,8 +7307,8 @@
   built_by_url: https://big-boss-studio.com
   featured: false
 - title: Appes - Meant to evolve
-  main_url: "https://appes.co"
-  url: "https://appes.co"
+  main_url: https://appes.co
+  url: https://appes.co
   description: >
     Appes is all about apps and evolution. We help companies to build mobile and
     web products.
@@ -7318,5 +7318,5 @@
     - Web Development
     - Technology
   built_by: Appes
-  built_by_url: "https://appes.co/"
+  built_by_url: https://appes.co
   featured: false
