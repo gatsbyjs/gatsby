@@ -43,7 +43,7 @@ Add a `graphql` import to modules that use the `graphql` tag function without an
 
 See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-graphql-from-gatsby).
 
-```sh
+```shell
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/global-graphql-calls.js <path>
 ```
 
@@ -74,7 +74,7 @@ Import `Link` from `gatsby` instead of `gatsby-link` and remove the `gatsby-link
 
 See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#import-link-from-gatsby).
 
-```sh
+```shell
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/import-link.js <path>
 ```
 
@@ -95,7 +95,7 @@ Change the deprecated `navigateTo` method from `gatsby-link` to `navigate` from 
 
 See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#change-navigateto-to-navigate).
 
-```sh
+```shell
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/navigate-calls.js <path>
 ```
 
@@ -122,7 +122,7 @@ Note: Run this codemod only against files that use `boundActionCreators` instead
 
 See the [Gatsby v2 migration guide for details on when to use this](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions).
 
-```sh
+```shell
 jscodeshift -t node_modules/gatsby-codemods/dist/transforms/rename-bound-action-creators.js <path-to-file>
 ```
 

@@ -436,7 +436,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 ## Image processing arguments
 
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
-`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
+`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `grayscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 

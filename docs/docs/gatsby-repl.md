@@ -181,7 +181,7 @@ gatsby > schema._implementations
 
 ### `siteConfig`
 
-Returns the the settings you would find in the `gatsby-config.js` file of your site as an object.
+Returns the settings you would find in the `gatsby-config.js` file of your site as an object.
 
 Usages: `siteConfig` or `siteConfig[<property>]`
 
