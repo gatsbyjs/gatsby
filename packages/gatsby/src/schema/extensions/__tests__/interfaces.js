@@ -7,8 +7,8 @@ const {
 } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
 const { dispatch } = store
-const { actions } = require(`../../../redux/actions/restricted`)
-const { createTypes } = actions
+const { actions } = require(`../../../redux/actions`)
+const { createTypes, createFieldExtension } = actions
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
@@ -17,42 +17,58 @@ afterEach(() => {
   report.panic.mockClear()
 })
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 describe(`Queryable Node interfaces`, () => {
   beforeEach(() => {
     dispatch({ type: `DELETE_CACHE` })
     const nodes = [
       {
         id: `test1`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         foo: `foo`,
         bar: `bar`,
         date: new Date(`2019-01-01`),
       },
       {
         id: `anothertest1`,
-        internal: { type: `AnotherTest` },
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         foo: `foooo`,
         baz: `baz`,
         date: new Date(`2018-01-01`),
       },
       {
         id: `tbtest1`,
-        internal: { type: `TBTest` },
+        internal: { type: `TBTest`, contentDigest: `0` },
         foo: `foo`,
         bar: `bar`,
         date: new Date(`2019-01-01`),
       },
       {
         id: `anotherbttest1`,
-        internal: { type: `AnotherTBTest` },
+        internal: { type: `AnotherTBTest`, contentDigest: `0` },
         foo: `foooo`,
         baz: `baz`,
         date: new Date(`2018-01-01`),
       },
     ]
-    nodes.forEach(node => {
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    })
+    nodes.forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
     dispatch(
       createTypes(`
         interface TestInterface @nodeInterface {
@@ -75,7 +91,7 @@ describe(`Queryable Node interfaces`, () => {
   })
 
   it(`adds root query fields for interface with @nodeInterface extension`, async () => {
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
     expect(rootQueryFields.testInterface).toBeDefined()
     expect(rootQueryFields.allTestInterface).toBeDefined()
@@ -98,7 +114,7 @@ describe(`Queryable Node interfaces`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
     expect(rootQueryFields.wrongInterface).toBeUndefined()
     expect(rootQueryFields.allWrongInterface).toBeUndefined()
@@ -332,7 +348,7 @@ describe(`Queryable Node interfaces`, () => {
         }
       `)
     )
-    await buildSchema()
+    await build({})
     expect(report.panic).toBeCalledTimes(1)
     expect(report.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must have a field ` +
@@ -362,20 +378,139 @@ describe(`Queryable Node interfaces`, () => {
     }
     expect(results).toEqual(expected)
   })
+
+  it(`uses concrete type resolvers when filtering on interface fields`, async () => {
+    const nodes = [
+      {
+        id: `author1`,
+        internal: { type: `AuthorYaml` },
+        name: `Author 1`,
+        birthday: new Date(Date.UTC(1978, 8, 26)),
+      },
+      {
+        id: `author2`,
+        internal: { type: `AuthorJson` },
+        name: `Author 2`,
+        birthday: new Date(Date.UTC(1978, 8, 26)),
+      },
+      {
+        id: `post1`,
+        internal: { type: `ThisPost` },
+        author: `author1`,
+      },
+      {
+        id: `post2`,
+        internal: { type: `ThatPost` },
+        author: `author2`,
+      },
+    ]
+    nodes.forEach(node =>
+      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    )
+    dispatch(
+      createFieldExtension({
+        name: `echo`,
+        args: {
+          value: `String!`,
+        },
+        extend(options) {
+          return {
+            resolve() {
+              return options.value
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes(`
+        interface Post @nodeInterface {
+          id: ID!
+          author: Author @link
+        }
+        type ThisPost implements Node & Post {
+          author: Author @link
+        }
+        type ThatPost implements Node & Post {
+          author: Author @link
+        }
+        interface Author @nodeInterface {
+          id: ID!
+          name: String
+          echo: String @echo(value: "Interface")
+        }
+        type AuthorJson implements Node & Author {
+          name: String
+          echo: String @echo(value: "Concrete Type")
+        }
+        type AuthorYaml implements Node & Author {
+          name: String
+          echo: String @echo(value: "Another Concrete Type")
+        }
+      `)
+    )
+    const query = `
+      {
+        allPost(
+          filter: {
+            author: {
+              echo: {
+                in: ["Concrete Type", "Another Concrete Type"]
+              }
+            }
+          }
+        ) {
+          nodes {
+            author {
+              name
+              echo
+            }
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allPost: {
+        nodes: [
+          {
+            author: {
+              name: `Author 1`,
+              echo: `Another Concrete Type`,
+            },
+          },
+          {
+            author: {
+              name: `Author 2`,
+              echo: `Concrete Type`,
+            },
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
 })
 
 const buildSchema = async () => {
   await build({})
-  return store.getState().schema
+  const {
+    schemaCustomization: { composer: schemaComposer },
+    schema,
+  } = store.getState()
+  return { schema, schemaComposer }
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema()
+  const { schema, schemaComposer } = await buildSchema()
   const results = await graphql(
     schema,
     query,
     undefined,
-    withResolverContext({}, schema)
+    withResolverContext({
+      schema,
+      schemaComposer,
+    })
   )
   expect(results.errors).toBeUndefined()
   return results.data
