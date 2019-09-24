@@ -3907,7 +3907,7 @@
     - Optimized images with gatsby-image
 - url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
   repo: https://github.com/sagar7993/gatsby-wordpress-typescript-blog-boilerplate
-  description: A Gatsby starter template for a Wordpress blog, built using TypeScript and Ant Design
+  description: A Gatsby starter template for a Wordpress blog, built using TypeScript, SCSS and Ant Design
   tags:
     - Blog
     - CMS:Wordpress
@@ -3924,7 +3924,7 @@
     - Auto generated Pagination for your Wordpress Posts
     - Auto generated Navigation for next and previous post at the end Post
     - Auto generated pages for tags and categories sourced from Wordpress
-    - SASS stylesheets
+    - SCSS stylesheets
     - PWA with offline support
     - Ant Design for UI components and theming
     - Jest and Enzyme Testing framework support for snapshots and unit tests.
@@ -3943,7 +3943,7 @@
     - Optimized images with gatsby-image
     - Git pre-commit and pre-push hooks using Husky
     - TSLint formatting
-    - Excellent Lighthouse audit score
+    - Highly optimized with excellent lighthouse audit score
 - url: https://gatsby-starter-typescript-deluxe.netlify.com/
   repo: https://github.com/gojutin/gatsby-starter-typescript-deluxe
   description: A Gatsby starter with TypeScript, Storybook, Styled Components, Framer Motion, Jest, and more.
