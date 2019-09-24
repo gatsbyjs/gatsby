@@ -1,39 +1,39 @@
 ---
-title: Gatsby.js Tutorials
+title: Руководства Gatsby.js
 disableTableOfContents: true
 ---
 
-Welcome to Gatsby! We’re glad you’re here. The goal of this tutorial is to guide you through setting up and deploying your first Gatsby site using a starter template. As we walk through that process, we’ll introduce some more general web development topics, and go over the underlying structure of a Gatsby site.
+Добро пожаловать в Gatsby! Мы рады, что ты здесь. Цель этого руководства ― помочь настроить и развернуть твой первый сайт с использованием Gatsby. В этом руководстве мы затронем некоторые темы веб-разработки и рассмотрим основную структуру сайта Gatsby.
 
-> The full tutorial is intended to be as accessible as possible to people without much web development experience (yet!) — no need to be an expert. If you prefer to jump straight to code, feel free to skip the step-by-step tutorial and see the [quick start](/docs/quick-start/) page.
+> Данное руководство предназначено для людей, не имеющих (пока что) большого опыта веб-разработки. Если тебя не интересует базовая подготовка, смело переходи на страницу [быстрого старта](/docs/quick-start/).
 
-## Gatsby fundamentals
+## Основы Gatsby.js
 
-0.  [Set Up Your Development Environment](/tutorial/part-zero/): We'll introduce you to core technologies that power Gatsby, and guide you through setting up your development environment.
-1.  [Get to know Gatsby building blocks](/tutorial/part-one/): Starting new projects, developing, and deploying sites.
-1.  [Introduction to using CSS in Gatsby](/tutorial/part-two/): Explore libraries like Typography.js and CSS Modules.
-1.  [Building nested layouts in Gatsby](/tutorial/part-three/): Layouts are sections of your site that are reused across multiple pages like headers and footers.
+0.  [Настройка среды разработки](/tutorial/part-zero/): Познакомимся с основными технологиями Gatsby и настроим среду разработки.
+1.  [Строительные блоки Gatsby](/tutorial/part-one/): Рассмотрим процессы создания проектов, их разработки и развертывания.
+1.  [Вступление в стилизацию Gatsby](/tutorial/part-two/): Изучим библиотеки, такие как Typography.js и CSS Modules в контексте Gatsby приложения.
+1.  [Создание шаблонов и компонентов](/tutorial/part-three/): Создадим шаблонные компоненты, которые могут использоваться на нескольких страницах, такие как хедер и футер.
 
-## Intermediate tutorials
+## Расширенные руководства
 
-In these intermediate tutorials, you'll learn how to pull data from almost anywhere into your Gatsby site with GraphQL.
+В разделах ниже ты узнаешь как получать данные практически из любого источника с помощью GraphQL.
 
-4.  [Querying for data in a blog](/tutorial/part-four/): Create a blog and use a GraphQL query to pull your site title into the blog header.
-5.  [Source plugins and rendering queried data](/tutorial/part-five/): Use a source plugin to pull Markdown blog posts into your site and create an index page with a list of blog posts.
-6.  [Transformer plugins](/tutorial/part-six/): Use a transformer plugin to transform your Markdown blog posts into a form the blog can render.
-7.  [Programmatically create pages from data](/tutorial/part-seven/): Learn how to programmatically create a set of pages for your blog posts.
-8.  [Preparing a site to go live](/tutorial/part-eight/): Learn how to audit your site for performance and best practices for accessibility, SEO, and more.
+4. [Получение данных для блога](/tutorial/part-four): Создадим блог и используя GraphQL, вставим заголовок сайта в блог.
+5. [Встроенные плагины и рендеринг запрашиваемых данных](/tutorial/part-five): С помощью плагинов встроим markdown-статьи на сайт и создадим страницу со списком всех постов блога.
+6. [Плагины-трансформеры](/tutorial/part-six): Поработаем с плагинами-трансформерами, чтобы преобразовать markdown в читабельный вид, с дальнейшим отображением в блоге.
+7. [Программное создание страниц из данных](/tutorial/part-seven): Познакомимся с API для программного создания страниц из списка публикаций.
+8. [Подготовка сайта к работе](/tutorial/part-eight): Проведем аудит сайта на предмет его производительности, SEO, a11y и многому другому.
 
-## Theme tutorials
+## Руководства по работе с темами
 
-Gatsby themes abstract all of your default configuration (shared functionality, data sourcing, design) out of your site and into an installable package.
+Темы Gatsby абстрагируют конфигурацию по умолчанию (общий функционал, получение данных, дизайн) с сайта в устанавливаемый пакет.
 
-This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
+Это означает, что конфигурация и функциональность не находятся непосредственно в проекте, а скорее являются версионированными, управляемыми и устанавливаемыми зависимостями. Темы можно легко обновлять, объединять несколько в одну и даже менять одну совместимую тему на другую.
 
-Learn more about using and building themes with the [Gatsby theme tutorials](/tutorial/theme-tutorials/).
+Узнать больше об использовании и создании тем можно с помощью [руководств по темам Gatsby](/tutorial/theme-tutorials/).
 
-## Additional tutorials
+## Дополнительные руководства
 
-There are many use cases for Gatsby, some of which aren't covered in the first set of tutorials to keep you focused while learning. Gatsby's Additional Tutorials section is a collection of resources showing how to complete even more Gatsby tasks step-by-step, such as using source plugins for images and CMS content.
+Есть много вариантов использования Gatsby и не все из них затрагиваются в основных руководствах, чтобы сосредоточить тебя во время обучения. Раздел "Дополнительные руководства Gatsby" представляет собой набор ресурсов о более широком спектре задач Gatsby, например плагины для изображений и работа с CMS.
 
-Go deeper with [additional Gatsby tutorials](/tutorial/additional-tutorials/).
+Изучай больше с ["дополнительными руководствами Gatsby"](/tutorial/additional-tutorials/).
