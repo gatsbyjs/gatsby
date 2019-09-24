@@ -161,7 +161,9 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       const dbSaveFile = `${__dirname}/fixtures/loki.db`
       await loki.start({
         saveFile: dbSaveFile,
-        adapter: mockedLokiFsAdapter,
+        lokiDBOptions: {
+          adapter: mockedLokiFsAdapter,
+        },
       })
     }
   }

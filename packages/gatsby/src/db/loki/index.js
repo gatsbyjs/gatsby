@@ -61,11 +61,10 @@ function ensureNodeCollections(db) {
   })
 }
 
-function startFileDb({ saveFile, adapter }) {
+function startFileDb({ saveFile, lokiDBOptions = {} }) {
   return new Promise((resolve, reject) => {
     const dbOptions = {
       autoload: true,
-      adapter,
       autoloadCallback: err => {
         if (err) {
           reject(err)
@@ -73,6 +72,7 @@ function startFileDb({ saveFile, adapter }) {
           resolve()
         }
       },
+      ...lokiDBOptions,
     }
     db = new loki(saveFile, dbOptions)
   })
@@ -95,14 +95,14 @@ async function startInMemory() {
  * the existing state has been loaded (if there was an existing
  * saveFile)
  */
-async function start({ saveFile, adapter } = {}) {
+async function start({ saveFile, lokiDBOptions } = {}) {
   if (saveFile && !_.isString(saveFile)) {
     throw new Error(`saveFile must be a path`)
   }
   if (saveFile) {
     const saveDir = path.dirname(saveFile)
     await fs.ensureDir(saveDir)
-    await startFileDb({ saveFile, adapter })
+    await startFileDb({ saveFile, lokiDBOptions })
   } else {
     await startInMemory()
   }
