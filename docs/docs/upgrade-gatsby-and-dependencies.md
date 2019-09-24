@@ -1,5 +1,5 @@
 ---
-title: Upgrade Gatsby for minor or patch releases
+title: Upgrade for Minor or Patch Releases
 ---
 
 To keep up with the latest bug fixes, security patches, and minor releases from both Gatsby and its dependencies, you should upgrade often to the latest version of each one.
