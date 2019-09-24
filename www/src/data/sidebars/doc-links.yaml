@@ -165,10 +165,10 @@
           items:
             - title: Why Gatsby Uses GraphQL
               link: /docs/why-gatsby-uses-graphql/
-            - title: Understanding GraphQL Syntax
+            - title: GraphQL Query Options Reference
               link: /docs/graphql-reference/
-            - title: Introducing GraphiQL
-              link: /docs/introducing-graphiql/
+            - title: Running Queries with the GraphiQL UI
+              link: /docs/running-queries-with-graphiql/
             - title: Creating and Modifying Pages
               link: /docs/creating-and-modifying-pages/
             - title: Querying Data in Pages with GraphQL
@@ -461,16 +461,18 @@
           link: /docs/gatsby-image/
         - title: Gatsby Config
           link: /docs/gatsby-config/
-        - title: Gatsby Node APIs
-          link: /docs/node-apis/
-        - title: Gatsby Node Helpers
-          link: /docs/node-api-helpers/
         - title: Gatsby Browser APIs
           link: /docs/browser-apis/
         - title: Gatsby SSR APIs
           link: /docs/ssr-apis/
         - title: Actions
           link: /docs/actions/
+        - title: GraphQL API
+          link: /docs/graphql-api/
+        - title: Gatsby Node APIs
+          link: /docs/node-apis/
+        - title: Gatsby Node Helpers
+          link: /docs/node-api-helpers/
         - title: Node Model
           link: /docs/node-model/
         - title: Node Interface
@@ -505,8 +507,8 @@
           link: /docs/gatsby-lifecycle-apis/
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
-        - title: Querying Data with GraphQL
-          link: /docs/querying-with-graphql/
+        - title: GraphQL Concepts
+          link: /docs/graphql-concepts/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing

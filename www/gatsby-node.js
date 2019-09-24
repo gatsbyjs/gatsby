@@ -360,6 +360,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/querying-with-graphql/`,
+    toPath: `/docs/graphql-concepts/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/introducing-graphiql/`,
+    toPath: `/docs/running-queries-with-graphiql/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
