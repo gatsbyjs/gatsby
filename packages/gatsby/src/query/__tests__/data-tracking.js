@@ -797,6 +797,107 @@ describe(`query caching between builds`, () => {
     }, 99999)
   })
 
+  describe.skip(`Changing page context invalidates page queries`, () => {
+    beforeAll(() => {
+      let pageChangeCounter = 1
+      let nodeChangeCounter = 1
+      setAPIhooks({
+        sourceNodes: (nodeApiContext, _pluginOptions) => {
+          const { createTestNode, createSiteNode } = getTypedNodeCreators(
+            nodeApiContext
+          )
+
+          createTestNode({
+            id: `test-1`,
+            slug: `foo1`,
+            content: `Lorem ipsum.`,
+          })
+          createTestNode({
+            id: `test-2`,
+            slug: `foo2`,
+            content: `Dolor sit amet.`,
+          })
+          createTestNode({
+            id: `test-3`,
+            slug: `foo3`,
+            content: `Consectetur adipiscing elit.`,
+          })
+
+          // this is just to trigger createPages without restarting
+          createSiteNode({
+            id: `Site`,
+            siteMetadata: {
+              title: `My Site`,
+              description: `Description of site
+            
+              --edited
+              edited content #${nodeChangeCounter++}
+              `,
+            },
+          })
+        },
+        createPages: ({ actions: { createPage } }, _pluginOptions) => {
+          console.log(`setting slug`, `foo-${pageChangeCounter}`)
+          createPage({
+            component: `/src/templates/details.js`,
+            path: `/`,
+            context: {
+              slug: `foo-${pageChangeCounter}`,
+            },
+          })
+
+          pageChangeCounter++
+        },
+      })
+      setPageQueries({
+        "/src/templates/details.js": `
+          query($slug: String!) {
+            test(slug: { eq: $slug}) {
+              slug
+              content
+            }
+          }
+        `,
+      })
+      setStaticQueries({})
+    })
+
+    it(`rerunning after cache clearing - should run all queries`, async () => {
+      const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+        restart: true,
+        clearCache: true,
+      })
+
+      // sanity check, to make sure test setup is correct
+      expect(pages).toEqual([`/`])
+
+      // on initial we want all queries to run
+      expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+    }, 99999)
+
+    it(`changing page context should rerun query (no restart)`, async () => {
+      const { pathsOfPagesWithQueriesThatRan, pages } = await setup()
+
+      // sanity check, to make sure test setup is correct
+      expect(pages).toEqual([`/`])
+
+      // it should rerun query for page with changed context
+      expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+    }, 999999)
+
+    it(`changing page context should rerun query (with restart)`, async () => {
+      const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+        restart: true,
+      })
+
+      // sanity check, to make sure test setup is correct
+      expect(pages).toEqual([`/`])
+
+      // it should rerun query for page with changed context
+      expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+    }, 999999)
+  })
+
   // this should be last test, it adds page that doesn't have queries (so it won't create any dependencies)
   describe(`Running "queries" for page without query`, () => {
     beforeAll(() => {
