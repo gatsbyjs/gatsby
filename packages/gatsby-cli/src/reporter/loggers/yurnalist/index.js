@@ -1,4 +1,4 @@
-import { onLogAction } from "../../redux/index"
+import { onLogAction } from "../../redux-manager/index"
 import {
   Actions,
   LogLevels,

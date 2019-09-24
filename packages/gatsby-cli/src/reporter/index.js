@@ -3,7 +3,7 @@
 const semver = require(`semver`)
 const { isCI } = require(`ci-info`)
 const signalExit = require(`signal-exit`)
-const reporterActions = require(`./redux/actions`)
+const reporterActions = require(`./redux-manager/actions`)
 
 const { LogLevels, ActivityStatuses, ActivityTypes } = require(`./constants`)
 
@@ -47,7 +47,7 @@ const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
 
 const { getErrorFormatter } = require(`./errors`)
-const { getStore } = require(`./redux`)
+const { getStore } = require(`./redux-manager`)
 const constructError = require(`../structured-errors/construct-error`)
 
 const errorFormatter = getErrorFormatter()
