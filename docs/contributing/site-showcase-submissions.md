@@ -6,7 +6,7 @@ Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructi
 
 ## Steps
 
-There are only three major steps :)
+There are three major steps:
 
 1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
 
@@ -77,7 +77,7 @@ Categories currently include both _type of site_ (structure) and the _content of
 - Gallery
 - See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
 
-#### Content of site:
+#### Content of site
 
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web development.
 
@@ -105,7 +105,7 @@ A few notes on site content: a common question is this: "aren't all Gatsby sites
 
 If you think that there is something missing in the tag list, you can update [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) and add a new one. However, we encourage you to use existing tags.
 
-### Note on Featured Sites
+### Notes on featured sites
 
 #### Review process
 
@@ -122,7 +122,7 @@ Featured sites will be chosen quarterly based on the following criteria:
 
 9, since that’s what can fit on one page of the site showcase
 
-#### How to Set a Site as Featured
+#### How to set a site as featured
 
 _Note: the Gatsby team will choose featured sites, leave as `featured: false` when first posting_
 
@@ -137,6 +137,6 @@ categories:
   - featured
 ```
 
-### Change your mind / need to edit your submission?
+### Need to change your submission?
 
 If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR.

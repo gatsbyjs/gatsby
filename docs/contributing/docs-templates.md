@@ -2,20 +2,7 @@
 title: Docs Templates
 ---
 
-1.  [Why use templates?](#why-use-templates)
-2.  [Reference guides](#reference-guides)
-    - [Reference guide template](#reference-guide-template)
-    - [Reference guide overview template](#reference-guide-overview-template)
-3.  [Recipes](#recipes)
-    - [Recipe template](#recipe-template)
-4.  [Tutorials](#tutorials)
-    - [Tutorial template](#tutorial-template)
-5.  [Plugin README template](#plugin-readme-template)
-6.  [Starter README template](#starter-readme-template)
-
-## The Gatsby way of writing learning materials
-
-Docs reference guides, recipes, and tutorials teach Gatsby concepts to users with a variety of learning styles and skill-sets.
+Docs reference guides, recipes, and tutorials teach Gatsby concepts to users with a variety of learning styles and skill-sets. _It's the Gatsby way of writing learning materials._
 
 Here are some things to keep in mind when deciding where to contribute to Gatsby:
 
@@ -164,25 +151,22 @@ You can copy and paste the markdown text below and fill it in with your own info
 
 ```markdown
 ---
-title: Testing
+title: Section Title
 ---
 
-## Section overview
-
-The section overview should be a 2-5 sentence explanation of the category and answer the following questions:
+The section overview should include a 2-5 sentence explanation of the category and answer the following questions:
 
 - What is the main purpose of this section in the docs?
 
 ## Prerequisites (if any)
 
-Assume the reader has basic programming knowledge like the command line, code editors, and beginning familiarity with React and GraphQL concepts. Beyond that assumed knowledge, list any other prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
-
-## Reference guides in this section
+Assume the reader has basic programming knowledge such as the command line, code editors, and beginning familiarity with React and GraphQL concepts. Beyond that assumed knowledge, list any other prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
 
 <GuideList slug={props.slug} />
 
 ## Other resources
 
+- Link to a recipe
 - Link to a blog post
 - Link to a YouTube tutorial
 - Link to an example site
