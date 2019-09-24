@@ -2,9 +2,7 @@
 title: Managing Pull Requests
 ---
 
-## Introduction
-
-If you'd like to help out managing PRs on the gatsby repo on GitHub, this document is for you. We'll go over conventions we prefer, what we like to check for on various types of pull requests, permissions and guidelines on how to leave feedback.
+If you'd like to help out managing PRs on the Gatsby repo on GitHub, this document is for you. We'll go over conventions the team prefers, what we check for on various types of pull requests, permissions, and guidelines on how to leave feedback.
 
 We have over 2,000 contributors and so much of what makes Gatsby great is contributed by folks like you.
 
@@ -12,24 +10,7 @@ Needless to say, we get a lot of PRs and we've been merging over a [100 contribu
 
 Let's talk a little about how we manage pull requests in the Gatsby repo.
 
-## What is a Pull Request?
-
-In case you aren't familiar, here is how the fine folks at GitHub [define a pull request](https://help.github.com/en/articles/about-pull-requests):
-
-> Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
-
-Gatsby uses the pull request process to review and test changes before they’re added to Gatsby’s GitHub repository. Anyone can open a pull request. The same process is used for all contributors, whether this is your first open source contribution or you’re a core member of the Gatsby team.
-
-Simply put, when someone wants to contribute to Gatsby, they open a request to _pull_ their code into ours. Depending on the type of change, we like to categorize pull requests (or PRs for short) into:
-
-- Documentation
-- Code
-- Starters or Site Showcase
-- Blog posts
-
-When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
-
-> 💡 We typically recommend [opening an issue](/contributing/how-to-file-an-issue/) before a PR if there isn't already an issue for the problem you'd like to solve. This helps facilitate a discussion before deciding on an implementation.
+For an introduction on what Pull Requests are and how to file one, check out the contributing doc on [How to Open a Pull Request](/contributing/how-to-open-a-pull-request).
 
 ## Verifying a Pull Request
 
@@ -40,6 +21,8 @@ Some general things to verify in a pull request are:
 - Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
 - Language ought to be inclusive and accessible
 - Issues and RFCs (if any) that this PR addresses ought to be linked to
+
+> 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
 
 ### Type Specific Guidelines
 
