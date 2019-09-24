@@ -84,7 +84,7 @@ module.exports = async function build(program: BuildArgs) {
   const stats = await buildProductionBundle(program, {
     parentSpan: activity.span,
   }).catch(err => {
-    activity.panicOnBuild(structureWebpackErrors(`build-javascript`, err))
+    activity.panic(structureWebpackErrors(`build-javascript`, err))
   })
   activity.end()
 
@@ -153,7 +153,7 @@ module.exports = async function build(program: BuildArgs) {
       id = `95312`
     }
 
-    activity.panicOnBuild({
+    activity.panic({
       id,
       error: err,
       context: {
