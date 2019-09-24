@@ -18,7 +18,16 @@ const useTerminalResize = () => {
   return sizes
 }
 
-const Develop = ({ pagesCount, appName, errorCount, working, status }) => {
+const mapConstantToStatus = {
+  IN_PROGRESS: `In Progress`,
+  NOT_STARTED: `Not Started`,
+  INTERRUPTED: `Interrupted`,
+  FAILED: `Failed`,
+  SUCCESS: `Success`,
+  CANCELLED: `Cancelled`,
+}
+
+const Develop = ({ pagesCount, appName, status }) => {
   const [width] = useTerminalResize()
 
   return (
@@ -27,7 +36,7 @@ const Develop = ({ pagesCount, appName, errorCount, working, status }) => {
       <Box height={1} flexDirection="row">
         <Color>{pagesCount} pages</Color>
         <Box flexGrow={1} />
-        <Color>{status}</Color>
+        <Color>{mapConstantToStatus[status]}</Color>
         <Box flexGrow={1} />
         <Color>{appName}</Color>
       </Box>
