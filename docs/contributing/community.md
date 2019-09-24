@@ -2,7 +2,7 @@
 title: Community
 ---
 
-As of March 2019, the Gatsby community is comprised of over 1,800 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
+As of September 2019, the Gatsby community is comprised of over 2,400 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
 
 Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
 

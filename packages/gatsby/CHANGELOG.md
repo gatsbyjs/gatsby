@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.20...gatsby@2.15.21) (2019-09-23)
+
+### Bug Fixes
+
+- update dependency is-wsl to ^2.1.1 ([#17815](https://github.com/gatsbyjs/gatsby/issues/17815)) ([1287648](https://github.com/gatsbyjs/gatsby/commit/1287648))
+
+## [2.15.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.19...gatsby@2.15.20) (2019-09-20)
+
+### Bug Fixes
+
+- **gatsby:** add timeout so fetching API info doesn't fail on very slow connections ([#17735](https://github.com/gatsbyjs/gatsby/issues/17735)) ([e85278c](https://github.com/gatsbyjs/gatsby/commit/e85278c))
+- update dependency eslint-plugin-graphql to ^3.1.0 ([#17775](https://github.com/gatsbyjs/gatsby/issues/17775)) ([5f4db21](https://github.com/gatsbyjs/gatsby/commit/5f4db21))
+- update dependency socket.io to ^2.3.0 ([#17760](https://github.com/gatsbyjs/gatsby/issues/17760)) ([1ef5053](https://github.com/gatsbyjs/gatsby/commit/1ef5053))
+
+## [2.15.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.18...gatsby@2.15.19) (2019-09-20)
+
+### Bug Fixes
+
+- **gatsby:** support `export { X as default }` syntax when checking if page template files have default export ([#17752](https://github.com/gatsbyjs/gatsby/issues/17752)) ([b785583](https://github.com/gatsbyjs/gatsby/commit/b785583))
+
 ## [2.15.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.17...gatsby@2.15.18) (2019-09-18)
 
 **Note:** Version bump only for package gatsby

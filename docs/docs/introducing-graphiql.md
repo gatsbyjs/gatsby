@@ -39,6 +39,8 @@ The GraphiQL Explorer enables you to interactively construct full queries by cli
   lessonTitle="Build a GraphQL Query using Gatsby’s GraphiQL Explorer"
 />
 
+Read more [about the GraphiQL Explorer](/blog/2019-06-03-integrating-graphiql-explorer/) on the Gatsby blog.
+
 ## Other resources
 
 - See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using GraphiQL

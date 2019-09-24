@@ -81,6 +81,15 @@ function setPathResources(path, getResourceURLsForPathname) {
 exports.onRouteUpdate = ({ location, getResourceURLsForPathname }) => {
   const pathname = location.pathname.replace(__BASE_PATH__, ``)
   setPathResources(pathname, getResourceURLsForPathname)
+
+  if (
+    `serviceWorker` in navigator &&
+    navigator.serviceWorker.controller !== null
+  ) {
+    navigator.serviceWorker.controller.postMessage({
+      gatsbyApi: `enableOfflineShell`,
+    })
+  }
 }
 
 exports.onPostPrefetchPathname = ({ pathname, getResourceURLsForPathname }) => {

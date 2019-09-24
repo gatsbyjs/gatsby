@@ -6,6 +6,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 jest.mock(`../../resolve-module-exports`)
+jest.mock(`../../../utils/get-latest-apis`)
 
 const reporter = require(`gatsby-cli/lib/reporter`)
 const {
@@ -14,9 +15,16 @@ const {
   handleMultipleReplaceRenderers,
   warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
+const getLatestAPIs = require(`../../../utils/get-latest-apis`)
 
 beforeEach(() => {
   Object.keys(reporter).forEach(key => reporter[key].mockReset())
+  getLatestAPIs.mockClear()
+  getLatestAPIs.mockResolvedValue({
+    browser: {},
+    node: {},
+    ssr: {},
+  })
 })
 
 describe(`collatePluginAPIs`, () => {
@@ -93,33 +101,35 @@ describe(`collatePluginAPIs`, () => {
 })
 
 describe(`handleBadExports`, () => {
-  it(`Does nothing when there are no bad exports`, async () => {
-    handleBadExports({
-      currentAPIs: {
-        node: [`these`, `can`, `be`],
-        browser: [`anything`, `as there`],
-        ssr: [`are no`, `bad errors`],
-      },
+  const getValidExports = () => {
+    return {
       badExports: {
         node: [],
         browser: [],
         ssr: [],
       },
-    })
+    }
+  }
+
+  it(`does not error without bad exports `, async () => {
+    await handleBadExports(getValidExports())
+
+    expect(reporter.error).not.toHaveBeenCalled()
+  })
+
+  it(`does not make an API call without bad exports`, async () => {
+    await handleBadExports(getValidExports())
+
+    expect(getLatestAPIs).not.toHaveBeenCalled()
   })
 
   it(`Calls structured error with reporter.error when bad exports are detected`, async () => {
     const exportName = `foo`
-    handleBadExports({
+    await handleBadExports({
       currentAPIs: {
         node: [``],
         browser: [``],
         ssr: [``],
-      },
-      latestAPIs: {
-        node: {},
-        browser: {},
-        ssr: {},
       },
       badExports: {
         node: [],
@@ -147,20 +157,15 @@ describe(`handleBadExports`, () => {
     )
   })
 
-  it(`adds info on plugin if a plugin API error`, () => {
+  it(`adds info on plugin if a plugin API error`, async () => {
     const exportName = `foo`
     const pluginName = `gatsby-source-contentful`
     const pluginVersion = `2.1.0`
-    handleBadExports({
+    await handleBadExports({
       currentAPIs: {
         node: [``],
         browser: [``],
         ssr: [``],
-      },
-      latestAPIs: {
-        node: {},
-        browser: {},
-        ssr: {},
       },
       badExports: {
         node: [],
@@ -188,24 +193,26 @@ describe(`handleBadExports`, () => {
     )
   })
 
-  it(`Adds fixes to context if newer API introduced in Gatsby`, () => {
+  it(`Adds fixes to context if newer API introduced in Gatsby`, async () => {
     const version = `2.2.0`
 
-    handleBadExports({
+    getLatestAPIs.mockResolvedValueOnce({
+      browser: {},
+      ssr: {},
+      node: {
+        validatePluginOptions: {
+          version,
+        },
+      },
+    })
+
+    await handleBadExports({
       currentAPIs: {
         node: [``],
         browser: [``],
         ssr: [``],
       },
-      latestAPIs: {
-        browser: {},
-        ssr: {},
-        node: {
-          validatePluginOptions: {
-            version,
-          },
-        },
-      },
+
       badExports: {
         browser: [],
         ssr: [],
@@ -228,39 +235,45 @@ describe(`handleBadExports`, () => {
     )
   })
 
-  it(`adds fixes if close match/typo`, () => {
-    ;[
+  it(`adds fixes if close match/typo`, async () => {
+    const typoAPIs = [
       [`modifyWebpackConfig`, `onCreateWebpackConfig`],
       [`createPagesss`, `createPages`],
-    ].forEach(([typoOrOldAPI, newAPI]) => {
-      handleBadExports({
-        currentAPIs: {
-          node: [newAPI],
-          browser: [``],
-          ssr: [``],
-        },
-        latestAPIs: {
-          browser: {},
-          ssr: {},
-          node: {},
-        },
-        badExports: {
-          browser: [],
-          ssr: [],
-          node: [
-            {
-              exportName: typoOrOldAPI,
-              pluginName: `default-site-plugin`,
-            },
-          ],
-        },
-      })
+    ]
 
-      expect(reporter.error).toHaveBeenCalledWith(
+    await Promise.all(
+      typoAPIs.map(([typoOrOldAPI, newAPI]) =>
+        handleBadExports({
+          currentAPIs: {
+            node: [newAPI],
+            browser: [``],
+            ssr: [``],
+          },
+          latestAPIs: {
+            browser: {},
+            ssr: {},
+            node: {},
+          },
+          badExports: {
+            browser: [],
+            ssr: [],
+            node: [
+              {
+                exportName: typoOrOldAPI,
+                pluginName: `default-site-plugin`,
+              },
+            ],
+          },
+        })
+      )
+    )
+
+    expect(reporter.error).toHaveBeenCalledTimes(typoAPIs.length)
+    const calls = reporter.error.mock.calls
+    calls.forEach(([call]) => {
+      expect(call).toEqual(
         expect.objectContaining({
-          context: expect.objectContaining({
-            fixes: [`Rename "${typoOrOldAPI}" -> "${newAPI}"`],
-          }),
+          id: `11329`,
         })
       )
     })
