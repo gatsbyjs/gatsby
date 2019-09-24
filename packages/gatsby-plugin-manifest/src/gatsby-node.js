@@ -202,3 +202,14 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
     JSON.stringify(manifest)
   )
 }
+
+exports.onCreateWebpackConfig = ({ actions, plugins }, pluginOptions) => {
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        __MANIFEST_PLUGIN_HAS_LOCALISATION__:
+          pluginOptions.localize && pluginOptions.localize.length,
+      }),
+    ],
+  })
+}
