@@ -1,5 +1,5 @@
 ---
-title: Upgrade Gatsby for minor or patch releases
+title: Upgrade for Minor or Patch Releases
 ---
 
 ## Introduction
