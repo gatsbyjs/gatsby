@@ -28,6 +28,11 @@ render() {
 }
 ```
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-a-local-image-from-the-static-folder-in-a-gatsby-component"
+  lessonTitle="Use a local image from the static folder in a Gatsby component"
+/>
+
 ### Downsides
 
 Keep in mind the downsides of this approach:
