@@ -73,7 +73,7 @@ const writeAll = async state => {
     // Nothing changed. No need to rewrite files
     // reporter.stateUpdate(`requiresWriter`, `SUCCESS`)
     // console.log(`on requiresWriter END1`)
-    return Promise.resolve(false)
+    return false
   }
 
   lastHash = newHash
