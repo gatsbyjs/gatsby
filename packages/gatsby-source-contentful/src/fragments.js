@@ -1,6 +1,22 @@
 import { graphql } from "gatsby"
 
-export const contentfulAssetFixed = graphql`
+/**
+ * The simplest set of fields for fixed assets
+ * @type {Fragment}
+ * @example
+ * myContentfulAssetField {
+ *   fixed {
+ *     ...GatsbyContentfulFixed
+ *     # ^ identical to using the following fields:
+ *     # base64
+ *     # width
+ *     # height
+ *     # src
+ *     # srcSet
+ *   }
+ * }
+ */
+export const GatsbyContentfulFixed = graphql`
   fragment GatsbyContentfulFixed on ContentfulFixed {
     base64
     width
@@ -10,7 +26,11 @@ export const contentfulAssetFixed = graphql`
   }
 `
 
-export const contentfulAssetFixedTracedSVG = graphql`
+/**
+ * Traced SVG fixed images
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFixed_tracedSVG = graphql`
   fragment GatsbyContentfulFixed_tracedSVG on ContentfulFixed {
     tracedSVG
     width
@@ -20,7 +40,11 @@ export const contentfulAssetFixedTracedSVG = graphql`
   }
 `
 
-export const contentfulAssetFixedNoBase64 = graphql`
+/**
+ * Assets without the blurred base64 imate
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFixed_noBase64 = graphql`
   fragment GatsbyContentfulFixed_noBase64 on ContentfulFixed {
     width
     height
@@ -29,7 +53,11 @@ export const contentfulAssetFixedNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetFixedPreferWebp = graphql`
+/**
+ * Fixed assets that prefer Webp
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFixed_withWebp = graphql`
   fragment GatsbyContentfulFixed_withWebp on ContentfulFixed {
     base64
     width
@@ -41,7 +69,11 @@ export const contentfulAssetFixedPreferWebp = graphql`
   }
 `
 
-export const contentfulAssetFixedPreferWebpNoBase64 = graphql`
+/**
+ * Traced SVG fixed assets without the blurred base64 image that prefer Webp
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFixed_withWebp_noBase64 = graphql`
   fragment GatsbyContentfulFixed_withWebp_noBase64 on ContentfulFixed {
     width
     height
@@ -52,7 +84,11 @@ export const contentfulAssetFixedPreferWebpNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetFluid = graphql`
+/**
+ * The simplest set of fields for fluid assets
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFluid = graphql`
   fragment GatsbyContentfulFluid on ContentfulFluid {
     base64
     aspectRatio
@@ -62,7 +98,11 @@ export const contentfulAssetFluid = graphql`
   }
 `
 
-export const contentfulAssetFluidTracedSVG = graphql`
+/**
+ * Traced SVG fluid assets
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFluid_tracedSVG = graphql`
   fragment GatsbyContentfulFluid_tracedSVG on ContentfulFluid {
     tracedSVG
     aspectRatio
@@ -72,7 +112,11 @@ export const contentfulAssetFluidTracedSVG = graphql`
   }
 `
 
-export const contentfulAssetFluidNoBase64 = graphql`
+/**
+ * Traced SVG fluid assets without the blurred base64 image
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFluid_noBase64 = graphql`
   fragment GatsbyContentfulFluid_noBase64 on ContentfulFluid {
     aspectRatio
     src
@@ -81,7 +125,11 @@ export const contentfulAssetFluidNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetFluidPreferWebp = graphql`
+/**
+ * Fluid assets that prefer Webp
+ * @type {Fragment}
+ */
+export const GatsbyContentfulFluid_withWebp = graphql`
   fragment GatsbyContentfulFluid_withWebp on ContentfulFluid {
     base64
     aspectRatio
@@ -93,6 +141,10 @@ export const contentfulAssetFluidPreferWebp = graphql`
   }
 `
 
+/**
+ * Traced SVG fluid assets without the blurred base64 image that prefer Webp
+ * @type {Fragment}
+ */
 export const contentfulAssetFluidPreferWebpNoBase64 = graphql`
   fragment GatsbyContentfulFluid_withWebp_noBase64 on ContentfulFluid {
     aspectRatio
@@ -105,7 +157,7 @@ export const contentfulAssetFluidPreferWebpNoBase64 = graphql`
 `
 
 // TODO: in v3 remove these legacy fragments
-export const contentfulAssetResolutions = graphql`
+export const GatsbyContentfulResolutions = graphql`
   fragment GatsbyContentfulResolutions on ContentfulResolutions {
     base64
     width
@@ -115,7 +167,7 @@ export const contentfulAssetResolutions = graphql`
   }
 `
 
-export const contentfulAssetResolutionsTracedSVG = graphql`
+export const GatsbyContentfulResolutions_tracedSVG = graphql`
   fragment GatsbyContentfulResolutions_tracedSVG on ContentfulResolutions {
     tracedSVG
     width
@@ -125,7 +177,7 @@ export const contentfulAssetResolutionsTracedSVG = graphql`
   }
 `
 
-export const contentfulAssetResolutionsNoBase64 = graphql`
+export const GatsbyContentfulResolutions_noBase64 = graphql`
   fragment GatsbyContentfulResolutions_noBase64 on ContentfulResolutions {
     width
     height
@@ -134,7 +186,7 @@ export const contentfulAssetResolutionsNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetResolutionsPreferWebp = graphql`
+export const GatsbyContentfulResolutions_withWebp = graphql`
   fragment GatsbyContentfulResolutions_withWebp on ContentfulResolutions {
     base64
     width
@@ -146,7 +198,7 @@ export const contentfulAssetResolutionsPreferWebp = graphql`
   }
 `
 
-export const contentfulAssetResolutionsPreferWebpNoBase64 = graphql`
+export const GatsbyContentfulResolutions_withWebp_noBase64 = graphql`
   fragment GatsbyContentfulResolutions_withWebp_noBase64 on ContentfulResolutions {
     width
     height
@@ -157,7 +209,7 @@ export const contentfulAssetResolutionsPreferWebpNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetSizes = graphql`
+export const GatsbyContentfulSizes = graphql`
   fragment GatsbyContentfulSizes on ContentfulSizes {
     base64
     aspectRatio
@@ -167,7 +219,7 @@ export const contentfulAssetSizes = graphql`
   }
 `
 
-export const contentfulAssetSizesTracedSVG = graphql`
+export const GatsbyContentfulSizes_tracedSVG = graphql`
   fragment GatsbyContentfulSizes_tracedSVG on ContentfulSizes {
     tracedSVG
     aspectRatio
@@ -177,7 +229,7 @@ export const contentfulAssetSizesTracedSVG = graphql`
   }
 `
 
-export const contentfulAssetSizesNoBase64 = graphql`
+export const GatsbyContentfulSizes_noBase64 = graphql`
   fragment GatsbyContentfulSizes_noBase64 on ContentfulSizes {
     aspectRatio
     src
@@ -186,7 +238,7 @@ export const contentfulAssetSizesNoBase64 = graphql`
   }
 `
 
-export const contentfulAssetSizesPreferWebp = graphql`
+export const GatsbyContentfulSizes_withWebp = graphql`
   fragment GatsbyContentfulSizes_withWebp on ContentfulSizes {
     base64
     aspectRatio
@@ -198,7 +250,7 @@ export const contentfulAssetSizesPreferWebp = graphql`
   }
 `
 
-export const contentfulAssetSizesPreferWebpNoBase64 = graphql`
+export const GatsbyContentfulSizes_withWebp_noBase64 = graphql`
   fragment GatsbyContentfulSizes_withWebp_noBase64 on ContentfulSizes {
     aspectRatio
     src

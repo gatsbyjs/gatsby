@@ -10,10 +10,11 @@ class DevLoader extends BaseLoader {
 
   loadPage(pagePath) {
     const realPath = cleanPath(pagePath)
-    return super.loadPage(realPath).then(result => {
-      require(`./socketIo`).getPageData(realPath)
-      return result
-    })
+    return super.loadPage(realPath).then(result =>
+      require(`./socketIo`)
+        .getPageData(realPath)
+        .then(() => result)
+    )
   }
 
   loadPageDataJson(rawPath) {
