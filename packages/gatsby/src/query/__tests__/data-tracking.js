@@ -839,7 +839,6 @@ describe(`query caching between builds`, () => {
           })
         },
         createPages: ({ actions: { createPage } }, _pluginOptions) => {
-          console.log(`setting slug`, `foo-${pageChangeCounter}`)
           createPage({
             component: `/src/templates/details.js`,
             path: `/`,
