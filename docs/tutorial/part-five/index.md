@@ -94,7 +94,7 @@ Alternatively, you can add fields by using the autocomplete shortcut (<kbd>Ctrl 
 ![filesystem-autocomplete](filesystem-autocomplete.png)
 
 Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd>
-each time to re-run the query. You'll see something like this:
+each time to re-run the query. You'll see the updated query results:
 
 ![allfile-query](allfile-query.png)
 
@@ -209,7 +209,7 @@ export const query = graphql`
 `
 ```
 
-And… 😲
+And now visit [http://localhost:8000/my-files](http://localhost:8000/my-files)… 😲
 
 ![my-files-page](my-files-page.png)
 
