@@ -1,5 +1,3 @@
-import { onRouteUpdate } from "../gatsby-browser"
-
 describe(`gatsby-plugin-manifest`, () => {
   const pluginOptions = {
     name: `My Website`,
@@ -11,10 +9,17 @@ describe(`gatsby-plugin-manifest`, () => {
       },
     ],
   }
+  let onRouteUpdate
 
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
+    global.__MANIFEST_PLUGIN_HAS_LOCALISATION__ = true
+    onRouteUpdate = require(`../gatsby-browser`).onRouteUpdate
     document.head.innerHTML = `<link rel="manifest" href="/manifest.webmanifest">`
+  })
+
+  afterAll(() => {
+    delete global.__MANIFEST_PLUGIN_HAS_LOCALISATION__
   })
 
   test(`has manifest in head`, () => {
