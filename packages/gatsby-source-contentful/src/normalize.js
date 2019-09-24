@@ -342,9 +342,14 @@ exports.createContentTypeNodes = ({
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
           if (existingReference) {
-            entryItemFields[foreignReference.name].push(
-              mId(foreignReference.id)
-            )
+            // If the existing reference is a string, we're dealing with a
+            // many-to-one reference which has already been recorded, so we can
+            // skip it. However, if it is an array, add it:
+            if (Array.isArray(existingReference)) {
+              entryItemFields[foreignReference.name].push(
+                mId(foreignReference.id)
+              )
+            }
           } else {
             // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.

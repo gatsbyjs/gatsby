@@ -156,7 +156,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
     url = hostInfo.https({ noCommittish: true, noGitPlus: true })
   }
 
-  const branch = hostInfo.committish ? [`-b`, `hostInfo.committish`] : [``]
+  const branch = hostInfo.committish ? [`-b`, hostInfo.committish] : []
 
   report.info(`Creating new site from git: ${url}`)
 
@@ -206,8 +206,10 @@ const getPaths = async (starterPath: string, rootPath: string) => {
       },
     ])
     // exit gracefully if responses aren't provided
-    if (!response.starter || !response.path) {
-      process.exit()
+    if (!response.starter || !response.path.trim()) {
+      throw new Error(
+        `Please mention both starter package and project name along with path(if its not in the root)`
+      )
     }
 
     selectedOtherStarter = response.starter === `different`

@@ -1,4 +1,5 @@
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { isDate, looksLikeADate } = require(`../date`)
@@ -234,72 +235,71 @@ describe(`looksLikeADate`, () => {
   })
 })
 
-const nodes = [
-  {
-    id: `id1`,
-    internal: { type: `Test` },
-    testDate: new Date(),
-    explicitValidDate: `2010-01-30T23:59:59.999-07:00`,
-    inferredValidDate: `1970-01-01T00:00:00.000Z`,
-    validYYYY: `1970`,
-    validYYMM: `2019-01`,
-    validYYMMDD: `2010-01-30`,
-    validYYMMDDNoDash: `20100101`,
-    validISO1: `2010-01-30T23:59:59.999+00:00`,
-    validISO2: `2010-01-30T23:59:59.999-07:00`,
-    validISO3: `2010-01-30T00:00:00.000+07:00`,
-    validISO4: `2010-01-30T23:59:59.999-07`,
-    validISO5: `2010-01-30T00:00:00.000+07`,
-    validISO6: `2010-01-30 00:00:00.000Z`,
-    validISO7: `1970-01-01T00:00:00.000Z`,
-    validISO8: `2012-04-01T00:00:00-05:00`,
-    validISO9: `2012-11-12T00:00:00+01:00`,
-
-    validOrdinal1: `1970-334`,
-    validOrdinal2: `1970334`,
-    validOrdinal3: `2090-001`,
-    validOrdinal4: `2090001`,
-
-    validWeek1: `1970-W31`,
-    validWeek2: `2006-W01`,
-    validWeek3: `1970W31`,
-    validWeek4: `2009-W53-7`,
-    validWeek5: `2009W537`,
-
-    validMicrosecond1: `2018-08-31T23:25:16.019345+02:00`,
-    validMicrosecond2: `2018-08-31T23:25:16.019345Z`,
-
-    validNanosecond1: `2018-08-31T23:25:16.019345123+02:00`,
-    validNanosecond2: `2018-08-31T23:25:16.019345123Z`,
-
-    invalidHighPrecision: `2018-08-31T23:25:16.01234567899993+02:00`,
-
-    invalidDate1: `2010-00-00`,
-    invalidDate2: `2010-01-00`,
-    invalidDate3: `2010-01-40`,
-    invalidDate4: `2010-01-01T24:01`, // 24:00:00 is actually valid
-    invalidDate5: `2010-01-01T23:60`,
-    invalidDate6: `2010-01-01T23:59:60`,
-    invalidDate7: `2010-01-40T23:59:59.9999`,
-
-    invalidDate8: undefined,
-    invalidDate9: `undefined`,
-    invalidDate10: null,
-    invalidDate11: `null`,
-    invalidDate12: [],
-    invalidDate13: {},
-    invalidDate14: ``,
-    invalidDate15: ` `,
-    invalidDate16: `2012-04-01T00:basketball`,
-    defaultFormatDate: `2010-01-30T23:59:59.999-07:00`,
-  },
-]
-
 describe(`dateResolver`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
+    const nodes = [
+      {
+        id: `id1`,
+        internal: { type: `Test`, contentDigest: `0` },
+        testDate: new Date(),
+        explicitValidDate: `2010-01-30T23:59:59.999-07:00`,
+        inferredValidDate: `1970-01-01T00:00:00.000Z`,
+        validYYYY: `1970`,
+        validYYMM: `2019-01`,
+        validYYMMDD: `2010-01-30`,
+        validYYMMDDNoDash: `20100101`,
+        validISO1: `2010-01-30T23:59:59.999+00:00`,
+        validISO2: `2010-01-30T23:59:59.999-07:00`,
+        validISO3: `2010-01-30T00:00:00.000+07:00`,
+        validISO4: `2010-01-30T23:59:59.999-07`,
+        validISO5: `2010-01-30T00:00:00.000+07`,
+        validISO6: `2010-01-30 00:00:00.000Z`,
+        validISO7: `1970-01-01T00:00:00.000Z`,
+        validISO8: `2012-04-01T00:00:00-05:00`,
+        validISO9: `2012-11-12T00:00:00+01:00`,
+
+        validOrdinal1: `1970-334`,
+        validOrdinal2: `1970334`,
+        validOrdinal3: `2090-001`,
+        validOrdinal4: `2090001`,
+
+        validWeek1: `1970-W31`,
+        validWeek2: `2006-W01`,
+        validWeek3: `1970W31`,
+        validWeek4: `2009-W53-7`,
+        validWeek5: `2009W537`,
+
+        validMicrosecond1: `2018-08-31T23:25:16.019345+02:00`,
+        validMicrosecond2: `2018-08-31T23:25:16.019345Z`,
+
+        validNanosecond1: `2018-08-31T23:25:16.019345123+02:00`,
+        validNanosecond2: `2018-08-31T23:25:16.019345123Z`,
+
+        invalidHighPrecision: `2018-08-31T23:25:16.01234567899993+02:00`,
+
+        invalidDate1: `2010-00-00`,
+        invalidDate2: `2010-01-00`,
+        invalidDate3: `2010-01-40`,
+        invalidDate4: `2010-01-01T24:01`, // 24:00:00 is actually valid
+        invalidDate5: `2010-01-01T23:60`,
+        invalidDate6: `2010-01-01T23:59:60`,
+        invalidDate7: `2010-01-40T23:59:59.9999`,
+
+        invalidDate8: undefined,
+        invalidDate9: `undefined`,
+        invalidDate10: null,
+        invalidDate11: `null`,
+        invalidDate12: [],
+        invalidDate13: {},
+        invalidDate14: ``,
+        invalidDate15: ` `,
+        invalidDate16: `2012-04-01T00:basketball`,
+        defaultFormatDate: `2010-01-30T23:59:59.999-07:00`,
+      },
+    ]
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      actions.createNode(node, { name: `test` })(store.dispatch)
     )
   })
 
