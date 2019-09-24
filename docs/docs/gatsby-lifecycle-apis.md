@@ -17,7 +17,7 @@ Gatsby's design principles include:
 
 # High level Overview
 
-The following model gives a conceptual overview of how data is source and transformed in the process of building a Gatsby site:
+The following model gives a conceptual overview of how data is sourced and transformed in the process of building a Gatsby site:
 
 <LayerModel />
 
