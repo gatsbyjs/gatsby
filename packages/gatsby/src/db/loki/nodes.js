@@ -25,7 +25,7 @@ function createNodeTypeCollection(type) {
   // into a transaction
   const options = {
     unique: [`id`],
-    indices: [`id`],
+    indices: [`id`, `internal.counter`],
     disableMeta: true,
   }
   const coll = getDb().addCollection(collName, options)
@@ -133,7 +133,10 @@ function getNodesByType(typeName) {
   const collName = getTypeCollName(typeName)
   const coll = getDb().getCollection(collName)
   if (!coll) return []
-  return coll.data
+  return coll
+    .chain()
+    .simplesort(`internal.counter`)
+    .data()
 }
 
 /**
@@ -290,6 +293,63 @@ function deleteNodes(nodes) {
   }
 }
 
+const saveResolvedNodes = async (nodeTypeNames, resolver) => {
+  for (const typeName of nodeTypeNames) {
+    const nodes = getNodesByType(typeName)
+    const resolved = await Promise.all(
+      nodes.map(async node => {
+        node.__gatsby_resolved = await resolver(node)
+        return node
+      })
+    )
+    const nodeColl = getNodeTypeCollection(typeName)
+    if (nodeColl) {
+      nodeColl.update(resolved)
+    }
+  }
+}
+
+// Cleared on DELETE_CACHE
+let fieldUsages = null
+const FIELD_INDEX_THRESHOLD = 5
+
+// Every time we run a query, we increment a counter for each of its
+// fields, so that we can determine which fields are used the
+// most. Any time a field is seen more than `FIELD_INDEX_THRESHOLD`
+// times, we create a loki index so that future queries with that
+// field will execute faster.
+// times, we create a loki index so that future queries with that
+// field will execute faster.
+function ensureFieldIndexes(typeName, lokiArgs, sortArgs) {
+  if (fieldUsages == null) {
+    fieldUsages = {}
+    const { emitter } = require(`../../redux`)
+
+    emitter.on(`DELETE_CACHE`, () => {
+      for (var field in fieldUsages) {
+        delete fieldUsages[field]
+      }
+    })
+  }
+
+  const nodeColl = getNodeTypeCollection(typeName)
+
+  if (!fieldUsages[typeName]) {
+    fieldUsages[typeName] = {}
+  }
+
+  _.forEach(lokiArgs, (v, fieldName) => {
+    // Increment the usages of the field
+    _.update(fieldUsages[typeName], fieldName, n => (n ? n + 1 : 1))
+    // If we have crossed the threshold, then create the index
+    if (_.get(fieldUsages[typeName], fieldName) >= FIELD_INDEX_THRESHOLD) {
+      // Loki ensures that this is a noop if index already exists. E.g
+      // if it was previously added via a sort field
+      nodeColl.ensureIndex(fieldName)
+    }
+  })
+}
+
 /////////////////////////////////////////////////////////////////////
 // Reducer
 /////////////////////////////////////////////////////////////////////
@@ -349,4 +409,7 @@ module.exports = {
   deleteAll,
 
   reducer,
+
+  saveResolvedNodes,
+  ensureFieldIndexes,
 }

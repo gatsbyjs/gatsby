@@ -2,7 +2,7 @@
 
 ## Usage
 
-```sh
+```shell
 npm install gatsby-page-utils
 ```
 
@@ -80,7 +80,7 @@ Create a page path from a file path. It returns the page path.
 
 #### validatePath
 
-Validate a file path. It veryfies that it doesn't contains specific characters or strings. It returns `true` if path is valid otherwise it returns `false`.
+Validate a file path. It verifies that the path doesn't contain specific characters or strings. It returns `true` if the path is valid otherwise it returns `false`.
 
 | property | description | type   |
 | -------- | ----------- | ------ |
@@ -90,7 +90,7 @@ Validate a file path. It veryfies that it doesn't contains specific characters o
 
 Determines if path should be ignored regarding of a ignore pattern passed as parameter. It returns `true` if the passed path should be ignored otherwise it returns `false`.
 
-| property | description                       | type    |
-| -------- | --------------------------------- | ------- |
-| path     | File path                         | String  |
-| ignore   | A pattern to match with file path | (Object | String | Array) |
+| property | description                       | type                        |
+| -------- | --------------------------------- | --------------------------- |
+| path     | File path                         | String                      |
+| ignore   | A pattern to match with file path | (Object \| String \| Array) |

@@ -18,11 +18,37 @@ const getComponents = pages =>
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
     .value()
+/**
+ * Get all dynamic routes and sort them by most specific at the top
+ * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
+ */
+const getMatchPaths = pages => {
+  const filteredPaths = []
+  pages.forEach((page, index) => {
+    if (page.matchPath) {
+      filteredPaths.push({
+        ...page,
+        index,
+        score: page.matchPath.split(`/`).length,
+      })
+    }
+  })
 
-const pickMatchPathFields = page => _.pick(page, [`path`, `matchPath`])
+  return filteredPaths
+    .sort((a, b) => {
+      // The higher the score, the higher the specificity of our matchPath
+      const order = b.score - a.score
+      if (order !== 0) {
+        return order
+      }
 
-const getMatchPaths = pages =>
-  pages.filter(page => page.matchPath).map(pickMatchPathFields)
+      // if specificty is the same we use the array index
+      return b.index - a.index
+    })
+    .map(({ path, matchPath }) => {
+      return { path, matchPath }
+    })
+}
 
 const createHash = (matchPaths, components) =>
   crypto

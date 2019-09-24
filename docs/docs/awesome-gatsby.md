@@ -93,6 +93,10 @@ See the [library of official and community plugins](/plugins/)
 
 - [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
 
+### Turkish
+
+- [GatsbyJS ile Modern Web Sitesi | 1. Bölüm (Başlangıç ve Kurulum) (Turkish)](https://medium.com/@raufsamestone/reactjs-ve-gatsbyjs-ile-modern-web-sitesi-1-b%C3%B6l%C3%BCm-ba%C5%9Flang%C4%B1%C3%A7-ve-kurulum-27437d6aaf54)
+
 ## Other resources
 
 ### DEV Community
@@ -102,3 +106,7 @@ See the [library of official and community plugins](/plugins/)
 ### Hashnode Community
 
 [Gatsby community on Hashnode](https://hashnode.com/n/gatsby) is a place where you can read discussions about Gatsby projects, read articles and tutorials and ask the rest of the Hashnode community Gatsby-related questions.
+
+### Reddit Community
+
+[Gatsby community on Reddit](https://www.reddit.com/r/gatsbyjs) is a place where you can read news about Gatsby, interact with other Gatsby developers and get advice on Gatsby-related Questions.

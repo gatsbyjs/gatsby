@@ -17,6 +17,8 @@ function preset(context, options = {}) {
   }
 
   const nodeConfig = {
+    corejs: 2,
+    useBuiltIns: `entry`,
     targets: {
       node: IS_PRODUCTION ? nodeVersion : `current`,
     },
@@ -30,7 +32,6 @@ function preset(context, options = {}) {
           {
             loose: true,
             debug: !!debug,
-            useBuiltIns: `entry`,
             shippedProposals: true,
             modules: `commonjs`,
           },

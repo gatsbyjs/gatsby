@@ -140,9 +140,7 @@ class Index extends React.Component {
           <li style={styles.column25}>
             <img
               src={cropBottomLeft.src}
-              alt={`File ${
-                cropBottomLeft.originalName
-              } cropped to the bottom left`}
+              alt={`File ${cropBottomLeft.originalName} cropped to the bottom left`}
             />
             <p>
               <small>
