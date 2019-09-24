@@ -7,7 +7,7 @@ jest.mock(`../emitter`)
 jest.mock(`../socketIo`, () => {
   return {
     default: jest.fn(),
-    getPageData: jest.fn(),
+    getPageData: jest.fn().mockResolvedValue(),
   }
 })
 
