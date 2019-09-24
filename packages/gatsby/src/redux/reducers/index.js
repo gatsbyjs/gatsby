@@ -59,5 +59,5 @@ module.exports = {
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
-  logs: require(`gatsby-cli/lib/reporter/redux/reducer`),
+  logs: require(`gatsby-cli/lib/reporter/redux-manager/reducer`),
 }
