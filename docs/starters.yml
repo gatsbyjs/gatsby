@@ -3905,7 +3905,7 @@
     - Mobile and responsive
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
-- url: https://eloquent-bartik-09a1e8.netlify.com
+- url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
   repo: https://github.com/sagar7993/gatsby-wordpress-typescript-blog-boilerplate
   description: A Gatsby starter template for a Wordpress blog, built using TypeScript and Ant Design
   tags:
@@ -3923,9 +3923,11 @@
     - Source content from Wordpress CMS
     - Auto generated Pagination for your Wordpress Posts
     - Auto generated Navigation for next and previous post at the end Post
+    - Auto generated pages for tags and categories sourced from Wordpress
     - SASS stylesheets
     - PWA with offline support
     - Ant Design for UI components and theming
+    - Jest and Enzyme Testing framework support for snapshots and unit tests.
     - Responsive Design
     - Google Analytics
     - Comments using Staticman
@@ -3935,6 +3937,7 @@
     - Twitter timeline and follow button
     - Facebook timeline and like button
     - SEO friendly
+    - Web app manifest
     - Mobile optimized and responsive
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
