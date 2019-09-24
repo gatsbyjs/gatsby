@@ -3,12 +3,6 @@ import stripAnsi from "strip-ansi"
 import _ from "lodash"
 
 const { Actions } = require(`../../constants`)
-const { getLocalGatsbyVersion } = require(`../../../util/version`)
-
-process.send({
-  type: Actions.Version,
-  gatsby: getLocalGatsbyVersion(),
-})
 
 onLogAction(action => {
   const sanitizedAction = {

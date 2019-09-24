@@ -1,5 +1,4 @@
 export const Actions = {
-  Version: `VERSION`,
   LogAction: `LOG_ACTION`,
   SetStatus: `SET_STATUS`,
   Log: `LOG`,
