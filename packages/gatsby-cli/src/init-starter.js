@@ -246,11 +246,20 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
     opn(`https://gatsby.dev/starters?v=2`)
     return
   }
-
   if (urlObject.protocol && urlObject.host) {
     trackError(`NEW_PROJECT_NAME_MISSING`)
+
+    const isStarterAUrl =
+      starter && !url.parse(starter).hostname && !url.parse(starter).protocol
+
+    if (/gatsby-starter/gi.test(rootPath) && isStarterAUrl) {
+      report.panic(
+        `It looks like you gave wrong argument orders . Try running instead "gatsby new ${starter} ${rootPath}"`
+      )
+      return
+    }
     report.panic(
-      `It looks like you forgot to add a name for your new project. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
+      `It looks like you passed a URL to your project name. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
     )
     return
   }
