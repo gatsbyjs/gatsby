@@ -154,6 +154,10 @@ A [CMS](#cms) that only handles the [backend](#backend) content management inste
 
 A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting/) projects include Netlify, AWS, S3, Surge, Heroku, and more.
 
+### Hot module replacement
+
+A feature in use when you run `gatsby develop` that updates your site when you save code in an editor by automatically replacing modules, or chunks of code while the site is running.
+
 ### Hydration
 
 Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
