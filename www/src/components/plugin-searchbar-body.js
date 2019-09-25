@@ -467,17 +467,16 @@ class PluginSearchBar extends Component {
 
   urlToSearch = () => {
     if (this.props.location.search) {
-      // ignore this automatically added query parameter
-      const search = this.props.location.search
-        .replace(`no-cache=1`, ``)
-        .slice(2)
+      const params = new URLSearchParams(this.props.location.search)
+      // only take into account 'search' query
+      const search = params.get(`search`)
       return decodeURIComponent(search)
     }
     return ``
   }
 
   updateHistory(value) {
-    reachNavigate(`${this.props.location.pathname}?=${value.query}`, {
+    reachNavigate(`${this.props.location.pathname}?=search=${value.query}`, {
       replace: true,
     })
   }
