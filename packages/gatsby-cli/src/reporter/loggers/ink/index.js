@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { render } from "ink"
 import { Provider, connect } from "react-redux"
 
-import { getStore, onStoreSwap } from "../../redux-manager/index"
+import { getStore, onStoreSwap } from "../../redux/index"
 
 import CLI from "./cli"
 
