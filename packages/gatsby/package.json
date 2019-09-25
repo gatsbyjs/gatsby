@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/core": "^7.6.0",
-    "@babel/parser": "^7.6.0",
+    "@babel/core": "^7.6.2",
+    "@babel/parser": "^7.6.2",
     "@babel/polyfill": "^7.6.0",
-    "@babel/runtime": "^7.6.0",
-    "@babel/traverse": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
+    "@babel/traverse": "^7.6.2",
     "@gatsbyjs/relay-compiler": "2.0.0-printer-fix.4",
     "@hapi/joi": "^15.1.1",
     "@mikaelkristiansson/domready": "^1.0.9",
@@ -143,8 +143,8 @@
     "yaml-loader": "^0.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/runtime": "^7.6.0",
+    "@babel/cli": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
     "babel-preset-gatsby-package": "^0.2.5",
     "cross-env": "^5.2.1",
     "documentation": "^12.1.2",
