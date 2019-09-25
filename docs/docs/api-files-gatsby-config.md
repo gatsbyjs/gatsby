@@ -69,6 +69,7 @@ module.exports = {
 ```
 
 When adding multiple plugins, they should be separated by commas in the `plugins` array to support valid JavaScript syntax.
+
 #### Plugins without options
 
 If a plugin does not require any options, you can add its name as a string to the `plugins` array:
@@ -81,7 +82,7 @@ module.exports = {
 
 #### Plugins with options
 
-Many plugins have optional or required options to configure them. Instead of adding a name string to the `plugins` array, add an object with its name and options. Most plugins show examples in their `README` file or page in the [Gatsby plugin library](/plugins). 
+Many plugins have optional or required options to configure them. Instead of adding a name string to the `plugins` array, add an object with its name and options. Most plugins show examples in their `README` file or page in the [Gatsby plugin library](/plugins).
 
 Here's an example showing how to write an object with keys to `resolve` the plugin name and an `options` object with any applicable settings:
 
