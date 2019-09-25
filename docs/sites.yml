@@ -7320,6 +7320,17 @@
   built_by: Appes
   built_by_url: https://appes.co
   featured: false
+- title: Intern
+  url: https://intern.imedadel.me
+  main_url: https://intern.imedadel.me
+  description: >
+    Intern is a job board for getting internships in tech, design, marketing, and more. It's built entirely with Gatsby.
+  categories:
+    - Directory
+    - Technology
+  built_by: Imed Adel
+  built_by_url: https://imedadel.me
+  featured: false
 - title: Global Citizen Foundation
   main_url: https://www.globalcitizenfoundation.org
   url: https://www.globalcitizenfoundation.org
