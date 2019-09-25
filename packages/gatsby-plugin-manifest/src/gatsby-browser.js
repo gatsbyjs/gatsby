@@ -1,5 +1,6 @@
 /* global __MANIFEST_PLUGIN_HAS_LOCALISATION__ */
 import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
+import getManifestForPathname from "./get-manifest-pathname"
 
 // when we don't have localisation in our manifest, we tree shake everything away
 if (__MANIFEST_PLUGIN_HAS_LOCALISATION__) {
@@ -13,22 +14,5 @@ if (__MANIFEST_PLUGIN_HAS_LOCALISATION__) {
     if (manifestEl) {
       manifestEl.setAttribute(`href`, withPrefix(manifestFilename))
     }
-  }
-
-  function getManifestForPathname(pathname, localizedApps) {
-    const defaultFilename = `manifest.webmanifest`
-    if (!Array.isArray(localizedApps)) {
-      return defaultFilename
-    }
-
-    const appOptions = localizedApps.find(app =>
-      pathname.startsWith(app.start_url)
-    )
-
-    if (!appOptions) {
-      return defaultFilename
-    }
-
-    return `manifest_${appOptions.lang}.webmanifest`
   }
 }

@@ -41,6 +41,8 @@ describe(`gatsby-plugin-manifest`, () => {
     const location = {
       pathname: `/es/`,
     }
+    // add default lang
+    pluginOptions.lang = `en`
     onRouteUpdate({ location }, pluginOptions)
     expect(document.head).toMatchInlineSnapshot(`
       <head>
@@ -56,6 +58,8 @@ describe(`gatsby-plugin-manifest`, () => {
     const location = {
       pathname: `/random-path/`,
     }
+    // add default lang
+    pluginOptions.lang = `en`
     onRouteUpdate({ location }, pluginOptions)
     expect(document.head).toMatchInlineSnapshot(`
       <head>
