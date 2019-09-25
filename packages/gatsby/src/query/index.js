@@ -8,16 +8,14 @@ const { boundActionCreators } = require(`../redux/actions`)
 const queryQueue = require(`./queue`)
 const GraphQLRunner = require(`./graphql-runner`)
 
-let seenIdsWithoutDataDependencies = []
+const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
 const extractedQueryIds = new Set()
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
 // so their query will be run again if they're created again.
 emitter.on(`DELETE_PAGE`, action => {
-  seenIdsWithoutDataDependencies = seenIdsWithoutDataDependencies.filter(
-    p => p !== action.payload.path
-  )
+  seenIdsWithoutDataDependencies.delete(action.payload.path)
 })
 
 emitter.on(`CREATE_NODE`, action => {
@@ -38,54 +36,64 @@ const popExtractedQueries = () => {
 }
 
 const findIdsWithoutDataDependencies = state => {
-  const allTrackedIds = _.uniq(
-    _.flatten(
-      _.concat(
-        _.values(state.componentDataDependencies.nodes),
-        _.values(state.componentDataDependencies.connections)
-      )
-    )
+  const allTrackedIds = new Set()
+  const boundAddToTrackedIds = allTrackedIds.add.bind(allTrackedIds)
+  state.componentDataDependencies.nodes.forEach(dependenciesOnNode => {
+    dependenciesOnNode.forEach(boundAddToTrackedIds)
+  })
+  state.componentDataDependencies.connections.forEach(
+    dependenciesOnConnection => {
+      dependenciesOnConnection.forEach(boundAddToTrackedIds)
+    }
   )
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
-  const notTrackedIds = _.difference(
+  const notTrackedIds = new Set(
     [
       ...Array.from(state.pages.values(), p => p.path),
       ...[...state.staticQueryComponents.values()].map(c => c.id),
-    ],
-    [...allTrackedIds, ...seenIdsWithoutDataDependencies]
+    ].filter(
+      x => !allTrackedIds.has(x) && !seenIdsWithoutDataDependencies.has(x)
+    )
   )
 
   // Add new IDs to our seen array so we don't keep trying to run queries for them.
   // Pages without queries can't be tracked.
-  seenIdsWithoutDataDependencies = _.uniq([
-    ...notTrackedIds,
-    ...seenIdsWithoutDataDependencies,
-  ])
+  for (const notTrackedId of notTrackedIds) {
+    seenIdsWithoutDataDependencies.add(notTrackedId)
+  }
 
   return notTrackedIds
 }
 
 const popNodeQueries = state => {
   const actions = _.uniq(queuedDirtyActions, a => a.payload.id)
-  const uniqDirties = _.uniq(
-    actions.reduce((dirtyIds, action) => {
-      const node = action.payload
+  const uniqDirties = actions.reduce((dirtyIds, action) => {
+    const node = action.payload
 
-      if (!node || !node.id || !node.internal.type) return dirtyIds
+    if (!node || !node.id || !node.internal.type) return dirtyIds
 
-      // Find components that depend on this node so are now dirty.
-      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
+    // Find components that depend on this node so are now dirty.
+    if (state.componentDataDependencies.nodes.has(node.id)) {
+      state.componentDataDependencies.nodes
+        .get(node.id)
+        .forEach(n => dirtyIds.add(n))
+    }
 
-      // Find connections that depend on this node so are now invalid.
-      dirtyIds = dirtyIds.concat(
-        state.componentDataDependencies.connections[node.internal.type]
-      )
+    // Find connections that depend on this node so are now invalid.
+    if (state.componentDataDependencies.connections.has(node.internal.type)) {
+      state.componentDataDependencies.connections
+        .get(node.internal.type)
+        .forEach(n => {
+          if (n) {
+            dirtyIds.add(n)
+          }
+        })
+    }
 
-      return _.compact(dirtyIds)
-    }, [])
-  )
+    return dirtyIds
+  }, new Set())
   queuedDirtyActions = []
   return uniqDirties
 }
