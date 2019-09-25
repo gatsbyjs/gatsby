@@ -143,11 +143,12 @@ describe(`Activity`, () => {
     ])
   })
   ;[`success`, `info`, `warn`, `log`, `error`].forEach(level => {
+    // success, info and log all emit `INFO`
     const mapActionToLevel = {
-      success: `SUCCESS`,
+      success: `INFO`,
       info: `INFO`,
       warn: `WARNING`,
-      log: `LOG`,
+      log: `INFO`,
       error: `ERROR`,
     }
 
