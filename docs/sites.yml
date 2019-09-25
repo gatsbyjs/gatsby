@@ -7347,11 +7347,11 @@
   description: >
     AFEX Nigeria strives to transform Nigerian agriculture by creating more bargaining power to smallholder farmers, access to information, and secure storage.
   categories:
-    - Food
-    - Finance
     - Blog
-    - WordPress
     - Business
+    - Finance
+    - Food
+    - WordPress
   built_by: Mayowa Falade
-  built_by_url: mayowafalade.com
+  built_by_url: http://mayowafalade.com
   featured: false
