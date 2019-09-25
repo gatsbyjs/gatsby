@@ -7320,3 +7320,13 @@
   built_by: Appes
   built_by_url: https://appes.co
   featured: false
+- title: Global Citizen Foundation
+  main_url: https://www.globalcitizenfoundation.org
+  url: https://www.globalcitizenfoundation.org
+  description: >
+    In the digital economy, we are Global Citizens and the currency is Personal Data
+  categories:
+    - Nonprofit
+  built_by: The Delta Studio
+  built_by_url: https://www.thedelta.io
+  featured: false
