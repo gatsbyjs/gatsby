@@ -857,33 +857,36 @@ export const pageQuery = graphql`
 
 #### Prerequisites
 
+- A [Gatsby site](/docs/quick-start/)
 - A [Contentful account](https://www.contentful.com/)
 - The [Contentful CLI](https://www.npmjs.com/package/contentful-cli) installed
 
 #### Directions
 
-1. Login to Contentful with the CLI. It will help you create an account if you don't have one.
+1. Log in to Contentful with the CLI and follow the steps. It will help you create an account if you don't have one.
 
-```
+```shell
 contentful login
 ```
 
 2. Create a new space. Make sure to save the space ID given to you at the end of the command.
 
-```
+```shell
 contentful space create --name 'Gatsby example'
 ```
 
-3. Seed the new space with example blog content using the new space ID returned from the previous command.
+3. Seed the new space with example blog content using the new space ID returned from the previous command, in place of `<space ID>`.
 
+```shell
+contentful space seed -s '<space ID>' -t blog
 ```
-contentful space seed -s '[space ID]' -t blog
-```
+
+For example, with a space ID in place: `contentful space seed -s '22fzx88spbp7' -t blog`
 
 4. Create a new access token for your space.
 
-```
-contentful space accesstoken create -s '[space ID]' --name 'Example token'
+```shell
+contentful space accesstoken create -s '<space ID>' --name 'Example token'
 ```
 
 5. Install the `gatsby-source-contentful` plugin in your Gatsby site:
@@ -892,15 +895,15 @@ contentful space accesstoken create -s '[space ID]' --name 'Example token'
 npm install --save gatsby-source-contentful
 ```
 
-6. Edit the file `gatsby-config.js` to enable the `gatsby-source-contentful` plugin. You should consider using [environment variables](https://www.gatsbyjs.org/docs/environment-variables/) to store your space ID and token.
+6. Edit the file `gatsby-config.js` to enable the `gatsby-source-contentful` plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
 
 ```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-source-contentful`,
     options: {
-      spaceId: `[space ID]`, // or process.env.CONTENTFUL_SPACE_ID
-      accessToken: `[access token]`, // or process.env.CONTENTFUL_TOKEN
+      spaceId: `<space ID>`, // or process.env.CONTENTFUL_SPACE_ID
+      accessToken: `<access token>`, // or process.env.CONTENTFUL_TOKEN
     },
   },
 ]
@@ -912,7 +915,7 @@ plugins: [
 
 ![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
 
-To query for a Blog Posts titles from Contentful, use the following GraphQL query:
+To query for Blog Post titles from Contentful, use the following GraphQL query:
 
 ```graphql
 {
@@ -963,6 +966,7 @@ export const query = graphql`
 `
 ```
 
+To continue building out your Contentful site including post detail pages, check out the rest of the [Gatsby docs](/docs/sourcing-from-contentful/) and additional resources below.
 #### Additional resources
 
 - [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful/)
