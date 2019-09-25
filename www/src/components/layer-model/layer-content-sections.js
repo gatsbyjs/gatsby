@@ -197,7 +197,7 @@ const ContentLayerContent = ({ sourceIndex, setSourceIndex, index }) => (
         management systems, files, or external APIs.
       </p>
       <p>
-        Any source of data can be connected Gatsby through plugins or using
+        Any source of data can be connected to Gatsby through plugins or using
         Gatsby's APIs.
       </p>
     </div>
