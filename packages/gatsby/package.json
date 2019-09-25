@@ -133,7 +133,7 @@
     "util.promisify": "^1.0.0",
     "uuid": "^3.3.3",
     "v8-compile-cache": "^1.1.2",
-    "webpack": "~4.40.2",
+    "webpack": "~4.40.3",
     "webpack-dev-middleware": "^3.7.1",
     "webpack-dev-server": "^3.8.1",
     "webpack-hot-middleware": "^2.25.0",
