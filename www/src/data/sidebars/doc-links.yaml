@@ -492,7 +492,7 @@
           link: /docs/migrating-from-v0-to-v1/
         - title: Upgrade for Minor or Patch Releases
           link: /docs/upgrade-gatsby-and-dependencies/
-          breadcrumbTitle: Upgrade for Minor or Patch Releases
+          breadcrumbTitle: Minor or Patch Releases
     - title: Conceptual Guide
       link: /docs/conceptual-guide/
       items:

@@ -14,7 +14,7 @@ This guide is meant to teach you how to upgrade Gatsby for minor or patch releas
 
 Every new version of every package comes with improvements on multiple categories from performance, accessibility, security, bug fixes, and more, so it is important to upgrade both Gatsby and its dependencies to get the latest improvements in every one of these categories.
 
-Constantly upgrading your dependencies on minor or patch releases also helps you to make major upgrades easier and to identify soon-to-be-deprecated functionality or APIs.
+Upgrading your dependencies often on minor or patch releases also helps you to make major upgrades easier and to identify soon-to-be-deprecated functionality or APIs.
 
 ## How to identify possible upgrades
 
@@ -35,7 +35,7 @@ gatsby                             2.15.13  2.15.13  2.15.20
 
 Depending on whether you want to update Gatsby and its dependencies for minor or patch releases you need to modify your `package.json` accordingly.
 
-If you only want to update for patch releases, you can add a tilde (`~`) before the version of your package:
+If you only want to update **for patch releases**, you can add a tilde (`~`) before the version of your package:
 
 ```json:title=package.json
 "dependencies"{
@@ -43,7 +43,7 @@ If you only want to update for patch releases, you can add a tilde (`~`) before 
 }
 ```
 
-For both patch and minor updates, add a caret (`^`) before the version of your package:
+**For both patch and minor updates**, add a caret (`^`) before the version of your package:
 
 ```json:title=package.json
 "dependencies"{
@@ -53,7 +53,7 @@ For both patch and minor updates, add a caret (`^`) before the version of your p
 
 For major updates follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration/) reference guide overview.
 
-If you are updating Gatsby, you'll likely also need to update Gatsby related plugins, you can identify them by their names starting with `gatsby-`. This only applies to plugins managed in the gatsbyjs/gatsby repo; for community plugins check beforehand if there is a new version available for upgrading.
+If you are updating Gatsby, you'll likely also need to update Gatsby related plugins, you can identify them by their names starting with `gatsby-`. This only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repo; for community plugins check beforehand if there is a new version available for upgrading.
 
 ## Updating all your dependencies at once
 
@@ -115,6 +115,5 @@ In case you get stuck in dependencies conflicts, you can use the [npm-force-reso
 
 Check out these related guides for major upgrades of Gatsby:
 
-[Migrating from v0 to v1](/docs/migrating-from-v0-to-v1/)
-
-[Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/)
+- [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/)
+- [Migrating from v0 to v1](/docs/migrating-from-v0-to-v1/)
