@@ -45,17 +45,6 @@ const iface = {
       timestamp: new Date().toJSON(),
     }
 
-    if (action.type === Actions.Log) {
-      // Don't emit Debug over IPC
-      if ([LogLevels.Debug].includes(action.payload.level)) {
-        return
-      }
-      // Override Success and Log types to Info over IPC
-      if ([LogLevels.Success, LogLevels.Log].includes(action.payload.level)) {
-        action.payload.level = LogLevels.Info
-      }
-    }
-
     store.dispatch(action)
 
     if (isInternalAction(action)) {
@@ -63,7 +52,20 @@ const iface = {
       // deal with actions needed just for internal tracking of status
       return
     }
-    onLogActionListeners.forEach(fn => fn(action))
+    onLogActionListeners.forEach(fn => {
+      if (action.type === Actions.Log) {
+        // Don't emit Debug over IPC
+        if ([LogLevels.Debug].includes(action.payload.level)) {
+          return
+        }
+        // Override Success and Log types to Info over IPC
+        if ([LogLevels.Success, LogLevels.Log].includes(action.payload.level)) {
+          action.payload.level = LogLevels.Info
+          fn(action)
+        }
+      }
+      fn(action)
+    })
   },
   onStoreSwap: fn => {
     storeSwapListeners.push(fn)
