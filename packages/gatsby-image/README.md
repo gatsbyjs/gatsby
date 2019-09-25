@@ -253,6 +253,8 @@ Their fragments are:
 - `GatsbySanityImageFluid`
 - `GatsbySanityImageFluid_noBase64`
 
+_Links to source code for fragment fields of official Gatsby plugins can be found in the [Gatsby GraphQL API](/docs/graphql-api/)_
+
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
 with `tracedSVG` at the end.
@@ -436,7 +438,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 ## Image processing arguments
 
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
-`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
+`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `grayscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 

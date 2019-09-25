@@ -256,19 +256,14 @@ To check if a user can access the content, you can wrap the restricted content i
 import React, { Component } from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
-class PrivateRoute extends Component {
-  componentDidMount() {
-    const { location } = this.props
-    let noOnLoginPage = location.pathname !== `/app/login`
-    if (!isLoggedIn() && noOnLoginPage) {
-      navigate("/app/login")
-      return null
-    }
+
+const PrivateRoute = ({ component: Component, location, ...rest }) => {
+  if (!isLoggedIn() && location.pathname !== `/app/login`) {
+    navigate("/app/login")
+    return null
   }
-  render() {
-    const { component: Component, ...rest } = this.props
-    return <Component {...rest} />
-  }
+
+  return <Component {...rest} />
 }
 
 export default PrivateRoute
