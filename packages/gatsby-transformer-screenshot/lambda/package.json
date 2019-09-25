@@ -1,10 +1,10 @@
 {
   "dependencies": {
     "puppeteer": "0.13.0",
-    "tar": "^4.4.11"
+    "tar": "^4.4.13"
   },
   "devDependencies": {
-    "aws-sdk": "^2.534.0"
+    "aws-sdk": "^2.535.0"
   },
   "keywords": [
     "gatsby-plugin"

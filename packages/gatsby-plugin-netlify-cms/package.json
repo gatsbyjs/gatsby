@@ -13,7 +13,7 @@
     "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^0.8.0",
     "netlify-identity-widget": "^1.5.5",
-    "webpack": "^4.40.2"
+    "webpack": "^4.41.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
