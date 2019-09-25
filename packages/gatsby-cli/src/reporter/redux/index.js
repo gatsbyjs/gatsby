@@ -1,7 +1,7 @@
 const Redux = require(`redux`)
 const reducer = require(`./reducer`)
 
-const { ActivityTypes, Actions } = require(`../constants`)
+const { ActivityTypes, Actions, LogLevels } = require(`../constants`)
 
 let store = Redux.createStore(
   Redux.combineReducers({
@@ -43,6 +43,17 @@ const iface = {
     action = {
       ...action,
       timestamp: new Date().toJSON(),
+    }
+
+    if (action.type === Actions.Log) {
+      // Don't emit Debug over IPC
+      if ([LogLevels.Debug].includes(action.payload.level)) {
+        return
+      }
+      // Override Success and Log types to Info over IPC
+      if ([LogLevels.Success, LogLevels.Log].includes(action.payload.level)) {
+        action.payload.level = LogLevels.Info
+      }
     }
 
     store.dispatch(action)
