@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.23...gatsby@2.15.24) (2019-09-25)
+
+### Bug Fixes
+
+- **query:** improve query performance ([#17682](https://github.com/gatsbyjs/gatsby/issues/17682)) ([a1b1396](https://github.com/gatsbyjs/gatsby/commit/a1b1396))
+
 ## [2.15.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.22...gatsby@2.15.23) (2019-09-25)
 
 ### Bug Fixes
