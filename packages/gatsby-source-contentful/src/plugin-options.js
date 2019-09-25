@@ -34,8 +34,8 @@ const optionsSchema = Joi.object().keys({
   forceFullSync: Joi.boolean(),
   proxy: Joi.object().keys({
     host: Joi.string().required(),
-    port:  Joi.number().required(),
-    auth:  Joi.object().keys({
+    port: Joi.number().required(),
+    auth: Joi.object().keys({
       username: Joi.string(),
       password: Joi.string(),
     }),
