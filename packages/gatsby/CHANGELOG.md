@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.24...gatsby@2.15.25) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby:** don't add undefined ([#17886](https://github.com/gatsbyjs/gatsby/issues/17886)) ([f0cdef0](https://github.com/gatsbyjs/gatsby/commit/f0cdef0))
+
 ## [2.15.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.23...gatsby@2.15.24) (2019-09-25)
 
 ### Bug Fixes
