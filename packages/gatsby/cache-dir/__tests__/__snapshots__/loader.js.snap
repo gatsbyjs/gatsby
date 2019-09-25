@@ -14,33 +14,3 @@ Object {
   },
 }
 `;
-
-exports[`Production loader loadPage should load matchPath pageData if current page returns notFound 1`] = `
-Object {
-  "component": "instance",
-  "json": Object {
-    "pageContext": "something something",
-  },
-  "page": Object {
-    "componentChunkName": "chunk",
-    "matchPath": undefined,
-    "path": "/app/",
-    "webpackCompilationHash": "123",
-  },
-}
-`;
-
-exports[`Production loader loadPage should load page path first before falling back to matchPath 1`] = `
-Object {
-  "component": "instance",
-  "json": Object {
-    "pageContext": "something something",
-  },
-  "page": Object {
-    "componentChunkName": "chunk",
-    "matchPath": undefined,
-    "path": "/app/login/",
-    "webpackCompilationHash": "123",
-  },
-}
-`;
