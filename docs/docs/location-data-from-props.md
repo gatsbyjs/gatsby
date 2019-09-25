@@ -1,30 +1,51 @@
 ---
 title: "Location Data from Props"
 ---
-## Introductory paragraph
-The introductory paragraph should be a 1-2 sentence explanation of the main
-topic and answer the following question:
-What is the purpose of this guide?
-## Prerequisites (if any)
-If applicable, list any prerequisites to reading and understanding your article. Does the reader need to read another document first, install a particular plugin, or already know a certain skill? List those things here.
-## The facts
-What are the facts you know about the topic of this guide?
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+## What is Location?
+
+Sometimes it can be helpful to know exactly what your app's browser url is at any given stage. Using @reach/router, location data represents where the app is currently, where you'd like it to go, and other helpful information.
+
+## Use Cases
+
+You can provide a location object instead of strings, helpful in a number of situations.
+
+* Providing state to linked components
+* 
+
 ## Example
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
-Provide at least one example of how the task gets accomplished. A code snippet is ideal, in this format:
-    code snippet
-//See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
+
+```js:title=index.js
+// usually you'd do this
+<Link to="/somecomponent"/>
+
+// but if we want to add some additional state
+<Link to={
+  pathname: '/somecomponent',
+  state: {modal: true}
+}>
+```
+
+Then from the recieving component we can conditionally render it based on the location state.
+
+```js:title=some-component.js
+const SomeComponent = ({ location }) => {
+  const { state = {} } = location;
+  const { modal } = state;
+    return (
+      modal ? <div className="modal">I'm a modal of Some Component!</div>
+      : <div>Welcome to the Some Component page!</div>
+  );
+};
+```
+
 ## Gatsby advantages
-Does Gatsby address this topic uniquely in some way? If so, state the unique advantages Gatsby provides to the user.
-If there are disadvantages Gatsby has, state those here as well and any known bugs or issues the Gatsby community is working on.
+The great thing is you can expect the location prop to be available to you on everypage thanks to its use of `@reach/router`
+
 ## Other resources
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
+
+- [@reach/router docs](https://reach.tech/router/api/Location)
+- [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
+- [Gatsby Breadcrumb Plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
+- [Create Modal w/ Navigation State using React Router](https://codedaily.io/tutorials/47/Create-a-Modal-Route-with-Link-and-Nav-State-in-React-Router)
+
+
