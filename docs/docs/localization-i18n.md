@@ -12,6 +12,8 @@ This guide is a brief look at the options that exist for enhancing your Gatsby p
 
 There are a few React i18n packages out there. Several options include [react-intl](https://github.com/yahoo/react-intl), the community [Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n) and [react-i18next](https://github.com/i18next/react-i18next/). There are several factors to consider when choosing a package: Do you already use a similar package in another project? How well does the package meet the needs of your users? Are you or your team already familiar with a certain package? Is the package well documented and maintained?
 
+Here are three potential packages you could choose for internationalization in Gatsby:
+
 <Accordion>
 
 <Details>
