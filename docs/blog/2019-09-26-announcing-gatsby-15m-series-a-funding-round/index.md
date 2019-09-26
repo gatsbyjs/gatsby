@@ -44,12 +44,11 @@ Over 2500 people have contributed to Gatsby including the creation of nearly 130
 I’m incredibly proud of the work the community and Gatsby Inc. full-time maintainers are doing to ship great software and create a place where everyone belongs.
 
 Great open-source tooling is what makes the web such an accessible and open space: anyone with access to a computer can learn and leverage the best development tools in the world.
-![The Gatsby Team in NYC, May 2019](./gatsby-team.jpeg)
-_The Gatsby Team in NYC, May 2019_
+![The Gatsby Team in NYC, May 2019](./gatsby-team.jpeg)_The Gatsby Team in NYC, May 2019_
 
 With Gatsby, we’re striving to create a business model that will drive many millions of dollars of investment in open-source tools and enable people to build the next generation of web experiences.
 
-Creating a company around Gatsby has enabled us to invest heavily in open source. With the latest funding, we’re now investing more than \$3 million every year in open source including on Gatsby core and official plugins and our learning materials.
+With the latest funding, we’re now investing more than \$3 million every year in open source including on Gatsby core and official plugins and our learning materials.
 
 ## Gatsby in the cloud
 
