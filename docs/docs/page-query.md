@@ -54,7 +54,7 @@ const HomePage = () => {
 }
 ```
 
-Below our `HomePage` component declaration, export a new constant called `query`, and set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks:
+Below our `HomePage` component declaration, export a new constant called `query`. The name of the constant isn't important, Gatsby just looks for an exported `graphql` string from the file. Then, set its value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks:
 
 ```diff:title=src/pages/index.js
 const HomePage = () => {
@@ -137,4 +137,55 @@ During the Gatsby build process, GraphQL queries are pulled out of the original 
 The longer answer is a little more involved: Gatsby borrows a technique from
 [Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
 
-This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag.
+_More information about [how queries work](/docs/query-behind-the-scenes/) is included in the Gatsby Internals section of the docs_
+
+This means that the `graphql` tag isn’t executed the way that you might expect. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag. It's still possible to pass variables into page queries with the `context` object [when creating pages](/docs/creating-and-modifying-pages).
+
+## How to add query variables to a page query
+
+Variables can be added to page queries (not static queries) through the context object that is an argument of the [`createPage` API](/docs/actions/#createPage).
+
+Consider the following query:
+
+```js:title=src/templates/blog-post.js
+export const query = graphql`
+  query MdxBlogPost {
+    mdx(title: { eq: "Using a Theme" }) {
+      id
+      title
+    }
+  }
+`
+```
+
+The `MdxBlogPost` query will return an MDX node that has been created in a site where `gatsby-plugin-mdx` is installed and `.mdx` files have been [sourced](/docs/content-and-data/) with `gatsby-source-filesystem`, so long as it matches the argument passed in that says the `title` must equal (`eq`) the string `"Using a Theme"`.
+
+In addition to hardcoding an argument directly into the query, you can pass in a variable. The query can be changed to include a variable like this:
+
+```js:title=src/templates/blog-post.js
+export const query = graphql`
+  query MdxBlogPost($title: String) { // highlight-line
+    mdx(title: {eq: $title}) { // highlight-line
+      id
+      title
+    }
+  }
+`
+```
+
+Then when a page is created from this blog post template, you can provide an object as part of the page's context. Keys in the context object that match up with arguments in the page query (in this case: `"title"`), will be used as variables. Variables are prefaced with `$`, so passing a `title` property will become `$title` in the query.
+
+```js:title=gatsby-node.js
+posts.forEach(({ node }, index) => {
+  createPage({
+    path: node.fields.slug,
+    component: path.resolve(`./src/templates/blog-post.js`),
+    // values in the context object are passed in as variables to page queries
+    context: {
+      title: node.title, // "Using a Theme"
+    },
+  })
+})
+```
+
+The docs have more information about [creating pages programmatically](/docs/programmatically-create-pages-from-data/).
