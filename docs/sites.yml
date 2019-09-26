@@ -7365,3 +7365,14 @@
   built_by: The Delta Studio
   built_by_url: https://www.thedelta.io
   featured: false
+- title: Front End Day Event Website
+  main_url: https://frontend-day.com/
+  url: https://frontend-day.com/
+  description: >
+    Performant landing page for a front end workshops recurring event / conference.
+  categories:
+    - Event
+    - Conference
+    - Web Development
+    - Technology
+  featured: false
