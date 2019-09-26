@@ -7329,3 +7329,13 @@
   built_by: The Delta Studio
   built_by_url: https://www.thedelta.io
   featured: false
+- title: VIA Data
+  main_url: https://viadata.io
+  url: https://viadata.io
+  description: >
+    The future of data management
+  categories:
+    - Data
+  built_by: The Delta Studio
+  built_by_url: https://www.thedelta.io
+  featured: false
