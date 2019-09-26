@@ -3919,7 +3919,7 @@
     - Portfolio
     - Styling:SCSS
   features:
-    - Typecsript for type-safe code
+    - Typescript for type-safe code
     - Source content from Wordpress CMS
     - Auto generated Pagination for your Wordpress Posts
     - Auto generated Navigation for next and previous post at the end Post
