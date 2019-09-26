@@ -7378,3 +7378,17 @@
   built_by: Pagepro
   built_by_url: https://pagepro.co
   featured: false
+- title: Mutual
+  main_url: https://www.madebymutual.com
+  url: https://www.madebymutual.com
+  description: >
+    Mutual is a web design and development agency. Our new website is powered by Gatsby and Craft CMS.
+  categories:
+    - Blog
+    - Portfolio
+    - Agency
+    - Design
+    - Web Development
+  built_by: Mutual
+  built_by_url: https://twitter.com/madebymutual
+  featured: false
