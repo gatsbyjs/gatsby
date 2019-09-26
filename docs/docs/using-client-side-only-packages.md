@@ -87,11 +87,13 @@ While this solution is inferior to `loadable-components`, that works both on ser
 Remember that the following code could break if executed without the `isSSR` guard.
 
 ```jsx
+import React from "react"
+
+const ClientSideOnlyLazy = React.lazy(() =>
+  import("../components/ClientSideOnly")
+)
 const MyPage = () => {
   const isSSR = typeof window === "undefined"
-  const ClientSideOnlyLazy = React.lazy(() =>
-    import("../components/ClientSideOnly")
-  )
 
   return (
     <>
