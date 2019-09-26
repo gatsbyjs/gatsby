@@ -10,7 +10,6 @@ Sometimes it can be helpful to know exactly what your app's browser url is at an
 You can provide a location object instead of strings, helpful in a number of situations.
 
 * Providing state to linked components
-* 
 
 ## Example
 
