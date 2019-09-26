@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
   "dependencies": {
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "bluebird": "^3.5.5",
     "fs-exists-cached": "^1.0.0",
     "gatsby-page-utils": "^0.0.21",
@@ -33,8 +33,8 @@
     "micromatch": "^3.1.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/core": "^7.6.0",
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
     "babel-preset-gatsby-package": "^0.2.5",
     "cross-env": "^5.2.1"
   },
