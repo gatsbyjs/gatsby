@@ -18,11 +18,11 @@
     "@mdx-js/react": "^1.0.0"
   },
   "dependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/generator": "^7.6.0",
+    "@babel/core": "^7.6.2",
+    "@babel/generator": "^7.6.2",
     "@babel/helper-plugin-utils": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/preset-env": "^7.6.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
     "@babel/types": "^7.6.1",
     "camelcase-css": "^2.0.1",
