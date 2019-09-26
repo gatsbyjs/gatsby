@@ -131,7 +131,7 @@ One of the big mental shifts you make when starting to build with components (if
 
 While a seemingly simple change, this has profound implications for how you think about building websites.
 
-Take the example of creating a custom button. In the past, you would create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
+Take the example of creating a custom button. In the past, you would create a CSS class (perhaps `.primary-button`) with your custom styles and then use it whenever you want to apply those styles. For example:
 
 ```html
 <button class="primary-button">Click me</button>
