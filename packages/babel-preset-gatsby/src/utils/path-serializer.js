@@ -1,14 +1,14 @@
-const path = require(`path`)
 const slash = require(`slash`)
-const localPackageRoot = path.resolve(__dirname, `../..`)
-const monoRepoRoot = path.resolve(localPackageRoot, `../..`)
 
-const cleanNodeModules = dir =>
-  slash(
-    dir
-      .replace(localPackageRoot, `<PROJECT_ROOT>`)
-      .replace(monoRepoRoot, `<PROJECT_ROOT>`)
-  )
+const cleanNodeModules = dir => {
+  const x = dir.split(`node_modules/`)
+
+  if (x.length <= 1) {
+    return dir
+  }
+
+  return slash(`<PROJECT_ROOT>/node_modules/${x[1]}`)
+}
 
 export const test = val =>
   typeof val === `string` && val !== cleanNodeModules(val)
