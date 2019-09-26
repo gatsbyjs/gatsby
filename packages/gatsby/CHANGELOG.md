@@ -3,6 +3,105 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.21...gatsby@2.15.22) (2019-09-24)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.14 ([#17817](https://github.com/gatsbyjs/gatsby/issues/17817)) ([9e9dc3b](https://github.com/gatsbyjs/gatsby/commit/9e9dc3b))
+
+## [2.15.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.20...gatsby@2.15.21) (2019-09-23)
+
+### Bug Fixes
+
+- update dependency is-wsl to ^2.1.1 ([#17815](https://github.com/gatsbyjs/gatsby/issues/17815)) ([1287648](https://github.com/gatsbyjs/gatsby/commit/1287648))
+
+## [2.15.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.19...gatsby@2.15.20) (2019-09-20)
+
+### Bug Fixes
+
+- **gatsby:** add timeout so fetching API info doesn't fail on very slow connections ([#17735](https://github.com/gatsbyjs/gatsby/issues/17735)) ([e85278c](https://github.com/gatsbyjs/gatsby/commit/e85278c))
+- update dependency eslint-plugin-graphql to ^3.1.0 ([#17775](https://github.com/gatsbyjs/gatsby/issues/17775)) ([5f4db21](https://github.com/gatsbyjs/gatsby/commit/5f4db21))
+- update dependency socket.io to ^2.3.0 ([#17760](https://github.com/gatsbyjs/gatsby/issues/17760)) ([1ef5053](https://github.com/gatsbyjs/gatsby/commit/1ef5053))
+
+## [2.15.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.18...gatsby@2.15.19) (2019-09-20)
+
+### Bug Fixes
+
+- **gatsby:** support `export { X as default }` syntax when checking if page template files have default export ([#17752](https://github.com/gatsbyjs/gatsby/issues/17752)) ([b785583](https://github.com/gatsbyjs/gatsby/commit/b785583))
+
+## [2.15.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.17...gatsby@2.15.18) (2019-09-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.16...gatsby@2.15.17) (2019-09-18)
+
+### Bug Fixes
+
+- update dependency webpack-dev-server to ^3.8.1 ([#17669](https://github.com/gatsbyjs/gatsby/issues/17669)) ([97f328c](https://github.com/gatsbyjs/gatsby/commit/97f328c))
+
+## [2.15.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.15...gatsby@2.15.16) (2019-09-16)
+
+### Bug Fixes
+
+- update dependency @babel/parser to ^7.6.0 ([#17620](https://github.com/gatsbyjs/gatsby/issues/17620)) ([2d942ed](https://github.com/gatsbyjs/gatsby/commit/2d942ed))
+
+## [2.15.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.14...gatsby@2.15.15) (2019-09-13)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.13 ([#17580](https://github.com/gatsbyjs/gatsby/issues/17580)) ([d43d2be](https://github.com/gatsbyjs/gatsby/commit/d43d2be))
+- update minor updates in packages except react, babel and eslint ([#17601](https://github.com/gatsbyjs/gatsby/issues/17601)) ([588cd8f](https://github.com/gatsbyjs/gatsby/commit/588cd8f))
+
+## [2.15.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.13...gatsby@2.15.14) (2019-09-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.12...gatsby@2.15.13) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix node internal validation ([#17511](https://github.com/gatsbyjs/gatsby/issues/17511)) ([97a720d](https://github.com/gatsbyjs/gatsby/commit/97a720d))
+
+## [2.15.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.11...gatsby@2.15.12) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** move default-site-plugin lower than plugin page-creation ([#17409](https://github.com/gatsbyjs/gatsby/issues/17409)) ([4af8a59](https://github.com/gatsbyjs/gatsby/commit/4af8a59))
+
+## [2.15.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.10...gatsby@2.15.11) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** Allow overriding options for default instance of gatsby-plugin-page-creator ([#17420](https://github.com/gatsbyjs/gatsby/issues/17420)) ([9bdeda4](https://github.com/gatsbyjs/gatsby/commit/9bdeda4))
+
+## [2.15.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.9...gatsby@2.15.10) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix mapping stack trace to source file after dependency upgrade ([#17445](https://github.com/gatsbyjs/gatsby/issues/17445)) ([f38d8c7](https://github.com/gatsbyjs/gatsby/commit/f38d8c7))
+- **gatsby:** Handle Windows drive letter casing correctly ([#17492](https://github.com/gatsbyjs/gatsby/issues/17492)) ([beddfb8](https://github.com/gatsbyjs/gatsby/commit/beddfb8))
+- **gatsby:** Use concrete type resolver on interface fields ([#17284](https://github.com/gatsbyjs/gatsby/issues/17284)) ([fd72133](https://github.com/gatsbyjs/gatsby/commit/fd72133))
+
+## [2.15.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.8...gatsby@2.15.9) (2019-09-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.7...gatsby@2.15.8) (2019-09-05)
+
+### Bug Fixes
+
+- **gatsby:** order matchpaths paths by specificity ([#17411](https://github.com/gatsbyjs/gatsby/issues/17411)) ([2968413](https://github.com/gatsbyjs/gatsby/commit/2968413))
+
+## [2.15.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.6...gatsby@2.15.7) (2019-09-04)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.5...gatsby@2.15.6) (2019-09-04)
+
+### Features
+
+- **gatsby:** enable page-creator on all themes ([#16698](https://github.com/gatsbyjs/gatsby/issues/16698)) ([7398da4](https://github.com/gatsbyjs/gatsby/commit/7398da4))
+
 ## [2.15.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.4...gatsby@2.15.5) (2019-09-03)
 
 ### Bug Fixes

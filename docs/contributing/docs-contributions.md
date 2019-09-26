@@ -4,19 +4,6 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
 
-On this page:
-
-- [Top priorities](#top-priorities)
-- [Options for contributing to the Gatsby docs](#options-for-contributing-to-the-gatsby-docs)
-- [Fixing image and link paths](#fixing-image-and-link-paths)
-- [Headings](#headings)
-- [Modifying markdown files](#modifying-markdown-files)
-  - [Converting a document from a stub](#converting-a-document-from-a-stub)
-- [Docs site setup instructions](#docs-site-setup-instructions)
-- [Docs renaming instructions](#docs-renaming-instructions)
-- [Claim your swag](#claim-your-swag)
-- [Want more?](#want-more)
-
 > _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-and-website-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
 
 ## Top priorities
@@ -91,9 +78,9 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
 
 ## Docs site setup instructions
 
-After going through the development setup instructions above, there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/). which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) directory.
+After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
 
-- Clone the Gatsby repo as described above.
+- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
 - For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
 - Change directories into the docs site folder: `cd www`
 - Install dependencies with Yarn: `yarn install`
@@ -101,7 +88,7 @@ After going through the development setup instructions above, there are a few ad
 - Start a build of `www` with `gatsby develop`.
 - Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
 - View the changes in your browser at `http://localhost:8000`.
-- Commit your changes and submit a pull request!
+- Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request/)!
 
 ## Docs renaming instructions
 

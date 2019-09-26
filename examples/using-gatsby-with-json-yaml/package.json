@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-example-using-yaml-json",
+  "private": true,
+  "description": "Gatsby example to use YAML as a source and add JSON and YAML at build time",
+  "version": "0.1.0",
+  "author": "jonniebigodes",
+  "dependencies": {
+    "gatsby": "^2.14.0",
+    "js-yaml": "^3.13.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  }
+}

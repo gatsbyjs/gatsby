@@ -2,7 +2,7 @@
 
 ## Usage
 
-```sh
+```shell
 npm install gatsby-page-utils
 ```
 

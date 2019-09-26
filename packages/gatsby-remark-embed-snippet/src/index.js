@@ -1,5 +1,6 @@
 "use strict"
 
+const path = require(`path`)
 const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
@@ -31,13 +32,13 @@ const getLanguage = file => {
     : extension.toLowerCase()
 }
 
-module.exports = ({ markdownAST }, { directory } = {}) => {
+module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
   if (!directory) {
-    throw Error(`Required option "directory" not specified`)
-  } else if (!fs.existsSync(directory)) {
+    directory = path.dirname(markdownNode.fileAbsolutePath)
+  }
+
+  if (!fs.existsSync(directory)) {
     throw Error(`Invalid directory specified "${directory}"`)
-  } else if (!directory.endsWith(`/`)) {
-    directory += `/`
   }
 
   visit(markdownAST, `inlineCode`, node => {
@@ -45,13 +46,13 @@ module.exports = ({ markdownAST }, { directory } = {}) => {
 
     if (value.startsWith(`embed:`)) {
       const file = value.substr(6)
-      const path = normalizePath(`${directory}${file}`)
+      const snippetPath = normalizePath(path.join(directory, file))
 
-      if (!fs.existsSync(path)) {
-        throw Error(`Invalid snippet specified; no such file "${path}"`)
+      if (!fs.existsSync(snippetPath)) {
+        throw Error(`Invalid snippet specified; no such file "${snippetPath}"`)
       }
 
-      const code = fs.readFileSync(path, `utf8`).trim()
+      const code = fs.readFileSync(snippetPath, `utf8`).trim()
 
       // PrismJS's theme styles are targeting pre[class*="language-"]
       // to apply its styles. We do the same here so that users
