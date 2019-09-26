@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.26...gatsby@2.15.28) (2019-09-26)
+
+### Bug Fixes
+
+- **gatsby:** console output: npm run build -> gatsby build ([#17896](https://github.com/gatsbyjs/gatsby/issues/17896)) ([fbbf406](https://github.com/gatsbyjs/gatsby/commit/fbbf406))
+
 ## [2.15.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.26...gatsby@2.15.27) (2019-09-26)
 
 ### Bug Fixes
