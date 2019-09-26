@@ -61,7 +61,7 @@ Lots more announcements to share in the coming weeks and months 🚀
 
 ## Growing our team
 
-Gatsby is a distributed team with members around the world. There’s now 35 Gatsby Inc team members, and with this new investment, we’ll be hiring more people to work on open source, write docs and tutorials, build cloud products, and create next-generation site design & building tools.
+Gatsby is a distributed team with members around the world. There’s now 35 Gatsby Inkteam members, and with this new investment, we’ll be hiring more people to work on open source, write docs and tutorials, build cloud products, and create next-generation site design & building tools.
 
 We’ll be hiring for dozens of remote positions in the coming months. Check back at [https://www.gatsbyjs.com/careers/](https://www.gatsbyjs.com/careers/) for openings (and feel free to propose your own job idea by applying to the “dream job” position).
 
