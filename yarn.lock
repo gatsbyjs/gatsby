@@ -10173,10 +10173,10 @@ ink-spinner@^3.0.1:
     cli-spinners "^1.0.0"
     prop-types "^15.5.10"
 
-ink@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/ink/-/ink-2.3.0.tgz#222136be17bb72fc742e19090483e7e0e7dc3690"
-  integrity sha512-931rgXHAS3hM++8ygWPOBeHOFwTzHh3pDAVZtiBVOUH6tVvJijym43ODUy22ySo2NwYUFeR/Zj3xuWzBEKMiHw==
+ink@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/ink/-/ink-2.4.0.tgz#991f8264d90b81b94fe963c96fccdf26afb6b436"
+  integrity sha512-dEEqRo2AgvJZy2o+ltQkHtS4BwPHPHfcNlt74R8gljH/KX265N6aIAAPhYpO3VJjnkoO4/y7MYAYeDDsLDlrNA==
   dependencies:
     "@types/react" "^16.8.6"
     arrify "^1.0.1"
@@ -10188,8 +10188,8 @@ ink@^2.3.0:
     lodash.throttle "^4.1.1"
     log-update "^3.0.0"
     prop-types "^15.6.2"
-    react-reconciler "^0.20.0"
-    scheduler "^0.13.2"
+    react-reconciler "^0.21.0"
+    scheduler "^0.15.0"
     signal-exit "^3.0.2"
     slice-ansi "^1.0.0"
     string-length "^2.0.0"
@@ -15846,14 +15846,15 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-reconciler@^0.20.0:
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.20.2.tgz#f72fe0329d579371f253719080e7d090262330a9"
+react-reconciler@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.21.0.tgz#8180342ab3c8295f860025a86d0a03742a294ea7"
+  integrity sha512-h4Rl3L3O6G9V4Ff+F+tCXX8ElDVn0Psk/odT+NPWeA55Yk5G7+kHT8D+Q3yE+51C72LbrYcX6OfLmCZ/7Nx9cw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.4"
+    scheduler "^0.15.0"
 
 react-test-renderer@^16.9.0:
   version "16.9.0"
@@ -16992,13 +16993,6 @@ saxes@^3.1.5, saxes@^3.1.9:
   integrity sha512-Ydydq3zC+WYDJK1+gRxRapLIED9PWeSuuS41wqyoRmzvhhh9nc+QQrVMKJYzJFULazeGhzSV0QleN2wD3boh2g==
   dependencies:
     xmlchars "^2.1.1"
-
-scheduler@^0.13.2, scheduler@^0.13.4:
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 scheduler@^0.15.0:
   version "0.15.0"
