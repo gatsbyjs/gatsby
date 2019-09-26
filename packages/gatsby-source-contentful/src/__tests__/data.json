@@ -3007,8 +3007,7 @@
           "type": "Symbol",
           "localized": false,
           "required": true,
-          "validations": [
-          ],
+          "validations": [],
           "disabled": false,
           "omitted": false
         },
@@ -3018,8 +3017,7 @@
           "type": "Symbol",
           "localized": false,
           "required": false,
-          "validations": [
-          ],
+          "validations": [],
           "disabled": false,
           "omitted": false
         },
@@ -3031,9 +3029,7 @@
           "required": false,
           "validations": [
             {
-              "linkContentType": [
-                "author"
-              ]
+              "linkContentType": ["author"]
             }
           ],
           "disabled": false,
@@ -3099,8 +3095,7 @@
           "type": "Symbol",
           "localized": false,
           "required": true,
-          "validations": [
-          ],
+          "validations": [],
           "disabled": false,
           "omitted": false
         },
@@ -3112,9 +3107,7 @@
           "required": false,
           "validations": [
             {
-              "linkContentType": [
-                "blogPost"
-              ]
+              "linkContentType": ["blogPost"]
             }
           ],
           "disabled": false,
@@ -3148,5 +3141,9 @@
         "version": 0
       }
     }
-  ]
+  ],
+  "space": {
+    "sys": { "type": "Space", "id": "x2t9il8x6p" },
+    "name": "space-name"
+  }
 }
