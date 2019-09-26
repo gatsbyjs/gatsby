@@ -51,11 +51,16 @@ const {
   createPluginConfig,
 } = require(`../plugin-options`)
 
+const proxyOption = {
+  host: `localhost`,
+  port: 9001,
+}
 const options = {
   spaceId: `rocybtov1ozk`,
   accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
   host: `host`,
   environment: `env`,
+  proxy: proxyOption,
 }
 
 const pluginConfig = createPluginConfig(options)
@@ -95,6 +100,7 @@ it(`calls contentful.createClient with expected params`, async () => {
       environment: `env`,
       host: `host`,
       space: `rocybtov1ozk`,
+      proxy: proxyOption,
     })
   )
 })
