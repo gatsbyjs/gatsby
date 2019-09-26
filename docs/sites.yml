@@ -7329,6 +7329,18 @@
   built_by: The Delta Studio
   built_by_url: https://www.thedelta.io
   featured: false
+- title: GatsbyFinds
+  main_url: https://gatsbyfinds.netlify.com
+  url: https://gatsbyfinds.netlify.com
+  source_url: https://github.com/bvlktech/GatsbyFinds
+  description: >
+    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Bvlktech
+  built_by_url: https://twitter.com/bvlktech
+  featured: false
 - title: AFEX Commodities Exchange
   main_url: https://afexnigeria.com
   url: https://afexnigeria.com
