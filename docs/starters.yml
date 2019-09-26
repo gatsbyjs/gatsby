@@ -4009,3 +4009,17 @@
     - Discus commenting added to each blog post
     - Perfect score on Lighthouse for SEO, Accessibility and Performance
     - ..and more
+- url: https://gatsby-starter-monolith.netlify.com
+  repo: https://github.com/danspratling/gatsby-starter-monolith
+  description: A Gatsby Starter designed to work with monolith. Monolith is a workspace starter which provides a good base to begin a medium-large (multisite) project
+  tags:
+    - Language:TypeScript
+    - Storybook
+    - Styling:CSS-in-JS
+  features:
+    - A minimal site with the option to add loads of functionality
+    - Based on the Monolith repo to provide an easy starting point for large projects https://github.com/danspratling/monolith
+    - Uses Theme-UI to handle theming and styling
+    - Uses Typescript to encourage good coding
+    - Uses Storybook to encourage visual testing
+    - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
