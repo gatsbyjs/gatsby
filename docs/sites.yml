@@ -7329,6 +7329,20 @@
   built_by: The Delta Studio
   built_by_url: https://www.thedelta.io
   featured: false
+- title: AFEX Commodities Exchange
+  main_url: https://afexnigeria.com
+  url: https://afexnigeria.com
+  description: >
+    AFEX Nigeria strives to transform Nigerian agriculture by creating more bargaining power to smallholder farmers, access to information, and secure storage.
+  categories:
+    - Blog
+    - Business
+    - Finance
+    - Food
+    - WordPress
+  built_by: Mayowa Falade
+  built_by_url: http://mayowafalade.com
+  featured: false
 - title: VIA Data
   main_url: https://viadata.io
   url: https://viadata.io
