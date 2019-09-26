@@ -1,6 +1,7 @@
 ---
 title: "Location Data from Props"
 ---
+
 ## What is location data
 
 Sometimes it can be helpful to know exactly what your app's browser url is at any given stage. Using @reach/router, location data represents where the app is currently, where you'd like it to go, and other helpful information. The location object is never mutated but `reach@router` this makes it helpful to determine when navigation happens.
@@ -43,13 +44,14 @@ Then from the recieving component we can conditionally render it based on the lo
 
 ```js:title=some-component.js
 const SomeComponent = ({ location }) => {
-  const { state = {} } = location;
-  const { modal } = state;
-    return (
-      modal ? <div className="modal">I'm a modal of Some Component!</div>
-      : <div>Welcome to the Some Component page!</div>
-  );
-};
+  const { state = {} } = location
+  const { modal } = state
+  return modal ? (
+    <div className="modal">I'm a modal of Some Component!</div>
+  ) : (
+    <div>Welcome to the Some Component page!</div>
+  )
+}
 ```
 
 ## Gatsby advantages
@@ -62,5 +64,3 @@ The great thing is you can expect the location prop to be available to you on ev
 - [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
 - [Gatsby Breadcrumb Plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
 - [Create Modal w/ Navigation State using React Router](https://codedaily.io/tutorials/47/Create-a-Modal-Route-with-Link-and-Nav-State-in-React-Router)
-
-
