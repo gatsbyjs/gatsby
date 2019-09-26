@@ -52,7 +52,7 @@ With the latest funding, we’re now investing more than \$3 million every year 
 
 ## Gatsby in the cloud
 
-We’re also investing heavily in building cloud services which complement our open source product. Modern software development work relies heavily on services from cloud vendors. Our cloud services help people quickly setup & run sites, and enable website teams including both technical and nontechnical people collaborate easily together. The services will be free for personal sites and must-haves for organizations.
+We’re also investing heavily in building cloud services which complement our open source product. Modern software development work relies heavily on services from cloud vendors. Our cloud services help people quickly setup & run sites, and enable website teams, including both technical and nontechnical people, to collaborate easily together. The services will be free for personal sites and must-haves for organizations.
 
 We’re in open beta for our initial CMS Preview service—please check it out at [https://www.gatsbyjs.com/preview](https://www.gatsbyjs.com/preview)
 
