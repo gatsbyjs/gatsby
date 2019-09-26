@@ -50,7 +50,7 @@ Una vez hayas seguido los pasos para la instalación, asegurate que todo esté i
 
 La respuesta de ambos comandos debe ser el número de versión. Las versiones que veas puede que no sean las mismas que te mostramos a continuación! Si despues de ejecutar esos comandos no te muestran las versiones, vuelve y asegúrate que hayas instalado Node.js.
 
-![Verifica las versiones de Node.js y npm](01-node-npm-versions.png)
+![Verifica las versiones de Node.js y npm](../../../../docs/tutorial/part-zero/01-node-npm-versions.png)
 
 ## Instala Git
 
@@ -70,7 +70,7 @@ Gatsby CLI está disponible via npm y debe ser instalado de manera global en tu 
 
 Para ver los comandos disponibles, ejecuta `gatsby --help`.
 
-![Echa un vistazo a los comandos disponibles con Gatsby](05-gatsby-help.png)
+![Echa un vistazo a los comandos disponibles con Gatsby](../../../../docs/tutorial/part-zero/05-gatsby-help.png)
 
 > 💡 Si no puedes ejecutar la Gatsby CLI por un problema de permisos, quizás te interese mirar [la documentación de npm para solucionar el problema de los permisos (inglés)](https://docs.npmjs.com/getting-started/fixing-npm-permissions), o [ésta guía (inglés)](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
@@ -80,8 +80,8 @@ Ahora ya estás listo para usar la línea de comandos de Gatsby (Gatsby CLI) par
 
 1. Abre la terminal.
 2. Ejecuta `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Nota: Dependiendo de tu velocidad de descarga, el tiempo que ésto tome puede variar. Por razones de brevedad, el siguiente gif se detuvo durante parte de la instalación_)
-3.  Ejecuta `cd hello-world`.
-4.  Ejecuta `gatsby develop`.
+3. Ejecuta `cd hello-world`.
+4. Ejecuta `gatsby develop`.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./03-create-site.mp4"></source>
@@ -114,7 +114,7 @@ gatsby develop
 
 Abre una nueva pestaña en tu navegador y ve a [**http://localhost:8000**](http://localhost:8000/).
 
-![Página principal](04-home-page.png)
+![Página principal](../../../../docs/tutorial/part-zero/04-home-page.png)
 
 ¡Felicidades! ¡Esto es el inicio de tu primer sitio hecho con Gatsby! 🎉
 

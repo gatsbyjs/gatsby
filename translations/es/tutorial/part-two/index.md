@@ -30,7 +30,7 @@ Una de las maneras más directas de agregar estilos globales a un sitio web es u
 
 #### ✋ Crea un nuevo sitio web con Gatsby
 
-Seria mejor (especialmente si eres nuevo con la linea de comandos) si cerraras el terminal que usaste para la [parte uno] (/tutorial/part-one/) e inicias una nueva sesión en otra terminal para la parte dos.
+Seria mejor (especialmente si eres nuevo con la linea de comandos) si cerraras el terminal que usaste para la [parte uno](/tutorial/part-one/) e inicias una nueva sesión en otra terminal para la parte dos.
 
 Abre una nueva terminal, crea un nuevo sitio web "hola mundo" con Gatsby e inicia el servidor de desarrollo:
 
@@ -124,7 +124,7 @@ gatsby develop
 
 Si echas un vistazo a tu proyecto en el navegador, deberías ver el fondo de atrás de color lavanda:
 
-![global-css](global-css.png)
+![global-css](../../../../docs/tutorial/part-two/global-css.png)
 
 > Tip: Esta parte del tutorial se ha enfocado en la manera más rápida y directa para iniciar a estilizar un sitio web Gatsby - importando directamente archivos CSS normales, usando `gatsby-browser.js`. En la mayoría de los casos, la mejor manera de agregar estilos globales es con un componente de diseño compartido. [Revisa la documentación](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files) para saber más acerca de esta aproximación.
 
@@ -191,7 +191,7 @@ export default () => (
 
 Ahora, si visitas `http://localhost:8000/about-css-modules/`, tu página debería verse algo parecido a esto:
 
-![css-modules-basic](css-modules-basic.png)
+![css-modules-basic](../../../../docs/tutorial/part-two/css-modules-basic.png)
 
 #### ✋ Dale estilo a un componente utilizando Módulos CSS
 
@@ -249,7 +249,7 @@ console.log(styles)
 
 El código `console.log(styles)` logeara/registrará/imprimirá en consola lo importado para que puedas apreciar el resultado de procesar el archivo `./about-css-modules.module.css`. Si abres la consola de desarrollador (usando por ejemplo las herramientas de desarrollador de Firefox o Chrome) en tu navegador, veras:
 
-![css-modules-console](css-modules-console.png)
+![css-modules-console](../../../../docs/tutorial/part-two/css-modules-console.png)
 
 Si comparas eso contra tu archivo CSS, observaras que cada clase es ahora una llave en el objeto importado apuntando a una cadena larga, por ejemplo `avatar` apunta a `src-pages----about-css-modules-module---avatar---2lRF7`. Estos son los nombres de las clases que Módulos CSS genera. Está garantizado que serán únicas en todo tu sitio web. Y a razón de que tienes que importarlas para usar las clases, nunca habrá ninguna duda de donde algún CSS está siendo usado.
 
@@ -300,7 +300,7 @@ export default () => (
 
 El resultado final de la pagina web debería verse así:
 
-![css-modules-userlist](css-modules-userlist.png)
+![css-modules-userlist](../../../../docs/tutorial/part-two/css-modules-userlist.png)
 
 ### CSS-in-JS
 

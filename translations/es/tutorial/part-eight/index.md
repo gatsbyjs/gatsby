@@ -54,11 +54,11 @@ Ahora ejecutarás tus primeras pruebas con Lighthouse.
 
 2.  Haz clic en la pestaña "Audits" donde mirarás una pantalla como esta:
 
-![Lighthouse audit start](./lighthouse-audit.png)
+![Lighthouse audit start](../../../../docs/tutorial/part-eight/lighthouse-audit.png)
 
 3.  Da clic en "Perform an audit..." (todos los tipos de auditoría disponibles deberán estar seleccionadas por defecto). Después da clic en "Run audit" (tomará un minuto aproximadamente para hacer la auditoría). Una vez que la auditoría termine, verás unos resultados como estos:
 
-![Lighthouse audit results](./lighthouse-audit-results.png)
+![Lighthouse audit results](../../../../docs/tutorial/part-eight/lighthouse-audit-results.png)
 
 Como puedes observar, el desempeño de Gatsby es excelente sin configuraciones previas, pero aún falta hacer algunas configuraciones para que el sitio web sea una PWA como accesibilidad, mejores practicas y SEO que mejorarán tus calificaciones (en el proceso haz tu sitio web mucho más amigable para los visitantes y motores de búsqueda).
 
@@ -71,7 +71,6 @@ Pero primero, ¿que _son_ exactamente las PWA?
 Son sitios web normales que toman ventaja de la funcionalidad de los navegadores modernos para mejorar la experiencia de uso con opciones y beneficios como si se tratara de una aplicación. Mira el [enfoque de Google](https://developers.google.com/web/progressive-web-apps/) de lo que debe ser una experiencia PWA.
 
 Incluir un manifiesto a la aplicación web es uno de los tres generalmente aceptados [requerimientos básicos para una PWA](https://alistapart.com/article/yes-that-web-project-should-be-a-pwa#section1).
-
 
 Citando a [Google](https://developers.google.com/web/fundamentals/web-app-manifest/):
 
@@ -119,7 +118,6 @@ Es todo lo que necesitas para empezar a agregar un manifiesto a tu sitio web Gat
 Otro requerimiento para que un sitio web califique como PWA es el uso de un [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). Un "service worker" se ejecuta en segundo plano, decidiendo si ofrece recursos en línea o almacenados en la cache del navegador dependiendo del estado de conexión, permitiendo una experiencia agradable sin ella.
 
 El [plugin Gatsby's offline](/packages/gatsby-plugin-offline/) hace que el sitio web Gatsby funcione sin conexión y sea mas resistente a malas condiciones de red, creando un "service worker" para tu sitio web.
-
 
 ### ✋ Usando `gatsby-plugin-offline`
 
