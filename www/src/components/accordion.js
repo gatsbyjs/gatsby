@@ -125,9 +125,6 @@ export const Summary = ({ children, ...props }) => {
         paddingTop: space[3],
         paddingBottom: space[3],
         paddingLeft: space[6],
-        display: `flex`,
-        alignItems: `center`,
-        justifyContent: `space-between`,
         listStyle: `none`,
         transition: `background ${transition.speed.default} ${transition.curve.default}`,
         "::-webkit-details-marker": {
@@ -140,9 +137,6 @@ export const Summary = ({ children, ...props }) => {
             background: colors.link.color,
             transform: `scale(1)`,
           },
-        },
-        "& > *": {
-          margin: 0,
         },
         "& .anchor": {
           marginLeft: `calc(-20px - ${space[5]})`,
@@ -169,17 +163,29 @@ export const Summary = ({ children, ...props }) => {
       }}
       {...props}
     >
-      {children}
-      <ChevronSvg
-        cssProps={{
-          marginRight: space[2],
-          transition: `transform ${transition.speed.default} ${transition.curve.default}`,
-          transform: `rotate(270deg)`,
-          "details[open] > summary > &": {
-            transform: `rotate(180deg)`,
+      <div
+        css={{
+          display: `flex`,
+          alignItems: `center`,
+          justifyContent: `space-between`,
+          "& > *": {
+            margin: 0,
           },
         }}
-      />
+      >
+        {children}
+        <ChevronSvg
+          cssProps={{
+            flex: `0 0 auto`,
+            marginRight: space[2],
+            transition: `transform ${transition.speed.default} ${transition.curve.default}`,
+            transform: `rotate(270deg)`,
+            "details[open] &": {
+              transform: `rotate(180deg)`,
+            },
+          }}
+        />
+      </div>
     </summary>
   )
 }
