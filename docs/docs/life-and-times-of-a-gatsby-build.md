@@ -8,7 +8,7 @@ import LayerModel from "../../www/src/components/layer-model"
 
 _This is a high-level overview about the steps in the Gatsby build process. For more detailed information about specific steps you can find information in the [Gatsby Internals](/docs/gatsby-internals) section of the docs._
 
-Gatsby has two modes:
+Gatsby has two modes for compiling a site:
 
 1. Develop - run with the `gatsby develop` command
 2. Build - run with `gatsby build`
@@ -17,17 +17,21 @@ You can start Gatsby in either mode with its respective command: `gatsby develop
 
 ## Build time vs runtime
 
-A common confusion with the generation of static assets is the difference between [build time](/docs/glossary#build) and [runtime](/docs/glossary#runtime). Processes that happen in a web browser that you click through and interact with can be referred to as a browser runtime. Code can interact with the browser and take advantage of APIs it offers. Build time refers to the process of rendering the site outside of a browser and putting it into files that can be delivered to a browser later, so browser tools like `window` aren't available.
+A common confusion with the generation of [static](/docs/glossary#static) assets is the difference between [build time](/docs/glossary#build) and [runtime](/docs/glossary#runtime).
 
-The `gatsby develop` command doesn't perform some of the build steps that the `gatsby build` command does, but starts up a development server that you can use to preview your site in the browser -- like a runtime. When you run `gatsby build` (build time) there won't be a browser available, so your site needs to be capable of protecting calls to browser based APIs.
+Processes that happen in a web browser that you click through and interact with can be referred to as a _browser runtime_. JavaScript code can interact with the browser and take advantage of APIs it offers, such as `window.location` or injecting markup dynamically into the [DOM](/docs/glossary#dom).
+
+_Build time_, in contrast, refers to the process of using a server process to compile the site into files that can be delivered to a web browser later, so DOM APIs like `window` aren't available at that time.
+
+The `gatsby develop` command doesn't perform some of the production build steps that the `gatsby build` command does. Instead, it starts up a development server that you can use to preview your site in the browser -- like a runtime. When you run `gatsby build` (build time) there won't be a browser available, so your site needs to be capable of protecting calls to browser based APIs.
 
 To gain a greater understanding of what happens when you run either command, it can be helpful to look at the information that Gatsby is reporting back and break it down.
 
-### Understanding gatsby develop (runtime)
+### Understanding `gatsby develop` (runtime)
 
-Using `gatsby develop` runs a server in the background enabling useful features like hot reloading and Gatsby’s data explorer.
+Using `gatsby develop` runs a server in the background, enabling useful features like live reloading and Gatsby’s [data explorer](/docs/running-queries-with-graphiql/).
 
-Gatsby develop is optimized for rapid feedback and extra debugging information. The output of running `gatsby develop` in a fresh install of the Gatsby default starter looks like this:
+`gatsby develop` is optimized for rapid feedback and extra debugging information. The output of running `gatsby develop` in a fresh install of the Gatsby default starter looks like this:
 
 ```shell
 success open and validate gatsby-configs - 0.051 s
@@ -58,11 +62,11 @@ success run page queries - 0.033 s — 5/5 347.81 queries/second
 success start webpack server - 1.707 s — 1/1 6.06 pages/second
 ```
 
-You can maybe take guesses at what some of the steps are doing, but others require context of Gatsby internals to make sense of (don't worry, the rest of this guide will give more explanations).
+Some of the steps may be self-explanatory, but others require context of Gatsby internals to make complete sense of (don't worry, the rest of this guide will give more explanations).
 
-### Understanding gatsby build (build time)
+### Understanding `gatsby build` (build time)
 
-Gatsby build is made for when you’ve added the finishing touches to your site and everything looks great. `gatsby build` creates a version of your site with optimizations like packaging up your site’s config, data, and code, and creating all the HTML that eventually gets [rehydrated](/docs/glossary#hydration) into a React app.
+Gatsby's `build` command should be run when you’ve added the finishing touches to your site and everything looks great. `gatsby build` creates a version of your site with production-ready optimizations like packaging up your site’s config, data, and code, and creating all the static HTML pages that eventually get [rehydrated](/docs/glossary#hydration) into a React application.
 
 The output of running `gatsby build` in a fresh install of the Gatsby default starter looks like this:
 
@@ -104,11 +108,11 @@ info Done building in 16.143999152 sec
 
 So what's the difference?
 
-If you compare the outputs of the two commands (develop vs build), you can see that everything (with the exception of deleting html and css files) up until the line that says `info bootstrap finished` are the same. However, `gatsby build` runs some additional steps to prepare your site to go live after the bootstrap phase.
+If you compare the outputs of the two commands (`gatsby develop` vs `gatsby build`), you can see that everything (with the exception of deleting [HTML](/docs/glossary#html) and [CSS](/docs/glossary#css) files) up until the line that says `info bootstrap finished` are the same. However, `gatsby build` runs some additional steps to prepare your site to go live after the bootstrap phase.
 
 The following output shows the differences between the above two examples:
 
-```diff:title=develop-vs-build
+```diff
 success open and validate gatsby-configs - 0.051 s
 success load plugins - 0.915 s
 success onPreInit - 0.021 s
@@ -143,27 +147,27 @@ success run page queries - 0.033 s — 5/5 347.81 queries/second
 + info Done building in 16.143999152 sec
 ```
 
-_**Note**: the output of `gatsby develop` and `gatsby build` can vary based on plugins you've installed that can tap into the lifecycle and the [Gatsby reporter](/docs/node-api-helpers/#reporter). The above output is from running the default Gatsby starter._
+_**Note**: the output of `gatsby develop` and `gatsby build` can vary based on plugins you've installed that can tap into the build lifecycle and the [Gatsby reporter](/docs/node-api-helpers/#reporter). The above output is from running the default Gatsby starter._
 
 There is only one difference in the bootstrap phase where HTML and CSS is deleted to prevent problems with previous builds. In the build phase, the build command skips setting up a dev server and goes into compiling the assets.
 
-By omitting these later steps, `gatsby develop` can speed up your ability to make edits with features like [hot module replacement](/docs/glossary#hot-module-replacement). It also saves time with the more CPU intensive processes that aren't necessary to perform while in develoment.
+By omitting these later steps, `gatsby develop` can speed up your ability to make live edits without page reloads using features like [hot module replacement](/docs/glossary#hot-module-replacement). It also saves time with the more CPU intensive processes that aren't necessary to perform in rapid development.
 
-A [cache](/docs/glossary#cache) is also used that is invalidated on every change to a `gatsby-*.js` file (like `gatsby-node.js`, or `gatsby-config.js`) or a dependency.
+A [cache](/docs/glossary#cache) is also used to detect changes to `gatsby-*.js` files (like `gatsby-node.js`, or `gatsby-config.js`) or dependencies. It can be cleared manually with the `gatsby clean` command to work through issues caused by outdated references and a stale cache.
 
 ## What happens when you run `gatsby build`?
 
 To see the code where many of these processes are happening, refer to the code and comments in the [`build`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build.js) and [`bootstrap`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js) files of the repository.
 
-A Node process is what is powering things behind the scenes when you run the `gatsby build` command. The process of converting assets and pages into HTML that can be rendered in a browser by a [server-side](docs/glossary#server-side) language like Node.js is referred to as server-side rendering. Since Gatsby is building everything ahead of time, this creates your entire site with all of the data your pages need all at once. Then when the site is deployed, it doesn't need to be running on a server because everything has been gathered up and combined by Gatsby.
+A Node.js server process powers things behind the scenes when you run the `gatsby build` command. The process of converting assets and pages into HTML that can be rendered in a browser by a [server-side](docs/glossary#server-side) language like Node.js is referred to as server-side rendering, or SSR. Since Gatsby builds everything ahead of time, this creates an entire site with all of the data your pages need at once. When the site is deployed, it doesn't need to run with server-side processes because everything has been gathered up and compiled by Gatsby.
 
-**Note**: because Gatsby apps still run React in the browser, you can still fetch data from other sources at [runtime](/docs/glossary#runtime) like you would in a normal React app
+**Note**: because Gatsby sites run as full React applications in the browser, you can still [fetch data](/docs/client-data-fetching/) from other sources at [runtime](/docs/glossary#runtime) like you would in a typical React app.
 
-The following model demonstrates what is happening at different "layers" of Gatsby. Content and data are gathered up and made available for your static assets.
+The following model demonstrates what is happening in different "layers" of Gatsby as content and data are gathered up and made available for your static assets.
 
 <LayerModel initialLayer="Build" />
 
-Like the console output demonstrates in the section above, there are 2 main steps that take place when you run a build, the `bootstrap` phase, and the `build` phase (which can be seen finishing in the console output when you run develop or build).
+Like the console output demonstrates in the section above, there are 2 main steps that take place when you run a build: the `bootstrap` phase, and the `build` phase (which can be observed finishing in the console output when you run `gatsby develop` or `gatsby build`).
 
 ```shell
 info bootstrap finished - 3.674 s
@@ -171,27 +175,27 @@ info bootstrap finished - 3.674 s
 info Done building in 16.143999152 sec
 ```
 
-At a high-level, what happens during the whole bootstrap and build process is:
+At a high level, what happens during the whole bootstrap and build process is:
 
-1. nodes are sourced from whatever sources you defined with plugins as well as in your `gatsby-node`
-2. a schema is inferred from the nodes
-3. pages are created based off JavaScript in your site or in installed themes
-4. queries are extracted and run to provide data for all pages
-5. static files are created and bundled up
+1. `Node` objects are sourced from whatever sources you defined in `gatsby-config.js` with plugins as well as in your `gatsby-node.js` file
+2. A schema is inferred from the Node objects
+3. Pages are created based off JavaScript components in your site or in installed themes
+4. GraphQL queries are extracted and run to provide data for all pages
+5. Static files are created and bundled in the `public` directory
 
 For an introduction to what happens at each step throughout the process from the output above, refer to the sections below.
 
 ### Steps of the bootstrap phase
 
-The steps of the bootstrap phase are shared between develop and build (with only one exception in the `delete html and css files from previous builds` step), and are:
+The steps of the bootstrap phase are shared between develop and build (with only one exception in the `delete html and css files from previous builds` step). This includes:
 
 1. `open and validate gatsby-configs`
 
-The `gatsby-config` file for the site and any installed themes are opened, ensuring that a function or object is exported for each.
+The `gatsby-config.js` file for the site and any installed themes are opened, ensuring that a function or object is exported for each.
 
 2. `load plugins`
 
-Plugins installed and included in the config of your site and your site's themes are [loaded](/docs/how-plugins-apis-are-run/). Gatsby uses redux internally, and stores info like the version, name, and what APIs are used by each plugin.
+Plugins installed and included in the config of your site and your site's themes are [loaded](/docs/how-plugins-apis-are-run/). Gatsby uses Redux for state management internally and stores info like the version, name, and what APIs are used by each plugin.
 
 3. `onPreInit`
 
@@ -199,11 +203,11 @@ Runs the [`onPreInit` node API](/docs/node-apis/#onPreInit) if it has been imple
 
 4. `delete html and css files from previous builds`
 
-The only different step between develop and build, the HTML and CSS from previous builds is deleted to prevent problems with styles and pages that no longer exist sticking around.
+The only different step between develop and build, the HTML and CSS from previous builds is deleted to prevent problems with styles and pages that no longer exist.
 
 5. `initialize cache`
 
-Check if new dependencies have been installed in the `package.json`, if the versions of installed plugins have changed, or if the `gatsby-config.js` or the `gatsby-node.js` files have changed. Plugins can [interact with the cache](/docs/build-caching/).
+Check if new dependencies have been installed in the `package.json`; if the versions of installed plugins have changed; or if the `gatsby-config.js` or the `gatsby-node.js` files have changed. Plugins can [interact with the cache](/docs/build-caching/).
 
 6. `copy gatsby files`
 
@@ -215,9 +219,9 @@ Calls the [`onPreBootstrap` node API](/docs/node-apis/#onPreBootstrap) in your s
 
 8. `source and transform nodes`
 
-Creates nodes from your site and all plugins implementing the [`sourceNodes` API](/docs/node-apis/#sourceNodes), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
+Creates Node objects from your site and all plugins implementing the [`sourceNodes` API](/docs/node-apis/#sourceNodes), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
 
-Nodes created at this stage are considered top level nodes, meaning they don't have a parent node that they are derived from.
+Node objects created at this stage are considered top level nodes, meaning they don't have a parent node that they are derived from.
 
 9. `Add explicit types`
 
@@ -243,7 +247,7 @@ Plugins can handle the [`onCreatePage` event](/docs/node-apis/#onCreatePage) at 
 
 14. `createPagesStatefully`
 
-Similar to the `createPages` step, but for the [`createPagesStatefully` API](/docs/node-apis/#createPagesStatefully).
+Similar to the `createPages` step, but for the [`createPagesStatefully` API](/docs/node-apis/#createPagesStatefully) which is intended for plugins who want to manage creating and removing pages in response to changes in data not managed by Gatsby.
 
 15. `onPreExtractQueries`
 
@@ -267,7 +271,7 @@ An internal Gatsby utility that adds code for redirects, like implemented with [
 
 20. `Build manifest and related icons` - (from `gatsby-plugin-manifest`)
 
-This step is actually activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating plugins are able to tap into the lifecycle.
+This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating how plugins are able to tap into the lifecycle.
 
 21. `onPostBootstrap`
 
@@ -277,11 +281,11 @@ Calls the [`onPostBootstrap` API](/docs/node-apis/#onPostBootstrap) for your sit
 
 1. `run static queries`
 
-Static queries that were queued up earlier from query extraction are actually run so the data pages need can be provided to them.
+Static queries in [non-page components](/docs/building-with-components/#non-page-components) that were queued up earlier from query extraction are run to provide data to the components that need it.
 
 2. `Generating image thumbnails — 6/6` - (from `gatsby-plugin-sharp`)
 
-Another step that is not a part of the built-in Gatsby functionality, but is the result of installing `gatsby-plugin-sharp`, which taps into the lifecycle. Sharp runs processing on images to create thumbnails of different sizes.
+Another step that is not a part of the built-in Gatsby functionality, but is the result of installing `gatsby-plugin-sharp`, which taps into the lifecycle. Sharp runs processing on images to create image assets of different sizes.
 
 3. `Building production JavaScript and CSS bundles`
 
@@ -293,14 +297,14 @@ Compilation hashes are used by webpack, and all files with page data need to be 
 
 5. `run page queries`
 
-Page queries that were queued up earlier from query extraction are actually run so the data pages need can be provided to them.
+Page queries that were queued up earlier from query extraction are run so the data pages need can be provided to them.
 
 6. `Building static HTML for pages`
 
-With everything ready for the HTML pages in place, HTML is rendered and written out to files so it can be served up statically. Since HTML is being rendered in a server environment, [references to browser APIs like window can break the build](/docs/debugging-html-builds/).
+With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
 
 ## What do you get from a successful build?
 
-When a Gatsby build is successfully completed, everything you need to deploy your site ends up in the `public` folder at the root of the site. Included in it are minified files, transformed images, JSON files with information and data for each page, static HTML pages for each page, and more.
+When a Gatsby build is successfully completed, everything you need to deploy your site ends up in the `public` folder at the root of the site. The build includes minified files, transformed images, JSON files with information and data for each page, static HTML for each page, and more.
 
 The final build is just static files so it can now be [deployed](/docs/deploying-and-hosting/).

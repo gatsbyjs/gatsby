@@ -160,7 +160,7 @@ A hosting provider keeps a copy of your website or app and makes it accessible t
 
 ### Hot module replacement
 
-A feature in use when you run `gatsby develop` that updates your site when you save code in an editor by automatically replacing modules, or chunks of code while the site is running.
+A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window.
 
 ### Hydration
 
