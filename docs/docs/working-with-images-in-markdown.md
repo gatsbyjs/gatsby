@@ -42,6 +42,8 @@ module.exports = {
 }
 ```
 
+Note: Resolving the images directory separately (as shown above) isn't necessary if the images are in the same directory as the markdown files.
+
 Then, in an example markdown file, add a field called `featuredImage`:
 
 ```md:title=src/pages/example-post.md
