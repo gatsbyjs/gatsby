@@ -1,7 +1,7 @@
 ---
 title: "Location Data from Props"
 ---
-## What is location data?
+## What is location data
 
 Sometimes it can be helpful to know exactly what your app's browser url is at any given stage. Using @reach/router, location data represents where the app is currently, where you'd like it to go, and other helpful information. The location object is never mutated but `reach@router` this makes it helpful to determine when navigation happens.
 
@@ -53,6 +53,7 @@ const SomeComponent = ({ location }) => {
 ```
 
 ## Gatsby advantages
+
 The great thing is you can expect the location prop to be available to you on everypage thanks to its use of `@reach/router`
 
 ## Other resources
