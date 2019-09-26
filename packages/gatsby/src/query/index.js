@@ -188,33 +188,44 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
   }
 }
 
+const processStaticQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  await processQueries(
+    queryIds.map(id => createStaticQueryJob(state, id)),
+    activity
+  )
+}
+
+const processPageQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  // Make sure we filter out pages that don't exist. An example is
+  // /dev-404-page/, whose SitePage node is created via
+  // `internal-data-bridge`, but the actual page object is only
+  // created during `gatsby develop`.
+  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
+  await processQueries(
+    pages.map(page => createPageQueryJob(state, page)),
+    activity
+  )
+}
+
 const getInitialQueryProcessors = ({ parentSpan } = {}) => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
   const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
 
-  // Make sure we filter out pages that don't exist. An example is
-  // /dev-404-page/, whose SitePage node is created via
-  // `internal-data-bridge`, but the actual page object is only
-  // created during `gatsby develop`.
-  const pagesQueryJobs = _.filter(
-    pageQueryIds.map(id => state.pages.get(id))
-  ).map(page => createPageQueryJob(state, page))
-
-  const staticQueryJobs = staticQueryIds.map(id =>
-    createStaticQueryJob(state, id)
-  )
-
-  const queryjobsCount = pagesQueryJobs.length + staticQueryJobs.length
+  const queryjobsCount =
+    _.filter(pageQueryIds.map(id => state.pages.get(id))).length +
+    staticQueryIds.length
 
   let activity = null
   let processedQueuesCount = 0
-  const createProcessor = queryJobs => async () => {
+  const createProcessor = (fn, queryIds) => async () => {
     if (!activity) {
       activity = createQueryRunningActivity(queryjobsCount, parentSpan)
     }
 
-    await processQueries(queryJobs, activity)
+    await fn(queryIds, { state, activity })
 
     processedQueuesCount++
     // if both page and static queries are done, finish activity
@@ -224,8 +235,8 @@ const getInitialQueryProcessors = ({ parentSpan } = {}) => {
   }
 
   return {
-    processStaticQueries: createProcessor(staticQueryJobs),
-    processPageQueries: createProcessor(pagesQueryJobs),
+    processStaticQueries: createProcessor(processStaticQueries, staticQueryIds),
+    processPageQueries: createProcessor(processPageQueries, pageQueryIds),
     pageQueryIds,
   }
 }
@@ -365,6 +376,9 @@ const enqueueExtractedPageComponent = componentPath => {
 }
 
 module.exports = {
+  calcInitialDirtyQueryIds,
+  processPageQueries,
+  processStaticQueries,
   groupQueryIds,
   initialProcessQueries,
   getInitialQueryProcessors,

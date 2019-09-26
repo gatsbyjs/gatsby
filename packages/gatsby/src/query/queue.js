@@ -101,24 +101,15 @@ const processBatch = async (queue, jobs, activity) => {
     return Promise.resolve()
   }
 
-  // const queryRunningActivity = report.createProgress(
-  //   label,
-  //   numJobs,
-  //   0,
-  //   activityOpts
-  // )
-  // queryRunningActivity.start()
-
   const runningJobs = jobs.map(job =>
     pushJob(queue, job).then(v => {
-      // console.log(`tick`)
-      activity.tick()
+      if (activity.tick) {
+        activity.tick()
+      }
       return v
     })
   )
   return Promise.all(runningJobs)
-
-  // queryRunningActivity.done()
 }
 
 module.exports = {
