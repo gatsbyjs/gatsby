@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.17...gatsby-remark-responsive-iframe@2.2.18) (2019-09-24)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
+## [2.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.16...gatsby-remark-responsive-iframe@2.2.17) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
+## [2.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.15...gatsby-remark-responsive-iframe@2.2.16) (2019-09-10)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.14...gatsby-remark-responsive-iframe@2.2.15) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.13...gatsby-remark-responsive-iframe@2.2.14) (2019-09-05)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.12...gatsby-remark-responsive-iframe@2.2.13) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.11...gatsby-remark-responsive-iframe@2.2.12) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.10...gatsby-remark-responsive-iframe@2.2.11) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.9...gatsby-remark-responsive-iframe@2.2.10) (2019-08-26)
+
+**Note:** Version bump only for package gatsby-remark-responsive-iframe
+
 ## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@2.2.8...gatsby-remark-responsive-iframe@2.2.9) (2019-08-25)
 
 **Note:** Version bump only for package gatsby-remark-responsive-iframe

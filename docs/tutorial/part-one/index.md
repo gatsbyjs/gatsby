@@ -345,7 +345,7 @@ If you haven't previously installed &amp; set up Surge, open a new terminal wind
 npm install --global surge
 
 # Then create a (free) account with them
-surge
+surge login
 ```
 
 Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):

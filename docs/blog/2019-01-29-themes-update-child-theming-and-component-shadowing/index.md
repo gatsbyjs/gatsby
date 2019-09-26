@@ -21,7 +21,7 @@ We've merged [a PR](https://github.com/gatsbyjs/gatsby/pull/10787) into Gatsby
 core to support Child theming. Child theming is an extension of the core theming
 algorithm to support a "parent/child" style relationship where child themes can
 rely on parent themes in the same way sites rely on themes. This means you can
-now use the `__experimentalThemes` gatsby-config key in a theme as well as your
+now add a child theme using the `plugins` gatsby-config key in a theme as well as your
 sites.
 
 This change is being made to make it easier for theme authors to produce themes
@@ -80,8 +80,7 @@ applied to the parent and focus on one possible child theme `gatsby-config.js`.
 
 ```js:title=gatsby-theme-blog/gatsby-config.js
 module.exports = {
-  __experimentalThemes: [`gatsby-theme-blog-core`],
-  plugins: [`gatsby-plugin-emotion`],
+  plugins: [`gatsby-theme-blog-core`, `gatsby-plugin-emotion`],
 }
 ```
 
@@ -91,7 +90,7 @@ by specifying only the child in their `gatsby-config.js`.
 
 ```js:title=my-site/gatsby-config.js
 module.exports = {
-  __experimentalThemes: [`gatsby-theme-blog`],
+  plugins: [`gatsby-theme-blog`],
 }
 ```
 

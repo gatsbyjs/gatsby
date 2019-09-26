@@ -261,6 +261,24 @@ async function getTracedSVG({ file, options, cache, reporter }) {
   return undefined
 }
 
+async function stats({ file, reporter }) {
+  let imgStats
+  try {
+    imgStats = await sharp(file.absolutePath).stats()
+  } catch (err) {
+    reportError(
+      `Failed to get stats for image ${file.absolutePath}`,
+      err,
+      reporter
+    )
+    return null
+  }
+
+  return {
+    isTransparent: !imgStats.isOpaque,
+  }
+}
+
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
@@ -572,3 +590,4 @@ exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.stats = stats
