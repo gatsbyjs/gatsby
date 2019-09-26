@@ -6,7 +6,7 @@ title: "Location Data from Props"
 
 Sometimes it can be helpful to know exactly what your app's browser URL is at any given stage. Using [@reach/router](https://github.com/reach/router) for [client-side routing](/docs/glossary#client-side) in Gatsby, `location` data represents where the app is currently, where you'd like it to go, and other helpful information. The `location` object is never mutated but `reach@router` makes it helpful to determine when navigation happens.
 
-```js:title=location object
+```js
 {
   key: 'ac3df4', // does not populate with a HashHistory!
   pathname: '/somepage',
