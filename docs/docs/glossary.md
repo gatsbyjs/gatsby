@@ -42,6 +42,10 @@ In Gatsby, this is the process of taking your code and content and packaging it 
 
 ## C
 
+### Cache
+
+A storage of information locally that might be used again, so computations and lookups can be retrieved faster from one place. Gatsby uses a cache to store information so it can build your site faster when you're developing without needing to do the same work twice.
+
 ### CLI
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
