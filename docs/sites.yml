@@ -3283,18 +3283,6 @@
     - Programming
   built_by_url: https://adhoc.team
   featured: false
-- title: BetterDocs | Discord Themes & Plugins
-  main_url: https://betterdocs.us
-  url: https://betterdocs.us
-  description: >
-    All Discord enhancement projects in 1! Free quality Themes and Plugins for Discord and easy installation instructions for BetterDiscord and more!
-  categories:
-    - Web Development
-    - Programming
-    - Open Source
-  built_by: Christopher R. | Owner
-  built_by_url: https://github.com/MrRobotjs/
-  featured: false
 - title: Birra Napoli
   main_url: http://www.birranapoli.it
   url: http://www.birranapoli.it
@@ -7354,4 +7342,14 @@
     - WordPress
   built_by: Mayowa Falade
   built_by_url: http://mayowafalade.com
+  featured: false
+- title: VIA Data
+  main_url: https://viadata.io
+  url: https://viadata.io
+  description: >
+    The future of data management
+  categories:
+    - Data
+  built_by: The Delta Studio
+  built_by_url: https://www.thedelta.io
   featured: false
