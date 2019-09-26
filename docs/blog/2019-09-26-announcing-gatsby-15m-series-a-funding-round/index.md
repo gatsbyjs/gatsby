@@ -7,7 +7,7 @@ tags: ["gatsby-inc"]
 
 I’m incredibly excited to announce that Gatsby has raised a \$15M Series A funding round, led by [CRV](https://www.crv.com/), to drive the reinvention of website development.
 
-Gatsby is a free and open-source web framework based on React that helps developers build blazing fast websites and apps. Hundreds of thousands of developers have adopted Gatsby since it was open sourced four years ago. Our [content mesh ](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)[platform](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/) is used by thousands of companies around the world, including IBM, PayPal, Harry's, and digital agencies that use Gatsby to create web properties for Fortune 500 clients.
+Gatsby is a free and open-source web framework based on React that helps developers build blazing fast websites and apps. Hundreds of thousands of developers have adopted Gatsby since it was open sourced four years ago. Our [content mesh platform](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/) is used by thousands of companies around the world, including IBM, PayPal, Harry's, and digital agencies that use Gatsby to create web properties for Fortune 500 clients.
 
 ## Why the excitement and growth?
 
@@ -61,7 +61,7 @@ Lots more announcements to share in the coming weeks and months 🚀
 
 ## Growing our team
 
-Gatsby is a distributed team with members around the world. There’s now 35 Gatsby Inkteam members, and with this new investment, we’ll be hiring more people to work on open source, write docs and tutorials, build cloud products, and create next-generation site design & building tools.
+Gatsby is a distributed team with members around the world. There’s now 35 Gatsby Inc team members, and with this new investment, we’ll be hiring more people to work on open source, write docs and tutorials, build cloud products, and create next-generation site design & building tools.
 
 We’ll be hiring for dozens of remote positions in the coming months. Check back at [https://www.gatsbyjs.com/careers/](https://www.gatsbyjs.com/careers/) for openings (and feel free to propose your own job idea by applying to the “dream job” position).
 
