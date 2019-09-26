@@ -239,7 +239,7 @@ Notice that in the above example for [querying images](#images), we used `...Gat
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
-For example if I put a fragment in a helper component, I can use that fragment in any other query:
+For example, if I put a fragment in a helper component, I can use that fragment in any other query:
 
 ```jsx:title=src/components/PostItem.js
 export const markdownFrontmatterFragment = graphql`
@@ -263,7 +263,7 @@ query($path: String!) {
 }
 ```
 
-It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page might map over all of your posts to show them in a list.
+It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page you might map over all of your posts to show them in a list.
 
 ```jsx:title=src/pages/index.jsx
 import React from "react"
