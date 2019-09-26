@@ -60,7 +60,7 @@ const SomeComponent = ({ location }) => {
 
 ## Gatsby advantages
 
-The great thing is you can expect the location prop to be available to you on everypage thanks to its use of `@reach/router`
+The great thing is you can expect the `location` prop to be available to you on every page thanks to its use of `@reach/router`.
 
 ## Other resources
 
