@@ -12,6 +12,14 @@ const mockClient = {
       ],
     })
   ),
+  getSpace: jest.fn(() =>
+    Promise.resolve({
+      space: {
+        sys: { type: `Space`, id: `x2t9il8x6p` },
+        name: `space-name`,
+      },
+    })
+  ),
   sync: jest.fn(() => {
     return {
       entries: [],
