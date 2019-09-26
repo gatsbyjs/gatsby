@@ -19,7 +19,7 @@ You can start Gatsby in either mode with its respective command: `gatsby develop
 
 A common confusion with the generation of [static](/docs/glossary#static) assets is the difference between [build time](/docs/glossary#build) and [runtime](/docs/glossary#runtime).
 
-Processes that happen in a web browser that you click through and interact with can be referred to as a _browser runtime_. JavaScript code can interact with the browser and take advantage of APIs it offers, such as `window.location` or injecting markup dynamically into the [DOM](/docs/glossary#dom).
+Processes that happen in a web browser that you click through and interact with can be referred to as a _browser runtime_. JavaScript code can interact with the browser and take advantage of APIs it offers, such as `window.location` or injecting markup dynamically into the [DOM](/docs/glossary#dom). [Gatsby creates a JavaScript runtime](/docs/production-app) that takes over in the browser once the initial HTML has loaded.
 
 _Build time_, in contrast, refers to the process of using a server process to compile the site into files that can be delivered to a web browser later, so DOM APIs like `window` aren't available at that time.
 
@@ -233,7 +233,7 @@ All other nodes not already defined are inspected and have types [inferred](/doc
 
 11. `Processing types`
 
-Composes 3rd party schema types, children fields, custom resolve functions, set fields, and print type definitions into the GraphQL schema.
+Composes 3rd party schema types, child fields, custom resolve functions, and sets fields in the GraphQL schema. It then prints information about type definitions.
 
 12. `building schema`
 
@@ -259,7 +259,7 @@ Rebuilds the GraphQL schema, this time with `SitePage` context.
 
 17. `extract queries from components`
 
-All JavaScript files in the site are loaded and Gatsby determines if there are any GraphQL queries in them. If there are problematic queries they can be reported back with warnings or errors. All these queries get queued up for execution in a later step.
+All JavaScript files in the site are loaded and Gatsby determines if there are any GraphQL queries exported from them. If there are problematic queries they can be reported back with warnings or errors. All these queries get queued up for execution in a later step.
 
 18. `write out requires`
 
@@ -267,7 +267,7 @@ An internal Gatsby utility adds the code that files need to load/require.
 
 19. `write out redirect data`
 
-An internal Gatsby utility that adds code for redirects, like implemented with [`createRedirect`](/docs/actions/#createRedirect).
+An internal Gatsby utility adds code for redirects, like implemented with [`createRedirect`](/docs/actions/#createRedirect).
 
 20. `Build manifest and related icons` - (from `gatsby-plugin-manifest`)
 
@@ -293,7 +293,7 @@ Compiles JavaScript and CSS using webpack.
 
 4. `Rewriting compilation hashes`
 
-Compilation hashes are used by webpack, and all files with page data need to be updated with the new hashes since they've been recompiled.
+Compilation hashes are used by [webpack for code splitting](/docs/how-code-splitting-works/#chunk-bundle-naming) and keeping the cache up to date, and all files with page data need to be updated with the new hashes since they've been recompiled.
 
 5. `run page queries`
 
@@ -308,3 +308,5 @@ With everything ready for the HTML pages in place, HTML is compiled and written 
 When a Gatsby build is successfully completed, everything you need to deploy your site ends up in the `public` folder at the root of the site. The build includes minified files, transformed images, JSON files with information and data for each page, static HTML for each page, and more.
 
 The final build is just static files so it can now be [deployed](/docs/deploying-and-hosting/).
+
+You can run `gatsby serve` to test the output from compilation. If you make any new changes to the source code that you want to preview, you will have to rebuild the site and run `gatsby serve` again.
