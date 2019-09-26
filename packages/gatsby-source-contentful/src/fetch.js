@@ -24,13 +24,13 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   // {'locale': value} } so we need to get the space and its default local.
   //
   // We'll extend this soon to support multiple locales.
-  let locales
   let space
+  let locales
   let defaultLocale = `en-US`
   try {
     console.log(`Fetching default locale`)
+    space = await client.getSpace()
     locales = await client.getLocales().then(response => response.items)
-    space = await client.getSpace().then(response => response)
     defaultLocale = _.find(locales, { default: true }).code
     locales = locales.filter(pluginConfig.get(`localeFilter`))
     console.log(`default locale is : ${defaultLocale}`)
