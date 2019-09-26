@@ -24,7 +24,7 @@ render() {
   // Note: this is an escape hatch and should be used sparingly!
   // Normally we recommend using `import` for getting asset URLs
   // as described in the “Importing Assets Directly Into Files” page.
-  return <img src={'logo.png'} alt="Logo" />;
+  return <img src={'/logo.png'} alt="Logo" />;
 }
 ```
 
