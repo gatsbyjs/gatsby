@@ -67,5 +67,5 @@ The great thing is you can expect the `location` prop to be available to you on 
 - [@reach/router docs](https://reach.tech/router/api/Location)
 - [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
 - [Hash Router](https://reacttraining.com/react-router/web/api/HashRouter)
-- [Gatsby Breadcrumb Plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
+- [Gatsby Breadcrumb Plugin](/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
 - [Create Modal w/ Navigation State using React Router](https://codedaily.io/tutorials/47/Create-a-Modal-Route-with-Link-and-Nav-State-in-React-Router)
