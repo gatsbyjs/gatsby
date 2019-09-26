@@ -3906,7 +3906,7 @@
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
 - url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
-  repo: https://github.com/sagar7993/gatsby-wordpress-typescript-blog-boilerplate
+  repo: https://github.com/sagar7993/gatsby-wordpress-typescript-scss-blog
   description: A Gatsby starter template for a Wordpress blog, built using TypeScript, SCSS and Ant Design
   tags:
     - Blog
@@ -3919,7 +3919,7 @@
     - Portfolio
     - Styling:SCSS
   features:
-    - Typecsript
+    - Typescript for type-safe code
     - Source content from Wordpress CMS
     - Auto generated Pagination for your Wordpress Posts
     - Auto generated Navigation for next and previous post at the end Post
@@ -3931,15 +3931,16 @@
     - Responsive Design
     - Google Analytics
     - Comments using Staticman
+    - Images within wordpress post/page content downloaded to static folder and transformed to webp format during build
     - Social widgets
-    - Instagram feed
-    - Pinterest pin-it button on hovering on images
-    - Twitter timeline and follow button
-    - Facebook timeline and like button
+    - Instagram feed of any profile (no API token needed)
+    - Pinterest pin-it button on hovering on images (no API token needed)
+    - Twitter timeline and follow button (no API token needed)
+    - Facebook timeline and like button (no API token needed)
     - SEO friendly
     - Web app manifest
     - Mobile optimized and responsive
-    - Sitemap & Robots.txt generation
+    - Sitemap.xml & Robots.txt generation
     - Optimized images with gatsby-image
     - Git pre-commit and pre-push hooks using Husky
     - TSLint formatting
