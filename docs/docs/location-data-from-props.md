@@ -24,7 +24,7 @@ Using `hash` is one way to update the browser URL and the DOM without having the
 
 ## Use cases
 
-You can provide a location object instead of strings, helpful in a number of situations.
+Through client-side routing in Gatsby you can provide a location object instead of strings, helpful in a number of situations.
 
 - Providing state to linked components
 - Client-only routes
@@ -37,14 +37,14 @@ You can provide a location object instead of strings, helpful in a number of sit
 // usually you'd do this
 <Link to="/somecomponent"/>
 
-// but if we want to add some additional state
+// but if you want to add some additional state
 <Link to={
   pathname: '/somecomponent',
   state: {modal: true}
 }>
 ```
 
-Then from the recieving component we can conditionally render it based on the location state.
+Then from the receiving component you can conditionally render markup based on the `location` state.
 
 ```js:title=some-component.js
 const SomeComponent = ({ location }) => {
