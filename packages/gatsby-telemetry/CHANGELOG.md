@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.25...gatsby-telemetry@1.1.26) (2019-09-25)
+
+### Bug Fixes
+
+- **core:** Use present tense for telemetry message ([#17884](https://github.com/gatsbyjs/gatsby/issues/17884)) ([cb8b076](https://github.com/gatsbyjs/gatsby/commit/cb8b076))
+
 ## [1.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.24...gatsby-telemetry@1.1.25) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-telemetry

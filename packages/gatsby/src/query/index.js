@@ -76,9 +76,11 @@ const popNodeQueries = state => {
 
     // Find components that depend on this node so are now dirty.
     if (state.componentDataDependencies.nodes.has(node.id)) {
-      state.componentDataDependencies.nodes
-        .get(node.id)
-        .forEach(n => dirtyIds.add(n))
+      state.componentDataDependencies.nodes.get(node.id).forEach(n => {
+        if (n) {
+          dirtyIds.add(n)
+        }
+      })
     }
 
     // Find connections that depend on this node so are now invalid.
