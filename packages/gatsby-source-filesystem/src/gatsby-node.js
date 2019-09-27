@@ -160,6 +160,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
   })
 
   const watcher = chokidar.watch(pluginOptions.path, {
+    // Setting useFsEvents to false fixes https://github.com/gatsbyjs/gatsby/issues/17131
     useFsEvents: false,
     ignored: [
       `**/*.un~`,
