@@ -196,6 +196,8 @@ class LocalNodeModel {
       `Querying GraphQLUnion types is not supported.`
     )
 
+    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+
     const fields = getQueryFields({
       filter: query.filter,
       sort: query.sort,
@@ -206,15 +208,9 @@ class LocalNodeModel {
       this.schemaComposer,
       this.schema,
       gqlType,
-      fields
+      fields,
+      nodeTypeNames
     )
-
-    let nodeTypeNames
-    if (isAbstractType(gqlType)) {
-      nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
-    } else {
-      nodeTypeNames = [gqlType.name]
-    }
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
 
@@ -639,7 +635,13 @@ function resolveField(
   )
 }
 
-const determineResolvableFields = (schemaComposer, schema, type, fields) => {
+const determineResolvableFields = (
+  schemaComposer,
+  schema,
+  type,
+  fields,
+  nodeTypeNames
+) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
   Object.keys(fields).forEach(fieldName => {
@@ -647,16 +649,25 @@ const determineResolvableFields = (schemaComposer, schema, type, fields) => {
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    const needsResolve = typeComposer.getFieldExtension(
-      fieldName,
-      `needsResolve`
-    )
+    let possibleTCs = [
+      typeComposer,
+      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
+    ]
+    let needsResolve = false
+    for (const tc of possibleTCs) {
+      needsResolve = tc.getFieldExtension(fieldName, `needsResolve`) || false
+      if (needsResolve) {
+        break
+      }
+    }
+
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
         schemaComposer,
         schema,
         gqlFieldType,
-        field
+        field,
+        toNodeTypeNames(schema, gqlFieldType)
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
