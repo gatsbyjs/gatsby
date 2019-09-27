@@ -133,24 +133,25 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
+  // Removed to keep old files. 
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
-  if (process.env.NODE_ENV === `production`) {
-    activity = report.activityTimer(
-      `delete html and css files from previous builds`,
-      {
-        parentSpan: bootstrapSpan,
-      }
-    )
-    activity.start()
-    await del([
-      `public/**/*.{html,css}`,
-      `!public/page-data/**/*`,
-      `!public/static`,
-      `!public/static/**/*.{html,css}`,
-    ])
-    activity.end()
-  }
+  // if (process.env.NODE_ENV === `production`) {
+  //   activity = report.activityTimer(
+  //     `delete html and css files from previous builds`,
+  //     {
+  //       parentSpan: bootstrapSpan,
+  //     }
+  //   )
+  //   activity.start()
+  //   await del([
+  //     `public/**/*.{html,css}`,
+  //     `!public/page-data/**/*`,
+  //     `!public/static`,
+  //     `!public/static/**/*.{html,css}`,
+  //   ])
+  //   activity.end()
+  // }
 
   activity = report.activityTimer(`initialize cache`, {
     parentSpan: bootstrapSpan,
@@ -194,7 +195,16 @@ module.exports = async (args: BootstrapArgs) => {
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+
+  if(fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
+    console.log("Copied redux-state for comparing later");
+    await fs.copy(`${cacheDirectory}/redux-state.json`, `${program.directory}/temp/redux-state-old.json`, {
+      clobber: true
+    });
+  }
+
+  // Removed to force a new .cache on each build
+  //if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       // Attempt to empty dir if remove fails,
       // like when directory is mount point
@@ -207,7 +217,7 @@ module.exports = async (args: BootstrapArgs) => {
     store.dispatch({
       type: `DELETE_CACHE`,
     })
-  }
+  //}
 
   // Update the store with the new plugins hash.
   store.dispatch({

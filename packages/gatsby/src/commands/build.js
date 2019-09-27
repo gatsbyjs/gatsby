@@ -16,7 +16,7 @@ const telemetry = require(`gatsby-telemetry`)
 const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
-const WorkerPool = require(`../utils/worker/pool`)
+//const WorkerPool = require(`../utils/worker/pool`); // not used if hash process removed
 const handleWebpackError = require(`../utils/webpack-error-parser`)
 
 type BuildArgs = {
@@ -90,42 +90,44 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
-  const workerPool = WorkerPool.create()
 
-  const webpackCompilationHash = stats.hash
-  if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
-    store.dispatch({
-      type: `SET_WEBPACK_COMPILATION_HASH`,
-      payload: webpackCompilationHash,
-    })
+  // Remove Hashes
+  // const workerPool = WorkerPool.create()
 
-    activity = report.activityTimer(`Rewriting compilation hashes`, {
-      parentSpan: buildSpan,
-    })
-    activity.start()
+  // const webpackCompilationHash = stats.hash
+  // if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
+  //   store.dispatch({
+  //     type: `SET_WEBPACK_COMPILATION_HASH`,
+  //     payload: webpackCompilationHash,
+  //   })
 
-    // We need to update all page-data.json files with the new
-    // compilation hash. As a performance optimization however, we
-    // don't update the files for `pageQueryIds` (dirty queries),
-    // since they'll be written after query execution.
-    const cleanPagePaths = _.difference(
-      [...store.getState().pages.keys()],
-      pageQueryIds
-    )
-    await pageDataUtil.updateCompilationHashes(
-      { publicDir, workerPool },
-      cleanPagePaths,
-      webpackCompilationHash
-    )
+  //   activity = report.activityTimer(`Rewriting compilation hashes`, {
+  //     parentSpan: buildSpan,
+  //   })
+  //   activity.start()
 
-    activity.end()
-  }
+  //   // We need to update all page-data.json files with the new
+  //   // compilation hash. As a performance optimization however, we
+  //   // don't update the files for `pageQueryIds` (dirty queries),
+  //   // since they'll be written after query execution.
+  //   const cleanPagePaths = _.difference(
+  //     [...store.getState().pages.keys()],
+  //     pageQueryIds
+  //   )
+  //   await pageDataUtil.updateCompilationHashes(
+  //     { publicDir, workerPool },
+  //     cleanPagePaths,
+  //     webpackCompilationHash
+  //   )
+
+  //   activity.end()
+  // }
 
   activity = report.activityTimer(`run page queries`, {
     parentSpan: buildSpan,
   })
   activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, { activity })
+  await queryUtil.processPageQueries(pageQueryIds, program, { activity })
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
@@ -136,6 +138,9 @@ module.exports = async function build(program: BuildArgs) {
 
   await db.saveState()
 
+  // Compare page data sets and return new keys
+  const newPageKeys = await pageDataUtil.getNewPageKeys(program.directory, store);
+
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
   })
@@ -144,7 +149,7 @@ module.exports = async function build(program: BuildArgs) {
     await buildHTML.buildPages({
       program,
       stage: `build-html`,
-      pagePaths: [...store.getState().pages.keys()],
+      pagePaths: newPageKeys,
       activity,
       workerPool,
     })

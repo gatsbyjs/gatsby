@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
-const { chunk } = require(`lodash`)
+const _ = require(`lodash`);
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -30,7 +30,7 @@ const updateCompilationHashes = (
   pagePaths,
   webpackCompilationHash
 ) => {
-  const segments = chunk(pagePaths, 50)
+  const segments = _.chunk(pagePaths, 50)
   return Promise.map(segments, segment =>
     workerPool.updateCompilationHashes(
       { publicDir },
@@ -40,8 +40,61 @@ const updateCompilationHashes = (
   )
 }
 
+  // Compare page data sets.
+  // TODO: logic to remove old pages.
+const getNewPageKeys = (directory, store) => {
+  return new Promise(resolve => {
+
+    // check if old data set is available else return all page keys
+    if(!(fs.existsSync(`${directory}/temp/redux-state-old.json`))) {
+      console.log("Return all pages")
+      resolve([...store.getState().pages.keys()]);
+      return;
+    }
+
+    const newPageKeys = [];
+    const newPageData = Object.assign({}, store.getState());
+    const previousPageData = require(`${directory}/temp/redux-state-old.json`);
+
+    // change pages map into object
+    Object.keys(newPageData).forEach(key => {
+      if (newPageData[key] instanceof Map) {
+        const obj = {};
+        newPageData[key].forEach ((v,k) => { obj[k] = v });
+        newPageData[key] = obj;
+      }
+    });
+
+    console.log("Start comparing page data")
+    _.forEach(newPageData.pages, (value, key) => {
+      if(!(key in previousPageData)) {
+        newPageKeys.push(key);
+      } else {
+        const newPageContext = value.context.page;
+        const previousPageContext = previousPageData[key].context.page;
+
+        if ( !_.isEqual(newPageContext, previousPageContext) ) {
+          newPageKeys.push(key);
+        }
+      }
+    });
+
+    // This was used for debugging
+    // if (_.size(newPageKeys)) {
+    //   fs.writeFileSync(`${directory}/temp/newPageKeys.json`, JSON.stringify({ newPageKeys }), "utf-8");
+    //   console.log("file of newPageKeys created");
+    // }
+
+    console.log("Finished");
+    console.log(newPageKeys)
+    resolve(newPageKeys);
+  });
+}
+
+
 module.exports = {
   read,
   write,
   updateCompilationHashes,
+  getNewPageKeys,
 }

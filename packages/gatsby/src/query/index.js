@@ -7,6 +7,7 @@ const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const queryQueue = require(`./queue`)
 const GraphQLRunner = require(`./graphql-runner`)
+const pageDataUtil = require(`../utils/page-data`);
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
@@ -201,12 +202,21 @@ const createPageQueryJob = (state, page) => {
   }
 }
 
-const processPageQueries = async (queryIds, { state, activity }) => {
+const processPageQueries = async (queryIds, program, { state, activity }) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
   // /dev-404-page/, whose SitePage node is created via
   // `internal-data-bridge`, but the actual page object is only
   // created during `gatsby develop`.
+
+  // Return new page keys
+  const newPageKeys = await pageDataUtil.getNewPageKeys(program.directory, store);
+  
+  // if page keys then change queryIds value
+  if(newPageKeys.length) {
+    queryIds = newPageKeys;
+  }
+
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
     pages.map(page => createPageQueryJob(state, page)),

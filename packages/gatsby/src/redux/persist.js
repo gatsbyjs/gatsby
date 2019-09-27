@@ -5,6 +5,15 @@ const file = `${process.cwd()}/.cache/redux.state`
 
 const readFromCache = () => v8.deserialize(fs.readFileSync(file))
 
-const writeToCache = contents => fs.writeFileSync(file, v8.serialize(contents))
-
+const writeToCache = contents => {
+    Object.keys(contents).forEach(key => {
+        if (contents[key] instanceof Map) {
+        const obj = {};
+        contents[key].forEach ((v,k) => { obj[k] = v });
+        contents[key] = obj;
+        }
+    });
+    return fs.writeFileSync(file, JSON.stringify(contents.pages), "utf-8");
+}
+  
 module.exports = { readFromCache, writeToCache }
