@@ -17,7 +17,7 @@
     "./dist/**/*"
   ],
   "scripts": {
-    "build": "microbundle build --sourcemap=false -f es,cjs && agadoo dist/index.esm.js",
+    "build": "(microbundle build --sourcemap=false -f es,cjs && agadoo dist/index.esm.js) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "microbundle watch --sourcemap=false -f es,cjs"
   },
