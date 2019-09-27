@@ -24,9 +24,14 @@ render() {
   // Note: this is an escape hatch and should be used sparingly!
   // Normally we recommend using `import` for getting asset URLs
   // as described in the “Importing Assets Directly Into Files” page.
-  return <img src={'logo.png'} alt="Logo" />;
+  return <img src={'/logo.png'} alt="Logo" />;
 }
 ```
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-a-local-image-from-the-static-folder-in-a-gatsby-component"
+  lessonTitle="Use a local image from the static folder in a Gatsby component"
+/>
 
 ### Downsides
 

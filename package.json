@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/node": "^7.6.1",
-    "@babel/runtime": "^7.6.0",
+    "@babel/core": "^7.6.2",
+    "@babel/node": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
     "@lerna/prompt": "3.13.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",

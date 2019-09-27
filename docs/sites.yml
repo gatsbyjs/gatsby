@@ -3283,18 +3283,6 @@
     - Programming
   built_by_url: https://adhoc.team
   featured: false
-- title: BetterDocs | Discord Themes & Plugins
-  main_url: https://betterdocs.us
-  url: https://betterdocs.us
-  description: >
-    All Discord enhancement projects in 1! Free quality Themes and Plugins for Discord and easy installation instructions for BetterDiscord and more!
-  categories:
-    - Web Development
-    - Programming
-    - Open Source
-  built_by: Christopher R. | Owner
-  built_by_url: https://github.com/MrRobotjs/
-  featured: false
 - title: Birra Napoli
   main_url: http://www.birranapoli.it
   url: http://www.birranapoli.it
@@ -7319,4 +7307,88 @@
     - Technology
   built_by: Appes
   built_by_url: https://appes.co
+  featured: false
+- title: Intern
+  url: https://intern.imedadel.me
+  main_url: https://intern.imedadel.me
+  description: >
+    Intern is a job board for getting internships in tech, design, marketing, and more. It's built entirely with Gatsby.
+  categories:
+    - Directory
+    - Technology
+  built_by: Imed Adel
+  built_by_url: https://imedadel.me
+  featured: false
+- title: Global Citizen Foundation
+  main_url: https://www.globalcitizenfoundation.org
+  url: https://www.globalcitizenfoundation.org
+  description: >
+    In the digital economy, we are Global Citizens and the currency is Personal Data
+  categories:
+    - Nonprofit
+  built_by: The Delta Studio
+  built_by_url: https://www.thedelta.io
+  featured: false
+- title: GatsbyFinds
+  main_url: https://gatsbyfinds.netlify.com
+  url: https://gatsbyfinds.netlify.com
+  source_url: https://github.com/bvlktech/GatsbyFinds
+  description: >
+    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Bvlktech
+  built_by_url: https://twitter.com/bvlktech
+  featured: false
+- title: AFEX Commodities Exchange
+  main_url: https://afexnigeria.com
+  url: https://afexnigeria.com
+  description: >
+    AFEX Nigeria strives to transform Nigerian agriculture by creating more bargaining power to smallholder farmers, access to information, and secure storage.
+  categories:
+    - Blog
+    - Business
+    - Finance
+    - Food
+    - WordPress
+  built_by: Mayowa Falade
+  built_by_url: http://mayowafalade.com
+  featured: false
+- title: VIA Data
+  main_url: https://viadata.io
+  url: https://viadata.io
+  description: >
+    The future of data management
+  categories:
+    - Data
+  built_by: The Delta Studio
+  built_by_url: https://www.thedelta.io
+  featured: false
+- title: Front End Day Event Website
+  main_url: https://frontend-day.com/
+  url: https://frontend-day.com/
+  description: >
+    Performant landing page for a front end workshops recurring event / conference.
+  categories:
+    - Event
+    - Conference
+    - Web Development
+    - Technology
+  built_by: Pagepro
+  built_by_url: https://pagepro.co
+  featured: false
+- title: Mutual
+  main_url: https://www.madebymutual.com
+  url: https://www.madebymutual.com
+  description: >
+    Mutual is a web design and development agency. Our new website is powered by Gatsby and Craft CMS.
+  categories:
+    - Blog
+    - Portfolio
+    - Agency
+    - Design
+    - Web Development
+  built_by: Mutual
+  built_by_url: https://twitter.com/madebymutual
   featured: false

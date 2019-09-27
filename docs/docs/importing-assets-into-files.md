@@ -43,6 +43,11 @@ If you're using SCSS the imports are relative to the entry SCSS file.
 
 Please be advised that this is also a custom feature of Webpack.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-import-a-local-image-into-a-gatsby-component-with-webpack"
+  lessonTitle="Import a Local Image into a Gatsby Component with webpack"
+/>
+
 ## Querying for a `File` in GraphQL using gatsby-source-filesystem
 
 You can also import files using GraphQL by querying for them in your data layer, which will trigger copying of those files to the public directory. Querying for the `publicURL` field of `File` nodes will provide URLs you can use in your JavaScript components, pages and templates.

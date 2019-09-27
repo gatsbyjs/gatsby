@@ -3906,7 +3906,7 @@
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
 - url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
-  repo: https://github.com/sagar7993/gatsby-wordpress-typescript-blog-boilerplate
+  repo: https://github.com/sagar7993/gatsby-wordpress-typescript-scss-blog
   description: A Gatsby starter template for a Wordpress blog, built using TypeScript, SCSS and Ant Design
   tags:
     - Blog
@@ -3919,7 +3919,7 @@
     - Portfolio
     - Styling:SCSS
   features:
-    - Typecsript
+    - Typescript for type-safe code
     - Source content from Wordpress CMS
     - Auto generated Pagination for your Wordpress Posts
     - Auto generated Navigation for next and previous post at the end Post
@@ -3931,15 +3931,16 @@
     - Responsive Design
     - Google Analytics
     - Comments using Staticman
+    - Images within wordpress post/page content downloaded to static folder and transformed to webp format during build
     - Social widgets
-    - Instagram feed
-    - Pinterest pin-it button on hovering on images
-    - Twitter timeline and follow button
-    - Facebook timeline and like button
+    - Instagram feed of any profile (no API token needed)
+    - Pinterest pin-it button on hovering on images (no API token needed)
+    - Twitter timeline and follow button (no API token needed)
+    - Facebook timeline and like button (no API token needed)
     - SEO friendly
     - Web app manifest
     - Mobile optimized and responsive
-    - Sitemap & Robots.txt generation
+    - Sitemap.xml & Robots.txt generation
     - Optimized images with gatsby-image
     - Git pre-commit and pre-push hooks using Husky
     - TSLint formatting
@@ -3988,3 +3989,64 @@
     - htaccess support
     - Typography.js
     - Integration with Social Media
+- url: https://blogerist.netlify.com
+  repo: https://github.com/bvlktech/blogerist
+  description: Starter blog built with GatsbyJS
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - A simple landing page with blog functionality built with Netlify CMS
+    - Create Blog posts from Netlify CMS
+    - Uses SCSS for styling
+    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
+    - Uses gatbsy-image with Netlify-CMS preview support
+    - Separate components for everything
+    - Netlify deploy configuration
+    - Netlify forms functionality
+    - Discus commenting added to each blog post
+    - Perfect score on Lighthouse for SEO, Accessibility and Performance
+    - ..and more
+- url: https://gatsby-starter-bloomer-db0aaf.netlify.com
+  repo: https://github.com/zlutfi/gatsby-starter-bloomer
+  description: Barebones starter website with Bloomer React components for Bulma.
+  tags:
+    - PWA
+    - Styling:Bulma
+    - Styling:SCSS
+  features:
+    - Bloomer React Commponents
+    - Bulma CSS Framework
+    - Uses SCSS for styling
+    - Font Awesome Support
+    - Progressive Web App
+- url: https://gatsby-starter-mdbreact.netlify.com
+  repo: https://github.com/zlutfi/gatsby-starter-mdbreact
+  description: Barebones starter website with Material Design Bootstrap React components.
+  tags:
+    - PWA
+    - Styling:Bootstrap
+    - Styling:Material
+    - Styling:SCSS
+  features:
+    - MDBReact React Commponents
+    - Bootstrap CSS Framework with Material Design Bootstrap styling
+    - Uses SCSS for styling
+    - Font Awesome Support
+    - Progressive Web App
+- url: https://gatsby-starter-monolith.netlify.com
+  repo: https://github.com/danspratling/gatsby-starter-monolith
+  description: A Gatsby Starter designed to work with monolith. Monolith is a workspace starter which provides a good base to begin a medium-large (multisite) project
+  tags:
+    - Language:TypeScript
+    - Storybook
+    - Styling:CSS-in-JS
+  features:
+    - A minimal site with the option to add loads of functionality
+    - Based on the Monolith repo to provide an easy starting point for large projects https://github.com/danspratling/monolith
+    - Uses Theme-UI to handle theming and styling
+    - Uses Typescript to encourage good coding
+    - Uses Storybook to encourage visual testing
+    - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
