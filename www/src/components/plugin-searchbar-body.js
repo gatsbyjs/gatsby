@@ -467,18 +467,20 @@ class PluginSearchBar extends Component {
 
   urlToSearch = () => {
     if (this.props.location.search) {
-      const params = new URLSearchParams(this.props.location.search)
-      // only take into account 'search' query
-      const search = params.get(`search`)
-      return decodeURIComponent(search)
+      const match = /(\?|&)=([^&]+)/.exec(this.props.location.search)
+      if (match) return decodeURIComponent(match[2])
+      return ``
     }
     return ``
   }
 
   updateHistory(value) {
-    reachNavigate(`${this.props.location.pathname}?=search=${value.query}`, {
-      replace: true,
-    })
+    reachNavigate(
+      `${this.props.location.pathname}?=${encodeURIComponent(value.query)}`,
+      {
+        replace: true,
+      }
+    )
   }
 
   onSearchStateChange = searchState => {
