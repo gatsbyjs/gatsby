@@ -88,6 +88,7 @@ exports.sourceNodes = async (
     contentTypeItems,
     defaultLocale,
     locales,
+    space,
   } = await fetchData({
     syncToken,
     reporter,
@@ -108,6 +109,7 @@ exports.sourceNodes = async (
       .map(locale => {
         const nodeId = createNodeId(
           normalize.makeId({
+            spaceId: space.sys.id,
             id: node.sys.id,
             currentLocale: locale.code,
             defaultLocale,
@@ -152,6 +154,7 @@ exports.sourceNodes = async (
     assets,
     defaultLocale,
     locales,
+    space,
   })
 
   // Build foreign reference map before starting to insert any nodes
@@ -161,6 +164,7 @@ exports.sourceNodes = async (
     resolvable,
     defaultLocale,
     locales,
+    space,
   })
 
   const newOrUpdatedEntries = []
@@ -203,6 +207,7 @@ exports.sourceNodes = async (
       foreignReferenceMap,
       defaultLocale,
       locales,
+      space,
     })
   })
 
@@ -213,6 +218,7 @@ exports.sourceNodes = async (
       createNodeId,
       defaultLocale,
       locales,
+      space,
     })
   })
 
