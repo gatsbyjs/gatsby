@@ -502,6 +502,8 @@ body {
 
 By targeting the HTML `body` element, your font will apply to most text on the page. Additional CSS can target other elements, such as `button` or `textarea`.
 
+If fonts are not updating following steps above, make sure to replace the existing font-family in relevant CSS.
+
 #### Additional resources
 
 - More on [importing assets into files](/docs/importing-assets-into-files/)
@@ -1527,6 +1529,11 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 
 Images can be imported right into a JavaScript module with webpack. This process automatically minifies and copies the image to your site's `public` folder, providing a dynamic image URL for you to pass to an HTML `<img>` element like a regular file path.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-import-a-local-image-into-a-gatsby-component-with-webpack"
+  lessonTitle="Import a Local Image into a Gatsby Component with webpack"
+/>
+
 #### Prerequisites
 
 - A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
@@ -1567,6 +1574,11 @@ export default () => (
 As an alternative to importing assets with webpack, the `static` folder allows access to content that gets automatically copied into the `public` folder when built.
 
 This is an **escape route** for [specific use cases](/docs/static-folder/#when-to-use-the-static-folder), and other methods like [importing with webpack](#import-an-image-into-a-component-with-webpack) are recommended to leverage optimizations made by Gatsby.
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-a-local-image-from-the-static-folder-in-a-gatsby-component"
+  lessonTitle="Use a local image from the static folder in a Gatsby component"
+/>
 
 #### Prerequisites
 
@@ -1804,6 +1816,7 @@ return (
 - [Gatsby Image API](/docs/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image)
 - [More on working with images in Gatsby](/docs/working-with-images/)
+- [Free egghead.io videos explaining these steps](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e)
 
 ### Optimizing and querying images in post frontmatter with gatsby-image
 

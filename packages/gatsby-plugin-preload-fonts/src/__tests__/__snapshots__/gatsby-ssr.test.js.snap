@@ -1,42 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-ssr accepts boolean \`crossOrigin\` in plugin config 1`] = `
+exports[`gatsby-ssr generates <link> tags with \`crossorigin\` \`anonymous\` prop for self-hosted fonts 1`] = `
 Array [
   <link
     as="font"
-    href="/path/to/font.otf"
+    crossOrigin="anonymous"
+    href="/font.otf"
     rel="preload"
   />,
 ]
 `;
 
-exports[`gatsby-ssr accepts function \`crossOrigin\` in plugin config 1`] = `
+exports[`gatsby-ssr generates <link> tags with \`crossorigin\` prop for external fonts accepts function \`crossOrigin\` in plugin config 1`] = `
 Array [
   <link
     as="font"
-    href="/path/to/font.otf"
+    crossOrigin="anonymous"
+    href="https://foo.bar/path/to/font.otf"
     rel="preload"
   />,
 ]
 `;
 
-exports[`gatsby-ssr accepts function \`crossOrigin\` in plugin config 2`] = `
+exports[`gatsby-ssr generates <link> tags with \`crossorigin\` prop for external fonts accepts function \`crossOrigin\` in plugin config 2`] = `
 Array [
   <link
     as="font"
     crossOrigin="use-credentials"
-    href="/path/to/another.woff"
+    href="https://foo.bar/path/to/another.woff"
     rel="preload"
   />,
 ]
 `;
 
-exports[`gatsby-ssr accepts string \`crossOrigin\` in plugin config 1`] = `
+exports[`gatsby-ssr generates <link> tags with \`crossorigin\` prop for external fonts accepts string \`crossOrigin\` in plugin config 1`] = `
 Array [
   <link
     as="font"
     crossOrigin="use-credentials"
-    href="/path/to/font.otf"
+    href="https://foo.bar/path/to/font.otf"
     rel="preload"
   />,
 ]
@@ -53,13 +55,13 @@ Array [
   <link
     as="font"
     crossOrigin="anonymous"
-    href="/path/to/another.ttf"
+    href="https://foo.bar/path/to/another.ttf"
     rel="preload"
   />,
   <link
     as="font"
     crossOrigin="anonymous"
-    href="/path/to/another/font.woff"
+    href="https://foo.baz/path/to/another/font.woff"
     rel="preload"
   />,
 ]

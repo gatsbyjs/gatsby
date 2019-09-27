@@ -1,5 +1,5 @@
 ---
-title: GraphQL Reference
+title: GraphQL Query Options Reference
 ---
 
 ## Intro

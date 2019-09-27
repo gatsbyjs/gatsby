@@ -61,10 +61,10 @@ module.exports = async (
     const optionsHash = createContentDigest(options)
 
     const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
-    let cahedRawHTML = await cache.get(cacheKey)
+    let cachedRawHTML = await cache.get(cacheKey)
 
-    if (cahedRawHTML) {
-      return cahedRawHTML
+    if (cachedRawHTML) {
+      return cachedRawHTML
     }
     const metaReader = sharp()
 

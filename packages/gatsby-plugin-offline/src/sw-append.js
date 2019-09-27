@@ -3,8 +3,13 @@
 importScripts(`idb-keyval-iife.min.js`)
 
 const { NavigationRoute } = workbox.routing
+let offlineShellEnabled = true
 
 const navigationRoute = new NavigationRoute(async ({ event }) => {
+  if (!offlineShellEnabled) {
+    return await fetch(event.request)
+  }
+
   let { pathname } = new URL(event.request.url)
   pathname = pathname.replace(new RegExp(`^%pathPrefix%`), ``)
 
@@ -31,17 +36,35 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
 
 workbox.routing.registerRoute(navigationRoute)
 
-const messageApi = {
-  setPathResources(event, { path, resources }) {
+// prefer standard object syntax to support more browsers
+const MessageAPI = {
+  setPathResources: (event, { path, resources }) => {
     event.waitUntil(idbKeyval.set(`resources:${path}`, resources))
   },
 
-  clearPathResources(event) {
+  clearPathResources: event => {
     event.waitUntil(idbKeyval.clear())
+  },
+
+  enableOfflineShell: () => {
+    offlineShellEnabled = true
+  },
+
+  disableOfflineShell: () => {
+    offlineShellEnabled = false
   },
 }
 
 self.addEventListener(`message`, event => {
-  const { gatsbyApi } = event.data
-  if (gatsbyApi) messageApi[gatsbyApi](event, event.data)
+  const { gatsbyApi: api } = event.data
+  if (api) MessageAPI[api](event, event.data)
+})
+
+workbox.routing.registerRoute(/\/.gatsby-plugin-offline:.+/, ({ event }) => {
+  const { pathname } = new URL(event.request.url)
+
+  const api = pathname.match(/:(.+)/)[1]
+  MessageAPI[api]()
+
+  return new Response()
 })
