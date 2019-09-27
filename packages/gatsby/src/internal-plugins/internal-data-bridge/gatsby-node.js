@@ -114,6 +114,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     `gatsby-config.js`
   )
   chokidar
+    // Setting useFsEvents to false fixes https://github.com/gatsbyjs/gatsby/issues/17131
     .watch(pathToGatsbyConfig, { useFsEvents: false })
     .on(`change`, () => {
       const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
