@@ -62,7 +62,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "event-source-polyfill": "^1.0.8",
+    "event-source-polyfill": "^1.0.9",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "fast-levenshtein": "^2.0.6",
