@@ -57,7 +57,7 @@ Let's walk through the steps:
   },
 ```
 
-When deploying to Netlify, `gatsby build` must be run before `netlify-lambda build src/lambda` or else your Netlify function builds will fail.  To avoid this, do not set your build script command to `"build": "run-p build:**"` when you replace `scripts` in `package.json`.  Doing so will run all build scripts in parallel.  This will make it possible for `netlify-lambda build src/lambda` to run before `gatsby build`.  
+When deploying to Netlify, `gatsby build` must be run before `netlify-lambda build src/lambda` or else your Netlify function builds will fail. To avoid this, do not set your build script command to `"build": "run-p build:**"` when you replace `scripts` in `package.json`. Doing so will run all build scripts in parallel. This will make it possible for `netlify-lambda build src/lambda` to run before `gatsby build`.
 
 3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each JavaScript/TypeScript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
 
@@ -370,8 +370,8 @@ export function handler(event, context, callback) {
     })
   } else {
     console.log(`
-    Note that netlify-lambda only locally emulates Netlify Functions, 
-    while netlify-identity-widget interacts with a real Netlify Identity instance. 
+    Note that netlify-lambda only locally emulates Netlify Functions,
+    while netlify-identity-widget interacts with a real Netlify Identity instance.
     This means that netlify-lambda doesn't support Netlify Functions + Netlify Identity integration.
     `)
     callback(null, {
