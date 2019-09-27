@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.15...gatsby-source-graphql@2.1.17) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.15...gatsby-source-graphql@2.1.16) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
 ## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.14...gatsby-source-graphql@2.1.15) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-source-graphql
