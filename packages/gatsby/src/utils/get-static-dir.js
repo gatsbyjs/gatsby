@@ -44,7 +44,7 @@ exports.copyStaticDirs = () => {
 exports.syncStaticDir = () => {
   const staticDir = nodePath.join(process.cwd(), `static`)
   chokidar
-    .watch(staticDir)
+    .watch(staticDir, { useFsEvents: false })
     .on(`add`, path => {
       const relativePath = nodePath.relative(staticDir, path)
       fs.copy(path, `${process.cwd()}/public/${relativePath}`)

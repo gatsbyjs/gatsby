@@ -232,10 +232,12 @@ const watch = async rootDir => {
   })
 
   watcher = chokidar
-    .watch([
-      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
-      ...packagePaths,
-    ])
+    .watch(
+      [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
+      {
+        useFsEvents: false,
+      }
+    )
     .on(`change`, path => {
       debounceCompile()
     })

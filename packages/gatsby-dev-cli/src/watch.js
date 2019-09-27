@@ -169,6 +169,7 @@ async function watch(
   chokidar
     .watch(watchers, {
       ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
+      useFsEvents: false,
     })
     .on(`all`, async (event, filePath) => {
       if (!watchEvents.includes(event)) {

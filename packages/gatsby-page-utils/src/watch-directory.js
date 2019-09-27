@@ -5,7 +5,7 @@ const slash = require(`slash`)
 module.exports = async (path, glob, onNewFile, onRemovedFile) =>
   new Promise((resolve, reject) => {
     chokidar
-      .watch(glob, { cwd: path })
+      .watch(glob, { cwd: path, useFsEvents: false })
       .on(`add`, path => {
         path = slash(path)
         onNewFile(path)

@@ -19,7 +19,7 @@ exports.createPagesStatefully = async ({ store, actions }, options, done) => {
       path: `/dev-404-page/`,
     })
     chokidar
-      .watch(source)
+      .watch(source, { useFsEvents: false })
       .on(`change`, () => copy())
       .on(`ready`, () => done())
   } else {

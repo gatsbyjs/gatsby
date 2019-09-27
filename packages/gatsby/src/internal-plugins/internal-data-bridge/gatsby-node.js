@@ -113,20 +113,22 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     program.directory,
     `gatsby-config.js`
   )
-  chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
-    const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
-    try {
-      // Delete require cache so we can reload the module.
-      delete require.cache[require.resolve(pathToGatsbyConfig)]
-      const config = require(pathToGatsbyConfig)
-      createGatsbyConfigNode(config)
-    } catch (e) {
-      // Restore the old cache since requiring the new gatsby-config.js failed.
-      if (oldCache !== undefined) {
-        require.cache[require.resolve(pathToGatsbyConfig)] = oldCache
+  chokidar
+    .watch(pathToGatsbyConfig, { useFsEvents: false })
+    .on(`change`, () => {
+      const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
+      try {
+        // Delete require cache so we can reload the module.
+        delete require.cache[require.resolve(pathToGatsbyConfig)]
+        const config = require(pathToGatsbyConfig)
+        createGatsbyConfigNode(config)
+      } catch (e) {
+        // Restore the old cache since requiring the new gatsby-config.js failed.
+        if (oldCache !== undefined) {
+          require.cache[require.resolve(pathToGatsbyConfig)] = oldCache
+        }
       }
-    }
-  })
+    })
 }
 
 exports.onCreatePage = ({ createContentDigest, page, actions }) => {
