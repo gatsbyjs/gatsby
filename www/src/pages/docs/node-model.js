@@ -33,7 +33,8 @@ class NodeModelDocs extends React.Component {
             Gatsby exposes its internal data store and query capabilities to
             GraphQL field resolvers on <code>context.nodeModel</code>.
           </p>
-          <div className="gatsby-code-title">Example usage</div>
+          <h3>Example usage</h3>
+          <div className="gatsby-code-title">gatsby-node.js</div>
           <div className="gatsby-highlight">
             <pre
               className="language-javascript"

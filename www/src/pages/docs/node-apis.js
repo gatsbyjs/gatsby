@@ -41,7 +41,7 @@ class NodeAPIDocs extends React.Component {
           </h1>
           <p>
             Gatsby gives plugins and site builders many APIs for controlling
-            your site.
+            your site's data in the GraphQL data layer.
           </p>
           <h3>Async plugins</h3>
           <p>
