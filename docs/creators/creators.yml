@@ -376,3 +376,17 @@
   for_hire: false
   hiring: false
   portfolio: true
+- name: Adaltas
+  type: company
+  description: >-
+    Adaltas is a team of consultants with a focus on Open Source, Big Data and 
+    distributed systems based in France, Canada and Morocco. Our core expertises include
+    Data Engineering, Data Science, DevOps, Cloud Computing and Web technologies.
+  location: France
+  website: "https://www.adaltas.com/"
+  github: "https://github.com/adaltas"
+  image: images/adaltas.png
+  for_hire: true
+  hiring: false
+  # If you mark `portfolio: true`, any sites you have in the Site Showcase that say `built_by: [imagine your name here]` will be linked to your Creator Profile. So make sure that `name`in `creators.yml` is exactly the same as `built_by` in `sites.yml`.
+  portfolio: true
