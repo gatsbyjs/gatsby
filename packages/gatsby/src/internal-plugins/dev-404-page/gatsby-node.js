@@ -19,6 +19,7 @@ exports.createPagesStatefully = async ({ store, actions }, options, done) => {
       path: `/dev-404-page/`,
     })
     chokidar
+      // Setting useFsEvents to false fixes https://github.com/gatsbyjs/gatsby/issues/17131
       .watch(source, { useFsEvents: false })
       .on(`change`, () => copy())
       .on(`ready`, () => done())
