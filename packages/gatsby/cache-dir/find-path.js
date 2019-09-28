@@ -1,14 +1,12 @@
 import { match } from "@reach/router/lib/utils"
-import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
 
 const pathCache = new Map()
 let matchPaths = []
 
 const trimPathname = rawPathname => {
-  let pathname = decodeURIComponent(rawPathname)
-  // Remove the pathPrefix from the pathname.
-  let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
+  // rawPathname should NOT have a pathPrefix
+  const trimmedPathname = decodeURIComponent(rawPathname)
     // Remove any hashfragment
     .split(`#`)[0]
     // Remove search query

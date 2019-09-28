@@ -117,45 +117,47 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  publicLoader.loadPage(browserLoc.pathname).then(page => {
-    if (!page || page.status === `error`) {
-      throw new Error(
-        `page resources for ${browserLoc.pathname} not found. Not rendering React`
-      )
-    }
-    const Root = () => (
-      <Location>
-        {locationContext => <LocationHandler {...locationContext} />}
-      </Location>
-    )
-
-    const WrappedRoot = apiRunner(
-      `wrapRootElement`,
-      { element: <Root /> },
-      <Root />,
-      ({ result }) => {
-        return { element: result }
+  publicLoader
+    .loadPage(stripPrefix(browserLoc.pathname, __BASE_PATH__))
+    .then(page => {
+      if (!page || page.status === `error`) {
+        throw new Error(
+          `page resources for ${browserLoc.pathname} not found. Not rendering React`
+        )
       }
-    ).pop()
-
-    let NewRoot = () => WrappedRoot
-
-    const renderer = apiRunner(
-      `replaceHydrateFunction`,
-      undefined,
-      ReactDOM.hydrate
-    )[0]
-
-    domReady(() => {
-      renderer(
-        <NewRoot />,
-        typeof window !== `undefined`
-          ? document.getElementById(`___gatsby`)
-          : void 0,
-        () => {
-          apiRunner(`onInitialClientRender`)
-        }
+      const Root = () => (
+        <Location>
+          {locationContext => <LocationHandler {...locationContext} />}
+        </Location>
       )
+
+      const WrappedRoot = apiRunner(
+        `wrapRootElement`,
+        { element: <Root /> },
+        <Root />,
+        ({ result }) => {
+          return { element: result }
+        }
+      ).pop()
+
+      let NewRoot = () => WrappedRoot
+
+      const renderer = apiRunner(
+        `replaceHydrateFunction`,
+        undefined,
+        ReactDOM.hydrate
+      )[0]
+
+      domReady(() => {
+        renderer(
+          <NewRoot />,
+          typeof window !== `undefined`
+            ? document.getElementById(`___gatsby`)
+            : void 0,
+          () => {
+            apiRunner(`onInitialClientRender`)
+          }
+        )
+      })
     })
-  })
 })

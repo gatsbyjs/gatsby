@@ -1,6 +1,7 @@
 import React from "react"
-import loader from "./loader"
 import shallowCompare from "shallow-compare"
+import loader from "./loader"
+import stripPrefix from "./strip-prefix"
 
 class EnsureResources extends React.Component {
   constructor(props) {
@@ -8,13 +9,17 @@ class EnsureResources extends React.Component {
     const { location, pageResources } = props
     this.state = {
       location: { ...location },
-      pageResources: pageResources || loader.loadPageSync(location.pathname),
+      pageResources:
+        pageResources ||
+        loader.loadPageSync(stripPrefix(location.pathname, __BASE_PATH__)),
     }
   }
 
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location.href !== location.href) {
-      const pageResources = loader.loadPageSync(location.pathname)
+      const pageResources = loader.loadPageSync(
+        stripPrefix(location.pathname, __BASE_PATH__)
+      )
       return {
         pageResources,
         location: { ...location },
@@ -41,7 +46,9 @@ class EnsureResources extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     // Always return false if we're missing resources.
     if (!nextState.pageResources) {
-      this.loadResources(nextProps.location.pathname)
+      this.loadResources(
+        stripPrefix(nextProps.location.pathname, __BASE_PATH__)
+      )
       return false
     }
 
