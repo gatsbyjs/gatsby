@@ -14,9 +14,9 @@ describe(`find-path`, () => {
       expect(cleanPath(`/index.html`)).toBe(`/`)
     })
 
-    it(`strip out a basePrefix`, () => {
+    it(`does NOT strip out a pathPrefix`, () => {
       global.__BASE_PATH__ = `/blog`
-      expect(cleanPath(`/blog/mypath`)).toBe(`/mypath`)
+      expect(cleanPath(`/blog/mypath`)).toBe(`/blog/mypath`)
     })
   })
 
