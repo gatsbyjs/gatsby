@@ -148,8 +148,8 @@
     "babel-preset-gatsby-package": "^0.2.7",
     "cross-env": "^5.2.1",
     "documentation": "^12.1.2",
-    "react": "^16.10.0",
-    "react-dom": "^16.10.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
     "rimraf": "^3.0.0",
     "xhr-mock": "^2.5.0"
   },
