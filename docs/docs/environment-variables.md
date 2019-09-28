@@ -140,7 +140,7 @@ You can trigger this endpoint locally for example on Unix-based operating system
 
 ## Build Variables
 
-Gatsby has uses additional environment variables in the build step to fine-tune the outcome of a build. These are likely reserved for more advanced configurations, such as using [CI/CD](https://en.wikipedia.org/wiki/CI/CD) to deploy a Gatsby site.
+Gatsby uses additional environment variables in the build step to fine-tune the outcome of a build. You may find these helpful for more advanced configurations, such as using [CI/CD](https://en.wikipedia.org/wiki/CI/CD) to deploy a Gatsby site.
 
 For example, you can set `CI=true` as an environment variable to allow Gatsby's build script to tailor the terminal output to an automated deployment environment. Some CI/CD tooling may already set this environment variable. This is useful for limiting the verbosity of the build output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals), such as terminal in progress animations.
 
