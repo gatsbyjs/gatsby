@@ -8,7 +8,7 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import DevLoader from "./dev-loader"
 import syncRequires from "./sync-requires"
-import stripPrefix from "./stripPrefix"
+import stripPrefix from "./strip-prefix"
 // Generated during bootstrap
 import matchPaths from "./match-paths.json"
 
