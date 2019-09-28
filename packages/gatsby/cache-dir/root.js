@@ -1,6 +1,7 @@
 import React from "react"
 import { Router, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
+import stripPrefix from "./strip-prefix"
 
 import {
   shouldUpdateScroll,
@@ -56,7 +57,7 @@ class LocationHandler extends React.Component {
   render() {
     let { location } = this.props
 
-    if (!loader.isPageNotFound(location.pathname)) {
+    if (!loader.isPageNotFound(stripPrefix(location.pathname, __BASE_PATH__))) {
       return (
         <EnsureResources location={location}>
           {locationAndPageResources => (

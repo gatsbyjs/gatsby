@@ -8,6 +8,7 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import DevLoader from "./dev-loader"
 import syncRequires from "./sync-requires"
+import stripPrefix from "./stripPrefix"
 // Generated during bootstrap
 import matchPaths from "./match-paths.json"
 
@@ -59,7 +60,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),
-    loader.loadPage(window.location.pathname),
+    loader.loadPage(stripPrefix(window.location.pathname, __BASE_PATH__)),
   ]).then(() => {
     const preferDefault = m => (m && m.default) || m
     let Root = preferDefault(require(`./root`))

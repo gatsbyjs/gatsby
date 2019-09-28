@@ -1,11 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { navigate as reachNavigate } from "@reach/router"
+import { parsePath } from "gatsby-link"
 import loader from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
-import { navigate as reachNavigate } from "@reach/router"
-import { parsePath } from "gatsby-link"
+import stripPrefix from "./strip-prefix"
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -13,7 +14,8 @@ const redirectMap = redirects.reduce((map, redirect) => {
   return map
 }, {})
 
-function maybeRedirect(pathname) {
+function maybeRedirect(locationPathname) {
+  const pathname = stripPrefix(locationPathname, __BASE_PATH__)
   const redirect = redirectMap[pathname]
 
   if (redirect != null) {
