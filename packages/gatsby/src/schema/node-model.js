@@ -108,10 +108,10 @@ class LocalNodeModel {
       result = this.nodeStore.getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodes = nodeTypeNames.reduce(
-        (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
-        []
-      )
+      const nodes = nodeTypeNames.reduce((acc, typeName) => {
+        acc.push(...this.nodeStore.getNodesByType(typeName))
+        return acc
+      }, [])
       result = nodes.filter(Boolean)
     }
 
@@ -147,6 +147,8 @@ class LocalNodeModel {
       `Querying GraphQLUnion types is not supported.`
     )
 
+    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+
     const fields = getQueryFields({
       filter: query.filter,
       sort: query.sort,
@@ -157,15 +159,9 @@ class LocalNodeModel {
       this.schemaComposer,
       this.schema,
       gqlType,
-      fields
+      fields,
+      nodeTypeNames
     )
-
-    let nodeTypeNames
-    if (isAbstractType(gqlType)) {
-      nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
-    } else {
-      nodeTypeNames = [gqlType.name]
-    }
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
 
@@ -340,9 +336,11 @@ class LocalNodeModel {
         this.createPageDependency({ path, connection: connectionType })
       } else {
         const nodes = Array.isArray(result) ? result : [result]
-        nodes
-          .filter(Boolean)
-          .map(node => this.createPageDependency({ path, nodeId: node.id }))
+        for (const node of nodes) {
+          if (node) {
+            this.createPageDependency({ path, nodeId: node.id })
+          }
+        }
       }
     }
 
@@ -588,7 +586,13 @@ function resolveField(
   )
 }
 
-const determineResolvableFields = (schemaComposer, schema, type, fields) => {
+const determineResolvableFields = (
+  schemaComposer,
+  schema,
+  type,
+  fields,
+  nodeTypeNames
+) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
   Object.keys(fields).forEach(fieldName => {
@@ -596,16 +600,25 @@ const determineResolvableFields = (schemaComposer, schema, type, fields) => {
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    const needsResolve = typeComposer.getFieldExtension(
-      fieldName,
-      `needsResolve`
-    )
+    let possibleTCs = [
+      typeComposer,
+      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
+    ]
+    let needsResolve = false
+    for (const tc of possibleTCs) {
+      needsResolve = tc.getFieldExtension(fieldName, `needsResolve`) || false
+      if (needsResolve) {
+        break
+      }
+    }
+
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
         schemaComposer,
         schema,
         gqlFieldType,
-        field
+        field,
+        toNodeTypeNames(schema, gqlFieldType)
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved

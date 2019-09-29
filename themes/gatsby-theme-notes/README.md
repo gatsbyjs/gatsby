@@ -15,13 +15,13 @@ A Gatsby theme for publishing notes to your website.
 
 This will generate a new site that pre-configures use of the notes theme.
 
-```sh
+```shell
 gatsby new my-themed-notes https://github.com/gatsbyjs/gatsby-starter-notes-theme
 ```
 
 ### Manually add to your site
 
-```sh
+```shell
 npm install --save gatsby-theme-notes
 ```
 

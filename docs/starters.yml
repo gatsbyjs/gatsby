@@ -2999,7 +2999,7 @@
     - Minimal
 - url: https://gatsby-typescript-starter-default.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
-  description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
+  description: Simple gatsby starter using TypeScript and eslint instead of outdated tslint.
   tags:
     - Language:TypeScript
     - SEO
@@ -3123,7 +3123,7 @@
     - A contact form protected by Google Recaptcha
     - Can be deployed with one click
     - Functional components with Recompose React Hooks! ready to migrate to React hooks!
-    - Fetches your Github pinned projects with most stars (You could customize this if you wish)
+    - Fetches your GitHub pinned projects with most stars (You could customize this if you wish)
 - url: https://github.com/smakosh/gatsby-airtable-starter
   repo: https://github.com/smakosh/gatsby-airtable-starter
   description: Gatsby Airtable starter
@@ -3721,7 +3721,7 @@
     - Includes plugins for offline support out of the box
 - url: https://gatsby-typescript-minimal.netlify.com/
   repo: https://github.com/benbarber/gatsby-typescript-minimal
-  description: A minimal, bare-bones Typescript starter for Gatsby
+  description: A minimal, bare-bones TypeScript starter for Gatsby
   tags:
     - Language:TypeScript
     - Styling:CSS-in-JS
@@ -3905,3 +3905,158 @@
     - Mobile and responsive
     - Sitemap & Robots.txt generation
     - Optimized images with gatsby-image
+- url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
+  repo: https://github.com/sagar7993/gatsby-wordpress-typescript-scss-blog
+  description: A Gatsby starter template for a Wordpress blog, built using TypeScript, SCSS and Ant Design
+  tags:
+    - Blog
+    - CMS:Wordpress
+    - CMS:Headless
+    - Language:TypeScript
+    - Pagination
+    - PWA
+    - SEO
+    - Portfolio
+    - Styling:SCSS
+  features:
+    - Typescript for type-safe code
+    - Source content from Wordpress CMS
+    - Auto generated Pagination for your Wordpress Posts
+    - Auto generated Navigation for next and previous post at the end Post
+    - Auto generated pages for tags and categories sourced from Wordpress
+    - SCSS stylesheets
+    - PWA with offline support
+    - Ant Design for UI components and theming
+    - Jest and Enzyme Testing framework support for snapshots and unit tests.
+    - Responsive Design
+    - Google Analytics
+    - Comments using Staticman
+    - Images within wordpress post/page content downloaded to static folder and transformed to webp format during build
+    - Social widgets
+    - Instagram feed of any profile (no API token needed)
+    - Pinterest pin-it button on hovering on images (no API token needed)
+    - Twitter timeline and follow button (no API token needed)
+    - Facebook timeline and like button (no API token needed)
+    - SEO friendly
+    - Web app manifest
+    - Mobile optimized and responsive
+    - Sitemap.xml & Robots.txt generation
+    - Optimized images with gatsby-image
+    - Git pre-commit and pre-push hooks using Husky
+    - TSLint formatting
+    - Highly optimized with excellent lighthouse audit score
+- url: https://gatsby-starter-typescript-deluxe.netlify.com/
+  repo: https://github.com/gojutin/gatsby-starter-typescript-deluxe
+  description: A Gatsby starter with TypeScript, Storybook, Styled Components, Framer Motion, Jest, and more.
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Storybook
+    - SEO
+    - Linting
+    - Testing
+  features:
+    - TypeScript for type-safe code.
+    - Styled-Components for all your styles.
+    - Framer Motion for awesome animations.
+    - gatsby-image and gatsby-transformer-sharp for optimized images.
+    - gatsby-plugin-manifest + SEO component for an SEO-friendly PWA.
+    - Storybook with add-ons for showing off your awesome components.
+    - Jest and React Testing library for snapshots and unit tests.
+    - ESLint (with TSLint and Prettier) to make your code look its best.
+    - React Axe and React A11y for accessibility so that your site is awesome for everyone.
+- url: https://gatsby-markdown-blog-starter.netlify.com/
+  repo: https://github.com/ammarjabakji/gatsby-markdown-blog-starter
+  description: GatsbyJS v2 starter for creating a markdown blog. Based on Gatsby Advanced Starter.
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - Gatsby v2 support
+    - Responsive Design
+    - Pagination
+    - Content is Markdown files
+    - Google Analytics
+    - Support for RSS feed
+    - SEO friendly
+    - Sitemap & Robots.txt generation
+    - Sass support
+    - Css Modules support
+    - Web App Manifest
+    - Offline support
+    - htaccess support
+    - Typography.js
+    - Integration with Social Media
+- url: https://blogerist.netlify.com
+  repo: https://github.com/bvlktech/blogerist
+  description: Starter blog built with GatsbyJS
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - A simple landing page with blog functionality built with Netlify CMS
+    - Create Blog posts from Netlify CMS
+    - Uses SCSS for styling
+    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
+    - Uses gatbsy-image with Netlify-CMS preview support
+    - Separate components for everything
+    - Netlify deploy configuration
+    - Netlify forms functionality
+    - Discus commenting added to each blog post
+    - Perfect score on Lighthouse for SEO, Accessibility and Performance
+    - ..and more
+- url: https://gatsby-starter-bloomer-db0aaf.netlify.com
+  repo: https://github.com/zlutfi/gatsby-starter-bloomer
+  description: Barebones starter website with Bloomer React components for Bulma.
+  tags:
+    - PWA
+    - Styling:Bulma
+    - Styling:SCSS
+  features:
+    - Bloomer React Commponents
+    - Bulma CSS Framework
+    - Uses SCSS for styling
+    - Font Awesome Support
+    - Progressive Web App
+- url: https://gatsby-starter-mdbreact.netlify.com
+  repo: https://github.com/zlutfi/gatsby-starter-mdbreact
+  description: Barebones starter website with Material Design Bootstrap React components.
+  tags:
+    - PWA
+    - Styling:Bootstrap
+    - Styling:Material
+    - Styling:SCSS
+  features:
+    - MDBReact React Commponents
+    - Bootstrap CSS Framework with Material Design Bootstrap styling
+    - Uses SCSS for styling
+    - Font Awesome Support
+    - Progressive Web App
+- url: https://gatsby-starter-monolith.netlify.com
+  repo: https://github.com/danspratling/gatsby-starter-monolith
+  description: A Gatsby Starter designed to work with monolith. Monolith is a workspace starter which provides a good base to begin a medium-large (multisite) project
+  tags:
+    - Language:TypeScript
+    - Storybook
+    - Styling:CSS-in-JS
+  features:
+    - A minimal site with the option to add loads of functionality
+    - Based on the Monolith repo to provide an easy starting point for large projects https://github.com/danspratling/monolith
+    - Uses Theme-UI to handle theming and styling
+    - Uses Typescript to encourage good coding
+    - Uses Storybook to encourage visual testing
+    - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
+- url: https://gatsby-starter-ts-pwa.netlify.com/
+  repo: https://github.com/markselby9/gatsby-starter-typescript-pwa
+  description: The default Gatsby starter fork with TypeScript and PWA support added
+  tags:
+    - Language:TypeScript
+    - PWA
+  features:
+    - Minumum changes based on default starter template for TypeScript and PWA
+    - Added TypeScript support with eslint and tsc check
+    - Support Github Actions CI/CD workflow (beta)

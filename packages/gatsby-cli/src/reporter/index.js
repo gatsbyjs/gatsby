@@ -223,8 +223,8 @@ const reporter = {
 }
 
 console.log = (...args) => reporter.log(util.format(...args))
-console.warn = (...args) => reporter.log(util.format(...args))
-console.info = (...args) => reporter.log(util.format(...args))
-console.error = (...args) => reporter.log(util.format(...args))
+console.warn = (...args) => reporter.warn(util.format(...args))
+console.info = (...args) => reporter.info(util.format(...args))
+console.error = (...args) => reporter.error(util.format(...args))
 
 module.exports = reporter

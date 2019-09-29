@@ -8,7 +8,7 @@ rendering support.
 
 ## Install
 
-```sh
+```shell
 npm install gatsby-plugin-styletron
 ```
 

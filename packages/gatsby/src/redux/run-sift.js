@@ -125,10 +125,10 @@ const runSift = args => {
   let nodes
 
   if (nodeTypeNames.length > 1) {
-    nodes = nodeTypeNames.reduce(
-      (acc, typeName) => acc.concat(getNodesAndResolvedNodes(typeName)),
-      []
-    )
+    nodes = nodeTypeNames.reduce((acc, typeName) => {
+      acc.push(...getNodesAndResolvedNodes(typeName))
+      return acc
+    }, [])
   } else {
     nodes = getNodesAndResolvedNodes(nodeTypeNames[0])
   }

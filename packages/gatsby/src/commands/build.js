@@ -46,8 +46,8 @@ module.exports = async function build(program) {
   initTracer(program.openTracingConfigFile)
 
   telemetry.trackCli(`BUILD_START`)
-  signalExit(() => {
-    telemetry.trackCli(`BUILD_END`)
+  signalExit(exitCode => {
+    telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
   const buildSpan = tracer.startSpan(`build`)
