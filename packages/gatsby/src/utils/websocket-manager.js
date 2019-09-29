@@ -21,6 +21,16 @@ const denormalize = path => {
 }
 
 /**
+ * @typedef {Object} QueryResult
+ * @param {string} id
+ * @param {Object} result
+ */
+
+/**
+ * @typedef {Map<string, QueryResult>} QueryResultsMap
+ */
+
+/**
  * Get cached page query result for given page path.
  * @param {string} pagePath Path to a page.
  * @param {string} directory Root directory of current project.

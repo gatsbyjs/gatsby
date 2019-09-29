@@ -1,3 +1,8 @@
+/**
+ * @typedef {Object} Plugin
+ * @param {string} name
+ */
+
 const actions = {}
 
 /**

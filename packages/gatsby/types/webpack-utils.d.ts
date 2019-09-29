@@ -21,17 +21,6 @@ type PluginInstance = any
 type PluginFactory = (...args: any[]) => PluginInstance
 
 type BuiltinPlugins = any
-
-type Stage = "develop" | "develop-html" | "build-javascript" | "build-html"
-
-/**
- * Configuration options for `createUtils`
- */
-export interface WebpackUtilsOptions {
-  stage: Stage
-  program: any
-}
-
 /**
  * Utils that produce webpack `loader` objects
  */

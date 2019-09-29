@@ -216,6 +216,10 @@ export function graphqlValidationError(errors, filePath, doc) {
 }
 
 /**
+ * @typedef {Error & { validationErrors?: Object }} RelayGraphQLError
+ */
+
+/**
  * @param {Map<string, string>} namePathMap
  * @param {Map<string, any>} nameDefMap
  * @param {Error | RelayGraphQLError} error

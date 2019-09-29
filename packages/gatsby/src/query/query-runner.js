@@ -9,6 +9,16 @@ const pageDataUtil = require(`../utils/page-data`)
 
 const resultHashes = {}
 
+/**
+ * @typedef {Object} QueryJob
+ * @param {string} id
+ * @param {string} [hash]
+ * @param {string} query
+ * @param {string} componentPath
+ * @param {Object} context
+ * @param {Boolean} isPage
+ */
+
 // Run query
 /**
  * @param graphqlRunner

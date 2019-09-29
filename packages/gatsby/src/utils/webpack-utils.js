@@ -11,6 +11,17 @@ const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
 
 /**
+ * @typedef {Object} WebpackUtilsOptions
+ * Configuration options for `createUtils`
+ * @param {Stage} stage
+ * @param {*} program
+ */
+
+/**
+ * @typedef {"develop" | "develop-html" | "build-javascript" | "build-html"} Stage
+ */
+
+/**
  * A factory method that produces an atoms namespace
  * @param {Object} $0
  * @param {Stage} $0.stage
@@ -25,6 +36,38 @@ module.exports = async ({ stage, program }) => {
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
+
+  /**
+   * @typedef {string | RegExp | RegExp[]} Condition
+   */
+
+  /**
+   * @typedef {Object} Rule
+   * {Condition} [test]
+   * {LoaderSpec[]} use
+   * {Condition} [exclude]
+   * {Condition} [include]
+   */
+
+  /**
+   * @callback RuleFactory
+   * @param {*} [options]
+   * @returns {Rule}
+   */
+
+  /**
+   * @typedef {*} PluginInstance
+   */
+
+  /**
+   * @callback PluginFactory
+   * @param {*} args
+   * @returns PluginInstance
+   */
+
+  /**
+   * @typedef {*} BuiltinPlugins
+   */
 
   /**
    * @param {RuleFactory<any>} original

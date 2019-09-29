@@ -30,6 +30,15 @@ const waitJobsFinished = () =>
   })
 
 /**
+ * @typedef {object} BuildArgs
+ * @param {string} directory
+ * @param {Object} sitePackageJson
+ * @param {boolean} prefixPaths
+ * @param {boolean} noUglify
+ * @param {string} openTracingConfigFile
+ */
+
+/**
  * @param {BuildArgs} program
  */
 module.exports = async function build(program) {

@@ -11,6 +11,11 @@ const { trackCli, trackError } = require(`gatsby-telemetry`)
 const prompts = require(`prompts`)
 const opn = require(`better-opn`)
 
+/**
+ * @typedef {Object} InitOptions
+ * @param {string} [rootPath]
+ */
+
 const {
   getPackageManager,
   promptPackageManager,

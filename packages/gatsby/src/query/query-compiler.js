@@ -160,6 +160,10 @@ class Runner {
   }
 
   /**
+   * @typedef {Map<string, RootQuery>} Queries
+   */
+
+  /**
    * @param {Map<string, DocumentNode>} nodes
    * @returns {Promise<Queries>}
    */
@@ -375,6 +379,16 @@ class Runner {
   }
 }
 export { Runner, resolveThemes }
+
+/**
+ * @typedef {Object} RootQuery
+ * @param {string} name
+ * @param {string} path
+ * @param {string} text
+ * @param {string} originalText
+ * @param {boolean} isStaticQuery
+ * @param {string} hash
+ */
 
 /**
  * @param $0

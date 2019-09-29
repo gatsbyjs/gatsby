@@ -48,6 +48,40 @@ const findChildren = initialChildren => {
 }
 
 /**
+ * @typedef {Object} Page
+ *
+ * The path of the page
+ * Any valid URL. Must start with a forward slash
+ * @param {string} path
+ *
+ * Path that Reach Router uses to match the page on the client side.
+ * @see {@link docs on matchPath|/docs/gatsby-internals-terminology/#matchpath}
+ * @param {string} matchPath
+ *
+ * The absolute path to the component for this page
+ * @param {string} component
+ *
+ * Context data for this page. Passed as props
+ * to the component `this.props.pageContext` as well as to the graphql query
+ * as graphql arguments.
+ * @example
+ * createPage({
+ *   path: `/my-sweet-new-page/`,
+ *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   // The context is passed as props to the component as well
+ *   // as into the component's GraphQL query.
+ *   context: {
+ *     id: `123456`,
+ *   },
+ * })
+ * @param {Object} [context]
+ *
+ * @param {string} internalComponentName
+ * @param {string} componentChunkName
+ * @param {number} updatedAt
+ */
+
+/**
  * Delete a page
  * @param {Page} page - a page object
  * @example
@@ -69,6 +103,13 @@ const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
 const pageComponentCache = {}
 const fileOkCache = {}
+
+/**
+ * @typedef {Object} ActionOptions
+ * @param {string | null} traceId
+ * @param {Object | null} parentSpan
+ * @param {Object | null} followsSpan
+ */
 
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
@@ -828,6 +869,27 @@ actions.touchNode = (options, plugin) => {
 }
 
 /**
+ * @typedef {Object} CreateNodeInput
+ *
+ * the target node object
+ * @param {Object} node
+ *
+ * @deprecated
+ * the name for the field
+ * @param {string} [fieldName]
+ *
+ * @deprecated
+ * the value for the field
+ * @param {string} [fieldValue]
+ *
+ * the name for the field
+ * @param {string} [name]
+ *
+ * the value for the field
+ * @param {*} value
+ */
+
+/**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
  *
@@ -1083,6 +1145,12 @@ actions.setBabelPreset = (config, plugin = null) => {
     payload: config,
   }
 }
+
+/**
+ * @typedef {Object} Job
+ * The id of the job
+ * @param {string} id
+ */
 
 /**
  * Create a "job". This is a long-running process that are generally

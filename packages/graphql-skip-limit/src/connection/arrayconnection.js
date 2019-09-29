@@ -2,6 +2,10 @@
  * A function that accepts an array and connection arguments, and returns
  * a connection object for use in GraphQL. It uses array offsets as pagination,
  * so pagination will only work if the array is static.
+ *
+ * @template T
+ * @param {T[]} data
+ * @param {ConnectionArguments} args
  */
 export function connectionFromArray(data, args) {
   const { skip, limit } = args
@@ -53,6 +57,10 @@ export function connectionFromArray(data, args) {
 /**
  * A version of `connectionFromArray` that takes a promised array, and returns a
  * promised connection.
+ *
+ * @template T
+ * @param {Promise<T[]>} dataPromise
+ * @param {ConnectionArguments} args
  */
 export function connectionFromPromisedArray(dataPromise, args) {
   return dataPromise.then(data => connectionFromArray(data, args))

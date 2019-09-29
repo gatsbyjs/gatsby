@@ -7,6 +7,21 @@ import {
 } from "graphql"
 
 /**
+ * @typedef {Object} ConnectionConfig
+ * @param {string | null} [name]
+ * @param {GraphQLObjectType} nodeType
+ * @param {GraphQLFieldResolver<any, any> | null} [resolveNode]
+ * @param {Thunk<GraphQLFieldConfigMap<any, any>> | null} [edgeFields]
+ * @param {Thunk<GraphQLFieldConfigMap<any, any>> | null} connectionFields
+ */
+
+/**
+ * @typedef {Object} GraphQLConnectionDefinitions
+ * @param {GraphQLObjectType} edgeType
+ * @param {GraphQLObjectType} connectionType
+ */
+
+/**
  * Returns a GraphQLFieldConfigArgumentMap appropriate to include on a field
  * whose return type is a connection type with backward pagination.
  * @type {GraphQLFieldConfigArgumentMap}
