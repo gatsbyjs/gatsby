@@ -235,8 +235,6 @@ module.exports = {
 }
 ```
 
-Restart the development server.
-
 ### Use a page query
 
 Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/page-query):
@@ -270,7 +268,9 @@ export const query = graphql`
 // highlight-end
 ```
 
-It worked! 🎉
+When the page reloads, you'll see an error message at this point. After making the changes above you'll need to restart the development server. The restart is required because page queries happen at build time (in this case, when you run `gatsby develop`). This is why you saw an error message, the data the page expects to use was not available because the page query you added was not there at build time previously.
+
+After restarting the development server, refresh your page and you'll see that it worked! 🎉
 
 ![Page title pulling from siteMetadata](site-metadata-title.png)
 
@@ -354,7 +354,9 @@ export default ({ children }) => {
 // highlight-end
 ```
 
-Another success! 🎉
+When the page reloads, you'll see an error message just like when you added the page query in the previous section. The development server needs to be restarted again. This is because the graphql query (specified in the useStaticQuery hook) happens at build time as well, just like a page query.
+
+After restarting the development server, refresh your page. Another success! 🎉
 
 ![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
 
