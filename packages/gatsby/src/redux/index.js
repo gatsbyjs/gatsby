@@ -56,7 +56,7 @@ const saveState = () => {
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
-    `pages,`
+    `pages`,
     `componentDataDependencies`,
     `components`,
     `staticQueryComponents`,
