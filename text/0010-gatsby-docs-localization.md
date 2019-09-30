@@ -17,23 +17,23 @@ Gatsby believes that everyone belongs in Open Source, and that includes develope
 
 ## Detailed Design
 
-The translations will be done in the [same monorepo](https://github.com/gatsbyjs/gatsby) as the rest of the Gatsby documentation and code. Additional tooling, automation, and documentation will be made to ensure that the languages stay up-to-date and to maintain translation quality.
+The translations will be done on GitHub using Markdown files, in separate repos per translation, similar to [React](https://github.com/reactjs/es.reactjs.org) and [Vue](https://github.com/vuejs/jp.vuejs.org). Additional tooling, automation, and documentation will be made to ensure that the languages stay up-to-date and to maintain translation quality.
 
 ### Overview of Changes
 
 The following things need to be created:
 
 * [ ] A bot to track changes to the English docs and create pull requests
-* [ ] Script to aid in verifying translation accuracy
+* [ ] Script/linters to aid in verifying translation accuracy
 * [ ] Script to set up a new language
 * [ ] Documentation for how to start a new language translation and how to contribute translations
 * [ ] A prioritized list of pages to translate
 
 There are several changes to the repo that need to be made in order to support localization:
 
-* [ ] Move all text strings in `/www` to `/docs` so they can be translated: https://github.com/gatsbyjs/gatsby/issues/17758
-* [ ] Create a `translations/` directory
+* [ ] Move all text strings in `/www` to YAML files so they can be translated: https://github.com/gatsbyjs/gatsby/issues/17758
 * [ ] Make routes such as `/docs` redirect to `/en/docs`
+* [ ] Plugin to pull in translated content from different repos
 * [ ] Support routes for translations (such as `/es/docs`)
 * [ ] Support for right-to-left languages
 * [ ] Support for language-specific fonts
@@ -48,42 +48,7 @@ In addition to these crucial tasks, there are a few nice-to-haves:
 
 ### Project Organization
 
-The documentation of each language will be put in a folder under the top-level `/translations` directory in the monorepo:
-
-```
-|-- /docs
-    |-- /docs
-    |-- /blog
-|-- /translations
-    |-- /es
-        |-- /docs
-        |-- /blog
-```
-
-The reason for doing this structure is so that all the documentation for each language can be under a single directory instead of being scattered across the `docs/` repository.
-
-In addition, this allows maintainers of each language to use their language directory to keep additional information such as README's for translators or style guides/glossaries to keep translations consistent.
-
-Another option that `gatsby-i18n` supports is to annotate each file with its language code (e.g. `accessibility.en.md`). If we do this, some directories would be cluttered with too many files:
-
-```
-|-- /docs
-    |-- accessibility.en.md
-    |-- accessibility.es.md
-    |-- accessibility.fr.md
-    |-- accessibility.ja.md
-    |-- accessibility.zh-Hans.md
-    |-- accessibility.zh-Hant.md
-    |-- links.en.md
-    |-- links.es.md
-    |-- links.fr.md
-    |-- links.ja.md
-    |-- links.zh-Hans.md
-    |-- links.zh-Hant.md
-    |-- ...
-```
-
-To prevent missing routes due to typos, we can also create a check in the build process to make sure that every file in a translated subdirectory has an equivalent English one. This script could also verify the structure of documents (for example, that all translations have the same sequence of headings).
+Each language translation will be held in a separate repository copied over from the monorepo that contains only the `docs/` directory for markdown files and `data/` for YAML files, and any additional tooling such as linters.
 
 ### Maintainers
 
@@ -103,7 +68,7 @@ Contributors who would like to be maintainers of a new language repo should crea
 * the [IETF language code](https://en.wikipedia.org/wiki/IETF_language_tag) of the language
 * the GitHub usernames of all proposed maintainers
 
-in a yaml file like so:
+in YAML like so:
 
 ```
 name: Spanish
@@ -116,15 +81,11 @@ maintainers:
 
 When accepted, a script should:
 
-* Create a new folder in the repo (e.g. `/translations/es`) with a template README and style guide
-* Edit `CODEOWNERS.md` adding the proposed maintainers (either directly or through creating a new team to the Gatsby org)
-* Create a new issue for tracking translation progress, and a new label (e.g. `translation-es`).
-
-The script should *not* copy over any files from the `/docs` directory. This should be done as contributors make new translations and to prevent the repo from becoming bloated with copies.
+* Create a new repository `gatsby-[code]`
+* Create `CODEOWNERS` adding the proposed maintainers (either directly or through creating a new team to the Gatsby org)
+* Create a new issue for tracking translation progress
 
 ### Organizing work
-
-Each supported language should have its own GitHub label (for example `translation-es`) for all changes made to a file in its directory, so that it will be easy to search for issues relating to the language.
 
 Each language will have a "progress tracking issue" with the prioritized list of pages to translate, much like [React](https://github.com/reactjs/id.reactjs.org/issues/1). Unlike React, the issue should ideally be automated (similar to [Renovate](https://github.com/gatsbyjs/gatsby/issues/16840)).
 
@@ -132,11 +93,11 @@ Each language will have a "progress tracking issue" with the prioritized list of
 
 When a translation of a page is completed, we still need to ensure that the translation remains updated when the English source is changed. To do that, we use a bot similar to [React](https://github.com/reactjs/de.reactjs.org/pull/88), but adapted for Gatsby's monorepo.
 
-When a change is detected in the `/docs` directory, the bot should, for each language:
+When a change is detected in the `/docs` directory of the monorepo, the bot should, for each language:
 
 * Determine the time a pull request by the bot has occurred
 * Run `git diff` on `/docs` from that hash
-* Apply the patch on `/translations/[lang]` using `git apply` 
+* Apply the patch on the `gatsby-[lang]` repo using `git apply` 
 * Commit all the merge conflicts and create a pull request (or some other way to annotate which lines have changed)
 * Assign the issue to the language maintainers
 
@@ -175,11 +136,18 @@ However, Crowdin has its fair share of disadvantages as well. We had considered 
 
 There are other SaaS platforms such as Transifex that fix some of Crowdin's issues. However, the core issue relies in that they are new systems that most developers are unfamiliar with. We are relying on developers from the Gatsby community rather than professional translators, and those developers tend to be more familiar with GitHub's UI.
 
-### Other GitHub-based arrangements
+### Separate Websites
 
-The monorepo isn't the only way to organize our code. We could do something like React and have each language be in a separate repo copy. This makes it easier to copy content and check for changes, since we can just use `git merge`.
+We could do what reactjs.org did and have each language be its own separate website (e.g. es.gatsbyjs.org). The advantage of this for React is that it was easier to get languages started quickly and make changes like RTL themselves.
 
-But this has its own drawbacks as well. Each language is its own website and we can't easily switch between languages. The rest of Gatsby's code is in a monorepo and has tooling to make it work, so it makes sense to continue with that paradigm. We'd also like to dogfood Gatsby's localization utilities such as [`gatsby-plugin-i18n`](https://www.gatsbyjs.org/docs/localization-i18n/#gatsby-plugin-i18n).
+This doesn't quite work for Gatsby. Since we have a monorepo, it takes a lot longer to copy the entire website and all its requirements. We'd also like to natively support localized versions in a single site using the Gatsby APIs to take full advantage of Gatsby's features.
+
+### Everything in the Monorepo
+
+Another GitHub-based alternative would be to put everything inside the monorepo in separate directories. The problem with this is that it would add a lot of clutter to Gatsby issues and pull requests. It's also a lot harder to create automation to sync the website because of the way that Git works.
+
+By moving everything to different repos, translation maintainers can self-organize and implement whatever tools they need to get translations completed.
+
 
 ## Adoption Strategy
 
