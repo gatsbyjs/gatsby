@@ -16,7 +16,7 @@ const telemetry = require(`gatsby-telemetry`)
 const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
-//const WorkerPool = require(`../utils/worker/pool`); // not used if hash process removed
+const WorkerPool = require(`../utils/worker/pool`);
 const handleWebpackError = require(`../utils/webpack-error-parser`)
 
 type BuildArgs = {
@@ -90,10 +90,9 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
+  const workerPool = WorkerPool.create()
 
-  // Remove Hashes
-  // const workerPool = WorkerPool.create()
-
+  // Remove Hashes 
   // const webpackCompilationHash = stats.hash
   // if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
   //   store.dispatch({
