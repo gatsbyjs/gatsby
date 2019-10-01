@@ -14,7 +14,7 @@ The `cache-control` header should be `cache-control: public, max-age=0, must-rev
 
 ## Page data
 
-Similar to HTML files, the JSON files in the `page-data/` directory should never be cached by the browser. In fact, it's possible for these files to be updated even without doing a redeploy of your site. Because of this, browsers should be instructed to check on every request if the data in your application has changed.
+Similar to HTML files, the JSON files in the `public/page-data/` directory should never be cached by the browser. In fact, it's possible for these files to be updated even without doing a redeploy of your site. Because of this, browsers should be instructed to check on every request if the data in your application has changed.
 
 The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`<sup>1</sup>
 
