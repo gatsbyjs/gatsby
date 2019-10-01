@@ -1,45 +1,40 @@
 import React from "react"
 import Copy from "../../components/copy"
-import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  fontSizes,
-} from "../../utils/presets"
+import { radii, mediaQueries } from "gatsby-design-tokens"
 
 const StarterInstallation = ({ repoName, repoUrl }) => {
   const content = `gatsby new ${repoName || `my-gatsby-project`} ${repoUrl}`
   return (
     <div
-      css={{
-        padding: `0px ${space[6]}`,
+      sx={{
+        px: 6,
+        py: 0,
         [mediaQueries.lg]: {
-          padding: `0px ${space[8]}`,
+          px: 8,
           display: `grid`,
           gridTemplateRows: `auto auto`,
-          gridRowGap: space[2],
+          gridRowGap: 2,
         },
       }}
     >
-      <div css={{ fontSize: fontSizes[1], color: colors.text.secondary }}>
+      <div sx={{ fontSize: 1, color: `text.secondary` }}>
         Install this starter locally:
       </div>
       <pre
-        css={{
-          padding: 0,
-          background: colors.code.bg,
+        sx={{
+          p: 0,
+          background: `code.bg`,
         }}
       >
         <code
-          css={{
+          sx={{
             display: `flex`,
             alignItems: `center`,
             justifyContent: `space-between`,
-            padding: space[2],
+            p: 2,
             overflowWrap: `break-word`,
             [mediaQueries.lg]: {
-              padding: space[3],
+              p: 3,
             },
             "&:before": {
               display: `none`,

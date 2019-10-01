@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -13,7 +15,6 @@ import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
 import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
-import { space } from "../../utils/presets"
 import useComparisonState from "../../hooks/use-comparison-state"
 
 const FeaturesHeader = () => (
@@ -52,11 +53,11 @@ const CmsFeaturesPage = ({ data, location }) => {
             Compare:
           </p>
           <div
-            css={{
+            sx={{
               display: `grid`,
               gridTemplateColumns: `repeat(auto-fit, minmax(75px, 120px))`,
-              gridGap: space[2],
-              paddingBottom: space[10],
+              gridGap: 2,
+              pb: 10,
             }}
           >
             {featureComparisonOptions.cms.map(({ key: optionKey, display }) => (

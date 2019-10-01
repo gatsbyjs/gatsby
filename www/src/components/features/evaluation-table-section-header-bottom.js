@@ -8,7 +8,7 @@ import {
   mediaQueries,
   lineHeights,
   fonts,
-} from "../../utils/presets"
+} from "gatsby-design-tokens"
 import { rhythm } from "../../utils/typography"
 
 const Td = styled.td`

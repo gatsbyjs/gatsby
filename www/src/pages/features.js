@@ -11,12 +11,11 @@ import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
-import { letterSpacings, space } from "../utils/presets"
 import { itemListFeatures } from "../utils/sidebar/item-list"
 
 const FeaturesHeader = () => (
   <section>
-    <h1 id="introduction" style={{ marginTop: 0 }}>
+    <h1 id="introduction" sx={{ mt: 0 }}>
       Features Overview
     </h1>
     <p>
@@ -49,7 +48,7 @@ const FeaturesHeader = () => (
         specific kind of site, usually a blog, as HTML files from the content
         you’ve added. These files can be cached and served from a CDN.
         <br />
-        <p css={{ marginTop: space[2] }}>Coming from the JAMstack world?</p>
+        <p sx={{ mt: 2 }}>Coming from the JAMstack world?</p>
         <Button to="/features/jamstack" secondary>
           Compare Gatsby vs JAMstack
         </Button>
@@ -78,7 +77,7 @@ const FeaturesHeader = () => (
         requirements you can self-host your website or use an official hosting
         provider.
         <br />
-        <p css={{ marginTop: space[2] }}>Coming from the CMS world?</p>
+        <p sx={{ mt: 2 }}>Coming from the CMS world?</p>
         <Button to="/features/cms" secondary>
           Compare Gatsby vs CMS
         </Button>
@@ -93,8 +92,8 @@ const FeaturesHeader = () => (
       id="legend"
       sx={{
         fontWeight: `normal`,
-        textTransform: `uppercase`,
         letterSpacing: `tracked`,
+        textTransform: `uppercase`,
       }}
     >
       Legend

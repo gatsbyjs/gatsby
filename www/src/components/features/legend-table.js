@@ -1,7 +1,7 @@
 import React from "react"
 
 import EvaluationCell from "./evaluation-cell"
-import { colors, mediaQueries, fonts } from "../../utils/presets"
+import { colors, mediaQueries, fonts } from "gatsby-design-tokens"
 
 const legendBorderColor = colors.ui.border.subtle
 

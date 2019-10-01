@@ -1,36 +1,38 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
+import { mediaQueries } from "gatsby-design-tokens"
 
-import { colors, space, mediaQueries } from "../../utils/presets"
 import { Name } from "./homepage-section"
 
 const Section = styled(`section`)`
   overflow: hidden;
-  padding: ${space[5]} 0;
+  padding: ${p => p.theme.space[5]} 0;
   width: 100%;
-  border-bottom: 1px solid ${colors.ui.border.subtle};
+  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
 
   ${mediaQueries.xl} {
     margin: -1px 0;
-    padding: ${space[5]} 0;
+    padding: ${p => p.theme.space[5]} 0;
   }
 
   ${mediaQueries.xxl} {
-    padding: ${space[7]} 0;
+    padding: ${p => p.theme.space[7]} 0;
   }
 `
 
 const Title = styled(`header`)`
-  padding-right: ${space[6]};
-  padding-left: ${space[6]};
+  padding-right: ${p => p.theme.space[6]};
+  padding-left: ${p => p.theme.space[6]};
   ${mediaQueries.md} {
     max-width: 30rem;
   }
 
   ${mediaQueries.lg} {
-    margin-left: ${space[9]};
+    margin-left: ${p => p.theme.space[9]};
   }
 
   ${mediaQueries.xl} {
@@ -49,13 +51,13 @@ const LogoGroup = styled(`div`)`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
-  grid-gap: ${space[8]};
+  grid-gap: ${p => p.theme.space[8]};
   align-items: center;
   overflow-x: scroll;
-  padding-left: ${space[3]};
-  padding-bottom: ${space[1]};
+  padding-left: $ ${p => p.theme.space[3]};
+  padding-bottom: $ ${p => p.theme.space[1]};
   ${mediaQueries.xxl} {
-    padding-bottom: ${space[3]};
+    padding-bottom: ${p => p.theme.space[3]};
   }
   &::-webkit-scrollbar {
     display: none;
