@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { useState, useEffect, useRef } from "react"
 import hex2rgba from "hex2rgba"
 
@@ -30,7 +32,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         p: 2,
         color: `grey.60`,
         fontWeight: selected ? `bold` : `normal`,
-        backgroundColor: `grey.5`,
+        backgroundColor: `ui.background`,
         border: selected
           ? `2px ${colors[baseColor][60]} solid`
           : `2px transparent solid`,
@@ -118,7 +120,7 @@ const LayerModel = ({ initialLayer = `Content` }) => {
       <div
         sx={{
           borderRadius: 3,
-          backgroundColor: colors.grey[5],
+          backgroundColor: `ui.background`,
         }}
       >
         <div
