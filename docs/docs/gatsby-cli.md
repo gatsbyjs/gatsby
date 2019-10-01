@@ -83,6 +83,8 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 | `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
 | `--no-color`, `--no-colors`  | Disables colored terminal output                                                                          |
 
+In addition to these build options, there are some optional [build environment variables](/docs/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
+
 ### `serve`
 
 At the root of a Gatsby site, serve the production build of your site for testing:
