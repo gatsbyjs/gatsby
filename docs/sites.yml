@@ -7392,6 +7392,18 @@
   built_by: Mutual
   built_by_url: https://twitter.com/madebymutual
   featured: false
+- title: Themis Attorneys
+  main_url: https://themis-attorneys.com
+  url: https://themis-attorneys.com
+  description: >
+    Themis Attorneys is Chennai based lawyers. Their new complete website is made using Gatsby.
+  categories:
+    - Agency
+    - Consulting
+    - Portfolio
+    - Law
+  built_by: Merbin J Anselm
+  built_by_url: https://anselm.in
 - title: Saint New York
   url: https://www.saintnewyork.com
   main_url: https://www.saintnewyork.com
