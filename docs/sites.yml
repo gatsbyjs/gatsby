@@ -7392,3 +7392,17 @@
   built_by: Mutual
   built_by_url: https://twitter.com/madebymutual
   featured: false
+- title: Runlet
+  main_url: https://runlet.app
+  url: https://runlet.app
+  source_url: https://github.com/runletapp/runlet
+  description: >
+    Runlet is a cloud-based job manager that offers device synchronization and reliable message delivery in a network of connected devices even after connectivity issues. Available for ARM, Linux, Mac and Windows.
+  categories:
+    - App
+    - Landing Page
+    - Productivity
+    - Technology
+  built_by: Vandre Leal
+  built_by_url: https://vandreleal.github.io
+  featured: false
