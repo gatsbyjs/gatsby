@@ -1,6 +1,6 @@
-const Plugin = require(".");
+const Plugin = require(`.`)
 
-const babel = require("@babel/core");
+const babel = require(`@babel/core`)
 
 const testContents = `import React from "react";
 import { graphql } from "gatsby";
@@ -12,16 +12,16 @@ export const pageQuery = graphql\`
     name
   }
 \`;
-`;
+`
 
-describe("babel-plugin-pluck-imports", () => {
-  test("plucks imports", () => {
-    const instance = new Plugin();
+describe(`babel-plugin-pluck-imports`, () => {
+  test(`plucks imports`, () => {
+    const instance = new Plugin()
     const result = babel.transform(testContents, {
       configFile: false,
       plugins: [instance.plugin],
-      presets: [require("@babel/preset-react")]
-    });
+      presets: [require(`@babel/preset-react`)],
+    })
 
     expect(result.code).toEqual(`export default (({
   children
@@ -30,28 +30,28 @@ export const pageQuery = graphql\`
   query MDXWhatever {
     name
   }
-\`;`);
-  });
+\`;`)
+  })
 
-  test("yields list of imports", () => {
-    const instance = new Plugin();
+  test(`yields list of imports`, () => {
+    const instance = new Plugin()
     babel.transform(testContents, {
       plugins: [instance.plugin],
-      presets: [require("@babel/preset-react")]
-    });
+      presets: [require(`@babel/preset-react`)],
+    })
 
     expect(instance.state.imports).toEqual([
       `import React from "react";`,
-      `import { graphql } from "gatsby";`
-    ]);
-  });
-  test("yields list of local identifiers", () => {
-    const instance = new Plugin();
+      `import { graphql } from "gatsby";`,
+    ])
+  })
+  test(`yields list of local identifiers`, () => {
+    const instance = new Plugin()
     babel.transform(testContents, {
       plugins: [instance.plugin],
-      presets: [require("@babel/preset-react")]
-    });
+      presets: [require(`@babel/preset-react`)],
+    })
 
-    expect(instance.state.identifiers).toEqual(["React", "graphql"]);
-  });
-});
+    expect(instance.state.identifiers).toEqual([`React`, `graphql`])
+  })
+})

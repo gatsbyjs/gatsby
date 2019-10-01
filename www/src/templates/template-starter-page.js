@@ -9,6 +9,7 @@ import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
 import StarterScreenshot from "../views/starter/screenshot"
 import StarterSource from "../views/starter/source"
+import StarterInstallation from "../views/starter/installation"
 import StarterDetails from "../views/starter/details"
 import FooterLinks from "../components/shared/footer-links"
 
@@ -115,6 +116,7 @@ class StarterTemplate extends React.Component {
               <StarterScreenshot imageSharp={screenshot} repoName={repoName} />
             </div>
             <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
+            <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
             <StarterDetails
               startersYaml={startersYaml}
               allDeps={allDeps}

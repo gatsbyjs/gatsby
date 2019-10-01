@@ -43,13 +43,13 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 Install with npm:
 
-```sh
+```shell
 npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
 
-```sh
+```shell
 yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
@@ -60,13 +60,50 @@ After installing gatsby-plugin-mdx you can add it to your plugins list in your
 
 ```js
 module.exports = {
-  plugins: [`gatsby-plugin-mdx`],
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    `gatsby-plugin-mdx`,
+  ],
 }
 ```
 
-By default, this configuration will allow you to create pages
+By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
+
+Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
+and configured to process local markdown files in order to
+generate the resulting Gatsby nodes.
+
+To automatically create pages with `.mdx` from other sources, you also need
+to configure gatsby-plugin-page-creator.
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
+      },
+    },
+    `gatsby-plugin-mdx`,
+  ],
+}
+```
 
 ### Configuration
 
@@ -116,6 +153,26 @@ layout defined, even if it's imported manually using `import MDX from './thing.m
 module.exports = {
   plugins: [
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
@@ -164,7 +221,7 @@ offers the option to set default layouts in the `gatsby-config.js` plugin
 config. Set the key to the `name` set in the `gatsby-source-filesystem` config.
 If no matching default layout is found, the `default` default layout is used.
 
-You can also set `options.defaultLayout.default` if you only want to
+You can also set `options.defaultLayouts.default` if you only want to
 use one layout for all MDX pages that don't already have a layout defined.
 
 ```js
@@ -187,6 +244,12 @@ module.exports = {
       options: {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
       },
     },
   ],
@@ -420,6 +483,9 @@ It's important to define the `components` you pass in in a stable way
 so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
+
+You can also expose any custom component to every mdx file using
+`MDXProvider`. See [Shortcodes](#shortcodes)
 
 ##### Related
 

@@ -3,7 +3,7 @@ module.exports = {
     {
       resolve: `gatsby-theme-notes`,
       options: {
-        mdx: true,
+        mdx: false,
         basePath: `/notes`,
       },
     },

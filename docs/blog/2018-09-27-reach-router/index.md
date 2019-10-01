@@ -32,7 +32,7 @@ The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitt
   frameborder="0"
   allow="autoplay; encrypted-media"
   allowfullscreen
-  title="YouTube: (React) Disqus router">
+  title="YouTube: (React) Disqus router"
 />
 
 A primary focus (no pun intended) of @reach/router is to manage focus in client-side routing, out of the box, lifting the onus from devs to manage it from scratch. From the @reach/router documentation:

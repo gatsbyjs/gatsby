@@ -27,7 +27,12 @@ module.exports.build = async ({ parentSpan }) => {
   })
 
   const {
-    schemaCustomization: { thirdPartySchemas, types, fieldExtensions },
+    schemaCustomization: {
+      thirdPartySchemas,
+      types,
+      fieldExtensions,
+      printConfig,
+    },
     config: { mapping: typeMapping },
   } = store.getState()
 
@@ -46,6 +51,7 @@ module.exports.build = async ({ parentSpan }) => {
     fieldExtensions,
     thirdPartySchemas,
     typeMapping,
+    printConfig,
     typeConflictReporter,
     parentSpan,
   })

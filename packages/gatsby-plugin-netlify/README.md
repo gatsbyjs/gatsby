@@ -3,13 +3,7 @@
 Automatically generates a `_headers` file and a `_redirects` file at the root of the public folder to configure
 [HTTP headers](https://www.netlify.com/docs/headers-and-basic-auth/) and [redirects](https://www.netlify.com/docs/redirects/) on Netlify.
 
-Notably, you can immediately enable HTTP/2 server push of critical Gatsby assets
-through the `Link` headers.
-
-By default, the plugin will add HTTP/2 assets to server push the critical Gatsby
-scripts (ones that have the `preload` attribute already). It will also add some
-basic security headers. You can easily add or replace headers through the plugin
-config.
+By default, the plugin will add some basic security headers. You can easily add or replace headers through the plugin config.
 
 ## Install
 
@@ -129,7 +123,7 @@ createRedirect({
 
 You can also create a `_redirects` file in the `static` folder for the same effect. Any programmatically created redirects will be appended to the file.
 
-```sh
+```shell
 # my manually set redirects
 /home              /
 /blog/my-post.php  /blog/my-post
@@ -138,4 +132,4 @@ You can also create a `_redirects` file in the `static` folder for the same effe
 You can validate the `_redirects` config through the
 [Netlify playground app](https://play.netlify.com/redirects).
 
-Redirect rules are automatically added for [client only paths](https://www.gatsbyjs.org/docs/building-apps-with-gatsby/#client-only-routes--user-authentication). If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.
+Redirect rules are automatically added for [client only paths](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication). If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.

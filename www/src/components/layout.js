@@ -155,7 +155,7 @@ class DefaultLayout extends React.Component {
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
-          className={`main-body`}
+          className={`main-body docSearch-content`}
           sx={{
             px: `env(safe-area-inset-left)`,
             pt: t => t.sizes.bannerHeight,

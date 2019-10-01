@@ -14,12 +14,6 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
-export interface StaticQueryProps {
-  query: any
-  render?: RenderCallback
-  children?: RenderCallback
-}
-
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
@@ -40,12 +34,12 @@ export interface PageRendererProps {
  */
 export class PageRenderer extends React.Component<PageRendererProps> {}
 
-type RenderCallback = (data: any) => React.ReactNode
+type RenderCallback<T = any> = (data: T) => React.ReactNode
 
-export interface StaticQueryProps {
+export interface StaticQueryProps<T = any> {
   query: any
-  render?: RenderCallback
-  children?: RenderCallback
+  render?: RenderCallback<T>
+  children?: RenderCallback<T>
 }
 
 /**
@@ -58,7 +52,9 @@ export interface StaticQueryProps {
  * @see https://www.gatsbyjs.org/docs/static-query/
  */
 
-export class StaticQuery extends React.Component<StaticQueryProps> {}
+export class StaticQuery<T = any> extends React.Component<
+  StaticQueryProps<T>
+> {}
 
 /**
  * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
@@ -374,6 +370,30 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
+
+  /**
+   * Customize Gatsby’s GraphQL schema by creating type definitions, field extensions or adding third-party schemas.
+   * The createTypes, createFieldExtension and addThirdPartySchema actions are only available in this API.
+   *
+   * For details on their usage please refer to the actions documentation.
+   *
+   * This API runs immediately before schema generation. For modifications of the generated schema, e.g.
+   * to customize added third-party types, use the createResolvers API.
+   * @see https://www.gatsbyjs.org/docs/node-apis/#createSchemaCustomization
+   */
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions
+  ): any
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions
+  ): Promise<any>
+  createSchemaCustomization?(
+    args: CreateSchemaCustomizationArgs,
+    options: PluginOptions,
+    callback: PluginCallback
+  ): void
 }
 
 /**
@@ -675,7 +695,11 @@ export interface SourceNodesArgs extends ParentSpanPluginArgs {
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
   intermediateSchema: object
   createResolvers: Function
-  traceId: `initial-createResolvers`
+  traceId: "initial-createResolvers"
+}
+
+export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
+  traceId: "initial-createSchemaCustomization"
 }
 
 export interface PreRenderHTMLArgs extends NodePluginArgs {
@@ -909,15 +933,16 @@ export interface Store {
 }
 
 type logMessageType = (format: string, ...args: any[]) => void
+type logErrorType = (message: string, error?: Error) => void
 
 export interface Reporter {
   stripIndent: Function
   format: object
   setVerbose(isVerbose: boolean): void
   setNoColor(isNoColor: boolean): void
-  panic(...args: any[]): void
-  panicOnBuild(...args: any[]): void
-  error(message: string, error: Error): void
+  panic: logErrorType
+  panicOnBuild: logErrorType
+  error: logErrorType
   uptime(prefix: string): void
   success: logMessageType
   verbose: logMessageType

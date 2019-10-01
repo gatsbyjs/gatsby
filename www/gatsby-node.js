@@ -10,6 +10,9 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const {
+  generateComparisonPageSet,
+} = require(`./src/utils/generate-comparison-page-set.js`)
 const yaml = require(`js-yaml`)
 const docLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
@@ -99,6 +102,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/docs/deploying-to-now/`,
+    toPath: `/docs/deploying-to-zeit-now/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/pair-programming/`,
     toPath: `/contributing/pair-programming/`,
     isPermanent: true,
@@ -183,6 +191,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/netlify-cms/`,
     toPath: `/docs/sourcing-from-netlify-cms/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/sourcing-from-saas-services/`,
+    toPath: `/docs/sourcing-from-hosted-services/`,
     isPermanent: true,
   })
 
@@ -341,6 +354,24 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/hosting-on-netlify/`,
+    toPath: `/docs/deploying-to-netlify/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/querying-with-graphql/`,
+    toPath: `/docs/graphql-concepts/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/introducing-graphiql/`,
+    toPath: `/docs/running-queries-with-graphiql/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
@@ -368,6 +399,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     )
     const creatorPageTemplate = path.resolve(
       `src/templates/template-creator-details.js`
+    )
+    const featureComparisonPageTemplate = path.resolve(
+      `src/templates/template-feature-comparison.js`
     )
 
     // Query for markdown nodes to use in creating pages.
@@ -556,9 +590,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           return null
         } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
           reporter.warn(
-            `Starter showcase entry "${
-              edge.node.repo
-            }" seems offline. Skipping.`
+            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
           )
           return null
         } else {
@@ -609,9 +641,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!edge.node.fields.slug) return
         if (!edge.node.fields.hasScreenshot) {
           reporter.warn(
-            `Site showcase entry "${
-              edge.node.main_url
-            }" seems offline. Skipping.`
+            `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
           )
           return
         }
@@ -758,6 +788,21 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           })
         }
       })
+
+      // Create feature comparison pages
+      const jamstackPages = generateComparisonPageSet(`jamstack`)
+      const cmsPages = generateComparisonPageSet(`cms`)
+      const comparisonPages = [...jamstackPages, ...cmsPages]
+      for (const { path, options, featureType } of comparisonPages) {
+        createPage({
+          path,
+          component: slash(featureComparisonPageTemplate),
+          context: {
+            options,
+            featureType,
+          },
+        })
+      }
 
       // redirecting cypress-gatsby => gatsby-cypress
       createRedirect({
@@ -988,9 +1033,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
     if (!validTypes[node.type]) {
       throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${
-          node.type
-        }” was provided for ${node.name}.`
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
       )
     }
     slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {

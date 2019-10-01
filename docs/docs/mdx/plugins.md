@@ -74,7 +74,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        mdPlugins: [capitalize, emoji],
+        remarkPlugins: [capitalize, emoji],
       },
     },
   ],

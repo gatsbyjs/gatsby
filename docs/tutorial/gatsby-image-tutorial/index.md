@@ -15,7 +15,7 @@ By the end of this tutorial, you’ll have done the following:
 
 This tutorial assumes you already have a Gatsby project up and running as well as images you'd like to render on your page. To set up a Gatsby site, check out the [main tutorial](/tutorial/) or the [quick start](/docs/quick-start/).
 
-In this tutorial you'll learn how to set up `gatsby-image`, a React component that optimizes responsive images using GraphQL and Gatsby's data later. You'll be informed of a number of ways to use `gatsby-image` and some gotchas.
+In this tutorial you'll learn how to set up `gatsby-image`, a React component that optimizes responsive images using GraphQL and Gatsby's data layer. You'll be informed of a number of ways to use `gatsby-image` and some gotchas.
 
 > _Note: this tutorial uses examples of static content stored in YAML files, but similar methods can be used for Markdown files._
 
@@ -291,7 +291,7 @@ The top-level object name of `data` is implicit. This is important because when 
 Here's an example of data flowing into a component:
 
 ```jsx
-const SpeakingPage = ({ data}) => {})
+const SpeakingPage = ({ data }) => {})
 ```
 
 Everything else gets referenced from that top-level return name.

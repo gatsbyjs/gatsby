@@ -156,6 +156,9 @@ class StickyResponsiveSidebar extends Component {
                   `transform ${t.transition.speed.slow} ${
                     t.transition.curve.default
                   }`,
+                transition: `transform ${transition.speed.fast} ${
+                  transition.curve.default
+                }`,
               }}
             />
           </div>

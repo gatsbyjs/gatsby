@@ -170,6 +170,7 @@ export const pageQuery = graphql`
         overview
         issue
         disableTableOfContents
+        tableOfContentsDepth
       }
       ...MarkdownPageFooterMdx
     }

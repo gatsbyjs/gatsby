@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.15...gatsby-plugin-netlify@2.1.17) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.15...gatsby-plugin-netlify@2.1.16) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.14...gatsby-plugin-netlify@2.1.15) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.13...gatsby-plugin-netlify@2.1.14) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.12...gatsby-plugin-netlify@2.1.13) (2019-09-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** security headers merging ([#17538](https://github.com/gatsbyjs/gatsby/issues/17538)) ([8420626](https://github.com/gatsbyjs/gatsby/commit/8420626))
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.11...gatsby-plugin-netlify@2.1.12) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.10...gatsby-plugin-netlify@2.1.11) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.9...gatsby-plugin-netlify@2.1.10) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.8...gatsby-plugin-netlify@2.1.9) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.7...gatsby-plugin-netlify@2.1.8) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.6...gatsby-plugin-netlify@2.1.7) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency fs-extra to ^4.0.3 ([#16876](https://github.com/gatsbyjs/gatsby/issues/16876)) ([2cc762d](https://github.com/gatsbyjs/gatsby/commit/2cc762d))
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.5...gatsby-plugin-netlify@2.1.6) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.4...gatsby-plugin-netlify@2.1.5) (2019-08-15)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.3...gatsby-plugin-netlify@2.1.4) (2019-08-08)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.2...gatsby-plugin-netlify@2.1.3) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-plugin-netlify
