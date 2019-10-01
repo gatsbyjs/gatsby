@@ -21,8 +21,8 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes#readme",
   "devDependencies": {
     "gatsby": "^2.15.28",
-    "react": "^16.10.0",
-    "react-dom": "^16.10.0"
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
   },
   "peerDependencies": {
     "gatsby": "^2.13.13",
