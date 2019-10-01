@@ -63,9 +63,9 @@ When deploying to Netlify, `gatsby build` must be run before `netlify-lambda bui
 
 ```toml
 [build]
-  Command = "npm run build"
-  Functions = "lambda"
-  Publish = "public"
+  command = "npm run build"
+  functions = "lambda"
+  publish = "public"
 ```
 
 For more info or configuration options (e.g. in different branches and build environments), check [the Netlify.toml reference](https://www.netlify.com/docs/netlify-toml-reference/).
