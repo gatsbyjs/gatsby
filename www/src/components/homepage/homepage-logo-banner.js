@@ -9,14 +9,14 @@ import { mediaQueries } from "gatsby-design-tokens"
 import { Name } from "./homepage-section"
 
 const Section = styled(`section`)`
+  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
   overflow: hidden;
   padding: ${p => p.theme.space[5]} 0;
   width: 100%;
-  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
 
   ${mediaQueries.xl} {
-    margin: -1px 0;
-    padding: ${p => p.theme.space[5]} 0;
+    margin-top: -1px;
+    margin-bottom: -1px;
   }
 
   ${mediaQueries.xxl} {
@@ -54,10 +54,10 @@ const LogoGroup = styled(`div`)`
   grid-gap: ${p => p.theme.space[8]};
   align-items: center;
   overflow-x: scroll;
-  padding-left: $ ${p => p.theme.space[3]};
-  padding-bottom: $ ${p => p.theme.space[1]};
+  padding-left: ${p => p.theme.space[3]};
+  padding-bottom: ${p => p.theme.space[4]};
   ${mediaQueries.xxl} {
-    padding-bottom: ${p => p.theme.space[3]};
+    padding-bottom: ${p => p.theme.space[6]};
   }
   &::-webkit-scrollbar {
     display: none;
@@ -78,7 +78,7 @@ const HomepageLogoBanner = () => {
           node {
             base
             childImageSharp {
-              fixed(quality: 75, height: 36) {
+              fixed(quality: 75, height: 24) {
                 ...GatsbyImageSharpFixed_tracedSVG
               }
             }
