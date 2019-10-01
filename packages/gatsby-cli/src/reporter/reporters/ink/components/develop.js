@@ -44,16 +44,15 @@ class Develop extends Component {
     })
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.stdout !== nextProps.stdout) {
-      this.props.stdout.off(`resize`)
-
-      const { stdout } = nextProps
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.stdout !== prevProps.stdout) {
+      this.props.stdout.off(`resize`);
+      const stdout = this.props.stdout;
       stdout.on(`resize`, () => {
         this.setState({
-          sizes: [stdout.columns, stdout.rows],
-        })
-      })
+          sizes: [stdout.columns, stdout.rows]
+        });
+      });
     }
   }
 
