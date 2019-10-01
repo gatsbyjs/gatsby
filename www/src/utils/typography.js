@@ -277,6 +277,7 @@ const _options = {
         color: colors.code.text,
         padding: `${space[5]} ${space[6]} ${space[4]}`,
         fontSize: fontSizes[0],
+        margin: `${space[2]} ${space[0]}`,
       },
       [mediaQueries.md]: {
         ".gatsby-highlight, .gatsby-resp-image-link, .gatsby-code-title": {

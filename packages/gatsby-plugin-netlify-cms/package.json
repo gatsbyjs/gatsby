@@ -20,8 +20,8 @@
     "@babel/core": "^7.6.2",
     "babel-preset-gatsby-package": "^0.2.7",
     "cross-env": "^5.2.1",
-    "react": "^16.10.0",
-    "react-dom": "^16.10.0"
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms#readme",
   "keywords": [

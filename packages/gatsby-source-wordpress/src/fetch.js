@@ -690,7 +690,7 @@ const useApiUrl = (apiUrl, endpointURL) => {
 
 /**
  * Build full URL from baseUrl and fullPath.
- * Method of constructing full URL depends on wether it's hosted on wordpress.com
+ * Method of constructing full URL depends on whether it's hosted on wordpress.com
  * or not as wordpress.com have slightly different (custom) REST structure
  *
  * @param {any} baseUrl The base site URL that should be prepended to full path
