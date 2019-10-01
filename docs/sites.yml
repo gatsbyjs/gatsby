@@ -7398,13 +7398,11 @@
   description: >
     We’re Surge 3 - a premier web development agency. Our company centers around the principles of quality, speed, and service! We are founded using the latest in web technologies and are dedicated to using those exact tools to help our customers achieve their goals.
   categories:
-    - CMS:Headless
-    - CMS:Strapi
-    - Netlify
     - Portfolio
     - Blog
-    - Styling:Bootstrap
     - Agency
+    - Web Development
+    - Marketing
   built_by: Dillon Browne
   built_by_url: https://dillonbrowne.com
   featured: false
