@@ -81,7 +81,6 @@ const commonAssertions = events => {
               `ACTIVITY_END`,
               `LOG`,
             ]),
-          // TODO: We should change this to always be an Object I think pieh
           payload: joi.object(),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
@@ -96,6 +95,7 @@ const commonAssertions = events => {
         .valid([`LOG_ACTION`]),
       action: actionSchema,
     })
+    console.log(events)
     events.forEach(event => {
       expect(event).toMatchSchema(eventSchema)
     })
