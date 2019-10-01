@@ -322,6 +322,7 @@ const config = {
   transition: t,
   zIndices: z,
 }
-console.log(`TOKENS`, config)
+
+// console.log(`TOKENS`, config)
 
 export default config
