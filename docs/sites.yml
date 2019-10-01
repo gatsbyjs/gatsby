@@ -1342,8 +1342,8 @@
     - Documentation
     - Open Source
     - Technology
-  built_by: David Worms
-  built_by_url: "http://www.adaltas.com"
+  built_by: Adaltas
+  built_by_url: "https://www.adaltas.com"
   featured: false
 - title: Gourav Sood Blog & Portfolio
   main_url: "https://www.gouravsood.com/"
@@ -7392,6 +7392,19 @@
   built_by: Mutual
   built_by_url: https://twitter.com/madebymutual
   featured: false
+- title: Adaltas
+  main_url: https://www.adaltas.com
+  url: https://www.adaltas.com
+  description: >
+    Adaltas is a team of consultants with a focus on Open Source, Big Data and Cloud Computing based in France, Canada and Morocco.
+  categories:
+    - Consulting
+    - Data
+    - Design System
+    - Programming
+    - Learning
+  built_by: Adaltas
+  built_by_url: https://www.adaltas.com
 - title: Themis Attorneys
   main_url: https://themis-attorneys.com
   url: https://themis-attorneys.com
