@@ -233,7 +233,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defiened ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
+- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defined ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
 
 <a name="2.0.9"></a>
 
