@@ -273,9 +273,7 @@ export const global = t => {
     ".main-body a": {
       color: t.colors.link.color,
       textDecoration: `none`,
-      transition: `all ${t.transition.speed.fast} ${
-        t.transition.curve.default
-      }`,
+      transition: `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
       borderBottom: `1px solid ${t.colors.link.border}`,
     },
     ".main-body a:hover": {
@@ -330,6 +328,7 @@ export const global = t => {
       color: t.colors.code.text,
       padding: `${t.space[5]} ${t.space[6]} ${t.space[4]}`,
       fontSize: t.fontSizes[0],
+      margin: `${t.space[2]} 0`,
     },
     video: {
       width: `100%`,
