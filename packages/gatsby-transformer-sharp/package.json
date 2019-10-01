@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "bluebird": "^3.5.5",
+    "bluebird": "^3.7.0",
     "fs-extra": "^8.1.0",
     "potrace": "^2.1.2",
     "probe-image-size": "^4.1.1",
