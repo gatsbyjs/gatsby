@@ -63,14 +63,14 @@ When deploying to Netlify, `gatsby build` must be run before `netlify-lambda bui
 
 ```toml
 [build]
-  Command = "npm run build"
-  Functions = "lambda"
-  Publish = "public"
+  command = "npm run build"
+  functions = "lambda"
+  publish = "public"
 ```
 
 For more info or configuration options (e.g. in different branches and build environments), check [the Netlify.toml reference](https://www.netlify.com/docs/netlify-toml-reference/).
 
-**NOTE:** the `Command` specified in `netlify.toml` overrides the build command specified in your site's Netlify UI Build settings.
+**NOTE:** the `command` specified in `netlify.toml` overrides the build command specified in your site's Netlify UI Build settings.
 
 4. **Proxy the emulated functions for local development**: Head to `gatsby-config.js` and add this to your `module.exports`:
 
