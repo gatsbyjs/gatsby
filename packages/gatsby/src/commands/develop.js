@@ -298,8 +298,7 @@ async function startServer(program, { activity }) {
     slash(directoryPath(path))
   )
 
-  // Setting useFsEvents to false fixes https://github.com/gatsbyjs/gatsby/issues/17131
-  chokidar.watch(watchGlobs, { useFsEvents: false }).on(`change`, async () => {
+  chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     socket.to(`clients`).emit(`reload`)
   })

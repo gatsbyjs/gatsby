@@ -169,8 +169,6 @@ async function watch(
   chokidar
     .watch(watchers, {
       ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
-      // Setting useFsEvents to false fixes https://github.com/gatsbyjs/gatsby/issues/17131
-      useFsEvents: false,
     })
     .on(`all`, async (event, filePath) => {
       if (!watchEvents.includes(event)) {
