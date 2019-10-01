@@ -4050,3 +4050,13 @@
     - Uses Typescript to encourage good coding
     - Uses Storybook to encourage visual testing
     - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
+- url: https://gatsby-starter-ts-pwa.netlify.com/
+  repo: https://github.com/markselby9/gatsby-starter-typescript-pwa
+  description: The default Gatsby starter fork with TypeScript and PWA support added
+  tags:
+    - Language:TypeScript
+    - PWA
+  features:
+    - Minumum changes based on default starter template for TypeScript and PWA
+    - Added TypeScript support with eslint and tsc check
+    - Support Github Actions CI/CD workflow (beta)
