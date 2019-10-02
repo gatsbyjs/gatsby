@@ -14,7 +14,7 @@
   Fast in every way that matters
 </h3>
 <p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
+Gatsby is a blazing fast static site generator built with React. Gatsby gives you all of the modern JavaScript tools you want; set up and ready to go out of the box.
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
