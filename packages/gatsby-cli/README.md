@@ -19,7 +19,7 @@ You can also use the `package.json` script variant of these commands, typically 
 }
 ```
 
-## Commands
+## CLI Commands
 
 1. [new](#new)
 2. [develop](#develop)
@@ -32,34 +32,32 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-```bash
+```
 gatsby new [<site-name> [<starter-url>]]
 ```
 
-#### Arguments
-
-| Argument    | Description                                                                                                                                                                                                                                         |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name along with the path should be pass here                                                                                                                                                                                       |
-| starter-url | Mention the gatsby starter pack url or local path here. See the [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/) for more. Default starter pack is [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default). |
+| Argument    | Description                                                                                                                                                                                                     |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create the project directory.                                                                                                                                      |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
 #### Examples
 
-- create a gatsby site with `my-awesome-site` name in the current working directory using the default starter:
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
 
 ```bash
 gatsby new my-awesome-site
 ```
 
-- create a gatbsy site with name `my-awesome-blog-site` and using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/) starter pack:
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
 
 ```bash
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-- If you leave all the both of the argument, then CLI will then run a interactive shell asking for these inputs:
+- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
 
 ```bash
 gatsby new
