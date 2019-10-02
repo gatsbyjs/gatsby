@@ -307,8 +307,6 @@ const config = {
   // this enables the color modes feature
   // and is used as the name for the top-level colors object
   initialColorMode: `light`,
-  // use CSS custom properties to help avoid flash of colors on initial page load
-  // useCustomProperties: true,
   // borders: borders,
   breakpoints: breakpointsTokens,
   colors: col,
