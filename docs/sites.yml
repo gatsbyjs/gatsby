@@ -96,6 +96,17 @@
   categories:
     - Featured
   featured: true
+- title: Theodora Warre
+  main_url: "https://theodorawarre.eu"
+  url: "https://theodorawarre.eu"
+  description: >-
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
+  categories:
+    - eCommerce
+    - Marketing
+  built_by: Pierre Nel
+  built_by_url: "https://pierre.io"
+  featured: false
 - title: Life Without Barriers | Foster Care
   main_url: "https://www.lwb.org.au/foster-care"
   url: "https://www.lwb.org.au/foster-care"
