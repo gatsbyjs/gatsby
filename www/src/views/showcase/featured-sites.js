@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
@@ -157,9 +157,7 @@ class FeaturedSites extends Component {
                       fontSize: 3,
                       fontWeight: `bold`,
                       transition: t =>
-                        `box-shadow ${t.transition.speed.slow} ${
-                          t.transition.curve.default
-                        }, transform .3s ${t.transition.curve.default}`,
+                        `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform .3s ${t.transition.curve.default}`,
                       "&:hover": { ...screenshotHover },
                     },
                   }}
@@ -213,9 +211,7 @@ class FeaturedSites extends Component {
                   "&&": {
                     border: 0,
                     transition: t =>
-                      `all ${t.transition.speed.default} ${
-                        t.transition.curve.default
-                      }`,
+                      `all ${t.transition.speed.default} ${t.transition.curve.default}`,
                     "&:hover": {
                       transform: t => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,

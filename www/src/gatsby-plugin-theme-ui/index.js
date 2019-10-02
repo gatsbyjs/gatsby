@@ -55,7 +55,15 @@ const col = {
   // Theme-UI required keys
   //
   // Body foreground color
-  text: c.text.primary,
+  // TODO fix conflict
+  // text: c.text.primary,
+  text: {
+    header: c.black,
+    primary: c.grey[80],
+    secondary: c.grey[50],
+    // moved placeholder to `input`
+  },
+
   // Body background color
   background: c.white,
   // Primary brand color for links, buttons, etc.
@@ -104,12 +112,6 @@ const col = {
     border: c.purple[30],
     hoverBorder: c.purple[50],
     hoverColor: c.purple[60],
-  },
-  text: {
-    header: c.black,
-    primary: c.grey[80],
-    secondary: c.grey[50],
-    // moved placeholder to `input`
   },
   input: {
     background: c.white,
@@ -167,7 +169,13 @@ const col = {
   modes: {
     dark: {
       background: darkBackground,
-      text: c.grey[20],
+      // TODO fix conflict
+      // text: c.grey[20],
+      text: {
+        header: c.white,
+        primary: c.grey[20],
+        secondary: c.grey[40],
+      },
       banner: hex2rgba(c.purple[90], 0.975),
       card: {
         background: c.purple[90],
@@ -236,11 +244,6 @@ const col = {
         itemBorderActive: c.purple[80],
         itemBorderColor: `transparent`,
         itemHoverBackground: hex2rgba(c.purple[90], 0.2),
-      },
-      text: {
-        header: c.white,
-        primary: c.grey[20],
-        secondary: c.grey[40],
       },
       ui: {
         background: darkBackground,
