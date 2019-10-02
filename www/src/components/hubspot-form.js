@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 
 import HubspotForm from "./react-hubspot-form"
 import { formInput, formInputFocus, buttonStyles } from "../utils/styles"

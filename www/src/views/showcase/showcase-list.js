@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 import { Link } from "gatsby"
 
 import {
@@ -86,11 +86,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                       "&&": {
                         display: `none`,
                         transition: t =>
-                          `background ${t.transition.speed.slow} ${
-                            t.transition.curve.default
-                          }, transform ${t.transition.speed.slow} ${
-                            t.transition.curve.default
-                          }`,
+                          `background ${t.transition.speed.slow} ${t.transition.curve.default}, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
                         [mediaQueries.lg]: {
                           alignItems: `center`,
                           background: `accent`,

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import MdFilterList from "react-icons/lib/md/filter-list"
 
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"

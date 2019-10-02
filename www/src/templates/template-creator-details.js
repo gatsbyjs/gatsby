@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
@@ -218,9 +218,7 @@ class CreatorTemplate extends Component {
                           borderBottom: `none`,
                           lineHeight: 0,
                           transition: t =>
-                            `all ${t.transition.speed.default} ${
-                              t.transition.curve.default
-                            }`,
+                            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
                         },
                       }}
                       to={site.node.fields.slug}

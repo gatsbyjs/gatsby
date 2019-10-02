@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
