@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import React, { Component } from "react"
 import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
@@ -13,7 +13,7 @@ import FooterLinks from "../components/shared/footer-links"
 class Plugins extends Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <Helmet>
           <title>Plugins</title>
           <meta
@@ -124,7 +124,7 @@ class Plugins extends Component {
           </div>
           <FooterLinks />
         </Container>
-      </>
+      </React.Fragment>
     )
   }
 }
