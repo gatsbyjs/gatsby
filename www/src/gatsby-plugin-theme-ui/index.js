@@ -67,7 +67,7 @@ const col = {
   // A contrast color for emphasizing UI
   accent: c.orange[60],
   // A faint color for backgrounds, borders, and accents that do not require high contrast with the background color
-  muted: c.grey[50],
+  muted: c.grey[5],
   // end Theme-UI required keys
   banner: c.purple[70],
   // gatsby-design-tokens has the following in colors.text,
