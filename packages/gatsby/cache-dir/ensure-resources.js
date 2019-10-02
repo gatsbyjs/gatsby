@@ -21,6 +21,12 @@ class EnsureResources extends React.Component {
       }
     }
 
+    if (prevState.location.key !== location.key) {
+      return {
+        location: { ...location },
+      }
+    }
+
     return null
   }
 
