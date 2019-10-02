@@ -98,7 +98,6 @@ const HomepageLogoBanner = () => {
             alt={`${image.base.split(`.`)[0]}`}
             fixed={image.childImageSharp.fixed}
             key={image.base}
-            style={{ opacity: 0.5 }}
           />
         ))}
       </LogoGroup>
