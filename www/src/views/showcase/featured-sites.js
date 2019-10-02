@@ -9,7 +9,7 @@ import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
 import { ShowcaseIcon } from "../../assets/icons"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { mediaQueries, colors } from "../../gatsby-plugin-theme-ui"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
@@ -268,11 +268,10 @@ class FeaturedSites extends Component {
           </div>
           <div
             sx={{
-              background: t =>
-                `linear-gradient(90deg, ${hex2rgba(
-                  t.colors.background,
-                  0
-                )} 0%, ${hex2rgba(t.colors.background, 1)} 100%)`,
+              background: `linear-gradient(90deg, ${hex2rgba(
+                colors.background,
+                0
+              )} 0%, ${hex2rgba(colors.background, 1)} 100%)`,
               bottom: t => t.space[6],
               pointerEvents: `none`,
               position: `absolute`,
