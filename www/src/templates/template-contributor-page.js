@@ -3,8 +3,8 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
 
+import Avatar from "../components/avatar"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
@@ -50,16 +50,7 @@ class ContributorPageTemplate extends React.Component {
               }}
             >
               <div>
-                <Img
-                  fixed={contributor.avatar.childImageSharp.fixed}
-                  sx={{
-                    height: t => t.space[10],
-                    width: t => t.space[10],
-                    borderRadius: 6,
-                    display: `inline-block`,
-                    verticalAlign: `middle`,
-                  }}
-                />
+                <Avatar image={contributor.avatar.childImageSharp.fixed} />
                 <h1 sx={{ mt: 0, mb: 3 }}>{contributor.id}</h1>
                 <p
                   sx={{
@@ -105,8 +96,8 @@ export const pageQuery = graphql`
       avatar {
         childImageSharp {
           fixed(
-            width: 63
-            height: 63
+            width: 64
+            height: 64
             quality: 75
             traceSVG: { turdSize: 10, background: "#f6f2f8", color: "#e0d6eb" }
           ) {

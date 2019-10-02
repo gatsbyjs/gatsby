@@ -37,6 +37,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         <Avatar
           image={post.frontmatter.author.avatar.childImageSharp.fixed}
           alt={post.frontmatter.author.id}
+          customCSS={{ mr: 3 }}
         />
       </Link>
       <div

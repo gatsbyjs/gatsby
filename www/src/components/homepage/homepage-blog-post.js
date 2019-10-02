@@ -221,7 +221,7 @@ const HomepageBlogPost = ({
 
       <Meta>
         <Author to={authorSlug}>
-          <Avatar image={authorFixed} alt={authorName} />
+          <Avatar image={authorFixed} alt={authorName} customCSS={{ mr: 3 }} />
           <span>{authorName}</span>
         </Author>
         &nbsp;on&nbsp;

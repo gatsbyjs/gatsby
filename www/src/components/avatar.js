@@ -2,20 +2,18 @@
 import { jsx } from "theme-ui"
 import Img from "gatsby-image"
 
-const Avatar = ({ image, alt }) => (
+const Avatar = ({ image, alt, customCSS }) => (
   <Img
     alt={alt ? alt : ``}
     fixed={image}
     sx={{
       borderRadius: 6,
       display: `inline-block`,
-      // TODO remove, component shouldn't decide this
-      // if required, those styles should be defined via component props
-      mr: 3,
-      mb: 0,
+      m: 0,
       verticalAlign: `top`,
       // prevents image twitch in Chrome when hovering the card
       transform: `translateZ(0)`,
+      ...customCSS,
     }}
   />
 )
