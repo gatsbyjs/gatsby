@@ -24,7 +24,7 @@ Using `hash` in JavaScript is one way to update the browser URL and the DOM with
 
 ## Use cases
 
-Through client-side routing in Gatsby you can provide a location object instead of strings, helpful in a number of situations.
+Through client-side routing in Gatsby you can provide a location object instead of strings, which are helpful in a number of situations:
 
 - Providing state to linked components
 - Client-only routes
