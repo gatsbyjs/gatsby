@@ -42,6 +42,10 @@ In Gatsby, this is the process of taking your code and content and packaging it 
 
 ## C
 
+### Cache
+
+A storage of information locally that might be used again, so computations and lookups can be retrieved faster from one place. Gatsby uses a cache to store information so it can build your site faster when you're developing without needing to do the same work twice.
+
 ### CLI
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
@@ -153,6 +157,10 @@ A [CMS](#cms) that only handles the [backend](#backend) content management inste
 ### Hosting
 
 A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting/) projects include Netlify, AWS, S3, Surge, Heroku, and more.
+
+### Hot module replacement
+
+A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window.
 
 ### Hydration
 
