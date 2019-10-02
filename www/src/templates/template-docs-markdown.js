@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -50,7 +51,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
   return (
-    <>
+    <React.Fragment>
       <Helmet>
         <title>{page.frontmatter.title}</title>
         <meta name="description" content={page.excerpt} />
@@ -147,7 +148,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
         </DocSearchContent>
         <FooterLinks />
       </Layout>
-    </>
+    </React.Fragment>
   )
 }
 
