@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
@@ -32,19 +33,19 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
     }}
   >
     {expandAll ? (
-      <>
+      <React.Fragment>
         <span sx={iconStyles}>
           <GoFold />
         </span>
         <span>Collapse All</span>
-      </>
+      </React.Fragment>
     ) : (
-      <>
+      <React.Fragment>
         <span sx={iconStyles}>
           <GoUnfold />
         </span>
         <span>Expand All</span>
-      </>
+      </React.Fragment>
     )}
   </button>
 )
