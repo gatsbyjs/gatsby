@@ -7473,3 +7473,13 @@
     - Blog
     - Portfolio
     - Web Development
+- title: Praveen Bisht
+  main_url: https://www.prvnbist.com/
+  url: https://www.prvnbist.com/
+  source_url: https://github.com/prvnbist/portfolio
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Praveen Bisht
+  built_by_url: https://www.prvnbist.com/
+  featured: false
