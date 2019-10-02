@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.42...gatsby-source-contentful@2.1.44) (2019-09-26)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Allow proxy to be passed in to… ([#17574](https://github.com/gatsbyjs/gatsby/issues/17574)) ([744c07d](https://github.com/gatsbyjs/gatsby/commit/744c07d))
+
+## [2.1.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.42...gatsby-source-contentful@2.1.43) (2019-09-26)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Allow proxy to be passed in to… ([#17574](https://github.com/gatsbyjs/gatsby/issues/17574)) ([744c07d](https://github.com/gatsbyjs/gatsby/commit/744c07d))
+
+## [2.1.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.41...gatsby-source-contentful@2.1.42) (2019-09-24)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.40...gatsby-source-contentful@2.1.41) (2019-09-23)
+
+### Bug Fixes
+
+- update dependency qs to ^6.9.0 ([#17802](https://github.com/gatsbyjs/gatsby/issues/17802)) ([8119d4b](https://github.com/gatsbyjs/gatsby/commit/8119d4b))
+
+## [2.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.39...gatsby-source-contentful@2.1.40) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.38...gatsby-source-contentful@2.1.39) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.37...gatsby-source-contentful@2.1.38) (2019-09-18)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Fixing when assets are in draft state ([#17571](https://github.com/gatsbyjs/gatsby/issues/17571)) ([7e40c1e](https://github.com/gatsbyjs/gatsby/commit/7e40c1e))
+
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.36...gatsby-source-contentful@2.1.37) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.35...gatsby-source-contentful@2.1.36) (2019-09-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.34...gatsby-source-contentful@2.1.35) (2019-09-10)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Prevent TypeError if many-to-on… ([#17500](https://github.com/gatsbyjs/gatsby/issues/17500)) ([fde5de6](https://github.com/gatsbyjs/gatsby/commit/fde5de6))
+
 ## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.33...gatsby-source-contentful@2.1.34) (2019-09-09)
 
 **Note:** Version bump only for package gatsby-source-contentful

@@ -1,7 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`requires-writer matchPath should sort matchPaths by specificity 1`] = `
+exports[`requires-writer matchPath should be sorted by specificity 1`] = `
 Array [
+  Object {
+    "matchPath": "/app/login/",
+    "path": "/app/login/",
+  },
   Object {
     "matchPath": "/app/clients/*",
     "path": "/app/clients/",
@@ -9,6 +13,27 @@ Array [
   Object {
     "matchPath": "/app/projects/*",
     "path": "/app/projects/",
+  },
+  Object {
+    "matchPath": "/app/*",
+    "path": "/app/",
+  },
+]
+`;
+
+exports[`requires-writer matchPath should have static pages that live inside a matchPath 1`] = `
+Array [
+  Object {
+    "matchPath": "/app/clients/static",
+    "path": "/app/clients/static",
+  },
+  Object {
+    "matchPath": "/app/login/",
+    "path": "/app/login/",
+  },
+  Object {
+    "matchPath": "/app/clients/*",
+    "path": "/app/clients/",
   },
   Object {
     "matchPath": "/app/*",

@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@emotion/core": "^10.0.7",
+    "@emotion/core": "^10.0.16",
     "@emotion/styled": "^10.0.12",
     "@loadable/component": "^5.10.2",
     "@mdx-js/mdx": "^1.0.14",
