@@ -178,7 +178,7 @@ const searchBoxStyles = t => css`
     height: ${t.space[9]};
     outline: none;
     transition: all ${t.transition.speed.default} ${t.transition.curve.default};
-    font-family: ${t.fonts.header};
+    font-family: ${t.fonts.heading};
     font-weight: bold;
   }
   .ais-InfiniteHits-loadMore:hover,

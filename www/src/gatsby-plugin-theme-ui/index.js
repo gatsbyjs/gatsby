@@ -29,9 +29,11 @@ for (let fontFamily in f) {
   fontsTokens[fontFamily] = f[fontFamily].join(`, `)
 }
 // https://theme-ui.com/theme-spec#typography
-// TODO decide whether to adjust keys in gatsby-design-tokens
+// TODO adjust keys in gatsby-design-tokens
 fontsTokens.body = fontsTokens.system
 fontsTokens.heading = fontsTokens.header
+
+console.log(`FONTSTOKIIIN`, fontsTokens)
 
 const fontSizesTokens = fs.map(token => `${token / 16}rem`)
 const spaceTokens = sp.map(token => `${token / 16}rem`)
@@ -77,6 +79,8 @@ const col = {
   heading: c.text.header, // text.header
   textMuted: c.text.secondary, // text.secondary
   // moved `text.placeholder` to `input.placeholder`
+  // ref. e.g. https://github.com/system-ui/theme-ui/blob/702c43e804046a94389e7a12a8bba4c4f436b14e/packages/presets/src/tailwind.js#L6
+  // transparent: `transparent`,
   // expand `gatsby-design-tokens` defaults
   code: {
     ...c.code,
@@ -118,8 +122,8 @@ const col = {
     background: c.white,
     backgroundFocus: c.white,
     border: c.grey[30],
-    focusBorder: c.orange[50],
-    focusBoxShadow: hex2rgba(c.orange[60], 0.75),
+    focusBorder: c.white,
+    focusBoxShadow: c.purple[30],
     icon: c.grey[50],
     iconFocus: c.grey[60],
     placeholder: c.text.placeholder,
@@ -165,8 +169,6 @@ const col = {
     background: c.white,
     color: c.text.primary,
   },
-  // ref. e.g. https://github.com/system-ui/theme-ui/blob/702c43e804046a94389e7a12a8bba4c4f436b14e/packages/presets/src/tailwind.js#L6
-  // transparent: `transparent`,
   modes: {
     dark: {
       background: darkBackground,

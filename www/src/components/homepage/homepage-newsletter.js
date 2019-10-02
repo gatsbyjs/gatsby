@@ -65,7 +65,7 @@ const Ornament = styled(`span`)`
 
 const Name = styled(`h3`)`
   color: ${p => p.theme.colors.lilac};
-  font-family: ${p => p.theme.fonts.header};
+  font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[1]};
   font-weight: ${p => p.theme.fontWeights[0]};
   letter-spacing: ${p => p.theme.letterSpacings.tracked};

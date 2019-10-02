@@ -76,7 +76,7 @@ const LegendTable = () => {
         css={{
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: fonts.header,
+          fontFamily: fonts.heading,
           display: `none`,
           [mediaQueries.sm]: {
             display: `table`,
@@ -91,7 +91,7 @@ const LegendTable = () => {
           display: `table`,
           border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
-          fontFamily: fonts.header,
+          fontFamily: fonts.heading,
           [mediaQueries.sm]: {
             display: `none`,
           },

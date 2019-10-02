@@ -33,7 +33,7 @@ export const buttonStyles = {
     color: colors.white,
     cursor: `pointer`,
     display: `inline-flex`,
-    fontFamily: fonts.header,
+    fontFamily: fonts.heading,
     fontWeight: `bold`,
     flexShrink: 0,
     lineHeight: lineHeights.solid,

@@ -130,7 +130,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
         props.item.type === `Starter`
           ? props.theme.colors.blue[70]
           : props.theme.colors.orange[90]};
-      font-family: ${p => p.theme.fonts.header};
+      font-family: ${p => p.theme.fonts.heading};
       font-size: ${p => p.theme.fontSizes[0]};
       left: 0;
       letter-spacing: ${p => p.theme.letterSpacings.tracked};

@@ -226,7 +226,7 @@ export default class FilteredStarterLibrary extends Component {
                 rel="noopener noreferrer"
                 small
                 icon={<ArrowForwardIcon />}
-                overrideCSS={{ marginLeft: 10 }}
+                overrideCSS={{ ml: 3 }}
               >
                 Submit a Starter
               </Button>

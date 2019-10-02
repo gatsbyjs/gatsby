@@ -9,7 +9,7 @@ const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
   border-radius: ${p => p.theme.radii[2]}px;
   color: ${p => p.theme.colors.gatsby};
-  font-family: ${p => p.theme.fonts.header};
+  font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[3]};
   font-weight: bold;
   padding: ${p => p.theme.space[7]} 3rem;

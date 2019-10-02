@@ -65,7 +65,7 @@ const Introduction = styled(`p`)`
       ? props.theme.colors.purple[10]
       : props.theme.colors.purple[80]};
   font-size: ${p => p.theme.fontSizes[3]};
-  font-family: ${p => p.theme.fonts.header};
+  font-family: ${p => p.theme.fonts.heading};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `

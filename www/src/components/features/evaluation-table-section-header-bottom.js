@@ -18,7 +18,7 @@ const Td = styled.td`
   line-height: ${lineHeights.dense};
   text-align: left;
   vertical-align: middle;
-  font-family: ${fonts.header};
+  font-family: ${fonts.heading};
   border-color: ${colors.ui.light};
   padding: ${space[3]};
 `

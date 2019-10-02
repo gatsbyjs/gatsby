@@ -132,7 +132,7 @@ class FilteredShowcase extends Component {
               edges={data.allSitesYaml.edges}
             />
             <div sx={{ ml: `auto` }}>
-              <label css={{ position: `relative` }}>
+              <label css={{ display: `block`, position: `relative` }}>
                 <input
                   sx={themedInput}
                   type="search"
