@@ -31,7 +31,7 @@ Through client-side routing in Gatsby you can provide a location object instead 
 - Fetching Data
 - Animation Transition
 
-## Example
+## Example of providing state to a link component
 
 ```js:title=index.js
 // usually you'd do this
