@@ -7465,3 +7465,11 @@
   built_by: Vandre Leal
   built_by_url: https://vandreleal.github.io
   featured: false
+- title: tiaan.dev
+  main_url: https://tiaan.dev
+  url: https://tiaan.dev
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
