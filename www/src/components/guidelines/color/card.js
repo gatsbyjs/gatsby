@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import MdLaunch from "react-icons/lib/md/launch"
 
 import { Box, Flex, Link, Text } from "../system"
@@ -24,7 +25,7 @@ const ColorValue = ({ label, inverted, value, href }) => (
       >
         {value}
         {href && (
-          <>
+          <React.Fragment>
             {` `}
             <Link
               href={href}
@@ -38,7 +39,7 @@ const ColorValue = ({ label, inverted, value, href }) => (
               <MdLaunch style={{ marginLeft: `0.25rem` }} />
               <SrOnly>Pantone Matching System reference</SrOnly>
             </Link>
-          </>
+          </React.Fragment>
         )}
       </Text>
     </Flex>

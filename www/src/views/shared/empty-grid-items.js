@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 
 const EmptyGridItems = ({ styles }) => {
   let items = []
@@ -17,7 +18,7 @@ const EmptyGridItems = ({ styles }) => {
     )
   }
 
-  return <>{items}</>
+  return <React.Fragment>{items}</React.Fragment>
 }
 
 export default EmptyGridItems

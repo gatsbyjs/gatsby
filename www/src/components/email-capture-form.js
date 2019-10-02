@@ -279,7 +279,7 @@ class EmailCaptureForm extends React.Component {
     )
 
     return (
-      <>
+      <React.Fragment>
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
@@ -314,7 +314,7 @@ class EmailCaptureForm extends React.Component {
             )}
           </Container>
         )}
-      </>
+      </React.Fragment>
     )
   }
 }

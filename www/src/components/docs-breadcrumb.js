@@ -44,7 +44,7 @@ const Breadcrumb = ({ itemList, location }) => {
   // because the docs intro page isn't generated from markdown
   if (activeItem.title === `Introduction`) {
     return (
-      <>
+      <React.Fragment>
         {/* only the breadcrumb nav of the proper viewport is displayed */}
         <BreadcrumbNav>
           <Link to="/">Home</Link>
@@ -55,12 +55,12 @@ const Breadcrumb = ({ itemList, location }) => {
           <Separator character={<ChevronLeft />} />
           <Link to="/">Home</Link>
         </BreadcrumbNav>
-      </>
+      </React.Fragment>
     )
   }
 
   return (
-    <>
+    <React.Fragment>
       {/* render the default view on desktop sizes with all links displayed */}
       <BreadcrumbNav>
         <Link to="/">Home</Link>
@@ -101,7 +101,7 @@ const Breadcrumb = ({ itemList, location }) => {
           </Link>
         </BreadcrumbNav>
       )}
-    </>
+    </React.Fragment>
   )
 }
 
