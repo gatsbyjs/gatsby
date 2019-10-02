@@ -295,7 +295,7 @@ The above code sets up defaults for your most common metadata tags and provides 
 
 4.  Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
 
-```jsx:title=blog-posts.js
+```jsx:title=src/templates/blog-post.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
