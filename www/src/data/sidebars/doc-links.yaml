@@ -465,6 +465,17 @@
           link: /docs/browser-apis/
         - title: Gatsby SSR APIs
           link: /docs/ssr-apis/
+        - title: API Files
+          link: /docs/api-files/
+          items:
+            - title: gatsby-config.js
+              link: /docs/api-files-gatsby-config/
+            - title: gatsby-browser.js
+              link: /docs/api-files-gatsby-browser/
+            - title: gatsby-node.js
+              link: /docs/api-files-gatsby-node/
+            - title: gatsby-ssr.js
+              link: /docs/api-files-gatsby-ssr/
         - title: Actions
           link: /docs/actions/
         - title: GraphQL API

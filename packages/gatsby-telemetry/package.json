@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
     "@babel/runtime": "^7.6.2",
-    "bluebird": "^3.5.5",
+    "bluebird": "^3.7.0",
     "boxen": "^3.2.0",
     "ci-info": "2.0.0",
     "configstore": "^5.0.0",
