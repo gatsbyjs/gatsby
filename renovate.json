@@ -15,13 +15,5 @@
   "rangeStrategy": "bump",
   "bumpVersion": null,
   "semanticCommitScope": null,
-  "prHourlyLimit": 0,
-  "packageRules": [
-    {
-      "updateTypes": ["minor"],
-      "groupName": "minor updates in packages except react, babel and eslint",
-      "excludePackagePatterns": ["^react", "^@babel/", "^eslint"],
-      "paths": ["packages/**"]
-    }
-  ]
+  "prHourlyLimit": 0
 }

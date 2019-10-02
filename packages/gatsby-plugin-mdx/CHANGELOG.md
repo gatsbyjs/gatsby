@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.44...gatsby-plugin-mdx@1.0.46) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.44...gatsby-plugin-mdx@1.0.45) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.43...gatsby-plugin-mdx@1.0.44) (2019-09-24)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.42...gatsby-plugin-mdx@1.0.43) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.41...gatsby-plugin-mdx@1.0.42) (2019-09-16)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17623](https://github.com/gatsbyjs/gatsby/issues/17623)) ([5bafdff](https://github.com/gatsbyjs/gatsby/commit/5bafdff))
+
+## [1.0.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.40...gatsby-plugin-mdx@1.0.41) (2019-09-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.0.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.39...gatsby-plugin-mdx@1.0.40) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ## [1.0.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.38...gatsby-plugin-mdx@1.0.39) (2019-09-05)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

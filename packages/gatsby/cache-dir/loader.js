@@ -1,6 +1,6 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
-import { setMatchPaths, findMatchPath, cleanPath } from "./find-path"
+import { setMatchPaths, findPath, findMatchPath } from "./find-path"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -145,7 +145,7 @@ export class BaseLoader {
   }
 
   loadPageDataJson(rawPath) {
-    const pagePath = cleanPath(rawPath)
+    const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
       return Promise.resolve(this.pageDataDb.get(pagePath))
     }
@@ -163,7 +163,7 @@ export class BaseLoader {
 
   // TODO check all uses of this and whether they use undefined for page resources not exist
   loadPage(rawPath) {
-    const pagePath = cleanPath(rawPath)
+    const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       return Promise.resolve(page.payload)
@@ -174,18 +174,6 @@ export class BaseLoader {
 
     const inFlight = this.loadPageDataJson(pagePath)
       .then(result => {
-        if (result.notFound) {
-          // if request was a 404, we should fallback to findMatchPath.
-          let foundMatchPatch = findMatchPath(pagePath)
-          if (foundMatchPatch && foundMatchPatch !== pagePath) {
-            return this.loadPage(foundMatchPatch).then(pageResources => {
-              this.pageDb.set(pagePath, this.pageDb.get(foundMatchPatch))
-
-              return pageResources
-            })
-          }
-        }
-
         if (result.status === `error`) {
           return {
             status: `error`,
@@ -238,7 +226,7 @@ export class BaseLoader {
 
   // returns undefined if loading page ran into errors
   loadPageSync(rawPath) {
-    const pagePath = cleanPath(rawPath)
+    const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       return this.pageDb.get(pagePath).payload
     }
@@ -276,18 +264,10 @@ export class BaseLoader {
       return false
     }
 
-    const realPath = cleanPath(pagePath)
+    const realPath = findPath(pagePath)
     // Todo make doPrefetch logic cacheable
     // eslint-disable-next-line consistent-return
-    this.doPrefetch(realPath).then(pageData => {
-      if (!pageData) {
-        const matchPath = findMatchPath(realPath)
-
-        if (matchPath && matchPath !== realPath) {
-          return this.prefetch(matchPath)
-        }
-      }
-
+    this.doPrefetch(realPath).then(() => {
       if (!this.prefetchCompleted.has(pagePath)) {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
         this.prefetchCompleted.add(pagePath)
@@ -306,7 +286,7 @@ export class BaseLoader {
   }
 
   getResourceURLsForPathname(rawPath) {
-    const pagePath = cleanPath(rawPath)
+    const pagePath = findPath(rawPath)
     const page = this.pageDataDb.get(pagePath)
     if (page) {
       const pageResources = toPageResources(page.payload)
@@ -321,7 +301,7 @@ export class BaseLoader {
   }
 
   isPageNotFound(rawPath) {
-    const pagePath = cleanPath(rawPath)
+    const pagePath = findPath(rawPath)
     const page = this.pageDb.get(pagePath)
     return page && page.notFound === true
   }
