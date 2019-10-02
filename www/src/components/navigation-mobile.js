@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import { Link } from "gatsby"
 
 import {
@@ -42,7 +43,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
 )
 
 const MobileNavigation = () => (
-  <>
+  <React.Fragment>
     <span sx={visuallyHidden}>
       <SvgDefs />
     </span>
@@ -77,7 +78,7 @@ const MobileNavigation = () => (
       <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
       <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
     </div>
-  </>
+  </React.Fragment>
 )
 
 export default MobileNavigation
