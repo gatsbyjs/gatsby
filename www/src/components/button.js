@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import { Link } from "gatsby"
 
 import { buttonStyles } from "../utils/styles"
@@ -81,7 +82,7 @@ const Button = ({
   return (
     <Tag {...props} onClick={trackingOnClick} sx={css}>
       {children}
-      {icon && <>{icon}</>}
+      {icon && <React.Fragment>{icon}</React.Fragment>}
     </Tag>
   )
 }
