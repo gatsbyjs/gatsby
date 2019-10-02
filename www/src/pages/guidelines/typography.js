@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import styled from "@emotion/styled"
 import MdWarning from "react-icons/lib/md/warning"
 

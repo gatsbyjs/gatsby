@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import Img from "gatsby-image"
 
 const Avatar = ({ image, alt }) => (

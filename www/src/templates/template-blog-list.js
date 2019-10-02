@@ -66,13 +66,7 @@ class BlogPostsIndex extends React.Component {
                     mb: 6,
                     mx: 0,
                     transition: t =>
-                      `transform ${t.transition.speed.default} ${
-                        t.transition.curve.default
-                      },  box-shadow ${t.transition.speed.default} ${
-                        t.transition.curve.default
-                      }, padding ${t.transition.speed.default} ${
-                        t.transition.curve.default
-                      }`,
+                      `transform ${t.transition.speed.default} ${t.transition.curve.default},  box-shadow ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
                     "&:hover": {
                       transform: t => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 

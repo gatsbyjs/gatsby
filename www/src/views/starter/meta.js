@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"

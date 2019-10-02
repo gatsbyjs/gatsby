@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
 import CreatorsHeader from "./creators-header"

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import { Link } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
 const { kebabCase } = require(`lodash-es`)

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import { Link } from "gatsby"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { withTitleHover } from "../shared/styles"

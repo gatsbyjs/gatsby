@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/tech-logos"
 import Card from "../card"

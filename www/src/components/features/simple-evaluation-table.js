@@ -7,7 +7,7 @@ import SectionHeaderTop from "./evaluation-table-section-header-top"
 import { renderCell } from "./evaluation-cell"
 
 const SimpleEvaluationTable = ({ title, headers, data }) => (
-  <>
+  <React.Fragment>
     {title && <SectionTitle text={title} />}
     <table>
       <tbody>
@@ -38,7 +38,7 @@ const SimpleEvaluationTable = ({ title, headers, data }) => (
         ))}
       </tbody>
     </table>
-  </>
+  </React.Fragment>
 )
 
 export default SimpleEvaluationTable

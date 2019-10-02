@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"

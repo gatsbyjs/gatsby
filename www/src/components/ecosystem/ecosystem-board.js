@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 import PropTypes from "prop-types"
 
 import EcosystemSection from "./ecosystem-section"
@@ -35,9 +35,7 @@ class EcosystemBoard extends Component {
             flexDirection: `row`,
             flexWrap: `wrap`,
             height: t =>
-              `calc(100vh - (${t.sizes.bannerHeight} + ${
-                t.sizes.headerHeight
-              } + 1px))`,
+              `calc(100vh - (${t.sizes.bannerHeight} + ${t.sizes.headerHeight} + 1px))`,
             pt: 7,
             px: 4,
             pb: 4,

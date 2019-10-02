@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 
@@ -415,9 +415,7 @@ class SearchForm extends Component {
               ...themedInput,
               width: [`100%`, null, null, null, 5, `100%`],
               transition: t =>
-                `width ${t.transition.speed.default} ${
-                  t.transition.curve.default
-                }`,
+                `width ${t.transition.speed.default} ${t.transition.curve.default}`,
             }}
             type="search"
             placeholder={`Search gatsbyjs.org`}

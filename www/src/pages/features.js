@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 

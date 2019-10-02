@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import { Link } from "gatsby"
+
 import {
   BlogIcon,
   DocsIcon,
@@ -10,7 +10,6 @@ import {
   ShowcaseIcon,
   SvgDefs,
 } from "../assets/icons"
-
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { visuallyHidden, svgStyles } from "../utils/styles"
 

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"

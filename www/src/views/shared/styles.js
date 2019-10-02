@@ -21,9 +21,7 @@ export const showcaseItem = {
 export const withTitleHover = {
   "& .title": {
     transition: t =>
-      `box-shadow ${t.transition.speed.slow} ${
-        t.transition.curve.default
-      }, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
+      `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
   },
   "&:hover .title": {
     boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.lavender}`,

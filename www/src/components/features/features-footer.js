@@ -1,7 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
-import { fontSizes, space } from "gatsby-design-tokens"
 
 const FeaturesFooter = () => (
   <p sx={{ fontSize: 1, mt: 8 }}>

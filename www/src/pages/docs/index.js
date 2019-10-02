@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet"
 
 import Layout from "../../components/layout"
 import { itemListDocs } from "../../utils/sidebar/item-list"
-import { space } from "../../gatsby-plugin-theme-ui"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"

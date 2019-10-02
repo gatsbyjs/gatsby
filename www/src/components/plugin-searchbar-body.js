@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 import {
   InstantSearch,
   Configure,
@@ -18,7 +18,7 @@ import GatsbyIcon from "../components/gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
 import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
-import { skipLink, formInputFocus, visuallyHidden } from "../utils/styles"
+import { skipLink, visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
@@ -266,9 +266,7 @@ class Search extends Component {
             sx={{
               [mediaQueries.md]: {
                 height: t =>
-                  `calc(100vh - ${t.sizes.headerHeight} - ${
-                    t.sizes.bannerHeight
-                  } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+                  `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
               },
             }}

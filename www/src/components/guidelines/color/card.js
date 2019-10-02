@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import MdLaunch from "react-icons/lib/md/launch"
 
 import { Box, Flex, Link, Text } from "../system"

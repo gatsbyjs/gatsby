@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 
 const CardHeadline = ({ children }) => (
   <h2

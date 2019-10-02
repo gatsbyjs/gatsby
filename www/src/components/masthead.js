@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import { mediaQueries } from "../gatsby-plugin-theme-ui"

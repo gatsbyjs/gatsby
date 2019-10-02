@@ -6,10 +6,7 @@ import MdLoop from "react-icons/lib/md/loop"
 
 import {
   fontSizes,
-  space,
-  colors,
   radii,
-  shadows,
   transition,
   mediaQueries,
 } from "gatsby-design-tokens"

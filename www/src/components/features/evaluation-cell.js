@@ -1,4 +1,5 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { colors } from "gatsby-design-tokens"
 import MdInfoOutline from "react-icons/lib/md/info-outline"
 

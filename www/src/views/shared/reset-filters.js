@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import MdClear from "react-icons/lib/md/clear"
 
 const ResetFilters = ({ onClick }) => (

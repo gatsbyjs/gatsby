@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import { Component } from "react"
 
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"

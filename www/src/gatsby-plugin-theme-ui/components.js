@@ -1,3 +1,5 @@
+import React from "react"
+
 import GuideList from "../components/guide-list.js"
 import HubspotForm from "../components/hubspot-form"
 import Pullquote from "../components/shared/pullquote"

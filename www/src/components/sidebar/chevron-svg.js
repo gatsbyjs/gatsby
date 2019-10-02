@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 
 const ChevronSvg = ({ size = 10, cssProps = {} }) => (
   <svg

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import hex2rgba from "hex2rgba"
 
 import logoDictionary from "./logo-dictionary"
