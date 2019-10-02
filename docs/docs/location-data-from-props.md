@@ -35,25 +35,25 @@ Through client-side routing in Gatsby you can provide a location object instead 
 
 ```js:title=index.js
 // usually you'd do this
-<Link to="/somecomponent"/>
+<Link to="/somepagecomponent"/>
 
 // but if you want to add some additional state
 <Link to={
-  pathname: '/somecomponent',
+  pathname: '/somepagecomponent',
   state: {modal: true}
 }>
 ```
 
 Then from the receiving component you can conditionally render markup based on the `location` state.
 
-```js:title=some-component.js
-const SomeComponent = ({ location }) => {
+```js:title=some-page-component.js
+const SomePageComponent = ({ location }) => {
   const { state = {} } = location
   const { modal } = state
   return modal ? (
-    <div className="modal">I'm a modal of Some Component!</div>
+    <dialog className="modal">I'm a modal of Some Page Component!</dialog>
   ) : (
-    <div>Welcome to the Some Component page!</div>
+    <div>Welcome to the Some Page Component!</div>
   )
 }
 ```
