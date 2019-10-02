@@ -65,7 +65,7 @@ const Label = styled(`label`)`
   font-size: ${p => p.theme.fontSizes[1]};
   :after {
     content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${p => p.theme.colors.text.secondary};
+    color: ${p => p.theme.colors.textMuted};
   }
 `
 

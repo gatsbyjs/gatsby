@@ -17,7 +17,7 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
         },
       }}
     >
-      <div sx={{ fontSize: 1, color: `text.secondary` }}>
+      <div sx={{ fontSize: 1, color: `textMuted` }}>
         Install this starter locally:
       </div>
       <pre

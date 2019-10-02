@@ -14,7 +14,7 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
       <LinkComponent
         sx={{
           "&&": {
-            color: `text.secondary`,
+            color: `textMuted`,
             fontWeight: `normal`,
             borderBottom: `none`,
             "&:hover": {

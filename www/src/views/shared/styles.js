@@ -58,7 +58,7 @@ export const shortcutIcon = {
   pl: 1,
   "&&": {
     borderBottom: `none`,
-    color: `text.secondary`,
+    color: `textMuted`,
     "&:hover": {
       color: `gatsby`,
     },
@@ -69,7 +69,7 @@ export const meta = {
   alignItems: `baseline`,
   fontSize: 1,
   "&&": {
-    color: `text.secondary`,
+    color: `textMuted`,
   },
 }
 
@@ -100,5 +100,5 @@ export const filterCheckbox = {
 }
 
 export const filterCount = {
-  color: `text.secondary`,
+  color: `textMuted`,
 }

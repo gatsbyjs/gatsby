@@ -6,7 +6,7 @@ const Heading = styled(Text)()
 
 Heading.defaultProps = {
   as: `h1`,
-  color: `text.header`,
+  color: `heading`,
   fontSize: 7,
   lineHeight: `dense`,
   letterSpacing: `tight`,

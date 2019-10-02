@@ -149,7 +149,7 @@ const ItemTitle = ({ children }) => (
 const ItemDescription = ({ children }) => (
   <small
     sx={{
-      color: `text.secondary`,
+      color: `textMuted`,
       display: `block`,
       fontFamily: `system`,
       fontSize: 1,

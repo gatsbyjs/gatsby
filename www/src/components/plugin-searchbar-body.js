@@ -243,7 +243,7 @@ class Search extends Component {
           <div
             sx={{
               alignItems: `center`,
-              color: `text.secondary`,
+              color: `textMuted`,
               display: `flex`,
               height: searchMetaHeight,
               px: 6,
@@ -407,7 +407,7 @@ const Result = ({ hit, pathname, query }) => {
           aria-hidden
           sx={{
             alignItems: `center`,
-            color: selected ? `lilac` : `text.secondary`,
+            color: selected ? `lilac` : `textMuted`,
             display: `flex`,
             lineHeight: `solid`,
             fontSize: 0,
@@ -435,7 +435,7 @@ const Result = ({ hit, pathname, query }) => {
       </div>
       <div
         sx={{
-          color: selected ? `inherit` : `text.secondary`,
+          color: selected ? `inherit` : `textMuted`,
           fontSize: 1,
         }}
       >

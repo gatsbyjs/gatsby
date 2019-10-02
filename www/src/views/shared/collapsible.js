@@ -41,7 +41,7 @@ class Collapsible extends Component {
           <h4
             sx={{
               alignItems: `center`,
-              color: `text.secondary`,
+              color: `textMuted`,
               cursor: `pointer`,
               display: `flex`,
               flexShrink: 0,

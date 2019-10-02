@@ -17,7 +17,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       bg: `transparent`,
       border: `none`,
       borderRadius: 1,
-      color: `text.secondary`,
+      color: `textMuted`,
       cursor: `pointer`,
       display: `flex`,
       flexGrow: 0,

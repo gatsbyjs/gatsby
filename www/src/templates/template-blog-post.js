@@ -25,7 +25,7 @@ class BlogPostTemplate extends React.Component {
     const BioLine = ({ children }) => (
       <p
         sx={{
-          color: `text.secondary`,
+          color: `textMuted`,
           fontFamily: `header`,
           lineHeight: `dense`,
           m: 0,

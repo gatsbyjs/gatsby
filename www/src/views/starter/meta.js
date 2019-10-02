@@ -84,7 +84,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           textOverflow: `ellipsis`,
         }}
       >
-        <span sx={{ color: `text.secondary` }}>{`By `}</span>
+        By{` `}
         <a
           sx={{
             "&&": {

@@ -55,15 +55,9 @@ const col = {
   // Theme-UI required keys
   //
   // Body foreground color
-  // TODO fix conflict
-  // text: c.text.primary,
-  text: {
-    header: c.black,
-    primary: c.grey[80],
-    secondary: c.grey[50],
-    // moved placeholder to `input`
-  },
-
+  // overwrite what's currently in `colors` from `gatsby-design-tokens`
+  // also see `heading` key below
+  text: c.grey[80], // c.text.primary
   // Body background color
   background: c.white,
   // Primary brand color for links, buttons, etc.
@@ -76,6 +70,13 @@ const col = {
   muted: c.grey[50],
   // end Theme-UI required keys
   banner: c.purple[70],
+  // gatsby-design-tokens has the following in colors.text,
+  // which conflicts with theme-ui's default color `text`
+  // making text.header and text.secondary available as
+  // `heading` and `textMuted` resolves that
+  heading: c.text.header, // text.header
+  textMuted: c.text.secondary, // text.secondary
+  // moved `text.placeholder` to `input.placeholder`
   // expand `gatsby-design-tokens` defaults
   code: {
     ...c.code,
@@ -121,7 +122,7 @@ const col = {
     focusBoxShadow: hex2rgba(c.orange[60], 0.75),
     icon: c.grey[50],
     iconFocus: c.grey[60],
-    placeholder: c.grey[40],
+    placeholder: c.text.placeholder,
   },
   // new tokens
   card: {
@@ -169,13 +170,9 @@ const col = {
   modes: {
     dark: {
       background: darkBackground,
-      // TODO fix conflict
-      // text: c.grey[20],
-      text: {
-        header: c.white,
-        primary: c.grey[20],
-        secondary: c.grey[40],
-      },
+      text: c.grey[20],
+      heading: c.white,
+      textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       card: {
         background: c.purple[90],

@@ -206,7 +206,7 @@ export const globalStyles = t => {
       fontWeight: t.fontWeights[2],
     },
     "h1, h2, h3, h4, h5, h6": {
-      color: t.colors.text.header,
+      color: t.colors.heading,
       letterSpacing: t.letterSpacings.tight,
     },
     h2: {
@@ -263,7 +263,7 @@ export const globalStyles = t => {
       marginBottom: t.space[9],
       display: `block`,
       fontStyle: `normal`,
-      color: t.colors.text.secondary,
+      color: t.colors.textMuted,
       position: `relative`,
     },
     ".gatsby-resp-image-link + em a, .gatsby-resp-image-wrapper + em a": {
@@ -286,7 +286,7 @@ export const globalStyles = t => {
       marginBottom: 0,
     },
     ".post-body figcaption": {
-      color: t.colors.text.secondary,
+      color: t.colors.textMuted,
       fontSize: `87.5%`,
       marginTop: t.space[1],
       marginBottom: t.space[3],

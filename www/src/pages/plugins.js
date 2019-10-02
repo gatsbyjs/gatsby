@@ -107,7 +107,7 @@ class Plugins extends Component {
 
             <p
               sx={{
-                color: `text.secondary`,
+                color: `textMuted`,
                 fontSize: 2,
                 textAlign: `center`,
               }}

@@ -57,7 +57,7 @@ const createLink = ({
             color: `navigation.linkDefault`,
             fontWeight: `normal`,
             ...(isDraft && {
-              color: `text.secondary`,
+              color: `textMuted`,
             }),
             ...(isActive && {
               color: `link.color`,

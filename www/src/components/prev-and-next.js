@@ -18,7 +18,7 @@ const prevNextLinkStyles = {
   lineHeight: `dense`,
 }
 const prevNextLabelStyles = {
-  color: `text.secondary`,
+  color: `textMuted`,
   fontSize: 2,
   fontWeight: `normal`,
   mb: 2,

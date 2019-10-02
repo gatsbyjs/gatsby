@@ -92,7 +92,7 @@ const Thumbnail = styled(`div`)`
 `
 
 const Description = styled(`p`)`
-  color: ${p => p.theme.colors.text.secondary};
+  color: ${p => p.theme.colors.textMuted};
   flex-grow: 1;
   font-size: ${p => p.theme.fontSizes[1]};
   margin: 0;

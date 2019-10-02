@@ -259,7 +259,7 @@ class SidebarBody extends Component {
         >
           <h3
             sx={{
-              color: `text.secondary`,
+              color: `textMuted`,
               px: 6,
               fontSize: 1,
               pt: 6,

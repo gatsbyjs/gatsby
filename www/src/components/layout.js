@@ -121,7 +121,7 @@ class DefaultLayout extends React.Component {
                   bg: `widget.background`,
                   border: 0,
                   borderRadius: 6,
-                  color: `text.secondary`,
+                  color: `textMuted`,
                   cursor: `pointer`,
                   fontSize: 4,
                   height: 40,

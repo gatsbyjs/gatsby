@@ -65,7 +65,7 @@ const algoliaStyles = t => css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column {
-    color: ${t.colors.text.secondary} !important;
+    color: ${t.colors.textMuted} !important;
     font-size: ${t.fontSizes[1]} !important;
     font-weight: normal !important;
     padding: ${t.space[1]} ${t.space[3]} !important;
@@ -114,7 +114,7 @@ const algoliaStyles = t => css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--text {
-    color: ${t.colors.text.secondary} !important;
+    color: ${t.colors.textMuted} !important;
   }
 
   .algolia-autocomplete

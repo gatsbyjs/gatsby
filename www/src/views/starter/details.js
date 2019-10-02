@@ -83,7 +83,7 @@ export default Details
 
 const styles = {
   headline: {
-    color: `text.secondary`,
+    color: `textMuted`,
     fontFamily: `header`,
     pr: 5,
   },

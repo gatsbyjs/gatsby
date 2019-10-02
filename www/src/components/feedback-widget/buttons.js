@@ -71,7 +71,7 @@ export const CloseButton = styled(`button`)`
   ${buttonStyles};
   background: ${p => p.theme.colors.widget.background};
   border: 1px solid ${p => p.theme.colors.input.border};
-  color: ${p => p.theme.colors.text.secondary};
+  color: ${p => p.theme.colors.textMuted};
 
   :focus {
     ${formInputFocus}
@@ -191,7 +191,7 @@ export const ToggleButton = styled(`button`)`
         transform: scale(1);
 
         svg {
-          fill: ${p => p.theme.colors.text.secondary};
+          fill: ${p => p.theme.colors.textMuted};
         }
       }
 

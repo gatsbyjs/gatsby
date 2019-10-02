@@ -106,7 +106,7 @@ class FeaturedSites extends Component {
           >
             <div
               sx={{
-                color: `text.secondary`,
+                color: `textMuted`,
                 display: `none`,
                 fontSize: 1,
                 mr: 4,
@@ -152,7 +152,7 @@ class FeaturedSites extends Component {
                   sx={{
                     "&&": {
                       borderBottom: `none`,
-                      color: `text.header`,
+                      color: `heading`,
                       fontFamily: `header`,
                       fontSize: 3,
                       fontWeight: `bold`,
@@ -180,7 +180,7 @@ class FeaturedSites extends Component {
                 </Link>
                 <div
                   sx={{
-                    color: `text.secondary`,
+                    color: `textMuted`,
                     fontSize: 1,
                     fontWeight: `normal`,
                     [mediaQueries.lg]: {

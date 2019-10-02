@@ -181,7 +181,7 @@ const Typography = ({ location }) => (
               <Box
                 fontSize={0}
                 mb={theme.fontSizes.length === index + 1 ? 0 : 3}
-                color="text.secondary"
+                color="textMuted"
               >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
@@ -289,7 +289,7 @@ const Typography = ({ location }) => (
               capital letters together, the default spacing looks too tight.
             </p>
             <Text
-              color="text.secondary"
+              color="textMuted"
               fontFamily="header"
               fontSize={1}
               letterSpacing="tracked"

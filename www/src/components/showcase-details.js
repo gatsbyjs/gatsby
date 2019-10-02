@@ -43,7 +43,7 @@ const styles = {
     boxShadow: `overlay`,
   },
   prevNextPermalinkLabel: {
-    color: `text.secondary`,
+    color: `textMuted`,
     fontFamily: `header`,
     fontWeight: `normal`,
   },
@@ -295,7 +295,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   {cleanUrl(data.sitesYaml.main_url)}
                 </a>
                 {data.sitesYaml.built_by && (
-                  <span sx={{ color: `text.secondary` }}>
+                  <span sx={{ color: `textMuted` }}>
                     <span sx={{ px: 2 }}>/</span>
                     Built by {` `}
                     {data.sitesYaml.built_by_url ? (
@@ -324,7 +324,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 {data.sitesYaml.featured && (
                   <div
                     sx={{
-                      color: `text.secondary`,
+                      color: `textMuted`,
                       display: `flex`,
                       fontWeight: `bold`,
                       p: 5,
@@ -466,7 +466,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 >
                   <div
                     sx={{
-                      color: `text.secondary`,
+                      color: `textMuted`,
                       pr: 5,
                     }}
                   >

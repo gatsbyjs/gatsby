@@ -147,7 +147,7 @@ class CreatorsView extends Component {
                     <div
                       sx={{
                         mb: 1,
-                        color: `text.secondary`,
+                        color: `textMuted`,
                       }}
                     >
                       {item.node.location}

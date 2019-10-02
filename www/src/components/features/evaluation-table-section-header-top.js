@@ -19,7 +19,7 @@ const superHeader = ({ columnHeaders }) => (
           verticalAlign: `bottom`,
           width: i === 0 ? 120 : `inherit`,
           border: 0,
-          color: `text.secondary`,
+          color: `textMuted`,
           bg: `ui.background`,
           "span:first-of-type": {
             borderTopLeftRadius: 2,

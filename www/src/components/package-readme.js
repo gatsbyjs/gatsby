@@ -54,12 +54,12 @@ const PackageReadMe = props => {
                     mr: 8,
                     "&&": {
                       border: 0,
-                      color: `text.secondary`,
+                      color: `textMuted`,
                       display: `flex`,
                       fontWeight: `normal`,
                     },
                     "&&:hover": {
-                      color: `text.secondary`,
+                      color: `textMuted`,
                     },
                   }}
                 >

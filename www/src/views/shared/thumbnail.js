@@ -30,7 +30,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
         fontFamily: `header`,
         "&&": {
           borderBottom: `none`,
-          color: `text.header`,
+          color: `heading`,
           transition: t =>
             `all ${t.transition.speed.default} ${t.transition.curve.default}`,
           "&:hover": screenshotHover,

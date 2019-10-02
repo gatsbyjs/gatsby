@@ -19,7 +19,7 @@ const MetaTitle = ({ children }) => (
   <p
     sx={{
       margin: `0`,
-      color: `text.secondary`,
+      color: `textMuted`,
       mb: 1,
       flexShrink: 0,
       [mediaQueries.xs]: {
@@ -138,7 +138,7 @@ class CreatorTemplate extends Component {
               {isAgencyOrCompany && (
                 <span
                   sx={{
-                    color: `text.secondary`,
+                    color: `textMuted`,
                     mr: 2,
                   }}
                 >

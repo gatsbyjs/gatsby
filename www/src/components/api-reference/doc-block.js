@@ -94,7 +94,7 @@ const APILink = ({ definition, relativeFilePath }) => {
         sx={{
           ...linkStyles,
           "&&:hover": {
-            color: `text.secondary`,
+            color: `textMuted`,
           },
           display: `inline-flex !important`,
           alignItems: `center`,

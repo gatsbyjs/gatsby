@@ -21,7 +21,7 @@ const FooterLinks = props => (
       "& li": {
         display: `inline-block`,
         "&:after": {
-          color: `text.secondary`,
+          color: `textMuted`,
           content: `"•"`,
           padding: 3,
         },

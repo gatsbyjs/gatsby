@@ -18,7 +18,7 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
   <nav
     aria-label="breadcrumb"
     sx={{
-      color: `text.secondary`,
+      color: `textMuted`,
       display: `${mobile ? `inherit` : `none`}`,
       fontSize: 1,
       mb: 6,

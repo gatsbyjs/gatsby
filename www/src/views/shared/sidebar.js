@@ -59,7 +59,7 @@ export const SidebarHeader = () => (
         borderBottomStyle: `solid`,
         borderBottomWidth: `1px`,
         borderColor: `ui.border`,
-        color: `text.secondary`,
+        color: `textMuted`,
         display: `none`,
         flexShrink: 0,
         fontSize: 3,
@@ -112,7 +112,7 @@ export const ContentHeader = ({ children, cssOverrides = {} }) => (
 const ResultCount = ({ children }) => (
   <small
     sx={{
-      color: `text.secondary`,
+      color: `textMuted`,
       fontSize: 2,
       fontWeight: `normal`,
     }}

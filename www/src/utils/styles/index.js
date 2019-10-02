@@ -141,7 +141,7 @@ export const linkStyles = {
   padding: `${space[3]} 0`,
   "&&": {
     border: 0,
-    color: colors.text.secondary,
+    color: colors.textMuted,
     display: `flex`,
     fontWeight: `normal`,
   },

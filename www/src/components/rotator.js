@@ -10,7 +10,7 @@ import { visuallyHidden } from "../utils/styles"
 
 const controlButtonStyles = {
   WebkitAppearance: `none`,
-  color: `text.secondary`,
+  color: `textMuted`,
   fontWeight: 700,
   border: 0,
   background: `transparent`,
@@ -163,7 +163,7 @@ class Rotator extends Component {
 
           <p
             sx={{
-              color: `text.secondary`,
+              color: `textMuted`,
               margin: 0,
               fontSize: 3,
               textAlign: `center`,

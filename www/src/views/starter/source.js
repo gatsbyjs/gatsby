@@ -60,7 +60,7 @@ const Source = ({ startersYaml, repoUrl }) => (
     >
       <span
         sx={{
-          color: `text.secondary`,
+          color: `textMuted`,
           mr: 4,
         }}
       >

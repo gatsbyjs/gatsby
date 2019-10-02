@@ -88,7 +88,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <span sx={{ color: `text.header` }}>{owner} /</span>
+                    <span sx={{ color: `heading` }}>{owner} /</span>
                     <span css={{ display: `flex` }}>
                       {gatsbyMajorVersion[0][1] === `2` && (
                         <img
