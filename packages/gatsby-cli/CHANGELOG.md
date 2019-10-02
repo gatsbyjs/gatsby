@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.51...gatsby-cli@2.7.53) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.51...gatsby-cli@2.7.52) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.50...gatsby-cli@2.7.51) (2019-09-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.49...gatsby-cli@2.7.50) (2019-09-24)
+
+### Features
+
+- **gatsby-cli:** Add success message after installing gatsby ([#17241](https://github.com/gatsbyjs/gatsby/issues/17241)) ([073e1a0](https://github.com/gatsbyjs/gatsby/commit/073e1a0))
+
+## [2.7.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.48...gatsby-cli@2.7.49) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.47...gatsby-cli@2.7.48) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.46...gatsby-cli@2.7.47) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix node internal validation ([#17511](https://github.com/gatsbyjs/gatsby/issues/17511)) ([97a720d](https://github.com/gatsbyjs/gatsby/commit/97a720d))
+
+## [2.7.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.45...gatsby-cli@2.7.46) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-cli:** added effective condition to check empty path ([#17482](https://github.com/gatsbyjs/gatsby/issues/17482)) ([693fa58](https://github.com/gatsbyjs/gatsby/commit/693fa58))
+
+## [2.7.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.44...gatsby-cli@2.7.45) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix mapping stack trace to source file after dependency upgrade ([#17445](https://github.com/gatsbyjs/gatsby/issues/17445)) ([f38d8c7](https://github.com/gatsbyjs/gatsby/commit/f38d8c7))
+
+## [2.7.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.43...gatsby-cli@2.7.44) (2019-09-03)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.42...gatsby-cli@2.7.43) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency execa to v2 ([#17029](https://github.com/gatsbyjs/gatsby/issues/17029)) ([59d3472](https://github.com/gatsbyjs/gatsby/commit/59d3472))
+
 ## [2.7.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.41...gatsby-cli@2.7.42) (2019-09-01)
 
 ### Bug Fixes

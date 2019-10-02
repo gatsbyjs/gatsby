@@ -15,7 +15,7 @@ Quickly get started using the Gatsby blog core theme! This starter creates a new
 
     Use the Gatsby CLI to create a new site, specifying the blog theme starter.
 
-    ```sh
+    ```shell
     # create a new Gatsby site using the blog theme starter
     gatsby new my-themed-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme-core
     ```
@@ -24,7 +24,7 @@ Quickly get started using the Gatsby blog core theme! This starter creates a new
 
     Navigate into your new site’s directory and start it up.
 
-    ```sh
+    ```shell
     cd my-themed-blog/
     gatsby develop
     ```

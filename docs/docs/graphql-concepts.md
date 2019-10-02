@@ -1,6 +1,8 @@
 ---
-title: Querying Data with GraphQL
+title: GraphQL Concepts
 ---
+
+import LayerModel from "../../www/src/components/layer-model"
 
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
@@ -18,6 +20,10 @@ Gatsby uses GraphQL to enable [page and StaticQuery
 components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
+
+Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
+
+<LayerModel initialLayer="Data" />
 
 ## Why is GraphQL so cool?
 
@@ -83,6 +89,24 @@ on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
 _Note:_ To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
+
+### Understanding the parts of a query
+
+The following diagram shows a GraphQL query, with each word highlighted in a color corresponding to its name on the legend:
+
+![GraphQL query diagram](./images/basic-query.png)
+
+#### Query Operation Type
+
+The diagram marks the word `query` as the "Operation Type", for Gatsby's uses the only operation type you will deal with is `query`, this can be omitted from your queries if you prefer (like in the above example).
+
+#### Operation Name
+
+`SiteInformation` is marked as the "Operation Name", which is a unique name that you assign to a query yourself. This is similar to how you would name a function or a variable, and like a function this can be omitted if you would rather the query be anonymous.
+
+#### Query Fields
+
+The four words `site`, `id`, `siteMetadata`, and `title` are marked as "Fields". Any top-level fields -- like `site` in the diagram -- are sometimes referred to as **root level fields**, though the name doesn't signify functional significance as all fields in GraphQL queries behave the same.
 
 ## How to learn GraphQL
 
@@ -215,7 +239,7 @@ Notice that in the above example for [querying images](#images), we used `...Gat
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any JavaScript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
-For example if I put a fragment in a helper component, I can use that fragment in any other query:
+For example, if I put a fragment in a helper component, I can use that fragment in any other query:
 
 ```jsx:title=src/components/PostItem.js
 export const markdownFrontmatterFragment = graphql`
@@ -239,7 +263,7 @@ query($path: String!) {
 }
 ```
 
-It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page might map over all of your posts to show them in a list.
+It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page you might map over all of your posts to show them in a list.
 
 ```jsx:title=src/pages/index.jsx
 import React from "react"
@@ -341,6 +365,7 @@ export const query = graphql`
 ## Further reading
 
 - [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
+- [The Anatomy of a GraphQL Query](https://blog.apollographql.com/the-anatomy-of-a-graphql-query-6dffa9e9e747)
 
 ### Getting started with GraphQL
 
