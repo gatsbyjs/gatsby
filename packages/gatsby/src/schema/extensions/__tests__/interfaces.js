@@ -490,6 +490,86 @@ describe(`Queryable Node interfaces`, () => {
     }
     expect(results).toEqual(expected)
   })
+
+  it(`materializes and searches by concrete type`, async () => {
+    dispatch({ type: `DELETE_CACHE` })
+
+    const nodes = [
+      {
+        id: `0`,
+        title: `Foo Bar`,
+        slugInternal: `foo-bar`,
+        internal: {
+          type: `FooConcrete`,
+          contentDigest: `0`,
+        },
+      },
+    ]
+
+    nodes.forEach(node =>
+      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    )
+
+    dispatch(
+      createTypes(`
+        interface FooInterface @nodeInterface {
+          id: ID!
+          title: String
+          slug: String
+        }
+
+        type FooConcrete implements Node & FooInterface {
+          id: ID!
+          title: String
+          slug: String @proxy(from: "slugInternal")
+        }
+      `)
+    )
+
+    expect(
+      await runQuery(`
+        {
+          allFooConcrete(filter: {slug: { eq: "foo-bar"}}) {
+            nodes {
+            id
+          }
+          }
+        }
+        `)
+    ).toMatchInlineSnapshot(`
+      Object {
+        "allFooConcrete": Object {
+          "nodes": Array [
+            Object {
+              "id": "0",
+            },
+          ],
+        },
+      }
+    `)
+
+    expect(
+      await runQuery(`
+        {
+          allFooInterface(filter: {slug: { eq: "foo-bar"}}) {
+            nodes {
+              id
+            }
+          }
+        }
+        `)
+    ).toMatchInlineSnapshot(`
+      Object {
+        "allFooInterface": Object {
+          "nodes": Array [
+            Object {
+              "id": "0",
+            },
+          ],
+        },
+      }
+    `)
+  })
 })
 
 const buildSchema = async () => {

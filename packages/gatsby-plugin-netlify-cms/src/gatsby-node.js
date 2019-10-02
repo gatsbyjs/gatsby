@@ -90,9 +90,10 @@ exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
 }
 
 exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, plugins, pathPrefix, loaders },
+  { store, stage, getConfig, plugins, pathPrefix, loaders, rules },
   {
     modulePath,
+    customizeWebpackConfig,
     publicPath = `admin`,
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
@@ -188,6 +189,18 @@ exports.onCreateWebpackConfig = (
       minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer,
     },
     devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
+  }
+
+  if (customizeWebpackConfig) {
+    customizeWebpackConfig(config, {
+      store,
+      stage,
+      pathPrefix,
+      getConfig,
+      rules,
+      loaders,
+      plugins,
+    })
   }
 
   return new Promise((resolve, reject) => {

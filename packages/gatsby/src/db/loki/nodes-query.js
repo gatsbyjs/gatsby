@@ -215,10 +215,10 @@ function doesSortFieldsHaveArray(type, sortArgs) {
  */
 async function runQuery(args) {
   if (args.nodeTypeNames.length > 1) {
-    const nodes = args.nodeTypeNames.reduce(
-      (acc, typeName) => acc.concat(getNodesByType(typeName)),
-      []
-    )
+    const nodes = args.nodeTypeNames.reduce((acc, typeName) => {
+      acc.push(...getNodesByType(typeName))
+      return acc
+    }, [])
     return runSiftOnNodes(nodes, args, getNode)
   }
 

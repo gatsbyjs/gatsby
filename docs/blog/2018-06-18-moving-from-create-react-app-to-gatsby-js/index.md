@@ -40,7 +40,7 @@ Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. Yo
 
 ## Gatsby project folder structure
 
-```sh
+```shell
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -74,7 +74,7 @@ Let's assume you have the following static routes in your `create-react-app` pro
 
 Gatsby will create these routes automatically based on files you create in your `pages` folder. The good news is you've already created the React components so it's a matter of copying them to the right place. The exception is the home page which should be named `index.js`.  You will end up with something like this:
 
-```sh
+```shell
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js
@@ -188,7 +188,7 @@ Since you already have the `BlogPost` component from your React project move it 
 
 Your Gatsby project will look like this:
 
-```sh
+```shell
 ├── LICENSE
 ├── README.md
 ├── gatsby-config.js

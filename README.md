@@ -106,7 +106,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    Get your Gatsby blog set up in a single command:
 
-   ```sh
+   ```shell
    # create a new Gatsby site using the default starter
    gatsby new my-blazing-fast-site
    ```
@@ -115,7 +115,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    Next, move into your new site’s directory and start it up:
 
-   ```sh
+   ```shell
    cd my-blazing-fast-site/
    gatsby develop
    ```
