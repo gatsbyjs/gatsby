@@ -207,7 +207,7 @@ module.exports = {
 
 3. In the `src/components` directory, create a file called `seo.js` and add the following:
 
-```jsx:title=seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
