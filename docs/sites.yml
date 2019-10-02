@@ -7403,6 +7403,19 @@
   built_by: Mutual
   built_by_url: https://twitter.com/madebymutual
   featured: false
+- title: Surge 3
+  main_url: https://surge3.com
+  url: https://surge3.com/
+  description: >
+    We’re Surge 3 - a premier web development agency. Our company centers around the principles of quality, speed, and service! We are founded using the latest in web technologies and are dedicated to using those exact tools to help our customers achieve their goals.
+  categories:
+    - Portfolio
+    - Blog
+    - Agency
+    - Web Development
+    - Marketing
+  built_by: Dillon Browne
+  built_by_url: https://dillonbrowne.com
 - title: Adaltas
   main_url: https://www.adaltas.com
   url: https://www.adaltas.com
