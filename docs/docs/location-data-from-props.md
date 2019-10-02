@@ -18,7 +18,7 @@ Sometimes it can be helpful to know exactly what your app's browser URL is at an
 }
 ```
 
-## HashHistory
+### HashHistory
 
 Using `hash` is one way to update the browser URL and the DOM without having the browser do a full reload. The HashHistory is used to track browser history when using [hashrouter](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/HashRouter.md#hashrouter) instead of [browserrouter](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/BrowserRouter.md#browserrouter) which uses the newer HTML5 history API.
 
