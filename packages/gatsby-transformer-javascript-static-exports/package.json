@@ -10,7 +10,7 @@
     "@babel/parser": "^7.6.2",
     "@babel/runtime": "^7.6.2",
     "@babel/traverse": "^7.6.2",
-    "bluebird": "^3.5.5"
+    "bluebird": "^3.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.2",

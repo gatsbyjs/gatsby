@@ -14,7 +14,7 @@
     "@babel/runtime": "^7.6.2",
     "@hapi/joi": "^15.1.1",
     "better-opn": "^0.1.4",
-    "bluebird": "^3.5.5",
+    "bluebird": "^3.7.0",
     "chalk": "^2.4.2",
     "ci-info": "^2.0.0",
     "clipboardy": "^2.1.0",
