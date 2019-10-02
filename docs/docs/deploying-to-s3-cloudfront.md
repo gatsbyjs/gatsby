@@ -56,19 +56,19 @@ Run `npm run build && npm run deploy` to do a build and have it immediately depl
 
 ## Deploying with `.env` variables
 
-Some deployments requires passing environment variables. To deploy with environment variables, update the deployment script to your `package.json`:
+Some deployments require passing environment variables. To deploy with environment variables, update the deployment script to your `package.json`:
 
 ```js
 "scripts" : {
     ...
-    "deploy": "yarn -n \"-r dotenv/config\" && yarn build && gatsby-plugin-s3 deploy"
+    "deploy": "npm run -n \"-r dotenv/config\" && npm run build && gatsby-plugin-s3 deploy"
 }
 ```
 
-This command requires running dotenv first before deploying to s3. Additionally, if you have multiple AWS profiles in your machine, you can deploy by declaring your `AWS_PROFILE` before the deploy script:
+This command requires running `dotenv` first before deploying to s3. Additionally, if you have multiple AWS profiles in your machine, you can deploy by declaring your `AWS_PROFILE` before the deploy script:
 
 ```sh
-AWS_PROFILE=yourprofilename yarn deploy
+AWS_PROFILE=yourprofilename npm run deploy
 ```
 
 ## Setting up: CloudFront
