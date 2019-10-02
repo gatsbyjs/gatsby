@@ -65,7 +65,7 @@ const CodeBlock = ({
                     position: `absolute`,
                     right: t => t.space[1],
                     top: t => t.space[1],
-                    borderRadius: t => `${t.radii[2]}px ${t.radii[2]}px`,
+                    borderRadius: 2,
                   }}
                   content={content}
                 />
