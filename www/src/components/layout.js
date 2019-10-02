@@ -8,7 +8,7 @@ import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { Global } from "@emotion/core"
 
-import { global } from "../utils/styles/global"
+import { globalStyles } from "../utils/styles/global"
 import { colors, space, zIndices } from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
@@ -70,7 +70,7 @@ class DefaultLayout extends React.Component {
     if (isModal && window.innerWidth > 750) {
       return (
         <>
-          <Global styles={global} />
+          <Global styles={globalStyles} />
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
@@ -149,7 +149,7 @@ class DefaultLayout extends React.Component {
 
     return (
       <>
-        <Global styles={global} />
+        <Global styles={globalStyles} />
         <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink sx={skipLink}>Skip to main content</SkipNavLink>
         <Banner />

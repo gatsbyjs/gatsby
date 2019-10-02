@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
 
-import { global } from "../../utils/styles/global"
+import { globalStyles } from "../../utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
 import AnotherHeader from "../navigation"
@@ -34,7 +34,7 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
         },
       }}
     />
-    <Global styles={global} />
+    <Global styles={globalStyles} />
     <Helmet>
       <title>
         {pageTitle ? `${pageTitle} | Guidelines | GatsbyJS` : `GatsbyJS`}

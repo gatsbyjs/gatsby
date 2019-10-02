@@ -188,7 +188,7 @@ const gatsbyHighlight = t => {
   }
 }
 
-export const global = t => {
+export const globalStyles = t => {
   return {
     ...prismToken(t),
     ...gatsbyHighlight(t),
