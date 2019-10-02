@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
@@ -16,7 +17,7 @@ const PackageReadMe = props => {
   const metaExcerpt = excerpt || `Plugin information for ${packageName}`
 
   return (
-    <>
+    <React.Fragment>
       <Container>
         <Helmet>
           <title>{packageName}</title>
@@ -96,7 +97,7 @@ const PackageReadMe = props => {
         <MarkdownPageFooter page={page} packagePage />
       </Container>
       <FooterLinks />
-    </>
+    </React.Fragment>
   )
 }
 

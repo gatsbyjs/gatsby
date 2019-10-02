@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
@@ -15,7 +16,7 @@ import Footer from "../shared/footer-links"
 import "../../assets/fonts/futura"
 
 const Layout = ({ children, background, pathname, pageTitle }) => (
-  <>
+  <React.Fragment>
     <Global
       styles={{
         ".ReactModal__Overlay": {
@@ -63,7 +64,7 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
         <Footer />
       </Box>
     </Box>
-  </>
+  </React.Fragment>
 )
 
 Layout.propTypes = {
