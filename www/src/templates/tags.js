@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import TagsIcon from "react-icons/lib/ti/tags"
@@ -48,12 +49,12 @@ const Tags = ({ pageContext, data, location }) => {
           View all tags <TagsIcon />
         </Button>
         {doc ? (
-          <>
+          <React.Fragment>
             <span css={{ margin: 5 }} />
             <Button small secondary key={`view-tag-docs-button`} to={doc}>
               Read the documentation <TiArrowRight />
             </Button>
-          </>
+          </React.Fragment>
         ) : null}
         {edges.map(({ node }) => (
           <BlogPostPreviewItem
