@@ -42,7 +42,7 @@ module.exports = {
 }
 ```
 
-Note: Resolving the images directory separately (as shown above) isn't necessary if the images are in the same directory as the markdown files.
+Note: If the images are in the same directory as the Markdown files, sourcing and resolving the images directory separately (as shown above) isn't necessary.
 
 Then, in an example markdown file, add a field called `featuredImage`:
 
