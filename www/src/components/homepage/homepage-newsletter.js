@@ -12,8 +12,8 @@ import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 const stripedBorderHeight = 1
 
 const Container = styled(`div`)`
-  background: ${p => p.theme.colors.white};
-  border: 1px solid ${p => p.theme.colors.ui.border};
+  background: ${p => p.theme.colors.newsletter.background};
+  border: 1px solid ${p => p.theme.colors.newsletter.border};
   border-radius: ${p => p.theme.radii[2]}px;
   display: flex;
   flex-direction: column;
@@ -27,15 +27,15 @@ const Container = styled(`div`)`
 
   :after {
     border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
-    background: ${p => p.theme.colors.white}
+    background: ${p => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
-        ${p => p.theme.colors.yellow[40]},
-        ${p => p.theme.colors.yellow[40]} 20px,
+        ${p => p.theme.colors.newsletter.stripeColorA},
+        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
         transparent 20px,
         transparent 40px,
-        ${p => p.theme.colors.teal[40]} 40px,
-        ${p => p.theme.colors.teal[40]} 60px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
         transparent 60px,
         transparent 80px
       );
@@ -74,7 +74,7 @@ const Name = styled(`h3`)`
 `
 
 const Title = styled(`h1`)`
-  color: ${p => p.theme.colors.gatsby};
+  color: ${p => p.theme.colors.newsletter.heading};
   font-size: ${p => p.theme.fontSizes[4]};
   font-weight: ${p => p.theme.fontWeights[1]};
   line-height: ${p => p.theme.lineHeights.dense};

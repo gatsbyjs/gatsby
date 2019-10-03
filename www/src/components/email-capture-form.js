@@ -10,9 +10,9 @@ import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
 const Container = styled(`div`)`
-  background: ${p => p.theme.colors.purple[5]};
+  background: ${p => p.theme.colors.newsletter.background};
   box-shadow: ${p => p.theme.shadows.raised},
-    inset 0 0 0 1px ${p => p.theme.colors.purple[10]};
+    inset 0 0 0 1px ${p => p.theme.colors.newsletter.border};
   border-radius: ${p => p.theme.radii[2]}px;
   margin-top: ${p => p.theme.space[8]};
   padding: calc(${p => p.theme.space[6]} * 1.2);
@@ -23,15 +23,15 @@ const Container = styled(`div`)`
 
   :after {
     border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
-    background: ${p => p.theme.colors.white}
+    background: ${p => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
-        ${p => p.theme.colors.red[40]},
-        ${p => p.theme.colors.red[40]} 20px,
+        ${p => p.theme.colors.newsletter.stripeColorA},
+        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
         transparent 20px,
         transparent 40px,
-        ${p => p.theme.colors.blue[40]} 40px,
-        ${p => p.theme.colors.blue[40]} 60px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
         transparent 60px,
         transparent 80px
       );
@@ -294,7 +294,7 @@ class EmailCaptureForm extends React.Component {
           <Container>
             <p
               sx={{
-                color: `gatsby`,
+                color: `newsletter.heading`,
                 fontWeight: `bold`,
                 fontSize: 3,
                 fontFamily: `header`,

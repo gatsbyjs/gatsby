@@ -167,6 +167,13 @@ const col = {
     background: c.white,
     color: c.text.primary,
   },
+  newsletter: {
+    background: c.white,
+    border: c.purple[10],
+    heading: c.purple[60],
+    stripeColorA: c.red[40],
+    stripeColorB: c.blue[40],
+  },
   modes: {
     dark: {
       background: darkBackground,
@@ -251,6 +258,13 @@ const col = {
         background: darkBackground,
         border: darkBorder,
         color: c.white,
+      },
+      newsletter: {
+        background: darkBackground,
+        border: darkBorder,
+        heading: c.white,
+        stripeColorA: c.red[90],
+        stripeColorB: c.blue[90],
       },
       search: {
         suggestionHighlightBackground: c.gatsby,
