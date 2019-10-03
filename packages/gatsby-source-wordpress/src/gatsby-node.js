@@ -22,6 +22,7 @@ let _perPage
 let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
+let _afterFetchNormalizer
 let _normalizer
 let _keepMediaSizes
 
@@ -49,6 +50,7 @@ exports.sourceNodes = async (
     concurrentRequests = 10,
     includedRoutes = [`**`],
     excludedRoutes = [],
+    afterFetchNormalizer,
     normalizer,
     keepMediaSizes = false,
   }
@@ -68,6 +70,7 @@ exports.sourceNodes = async (
   _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
   _keepMediaSizes = keepMediaSizes
+  _afterFetchNormalizer = afterFetchNormalizer
   _normalizer = normalizer
 
   let entities = await fetch({
@@ -87,6 +90,34 @@ exports.sourceNodes = async (
     typePrefix,
     refactoredEntityTypes,
   })
+
+  // Apply custom normalizer after fetching data
+  if (typeof _afterFetchNormalizer === `function`) {
+    entities = _afterFetchNormalizer({
+      entities,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      touchNode,
+      getNode,
+      typePrefix,
+      refactoredEntityTypes,
+      baseUrl,
+      protocol,
+      _siteURL,
+      hostingWPCOM,
+      useACF,
+      acfOptionPageIds,
+      auth,
+      verboseOutput,
+      perPage,
+      searchAndReplaceContentUrls,
+      concurrentRequests,
+      excludedRoutes,
+      keepMediaSizes,
+    });
+  }
 
   // Normalize data & create nodes
 

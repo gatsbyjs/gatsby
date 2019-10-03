@@ -140,6 +140,10 @@ module.exports = {
         // URLs for thumbnails, or any other media detail.
         // Defaults to false
         keepMediaSizes: false,
+        // use a custom normalizer which is applied before the built-in ones.
+        afterFetchNormalizer: function({ entities }) {
+          return entities
+        },
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
