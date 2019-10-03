@@ -56,7 +56,6 @@ class FeaturedSites extends Component {
       >
         <div
           sx={{
-            mb: 6,
             display: `flex`,
             alignItems: `center`,
             flexWrap: `wrap`,
@@ -137,7 +136,7 @@ class FeaturedSites extends Component {
               flexShrink: 0,
               margin: t => `0 -${t.space[6]}`,
               overflowX: `scroll`,
-              padding: t => `3px ${t.space[6]} 0`,
+              padding: t => `${t.space[6]} ${t.space[6]} 0`,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
