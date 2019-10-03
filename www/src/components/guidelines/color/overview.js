@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+import React from "react"
 import range from "range"
 
 import { SectionHeading, SectionSubheading } from "../typography"
@@ -121,7 +122,7 @@ const Palette = ({ color, handler }) => {
 }
 
 const Overview = ({ handler }) => (
-  <>
+  <React.Fragment>
     <Flex>
       <CopyColumn />
       <Box
@@ -166,7 +167,7 @@ const Overview = ({ handler }) => (
         <Palette color="whiteFade" handler={handler} /> */}
       </Box>
     </Box>
-  </>
+  </React.Fragment>
 )
 
 export default Overview
