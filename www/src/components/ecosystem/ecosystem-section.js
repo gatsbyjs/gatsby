@@ -50,7 +50,7 @@ export const Header = styled(`header`)`
 
 const Title = styled(`h1`)`
   align-items: center;
-  color: ${p => p.theme.colors.gatsby};
+  color: ${p => p.theme.colors.heading};
   display: flex;
   font-size: ${p => p.theme.fontSizes[4]};
   font-weight: ${p => p.theme.fontWeights.heading};

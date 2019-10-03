@@ -52,7 +52,7 @@ const Header = styled(`header`)`
   justify-content: space-between;
 
   h3 {
-    color: ${p => p.theme.colors.purple[80]};
+    color: ${p => p.theme.colors.heading};
     font-size: ${p => p.theme.fontSizes[2]};
     margin: 0;
   }
