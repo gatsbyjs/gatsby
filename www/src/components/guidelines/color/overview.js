@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import range from "range"
 
 import { SectionHeading, SectionSubheading } from "../typography"
