@@ -33,7 +33,7 @@ import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-
 import ColorSwatch from "../../components/guidelines/color/card"
 
 import { Box, Button, Flex, Text } from "../../components/guidelines/system"
-import theme from "../../utils/guidelines/theme"
+import theme from "../../gatsby-plugin-theme-ui"
 import palette from "../../utils/guidelines/extend-palette-info"
 
 const List = styled(`ul`)`
@@ -370,8 +370,8 @@ const Logo = ({ data, location }) => (
           </Text>
           <Text
             fontSize={5}
-            fontFamily="header"
-            fontWeight={1}
+            fontFamily="heading"
+            fontWeight="heading"
             lineHeight="dense"
           >
             ABCDEFGHIJKLMNOPQRSTUVWXYZ

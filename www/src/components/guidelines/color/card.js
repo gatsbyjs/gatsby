@@ -12,7 +12,7 @@ const ColorValue = ({ label, inverted, value, href }) => (
   <Box mt={4} px={2} css={{ flexShrink: 0, flexBase: `50%` }}>
     <Text
       color={inverted ? `whiteFade.70` : `blackFade.70`}
-      fontFamily="header"
+      fontFamily="heading"
       fontSize={1}
     >
       {label}
@@ -60,10 +60,10 @@ const ColorSwatch = ({ color, ...rest }) => {
       withBorder={!inverted}
     >
       <Text
-        fontFamily="header"
+        fontFamily="heading"
         fontSize={4}
         px={2}
-        fontWeight={1}
+        fontWeight="heading"
         color={textColor}
       >
         {color.name}

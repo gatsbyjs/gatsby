@@ -18,7 +18,7 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
-import theme from "../../utils/guidelines/theme"
+import theme from "../../gatsby-plugin-theme-ui"
 import { Box, Flex, Text } from "../../components/guidelines/system"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
@@ -48,7 +48,7 @@ const ColorExample = ({ hex, token }) => (
       }}
     >
       <Flex alignItems="center">
-        <Text color={hex} fontWeight={1} fontSize={6} mr={8}>
+        <Text color={hex} fontWeight="bold" fontSize={6} mr={8}>
           Aa
         </Text>
         <div

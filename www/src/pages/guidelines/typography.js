@@ -22,7 +22,12 @@ import Starter from "../../components/guidelines/cards/starter"
 import Blog from "../../components/guidelines/cards/blog"
 import ImagePlaceholder from "../../components/guidelines/image-placeholder"
 
-import theme from "../../utils/guidelines/theme"
+import {
+  fontSizes,
+  fontWeights,
+  letterSpacings,
+  lineHeights,
+} from "../../gatsby-plugin-theme-ui"
 import {
   Box,
   Button,
@@ -39,7 +44,7 @@ const MarketingColumn = ({ children, title }) => (
     <Heading fontSize={5} mb={3} fontWeight="heading">
       {title}
     </Heading>
-    <Text color="grey.70">{children}</Text>
+    <Text color="textMuted">{children}</Text>
   </Box>
 )
 
@@ -110,7 +115,7 @@ const Typography = ({ location }) => (
         </CopyColumn>
         <ContentColumn css={{ alignSelf: `flex-end`, display: `flex` }}>
           <Flex flexDirection="column">
-            <Typeface fontFamily="header">Futura PT</Typeface>
+            <Typeface fontFamily="heading">Futura PT</Typeface>
           </Flex>
         </ContentColumn>
       </Columns>
@@ -160,7 +165,7 @@ const Typography = ({ location }) => (
           </Text>
         </CopyColumn>
         <ContentColumn fullWidth>
-          {theme.fontSizes.map((size, index) => (
+          {fontSizes.map((size, index) => (
             <div key={`${index}-${size}`}>
               <Text
                 // don't scale based on root font size here
@@ -180,7 +185,7 @@ const Typography = ({ location }) => (
               </Text>
               <Box
                 fontSize={0}
-                mb={theme.fontSizes.length === index + 1 ? 0 : 3}
+                mb={fontSizes.length === index + 1 ? 0 : 3}
                 color="textMuted"
               >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
@@ -214,8 +219,8 @@ const Typography = ({ location }) => (
           <SectionSubheading mt={0}>Font Weights</SectionSubheading>
           <Flex flexWrap="wrap" flexDirection="row">
             <Box maxWidth={{ xl: `40%` }} mr={{ xl: 6 }}>
-              <Weight fontFamily="header" fontWeight="headingPrimary">
-                {theme.fontWeights.headingPrimary}
+              <Weight fontFamily="heading" fontWeight="headingPrimary">
+                {fontWeights.headingPrimary}
               </Weight>
               <Box pb={4}>
                 <code>fontWeights.headingPrimary</code>
@@ -226,8 +231,8 @@ const Typography = ({ location }) => (
             </Box>
 
             <Box maxWidth={{ xl: `40%` }}>
-              <Weight fontFamily="header" fontWeight="bold">
-                {theme.fontWeights.bold}
+              <Weight fontFamily="heading" fontWeight="bold">
+                {fontWeights.bold}
               </Weight>
               <Box pb={4}>
                 <code>fontWeights.bold</code> — <code>bold</code>
@@ -238,8 +243,8 @@ const Typography = ({ location }) => (
               </Box>
             </Box>
             <Box>
-              <Weight fontFamily="header" fontWeight={0}>
-                {theme.fontWeights.body}
+              <Weight fontFamily="heading" fontWeight="body">
+                {fontWeights.body}
               </Weight>
               <code>fontWeights.body</code> — <code>normal</code>
             </Box>
@@ -258,7 +263,7 @@ const Typography = ({ location }) => (
             <Text as="p" mb={0}>
               <strong>Normal</strong> — <code>letterSpacings.normal</code> —
               {` `}
-              <code>{theme.letterSpacings.normal}</code>
+              <code>{letterSpacings.normal}</code>
             </Text>
             <p>Use for almost everything.</p>
           </ExampleBox>
@@ -268,7 +273,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Tight</strong> — <code>letterSpacings.tight</code> —{` `}
-              <code>{theme.letterSpacings.tight}</code>
+              <code>{letterSpacings.tight}</code>
             </Text>
             <p>Use for headlines set in Futura PT.</p>
             <Heading lineHeight="solid" pb={8}>
@@ -282,7 +287,7 @@ const Typography = ({ location }) => (
             <Text as="p" mb={0}>
               <strong>Tracked</strong> — <code>letterSpacings.tracked</code> —
               {` `}
-              <code>{theme.letterSpacings.tracked}</code>
+              <code>{letterSpacings.tracked}</code>
             </Text>
             <p>
               Use for small caps, particularly at small sizes — when using
@@ -290,7 +295,7 @@ const Typography = ({ location }) => (
             </p>
             <Text
               color="textMuted"
-              fontFamily="header"
+              fontFamily="heading"
               fontSize={1}
               letterSpacing="tracked"
               pb={8}
@@ -307,7 +312,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Default</strong> — <code>lineHeights.default</code> —{` `}
-              <code>{theme.lineHeights.default}</code>
+              <code>{lineHeights.default}</code>
             </Text>
             <Text as="p" lineHeight="default" pb={8} pt={4}>
               It eluded us then, but that’s no matter—tomorrow we will run
@@ -322,7 +327,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Solid</strong> — <code>lineHeights.solid</code> —{` `}
-              <code>{theme.lineHeights.solid}</code>
+              <code>{lineHeights.solid}</code>
             </Text>
             <Heading pb={8} pt={4} lineHeight="solid">
               Scale to the entire internet
@@ -334,9 +339,9 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Dense</strong> — <code>lineHeights.dense</code> —{` `}
-              <code>{theme.lineHeights.dense}</code>
+              <code>{lineHeights.dense}</code>
             </Text>
-            <Heading pb={8} pt={4} fontWeight={1}>
+            <Heading pb={8} pt={4} fontWeight="heading">
               Stop managing content.
               <br />
               Start telling your story.
@@ -348,7 +353,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Loose</strong> — <code>lineHeights.loose</code> —{` `}
-              <code>{theme.lineHeights.loose}</code>
+              <code>{lineHeights.loose}</code>
             </Text>
             <Intro lineHeight="loose" pb={8} pt={4} mb={0}>
               As a popular and growing framework for building websites and web
@@ -378,7 +383,7 @@ const Typography = ({ location }) => (
           <Box maxWidth="35rem">
             <Text
               as="p"
-              fontFamily="header"
+              fontFamily="heading"
               fontWeight={0}
               fontSize={4}
               mb={4}
@@ -397,7 +402,7 @@ const Typography = ({ location }) => (
             >
               Create digital experiences on the edge—faster
             </Heading>
-            <Heading as="h2" mb={8} fontSize={6} fontWeight={1}>
+            <Heading as="h2" mb={8} fontSize={6} fontWeight="heading">
               Gatsby provides a modern framework for turning content into
               feature-rich, visually engaging apps and websites.
             </Heading>
@@ -531,7 +536,7 @@ const Typography = ({ location }) => (
             }}
             pr={7}
           >
-            <Heading fontWeight="1" fontSize={3} mb={5}>
+            <Heading fontWeight="heading" fontSize={3} mb={5}>
               Documentation
             </Heading>
             <SidebarUL>
@@ -539,7 +544,7 @@ const Typography = ({ location }) => (
                 <SidebarLI key={`sidebar-item-1-${index}`}>{item}</SidebarLI>
               ))}
             </SidebarUL>
-            <Heading fontWeight="1" fontSize={3} mt={8} mb={5}>
+            <Heading fontWeight="heading" fontSize={3} mt={8} mb={5}>
               Guides
             </Heading>
             <SidebarUL>
@@ -578,7 +583,7 @@ const Typography = ({ location }) => (
           <Text
             fontSize={{ xxs: 2, md: 3, lg: 4 }}
             color="black.50"
-            fontWeight={0}
+            fontWeight="body"
             // fontFamily="serif"
           >
             <ImagePlaceholder mb={4} />
