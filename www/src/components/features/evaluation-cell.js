@@ -40,6 +40,7 @@ const renderCell = (text, column) => {
           sx={{
             background: `none`,
             border: 0,
+            color: `text`,
             cursor: `inherit`,
             p: 0,
             textAlign: `left`,

@@ -40,7 +40,6 @@ const MastheadContent = () => (
         mt: 0,
         mx: `auto`,
         [mediaQueries.sm]: { fontSize: 5 },
-        [mediaQueries.lg]: { fontSize: 6 },
       }}
     >
       Gatsby is a free and open source framework based on React that helps

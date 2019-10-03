@@ -22,7 +22,7 @@ const SimpleEvaluationTable = ({ title, headers, data }) => (
                   "&:hover": {
                     cursor: `pointer`,
                   },
-                  borderBottom: t => `1px solid ${t.colors.ui.light}`,
+                  borderBottom: t => `1px solid ${t.colors.ui.border}`,
                   minWidth: 40,
                   px: 0,
                   textAlign: `left`,

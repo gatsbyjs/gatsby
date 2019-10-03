@@ -28,7 +28,7 @@ const navItemStyles = {
   position: `relative`,
   textDecoration: `none`,
   zIndex: 1,
-  "&:hover": { color: `navigation.linkHover` },
+  "&:hover, &:focus": { color: `navigation.linkHover` },
 }
 
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
