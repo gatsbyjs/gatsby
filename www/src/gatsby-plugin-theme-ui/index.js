@@ -139,6 +139,10 @@ const col = {
     background: c.white,
     color: c.grey[50],
     header: c.black,
+    starterLabelBackground: c.teal[5],
+    starterLabelText: c.teal[70],
+    pluginLabelBackground: c.orange[5],
+    pluginLabelText: c.orange[90],
   },
   modal: {
     background: c.white,
@@ -193,6 +197,10 @@ const col = {
         background: c.grey[90],
         color: c.whiteFade[70],
         header: c.white,
+        starterLabelBackground: c.teal[90],
+        starterLabelText: c.teal[10],
+        pluginLabelBackground: c.orange[90],
+        pluginLabelText: c.orange[10],
       },
       modal: {
         background: darkBackground,
