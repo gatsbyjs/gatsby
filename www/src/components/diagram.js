@@ -139,7 +139,7 @@ const ItemTitle = ({ children }) => (
     sx={{
       fontSize: 2,
       margin: 0,
-      color: `card.color`,
+      color: `card.header`,
     }}
   >
     {children}
