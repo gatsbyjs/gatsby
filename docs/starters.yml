@@ -2400,7 +2400,6 @@
     - Styled components in favor of inline styles
     - Transition Link for nice page transitions
     - Type definitions from GraphQL schema (with code generation)
-    - Type definitions from grapql schema (with code generation)
 - url: https://gatsby-starter-sass.netlify.com/
   repo: https://github.com/colbyfayock/gatsby-starter-sass
   description: A Gatsby starter with Sass and no assumptions!
