@@ -1,9 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
+import MdArrowBack from "react-icons/lib/md/arrow-back"
+
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { withTitleHover } from "../shared/styles"
-import MdArrowBack from "react-icons/lib/md/arrow-back"
 
 const Header = ({ stub }) => (
   <div
@@ -21,10 +22,10 @@ const Header = ({ stub }) => (
           "&&": {
             fontSize: 1,
             borderBottom: 0,
-            color: `gatsby`,
+            color: `link.color`,
             fontWeight: `body`,
             "&:hover": {
-              color: `lilac`,
+              color: `link.hoverColor`,
             },
           },
           ...withTitleHover,
