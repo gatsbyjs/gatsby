@@ -18,7 +18,7 @@ const searchDropdownOffsetTop = space[9]
 
 const algoliaStyles = t => css`
   .algolia-autocomplete .algolia-docsearch-suggestion--title {
-    color: ${t.colors.text.primary} !important;
+    color: ${t.colors.text} !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^=ds-dataset-] {
@@ -206,7 +206,7 @@ const algoliaStyles = t => css`
 
   ${t.mediaQueries.sm} {
     .algolia-autocomplete .algolia-docsearch-suggestion--category-header {
-      color: ${t.colors.text.primary} !important;
+      color: ${t.colors.text} !important;
       font-weight: normal !important;
     }
 

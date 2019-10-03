@@ -6,7 +6,7 @@ export const LinkBox = styled(`a`)`
   border-bottom: none !important;
   border-radius: ${p => p.theme.radii[1]}px;
   font-size: ${p => p.theme.fontSizes[0]} !important;
-  color: ${p => p.theme.colors.text.primary} !important;
+  color: ${p => p.theme.colors.text} !important;
   line-height: 22px;
   background: ${p => p.theme.colors.ui.background};
   margin-left: ${p => p.theme.space[1]};

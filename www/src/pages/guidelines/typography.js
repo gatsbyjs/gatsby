@@ -45,7 +45,7 @@ const MarketingColumn = ({ children, title }) => (
 
 const Typeface = ({ children, fontFamily }) => (
   <Text
-    color="text.primary"
+    color="text"
     fontFamily={fontFamily}
     fontSize={{ xxs: 8, lg: 12 }}
     lineHeight="solid"
@@ -165,7 +165,7 @@ const Typography = ({ location }) => (
               <Text
                 // don't scale based on root font size here
                 fontSize={`${parseFloat(size) * 16}px`}
-                color="text.primary"
+                color="text"
                 css={{
                   overflow: `hidden`,
                   position: `relative`,

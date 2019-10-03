@@ -92,7 +92,7 @@ export const ToggleButtonLabel = styled(`span`)`
 
   ${mediaQueries.lg} {
     background: ${p => p.theme.colors.widget.background};
-    color: ${p => p.theme.colors.text.primary};
+    color: ${p => p.theme.colors.text};
     border-color: ${p => p.theme.colors.widget.border};
     box-shadow: ${p => p.theme.shadows.floating};
     width: auto;

@@ -5,6 +5,6 @@ import Box from "./box"
 
 const Text = styled(Box, { shouldForwardProp })()
 
-Text.defaultProps = { color: `text.primary` }
+Text.defaultProps = { color: `text` }
 
 export default Text

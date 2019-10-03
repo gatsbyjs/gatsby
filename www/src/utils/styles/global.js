@@ -153,7 +153,7 @@ const gatsbyHighlight = t => {
     // gatsby-remark-prismjs styles
     ".gatsby-highlight": {
       background: t.colors.code.background,
-      color: t.colors.text.primary,
+      color: t.colors.text,
       position: `relative`,
       WebkitOverflowScrolling: `touch`,
     },
@@ -194,7 +194,7 @@ export const globalStyles = t => {
     ...gatsbyHighlight(t),
     ...gatsbyHighlightLanguageBadges(t),
     "html, body": {
-      color: t.colors.text.primary,
+      color: t.colors.text,
       MozOsxFontSmoothing: `grayscale`,
       textRendering: `optimizelegibility`,
       WebkitFontSmoothing: `antialiased`,

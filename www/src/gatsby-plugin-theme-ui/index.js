@@ -33,8 +33,6 @@ for (let fontFamily in f) {
 fontsTokens.body = fontsTokens.system
 fontsTokens.heading = fontsTokens.header
 
-console.log(`FONTSTOKIIIN`, fontsTokens)
-
 const fontSizesTokens = fs.map(token => `${token / 16}rem`)
 const spaceTokens = sp.map(token => `${token / 16}rem`)
 
@@ -322,7 +320,5 @@ const config = {
   transition: t,
   zIndices: z,
 }
-
-// console.log(`TOKENS`, config)
 
 export default config

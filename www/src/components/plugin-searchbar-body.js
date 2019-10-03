@@ -61,7 +61,7 @@ const searchBoxStyles = t => css`
     background: ${t.colors.themedInput.background};
     border-radius: ${t.radii[2]}px;
     border: 0;
-    color: ${t.colors.text.primary};
+    color: ${t.colors.text};
     display: inline-block;
     height: ${searchInputHeight};
     padding: 0;
@@ -388,7 +388,7 @@ const Result = ({ hit, pathname, query }) => {
         <h2
           sx={{
             alignItems: `center`,
-            color: selected ? `navigation.linkColor` : `text.primary`,
+            color: selected ? `navigation.linkColor` : `text`,
             display: `flex`,
             fontFamily: `system`,
             fontSize: 1,

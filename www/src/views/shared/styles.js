@@ -77,7 +77,7 @@ export const filterButton = {
   alignItems: `flex-start`,
   background: `none`,
   border: `none`,
-  color: `text.primary`,
+  color: `text`,
   cursor: `pointer`,
   display: `flex`,
   fontSize: 1,

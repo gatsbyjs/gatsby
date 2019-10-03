@@ -51,7 +51,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         >
           <MdStar />
           {` `}
-          <span sx={{ color: `text.primary`, pl: 1 }}>{starter.stars}</span>
+          <span sx={{ color: `text`, pl: 1 }}>{starter.stars}</span>
         </span>
       </div>
 

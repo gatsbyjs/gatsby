@@ -188,7 +188,7 @@ export const themedInput = {
   appearance: `none`,
   bg: `themedInput.background`,
   border: 0,
-  color: `text.primary`,
+  color: `text`,
   fontFamily: `header`,
   fontSize: 3,
   overflow: `hidden`,
@@ -197,7 +197,7 @@ export const themedInput = {
   ":focus": {
     bg: `themedInput.backgroundFocus`,
     boxShadow: t => `0 0 0 2px ${t.colors.themedInput.focusBoxShadow}`,
-    color: `text.primary`,
+    color: `text`,
     outline: 0,
     width: `100%`,
   },

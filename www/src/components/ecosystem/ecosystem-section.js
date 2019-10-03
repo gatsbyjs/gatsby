@@ -81,7 +81,7 @@ const SubTitle = styled(`h2`)`
 `
 
 const Description = styled(`p`)`
-  color: ${p => p.theme.colors.text.primary};
+  color: ${p => p.theme.colors.text};
   font-size: ${p => p.theme.fontSizes[2]};
 `
 
