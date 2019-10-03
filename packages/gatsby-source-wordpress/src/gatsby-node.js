@@ -116,7 +116,7 @@ exports.sourceNodes = async (
       concurrentRequests,
       excludedRoutes,
       keepMediaSizes,
-    });
+    })
   }
 
   // Normalize data & create nodes
