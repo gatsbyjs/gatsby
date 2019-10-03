@@ -23,24 +23,15 @@ const Section = styled(`section`)`
 `
 
 const Title = styled(`header`)`
-  padding-right: ${space[6]};
-  padding-left: ${space[6]};
-  ${mediaQueries.md} {
-    max-width: 30rem;
-  }
+  margin: auto;
+`
+
+const LogoHeading = styled(Name)`
+  justify-content: center;
+  margin-left: 0px;
 
   ${mediaQueries.lg} {
-    margin-left: ${space[9]};
-  }
-
-  ${mediaQueries.xl} {
-    padding-right: 5%;
-    padding-left: 5%;
-  }
-
-  ${mediaQueries.xxl} {
-    padding-right: 8%;
-    padding-left: 8%;
+    margin-left: 0px;
   }
 `
 
@@ -89,7 +80,7 @@ const HomepageLogoBanner = () => {
   return (
     <Section>
       <Title>
-        <Name>Trusted by</Name>
+        <LogoHeading>Trusted by</LogoHeading>
       </Title>
       <LogoGroup>
         {data.allFile.edges.map(({ node: image }) => (
