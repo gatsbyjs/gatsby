@@ -72,5 +72,6 @@
     "markdown",
     "remark",
     "rehype"
-  ]
+  ],
+  "types": "index.d.ts"
 }
