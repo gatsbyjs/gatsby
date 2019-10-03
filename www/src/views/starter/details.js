@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
+import MdLaunch from "react-icons/lib/md/launch"
+
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import FaExtLink from "react-icons/lib/fa/external-link"
 
 const Details = ({
   allDeps,
@@ -64,7 +65,7 @@ const Details = ({
               <div key={dep}>
                 <a href={`https://npm.im/${dep}`}>
                   {`${dep} `}
-                  <FaExtLink />
+                  <MdLaunch />
                 </a>
               </div>
             )
