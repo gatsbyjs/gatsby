@@ -144,7 +144,6 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             url={`https://github.com/${starter.githubFullName}`}
             title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
             image={imageSharp.childImageSharp.resize.src}
-            theme={`accent`}
           />
         </div>
       </div>
