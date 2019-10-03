@@ -54,6 +54,7 @@ See the [library of official and community plugins](/plugins/)
 
 - [Official tutorial](/tutorial/)
 - [Creating a blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
+- [Deep dive into Gatsby – Building a static blog using Gatsby, React and GraphQL](https://zocada.com/deep-dive-gatsby-building-a-simple-static-blog-using-gatsby-react-and-graphql/)
 - [Level Up Tutorials series on creating a blog](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg)
 - [Level up Tutorials Pro Gatsby series](https://www.leveluptutorials.com/store/products/tutorials/lut-dd020)
 - [Giraffe Academy series on getting started with Gatsby](https://www.youtube.com/playlist?list=PLLAZ4kZ9dFpMXuwazIt4mWtTuqOHdjRlk)
