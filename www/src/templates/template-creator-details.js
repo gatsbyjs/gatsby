@@ -26,7 +26,7 @@ const MetaTitle = ({ children }) => (
         width: 150,
       },
       [breakpoint2Columns]: {
-        fontWeight: `600`,
+        fontWeight: `bold`,
         mb: 0,
         textTransform: `none`,
       },

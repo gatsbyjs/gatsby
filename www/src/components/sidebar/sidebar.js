@@ -264,7 +264,7 @@ class SidebarBody extends Component {
               fontSize: 1,
               pt: 6,
               margin: 0,
-              fontWeight: `normal`,
+              fontWeight: `body`,
               textTransform: `uppercase`,
               letterSpacing: `tracked`,
             }}

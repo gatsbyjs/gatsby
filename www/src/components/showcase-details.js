@@ -45,7 +45,7 @@ const styles = {
   prevNextPermalinkLabel: {
     color: `textMuted`,
     fontFamily: `header`,
-    fontWeight: `normal`,
+    fontWeight: `body`,
   },
   prevNextPermalinkImage: {
     mb: 0,

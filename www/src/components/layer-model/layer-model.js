@@ -31,7 +31,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         borderRadius: 3,
         p: 2,
         color: `grey.60`,
-        fontWeight: selected ? `bold` : `normal`,
+        fontWeight: selected ? `bold` : `body`,
         backgroundColor: `ui.background`,
         border: selected
           ? `2px ${colors[baseColor][60]} solid`

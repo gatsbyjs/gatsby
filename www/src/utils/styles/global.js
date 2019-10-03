@@ -36,10 +36,10 @@ const prismToken = t => {
       color: t.colors.code.cssString,
     },
     ".token.important": {
-      fontWeight: t.fontWeights[0],
+      fontWeight: t.fontWeights.body,
     },
     ".token.bold": {
-      fontWeight: t.fontWeights[1],
+      fontWeight: t.fontWeights.bold,
     },
     ".token.italic": {
       fontStyle: `italic`,
@@ -111,7 +111,7 @@ const gatsbyHighlightLanguageBadges = t => {
       content: `'mdx'`,
       background: `#f9ac00`,
       color: t.colors.white,
-      fontWeight: `400`,
+      fontWeight: t.fontWeights.body,
     },
     ".gatsby-highlight pre[class='language-shell']::before": {
       content: `'shell'`,
@@ -203,7 +203,7 @@ export const globalStyles = t => {
       textDecoration: `none`,
     },
     h1: {
-      fontWeight: t.fontWeights[2],
+      fontWeight: t.fontWeights.headingPrimary,
     },
     "h1, h2, h3, h4, h5, h6": {
       color: t.colors.heading,
@@ -216,7 +216,7 @@ export const globalStyles = t => {
       marginTop: t.space[9],
     },
     "h4, h5, h6": { fontSize: t.fontSizes[3] },
-    "h5, h6": { fontWeight: t.fontWeights[0] },
+    "h5, h6": { fontWeight: t.fontWeights.body },
     h6: { fontSize: t.fontSizes[2] },
     blockquote: {
       paddingLeft: t.space[6],
@@ -238,7 +238,7 @@ export const globalStyles = t => {
       lineHeight: `inherit`,
     },
     "h1 code, h2 code, h3 code, h4 code, h5 code, h6 code": {
-      fontWeight: t.fontWeights[0],
+      fontWeight: t.fontWeights.body,
       fontSize: `82.5%`,
     },
     "tt, code, kbd": {
@@ -267,7 +267,7 @@ export const globalStyles = t => {
       position: `relative`,
     },
     ".gatsby-resp-image-link + em a, .gatsby-resp-image-wrapper + em a": {
-      fontWeight: t.fontWeights[0],
+      fontWeight: t.fontWeights.body,
       color: t.colors.lilac,
     },
     ".main-body a": {
@@ -280,7 +280,7 @@ export const globalStyles = t => {
       borderBottomColor: t.colors.link.hoverBorder,
     },
     ".post-body h1": {
-      fontWeight: t.fontWeights[1],
+      fontWeight: t.fontWeights.bold,
     },
     ".post-body figure img": {
       marginBottom: 0,

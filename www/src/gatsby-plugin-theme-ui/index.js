@@ -49,6 +49,14 @@ const darkBorder = c.grey[90]
 const shadowDarkBase = `19,18,23`
 const shadowDarkFlares = `0,0,0`
 
+const fweights = {
+  body: fw[0],
+  bold: fw[1],
+  medium: `600`,
+  heading: fw[1],
+  headingPrimary: fw[2],
+}
+
 const col = {
   ...c,
   // https://theme-ui.com/theme-spec#color
@@ -182,7 +190,7 @@ const col = {
       textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       card: {
-        background: c.purple[90],
+        background: c.grey[90],
         color: c.whiteFade[70],
         header: c.white,
       },
@@ -303,7 +311,7 @@ export const breakpoints = breakpointsTokens
 export const colors = col
 export const fonts = fontsTokens
 export const fontSizes = fontSizesTokens
-export const fontWeights = fw
+export const fontWeights = fweights
 export const letterSpacings = ls
 export const lineHeights = lineHeightsTokens
 export const mediaQueries = mq
@@ -323,7 +331,7 @@ const config = {
   colors: col,
   fonts: fontsTokens,
   fontSizes: fontSizesTokens,
-  fontWeights: fw,
+  fontWeights: fweights,
   letterSpacings: ls,
   lineHeights: lineHeightsTokens,
   mediaQueries: mq,

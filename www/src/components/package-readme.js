@@ -56,7 +56,7 @@ const PackageReadMe = props => {
                       border: 0,
                       color: `textMuted`,
                       display: `flex`,
-                      fontWeight: `normal`,
+                      fontWeight: `body`,
                     },
                     "&&:hover": {
                       color: `textMuted`,

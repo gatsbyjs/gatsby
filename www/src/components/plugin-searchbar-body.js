@@ -298,7 +298,7 @@ class Search extends Component {
               "&&": {
                 background: `url(${AlgoliaLogo})`,
                 border: `none`,
-                fontWeight: `normal`,
+                fontWeight: `body`,
                 backgroundRepeat: `no-repeat`,
                 backgroundPosition: `50%`,
                 backgroundSize: `100%`,
@@ -341,7 +341,7 @@ const Result = ({ hit, pathname, query }) => {
           bg: selected ? `sidebar.itemHoverBackground` : `background`,
           borderBottom: 0,
           display: `block`,
-          fontWeight: `400`,
+          fontWeight: `body`,
           position: `relative`,
           px: 6,
           py: 5,

@@ -25,7 +25,7 @@ NavLink.defaultProps = {
   color: `navigation.linkDefault`,
   fontFamily: `header`,
   fontSize: 3,
-  fontWeight: 400,
+  fontWeight: `body`,
   mr: 4,
 }
 

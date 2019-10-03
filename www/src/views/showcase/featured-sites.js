@@ -182,7 +182,7 @@ class FeaturedSites extends Component {
                   sx={{
                     color: `textMuted`,
                     fontSize: 1,
-                    fontWeight: `normal`,
+                    fontWeight: `body`,
                     [mediaQueries.lg]: {
                       marginTop: `auto`,
                     },

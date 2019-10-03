@@ -55,18 +55,18 @@ const createLink = ({
           "&&": {
             border: 0,
             color: `navigation.linkDefault`,
-            fontWeight: `normal`,
+            fontWeight: `body`,
             ...(isDraft && {
               color: `textMuted`,
             }),
             ...(isActive && {
               color: `link.color`,
-              fontWeight: 600,
+              fontWeight: `medium`,
             }),
             ...(isParentOfActiveItem && {
               bg: `sidebar.itemBackgroundActive`,
               color: `link.color`,
-              fontWeight: 600,
+              fontWeight: `medium`,
             }),
             "&:hover": {
               bg: `sidebar.itemHoverBackground`,
@@ -116,7 +116,7 @@ const createLink = ({
               borderStyle: `solid`,
               borderWidth: `1px`,
               display: `block`,
-              fontWeight: `normal`,
+              fontWeight: `body`,
               height: bulletSize,
               left: 6,
               position: `absolute`,

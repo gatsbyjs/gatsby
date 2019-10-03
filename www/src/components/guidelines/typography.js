@@ -21,7 +21,7 @@ Intro.defaultProps = {
   color: `textMuted`,
   fontFamily: `header`,
   fontSize: { xxs: 4, sm: 5 },
-  fontWeight: `400`,
+  fontWeight: `body`,
   lineHeight: `dense`,
   maxWidth: `36rem`,
   mb: 3,

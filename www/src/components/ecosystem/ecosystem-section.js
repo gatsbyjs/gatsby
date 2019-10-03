@@ -8,7 +8,7 @@ import EcosystemFeaturedItem from "./ecosystem-featured-item"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const EcosystemSectionRoot = styled(`section`)`
-  background: ${p => p.theme.colors.white};
+  background: ${p => p.theme.colors.card.background};
   padding: 0 ${p => p.theme.space[6]};
   margin-bottom: ${p => p.theme.space[3]};
 
@@ -53,7 +53,7 @@ const Title = styled(`h1`)`
   color: ${p => p.theme.colors.gatsby};
   display: flex;
   font-size: ${p => p.theme.fontSizes[4]};
-  font-weight: ${p => p.theme.fontWeights[1]};
+  font-weight: ${p => p.theme.fontWeights.heading};
   line-height: ${p => p.theme.lineHeights.solid};
   margin: 0;
   margin-bottom: ${p => p.theme.space[1]};

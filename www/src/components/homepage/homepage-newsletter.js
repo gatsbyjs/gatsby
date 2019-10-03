@@ -67,7 +67,7 @@ const Name = styled(`h3`)`
   color: ${p => p.theme.colors.lilac};
   font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[1]};
-  font-weight: ${p => p.theme.fontWeights[0]};
+  font-weight: ${p => p.theme.fontWeights.body};
   letter-spacing: ${p => p.theme.letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
@@ -76,7 +76,7 @@ const Name = styled(`h3`)`
 const Title = styled(`h1`)`
   color: ${p => p.theme.colors.newsletter.heading};
   font-size: ${p => p.theme.fontSizes[4]};
-  font-weight: ${p => p.theme.fontWeights[1]};
+  font-weight: ${p => p.theme.fontWeights.heading};
   line-height: ${p => p.theme.lineHeights.dense};
   margin: 0;
   margin-top: ${p => p.theme.space[1]};

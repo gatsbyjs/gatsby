@@ -48,7 +48,7 @@ class Plugins extends Component {
             <h1
               sx={{
                 fontSize: 6,
-                fontWeight: `700`,
+                fontWeight: `heading`,
                 mx: 5,
                 mb: 0,
                 textAlign: `center`,

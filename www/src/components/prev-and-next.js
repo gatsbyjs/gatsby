@@ -20,7 +20,7 @@ const prevNextLinkStyles = {
 const prevNextLabelStyles = {
   color: `textMuted`,
   fontSize: 2,
-  fontWeight: `normal`,
+  fontWeight: `body`,
   mb: 2,
   mt: 0,
 }

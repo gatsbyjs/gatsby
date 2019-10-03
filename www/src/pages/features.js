@@ -91,7 +91,7 @@ const FeaturesHeader = () => (
     <h6
       id="legend"
       sx={{
-        fontWeight: `normal`,
+        fontWeight: `body`,
         letterSpacing: `tracked`,
         textTransform: `uppercase`,
       }}

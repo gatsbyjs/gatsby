@@ -36,7 +36,7 @@ const ExampleBox = styled(Box)({ pt: 4 })
 
 const MarketingColumn = ({ children, title }) => (
   <Box width={{ lg: 1 / 2 }} px={{ md: 8 }} py={{ xxs: 4, lg: 0 }}>
-    <Heading fontSize={5} mb={3} fontWeight={1}>
+    <Heading fontSize={5} mb={3} fontWeight="heading">
       {title}
     </Heading>
     <Text color="grey.70">{children}</Text>
@@ -214,11 +214,11 @@ const Typography = ({ location }) => (
           <SectionSubheading mt={0}>Font Weights</SectionSubheading>
           <Flex flexWrap="wrap" flexDirection="row">
             <Box maxWidth={{ xl: `40%` }} mr={{ xl: 6 }}>
-              <Weight fontFamily="header" fontWeight={2}>
-                {theme.fontWeights[2]}
+              <Weight fontFamily="header" fontWeight="headingPrimary">
+                {theme.fontWeights.headingPrimary}
               </Weight>
               <Box pb={4}>
-                <code>fontWeights[2]</code>
+                <code>fontWeights.headingPrimary</code>
                 <Text as="p" pt={4}>
                   Use this for the main headline, set in Futura PT Bold, only.
                 </Text>
@@ -226,11 +226,11 @@ const Typography = ({ location }) => (
             </Box>
 
             <Box maxWidth={{ xl: `40%` }}>
-              <Weight fontFamily="header" fontWeight={1}>
-                {theme.fontWeights[1]}
+              <Weight fontFamily="header" fontWeight="bold">
+                {theme.fontWeights.bold}
               </Weight>
               <Box pb={4}>
-                <code>fontWeights[1]</code> — <code>bold</code>
+                <code>fontWeights.bold</code> — <code>bold</code>
                 <Text as="p" pt={4}>
                   Use this for the all headlines but the main page title, and to
                   emphasize text throughout regular copy.
@@ -239,9 +239,9 @@ const Typography = ({ location }) => (
             </Box>
             <Box>
               <Weight fontFamily="header" fontWeight={0}>
-                {theme.fontWeights[0]}
+                {theme.fontWeights.body}
               </Weight>
-              <code>fontWeights[0]</code> — <code>normal</code>
+              <code>fontWeights.body</code> — <code>normal</code>
             </Box>
           </Flex>
 

@@ -32,7 +32,7 @@ const Button = styled(Box)(
   props =>
     props.outlined && {
       background: themeGet(`colors.white`)(props),
-      fontWeight: themeGet(`fontWeights.0`)(props),
+      fontWeight: themeGet(`fontWeights.body`)(props),
       padding: `${themeGet(`space.2`)(props)} ${themeGet(`space.3`)(props)}`,
       "&&": {
         border: `1px solid ${themeGet(`colors.purple.30`)(props)}`,
@@ -61,7 +61,7 @@ Button.defaultProps = {
   color: `white`,
   fontFamily: `header`,
   fontSize: { xxs: 4, md: 5 },
-  fontWeight: 1,
+  fontWeight: `bold`,
   px: 4,
   py: 2,
 }

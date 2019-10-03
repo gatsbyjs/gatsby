@@ -444,7 +444,7 @@ const DesignTokens = ({ location }) => (
                     <td>
                       <Text
                         letterSpacing={letterSpacing}
-                        color="grey.90"
+                        color="text"
                         lineHeight="solid"
                         css={{
                           whiteSpace: `nowrap`,

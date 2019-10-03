@@ -29,7 +29,7 @@ const Source = ({ startersYaml, repoUrl }) => (
             borderBottom: 0,
             color: `link.color`,
             cursor: `pointer`,
-            fontWeight: `normal`,
+            fontWeight: `body`,
             "&:hover": {
               color: `link.hoverColor`,
             },

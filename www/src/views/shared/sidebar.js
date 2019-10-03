@@ -63,7 +63,7 @@ export const SidebarHeader = () => (
         display: `none`,
         flexShrink: 0,
         fontSize: 3,
-        fontWeight: `normal`,
+        fontWeight: `body`,
         height: `headerHeight`,
         lineHeight: `solid`,
         margin: 0,
@@ -114,7 +114,7 @@ const ResultCount = ({ children }) => (
     sx={{
       color: `textMuted`,
       fontSize: 2,
-      fontWeight: `normal`,
+      fontWeight: `body`,
     }}
   >
     {children}

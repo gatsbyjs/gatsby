@@ -11,7 +11,7 @@ import { visuallyHidden } from "../utils/styles"
 const controlButtonStyles = {
   WebkitAppearance: `none`,
   color: `textMuted`,
-  fontWeight: 700,
+  fontWeight: `bold`,
   border: 0,
   background: `transparent`,
   position: `absolute`,
@@ -144,8 +144,8 @@ class Rotator extends Component {
               }}
             >
               <span
-                css={{
-                  fontWeight: 600,
+                sx={{
+                  fontWeight: `bold`,
                   whiteSpace: `nowrap`,
                   display: `inline-block`,
                 }}

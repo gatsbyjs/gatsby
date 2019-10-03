@@ -14,7 +14,7 @@ const superHeader = ({ columnHeaders }) => (
           textTransform: `uppercase`,
           fontSize: 0,
           lineHeight: `solid`,
-          fontWeight: 500,
+          fontWeight: `body`,
           textAlign: `center`,
           verticalAlign: `bottom`,
           width: i === 0 ? 120 : `inherit`,

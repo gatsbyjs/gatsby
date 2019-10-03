@@ -45,7 +45,7 @@ class Collapsible extends Component {
               cursor: `pointer`,
               display: `flex`,
               flexShrink: 0,
-              fontWeight: `normal`,
+              fontWeight: `body`,
               fontSize: 1,
               mt: 6,
               mr: 7,

@@ -37,7 +37,7 @@ const SegmentTitle = ({ children }) => (
       color: `black`,
       display: `inline`,
       fontSize: 1,
-      fontWeight: `normal`,
+      fontWeight: `body`,
       letterSpacing: `tracked`,
       lineHeight: `solid`,
       margin: `0 auto`,
@@ -234,7 +234,7 @@ const Diagram = () => (
       >
         <h1
           sx={{
-            fontWeight: 1,
+            fontWeight: `heading`,
             mb: 6,
             mt: 0,
             [mediaQueries.md]: {

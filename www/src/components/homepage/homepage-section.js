@@ -25,7 +25,7 @@ export const Name = styled(`h3`)`
     props.inverse ? props.theme.colors.purple[10] : props.theme.colors.lilac};
   display: flex;
   font-size: ${p => p.theme.fontSizes[2]};
-  font-weight: ${p => p.theme.fontWeights[0]};
+  font-weight: ${p => p.theme.fontWeights.body};
   margin: 0;
   margin-left: calc(${p => p.theme.space[ICON_SIZE]} * -0.2);
   margin-bottom: 0.5em;
@@ -55,7 +55,7 @@ export const Title = styled(`h1`)`
   color: ${props =>
     props.inverse ? props.theme.colors.yellow[40] : props.theme.colors.gatsby};
   font-size: ${p => p.theme.fontSizes[6]};
-  font-weight: ${p => p.theme.fontWeights[1]};
+  font-weight: ${p => p.theme.fontWeights.heading};
   margin: 0;
 `
 

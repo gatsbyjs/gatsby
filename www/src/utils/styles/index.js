@@ -7,6 +7,7 @@ import {
   radii,
   mediaQueries,
   fontSizes,
+  fontWeights,
   lineHeights,
   fonts,
   zIndices,
@@ -60,7 +61,7 @@ export const buttonStyles = {
   secondary: {
     backgroundColor: `transparent`,
     color: colors.gatsby,
-    fontWeight: `normal`,
+    fontWeight: fontWeights.body,
   },
   large: {
     fontSize: fontSizes[4],
@@ -143,7 +144,7 @@ export const linkStyles = {
     border: 0,
     color: colors.textMuted,
     display: `flex`,
-    fontWeight: `normal`,
+    fontWeight: fontWeights.body,
   },
   "&&:hover": {
     color: colors.gatsby,
@@ -163,7 +164,7 @@ export const formInput = {
   display: `block`,
   fontFamily: fonts.system,
   fontSize: fontSizes[2],
-  fontWeight: `normal`,
+  fontWeight: fontWeights.body,
   padding: space[1],
   paddingLeft: space[2],
   paddingRight: space[2],

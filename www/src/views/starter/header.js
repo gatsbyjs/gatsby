@@ -22,7 +22,7 @@ const Header = ({ stub }) => (
             fontSize: 1,
             borderBottom: 0,
             color: `gatsby`,
-            fontWeight: `normal`,
+            fontWeight: `body`,
             "&:hover": {
               color: `lilac`,
             },

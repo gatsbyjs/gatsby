@@ -15,7 +15,7 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
         sx={{
           "&&": {
             color: `textMuted`,
-            fontWeight: `normal`,
+            fontWeight: `body`,
             borderBottom: `none`,
             "&:hover": {
               color: `gatsby`,
