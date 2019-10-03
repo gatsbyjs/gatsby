@@ -18,7 +18,7 @@ export const Intro = styled(Text)()
 
 Intro.defaultProps = {
   as: `p`,
-  color: `textMuted`,
+  color: `text`,
   fontFamily: `header`,
   fontSize: { xxs: 4, sm: 5 },
   fontWeight: `body`,
