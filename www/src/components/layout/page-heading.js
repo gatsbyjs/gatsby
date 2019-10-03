@@ -19,9 +19,9 @@ const PageHeadingContainer = styled(`header`)`
 
 const H1 = styled(`h1`)`
   align-items: center;
-  color: ${p => p.theme.colors.lilac};
+  color: ${p => p.theme.colors.heading};
   display: flex;
-  font-size: ${p => p.theme.fontSizes[5]};
+  font-size: ${p => p.theme.fontSizes[4]};
   line-height: ${p => p.theme.lineHeights.solid};
   margin: 0;
   position: relative;
@@ -44,7 +44,7 @@ const H1 = styled(`h1`)`
     position: absolute;
     right: -${p => p.theme.space[3]};
     z-index: -1;
-    color: ${p => p.theme.colors.purple[5]};
+    color: ${p => p.theme.colors.blackFade[10]};
 
     ${mediaQueries.md} {
       display: block;

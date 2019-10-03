@@ -193,6 +193,7 @@ const col = {
       heading: c.white,
       textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
+      muted: c.grey[90],
       card: {
         background: c.grey[90],
         color: c.whiteFade[70],

@@ -18,11 +18,10 @@ import GatsbyIcon from "../components/gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
 
 import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
-import { skipLink, visuallyHidden } from "../utils/styles"
+import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
-import styled from "@emotion/styled"
 import removeMD from "remove-markdown"
-import { SkipNavLink } from "@reach/skip-nav"
+import SkipNavLink from "../components/skip-nav-link"
 
 // This is for the urlSync
 const updateAfter = 700
@@ -192,8 +191,6 @@ const searchBoxStyles = t => css`
 `
 /* stylelint-enable */
 
-const StyledSkipNavLink = styled(SkipNavLink)({ ...skipLink })
-
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
   render() {
@@ -257,7 +254,7 @@ class Search extends Component {
                 },
               }}
             />
-            <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
+            <SkipNavLink />
           </div>
         </div>
 

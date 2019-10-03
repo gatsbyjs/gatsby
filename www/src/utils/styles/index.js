@@ -10,7 +10,6 @@ import {
   fontWeights,
   lineHeights,
   fonts,
-  zIndices,
 } from "../../gatsby-plugin-theme-ui"
 
 const stripeAnimation = keyframes({
@@ -229,23 +228,4 @@ export const pullIntoGutter = {
   marginRight: `-${space[6]}`,
   paddingLeft: space[6],
   paddingRight: space[6],
-}
-
-// Components
-export const skipLink = {
-  ...visuallyHidden,
-  color: colors.gatsby,
-  fontSize: fontSizes[1],
-  zIndex: zIndices.skipLink,
-  ":focus": {
-    background: colors.white,
-    clip: `auto`,
-    height: `auto`,
-    left: space[6],
-    padding: space[4],
-    position: `fixed`,
-    textDecoration: `none`,
-    top: space[6],
-    width: `auto`,
-  },
 }

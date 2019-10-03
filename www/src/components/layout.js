@@ -4,7 +4,6 @@ import React from "react"
 import { navigate, PageRenderer } from "gatsby"
 import mousetrap from "mousetrap"
 import Modal from "react-modal"
-import { SkipNavLink } from "@reach/skip-nav"
 import MdClose from "react-icons/lib/md/close"
 import { Global } from "@emotion/core"
 
@@ -17,7 +16,7 @@ import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
-import { skipLink } from "../utils/styles"
+import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
 
 let windowWidth
@@ -151,7 +150,7 @@ class DefaultLayout extends React.Component {
       <>
         <Global styles={globalStyles} />
         <SiteMetadata pathname={this.props.location.pathname} />
-        <SkipNavLink sx={skipLink}>Skip to main content</SkipNavLink>
+        <SkipNavLink />
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
