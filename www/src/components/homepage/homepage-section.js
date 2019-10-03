@@ -39,21 +39,21 @@ const Icon = styled(`span`)`
   display: block;
 
   ${mediaQueries.md} {
-    margin-right: calc(${ICON_SIZE} / 5);
+    margin-right: calc(${p => p.theme.space[ICON_SIZE]} / 5);
   }
 
   svg {
     fill: transparent;
-    height: ${ICON_SIZE};
+    height: ${p => p.theme.space[ICON_SIZE]};
     stroke: ${props =>
       props.inverse ? props.theme.colors.purple[10] : props.theme.colors.lilac};
-    width: ${ICON_SIZE};
+    width: ${p => p.theme.space[ICON_SIZE]};
   }
 `
 
 export const Title = styled(`h1`)`
   color: ${props =>
-    props.inverse ? props.theme.colors.yellow[40] : props.theme.colors.gatsby};
+    props.inverse ? props.theme.colors.yellow[40] : props.theme.colors.heading};
   font-size: ${p => p.theme.fontSizes[6]};
   font-weight: ${p => p.theme.fontWeights.heading};
   margin: 0;
@@ -63,7 +63,7 @@ const Introduction = styled(`p`)`
   color: ${props =>
     props.inverse
       ? props.theme.colors.purple[10]
-      : props.theme.colors.purple[80]};
+      : props.theme.colors.textMuted};
   font-size: ${p => p.theme.fontSizes[3]};
   font-family: ${p => p.theme.fonts.heading};
   margin: 0;
