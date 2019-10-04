@@ -7,7 +7,7 @@ tags: ["cms", "drupal"]
 
 ## Why use Drupal + Gatsby together?
 
-Kyle Mathews is presenting on “Gatsby + Drupal” at [Decoupled Drupal Days NYC](https://2018.decoupleddays.com/session/decoupled-drupal-gatsby) this Saturday; for those who can’t make it to his presentation, we wanted to give you a sneak peak of what it will be about.
+Kyle Mathews is presenting on “Gatsby + Drupal” at [Decoupled Drupal Days NYC](https://2018.decoupleddays.com/session/decoupled-drupal-gatsby) this Saturday; for those who can’t make it to his presentation, we wanted to give you a sneak peek of what it will be about.
 
 (Hint: it’s about how nicely Gatsby and Drupal work together!)
 

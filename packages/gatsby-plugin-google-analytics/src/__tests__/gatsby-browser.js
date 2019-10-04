@@ -1,8 +1,6 @@
 import { onRouteUpdate } from "../gatsby-browser"
 import { Minimatch } from "minimatch"
 
-jest.useFakeTimers()
-
 describe(`gatsby-plugin-google-analytics`, () => {
   describe(`gatsby-browser`, () => {
     describe(`onRouteUpdate`, () => {
@@ -29,10 +27,12 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         beforeEach(() => {
+          jest.useFakeTimers()
           window.ga = jest.fn()
-          window.requestAnimationFrame = jest.fn(cb => {
-            cb()
-          })
+        })
+
+        afterEach(() => {
+          jest.resetAllMocks()
         })
 
         it(`does not send page view when ga is undefined`, () => {
@@ -40,7 +40,9 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
           onRouteUpdate({})
 
-          expect(window.requestAnimationFrame).not.toHaveBeenCalled()
+          jest.runAllTimers()
+
+          expect(setTimeout).not.toHaveBeenCalled()
         })
 
         it(`does not send page view when path is excluded`, () => {
@@ -53,23 +55,34 @@ describe(`gatsby-plugin-google-analytics`, () => {
             },
           })
 
+          jest.runAllTimers()
+
           expect(window.ga).not.toHaveBeenCalled()
         })
 
         it(`sends page view`, () => {
           onRouteUpdate({})
 
+          jest.runAllTimers()
+
           expect(window.ga).toHaveBeenCalledTimes(2)
         })
 
-        it(`uses setTimeout when requestAnimationFrame is undefined`, () => {
-          delete window.requestAnimationFrame
-
+        it(`uses setTimeout with a minimum delay of 32ms`, () => {
           onRouteUpdate({})
 
           jest.runAllTimers()
 
-          expect(setTimeout).toHaveBeenCalledTimes(1)
+          expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 32)
+          expect(window.ga).toHaveBeenCalledTimes(2)
+        })
+
+        it(`uses setTimeout with the provided pageTransitionDelay value`, () => {
+          onRouteUpdate({}, { pageTransitionDelay: 1000 })
+
+          jest.runAllTimers()
+
+          expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 1000)
           expect(window.ga).toHaveBeenCalledTimes(2)
         })
       })

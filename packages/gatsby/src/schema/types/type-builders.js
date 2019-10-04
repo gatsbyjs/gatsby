@@ -5,6 +5,8 @@ import type {
   ComposeInputObjectTypeConfig,
   ComposeInterfaceTypeConfig,
   ComposeUnionTypeConfig,
+  ComposeEnumTypeConfig,
+  ComposeScalarTypeConfig,
 } from "graphql-compose"
 
 const GatsbyGraphQLTypeKind = {
@@ -12,18 +14,34 @@ const GatsbyGraphQLTypeKind = {
   INPUT_OBJECT: `INPUT_OBJECT`,
   UNION: `UNION`,
   INTERFACE: `INTERFACE`,
+  ENUM: `ENUM`,
+  SCALAR: `SCALAR`,
 }
 
 export type GatsbyGraphQLType =
-  | { kind: GatsbyGraphQLTypeKind.OBJECT, config: ComposeObjectTypeConfig }
+  | {
+      kind: GatsbyGraphQLTypeKind.OBJECT,
+      config: ComposeObjectTypeConfig,
+    }
   | {
       kind: GatsbyGraphQLTypeKind.INPUT_OBJECT,
       config: ComposeInputObjectTypeConfig,
     }
-  | { kind: GatsbyGraphQLTypeKind.UNION, config: ComposeUnionTypeConfig }
+  | {
+      kind: GatsbyGraphQLTypeKind.UNION,
+      config: ComposeUnionTypeConfig,
+    }
   | {
       kind: GatsbyGraphQLTypeKind.INTERFACE,
       config: ComposeInterfaceTypeConfig,
+    }
+  | {
+      kind: GatsbyGraphQLTypeKind.ENUM,
+      config: ComposeEnumTypeConfig,
+    }
+  | {
+      kind: GatsbyGraphQLTypeKind.SCALAR,
+      config: ComposeScalarTypeConfig,
     }
 
 const buildObjectType = config => {
@@ -54,6 +72,20 @@ const buildInputObjectType = config => {
   }
 }
 
+const buildEnumType = config => {
+  return {
+    kind: GatsbyGraphQLTypeKind.ENUM,
+    config,
+  }
+}
+
+const buildScalarType = config => {
+  return {
+    kind: GatsbyGraphQLTypeKind.SCALAR,
+    config,
+  }
+}
+
 const isGatsbyType = something =>
   typeof something === `object` &&
   something.kind &&
@@ -65,5 +97,7 @@ module.exports = {
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
+  buildEnumType,
+  buildScalarType,
   isGatsbyType,
 }

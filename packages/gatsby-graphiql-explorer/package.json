@@ -1,6 +1,6 @@
 {
   "name": "gatsby-graphiql-explorer",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "GraphiQL IDE with custom features for Gatsby users",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,8 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-graphiql-explorer#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-graphiql-explorer"
   },
   "license": "MIT",
   "dependencies": {
@@ -37,7 +38,7 @@
     "@babel/preset-env": "^7.4.1",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.0",
-    "babel-preset-gatsby-package": "^0.2.0",
+    "babel-preset-gatsby-package": "^0.2.2",
     "cross-env": "^5.0.5",
     "css-loader": "^1.0.0",
     "graphiql": "^0.13.2",

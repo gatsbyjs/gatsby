@@ -54,8 +54,12 @@ describe(`Kitchen sink schema test`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        type PostsJson implements Node @infer {
-          id: String!
+        interface Post @nodeInterface {
+          id: ID!
+          code: String
+        }
+        type PostsJson implements Node & Post @infer {
+          id: ID!
           time: Date @dateformat(locale: "fi", formatString: "DD MMMM")
           code: String
           image: File @fileByRelativePath
@@ -76,6 +80,20 @@ describe(`Kitchen sink schema test`, () => {
     expect(
       await runQuery(`
         {
+          interface: allPost(sort: { fields: id }, limit: 1) {
+            nodes {
+              id
+              code
+              ... on PostsJson {
+                time
+                image {
+                  childImageSharp {
+                    id
+                  }
+                }
+              }
+            }
+          }
           sort: allPostsJson(sort: { fields: likes, order: ASC }, limit: 2) {
             edges {
               node {
@@ -105,7 +123,9 @@ describe(`Kitchen sink schema test`, () => {
               }
             }
           }
-          resolveFilter: postsJson(idWithDecoration: { eq: "decoration-1601601194425654597"}) {
+          resolveFilter: postsJson(
+            idWithDecoration: { eq: "decoration-1601601194425654597" }
+          ) {
             id
             idWithDecoration
             likes

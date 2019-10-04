@@ -3,6 +3,7 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const crypto = require(`crypto`)
 const Debug = require(`debug`)
+const { urlResolve } = require(`gatsby-core-utils`)
 
 const debug = Debug(`gatsby-theme-notes`)
 
@@ -35,7 +36,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const toNotesPath = node => {
     const { dir } = path.parse(node.parent.relativePath)
-    return path.join(basePath, dir, node.parent.name)
+    return urlResolve(basePath, dir, node.parent.name)
   }
 
   const result = await graphql(`

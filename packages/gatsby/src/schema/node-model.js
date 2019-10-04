@@ -25,7 +25,7 @@ interface PageDependencies {
 
 interface QueryArguments {
   type: TypeOrTypeName;
-  query: { filter: Object, sort?: Object, skip?: number, limit?: number };
+  query: { filter: Object, sort?: Object };
   firstOnly?: boolean;
 }
 
@@ -151,7 +151,7 @@ class LocalNodeModel {
    * Get nodes of a type matching the specified query.
    *
    * @param {Object} args
-   * @param {Object} args.query Query arguments (`filter`, `sort`, `limit`, `skip`)
+   * @param {Object} args.query Query arguments (`filter` and `sort`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {boolean} [args.firstOnly] If true, return only first match
    * @param {PageDependencies} [pageDependencies]
@@ -171,12 +171,15 @@ class LocalNodeModel {
     // We provide nodes in case of abstract types, because `run-sift` should
     // only need to know about node types in the store.
     let nodes
-    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
-    if (nodeTypeNames.length > 1) {
+    let nodeTypeNames
+    if (isAbstractType(gqlType)) {
+      nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
       nodes = nodeTypeNames.reduce(
         (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
         []
       )
+    } else {
+      nodeTypeNames = [gqlType.name]
     }
 
     const queryResult = await this.nodeStore.runQuery({
@@ -184,6 +187,7 @@ class LocalNodeModel {
       firstOnly,
       gqlType,
       nodes,
+      nodeTypeNames,
     })
 
     let result = queryResult

@@ -10,12 +10,8 @@
       "message": "chore(release): Publish"
     }
   },
+  "packages": ["packages/*", "/gatsby-theme-*"],
   "loglevel": "success",
-  "packages": [
-    "packages/*",
-    "themes/gatsby-theme-blog",
-    "themes/gatsby-theme-notes"
-  ],
   "version": "independent",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",

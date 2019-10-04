@@ -4,8 +4,7 @@ date: 2019-05-29
 author: Linda Watkins
 excerpt: "Read a summary of Gatsby Days and the Gatsby Gathering in NYC, including links to talks by Gatsby co-founder Kyle Mathews and other team members"
 tags:
-  - gathering
-  - team
+  - gatsby-inc
 ---
 
 "You belong here" is a core tenet of both Gatsby, the open source project, and Gatsby, the enterprise. Involving the developer community in this adventure to the front end far horizon has been our prime directive ever since launch. In the past four years we have worked alongside a constellation of 1,900+ contributors helping to build Gatsbyjs and created a robust library of useful plugins. All along, Gatsby’s competitive advantage has been the strength of its community and ecosystem: we came this far this fast thanks to users who rolled up their sleeves and pitched in.

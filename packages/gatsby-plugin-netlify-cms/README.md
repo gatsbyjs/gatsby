@@ -171,6 +171,13 @@ Customize the path to Netlify CMS on your Gatsby site.
 Customize the value of the `title` tag in your CMS HTML (shows in the browser
 bar).
 
+### `htmlFavicon`
+
+(_optional_, type: `string`, default: `""`)
+
+Customize the value of the `favicon` tag in your CMS HTML (shows in the browser
+bar).
+
 ## Example
 
 Here is the plugin with example values for all options (note that no option is
@@ -185,6 +192,7 @@ plugins: [
       enableIdentityWidget: true,
       publicPath: `admin`,
       htmlTitle: `Content Manager`,
+      htmlFavicon: `path/to/favicon`,
     },
   },
 ]

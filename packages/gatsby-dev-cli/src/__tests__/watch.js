@@ -101,8 +101,6 @@ describe(`watching`, () => {
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
 
-      // console.log(`checking`)
-
       expect(fs.copy).toHaveBeenCalledTimes(1)
       expect(fs.copy).toHaveBeenCalledWith(
         filePath,
@@ -129,7 +127,7 @@ describe(`watching`, () => {
       )
     })
 
-    it(`filters non-existant files/directories`, () => {
+    it(`filters non-existent files/directories`, () => {
       fs.existsSync.mockReset().mockImplementation(file => false)
 
       watch(...args)

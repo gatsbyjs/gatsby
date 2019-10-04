@@ -158,7 +158,7 @@ const styles = {
     right: space[6],
     visibility: `visible`,
     width: space[10],
-    zIndex: zIndices.sidebarToggleButton,
+    zIndex: zIndices.floatingActionButton,
     [mediaQueries.md]: { display: `none` },
   },
   sidebarToggleButtonInner: {

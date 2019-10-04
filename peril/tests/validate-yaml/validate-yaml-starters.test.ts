@@ -68,7 +68,7 @@ describe("a new PR", () => {
     expect(mockedUtils.addErrorMsg).not.toBeCalled()
   })
 
-  it(`Check for required fields and disallow unkown fields`, async () => {
+  it(`Check for required fields and disallow unknown fields`, async () => {
     setStartersYmlContent(`
       - test: loem
     `)

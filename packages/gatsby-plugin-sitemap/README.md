@@ -23,7 +23,7 @@ generated sitemap will include all of your site's pages, except the ones you exc
 
 ## Options
 
-The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L34) can be overridden.
+The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L45) can be overridden.
 
 The options are as follows:
 
@@ -102,5 +102,5 @@ plugins: [
 ]
 ```
 
-Above is the minimal configuration to split large sitemap.
-When number of URL in sitemap is more than 5000 plugin will create sitemap (e.g. `sitemap-0.xml`, `sitemap-1.xml`) and index (e.g. `sitemap.xml`) files.
+Above is the minimal configuration to split a large sitemap.
+When the number of URLs in a sitemap is more than 5000, the plugin will a create sitemap (e.g. `sitemap-0.xml`, `sitemap-1.xml`) and index (e.g. `sitemap.xml`) files.

@@ -4,9 +4,9 @@ date: 2019-04-12
 author: Jim Ettig
 excerpt: "Are your sales dropping despite your sales and marketing teams doing all they can? See why your developer organization might have the answers you’re looking for."
 tags:
-  - sales
-  - application performance
-  - developer experience
+  - lead-conversion
+  - performance
+  - building-sites-faster
 ---
 
 So you’ve spent countless hours on sales enablement to help improve your sales teams conversion rates and deal size. You’ve spent thousands of dollars on sales tools to make your team more effective and efficient. You’ve spent days/months searching for that next “rockstar rep”. You’ve optimized your CRM to help surface hot leads and implemented a sales process to help you achieve predictable outcomes from your sales metrics.

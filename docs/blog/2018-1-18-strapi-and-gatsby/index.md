@@ -3,7 +3,7 @@ title: "Building a static blog using Gatsby and Strapi"
 date: 2018-01-18
 author: "Pierre Burgy"
 canonicalLink: https://blog.strapi.io/building-a-static-website-using-gatsby-and-strapi/
-tags: ["strapi", "blog", "cms", "headless-cms", "open source", "tutorials"]
+tags: ["blogs", "cms", "headless-cms", "getting-started"]
 ---
 
 (Article updated on 20 March 2019. This updates the tutorial code examples. We added videos with additional explanations to each section.)
@@ -69,7 +69,15 @@ Note: Within the content below we provide links that open a running _localhost_ 
 
 This video series will take you step by step through creating a blog in Gatsby and teach you how to connect it to the open sourced headless CMS - Strapi.
 
-<iframe width="1206" height="678" title="Intro - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/It4PRFJJaF0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="1206"
+  height="678"
+  title="Intro - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/It4PRFJJaF0"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 _Important links from Video:_
 
@@ -80,7 +88,15 @@ _Important links from Video:_
 
 ### 2. Installation
 
-<iframe width="1206" height="678" title="Installation - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/4QnDgxtWqOI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="1206"
+  height="678"
+  title="Installation - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/4QnDgxtWqOI"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 _Important links from Video:_
 
@@ -152,7 +168,15 @@ Starting here, you should be able to visit the admin panel of your project: http
 
 ### 3. Content Types
 
-<iframe width="886" height="498" title="Content Types - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/cPEkpfik6X4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="886"
+  height="498"
+  title="Content Types - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/cPEkpfik6X4"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 _Important links from Video:_
 
@@ -190,7 +214,15 @@ Note: You can download the sample content from the video [here](https://github.c
 
 ### 4. Roles and Permissions
 
-<iframe width="886" height="498" title="Roles and Permissions - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/1jev6QRwcSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="886"
+  height="498"
+  title="Roles and Permissions - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/1jev6QRwcSo"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 #### Allow access to Article
 
@@ -204,7 +236,15 @@ Great job, our API is ready! We can start developing the static website.
 
 ### 5. Setting up Gatsby
 
-<iframe width="886" height="498" title="Setting up Gatsby - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/SnrEEW1uTlU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="886"
+  height="498"
+  title="Setting up Gatsby - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/SnrEEW1uTlU"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 _Important links from Video:_
 
@@ -320,7 +360,15 @@ Next, restart the server to ensure Gatsby registers these updates.
 
 ### 6. Create our Index Page
 
-<iframe width="886" height="498" title="Create the Index page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/UaFgCubwRD8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="886"
+  height="498"
+  title="Create the Index page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/UaFgCubwRD8"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 _Important links from Video:_
 
@@ -441,7 +489,15 @@ export const pageQuery = graphql`
 
 ### 7. Create the Article page view
 
-<iframe width="886" height="498" title="Create the Article page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/FTzwb49tBvw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="886"
+  height="498"
+  title="Create the Article page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/FTzwb49tBvw"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 _Important links from Video:_
 
@@ -563,7 +619,15 @@ From now on, you should be able to visit the detail page by clicking on URLs dis
 
 ### 8. Gatsby Images and author page
 
-<iframe width="886" height="498" title="Gatsby Images & author page - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series" src="https://www.youtube.com/embed/mPyJrjD3oU0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="886"
+  height="498"
+  title="Gatsby Images & author page - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
+  src="https://www.youtube.com/embed/mPyJrjD3oU0"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+/>
 
 _Important links from Video:_
 

@@ -9,8 +9,8 @@ import {
   fontSizes,
   lineHeights,
   fonts,
+  zIndices,
 } from "./presets"
-import { zIndices } from "./tokens"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },

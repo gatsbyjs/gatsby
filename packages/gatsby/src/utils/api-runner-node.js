@@ -8,12 +8,14 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const getCache = require(`./get-cache`)
 const apiList = require(`./api-node-docs`)
 const createNodeId = require(`./create-node-id`)
-const createContentDigest = require(`./create-content-digest`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
+  buildEnumType,
+  buildScalarType,
 } = require(`../schema/types/type-builders`)
 const { emitter } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
@@ -188,6 +190,8 @@ const runAPI = (plugin, api, args) => {
           buildUnionType,
           buildInterfaceType,
           buildInputObjectType,
+          buildEnumType,
+          buildScalarType,
         },
       },
       plugin.pluginOptions,
@@ -331,9 +335,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       }
 
       let pluginName =
-        plugin.name === `default-site-plugin`
-          ? `gatsby-node.js`
-          : `Plugin ${plugin.name}`
+        plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
@@ -341,7 +343,17 @@ module.exports = async (api, args = {}, pluginSource) =>
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
         })
-        reporter.panicOnBuild(`${pluginName} returned an error`, err)
+
+        reporter.panicOnBuild({
+          id: `11321`,
+          context: {
+            pluginName,
+            api,
+            message: err instanceof Error ? err.message : err,
+          },
+          error: err instanceof Error ? err : undefined,
+        })
+
         return null
       })
     }).then(results => {

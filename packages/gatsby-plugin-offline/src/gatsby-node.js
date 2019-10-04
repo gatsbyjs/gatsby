@@ -45,19 +45,15 @@ exports.onPostBuild = (args, pluginOptions) => {
     `webpack-runtime`,
     `component---node-modules-gatsby-plugin-offline-app-shell-js`,
   ])
+  const appFile = files.find(file => file.startsWith(`app-`))
 
   // Remove the custom prefix (if any) so Workbox can find the files.
   // This is added back at runtime (see modifyUrlPrefix) in order to serve
   // from the correct location.
   const omitPrefix = path => path.slice(pathPrefix.length)
 
-  const criticalFilePaths = _.uniq(
-    _.concat(
-      getResourcesFromHTML(`${process.cwd()}/${rootDir}/404.html`),
-      getResourcesFromHTML(
-        `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
-      )
-    )
+  const criticalFilePaths = getResourcesFromHTML(
+    `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
   ).map(omitPrefix)
 
   const globPatterns = files.concat([
@@ -130,6 +126,7 @@ exports.onPostBuild = (args, pluginOptions) => {
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
         .replace(/%pathPrefix%/g, pathPrefix)
+        .replace(/%appFile%/g, appFile)
 
       fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
       console.log(

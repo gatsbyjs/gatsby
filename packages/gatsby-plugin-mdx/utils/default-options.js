@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const { isString, once } = require("lodash");
-const debug = require("debug")("gatsby-mdx:utils/default-options");
+const debug = require("debug")("gatsby-plugin-mdx:utils/default-options");
 
 const optDebug = once(options => {
   debug("options", options);
@@ -34,13 +34,13 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
   // break immediately
   if (pluginOptions.hastPlugins && options.rehypePlugins.length === 0) {
     console.warn(
-      "hastPlugins should be renamed to rehypePlugins in your gatsby-mdx config"
+      "hastPlugins should be renamed to rehypePlugins in your gatsby-plugin-mdx config"
     );
     options.rehypePlugins = hastPlugins;
   }
   if (pluginOptions.mdPlugins && options.remarkPlugins.length === 0) {
     console.warn(
-      "mdPlugins should be renamed to remarkPlugins in your gatsby-mdx config"
+      "mdPlugins should be renamed to remarkPlugins in your gatsby-plugin-mdx config"
     );
     options.remarkPlugins = mdPlugins;
   }

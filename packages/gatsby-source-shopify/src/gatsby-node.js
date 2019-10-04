@@ -10,6 +10,7 @@ import {
   ProductNode,
   ProductOptionNode,
   ProductVariantNode,
+  ProductMetafieldNode,
   ShopPolicyNode,
   ProductTypeNode,
   PageNode,
@@ -77,6 +78,11 @@ export const sourceNodes = async (
         if (x.variants)
           await forEach(x.variants.edges, async edge =>
             createNode(await ProductVariantNode(imageArgs)(edge.node))
+          )
+
+        if (x.metafields)
+          await forEach(x.metafields.edges, async edge =>
+            createNode(await ProductMetafieldNode(imageArgs)(edge.node))
           )
 
         if (x.options)

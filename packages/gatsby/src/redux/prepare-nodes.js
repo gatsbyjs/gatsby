@@ -22,12 +22,17 @@ const enhancedNodeCacheId = ({ node, args }) =>
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
-    const { schema } = store.getState()
-    return field.resolve(node, {}, withResolverContext({}, schema), {
-      fieldName: k,
-      schema,
-      returnType: field.type,
-    })
+    const { schema, schemaCustomization } = store.getState()
+    return field.resolve(
+      node,
+      {},
+      withResolverContext({}, schema, schemaCustomization.context),
+      {
+        fieldName: k,
+        schema,
+        returnType: field.type,
+      }
+    )
   } else if (node[k] !== undefined) {
     return node[k]
   }

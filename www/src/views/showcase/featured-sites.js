@@ -5,8 +5,8 @@ import Img from "gatsby-image"
 import styles from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
-import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
-import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
+import FeaturedSitesIcon from "../../assets/icons/featured-sites-icons.svg"
+import { ShowcaseIcon } from "../../assets/icons"
 import {
   colors,
   space,

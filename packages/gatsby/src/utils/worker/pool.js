@@ -1,5 +1,5 @@
 const Worker = require(`jest-worker`).default
-const cpuCoreCount = require(`./cpu-core-count`)
+const { cpuCoreCount } = require(`gatsby-core-utils`)
 
 const create = () =>
   new Worker(require.resolve(`./child`), {

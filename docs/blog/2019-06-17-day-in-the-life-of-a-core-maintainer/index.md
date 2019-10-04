@@ -5,8 +5,8 @@ author: Dustin Schau
 excerpt: "In this post, I outline the tasks, responsibilities, and day-to-day happenings of a Core contributor"
 tags:
   - community
-  - open source
-  - contributor
+  - gatsby-inc
+  - open-source
 ---
 
 _Note: A "core maintainer" is an official member of the Gatsby team--you'll see them around GitHub day-to-day and they're accessible via the `@gatsbyjs/core` team. Gatsby Core is the open-source Gatsby you know and love, e.g. [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)._

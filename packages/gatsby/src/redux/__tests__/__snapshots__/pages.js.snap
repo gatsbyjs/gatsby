@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Add pages Fails if component path is missing 1`] = `"The plugin \\"test\\" must set the absolute path to the page component when create creating a page"`;
+exports[`Add pages Fails if component path is missing 1`] = `"A component must be set when creating a page"`;
 
 exports[`Add pages Fails if path is missing 1`] = `"The plugin \\"test\\" must set the page path when creating a page"`;
 

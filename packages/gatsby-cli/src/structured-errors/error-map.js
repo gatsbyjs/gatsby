@@ -21,6 +21,11 @@ const errorMap = {
     level: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  "98123": {
+    text: context => `${context.stageLabel} failed\n\n${context.message}`,
+    type: `WEBPACK`,
+    level: `ERROR`,
+  },
   "85901": {
     text: context =>
       `There was an error in your GraphQL query:\n\n${context.sourceMessage}`,
@@ -74,6 +79,98 @@ const errorMap = {
         context.configName
       } file is in the wrong place. You've placed it in the src/ directory. It must instead be at the root of your site next to your package.json file.`,
     type: `CONFIG`,
+    level: `ERROR`,
+  },
+  "10126": {
+    text: context =>
+      `${context.path}/${context.configName} cannot export a function.` +
+      `\n\nA ${
+        context.configName
+      } exported as a Function can only be used as a theme and not run directly.` +
+      `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
+      `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
+      `\nare not supported in the root gatsby-config.`,
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
+  // Plugin errors
+  "11321": {
+    text: context =>
+      `"${context.pluginName}" threw an error while running the ${
+        context.api
+      } lifecycle:\n\n${context.message}`,
+    type: `PLUGIN`,
+    level: `ERROR`,
+  },
+  "11322": {
+    text: context =>
+      `${
+        context.pluginName
+      } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
+        context.pageObject,
+        null,
+        4
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+    level: `ERROR`,
+  },
+  "11323": {
+    text: context =>
+      `${
+        context.pluginName
+      } must set the page path when creating a page.\n\nThe page object passed to createPage:\n${JSON.stringify(
+        context.pageObject,
+        null,
+        4
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+    level: `ERROR`,
+  },
+  "11324": {
+    text: context =>
+      `${
+        context.message
+      }\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+    level: `ERROR`,
+  },
+  "11325": {
+    text: context =>
+      `${
+        context.pluginName
+      } created a page with a component that doesn't exist.\n\nThe path to the missing component is "${
+        context.component
+      }"\n\nThe page object passed to createPage:\n${JSON.stringify(
+        context.pageObject,
+        null,
+        4
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+    level: `ERROR`,
+  },
+  "11326": {
+    text: context =>
+      `${
+        context.pluginName
+      } must set the absolute path to the page component when create creating a page.\n\nThe (relative) path you used for the component is "${
+        context.component
+      }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
+        context.component
+      }")\n\nThe page object passed to createPage:\n${JSON.stringify(
+        context.pageObject,
+        null,
+        4
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+    level: `ERROR`,
+  },
+  "11327": {
+    text: context =>
+      `You have an empty file in the "src/pages" directory at "${
+        context.relativePath
+      }". Please remove it or make it a valid component`,
+    level: `ERROR`,
+  },
+  "11328": {
+    text: context =>
+      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${
+        context.fileName
+      }`,
     level: `ERROR`,
   },
 }

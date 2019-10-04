@@ -1,6 +1,7 @@
 ---
 title: Preparing a site to go live
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Wow! You've come a long way! You've learned how to:

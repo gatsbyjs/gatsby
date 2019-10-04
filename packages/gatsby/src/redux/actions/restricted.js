@@ -1,4 +1,5 @@
 // @flow
+const { camelCase } = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 import type { Plugin } from "./types"
@@ -79,7 +80,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  *
  *
  * @example
- * exports.sourceNodes = ({ actions }) => {
+ * exports.createSchemaCustomization = ({ actions }) => {
  *   const { createTypes } = actions
  *   const typeDefs = `
  *     """
@@ -113,7 +114,7 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  * }
  *
  * // using Gatsby Type Builder API
- * exports.sourceNodes = ({ actions, schema }) => {
+ * exports.createSchemaCustomization = ({ actions, schema }) => {
  *   const { createTypes } = actions
  *   const typeDefs = [
  *     schema.buildObjectType({
@@ -261,6 +262,110 @@ actions.createFieldExtension = (
   }
 }
 
+/**
+ * Write GraphQL schema to file
+ *
+ * Writes out inferred and explicitly specified type definitions. This is not
+ * the full GraphQL schema, but only the types necessary to recreate all type
+ * definitions, i.e. it does not include directives, built-ins, and derived
+ * types for filtering, sorting, pagination etc. Optionally, you can define a
+ * list of types to include/exclude. This is recommended to avoid including
+ * definitions for plugin-created types.
+ *
+ * @availableIn [createSchemaCustomization]
+ *
+ * @param {object} $0
+ * @param {string} [$0.path] The path to the output file, defaults to `schema.gql`
+ * @param {object} [$0.include] Configure types to include
+ * @param {string[]} [$0.include.types] Only include these types
+ * @param {string[]} [$0.include.plugins] Only include types owned by these plugins
+ * @param {object} [$0.exclude] Configure types to exclude
+ * @param {string[]} [$0.exclude.types] Do not include these types
+ * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
+ * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
+ */
+actions.printTypeDefinitions = (
+  {
+    path = `schema.gql`,
+    include,
+    exclude,
+    withFieldTypes = true,
+  }: {
+    path?: string,
+    include?: { types?: Array<string>, plugins?: Array<string> },
+    exclude?: { types?: Array<string>, plugins?: Array<string> },
+    withFieldTypes?: boolean,
+  },
+  plugin: Plugin,
+  traceId?: string
+) => {
+  return {
+    type: `PRINT_SCHEMA_REQUESTED`,
+    plugin,
+    traceId,
+    payload: {
+      path,
+      include,
+      exclude,
+      withFieldTypes,
+    },
+  }
+}
+
+/**
+ * Make functionality available on field resolver `context`
+ *
+ * @availableIn [createSchemaCustomization]
+ *
+ * @param {object} context Object to make available on `context`.
+ * When called from a plugin, the context value will be namespaced under
+ * the camel-cased plugin name without the "gatsby-" prefix
+ * @example
+ * const getHtml = md => remark().use(html).process(md)
+ * exports.createSchemaCustomization = ({ actions }) => {
+ *   actions.createResolverContext({ getHtml })
+ * }
+ * // The context value can then be accessed in any field resolver like this:
+ * exports.createSchemaCustomization = ({ actions }) => {
+ *   actions.createTypes(schema.buildObjectType({
+ *     name: 'Test',
+ *     interfaces: ['Node'],
+ *     fields: {
+ *       md: {
+ *         type: 'String!',
+ *         async resolve(source, args, context, info) {
+ *           const processed = await context.transformerRemark.getHtml(source.internal.contents)
+ *           return processed.contents
+ *         }
+ *       }
+ *     }
+ *   }))
+ * }
+ */
+actions.createResolverContext = (
+  context: object,
+  plugin: Plugin,
+  traceId?: string
+) => dispatch => {
+  if (!context || typeof context !== `object`) {
+    report.error(
+      `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
+    )
+  } else {
+    const { name } = plugin || {}
+    const payload =
+      !name || name === `default-site-plugin`
+        ? context
+        : { [camelCase(name.replace(/^gatsby-/, ``))]: context }
+    dispatch({
+      type: `CREATE_RESOLVER_CONTEXT`,
+      plugin,
+      traceId,
+      payload,
+    })
+  }
+}
+
 const withDeprecationWarning = (actionName, action, api, allowedIn) => (
   ...args
 ) => {
@@ -336,9 +441,15 @@ const availableActionsByAPI = mapAvailableActionsToAPIs({
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
     [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
   },
+  createResolverContext: {
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+  },
   addThirdPartySchema: {
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
     [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
+  },
+  printTypeDefinitions: {
+    [ALLOWED_IN]: [`createSchemaCustomization`],
   },
 })
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Process YAML nodes correctly correctly creates a node from JSON which is a single object 1`] = `
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, when no target type name is specified, all nodes have a type name based on the file name 1`] = `
 Array [
   Array [
     Object {
@@ -10,59 +10,7 @@ Array [
       "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
-        "type": "BarYaml",
-      },
-      "parent": "whatever",
-    },
-  ],
-]
-`;
-
-exports[`Process YAML nodes correctly correctly creates a node from JSON which is a single object 2`] = `
-Array [
-  Array [
-    Object {
-      "child": Object {
-        "blue": true,
-        "children": Array [],
-        "funny": "yup",
-        "id": "uuid-from-gatsby",
-        "internal": Object {
-          "contentDigest": "contentDigest",
-          "type": "BarYaml",
-        },
-        "parent": "whatever",
-      },
-      "parent": Object {
-        "children": Array [],
-        "content": "blue: true
-funny: yup
-",
-        "dir": "<TEMP_DIR>/bar/",
-        "id": "whatever",
-        "internal": Object {
-          "contentDigest": "whatever",
-          "mediaType": "text/yaml",
-        },
-        "name": "test",
-        "parent": null,
-      },
-    },
-  ],
-]
-`;
-
-exports[`Process YAML nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
-Array [
-  Array [
-    Object {
-      "blue": true,
-      "children": Array [],
-      "funny": "yup",
-      "id": "uuid-from-gatsby",
-      "internal": Object {
-        "contentDigest": "contentDigest",
-        "type": "TestYaml",
+        "type": "MyFileYaml",
       },
       "parent": "whatever",
     },
@@ -75,7 +23,7 @@ Array [
       "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
-        "type": "TestYaml",
+        "type": "MyFileYaml",
       },
       "parent": "whatever",
     },
@@ -83,7 +31,7 @@ Array [
 ]
 `;
 
-exports[`Process YAML nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, when no target type name is specified, all nodes have a type name based on the file name 2`] = `
 Array [
   Array [
     Object {
@@ -94,23 +42,26 @@ Array [
         "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
-          "type": "TestYaml",
+          "type": "MyFileYaml",
         },
         "parent": "whatever",
       },
       "parent": Object {
         "children": Array [],
-        "content": "- blue: true
-  funny: yup
-- blue: false
-  funny: nope
-",
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/yaml",
+          "type": "File",
         },
-        "name": "test",
+        "name": "My File",
         "parent": null,
       },
     },
@@ -124,23 +75,848 @@ Array [
         "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
-          "type": "TestYaml",
+          "type": "MyFileYaml",
         },
         "parent": "whatever",
       },
       "parent": Object {
         "children": Array [],
-        "content": "- blue: true
-  funny: yup
-- blue: false
-  funny: nope
-",
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/yaml",
+          "type": "File",
         },
-        "name": "test",
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the specified target type name 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "fixed",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "funny": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "fixed",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the specified target type name 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "fixed",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "File",
+        },
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "fixed",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "File",
+        },
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "yup",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "funny": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "nope",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "yup",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "File",
+        },
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "nope",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "File",
+        },
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, when no target type name is specified, the type name is based on the directory name 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "some",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "FooBarYaml",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, when no target type name is specified, the type name is based on the directory name 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "some",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "FooBarYaml",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            id: some
+            blue: true
+            funny: yup
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "File",
+        },
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the specified target type name 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "some",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "fixed",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the specified target type name 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "some",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "fixed",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            id: some
+            blue: true
+            funny: yup
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "File",
+        },
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "some",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "yup",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "some",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "yup",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            id: some
+            blue: true
+            funny: yup
+      ",
+        "dir": "<TEMP_DIR>/top/foo bar/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "File",
+        },
+        "name": "My File",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, when no target type name is specified, all nodes have a type name based on the original node's internal type 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "OtherYaml",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "funny": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "OtherYaml",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, when no target type name is specified, all nodes have a type name based on the original node's internal type 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "OtherYaml",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "OtherYaml",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the specified target type name 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "fixed",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "funny": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "fixed",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the specified target type name 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "fixed",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "fixed",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "yup",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "funny": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "nope",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "yup",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "nope",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            - blue: true
+              funny: yup
+            - blue: false
+              funny: nope
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, when no target type name is specified, the type name is based on the original node's internal type 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "some",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "OtherYaml",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, when no target type name is specified, the type name is based on the original node's internal type 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "some",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "OtherYaml",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            id: some
+            blue: true
+            funny: yup
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the specified target type name 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "some",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "fixed",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the specified target type name 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "some",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "fixed",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            id: some
+            blue: true
+            funny: yup
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "some",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "yup",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "some",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "yup",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+            id: some
+            blue: true
+            funny: yup
+      ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+          "type": "Other",
+        },
         "parent": null,
       },
     },

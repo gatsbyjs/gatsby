@@ -79,6 +79,7 @@ const SingleLineInput = styled(`input`)`
   ${formInput};
   border-color: ${colors.purple[20]};
   width: 100%;
+  -webkit-appearance: none;
 
   :focus {
     ${formInputFocus}

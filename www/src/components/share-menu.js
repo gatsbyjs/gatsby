@@ -98,7 +98,7 @@ class ShareMenu extends React.Component {
                 media: image,
                 description: title,
               })}`}
-              title="Share on Pinterest'"
+              title="Share on Pinterest"
             >
               <FaPinterestP />
             </a>

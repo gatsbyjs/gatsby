@@ -6,12 +6,11 @@ title: "Environment Variables"
 
 You can provide environment variables to your site to customise its behavior in different environments.
 
-Note that we need to distinguish in this discussion between variables which have been defined in
-special places in order to be used in different deployment environments, and true OS-level
-environment variables that could be used in, for example, command-line calls.
-We'll call the former "Project Env Vars" and the latter "OS Env Vars".
-In both cases we want to be able to access the relevant value of these variables for the environment
-we're in.
+First we need to distinguish between different types of Env variables.  
+There are env variables that are defined in special places intended to be used in different deployment environments. Let's call these “Project Env Vars”.  
+And there are true OS-level environment variables that might be used in command-line calls. Let's call these “OS Env Vars”.
+
+In both cases we want to be able to access the relevant value of these variables for the environment we’re in.
 
 By default gatsby supports only 2 environments:
 
@@ -36,7 +35,7 @@ or rebuild your site after changing them.
 
 ## Defining Environment Variables
 
-#### Client-side JavaScript
+### Client-side JavaScript
 
 For Project Env Vars that you want to access in client-side browser JavaScript, you can define
 an environment config file, `.env.development` and/or `.env.production`, in your root folder.
@@ -51,7 +50,7 @@ browser JavaScript.
 GATSBY_API_URL=https://dev.example.com/api
 ```
 
-#### Server-side Node.js
+### Server-side Node.js
 
 Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`.
 OS Env Vars will already be available when Node is running, so you can add environment variables the

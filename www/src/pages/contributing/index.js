@@ -4,10 +4,12 @@ import { Helmet } from "react-helmet"
 
 import Layout from "../../components/layout"
 import { itemListContributing } from "../../utils/sidebar/item-list"
+import { space } from "../../utils/presets"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
 import FooterLinks from "../../components/shared/footer-links"
+import PrevAndNext from "../../components/prev-and-next"
 
 class IndexRoute extends React.Component {
   render() {
@@ -68,6 +70,10 @@ class IndexRoute extends React.Component {
               </li>
             </ul>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
+            <PrevAndNext
+              css={{ marginTop: space[9] }}
+              next={{ title: `Community`, link: `/contributing/community/` }}
+            />
           </Container>
           <FooterLinks />
         </DocSearchContent>

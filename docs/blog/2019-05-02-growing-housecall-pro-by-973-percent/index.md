@@ -7,6 +7,8 @@ tags:
   - contentful
   - react
   - netlify
+  - case-studies
+  - gatsby-for-teams
 ---
 
 In October of 2018, we realized that our ​[marketing website](https://www.housecallpro.com/)​ needed some serious love to meet our standards for a scalable and effective digital front door. At the time, the site was being served from a legacy Ruby on Rails server hosted on AWS. The loading time for each page took several seconds on desktop, and was really hurting on mobile, where our analytics and current trends were showing an ever increasing share of use. The development process was not efficient, involving an engineer to create an HTML template in Ruby for each new page to be rendered and served by Rails. This process was not sustainable and would not aid in our goal to radically increase our useful content to capture a wider audience of potential customers.

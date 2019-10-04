@@ -4,8 +4,8 @@ date: 2019-03-07
 author: Linda Watkins
 tags:
   - agencies
-  - sales
-  - clients
+  - lead-conversion
+  - marketing
 ---
 
 At the last Gatsby Days conference a couple months ago, I gave a talk about how to talk about Gatsby to your clients or team. See [a recording of that talk here.](https://www.gatsbyjs.com/gatsby-days-positioning-linda "The Power of Positioning: Selling Gatsby to Your Clients") This post is a compliment to that talk and goes into a bit more detail on how to talk about Gatsby to a less-technical audience.
@@ -58,18 +58,28 @@ Give examples of websites that use the tech stack you’re recommending for the 
 
 **SEO for the Win!:** In a recent [case study](/blog/2019-01-30-flamingo-case-study/ "Flamingo case study") with [Harry’s](https://www.harrys.com/en/us), Johnny Lin (Engineering Manager) and his team needed to launch a new website to support the launch of a new brand, [Flamingo](https://www.shopflamingo.com/). Flamingo is an e-commerce site that sells shaving products for women. The Flamingo team was preparing a big product launch on a tight timeline and needed a stable, secure website that was optimized for SEO. They knew they needed high search rankings to compete in this competitive market and a Gatsby website was the perfect fit. Johnny talked about the importance of the website:
 
-<Pullquote citation="Johnny Lin">We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later. And as an e-commerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.</Pullquote>
+<Pullquote citation="Johnny Lin">
+  We wanted to focus on performance at the beginning of the project, having it
+  baked in. It’s easier than trying to make an already built website perform
+  later. And as an e-commerce site, performance (SEO and conversion) is super
+  important and Gatsby takes care of this for us.
+</Pullquote>
 
 **60% More Leads:** Zach Muha, Director of Digital Marketing with [Youfit Health Clubs](/blog/2018-11-16-youfit-case-study/), depended on the website to attract new customers. But their site was bogged down with excruciatingly slow page load times (some pages took 22 seconds to load!). This led to a high bounce rate which was killing the lead conversion numbers. Since [rebuilding the site with Gatsby](/blog/2018-11-16-youfit-case-study/), Youfit saw a 22% increase in organic search results and a 60% increase in lead conversion. Prior to the website rebuild, Youfit Health Clubs viewed their website as an “add-on” because the team did not see it as critical to the success of the company. But now that they are experiencing first-hand the benefits of Gatsby, their website has become a primary channel for lead generation.
 
 **Easy Onboarding for the Team:** For the Flamingo website launch, it was important that the team worked well together since they were working on a tight timeline. There was no room for major miscommunications or big errors. But because of Gatsby’s excellent documentation and ease of use, Johnny felt confident his team would be successful. He even had confidence in new team members handling the post-launch support.
 
-<Pullquote>We were able to allow newer teammates to be part of the on-call for the launch because Gatsby made it so easy to maintain.</Pullquote>
+<Pullquote>
+  We were able to allow newer teammates to be part of the on-call for the launch
+  because Gatsby made it so easy to maintain.
+</Pullquote>
 
 **Return on Investment:** When Youfit Health Clubs did a complete site overhaul with Gatsby, they found the page load times decreased by at least a half. Lead conversion rates increased as more people were able to access the website and sign up for a free trial which led to more revenue. By using Gatsby, Youfit significantly increased their organic traffic, lead capture, and ROI.
 
 <Pullquote citation="Zach Muha, Director of Digital Marketing @ Youfit">
-We are very happy with the results so far, especially the 60% increase in leads. The website went from a burden to a strategic tool we use to capture leads and generate ROI.  
+  We are very happy with the results so far, especially the 60% increase in
+  leads. The website went from a burden to a strategic tool we use to capture
+  leads and generate ROI.
 </Pullquote>
 
 Case studies like the ones above can help show (not just tell) a team member or client what they can expect with Gatsby. So when talking to a marketer, client, or coworker, be sure to touch on the points that are important to them. Let them see what Gatsby can do for them and how it can impact the team, outcomes, and the business.

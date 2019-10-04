@@ -64,49 +64,46 @@ There are several ways to structure queries depending on how you prefer to work,
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
-  const createPosts = new Promise((resolve, reject) => {
-    const postTemplate = path.resolve(`./src/templates/post.js`)
-    resolve(
-      graphql(`
-        {
-          allGhostPost(sort: { order: ASC, fields: published_at }) {
-            edges {
-              node {
-                slug
-              }
-            }
+  const postTemplate = path.resolve(`./src/templates/post.js`)
+
+  // Query Ghost data
+  const result = await graphql(`
+    {
+      allGhostPost(sort: { order: ASC, fields: published_at }) {
+        edges {
+          node {
+            slug
           }
         }
-      `).then(result => {
-        if (result.errors) {
-          return reject(result.errors)
-        }
+      }
+    }
+  `)
 
-        if (!result.data.allGhostPost) {
-          return resolve()
-        }
+  // Handle errors
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
 
-        const items = result.data.allGhostPost.edges
+  if (!result.data.allGhostPost) {
+    return
+  }
 
-        items.forEach(({ node }) => {
-          node.url = `/${node.slug}/`
+  // Create pages for each Ghost post
+  const items = result.data.allGhostPost.edges
+  items.forEach(({ node }) => {
+    node.url = `/${node.slug}/`
 
-          createPage({
-            path: node.url,
-            component: path.resolve(postTemplate),
-            context: {
-              slug: node.slug,
-            },
-          })
-        })
-        return resolve()
-      })
-    )
+    createPage({
+      path: node.url,
+      component: path.resolve(postTemplate),
+      context: {
+        slug: node.slug,
+      },
+    })
   })
-
-  return Promise.all([createPosts])
 }
 ```
 

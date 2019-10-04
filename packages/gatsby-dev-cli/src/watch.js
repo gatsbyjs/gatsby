@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const del = require(`del`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 
 const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
@@ -20,14 +21,22 @@ const quit = () => {
 const MAX_COPY_RETRIES = 3
 
 /*
- * non-existant packages break on('ready')
+ * non-existent packages break on('ready')
  * See: https://github.com/paulmillr/chokidar/issues/449
  */
-function watch(
+async function watch(
   root,
   packages,
-  { scanOnce, quiet, monoRepoPackages, localPackages }
+  { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
 ) {
+  // determine if in yarn workspace - if in workspace, force using verdaccio
+  // as current logic of copying files will not work correctly.
+  const yarnWorkspaceRoot = findWorkspaceRoot()
+  if (yarnWorkspaceRoot && process.env.NODE_ENV !== `test`) {
+    console.log(`Yarn workspace found.`)
+    forceInstall = true
+  }
+
   let afterPackageInstallation = false
   let queuedCopies = []
 
@@ -103,19 +112,30 @@ function watch(
     ? _.intersection(packages, seenPackages)
     : seenPackages
 
-  let packagesToInstall = []
+  let ignoredPackageJSON = new Map()
+  const ignorePackageJSONChanges = (packageName, contentArray) => {
+    ignoredPackageJSON.set(packageName, contentArray)
 
-  const getPackagesToInstall = packages =>
-    packages.forEach(pkg => {
-      if (localPackages.includes(pkg)) {
-        packagesToInstall.push(pkg)
-      }
-      if (depTree[pkg]) {
-        getPackagesToInstall([...depTree[pkg]])
-      }
-    })
+    return () => {
+      ignoredPackageJSON.delete(packageName)
+    }
+  }
 
-  getPackagesToInstall(allPackagesToWatch)
+  if (forceInstall) {
+    try {
+      await publishPackagesLocallyAndInstall({
+        packagesToPublish: allPackagesToWatch,
+        root,
+        localPackages,
+        ignorePackageJSONChanges,
+        yarnWorkspaceRoot,
+      })
+    } catch (e) {
+      console.log(e)
+    }
+
+    process.exit()
+  }
 
   if (allPackagesToWatch.length === 0) {
     console.error(`There are no packages to watch.`)
@@ -140,17 +160,9 @@ function watch(
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
-  let ignoredPackageJSON = new Map()
+
   const waitFor = new Set()
   let anyPackageNotInstalled = false
-
-  const ignorePackageJSONChanges = (packageName, contentArray) => {
-    ignoredPackageJSON.set(packageName, contentArray)
-
-    return () => {
-      ignoredPackageJSON.delete(ignoredPackageJSON)
-    }
-  }
 
   const watchEvents = [`change`, `add`]
 

@@ -1,21 +1,15 @@
 import fs from "fs"
 import path from "path"
 import sharp from "./safe-sharp"
-import createContentDigest from "gatsby/dist/utils/create-content-digest"
+import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
 
 sharp.simd(true)
 
-try {
-  // Handle Sharp's concurrency based on the Gatsby CPU count
-  // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
-  // See: https://www.gatsbyjs.org/docs/multi-core-builds/
-  const cpuCoreCount = require(`gatsby/dist/utils/cpu-core-count`)
-  sharp.concurrency(cpuCoreCount())
-} catch {
-  // if above throws error this probably means that used Gatsby version
-  // doesn't support cpu-core-count utility.
-}
+// Handle Sharp's concurrency based on the Gatsby CPU count
+// See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
+// See: https://www.gatsbyjs.org/docs/multi-core-builds/
+sharp.concurrency(cpuCoreCount())
 
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)

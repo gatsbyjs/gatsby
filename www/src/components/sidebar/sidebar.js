@@ -115,7 +115,7 @@ class SidebarBody extends Component {
           props.itemList,
           activeItemLink,
           []
-        ),
+        ).map(link => link.title),
         activeItemHash: props.activeItemHash,
       }
     }
@@ -140,7 +140,7 @@ class SidebarBody extends Component {
         props.itemList,
         activeItemLink,
         []
-      ),
+      ).map(link => link.title),
     }
 
     getOpenItemHash(props.itemList, state)

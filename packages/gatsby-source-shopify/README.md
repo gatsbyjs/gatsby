@@ -62,6 +62,9 @@ plugins: [
 ]
 ```
 
+NOTE: By default, all metafields are private. In order to pull metafields,
+you must first [expose the metafield to the Storefront API](https://help.shopify.com/en/api/guides/metafields/storefront-api-metafields#expose-metafields-to-the-storefront-api).
+
 ## How to query
 
 You can query nodes created from Shopify using GraphQL like the following:

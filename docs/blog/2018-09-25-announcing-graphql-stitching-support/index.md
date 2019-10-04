@@ -2,7 +2,7 @@
 title: Announcing support for natively querying 3rd-party GraphQL APIs with Gatsby
 date: 2018-09-25
 author: "Mikhail Novikov"
-tags: ["graphql", "plugin", "source"]
+tags: ["graphql", "plugins", "content-mesh", "releases"]
 ---
 
 When Gatsby was started 3.5 years ago, [GraphQL](https://www.graphql.com/) was still an internal project at Facebook and had yet to be open sourced.

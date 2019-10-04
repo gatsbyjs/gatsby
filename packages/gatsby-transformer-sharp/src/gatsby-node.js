@@ -24,7 +24,7 @@ exports.sourceNodes = ({ actions }) => {
 
   if (createTypes) {
     createTypes(`
-      type ImageSharp implements Node @infer {
+      type ImageSharp implements Node @infer @childOf(types: ["File"]) {
         id: ID!
       }
     `)

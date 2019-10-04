@@ -4,6 +4,7 @@
 // use require() with backtick strings so use the es6 syntax
 import "@babel/polyfill"
 const semver = require(`semver`)
+const util = require(`util`)
 
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
@@ -24,10 +25,17 @@ if (!semver.satisfies(process.version, MIN_NODE_VERSION)) {
   )
 }
 
-process.on(`unhandledRejection`, error => {
+process.on(`unhandledRejection`, reason => {
   // This will exit the process in newer Node anyway so lets be consistent
   // across versions and crash
-  report.panic(`UNHANDLED REJECTION`, error)
+
+  // reason can be anything, it can be a message, an object, ANYTHING!
+  // we convert it to an error object so we don't crash on structured error validation
+  if (!(reason instanceof Error)) {
+    reason = new Error(util.format(reason))
+  }
+
+  report.panic(`UNHANDLED REJECTION`, reason)
 })
 
 process.on(`uncaughtException`, error => {

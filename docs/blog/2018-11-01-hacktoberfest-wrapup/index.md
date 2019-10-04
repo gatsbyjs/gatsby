@@ -2,7 +2,7 @@
 title: "Gatsby Hacktoberfest Wrap-up"
 date: 2018-11-01
 author: "Amberley Romo"
-tags: ["hacktoberfest", "open source"]
+tags: ["hacktoberfest", "open-source"]
 ---
 
 Just like that, Gatsby Hacktoberfest is over! Or, "Hacktoverfest"? 😂 (Thanks for the pun, [@m-allanson](https://github.com/m-allanson)). We had a great time Hacktoberfesting with y'all and wanted to share a bit of our planning process and lessons learned in review!
@@ -29,17 +29,28 @@ Most of the [Docs issues](https://github.com/gatsbyjs/gatsby/issues/7928) stemme
 Thanks to everyone's contributions, throughout October we merged 439 pull requests from 250 different authors into the Gatsby repo!
 
 <figure>
-  <img alt="GitHub insights for the Gatsby repo, October 1 - November 1, 2018" height="400" src="./gatsby-hacktoberfest.png" />
-  <figcaption>
-    An awesome community response for Hacktoberfest!
-  </figcaption>
+  <img
+    alt="GitHub insights for the Gatsby repo, October 1 - November 1, 2018"
+    height="400"
+    src="./gatsby-hacktoberfest.png"
+  />
+  <figcaption>An awesome community response for Hacktoberfest!</figcaption>
 </figure>
 
 ### Over 170 new first-time contributors!
 
 Of the 250 different authors who contributed to this month, over 170 were first-time contributors to the Gatsby repo!
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">150 new people started contributing to Gatsby last month! Welcome and thanks! <a href="https://twitter.com/hashtag/Hacktoberfest?src=hash&amp;ref_src=twsrc%5Etfw">#Hacktoberfest</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/1056235954824871936?ref_src=twsrc%5Etfw">October 27, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    150 new people started contributing to Gatsby last month! Welcome and
+    thanks!{" "}
+    <a href="https://twitter.com/hashtag/Hacktoberfest?src=hash&amp;ref_src=twsrc%5Etfw">
+      #Hacktoberfest
+    </a>
+  </p>
+  &mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/1056235954824871936?ref_src=twsrc%5Etfw">October 27, 2018</a>
+</blockquote>
 
 (We celebrated a bit early).
 

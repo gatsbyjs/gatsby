@@ -307,7 +307,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       if (docsJson.loc) {
         // loc is instance of SourceLocation class, and Gatsby doesn't support
         // class instances at this moment when inferring schema. Serializing
-        // and desirializing converts class instance to plain object.
+        // and deserializing converts class instance to plain object.
         picked.docsLocation = JSON.parse(JSON.stringify(docsJson.loc))
       }
       if (docsJson.context && docsJson.context.loc) {

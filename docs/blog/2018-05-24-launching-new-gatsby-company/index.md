@@ -2,6 +2,7 @@
 title: Announcing new Gatsby Company
 date: 2018-05-24
 author: "Kyle Mathews"
+tags: ["gatsby-inc"]
 ---
 
 Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I’m thrilled to announce the formation of [Gatsby Inc.](https://www.gatsbyjs.com/) Based on the open source project Gatsby I founded, Gatsby the company will make feature-rich and blazing-fast websites easier to build and run.

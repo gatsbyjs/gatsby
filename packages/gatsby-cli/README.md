@@ -64,6 +64,7 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 |       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `false` |
 |        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    | `false` |
 | `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                           | `false` |
 
 ### `serve`
 

@@ -17,7 +17,7 @@ export const onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment || debug) {
     setPostBodyComponents([
       <script
-        key="plugin-facebook-analitycs"
+        key="plugin-facebook-analytics"
         dangerouslySetInnerHTML={{
           __html: stripIndent(`
             window.fbAsyncInit = function() {

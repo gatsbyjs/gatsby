@@ -30,10 +30,15 @@ async function queryResult(nodes, query) {
   nodes.forEach(node => store.dispatch({ type: `CREATE_NODE`, payload: node }))
 
   await build({})
-  const { schema } = store.getState()
+  const { schema, schemaCustomization } = store.getState()
 
   const context = { path: `foo` }
-  return graphql(schema, query, undefined, withResolverContext(context))
+  return graphql(
+    schema,
+    query,
+    undefined,
+    withResolverContext(context, schema, schemaCustomization.context)
+  )
 }
 
 describe(`filtering on linked nodes`, () => {

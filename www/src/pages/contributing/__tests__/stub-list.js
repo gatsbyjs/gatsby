@@ -31,7 +31,7 @@ jest.mock(`react-modal`, () => {
 })
 import React from "react"
 import { useStaticQuery } from "gatsby"
-import { render } from "react-testing-library"
+import { render } from "@testing-library/react"
 
 import StubList from "../stub-list"
 

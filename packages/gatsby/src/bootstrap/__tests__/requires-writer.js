@@ -1,4 +1,4 @@
-const { joinPath } = require(`../../utils/path`)
+const { joinPath } = require(`gatsby-core-utils`)
 const requiresWriter = require(`../requires-writer`)
 
 const now = Date.now()

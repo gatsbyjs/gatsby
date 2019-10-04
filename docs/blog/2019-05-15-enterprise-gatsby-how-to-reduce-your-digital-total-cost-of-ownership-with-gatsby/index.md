@@ -7,7 +7,6 @@ tags:
   - accessibility
   - ecommerce
   - enterprise
-  - gatsby
   - performance
   - security
 ---

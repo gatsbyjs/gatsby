@@ -5,8 +5,11 @@ const fs = require(`fs-extra`)
 const convertHrtime = require(`convert-hrtime`)
 const { chunk } = require(`lodash`)
 const webpackConfig = require(`../utils/webpack.config`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const telemetry = require(`gatsby-telemetry`)
+
+const handleWebpackError = require(`../utils/webpack-error-parser`)
 
 const runWebpack = compilerConfig =>
   new Promise((resolve, reject) => {
@@ -25,14 +28,7 @@ const doBuildRenderer = async (program, webpackConfig) => {
   // render-page.js is hard coded in webpack.config
   const outputFile = `${directory}/public/render-page.js`
   if (stats.hasErrors()) {
-    let webpackErrors = stats.toJson().errors.filter(Boolean)
-    const error = webpackErrors.length
-      ? createErrorFromString(webpackErrors[0], `${outputFile}.map`)
-      : new Error(
-          `There was an issue while building the site: ` +
-            `\n\n${stats.toString()}`
-        )
-    throw error
+    reporter.panic(handleWebpackError(`build-html`, stats.compilation.errors))
   }
   return outputFile
 }

@@ -3,7 +3,7 @@ title: Introduction to Gatsby
 date: 2018-05-31
 author: Michelle Barker
 excerpt: "In case you haven’t heard about it, Gatsby is the latest hot thing in static site generators"
-tags: ["css", "graphql", "blog"]
+tags: ["cutting-edge-experiences", "graphql", "blogs"]
 canonicalLink: https://css-irl.info/introduction-to-gatsby/
 publishedAt: css-irl.info
 ---

@@ -47,7 +47,7 @@ Each method detailed below will start with the following contact form:
 
 If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling/).
 
-Setting this up only invloves adding a few form attributes:
+Setting this up only involves adding a few form attributes:
 
 ```diff:title=src/pages/contact.js
 - <form method="post" action="#">

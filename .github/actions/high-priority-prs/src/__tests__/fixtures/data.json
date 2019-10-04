@@ -3649,7 +3649,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-04-29T06:37:51Z",
-                  "message": "remove accidentally commited .patch file"
+                  "message": "remove accidentally committed .patch file"
                 }
               },
               {
@@ -4853,7 +4853,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-05-26T18:18:31Z",
-                  "message": "skip checking if createTypes is available - this is hard requirment now and wouldn't work without it"
+                  "message": "skip checking if createTypes is available - this is hard requirement now and wouldn't work without it"
                 }
               },
               {
@@ -6424,7 +6424,7 @@
         {
           "createdAt": "2019-05-17T13:04:21Z",
           "updatedAt": "2019-06-03T13:52:10Z",
-          "title": "fix(www): Normalize data from airtable on schema level, remove unnessecary hook.",
+          "title": "fix(www): Normalize data from airtable on schema level, remove unnecessary hook.",
           "url": "https://github.com/gatsbyjs/gatsby/pull/14114",
           "author": {
             "url": "https://github.com/freiksenet"
@@ -6465,7 +6465,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-05-17T13:03:04Z",
-                  "message": "Normalize data from airtable on schema level, remove unnessecary hook."
+                  "message": "Normalize data from airtable on schema level, remove unnecessary hook."
                 }
               },
               {

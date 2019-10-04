@@ -1,7 +1,7 @@
 import React from "react"
 import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import fs from "fs"
-import createContentDigest from "gatsby/dist/utils/create-content-digest"
+import { createContentDigest } from "gatsby-core-utils"
 
 import { defaultIcons, addDigestToPath } from "./common.js"
 

@@ -17,11 +17,7 @@ const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
 const WorkerPool = require(`../utils/worker/pool`)
-
-function reportFailure(msg, err: Error) {
-  report.log(``)
-  report.panic(msg, err)
-}
+const handleWebpackError = require(`../utils/webpack-error-parser`)
 
 type BuildArgs = {
   directory: string,
@@ -88,7 +84,7 @@ module.exports = async function build(program: BuildArgs) {
   )
   activity.start()
   const stats = await buildProductionBundle(program).catch(err => {
-    reportFailure(`Generating JavaScript bundles failed`, err)
+    report.panic(handleWebpackError(`build-javascript`, err))
   })
   activity.end()
 

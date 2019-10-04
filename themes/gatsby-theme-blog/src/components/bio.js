@@ -44,9 +44,9 @@ const Bio = () => {
           role="presentation"
         />
       )}
-      <Styled.p>
+      <Styled.div>
         <BioContent />
-      </Styled.p>
+      </Styled.div>
     </Flex>
   )
 }

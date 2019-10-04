@@ -10,6 +10,7 @@
 
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
+
 const path = require(`path`)
 const slash = require(`slash`)
 
@@ -19,6 +20,7 @@ const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
+const getGatsbyDependents = require(`../utils/gatsby-dependents`)
 
 const getQueriesSnapshot = () => {
   const state = store.getState()
@@ -220,11 +222,22 @@ const debounceCompile = _.debounce(() => {
   updateStateAndRunQueries()
 }, 100)
 
-const watch = rootDir => {
+const watch = async rootDir => {
   if (watcher) return
 
+  const modulesThatUseGatsby = await getGatsbyDependents()
+
+  const packagePaths = modulesThatUseGatsby.map(module => {
+    const filesRegex = `*.+(t|j)s?(x)`
+    const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
+    return slash(path.join(module.path, pathRegex))
+  })
+
   watcher = chokidar
-    .watch(slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)))
+    .watch([
+      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
+      ...packagePaths,
+    ])
     .on(`change`, path => {
       debounceCompile()
     })

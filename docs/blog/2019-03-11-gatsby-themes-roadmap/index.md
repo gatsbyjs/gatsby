@@ -3,7 +3,7 @@ title: Gatsby Themes Roadmap
 date: 2019-03-11
 author: Chris Biscardi
 excerpt: "Where Gatsby themes are headed in 2019"
-tags: ["themes", "architecture"]
+tags: ["themes", "content-mesh"]
 ---
 
 Gatsby themes have come a long way in the last few months. We've iteratively

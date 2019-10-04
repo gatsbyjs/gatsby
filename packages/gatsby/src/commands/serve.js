@@ -8,6 +8,7 @@ const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
 const rl = require(`readline`)
 const onExit = require(`signal-exit`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const telemetry = require(`gatsby-telemetry`)
 
@@ -31,7 +32,22 @@ onExit(() => {
 
 const readMatchPaths = async program => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
-  const rawJSON = await fs.readFile(filePath)
+  let rawJSON = `[]`
+  try {
+    rawJSON = await fs.readFile(filePath)
+  } catch (error) {
+    report.warn(error)
+    report.warn(
+      `Could not read ${chalk.bold(
+        `match-paths.json`
+      )} from the .cache directory`
+    )
+    report.warn(
+      `Client-side routing will not work correctly. Maybe you need to re-run ${chalk.bold(
+        `gatsby build`
+      )}?`
+    )
+  }
   return JSON.parse(rawJSON)
 }
 
@@ -101,19 +117,11 @@ module.exports = async program => {
   const startListening = () => {
     app.listen(port, host, () => {
       let openUrlString = `http://${host}:${port}${pathPrefix}`
-      console.log(
-        `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
-          openUrlString
-        )}`
-      )
+      report.info(`gatsby serve running at: ${chalk.bold(openUrlString)}`)
       if (open) {
-        console.log(`${chalk.blue(`info`)} Opening browser...`)
+        report.info(`Opening browser...`)
         Promise.resolve(openurl(openUrlString)).catch(err =>
-          console.log(
-            `${chalk.yellow(
-              `warn`
-            )} Browser not opened because no browser was found`
-          )
+          report.warn(`Browser not opened because no browser was found`)
         )
       }
     })

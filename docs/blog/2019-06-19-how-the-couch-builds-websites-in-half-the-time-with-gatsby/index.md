@@ -3,11 +3,10 @@ title: How The Couch Builds Websites in Half the Time with Gatsby
 date: 2019-06-19
 author: Linda Watkins
 tags:
-  - case study
   - case-studies
   - ecommerce
   - content-mesh
-  - developer experience
+  - building-sites-faster
   - hosting
   - performance
 ---

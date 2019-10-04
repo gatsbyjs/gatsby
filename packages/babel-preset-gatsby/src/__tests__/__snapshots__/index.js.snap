@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`babel-preset-gatsby should specify proper presets and plugins when stage is build-html 1`] = `
+Object {
+  "plugins": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      Object {
+        "loose": true,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
+    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      Object {
+        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "corejs": false,
+        "helpers": false,
+        "regenerator": true,
+        "useESModules": true,
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      Object {
+        "loose": false,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+  ],
+  "presets": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      Object {
+        "corejs": 2,
+        "exclude": Array [
+          "transform-typeof-symbol",
+        ],
+        "loose": true,
+        "modules": false,
+        "targets": Object {
+          "node": "current",
+        },
+        "useBuiltIns": "usage",
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      Object {
+        "development": false,
+        "pragma": "React.createElement",
+        "useBuiltIns": true,
+      },
+    ],
+  ],
+}
+`;
+
+exports[`babel-preset-gatsby should specify proper presets and plugins when stage is build-javascript 1`] = `
+Object {
+  "plugins": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      Object {
+        "loose": true,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
+    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      Object {
+        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "corejs": false,
+        "helpers": false,
+        "regenerator": true,
+        "useESModules": true,
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      Object {
+        "loose": false,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    Array [
+      "<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+      Object {
+        "removeImport": true,
+      },
+    ],
+  ],
+  "presets": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      Object {
+        "corejs": 2,
+        "exclude": Array [
+          "transform-typeof-symbol",
+        ],
+        "loose": true,
+        "modules": false,
+        "targets": undefined,
+        "useBuiltIns": "usage",
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      Object {
+        "development": false,
+        "pragma": "React.createElement",
+        "useBuiltIns": true,
+      },
+    ],
+  ],
+}
+`;
+
+exports[`babel-preset-gatsby should specify proper presets and plugins when stage is build-stage 1`] = `
+Object {
+  "plugins": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      Object {
+        "loose": true,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
+    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      Object {
+        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "corejs": false,
+        "helpers": false,
+        "regenerator": true,
+        "useESModules": true,
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      Object {
+        "loose": false,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+  ],
+  "presets": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      Object {
+        "corejs": 2,
+        "exclude": Array [
+          "transform-typeof-symbol",
+        ],
+        "loose": true,
+        "modules": false,
+        "targets": undefined,
+        "useBuiltIns": "usage",
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      Object {
+        "development": false,
+        "pragma": "React.createElement",
+        "useBuiltIns": true,
+      },
+    ],
+  ],
+}
+`;
+
+exports[`babel-preset-gatsby should specify proper presets and plugins when stage is develop 1`] = `
+Object {
+  "plugins": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
+      Object {
+        "loose": true,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
+    "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
+      Object {
+        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": true,
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
+      Object {
+        "loose": false,
+      },
+    ],
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+  ],
+  "presets": Array [
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
+      Object {
+        "corejs": 2,
+        "exclude": Array [
+          "transform-typeof-symbol",
+        ],
+        "loose": true,
+        "modules": false,
+        "targets": undefined,
+        "useBuiltIns": "usage",
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/preset-react/lib/index.js",
+      Object {
+        "development": true,
+        "pragma": "React.createElement",
+        "useBuiltIns": true,
+      },
+    ],
+  ],
+}
+`;

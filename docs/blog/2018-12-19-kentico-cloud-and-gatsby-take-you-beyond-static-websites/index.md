@@ -4,7 +4,7 @@ date: 2019-01-07
 author: "Ondrej Polesny"
 image: "images/teaser.png"
 imageTitle: Kentico Cloud and Gatsby
-tags: ["react", "kentico cloud", "graphql"]
+tags: ["react", "graphql", "content-mesh"]
 ---
 
 I have to admit I have never really been a fan of JavaScript. I know, shame on me! When I was finishing my studies, I was all about .NET as it was easy to understand, debugging capabilities came with Visual Studio out-of-the-box, and the inheritance and objects model was simple. I looked at JavaScript with thoughts like "what kind of language would allow you to create objects freely, clone them, add functions to only specific instances or allow anyone to see the source code?"

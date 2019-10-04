@@ -9,6 +9,11 @@ type Props = {
   arr: Array<any>,
   func?: (value: string) => void,
   obj?: { subvalue: ?boolean },
+  /**
+   * Bad Documented
+   * @memberof Props
+   */
+  badDocumented: ReactNode,
 }
 
 /**

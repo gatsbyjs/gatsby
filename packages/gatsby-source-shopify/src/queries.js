@@ -132,6 +132,18 @@ export const PRODUCTS_QUERY = `
                 }
               }
             }
+            metafields(first: 250) {
+              edges {
+                node {
+                  description
+                  id
+                  key
+                  namespace
+                  value
+                  valueType
+                }
+              }
+            }
             onlineStoreUrl
             options {
               id

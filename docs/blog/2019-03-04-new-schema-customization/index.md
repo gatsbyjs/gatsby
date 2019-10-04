@@ -2,7 +2,7 @@
 title: New schema customization API in Gatsby
 date: 2019-03-04
 author: Mikhail Novikov
-tags: ["schema", "graphql"]
+tags: ["graphql", "releases"]
 ---
 
 Today we are releasing a preview of a new core Gatsby API - Schema Customization. It gives Gatsby users much better control over the inferred schema, solving many common issues that people have had with their data sources. In addition to adding the new API, we rewrote big chunks of schema generation code from scratch. This gives us a great long-term foundation that will let us make Gatsby GraphQL better in the future.
@@ -117,7 +117,7 @@ You can specify types for some or all of the fields that you have on the given n
 
 ```graphql
 # For this type `name` won't be added
-type AuthorJson implements Node @dontInfer() {
+type AuthorJson implements Node @dontInfer {
   birthday: Date
 }
 
@@ -126,9 +126,8 @@ type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
   birthday: Date
 }
 
-
 # For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
-type AuthorJson implements Node @infer() {
+type AuthorJson implements Node @infer {
   id: ID!
 }
 

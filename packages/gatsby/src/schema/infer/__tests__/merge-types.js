@@ -588,7 +588,7 @@ describe(`merges explicit and inferred type definitions`, () => {
           links: {
             type: `[Test!]!`,
             extensions: {
-              link: true,
+              link: {},
             },
           },
         },

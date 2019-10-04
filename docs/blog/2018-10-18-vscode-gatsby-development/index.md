@@ -2,7 +2,7 @@
 title: "Using VS Code for Supercharged Gatsby.js Development"
 author: Michael Holtzman
 date: 2018-10-22
-tags: ["editor", "source", "documentation"]
+tags: ["code-editor", "source", "documentation-sites", "developer-experience"]
 ---
 
 VS Code is a truly great choice for your code editing needs. In this article, I'll show you some great tips and tricks, extensions, and more to maximize your productivity and get to what matters, building out great products. Some of these tips and tricks will make it even easier to contribute to the [Gatsby core repo](https://github.com/gatsbyjs/gatsby), and help ensure your pull requests are ✅ and accepted. That being said everything mentioned here can be applied to just about _any_ JavaScript project.

@@ -8,6 +8,7 @@ const createStore = (schema = {}) => {
     getState: () => {
       return {
         schema,
+        schemaCustomization: {},
       }
     },
   }

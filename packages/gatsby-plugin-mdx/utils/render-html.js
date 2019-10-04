@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const evaluate = require("eval");
-const debug = require("debug")("gatsby-mdx:render-html");
+const debug = require("debug")("gatsby-plugin-mdx:render-html");
 const PQueue = require("p-queue");
 
 //const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
@@ -138,7 +138,7 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) => {
               if (err) {
                 reporter.error(err.stack || err);
                 if (err.details) {
-                  reporter.error("gatsby-mdx\n" + err.details);
+                  reporter.error("gatsby-plugin-mdx\n" + err.details);
                 }
                 return;
               }
@@ -146,11 +146,11 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) => {
               const info = stats.toJson();
 
               if (stats.hasErrors()) {
-                reporter.error("gatsby-mdx\n" + info.errors);
+                reporter.error("gatsby-plugin-mdx\n" + info.errors);
               }
 
               if (stats.hasWarnings()) {
-                reporter.warn("gatsby-mdx\n" + info.warnings);
+                reporter.warn("gatsby-plugin-mdx\n" + info.warnings);
               }
 
               resolve(
@@ -159,7 +159,7 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) => {
                     renderMdxBody
                       ? renderMdxBody(body)
                       : reporter.error(
-                          `gatsby-mdx: renderMdxBody was unavailable when rendering html.
+                          `gatsby-plugin-mdx: renderMdxBody was unavailable when rendering html.
 >> This is a bug.`
                         )
                 )

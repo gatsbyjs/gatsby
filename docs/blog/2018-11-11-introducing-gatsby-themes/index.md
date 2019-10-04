@@ -3,7 +3,7 @@ title: Introducing Gatsby Themes
 date: 2018-11-11
 author: Chris Biscardi
 excerpt: "Scaling the production of Gatsby sites"
-tags: ["themes", "architecture"]
+tags: ["themes"]
 ---
 
 Gatsby is a powerful platform for building marketing sites, blogs,

@@ -6,7 +6,7 @@
  * Usage: gatsby-config.js
  *
  * ```
- * const mdxFeed = require("gatsby-mdx/feed");
+ * const mdxFeed = require("gatsby-plugin-mdx/feed");
  *
  * module.exports = {
  *   plugins: [

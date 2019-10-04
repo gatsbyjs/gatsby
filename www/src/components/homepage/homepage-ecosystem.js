@@ -15,8 +15,8 @@ import {
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
 
-import { EcosystemIcon } from "../../assets/mobile-nav-icons"
-import { PluginsIcon, StartersIcon } from "../../assets/ecosystem-icons"
+import { EcosystemIcon } from "../../assets/icons"
+import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
 
 import {
   colors,

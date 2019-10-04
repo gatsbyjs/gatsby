@@ -24,7 +24,7 @@ module.exports = (state = new Map(), action) => {
         const machine = componentMachine.withContext({
           componentPath: action.payload.componentPath,
           query: state.get(action.payload.componentPath)?.query || ``,
-          pages: [action.payload.path],
+          pages: new Set([action.payload.path]),
           isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
         service = interpret(machine).start()
@@ -38,8 +38,13 @@ module.exports = (state = new Map(), action) => {
         services.set(action.payload.componentPath, service)
       } else {
         service = services.get(action.payload.componentPath)
-        if (!service.state.context.pages.includes(action.payload.path)) {
+        if (!service.state.context.pages.has(action.payload.path)) {
           service.send({ type: `NEW_PAGE_CREATED`, path: action.payload.path })
+        } else if (action.contextModified) {
+          service.send({
+            type: `PAGE_CONTEXT_MODIFIED`,
+            path: action.payload.path,
+          })
         }
       }
 

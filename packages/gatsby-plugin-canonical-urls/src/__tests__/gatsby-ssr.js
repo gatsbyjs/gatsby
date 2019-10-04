@@ -39,7 +39,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
   })
 
-  it(`strips search paramaters if option stripQueryString is true`, async () => {
+  it(`strips search parameters if option stripQueryString is true`, async () => {
     const pluginOptions = {
       siteUrl: `http://someurl.com`,
       stripQueryString: true,

@@ -1,6 +1,7 @@
 ---
 title: Data in Gatsby
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
