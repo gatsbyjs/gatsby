@@ -7530,3 +7530,14 @@
   categories:
     - Education
     - Learning
+- title: blog.kwst.site
+  main_url: https://blog.kwst.site
+  url: https://blog.kwst.site
+  description: 大名ではたらくフロントエンジニアのブログ
+  source_url: https://github.com/SatoshiKawabata/blog
+  featured: false
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+    - JavaScript
