@@ -392,7 +392,7 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ### Near-perfect example of a plugin README
 
-[`gatsby-source-filesystem` README](/packages/gatsby-source-filesystem/README.md)
+[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 
 ```markdown
 ## Description
