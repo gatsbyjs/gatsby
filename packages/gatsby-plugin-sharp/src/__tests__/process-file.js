@@ -5,7 +5,13 @@ jest.mock(`../safe-sharp`, () => {
     concurrency: jest.fn(),
   }
 })
-const { createArgsDigest, processFile, sortKeys } = require(`../process-file`)
+const crypto = require(`crypto`)
+const {
+  createArgsDigest,
+  processFile,
+  sortKeys,
+  setCreateContentDigestFunction,
+} = require(`../process-file`)
 const got = require(`got`)
 
 describe(`createArgsDigest`, () => {
@@ -23,6 +29,15 @@ describe(`createArgsDigest`, () => {
     fit: `COVER`,
     background: `rgb(0,0,0,1)`,
   }
+
+  beforeAll(() => {
+    setCreateContentDigestFunction(options =>
+      crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(options))
+        .digest(`hex`)
+    )
+  })
 
   describe(`changes hash if used args are different`, () => {
     const testHashDifferent = (label, change, extraBaselineOptions = {}) => {

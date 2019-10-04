@@ -7,7 +7,6 @@ const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const { cpuCoreCount } = require(`gatsby-core-utils`)
 const got = require(`got`)
 
@@ -42,6 +41,11 @@ const argsWhitelist = [
   `fit`,
   `background`,
 ]
+
+let createContentDigest
+exports.setCreateContentDigestFunction = createContentDigestFunction => {
+  createContentDigest = createContentDigestFunction
+}
 
 /**
  * @typedef {Object} TransformArgs
@@ -261,10 +265,7 @@ exports.createArgsDigest = args => {
     return argsWhitelist.includes(key)
   })
 
-  const argsDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(sortKeys(filtered)))
-    .digest(`hex`)
+  const argsDigest = createContentDigest(sortKeys(filtered))
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
