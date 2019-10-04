@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const csv = require(`csvtojson`)
 const _ = require(`lodash`)
+const path = require(`path`)
 
 const convertToJson = (data, options) =>
   new Promise((res, rej) => {
@@ -16,7 +17,7 @@ const convertToJson = (data, options) =>
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  options
+  pluginOptions,
 ) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-csv content
@@ -25,30 +26,67 @@ async function onCreateNode(
   }
   // Load CSV contents
   const content = await loadNodeContent(node)
+
+  // Destructure out our custom options
+  const { typeName, nodePerFile, ...options } = pluginOptions
+
   // Parse
   let parsedContent = await convertToJson(content, options)
 
-  if (_.isArray(parsedContent)) {
-    const csvArray = parsedContent.map((obj, i) => {
-      return {
-        ...obj,
-        id: obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> CSV`),
-        children: [],
-        parent: node.id,
-        internal: {
-          contentDigest: createContentDigest(obj),
-          // TODO make choosing the "type" a lot smarter. This assumes
-          // the parent node is a file.
-          // PascalCase
-          type: _.upperFirst(_.camelCase(`${node.name} Csv`)),
-        },
-      }
-    })
+  // Generate the type
+  function getType({ node, object }) {
+    if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
+      return pluginOptions.typeName({ node, object })
+    } else if (
+      pluginOptions &&
+      _.isString(pluginOptions.typeName) &&
+      pluginOptions.typeName === `from-dir`
+    ) {
+      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Csv`))
+    } else if (
+      pluginOptions &&
+      _.isString(pluginOptions.typeName) &&
+      pluginOptions.typeName === `from-filename`
+    ) {
+      // be explicit
+      return _.upperFirst(_.camelCase(`${node.name} Csv`))
+    } else {
+      return _.upperFirst(_.camelCase(`${node.name} Csv`))
+    }
+  }
 
-    _.each(csvArray, y => {
-      createNode(y)
-      createParentChildLink({ parent: node, child: y })
-    })
+  // Generate the new node
+  function transformObject(obj, i) {
+    const csvNode = {
+      ...obj,
+      id: obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> CSV`),
+      children: [],
+      parent: node.id,
+      internal: {
+        contentDigest: createContentDigest(obj),
+        // TODO make choosing the "type" a lot smarter. This assumes
+        // the parent node is a file.
+        // PascalCase
+        type: getType({ node, object: parsedContent }),
+      },
+    }
+
+    createNode(csvNode)
+    createParentChildLink({ parent: node, child: csvNode })
+  }
+
+  if (_.isArray(parsedContent)) {
+    if (pluginOptions && pluginOptions.nodePerFile) {
+      if (pluginOptions && _.isString(pluginOptions.nodePerFile)) {
+        transformObject({ [pluginOptions.nodePerFile]: parsedContent }, 0)
+      } else {
+        transformObject({ items: parsedContent }, 0)
+      }
+    } else {
+      _.each(parsedContent, (obj, i) => {
+        transformObject(obj, i)
+      })
+    }
   }
 
   return

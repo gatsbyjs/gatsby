@@ -57,9 +57,9 @@ You can see an example project at https://github.com/gatsbyjs/gatsby/tree/master
 
 ## Parsing algorithm
 
-Each row is converted into a node with CSV headers as the keys.
+By default each row is converted into a node with CSV headers as the keys.
 
-So if your project has a `letters.csv` with
+If your project has a `letters.csv` with:
 
 ```
 letter,value
@@ -68,7 +68,7 @@ b,66
 c,67
 ```
 
-the following three nodes would be created.
+The following three nodes would be created:
 
 ```json
 [
@@ -78,9 +78,119 @@ the following three nodes would be created.
 ]
 ```
 
+Alternatively the `typeName` option can be used to modify this behaviour.
+
+Its arguments are either `from-filename` (the default), `from-dir` or a function that accepts an argument object of `{ node, object }` which should return the string type name.
+
+For example, if the csvs are in a group of folders, and you wish to create a group per folder with the suffix "Data".
+
+```javascript
+const _ = require(`lodash`)
+const path = require(`path`)
+
+{
+  resolve: `gatsby-transformer-csv`,
+  options: {
+    typeName: ({node, object}) => _.upperFirst(_.camelCase(`${path.basename(node.dir)} Data`)),
+  },
+},
+```
+
+Or if you simply wanted to have a group per folder with the suffix "Csv", the `from-dir` option would be appropriate.
+
+```javascript
+{
+  resolve: `gatsby-transformer-csv`,
+  options: {
+    typeName: `from-dir`,
+  },
+},
+```
+
+## Alternate content behaviour
+
+The `nodePerFile` option can either be `false`, which creates a node per line like above, `true`, which creates a node per file, with the key `items` containing the content, or a string which is the key containing the content.
+
+For example, if there are a series of csv files called `vegetables.csv`, `grains.csv`, the following config would produce the following result.
+
+The config:
+
+```javascript
+{
+  resolve: `gatsby-transformer-csv`,
+  options: {
+    typeName: () => `Foodstuffs`,
+    nodePerFile: `ingredients`,
+  },
+},
+```
+
+A query:
+
+```graphql
+{
+  allFoodstuffs {
+    nodes {
+      ingredients {
+        ingredient
+        amount
+      }
+      parent {
+        ... on File {
+          name
+        }
+      }
+    }
+  }
+}
+```
+
+The result:
+
+```json
+{
+  "data": {
+    "allFoodstuffs": {
+      "nodes": [
+        {
+          "parent": {
+            "name": "vegetables"
+          },
+          "ingredients": [
+            {
+              "ingredient": "potato",
+              "amount": 32
+            },
+            {
+              "ingredient": "lettuce",
+              "amount": 12
+            }
+          ]
+        },
+        {
+          "parent": {
+            "name": "grains"
+          },
+          "ingredients": [
+            {
+              "ingredient": "barley",
+              "amount": 2
+            },
+            {
+              "ingredient": "wheat",
+              "amount": 42
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
 ## How to query
 
-You'd be able to query your letters like:
+In the default configuration, items can be queried like this:
 
 ```graphql
 {
@@ -97,28 +207,28 @@ You'd be able to query your letters like:
 
 Which would return:
 
-```javascript
+```json
 {
-  allLettersCsv: {
-    edges: [
+  "allLettersCsv": {
+    "edges": [
       {
-        node: {
-          letter: "a",
-          value: 65,
-        },
+        "node": {
+          "letter": "a",
+          "value": 65
+        }
       },
       {
-        node: {
-          letter: "b",
-          value: 66,
-        },
+        "node": {
+          "letter": "b",
+          "value": 66
+        }
       },
       {
-        node: {
-          letter: "c",
-          value: 67,
-        },
-      },
+        "node": {
+          "letter": "c",
+          "value": 67
+        }
+      }
     ]
   }
 }
