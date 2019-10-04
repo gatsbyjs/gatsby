@@ -37,18 +37,21 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       >
         <h1>
           No {`${emptyStateReason}`} starters found!
-          <div sx={{ color: `gatsby` }}>
-            <small>
-              Why not write one and
-              {` `}
-              <Link to="/contributing/submit-to-starter-library/">
-                submit it
-              </Link>
-              ? Or learn more
-              {` `}
-              <Link to="/docs/starters">about starters</Link>.
-            </small>
-          </div>
+          <small
+            sx={{
+              color: `textMuted`,
+              display: `block`,
+              fontWeight: `body`,
+              mt: 2,
+            }}
+          >
+            Why not write one and
+            {` `}
+            <Link to="/contributing/submit-to-starter-library/">submit it</Link>
+            ? Or learn more
+            {` `}
+            <Link to="/docs/starters">about starters</Link>.
+          </small>
         </h1>
       </div>
     )

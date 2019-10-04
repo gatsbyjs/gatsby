@@ -211,7 +211,6 @@ export default class FilteredStarterLibrary extends Component {
                   sx={{
                     ...themedInput,
                     pl: 7,
-                    width: `10rem`,
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}
