@@ -13,7 +13,7 @@ const writeToCache = contents => {
         contents[key] = obj;
         }
     });
-    return fs.writeFileSync(file, JSON.stringify(contents.pages), "utf-8");
+    return fs.writeFileSync(file, JSON.stringify({pages: contents.pages, webpackCompilationHashOld: contents.webpackCompilationHash}), "utf-8");
 }
   
 module.exports = { readFromCache, writeToCache }

@@ -195,7 +195,10 @@ module.exports = async (args: BootstrapArgs) => {
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
-
+  
+  /*
+   * Copy cache state for comparing data
+   */
   if(fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
     console.log("Copied redux-state for comparing later");
     await fs.copy(`${cacheDirectory}/redux-state.json`, `${program.directory}/temp/redux-state-old.json`, {

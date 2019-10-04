@@ -40,56 +40,53 @@ const updateCompilationHashes = (
   )
 }
 
-  // Compare page data sets.
-  // TODO: logic to remove old pages.
-const getNewPageKeys = (directory, store) => {
-  return new Promise(resolve => {
-
-    // check if old data set is available else return all page keys
-    if(!(fs.existsSync(`${directory}/temp/redux-state-old.json`))) {
-      console.log("Return all pages")
-      resolve([...store.getState().pages.keys()]);
-      return;
-    }
-
-    const newPageKeys = [];
-    const newPageData = Object.assign({}, store.getState());
-    const previousPageData = require(`${directory}/temp/redux-state-old.json`);
-
-    // change pages map into object
-    Object.keys(newPageData).forEach(key => {
-      if (newPageData[key] instanceof Map) {
-        const obj = {};
-        newPageData[key].forEach ((v,k) => { obj[k] = v });
-        newPageData[key] = obj;
+// Compare page data sets.
+// TODO: logic to remove old pages.
+const getNewPageKeys = (directory, store, isNewBuild) => { 
+    return new Promise(resolve => {
+      
+      if(isNewBuild || !(fs.existsSync(`${directory}/temp/redux-state-old.json`))) {
+        console.log("return default pages")
+        resolve([...store.getState().pages.keys()]);
+        return;
       }
-    });
-
-    console.log("Start comparing page data")
-    _.forEach(newPageData.pages, (value, key) => {
-      if(!(key in previousPageData)) {
-        newPageKeys.push(key);
-      } else {
-        const newPageContext = value.context.page;
-        const previousPageContext = previousPageData[key].context.page;
-
-        if ( !_.isEqual(newPageContext, previousPageContext) ) {
-          newPageKeys.push(key);
+      
+      const newPageKeys = [];
+      const newPageData = Object.assign({}, store.getState());
+      const previousPageData = require(`${directory}/temp/redux-state-old.json`);
+  
+      Object.keys(newPageData).forEach(key => {
+        if (newPageData[key] instanceof Map) {
+          const obj = {};
+          newPageData[key].forEach ((v,k) => { obj[k] = v });
+          newPageData[key] = obj;
         }
+      });
+    
+      console.log("Start looping over Redux state")
+      _.forEach(newPageData.pages, (value, key) => {
+        if(!(key in previousPageData.pages)) {
+          newPageKeys.push(key);
+        } else {
+          const newPageContext = value.context.page;
+          const previousPageContext = previousPageData.pages[key].context.page;
+          
+          if ( !_.isEqual(newPageContext, previousPageContext) ) {
+            newPageKeys.push(key);
+          }
+        }
+      });
+  
+      if (_.size(newPageKeys)) {
+        fs.writeFileSync(`${directory}/temp/newPageKeys.json`, JSON.stringify({ newPageKeys }), "utf-8");
+        console.log("file of newPageKeys created");
       }
+  
+      console.log("Finished");
+      console.log(newPageKeys)
+      resolve(newPageKeys);
     });
-
-    // This was used for debugging
-    // if (_.size(newPageKeys)) {
-    //   fs.writeFileSync(`${directory}/temp/newPageKeys.json`, JSON.stringify({ newPageKeys }), "utf-8");
-    //   console.log("file of newPageKeys created");
-    // }
-
-    console.log("Finished");
-    console.log(newPageKeys)
-    resolve(newPageKeys);
-  });
-}
+  }
 
 
 module.exports = {

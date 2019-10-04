@@ -202,7 +202,7 @@ const createPageQueryJob = (state, page) => {
   }
 }
 
-const processPageQueries = async (queryIds, program, { state, activity }) => {
+const processPageQueries = async (queryIds, program, isNewBuild, { state, activity }) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
   // /dev-404-page/, whose SitePage node is created via
@@ -210,7 +210,7 @@ const processPageQueries = async (queryIds, program, { state, activity }) => {
   // created during `gatsby develop`.
 
   // Return new page keys
-  const newPageKeys = await pageDataUtil.getNewPageKeys(program.directory, store);
+  const newPageKeys = await pageDataUtil.getNewPageKeys(program.directory, store, isNewBuild);
   
   // if page keys then change queryIds value
   if(newPageKeys.length) {
