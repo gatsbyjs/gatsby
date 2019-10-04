@@ -49,7 +49,7 @@ Technology is incredibly fun when we, like the wizard of fantasy, can type an in
 
 When this incantation is simple and takes seconds, we can easily get lost for hours in the rush of creation trying one thing after another improvising our way to an eventual design.
 
-Developers, designers, demand-gen marketers, copywriters -- every stakeholder in a website project _can_ feel this this -- with proper tooling.
+Developers, designers, demand-gen marketers, copywriters -- every stakeholder in a website project _can_ feel this -- with proper tooling.
 
 As Bret Victor suggested in _Inventing on Principle_, each creator needs "an immediate connection to what they're making.”
 

@@ -150,6 +150,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
 
   try {
     typeDefs.forEach(tc => printedTypeDefs.push(printType(tc)))
+    report.info(`Writing GraphQL type definitions to ${path}`)
     return fs.writeFile(path, printedTypeDefs.join(`\n\n`))
   } catch (error) {
     report.error(`Failed writing type definitions to \`${path}\`.`, error)

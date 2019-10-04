@@ -1,7 +1,13 @@
 const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
-const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
+const {
+  GraphQLList,
+  getNullableType,
+  getNamedType,
+  Kind,
+  GraphQLInterfaceType,
+} = require(`graphql`)
 const { getValueAt } = require(`../utils/get-value-at`)
 
 const findMany = typeName => (source, args, context, info) =>
@@ -39,7 +45,8 @@ const distinct = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const values = edges.reduce((acc, { node }) => {
-    const value = getValueAt(node, field)
+    const value =
+      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
     return value != null
       ? acc.concat(value instanceof Date ? value.toISOString() : value)
       : acc
@@ -51,7 +58,8 @@ const group = (source, args, context, info) => {
   const { field } = args
   const { edges } = source
   const groupedResults = edges.reduce((acc, { node }) => {
-    const value = getValueAt(node, field)
+    const value =
+      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
     const values = Array.isArray(value) ? value : [value]
     values
       .filter(value => value != null)
@@ -111,29 +119,25 @@ const paginate = (results = [], { skip = 0, limit }) => {
   }
 }
 
-const link = ({ by = `id`, from }, originalResolver) => async (
+const link = (options = {}, fieldConfig) => async (
   source,
   args,
   context,
   info
 ) => {
-  const fieldValue = await originalResolver(source, args, context, {
+  const resolver = fieldConfig.resolve || context.defaultFieldResolver
+  const fieldValue = await resolver(source, args, context, {
     ...info,
-    fieldName: from || info.fieldName,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
-  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
-  if (
-    Array.isArray(fieldValue) &&
-    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
-  ) {
-    return fieldValue
-  }
+  if (fieldValue == null) return null
 
-  const returnType = getNullableType(info.returnType)
+  const returnType = getNullableType(options.type || info.returnType)
   const type = getNamedType(returnType)
 
-  if (by === `id`) {
+  if (options.by === `id` && !(type instanceof GraphQLInterfaceType)) {
     if (Array.isArray(fieldValue)) {
       return context.nodeModel.getNodesByIds(
         { ids: fieldValue, type: type },
@@ -154,7 +158,7 @@ const link = ({ by = `id`, from }, originalResolver) => async (
     return { in: value }
   }
   const operator = Array.isArray(fieldValue) ? oneOf : equals
-  args.filter = by.split(`.`).reduceRight((acc, key, i, { length }) => {
+  args.filter = options.by.split(`.`).reduceRight((acc, key, i, { length }) => {
     return {
       [key]: i === length - 1 ? operator(acc) : acc,
     }
@@ -170,31 +174,27 @@ const link = ({ by = `id`, from }, originalResolver) => async (
     Array.isArray(result)
   ) {
     return fieldValue.map(value =>
-      result.find(obj => getValueAt(obj, by) === value)
+      result.find(obj => getValueAt(obj, options.by) === value)
     )
   } else {
     return result
   }
 }
 
-const fileByPath = ({ from }, originalResolver) => async (
+const fileByPath = (options = {}, fieldConfig) => async (
   source,
   args,
   context,
   info
 ) => {
-  const fieldValue = await originalResolver(source, args, context, {
+  const resolver = fieldConfig.resolve || context.defaultFieldResolver
+  const fieldValue = await resolver(source, args, context, {
     ...info,
-    fieldName: from || info.fieldName,
+    from: options.from || info.from,
+    fromNode: options.from ? options.fromNode : info.fromNode,
   })
 
-  if (fieldValue == null || _.isPlainObject(fieldValue)) return fieldValue
-  if (
-    Array.isArray(fieldValue) &&
-    (fieldValue[0] == null || _.isPlainObject(fieldValue[0]))
-  ) {
-    return fieldValue
-  }
+  if (fieldValue == null) return null
 
   const findLinkedFileNode = relativePath => {
     // Use the parent File node to create the absolute path to
@@ -282,7 +282,23 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
     return acc
   }, [])
 
+const defaultFieldResolver = (source, args, context, info) => {
+  if (!source || typeof source !== `object`) return null
+
+  if (info.from) {
+    if (info.fromNode) {
+      const node = context.nodeModel.findRootNodeAncestor(source)
+      if (!node) return null
+      return getValueAt(node, info.from)
+    }
+    return getValueAt(source, info.from)
+  }
+
+  return source[info.fieldName]
+}
+
 module.exports = {
+  defaultFieldResolver,
   findManyPaginated,
   findOne,
   fileByPath,

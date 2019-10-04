@@ -8,7 +8,7 @@ You add plugins to read and understand folders with Markdown files and from them
 Here are the steps Gatsby follows for making this happen.
 
 1.  Read files into Gatsby from the filesystem
-2.  Transform Markdown to HTML and [frontmatter](#including-frontmatter) to data
+2.  Transform Markdown to HTML and [frontmatter](#frontmatter-for-metadata-in-markdown-files) to data
 3.  Add a Markdown file
 4.  Create a page component for the Markdown files
 5.  Create static pages using Gatsby's Node.js `createPage` API

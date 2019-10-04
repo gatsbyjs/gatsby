@@ -1,10 +1,12 @@
-const fs = require(`fs`)
-const workboxBuild = require(`workbox-build`)
+// use `let` to workaround https://github.com/jhnns/rewire/issues/144
+let fs = require(`fs`)
+let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const slash = require(`slash`)
+const glob = require(`glob`)
 const _ = require(`lodash`)
 
-const getResourcesFromHTML = require(`./get-resources-from-html`)
+let getResourcesFromHTML = require(`./get-resources-from-html`)
 
 exports.createPages = ({ actions }) => {
   if (process.env.NODE_ENV === `production`) {
@@ -28,15 +30,44 @@ const readStats = () => {
   }
 }
 
-const getAssetsForChunks = chunks => {
+function getAssetsForChunks(chunks) {
   const files = _.flatten(
     chunks.map(chunk => readStats().assetsByChunkName[chunk])
   )
   return _.compact(files)
 }
 
-exports.onPostBuild = (args, pluginOptions) => {
-  const { pathPrefix } = args
+function getPrecachePages(globs, base) {
+  const precachePages = []
+
+  globs.forEach(page => {
+    const matches = glob.sync(base + page)
+    matches.forEach(path => {
+      const isDirectory = fs.lstatSync(path).isDirectory()
+      let precachePath
+
+      if (isDirectory && fs.existsSync(`${path}/index.html`)) {
+        precachePath = `${path}/index.html`
+      } else if (path.endsWith(`.html`)) {
+        precachePath = path
+      } else {
+        return
+      }
+
+      if (precachePages.indexOf(precachePath) === -1) {
+        precachePages.push(precachePath)
+      }
+    })
+  })
+
+  return precachePages
+}
+
+exports.onPostBuild = (
+  args,
+  { precachePages: precachePagesGlobs = [], appendScript = null, workboxConfig }
+) => {
+  const { pathPrefix, reporter } = args
   const rootDir = `public`
 
   // Get exact asset filenames for app and offline app shell chunks
@@ -47,16 +78,25 @@ exports.onPostBuild = (args, pluginOptions) => {
   ])
   const appFile = files.find(file => file.startsWith(`app-`))
 
-  // Remove the custom prefix (if any) so Workbox can find the files.
-  // This is added back at runtime (see modifyUrlPrefix) in order to serve
-  // from the correct location.
-  const omitPrefix = path => path.slice(pathPrefix.length)
+  function flat(arr) {
+    return Array.prototype.flat ? arr.flat() : [].concat(...arr)
+  }
 
-  const criticalFilePaths = getResourcesFromHTML(
-    `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
-  ).map(omitPrefix)
+  const offlineShellPath = `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
+  const precachePages = [
+    offlineShellPath,
+    ...getPrecachePages(
+      precachePagesGlobs,
+      `${process.cwd()}/${rootDir}`
+    ).filter(page => page !== offlineShellPath),
+  ]
+
+  const criticalFilePaths = _.uniq(
+    flat(precachePages.map(page => getResourcesFromHTML(page, pathPrefix)))
+  )
 
   const globPatterns = files.concat([
+    // criticalFilePaths doesn't include HTML pages (we only need this one)
     `offline-plugin-app-shell-fallback/index.html`,
     ...criticalFilePaths,
   ])
@@ -70,7 +110,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     importWorkboxFrom: `local`,
     globDirectory: rootDir,
     globPatterns,
-    modifyUrlPrefix: {
+    modifyURLPrefix: {
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
       "/": `${pathPrefix}/`,
@@ -78,39 +118,38 @@ exports.onPostBuild = (args, pluginOptions) => {
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory,
     // since these files have unique URLs and their contents will never change
-    dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
+    dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
     runtimeCaching: [
       {
         // Use cacheFirst since these don't need to be revalidated (same RegExp
         // and same reason as above)
         urlPattern: /(\.js$|\.css$|static\/)/,
-        handler: `cacheFirst`,
+        handler: `CacheFirst`,
       },
       {
         // page-data.json files are not content hashed
         urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        handler: `networkFirst`,
+        handler: `NetworkFirst`,
       },
       {
         // Add runtime caching of various other page resources
         urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-        handler: `staleWhileRevalidate`,
+        handler: `StaleWhileRevalidate`,
       },
       {
         // Google Fonts CSS (doesn't end in .css so we need to specify it)
         urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-        handler: `staleWhileRevalidate`,
+        handler: `StaleWhileRevalidate`,
       },
     ],
     skipWaiting: true,
     clientsClaim: true,
   }
 
-  // pluginOptions.plugins is assigned automatically when the user hasn't
-  // specified custom options - Workbox throws an error with unsupported
-  // parameters, so delete it.
-  delete pluginOptions.plugins
-  const combinedOptions = _.defaults(pluginOptions, options)
+  const combinedOptions = {
+    ...options,
+    ...workboxConfig,
+  }
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
@@ -129,8 +168,23 @@ exports.onPostBuild = (args, pluginOptions) => {
         .replace(/%appFile%/g, appFile)
 
       fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
-      console.log(
-        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.`
+
+      if (appendScript !== null) {
+        let userAppend
+        try {
+          userAppend = fs.readFileSync(appendScript, `utf8`)
+        } catch (e) {
+          throw new Error(`Couldn't find the specified offline inject script`)
+        }
+        fs.appendFileSync(`public/sw.js`, `\n` + userAppend)
+      }
+
+      reporter.info(
+        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.\n` +
+          `The following pages will be precached:\n` +
+          precachePages
+            .map(path => path.replace(`${process.cwd()}/public`, ``))
+            .join(`\n`)
       )
     })
 }

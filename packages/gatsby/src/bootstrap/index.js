@@ -19,7 +19,6 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
-const nodeTracking = require(`../db/node-tracking`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -88,7 +87,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    // TODO: deprecation message for old __experimentalThemes
+    report.warn(
+      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
+    )
     const themes = await loadThemes(config, { useLegacyThemes: true })
     config = themes.config
 
@@ -114,7 +115,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  activity = report.activityTimer(`load plugins`)
+  activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
@@ -142,16 +143,17 @@ module.exports = async (args: BootstrapArgs) => {
     )
     activity.start()
     await del([
-      `public/*.{html,css}`,
       `public/**/*.{html,css}`,
-      `!public/page-data/404.html`,
+      `!public/page-data/**/*`,
       `!public/static`,
       `!public/static/**/*.{html,css}`,
     ])
     activity.end()
   }
 
-  activity = report.activityTimer(`initialize cache`)
+  activity = report.activityTimer(`initialize cache`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
   // Check if any plugins have been updated since our last run. If so
   // we delete the cache is there's likely been changes
@@ -243,11 +245,6 @@ module.exports = async (args: BootstrapArgs) => {
     activity.end()
   }
 
-  // By now, our nodes database has been loaded, so ensure that we
-  // have tracked all inline objects
-  nodeTracking.trackDbNodes()
-
-  // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
   })
@@ -281,7 +278,7 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include gatsby-browser.js files if they exists as they're
+    // Always include gatsby-browser.js files if they exist as they're
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
@@ -363,9 +360,13 @@ module.exports = async (args: BootstrapArgs) => {
    */
 
   // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`)
+  activity = report.activityTimer(`onPreBootstrap`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
-  await apiRunnerNode(`onPreBootstrap`)
+  await apiRunnerNode(`onPreBootstrap`, {
+    parentSpan: activity.span,
+  })
   activity.end()
 
   // Source nodes
@@ -449,7 +450,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await extractQueries()
+  await extractQueries({ parentSpan: activity.span })
   activity.end()
 
   // Write out files.

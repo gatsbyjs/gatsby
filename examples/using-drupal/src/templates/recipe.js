@@ -18,9 +18,9 @@ const RecipeTemplate = ({ data }) => (
       }}
     >
       <Container>
-        <h1>{data.recipes.title}</h1>
+        <h1>{data.recipe.title}</h1>
         <p>
-          <strong>Category:</strong> {data.recipes.relationships.category.name}
+          <strong>Category:</strong> {data.recipe.relationships.category.name}
         </p>
         <div
           css={{
@@ -32,8 +32,7 @@ const RecipeTemplate = ({ data }) => (
           <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(2)})` }}>
             <Img
               fluid={
-                data.recipes.relationships.image.relationships.imageFile
-                  .localFile.childImageSharp.fluid
+                data.recipe.relationships.image.localFile.childImageSharp.fluid
               }
             />
           </div>
@@ -41,15 +40,15 @@ const RecipeTemplate = ({ data }) => (
             <div>
               <strong>Preparation time:</strong>
             </div>
-            <div>{data.recipes.preparationTime} minutes</div>
+            <div>{data.recipe.preparationTime} minutes</div>
             <div>
               <strong>Cooking time:</strong>
             </div>
-            <div>{data.recipes.totalTime} minutes</div>
+            <div>{data.recipe.totalTime} minutes</div>
             <div>
               <strong>Difficulty:</strong>
             </div>
-            <div>{data.recipes.difficulty}</div>
+            <div>{data.recipe.difficulty}</div>
           </div>
         </div>
         <div css={{ background: `white`, padding: rhythm(1.5) }}>
@@ -58,8 +57,8 @@ const RecipeTemplate = ({ data }) => (
             <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(1.5)})` }}>
               <h3>Ingredients</h3>
               <ul>
-                {data.recipes.ingredients &&
-                  data.recipes.ingredients.map((ing, index) => (
+                {data.recipe.ingredients &&
+                  data.recipe.ingredients.map((ing, index) => (
                     <li key={index}>{ing}</li>
                   ))}
               </ul>
@@ -67,8 +66,8 @@ const RecipeTemplate = ({ data }) => (
             <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(1.5)})` }}>
               <h3>Method</h3>
               <ul>
-                {data.recipes.instructions &&
-                  data.recipes.instructions
+                {data.recipe.instructions.text &&
+                  data.recipe.instructions.text
                     .split(`,`)
                     .map(i => <li key={i}>{i}</li>)}
               </ul>
@@ -84,26 +83,24 @@ export default RecipeTemplate
 
 export const query = graphql`
   query($slug: String!) {
-    recipes(fields: { slug: { eq: $slug } }) {
+    recipe: nodeRecipe(fields: { slug: { eq: $slug } }) {
       title
-      preparationTime
-      difficulty
-      totalTime
-      ingredients
-      instructions
+      preparationTime: field_preparation_time
+      difficulty: field_difficulty
+      totalTime: field_cooking_time
+      ingredients: field_ingredients
+      instructions: field_recipe_instruction {
+        text: processed
+      }
       relationships {
-        category {
+        category: field_recipe_category {
           name
         }
-        image {
-          relationships {
-            imageFile {
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 470, maxHeight: 353) {
-                    ...GatsbyImageSharpFluid
-                  }
-                }
+        image: field_image {
+          localFile {
+            childImageSharp {
+              fluid(maxWidth: 470, maxHeight: 353) {
+                ...GatsbyImageSharpFluid
               }
             }
           }

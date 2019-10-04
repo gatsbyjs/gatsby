@@ -76,6 +76,8 @@ See
   inferred. Parent/child links from nodes and their transformed derivative nodes
   are first class links.
 
+_More definitions and terms are defined in the [Glossary](/docs/glossary/)_
+
 ## Operators
 
 - _Create_ — make a new thing

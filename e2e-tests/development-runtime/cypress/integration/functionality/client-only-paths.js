@@ -37,6 +37,7 @@ describe(`Client only paths`, () => {
       it(label, () => {
         cy.visit(path).waitForRouteChange()
         cy.getTestElement(`dom-marker`).contains(marker)
+        cy.url().should(`eq`, Cypress.config().baseUrl + path)
       })
     })
   })
@@ -49,6 +50,7 @@ describe(`Client only paths`, () => {
       it(label, () => {
         cy.navigateAndWaitForRouteChange(path)
         cy.getTestElement(`dom-marker`).contains(marker)
+        cy.url().should(`eq`, Cypress.config().baseUrl + path)
       })
     })
   })
