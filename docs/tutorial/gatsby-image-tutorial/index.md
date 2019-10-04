@@ -291,7 +291,7 @@ The top-level object name of `data` is implicit. This is important because when 
 Here's an example of data flowing into a component:
 
 ```jsx
-const SpeakingPage = ({ data }) => {})
+const SpeakingPage = ({ data }) => {}
 ```
 
 Everything else gets referenced from that top-level return name.
