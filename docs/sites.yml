@@ -96,6 +96,17 @@
   categories:
     - Featured
   featured: true
+- title: Theodora Warre
+  main_url: "https://theodorawarre.eu"
+  url: "https://theodorawarre.eu"
+  description: >-
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
+  categories:
+    - eCommerce
+    - Marketing
+  built_by: Pierre Nel
+  built_by_url: "https://pierre.io"
+  featured: false
 - title: Life Without Barriers | Foster Care
   main_url: "https://www.lwb.org.au/foster-care"
   url: "https://www.lwb.org.au/foster-care"
@@ -7392,6 +7403,19 @@
   built_by: Mutual
   built_by_url: https://twitter.com/madebymutual
   featured: false
+- title: Surge 3
+  main_url: https://surge3.com
+  url: https://surge3.com/
+  description: >
+    We’re Surge 3 - a premier web development agency. Our company centers around the principles of quality, speed, and service! We are founded using the latest in web technologies and are dedicated to using those exact tools to help our customers achieve their goals.
+  categories:
+    - Portfolio
+    - Blog
+    - Agency
+    - Web Development
+    - Marketing
+  built_by: Dillon Browne
+  built_by_url: https://dillonbrowne.com
 - title: Adaltas
   main_url: https://www.adaltas.com
   url: https://www.adaltas.com
@@ -7440,4 +7464,22 @@
     - Technology
   built_by: Vandre Leal
   built_by_url: https://vandreleal.github.io
+  featured: false
+- title: tiaan.dev
+  main_url: https://tiaan.dev
+  url: https://tiaan.dev
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+- title: Praveen Bisht
+  main_url: https://www.prvnbist.com/
+  url: https://www.prvnbist.com/
+  source_url: https://github.com/prvnbist/portfolio
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Praveen Bisht
+  built_by_url: https://www.prvnbist.com/
   featured: false

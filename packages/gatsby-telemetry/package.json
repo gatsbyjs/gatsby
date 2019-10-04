@@ -1,7 +1,7 @@
 {
   "name": "gatsby-telemetry",
   "description": "Gatsby Telemetry",
-  "version": "1.1.28",
+  "version": "1.1.29",
   "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
     "@babel/runtime": "^7.6.2",
-    "bluebird": "^3.5.5",
+    "bluebird": "^3.7.0",
     "boxen": "^3.2.0",
     "ci-info": "2.0.0",
     "configstore": "^5.0.0",

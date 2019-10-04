@@ -399,6 +399,8 @@
                   link: /docs/reach-router-and-gatsby/
                 - title: Linking and Prefetching with Gatsby*
                   link: /docs/linking-and-prefetching-with-gatsby/
+                - title: Location Data from Props
+                  link: /docs/location-data-from-props/
                 - title: Centralizing Your Site's Navigation
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
@@ -465,6 +467,17 @@
           link: /docs/browser-apis/
         - title: Gatsby SSR APIs
           link: /docs/ssr-apis/
+        - title: API Files
+          link: /docs/api-files/
+          items:
+            - title: gatsby-config.js
+              link: /docs/api-files-gatsby-config/
+            - title: gatsby-browser.js
+              link: /docs/api-files-gatsby-browser/
+            - title: gatsby-node.js
+              link: /docs/api-files-gatsby-node/
+            - title: gatsby-ssr.js
+              link: /docs/api-files-gatsby-ssr/
         - title: Actions
           link: /docs/actions/
         - title: GraphQL API
@@ -502,7 +515,7 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
-        - title: Life and Times of a Gatsby Build*
+        - title: Life and Times of a Gatsby Build
           link: /docs/life-and-times-of-a-gatsby-build/
         - title: Building with Components
           link: /docs/building-with-components/

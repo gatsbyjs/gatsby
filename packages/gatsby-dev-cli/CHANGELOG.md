@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.30...gatsby-dev-cli@2.5.31) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency chokidar to v3.2.1 ([#18009](https://github.com/gatsbyjs/gatsby/issues/18009)) ([4df0306](https://github.com/gatsbyjs/gatsby/commit/4df0306))
+- update dependency execa to ^2.0.5 ([#18106](https://github.com/gatsbyjs/gatsby/issues/18106)) ([db8d4a8](https://github.com/gatsbyjs/gatsby/commit/db8d4a8))
+- update dependency verdaccio to ^4.3.1 ([#18032](https://github.com/gatsbyjs/gatsby/issues/18032)) ([5cb1c4e](https://github.com/gatsbyjs/gatsby/commit/5cb1c4e))
+- update dependency verdaccio to ^4.3.3 ([#18064](https://github.com/gatsbyjs/gatsby/issues/18064)) ([cea1fb8](https://github.com/gatsbyjs/gatsby/commit/cea1fb8))
+
 ## [2.5.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.28...gatsby-dev-cli@2.5.30) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-dev-cli

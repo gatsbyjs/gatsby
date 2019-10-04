@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-lever",
   "description": "Gatsby source plugin for building websites using the Lever.co Recruitment Software as a data source.",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.2",
     "axios": "^0.19.0",
-    "bluebird": "^3.5.5",
+    "bluebird": "^3.7.0",
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
     "json-stringify-safe": "^5.0.1",
