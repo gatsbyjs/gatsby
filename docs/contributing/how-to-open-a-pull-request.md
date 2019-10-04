@@ -110,7 +110,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
   ```
 - [In the branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) you want to update, merge any changes from Gatsby into your fork:
   ```shell
-  git merge upstream master
+  git merge upstream/master
   ```
   - If there are any [merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github), you'll want to address those to get a clean merge.
 - Once your branch is in good working order, push the changes to your fork:
