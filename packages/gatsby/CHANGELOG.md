@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.28...gatsby@2.15.29) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+- update dependency chokidar to v3.2.1 ([#18009](https://github.com/gatsbyjs/gatsby/issues/18009)) ([4df0306](https://github.com/gatsbyjs/gatsby/commit/4df0306))
+- update dependency eslint-plugin-react to ^7.15.0 ([#18010](https://github.com/gatsbyjs/gatsby/issues/18010)) ([6a5cd19](https://github.com/gatsbyjs/gatsby/commit/6a5cd19))
+- update dependency eslint-plugin-react to ^7.15.1 ([#18031](https://github.com/gatsbyjs/gatsby/issues/18031)) ([8d5597f](https://github.com/gatsbyjs/gatsby/commit/8d5597f))
+- update dependency webpack-dev-server to ^3.8.2 ([#18055](https://github.com/gatsbyjs/gatsby/issues/18055)) ([aa540c3](https://github.com/gatsbyjs/gatsby/commit/aa540c3))
+- **gatsby:** Fix not materializing concrete fields ([#17942](https://github.com/gatsbyjs/gatsby/issues/17942)) ([8439305](https://github.com/gatsbyjs/gatsby/commit/8439305))
+
 ## [2.15.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.26...gatsby@2.15.28) (2019-09-26)
 
 ### Bug Fixes
