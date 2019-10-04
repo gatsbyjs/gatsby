@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.18...gatsby-plugin-manifest@2.2.20) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+### Features
+
+- **gatsby-plugin-manifest:** Update manifest on navigation ([#17426](https://github.com/gatsbyjs/gatsby/issues/17426)) ([f88a9e2](https://github.com/gatsbyjs/gatsby/commit/f88a9e2)), closes [#13471](https://github.com/gatsbyjs/gatsby/issues/13471)
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.18...gatsby-plugin-manifest@2.2.19) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+### Features
+
+- **gatsby-plugin-manifest:** Update manifest on navigation ([#17426](https://github.com/gatsbyjs/gatsby/issues/17426)) ([f88a9e2](https://github.com/gatsbyjs/gatsby/commit/f88a9e2)), closes [#13471](https://github.com/gatsbyjs/gatsby/issues/13471)
+
 ## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.17...gatsby-plugin-manifest@2.2.18) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-plugin-manifest
@@ -213,7 +233,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defiened ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
+- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defined ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
 
 <a name="2.0.9"></a>
 

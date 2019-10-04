@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby",
-  "version": "0.2.14",
+  "version": "0.2.17",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -11,11 +11,11 @@
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.6.0",
-    "@babel/plugin-transform-spread": "^7.2.2",
-    "@babel/preset-env": "^7.6.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/plugin-transform-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-macros": "^2.6.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
@@ -26,14 +26,15 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.js",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.js"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "babel-preset-gatsby-package": "^0.2.5",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.6.2",
+    "babel-preset-gatsby-package": "^0.2.7",
+    "cross-env": "^5.2.1",
+    "slash": "^3.0.0"
   },
   "engines": {
     "node": ">=8.0.0"

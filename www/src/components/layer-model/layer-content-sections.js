@@ -197,7 +197,7 @@ const ContentLayerContent = ({ sourceIndex, setSourceIndex, index }) => (
         management systems, files, or external APIs.
       </p>
       <p>
-        Any source of data can be connected Gatsby through plugins or using
+        Any source of data can be connected to Gatsby through plugins or using
         Gatsby's APIs.
       </p>
     </div>
@@ -281,7 +281,7 @@ const ViewLayerContent = ({ index }) => (
     <div>
       <p>
         React powers components in Gatsby sites that are{` `}
-        <Link to="/docs/glossary#rehydrate"> rehydrated</Link>, whatever you can
+        <Link to="/docs/glossary#hydration"> rehydrated</Link>, whatever you can
         do in React you can do with Gatsby.
       </p>
       <p>
