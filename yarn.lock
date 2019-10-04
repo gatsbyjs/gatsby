@@ -9557,10 +9557,10 @@ graphiql-code-exporter@^2.0.5:
   dependencies:
     copy-to-clipboard "^3.0.8"
 
-graphiql-explorer@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/graphiql-explorer/-/graphiql-explorer-0.4.4.tgz#01a7005c27a4148a4555bb746f5af84eb588824c"
-  integrity sha512-NuQ1XAjZwykKb9GoHM6ofI9qITZ8Lue/mXi1Bj3/ZbGZv1Srk3sz0QkKQ5jBaxmuS3Ay09LRvJQSOr0Ci1dlfg==
+graphiql-explorer@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/graphiql-explorer/-/graphiql-explorer-0.4.5.tgz#b8305d383fbf2fada357036e088873aab95433f3"
+  integrity sha512-b8ubovt6MFPI9Oswxy4EXAd20Vm+QqrTpD6PRWcbx/cXBdD6BUPFIU8cPDRbzd4W4Emir20iIm/PRUNA/qjbdA==
 
 graphiql@^0.15.1:
   version "0.15.1"
