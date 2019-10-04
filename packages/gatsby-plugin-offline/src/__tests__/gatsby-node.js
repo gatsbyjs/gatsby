@@ -84,4 +84,20 @@ describe(`onPostBuild`, () => {
 
     expect(swText).toContain(`console.log(\`Hello, world!\`)`)
   })
+
+  it(`configures the Workbox debug option`, async () => {
+    await gatsbyNode.onPostBuild(
+      {
+        pathPrefix: ``,
+        reporter: {
+          info(message) {
+            console.log(message)
+          },
+        },
+      },
+      { debug: true }
+    )
+
+    expect(swText).toContain(`debug: true`)
+  })
 })

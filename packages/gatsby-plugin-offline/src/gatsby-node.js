@@ -69,7 +69,7 @@ exports.onPostBuild = (
     precachePages: precachePagesGlobs = [],
     appendScript = null,
     debug = undefined,
-    workboxConfig,
+    workboxConfig = {},
   }
 ) => {
   const { pathPrefix, reporter } = args
