@@ -232,7 +232,7 @@ const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
 
 async function base64(arg) {
   if (arg.cache) {
-    // Not all tranformer plugins are going to provide cache
+    // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(arg, generateCacheKey, generateBase64)
   }
 
@@ -241,7 +241,7 @@ async function base64(arg) {
 
 async function traceSVG(args) {
   if (args.cache) {
-    // Not all tranformer plugins are going to provide cache
+    // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
   }
   return await memoizedTraceSVG(args)
@@ -259,6 +259,24 @@ async function getTracedSVG({ file, options, cache, reporter }) {
     return tracedSVG
   }
   return undefined
+}
+
+async function stats({ file, reporter }) {
+  let imgStats
+  try {
+    imgStats = await sharp(file.absolutePath).stats()
+  } catch (err) {
+    reportError(
+      `Failed to get stats for image ${file.absolutePath}`,
+      err,
+      reporter
+    )
+    return null
+  }
+
+  return {
+    isTransparent: !imgStats.isOpaque,
+  }
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
@@ -298,9 +316,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   if (options[fixedDimension] < 1) {
     throw new Error(
-      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
-        options[fixedDimension]
-      }`
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
     )
   }
 
@@ -470,13 +486,9 @@ async function fixed({ file, args = {}, reporter, cache }) {
     filteredSizes.push(dimensions[fixedDimension])
     console.warn(
       `
-                 The requested ${fixedDimension} "${
-        options[fixedDimension]
-      }px" for a resolutions field for
+                 The requested ${fixedDimension} "${options[fixedDimension]}px" for a resolutions field for
                  the file ${file.absolutePath}
-                 was larger than the actual image ${fixedDimension} of ${
-        dimensions[fixedDimension]
-      }px!
+                 was larger than the actual image ${fixedDimension} of ${dimensions[fixedDimension]}px!
                  If possible, replace the current image with a larger one.
                  `
     )
@@ -578,3 +590,4 @@ exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.stats = stats

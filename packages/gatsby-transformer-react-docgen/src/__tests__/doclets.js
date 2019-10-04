@@ -70,7 +70,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
           name: `string`,
         }
 
-        it(`doclet says number, typescript says string, doclet should win as default behauvior`, () => {
+        it(`doclet says number, typescript says string, doclet should win as default behavior`, () => {
           expect(applyPropDoclets({ doclets, tsType })).toHaveProperty(`type`, {
             name: `number`,
           })

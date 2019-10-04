@@ -101,7 +101,7 @@ In the example site, create a `gatsby-config.js` file and add the theme.
 
 ```js:title=example/gatsby-config.js
 module.exports = {
-  __experimentalThemes: ["gatsby-theme-example-workspaces"],
+  plugins: ["gatsby-theme-example-workspaces"],
 }
 ```
 
@@ -179,7 +179,7 @@ import React from "react"
 export default props => <h1>Hello, from the theme!</h1>
 ```
 
-Stop and restart the Gatsby development server to pick up the new page from the theme. The theme's page should be visible at `http://localhost:8080/theme-page`.
+Stop and restart the Gatsby development server to pick up the new page from the theme. The theme's page should be visible at `http://localhost:8000/theme-page`.
 
 That's it! By now you should have a basic Yarn workspaces setup to develop Gatsby themes with.
 Be sure to look for more posts on developing Gatsby themes in the near future,

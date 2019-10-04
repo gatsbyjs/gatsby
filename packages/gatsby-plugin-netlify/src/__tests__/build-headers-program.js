@@ -177,3 +177,24 @@ test(`without caching headers`, async () => {
     await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
   ).toMatchSnapshot()
 })
+
+test(`with security headers`, async () => {
+  const pluginData = await createPluginData()
+
+  const pluginOptions = {
+    ...DEFAULT_OPTIONS,
+    mergeSecurityHeaders: true,
+    headers: {
+      "/*": [
+        `Content-Security-Policy: frame-ancestors 'self' https://*.storyblok.com/`,
+        `X-Frame-Options: ALLOW-FROM https://app.storyblok.com/`,
+      ],
+    },
+  }
+
+  await buildHeadersProgram(pluginData, pluginOptions)
+
+  expect(
+    await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
+  ).toMatchSnapshot()
+})

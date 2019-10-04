@@ -142,7 +142,7 @@ const run = async () => {
       }
     }
   } catch {
-    // if no packages are marked are changed, lerna will exit with non-zero
+    // if no packages are marked as changed, lerna will exit with non-zero
   }
 }
 

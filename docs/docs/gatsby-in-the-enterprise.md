@@ -38,7 +38,7 @@ Depending on your type of your organization, not all of these challenges may app
 
 A somewhat complete list of potential areas that may have in-house, standard solutions: authentication, SSO, error logging, deployments, staging, hosting, security, CDN, middleware (data fetching), analytics, and internationalization/localization.
 
-These requirements tend to be in place to enable enable marketing, security, analytics, and operations teams to function effectively.
+These requirements tend to be in place to enable marketing, security, analytics, and operations teams to function effectively.
 
 **Solution 1: Dedicate a few days or weeks to build integrations.** If your company has these requirements, building integrations is quite feasible with Gatsby’s plugin system (and even well-documented, with many examples for each category of integration).
 

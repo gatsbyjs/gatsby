@@ -58,9 +58,7 @@ export const mergeOnGreen = async () => {
       // search returns first 100 results, we are not handling pagination right now
       // because it's unlikely to get more 100 results for given sha
       const results = await danger.github.api.search.issues({
-        q: `${danger.github.check_suite.head_sha} is:open repo:${
-          danger.github.repository.owner.login
-        }/${danger.github.repository.name}`,
+        q: `${danger.github.check_suite.head_sha} is:open repo:${danger.github.repository.owner.login}/${danger.github.repository.name}`,
       })
 
       let i = 0
@@ -79,9 +77,7 @@ export const mergeOnGreen = async () => {
       // search returns first 100 results, we are not handling pagination right now
       // because it's unlikely to get more 100 results for given sha
       const results = await danger.github.api.search.issues({
-        q: `${danger.github.commit.sha} is:open repo:${
-          danger.github.repository.owner.login
-        }/${danger.github.repository.name}`,
+        q: `${danger.github.commit.sha} is:open repo:${danger.github.repository.owner.login}/${danger.github.repository.name}`,
       })
 
       let i = 0
