@@ -273,7 +273,7 @@ You may also choose to include line highlighting in your code snippets, using th
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
-		title: `GatsbyJS`, // highlight-line
+		title: `GatsbyJS`, \/\/ highlight-line
 		siteUrl: `https://www.gatsbyjs.org`,
 	},
 }
@@ -296,7 +296,7 @@ module.exports = {
 module.exports = {
 	siteMetadata: {
 		title: `GatsbyJS`,
-		// highlight-next-line
+		\/\/ highlight-next-line
 		siteUrl: `https://www.gatsbyjs.org`,
 	},
 }
@@ -318,12 +318,12 @@ module.exports = {
 ````
 ```javascript:title=gatsby-config.js
 module.exports = {
-	// highlight-start
+	\/\/ highlight-start
 	siteMetadata: {
 		title: `GatsbyJS`,
 		siteUrl: `https://www.gatsbyjs.org`,
 	},
-	// highlight-end
+	\/\/ highlight-end
 }
 ```
 ````
