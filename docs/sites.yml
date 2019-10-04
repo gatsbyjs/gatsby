@@ -7483,6 +7483,20 @@
   built_by: Praveen Bisht
   built_by_url: https://www.prvnbist.com/
   featured: false
+- title: Jeff Mills The Outer Limits x NTS Radio
+  url: https://www.nts.live/projects/jeff-mills-the-outer-limits/
+  main_url: https://www.nts.live/projects/jeff-mills-the-outer-limits/
+  source_url: https://github.com/ntslive/the-outer-limits
+  description: >
+    NTS Radio created a minisite for Jeff Mills' 6 part radio series The Outer Limits, including original music production and imagery curated from the NASA online image archive.
+  categories:
+    - Music
+    - Gallery
+    - Science
+    - Entertainment
+  built_by: NTS Radio
+  built_by_url: https://www.nts.live
+  featured: false
 - title: BALAJIRAO676
   main_url: https://thebalajiraoecommerce.netlify.com/
   url: https://thebalajiraoecommerce.netlify.com/
