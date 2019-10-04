@@ -1,10 +1,10 @@
 /**
  * A pretty cool jsdoc example
- * @param {string} apple A nice crispy apple
+ * @param {string} paramName A nice crispy apple
  * @example
  * const apple = require('apple')
  * apple()
  */
-const apple = apple => {
+exports.apple = paramName => {
   console.log(`hi`)
 }

@@ -32,21 +32,25 @@ Now, it's time to configure Gatsby to send page views to your Google Analytics a
 
 We are going to use `gatsby-plugin-google-analytics`. For other analytics options (including Google Analytics gtag.js and Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
 
-```bash
+```shell
 npm install --save gatsby-plugin-google-analytics
 ```
 
 ```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-      // replace "UA-XXXXXXXXX-X" with your own Tracking ID
+        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
         trackingId: "UA-XXXXXXXXX-X",
       },
     },
+  ],
+}
 ```
 
-> Note: You'll need to replace `UA-XXXXXXXXX-X` with your own Tracking ID.
+> Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
 
 Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
 
@@ -58,8 +62,9 @@ Once this is configured you can deploy your site to test! If you navigate to the
 
 - [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
 - [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
-- [Segment](/packages/gatsby-plugin-segment)
+- [Segment](/packages/gatsby-plugin-segment-js)
 - [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
 - [Fathom](/packages/gatsby-plugin-fathom/)
 - [Baidu](/packages/gatsby-plugin-baidu-analytics/)
 - [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)
+- [Simple Analytics](/packages/gatsby-plugin-simple-analytics)

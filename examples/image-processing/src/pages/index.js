@@ -85,7 +85,7 @@ class Index extends React.Component {
           {` `}
           exposes Sharp
           {`'`}s{` `}
-          <a href="http://sharp.dimens.io/en/stable/api-operation/#rotate">
+          <a href="http://sharp.pixelplumbing.com/en/stable/api-operation/#rotate">
             <code>rotate</code>
           </a>
           {` `}.
@@ -114,7 +114,7 @@ class Index extends React.Component {
         >
           We also expose all of Sharp
           {`'`}s{` `}
-          <a href="http://sharp.dimens.io/en/stable/api-resize/#crop">
+          <a href="http://sharp.pixelplumbing.com/en/stable/api-resize/#crop">
             <code>crop</code>
           </a>
           {` `}
@@ -140,9 +140,7 @@ class Index extends React.Component {
           <li style={styles.column25}>
             <img
               src={cropBottomLeft.src}
-              alt={`File ${
-                cropBottomLeft.originalName
-              } cropped to the bottom left`}
+              alt={`File ${cropBottomLeft.originalName} cropped to the bottom left`}
             />
             <p>
               <small>
@@ -208,7 +206,7 @@ class Index extends React.Component {
           and a{` `}
           <code>base64</code>
           {` `}
-          image to use as a placeholder) you need to implement the "blur up"
+          image to use as a placeholder) you need to implement the {`"blur up"`}
           technique popularized by
           {` `}
           <a href="https://jmperezperez.com/medium-image-progressive-loading-placeholder/">
@@ -247,8 +245,8 @@ class Index extends React.Component {
 
         <p>
           The <code>toFormat</code> option lets you convert the source image to
-          another image format. We use "PNG" here to ensure that the duotoned
-          image does not show any JPG artifacts.
+          another image format. We use {`"PNG"`} here to ensure that the
+          duotoned image does not show any JPG artifacts.
         </p>
 
         <h3>
@@ -256,7 +254,8 @@ class Index extends React.Component {
             fluid(duotone:
             {` `}
             {`{ `}
-            highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
+            highlight: {`"#f00e2e"`}, shadow: {`"#192550"`} {`}`}, toFormat:
+            PNG)
           </small>
         </h3>
 
@@ -267,7 +266,7 @@ class Index extends React.Component {
             fluid(duotone:
             {` `}
             {`{ `}
-            highlight: "#0ec4f1", shadow: "#192550", opacity: 50 {`}`})
+            highlight: {`"#0ec4f1"`}, shadow: {`"#192550"`}, opacity: 50 {`}`})
           </small>
         </h3>
 
@@ -315,7 +314,7 @@ class Index extends React.Component {
         </p>
         <p>
           Automatically create images for different resolutions — we do 1x,
-          1.5x, 2x, and 3x.
+          1.5x, and 2x.
           {` `}
         </p>
 
@@ -326,7 +325,7 @@ class Index extends React.Component {
           {` `}
           uses Sharp
           {`'`}s{` `}
-          <a href="http://sharp.dimens.io/en/stable/api-colour/#greyscale">
+          <a href="http://sharp.pixelplumbing.com/en/stable/api-colour/#greyscale">
             <code>greyscale</code>
           </a>
           {` `}

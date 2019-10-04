@@ -1,2 +1,1 @@
-import 'jest-dom/extend-expect'
-import 'react-testing-library/cleanup-after-each'
+require(`@testing-library/jest-dom/extend-expect`)

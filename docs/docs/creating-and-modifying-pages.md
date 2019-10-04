@@ -39,7 +39,11 @@ your sites development server at `HOST:PORT/___graphql` e.g.
 }
 ```
 
+The `context` property accepts an object, and we can pass in any data we want the page to be able to access.
+
 You can also query for any `context` data you or plugins added to pages.
+
+> **NOTE:** There are a few reserved names that _cannot_ be used in `context`. They are: `path`, `matchPath`, `component`, `componentChunkName`, `pluginCreator___NODE`, and `pluginCreatorId`.
 
 ## Creating pages in gatsby-node.js
 
@@ -52,47 +56,45 @@ of the markdown file.
 ```javascript:title=gatsby-node.js
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
-    // Query for markdown nodes to use in creating pages.
-    resolve(
-      graphql(
-        `
-          {
-            allMarkdownRemark(limit: 1000) {
-              edges {
-                node {
-                  frontmatter {
-                    path
-                  }
-                }
+  // Query for markdown nodes to use in creating pages.
+  const result = await graphql(
+    `
+      {
+        allMarkdownRemark(limit: 1000) {
+          edges {
+            node {
+              frontmatter {
+                path
               }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(result.errors)
         }
+      }
+    `
+  )
 
-        // Create pages for each markdown file.
-        result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-          const path = node.frontmatter.path
-          createPage({
-            path,
-            component: blogPostTemplate,
-            // In your blog post template's graphql query, you can use path
-            // as a GraphQL variable to query for data from the markdown file.
-            context: {
-              path,
-            },
-          })
-        })
-      })
-    )
+  // Handle errors
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  // Create pages for each markdown file.
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    const path = node.frontmatter.path
+    createPage({
+      path,
+      component: blogPostTemplate,
+      // In your blog post template's graphql query, you can use path
+      // as a GraphQL variable to query for data from the markdown file.
+      context: {
+        path,
+      },
+    })
   })
 }
 ```
@@ -113,6 +115,8 @@ To do this, in your site's `gatsby-node.js` add code similar to the following:
 _Note: There's also a plugin that will remove all trailing slashes from pages automatically:
 [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
 
+_Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
+
 ```javascript:title=gatsby-node.js
 // Replacing '/' would result in empty string which is invalid
 const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
@@ -120,17 +124,15 @@ const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions
-  return new Promise(resolve => {
-    const oldPage = Object.assign({}, page)
-    // Remove trailing slash unless page is /
-    page.path = replacePath(page.path)
-    if (page.path !== oldPage.path) {
-      // Replace new page with old page
-      deletePage(oldPage)
-      createPage(page)
-    }
-    resolve()
-  })
+
+  const oldPage = Object.assign({}, page)
+  // Remove trailing slash unless page is /
+  page.path = replacePath(page.path)
+  if (page.path !== oldPage.path) {
+    // Replace new page with old page
+    deletePage(oldPage)
+    createPage(page)
+  }
 }
 ```
 
@@ -147,8 +149,27 @@ exports.onCreatePage = ({ page, actions }) => {
   createPage({
     ...page,
     context: {
-      house: Gryffindor,
+      ...page.context,
+      house: `Gryffindor`,
     },
   })
 }
 ```
+
+On your pages and templates, you can access your context via the prop `pageContext` like this:
+
+```jsx
+import React from "react"
+
+const Page = ({ pageContext }) => {
+  return <div>{pageContext.house}</div>
+}
+
+export default Page
+```
+
+Page context is serialized before being passed to pages: This means it can't be used to pass functions into components.
+
+## Creating Client-only routes
+
+In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication/).

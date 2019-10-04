@@ -1,4 +1,4 @@
 /*.js
 !index.js
-!sw-append.js
+!src/__tests__/fixtures/public
 yarn.lock

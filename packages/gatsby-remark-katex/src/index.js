@@ -2,11 +2,12 @@ const visit = require(`unist-util-visit`)
 const katex = require(`katex`)
 const remarkMath = require(`remark-math`)
 
-module.exports = ({ markdownAST }) => {
+module.exports = ({ markdownAST }, pluginOptions = {}) => {
   visit(markdownAST, `inlineMath`, node => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: false,
+      ...pluginOptions,
     })
   })
 
@@ -14,6 +15,7 @@ module.exports = ({ markdownAST }) => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: true,
+      ...pluginOptions,
     })
   })
 }

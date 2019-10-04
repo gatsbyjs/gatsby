@@ -1,7 +1,8 @@
 import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
+import { parse } from "path"
 import kebabHash from "kebab-hash"
-import { HEADER_COMMENT } from "./constants"
+import { HEADER_COMMENT, IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
   COMMON_BUNDLES,
@@ -10,6 +11,11 @@ import {
   LINK_REGEX,
   NETLIFY_HEADERS_FILENAME,
 } from "./constants"
+
+function getHeaderName(header) {
+  const matches = header.match(/^([^:]+):/)
+  return matches && matches[1]
+}
 
 function validHeaders(headers) {
   if (!headers || !_.isObject(headers)) {
@@ -20,7 +26,10 @@ function validHeaders(headers) {
     headers,
     (headersList, path) =>
       _.isArray(headersList) &&
-      _.every(headersList, header => _.isString(header))
+      _.every(
+        headersList,
+        header => _.isString(header) && getHeaderName(header)
+      )
   )
 }
 
@@ -41,8 +50,18 @@ function createScriptHeaderGenerator(manifest, pathPrefix) {
       return null
     }
 
-    // Always add starting slash, as link entries start with slash as relative to deploy root
-    return linkTemplate(`${pathPrefix}/${chunk}`)
+    // convert to array if it's not already
+    const chunks = _.isArray(chunk) ? chunk : [chunk]
+
+    return chunks
+      .filter(script => {
+        const parsed = parse(script)
+        // handle only .js, .css content is inlined already
+        // and doesn't need to be pushed
+        return parsed.ext === `.js`
+      })
+      .map(script => linkTemplate(`${pathPrefix}/${script}`))
+      .join(`\n  `)
   }
 }
 
@@ -84,6 +103,25 @@ function defaultMerge(...headers) {
   }
 
   return _.mergeWith({}, ...headers, unionMerge)
+}
+
+function headersMerge(userHeaders, defaultHeaders) {
+  const merged = {}
+  Object.keys(defaultHeaders).forEach(path => {
+    if (!userHeaders[path]) {
+      merged[path] = defaultHeaders[path]
+      return
+    }
+    const headersMap = {}
+    defaultHeaders[path].forEach(header => {
+      headersMap[getHeaderName(header)] = header
+    })
+    userHeaders[path].forEach(header => {
+      headersMap[getHeaderName(header)] = header // override if exists
+    })
+    merged[path] = Object.values(headersMap)
+  })
+  return merged
 }
 
 function transformLink(manifest, publicFolder, pathPrefix) {
@@ -205,15 +243,32 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
     return headers
   }
 
-  return defaultMerge(headers, SECURITY_HEADERS)
+  return headersMerge(headers, SECURITY_HEADERS)
 }
 
-const applyCachingHeaders = ({ mergeCachingHeaders }) => headers => {
+const applyCachingHeaders = (
+  pluginData,
+  { mergeCachingHeaders }
+) => headers => {
   if (!mergeCachingHeaders) {
     return headers
   }
 
-  return defaultMerge(headers, CACHING_HEADERS)
+  const chunks = Array.from(pluginData.pages.values()).map(
+    page => page.componentChunkName
+  )
+
+  chunks.push(`pages-manifest`, `app`)
+
+  const files = [].concat(...chunks.map(chunk => pluginData.manifest[chunk]))
+
+  const cachingHeaders = {}
+
+  files.forEach(file => {
+    cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+  })
+
+  return defaultMerge(headers, cachingHeaders, CACHING_HEADERS)
 }
 
 const applyTransfromHeaders = ({ transformHeaders }) => headers =>
@@ -228,9 +283,9 @@ const writeHeadersFile = ({ publicFolder }) => contents =>
 export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     validateUserOptions(pluginOptions),
-    mapUserLinkHeaders(pluginData, pluginOptions),
+    mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
-    applyCachingHeaders(pluginOptions),
+    applyCachingHeaders(pluginData, pluginOptions),
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),

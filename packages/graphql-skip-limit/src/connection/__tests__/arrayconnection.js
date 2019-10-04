@@ -150,6 +150,27 @@ describe(`connectionFromArray()`, () => {
         },
       })
     })
+
+    it(`returns hasNextPage correctly`, () => {
+      const c = connectionFromArray(letters, { limit: 2, skip: 3 })
+      return expect(c).toEqual({
+        edges: [
+          {
+            next: `E`,
+            node: `D`,
+            previous: `C`,
+          },
+          {
+            next: undefined,
+            node: `E`,
+            previous: `D`,
+          },
+        ],
+        pageInfo: {
+          hasNextPage: false,
+        },
+      })
+    })
   })
 })
 

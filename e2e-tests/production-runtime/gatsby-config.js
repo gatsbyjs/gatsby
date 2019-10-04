@@ -1,9 +1,12 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
+    author: `Kyle Mathews`,
+    description: `This is site for production runtime e2e tests`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-global-style`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -16,5 +19,5 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-  ],
+  ].concat(process.env.TEST_PLUGIN_OFFLINE ? [`gatsby-plugin-offline`] : []),
 }

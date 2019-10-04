@@ -1,7 +1,10 @@
 # gatsby-source-filesystem
 
-Plugin for creating `File` nodes from the file system. The various "transformer"
-plugins transform `File` nodes into various other types of data e.g.
+A Gatsby source plugin for sourcing data into your Gatsby application
+from your local filesystem.
+
+The plugin creates `File` nodes from files. The various "transformer"
+plugins can transform `File` nodes into various other types of data e.g.
 `gatsby-transformer-json` transforms JSON files into JSON data nodes and
 `gatsby-transformer-remark` transforms markdown files into `MarkdownRemark`
 nodes from which you can query an HTML representation of the markdown.
@@ -59,6 +62,8 @@ They will be added to the following default list:
 ../**/dist/**
 ```
 
+To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
+
 ## How to query
 
 You can query file nodes like the following:
@@ -95,10 +100,11 @@ To filter by the `name` you specified in the config, use `sourceInstanceName`:
 
 ## Helper functions
 
-`gatsby-source-filesystem` exports two helper functions:
+`gatsby-source-filesystem` exports three helper functions:
 
 - `createFilePath`
 - `createRemoteFileNode`
+- `createFileNodeFromBuffer`
 
 ### createFilePath
 
@@ -160,6 +166,9 @@ createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file.jpg`,
 
+  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
+  parentNodeId,
+
   // The redux store which is passed to all Node APIs.
   store,
 
@@ -175,6 +184,10 @@ createRemoteFileNode({
   // OPTIONAL
   // Adds htaccess authentication to the download request if passed in.
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
+
+  // OPTIONAL
+  // Adds extra http headers to download request if passed in.
+  httpHeaders: { Authorization: `Bearer someAccessToken` },
 
   // OPTIONAL
   // Sets the file extension
@@ -205,6 +218,7 @@ exports.downloadMediaFiles = ({
       try {
         fileNode = await createRemoteFileNode({
           url: node.source_url,
+          parentNodeId: node.id,
           store,
           cache,
           createNode,
@@ -227,19 +241,108 @@ exports.downloadMediaFiles = ({
 
 The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
 
-#### Retrieving the remote file extension
+#### Retrieving the remote file name and extension
 
-The helper tries first to retrieve the file extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the extension _can_ be explicitly passed, like so:
+The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg` and the name as `image`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
 
 ```javascript
 createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file-without-an-extension`,
+  parentNodeId: node.id,
   store,
   cache,
   createNode,
   createNodeId,
   // if necessary!
   ext: ".jpg",
+  name: "image",
 })
+```
+
+### createFileNodeFromBuffer
+
+When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
+
+The `createFileNodeFromBuffer` helper accepts a `Buffer`, caches its contents to disk, and creates a file node that points to it.
+
+## Example usage
+
+The following example is adapted from the source of [`gatsby-source-mysql`](https://github.com/malcolm-kee/gatsby-source-mysql):
+
+```js
+// gatsby-node.js
+const createMySqlNodes = require(`./create-nodes`)
+
+exports.sourceNodes = async (
+  { actions, createNodeId, store, cache },
+  config
+) => {
+  const { createNode } = actions
+  const { conn, queries } = config
+  const { db, results } = await query(conn, queries)
+
+  try {
+    queries
+      .map((query, i) => ({ ...query, ___sql: results[i] }))
+      .forEach(result =>
+        createMySqlNodes(result, results, createNode, {
+          createNode,
+          createNodeId,
+          store,
+          cache,
+        })
+      )
+    db.end()
+  } catch (e) {
+    console.error(e)
+    db.end()
+  }
+}
+
+// create-nodes.js
+const { createFileNodeFromBuffer } = require(`gatsby-source-filesystem`)
+const createNodeHelpers = require(`gatsby-node-helpers`).default
+
+const { createNodeFactory } = createNodeHelpers({ typePrefix: `mysql` })
+
+function attach(node, key, value, ctx) {
+  if (Buffer.isBuffer(value)) {
+    ctx.linkChildren.push(parentNodeId =>
+      createFileNodeFromBuffer({
+        buffer: value,
+        store: ctx.store,
+        cache: ctx.cache,
+        createNode: ctx.createNode,
+        createNodeId: ctx.createNodeId,
+      })
+    )
+    value = `Buffer`
+  }
+
+  node[key] = value
+}
+
+function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
+  const MySqlNode = createNodeFactory(name)
+  ctx.linkChildren = []
+
+  return __sql.forEach(row => {
+    if (!keys) keys = Object.keys(row)
+
+    const node = { id: row[idField] }
+
+    for (const key of keys) {
+      attach(node, key, row[key], ctx)
+    }
+
+    node = ctx.createNode(node)
+
+    for (const link of ctx.linkChildren) {
+      link(node.id)
+    }
+  })
+}
+
+module.exports = createMySqlNodes
 ```

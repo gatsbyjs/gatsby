@@ -1,6 +1,5 @@
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
-const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
 const _ = require(`lodash`)
@@ -12,38 +11,56 @@ const DEPLOY_DIR = `public`
 const invalidDestinationDirMessage = dir =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
-// dir must be a child
-const destinationDirIsValid = dir => !path.relative(`./`, dir).startsWith(`..`)
+// dest must be a child
+const destinationIsValid = dest => !path.relative(`./`, dest).startsWith(`..`)
 
-const validateDestinationDir = dir =>
-  !dir || (dir && destinationDirIsValid(dir))
-
-const newFileName = linkNode =>
-  `${linkNode.name}-${linkNode.internal.contentDigest}.${linkNode.extension}`
-
-const newPath = (linkNode, destinationDir) => {
-  if (destinationDir) {
-    return path.posix.join(
-      process.cwd(),
-      DEPLOY_DIR,
-      destinationDir,
-      newFileName(linkNode)
-    )
+const validateDestinationDir = dir => {
+  if (typeof dir === `undefined`) {
+    return true
+  } else if (typeof dir === `string`) {
+    // need to pass dummy data for validation to work
+    return destinationIsValid(`${dir}/h/n`)
+  } else if (_.isFunction(dir)) {
+    // need to pass dummy data for validation to work
+    return destinationIsValid(`${dir({ name: `n`, hash: `h` })}`)
+  } else {
+    return false
   }
-  return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
 }
 
-const newLinkURL = (linkNode, destinationDir, pathPrefix) => {
-  const linkPaths = [
-    `/`,
-    pathPrefix,
-    destinationDir,
-    newFileName(linkNode),
-  ].filter(function(lpath) {
-    if (lpath) return true
-    return false
-  })
+const defaultDestination = linkNode =>
+  `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`
 
+const getDestination = (linkNode, dir) => {
+  if (_.isFunction(dir)) {
+    // need to pass dummy data for validation to work
+    const isValidFunction = `${dir({ name: `n`, hash: `h` })}` !== `${dir({})}`
+    return isValidFunction
+      ? `${dir({
+          name: linkNode.name,
+          hash: linkNode.internal.contentDigest,
+        })}.${linkNode.extension}`
+      : `${dir()}/${defaultDestination(linkNode)}`
+  } else if (_.isString(dir)) {
+    return `${dir}/${defaultDestination(linkNode)}`
+  } else {
+    return defaultDestination(linkNode)
+  }
+}
+
+const newPath = (linkNode, options) => {
+  const { destinationDir } = options
+  const destination = getDestination(linkNode, destinationDir)
+  const paths = [process.cwd(), DEPLOY_DIR, destination]
+  return path.posix.join(...paths)
+}
+
+const newLinkURL = (linkNode, options, pathPrefix) => {
+  const { destinationDir } = options
+  const destination = getDestination(linkNode, destinationDir)
+  const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
+    lpath ? true : false
+  )
   return path.posix.join(...linkPaths)
 }
 
@@ -89,12 +106,12 @@ module.exports = (
         return null
       })
       if (linkNode && linkNode.absolutePath) {
-        const newFilePath = newPath(linkNode, options.destinationDir)
+        const newFilePath = newPath(linkNode, options)
 
-        // Prevent uneeded copying
+        // Prevent unneeded copying
         if (linkPath === newFilePath) return
 
-        const linkURL = newLinkURL(linkNode, options.destinationDir, pathPrefix)
+        const linkURL = newLinkURL(linkNode, options, pathPrefix)
         link.url = linkURL
         filesToCopy.set(linkPath, newFilePath)
       }
@@ -132,7 +149,7 @@ module.exports = (
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
       dimensions = imageSize.sync(
-        toArray(fs.readFileSync(imageNode.absolutePath))
+        toArray(fsExtra.readFileSync(imageNode.absolutePath))
       )
     }
 
@@ -203,137 +220,84 @@ module.exports = (
   })
 
   // For each HTML Node
-  visit(markdownAST, `html`, node => {
+  visit(markdownAST, [`html`, `jsx`], node => {
     const $ = cheerio.load(node.value)
 
-    // Handle Images
-    const imageRefs = []
-    $(`img`).each(function() {
+    function processUrl({ url }) {
       try {
-        if (isRelativeUrl($(this).attr(`src`))) {
-          imageRefs.push($(this))
-        }
-      } catch (err) {
-        // Ignore
-      }
-    })
-
-    for (let thisImg of imageRefs) {
-      try {
-        const ext = thisImg
-          .attr(`src`)
-          .split(`.`)
-          .pop()
-        if (!options.ignoreFileExtensions.includes(ext)) {
-          generateImagesAndUpdateNode(thisImg, node)
-        }
-      } catch (err) {
-        // Ignore
-      }
-    }
-
-    // Handle video tags.
-    const videoRefs = []
-    $(`video source`).each(function() {
-      try {
-        if (isRelativeUrl($(this).attr(`src`))) {
-          videoRefs.push($(this))
-        }
-      } catch (err) {
-        // Ignore
-      }
-    })
-
-    for (let thisVideo of videoRefs) {
-      try {
-        const ext = thisVideo
-          .attr(`src`)
-          .split(`.`)
-          .pop()
+        const ext = url.split(`.`).pop()
         if (!options.ignoreFileExtensions.includes(ext)) {
           // The link object will be modified to the new location so we'll
           // use that data to update our ref
-          const link = { url: thisVideo.attr(`src`) }
+          const link = { url }
           visitor(link)
-          node.value = node.value.replace(
-            new RegExp(thisVideo.attr(`src`), `g`),
-            link.url
-          )
+          node.value = node.value.replace(new RegExp(url, `g`), link.url)
         }
       } catch (err) {
         // Ignore
       }
     }
+
+    // extracts all elements that have the provided url attribute
+    function extractUrlAttributeAndElement(selection, attribute) {
+      return (
+        selection
+          // extract the elements that have the attribute
+          .map(function() {
+            const element = $(this)
+            const url = $(this).attr(attribute)
+            if (url && isRelativeUrl(url)) {
+              return { url, element }
+            }
+            return undefined
+          })
+          // cheerio object -> array
+          .toArray()
+          // filter out empty or undefined values
+          .filter(Boolean)
+      )
+    }
+
+    // Handle Images
+    extractUrlAttributeAndElement($(`img[src]`), `src`).forEach(
+      ({ url, element }) => {
+        try {
+          const ext = url.split(`.`).pop()
+          if (!options.ignoreFileExtensions.includes(ext)) {
+            generateImagesAndUpdateNode(element, node)
+          }
+        } catch (err) {
+          // Ignore
+        }
+      }
+    )
+
+    // Handle video tags.
+    extractUrlAttributeAndElement(
+      $(`video source[src], video[src]`),
+      `src`
+    ).forEach(processUrl)
 
     // Handle audio tags.
-    const audioRefs = []
-    $(`audio source`).each(function() {
-      try {
-        if (isRelativeUrl($(this).attr(`src`))) {
-          audioRefs.push($(this))
-        }
-      } catch (err) {
-        // Ignore
-      }
-    })
+    extractUrlAttributeAndElement(
+      $(`audio source[src], audio[src]`),
+      `src`
+    ).forEach(processUrl)
 
-    for (let thisAudio of audioRefs) {
-      try {
-        const ext = thisAudio
-          .attr(`src`)
-          .split(`.`)
-          .pop()
-        if (!options.ignoreFileExtensions.includes(ext)) {
-          const link = { url: thisAudio.attr(`src`) }
-          visitor(link)
-          node.value = node.value.replace(
-            new RegExp(thisAudio.attr(`src`), `g`),
-            link.url
-          )
-        }
-      } catch (err) {
-        // Ignore
-      }
-    }
+    // Handle flash embed tags.
+    extractUrlAttributeAndElement($(`object param[value]`), `value`).forEach(
+      processUrl
+    )
 
     // Handle a tags.
-    const aRefs = []
-    $(`a`).each(function() {
-      try {
-        if (isRelativeUrl($(this).attr(`href`))) {
-          aRefs.push($(this))
-        }
-      } catch (err) {
-        // Ignore
-      }
-    })
-
-    for (let thisATag of aRefs) {
-      try {
-        const ext = thisATag
-          .attr(`href`)
-          .split(`.`)
-          .pop()
-        if (!options.ignoreFileExtensions.includes(ext)) {
-          const link = { url: thisATag.attr(`href`) }
-          visitor(link)
-
-          node.value = node.value.replace(
-            new RegExp(thisATag.attr(`href`), `g`),
-            link.url
-          )
-        }
-      } catch (err) {
-        // Ignore
-      }
-    }
+    extractUrlAttributeAndElement($(`a[href]`), `href`).forEach(processUrl)
 
     return
   })
 
   return Promise.all(
     Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
-      // Don't copy anything is the file already exists at the location.
+      // Don't copy anything if the file already exists at the location.
       if (!fsExtra.existsSync(newFilePath)) {
         try {
           await fsExtra.ensureDir(path.dirname(newFilePath))

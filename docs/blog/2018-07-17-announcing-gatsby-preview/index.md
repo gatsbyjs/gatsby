@@ -1,8 +1,8 @@
 ---
 title: Announcing Gatsby Preview
-date: "2018-07-17"
+date: 2018-07-17
 author: "Sam Bhagwat"
-tags: ["contentful", "preview", "product"]
+tags: ["contentful", "gatsby-preview", "gatsby-cloud", "gatsby-inc"]
 ---
 
 Today we’re excited to announce our first commercial offering, a hosted Gatsby preview service for teams, with [Contentful](https://www.contentful.com/) as our initial integration.
@@ -29,9 +29,9 @@ Over the next few months, we’ll be adding integration with other CMSs like Dru
 
 We’re incredibly excited to launch our first commercial service and to continue to push forward the Gatsby experience! We’re looking forward to meeting more of you and working together to push forward the modern web.
 
-Before you go, take a look at a GIF of Gatsby Preview in action on our own [https://wwww.gatsbyjs.com](https://gatsbyjs.com) website:
+Before you go, take a look at a GIF of Gatsby Preview in action on [our own website](https://gatsbyjs.com):
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./gatsby-contentful-preview.mp4"></source>
+  <source type="video/mp4" src="./gatsby-contentful-preview.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>

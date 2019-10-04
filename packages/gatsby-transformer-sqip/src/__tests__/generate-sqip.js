@@ -32,7 +32,7 @@ describe(`gatsby-transformer-sqip`, async () => {
   const absolutePath = resolve(
     __dirname,
     `images`,
-    `this-file-does-not-neet-to-exist-for-the-test.jpg`
+    `this-file-does-not-need-to-exist-for-the-test.jpg`
   )
   const cacheDir = __dirname
 
@@ -90,6 +90,32 @@ describe(`gatsby-transformer-sqip`, async () => {
       expect(exists).toHaveBeenCalledTimes(1)
       expect(writeFile).toHaveBeenCalledTimes(0)
       expect(readFile).toHaveBeenCalledTimes(1)
+    })
+    it(`returns null for unsupported files`, async () => {
+      exists.mockImplementationOnce(() => true)
+
+      const cache = {
+        get: jest.fn(),
+        set: jest.fn(),
+      }
+      const numberOfPrimitives = 5
+      const blur = 0
+      const mode = 3
+      const result = await generateSqip({
+        cache,
+        cacheDir,
+        absolutePath: absolutePath.replace(`.jpg`, `.svg`),
+        numberOfPrimitives,
+        blur,
+        mode,
+      })
+
+      expect(result).toBe(null)
+
+      expect(sqip).toHaveBeenCalledTimes(0)
+      expect(exists).toHaveBeenCalledTimes(0)
+      expect(writeFile).toHaveBeenCalledTimes(0)
+      expect(readFile).toHaveBeenCalledTimes(0)
     })
   })
 })

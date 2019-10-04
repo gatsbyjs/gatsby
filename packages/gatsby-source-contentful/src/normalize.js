@@ -66,13 +66,17 @@ exports.fixIds = object => {
   }
 }
 
-const makeId = ({ id, currentLocale, defaultLocale }) =>
-  currentLocale === defaultLocale ? id : `${id}___${currentLocale}`
+const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
+  currentLocale === defaultLocale
+    ? `${spaceId}___${id}`
+    : `${spaceId}___${id}___${currentLocale}`
 
 exports.makeId = makeId
 
-const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => id =>
-  createNodeId(makeId({ id, currentLocale, defaultLocale }))
+const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
+  spaceId,
+  id
+) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale }))
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
@@ -116,6 +120,7 @@ exports.buildForeignReferenceMap = ({
   resolvable,
   defaultLocale,
   locales,
+  space,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -147,6 +152,7 @@ exports.buildForeignReferenceMap = ({
                 foreignReferenceMap[v.sys.id].push({
                   name: `${contentTypeItemId}___NODE`,
                   id: entryItem.sys.id,
+                  spaceId: space.sys.id,
                 })
               })
             }
@@ -163,6 +169,7 @@ exports.buildForeignReferenceMap = ({
             foreignReferenceMap[entryItemFieldValue.sys.id].push({
               name: `${contentTypeItemId}___NODE`,
               id: entryItem.sys.id,
+              spaceId: space.sys.id,
             })
           }
         }
@@ -193,9 +200,9 @@ function prepareTextNode(node, key, text, createNodeId) {
   return textNode
 }
 
-function prepareStructuredTextNode(node, key, content, createNodeId) {
+function prepareRichTextNode(node, key, content, createNodeId) {
   const str = stringify(content)
-  const structuredTextNode = {
+  const richTextNode = {
     ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
     parent: node.id,
@@ -209,9 +216,9 @@ function prepareStructuredTextNode(node, key, content, createNodeId) {
     },
   }
 
-  node.children = node.children.concat([structuredTextNode.id])
+  node.children = node.children.concat([richTextNode.id])
 
-  return structuredTextNode
+  return richTextNode
 }
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
@@ -244,6 +251,7 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
   locales,
+  space,
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
@@ -297,6 +305,7 @@ exports.createContentTypeNodes = ({
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
           if (Array.isArray(entryItemFieldValue)) {
             if (
+              entryItemFieldValue[0] &&
               entryItemFieldValue[0].sys &&
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
@@ -309,7 +318,7 @@ exports.createContentTypeNodes = ({
                   return resolvable.has(v.sys.id)
                 })
                 .map(function(v) {
-                  return mId(v.sys.id)
+                  return mId(space.sys.id, v.sys.id)
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
                 entryItemFields[
@@ -327,6 +336,7 @@ exports.createContentTypeNodes = ({
           ) {
             if (resolvable.has(entryItemFieldValue.sys.id)) {
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
+                space.sys.id,
                 entryItemFieldValue.sys.id
               )
             }
@@ -341,19 +351,27 @@ exports.createContentTypeNodes = ({
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
           if (existingReference) {
-            entryItemFields[foreignReference.name].push(
-              mId(foreignReference.id)
-            )
+            // If the existing reference is a string, we're dealing with a
+            // many-to-one reference which has already been recorded, so we can
+            // skip it. However, if it is an array, add it:
+            if (Array.isArray(existingReference)) {
+              entryItemFields[foreignReference.name].push(
+                mId(foreignReference.spaceId, foreignReference.id)
+              )
+            }
           } else {
             // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.
-            entryItemFields[foreignReference.name] = [mId(foreignReference.id)]
+            entryItemFields[foreignReference.name] = [
+              mId(foreignReference.spaceId, foreignReference.id),
+            ]
           }
         })
       }
 
       let entryNode = {
-        id: mId(entryItem.sys.id),
+        id: mId(space.sys.id, entryItem.sys.id),
+        spaceId: space.sys.id,
         contentful_id: entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
@@ -404,7 +422,7 @@ exports.createContentTypeNodes = ({
           fieldType === `RichText` &&
           _.isPlainObject(entryItemFields[entryItemFieldKey])
         ) {
-          const richTextNode = prepareStructuredTextNode(
+          const richTextNode = prepareRichTextNode(
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
@@ -497,6 +515,7 @@ exports.createAssetNodes = ({
   createNodeId,
   defaultLocale,
   locales,
+  space,
 }) => {
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
@@ -527,7 +546,7 @@ exports.createAssetNodes = ({
     }
     const assetNode = {
       contentful_id: localizedAsset.sys.contentful_id,
-      id: mId(localizedAsset.sys.id),
+      id: mId(space.sys.id, localizedAsset.sys.id),
       parent: null,
       children: [],
       ...localizedAsset.fields,

@@ -48,7 +48,7 @@ Navigate to `http://localhost:8000/___graphql` in your browser to view the Graph
 
 Examining the available types in GraphQL you will notice that you can query `site`. This GraphQL type further returns the `siteMetadata` which needs to be accessed to create the dynamic navigation. At this point, it is useful if you know a little GraphQL in order to extract the menu links. If you are unfamiliar with GraphQL, there is some excellent documentation available at GraphQL's official website found [here](https://graphql.org/learn/) that you can use to brush up on your skills! The query below will return the menu links.
 
-```js
+```graphql
 query SiteQuery {
   site {
     siteMetadata {
@@ -64,7 +64,7 @@ query SiteQuery {
 
 When executing this query within the GraphiQL editor you see output that looks similar to the following:
 
-```js
+```json
 {
   "data": {
     "site": {
@@ -191,64 +191,78 @@ const Layout = ({ children }) => (
 
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
 
-```diff:title=src/components/header.js
-import React from 'react'
-import { Link } from 'gatsby'
+```js:title=src/components/header.js
+import React from "react"
+import { Link } from "gatsby"
 const Header = ({ siteTitle, menuLinks }) => (
--  <div
--    style={{
--      background: 'rebeccapurple',
--      marginBottom: '1.45rem',
--    }}
--  >
--    <div
--      style={{
--        margin: '0 auto',
--        maxWidth: 960,
--        padding: '1.45rem 1.0875rem',
--      }}
--    >
--      <div style={{
--        display: 'flex',
--        'justifyItems': 'space-between',
--        'alignItems': 'center'
--      }}>
--        <h1 style={{ margin: 0, flex: 1 }}>
--          <Link
--            to="/"
--            style={{
--              color: 'white',
--              textDecoration: 'none',
--            }}
--          >
--            {siteTitle}
--          </Link>
--        </h1>
--
--      </div>
--    </div>
--  </div>
+  <header
+    style={{
+      background: "rebeccapurple",
+      marginBottom: "1.45rem",
+    }}
+  >
+    <div
+      style={{
+        background: "rebeccapurple",
+        marginBottom: "1.45rem",
+      }}
+    >
+      <div
+        style={{
+          margin: "0 auto",
+          maxWidth: 960,
+          padding: "1.45rem 1.0875rem",
+          display: "flex",
+          justifyItems: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h1 style={{ margin: 0, flex: 1 }}>
+          <Link
+            to="/"
+            style={{
+              color: "white",
+              textDecoration: "none",
+            }}
+          >
+            {siteTitle}
+          </Link>
+        </h1>
+        // highlight-start
+        <div>
+          <nav>
+            <ul style={{ display: "flex", flex: 1 }}>
+              {menuLinks.map(link => (
+                <li
+                  key={link.name}
+                  style={{
+                    listStyleType: `none`,
+                    padding: `1rem`,
+                  }}
+                >
+                  <Link style={{ color: `white` }} to={link.link}>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+        // highlight-end
+      </div>
+    </div>
+  </header>
 )
-```
 
-The `siteTitle` and `menuLinks` arguments are de-structered es6 syntax for quickly accessing an objects inner properties. It is functionally equivalent to writing `object.siteTitle` or `object.menuLinks`.
+Header.propTypes = {
+  siteTitle: PropTypes.string,
+}
 
-You can now access the header component's props and map the `menuLinks` array into elements that can be rendered in the document:
+Header.defaultProps = {
+  siteTitle: ``,
+}
 
-```diff:title=src/components/header.js
-import React from 'react'
-import { Link } from 'gatsby'
-
-const Header = ({ siteTitle, menuLinks }) => (
-+  <nav style={{ display: 'flex', flex: 1 }}>
-+    {
-+      menuLinks.map(link =>
-+        <li key={link.name} style={{ 'listStyleType': 'none' }}>
-+          <Link to={link.link}>{link.name}</Link>
-+        </li>)
-+    }
-+  </nav>
-)
+export default Header
 ```
 
 Starting the development server by running `npm run develop` and navigating to `http://localhost:8000` you should now see some dynamically generated menu links on your page.
@@ -259,5 +273,5 @@ If you have made it this far, good job! You can now add new site links to your w
 
 Be sure to check out more documentation for further in-depth examples and guides on achieving tasks using Gatsby.
 
-- [Authentication in Gatsby](/docs/authentication-tutorial/)
-- [E-commerce in Gatsby](/docs/ecommerce-tutorial/)
+- [Authentication in Gatsby](/tutorial/authentication-tutorial/)
+- [E-commerce in Gatsby](/tutorial/ecommerce-tutorial/)

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/danger/peril/master/peril-settings-json.schema",
+  "settings": {
+    "ignored_repos": [],
+    "env_vars": ["SLACK_WEBHOOK_URL", "GITHUB_ACCESS_TOKEN"],
+    "modules": ["@slack/client", "joi", "js-yaml", "date-fns"]
+  },
+  "rules": {
+    "issue_comment": ["peril/rules/not-stale.ts"],
+    "issues.opened": ["peril/rules/emptybody.ts", "peril/rules/labeler.ts"],
+    "pull_request.closed (pull_request.merged == true)": [
+      "peril/rules/invite-collaborator.ts"
+    ]
+  },
+  "repos": {
+    "gatsbyjs/gatsby": {
+      "pull_request": ["gatsbyjs/gatsby@peril/rules/validate-yaml.ts"],
+      "check_run": ["gatsbyjs/gatsby@peril/rules/validate-yaml.ts"],
+      "pull_request.labeled": ["gatsbyjs/gatsby@peril/rules/merge-on-green.ts"],
+      "pull_request_review.submitted": [
+        "gatsbyjs/gatsby@peril/rules/merge-on-green.ts"
+      ],
+      "check_suite.completed": [
+        "gatsbyjs/gatsby@peril/rules/merge-on-green.ts"
+      ],
+      "status.success": ["gatsbyjs/gatsby@peril/rules/merge-on-green.ts"]
+    },
+    "gatsbyjs/gatsby-starter-default": {
+      "pull_request.opened": [
+        "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
+      ]
+    },
+    "gatsbyjs/gatsby-starter-hello-world": {
+      "pull_request.opened": [
+        "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
+      ]
+    },
+    "gatsbyjs/gatsby-starter-blog": {
+      "pull_request.opened": [
+        "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
+      ]
+    }
+  },
+  "tasks": {
+    "stale": "peril/tasks/stale.ts"
+  },
+  "scheduler": {
+    "daily": "stale"
+  }
+}

@@ -2,6 +2,10 @@
 title: Schema connections
 ---
 
+> This documentation isn't up to date with latest
+> [schema customization changes](/docs/schema-customization). Help Gatsby by
+> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+
 ## What are schema connections?
 
 So far in schema generation, we have covered how [GraphQL types are inferred](/docs/schema-gql-type), how [query arguments for types](/docs/schema-input-gql) are created, and how [sift resolvers](/docs/schema-sift) work. But all of these only allow querying down to a single node of a type. Schema connections is the ability to query over **collections** of nodes of a type. For example, if we want to query all markdown nodes by some criteria, it will allow us to write queries such as:

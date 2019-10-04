@@ -1,7 +1,6 @@
 import React, { Component } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import Layout from "../../components/layout"
-import Unbird from "../../components/unbird"
 import RRSM from "../../utils/reach-router-state-manager"
 import queryString from "query-string"
 
@@ -20,8 +19,8 @@ class StarterLibraryPage extends Component {
       urlState.s !== undefined
         ? urlState.s // if theres a search term
         : urlState.d && !Array.isArray(urlState.d)
-          ? urlState.d // if theres a single dependency
-          : `Library` // if no search term or single dependency
+        ? urlState.d // if theres a single dependency
+        : `Library` // if no search term or single dependency
 
     return (
       <Layout location={location}>
@@ -55,11 +54,6 @@ class StarterLibraryPage extends Component {
             />
           )}
           defaultSearchState={{ v: [`2`] }}
-        />
-        <Unbird
-          dataSetId="5c113a828240aa564734d954"
-          publicKey="LCrEeIhIqPlNchPYkyXGww2azg5aCtC1"
-          feedbackPrompt="Have feedback on the Starter Library?"
         />
       </Layout>
     )

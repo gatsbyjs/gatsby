@@ -9,6 +9,10 @@ The two top priorities of the API are a) enable a broad and robust plugin
 ecosystem and b) on top of that a broad and robust theme ecosystem (themes are
 on the back burner btw until after v1 comes out).
 
+## Prerequisites
+
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+
 ## Plugins
 
 Plugins can extend Gatsby in many ways:
@@ -71,6 +75,8 @@ See
   relationships. Can be created in a variety of ways as well as automatically
   inferred. Parent/child links from nodes and their transformed derivative nodes
   are first class links.
+
+_More definitions and terms are defined in the [Glossary](/docs/glossary/)_
 
 ## Operators
 

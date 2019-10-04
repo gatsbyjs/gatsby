@@ -1,5 +1,5 @@
 ---
-title: "Add custom webpack config"
+title: "Adding a Custom webpack Config"
 ---
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby
@@ -78,7 +78,7 @@ exports.onCreateWebpackConfig = ({
 
 ### Absolute imports
 
-Instead of writing `import Header from '../../components/Header'` over and over again you can just write `import Header from 'components/Header'` with absolute imports:
+Instead of writing `import Header from '../../components/header'` over and over again you can just write `import Header from 'components/header'` with absolute imports:
 
 ```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ stage, actions }) => {

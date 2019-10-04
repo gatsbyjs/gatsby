@@ -1,14 +1,34 @@
+/* @flow */
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
 
+interface NodeStore {
+  getNodes: () => Array<any>;
+  getNode: (id: string) => any | undefined;
+  getNodesByType: (type: string) => Array<any>;
+  getTypes: () => Array<string>;
+  hasNodeChanged: (id: string, digest: string) => boolean;
+  getNodeAndSavePathDependency: (id: string, path: string) => any | undefined;
+  runQuery: (args: {
+    gqlType: GraphQLType,
+    queryArgs: Object,
+    firstOnly: boolean,
+    resolvedFields: Object,
+    nodeTypeNames: Array<string>,
+  }) => any | undefined;
+}
+
 const backend = process.env.GATSBY_DB_NODES || `redux`
-let nodesDb
+let nodesDb: NodeStore
+let runQuery
 switch (backend) {
   case `redux`:
     nodesDb = require(`../redux/nodes`)
+    runQuery = require(`../redux/run-sift`).runSift
     break
   case `loki`:
     nodesDb = require(`./loki/nodes`)
+    runQuery = require(`./loki/nodes-query`)
     break
   default:
     throw new Error(
@@ -16,8 +36,7 @@ switch (backend) {
     )
 }
 
-module.exports = { ...nodesDb }
-module.exports.backend = backend
+module.exports = { ...nodesDb, runQuery, backend }
 
 /**
  * Get content for a node from the plugin that created it.

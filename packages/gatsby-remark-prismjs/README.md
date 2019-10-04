@@ -50,6 +50,31 @@ plugins: [
             // If setting this to true, the parser won't handle and highlight inline
             // code used in markdown i.e. single backtick code like `this`.
             noInlineHighlight: false,
+            // This adds a new language definition to Prism or extend an already
+            // existing language definition. More details on this option can be
+            // found under the header "Add new language definition or extend an
+            // existing language" below.
+            languageExtensions: [
+              {
+                language: "superscript",
+                extend: "javascript",
+                definition: {
+                  superscript_types: /(SuperType)/,
+                },
+                insertBefore: {
+                  function: {
+                    superscript_keywords: /(superif|superelse)/,
+                  },
+                },
+              },
+            ],
+            // Customize the prompt used in shell output
+            // Values below are default
+            prompt: {
+              user: "root",
+              host: "localhost",
+              global: false,
+            },
           },
         },
       ],
@@ -137,10 +162,10 @@ CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 
 If you want to add line numbering alongside your code, you need to
 import the corresponding CSS file from PrismJS, right after importing your
-colorscheme in `src/components/layout.js`:
+colorscheme in `gatsby-browser.js`:
 
 ```javascript
-// src/components/layout.js
+// gatsby-browser.js
 require("prismjs/plugins/line-numbers/prism-line-numbers.css")
 ```
 
@@ -175,6 +200,41 @@ Then add in the corresponding CSS:
 }
 ```
 
+#### Optional: Add shell prompt
+
+If you want a fancy prompt on anything with `shell` or `bash`, you need to import
+the following CSS file in `gatsby-browser.js`:
+
+```javascript
+// gatsby-browser.js
+require("prismjs/plugins/command-line/prism-command-line.css")
+```
+
+If you want to change the resulting prompt, use the following CSS:
+
+```css
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
+}
+```
+
 ### Usage in Markdown
 
 This is some beautiful code:
@@ -192,6 +252,8 @@ This is some beautiful code:
       }
     ]
     ```
+
+### Line numbering
 
 To see the line numbers alongside your code, you can use the `numberLines` option:
 
@@ -226,6 +288,8 @@ will start at index 5):
     ]
     ```
 
+### Line highlighting
+
 You can also add line highlighting. It adds a span around lines of code with a
 special class `.gatsby-highlight-code-line` that you can target with styles. See
 this README for more info.
@@ -238,66 +302,106 @@ code:
 - `highlight-start` highlights the lines until the matching `hightlight-end`;
 - `highlight-range{1, 4-6}` will highlight the next line, and the fourth, fifth and sixth lines.
 
-  ```jsx
-  class FlavorForm extends React.Component { // highlight-line
-    constructor(props) {
-      super(props);
-      this.state = {value: 'coconut'};
+````
+```jsx
+class FlavorForm extends React.Component { // highlight-line
+  constructor(props) {
+    super(props);
+    this.state = {value: 'coconut'};
 
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-      // highlight-next-line
-      this.setState({value: event.target.value});
-    }
-
-    // highlight-start
-    handleSubmit(event) {
-      alert('Your favorite flavor is: ' + this.state.value);
-      event.preventDefault();
-    }
-    // highlight-end
-
-    render() {
-      return (
-        { /* highlight-range{1,4-9,12} */ }
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Pick your favorite flavor:
-            <select value={this.state.value} onChange={this.handleChange}>
-              <option value="grapefruit">Grapefruit</option>
-              <option value="lime">Lime</option>
-              <option value="coconut">Coconut</option>
-              <option value="mango">Mango</option>
-            </select>
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      );
-    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  ```
+
+  handleChange(event) {
+    // highlight-next-line
+    this.setState({value: event.target.value});
+  }
+
+  // highlight-start
+  handleSubmit(event) {
+    alert('Your favorite flavor is: ' + this.state.value);
+    event.preventDefault();
+  }
+  // highlight-end
+
+  render() {
+    return (
+      { /* highlight-range{1,4-9,12} */ }
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Pick your favorite flavor:
+          <select value={this.state.value} onChange={this.handleChange}>
+            <option value="grapefruit">Grapefruit</option>
+            <option value="lime">Lime</option>
+            <option value="coconut">Coconut</option>
+            <option value="mango">Mango</option>
+          </select>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+````
 
 You can also specify the highlighted lines outside of the code block.
 In the following code snippet, lines 1 and 4 through 6 will get the line
 highlighting. The line range parsing is done with
 <https://www.npmjs.com/package/parse-numeric-range>.
 
-    ```javascript{1,4-6}
-    // In your gatsby-config.js
-    plugins: [
-      {
-        resolve: `gatsby-transformer-remark`,
-        options: {
-          plugins: [
-            `gatsby-remark-prismjs`,
-          ]
-        }
-      }
-    ]
-    ```
+````
+```javascript{1,4-6}
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        `gatsby-remark-prismjs`,
+      ]
+    }
+  }
+]
+```
+````
+
+### Shell prompt
+
+To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
+
+By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
+to the language.
+
+````
+```bash{outputLines: 2-10,12}
+````
+
+The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
+unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
+
+````
+```bash{promptUser: alice}{promptHost: dev.localhost}
+````
+
+### Line hiding
+
+As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).
+
+As with highlighting lines, you can control which lines to hide by adding directives as comments in your source code.
+
+The available directives are:
+
+- `hide-line` hides the current line;
+- `hide-next-line` hides the next line;
+- `hide-start` hides the lines until the matching `hide-end`;
+- `hide-range{1, 4-6}` will hide the next line, and the fourth, fifth and sixth lines.
+
+The hide-line directives will always be hidden too. Check out [the using-remark example site](https://using-remark.gatsbyjs.org/embed-snippets/) to see how this looks on a live site.
+
+### Inline code blocks
 
 In addition to fenced code blocks, inline code blocks will be passed through
 PrismJS as well.
@@ -311,8 +415,70 @@ Here's an example of how to use this if the `inlineCodeMarker` was set to `±`:
 This will be rendered in a `<code class=language-css>` with just the (syntax
 highlighted) text of `.some-class { background-color: red }`
 
+### Disabling syntax highlighting
+
 If you need to prevent any escaping or highlighting, you can use the `none`
 language; the inner contents will not be changed at all.
+
+### Add new language definition or extend an existing language
+
+You can provide a language extension by giving a single object or an array of
+language extension objects as the `languageExtensions` option.
+
+A language extension object looks like this:
+
+```javascript
+languageExtensions: [
+  {
+    language: "superscript",
+    extend: "javascript",
+    definition: {
+      superscript_types: /(SuperType)/,
+    },
+    insertBefore: {
+      function: {
+        superscript_keywords: /(superif|superelse)/,
+      },
+    },
+  },
+]
+```
+
+used options:
+
+- `language` (optional) The name of the new language.
+- `extend` (optional) The language you wish to extend.
+- `definition` (optional) This is the Prism language definition.
+- `insertBefore` (optional) Is used to define where in the language definition we want to insert our extension.
+
+More information of the format can be found here:
+https://prismjs.com/extending.html
+
+Note:
+
+- One of the parameters `language` and `extend` is needed.
+- If only `language` is given, a new language will be defined from scratch.
+- If only `extend` is given, an extension will be made to the given language.
+- If both `language` and `extend` is given, a new language that extends the `extend` language will
+  be defined.
+
+In case a language is extended, note that the definitions will not be merged.
+If the extended language definition and the given definition contains the same
+token, the original pattern will be overwritten.
+
+One of the parameters `definition` and `insertBefore` needs to be defined.
+`insertBefore` needs to be combined with `definition` or `extend` (otherwise
+there will not be any language definition tokens to insert before).
+
+In addition to this extension parameters the css also needs to be updated to
+get a style for the new tokens. Prism will wrap the matched tokens with a
+`span` element and give it the classes `token` and the token name you defined.
+In the example above we would match `superif` and `superelse`. In the html
+it would result in the following when a match is found:
+
+```html
+<span class="token superscript_keywords">superif</span>
+```
 
 ## Implementation notes
 

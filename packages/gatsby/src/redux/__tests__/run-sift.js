@@ -1,97 +1,192 @@
-const runSift = require(`../run-sift`)
-const {
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLID,
-  GraphQLString,
-} = require(`graphql`)
+if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
+  const { runSift } = require(`../run-sift`)
+  const { store } = require(`../index`)
+  const { actions } = require(`../actions`)
+  const {
+    GraphQLObjectType,
+    GraphQLNonNull,
+    GraphQLID,
+    GraphQLString,
+    GraphQLList,
+  } = require(`graphql`)
 
-jest.mock(`../../db/node-tracking`, () => {
-  return {
-    trackInlineObjectsInRootNode: () => jest.fn(),
-  }
-})
-
-const mockNodes = [
-  {
-    id: `id_1`,
-    string: `foo`,
-  },
-  {
-    id: `id_2`,
-    string: `bar`,
-  },
-  {
-    id: `id_3`,
-    string: `baz`,
-  },
-]
-
-jest.mock(`../../db/nodes`, () => {
-  return {
-    getNode: id => mockNodes.find(node => node.id === id),
-    getNodesByType: () => mockNodes,
-  }
-})
-
-describe(`run-sift`, () => {
-  const typeName = `test`
-  const gqlType = new GraphQLObjectType({
-    name: typeName,
-    fields: () => {
-      return {
-        id: new GraphQLNonNull(GraphQLID),
-        string: GraphQLString,
-      }
+  const mockNodes = () => [
+    {
+      id: `id_1`,
+      string: `foo`,
+      internal: {
+        type: `notTest`,
+        contentDigest: `0`,
+      },
     },
+    {
+      id: `id_2`,
+      string: `bar`,
+      internal: {
+        type: `test`,
+        contentDigest: `0`,
+      },
+    },
+    {
+      id: `id_3`,
+      string: `baz`,
+      internal: {
+        type: `test`,
+        contentDigest: `0`,
+      },
+    },
+    {
+      id: `id_4`,
+      string: `qux`,
+      internal: {
+        type: `test`,
+        contentDigest: `0`,
+      },
+      first: {
+        willBeResolved: `willBeResolved`,
+        second: [
+          {
+            willBeResolved: `willBeResolved`,
+            third: {
+              foo: `foo`,
+            },
+          },
+        ],
+      },
+    },
+  ]
+
+  beforeEach(() => {
+    store.dispatch({ type: `DELETE_CACHE` })
+    mockNodes().forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
   })
-  const nodes = mockNodes
 
-  describe(`filters by just id correctly`, () => {
-    it(`eq operator`, async () => {
-      const queryArgs = {
-        filter: {
-          id: { eq: `id_2` },
-        },
-      }
-
-      const resultSingular = await runSift({
-        gqlType,
-        queryArgs,
-        firstOnly: true,
-      })
-
-      const resultMany = await runSift({
-        gqlType,
-        queryArgs,
-        firstOnly: false,
-      })
-
-      expect(resultSingular).toEqual([nodes[1]])
-      expect(resultMany).toEqual([nodes[1]])
+  describe(`run-sift`, () => {
+    const typeName = `test`
+    const gqlType = new GraphQLObjectType({
+      name: typeName,
+      fields: () => {
+        return {
+          id: { type: new GraphQLNonNull(GraphQLID) },
+          string: { type: GraphQLString },
+          first: {
+            type: new GraphQLObjectType({
+              name: `First`,
+              fields: {
+                willBeResolved: {
+                  type: GraphQLString,
+                  resolve: () => `resolvedValue`,
+                },
+                second: {
+                  type: new GraphQLList(
+                    new GraphQLObjectType({
+                      name: `Second`,
+                      fields: {
+                        willBeResolved: {
+                          type: GraphQLString,
+                          resolve: () => `resolvedValue`,
+                        },
+                        third: new GraphQLObjectType({
+                          name: `Third`,
+                          fields: {
+                            foo: GraphQLString,
+                          },
+                        }),
+                      },
+                    })
+                  ),
+                },
+              },
+            }),
+          },
+        }
+      },
     })
+    describe(`filters by just id correctly`, () => {
+      it(`eq operator`, async () => {
+        const queryArgs = {
+          filter: {
+            id: { eq: `id_2` },
+          },
+        }
 
-    it(`non-eq operator`, async () => {
-      const queryArgs = {
-        filter: {
-          id: { ne: `id_2` },
-        },
-      }
+        const resultSingular = await runSift({
+          gqlType,
+          queryArgs,
+          firstOnly: true,
+          nodeTypeNames: [gqlType.name],
+        })
 
-      const resultSingular = await runSift({
-        gqlType,
-        queryArgs,
-        firstOnly: true,
+        const resultMany = await runSift({
+          gqlType,
+          queryArgs,
+          firstOnly: false,
+          nodeTypeNames: [gqlType.name],
+        })
+
+        expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
+        expect(resultMany.map(o => o.id)).toEqual([mockNodes()[1].id])
       })
 
-      const resultMany = await runSift({
-        gqlType,
-        queryArgs,
-        firstOnly: false,
+      it(`eq operator honors type`, async () => {
+        const queryArgs = {
+          filter: {
+            id: { eq: `id_1` },
+          },
+        }
+
+        const resultSingular = await runSift({
+          gqlType,
+          queryArgs,
+          firstOnly: true,
+          nodeTypeNames: [gqlType.name],
+        })
+
+        const resultMany = await runSift({
+          gqlType,
+          queryArgs,
+          firstOnly: false,
+          nodeTypeNames: [gqlType.name],
+        })
+
+        // `id-1` node is not of queried type, so results should be empty
+        expect(resultSingular).toEqual([])
+        expect(resultMany).toEqual(null)
       })
 
-      expect(resultSingular).toEqual([nodes[0]])
-      expect(resultMany).toEqual([nodes[0], nodes[2]])
+      it(`non-eq operator`, async () => {
+        const queryArgs = {
+          filter: {
+            id: { ne: `id_2` },
+          },
+        }
+
+        const resultSingular = await runSift({
+          gqlType,
+          queryArgs,
+          firstOnly: true,
+          nodeTypeNames: [gqlType.name],
+        })
+
+        const resultMany = await runSift({
+          gqlType,
+          queryArgs,
+          firstOnly: false,
+          nodeTypeNames: [gqlType.name],
+        })
+
+        expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[2].id])
+        expect(resultMany.map(o => o.id)).toEqual([
+          mockNodes()[2].id,
+          mockNodes()[3].id,
+        ])
+      })
     })
   })
-})
+} else {
+  it(`Loki skipping redux run-sift`, () => {
+    expect(true).toEqual(true)
+  })
+}

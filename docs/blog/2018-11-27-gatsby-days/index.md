@@ -3,12 +3,8 @@ title: Gatsby Days, Meetups, and more!
 date: 2018-11-27
 author: Linda Watkins
 tags:
-  - events
+  - community
 ---
-
-<a href="https://www.eventbrite.com/e/gatsby-days-tickets-51837151315">
-  <img alt="Gatsby Days" src="./images/gatsby-days.png" />
-</a>
 
 When I started as Director of Marketing at Gatsby 4 months ago, I was impressed with the enthusiasm and energy I saw in the community around Gatsby. And as I’ve started to connect with developers at technology meetups and conferences, I’ve heard so many of you talk about interest in Gatsby-sponsored events. Well, now the wait is over!
 
@@ -28,7 +24,7 @@ If you didn’t get a chance to cast your vote for a Gatsby Days host city, you 
 
 Meetups are also a great way to connect with the Gatsby community. Several community-organized Gatsby meetups have already been popping up across the globe and we’ll be launching a more formal program to support community-organized meetups with free swag and resources (details will be coming soon). In the meantime, if you’re organizing a Gatsby meetup or event and need some support, just [fill out the form here](https://airtable.com/shrpwc99yogJm9sfI) and someone will get back with you to work out the details.
 
-And if you’re in the San Francisco bay area, join our [San Francisco meetup](https://www.meetup.com/meetup-group-cHIRVLfX/) to connect with Gatsbyjs community members. These will be more casual gatherings where we talk about front-end web development, the modern web tech stack, and Gatsby. We'll have our first meetup after the new year (in January 2019) so stay tuned!
+And if you’re in the San Francisco bay area, join our [San Francisco meetup](https://www.meetup.com/meetup-group-cHIRVLfX/) to connect with Gatsbyjs community members. These will be more casual gatherings where we talk about frontend web development, the modern web tech stack, and Gatsby. We'll have our first meetup after the new year (in January 2019) so stay tuned!
 
 Join the Gatsby [Meetup San Francisco here](https://www.meetup.com/meetup-group-cHIRVLfX/).
 

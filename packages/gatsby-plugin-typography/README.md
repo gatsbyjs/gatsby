@@ -2,7 +2,7 @@
 
 A Gatsby plugin for utilizing the [Typography](https://kyleamathews.github.io/typography.js/) library with minimal configuration.
 
-See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-two/#typographyjs)
+See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-three/)
 ([source](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography))
 
 ## Install
@@ -19,6 +19,8 @@ import grandViewTheme from "typography-theme-grand-view"
 
 const typography = new Typography(grandViewTheme)
 
+// Export helper functions
+export const { scale, rhythm, options } = typography
 export default typography
 ```
 

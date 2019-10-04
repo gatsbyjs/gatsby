@@ -1,9 +1,9 @@
 ---
 title: My experience doing pair programming with the Gatsby team and why you should do it
-date: "2018-08-11"
+date: 2018-08-11
 image: images/screenshot.jpg
 author: Horacio Herrera
-tags: ["collaboration", "community"]
+tags: ["gatsby-for-teams", "community"]
 ---
 
 I love pair programming. This is one of the practices we do in our trainings at [ReactJS Academy](https://reactjs.academy?utm_source=social&utm_medium=medium&utm_campaign=horacio-gatsby-post&utm_term=reactjs-academy), and we do it regularly at [LeanJS](https://leanjs.com?utm_source=social&utm_medium=medium&utm_campaign=horacio-gatsby-post&utm_term=leanjs).
@@ -36,4 +36,4 @@ Jason patiently explained the parts I didn’t understand about Gatsby and he al
 
 Again, thanks Jason Lengstorf for the time! and thanks Gatsby for this amazing project!! 🎉
 
-> If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/docs/pair-programming/).
+> If you want to sign up for your session, check out the [open community pair programming sessions docs and signup instructions](/contributing/pair-programming/).

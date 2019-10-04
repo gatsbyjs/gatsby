@@ -4,29 +4,34 @@ title: "Quick Start"
 
 This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/tutorial/)!
 
-## Install Gatsby's command line tool
-
-```bash
-npm install --global gatsby-cli
-```
-
 ## Use the Gatsby CLI
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-quick-start-with-gatsby-create-develop-and-build-gatsby-sites-from-the-command-line"
+  lessonTitle="Quick Start with Gatsby: Create, Develop, and Build Gatsby Sites From the Command Line"
+/>
+
+### Install the Gatsby CLI.
+
+```shell
+npm install -g gatsby-cli
+```
 
 ### Create a new site.
 
-```bash
+```shell
 gatsby new gatsby-site
 ```
 
 ### Change directories into site folder.
 
-```bash
+```shell
 cd gatsby-site
 ```
 
 ### Start development server.
 
-```bash
+```shell
 gatsby develop
 ```
 
@@ -36,7 +41,7 @@ Try editing the JavaScript pages in `src/pages`. Saved changes will live reload 
 
 ### Create a production build.
 
-```bash
+```shell
 gatsby build
 ```
 
@@ -44,14 +49,16 @@ Gatsby will perform an optimized production build for your site, generating stat
 
 ### Serve the production build locally.
 
-```bash
+```shell
 gatsby serve
 ```
 
-Gatsby starts a local HTML server for testing your built site.
+Gatsby starts a local HTML server for testing your built site. Remember to build your site using `gatsby build` before using this command.
 
-### Access documentation for CLI commands.
+### Access documentation for CLI commands
 
 To see detailed documentation for the CLI commands, run `gatsby --help` in the terminal.
 
-For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby develop --help`.
+For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby new --help`.
+
+For more information on the Gatsby CLI, visit the [CLI reference](/docs/gatsby-cli/) section of the docs.
