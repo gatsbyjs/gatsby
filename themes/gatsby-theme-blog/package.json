@@ -23,7 +23,7 @@
     "@theme-ui/prism": "^0.2.40",
     "@theme-ui/typography": "^0.2.40",
     "deepmerge": "^4.0.0",
-    "gatsby-image": "^2.2.23",
+    "gatsby-image": "^2.2.24",
     "gatsby-plugin-emotion": "^4.1.9",
     "gatsby-plugin-feed": "^2.3.15",
     "gatsby-plugin-react-helmet": "^3.1.10",
@@ -39,7 +39,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.15.28",
+    "gatsby": "^2.15.29",
     "prettier": "^1.18.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
