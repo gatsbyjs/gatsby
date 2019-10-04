@@ -88,11 +88,11 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
 
-2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”. This directory further contains following sub directories.
+2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”. This directory further contains following subdirectories.
 
-    - **`/components`**: This sub directory contains all the repetatvie sections of UI on your fron-tend. All components are written in special JavaScript syntax [JSX](https://reactjs.org/docs/introducing-jsx.html).
-    - **`/images`**: Images used on your site will be under this directory.
-    - **`/pages`**: Every component under this directory will be defined as a page of your site.
+    - **`/components`**: This subdirectory contains all the repetatvie sections of UI on your fron-tend. All components are written in special JavaScript syntax [JSX](https://reactjs.org/docs/introducing-jsx.html).
+    - **`/images`**: Images used on your site will be under this subdirectory.
+    - **`/pages`**: Every component under this subdirectory will be defined as a page of your site.
 
 3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 
