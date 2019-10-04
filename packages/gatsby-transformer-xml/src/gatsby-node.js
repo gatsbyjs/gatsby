@@ -67,24 +67,6 @@ async function onCreateNode(
   }
 
   function createNewOutputFormat(result) {
-    function getLegacyElementValue(cValue) {
-      // If the value is an attribute, return the string outright
-      if (typeof cValue === `string`) return cValue
-
-      // Otherwise, figure out if the value has child elements, and recurse accordingly.
-      const keys = Object.keys(cValue)
-      const values = keys.map(key => cValue[key])
-      if (values.length > 1) {
-        const arrayValues = keys.map(key => {
-          return { name: key, content: getLegacyElementValue(cValue[key]) }
-        })
-        return arrayValues
-      } else {
-        // single value
-        return values.join()
-      }
-    }
-
     // recursively extract children from XML
     function extractChildrenFromResult(parentElement) {
       Object.entries(parentElement).forEach(([childKey, childValue]) => {
@@ -111,21 +93,23 @@ async function onCreateNode(
          */
         if (Array.isArray(childValue)) {
           childValue.map(cValue => {
+            const { attributes, ...values } = cValue
             transformedObject.root.children = [
               ...transformedObject.root.children,
               {
-                name: childKey,
-                children: getLegacyElementValue(cValue),
+                attributes: { ...attributes },
+                ...values,
               },
             ]
           })
         } else {
           // If its not an array, we just map the childValue to the key.
+          const { attributes, ...values } = childValue
           transformedObject.root.children = [
             ...transformedObject.root.children,
             {
-              name: childKey,
-              children: getLegacyElementValue(childValue),
+              attributes: { ...attributes },
+              ...values,
             },
           ]
         }
@@ -171,9 +155,9 @@ async function onCreateNode(
       id:
         _.get(item, `attributes.id`) !== undefined
           ? item.attributes.id
-          : createNodeId(`${node.id} [${i ? i : ``}] >>> XML`),
+          : createNodeId(`${JSON.stringify(item)}`),
       parent: node.id,
-      children: [],
+      children: item.hasOwnProperty(`children`) ? [item.children] : [],
       internal: {
         contentDigest: createContentDigest(item),
         type: _.upperFirst(_.camelCase(`${node.name} xml`)),
@@ -181,12 +165,8 @@ async function onCreateNode(
     }
   }
   if (!useElementNamesAsKeys) {
-    xmlnodeArray = children.map((obj, i) => {
-      if (obj.children) {
-        obj.xmlChildren = obj.children
-        delete obj.children
-      }
-      return createNodeFromXml(obj, i)
+    children.forEach(element => {
+      xmlnodeArray = [...xmlnodeArray, createNodeFromXml(element)]
     })
   } else {
     // iterates the children from the object (2nd level down the rabbit hole)

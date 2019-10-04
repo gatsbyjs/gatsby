@@ -24,6 +24,12 @@ describe(`Process XML nodes correctly`, () => {
             <genre>Computer</genre>
             <price>44.95</price>
             <publish_date>2000-10-01</publish_date>
+            <description>An in-depth look at creating applications
+            with XML.</description>
+            <description_html><![CDATA[
+              <p>An in-depth look at creating applications
+            with XML.</p>
+            ]]></description_html>
             <publish_date_explicit>
               <year>2000</year>
               <month>
@@ -32,12 +38,6 @@ describe(`Process XML nodes correctly`, () => {
               </month>
               <day>01</day>
             </publish_date_explicit>
-            <description>An in-depth look at creating applications
-            with XML.</description>
-            <description_html><![CDATA[
-              <p>An in-depth look at creating applications
-            with XML.</p>
-            ]]></description_html>
          </book>
          <book id="bk102">
             <author>Ralls, Kim</author>
@@ -45,14 +45,6 @@ describe(`Process XML nodes correctly`, () => {
             <genre>Fantasy</genre>
             <price>5.95</price>
             <publish_date>2000-12-16</publish_date>
-            <publish_date_explicit>
-              <year>2000</year>
-              <month>
-                <month_number>12</month_number>
-                <month_name lang="en-gb">December</month_name>
-              </month>
-              <day>16</day>
-            </publish_date_explicit>
             <description>A former architect battles corporate zombies,
             an evil sorceress, and her own childhood to become queen
             of the world.</description>
@@ -61,6 +53,14 @@ describe(`Process XML nodes correctly`, () => {
             an evil sorceress, and her own childhood to become queen
             of the world.</p>
             ]]></description_html>
+            <publish_date_explicit>
+              <year>2000</year>
+              <month>
+                <month_number>12</month_number>
+                <month_name lang="en-gb">December</month_name>
+              </month>
+              <day>16</day>
+            </publish_date_explicit>
          </book>
       </catalog>
     `
