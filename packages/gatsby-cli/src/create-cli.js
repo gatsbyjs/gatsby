@@ -259,6 +259,15 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
+    command: `run-static-queries`,
+    desc: `Run static queries and generate JSON files`,
+    handler: getCommandHandler(`run-static-queries`, (args, cmd) => {
+      process.env.NODE_ENV = process.env.NODE_ENV || `development`
+      return cmd(args)
+    }),
+  })
+
+  cli.command({
     command: `repl`,
     desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
