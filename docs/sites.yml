@@ -7486,6 +7486,13 @@
 - title: Mozilla India
   main_url: https://mozillaindia.org/
   url: https://mozillaindia.org/
-  categories: 
+  categories:
     - Open Source
   featured: false
+- title: Primer Labs
+  main_url: https://www.primerlabs.io
+  url: https://www.primerlabs.io
+  featured: false
+  categories:
+    - Education
+    - Learning

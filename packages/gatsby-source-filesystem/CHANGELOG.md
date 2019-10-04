@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.28...gatsby-source-filesystem@2.1.29) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+- update dependency chokidar to v3.2.1 ([#18009](https://github.com/gatsbyjs/gatsby/issues/18009)) ([4df0306](https://github.com/gatsbyjs/gatsby/commit/4df0306))
+
 ## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.26...gatsby-source-filesystem@2.1.28) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-source-filesystem
