@@ -390,3 +390,15 @@
   hiring: false
   # If you mark `portfolio: true`, any sites you have in the Site Showcase that say `built_by: [imagine your name here]` will be linked to your Creator Profile. So make sure that `name`in `creators.yml` is exactly the same as `built_by` in `sites.yml`.
   portfolio: true
+- name: Desarol
+  type: agency
+  description: >-
+    Desarol is a remote digital agency that specializes in building static websites
+    built on the decoupled CMS of your choice. We use Agile processes, we love Headless
+    Drupal, performance and accessibilty excite us.
+  location: United States
+  website: "https://desarol.com/"
+  github: "https://github.com/desarol/"
+  image: images/desarol.png
+  for_hire: true
+  hiring: true
