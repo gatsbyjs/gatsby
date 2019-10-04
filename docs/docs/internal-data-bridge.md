@@ -6,21 +6,7 @@ The Internal Data Bridge is an internal Gatsby plugin located at [internal-plugi
 
 ## Example usage
 
-As a site developer, you can write queries to introspect your site's information. For example, to get all the `jsonName`s of your pages:
-
-```graphql
-{
-  allSitePage(limit: 10) {
-    edges {
-      node {
-        jsonName
-      }
-    }
-  }
-}
-```
-
-Or, to get a list of all Gatsby plugins that you're using:
+As a site developer, you can write queries to introspect your site's information. For example, to get a list of all Gatsby plugins that you're using:
 
 ```graphql
 {

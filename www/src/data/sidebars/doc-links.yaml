@@ -399,6 +399,8 @@
                   link: /docs/reach-router-and-gatsby/
                 - title: Linking and Prefetching with Gatsby*
                   link: /docs/linking-and-prefetching-with-gatsby/
+                - title: Location Data from Props
+                  link: /docs/location-data-from-props/
                 - title: Centralizing Your Site's Navigation
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
