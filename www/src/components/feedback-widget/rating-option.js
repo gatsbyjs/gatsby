@@ -68,7 +68,7 @@ const RatingText = styled(`span`)`
 
 const Label = styled(`label`)`
   align-items: center;
-  background: ${p => p.theme.colors.white};
+  background: ${p => p.theme.colors.themedInput.background};
   cursor: pointer;
   display: flex;
   flex-basis: 33.33%;

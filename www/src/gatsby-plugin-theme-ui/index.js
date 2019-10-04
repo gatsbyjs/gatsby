@@ -42,7 +42,7 @@ const lineHeightsTokens = {
   heading: lh.dense,
 }
 
-const darkBackground = `#131217` // meh
+const darkBackground = `#111014` // meh
 const darkBorder = c.grey[90]
 // const darkBackground = c.purple[90]
 // const darkBorder = c.purple[80]
