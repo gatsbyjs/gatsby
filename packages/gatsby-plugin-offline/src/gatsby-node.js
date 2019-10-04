@@ -171,7 +171,7 @@ exports.onPostBuild = (
         const swText = fs
           .readFileSync(swDest, `utf8`)
           .replace(
-            /(workbox\.setConfig\({modulePathPrefix: ".+?")}\);/,
+            /(workbox\.setConfig\({modulePathPrefix: "[^"]+")}\);/,
             `$1, debug: ${JSON.stringify(debug)}});`
           )
         fs.writeFileSync(swDest, swText)
