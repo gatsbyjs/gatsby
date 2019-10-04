@@ -181,8 +181,8 @@ const col = {
   },
   newsletter: {
     background: c.white,
-    border: c.purple[10],
-    heading: c.purple[60],
+    border: c.grey[10],
+    heading: c.grey[70],
     stripeColorA: c.red[40],
     stripeColorB: c.blue[40],
   },
@@ -245,11 +245,11 @@ const col = {
       },
       themedInput: {
         background: darkBorder,
-        backgroundFocus: hex2rgba(c.purple[90], 0.25),
-        focusBorder: c.purple[80],
-        focusBoxShadow: c.purple[90],
+        backgroundFocus: `black`,
+        focusBorder: c.purple[60],
+        focusBoxShadow: c.purple[60],
         icon: c.grey[50],
-        iconFocus: c.whiteFade[70],
+        iconFocus: c.purple[50],
         placeholder: c.whiteFade[50],
       },
       // TODO figure out how to make shadows themeable
@@ -268,7 +268,7 @@ const col = {
       },
       ui: {
         background: darkBackground,
-        hover: c.purple[5],
+        hover: c.purple[90],
         border: darkBorder,
       },
       widget: {

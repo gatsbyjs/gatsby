@@ -134,7 +134,7 @@ class FilteredShowcase extends Component {
             <div sx={{ ml: `auto` }}>
               <label css={{ display: `block`, position: `relative` }}>
                 <input
-                  sx={themedInput}
+                  sx={{ ...themedInput, pl: 7 }}
                   type="search"
                   value={this.state.search}
                   onChange={e => this.setState({ search: e.target.value })}

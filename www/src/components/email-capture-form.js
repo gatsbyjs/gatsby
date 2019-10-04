@@ -6,7 +6,7 @@ import styled from "@emotion/styled"
 import SendIcon from "react-icons/lib/md/send"
 
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
-import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
+import { themedInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
 const Container = styled(`div`)`
@@ -67,23 +67,6 @@ const Label = styled(`label`)`
     content: ${props => (props.isRequired ? `'*'` : ``)};
     color: ${p => p.theme.colors.textMuted};
   }
-`
-
-const SingleLineInput = styled(`input`)`
-  ${formInput};
-  border-color: ${p => p.theme.colors.purple[20]};
-  width: 100%;
-  -webkit-appearance: none;
-
-  :focus {
-    ${formInputFocus}
-  }
-`
-
-const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${p => p.theme.fonts.system};
-  font-size: ${p => p.theme.fontSizes[2]};
-  padding: ${p => p.theme.space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
@@ -206,10 +189,6 @@ class Form extends React.Component {
   render() {
     const { isHomepage } = this.props
 
-    const SingleLineInputComponent = isHomepage
-      ? SingleLineInputOnHomepage
-      : SingleLineInput
-
     return (
       <StyledForm onSubmit={this.onSubmit} isHomepage={isHomepage}>
         {!isHomepage && (
@@ -217,7 +196,7 @@ class Form extends React.Component {
             Email
           </Label>
         )}
-        <SingleLineInputComponent
+        <input
           id="email"
           name="email"
           type="email"
@@ -228,6 +207,13 @@ class Form extends React.Component {
           }}
           aria-label={isHomepage ? `Email` : ``}
           placeholder={`your.email@example.com`}
+          sx={{
+            ...themedInput,
+            width: `100%`,
+            "&:focus": {
+              ...formInputFocus,
+            },
+          }}
         />
         {this.state.fieldErrors.email && (
           <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>

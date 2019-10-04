@@ -86,7 +86,7 @@ class FeaturedSites extends Component {
                 borderBottom: 0,
                 cursor: `pointer`,
                 "&:hover": {
-                  color: `gatsby`,
+                  color: `link.hoverColor`,
                 },
               },
             }}

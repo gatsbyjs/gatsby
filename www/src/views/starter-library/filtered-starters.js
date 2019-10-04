@@ -210,6 +210,7 @@ export default class FilteredStarterLibrary extends Component {
                 <DebounceInput
                   sx={{
                     ...themedInput,
+                    pl: 7,
                     width: `10rem`,
                   }}
                   value={urlState.s}

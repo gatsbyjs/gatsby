@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
@@ -58,11 +60,12 @@ const TextareaLabel = styled(`label`)`
   }
 `
 
-const Textarea = styled(`textarea`)`
-  ${themedInput}
-  height: 5.5rem;
-  margin: ${p => p.theme.space[1]} 0 ${p => p.theme.space[4]};
-`
+const textareaStyles = {
+  ...themedInput,
+  height: `5.5rem`,
+  mt: 1,
+  mb: 4,
+}
 
 const FeedbackForm = ({
   handleSubmit,
@@ -113,7 +116,8 @@ const FeedbackForm = ({
       </Fieldset>
       <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
         Your comments <span>(optional):</span>
-        <Textarea
+        <textarea
+          sx={{ ...textareaStyles, mb: 4 }}
           value={comment}
           onChange={handleCommentChange}
           disabled={submitting}

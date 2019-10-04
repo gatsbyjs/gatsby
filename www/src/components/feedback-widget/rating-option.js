@@ -51,7 +51,7 @@ const IconWrapper = styled(`span`)`
   width: ${p => p.theme.space[9]};
 
   svg {
-    color: ${p => p.theme.colors.lilac};
+    color: ${p => p.theme.colors.grey[40]};
     height: 100%;
     width: 100%;
   }
@@ -79,12 +79,12 @@ const Label = styled(`label`)`
   transition: background 0.25s;
 
   &.focused {
-    background: ${p => p.theme.colors.lilac};
+    background: ${p => p.theme.colors.gatsby};
     color: ${p => p.theme.colors.white};
 
     ${IconWrapper} {
       svg {
-        color: ${p => p.theme.colors.orange[40]};
+        color: ${p => p.theme.colors.white};
       }
     }
   }

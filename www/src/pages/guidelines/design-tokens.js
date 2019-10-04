@@ -139,7 +139,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-${space}`}
                       height={space}
                       width={space}
-                      bg="orange.30"
+                      bg="grey.30"
                     />
                     <SrOnly>
                       A box with <code>space[{index}]</code> set as value for
@@ -157,7 +157,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section bg="grey.5">
+    <Section bg="ui.background">
       <SectionHeading>Shadows &amp; Elevation</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -268,7 +268,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-radius`}
                       height={40}
                       width={80}
-                      bg="orange.30"
+                      bg="grey.30"
                       borderRadius={index}
                     />
                     <SrOnly>

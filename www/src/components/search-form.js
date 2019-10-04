@@ -413,6 +413,7 @@ class SearchForm extends Component {
             id="doc-search"
             sx={{
               ...themedInput,
+              pl: 7,
               width: [`100%`, null, null, null, 5, `100%`],
               transition: t =>
                 `width ${t.transition.speed.default} ${t.transition.curve.default}`,

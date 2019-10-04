@@ -145,7 +145,7 @@ class TagsPage extends React.Component {
               <h2>All tags</h2>
               <label css={{ position: `relative` }}>
                 <input
-                  sx={themedInput}
+                  sx={{ ...themedInput, pl: 7 }}
                   id="tagsFilter"
                   name="filterQuery"
                   type="search"
