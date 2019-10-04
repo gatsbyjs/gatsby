@@ -43,7 +43,7 @@
     "css-loader": "^1.0.1",
     "graphiql": "^0.15.1",
     "graphiql-code-exporter": "^2.0.5",
-    "graphiql-explorer": "^0.4.4",
+    "graphiql-explorer": "^0.4.5",
     "html-webpack-plugin": "^3.2.0",
     "npm-run-all": "4.1.5",
     "react": "^16.10.2",
