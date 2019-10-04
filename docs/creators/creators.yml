@@ -390,6 +390,17 @@
   hiring: false
   # If you mark `portfolio: true`, any sites you have in the Site Showcase that say `built_by: [imagine your name here]` will be linked to your Creator Profile. So make sure that `name`in `creators.yml` is exactly the same as `built_by` in `sites.yml`.
   portfolio: true
+- name: JAMchefs
+  type: agency
+  description: >-
+    We are a small studio entirely focused on JAMstack websites built with Gatsby. We help companies around the world to build beautiful and high-performant websites, landing pages and e-shops.
+  location: Bulgaria
+  website: "https://jamchefs.com/"
+  github: "https://github.com/jamchefs"
+  image: images/jamchefs.png
+  for_hire: true
+  hiring: false
+  portfolio: true
 - name: Desarol
   type: agency
   description: >-
