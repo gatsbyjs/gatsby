@@ -89,49 +89,39 @@ export const buttonStyles = {
   },
 }
 
-export const svgStyles = {
-  stroke: {
-    "& .svg-stroke": {
-      strokeMiterlimit: 10,
-      strokeWidth: 1.4173,
+export const svgStyles = t => {
+  return {
+    stroke: {
+      "& .svg-stroke": {
+        strokeMiterlimit: 10,
+        strokeWidth: 1.5,
+      },
     },
-  },
-  default: {
-    "& .svg-stroke-accent": { stroke: colors.purple[40] },
-    "& .svg-stroke-lilac": { stroke: colors.purple[40] },
-    "& .svg-fill-lilac": { fill: colors.purple[40] },
-    "& .svg-fill-gatsby": { fill: colors.purple[40] },
-    "& .svg-fill-brightest": { fill: colors.white },
-    "& .svg-fill-accent": { fill: colors.purple[40] },
-    "& .svg-stroke-gatsby": { stroke: colors.purple[40] },
-    "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
-    "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-    "& .svg-fill-gradient-accent-white-bottom": { fill: colors.white },
-    "& .svg-fill-gradient-purple": { fill: colors.purple[40] },
-    "& .svg-stroke-gradient-purple": { stroke: colors.purple[40] },
-    "& .svg-fill-lavender": { fill: `transparent` },
-  },
-  active: {
-    "& .svg-stroke-accent": { stroke: colors.accent },
-    "& .svg-stroke-lilac": { stroke: colors.lilac },
-    "& .svg-stroke-gatsby": { stroke: colors.gatsby },
-    "& .svg-stroke-gradient-purple": { stroke: `url(#purple-top)` },
-    "& .svg-fill-lilac": { fill: colors.lilac },
-    "& .svg-fill-gatsby": { fill: colors.gatsby },
-    "& .svg-fill-accent": { fill: colors.accent },
-    "& .svg-fill-lavender": { fill: colors.lavender },
-    "& .svg-fill-brightest": { fill: colors.white },
-    "& .svg-fill-gradient-accent-white-45deg": {
-      fill: `url(#accent-white-45deg)`,
+    default: {
+      "& .svg-stroke-dark": { stroke: `icon.neutral` },
+      "& .svg-stroke-accent": { stroke: `icon.neutralLight` },
+      "& .svg-stroke-background": { stroke: `icon.background` },
+      "& .svg-stroke-light": { stroke: `icon.light` },
+      "& .svg-fill-dark": { fill: `icon.neutral` },
+      "& .svg-fill-accent": { fill: `icon.neutralLight` },
+      "& .svg-fill-background": { fill: `icon.background` },
+      "& .svg-fill-light": { fill: `icon.light` },
+      "& .svg-fill-accent.svg-fill-transparent": { fill: `transparent` },
+      "& .svg-fill-light.svg-fill-transparent": { fill: `transparent` },
     },
-    "& .svg-fill-gradient-purple": { fill: `url(#lilac-gatsby)` },
-    "& .svg-fill-gradient-accent-white-bottom": {
-      fill: `url(#accent-white-bottom)`,
+    active: {
+      "& .svg-stroke-dark": { stroke: `icon.dark` },
+      "& .svg-stroke-accent": { stroke: `icon.accent` },
+      "& .svg-stroke-background": { stroke: `icon.background` },
+      "& .svg-stroke-light": { stroke: `icon.light` },
+      "& .svg-fill-dark": { fill: `icon.dark` },
+      "& .svg-fill-accent": { fill: `icon.accent` },
+      "& .svg-fill-background": { fill: `icon.background` },
+      "& .svg-fill-light": { fill: `icon.light` },
+      "& .svg-fill-accent.svg-fill-transparent": { fill: `icon.accent` },
+      "& .svg-fill-light.svg-fill-transparent": { fill: `icon.light` },
     },
-    "& .svg-fill-gradient-accent-white-top": {
-      fill: `url(#accent-white-top)`,
-    },
-  },
+  }
 }
 
 // This is an exceptionally bad name

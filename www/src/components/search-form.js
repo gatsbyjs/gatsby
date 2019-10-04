@@ -384,7 +384,7 @@ class SearchForm extends Component {
         sx={{
           alignItems: `flex-end`,
           display: `flex`,
-          flex: `1 0 auto`,
+          flex: `1 1 auto`,
           flexDirection: `row`,
           mb: 0,
           ml: 4,

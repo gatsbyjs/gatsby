@@ -248,7 +248,6 @@ class FeaturedSites extends Component {
                         [mediaQueries.xl]: {
                           height: 72,
                         },
-
                         "& svg": {
                           height: `100%`,
                           ...svgStyles.active,

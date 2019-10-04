@@ -124,6 +124,14 @@ const col = {
     hoverBorder: c.purple[50],
     hoverColor: c.purple[60],
   },
+  icon: {
+    dark: c.purple[60],
+    neutral: c.grey[50],
+    neutralLight: c.grey[30],
+    background: c.white,
+    accent: c.yellow[60],
+    light: c.purple[10],
+  },
   input: {
     background: c.white,
     backgroundFocus: c.white,
@@ -151,7 +159,7 @@ const col = {
   navigation: {
     background: hex2rgba(c.white, 0.975),
     linkDefault: c.grey[70],
-    linkActive: c.black,
+    linkActive: c.gatsby,
     linkHover: c.gatsby,
     socialLink: c.grey[40],
   },
@@ -194,13 +202,21 @@ const col = {
       textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
+      icon: {
+        dark: c.purple[40],
+        neutral: c.grey[60],
+        neutralLight: c.grey[90],
+        background: c.darkBorder,
+        accent: c.purple[60],
+        light: c.purple[90],
+      },
       card: {
         background: c.grey[90],
         color: c.whiteFade[70],
         header: c.white,
-        starterLabelBackground: c.teal[90],
+        starterLabelBackground: hex2rgba(c.teal[90], 0.125),
         starterLabelText: c.teal[10],
-        pluginLabelBackground: c.orange[90],
+        pluginLabelBackground: hex2rgba(c.orange[90], 0.125),
         pluginLabelText: c.orange[10],
       },
       modal: {

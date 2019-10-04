@@ -36,7 +36,7 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
     ? {
         style: {
           borderBottomColor: colors.lilac,
-          color: colors.lilac,
+          color: colors.gatsby,
         },
       }
     : {}
