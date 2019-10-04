@@ -28,7 +28,7 @@ async function onCreateNode(
   const content = await loadNodeContent(node)
 
   // Destructure out our custom options
-  const { typeName, nodePerFile, ...options } = pluginOptions
+  const { typeName, nodePerFile, ...options } = pluginOptions || {}
 
   // Parse
   let parsedContent = await convertToJson(content, options)
