@@ -179,7 +179,7 @@ class BlogPostTemplate extends React.Component {
                   order: 0,
                   letterSpacing: `tight`,
                   lineHeight: `dense`,
-                  fontSize: [5, 6, 7, 8, 10, 12],
+                  fontSize: [5, 6, 7, 8, 9, 11],
                   [mediaQueries.lg]: {
                     ml: `-8rem`,
                     mb: 8,
