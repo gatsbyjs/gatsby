@@ -183,6 +183,13 @@ export const formInput = {
   },
 }
 
+export const themedInputFocus = {
+  bg: `themedInput.backgroundFocus`,
+  boxShadow: t => `0 0 0 2px ${t.colors.themedInput.focusBoxShadow}`,
+  outline: 0,
+  width: `100%`,
+}
+
 export const themedInput = {
   ...formInput,
   appearance: `none`,
@@ -192,10 +199,7 @@ export const themedInput = {
   overflow: `hidden`,
   px: 3,
   ":focus": {
-    bg: `themedInput.backgroundFocus`,
-    boxShadow: t => `0 0 0 2px ${t.colors.themedInput.focusBoxShadow}`,
-    outline: 0,
-    width: `100%`,
+    ...themedInputFocus,
   },
   "::placeholder": {
     color: `themedInput.placeholder`,

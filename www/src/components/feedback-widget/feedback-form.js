@@ -4,7 +4,7 @@ import { Fragment } from "react"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton } from "./buttons"
-import { themedInput, formInputFocus } from "../../utils/styles"
+import { themedInput, themedInputFocus } from "../../utils/styles"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
 import MdSentimentDissatisfied from "react-icons/lib/md/sentiment-dissatisfied"
@@ -31,25 +31,31 @@ const Legend = styled(`legend`)`
   text-align: center;
 `
 
-const Rating = styled(`div`)`
-  align-content: stretch;
-  border: 1px solid ${p => p.theme.colors.input.border};
-  border-radius: ${p => p.theme.radii[2]}px;
-  display: flex;
-  flex: 1 1 auto;
-  justify-content: stretch;
-  overflow: hidden;
-  transition: 0.5s;
-  width: 99.99%;
+const Rating = ({ children }) => (
+  <div
+    sx={{
+      ...themedInput,
+      px: 0,
+      alignContent: `stretch`,
+      display: `flex`,
+      flex: `1 1 auto`,
+      justifyContent: `stretch`,
+      overflow: `hidden`,
+      transition: `0.5s`,
+      width: `99.99%`,
 
-  &:focus-within {
-    ${formInputFocus}
-  }
+      "&:focus-within": {
+        ...themedInputFocus,
+      },
 
-  [disabled] & {
-    opacity: 0.5;
-  }
-`
+      "[disabled] &": {
+        opacity: `0.5`,
+      },
+    }}
+  >
+    {children}
+  </div>
+)
 
 const TextareaLabel = styled(`label`)`
   font-size: ${p => p.theme.fontSizes[1]};
