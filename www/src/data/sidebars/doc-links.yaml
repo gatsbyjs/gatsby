@@ -515,8 +515,6 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
-        - title: Life and Times of a Gatsby Build
-          link: /docs/life-and-times-of-a-gatsby-build/
         - title: Overview of the Gatsby Build Process
           link: /docs/overview-of-the-gatsby-build-process/
         - title: Building with Components
