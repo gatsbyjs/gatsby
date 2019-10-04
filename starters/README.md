@@ -70,7 +70,7 @@ A starter is a simplified example to get up and running with Gatsby quickly and 
 
 ## 🚀 Get Up and Running in 5 Minutes
 
-```sh
+```shell
 # create a new Gatsby site using the default starter
 gatsby new my-blazing-fast-site
 ```

@@ -9,6 +9,7 @@ const {
 const { SchemaComposer } = require(`graphql-compose`)
 jest.mock(`../../utils/api-runner-node`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const {
   buildObjectType,
@@ -20,7 +21,22 @@ require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = require(`./fixtures/node-model`)
 
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => report.warn.mockClear())
 
@@ -32,7 +48,10 @@ describe(`Build schema`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      actions.createNode(
+        { ...node, internal: { ...node.internal } },
+        { name: `test` }
+      )(store.dispatch)
     )
   })
 

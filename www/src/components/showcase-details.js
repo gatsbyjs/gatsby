@@ -254,17 +254,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
                 <meta
                   property="og:image"
-                  content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
-                  }`}
+                  content={`https://www.gatsbyjs.org${data.sitesYaml.childScreenshot.screenshotFile.childImageSharp.resize.src}`}
                 />
                 <meta
                   name="twitter:image"
-                  content={`https://www.gatsbyjs.org${
-                    data.sitesYaml.childScreenshot.screenshotFile
-                      .childImageSharp.resize.src
-                  }`}
+                  content={`https://www.gatsbyjs.org${data.sitesYaml.childScreenshot.screenshotFile.childImageSharp.resize.src}`}
                 />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta
@@ -476,10 +470,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       }}
                       url={data.sitesYaml.main_url}
                       title={data.sitesYaml.title}
-                      image={`https://www.gatsbyjs.org${
-                        data.sitesYaml.childScreenshot.screenshotFile
-                          .childImageSharp.resize.src
-                      }`}
+                      image={`https://www.gatsbyjs.org${data.sitesYaml.childScreenshot.screenshotFile.childImageSharp.resize.src}`}
                     />
                   </div>
                 </div>

@@ -2,11 +2,11 @@
 title: Building the JavaScript App
 ---
 
-Gatsby is a static site generator. It generates your site's HTML pages, but also creates a JavaScript runtime that takes over in the browser once the initial HTML has loaded. This enables other pages to load instantaneously. Read on to find out how that runtime is generated.
+Gatsby generates your site's HTML pages, but also creates a JavaScript runtime that takes over in the browser once the initial HTML has loaded. This enables other pages to load instantaneously. Read on to find out how that runtime is generated.
 
 ## Webpack config
 
-The [build-javascript.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build-javascript.js) Gatsby file is the entrypoint to this section. It dynamically creates a webpack configuration by calling [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js). This can produce radically different configs depending on the stage. E.g `build-javascript`, `build-html`, `develop`, or `develop-html`. This section deals with the `build-javascript` stage.
+The [build-javascript.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build-javascript.js) Gatsby file is the entry point to this section. It dynamically creates a webpack configuration by calling [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js). This can produce radically different configs depending on the stage. E.g `build-javascript`, `build-html`, `develop`, or `develop-html`. This section deals with the `build-javascript` stage.
 
 The config is quite large, but here are some of the important values in the final output.
 
@@ -60,7 +60,7 @@ This is a separate bundle for each page. The mechanics for how these are split o
 
 ## production-app.js
 
-This is the entrypoint to webpack that outputs `app-[contenthash].js` bundle. It is responsible for navigation and page loading once the initial HTML has been loaded.
+This is the entry point to webpack that outputs `app-[contenthash].js` bundle. It is responsible for navigation and page loading once the initial HTML has been loaded.
 
 ### First load
 

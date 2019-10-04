@@ -4,6 +4,22 @@ const extendNodeType = require(`../extend-node-type`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
   nodes,
@@ -89,6 +105,10 @@ const bootstrapTest = (
         additionalParameters,
         pluginOptions,
       }).then(result => {
+        if (result.errors) {
+          done.fail(result.errors)
+        }
+
         try {
           test(result.data.listNode[0])
           done()
@@ -866,7 +886,6 @@ some other text
     node => {
       expect(node).toMatchSnapshot()
       expect(console.warn).toBeCalled()
-      expect(node.tableOfContents).toBe(null)
     }
   )
 

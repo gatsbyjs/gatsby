@@ -14,6 +14,8 @@ starter:
   - CMS:Netlify
   - CMS:Wordpress
   - CMS:sanity.io
+  - CMS:Strapi
+  - CMS:Forestry.io
   - CMS:Other
   - Disqus
   - Documentation
@@ -85,6 +87,7 @@ site:
   - Government
   - Healthcare
   - JavaScript
+  - Law
   - Landing Page
   - Learning
   - Library

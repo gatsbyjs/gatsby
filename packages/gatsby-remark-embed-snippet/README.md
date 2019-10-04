@@ -1,40 +1,111 @@
 # gatsby-remark-embed-snippet
 
-Embeds the contents of specified files within Prism-formatted HTML blocks.
+Embeds the contents of specified files as code snippets.
 
-## Overview
+## Installation
 
-### Embedding Files
+**Note**: This plugin depends on [gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/) and [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/) plugins
 
-For example, given the following project directory structure:
-
-```
-./examples/
-├── sample-javascript-file.js
-├── sample-html-file.html
+```shell
+npm install --save gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer-remark
 ```
 
-The following markdown syntax could be used to embed the contents of these
-files:
+## Configuration
+
+> **Important**: _You must add `gatsby-remark-embed-snippet` before `gatsby-remark-prismjs` in your plugins array!_
+> Otherwise, this plugin will not work because the code snippet files first need to be inlined before they can be transformed into code blocks.
+> For more information, see [gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/).
+
+To use `gatsby-remark-embed-snippet` plugin:
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-embed-snippet`,
+            options: {},
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {},
+          },
+        ],
+      },
+    },
+  ],
+}
+```
+
+## Plugin option
+
+| option      | description                                                                                                                                                                             |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `directory` | Specify the directory where the code snippet files are located. If this option is omitted, this plugin will look for the code snippet files in the same directory as the markdown file. |
+
+### Example 1: Specify that code snippet files are under the root directory
+
+```js
+// In gatsby-config.js
+{
+  resolve: `gatsby-remark-embed-snippet`,
+  options: {
+    directory: `${__dirname}`
+  }
+},
+```
+
+### Example 2: Specify that code snippet files are under a directory called `snippets`
+
+```js
+// In gatsby-config.js
+{
+  resolve: `gatsby-remark-embed-snippet`,
+  options: {
+    directory: `${__dirname}/snippets/`
+  }
+},
+```
+
+## Sample Usage I
+
+Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code snippets inside the Markdown file `index.md`.
+
+```none
+.
+├── content
+│   └── my-first-post
+│       ├── index.md
+│       ├── javascript-code.js
+│       └── html-code.html
+```
+
+Add the following syntax to the Markdown file `index.md` to embed `javascript-code.js` and `html-code.html` as code snippets:
+
+**`index.md`:**
 
 ```md
 # Sample JavaScript
 
-`embed:sample-javascript-file.js`
+`embed:javascript-code.js`
 
 # Sample HTML
 
-`embed:sample-html-file.html`
+`embed:html-code.html`
 ```
 
-The resulting HTML for the above markdown would look something like this:
+The resulting HTML generated from the Markdown file above would look something like this:
 
 ```html
 <h1>Sample JavaScript</h1>
 <div class="gatsby-highlight">
   <pre class="language-jsx">
     <code>
-      <!-- Embedded content here ... -->
+      <!-- Embedded javascript-code.js content here ... -->
     </code>
   </pre>
 </div>
@@ -43,11 +114,74 @@ The resulting HTML for the above markdown would look something like this:
 <div class="gatsby-highlight">
   <pre class="language-html">
     <code>
-      <!-- Embedded content here ... -->
+      <!-- Embedded html-code.html content here ... -->
     </code>
   </pre>
 </div>
 ```
+
+## Sample Usage II
+
+Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code snippets inside the Markdown file `my-first-post.md`.
+
+```none
+.
+├── content
+│   └── my-first-post.md
+├── snippets
+│   ├── javascript-code.js
+│   └── html-code.html
+```
+
+Use `directory` plugin option to tell `gatsby-remark-embed-snippet` plugin that code snippet files are located under a directory called `snippets`:
+
+```js
+// gatsby-config.js
+{
+  resolve: `gatsby-remark-embed-snippet`,
+  options: {
+    directory: `${__dirname}/snippets/`,
+  },
+},
+```
+
+Add the following syntax to the Markdown file `my-first-post.md` to embed `javascript-code.js` and `html-code.html` as code snippets:
+
+**`my-first-post.md`:**
+
+```md
+# Sample JavaScript 2
+
+`embed:javascript-code.js`
+
+# Sample HTML 2
+
+`embed:html-code.html`
+```
+
+The resulting HTML generated from the markdown file above would look something like this:
+
+```html
+<h1>Sample JavaScript 2</h1>
+<div class="gatsby-highlight">
+  <pre class="language-jsx">
+    <code>
+      <!-- Embedded javascript-code.js content here ... -->
+    </code>
+  </pre>
+</div>
+
+<h1>Sample HTML 2</h1>
+<div class="gatsby-highlight">
+  <pre class="language-html">
+    <code>
+      <!-- Embedded html-code.html content here ... -->
+    </code>
+  </pre>
+</div>
+```
+
+## Code snippet syntax highlighting
 
 ### Highlighting Lines
 
@@ -55,7 +189,7 @@ You can also specify specific lines for Prism to highlight using
 `highlight-line` and `highlight-next-line` comments. You can also specify a
 range of lines to highlight, relative to a `highlight-range` comment.
 
-#### JavaScript example
+**JavaScript example**:
 
 ```js
 import React from "react"
@@ -72,7 +206,7 @@ ReactDOM.render(
 )
 ```
 
-#### CSS example
+**CSS example**:
 
 ```css
 html {
@@ -86,13 +220,13 @@ html {
 }
 ```
 
-#### HTML example
+**HTML example**:
 
+<!-- prettier-ignore-start -->
 ```html
 <html>
   <body>
-    <h1>highlight me</h1>
-    <!-- highlight-line -->
+    <h1>highlight me</h1> <!-- highlight-line -->
     <p>
       <!-- highlight-next-line -->
       And me
@@ -100,8 +234,9 @@ html {
   </body>
 </html>
 ```
+<!-- prettier-ignore-end -->
 
-#### YAML example
+**YAML example**:
 
 ```yaml
 foo: "highlighted" # highlight-line
@@ -115,7 +250,7 @@ quz: "highlighted"
 
 It's also possible to specify a range of lines to be hidden.
 
-#### JavaScript example
+**JavaScript example**:
 
 ```js
 // hide-range{1-2}
@@ -155,76 +290,5 @@ function App() {
       </ul>
     </div>
   )
-}
-```
-
-## Installation
-
-`npm install --save gatsby-remark-embed-snippet`
-
-## How to use
-
-**Important**: This module must appear before `gatsby-remark-prismjs` in your
-plugins array, or the markup will have already been transformed into a code
-block and this plugin will fail to detect it and inline the file.
-For further information about its options, visit the `gatsby-remark-prismjs`
-[README](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/).
-
-```js
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: "gatsby-remark-embed-snippet",
-            options: {
-              // Example code links are relative to this dir.
-              // eg examples/path/to/file.js
-              directory: `${__dirname}/examples/`,
-            },
-          },
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              // Class prefix for <pre> tags containing syntax highlighting;
-              // defaults to 'language-' (eg <pre class="language-js">).
-              // If your site loads Prism into the browser at runtime,
-              // (eg for use with libraries like react-live),
-              // you may use this to prevent Prism from re-processing syntax.
-              // This is an uncommon use-case though;
-              // If you're unsure, it's best to use the default value.
-              classPrefix: "language-",
-              // This is used to allow setting a language for inline code
-              // (i.e. single backticks) by creating a separator.
-              // This separator is a string and will do no white-space
-              // stripping.
-              // A suggested value for English speakers is the non-ascii
-              // character '›'.
-              inlineCodeMarker: null,
-              // This lets you set up language aliases.  For example,
-              // setting this to '{ sh: "bash" }' will let you use
-              // the language "sh" which will highlight using the
-              // bash highlighter.
-              aliases: {},
-              // This toggles the display of line numbers globally alongside the code.
-              // To use it, add the following line in gatsby-browser.js
-              // right after importing the prism color scheme:
-              //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
-              // Defaults to false.
-              // If you wish to only show line numbers on certain code blocks,
-              // leave false and use the {numberLines: true} syntax.
-              showLineNumbers: false,
-              // If setting this to true, the parser won't handle and highlight inline
-              // code used in markdown i.e. single backtick code like `this`.
-              noInlineHighlight: false,
-            },
-          },
-        ],
-      },
-    },
-  ],
 }
 ```

@@ -98,7 +98,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     acc[dir] = acc[dir] || []
     acc[dir].push({
-      pagePath: path.join(basePath, dir),
+      pagePath: urlResolve(basePath, dir),
       url: toNotesPath(node),
       ...node,
     })
@@ -112,14 +112,14 @@ exports.createPages = async ({ graphql, actions }) => {
         ...acc,
         {
           name: dir,
-          url: path.join(basePath, dir),
+          url: urlResolve(basePath, dir),
         },
       ],
       []
     )
 
     createPage({
-      path: path.join(basePath, key),
+      path: urlResolve(basePath, key),
       context: {
         breadcrumbs,
         siteTitle,
