@@ -7483,3 +7483,50 @@
   built_by: Praveen Bisht
   built_by_url: https://www.prvnbist.com/
   featured: false
+- title: Jeff Mills The Outer Limits x NTS Radio
+  url: https://www.nts.live/projects/jeff-mills-the-outer-limits/
+  main_url: https://www.nts.live/projects/jeff-mills-the-outer-limits/
+  source_url: https://github.com/ntslive/the-outer-limits
+  description: >
+    NTS Radio created a minisite for Jeff Mills' 6 part radio series The Outer Limits, including original music production and imagery curated from the NASA online image archive.
+  categories:
+    - Music
+    - Gallery
+    - Science
+    - Entertainment
+  built_by: NTS Radio
+  built_by_url: https://www.nts.live
+  featured: false
+- title: BALAJIRAO676
+  main_url: https://thebalajiraoecommerce.netlify.com/
+  url: https://thebalajiraoecommerce.netlify.com/
+  featured: false
+  categories:
+    - Blog
+    - eCommerce
+    - Web Development
+- title: Mentimeter
+  url: https://www.mentimeter.com/
+  main_url: https://www.mentimeter.com/
+  categories:
+    - Business
+  featured: false
+- title: HYFN
+  url: https://hyfn.com/
+  main_url: https://hyfn.com/
+  categories:
+    - Business
+  featured: false
+- title: Mozilla India
+  main_url: https://mozillaindia.org/
+  url: https://mozillaindia.org/
+  categories:
+    - Open Source
+  featured: false
+- title: Primer Labs
+  main_url: https://www.primerlabs.io
+  url: https://www.primerlabs.io
+  featured: false
+  categories:
+    - Education
+    - Learning
