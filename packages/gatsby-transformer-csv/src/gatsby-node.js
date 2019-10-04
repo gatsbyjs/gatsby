@@ -17,7 +17,7 @@ const convertToJson = (data, options) =>
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  pluginOptions,
+  pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-csv content
@@ -35,18 +35,18 @@ async function onCreateNode(
 
   // Generate the type
   function getType({ node, object }) {
-    if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
+    if (pluginOptions && _.isFunction(typeName)) {
       return pluginOptions.typeName({ node, object })
     } else if (
       pluginOptions &&
-      _.isString(pluginOptions.typeName) &&
-      pluginOptions.typeName === `from-dir`
+      _.isString(typeName) &&
+      typeName === `from-dir`
     ) {
       return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Csv`))
     } else if (
       pluginOptions &&
-      _.isString(pluginOptions.typeName) &&
-      pluginOptions.typeName === `from-filename`
+      _.isString(typeName) &&
+      typeName === `from-filename`
     ) {
       // be explicit
       return _.upperFirst(_.camelCase(`${node.name} Csv`))
@@ -76,9 +76,9 @@ async function onCreateNode(
   }
 
   if (_.isArray(parsedContent)) {
-    if (pluginOptions && pluginOptions.nodePerFile) {
-      if (pluginOptions && _.isString(pluginOptions.nodePerFile)) {
-        transformObject({ [pluginOptions.nodePerFile]: parsedContent }, 0)
+    if (pluginOptions && nodePerFile) {
+      if (pluginOptions && _.isString(nodePerFile)) {
+        transformObject({ [nodePerFile]: parsedContent }, 0)
       } else {
         transformObject({ items: parsedContent }, 0)
       }
