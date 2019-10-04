@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.26...gatsby@2.15.28) (2019-09-26)
+
+### Bug Fixes
+
+- **gatsby:** console output: npm run build -> gatsby build ([#17896](https://github.com/gatsbyjs/gatsby/issues/17896)) ([fbbf406](https://github.com/gatsbyjs/gatsby/commit/fbbf406))
+
+## [2.15.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.26...gatsby@2.15.27) (2019-09-26)
+
+### Bug Fixes
+
+- **gatsby:** console output: npm run build -> gatsby build ([#17896](https://github.com/gatsbyjs/gatsby/issues/17896)) ([fbbf406](https://github.com/gatsbyjs/gatsby/commit/fbbf406))
+
+## [2.15.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.25...gatsby@2.15.26) (2019-09-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.24...gatsby@2.15.25) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby:** don't add undefined ([#17886](https://github.com/gatsbyjs/gatsby/issues/17886)) ([f0cdef0](https://github.com/gatsbyjs/gatsby/commit/f0cdef0))
+
+## [2.15.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.23...gatsby@2.15.24) (2019-09-25)
+
+### Bug Fixes
+
+- **query:** improve query performance ([#17682](https://github.com/gatsbyjs/gatsby/issues/17682)) ([a1b1396](https://github.com/gatsbyjs/gatsby/commit/a1b1396))
+
+## [2.15.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.22...gatsby@2.15.23) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby:** remove 404 pagedata logic on client side pages ([#17412](https://github.com/gatsbyjs/gatsby/issues/17412)) ([6c64948](https://github.com/gatsbyjs/gatsby/commit/6c64948))
+- update dependency webpack to ~4.41.0 ([#17863](https://github.com/gatsbyjs/gatsby/issues/17863)) ([9c24bca](https://github.com/gatsbyjs/gatsby/commit/9c24bca))
+- **gatsby:** prevent unmount wrapPageElement while page-data l… ([#17111](https://github.com/gatsbyjs/gatsby/issues/17111)) ([610b581](https://github.com/gatsbyjs/gatsby/commit/610b581))
+
+### Features
+
+- **gatsby-telemetry:** add exitCode to `BUILD_END` event ([#17847](https://github.com/gatsbyjs/gatsby/issues/17847)) ([6ab4de6](https://github.com/gatsbyjs/gatsby/commit/6ab4de6))
+
+## [2.15.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.21...gatsby@2.15.22) (2019-09-24)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.14 ([#17817](https://github.com/gatsbyjs/gatsby/issues/17817)) ([9e9dc3b](https://github.com/gatsbyjs/gatsby/commit/9e9dc3b))
+
+## [2.15.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.20...gatsby@2.15.21) (2019-09-23)
+
+### Bug Fixes
+
+- update dependency is-wsl to ^2.1.1 ([#17815](https://github.com/gatsbyjs/gatsby/issues/17815)) ([1287648](https://github.com/gatsbyjs/gatsby/commit/1287648))
+
 ## [2.15.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.19...gatsby@2.15.20) (2019-09-20)
 
 ### Bug Fixes

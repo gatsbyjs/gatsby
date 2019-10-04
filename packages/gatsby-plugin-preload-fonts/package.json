@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-preload-fonts",
   "description": "Gatsby plugin for preloading fonts per page",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "author": "Aaron Ross <superhawk610@gmail.com>",
   "main": "index.js",
   "bin": {
@@ -12,16 +12,16 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "date-fns": "^2.2.1",
+    "date-fns": "^2.4.1",
     "fs-extra": "^8.1.0",
     "graphql-request": "^1.8.2",
     "progress": "^2.0.3",
     "puppeteer": "^1.20.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/core": "^7.6.0",
-    "babel-preset-gatsby-package": "^0.2.5",
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "babel-preset-gatsby-package": "^0.2.7",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preload-fonts#readme",

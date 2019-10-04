@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.36...gatsby-source-wordpress@3.1.38) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.36...gatsby-source-wordpress@3.1.37) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.35...gatsby-source-wordpress@3.1.36) (2019-09-23)
+
+### Bug Fixes
+
+- update dependency qs to ^6.9.0 ([#17802](https://github.com/gatsbyjs/gatsby/issues/17802)) ([8119d4b](https://github.com/gatsbyjs/gatsby/commit/8119d4b))
+
 ## [3.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.34...gatsby-source-wordpress@3.1.35) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-source-wordpress

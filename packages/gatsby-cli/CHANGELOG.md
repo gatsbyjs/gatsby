@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.51...gatsby-cli@2.7.53) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.51...gatsby-cli@2.7.52) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.50...gatsby-cli@2.7.51) (2019-09-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.49...gatsby-cli@2.7.50) (2019-09-24)
+
+### Features
+
+- **gatsby-cli:** Add success message after installing gatsby ([#17241](https://github.com/gatsbyjs/gatsby/issues/17241)) ([073e1a0](https://github.com/gatsbyjs/gatsby/commit/073e1a0))
+
 ## [2.7.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.48...gatsby-cli@2.7.49) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-cli

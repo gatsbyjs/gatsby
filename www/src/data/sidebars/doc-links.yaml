@@ -128,9 +128,9 @@
             - title: Sourcing From Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
-            - title: Sourcing from SaaS Services
-              link: /docs/sourcing-from-saas-services/
-              breadcrumbTitle: From SaaS Services
+            - title: Sourcing from Hosted Services
+              link: /docs/sourcing-from-hosted-services/
+              breadcrumbTitle: From Hosted Services
             - title: Sourcing from Private APIs
               link: /docs/sourcing-from-private-apis/
               breadcrumbTitle: From Private APIs
@@ -165,10 +165,10 @@
           items:
             - title: Why Gatsby Uses GraphQL
               link: /docs/why-gatsby-uses-graphql/
-            - title: Understanding GraphQL Syntax
+            - title: GraphQL Query Options Reference
               link: /docs/graphql-reference/
-            - title: Introducing GraphiQL
-              link: /docs/introducing-graphiql/
+            - title: Running Queries with the GraphiQL UI
+              link: /docs/running-queries-with-graphiql/
             - title: Creating and Modifying Pages
               link: /docs/creating-and-modifying-pages/
             - title: Querying Data in Pages with GraphQL
@@ -461,16 +461,29 @@
           link: /docs/gatsby-image/
         - title: Gatsby Config
           link: /docs/gatsby-config/
-        - title: Gatsby Node APIs
-          link: /docs/node-apis/
-        - title: Gatsby Node Helpers
-          link: /docs/node-api-helpers/
         - title: Gatsby Browser APIs
           link: /docs/browser-apis/
         - title: Gatsby SSR APIs
           link: /docs/ssr-apis/
+        - title: API Files
+          link: /docs/api-files/
+          items:
+            - title: gatsby-config.js
+              link: /docs/api-files-gatsby-config/
+            - title: gatsby-browser.js
+              link: /docs/api-files-gatsby-browser/
+            - title: gatsby-node.js
+              link: /docs/api-files-gatsby-node/
+            - title: gatsby-ssr.js
+              link: /docs/api-files-gatsby-ssr/
         - title: Actions
           link: /docs/actions/
+        - title: GraphQL API
+          link: /docs/graphql-api/
+        - title: Gatsby Node APIs
+          link: /docs/node-apis/
+        - title: Gatsby Node Helpers
+          link: /docs/node-api-helpers/
         - title: Node Model
           link: /docs/node-model/
         - title: Node Interface
@@ -500,7 +513,7 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
-        - title: Life and Times of a Gatsby Build*
+        - title: Life and Times of a Gatsby Build
           link: /docs/life-and-times-of-a-gatsby-build/
         - title: Building with Components
           link: /docs/building-with-components/
@@ -508,8 +521,8 @@
           link: /docs/gatsby-lifecycle-apis/
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
-        - title: Querying Data with GraphQL
-          link: /docs/querying-with-graphql/
+        - title: GraphQL Concepts
+          link: /docs/graphql-concepts/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing

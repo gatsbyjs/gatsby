@@ -2,7 +2,7 @@
 
 Use this plugin to simplify creating a “hybrid” Gatsby app with both statically rendered pages as well as "client-paths". These paths exist on the client only and do not correspond to index.html files in an app's built assets.
 
-For more informations refer to [client-only routes & user authentication](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication/).
+For more information refer to [client-only routes & user authentication](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication/).
 
 ## Usage
 

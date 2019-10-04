@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.1.15...gatsby-remark-images-contentful@2.1.17) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.1.15...gatsby-remark-images-contentful@2.1.16) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.1.14...gatsby-remark-images-contentful@2.1.15) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby-remark-images-contentful:** avoid modifying options when passed by reference ([#17880](https://github.com/gatsbyjs/gatsby/issues/17880)) ([23a2bcb](https://github.com/gatsbyjs/gatsby/commit/23a2bcb))
+
 ## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.1.13...gatsby-remark-images-contentful@2.1.14) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful

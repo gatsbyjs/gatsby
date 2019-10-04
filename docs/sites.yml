@@ -96,6 +96,17 @@
   categories:
     - Featured
   featured: true
+- title: Theodora Warre
+  main_url: "https://theodorawarre.eu"
+  url: "https://theodorawarre.eu"
+  description: >-
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
+  categories:
+    - eCommerce
+    - Marketing
+  built_by: Pierre Nel
+  built_by_url: "https://pierre.io"
+  featured: false
 - title: Life Without Barriers | Foster Care
   main_url: "https://www.lwb.org.au/foster-care"
   url: "https://www.lwb.org.au/foster-care"
@@ -1342,8 +1353,8 @@
     - Documentation
     - Open Source
     - Technology
-  built_by: David Worms
-  built_by_url: "http://www.adaltas.com"
+  built_by: Adaltas
+  built_by_url: "https://www.adaltas.com"
   featured: false
 - title: Gourav Sood Blog & Portfolio
   main_url: "https://www.gouravsood.com/"
@@ -3282,18 +3293,6 @@
     - Healthcare
     - Programming
   built_by_url: https://adhoc.team
-  featured: false
-- title: BetterDocs | Discord Themes & Plugins
-  main_url: https://betterdocs.us
-  url: https://betterdocs.us
-  description: >
-    All Discord enhancement projects in 1! Free quality Themes and Plugins for Discord and easy installation instructions for BetterDiscord and more!
-  categories:
-    - Web Development
-    - Programming
-    - Open Source
-  built_by: Christopher R. | Owner
-  built_by_url: https://github.com/MrRobotjs/
   featured: false
 - title: Birra Napoli
   main_url: http://www.birranapoli.it
@@ -7049,7 +7048,7 @@
   url: https://skirtcraft.com/products
   source_url: https://github.com/jqrn/skirtcraft-web
   description: >
-    Skirtcraft sells unisex skirts with large pockets, made in the USA. Site built with Typescript and styled-components, with Tumblr-sourced blog posts.
+    Skirtcraft sells unisex skirts with large pockets, made in the USA. Site built with TypeScript and styled-components, with Tumblr-sourced blog posts.
   categories:
     - eCommerce
     - Blog
@@ -7103,7 +7102,7 @@
   built_by: Dave Mullen Jnr
   built_by_url: https://davemullenjnr.co.uk
   featured: false
-- title: Gopesh Gopinath - Full Stack Javascript Developer
+- title: Gopesh Gopinath - Full Stack JavaScript Developer
   url: https://www.gopeshgopinath.com
   main_url: https://www.gopeshgopinath.com
   source_url: https://github.com/GopeshMedayil/gopeshgopinath.com
@@ -7282,4 +7281,205 @@
     - Landing Page
   built_by: İbrahim Telman
   built_by_url: https://github.com/ibrahimtelman/
+  featured: false
+- title: spon.io
+  url: https://www.spon.io
+  main_url: https://www.spon.io
+  source_url: https://github.com/magicspon/spon.io
+  description: >
+    Portfolio for frontend web developer, based in Bristol UK
+  categories:
+    - Portfolio
+  built_by: Dave Stockley
+  built_by_url: https://www.spon.io
+  featured: false
+- title: BBS
+  url: https://big-boss-studio.com
+  main_url: https://big-boss-studio.com
+  description: >
+    For 11 years, we help great brands in their digital transformation, offering all our expertise for their needs. Technical consulting, UX, design, technical integration and maintenance.
+  categories:
+    - Agency
+    - JavaScript
+    - Web Development
+  built_by: BBS
+  built_by_url: https://big-boss-studio.com
+  featured: false
+- title: Appes - Meant to evolve
+  main_url: https://appes.co
+  url: https://appes.co
+  description: >
+    Appes is all about apps and evolution. We help companies to build mobile and
+    web products.
+  categories:
+    - Agency
+    - Mobile Development
+    - Web Development
+    - Technology
+  built_by: Appes
+  built_by_url: https://appes.co
+  featured: false
+- title: Intern
+  url: https://intern.imedadel.me
+  main_url: https://intern.imedadel.me
+  description: >
+    Intern is a job board for getting internships in tech, design, marketing, and more. It's built entirely with Gatsby.
+  categories:
+    - Directory
+    - Technology
+  built_by: Imed Adel
+  built_by_url: https://imedadel.me
+  featured: false
+- title: Global Citizen Foundation
+  main_url: https://www.globalcitizenfoundation.org
+  url: https://www.globalcitizenfoundation.org
+  description: >
+    In the digital economy, we are Global Citizens and the currency is Personal Data
+  categories:
+    - Nonprofit
+  built_by: The Delta Studio
+  built_by_url: https://www.thedelta.io
+  featured: false
+- title: GatsbyFinds
+  main_url: https://gatsbyfinds.netlify.com
+  url: https://gatsbyfinds.netlify.com
+  source_url: https://github.com/bvlktech/GatsbyFinds
+  description: >
+    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
+  categories:
+    - Portfolio
+    - Gallery
+  built_by: Bvlktech
+  built_by_url: https://twitter.com/bvlktech
+  featured: false
+- title: AFEX Commodities Exchange
+  main_url: https://afexnigeria.com
+  url: https://afexnigeria.com
+  description: >
+    AFEX Nigeria strives to transform Nigerian agriculture by creating more bargaining power to smallholder farmers, access to information, and secure storage.
+  categories:
+    - Blog
+    - Business
+    - Finance
+    - Food
+    - WordPress
+  built_by: Mayowa Falade
+  built_by_url: http://mayowafalade.com
+  featured: false
+- title: VIA Data
+  main_url: https://viadata.io
+  url: https://viadata.io
+  description: >
+    The future of data management
+  categories:
+    - Data
+  built_by: The Delta Studio
+  built_by_url: https://www.thedelta.io
+  featured: false
+- title: Front End Day Event Website
+  main_url: https://frontend-day.com/
+  url: https://frontend-day.com/
+  description: >
+    Performant landing page for a front end workshops recurring event / conference.
+  categories:
+    - Event
+    - Conference
+    - Web Development
+    - Technology
+  built_by: Pagepro
+  built_by_url: https://pagepro.co
+  featured: false
+- title: Mutual
+  main_url: https://www.madebymutual.com
+  url: https://www.madebymutual.com
+  description: >
+    Mutual is a web design and development agency. Our new website is powered by Gatsby and Craft CMS.
+  categories:
+    - Blog
+    - Portfolio
+    - Agency
+    - Design
+    - Web Development
+  built_by: Mutual
+  built_by_url: https://twitter.com/madebymutual
+  featured: false
+- title: Surge 3
+  main_url: https://surge3.com
+  url: https://surge3.com/
+  description: >
+    We’re Surge 3 - a premier web development agency. Our company centers around the principles of quality, speed, and service! We are founded using the latest in web technologies and are dedicated to using those exact tools to help our customers achieve their goals.
+  categories:
+    - Portfolio
+    - Blog
+    - Agency
+    - Web Development
+    - Marketing
+  built_by: Dillon Browne
+  built_by_url: https://dillonbrowne.com
+- title: Adaltas
+  main_url: https://www.adaltas.com
+  url: https://www.adaltas.com
+  description: >
+    Adaltas is a team of consultants with a focus on Open Source, Big Data and Cloud Computing based in France, Canada and Morocco.
+  categories:
+    - Consulting
+    - Data
+    - Design System
+    - Programming
+    - Learning
+  built_by: Adaltas
+  built_by_url: https://www.adaltas.com
+- title: Themis Attorneys
+  main_url: https://themis-attorneys.com
+  url: https://themis-attorneys.com
+  description: >
+    Themis Attorneys is Chennai based lawyers. Their new complete website is made using Gatsby.
+  categories:
+    - Agency
+    - Consulting
+    - Portfolio
+    - Law
+  built_by: Merbin J Anselm
+  built_by_url: https://anselm.in
+- title: Saint New York
+  url: https://www.saintnewyork.com
+  main_url: https://www.saintnewyork.com
+  description: >
+    A powerful fresh-scent formula made with clean ingredients.
+  categories:
+    - eCommerce
+    - Business
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+- title: Runlet
+  main_url: https://runlet.app
+  url: https://runlet.app
+  source_url: https://github.com/runletapp/runlet
+  description: >
+    Runlet is a cloud-based job manager that offers device synchronization and reliable message delivery in a network of connected devices even after connectivity issues. Available for ARM, Linux, Mac and Windows.
+  categories:
+    - App
+    - Landing Page
+    - Productivity
+    - Technology
+  built_by: Vandre Leal
+  built_by_url: https://vandreleal.github.io
+  featured: false
+- title: tiaan.dev
+  main_url: https://tiaan.dev
+  url: https://tiaan.dev
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+- title: Praveen Bisht
+  main_url: https://www.prvnbist.com/
+  url: https://www.prvnbist.com/
+  source_url: https://github.com/prvnbist/portfolio
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Praveen Bisht
+  built_by_url: https://www.prvnbist.com/
   featured: false

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-faker@2.1.7...gatsby-source-faker@2.1.9) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-faker
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-faker@2.1.7...gatsby-source-faker@2.1.8) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-faker
+
 ## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-faker@2.1.6...gatsby-source-faker@2.1.7) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-source-faker
@@ -63,7 +71,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defiened ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
+- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defined ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
 
 <a name="2.0.1"></a>
 
