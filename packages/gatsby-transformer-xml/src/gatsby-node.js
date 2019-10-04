@@ -82,10 +82,8 @@ async function onCreateNode(
     }
 
     Object.entries(result).forEach(([childKey, childValue]) => {
-      /* In legacy mode, we want each child to become its own node.
-       * Each node has a name property (childKey), and an xmlChildren
-       * property. The xmlChildren property is later mapped from the children
-       * property.
+      /* If useElementNameAsKeys are false, we fall back to legacy mode,
+       * which results in the same format as you would expect with the old xml2js implementation. No changes here.
        */
       if (!useElementNamesAsKeys) {
         /* If the childValue is an array, we need to create an object
@@ -115,6 +113,10 @@ async function onCreateNode(
         }
         return
       }
+
+      /* From here, we use a new implementation, given
+       * the user wants to use xml element names as keys instead.
+       */
 
       if (Array.isArray(childValue)) {
         transformedObject.root.children = [
@@ -169,7 +171,7 @@ async function onCreateNode(
       xmlnodeArray = [...xmlnodeArray, createNodeFromXml(element)]
     })
   } else {
-    // iterates the children from the object (2nd level down the rabbit hole)
+    // iterates the children from the object
     children.forEach(element => {
       if (
         element.hasOwnProperty(`children`) &&
