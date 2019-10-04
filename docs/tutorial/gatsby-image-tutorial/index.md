@@ -63,7 +63,7 @@ npm install gatsby-source-filesystem
 plugins: [
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`,
-  { resolve: `gatsby-source-filesystem`, options: { path: `./src/data/` },
+  { resolve: `gatsby-source-filesystem`, options: { path: `./src/data/` } },
 ]
 ```
 
