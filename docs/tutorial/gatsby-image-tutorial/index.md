@@ -275,7 +275,7 @@ When you do that, you’ve changed the reference to the query object available i
 ```jsx
 {data.allSpeakingYaml.edges.map(({ node }) => (
    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+))}
 ```
 
 Giving it an alias does not add a level of complexity to the response object, it just replaces it. So you end up with the same structure, referenced like this (note the alias `talks` in place of the longer `allSpeakingYaml`):
@@ -283,7 +283,7 @@ Giving it an alias does not add a level of complexity to the response object, it
 ```jsx
 {data.talks.edges.map(({ node }) => (
     <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+))}
 ```
 
 The top-level object name of `data` is implicit. This is important because when you conduct multiple queries as part of a single component, Gatsby still passes the entire result to the component.
@@ -328,7 +328,7 @@ Notice that this example uses aliasing for one query and not the other. This is 
 ```jsx
 {data.allSpeakingYaml.edges.map(({ node }) => (
      <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+))}
 ```
 
 And then like this to access the image using the alias name `banner`.
