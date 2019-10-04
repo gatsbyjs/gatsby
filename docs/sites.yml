@@ -7483,6 +7483,12 @@
   built_by: Praveen Bisht
   built_by_url: https://www.prvnbist.com/
   featured: false
+- title: HYFN
+  url: https://hyfn.com/
+  main_url: https://hyfn.com/
+  categories:
+    - Business
+  featured: false
 - title: Mozilla India
   main_url: https://mozillaindia.org/
   url: https://mozillaindia.org/
