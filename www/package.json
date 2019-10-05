@@ -77,7 +77,7 @@
     "mousetrap": "^1.6.3",
     "parse-github-url": "^1.0.2",
     "prism-react-renderer": "^0.2.0",
-    "prismjs": "^1.14.0",
+    "prismjs": "^1.17.1",
     "qs": "^6.9.0",
     "query-string": "^6.8.3",
     "range": "^0.0.3",
