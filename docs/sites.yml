@@ -7530,3 +7530,14 @@
   categories:
     - Education
     - Learning
+- title: GlobalMoney
+  url: https://global24.ua
+  main_url: https://global24.ua
+  description: >
+    Provide payment solution for SMB, eWallet GlobalMoney
+  categories:
+    - Business
+    - Finance
+    - Technology
+  built_by: NodeArt
+  built_by_url: https://NodeArt.io
