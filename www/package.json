@@ -47,7 +47,7 @@
     "gatsby-plugin-twitter": "^2.0.5",
     "gatsby-plugin-typography": "^2.2.0",
     "gatsby-remark-autolink-headers": "^2.0.10",
-    "gatsby-remark-code-titles": "^1.0.2",
+    "gatsby-remark-code-titles": "^1.1.0",
     "gatsby-remark-copy-linked-files": "^2.0.5",
     "gatsby-remark-embed-video": "^1.7.1",
     "gatsby-remark-graphviz": "^1.0.11",
