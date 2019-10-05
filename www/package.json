@@ -13,7 +13,7 @@
     "@reach/visually-hidden": "^0.1.2",
     "@styled-system/prop-types": "^5.0.5",
     "@styled-system/should-forward-prop": "^5.0.5",
-    "@styled-system/theme-get": "^5.0.5",
+    "@styled-system/theme-get": "^5.1.2",
     "@xstate/react": "^0.2.1",
     "axios": "^0.19.0",
     "bluebird": "^3.5.1",
