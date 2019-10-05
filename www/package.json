@@ -56,7 +56,7 @@
     "gatsby-remark-prismjs": "^3.0.2",
     "gatsby-remark-responsive-iframe": "^2.0.5",
     "gatsby-remark-smartypants": "^2.0.5",
-    "gatsby-source-airtable": "^2.0.6",
+    "gatsby-source-airtable": "^2.0.9",
     "gatsby-source-filesystem": "^2.0.1",
     "gatsby-source-npm-package-search": "^2.0.0",
     "gatsby-transformer-csv": "^2.0.0",
