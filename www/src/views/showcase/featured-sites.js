@@ -32,7 +32,7 @@ const featuredSitesCard = {
   },
 }
 
-const GradientOverlay = ({}) => {
+const GradientOverlay = () => {
   const [colorMode] = useColorMode()
   const gradientColor =
     colorMode === `dark` ? colors.modes.dark.background : colors.background
