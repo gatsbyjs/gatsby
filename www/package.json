@@ -8,7 +8,7 @@
     "@emotion/styled": "^10.0.12",
     "@loadable/component": "^5.10.2",
     "@mdx-js/mdx": "^1.5.0",
-    "@mdx-js/react": "^1.0.6",
+    "@mdx-js/react": "^1.5.0",
     "@reach/skip-nav": "^0.1.1",
     "@reach/visually-hidden": "^0.1.2",
     "@styled-system/prop-types": "^5.0.5",
