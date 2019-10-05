@@ -11,7 +11,7 @@
     "@mdx-js/react": "^1.5.0",
     "@reach/skip-nav": "^0.1.1",
     "@reach/visually-hidden": "^0.1.2",
-    "@styled-system/prop-types": "^5.0.5",
+    "@styled-system/prop-types": "^5.1.2",
     "@styled-system/should-forward-prop": "^5.0.5",
     "@styled-system/theme-get": "^5.1.2",
     "@xstate/react": "^0.2.1",
