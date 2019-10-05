@@ -18,7 +18,7 @@
     "axios": "^0.19.0",
     "bluebird": "^3.5.1",
     "color-blend": "^2.0.4",
-    "dotenv": "^6.0.0",
+    "dotenv": "^6.2.0",
     "email-validator": "^1.1.1",
     "emotion-theming": "^10.0.10",
     "fuse.js": "^3.2.0",
