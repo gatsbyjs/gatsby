@@ -125,7 +125,7 @@
     "@testing-library/react": "^8.0.9",
     "babel-jest": "^24.3.1",
     "babel-preset-gatsby": "^0.1.8",
-    "cross-env": "^5.2.0",
+    "cross-env": "^5.2.1",
     "front-matter": "^2.3.0",
     "github-api": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
