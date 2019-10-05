@@ -132,7 +132,7 @@
     "jest": "^24.3.1",
     "jest-dom": "^3.5.0",
     "stylelint": "^9.6.0",
-    "stylelint-config-standard": "^18.2.0",
+    "stylelint-config-standard": "^18.3.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.5.0",
     "webshot": "^0.18.0"
