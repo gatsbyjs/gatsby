@@ -22,7 +22,7 @@ describe(`Activity`, () => {
       env: {
         ...process.env,
         NODE_ENV: `development`,
-        ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
+        ENABLE_GATSBY_REFRESH_ENDPOINT: true,
         FAILING_ACTIVITY: true,
       },
     })

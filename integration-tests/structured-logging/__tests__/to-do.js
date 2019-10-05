@@ -64,7 +64,7 @@ const commonAssertions = events => {
           payload: joi
             .string()
             .required()
-            .valid([`SUCCESS`, `IN_PROGRESS`]),
+            .valid([`SUCCESS`, `IN_PROGRESS`, `FAILED`]),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
@@ -95,10 +95,21 @@ const commonAssertions = events => {
         .valid([`LOG_ACTION`]),
       action: actionSchema,
     })
-    console.log(events)
     events.forEach(event => {
       expect(event).toMatchSchema(eventSchema)
     })
+  })
+  it(`asserts all activities that started actually ended`, () => {
+    const activityStartEventUuids = events
+      .filter(event => event.action.type === `ACTIVITY_START`)
+      .map(event => event.action.payload.uuid)
+    const activityEndEventUuids = events
+      .filter(event => event.action.type === `ACTIVITY_END`)
+      .map(event => event.action.payload.uuid)
+    // We use a Set here because order of some activities ending might be different
+    expect(new Set(activityStartEventUuids)).toEqual(
+      new Set(activityEndEventUuids)
+    )
   })
 }
 
@@ -121,86 +132,241 @@ const commonAssertionsForSuccess = events => {
     expect(filteredEvents.length).toEqual(2)
   })
 
-  it(`asserts all activities that started actually finished successfully`, () => {
-    const activityStartEventUuids = events
-      .filter(event => event.action.type === `ACTIVITY_START`)
-      .map(event => event.action.payload.uuid)
-    const activityEndEventUuids = events
-      .filter(event => event.action.type === `ACTIVITY_END`)
-      .map(event => event.action.payload.uuid)
-    // We use a Set here because order of some activities ending might be different
-    expect(new Set(activityStartEventUuids)).toEqual(
-      new Set(activityEndEventUuids)
-    )
-  })
-
   // TO-DO: Do we actually need these considering that activities are created
   // for these as well. Here are we asserting that those activities are correctly created
-  // and are working!
+  // and are working?
   it.todo(`assert that there are no jobs in progress`)
   it.todo(`assert that there are no apis running`)
 }
 
-// const commonAssertionsForFailure = () => {
-//   commonAssertions()
-//   it.todo(`emit initial SET_STATUS with IN_PROGRESS - very first message`)
-//   it.todo(`emit final SET_STATUS with FAILURE - last message`)
-//   it.todo(`it emits just 2 SET_STATUS`)
+const commonAssertionsForFailure = events => {
+  commonAssertions(events)
+  it(`emit initial SET_STATUS with IN_PROGRESS - very first message`, () => {
+    const event = first(events)
+    expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+    expect(event).toHaveProperty(`action.payload`, `IN_PROGRESS`)
+  })
+  it(`emit final SET_STATUS with FAILED - last message`, () => {
+    const event = last(events)
+    expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+    expect(event).toHaveProperty(`action.payload`, `FAILED`)
+  })
+  it(`it emits just 2 SET_STATUS`, () => {
+    const filteredEvents = events.filter(
+      event => event.action.type === `SET_STATUS`
+    )
+    expect(filteredEvents.length).toEqual(2)
+  })
+}
 
-//   it.todo(
-//     `asserts all activities that started actually ended (with at least one failure)`
-//   )
-// }
+describe(`develop`, () => {
+  describe(`initial work finishes with SUCCESS`, () => {
+    let gatsbyProcess
+    let events = []
 
-// describe(`develop`, () => {
-//   describe(`initial work finishes with SUCCESS`, () => {
-//     commonAssertionsForSuccess()
+    beforeAll(async done => {
+      gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+        // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+        stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+        env: {
+          ...process.env,
+          NODE_ENV: `development`,
+          ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+        },
+      })
 
-//     // We need to check if Cloud depends on the emission of certain
-//     // specific activities (like building schema, run queries, building HTML pages)
-//     // If yes, we need to assert that they are emitted so that we can catch
-//     // an instance if they are removed accidentally
-//     it.todo(`asserts activities of bootstrap`)
-//   })
+      gatsbyProcess.on(`message`, msg => {
+        //   console.log(msg)
+        events.push(msg)
+        // we are ready for tests
+        if (
+          msg.action &&
+          msg.action.type === `SET_STATUS` &&
+          msg.action.payload !== `IN_PROGRESS`
+        ) {
+          done()
+        }
+      })
+    })
 
-//   describe(`work finishes with FAILURE`, () => {
-//     describe(`called with reporter.panic(onBuild)`, () => {
-//       commonAssertionsForFailure()
-//     })
-//     describe(`unhandledRejection`, () => {
-//       commonAssertionsForFailure()
-//     })
-//     describe(`process.exit(1)`, () => {
-//       commonAssertionsForFailure()
-//     })
+    afterAll(async () => {
+      gatsbyProcess.kill()
+    })
+    commonAssertionsForSuccess(events)
 
-//     // in cloud we kill gatsby process with SIGTERM
-//     describe(`process.kill(process.pid, "SIGTERM")`, () => {
-//       commonAssertionsForFailure()
-//     })
-//   })
+    // We need to check if Cloud depends on the emission of certain
+    // specific activities (like building schema, run queries, building HTML pages)
+    // If yes, we need to assert that they are emitted so that we can catch
+    // an instance if they are removed accidentally
+    it.todo(`asserts activities of bootstrap`)
+  })
 
-//   describe(`test preview workflows`, () => {
-//     describe(`code change`, () => {
-//       describe(`valid`, () => {
-//         commonAssertionsForSuccess()
-//       })
-//       describe(`invalid`, () => {
-//         commonAssertionsForFailure()
-//       })
-//     })
-//     describe(`data change`, () => {
-//       describe(`via refresh webhook`, () => {
-//         commonAssertionsForSuccess()
-//       })
-//       describe(`with stateful plugin (i.e. Sanity)`, () => {
-//         commonAssertionsForSuccess()
-//         // TO-DO: do we need test for SET_STATUS thrashing due to rapid
-//         // data changes
-//       })
-//     })
-//   })
-// })
+  describe(`work finishes with FAILED`, () => {
+    describe(`called with reporter.panic`, () => {
+      let gatsbyProcess
+      let events = []
+
+      beforeAll(async done => {
+        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `development`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            PANIC_ON_BUILD: true,
+          },
+        })
+
+        gatsbyProcess.on(`message`, msg => {
+          //   console.log(msg)
+          events.push(msg)
+          // we are ready for tests
+          if (
+            msg.action &&
+            msg.action.type === `SET_STATUS` &&
+            msg.action.payload !== `IN_PROGRESS`
+          ) {
+            done()
+          }
+        })
+      })
+
+      afterAll(async () => {
+        gatsbyProcess.kill()
+      })
+      commonAssertionsForFailure(events)
+    })
+    describe(`unhandledRejection`, () => {
+      let gatsbyProcess
+      let events = []
+
+      beforeAll(async done => {
+        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `development`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            UNHANDLED_REJECTION: true,
+          },
+        })
+
+        gatsbyProcess.on(`message`, msg => {
+          //   console.log(msg)
+          events.push(msg)
+          // we are ready for tests
+          if (
+            msg.action &&
+            msg.action.type === `SET_STATUS` &&
+            msg.action.payload !== `IN_PROGRESS`
+          ) {
+            done()
+          }
+        })
+      })
+
+      afterAll(async () => {
+        gatsbyProcess.kill()
+      })
+      commonAssertionsForFailure(events)
+    })
+    describe(`process.exit`, () => {
+      let gatsbyProcess
+      let events = []
+
+      beforeAll(async done => {
+        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `development`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            PROCESS_EXIT: true,
+          },
+        })
+
+        gatsbyProcess.on(`message`, msg => {
+          //   console.log(msg)
+          events.push(msg)
+          // we are ready for tests
+          if (
+            msg.action &&
+            msg.action.type === `SET_STATUS` &&
+            msg.action.payload !== `IN_PROGRESS`
+          ) {
+            done()
+          }
+        })
+      })
+
+      afterAll(async () => {
+        gatsbyProcess.kill()
+      })
+      commonAssertionsForFailure(events)
+    })
+
+    // in cloud we kill gatsby process with SIGTERM
+    describe(`process.kill`, () => {
+      let gatsbyProcess
+      let events = []
+
+      beforeAll(async done => {
+        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `development`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            PROCESS_KILL: true,
+          },
+        })
+
+        gatsbyProcess.on(`message`, msg => {
+          //   console.log(msg)
+          events.push(msg)
+          // we are ready for tests
+          if (
+            msg.action &&
+            msg.action.type === `SET_STATUS` &&
+            msg.action.payload !== `IN_PROGRESS`
+          ) {
+            done()
+          }
+        })
+      })
+
+      afterAll(async () => {
+        gatsbyProcess.kill()
+      })
+      commonAssertionsForFailure(events)
+    })
+  })
+
+  // describe(`test preview workflows`, () => {
+  //   describe(`code change`, () => {
+  //     describe(`valid`, () => {
+  //       commonAssertionsForSuccess()
+  //     })
+  //     describe(`invalid`, () => {
+  //       commonAssertionsForFailure()
+  //     })
+  //   })
+  //   describe(`data change`, () => {
+  //     describe(`via refresh webhook`, () => {
+  //       commonAssertionsForSuccess()
+  //     })
+  //     describe(`with stateful plugin (i.e. Sanity)`, () => {
+  //       commonAssertionsForSuccess()
+  //       // TO-DO: do we need test for SET_STATUS thrashing due to rapid
+  //       // data changes
+  //     })
+  //   })
+  // })
+})
 
 describe(`build`, () => {
   describe(`initial work finishes with SUCCESS`, () => {
@@ -214,7 +380,7 @@ describe(`build`, () => {
         env: {
           ...process.env,
           NODE_ENV: `production`,
-          ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
+          ENABLE_GATSBY_REFRESH_ENDPOINT: true,
         },
       })
 
@@ -237,22 +403,122 @@ describe(`build`, () => {
     it.todo(`asserts activities of bootstrap`)
   })
 
-  // describe(`work finishes with FAILURE`, () => {
-  //   describe(`called with reporter.panic(onBuild)`, () => {
-  //     commonAssertionsForFailure()
-  //   })
-  //   describe(`unhandledRejection`, () => {
-  //     commonAssertionsForFailure()
-  //   })
-  //   describe(`process.exit(1)`, () => {
-  //     commonAssertionsForFailure()
-  //   })
+  describe(`work finishes with FAILED`, () => {
+    describe(`called with reporter.panic`, () => {
+      let gatsbyProcess
+      let events = []
 
-  //   // in cloud we kill gatsby process with SIGTERM
-  //   describe(`process.kill(process.pid, "SIGTERM")`, () => {
-  //     commonAssertionsForFailure()
-  //   })
-  // })
+      beforeAll(async () => {
+        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `production`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            PANIC_ON_BUILD: true,
+          },
+        })
+
+        await new Promise(resolve => {
+          gatsbyProcess.on(`message`, msg => {
+            events.push(msg)
+          })
+
+          gatsbyProcess.on(`exit`, exitCode => {
+            resolve()
+          })
+        })
+      })
+      commonAssertionsForFailure(events)
+    })
+    describe(`unhandledRejection`, () => {
+      let gatsbyProcess
+      let events = []
+
+      beforeAll(async () => {
+        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `production`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            UNHANDLED_REJECTION: true,
+          },
+        })
+
+        await new Promise(resolve => {
+          gatsbyProcess.on(`message`, msg => {
+            events.push(msg)
+          })
+
+          gatsbyProcess.on(`exit`, exitCode => {
+            resolve()
+          })
+        })
+      })
+      commonAssertionsForFailure(events)
+    })
+    describe(`process.exit`, () => {
+      let gatsbyProcess
+      let events = []
+
+      beforeAll(async () => {
+        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `production`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            PROCESS_EXIT: true,
+          },
+        })
+
+        await new Promise(resolve => {
+          gatsbyProcess.on(`message`, msg => {
+            events.push(msg)
+          })
+
+          gatsbyProcess.on(`exit`, exitCode => {
+            resolve()
+          })
+        })
+      })
+      commonAssertionsForFailure(events)
+    })
+
+    // in cloud we kill gatsby process with SIGTERM
+    describe(`process.kill`, () => {
+      let gatsbyProcess
+      let events = []
+
+      beforeAll(async () => {
+        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          env: {
+            ...process.env,
+            NODE_ENV: `production`,
+            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+            PROCESS_KILL: true,
+          },
+        })
+
+        await new Promise(resolve => {
+          gatsbyProcess.on(`message`, msg => {
+            events.push(msg)
+          })
+
+          gatsbyProcess.on(`exit`, exitCode => {
+            resolve()
+          })
+        })
+      })
+      commonAssertionsForFailure(events)
+    })
+  })
 })
 
 //TO-DO: add api running activity

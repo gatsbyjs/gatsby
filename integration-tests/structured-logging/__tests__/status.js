@@ -24,7 +24,7 @@ describe(`Successful Build`, () => {
       env: {
         ...process.env,
         NODE_ENV: `production`,
-        ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
+        ENABLE_GATSBY_REFRESH_ENDPOINT: true,
       },
     })
 
@@ -101,7 +101,7 @@ const IndexPage = () => <div>Hello world!</div>
       env: {
         ...process.env,
         NODE_ENV: `production`,
-        ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
+        ENABLE_GATSBY_REFRESH_ENDPOINT: true,
         FAILING_ACTIVITY: true,
       },
     })

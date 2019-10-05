@@ -23,7 +23,7 @@ describe(`Panic`, () => {
       env: {
         ...process.env,
         NODE_ENV: `production`,
-        ENABLE_GATSBY_REFRESH_ENDPOINT: `true`,
+        ENABLE_GATSBY_REFRESH_ENDPOINT: true,
         PANIC_ON_BUILD: true,
       },
     })
