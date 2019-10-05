@@ -79,7 +79,7 @@
     "prism-react-renderer": "^0.2.0",
     "prismjs": "^1.14.0",
     "qs": "^6.9.0",
-    "query-string": "^6.1.0",
+    "query-string": "^6.8.3",
     "range": "^0.0.3",
     "react": "^16.8.6",
     "react-copy-to-clipboard": "^5.0.1",
