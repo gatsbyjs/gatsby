@@ -68,6 +68,7 @@ describe(`watching`, () => {
     expect(chokidar.watch).toHaveBeenCalledTimes(1)
     expect(chokidar.watch).toHaveBeenCalledWith(expect.any(Array), {
       ignored: [expect.any(Function)],
+      useFsEvents: expect.any(Boolean),
     })
   })
 
