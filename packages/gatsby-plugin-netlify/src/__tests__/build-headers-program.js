@@ -189,6 +189,7 @@ test(`with security headers`, async () => {
         `Content-Security-Policy: frame-ancestors 'self' https://*.storyblok.com/`,
         `X-Frame-Options: ALLOW-FROM https://app.storyblok.com/`,
       ],
+      "/hello": [`X-Frame-Options: SAMEORIGIN`],
     },
   }
 
