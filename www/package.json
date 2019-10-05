@@ -100,7 +100,7 @@
     "wcag-contrast": "^2.1.1",
     "xstate": "^4.6.7",
     "zipkin": "^0.14.2",
-    "zipkin-javascript-opentracing": "^2.0.0",
+    "zipkin-javascript-opentracing": "^2.0.1",
     "zipkin-transport-http": "^0.14.2"
   },
   "keywords": [
