@@ -67,7 +67,7 @@
     "gatsby-transformer-yaml": "^2.1.1",
     "get-package-json-from-github": "^1.2.1",
     "git-rev-sync": "^1.12.0",
-    "graphql-request": "1.6.0",
+    "graphql-request": "1.8.2",
     "gray-percentage": "^2.0.0",
     "hex-rgb": "^4.1.0",
     "hex2rgba": "^0.0.1",
