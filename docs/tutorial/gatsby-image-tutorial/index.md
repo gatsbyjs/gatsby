@@ -273,17 +273,21 @@ talks: allSpeakingYaml {
 When you do that, you’ve changed the reference to the query object available in your JSX code. While it was previously referenced as this:
 
 ```jsx
-{data.allSpeakingYaml.edges.map(({ node }) => (
-   <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+{
+  data.allSpeakingYaml.edges.map(({ node }) => (
+    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt} />
+  ))
+}
 ```
 
 Giving it an alias does not add a level of complexity to the response object, it just replaces it. So you end up with the same structure, referenced like this (note the alias `talks` in place of the longer `allSpeakingYaml`):
 
 ```jsx
-{data.talks.edges.map(({ node }) => (
-    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+{
+  data.talks.edges.map(({ node }) => (
+    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt} />
+  ))
+}
 ```
 
 The top-level object name of `data` is implicit. This is important because when you conduct multiple queries as part of a single component, Gatsby still passes the entire result to the component.
@@ -291,7 +295,7 @@ The top-level object name of `data` is implicit. This is important because when 
 Here's an example of data flowing into a component:
 
 ```jsx
-const SpeakingPage = ({ data }) => {})
+const SpeakingPage = ({ data }) => {}
 ```
 
 Everything else gets referenced from that top-level return name.
@@ -326,9 +330,11 @@ With that understanding, you can combine two queries referencing images and use 
 Notice that this example uses aliasing for one query and not the other. This is allowed; there is no requirement that all your queries use aliasing. In this case, the JSX would look like this to access the `speaking.yaml` content.
 
 ```jsx
-{data.allSpeakingYaml.edges.map(({ node }) => (
-     <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+{
+  data.allSpeakingYaml.edges.map(({ node }) => (
+    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt} />
+  ))
+}
 ```
 
 And then like this to access the image using the alias name `banner`.
