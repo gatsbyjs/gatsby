@@ -23,3 +23,10 @@ Then configure via `gatsby-config.js`:
 
 In this example, all paths prefixed by `/app/` will render the route described
 in `src/pages/app.js`.
+
+The current route param can be accessed via the location object.
+```
+const MyComponent = (location) => (
+  <h1>{location.location.pathname.slice(location.path.length - 1)}
+)
+```
