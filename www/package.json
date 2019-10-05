@@ -93,7 +93,7 @@
     "rehype-react": "^3.1.0",
     "remove-markdown": "^0.3.0",
     "slash": "^1.0.0",
-    "slugify": "^1.3.0",
+    "slugify": "^1.3.5",
     "styled-system": "^5.1.2",
     "typography": "^1.0.0-alpha.4",
     "typography-plugin-code": "^1.0.0-alpha.0",
