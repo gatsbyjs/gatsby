@@ -124,7 +124,7 @@
   "devDependencies": {
     "@testing-library/react": "^8.0.9",
     "babel-jest": "^24.3.1",
-    "babel-preset-gatsby": "^0.1.11",
+    "babel-preset-gatsby": "^0.2.17",
     "cross-env": "^5.2.1",
     "front-matter": "^2.3.0",
     "github-api": "^3.3.0",
