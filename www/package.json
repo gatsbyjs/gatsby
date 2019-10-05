@@ -19,7 +19,7 @@
     "bluebird": "^3.7.0",
     "color-blend": "^2.0.7",
     "dotenv": "^6.2.0",
-    "email-validator": "^1.1.1",
+    "email-validator": "^1.2.3",
     "emotion-theming": "^10.0.19",
     "fuse.js": "^3.4.5",
     "gatsby": "^2.15.29",
