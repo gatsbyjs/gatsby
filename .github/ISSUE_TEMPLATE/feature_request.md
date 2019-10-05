@@ -1,25 +1,33 @@
 ---
-name: New Translation Request 🌐
-about: Suggest a new language translation of the repo.
+name: Feature Request 💡
+about: Suggest a new idea for the project.
 ---
 
 <!--
-  Please fill out the YAML form below, otherwise your issue will be closed.
+  Please fill out each section below, otherwise your issue will be closed.
 
-  - *Name*: Language name in *English*
-  - *Code*: [ISO-693 Code]() or [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) of the language
-  - *Maintainers*: list of GitHub usernames of proposed maintainers (at least 2 required)
+  Useful Links:
+  - Gatsby RFCs: https://github.com/gatsbyjs/rfcs
+  - How to Contribute: https://www.gatsbyjs.org/contributing/how-to-contribute/
+  - How to File an Issue: https://www.gatsbyjs.org/contributing/how-to-file-an-issue/
 
-  Each maintainer listed should respond to the issue with:
+  Before opening a new issue, please search existing issues:  https://github.com/gatsbyjs/gatsby/issues
 
-  - your experience level in open source
-  - your level of experience in the target language and localization
+  ## A note on adding features to Gatsby and its official plugins
+
+  Every feature needs to strike a balance - complex features are less likely to be worked on, whether that complexity comes from design, implementation or ongoing   maintenance costs. On the other side, features that are useful to all (or most) of Gatsby's users are more likely to be accepted.
+
+  This means that not every feature request will be added to Gatsby, but hearing about what you want Gatsby to do is important. Don't be afraid to add a feature request!
 -->
 
-```yaml
-name: English
-code: en
-maintainers:
-  - tesseralis
-  - marcysutton
-```
+## Summary
+
+Brief explanation of the feature.
+
+### Basic example
+
+If the proposal involves a new or changed API, include a basic code example. Omit this section if it's not applicable.
+
+### Motivation
+
+Why are we doing this? What use cases does it support? What is the expected outcome?
