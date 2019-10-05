@@ -249,7 +249,7 @@ export const Header = props => (
 export default Header
 ```
 
-If you prefer to utilize useStaticQuery instead, you can rewrite
+If you prefer to utilize `useStaticQuery` instead, you can rewrite
 the Header component as:
 
 ```jsx:title=src/components/header.js
