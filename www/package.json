@@ -94,7 +94,7 @@
     "remove-markdown": "^0.3.0",
     "slash": "^1.0.0",
     "slugify": "^1.3.0",
-    "styled-system": "^5.0.5",
+    "styled-system": "^5.1.2",
     "typography": "^1.0.0-alpha.4",
     "typography-plugin-code": "^1.0.0-alpha.0",
     "wcag-contrast": "^2.1.1",
