@@ -24,7 +24,7 @@ export const withTitleHover = {
       `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
   },
   "&:hover .title": {
-    boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.lavender}`,
+    boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.link.hoverBorder}`,
   },
 }
 
@@ -47,7 +47,7 @@ export const screenshot = {
 
 export const screenshotHover = {
   bg: `transparent`,
-  color: `gatsby`,
+  color: `link.hoverColor`,
   "& .gatsby-image-wrapper": {
     transform: t => `translateY(-${t.space[1]})`,
     boxShadow: `overlay`,
@@ -60,7 +60,7 @@ export const shortcutIcon = {
     borderBottom: `none`,
     color: `textMuted`,
     "&:hover": {
-      color: `gatsby`,
+      color: `link.hoverColor`,
     },
   },
 }
@@ -77,7 +77,7 @@ export const filterButton = {
   alignItems: `flex-start`,
   background: `none`,
   border: `none`,
-  color: `text`,
+  color: `textMuted`,
   cursor: `pointer`,
   display: `flex`,
   fontSize: 1,
@@ -90,7 +90,7 @@ export const filterButton = {
   textAlign: `left`,
   width: `100%`,
   ":hover": {
-    color: `gatsby`,
+    color: `link.hoverColor`,
   },
 }
 

@@ -46,12 +46,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 }}
                 className="meta"
               >
-                <div
-                  sx={{
-                    pr: 5,
-                    lineHeight: `dense`,
-                  }}
-                >
+                <div sx={{ pr: 5 }}>
                   <ShowcaseItemCategories
                     categories={node.categories}
                     onCategoryClick={onCategoryClick}

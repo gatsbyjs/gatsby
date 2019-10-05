@@ -125,7 +125,7 @@ const styles = {
         borderBottomLeftRadius: 1,
         borderBottomRightRadius: 1,
         left: `50%`,
-        top: 0,
+        top: `-1px`,
         transform: `translateX(-50%)`,
       },
     },

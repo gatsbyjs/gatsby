@@ -137,7 +137,7 @@ const col = {
     backgroundFocus: c.white,
     border: c.grey[30],
     focusBorder: c.white,
-    focusBoxShadow: c.purple[30],
+    focusBoxShadow: c.purple[60],
     icon: c.grey[50],
     iconFocus: c.grey[60],
     placeholder: c.text.placeholder,
@@ -154,10 +154,10 @@ const col = {
   },
   modal: {
     background: c.white,
-    overlayBackground: hex2rgba(c.white, 0.975),
+    overlayBackground: hex2rgba(c.white, 0.95),
   },
   navigation: {
-    background: hex2rgba(c.white, 0.975),
+    background: hex2rgba(c.white, 0.985),
     linkDefault: c.grey[70],
     linkActive: c.gatsby,
     linkHover: c.gatsby,
@@ -199,7 +199,7 @@ const col = {
       background: darkBackground,
       text: c.grey[20],
       heading: c.white,
-      textMuted: c.grey[40],
+      textMuted: c.grey[50],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
       icon: {
@@ -221,7 +221,7 @@ const col = {
       },
       modal: {
         background: darkBackground,
-        overlayBackground: hex2rgba(darkBackground, 0.975),
+        overlayBackground: hex2rgba(darkBackground, 0.95),
       },
       code: {
         // ui
