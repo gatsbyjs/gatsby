@@ -4,6 +4,7 @@ import { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
+import { useColorMode } from "theme-ui"
 
 import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
@@ -29,6 +30,30 @@ const featuredSitesCard = {
   [mediaQueries.xxl]: {
     width: 400,
   },
+}
+
+const GradientOverlay = ({}) => {
+  const [colorMode] = useColorMode()
+  const gradientColor =
+    colorMode === `dark` ? colors.modes.dark.background : colors.background
+
+  return (
+    <div
+      sx={{
+        background: t =>
+          `linear-gradient(90deg, ${hex2rgba(gradientColor, 0)} 0%, ${hex2rgba(
+            gradientColor,
+            1
+          )} 100%)`,
+        bottom: t => t.space[6],
+        pointerEvents: `none`,
+        position: `absolute`,
+        right: t => `-${t.space[6]}`,
+        top: 0,
+        width: 60,
+      }}
+    />
+  )
 }
 
 class FeaturedSites extends Component {
@@ -264,20 +289,7 @@ class FeaturedSites extends Component {
               </a>
             </div>
           </div>
-          <div
-            sx={{
-              background: `linear-gradient(90deg, ${hex2rgba(
-                colors.background,
-                0
-              )} 0%, ${hex2rgba(colors.background, 1)} 100%)`,
-              bottom: t => t.space[6],
-              pointerEvents: `none`,
-              position: `absolute`,
-              right: t => `-${t.space[6]}`,
-              top: 0,
-              width: 60,
-            }}
-          />
+          <GradientOverlay />
         </div>
       </section>
     )
