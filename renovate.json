@@ -5,7 +5,7 @@
     "starters/**",
     "themes/**",
     "packages/**",
-    "www"
+    "www/package.json"
   ],
   "major": {
     "masterIssueApproval": true
