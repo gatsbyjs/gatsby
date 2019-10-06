@@ -25,6 +25,7 @@ export const withTitleHover = {
   },
   "&:hover .title": {
     boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.link.hoverBorder}`,
+    color: `link.hoverColor`,
   },
 }
 

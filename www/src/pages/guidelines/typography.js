@@ -631,7 +631,13 @@ const Typography = ({ location }) => (
               and then{` `}
               <code>useStaticQuery</code>.
             </p>
-            <Box bg="grey.10" p={5} my={6} fontSize={{ xxs: 1, md: 2 }}>
+            <Box
+              bg="grey.10"
+              color="grey.80"
+              p={5}
+              my={6}
+              fontSize={{ xxs: 1, md: 2 }}
+            >
               💡 For a great introduction to using the command line, check out
               {` `}
               <a href="https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command">

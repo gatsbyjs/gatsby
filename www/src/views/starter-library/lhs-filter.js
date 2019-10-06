@@ -38,7 +38,10 @@ export default function LHSFilter({
                   setFilters(filters.add(c))
                 }
               }}
-              sx={filterButton}
+              sx={{
+                ...filterButton,
+                color: filters.has(c) ? `link.color` : `textMuted`,
+              }}
             >
               <div sx={filterCheckbox}>
                 {filters.has(c) ? (

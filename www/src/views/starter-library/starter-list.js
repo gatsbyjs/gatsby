@@ -144,7 +144,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   </div>
                   <div>
                     <Link to={`/starters${slug}`}>
-                      <h5 sx={{ m: 0, fontSize: 3 }}>
+                      <h5 sx={{ m: 0, fontSize: 2 }}>
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
