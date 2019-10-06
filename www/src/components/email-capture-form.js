@@ -11,7 +11,7 @@ import { rhythm } from "../utils/typography"
 
 const Container = styled(`div`)`
   background: ${p => p.theme.colors.newsletter.background};
-  box-shadow: ${p => p.theme.shadows.raised},
+  box-shadow: ${p => p.theme.shadows.floating},
     inset 0 0 0 1px ${p => p.theme.colors.newsletter.border};
   border-radius: ${p => p.theme.radii[2]}px;
   margin-top: ${p => p.theme.space[8]};

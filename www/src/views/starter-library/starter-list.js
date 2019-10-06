@@ -13,7 +13,7 @@ import {
 } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import V2Icon from "../../assets/icons/v2icon.svg"
+import V2Icon from "!raw-loader!../../assets/icons/v2icon.svg"
 import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
@@ -91,17 +91,45 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <span sx={{ color: `heading` }}>{owner} /</span>
+                    <span
+                      sx={{
+                        color: `textMuted`,
+                        fontSize: 0,
+                        textTransform: `uppercase`,
+                        letterSpacing: `tracked`,
+                        fontFamily: `heading`,
+                      }}
+                    >
+                      {owner} /
+                    </span>
                     <span css={{ display: `flex` }}>
                       {gatsbyMajorVersion[0][1] === `2` && (
-                        <img
-                          src={V2Icon}
-                          alt="Gatsby v2"
+                        <span
                           sx={{
-                            mb: 0,
+                            alignItems: `center`,
+                            bg: `muted`,
+                            display: `flex`,
+                            borderRadius: 5,
+                            fontSize: 0,
+                            lineHeight: `solid`,
+                            px: `2px`,
+                            pr: 2,
+                            py: `2px`,
                             mr: 2,
                           }}
-                        />
+                        >
+                          <span
+                            dangerouslySetInnerHTML={{ __html: V2Icon }}
+                            sx={{
+                              color: `textMuted`,
+                              mb: 0,
+                              mr: 2,
+                              "& svg": { height: 12, width: 12 },
+                            }}
+                          />
+                          {` `}
+                          v2
+                        </span>
                       )}
                       <div
                         sx={{
@@ -116,23 +144,27 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   </div>
                   <div>
                     <Link to={`/starters${slug}`}>
-                      <h5 sx={{ m: 0, fontSize: 2 }}>
+                      <h5 sx={{ m: 0, fontSize: 3 }}>
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
                   </div>
                   <div
                     sx={{
+                      color: `text`,
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
-                      marginBottom: 1,
+                      marginBottom: 4,
                     }}
                   >
                     {description || `No description`}
                   </div>
                   <div
-                    css={{ display: `flex`, justifyContent: `space-between` }}
+                    css={{
+                      display: `flex`,
+                      justifyContent: `space-between`,
+                    }}
                   >
                     <div sx={{ display: `inline-block`, fontSize: 0 }}>
                       Updated {new Date(lastUpdated).toLocaleDateString()}

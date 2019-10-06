@@ -18,7 +18,7 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
             fontWeight: `body`,
             borderBottom: `none`,
             "&:hover": {
-              color: `gatsby`,
+              color: `link.hoverColor`,
             },
           },
         }}

@@ -135,6 +135,7 @@ export const ContentTitle = ({
       fontSize: 4,
       lineHeight: `solid`,
       margin: 0,
+      fontWeight: `bold`,
     }}
   >
     {search.length === 0 ? (

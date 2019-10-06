@@ -80,26 +80,30 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     sx={{
                       "&&": {
                         display: `none`,
-                        transition: t =>
-                          `background ${t.transition.speed.slow} ${t.transition.curve.default}, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
                         [mediaQueries.lg]: {
                           alignItems: `center`,
-                          background: `accent`,
+                          bg: `accent`,
                           border: `none`,
                           borderTopRightRadius: 1,
                           borderBottomLeftRadius: 1,
                           boxShadow: `none`,
+                          color: `white`,
                           cursor: `pointer`,
                           display: `flex`,
-                          height: 24,
+                          fontSize: 2,
+                          justifyContent: `center`,
+                          height: 20,
                           margin: 0,
                           padding: 0,
                           position: `absolute`,
                           top: 0,
                           right: 0,
-                          width: 24,
+                          width: 20,
                           "&:hover": {
-                            background: `gatsby`,
+                            bg: `gatsby`,
+                          },
+                          "& svg": {
+                            display: `block`,
                           },
                         },
                       },
