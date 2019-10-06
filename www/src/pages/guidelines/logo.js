@@ -409,7 +409,10 @@ const Logo = ({ data, location }) => {
               dangerouslySetInnerHTML={{
                 __html: Wordmark,
               }}
-              css={{ svg: { display: `block`, width: `100%` } }}
+              css={{
+                svg: { display: `block`, width: `100%` },
+                color: isDark ? `white` : `black`,
+              }}
             />
             <Box
               maxWidth="257px"
