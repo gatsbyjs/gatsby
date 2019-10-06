@@ -4,7 +4,7 @@ import { Component } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import { space } from "../gatsby-plugin-theme-ui"
 import SearchIcon from "./search-icon"
 import { themedInput } from "../utils/styles"
 
@@ -414,7 +414,6 @@ class SearchForm extends Component {
         <label
           sx={{
             position: `relative`,
-            width: `100%`,
             width: [
               `100%`,
               `100%`,
