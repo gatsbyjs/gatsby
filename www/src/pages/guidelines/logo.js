@@ -158,7 +158,7 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
 )
 
 const Logo = ({ data, location }) => {
-  const [colorMode, setColorMode] = useColorMode()
+  const [colorMode] = useColorMode()
   const isDark = colorMode === `dark`
 
   return (
