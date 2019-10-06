@@ -23,7 +23,7 @@ However, in his current class _nobody has dropped out_. And every single one of 
 
 [![Image of graphic designer's site](graphic-design-1.png)](http://mmd-site.netlify.com/)
 
-[Melany Dierks](http://mmd-site.netlify.com/) ([source](https://github.com/reguv760/mmd-site))
+[Melany Dierks](http://mmd-site.netlify.com/)
 
 [![Image of graphic designer's site](graphic-design-2.png)](http://myceevee.netlify.com/)
 
