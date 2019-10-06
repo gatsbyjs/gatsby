@@ -98,7 +98,3 @@ export const filterCheckbox = {
   fontSize: 2,
   mr: 2,
 }
-
-export const filterCount = {
-  color: `textMuted`,
-}

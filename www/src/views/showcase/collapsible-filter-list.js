@@ -4,11 +4,7 @@ import { jsx } from "theme-ui"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import Collapsible from "../shared/collapsible"
-import {
-  filterButton,
-  filterCount,
-  filterCheckbox,
-} from "../../views/shared/styles"
+import { filterButton, filterCheckbox } from "../../views/shared/styles"
 
 const CollapsibleFilterList = ({
   filters,
@@ -29,29 +25,20 @@ const CollapsibleFilterList = ({
             setFilters([...filters, c])
           }
         }}
-        sx={filterButton}
+        sx={{
+          ...filterButton,
+          color: filters.includes(c) ? `link.color` : `textMuted`,
+        }}
       >
-        <div
-          sx={{
-            color: filters.includes(c) ? `gatsby` : `input.border`,
-            ...filterCheckbox,
-          }}
-        >
+        <div sx={filterCheckbox}>
           {filters.includes(c) ? (
             <MdCheckbox style={{ verticalAlign: `-0.125em` }} />
           ) : (
             <MdCheckboxBlank style={{ verticalAlign: `-0.125em` }} />
           )}
         </div>
-        <div
-          sx={{
-            color: filters.includes(c) ? `gatsby` : false,
-            mr: `auto`,
-          }}
-        >
-          {c}
-        </div>
-        <div sx={filterCount}>{aggregatedCategories[c]}</div>
+        <div sx={{ mr: `auto` }}>{c}</div>
+        <div>{aggregatedCategories[c]}</div>
       </button>
     ))}
   </Collapsible>

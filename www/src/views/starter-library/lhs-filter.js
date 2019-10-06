@@ -4,7 +4,7 @@ import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 
 import Collapsible from "../shared/collapsible"
-import { filterButton, filterCheckbox, filterCount } from "../shared/styles"
+import { filterButton, filterCheckbox } from "../shared/styles"
 
 export default function LHSFilter({
   sortRecent,
@@ -40,27 +40,15 @@ export default function LHSFilter({
               }}
               sx={filterButton}
             >
-              <div
-                sx={{
-                  color: filters.has(c) ? `gatsby` : `input.border`,
-                  ...filterCheckbox,
-                }}
-              >
+              <div sx={filterCheckbox}>
                 {filters.has(c) ? (
                   <MdCheckbox style={{ verticalAlign: `-0.125em` }} />
                 ) : (
                   <MdCheckboxBlank style={{ verticalAlign: `-0.125em` }} />
                 )}
               </div>
-              <div
-                sx={{
-                  color: filters.has(c) ? `gatsby` : false,
-                  mr: `auto`,
-                }}
-              >
-                {c.replace(/^gatsby-/, `*-`)}
-              </div>
-              <div sx={filterCount}>{count}</div>
+              <div sx={{ mr: `auto` }}>{c.replace(/^gatsby-/, `*-`)}</div>
+              <div>{count}</div>
             </button>
           </ul>
         ))}
