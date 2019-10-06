@@ -213,7 +213,7 @@ const col = {
       muted: c.grey[90],
       icon: {
         dark: c.purple[50],
-        neutral: c.grey[80],
+        neutral: c.grey[70],
         neutralLight: c.grey[90],
         background: c.darkBorder,
         accent: c.yellow[50],
@@ -235,11 +235,11 @@ const col = {
       },
       code: {
         // ui
-        background: darkBorder,
+        background: `#1b191f`, // another meh
         backgroundInline: darkBorder,
-        border: c.grey[80],
-        lineHighlightBackground: hex2rgba(c.blue[90], 0.125),
-        lineHighlightBorder: c.blue[90],
+        border: c.grey[90],
+        lineHighlightBackground: hex2rgba(c.purple[90], 0.25),
+        lineHighlightBorder: c.purple[90],
         scrollbarThumb: c.grey[70],
         scrollbarTrack: c.grey[90],
         copyButton: c.grey[40],
