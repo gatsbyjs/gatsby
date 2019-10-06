@@ -16,7 +16,7 @@ Given a sample post:
 
 ```markdown
 ---
-title: My first blogpost!
+title: My first blog post!
 featuredImgUrl: https://images.unsplash.com/photo-1560237731-890b122a9b6c
 featuredImgAlt: Mountains with a starry sky
 ---
@@ -31,6 +31,8 @@ By default, this is a string value as you haven't told Gatsby yet how to interpr
 ## Gatsby Node
 
 In your `gatsby-node.js` file, you can do some processing to create file nodes for the custom `featuredImgUrl` Frontmatter field.
+
+As we may not want all blog posts to have a featured image, we should define some GraphQL types with the [Schema Customization API](/docs/schema-customization/). Explicitly defining these types allows you to not need to add the fields in the frontmatter to every single blog post and will return `null` when not present. Even if there are no blog posts with these fields, the type will still exist in the schema and can be used in your code.
 
 ```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
@@ -82,7 +84,7 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1. Define some types for `MarkdownRemark` using the [Schema Customization API](/docs/schema-customization/) so if `featuredImgUrl` is not in a Markdown file, it will return `null`. Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
+1. Define some types for `MarkdownRemark` using the Schema Customization API. Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
 2. Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
 3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
 4. If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference.
@@ -140,10 +142,12 @@ const template = ({ data }) => {
   return (
     <>
       <h1>{data.markdownRemark.frontmatter.title}</h1>
-      <Img
-        fixed={data.markdownRemark.featuredImg.childImageSharp.fixed}
-        alt={data.markdownRemark.frontmatter.featuredImgAlt}
-      />
+      {data.markdownRemark.featuredImg && (
+        <Img
+          fixed={data.markdownRemark.featuredImg.childImageSharp.fixed}
+          alt={data.markdownRemark.frontmatter.featuredImgAlt}
+        />
+      )}
       <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
     </>
   )
@@ -173,4 +177,4 @@ export const query = graphql`
 
 And if you run `gatsby develop`, you'll see the remote file locally now:
 
-![Screenshot of rendered blopost with featured image](images/remote-file-node-blogpost.png)
+![Screenshot of rendered blog post with featured image](images/remote-file-node-blogpost.png)
