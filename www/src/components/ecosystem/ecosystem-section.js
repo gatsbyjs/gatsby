@@ -117,7 +117,7 @@ const EcosystemSection = ({
           const { to, label, secondary } = item
 
           return (
-            <Button key={to} to={to} secondary={secondary} variant="tiny">
+            <Button key={to} to={to} secondary={secondary} variant="small">
               {label}
             </Button>
           )

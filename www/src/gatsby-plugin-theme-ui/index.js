@@ -385,21 +385,9 @@ const config = {
       height: `52px`,
     },
     small: {
-      fontSize: 1,
+      fontSize: 2,
       py: 2,
       px: 3,
-      [mq.md]: {
-        fontSize: 2,
-      },
-    },
-    tiny: {
-      borderRadius: 1,
-      fontSize: 1,
-      px: 2,
-      py: 1,
-      [mq.md]: {
-        fontSize: 2,
-      },
     },
   },
 }
