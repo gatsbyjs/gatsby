@@ -154,11 +154,10 @@ const Navigation = ({ pathname }) => {
             [mediaQueries.md]: {
               alignSelf: `flex-end`,
               display: `flex`,
-              ml: 4,
-              flexGrow: 0,
-              // flexShrink: 1,
-              minWidth: 0,
+              flexGrow: 1,
+              flexShrink: 1,
               m: 0,
+              minWidth: 0,
               mr: `auto`,
             },
           }}
@@ -205,7 +204,7 @@ const Navigation = ({ pathname }) => {
           <div
             sx={{
               display: `none`,
-              [mediaQueries.lg]: { display: `flex` },
+              [mediaQueries.xl]: { display: `flex` },
             }}
           >
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">

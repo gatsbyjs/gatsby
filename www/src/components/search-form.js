@@ -4,7 +4,7 @@ import { Component } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 
-import { space } from "../gatsby-plugin-theme-ui"
+import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
 import SearchIcon from "./search-icon"
 import { themedInput } from "../utils/styles"
 
@@ -383,15 +383,27 @@ class SearchForm extends Component {
       <form
         sx={{
           alignItems: `flex-end`,
+          justifyContent: `flex-end`,
           display: `flex`,
-          flex: `1 1 auto`,
+          flex: [
+            `1 0 auto`,
+            `1 0 auto`,
+            `1 0 auto`,
+            `1 0 auto`,
+            `0 0 auto`,
+            `1 0 auto`,
+          ],
           flexDirection: `row`,
           mb: 0,
-          ml: 4,
-          mr: 4,
+          mx: [3, 3, 3, 3, 4],
+          position: `relative`,
           // minWidth: [null, null, null, null, null, `12rem`],
-          maxWidth: [null, null, null, null, null, `24rem`],
+          // maxWidth: [`100%`, `100%`, `100%`, `100%`, null, `24rem`],
           mt: offsetVertical ? offsetVertical : false,
+          "& .algolia-autocomplete": {
+            width: `100%`,
+            display: `block !important`,
+          },
         }}
         className="searchWrap"
         onMouseOver={() => this.loadAlgoliaJS()}
@@ -403,20 +415,41 @@ class SearchForm extends Component {
           sx={{
             position: `relative`,
             width: `100%`,
-            "& .algolia-autocomplete": {
-              width: `100%`,
-              display: `block !important`,
-            },
+            width: [
+              `100%`,
+              `100%`,
+              `100%`,
+              `100%`,
+              focussed ? `14rem` : 24,
+              `100%`,
+            ],
+            transition: t =>
+              `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
         >
           <input
             id="doc-search"
             sx={{
               ...themedInput,
-              pl: 7,
-              width: [`100%`, null, null, null, 5, `100%`],
+              bg: [
+                `themedInput.background`,
+                `themedInput.background`,
+                `themedInput.background`,
+                `themedInput.background`,
+                focussed ? `themedInput.background` : `transparent`,
+                `themedInput.background`,
+              ],
+              pl: [7, 7, 7, 7, focussed ? 7 : 24, 7],
+              width: [
+                `100%`,
+                `100%`,
+                `100%`,
+                `100%`,
+                focussed ? `14rem` : 24,
+                `100%`,
+              ],
               transition: t =>
-                `width ${t.transition.speed.default} ${t.transition.curve.default}`,
+                `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
             }}
             type="search"
             placeholder={`Search gatsbyjs.org`}
