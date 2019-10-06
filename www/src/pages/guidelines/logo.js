@@ -101,7 +101,13 @@ const Monogram = ({ size, ...props }) => (
   </Box>
 )
 
-const GatsbyLogoContainered = ({ height, opacity, inverted, ...rest }) => (
+const GatsbyLogoContainered = ({
+  height,
+  opacity,
+  inverted,
+  invertedWordmark,
+  ...rest
+}) => (
   <Box
     {...rest}
     height={height}
@@ -115,7 +121,7 @@ const GatsbyLogoContainered = ({ height, opacity, inverted, ...rest }) => (
       },
     }}
   >
-    <GatsbyLogo inverted={inverted} />
+    <GatsbyLogo inverted={inverted} invertedWordmark={invertedWordmark} />
   </Box>
 )
 
@@ -195,6 +201,7 @@ const Logo = ({ data, location }) => {
               fontSize={1}
               borderRadius={2}
               maxWidth="30rem"
+              color="grey.80"
             >
               Please{` `}
               <a href="https://github.com/gatsbyjs/gatsby/issues">
@@ -208,7 +215,7 @@ const Logo = ({ data, location }) => {
             </Box>
           </CopyColumn>
           <ContentColumn>
-            <GatsbyLogoContainered mb={4} inverted={isDark} />
+            <GatsbyLogoContainered mb={4} invertedWordmark={isDark} />
             <p>
               Gatsby’s logo was created by Sacha Greif in late 2016, and is a
               true open source community effort.{` `}
@@ -313,7 +320,7 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <GatsbyLogoContainered />
+            <GatsbyLogoContainered invertedWordmark={isDark} />
           </ContentColumn>
         </Columns>
       </Section>

@@ -1,7 +1,7 @@
 import React from "react"
 import { colors } from "../../../gatsby-plugin-theme-ui"
 
-const GatsbyLogo = ({ inverted, color, monogramColor }) => {
+const GatsbyLogo = ({ inverted, invertedWordmark, color, monogramColor }) => {
   let monogram = monogramColor || colors.purple[`60`]
   let wordmark = color || colors.black
   let monogramFill = colors.white
@@ -9,6 +9,10 @@ const GatsbyLogo = ({ inverted, color, monogramColor }) => {
   if (inverted) {
     monogram = wordmark = color || colors.white
     monogramFill = `transparent`
+  }
+
+  if (invertedWordmark) {
+    wordmark = colors.white
   }
 
   return (
