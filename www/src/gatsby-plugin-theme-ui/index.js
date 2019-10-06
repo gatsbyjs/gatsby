@@ -131,6 +131,7 @@ const col = {
     background: c.white,
     accent: c.yellow[60],
     light: c.purple[10],
+    lightActive: c.purple[20],
   },
   input: {
     background: c.white,
@@ -197,8 +198,10 @@ const col = {
   button: {
     primaryBg: c.purple[60],
     primaryText: c.white,
-    secondaryBg: c.purple[50],
-    secondaryText: c.purple[40],
+    primaryBorder: c.purple[60],
+    secondaryBg: `transparent`,
+    secondaryText: c.purple[50],
+    secondaryBorder: c.purple[40],
   },
   modes: {
     dark: {
@@ -209,12 +212,13 @@ const col = {
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
       icon: {
-        dark: c.purple[40],
-        neutral: c.grey[60],
+        dark: c.purple[50],
+        neutral: c.grey[80],
         neutralLight: c.grey[90],
         background: c.darkBorder,
-        accent: c.purple[60],
-        light: c.purple[90],
+        accent: c.yellow[50],
+        light: c.grey[90],
+        lightActive: c.purple[90],
       },
       card: {
         background: c.grey[90],

@@ -29,7 +29,7 @@ export const buttonStyles = t => {
       borderRadius: 2,
       borderWidth: 1,
       borderStyle: `solid`,
-      borderColor: `button.primaryBg`,
+      borderColor: `button.primaryBorder`,
       color: `button.primaryText`,
       cursor: `pointer`,
       display: `inline-flex`,
@@ -56,6 +56,7 @@ export const buttonStyles = t => {
       "& svg": { marginLeft: `.2em` },
     },
     secondary: {
+      borderColor: `button.secondaryBorder`,
       backgroundColor: `button.secondaryBg`,
       color: `button.secondaryText`,
       fontWeight: `body`,
@@ -91,9 +92,9 @@ export const svgStyles = t => {
       "& .svg-fill-dark": { fill: `icon.dark` },
       "& .svg-fill-accent": { fill: `icon.accent` },
       "& .svg-fill-background": { fill: `icon.background` },
-      "& .svg-fill-light": { fill: `icon.light` },
+      "& .svg-fill-light": { fill: `icon.lightActive` },
       "& .svg-fill-accent.svg-fill-transparent": { fill: `icon.accent` },
-      "& .svg-fill-light.svg-fill-transparent": { fill: `icon.light` },
+      "& .svg-fill-light.svg-fill-transparent": { fill: `icon.lightActive` },
     },
   }
 }
