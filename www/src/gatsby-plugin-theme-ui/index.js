@@ -159,7 +159,7 @@ const col = {
   navigation: {
     background: hex2rgba(c.white, 0.985),
     linkDefault: c.grey[70],
-    linkActive: c.gatsby,
+    linkActive: c.purple[50],
     linkHover: c.gatsby,
     socialLink: c.grey[40],
   },
@@ -193,6 +193,12 @@ const col = {
     heading: c.grey[70],
     stripeColorA: c.red[40],
     stripeColorB: c.blue[40],
+  },
+  button: {
+    primaryBg: c.purple[60],
+    primaryText: c.white,
+    secondaryBg: c.purple[50],
+    secondaryText: c.purple[40],
   },
   modes: {
     dark: {
@@ -303,6 +309,12 @@ const col = {
         suggestionHighlightBackground: c.gatsby,
         suggestionHighlightColor: c.purple[20],
       },
+      button: {
+        primaryBg: c.purple[60],
+        primaryText: c.white,
+        secondaryBg: c.purple[90],
+        secondaryText: c.purple[40],
+      },
     },
   },
 }
@@ -366,6 +378,30 @@ const config = {
   space: spaceTokens,
   transition: t,
   zIndices: z,
+  buttons: {
+    large: {
+      fontSize: 4,
+      px: 4,
+      height: `52px`,
+    },
+    small: {
+      fontSize: 1,
+      py: 2,
+      px: 3,
+      [mq.md]: {
+        fontSize: 2,
+      },
+    },
+    tiny: {
+      borderRadius: 1,
+      fontSize: 1,
+      px: 2,
+      py: 1,
+      [mq.md]: {
+        fontSize: 2,
+      },
+    },
+  },
 }
 
 export default config

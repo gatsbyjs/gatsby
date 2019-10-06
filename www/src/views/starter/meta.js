@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import ShareMenu from "../../components/share-menu"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
+
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import ShareMenu from "../../components/share-menu"
+import Button from "../../components/button"
 
 const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
@@ -34,8 +36,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         flexWrap: `wrap`,
         justifyContent: `space-between`,
         mt: 6,
-        pr: 4,
         [mediaQueries.sm]: {
+          pr: 4,
           justifyContent: `flex-start`,
         },
       }}
@@ -44,9 +46,9 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         <span
           sx={{
             alignItems: `center`,
-            color: `accent`,
+            color: `textMuted`,
             display: `inline-flex`,
-            pr: 5,
+            [mediaQueries.sm]: { pr: 5 },
           }}
         >
           <MdStar />
@@ -55,10 +57,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         </span>
       </div>
 
-      <div>
-        <span sx={{ pr: 2 }}>Updated</span>
-        {showDate(starter.lastUpdated)}
-      </div>
+      <div>Updated {showDate(starter.lastUpdated)}</div>
     </div>
 
     <div
@@ -67,7 +66,6 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         display: `flex`,
         flexGrow: 1,
         flexWrap: `nowrap`,
-        mr: 4,
         mt: 6,
         pb: 3,
         [mediaQueries.sm]: {
@@ -113,33 +111,21 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         <div
           sx={{
             position: `absolute`,
-            right: t => t.space[6],
+            right: 0,
             top: 0,
             left: `auto`,
             zIndex: 1,
             display: `flex`,
           }}
         >
-          <a
-            href={demo}
-            sx={{
-              border: 0,
-              borderRadius: 1,
-              fontFamily: `header`,
-              fontWeight: `bold`,
-              mr: 2,
-              py: 1,
-              px: 4,
-              "&&": {
-                backgroundColor: `accent`,
-                borderBottom: `none`,
-                color: `gatsby`,
-              },
-            }}
+          <Button
+            tag="href"
+            to={demo}
+            overrideCSS={{ mr: 2 }}
+            icon={<MdLink />}
           >
-            <MdLink style={{ verticalAlign: `sub` }} />
-            {` Visit demo `}
-          </a>
+            Visit demo
+          </Button>
           <ShareMenu
             url={`https://github.com/${starter.githubFullName}`}
             title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}

@@ -51,7 +51,7 @@ export default class GatsbyHubspotForm extends Component {
             color: `textMuted`,
           },
           "& .hs-button.primary": {
-            ...buttonStyles.default,
+            ...buttonStyles().default,
           },
         }}
       >

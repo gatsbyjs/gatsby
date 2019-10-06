@@ -48,7 +48,7 @@ const MastheadContent = () => (
       <strong>apps</strong>
     </p>
     <Button
-      large
+      variant="large"
       to="/docs/"
       tracking="MasterHead -> Get Started"
       icon={<ArrowForwardIcon />}

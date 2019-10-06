@@ -17,7 +17,7 @@ const createLink = ({
   isActive,
   isParentOfActiveItem,
   ui,
-  customCSS,
+  overrideCSS,
   level,
 }) => {
   const isDraft = _isDraft(item.title)
@@ -76,7 +76,7 @@ const createLink = ({
                 transform: `scale(1)`,
               },
             },
-            ...customCSS,
+            ...overrideCSS,
           },
           "&:before, &:after": {
             content: `''`,

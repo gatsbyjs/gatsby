@@ -224,7 +224,7 @@ export default class FilteredStarterLibrary extends Component {
                 tag="href"
                 target="_blank"
                 rel="noopener noreferrer"
-                small
+                variant="small"
                 icon={<ArrowForwardIcon />}
                 overrideCSS={{ ml: 3 }}
               >
@@ -240,7 +240,7 @@ export default class FilteredStarterLibrary extends Component {
           />
           {this.state.sitesToShow < starters.length && (
             <Button
-              large
+              variant="large"
               tag="button"
               overrideCSS={loadMoreButton}
               onClick={() => this.showMoreSites(starters)}

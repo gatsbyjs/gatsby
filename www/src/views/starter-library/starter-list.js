@@ -104,7 +104,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         />
                       )}
                       <div
-                        xs={{
+                        sx={{
                           alignItems: `center`,
                           display: `inline-flex`,
                           fontSize: 0,

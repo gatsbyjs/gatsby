@@ -130,7 +130,7 @@ class BlogPostTemplate extends React.Component {
                       image={
                         post.frontmatter.author.avatar.childImageSharp.fixed
                       }
-                      customCSS={{ mr: 5 }}
+                      overrideCSS={{ mr: 5 }}
                     />
                   </Link>
                 </div>

@@ -15,22 +15,23 @@ const Details = ({
   <div
     sx={{
       p: 6,
-      [mediaQueries.lg]: {
+      [mediaQueries.md]: {
         display: `grid`,
-        gridRowGap: 5,
+        gridRowGap: 6,
+        gridColumnGap: 6,
         gridTemplateColumns: `auto 1fr`,
         p: 8,
       },
     }}
   >
-    <div sx={styles.headline}>Tags</div>
-    <div>{startersYaml.tags.join(`, `)}</div>
+    <h2 sx={styles.headline}>Tags</h2>
+    <div sx={styles.content}>{startersYaml.tags.join(`, `)}</div>
 
-    <div sx={styles.headline}>Description</div>
-    <div>{startersYaml.description}</div>
+    <h2 sx={styles.headline}>Description</h2>
+    <div sx={styles.content}>{startersYaml.description}</div>
 
-    <div sx={styles.headline}>Features</div>
-    <div>
+    <h2 sx={styles.headline}>Features</h2>
+    <div sx={styles.content}>
       {startersYaml.features ? (
         <ul sx={{ mt: 0 }}>
           {startersYaml.features.map((f, i) => (
@@ -42,13 +43,12 @@ const Details = ({
       )}
     </div>
 
-    <div sx={styles.headline}>Dependencies</div>
+    <h2 sx={styles.headline}>Dependencies</h2>
 
     <div>
       <div
         sx={{
           display: `grid`,
-          marginBottom: `7.5rem`,
           [mediaQueries.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
             gridGap: 5,
@@ -85,8 +85,17 @@ export default Details
 const styles = {
   headline: {
     color: `textMuted`,
-    fontFamily: `header`,
-    pr: 5,
+    fontWeight: `normal`,
+    fontSize: 3,
+    mt: 0,
+    mb: 2,
+    [mediaQueries.md]: {
+      mb: 0,
+    },
+  },
+  content: {
+    pb: 8,
+    [mediaQueries.md]: { pb: 0 },
   },
   showMoreButton: {
     backgroundColor: `gatsby`,

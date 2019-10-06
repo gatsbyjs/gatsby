@@ -44,7 +44,7 @@ const TagsSection = ({ tags }) => {
       </em>
       <Button
         css={{ flexShrink: 0 }}
-        small
+        variant="small"
         key="blog-post-view-all-tags-button"
         to="/blog/tags"
       >

@@ -5,7 +5,6 @@ import {
   space,
   transition,
   radii,
-  mediaQueries,
   fontSizes,
   fontWeights,
   lineHeights,
@@ -22,71 +21,46 @@ export const focusStyle = {
   boxShadow: `0 0 0 2px ${colors.input.focusBoxShadow}`,
 }
 
-export const buttonStyles = {
-  default: {
-    alignItems: `center`,
-    backgroundColor: colors.gatsby,
-    borderRadius: `${radii[2]}px`,
-    borderWidth: 1,
-    borderStyle: `solid`,
-    borderColor: colors.gatsby,
-    color: colors.white,
-    cursor: `pointer`,
-    display: `inline-flex`,
-    fontFamily: fonts.heading,
-    fontWeight: `bold`,
-    flexShrink: 0,
-    lineHeight: lineHeights.solid,
-    textDecoration: `none`,
-    whiteSpace: `nowrap`,
-    paddingLeft: space[3],
-    paddingRight: space[3],
-    height: 36,
-    backgroundSize: `${space[7]} ${space[7]}`,
-    transition: `all ${transition.speed.default} ${transition.curve.default}`,
-    ":hover, :focus": {
-      backgroundColor: colors.gatsby,
-      backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-      color: colors.white,
-      animation: `${stripeAnimation} 2.8s linear infinite`,
-      borderColor: colors.gatsby,
+export const buttonStyles = t => {
+  return {
+    default: {
+      alignItems: `center`,
+      backgroundColor: `button.primaryBg`,
+      borderRadius: 2,
+      borderWidth: 1,
+      borderStyle: `solid`,
+      borderColor: `button.primaryBg`,
+      color: `button.primaryText`,
+      cursor: `pointer`,
+      display: `inline-flex`,
+      fontFamily: `heading`,
+      fontWeight: `bold`,
+      flexShrink: 0,
+      lineHeight: `solid`,
+      textDecoration: `none`,
+      whiteSpace: `nowrap`,
+      px: 3,
+      height: `36px`,
+      backgroundSize: t => `${t.space[7]} ${t.space[7]}`,
+      transition: t =>
+        `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+      ":hover, :focus": {
+        backgroundColor: `gatsby`,
+        backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+        color: colors.white,
+        animation: `${stripeAnimation} 2.8s linear infinite`,
+        borderColor: `gatsby`,
+      },
+      ":focus": { ...focusStyle },
+      ":after": { content: `''`, display: `block` },
+      "& svg": { marginLeft: `.2em` },
     },
-    ":focus": {
-      ...focusStyle,
+    secondary: {
+      backgroundColor: `button.secondaryBg`,
+      color: `button.secondaryText`,
+      fontWeight: `body`,
     },
-    ":after": { content: `''`, display: `block` },
-    "& svg": { marginLeft: `.2em` },
-  },
-  secondary: {
-    backgroundColor: `transparent`,
-    color: colors.gatsby,
-    fontWeight: fontWeights.body,
-  },
-  large: {
-    fontSize: fontSizes[4],
-    paddingLeft: space[4],
-    paddingRight: space[4],
-    height: 52,
-  },
-  small: {
-    fontSize: fontSizes[1],
-    padding: `${space[2]} ${space[3]}`,
-    [mediaQueries.md]: {
-      fontSize: fontSizes[2],
-    },
-  },
-  tiny: {
-    borderRadius: radii[1],
-    fontSize: fontSizes[1],
-    padding: `${space[1]} ${space[2]}`,
-    [mediaQueries.md]: {
-      fontSize: fontSizes[2],
-    },
-  },
-  ondark: {
-    border: `1px solid ${colors.purple[10]}`,
-    background: colors.purple[80],
-  },
+  }
 }
 
 export const svgStyles = t => {

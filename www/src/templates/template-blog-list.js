@@ -42,7 +42,11 @@ class BlogPostsIndex extends React.Component {
               }}
             >
               <h1 sx={{ mb: 0 }}>Blog</h1>
-              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
+              <Button
+                key="blog-view-all-tags-button"
+                to="/blog/tags"
+                variant="small"
+              >
                 View all Tags <TagsIcon />
               </Button>
             </div>

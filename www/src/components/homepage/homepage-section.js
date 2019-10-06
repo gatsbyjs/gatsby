@@ -21,8 +21,7 @@ export const Header = styled(`header`)`
 
 export const Name = styled(`h3`)`
   align-items: center;
-  color: ${props =>
-    props.inverse ? props.theme.colors.purple[10] : props.theme.colors.lilac};
+  color: ${p => p.theme.colors.lilac};
   display: flex;
   font-size: ${p => p.theme.fontSizes[2]};
   font-weight: ${p => p.theme.fontWeights.body};
@@ -45,25 +44,20 @@ const Icon = styled(`span`)`
   svg {
     fill: transparent;
     height: ${p => p.theme.space[ICON_SIZE]};
-    stroke: ${props =>
-      props.inverse ? props.theme.colors.purple[10] : props.theme.colors.lilac};
+    stroke: ${p => p.theme.colors.lilac};
     width: ${p => p.theme.space[ICON_SIZE]};
   }
 `
 
 export const Title = styled(`h1`)`
-  color: ${props =>
-    props.inverse ? props.theme.colors.yellow[40] : props.theme.colors.heading};
+  color: ${p => p.theme.colors.heading};
   font-size: ${p => p.theme.fontSizes[6]};
   font-weight: ${p => p.theme.fontWeights.heading};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
-  color: ${props =>
-    props.inverse
-      ? props.theme.colors.purple[10]
-      : props.theme.colors.textMuted};
+  color: ${p => p.theme.colors.textMuted};
   font-size: ${p => p.theme.fontSizes[3]};
   font-family: ${p => p.theme.fonts.heading};
   margin: 0;
@@ -90,15 +84,13 @@ const HomepageSection = ({
   sectionIcon,
   title,
   introduction,
-  inverseStyle,
   links,
-  inverse,
   className,
 }) => (
   <section
     sx={{
-      bg: inverse ? `purple.80` : `background`,
-      color: inverse ? `purple.10` : `purple.80`,
+      bg: `background`,
+      color: `purple.80`,
       px: 6,
       py: 5,
       width: `100%`,
@@ -113,24 +105,18 @@ const HomepageSection = ({
         px: `8%`,
       },
     }}
-    inverse={inverseStyle}
     className={className}
   >
     {sectionName && (
       <Header>
-        <Name inverse={inverseStyle}>
+        <Name>
           {sectionIcon && (
-            <Icon
-              dangerouslySetInnerHTML={{ __html: sectionIcon }}
-              inverse={inverseStyle}
-            />
+            <Icon dangerouslySetInnerHTML={{ __html: sectionIcon }} />
           )}
           {sectionName}
         </Name>
-        {title && <Title inverse={inverseStyle}>{title}</Title>}
-        {introduction && (
-          <Introduction inverse={inverseStyle}>{introduction}</Introduction>
-        )}
+        {title && <Title>{title}</Title>}
+        {introduction && <Introduction>{introduction}</Introduction>}
         {links && (
           <Actions>
             {links.map(item => {
@@ -140,8 +126,7 @@ const HomepageSection = ({
                 <Button
                   key={label}
                   to={to}
-                  small
-                  ondark={inverseStyle ? true : false}
+                  variant="small"
                   secondary={secondary}
                   tracking={tracking}
                 >
@@ -164,7 +149,6 @@ HomepageSection.propTypes = {
   title: PropTypes.string,
   introduction: PropTypes.string,
   links: PropTypes.array,
-  inverseStyle: PropTypes.bool,
   className: PropTypes.string,
 }
 

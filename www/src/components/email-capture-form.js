@@ -80,31 +80,6 @@ const SuccessMessage = styled(`div`)`
   font-family: ${p => p.theme.fonts.system};
 `
 
-const Submit = styled(`input`)`
-  ${buttonStyles.default};
-  margin-top: ${p => p.theme.space[3]};
-`
-
-const SubmitOnHomepage = styled(`button`)`
-  ${buttonStyles.default};
-  font-size: ${p => p.theme.fontSizes[3]};
-  width: 100%;
-  margin-top: ${p => p.theme.space[3]};
-
-  span {
-    align-items: center;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  ${mediaQueries.lg} {
-    width: auto;
-    margin-top: 0;
-    margin-left: ${p => p.theme.space[2]};
-  }
-`
-
 class Form extends React.Component {
   constructor(props) {
     super(props)
@@ -223,14 +198,40 @@ class Form extends React.Component {
         )}
 
         {isHomepage ? (
-          <SubmitOnHomepage type="submit">
+          <button
+            type="submit"
+            sx={{
+              ...buttonStyles().default,
+              fontSize: 3,
+              mt: 3,
+              width: `100%`,
+              span: {
+                alignItems: `center`,
+                display: `flex`,
+                justifyContent: `space-between`,
+                width: `100%`,
+              },
+              [mediaQueries.lg]: {
+                ml: 2,
+                mt: 0,
+                width: `auto`,
+              },
+            }}
+          >
             <span>
               Subscribe
               <SendIcon />
             </span>
-          </SubmitOnHomepage>
+          </button>
         ) : (
-          <Submit type="submit" value="Subscribe" />
+          <input
+            type="submit"
+            value="Subscribe"
+            sx={{
+              ...buttonStyles().default,
+              mt: 3,
+            }}
+          />
         )}
       </StyledForm>
     )

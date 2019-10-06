@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-const Badge = ({ forHire, children, customCSS }) => (
+const Badge = ({ forHire, children, overrideCSS }) => (
   <div
     sx={{
       ...styles.badge,
       ...(forHire ? styles.forHire : styles.hiring),
-      letterSpacing: customCSS ? `tracked` : null,
-      ...(customCSS && forHire ? customCSS : {}),
+      letterSpacing: overrideCSS ? `tracked` : null,
+      ...(overrideCSS && forHire ? overrideCSS : {}),
     }}
   >
     {children}

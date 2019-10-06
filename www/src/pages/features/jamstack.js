@@ -75,7 +75,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
               )
             )}
             <Button
-              style={{ whiteSpace: `pre-wrap` }}
+              overrideCSS={{ whiteSpace: `pre-wrap` }}
               to={
                 hasSelected
                   ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`

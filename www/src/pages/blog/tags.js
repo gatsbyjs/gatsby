@@ -42,7 +42,7 @@ const PopularTagGrid = styled.div`
 `
 
 const PopularTagButton = ({ children, tag }) => (
-  <Button small secondary to={`/blog/tags/${tag}`}>
+  <Button variant="small" secondary to={`/blog/tags/${tag}`}>
     {tag}
     <TiArrowRight />
     {children}

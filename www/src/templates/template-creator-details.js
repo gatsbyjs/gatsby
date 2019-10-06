@@ -156,7 +156,7 @@ class CreatorTemplate extends Component {
                 >
                   <Badge
                     forHire={creator.for_hire}
-                    customCSS={{
+                    overrideCSS={{
                       background: `green.50`,
                       color: `white`,
                     }}

@@ -45,13 +45,22 @@ const Tags = ({ pageContext, data, location }) => {
       </Helmet>
       <Container>
         <h1>{tagHeader}</h1>
-        <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
+        <Button
+          variant="small"
+          key="blog-post-view-all-tags-button"
+          to="/blog/tags"
+        >
           View all tags <TagsIcon />
         </Button>
         {doc ? (
           <React.Fragment>
             <span css={{ margin: 5 }} />
-            <Button small secondary key={`view-tag-docs-button`} to={doc}>
+            <Button
+              variant="small"
+              secondary
+              key={`view-tag-docs-button`}
+              to={doc}
+            >
               Read the documentation <TiArrowRight />
             </Button>
           </React.Fragment>

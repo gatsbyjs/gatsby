@@ -114,7 +114,7 @@ const SplitButton = ({
         location,
         onLinkClick,
         level: item.level,
-        customCSS: {
+        overrideCSS: {
           ...(item.level === 0 &&
             item.ui !== `steps` && {
               "&&": {

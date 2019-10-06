@@ -221,7 +221,11 @@ const HomepageBlogPost = ({
 
       <Meta>
         <Author to={authorSlug}>
-          <Avatar image={authorFixed} alt={authorName} customCSS={{ mr: 3 }} />
+          <Avatar
+            image={authorFixed}
+            alt={authorName}
+            overrideCSS={{ mr: 3 }}
+          />
           <span>{authorName}</span>
         </Author>
         &nbsp;on&nbsp;

@@ -146,7 +146,7 @@ class FeaturedSites extends Component {
               tag="href"
               target="_blank"
               rel="noopener noreferrer"
-              small
+              variant="small"
               icon={<ArrowForwardIcon />}
             >
               Submit your Site

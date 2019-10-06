@@ -63,7 +63,7 @@ class CreatorsHeader extends Component {
             }}
           >
             <Button
-              small
+              variant="small"
               to="/contributing/submit-to-creator-showcase/"
               icon={<ArrowForwardIcon />}
             >

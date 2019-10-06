@@ -155,7 +155,7 @@ class FilteredShowcase extends Component {
 
           {this.state.sitesToShow < items.length && (
             <Button
-              large
+              variant="large"
               tag="button"
               overrideCSS={loadMoreButton}
               onClick={() => {

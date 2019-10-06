@@ -1,16 +1,16 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import Copy from "../../components/copy"
-import { radii, mediaQueries } from "gatsby-design-tokens"
+import { mediaQueries } from "gatsby-design-tokens"
 
 const StarterInstallation = ({ repoName, repoUrl }) => {
   const content = `gatsby new ${repoName || `my-gatsby-project`} ${repoUrl}`
   return (
     <div
       sx={{
-        px: 6,
-        py: 0,
+        mx: 6,
         [mediaQueries.lg]: {
-          px: 8,
+          mx: 8,
           display: `grid`,
           gridTemplateRows: `auto auto`,
           gridRowGap: 2,
@@ -22,17 +22,17 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
       </div>
       <pre
         sx={{
-          p: 0,
           background: `code.bg`,
+          p: 0,
         }}
       >
         <code
           sx={{
-            display: `flex`,
             alignItems: `center`,
+            display: `flex`,
             justifyContent: `space-between`,
-            p: 2,
             overflowWrap: `break-word`,
+            p: 2,
             [mediaQueries.lg]: {
               p: 3,
             },
@@ -48,7 +48,7 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
           <Copy
             fileName="Install command"
             content={content}
-            css={{ borderRadius: `${radii[1]}px` }}
+            sx={{ borderRadius: 1 }}
           />
         </code>
       </pre>

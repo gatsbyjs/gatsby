@@ -124,7 +124,7 @@ class IndexRoute extends React.Component {
                 </FuturaParagraph>
                 <Button
                   secondary
-                  large
+                  variant="large"
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
                   overrideCSS={{ mt: 5 }}

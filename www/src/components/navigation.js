@@ -31,16 +31,6 @@ const navItemStyles = {
   "&:hover, &:focus": { color: `navigation.linkHover` },
 }
 
-const assignActiveStyles = ({ isPartiallyCurrent }) =>
-  isPartiallyCurrent
-    ? {
-        style: {
-          borderBottomColor: colors.lilac,
-          color: colors.gatsby,
-        },
-      }
-    : {}
-
 const NavItem = ({ linkTo, children }) => (
   <li
     sx={{
@@ -49,7 +39,17 @@ const NavItem = ({ linkTo, children }) => (
       mx: navItemHorizontalSpacing,
     }}
   >
-    <Link to={linkTo} getProps={assignActiveStyles} sx={navItemStyles}>
+    <Link
+      to={linkTo}
+      activeClassName="active"
+      sx={{
+        ...navItemStyles,
+        "&.active": {
+          borderBottomColor: `lilac`,
+          color: `lilac`,
+        },
+      }}
+    >
       {children}
     </Link>
   </li>

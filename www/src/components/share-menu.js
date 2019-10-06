@@ -20,14 +20,14 @@ const ShareMenuItem = ({ href, title, children }) => (
     target="_blank"
     rel="noopener noreferrer"
     sx={{
-      width: 32,
-      height: 32,
+      width: 36,
+      height: 36,
       mb: 2,
       "&&": {
-        bg: `gatsby`,
+        bg: `button.primaryBg`,
         border: 0,
-        borderRadius: 1,
-        color: `white`,
+        borderRadius: 2,
+        color: `button.primaryText`,
         display: `flex`,
         alignItems: `center`,
         justifyContent: `center`,
@@ -87,19 +87,20 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, className, overrideCSS } = this.props
+    const { url, title, image, className } = this.props
     const { open } = this.state
     return (
       <Fragment>
         <button
           onClick={this.shareMenu}
           sx={{
-            bg: `gatsby`,
+            bg: `button.primaryBg`,
             border: 0,
-            borderRadius: 1,
-            color: `white`,
+            borderRadius: 2,
+            color: `button.primaryText`,
             cursor: `pointer`,
-            ...overrideCSS,
+            height: 36,
+            width: 36,
           }}
           className={className}
           ref={this.setShareBtnRef}

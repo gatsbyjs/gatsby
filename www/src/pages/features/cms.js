@@ -70,9 +70,7 @@ const CmsFeaturesPage = ({ data, location }) => {
               </CompareButton>
             ))}
             <Button
-              style={{
-                whiteSpace: `pre-wrap`,
-              }}
+              overrideCSS={{ whiteSpace: `pre-wrap` }}
               to={
                 hasSelected
                   ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`
