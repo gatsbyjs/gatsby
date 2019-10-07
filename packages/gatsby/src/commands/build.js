@@ -150,16 +150,22 @@ module.exports = async function build(program: BuildArgs) {
     })
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
-    if (err.message === `ReferenceError: window is not defined`) {
+    const context = {
+      errorPath: err.context && err.context.path,
+    }
+
+    const match = err.message.match(
+      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+    )
+    if (match && match[1]) {
       id = `95312`
+      context.ref = match[1]
     }
 
     report.panic({
       id,
+      context,
       error: err,
-      context: {
-        errorPath: err.context && err.context.path,
-      },
     })
   }
   activity.end()

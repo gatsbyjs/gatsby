@@ -135,7 +135,7 @@ Third, **many people don’t see themselves represented in open source.**
 
 #### Overcoming these obstacles
 
-We believe that that these barriers aren't simply obstacles to contributing, they're also obstacles to creating thriving projects. When these barriers persist:
+We believe that these barriers aren't simply obstacles to contributing, they're also obstacles to creating thriving projects. When these barriers persist:
 
 - projects lose so many brilliant people who have so much to contribute
 - projects lose an opportunity to add more maintainers
