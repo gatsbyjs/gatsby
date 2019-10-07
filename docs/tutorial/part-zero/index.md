@@ -126,11 +126,9 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there.
 
-> If you haven't worked with a code editor before, we recommend [**VS Code**](https://code.visualstudio.com/), simply because the screenshots used throughout the tutorial were taken in VS Code, and therefore may look more similar to your screen.
-
 ### Download VS Code
 
-Gatsby documentation sometimes includes screenshots of code editors; these screenshots show the VS Code editor, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
+Gatsby documentation sometimes includes screenshots that were taken in VS Code, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
 
 ### Install the Prettier plugin
 
