@@ -7579,3 +7579,16 @@
   built_by: Little & Big
   built_by_url: "https://www.littleandbig.com.au/"
   featured: false
+- title: Guus van de Wal | Drupal Front-end specialist
+  url: https://guusvandewal.nl
+  main_url: https://guusvandewal.nl
+  description: >
+    Decoupled portfolio site for guusvandewal.nl, a Drupal and ReactJS front-end developer and designer.
+  categories:
+    - Open Source
+    - Web Development
+    - Design
+    - Blog
+    - Freelance
+  built_by: Guus van de Wal
+  featured: false
