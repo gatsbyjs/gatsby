@@ -314,10 +314,9 @@ const col = {
         suggestionHighlightColor: c.purple[20],
       },
       button: {
-        primaryBg: c.purple[60],
-        primaryText: c.white,
-        secondaryBg: c.purple[90],
+        secondaryBg: `transparent`,
         secondaryText: c.purple[40],
+        secondaryBorder: c.purple[40],
       },
     },
   },
