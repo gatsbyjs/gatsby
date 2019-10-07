@@ -10,47 +10,44 @@ Before you start building your first Gatsby site, you’ll need to familiarize y
 
 The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial, we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
-Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
+Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.lifewire.com/how-to-open-command-prompt-2618089) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
-## Install Homebrew for Node.js
+_Note: If you’re new to the command line, "running" a command, means writing the text in the highlighted box in the command prompt, and hitting the Enter key”. Commands will be in a highlighted box like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute._
 
-To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+## Mac prerequisites
 
-How to install or verify Homebrew on your computer:
+To install Gatsby and Node.js, we recommend you to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+
+### How to install or verify Homebrew on your computer:
 
 1. Open your Terminal.
 1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
-1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
+1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation).
 1. Once you've installed Homebrew, repeat step 2 to verify.
 
-### Mac Users: install Xcode Command Line Tools
+### Install Xcode Command Line Tools:
 
 1. Open your Terminal.
-1. On a Mac, install Xcode Command line tools by running `xcode-select --install`.
+1. Install Xcode Command line tools by running `xcode-select --install`.
    1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
-## ⌚ Install Node.js and npm
+## Installing Node.js and npm
 
-Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
+Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer. npm comes bundled with Node.js so if you don't have npm, chances are that you don't have Node.js too.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
 1. Open your Terminal.
-1. Run `brew update` to make sure you have the latest version of Homebrew.
-1. Run this command to install Node and npm in one go: `brew install node`
+1. Install Node.js for your appropriate operating system.
+   - On **MacOS** with homebrew installed, run `brew install node`. If you don't want to install it through homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+   - On **Windows**, download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
+   - On **Linux**, run `sudo apt-get install curl`. After it finishes installing, run `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -` and install Node.js by running `sudo apt-get install nodejs`. If it asks for confirmation, type `y` and press enter. If you're on Fedora, follow [this guide to install Node.js and npm](https://tecadmin.net/install-latest-nodejs-on-fedora/) instead.
+1. Verify you have Node.js and npm installed by running `node --version` and `npm --version` in the terminal.
+1. The output of each of those commands should be a version number. Your versions may not be the same as those shown below! If entering those commands doesn’t show you a version number, go back and make sure you have installed Node.js.
+   ![Check node and npm versions in terminal](01-node-npm-versions.png)
 
-Once you have followed the installation steps, make sure everything was installed properly:
-
-### Check your Node.js installation
-
-1.  Open up your terminal.
-2.  Run `node --version`. (If you’re new to the command line, “run `command`” means “type `node --version` in the command prompt, and hit the Enter key”. From here on, this is what we mean by “run `command`”).
-3.  Run `npm --version`.
-
-The output of each of those commands should be a version number. Your versions may not be the same as those shown below! If entering those commands doesn’t show you a version number, go back and make sure you have installed Node.js.
-
-![Check node and npm versions in terminal](01-node-npm-versions.png)
+Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step:
 
 ## Install Git
 
