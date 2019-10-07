@@ -7530,3 +7530,14 @@
   categories:
     - Education
     - Learning
+- title: Women's and Girls' Emergency Centre
+  url: https://www.wagec.org.au/
+  main_url: https://www.wagec.org.au/
+  description: >
+    Specialist homelessness service for women and families escaping domestic violence. Based in Redfern, Sydney, Australia.
+  categories:
+    - Nonprofit
+    - Community
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
