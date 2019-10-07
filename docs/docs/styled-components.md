@@ -112,7 +112,31 @@ export default () => (
 )
 ```
 
-### Enabling user stylesheets with a stable class name
+## Creating Global Styles
+
+Normally, styled components are created for a single CSS class that is isolated from other components. In some cases, it’s helpful (and cleaner!) to create a global style so more than one component can have access to the same styles. In a way, you can create a base stylesheet.
+
+A global style can be created by using `createGlobalStyle` and can be added to files like `container.js` or `index.js`.
+
+The example below shows how to create a `GlobalStyle` (which is a StyledComponent) for the color purple by importing `createGlobalStyle` from `styled-components`.
+
+```jsx:title=src/pages/index.js
+import { createGlobalStyle } from 'styled-components'
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    color: ${props => (props.purpleColor ? 'purple' : 'white')};
+  }
+`
+
+// later on in your file
+
+<React.Fragment>
+  <GlobalStyle purpleColor />
+</React.Fragment>
+```
+
+## Enabling user stylesheets with a stable class name
 
 Adding a persistent CSS `className` to your styled components can make it easier for end users of your website to take advantage of [user stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 
