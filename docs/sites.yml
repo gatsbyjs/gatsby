@@ -7585,8 +7585,10 @@
   description: >
     Decoupled portfolio site for guusvandewal.nl, a Drupal and ReactJS front-end developer and designer.
   categories:
-    - CMS:Drupal
+    - Open Source
     - Web Development
     - Design
+    - Blog
+    - Freelance
   built_by: Guus van de Wal
   featured: false
