@@ -69,7 +69,7 @@ Now let's get down to business...
 
 ## Setting up WordPress
 
-This article assumes you have at least a rudimentary knowledge of WordPress. If you've never used it, you can check out [my quick guide to setting up a WordPress site](https://www.iamtimsmith.com/blog/how-to-build-a-beautiful-website-in-less-than-10-minutes/).
+This article assumes you have at least a rudimentary knowledge of WordPress. If you've never used it, you can check out [my quick guide to setting up a WordPress site](https://www.iamtimsmith.com/blog/how-to-build-website-in-less-than-10-minutes/).
 
 ## A bit about WordPress as a CMS
 

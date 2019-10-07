@@ -180,7 +180,7 @@ class BlogPostTemplate extends React.Component {
               {post.frontmatter.title}
             </h1>
             {post.frontmatter.image &&
-              !(post.frontmatter.showImageInArticle === false) && (
+              post.frontmatter.showImageInArticle !== false && (
                 <div css={{ marginBottom: space[5] }}>
                   <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
                   {post.frontmatter.imageAuthor &&
