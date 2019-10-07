@@ -1100,7 +1100,7 @@
     - Documentation
     - Community
   built_by: Sankarsan Kampa
-  built_by_url: "https://sankarsankampa.com"
+  built_by_url: "https://traction.one"
 - title: Smakosh
   main_url: "https://smakosh.com/"
   url: "https://smakosh.com/"
@@ -6989,7 +6989,7 @@
   url: https://opensourcerepos.com
   featured: false
   description: >
-    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the github repository. Out main aim to is to help more developers contribute to open source projects.
+    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the GitHub repository. Out main aim to is to help more developers contribute to open source projects.
   source_url: https://github.com/opensourcerepos/blogs
   categories:
     - Open Source
@@ -7530,3 +7530,65 @@
   categories:
     - Education
     - Learning
+- title: Run Leeds
+  main_url: http://www.runleeds.co.uk
+  url: http://www.runleeds.co.uk
+  description: >
+    Community running site based in Leeds,UK. Aiming to support those going through a life crisis.
+  categories:
+    - Accessibility
+    - Blog
+    - Community
+    - Nonprofit
+    - Sports
+    - WordPress
+  built_by: Robert Marshall
+  built_by_url: https://www.robertmarshall.dev
+- title: Arvind Kumar
+  main_url: https://arvind.io
+  url: https://arvind.io
+  source_url: https://github.com/EnKrypt/arvind.io
+  built_by: Arvind Kumar
+  built_by_url: "https://arvind.io/"
+  description: >
+    A blog about writing code, making music and studying the skies.
+  featured: false
+  categories:
+    - Blog
+    - Music
+    - Technology
+- title: GlobalMoney
+  url: https://global24.ua
+  main_url: https://global24.ua
+  description: >
+    Provide payment solution for SMB, eWallet GlobalMoney
+  categories:
+    - Business
+    - Finance
+    - Technology
+  built_by: NodeArt
+  built_by_url: https://NodeArt.io
+- title: Women's and Girls' Emergency Centre
+  url: https://www.wagec.org.au/
+  main_url: https://www.wagec.org.au/
+  description: >
+    Specialist homelessness service for women and families escaping domestic violence. Based in Redfern, Sydney, Australia.
+  categories:
+    - Nonprofit
+    - Community
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
+- title: Guus van de Wal | Drupal Front-end specialist
+  url: https://guusvandewal.nl
+  main_url: https://guusvandewal.nl
+  description: >
+    Decoupled portfolio site for guusvandewal.nl, a Drupal and ReactJS front-end developer and designer.
+  categories:
+    - Open Source
+    - Web Development
+    - Design
+    - Blog
+    - Freelance
+  built_by: Guus van de Wal
+  featured: false
