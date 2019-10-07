@@ -4,11 +4,9 @@ title: Gatsby on Linux
 
 # Linux
 
-> This is a TODO. Help our community expand it.
-
-> Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your pull request gets accepted.
-
 ## Windows Subsystem Linux (WSL)
+
+This guide assumes that you already have WSL installed with an working Linux distro. If you don't, follow [this guide from microsoft's site](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install WSL and a Linux distro of your choice.
 
 As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are available via the [Windows Store], there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
 
@@ -64,10 +62,11 @@ Or to install all at the same time and approve `(y)` all installs:
 sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && sudo apt install git && sudo apt install libpng-dev
 ```
 
-<!-- links -->
+### Additional links and resources
 
-[windows store]: https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6
-[n]: https://github.com/tj/n
-[n-install]: https://github.com/mklement0/n-install
-[nvm]: https://github.com/creationix/nvm
-[bash startup]: https://github.com/Microsoft/WSL/issues/776#issuecomment-266112578
+- [Super detailed guide to making VSCode work with ESL from VSCode's docs website](https://code.visualstudio.com/docs/remote/wsl)
+- [windows store](https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6)
+- [n](https://github.com/tj/n)
+- [n-install](https://github.com/mklement0/n-install)
+- [nvm](https://github.com/creationix/nvm)
+- [bash startup](https://github.com/Microsoft/WSL/issues/776#issuecomment-266112578)
