@@ -53,6 +53,9 @@ Object {
 
 exports[`report.error handles "structuredError" signature correctly 1`] = `
 Object {
+  "context": Object {
+    "ref": "navigator",
+  },
   "docsUrl": "https://gatsby.dev/debug-html",
   "id": "95312",
   "level": "ERROR",
