@@ -132,3 +132,4 @@ _**Note:** as a member of the Gatsby repo, you can also clone it directly (inste
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
 - [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
+- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)
