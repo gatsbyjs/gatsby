@@ -7530,6 +7530,19 @@
   categories:
     - Education
     - Learning
+- title: Arvind Kumar
+  main_url: https://arvind.io
+  url: https://arvind.io
+  source_url: https://github.com/EnKrypt/arvind.io
+  built_by: Arvind Kumar
+  built_by_url: "https://arvind.io/"
+  description: >
+    A blog about writing code, making music and studying the skies.
+  featured: false
+  categories:
+    - Blog
+    - Music
+    - Technology
 - title: GlobalMoney
   url: https://global24.ua
   main_url: https://global24.ua
