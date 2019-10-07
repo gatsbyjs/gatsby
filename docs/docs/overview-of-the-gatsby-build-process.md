@@ -1,5 +1,5 @@
 ---
-title: Life and times of a Gatsby build
+title: Overview of the Gatsby Build Process
 ---
 
 import LayerModel from "../../www/src/components/layer-model"

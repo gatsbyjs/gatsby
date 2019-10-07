@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.23...gatsby-page-utils@0.0.24) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+- update dependency chokidar to v3.2.1 ([#18009](https://github.com/gatsbyjs/gatsby/issues/18009)) ([4df0306](https://github.com/gatsbyjs/gatsby/commit/4df0306))
+
 ## [0.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.21...gatsby-page-utils@0.0.23) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-page-utils
