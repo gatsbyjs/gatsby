@@ -16,11 +16,30 @@ const IconWrapper = styled.button`
   border: 0;
   cursor: pointer;
   display: inline-flex;
-  height: 24px;
+  height: 40px;
   justify-content: center;
-  opacity: 0.5;
-  outline: none;
+  /*
+    roughly compensates for the additional whitespace of this specific
+    "icon button" in relation to its "social icon" siblings;
+    leave the left untouched for some separation from the aforementioned
+  */
+  margin-right: -11px;
+  opacity: 0.75;
+  /*
+    allows us to use the default :focus
+    outline without the "moon mask" being taken into account
+    by the browser when rendering the outline —
+    not an ideal solution, but good for now
+  */
+  overflow: hidden;
   position: relative;
+  /*
+    scaling to 75% of the original size
+    scales the "moon" shape from 24px to 18px,
+    aligning it with the rest of the main nav's
+    "social icons"; sun and its rays are slightly larger;
+    good for now, too ;-)
+  */
   transform: scale(0.75);
   transition: opacity 0.3s ease;
   vertical-align: middle;
@@ -28,18 +47,6 @@ const IconWrapper = styled.button`
 
   &:hover {
     opacity: 1;
-  }
-
-  &[data-a11y="true"]:focus::after {
-    background: rgba(255, 255, 255, 0.01);
-    border-radius: 5px;
-    border: 2px solid ${p => p.theme.colors.accent};
-    content: "";
-    height: 160%;
-    left: 0;
-    position: absolute;
-    top: -30%;
-    width: 100%;
   }
 `
 
@@ -96,16 +103,16 @@ const MoonOrSun = styled.div`
 `
 
 const MoonMask = styled.div`
-  background: ${p => p.theme.colors.background};
+  background: ${p => p.theme.colors.white};
   border-radius: 50%;
   border: 0;
   height: 24px;
   opacity: ${p => (p.isDark ? 0 : 1)};
   position: absolute;
-  right: -1px;
-  top: -8px;
+  right: 0;
+  top: 0;
   transform: translate(${p => (p.isDark ? `14px, -14px` : `0, 0`)});
-  transition: background 0.25s var(--ease-in-out-quad), transform 0.45s ease;
+  transition: background 0.25s ease, transform 0.45s ease;
   width: 24px;
 `
 
