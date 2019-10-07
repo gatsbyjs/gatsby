@@ -248,7 +248,7 @@
     - Styling:Bootstrap
     - CMS:Netlify
   features:
-    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
+    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (e.g. set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
 - url: https://gatstrap.netlify.com/
   repo: https://github.com/jaxx2104/gatsby-starter-bootstrap
   description: n/a
@@ -2931,7 +2931,7 @@
   features:
     - Fully Responsive
     - Styling with SCSS
-    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
+    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (e.g. set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
     - LocalizedLink - built-in link component handling route generation
 - url: https://gatsby-kea-starter.netlify.com/
   repo: https://github.com/benjamin-glitsos/gatsby-kea-starter

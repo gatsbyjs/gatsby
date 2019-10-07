@@ -11,11 +11,11 @@ _Note: this section only explains how `gatsby-node` plugins are run. Not browser
 Early in the bootstrap phase, we [load all the configured plugins](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/index.js#L40) (and internal plugins) for the site. These are saved into redux under the `flattenedPlugins` namespace. Each plugin in redux contains the following fields:
 
 - **resolve**: absolute path to the plugin's directory
-- **id**: String concatenation of 'Plugin ' and the name of the plugin. E.g `Plugin query-runner`
-- **name**: The name of the plugin. E.g `query-runner`
+- **id**: String concatenation of 'Plugin ' and the name of the plugin. E.g. `Plugin query-runner`
+- **name**: The name of the plugin. E.g. `query-runner`
 - **version**: The version as per the package.json. Or if it is a site plugin, one is generated from the file's hash
 - **pluginOptions**: Plugin options as specified in [gatsby-config.js](/docs/gatsby-config/)
-- **nodeAPIs**: A list of node APIs that this plugin implements. E.g `[ 'sourceNodes', ...]`
+- **nodeAPIs**: A list of node APIs that this plugin implements. E.g. `[ 'sourceNodes', ...]`
 - **browserAPIs**: List of browser APIs that this plugin implements
 - **ssrAPIs**: List of SSR APIs that this plugin implements
 
@@ -26,8 +26,8 @@ In addition, we also create a lookup from api to the plugins that implement it a
 Some API calls can take a while to finish. So every time an API is run, we create an object called [apiRunInstance](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L179) to track it. It contains the following notable fields:
 
 - **id**: Unique identifier generated based on type of API
-- **api**: The API we're running. E.g `onCreateNode`
-- **args**: Any arguments passed to `api-runner-node`. E.g a node object
+- **api**: The API we're running. E.g. `onCreateNode`
+- **args**: Any arguments passed to `api-runner-node`. E.g. a node object
 - **pluginSource**: optional name of the plugin that initiated the original call
 - **resolve**: promise resolve callback to be called when the API has finished running
 - **startTime**: time that the API run was started
@@ -38,7 +38,7 @@ We immediately place this object into an `apisRunningById` Map, where we track i
 
 ## Running each plugin
 
-Next, we filter all `flattenedPlugins` down to those that implement the API we're trying to run. For each plugin, we require its `gatsby-node.js` and call its exported API function. E.g if API was `sourceNodes`, it would result in a call to `gatsbyNode['sourceNodes'](...apiCallargs)`.
+Next, we filter all `flattenedPlugins` down to those that implement the API we're trying to run. For each plugin, we require its `gatsby-node.js` and call its exported API function. E.g. if API was `sourceNodes`, it would result in a call to `gatsbyNode['sourceNodes'](...apiCallargs)`.
 
 ## Injected arguments
 
@@ -46,8 +46,8 @@ API implementations are passed a variety of useful [actions](/docs/actions/) and
 
 All actions take 3 arguments:
 
-1.  The core information required by the action. E.g for [createNode](/docs/actions/#createNode), we must pass a node
-2.  The plugin that is calling this action. E.g `createNode` uses this to assign the owner of the new node
+1.  The core information required by the action. E.g. for [createNode](/docs/actions/#createNode), we must pass a node
+2.  The plugin that is calling this action. E.g. `createNode` uses this to assign the owner of the new node
 3.  An object with misc action options:
     - **traceId**: [See below](#using-traceid-to-await-downstream-api-calls)
     - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing/))
@@ -60,7 +60,7 @@ Each plugin is run inside a [map-series](https://www.npmjs.com/package/map-serie
 
 ## Using traceID to await downstream API calls
 
-The majority of API calls result in one or more implementing plugins being called. We then wait for them all to complete, and return. But some plugins (e.g [sourceNodes](/docs/node-apis/#sourceNodes)) result in calls to actions that themselves call APIs. We need some way of tracing whether an API call originated from another API call, so that we can wait on all child calls to complete. The mechanism for this is the `traceId`.
+The majority of API calls result in one or more implementing plugins being called. We then wait for them all to complete, and return. But some plugins (e.g. [sourceNodes](/docs/node-apis/#sourceNodes)) result in calls to actions that themselves call APIs. We need some way of tracing whether an API call originated from another API call, so that we can wait on all child calls to complete. The mechanism for this is the `traceId`.
 
 ```dot
 digraph {

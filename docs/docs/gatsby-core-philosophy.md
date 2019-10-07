@@ -97,7 +97,7 @@ If you were designing a user interface, you might move advanced or rarely-used f
 
 Progressive disclosure simplifies the experience for most people without limiting the abilities of more advanced users.
 
-We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image`, and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (eg, dependencies) yourself.
+We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image`, and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (e.g. dependencies) yourself.
 
 [Read more here](https://lengstorf.com/progressive-disclosure-of-complexity/).
 
