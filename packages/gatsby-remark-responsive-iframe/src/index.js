@@ -71,8 +71,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
           }"
           >
             ${newIframe}
-          </div>
-          `
+          </div>`
 
           node.type = `html`
           node.value = rawHTML
