@@ -3542,7 +3542,7 @@
     - Mobile Screen support
     - Out of the box support with Contentful CMS for articles.
     - Toggleable Light and Dark Mode
-    - Profile image with links to your github and twitter.
+    - Profile image with links to your GitHub and Twitter.
 - url: https://prist.marguerite.io/
   repo: https://github.com/margueriteroth/gatsby-prismic-starter-prist
   description: A light-themed starter powered by Gatsby v2 and Prismic to showcase portfolios and blogs.
@@ -4038,7 +4038,7 @@
     - A minimal site with the option to add loads of functionality
     - Based on the Monolith repo to provide an easy starting point for large projects https://github.com/danspratling/monolith
     - Uses Theme-UI to handle theming and styling
-    - Uses Typescript to encourage good coding
+    - Uses TypeScript to encourage good coding
     - Uses Storybook to encourage visual testing
     - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
 - url: https://gatsby-starter-ts-pwa.netlify.com/
@@ -4050,4 +4050,4 @@
   features:
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
-    - Support Github Actions CI/CD workflow (beta)
+    - Support GitHub Actions CI/CD workflow (beta)
