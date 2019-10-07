@@ -3674,3 +3674,14 @@
   features:
     - Demonstrates both query and mutation from the linked Hasura project.
     - Uses apollo react hooks for query and mutation.
+- url: https://billyjacoby.github.io/gatsby-bootstrap-wordpress-starter/
+  repo: https://github.com/billyjacoby/gatsby-bootstrap-wordpress-starter
+  description: GatsbyJS starter with react-bootstrap, SASS, and Wordpress Sourcing
+  tags:
+    - Styling:Bootstrap
+    - Styling:SCSS
+    - Sourcing:Wordpress
+  features:
+    - SASS stylesheets to make styling components easy
+    - Sample navbar that sticks to the top of the page on scroll
+    - Includes an example of sourcing from wordpress
