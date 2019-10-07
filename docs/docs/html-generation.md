@@ -2,6 +2,14 @@
 title: Page HTML Generation
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> Outdated areas are:
+>
+> - replace mentions of `data.json` with `page-data.json`
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack to build the JavaScript bundles required to take over the user experience once the first HTML page has finished loading. But how do the original HTML pages get generated?
 
 The high level process is:
