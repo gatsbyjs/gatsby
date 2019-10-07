@@ -960,7 +960,7 @@
     - i18n with rtl text
     - Stateless components using Recompose
     - Font changes depending on the chosen language
-    - SEO (meta tags, openGraph, structured data, twitter and more...)
+    - SEO (meta tags, openGraph, structured data, Twitter and more...)
 - url: https://gatsby-starter-mate.netlify.com
   repo: https://github.com/EmaSuriano/gatsby-starter-mate
   description: A portfolio starter for Gatsby integrated with Contentful CMS.
