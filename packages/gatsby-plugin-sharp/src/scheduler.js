@@ -29,7 +29,7 @@ exports.scheduleJob = async (
 ) => {
   const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
-  const jobPath = `${inputFileKey}.${outputFileKey}`
+  const jobPath = `["${inputFileKey}"].["${outputFileKey}"]`
 
   // Check if the job has already been queued. If it has, there's nothing
   // to do, return.
