@@ -10634,12 +10634,13 @@ ink-spinner@^3.0.1:
     cli-spinners "^1.0.0"
     prop-types "^15.5.10"
 
-ink@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/ink/-/ink-2.4.0.tgz#991f8264d90b81b94fe963c96fccdf26afb6b436"
-  integrity sha512-dEEqRo2AgvJZy2o+ltQkHtS4BwPHPHfcNlt74R8gljH/KX265N6aIAAPhYpO3VJjnkoO4/y7MYAYeDDsLDlrNA==
+ink@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/ink/-/ink-2.5.0.tgz#66cf988b65ca06d14f00f385eb531fde29f95819"
+  integrity sha512-HUkVglJ11cXK+W1a5cKNoOCxLkDi5hbDMAWSFDcwF2kpNd0eoX+2/cpaTP9BTFaQ8RJk7O59NxKMmyPXkmxo7w==
   dependencies:
     "@types/react" "^16.8.6"
+    ansi-escapes "^4.2.1"
     arrify "^1.0.1"
     auto-bind "^2.0.0"
     chalk "^2.4.1"
