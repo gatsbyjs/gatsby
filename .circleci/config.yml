@@ -17,18 +17,18 @@ aliases:
 
   restore_cache: &restore_cache
     restore_cache:
-      name: Restore node_modules cache
+      name: 🔨️ Restore node_modules cache
       keys:
         - yarn-cypress-cache-{{ checksum "yarn.lock" }}
 
   install_node_modules: &install_node_modules
     run:
-      name: Install node modules
+      name: 🏗️ Install node modules
       command: yarn --frozen-lockfile
 
   persist_cache: &persist_cache
     save_cache:
-      name: Save node modules cache
+      name: 💾 Save node modules cache
       key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
       paths:
         - ~/.cache
@@ -117,8 +117,12 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: yarn lint:code
-      - run: yarn lint:other
+      - run:
+          name: 🌸 Lint Code
+          command: yarn lint:code
+      - run:
+          name: 🌸 Lint Other
+          command: yarn lint:other
       - run: yarn check-repo-fields
 
   unit_tests_node8:
@@ -145,6 +149,7 @@ jobs:
           command: yarn
           working_directory: ~/project/www
       - run:
+          name: 🧪 Run Tests
           command: yarn test
           working_directory: ~/project/www
 
@@ -241,8 +246,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: 🔨️️ Restoring Cache
           key: v1_www_public_dir
       - restore_cache:
+          name: 🔨️️ Restoring Cache
           key: v1_www_cache_dir
       - run:
           command: yarn
@@ -252,10 +259,12 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
+          name: 💾 Saving Cache
           key: v1_www_public_dir_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
+          name: 💾 Saving Cache
           key: v1_www_cache_dir_{{ epoch }}
           paths:
             - ~/project/www/.cache
@@ -266,11 +275,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: 🔨️️ Restoring Cache
           key: v1_www_public_dir
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
       - run:
+          name: 💻 Deploy
           command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
           no_output_timeout: 2h
           working_directory: ~/project/www
@@ -282,18 +293,20 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: 🔨️️ Restoring Cache
           keys:
             - yarn-packages-v2-{{ checksum "yarn.lock" }}
             - yarn-packages-v2-
       - run:
-          name: "Install dependencies"
+          name: 🏗️ Install Dependencies
           command: yarn bootstrap
       - save_cache:
+          name: 💾 Saving Cache
           paths:
             - C:\Users\circleci\AppData\Local\Yarn\Cache
           key: yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
-          name: "Run Tests"
+          name: 🧪 Run Tests
           command: yarn test
 
 workflows:
