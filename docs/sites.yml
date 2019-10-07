@@ -7530,6 +7530,20 @@
   categories:
     - Education
     - Learning
+- title: Run Leeds
+  main_url: http://www.runleeds.co.uk
+  url: http://www.runleeds.co.uk
+  description: >
+    Community running site based in Leeds,UK. Aiming to support those going through a life crisis.
+  categories:
+    - Accessibility
+    - Blog
+    - Community
+    - Nonprofit
+    - Sports
+    - WordPress
+  built_by: Robert Marshall
+  built_by_url: https://www.robertmarshall.dev
 - title: Arvind Kumar
   main_url: https://arvind.io
   url: https://arvind.io
