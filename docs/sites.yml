@@ -6989,7 +6989,7 @@
   url: https://opensourcerepos.com
   featured: false
   description: >
-    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the github repository. Out main aim to is to help more developers contribute to open source projects.
+    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the GitHub repository. Out main aim to is to help more developers contribute to open source projects.
   source_url: https://github.com/opensourcerepos/blogs
   categories:
     - Open Source
