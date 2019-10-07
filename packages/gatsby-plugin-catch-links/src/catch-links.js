@@ -72,8 +72,7 @@ export const urlsAreOnSameOrigin = (origin, destination) =>
   /* a.host includes both hostname and port in the expected format host:port */
   origin.host === destination.host
 
-export const pathIsNotHandledByApp = destination => {
-  const pathStartRegEx = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
+export const pathIsNotHandledByApp = (destination, pathStartRegEx) => {
   const pathFileExtensionRegEx = /^.*\.((?!htm)[a-z0-9]{1,5})$/i
 
   return (
@@ -82,8 +81,8 @@ export const pathIsNotHandledByApp = destination => {
      * pointing to the same domain but outside of the app's pathPrefix. For
      * example, a Gatsby app lives at https://example.com/myapp/, with the
      * pathPrefix set to `/myapp`. When adding an absolute link to the same
-     * domain but outside of the /myapp path, for example, <a
-     * href="https://example.com/not-my-app"> the plugin won't catch it and
+     * domain but outside of the /myapp path, for example, `<a
+     * href="https://example.com/not-my-app">` the plugin won't catch it and
      * will navigate to an external link instead of doing a pushState resulting
      * in `https://example.com/myapp/https://example.com/not-my-app`
      */
@@ -106,7 +105,12 @@ export const hashShouldBeFollowed = (origin, destination) =>
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
-export const routeThroughBrowserOrApp = hrefHandler => event => {
+export const routeThroughBrowserOrApp = (
+  hrefHandler,
+  pluginOptions
+) => event => {
+  if (window.___failedResources) return true
+
   if (userIsForcingNavigation(event)) return true
 
   if (navigationWasHandledElsewhere(event)) return true
@@ -120,6 +124,9 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
   // in React. Creating a new anchor element to ensure host value is present
   const destination = document.createElement(`a`)
   destination.href = clickedAnchor.href
+  if (clickedAnchor.href instanceof SVGAnimatedString) {
+    destination.href = clickedAnchor.href.animVal
+  }
 
   // In IE, the default port is included in the anchor host but excluded from
   // the location host.  This affects the ability to directly compare
@@ -132,23 +139,36 @@ export const routeThroughBrowserOrApp = hrefHandler => event => {
 
   if (urlsAreOnSameOrigin(origin, destination) === false) return true
 
-  if (pathIsNotHandledByApp(destination)) return true
+  // Regex to test pathname against pathPrefix
+  const pathStartRegEx = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
+
+  if (pathIsNotHandledByApp(destination, pathStartRegEx)) return true
 
   if (hashShouldBeFollowed(origin, destination)) return true
 
+  if (pluginOptions.excludePattern) {
+    const excludeRegex = new RegExp(pluginOptions.excludePattern)
+    if (excludeRegex.test(destination.pathname)) {
+      return true
+    }
+  }
+
   event.preventDefault()
 
-  hrefHandler(
-    `${slashedPathname(destination.pathname)}${destination.search}${
-      destination.hash
-    }`
+  // See issue #8907: destination.pathname already includes pathPrefix added
+  // by gatsby-transformer-remark but gatsby-link.navigate needs href without
+  const destinationPathname = slashedPathname(destination.pathname).replace(
+    pathStartRegEx,
+    `/`
   )
+
+  hrefHandler(`${destinationPathname}${destination.search}${destination.hash}`)
 
   return false
 }
 
-export default function(root, cb) {
-  const clickHandler = routeThroughBrowserOrApp(cb)
+export default function(root, pluginOptions, cb) {
+  const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)
 
   root.addEventListener(`click`, clickHandler)
 

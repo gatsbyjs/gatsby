@@ -2,6 +2,10 @@
 title: Inferring Input Filters
 ---
 
+> This documentation isn't up to date with latest
+> [schema customization changes](/docs/schema-customization). Help Gatsby by
+> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+
 ## Input Filters vs gqlType
 
 In [gqlTypes](/docs/schema-gql-type), we inferred a Gatsby Node's main fields. These allow us to query a node's children, parent and object fields. But these are only useful once a top level GraphQL Query has returned results. In order to query by those fields, we must create GraphQL objects for input filters. E.g, querying for all markdownRemark nodes that have 4 paragraphs.
@@ -54,7 +58,7 @@ If the key is a foreign key reference (ends in `___NODE`), then we find the fiel
 
 ### Inferring input filters from plugin fields
 
-Plugins themselves have the opportunity to create custom fields that apply to ALL nodes of a particular type, as opposed to having to expicitly add the field on every node creation. An example would be `markdownRemark` which adds a `wordcount` field to each node automatically. This section deals with the generation of input filters so that we can query by these fields as well. E.g:
+Plugins themselves have the opportunity to create custom fields that apply to ALL nodes of a particular type, as opposed to having to explicitly add the field on every node creation. An example would be `markdownRemark` which adds a `wordcount` field to each node automatically. This section deals with the generation of input filters so that we can query by these fields as well. E.g:
 
 ```graphql
 {
@@ -64,7 +68,7 @@ Plugins themselves have the opportunity to create custom fields that apply to AL
 }
 ```
 
-Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields-from-fields.js#L195), which will generate input filters for thew new fields. The result would look something like:
+Plugins add custom fields by implementing the [setFieldsOnGraphQLNodeType](/docs/node-apis/#setFieldsOnGraphQLNodeType) API. They must return a full GraphQLObjectType, complete with `resolve` function. Once this API has been run, the fields are passed to [inferInputObjectStructureFromFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields-from-fields.js#L195), which will generate input filters for the new fields. The result would look something like:
 
 ```javascript
 { //GraphQLInputObjectType

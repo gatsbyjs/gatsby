@@ -1,4 +1,5 @@
 const Promise = require(`bluebird`)
+const os = require(`os`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 
@@ -33,7 +34,7 @@ const bootstrapTest = async (node, pluginOptions = {}) => {
 describe(`Process JSON nodes correctly`, () => {
   const baseNode = {
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       contentDigest: `whatever`,
@@ -44,7 +45,7 @@ describe(`Process JSON nodes correctly`, () => {
   const baseFileNode = {
     ...baseNode,
     name: `nodeName`,
-    dir: `/tmp/foo/`,
+    dir: `${os.tmpdir()}/foo/`,
     internal: {
       ...baseNode.internal,
       type: `File`,
@@ -79,6 +80,21 @@ describe(`Process JSON nodes correctly`, () => {
 
   it(`correctly creates a node from JSON which is a single object`, async () => {
     const data = { id: `foo`, blue: true, funny: `yup` }
+    const node = {
+      ...baseFileNode,
+      content: JSON.stringify(data),
+    }
+
+    return bootstrapTest(node).then(({ createNode, createParentChildLink }) => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(1)
+      expect(createParentChildLink).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it(`coerces an id field to always be a String`, async () => {
+    const data = { id: 12345, blue: true, funny: `yup` }
     const node = {
       ...baseFileNode,
       content: JSON.stringify(data),

@@ -42,7 +42,7 @@ class IndexPage extends React.Component {
     return (
       <Layout>
         <div style={{ marginBottom: rhythm(2) }}>
-          <h2>Gatsby's integration with the Contentful Image API</h2>
+          <h2>{`Gatsby's`} integration with the Contentful Image API</h2>
           <Link to="/image-api/">See examples</Link>
           <br />
           <br />
@@ -50,8 +50,8 @@ class IndexPage extends React.Component {
           <h2>Localization</h2>
           <p>
             The <code>gatsby-source-contentful</code> plugin offers full support
-            for Contentful's localization features. Our sample space includes
-            products localized into both English and German.
+            for {`Contentful's`} localization features. Our sample space
+            includes products localized into both English and German.
           </p>
           <p>
             An entry and asset node are created for each locale following

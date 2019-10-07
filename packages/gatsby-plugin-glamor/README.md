@@ -41,7 +41,7 @@ render () {
       <h1
         css={{
           color: `red`,
-          // Psuedo styles are supported!
+          // Pseudo styles are supported!
           ':hover': {
             textDecoration: `underline`,
           },

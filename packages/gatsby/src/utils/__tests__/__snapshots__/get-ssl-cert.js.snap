@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gets ssl certs Custom SSL certificate loads a cert from a absolute paths 1`] = `
+Object {
+  "cert": "/foo.crt::file",
+  "certPath": "/foo.crt",
+  "key": "/foo.key::file",
+  "keyPath": "/foo.key",
+}
+`;
+
+exports[`gets ssl certs Custom SSL certificate loads a cert relative to a directory 1`] = `
+Object {
+  "cert": "/app/directory/foo.crt::file",
+  "certPath": "/app/directory/foo.crt",
+  "key": "/app/directory/foo.key::file",
+  "keyPath": "/app/directory/foo.key",
+}
+`;
+
+exports[`gets ssl certs Custom SSL certificate panic if cert and key are not both included 1`] = `
+Array [
+  Array [
+    "for custom ssl --https, --cert-file, and --key-file must be used together",
+  ],
+]
+`;
+
+exports[`gets ssl certs Custom SSL certificate panic if cert and key are not both included 2`] = `
+Array [
+  Array [
+    "for custom ssl --https, --cert-file, and --key-file must be used together",
+  ],
+]
+`;
+
+exports[`gets ssl certs automatic SSL certificate panics if certificate can't be created 1`] = `
+Array [
+  Array [
+    "
+Failed to generate dev SSL certificate",
+    [Error: mock error message],
+  ],
+]
+`;
+
+exports[`gets ssl certs automatic SSL certificate sets up dev cert 1`] = `
+Array [
+  Array [
+    "setting up automatic SSL certificate (may require sudo)
+",
+  ],
+]
+`;

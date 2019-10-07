@@ -1,6 +1,6 @@
 # gatsby-transformer-pdf
 
-Use [pdf2Json](`https://github.com/modesty/pdf2json`) to extract textual content of pdf files.
+Use [pdf2Json](https://github.com/modesty/pdf2json) to extract textual content of pdf files.
 
 ## Install
 
@@ -26,7 +26,7 @@ module.exports = {
 }
 ```
 
-Then you'll be able to query the textual content of your pdfs files like:
+Then you'll be able to query the textual content of your pdf files like:
 
 ```javascript
 {
@@ -39,6 +39,7 @@ Then you'll be able to query the textual content of your pdfs files like:
   }
 }
 ```
+
 Which would return:
 
 ```javascript

@@ -2,6 +2,10 @@
 title: GraphQL Node Types Creation
 ---
 
+> This documentation isn't up to date with latest
+> [schema customization changes](/docs/schema-customization). Help Gatsby by
+> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+
 Gatsby creates a [GraphQLObjectType](https://graphql.org/graphql-js/type/#graphqlobjecttype) for each distinct `node.internal.type` that is created during the source-nodes phase. Find out below how this is done.
 
 ## GraphQL Types for each type of node
@@ -90,13 +94,13 @@ mapping: {
 },
 ```
 
-The field generaton in this case is handled by [inferFromMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L129). The first step is to find the type that is mapped to. In this case, `AuthorYaml`. This is known as the `linkedType`. That type will have a field to link by. In this case `name`. If one is not supplied, it defaults to `id`. This field is known as `linkedField`
+The field generation in this case is handled by [inferFromMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L129). The first step is to find the type that is mapped to. In this case, `AuthorYaml`. This is known as the `linkedType`. That type will have a field to link by. In this case `name`. If one is not supplied, it defaults to `id`. This field is known as `linkedField`
 
 Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which we look up in list of other `gqlTypes`). The field resolver will get the value for the node (in this case, the author string), and then search through the react nodes until it finds one whose type is `AuthorYaml` and whose `name` field matches the author string.
 
 #### Foreign Key reference (`___NODE`)
 
-If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out [Create a Source Plugin](/docs/create-source-plugin/#create-source-plugin) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
+If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/docs/pixabay-source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
 
 This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g for `author___NODE___name`, the linkedField would be `name` instead of `id`.
 
@@ -112,7 +116,7 @@ The core of this step creates a GraphQL Field object, where the type is inferred
 
 If however, the value is an object or array, we recurse, using [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) to create the GraphQL fields.
 
-In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L52) functions), then we return the appropariate custom type. 
+In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L52) functions), then we return the appropriate custom type.
 
 ### Child/Parent fields
 
@@ -154,7 +158,7 @@ query {
 
 To resolve `file.childMarkdownRemark`, we take the node we're resolving, and filter over all of its `children` until we find one of type `markdownRemark`, which is returned. Remember that `children` is a collection of IDs. So as part of this, we lookup the node by ID in redux too.
 
-But before we return from the resolve function, remember that we might be running this query within the context of a page. If that's the case, then whenever the node changes, the page will need to be rerendered. To record that fact, we call call [createPageDependency](/docs/page-node-dependencies/) with the node ID and the page, which is a field in the `context` object in the resolve function signature.
+But before we return from the resolve function, remember that we might be running this query within the context of a page. If that's the case, then whenever the node changes, the page will need to be rerendered. To record that fact, we call [createPageDependency](/docs/page-node-dependencies/) with the node ID and the page, which is a field in the `context` object in the resolve function signature.
 
 #### parent field
 
@@ -166,41 +170,37 @@ These are fields created by plugins that implement the [setFieldsOnGraphQLNodeTy
 
 ### File types
 
-As described in [plain object or value field](#plain-object-or-value-field), if a string field value looks like a file path, then we infer `File` as the field's type. The creation of this type occurs in [type-file.js setFileNodeRootType()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L18). It is called just after we have created the GqlType for `File` (only called once). 
+As described in [plain object or value field](#plain-object-or-value-field), if a string field value looks like a file path, then we infer `File` as the field's type. The creation of this type occurs in [type-file.js setFileNodeRootType()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L18). It is called just after we have created the GqlType for `File` (only called once).
 
 It creates a new GraphQL Field Config whose type is the just created `File` GqlType, and whose resolver converts a string into a File object. Here's how it works:
 
 Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [gatsby-transformer-json](/packages/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
 
-```javascript
-// data/posts.json
-[
+```javascript:title=data/posts.json
+;[
   {
-    "id": "1685001452849004065",
-    "text": "Venice is 👌",
-    "image": "images/BdiU-TTFP4h.jpg",
-  }
+    id: "1685001452849004065",
+    text: "Venice is 👌",
+    image: "images/BdiU-TTFP4h.jpg",
+  },
 ]
 ```
 
 Notice that the image value looks like a file. Therefore, we'd like to query it as if it were a file, and get its relativePath, accessTime, etc.
 
 ```graphql
-{ 
-  postsJson( id: { eq: "1685001452849004065" } ) {
+{
+  postsJson(id: { eq: "1685001452849004065" }) {
     image {
-      relativePath, 
+      relativePath
       accessTime
     }
   }
 }
 ```
 
-The [File type resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L135) takes care of this. It gets the value (`images/BdiU-TTFP4h.jpg`). It then looks up this node's root NodeID via [Node Tracking](/docs/node-tracking/) which returns the original `data/posts.json` file. It creates a new filename by concatenating the field value onto the parent node's directory. 
+The [File type resolver](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js#L135) takes care of this. It gets the value (`images/BdiU-TTFP4h.jpg`). It then looks up this node's root NodeID via [Node Tracking](/docs/node-tracking/) which returns the original `data/posts.json` file. It creates a new filename by concatenating the field value onto the parent node's directory.
 
-I.e `data` + `images/BdiU-TTFP4h.jpg` = `data/images/BdiU-TTFP4h.jpg`. 
+I.e `data` + `images/BdiU-TTFP4h.jpg` = `data/images/BdiU-TTFP4h.jpg`.
 
 And then finally it searches redux for the first `File` node whose path matches this one. This is our proper resolved node. We're done!
-
-
-

@@ -1,7 +1,13 @@
 const parseXml = require(`xml-parser`)
 const _ = require(`lodash`)
 
-async function onCreateNode({ node, actions, loadNodeContent, createNodeId, createContentDigest }) {
+async function onCreateNode({
+  node,
+  actions,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) {
   const { createNode, createParentChildLink } = actions
 
   // We only care about XML content.

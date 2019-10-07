@@ -66,13 +66,17 @@ exports.fixIds = object => {
   }
 }
 
-const makeId = ({ id, currentLocale, defaultLocale }) =>
-  currentLocale === defaultLocale ? id : `${id}___${currentLocale}`
+const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
+  currentLocale === defaultLocale
+    ? `${spaceId}___${id}`
+    : `${spaceId}___${id}___${currentLocale}`
 
 exports.makeId = makeId
 
-const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => id =>
-  createNodeId(makeId({ id, currentLocale, defaultLocale }))
+const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
+  spaceId,
+  id
+) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale }))
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
@@ -89,7 +93,16 @@ exports.buildResolvableSet = ({
   defaultLocale,
 }) => {
   const resolvable = new Set()
-  existingNodes.forEach(n => resolvable.add(n.id))
+  existingNodes.forEach(n => {
+    if (n.contentful_id) {
+      // We need to add only root level resolvable (assets and entries)
+      // derived nodes (markdown or JSON) will be recreated if needed.
+      // We also need to apply `fixId` as some objects will have ids
+      // prefixed with `c` and fixIds will recursively apply that
+      // and resolvable ids need to match that.
+      resolvable.add(fixId(n.contentful_id))
+    }
+  })
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
@@ -107,6 +120,7 @@ exports.buildForeignReferenceMap = ({
   resolvable,
   defaultLocale,
   locales,
+  space,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -138,6 +152,7 @@ exports.buildForeignReferenceMap = ({
                 foreignReferenceMap[v.sys.id].push({
                   name: `${contentTypeItemId}___NODE`,
                   id: entryItem.sys.id,
+                  spaceId: space.sys.id,
                 })
               })
             }
@@ -154,6 +169,7 @@ exports.buildForeignReferenceMap = ({
             foreignReferenceMap[entryItemFieldValue.sys.id].push({
               name: `${contentTypeItemId}___NODE`,
               id: entryItem.sys.id,
+              spaceId: space.sys.id,
             })
           }
         }
@@ -164,7 +180,7 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNode, createNodeId) {
+function prepareTextNode(node, key, text, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
     id: createNodeId(`${node.id}${key}TextNode`),
@@ -184,6 +200,26 @@ function prepareTextNode(node, key, text, createNode, createNodeId) {
   return textNode
 }
 
+function prepareRichTextNode(node, key, content, createNodeId) {
+  const str = stringify(content)
+  const richTextNode = {
+    ...content,
+    id: createNodeId(`${node.id}${key}RichTextNode`),
+    parent: node.id,
+    children: [],
+    [key]: str,
+    internal: {
+      type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
+      mediaType: `text/richtext`,
+      content: str,
+      contentDigest: digest(str),
+    },
+  }
+
+  node.children = node.children.concat([richTextNode.id])
+
+  return richTextNode
+}
 function prepareJSONNode(node, key, content, createNodeId, i = ``) {
   const str = JSON.stringify(content)
   const JSONNode = {
@@ -215,6 +251,7 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
   locales,
+  space,
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
@@ -268,6 +305,7 @@ exports.createContentTypeNodes = ({
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
           if (Array.isArray(entryItemFieldValue)) {
             if (
+              entryItemFieldValue[0] &&
               entryItemFieldValue[0].sys &&
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
@@ -280,7 +318,7 @@ exports.createContentTypeNodes = ({
                   return resolvable.has(v.sys.id)
                 })
                 .map(function(v) {
-                  return mId(v.sys.id)
+                  return mId(space.sys.id, v.sys.id)
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
                 entryItemFields[
@@ -298,6 +336,7 @@ exports.createContentTypeNodes = ({
           ) {
             if (resolvable.has(entryItemFieldValue.sys.id)) {
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
+                space.sys.id,
                 entryItemFieldValue.sys.id
               )
             }
@@ -312,19 +351,27 @@ exports.createContentTypeNodes = ({
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
           if (existingReference) {
-            entryItemFields[foreignReference.name].push(
-              mId(foreignReference.id)
-            )
+            // If the existing reference is a string, we're dealing with a
+            // many-to-one reference which has already been recorded, so we can
+            // skip it. However, if it is an array, add it:
+            if (Array.isArray(existingReference)) {
+              entryItemFields[foreignReference.name].push(
+                mId(foreignReference.spaceId, foreignReference.id)
+              )
+            }
           } else {
             // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.
-            entryItemFields[foreignReference.name] = [mId(foreignReference.id)]
+            entryItemFields[foreignReference.name] = [
+              mId(foreignReference.spaceId, foreignReference.id),
+            ]
           }
         })
       }
 
       let entryNode = {
-        id: mId(entryItem.sys.id),
+        id: mId(space.sys.id, entryItem.sys.id),
+        spaceId: space.sys.id,
         contentful_id: entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
@@ -342,8 +389,6 @@ exports.createContentTypeNodes = ({
         if (entryItemFieldKey.split(`___`).length > 1) {
           return
         }
-
-        entryItemFields[entryItemFieldKey] = entryItemFields[entryItemFieldKey]
       })
 
       // Replace text fields with text nodes so we can process their markdown
@@ -366,12 +411,26 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode,
             createNodeId
           )
 
           childrenNodes.push(textNode)
           entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
+
+          delete entryItemFields[entryItemFieldKey]
+        } else if (
+          fieldType === `RichText` &&
+          _.isPlainObject(entryItemFields[entryItemFieldKey])
+        ) {
+          const richTextNode = prepareRichTextNode(
+            entryNode,
+            entryItemFieldKey,
+            entryItemFields[entryItemFieldKey],
+            createNodeId
+          )
+
+          childrenNodes.push(richTextNode)
+          entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNode.id
 
           delete entryItemFields[entryItemFieldKey]
         } else if (
@@ -456,6 +515,7 @@ exports.createAssetNodes = ({
   createNodeId,
   defaultLocale,
   locales,
+  space,
 }) => {
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
@@ -486,7 +546,7 @@ exports.createAssetNodes = ({
     }
     const assetNode = {
       contentful_id: localizedAsset.sys.contentful_id,
-      id: mId(localizedAsset.sys.id),
+      id: mId(space.sys.id, localizedAsset.sys.id),
       parent: null,
       children: [],
       ...localizedAsset.fields,

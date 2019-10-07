@@ -16,21 +16,17 @@ const getBase64Img = async url => {
 
 const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
   const { width, height, density } = metadata
+  const { sizeByPixelDensity, maxWidth, sizes } = options
   const aspectRatio = width / height
   const pixelRatio =
-    options.sizeByPixelDensity && typeof density === `number` && density > 0
+    sizeByPixelDensity && typeof density === `number` && density > 0
       ? density / 72
       : 1
 
-  const presentationWidth = Math.min(
-    options.maxWidth,
-    Math.round(width / pixelRatio)
-  )
+  const presentationWidth = Math.min(maxWidth, Math.round(width / pixelRatio))
   const presentationHeight = Math.round(presentationWidth * (height / width))
-
-  if (!options.sizes) {
-    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
-  }
+  const sizesQuery =
+    sizes || `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
 
   const images = []
 
@@ -51,12 +47,20 @@ const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
     .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
     .join(`,\n`)
 
+  const webpSrcSet = filteredSizes
+    .map(
+      size => `${imageUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`
+    )
+    .join(`,\n`)
+
+  // TODO think about a better structure to save srcset types instead of adding them to the root
   return {
     base64: base64Img,
     aspectRatio,
     srcSet,
+    webpSrcSet,
     src: imageUrl,
-    sizes: options.sizes,
+    sizes: sizesQuery,
     density,
     presentationWidth,
     presentationHeight,

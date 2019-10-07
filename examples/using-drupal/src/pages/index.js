@@ -52,10 +52,7 @@ class IndexPage extends React.Component {
           <h2>{recipe.title}</h2>
         </div>
         <Img
-          fluid={
-            recipe.relationships.image.relationships.imageFile.localFile
-              .childImageSharp.fluid
-          }
+          fluid={recipe.relationships.image.localFile.childImageSharp.fluid}
         />
       </Link>
     )
@@ -80,20 +77,16 @@ class IndexPage extends React.Component {
         }}
       >
         <Img
-          fluid={
-            recipe.relationships.image.relationships.imageFile.localFile
-              .childImageSharp.fluid
-          }
+          fluid={recipe.relationships.image.localFile.childImageSharp.fluid}
         />
         <div
           css={{
             padding: `${rhythm(3 / 4)} ${rhythm(1)}`,
             width:
-              recipe.relationships.image.relationships.imageFile.localFile
-                .childImageSharp.fluid.width,
+              recipe.relationships.image.localFile.childImageSharp.fluid.width,
             height: square
-              ? recipe.relationships.image.relationships.imageFile.localFile
-                  .childImageSharp.fluid.height
+              ? recipe.relationships.image.localFile.childImageSharp.fluid
+                  .height
               : undefined,
           }}
         >
@@ -131,6 +124,7 @@ class IndexPage extends React.Component {
                   square={true}
                   columns={4}
                   marginBottom={0}
+                  key={recipe.fields.slug}
                 />
               ))}
             </div>
@@ -147,7 +141,7 @@ class IndexPage extends React.Component {
               }}
             >
               <div css={{ maxWidth: rhythm(15) }}>
-                <h2>In this month's edition</h2>
+                <h2>In this {`month's`} edition</h2>
                 <p>
                   Quisque vitae pulvinar arcu. Aliquam ac pellentesque erat, at
                   finibus massa.
@@ -186,7 +180,11 @@ class IndexPage extends React.Component {
               }}
             >
               {nextFourPromotedRecipes.map(recipe => (
-                <PromotedCard recipe={recipe} columns={2} />
+                <PromotedCard
+                  recipe={recipe}
+                  columns={2}
+                  key={recipe.fields.slug}
+                />
               ))}
             </div>
           </Container>
@@ -215,7 +213,7 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query {
-    topRecipe: allRecipes(sort: { fields: [createdAt] }, limit: 1) {
+    topRecipe: allNodeRecipe(sort: { fields: [created] }, limit: 1) {
       edges {
         node {
           title
@@ -223,15 +221,11 @@ export const pageQuery = graphql`
             slug
           }
           relationships {
-            image {
-              relationships {
-                imageFile {
-                  localFile {
-                    childImageSharp {
-                      fluid(maxWidth: 740, maxHeight: 555) {
-                        ...GatsbyImageSharpFluid
-                      }
-                    }
+            image: field_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 740, maxHeight: 555) {
+                    ...GatsbyImageSharpFluid
                   }
                 }
               }
@@ -240,8 +234,8 @@ export const pageQuery = graphql`
         }
       }
     }
-    nextTwoPromotedRecipes: allRecipes(
-      sort: { fields: [createdAt] }
+    nextTwoPromotedRecipes: allNodeRecipe(
+      sort: { fields: [created] }
       limit: 2
       skip: 1
     ) {
@@ -252,18 +246,14 @@ export const pageQuery = graphql`
             slug
           }
           relationships {
-            category {
+            category: field_recipe_category {
               name
             }
-            image {
-              relationships {
-                imageFile {
-                  localFile {
-                    childImageSharp {
-                      fluid(maxWidth: 240, maxHeight: 240) {
-                        ...GatsbyImageSharpFluid
-                      }
-                    }
+            image: field_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 240, maxHeight: 240) {
+                    ...GatsbyImageSharpFluid
                   }
                 }
               }
@@ -272,8 +262,8 @@ export const pageQuery = graphql`
         }
       }
     }
-    nextFourPromotedRecipes: allRecipes(
-      sort: { fields: [createdAt] }
+    nextFourPromotedRecipes: allNodeRecipe(
+      sort: { fields: [created] }
       limit: 4
       skip: 3
     ) {
@@ -284,18 +274,14 @@ export const pageQuery = graphql`
             slug
           }
           relationships {
-            category {
+            category: field_recipe_category {
               name
             }
-            image {
-              relationships {
-                imageFile {
-                  localFile {
-                    childImageSharp {
-                      fluid(maxWidth: 475, maxHeight: 475) {
-                        ...GatsbyImageSharpFluid
-                      }
-                    }
+            image: field_image {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 475, maxHeight: 475) {
+                    ...GatsbyImageSharpFluid
                   }
                 }
               }

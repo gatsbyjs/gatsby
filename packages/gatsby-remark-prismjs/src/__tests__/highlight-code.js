@@ -48,17 +48,65 @@ class Counter extends React.Component {
 
 export default Counter
 `
-    expect(
-      highlightCode(language, code, lineNumbersHighlight)
-    ).toMatchSnapshot()
+    const processed = highlightCode(language, code, lineNumbersHighlight)
+
+    expect(processed).toMatchSnapshot()
+    // expect spans to not contain \n as it would break line highlighting
+    expect(/<span[^>]*>[^<]*\n[^<]*<\/span>/g.exec(processed)).not.toBeTruthy()
   })
 
   describe(`with language-text`, () => {
-    it(`escapes &, <, " elements #4597`, () => {
+    it(`escapes &, <, " elements and warns`, () => {
+      spyOn(console, `warn`)
+
+      const highlightCode = require(`../highlight-code`)
+      const language = `text`
+      const code = `<button />`
+      expect(highlightCode(language, code, [], true)).toMatch(
+        `&lt;button /&gt;`
+      )
+      expect(console.warn).toHaveBeenCalledWith(
+        `code block language not specified in markdown.`,
+        `applying generic code block`
+      )
+    })
+
+    it(`can warn about languages missing from inline code`, () => {
+      spyOn(console, `warn`)
+
       const highlightCode = require(`../highlight-code`)
       const language = `text`
       const code = `<button />`
       expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
+      expect(console.warn).toHaveBeenCalledWith(
+        `code block or inline code language not specified in markdown.`,
+        `applying generic code block`
+      )
+    })
+
+    it(`warns once per language`, () => {
+      spyOn(console, `warn`)
+
+      const highlightCode = require(`../highlight-code`)
+      const language1 = `text`
+      const language2 = `raw`
+      const code1 = `<button />`
+      const code2 = `<form />`
+      const code3 = `<input />`
+      highlightCode(language1, code1)
+      highlightCode(language1, code2)
+      highlightCode(language2, code3)
+      expect(console.warn).toHaveBeenCalledTimes(2)
+      expect(console.warn).toHaveBeenNthCalledWith(
+        1,
+        `code block or inline code language not specified in markdown.`,
+        `applying generic code block`
+      )
+      expect(console.warn).toHaveBeenNthCalledWith(
+        2,
+        `unable to find prism language 'raw' for highlighting.`,
+        `applying generic code block`
+      )
     })
   })
 

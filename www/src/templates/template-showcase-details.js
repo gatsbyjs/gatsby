@@ -1,5 +1,6 @@
 import React from "react"
 import { navigate, graphql } from "gatsby"
+import qs from "qs"
 
 import ShowcaseDetails from "../components/showcase-details"
 
@@ -29,6 +30,7 @@ class ShowcaseTemplate extends React.Component {
     navigate(nextSite.fields.slug, {
       state: {
         isModal: location.state.isModal,
+        filters: location.state.filters,
       },
     })
   }
@@ -47,17 +49,50 @@ class ShowcaseTemplate extends React.Component {
     navigate(previousSite.fields.slug, {
       state: {
         isModal: location.state.isModal,
+        filters: location.state.filters,
       },
     })
   }
 
+  /**
+   * @returns {string} - the URI that should be navigated to when the showcase details modal is closed
+   */
+  getExitLocation() {
+    if (
+      this.props.location.state &&
+      this.props.location.state.filters &&
+      Object.keys(this.props.location.state.filters).length
+    ) {
+      const queryString = qs.stringify({
+        filters: this.props.location.state.filters,
+      })
+      return `/showcase?${queryString}`
+    } else {
+      return `/showcase`
+    }
+  }
+
   render() {
-    const { data } = this.props
+    let { data } = this.props
 
     const isModal =
       this.props.location.state && this.props.location.state.isModal
 
     const categories = data.sitesYaml.categories || []
+
+    /*
+     * This shouldn't ever happen due to filtering on hasScreenshot field
+     * However, it appears to break Gatsby Build
+     * so let's avoid a failure here
+     */
+    if (
+      !data.sitesYaml.childScreenshot ||
+      !data.sitesYaml.childScreenshot.screenshotFile
+    ) {
+      data.sitesYaml.childScreenshot = {
+        screenshotFile: data.fallback,
+      }
+    }
 
     return (
       <ShowcaseDetails
@@ -90,19 +125,22 @@ export const pageQuery = graphql`
             fluid(maxWidth: 700) {
               ...GatsbyImageSharpFluid_noBase64
             }
-            resize(
-              width: 1500
-              height: 1500
-              cropFocus: CENTER
-              toFormat: JPG
-            ) {
+            resize(width: 1200, height: 627, cropFocus: NORTH, toFormat: JPG) {
               src
+              height
+              width
             }
           }
         }
       }
       fields {
         slug
+      }
+    }
+
+    fallback: file(relativePath: { eq: "screenshot-fallback.png" }) {
+      childImageSharp {
+        ...ScreenshotDetails
       }
     }
   }

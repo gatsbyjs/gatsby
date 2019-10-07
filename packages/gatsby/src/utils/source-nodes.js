@@ -2,7 +2,8 @@ const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const apiRunner = require(`./api-runner-node`)
-const { store, getNode } = require(`../redux`)
+const { store } = require(`../redux`)
+const { getNode, getNodes } = require(`../db/nodes`)
 const { boundActionCreators } = require(`../redux/actions`)
 const { deleteNode } = boundActionCreators
 
@@ -12,13 +13,17 @@ const { deleteNode } = boundActionCreators
  */
 function discoverPluginsWithoutNodes(storeState) {
   // Discover which plugins implement APIs which may create nodes
-  const nodeCreationPlugins = _.without(
-    _.union(storeState.apiToPlugins.sourceNodes),
-    `default-site-plugin`
-  )
+  const nodeCreationPlugins = storeState.flattenedPlugins
+    .filter(
+      plugin =>
+        plugin.nodeAPIs.includes(`sourceNodes`) &&
+        plugin.name !== `default-site-plugin`
+    )
+    .map(plugin => plugin.name)
+
   // Find out which plugins own already created nodes
   const nodeOwners = _.uniq(
-    Array.from(storeState.nodes.values()).reduce((acc, node) => {
+    Array.from(getNodes()).reduce((acc, node) => {
       acc.push(node.internal.owner)
       return acc
     }, [])
@@ -26,11 +31,12 @@ function discoverPluginsWithoutNodes(storeState) {
   return _.difference(nodeCreationPlugins, nodeOwners)
 }
 
-module.exports = async ({ parentSpan } = {}) => {
+module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
-    parentSpan: parentSpan,
+    parentSpan,
+    webhookBody,
   })
 
   const state = store.getState()
@@ -45,7 +51,7 @@ module.exports = async ({ parentSpan } = {}) => {
 
   // Garbage collect stale data nodes
   const touchedNodes = Object.keys(state.nodesTouched)
-  const staleNodes = Array.from(state.nodes.values()).filter(node => {
+  const staleNodes = Array.from(getNodes()).filter(node => {
     // Find the root node.
     let rootNode = node
     let whileCount = 0

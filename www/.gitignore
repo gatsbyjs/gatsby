@@ -33,4 +33,4 @@ src/cache
 /package-lock.json
 
 # Env variables
-.env.development
+.env*

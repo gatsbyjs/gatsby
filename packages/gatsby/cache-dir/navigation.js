@@ -1,12 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
-import loader, { setApiRunnerForLoader } from "./loader"
+import loader from "./loader"
 import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { navigate as reachNavigate } from "@reach/router"
-import parsePath from "./parse-path"
-import loadDirectlyOr404 from "./load-directly-or-404"
+import { parsePath } from "gatsby-link"
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -19,7 +18,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.getResourcesForPathnameSync(pathname)
+      const pageResources = loader.loadPageSync(pathname)
 
       if (pageResources != null) {
         console.error(
@@ -35,15 +34,15 @@ function maybeRedirect(pathname) {
   }
 }
 
-const onPreRouteUpdate = location => {
+const onPreRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
-    apiRunner(`onPreRouteUpdate`, { location })
+    apiRunner(`onPreRouteUpdate`, { location, prevLocation })
   }
 }
 
-const onRouteUpdate = location => {
+const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
-    apiRunner(`onRouteUpdate`, { location })
+    apiRunner(`onRouteUpdate`, { location, prevLocation })
 
     // Temp hack while awaiting https://github.com/reach/router/issues/119
     window.__navigatingToLink = false
@@ -66,8 +65,9 @@ const navigate = (to, options = {}) => {
     pathname = parsePath(to).pathname
   }
 
-  // If we had a service worker update, no matter the path, reload window
-  if (window.GATSBY_SW_UPDATED) {
+  // If we had a service worker update, no matter the path, reload window and
+  // reset the pathname whitelist
+  if (window.___swUpdated) {
     window.location = pathname
     return
   }
@@ -81,19 +81,41 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.getResourcesForPathname(pathname).then(pageResources => {
-    if (
-      (!pageResources || pageResources.page.path === `/404.html`) &&
-      process.env.NODE_ENV === `production`
-    ) {
-      clearTimeout(timeoutId)
-      loadDirectlyOr404(pageResources, to).then(() =>
-        reachNavigate(to, options)
-      )
-    } else {
-      reachNavigate(to, options)
-      clearTimeout(timeoutId)
+  loader.loadPage(pathname).then(pageResources => {
+    // If no page resources, then refresh the page
+    // Do this, rather than simply `window.location.reload()`, so that
+    // pressing the back/forward buttons work - otherwise when pressing
+    // back, the browser will just change the URL and expect JS to handle
+    // the change, which won't always work since it might not be a Gatsby
+    // page.
+    if (!pageResources || pageResources.status === `error`) {
+      window.history.replaceState({}, ``, location.href)
+      window.location = pathname
     }
+    // If the loaded page has a different compilation hash to the
+    // window, then a rebuild has occurred on the server. Reload.
+    if (process.env.NODE_ENV === `production` && pageResources) {
+      if (
+        pageResources.page.webpackCompilationHash !==
+        window.___webpackCompilationHash
+      ) {
+        // Purge plugin-offline cache
+        if (
+          `serviceWorker` in navigator &&
+          navigator.serviceWorker.controller !== null &&
+          navigator.serviceWorker.controller.state === `activated`
+        ) {
+          navigator.serviceWorker.controller.postMessage({
+            gatsbyApi: `resetWhitelist`,
+          })
+        }
+
+        console.log(`Site has changed on server. Reloading browser`)
+        window.location = pathname
+      }
+    }
+    reachNavigate(to, options)
+    clearTimeout(timeoutId)
   })
 }
 
@@ -107,7 +129,9 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
-    return results[0]
+    // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
+    // @see https://github.com/gatsbyjs/gatsby/issues/12038
+    return results[results.length - 1]
   }
 
   if (prevRouterProps) {
@@ -127,7 +151,6 @@ function init() {
   // Temp hack while awaiting https://github.com/reach/router/issues/119
   window.__navigatingToLink = false
 
-  window.___loader = loader
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)
@@ -140,22 +163,22 @@ function init() {
 class RouteUpdates extends React.Component {
   constructor(props) {
     super(props)
-    onPreRouteUpdate(props.location)
+    onPreRouteUpdate(props.location, null)
   }
 
   componentDidMount() {
-    onRouteUpdate(this.props.location)
+    onRouteUpdate(this.props.location, null)
   }
 
   componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
     if (shouldFireRouteUpdate) {
-      onRouteUpdate(this.props.location)
+      onRouteUpdate(this.props.location, prevProps.location)
     }
   }
 
   getSnapshotBeforeUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      onPreRouteUpdate(this.props.location)
+      onPreRouteUpdate(this.props.location, prevProps.location)
       return true
     }
 

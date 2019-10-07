@@ -1,6 +1,7 @@
 import React from "react"
-import sharedStyles from "../shared/styles"
 import Img from "gatsby-image"
+
+import sharedStyles from "../shared/styles"
 
 const Screenshot = ({ imageSharp, repoName }) => (
   <div

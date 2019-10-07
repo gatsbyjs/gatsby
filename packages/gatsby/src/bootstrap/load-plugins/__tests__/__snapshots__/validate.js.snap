@@ -2,41 +2,6 @@
 
 exports[`collatePluginAPIs Identifies APIs used by a site's plugins 1`] = `
 Object {
-  "apiToPlugins": Object {
-    "browser-1": Array [
-      "foo-plugin",
-    ],
-    "browser-2": Array [
-      "foo-plugin",
-      "default-site-plugin",
-    ],
-    "browser-3": Array [
-      "default-site-plugin",
-    ],
-    "browser-4": Array [],
-    "node-1": Array [
-      "foo-plugin",
-    ],
-    "node-2": Array [
-      "foo-plugin",
-      "default-site-plugin",
-    ],
-    "node-3": Array [
-      "default-site-plugin",
-    ],
-    "node-4": Array [],
-    "ssr-1": Array [
-      "foo-plugin",
-    ],
-    "ssr-2": Array [
-      "foo-plugin",
-      "default-site-plugin",
-    ],
-    "ssr-3": Array [
-      "default-site-plugin",
-    ],
-    "ssr-4": Array [],
-  },
   "badExports": Object {
     "browser": Array [],
     "node": Array [],
@@ -91,32 +56,6 @@ Object {
 
 exports[`collatePluginAPIs Identifies incorrect APIs used by a site's plugins 1`] = `
 Object {
-  "apiToPlugins": Object {
-    "browser-1": Array [
-      "foo-plugin",
-    ],
-    "browser-2": Array [
-      "foo-plugin",
-    ],
-    "browser-3": Array [],
-    "browser-4": Array [],
-    "node-1": Array [
-      "foo-plugin",
-    ],
-    "node-2": Array [
-      "foo-plugin",
-    ],
-    "node-3": Array [],
-    "node-4": Array [],
-    "ssr-1": Array [
-      "foo-plugin",
-    ],
-    "ssr-2": Array [
-      "foo-plugin",
-    ],
-    "ssr-3": Array [],
-    "ssr-4": Array [],
-  },
   "badExports": Object {
     "browser": Array [
       Object {

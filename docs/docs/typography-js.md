@@ -2,31 +2,30 @@
 title: Typography.js
 ---
 
-# Using Typography.js in Gatsby
+## Using Typography.js in Gatsby
 
-Typography.js is a javascript library that enables you to define and explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It limits the number of tedious changes you need to make to your website just to change the font. Typography.js currently maintains over 30 themes for you to use, however you can also define your own custom font themes if none of the available themes meet your requirements. Implementing Typography into your project involves specifying a configuration object for Typography and installing a Gatsby plugin.
+Typography.js is a JavaScript library that enables you to define and explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It limits the number of tedious changes you need to make to your website just to change the font. Typography.js currently maintains over 30 themes for you to use, however you can also define your own custom font themes if none of the available themes meet your requirements. Implementing Typography into your project involves specifying a configuration object for Typography and installing a Gatsby plugin.
 
 ## Installing the Typography plugin
 
-Gatsby has the plugin `gatsby-plugin-typography` to assist with introducting Typography.js library into your project.
+Gatsby has the plugin `gatsby-plugin-typography` to assist with introducing Typography.js library into your project.
 
-You can install the plugin into your project by running the command `npm install gatsby-plugin-typography --save`
+You can install the plugin and its peer dependencies into your project by running the command `npm install gatsby-plugin-typography react-typography typography --save`
 
 After the installation of the plugin has completed, navigate to your `gatsby-config.js` file located in the root of your project's directory and add the plugin to the configuration:
 
-```diff:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
-siteMetadata: {
-    title: 'Gatsby Default Starter',
-},
-plugins: [
-+ {
-+  resolve: `gatsby-plugin-typography`,
-+  options: {
-+    pathToConfigModule: `src/utils/typography`,
-+  }
-+ }
-],
+  plugins: [
+    // highlight-start
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+    // highlight-end
+  ],
 }
 ```
 
@@ -84,13 +83,13 @@ const typography = new Typography(
 -     baseLineHeight: 1.666,
 -     headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
 -     bodyFontFamily: ['Georgia', 'serif'],
-- }
+- },
 + funstonTheme
 );
 
 export default typography;
 ```
 
-After completing the above steps, you can start the development server using the command `npm run develop` and navigate to the local website `http://localhost:8000`. If all went well you should see the text on your website using the Funston typographic theme just installed.
+After completing the above steps, you can start the development server using the command `gatsby develop` and navigate to the local website `http://localhost:8000`. If all went well you should see the text on your website using the Funston typographic theme just installed.
 
 If you would like to find more themes to install into your project check out at the official [Typography.js](https://kyleamathews.github.io/typography.js/) website.

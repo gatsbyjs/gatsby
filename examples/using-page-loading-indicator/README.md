@@ -2,7 +2,7 @@
 
 The loading indicator only will show up in the production version of the site.
 
-So first run `gatsby build` then `gatsby serve`.
+So first run `npm run build` then `npm run serve`.
 
 Then you'll need to open up the chrome (or equivalent in other browsers)
 devtools and go to the Network tab. There where it says "No throttling" along

@@ -4,36 +4,38 @@ title: PostCSS
 
 PostCSS transforms extended syntaxes and features into modern, browser-friendly CSS. This guide will show you how to get started with Gatsby and PostCSS.
 
-### Installation and Configuration
+## Installing and Configuring PostCSS
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](https://www.gatsbyjs.org/docs), then come back.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start/), then come back.
 
-1.  Install the Gatsby plugin [**gatsby-plugin-postcss**](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss).
+1.  Install the Gatsby plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss/).
 
-  `npm install --save gatsby-plugin-postcss`
+`npm install --save gatsby-plugin-postcss`
 
 2.  Include the plugin in your `gatsby-config.js` file.
 
-  ```javascript:title=gatsby-config.js
-  plugins: [`gatsby-plugin-postcss`],
-  ```
+```javascript:title=gatsby-config.js
+plugins: [`gatsby-plugin-postcss`],
+```
+
+> **Note**: If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
 
 3.  Write your stylesheets using PostCSS (.css files) and require or import them as normal.
 
-If you need to pass options to PostCSS use the plugins options; see postcss-loader for all available options.
-
-#### Syntax example
-
-```css
+```css:styles.css
 @custom-media --med (width <= 50rem);
 
 @media (--med) {
-  a { 
+  a {
     &:hover {
       color: color-mod(black alpha(54%));
     }
   }
 }
+```
+
+```javascript
+import "./styles.css"
 ```
 
 ### With CSS Modules
@@ -69,6 +71,6 @@ module.exports = () => ({
 })
 ```
 
-### Other resources
+## Other resources
 
-* [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
+- [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
