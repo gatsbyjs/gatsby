@@ -2,7 +2,7 @@
 title: Inferring Input Filters
 ---
 
-> This page isn't up to date with the latest [schema customization changes](/docs/schema-customization).
+> This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
 >
 > Outdated areas are:
 >
