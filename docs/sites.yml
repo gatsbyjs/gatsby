@@ -7592,3 +7592,14 @@
     - Freelance
   built_by: Guus van de Wal
   featured: false
+- title: Tamarisc VC
+  url: https://www.tamarisc.vc
+  main_url: https://www.tamarisc.vc
+  description: >
+    Tamarisc invests in and helps build companies that improve the human habitat through innovating at the intersection of real estate, health, and technology.
+  categories:
+    - Business
+    - Technology
+  built_by: Peter Hironaka
+  built_by_url: "https://peterhironaka.com"
+  featured: false
