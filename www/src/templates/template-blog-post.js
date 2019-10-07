@@ -189,7 +189,7 @@ class BlogPostTemplate extends React.Component {
                 {post.frontmatter.title}
               </h1>
               {post.frontmatter.image &&
-                !(post.frontmatter.showImageInArticle === false) && (
+                post.frontmatter.showImageInArticle !== false && (
                   <div
                     sx={{
                       mt: 8,

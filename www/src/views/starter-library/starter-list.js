@@ -57,7 +57,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
     )
   }
   if (count) {
-    starters = starters.sort(sortingFunction(sortRecent)).slice(0, count)
+    starters = starters.sort(sortingFunction()).slice(0, count)
     return (
       <div sx={showcaseList}>
         {starters.map(({ node: starter }) => {
