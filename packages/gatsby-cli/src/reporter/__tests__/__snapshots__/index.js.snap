@@ -57,6 +57,6 @@ Object {
   "id": "95312",
   "level": "ERROR",
   "stack": Any<Array>,
-  "text": "\\"window\\" is not available during server side rendering.",
+  "text": "\\"navigator\\" is not available during server side rendering.",
 }
 `;

@@ -154,7 +154,9 @@ module.exports = async function build(program: BuildArgs) {
       errorPath: err.context && err.context.path,
     }
 
-    const match = err.message.match(/ReferenceError: (\w+) is not defined/)
+    const match = err.message.match(
+      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+    )
     if (match && match[1]) {
       id = `95312`
       context.ref = match[1]
