@@ -193,6 +193,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/sourcing-from-netlify-cms/`,
     isPermanent: true,
   })
+  createRedirect({
+    fromPath: `/docs/sourcing-from-saas-services/`,
+    toPath: `/docs/sourcing-from-hosted-services/`,
+    isPermanent: true,
+  })
 
   createRedirect({
     fromPath: `/starter-showcase/`, // Moved "Starter Showcase" index page from /starter-showcase to /starters
@@ -352,6 +357,24 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/hosting-on-netlify/`,
     toPath: `/docs/deploying-to-netlify/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/querying-with-graphql/`,
+    toPath: `/docs/graphql-concepts/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/introducing-graphiql/`,
+    toPath: `/docs/running-queries-with-graphiql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/life-and-times-of-a-gatsby-build/`,
+    toPath: `/docs/overview-of-the-gatsby-build-process/`,
     isPermanent: true,
   })
 
@@ -573,9 +596,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           return null
         } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
           reporter.warn(
-            `Starter showcase entry "${
-              edge.node.repo
-            }" seems offline. Skipping.`
+            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
           )
           return null
         } else {
@@ -626,9 +647,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!edge.node.fields.slug) return
         if (!edge.node.fields.hasScreenshot) {
           reporter.warn(
-            `Site showcase entry "${
-              edge.node.main_url
-            }" seems offline. Skipping.`
+            `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
           )
           return
         }
@@ -1020,9 +1039,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
     if (!validTypes[node.type]) {
       throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${
-          node.type
-        }” was provided for ${node.name}.`
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
       )
     }
     slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {

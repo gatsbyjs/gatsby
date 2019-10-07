@@ -44,8 +44,8 @@ module.exports = async function build(program: BuildArgs) {
   initTracer(program.openTracingConfigFile)
 
   telemetry.trackCli(`BUILD_START`)
-  signalExit(() => {
-    telemetry.trackCli(`BUILD_END`)
+  signalExit(exitCode => {
+    telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
   const buildSpan = tracer.startSpan(`build`)
@@ -83,7 +83,9 @@ module.exports = async function build(program: BuildArgs) {
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program).catch(err => {
+  const stats = await buildProductionBundle(program, {
+    parentSpan: activity.span,
+  }).catch(err => {
     report.panic(handleWebpackError(`build-javascript`, err))
   })
   activity.end()
@@ -119,7 +121,9 @@ module.exports = async function build(program: BuildArgs) {
     activity.end()
   }
 
-  activity = report.activityTimer(`run page queries`)
+  activity = report.activityTimer(`run page queries`, {
+    parentSpan: buildSpan,
+  })
   activity.start()
   await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()
@@ -146,16 +150,22 @@ module.exports = async function build(program: BuildArgs) {
     })
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
-    if (err.message === `ReferenceError: window is not defined`) {
+    const context = {
+      errorPath: err.context && err.context.path,
+    }
+
+    const match = err.message.match(
+      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+    )
+    if (match && match[1]) {
       id = `95312`
+      context.ref = match[1]
     }
 
     report.panic({
       id,
+      context,
       error: err,
-      context: {
-        errorPath: err.context && err.context.path,
-      },
     })
   }
   activity.end()

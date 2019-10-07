@@ -273,9 +273,7 @@ class Search extends Component {
           <div
             css={{
               [mediaQueries.md]: {
-                height: `calc(100vh - ${sizes.headerHeight} - ${
-                  sizes.bannerHeight
-                } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+                height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
               },
             }}
@@ -353,9 +351,7 @@ const Result = ({ hit, pathname, query }) => {
           fontWeight: `400`,
           padding: `${space[5]} ${space[6]}`,
           position: `relative`,
-          transition: `all ${transition.speed.default} ${
-            transition.curve.default
-          }`,
+          transition: `all ${transition.speed.default} ${transition.curve.default}`,
           zIndex: selected ? 1 : false,
           "&:hover": {
             background: selected ? colors.ui.hover : colors.white,
@@ -471,19 +467,20 @@ class PluginSearchBar extends Component {
 
   urlToSearch = () => {
     if (this.props.location.search) {
-      // ignore this automatically added query parameter
-      const search = this.props.location.search
-        .replace(`no-cache=1`, ``)
-        .slice(2)
-      return decodeURIComponent(search)
+      const match = /(\?|&)=([^&]+)/.exec(this.props.location.search)
+      if (match) return decodeURIComponent(match[2])
+      return ``
     }
     return ``
   }
 
   updateHistory(value) {
-    reachNavigate(`${this.props.location.pathname}?=${value.query}`, {
-      replace: true,
-    })
+    reachNavigate(
+      `${this.props.location.pathname}?=${encodeURIComponent(value.query)}`,
+      {
+        replace: true,
+      }
+    )
   }
 
   onSearchStateChange = searchState => {

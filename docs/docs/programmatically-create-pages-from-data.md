@@ -1,5 +1,5 @@
 ---
-title: Creating Pages from Data Programatically
+title: Creating Pages from Data Programmatically
 ---
 
 Gatsby and its ecosystem of plugins provide all kinds of data through a
@@ -104,7 +104,7 @@ export const query = graphql`
 
 Notice that we're able to query with the `$slug` value from our `context` as
 an argument, which ensures that we're returning only the data that matches
-that specific page. As a result we can provide the `title` and `html` from
+that specific page. As a result, we can provide the `title` and `html` from
 the matching `markdownRemark` record to our component. The `context` values
 are also available as the `pageContext` prop in the template component itself.
 
@@ -120,3 +120,4 @@ programmatically create pages.
 
 - [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
 - [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- [CodeSandbox example creating pages from 3rd party data](https://codesandbox.io/s/b84oz)

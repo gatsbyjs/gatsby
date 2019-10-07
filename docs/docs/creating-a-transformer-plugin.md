@@ -276,9 +276,7 @@ Cache keys should at least contain the contentDigest of the concerned node. For 
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 ```
 
 Accessing and setting content in the cache is as simple as:

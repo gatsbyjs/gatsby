@@ -401,11 +401,7 @@ class SearchForm extends Component {
               paddingLeft: space[7],
               overflow: `hidden`,
               width: space[5],
-              transition: `width ${transition.speed.default} ${
-                transition.curve.default
-              }, background-color ${transition.speed.default} ${
-                transition.curve.default
-              }`,
+              transition: `width ${transition.speed.default} ${transition.curve.default}, background-color ${transition.speed.default} ${transition.curve.default}`,
               ":focus": {
                 backgroundColor: colors.purple[10],
                 color: colors.gatsby,
@@ -439,9 +435,7 @@ class SearchForm extends Component {
               width: space[4],
               height: space[4],
               pointerEvents: `none`,
-              transition: `fill ${transition.speed.default} ${
-                transition.curve.default
-              }`,
+              transition: `fill ${transition.speed.default} ${transition.curve.default}`,
               transform: `translateY(-55%)`,
               [mediaQueries.sm]: {
                 fill: focussed ? colors.gatsby : false,

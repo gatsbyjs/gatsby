@@ -107,12 +107,12 @@ describe(`Process WordPress data`, () => {
     })
   })
 
-  // Actually let's not test this since it's a bit tricky to mock
+  // Skipped for now since it's a bit tricky to mock
   // as it needs access to the store/cache + would download file.
-  // it(`Downloads media files and removes "sizes" if sourceThumbnails is set to false (default)`, () => {
-  // entities = await normalize.downloadMediaFiles(entities)
-  // expect(entities).toMatchSnapshot()
-  // })
+  it.skip(`downloads media files and removes "sizes" if keepMediaSizes is set to false (default)`, async () => {
+    entities = await normalize.downloadMediaFiles(entities)
+    expect(entities).toMatchSnapshot()
+  })
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()

@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const { store, emitter } = require(`../redux/`)
+const { match } = require(`@reach/router/lib/utils`)
 import { joinPath } from "gatsby-core-utils"
 
 let lastHash = null
@@ -19,10 +20,72 @@ const getComponents = pages =>
     .uniqBy(c => c.componentChunkName)
     .value()
 
-const pickMatchPathFields = page => _.pick(page, [`path`, `matchPath`])
+/**
+ * Get all dynamic routes and sort them by most specific at the top
+ * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
+ */
+const getMatchPaths = pages => {
+  const createMatchPathEntry = (page, index) => {
+    let score = page.matchPath.replace(/\/$/, ``).split(`/`).length
+    if (!page.matchPath.includes(`*`)) {
+      score += 1
+    }
 
-const getMatchPaths = pages =>
-  pages.filter(page => page.matchPath).map(pickMatchPathFields)
+    return {
+      ...page,
+      index,
+      score,
+    }
+  }
+
+  const matchPathPages = []
+  pages.forEach((page, index) => {
+    if (page.matchPath) {
+      matchPathPages.push(createMatchPathEntry(page, index))
+    }
+  })
+
+  // Pages can live in matchPaths, to keep them working without doing another network request
+  // we save them in matchPath. Our sorting will put them above dynamic routes
+  // as we add a static bonus point to static routes
+  // More info in https://github.com/gatsbyjs/gatsby/issues/16097
+  // small speedup: don't bother traversing when no matchPaths found.
+  if (matchPathPages.length) {
+    pages.forEach((page, index) => {
+      const isInsideMatchPath = !!matchPathPages.find(
+        pageWithMatchPath =>
+          !page.matchPath && match(pageWithMatchPath.matchPath, page.path)
+      )
+
+      if (isInsideMatchPath) {
+        matchPathPages.push(
+          createMatchPathEntry(
+            {
+              ...page,
+              matchPath: page.path,
+            },
+            index
+          )
+        )
+      }
+    })
+  }
+
+  return matchPathPages
+    .sort((a, b) => {
+      // The higher the score, the higher the specificity of our matchPath
+      const order = b.score - a.score
+      if (order !== 0) {
+        return order
+      }
+
+      // if specificity is the same we use the array index
+      return b.index - a.index
+    })
+    .map(({ path, matchPath }) => {
+      return { path, matchPath }
+    })
+}
 
 const createHash = (matchPaths, components) =>
   crypto

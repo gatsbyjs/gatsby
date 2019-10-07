@@ -23,7 +23,7 @@ let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
 let _normalizer
-let _keepMediaDetails
+let _keepMediaSizes
 
 exports.sourceNodes = async (
   {
@@ -50,7 +50,7 @@ exports.sourceNodes = async (
     includedRoutes = [`**`],
     excludedRoutes = [],
     normalizer,
-    keepMediaDetails = false,
+    keepMediaSizes = false,
   }
 ) => {
   const { createNode, touchNode } = actions
@@ -67,7 +67,7 @@ exports.sourceNodes = async (
   _concurrentRequests = concurrentRequests
   _includedRoutes = includedRoutes
   _excludedRoutes = excludedRoutes
-  _keepMediaDetails = keepMediaDetails
+  _keepMediaSizes = keepMediaSizes
   _normalizer = normalizer
 
   let entities = await fetch({
@@ -83,7 +83,7 @@ exports.sourceNodes = async (
     _concurrentRequests,
     _includedRoutes,
     _excludedRoutes,
-    _keepMediaDetails,
+    _keepMediaSizes,
     typePrefix,
     refactoredEntityTypes,
   })
@@ -142,7 +142,8 @@ exports.sourceNodes = async (
     touchNode,
     getNode,
     _auth,
-    keepMediaDetails,
+    reporter,
+    keepMediaSizes,
   })
 
   // Creates links between elements and parent element.
@@ -182,7 +183,7 @@ exports.sourceNodes = async (
       searchAndReplaceContentUrls,
       concurrentRequests,
       excludedRoutes,
-      keepMediaDetails,
+      keepMediaSizes,
     })
   }
 

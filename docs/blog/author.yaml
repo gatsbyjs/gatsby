@@ -251,7 +251,7 @@
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
 - id: Tania Rascia
-  bio: Designer, developer, writer. I build open source projects and write the missing instruction manuals of the web.
+  bio: Web developer and writer specializing in modern JavaScript.
   avatar: avatars/tania-rascia.jpg
   twitter: "@taniarascia"
 - id: Kym Ellis
@@ -339,7 +339,17 @@
 - id: Grant Glidewell
   bio: New dad moving modern technologies forward with cutting-edge projects @ThirdAndGrove. And doggos
   avatar: avatars/grant-glidewell.jpg
+- id: Clearleft
+  bio: We help design leaders get the most from their digital products, services & teams. We also organise UX London, Leading Design & Patterns Day
+  avatar: avatars/clearleft.png
 - id: Ilesh Mistry
   bio: https://www.ileshmistry.com | Gatsby and GraphQL fan | @kentico MVP working at @MMT_Digital uses KenticoCloud 💻 | @ManUtd fan 🔴 | Husband ❤️ | Father 💙 | Traveller ✈️ 🏝 | @Marvel fan 💪
   avatar: avatars/ilesh-mistry.jpg
   twitter: "@ileshmistry"
+- id: Thomas Slade
+  bio: Web developer with a focus on modern e-commerce @getelevar - https://www.getelevar.com/
+  avatar: avatars/thomas-slade.jpeg
+  twitter: "@twslade"
+- id: Maddie Wolf
+  bio: Podcast listener. Puzzle doer. Dog stalker. Will explode if I don’t pet every dog I see.
+  avatar: avatars/maddie-wolf.jpeg
