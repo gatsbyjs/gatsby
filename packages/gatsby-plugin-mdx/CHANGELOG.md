@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.48...gatsby-plugin-mdx@1.0.49) (2019-10-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** pass the correct options to setParserP… ([#18243](https://github.com/gatsbyjs/gatsby/issues/18243)) ([8224af5](https://github.com/gatsbyjs/gatsby/commit/8224af5))
+
 ## [1.0.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.47...gatsby-plugin-mdx@1.0.48) (2019-10-08)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

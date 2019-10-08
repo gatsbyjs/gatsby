@@ -121,6 +121,11 @@ function headersMerge(userHeaders, defaultHeaders) {
     })
     merged[path] = Object.values(headersMap)
   })
+  Object.keys(userHeaders).forEach(path => {
+    if (!merged[path]) {
+      merged[path] = userHeaders[path]
+    }
+  })
   return merged
 }
 

@@ -1,6 +1,7 @@
 const visit = require(`unist-util-visit`)
 const cheerio = require(`cheerio`)
 const Promise = require(`bluebird`)
+const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)
 
 const isPixelNumber = n => /\d+px$/.test(n)
@@ -62,7 +63,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
 
           // TODO add youtube preview image as background-image.
 
-          const rawHTML = `
+          const rawHTML = oneLine`
           <div
             class="gatsby-resp-iframe-wrapper"
             style="padding-bottom: ${(height / width) *

@@ -1,7 +1,9 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { useState, useEffect, useRef } from "react"
 import hex2rgba from "hex2rgba"
 
-import { space, colors, radii } from "../../utils/presets"
+import { colors } from "gatsby-design-tokens"
 import LayerIcon from "../../assets/icons/layer-icon"
 import {
   ContentLayerContent,
@@ -24,13 +26,13 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       aria-controls={`tabpanel${index}`}
       aria-selected={selected}
       onClick={onClick}
-      css={{
+      sx={{
         cursor: `pointer`,
-        borderRadius: radii[3],
-        padding: space[2],
-        color: colors.grey[60],
-        fontWeight: selected ? `bold` : `normal`,
-        backgroundColor: colors.grey[5],
+        borderRadius: 3,
+        p: 2,
+        color: `grey.60`,
+        fontWeight: selected ? `bold` : `body`,
+        backgroundColor: `ui.background`,
         border: selected
           ? `2px ${colors[baseColor][60]} solid`
           : `2px transparent solid`,
@@ -44,10 +46,10 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       }}
     >
       <span
-        css={{
-          padding: space[2],
+        sx={{
           display: `flex`,
           flexDirection: `column`,
+          p: 2,
         }}
       >
         <span css={{ height: 40 }}>
@@ -116,17 +118,17 @@ const LayerModel = ({ initialLayer = `Content` }) => {
   return (
     <>
       <div
-        css={{
-          borderRadius: radii[3],
-          backgroundColor: colors.grey[5],
+        sx={{
+          borderRadius: 3,
+          backgroundColor: `ui.background`,
         }}
       >
         <div
           role="tablist"
-          css={{
+          sx={{
             display: `grid`,
             gridTemplateColumns: `repeat(5, 1fr)`,
-            gridGap: space[1],
+            gridGap: 1,
             textAlign: `center`,
           }}
         >

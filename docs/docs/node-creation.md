@@ -57,7 +57,7 @@ During schema compilation, Gatsby will infer the sub object's type while [creati
 
 ## Fresh/stale nodes
 
-Every time a build is re-run, there is a chance that a node that exists in the redux store no longer exists in the original data source. E.g a file might be deleted from disk between runs. We need a way to indicate that fact to Gatsby.
+Every time a build is re-run, there is a chance that a node that exists in the redux store no longer exists in the original data source. E.g. a file might be deleted from disk between runs. We need a way to indicate that fact to Gatsby.
 
 To track this, there is a redux `nodesTouched` namespace that tracks whether a particular node ID has been touched. This occurs whenever a node is created (handled by [CREATE_NODE](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/nodes-touched.js)), or an explicit call to [touchNode](/docs/actions/#touchNode).
 
@@ -69,7 +69,7 @@ Any nodes that aren't touched by the end of the `source-nodes` phase, are delete
 
 From a site developer's point of view, nodes are immutable. In the sense that if you simply change a node object, those changes will not be seen by other parts of Gatsby. To make a change to a node, it must be persisted to redux via an action.
 
-So, how do you add a field to an existing node? E.g perhaps in onCreateNode, you want to add a transformer specific field? You can call [createNodeField](/docs/actions/#createNodeField) and this will simply add your field to the node's `node.fields` object and then persists it to redux. This can then be referenced by other parts of your plugin at later stages of the build.
+So, how do you add a field to an existing node? E.g. perhaps in onCreateNode, you want to add a transformer specific field? You can call [createNodeField](/docs/actions/#createNodeField) and this will simply add your field to the node's `node.fields` object and then persists it to redux. This can then be referenced by other parts of your plugin at later stages of the build.
 
 ## Node Tracking
 

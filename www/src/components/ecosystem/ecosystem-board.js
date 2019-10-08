@@ -1,30 +1,14 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import PropTypes from "prop-types"
-import styled from "@emotion/styled"
 
 import EcosystemSection from "./ecosystem-section"
-
-import { space, mediaQueries, sizes } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import {
   setupScrollersObserver,
   unobserveScrollers,
 } from "../../utils/scrollers-observer"
-
-const EcosystemBoardRoot = styled(`div`)`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  ${mediaQueries.md} {
-    flex-direction: row;
-    flex-wrap: wrap;
-    min-height: calc(
-      100vh - (${sizes.bannerHeight} + ${sizes.headerHeight} + 1px)
-    );
-    padding: ${space[7]} ${space[4]} ${space[4]};
-  }
-`
 
 class EcosystemBoard extends Component {
   componentDidMount() {
@@ -48,7 +32,23 @@ class EcosystemBoard extends Component {
     } = this.props
 
     return (
-      <EcosystemBoardRoot>
+      <div
+        sx={{
+          display: `flex`,
+          flexDirection: `column`,
+          flexWrap: `wrap`,
+          justifyContent: `center`,
+          [mediaQueries.md]: {
+            flexDirection: `row`,
+            flexWrap: `wrap`,
+            height: t =>
+              `calc(100vh - (${t.sizes.bannerHeight} + ${t.sizes.headerHeight} + 1px))`,
+            pt: 7,
+            px: 4,
+            pb: 4,
+          },
+        }}
+      >
         <EcosystemSection
           title="Plugins"
           description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more!"
@@ -101,7 +101,7 @@ class EcosystemBoard extends Component {
           description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
           links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
         />
-      </EcosystemBoardRoot>
+      </div>
     )
   }
 }

@@ -48,7 +48,7 @@ Contains a mapping from componentChunkName to their core (non-shared) chunks. Se
 
 #### 2. Create HTML React Container
 
-We create an `html` React component that will eventually be rendered to a file. It will have props for each section (e.g `head`, `preBodyComponents`, `postBodyComponents`). This is owned by [default-html.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/default-html.js).
+We create an `html` React component that will eventually be rendered to a file. It will have props for each section (e.g. `head`, `preBodyComponents`, `postBodyComponents`). This is owned by [default-html.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/default-html.js).
 
 #### 3. Load Page and Data
 
