@@ -10,6 +10,7 @@
     "@babel/runtime": "^7.6.2",
     "bluebird": "^3.7.0",
     "cheerio": "^1.0.0-rc.3",
+    "common-tags": "^1.8.0",
     "lodash": "^4.17.15",
     "unist-util-visit": "^1.4.1"
   },
