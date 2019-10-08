@@ -51,6 +51,8 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   ]
   ```
 
+  <br />
+
   ```javascript:title=src/custom-sw-code.js
   // show a notification after 15 seconds (the notification
   // permission must be granted first)
