@@ -10,7 +10,8 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
-const del = require(`del`); // new
+const del = require(`del`) // new
+const fs = require(`fs-extra`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
@@ -95,8 +96,8 @@ module.exports = async function build(program: BuildArgs) {
   let isNewBuild = false; // by default we don't want to do a rebuild of all html
 
   /*
-   * A new webpack hash is returned from JS build if there are code changes   
-   * if the code is changed we want to delete the old html and build new ones 
+   * A new webpack hash is returned from JS build if there are code changes
+   * if the code is changed we want to delete the old html and build new ones
    */
 
   if(fs.existsSync(`${program.directory}/temp/redux-state-old.json`)) {

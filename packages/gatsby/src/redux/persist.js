@@ -15,5 +15,5 @@ const writeToCache = contents => {
     });
     return fs.writeFileSync(file, JSON.stringify({pages: contents.pages, webpackCompilationHashOld: contents.webpackCompilationHash}), "utf-8");
 }
-  
+
 module.exports = { readFromCache, writeToCache }

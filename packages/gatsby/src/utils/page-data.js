@@ -44,7 +44,6 @@ const updateCompilationHashes = (
 // TODO: logic to remove old pages.
 const getNewPageKeys = (directory, store, isNewBuild) => { 
     return new Promise(resolve => {
-      
       if(isNewBuild || !(fs.existsSync(`${directory}/temp/redux-state-old.json`))) {
         console.log("return default pages")
         resolve([...store.getState().pages.keys()]);
