@@ -584,13 +584,11 @@ module.exports = (
             let timeToRead = 0
             const pureText = sanitizeHTML(html, { allowTags: [] })
             const avgWPM = 265
-            const wordCount = _.words(pureText).length
+            const wordCount =
+              _.words(pureText).length +
+              _.words(pureText, /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu)
+                .length
             timeToRead = Math.round(wordCount / avgWPM)
-            const avgCJKPM = 400
-            const CJKCount = pureText.match(
-              /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu
-            )
-            timeToRead += CJKCount ? CJKCount.length / avgCJKPM : 0
             if (timeToRead === 0) {
               timeToRead = 1
             }
