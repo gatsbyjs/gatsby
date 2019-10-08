@@ -4,22 +4,30 @@ const Promise = require(`bluebird`)
 const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)
 
-const isPixelNumber = n => /\d+px$/.test(n)
+// const isPixelNumber = n => /\d+px$/.test(n)
 
-const isUnitlessNumber = n => {
-  const nToNum = _.toNumber(n)
-  return _.isFinite(nToNum)
-}
+// const isUnitlessNumber = n => {
+//   const nToNum = _.toNumber(n)
+//   return _.isFinite(nToNum)
+// }
 
-const isUnitlessOrPixelNumber = n =>
-  n && (isUnitlessNumber(n) || isPixelNumber(n))
+// const isUnitlessOrPixelNumber = n =>
+//   n && (isUnitlessNumber(n) || isPixelNumber(n))
 
 const needsSemicolon = str => !str.endsWith(`;`)
 
 // Aspect ratio can only be determined if both width and height are unitless or
 // pixel values. Any other values mean the responsive wrapper is not applied.
-const acceptedDimensions = (width, height) =>
-  isUnitlessOrPixelNumber(width) && isUnitlessOrPixelNumber(height)
+// const acceptedDimensions = (width, height) =>
+//   isUnitlessOrPixelNumber(width) && isUnitlessOrPixelNumber(height)
+
+/**
+ * Convert anything to number, except for % value
+ * @param {*} n something to be converted to number
+ * @returns {number}
+ */
+const convert = n =>
+  typeof n === `string` && n.endsWith(`%`) ? NaN : parseInt(n, 10)
 
 module.exports = ({ markdownAST }, pluginOptions = {}) =>
   new Promise(resolve => {
@@ -31,10 +39,10 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
       const $ = cheerio.load(node.value)
       const iframe = $(`iframe, object`)
       if (iframe.length) {
-        const width = iframe.attr(`width`)
-        const height = iframe.attr(`height`)
+        const width = convert(iframe.attr(`width`))
+        const height = convert(iframe.attr(`height`))
 
-        if (acceptedDimensions(width, height)) {
+        if (_.isFinite(width) && _.isFinite(height)) {
           const existingStyle = $(`iframe`).attr(`style`) // Other plugins might set border: 0
           // so we make sure that we maintain those existing styles. If other styles like height or
           // width are already defined they will be overridden anyway.
