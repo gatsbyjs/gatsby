@@ -1,5 +1,6 @@
-import React from "react"
-import { colors, space } from "../../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { colors } from "gatsby-design-tokens"
 import MdInfoOutline from "react-icons/lib/md/info-outline"
 
 const bgDefault = colors.orange[20]
@@ -13,9 +14,9 @@ const renderText = txt => {
       {` `}
       {`${words[words.length - 1]} `}
       <MdInfoOutline
-        css={{
-          height: space[3],
-          marginBottom: space[1],
+        sx={{
+          height: t => t.space[3],
+          mb: 1,
           verticalAlign: `baseline`,
         }}
         alt={`Info Icon`}
@@ -28,20 +29,20 @@ const renderCell = (text, column) => {
   if (column === 0) {
     return (
       <div
-        css={{
-          verticalAlign: `middle`,
-          textAlign: `left`,
+        sx={{
           display: `inline-block`,
-          marginLeft: `auto`,
-          marginRight: `auto`,
+          mx: `auto`,
+          textAlign: `left`,
+          verticalAlign: `middle`,
         }}
       >
         <button
-          css={{
+          sx={{
             background: `none`,
             border: 0,
+            color: `text`,
             cursor: `inherit`,
-            padding: 0,
+            p: 0,
             textAlign: `left`,
           }}
           onClick={e => {
@@ -77,15 +78,15 @@ const getBackground = num => {
 }
 
 const basicStyling = {
-  height: space[5],
-  width: space[5],
+  height: t => t.space[5],
+  width: t => t.space[5],
   borderRadius: `50%`,
   margin: `0 auto`,
 }
 
 const EvaluationCell = ({ num, style }) => (
   <div
-    css={{
+    sx={{
       ...basicStyling,
       backgroundColor:
         [`N/A`, `0`, ``].indexOf(num) !== -1

@@ -6,7 +6,7 @@ Gatsby generates your site's HTML pages, but also creates a JavaScript runtime t
 
 ## Webpack config
 
-The [build-javascript.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build-javascript.js) Gatsby file is the entry point to this section. It dynamically creates a webpack configuration by calling [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js). This can produce radically different configs depending on the stage. E.g `build-javascript`, `build-html`, `develop`, or `develop-html`. This section deals with the `build-javascript` stage.
+The [build-javascript.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build-javascript.js) Gatsby file is the entry point to this section. It dynamically creates a webpack configuration by calling [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js). This can produce radically different configs depending on the stage. E.g. `build-javascript`, `build-html`, `develop`, or `develop-html`. This section deals with the `build-javascript` stage.
 
 The config is quite large, but here are some of the important values in the final output.
 
@@ -16,9 +16,9 @@ The config is quite large, but here are some of the important values in the fina
     app: ".cache/production-app"
   },
   output: {
-    // e.g app-2e49587d85e03a033f58.js
+    // e.g. app-2e49587d85e03a033f58.js
     filename: `[name]-[contenthash].js`,
-    // e.g component---src-blog-2-js-cebc3ae7596cbb5b0951.js
+    // e.g. component---src-blog-2-js-cebc3ae7596cbb5b0951.js
     chunkFilename: `[name]-[contenthash].js`,
     path: `/public`,
     publicPath: `/`
@@ -30,7 +30,7 @@ The config is quite large, but here are some of the important values in the fina
   },
   optimization: {
     runtimeChunk: {
-      // e.g webpack-runtime-e402cdceeae5fad2aa61.js
+      // e.g. webpack-runtime-e402cdceeae5fad2aa61.js
       name: `webpack-runtime`
     },
     splitChunks: false

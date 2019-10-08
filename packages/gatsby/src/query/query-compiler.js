@@ -118,18 +118,16 @@ class Runner {
     let files = [
       path.join(this.base, `src`),
       path.join(this.base, `.cache`, `fragments`),
-    ]
-      .concat(this.additional.map(additional => path.join(additional, `src`)))
-      .concat(modulesThatUseGatsby.map(module => module.path))
-      .reduce(
-        (merged, folderPath) =>
-          merged.concat(
-            glob.sync(path.join(folderPath, pathRegex), {
-              nodir: true,
-            })
-          ),
-        []
+      ...this.additional.map(additional => path.join(additional, `src`)),
+      ...modulesThatUseGatsby.map(module => module.path),
+    ].reduce((merged, folderPath) => {
+      merged.push(
+        ...glob.sync(path.join(folderPath, pathRegex), {
+          nodir: true,
+        })
       )
+      return merged
+    }, [])
 
     files = files.filter(d => !d.match(/\.d\.ts$/))
 

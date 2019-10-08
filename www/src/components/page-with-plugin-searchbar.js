@@ -1,15 +1,32 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
 import PluginSearchBar from "./plugin-searchbar-body"
-import { rhythm } from "../utils/typography"
-import { colors, mediaQueries, sizes } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>
     <nav
-      css={{
-        ...styles.sidebar,
+      sx={{
         // mobile: hide PluginSearchBar when on gatsbyjs.org/packages/foo, aka package README page
         display: !isPluginsIndex ? `none` : false,
+        height: t => `calc(100vh - ${t.sizes.headerHeight})`,
+        top: t =>
+          `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} - 1px)`,
+        width: `100%`,
+        zIndex: 1,
+        [mediaQueries.md]: {
+          backgroundColor: `background`,
+          borderColor: `ui.border`,
+          borderRightStyle: `solid`,
+          borderRightWidth: `1px`,
+          display: `block`,
+          position: `fixed`,
+          width: `pluginsSidebarWidthDefault`,
+        },
+        [mediaQueries.lg]: {
+          width: `pluginsSidebarWidthLarge`,
+        },
       }}
       aria-label="Plugin navigation"
     >
@@ -17,46 +34,21 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
     </nav>
     <main
       id={`reach-skip-nav`}
-      css={{
-        ...styles.content,
+      sx={{
         // mobile: hide README on gatsbyjs.org/plugins index page
         display: isPluginsIndex ? `none` : false,
+        [mediaQueries.md]: {
+          display: `block`,
+          pl: t => t.sizes.pluginsSidebarWidthDefault,
+        },
+        [mediaQueries.lg]: {
+          pl: t => t.sizes.pluginsSidebarWidthLarge,
+        },
       }}
     >
       {children}
     </main>
   </Fragment>
 )
-
-const widthDefault = rhythm(14)
-const widthLarge = rhythm(16)
-
-const styles = {
-  sidebar: {
-    height: `calc(100vh - ${sizes.headerHeight})`,
-    width: `100%`,
-    zIndex: 1,
-    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight} - 1px)`,
-    [mediaQueries.md]: {
-      display: `block`,
-      width: widthDefault,
-      position: `fixed`,
-      background: colors.white,
-      borderRight: `1px solid ${colors.ui.border.subtle}`,
-    },
-    [mediaQueries.lg]: {
-      width: widthLarge,
-    },
-  },
-  content: {
-    [mediaQueries.md]: {
-      display: `block`,
-      paddingLeft: widthDefault,
-    },
-    [mediaQueries.lg]: {
-      paddingLeft: widthLarge,
-    },
-  },
-}
 
 export default PageWithPluginSearchBar

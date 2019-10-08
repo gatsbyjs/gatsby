@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.17...gatsby-plugin-netlify@2.1.18) (2019-10-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** fix merging of path headers ([#18203](https://github.com/gatsbyjs/gatsby/issues/18203)) ([5cbb741](https://github.com/gatsbyjs/gatsby/commit/5cbb741))
+
 ## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.15...gatsby-plugin-netlify@2.1.17) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-plugin-netlify
