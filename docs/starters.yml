@@ -248,7 +248,7 @@
     - Styling:Bootstrap
     - CMS:Netlify
   features:
-    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
+    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (e.g. set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
 - url: https://gatstrap.netlify.com/
   repo: https://github.com/jaxx2104/gatsby-starter-bootstrap
   description: n/a
@@ -838,12 +838,12 @@
   description: Gatsby starter using WordPress as the content source.
   tags:
     - Styling:CSS-in-JS
-    - CMS:Wordpress
+    - CMS:WordPress
   features:
     - All the features from gatsby-advanced-starter, plus
     - Leverages the WordPress plugin for Gatsby for data
     - Configured to work with WordPress Advanced Custom Fields
-    - Auto generated Navigation for your Wordpress Pages
+    - Auto generated Navigation for your WordPress Pages
     - Minimal UI and Styling — made to customize.
     - Styled Components
 - url: https://www.concisejavascript.org/
@@ -960,7 +960,7 @@
     - i18n with rtl text
     - Stateless components using Recompose
     - Font changes depending on the chosen language
-    - SEO (meta tags, openGraph, structured data, twitter and more...)
+    - SEO (meta tags, openGraph, structured data, Twitter and more...)
 - url: https://gatsby-starter-mate.netlify.com
   repo: https://github.com/EmaSuriano/gatsby-starter-mate
   description: A portfolio starter for Gatsby integrated with Contentful CMS.
@@ -1947,7 +1947,7 @@
   repo: https://github.com/pablovila/gatsby-starter-wordpress-community
   description: Starter using gatsby-source-wordpress to display posts and pages from a WordPress site
   tags:
-    - CMS:Wordpress
+    - CMS:WordPress
     - Styling:Bulma
     - Blog
     - Pagination
@@ -2400,7 +2400,6 @@
     - Styled components in favor of inline styles
     - Transition Link for nice page transitions
     - Type definitions from GraphQL schema (with code generation)
-    - Type definitions from grapql schema (with code generation)
 - url: https://gatsby-starter-sass.netlify.com/
   repo: https://github.com/colbyfayock/gatsby-starter-sass
   description: A Gatsby starter with Sass and no assumptions!
@@ -2932,7 +2931,7 @@
   features:
     - Fully Responsive
     - Styling with SCSS
-    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
+    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (e.g. set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
     - LocalizedLink - built-in link component handling route generation
 - url: https://gatsby-kea-starter.netlify.com/
   repo: https://github.com/benjamin-glitsos/gatsby-kea-starter
@@ -3543,7 +3542,7 @@
     - Mobile Screen support
     - Out of the box support with Contentful CMS for articles.
     - Toggleable Light and Dark Mode
-    - Profile image with links to your github and twitter.
+    - Profile image with links to your GitHub and Twitter.
 - url: https://prist.marguerite.io/
   repo: https://github.com/margueriteroth/gatsby-prismic-starter-prist
   description: A light-themed starter powered by Gatsby v2 and Prismic to showcase portfolios and blogs.
@@ -3659,14 +3658,6 @@
     - Beautiful "postcard" view for photos with fullscreen toggle.
     - Both views are responsive with minimal whitespace and polished UX.
     - Many performance optimizations for image delivery (both by Gatsby & way beyond what Gatsby can do).
-- url: https://ghs.ksmorano.com/
-  repo: https://github.com/ksmorano/gatsby-hasura-starter
-  description: A boilerplate for a Gatsby app paired with a Hasura project as the backend.
-  tags:
-    - Styling:Bulma
-  features:
-    - Demonstrates both query and mutation from the linked Hasura project.
-    - Uses apollo react hooks for query and mutation.
 - url: https://gatsby-typescript-scss-starter.netlify.com/
   repo: https://github.com/GrantBartlett/gatsby-typescript-starter
   description: A simple starter project using TypeScript and SCSS
@@ -3841,7 +3832,7 @@
   tags:
     - Blog
     - CMS:Headless
-    - CMS:Wordpress
+    - CMS:WordPress
   features:
     - New Header
     - Responsive
@@ -3907,10 +3898,10 @@
     - Optimized images with gatsby-image
 - url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
   repo: https://github.com/sagar7993/gatsby-wordpress-typescript-scss-blog
-  description: A Gatsby starter template for a Wordpress blog, built using TypeScript, SCSS and Ant Design
+  description: A Gatsby starter template for a WordPress blog, built using TypeScript, SCSS and Ant Design
   tags:
     - Blog
-    - CMS:Wordpress
+    - CMS:WordPress
     - CMS:Headless
     - Language:TypeScript
     - Pagination
@@ -3920,10 +3911,10 @@
     - Styling:SCSS
   features:
     - Typescript for type-safe code
-    - Source content from Wordpress CMS
-    - Auto generated Pagination for your Wordpress Posts
+    - Source content from WordPress CMS
+    - Auto generated Pagination for your WordPress Posts
     - Auto generated Navigation for next and previous post at the end Post
-    - Auto generated pages for tags and categories sourced from Wordpress
+    - Auto generated pages for tags and categories sourced from WordPress
     - SCSS stylesheets
     - PWA with offline support
     - Ant Design for UI components and theming
@@ -3931,7 +3922,7 @@
     - Responsive Design
     - Google Analytics
     - Comments using Staticman
-    - Images within wordpress post/page content downloaded to static folder and transformed to webp format during build
+    - Images within WordPress post/page content downloaded to static folder and transformed to webp format during build
     - Social widgets
     - Instagram feed of any profile (no API token needed)
     - Pinterest pin-it button on hovering on images (no API token needed)
@@ -4047,7 +4038,7 @@
     - A minimal site with the option to add loads of functionality
     - Based on the Monolith repo to provide an easy starting point for large projects https://github.com/danspratling/monolith
     - Uses Theme-UI to handle theming and styling
-    - Uses Typescript to encourage good coding
+    - Uses TypeScript to encourage good coding
     - Uses Storybook to encourage visual testing
     - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
 - url: https://gatsby-starter-ts-pwa.netlify.com/
@@ -4059,4 +4050,4 @@
   features:
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
-    - Support Github Actions CI/CD workflow (beta)
+    - Support GitHub Actions CI/CD workflow (beta)

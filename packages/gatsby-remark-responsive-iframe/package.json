@@ -1,15 +1,15 @@
 {
   "name": "gatsby-remark-responsive-iframe",
   "description": "Make iframes in Markdown processed by Remark responsive",
-  "version": "2.2.20",
+  "version": "2.2.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "bluebird": "^3.5.5",
     "cheerio": "^1.0.0-rc.3",
+    "common-tags": "^1.8.0",
     "lodash": "^4.17.15",
     "unist-util-visit": "^1.4.1"
   },
@@ -19,7 +19,7 @@
     "babel-preset-gatsby-package": "^0.2.7",
     "cross-env": "^5.2.1",
     "remark": "^10.0.1",
-    "remark-mdx": "^1.5.0",
+    "remark-mdx": "^1.5.1",
     "semver": "^6.3.0",
     "unist-util-find": "^1.0.1"
   },

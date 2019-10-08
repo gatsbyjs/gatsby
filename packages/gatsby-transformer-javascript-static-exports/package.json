@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-javascript-static-exports",
   "description": "Gatsby transformer plugin for JavaScript to extract exports.data statically.",
-  "version": "2.2.12",
+  "version": "2.2.13",
   "author": "Jacob Bolda <me@jacobbolda.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,7 +10,7 @@
     "@babel/parser": "^7.6.2",
     "@babel/runtime": "^7.6.2",
     "@babel/traverse": "^7.6.2",
-    "bluebird": "^3.5.5"
+    "bluebird": "^3.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.2",

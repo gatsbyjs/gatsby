@@ -1,14 +1,15 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 
 import { Link } from "gatsby"
-import { space } from "../utils/presets"
 import Container from "../components/container"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import FooterLinks from "../components/shared/footer-links"
 import GithubIcon from "react-icons/lib/go/mark-github"
-import GatsbyIcon from "../assets/monogram.svg"
+import GatsbyIcon from "../components/gatsby-monogram"
 import { linkStyles } from "../utils/styles"
 
 const PackageReadMe = props => {
@@ -16,7 +17,7 @@ const PackageReadMe = props => {
   const metaExcerpt = excerpt || `Plugin information for ${packageName}`
 
   return (
-    <>
+    <React.Fragment>
       <Container>
         <Helmet>
           <title>{packageName}</title>
@@ -29,11 +30,11 @@ const PackageReadMe = props => {
           <meta name="twitter:data1" content={`${timeToRead} min read`} />
         </Helmet>
         <div
-          css={{
+          sx={{
             display: `flex`,
             flexWrap: `wrap`,
             justifyContent: `space-between`,
-            paddingBottom: space[9],
+            pb: 9,
             "&&:hover": {
               color: `inherit`,
             },
@@ -48,23 +49,29 @@ const PackageReadMe = props => {
             {githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 &&
               packageName[0] !== `@` && (
                 <div
-                  css={{
+                  sx={{
                     ...linkStyles,
-                    color: `#aaa !important`,
-                    marginRight: space[6],
+                    mr: 8,
+                    "&&": {
+                      border: 0,
+                      color: `textMuted`,
+                      display: `flex`,
+                      fontWeight: `body`,
+                    },
+                    "&&:hover": {
+                      color: `textMuted`,
+                    },
                   }}
                 >
-                  <img
-                    src={GatsbyIcon}
-                    css={{
-                      height: 16,
-                      marginBottom: 0,
-                      marginRight: 5,
-                      filter: `grayscale(100%)`,
-                      opacity: 0.5,
+                  <span
+                    sx={{
+                      display: `inline-block`,
+                      mr: 2,
                     }}
-                    alt={`Official Gatsby Plugin`}
-                  />
+                    title={`Official Gatsby Plugin`}
+                  >
+                    <GatsbyIcon />
+                  </span>
                   Official Plugin
                 </div>
               )}
@@ -73,7 +80,7 @@ const PackageReadMe = props => {
               href={githubUrl}
               aria-labelledby="github-link-label"
             >
-              <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+              <GithubIcon focusable="false" sx={{ mr: 2 }} />
               <span id="github-link-label">View plugin on GitHub</span>
             </a>
           </div>
@@ -90,7 +97,7 @@ const PackageReadMe = props => {
         <MarkdownPageFooter page={page} packagePage />
       </Container>
       <FooterLinks />
-    </>
+    </React.Fragment>
   )
 }
 

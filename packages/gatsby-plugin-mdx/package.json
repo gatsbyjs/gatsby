@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "1.0.46",
+  "version": "1.0.49",
   "description": "MDX integration for Gatsby",
   "main": "index.js",
   "license": "MIT",
@@ -34,7 +34,7 @@
     "eval": "^0.1.4",
     "fs-extra": "^8.1.0",
     "gray-matter": "^4.0.2",
-    "json5": "^2.1.0",
+    "json5": "^2.1.1",
     "loader-utils": "^1.2.3",
     "lodash": "^4.17.15",
     "mdast-util-to-string": "^1.0.6",
@@ -55,11 +55,11 @@
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
-    "@mdx-js/mdx": "^1.5.0",
-    "@mdx-js/react": "^1.5.0",
+    "@mdx-js/mdx": "^1.5.1",
+    "@mdx-js/react": "^1.5.1",
     "jest": "^24.9.0",
     "js-combinatorics": "^0.5.4",
-    "react-test-renderer": "^16.10.0"
+    "react-test-renderer": "^16.10.2"
   },
   "jest": {
     "testEnvironment": "node"

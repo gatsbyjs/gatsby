@@ -96,6 +96,17 @@
   categories:
     - Featured
   featured: true
+- title: Theodora Warre
+  main_url: "https://theodorawarre.eu"
+  url: "https://theodorawarre.eu"
+  description: >-
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
+  categories:
+    - eCommerce
+    - Marketing
+  built_by: Pierre Nel
+  built_by_url: "https://pierre.io"
+  featured: false
 - title: Life Without Barriers | Foster Care
   main_url: "https://www.lwb.org.au/foster-care"
   url: "https://www.lwb.org.au/foster-care"
@@ -1089,7 +1100,7 @@
     - Documentation
     - Community
   built_by: Sankarsan Kampa
-  built_by_url: "https://sankarsankampa.com"
+  built_by_url: "https://traction.one"
 - title: Smakosh
   main_url: "https://smakosh.com/"
   url: "https://smakosh.com/"
@@ -1342,8 +1353,8 @@
     - Documentation
     - Open Source
     - Technology
-  built_by: David Worms
-  built_by_url: "http://www.adaltas.com"
+  built_by: Adaltas
+  built_by_url: "https://www.adaltas.com"
   featured: false
 - title: Gourav Sood Blog & Portfolio
   main_url: "https://www.gouravsood.com/"
@@ -2386,7 +2397,7 @@
   featured: false
 - title: Fitekran
   description: >
-    One of the most visited Turkish blogs about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using Wordpress.
+    One of the most visited Turkish blogs about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using WordPress.
   main_url: "https://www.fitekran.com"
   url: "https://www.fitekran.com"
   categories:
@@ -5006,7 +5017,7 @@
   main_url: https://www.goldmedalflour.com
   url: https://www.goldmedalflour.com
   description: >
-    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from Wordpress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
+    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from WordPress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
   categories:
     - Food
   built_by: General Mills Branded Sites Dev Team
@@ -5464,7 +5475,7 @@
   main_url: https://camiloholguin.me
   source_url: https://github.com/camiloholguin/gatsby-portfolio
   description: >
-    Portfolio site using GatsbyJS and Wordpress REST API.
+    Portfolio site using GatsbyJS and WordPress REST API.
   categories:
     - WordPress
     - Portfolio
@@ -6978,7 +6989,7 @@
   url: https://opensourcerepos.com
   featured: false
   description: >
-    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the github repository. Out main aim to is to help more developers contribute to open source projects.
+    Open Source Repos is a blog site for explaining the architecture, code-walkthrough and key takeways for the GitHub repository. Out main aim to is to help more developers contribute to open source projects.
   source_url: https://github.com/opensourcerepos/blogs
   categories:
     - Open Source
@@ -7391,4 +7402,257 @@
     - Web Development
   built_by: Mutual
   built_by_url: https://twitter.com/madebymutual
+  featured: false
+- title: Surge 3
+  main_url: https://surge3.com
+  url: https://surge3.com/
+  description: >
+    We’re Surge 3 - a premier web development agency. Our company centers around the principles of quality, speed, and service! We are founded using the latest in web technologies and are dedicated to using those exact tools to help our customers achieve their goals.
+  categories:
+    - Portfolio
+    - Blog
+    - Agency
+    - Web Development
+    - Marketing
+  built_by: Dillon Browne
+  built_by_url: https://dillonbrowne.com
+- title: Adaltas
+  main_url: https://www.adaltas.com
+  url: https://www.adaltas.com
+  description: >
+    Adaltas is a team of consultants with a focus on Open Source, Big Data and Cloud Computing based in France, Canada and Morocco.
+  categories:
+    - Consulting
+    - Data
+    - Design System
+    - Programming
+    - Learning
+  built_by: Adaltas
+  built_by_url: https://www.adaltas.com
+- title: Themis Attorneys
+  main_url: https://themis-attorneys.com
+  url: https://themis-attorneys.com
+  description: >
+    Themis Attorneys is Chennai based lawyers. Their new complete website is made using Gatsby.
+  categories:
+    - Agency
+    - Consulting
+    - Portfolio
+    - Law
+  built_by: Merbin J Anselm
+  built_by_url: https://anselm.in
+- title: Saint New York
+  url: https://www.saintnewyork.com
+  main_url: https://www.saintnewyork.com
+  description: >
+    A powerful fresh-scent formula made with clean ingredients.
+  categories:
+    - eCommerce
+    - Business
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+- title: Runlet
+  main_url: https://runlet.app
+  url: https://runlet.app
+  source_url: https://github.com/runletapp/runlet
+  description: >
+    Runlet is a cloud-based job manager that offers device synchronization and reliable message delivery in a network of connected devices even after connectivity issues. Available for ARM, Linux, Mac and Windows.
+  categories:
+    - App
+    - Landing Page
+    - Productivity
+    - Technology
+  built_by: Vandre Leal
+  built_by_url: https://vandreleal.github.io
+  featured: false
+- title: tiaan.dev
+  main_url: https://tiaan.dev
+  url: https://tiaan.dev
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+- title: Praveen Bisht
+  main_url: https://www.prvnbist.com/
+  url: https://www.prvnbist.com/
+  source_url: https://github.com/prvnbist/portfolio
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Praveen Bisht
+  built_by_url: https://www.prvnbist.com/
+  featured: false
+- title: Jeff Mills The Outer Limits x NTS Radio
+  url: https://www.nts.live/projects/jeff-mills-the-outer-limits/
+  main_url: https://www.nts.live/projects/jeff-mills-the-outer-limits/
+  source_url: https://github.com/ntslive/the-outer-limits
+  description: >
+    NTS Radio created a minisite for Jeff Mills' 6 part radio series The Outer Limits, including original music production and imagery curated from the NASA online image archive.
+  categories:
+    - Music
+    - Gallery
+    - Science
+    - Entertainment
+  built_by: NTS Radio
+  built_by_url: https://www.nts.live
+  featured: false
+- title: BALAJIRAO676
+  main_url: https://thebalajiraoecommerce.netlify.com/
+  url: https://thebalajiraoecommerce.netlify.com/
+  featured: false
+  categories:
+    - Blog
+    - eCommerce
+    - Web Development
+- title: Mentimeter
+  url: https://www.mentimeter.com/
+  main_url: https://www.mentimeter.com/
+  categories:
+    - Business
+  featured: false
+- title: HYFN
+  url: https://hyfn.com/
+  main_url: https://hyfn.com/
+  categories:
+    - Business
+  featured: false
+- title: Mozilla India
+  main_url: https://mozillaindia.org/
+  url: https://mozillaindia.org/
+  categories:
+    - Open Source
+  featured: false
+- title: Primer Labs
+  main_url: https://www.primerlabs.io
+  url: https://www.primerlabs.io
+  featured: false
+  categories:
+    - Education
+    - Learning
+- title: Run Leeds
+  main_url: http://www.runleeds.co.uk
+  url: http://www.runleeds.co.uk
+  description: >
+    Community running site based in Leeds,UK. Aiming to support those going through a life crisis.
+  categories:
+    - Accessibility
+    - Blog
+    - Community
+    - Nonprofit
+    - Sports
+    - WordPress
+  built_by: Robert Marshall
+  built_by_url: https://www.robertmarshall.dev
+- title: Arvind Kumar
+  main_url: https://arvind.io
+  url: https://arvind.io
+  source_url: https://github.com/EnKrypt/arvind.io
+  built_by: Arvind Kumar
+  built_by_url: "https://arvind.io/"
+  description: >
+    A blog about writing code, making music and studying the skies.
+  featured: false
+  categories:
+    - Blog
+    - Music
+    - Technology
+- title: GlobalMoney
+  url: https://global24.ua
+  main_url: https://global24.ua
+  description: >
+    Provide payment solution for SMB, eWallet GlobalMoney
+  categories:
+    - Business
+    - Finance
+    - Technology
+  built_by: NodeArt
+  built_by_url: https://NodeArt.io
+- title: Women's and Girls' Emergency Centre
+  url: https://www.wagec.org.au/
+  main_url: https://www.wagec.org.au/
+  description: >
+    Specialist homelessness service for women and families escaping domestic violence. Based in Redfern, Sydney, Australia.
+  categories:
+    - Nonprofit
+    - Community
+  built_by: Little & Big
+  built_by_url: "https://www.littleandbig.com.au/"
+  featured: false
+- title: Guus van de Wal | Drupal Front-end specialist
+  url: https://guusvandewal.nl
+  main_url: https://guusvandewal.nl
+  description: >
+    Decoupled portfolio site for guusvandewal.nl, a Drupal and ReactJS front-end developer and designer.
+  categories:
+    - Open Source
+    - Web Development
+    - Design
+    - Blog
+    - Freelance
+  built_by: Guus van de Wal
+  featured: false
+- title: Pixelize Web Design Gold Coast | Web Design and SEO
+  url: https://www.pixelize.com.au/
+  main_url: https://www.pixelize.com.au/
+  description: >
+    Pixelize is a tight knit group of professional web developers, graphic designers, and content creators that work together to create high performing, blazing fast, beautiful websites with a strong focus on SEO.
+  categories:
+    - Agency
+    - Web Development
+    - Marketing
+    - SEO
+    - Design
+    - Portfolio
+    - Blog
+  built_by: Pixelize
+  built_by_url: https://www.pixelize.com.au
+  featured: false
+- title: VS Code GitHub Stats
+  url: https://vscode-github-stats.netlify.com
+  main_url: https://vscode-github-stats.netlify.com
+  source_url: https://github.com/lannonbr/vscode-github-stats/
+  description: >
+    Statistics Dashboard for VS Code GitHub repository
+  categories:
+    - Data
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
+  featured: false
+- title: MetaProjection
+  main_url: https://www.metaprojection.ca
+  url: https://www.metaprojection.ca
+  source_url: https://github.com/rosslh/metaprojection
+  description: >
+    MetaProjection is a website that aggregates multiple Canadian federal electoral projections in order to provide an overview of how the election is playing out, both federally and by district.
+  categories:
+    - Government
+    - Data
+    - Open Source
+  built_by: Ross Hill
+  built_by_url: https://rosshill.ca
+  featured: false
+- title: Tamarisc VC
+  url: https://www.tamarisc.vc
+  main_url: https://www.tamarisc.vc
+  description: >
+    Tamarisc invests in and helps build companies that improve the human habitat through innovating at the intersection of real estate, health, and technology.
+  categories:
+    - Business
+    - Technology
+  built_by: Peter Hironaka
+  built_by_url: "https://peterhironaka.com"
+  featured: false
+- title: Roman Kravets
+  description: >
+    Portfolio of Roman Kravets. Web Developer, HTML & CSS Coder.
+  main_url: "https://romkravets.netlify.com/"
+  url: "https://romkravets.netlify.com/"
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+    - Blog
+  built_by: Roman Kravets
+  built_by_url: "https://github.com/romkravets/dev-page"
   featured: false

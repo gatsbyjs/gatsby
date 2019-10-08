@@ -80,6 +80,7 @@ See the [library of official and community plugins](/plugins/)
 - [The Great Gatsby Bootcamp \[Full Course\] - Andrew Mead](https://www.youtube.com/watch?v=8t0vNu2fCCM)
 - [Understanding the Gatsby lifecycle](https://medium.com/narative/understanding-gatsbys-lifecycle-31c473ba2f2d)
 - [GatsbyGuides.com series on building web applications with Gatsby & Drupal](https://gatsbyguides.com/)
+- [Deep dive into Gatsby – Building a static blog using Gatsby, React and GraphQL](https://zocada.com/deep-dive-gatsby-building-a-simple-static-blog-using-gatsby-react-and-graphql/)
 
 ### German
 
