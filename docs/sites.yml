@@ -7603,3 +7603,27 @@
   built_by: Benjamin Lannon
   built_by_url: https://lannonbr.com
   featured: false
+- title: MetaProjection
+  main_url: https://www.metaprojection.ca
+  url: https://www.metaprojection.ca
+  source_url: https://github.com/rosslh/metaprojection
+  description: >
+    MetaProjection is a website that aggregates multiple Canadian federal electoral projections in order to provide an overview of how the election is playing out, both federally and by district.
+  categories:
+    - Government
+    - Data
+    - Open Source
+  built_by: Ross Hill
+  built_by_url: https://rosshill.ca
+  featured: false
+- title: Tamarisc VC
+  url: https://www.tamarisc.vc
+  main_url: https://www.tamarisc.vc
+  description: >
+    Tamarisc invests in and helps build companies that improve the human habitat through innovating at the intersection of real estate, health, and technology.
+  categories:
+    - Business
+    - Technology
+  built_by: Peter Hironaka
+  built_by_url: "https://peterhironaka.com"
+  featured: false
