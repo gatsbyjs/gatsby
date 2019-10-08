@@ -41,7 +41,7 @@ const Section = styled(EcosystemSection)`
   max-width: calc(33% - 1rem);
 
   ${mediaQueries.md} {
-    margin: 0 ${p => p.theme.space[2]} 0;
+    margin: 0 ${p => p.theme.space[2]} ${p => p.theme.space[4]};
     padding: ${p => p.theme.space[6]};
 
     :last-child {
