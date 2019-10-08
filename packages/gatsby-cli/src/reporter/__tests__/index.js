@@ -59,6 +59,9 @@ describe(`report.error`, () => {
   it(`handles "structuredError" signature correctly`, () => {
     reporter.error({
       id: `95312`,
+      context: {
+        ref: `navigator`,
+      },
     })
     const generatedError = reporterInstance.error.mock.calls[0][0]
     expect(generatedError).toMatchSnapshot({

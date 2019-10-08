@@ -57,7 +57,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **www:** fallback to github & unpkg to get README.md ([#16322](https://github.com/gatsbyjs/gatsby/issues/16322)) ([f38b40d](https://github.com/gatsbyjs/gatsby/commit/f38b40d))
+- **www:** fallback to GitHub & unpkg to get README.md ([#16322](https://github.com/gatsbyjs/gatsby/issues/16322)) ([f38b40d](https://github.com/gatsbyjs/gatsby/commit/f38b40d))
 
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.1...gatsby-source-npm-package-search@2.1.2) (2019-07-12)
 

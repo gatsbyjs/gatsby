@@ -960,7 +960,7 @@
     - i18n with rtl text
     - Stateless components using Recompose
     - Font changes depending on the chosen language
-    - SEO (meta tags, openGraph, structured data, twitter and more...)
+    - SEO (meta tags, openGraph, structured data, Twitter and more...)
 - url: https://gatsby-starter-mate.netlify.com
   repo: https://github.com/EmaSuriano/gatsby-starter-mate
   description: A portfolio starter for Gatsby integrated with Contentful CMS.
@@ -3542,7 +3542,7 @@
     - Mobile Screen support
     - Out of the box support with Contentful CMS for articles.
     - Toggleable Light and Dark Mode
-    - Profile image with links to your github and twitter.
+    - Profile image with links to your GitHub and Twitter.
 - url: https://prist.marguerite.io/
   repo: https://github.com/margueriteroth/gatsby-prismic-starter-prist
   description: A light-themed starter powered by Gatsby v2 and Prismic to showcase portfolios and blogs.
@@ -4038,7 +4038,7 @@
     - A minimal site with the option to add loads of functionality
     - Based on the Monolith repo to provide an easy starting point for large projects https://github.com/danspratling/monolith
     - Uses Theme-UI to handle theming and styling
-    - Uses Typescript to encourage good coding
+    - Uses TypeScript to encourage good coding
     - Uses Storybook to encourage visual testing
     - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
 - url: https://gatsby-starter-ts-pwa.netlify.com/
@@ -4050,4 +4050,4 @@
   features:
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
-    - Support Github Actions CI/CD workflow (beta)
+    - Support GitHub Actions CI/CD workflow (beta)
