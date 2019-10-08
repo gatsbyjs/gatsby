@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.31...gatsby@2.15.32) (2019-10-08)
+
+### Bug Fixes
+
+- **gatsby:** In public actions, don't let actionOptions overwr… ([#18302](https://github.com/gatsbyjs/gatsby/issues/18302)) ([014b95e](https://github.com/gatsbyjs/gatsby/commit/014b95e))
+
 ## [2.15.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.30...gatsby@2.15.31) (2019-10-08)
 
 ### Bug Fixes
