@@ -12,7 +12,7 @@ ButterCMS is a headless CMS that lets you manage content using their dashboard a
 
 ButterCMS provides a user-friendly UI for managing marketing sites, blogging, and custom content scenarios. We can be used for SEO landing pages, customer case studies, company news & updates, events + webinar pages, education center, location pages, knowledgebases, and more.
 
-ButterCMS is different from a traditional CMS like Drupal or Wordpress in that they're not a large piece of software you need to download, host, customize, and maintain. Instead they provide easy to consume, performant content API's that you add to your application.
+ButterCMS is different from a traditional CMS like Drupal or WordPress in that they're not a large piece of software you need to download, host, customize, and maintain. Instead they provide easy to consume, performant content API's that you add to your application.
 
 For example, if you wanted to enable a non-technical person to be able to add customer case study pages to your marketing site, you might create a Case Study Page Type to represent these pages. The non-technical person would be able to manage these pages from their dashboard and the JSON API output would look something like this:
 

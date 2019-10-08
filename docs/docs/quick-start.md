@@ -11,6 +11,8 @@ This quick start is intended for intermediate to advanced developers. For a gent
   lessonTitle="Quick Start with Gatsby: Create, Develop, and Build Gatsby Sites From the Command Line"
 />
 
+**Note**: this video uses `npx`, which is a tool to execute an npm package without first installing it. Running the command `npx gatsby new` is the same as running `gatsby new` after installing the gatsby-cli on your computer.
+
 ### Install the Gatsby CLI.
 
 ```shell
