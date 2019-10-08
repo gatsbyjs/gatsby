@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.2.13...gatsby-transformer-hjson@2.2.14) (2019-10-08)
+
+### Bug Fixes
+
+- update dependency hjson to ^3.2.0 ([#18269](https://github.com/gatsbyjs/gatsby/issues/18269)) ([e18310b](https://github.com/gatsbyjs/gatsby/commit/e18310b))
+
 ## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.2.12...gatsby-transformer-hjson@2.2.13) (2019-10-04)
 
 ### Bug Fixes
