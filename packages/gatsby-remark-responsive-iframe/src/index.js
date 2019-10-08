@@ -6,12 +6,14 @@ const _ = require(`lodash`)
 const needsSemicolon = str => !str.endsWith(`;`)
 
 /**
- * Convert anything to number, except for % value
+ * Convert anything to number, except for % value.
+ * We don't have to check for other values (em, vw, etc.)
+ * because the browsers will treat them as px anyway.
  * @param {*} n something to be converted to number
  * @returns {number}
  */
 const convert = n =>
-  typeof n === `string` && n.endsWith(`%`) ? NaN : parseInt(n, 10)
+  typeof n === `string` && n.trim().endsWith(`%`) ? NaN : parseInt(n, 10)
 
 /**
  * Check whether all passed in arguments are valid number or not
