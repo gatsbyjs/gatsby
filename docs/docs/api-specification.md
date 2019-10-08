@@ -100,7 +100,7 @@ load site config -> load plugins -> source nodes -> transform nodes -> create
 graphql schema -> create pages -> compile component queries -> run queries ->
 fin
 
-Once the initial bootstrap is finished, we start `webpack-dev-server` and an express server for serving files for the development server, and for a production build, we start building the CSS then JavaScript then HTML with webpack.
+Once the initial bootstrap is finished `webpack-dev-server` is started, and an express server for serving files for the development server, and for a production build, is starting to build a CSS then JavaScript then HTML with webpack.
 
 During these processes there are various extension points where plugins can
 intervene. All major processes have an `onPre` and `onPost` e.g. `onPreBootstrap`
