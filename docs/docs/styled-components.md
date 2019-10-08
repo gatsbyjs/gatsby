@@ -114,9 +114,7 @@ export default () => (
 
 ## Creating Global Styles
 
-Normally, styled components are created for a single CSS class that is isolated from other components. In some cases, it’s helpful (and cleaner!) to create a global style so more than one component can have access to the same styles. In a way, you can create a base stylesheet.
-
-A global style can be created by using `createGlobalStyle` and can be added to files like `container.js` or `index.js`.
+Styled-components are primarily used for a single CSS class that is isolated from other components. In some cases, you want to override global styling — for example, the default margins of your `body` element. Styled-components has your back. You can use the `createGlobalStyle` to accomplish this. We advise using `createGlobalStyle` in Layout components, which are shared over multiple pages rather than using it on a single page.
 
 The example below shows how to create a `GlobalStyle` (which is a StyledComponent) for the color purple by importing `createGlobalStyle` from `styled-components`.
 
@@ -125,14 +123,14 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   body {
-    color: ${props => (props.purpleColor ? 'purple' : 'white')};
+    color: ${props => (props.theme === 'purple' ? 'purple' : 'white')};
   }
 `
 
 // later on in your file
 
 <React.Fragment>
-  <GlobalStyle purpleColor />
+  <GlobalStyle theme="purple" />
 </React.Fragment>
 ```
 
