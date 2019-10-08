@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`with badly headers configuration 1`] = `
+exports[`build-headers-program with badly headers configuration 1`] = `
 "## Created with gatsby-plugin-netlify
 
 /*
@@ -78,7 +78,7 @@ X-Frame-Options
 "
 `;
 
-exports[`with caching headers 1`] = `
+exports[`build-headers-program with caching headers 1`] = `
 "## Created with gatsby-plugin-netlify
 
 /*
@@ -154,7 +154,7 @@ exports[`with caching headers 1`] = `
 "
 `;
 
-exports[`with security headers 1`] = `
+exports[`build-headers-program with security headers 1`] = `
 "## Created with gatsby-plugin-netlify
 
 /*
@@ -233,7 +233,7 @@ exports[`with security headers 1`] = `
 "
 `;
 
-exports[`without caching headers 1`] = `
+exports[`build-headers-program without caching headers 1`] = `
 "## Created with gatsby-plugin-netlify
 
 /*
