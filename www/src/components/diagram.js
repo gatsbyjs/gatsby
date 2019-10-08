@@ -1,32 +1,15 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm } from "../utils/typography"
-import {
-  colors,
-  space,
-  radii,
-  shadows,
-  mediaQueries,
-  letterSpacings,
-  lineHeights,
-  fontSizes,
-  fonts,
-  fontWeights,
-} from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = colors.purple[70]
-const stripeSize = 15
-const stripeBg = {
-  backgroundColor: colors.purple[80],
-  backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, ${stripeColor} 25%, transparent 25%, transparent 50%, ${stripeColor} 50%, ${stripeColor} 75%, transparent 75%, transparent)`,
-}
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
 })
@@ -35,8 +18,8 @@ const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
-      maxWidth: rhythm(32),
       margin: `0 auto`,
+      maxWidth: `48rem`,
       textAlign: `center`,
     }}
   >
@@ -47,18 +30,20 @@ const Segment = ({ className, children }) => (
 const SegmentTitle = ({ children }) => (
   <h2
     className="Segment-title"
-    css={{
+    sx={{
+      bg: `accent`,
+      borderRadius: 1,
+      bottom: t => `-${t.space[2]}`,
+      color: `black`,
       display: `inline`,
-      background: colors.accent,
-      borderRadius: radii[1],
+      fontSize: 1,
+      fontWeight: `body`,
+      letterSpacing: `tracked`,
+      lineHeight: `solid`,
       margin: `0 auto`,
       position: `relative`,
-      bottom: `-${space[2]}`,
-      padding: `${space[2]} ${space[3]}`,
-      fontWeight: `normal`,
-      letterSpacing: letterSpacings.tracked,
-      fontSize: fontSizes[1],
-      lineHeight: lineHeights.solid,
+      px: 3,
+      py: 2,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -76,8 +61,8 @@ const VerticalLine = () => (
   >
     <path
       d="M10 40 L10 -10"
-      css={{
-        stroke: colors.lilac,
+      sx={{
+        stroke: t => t.colors.lilac,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -88,23 +73,26 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.purple[10]}`,
-  borderRadius: radii[2],
-  padding: `${space[5]} ${space[7]} 0`,
+  borderColor: `ui.border`,
+  borderRadius: 2,
+  borderStyle: `solid`,
+  borderWidth: `1px`,
+  px: 7,
+  py: 5,
 }
 
 const borderAndBoxShadow = {
-  background: colors.white,
+  bg: `card.background`,
   border: 0,
-  borderRadius: radii[1],
-  boxShadow: shadows.raised,
+  borderRadius: 1,
+  boxShadow: `raised`,
   transform: `translateZ(0)`,
   width: `100%`,
 }
 
 const SourceItems = ({ children }) => (
   <div
-    css={{
+    sx={{
       display: `flex`,
       flexWrap: `wrap`,
       justifyContent: `center`,
@@ -115,13 +103,14 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${space[3]} ${space[4]}` }
+const boxPadding = { py: 3, px: 4 }
 
 const SourceItem = ({ children }) => (
   <div
-    css={{
+    sx={{
       boxSizing: `border-box`,
-      padding: `0 ${space[4]} ${space[5]}`,
+      py: 4,
+      px: 5,
       display: `flex`,
       [mediaQueries.xs]: {
         flex: `1 1 50%`,
@@ -133,10 +122,10 @@ const SourceItem = ({ children }) => (
     }}
   >
     <div
-      css={{
+      sx={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: lineHeights.dense,
+        lineHeight: `dense`,
         textAlign: `left`,
       }}
     >
@@ -147,9 +136,10 @@ const SourceItem = ({ children }) => (
 
 const ItemTitle = ({ children }) => (
   <h3
-    css={{
-      fontSize: fontSizes[2],
+    sx={{
+      fontSize: 2,
       margin: 0,
+      color: `card.header`,
     }}
   >
     {children}
@@ -158,12 +148,12 @@ const ItemTitle = ({ children }) => (
 
 const ItemDescription = ({ children }) => (
   <small
-    css={{
-      lineHeight: lineHeights.dense,
+    sx={{
+      color: `textMuted`,
       display: `block`,
-      color: colors.text.secondary,
-      fontSize: fontSizes[1],
-      fontFamily: fonts.system,
+      fontFamily: `system`,
+      fontSize: 1,
+      lineHeight: `dense`,
     }}
   >
     {children}
@@ -171,56 +161,47 @@ const ItemDescription = ({ children }) => (
 )
 
 const ItemDescriptionLink = ({ to, children }) => (
-  <Link
-    css={{
-      "&&": {
-        color: colors.purple[80],
-      },
-    }}
-    to={to}
-  >
+  <Link css={{ "&&": { color: `purple.80` } }} to={to}>
     {children}
   </Link>
 )
 
 const Gatsby = () => (
   <div
-    css={{
+    sx={{
       ...borderAndBoxShadow,
-      padding: space[5],
+      bg: `white`,
+      p: 5,
       margin: `0 auto`,
-      width: rhythm(5.5),
-      height: rhythm(5.5),
-      [mediaQueries.lg]: {
-        width: rhythm(6),
-        height: rhythm(6),
-      },
+      width: `8.5rem`,
+      height: `8.5rem`,
     }}
   >
     <img
       src={logo}
-      css={{
+      sx={{
         display: `inline-block`,
-        height: space[8],
+        height: t => t.space[8],
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
         [mediaQueries.lg]: {
-          height: space[9],
+          height: t => t.space[9],
         },
       }}
       alt="Gatsby"
     />
     <ItemDescription>
       <small
-        css={{
-          marginTop: space[1],
+        sx={{
           display: `block`,
+          mt: 2,
+          mb: 1,
         }}
       >
         powered by
       </small>
-      <span css={{ color: colors.gatsby }}>
+      <span sx={{ color: `gatsby` }}>
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
       </span>
     </ItemDescription>
@@ -244,26 +225,26 @@ const Diagram = () => (
     render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
       <section
         className="Diagram"
-        css={{
-          fontFamily: fonts.header,
-          padding: space[6],
-          textAlign: `center`,
+        sx={{
           flex: `1 1 100%`,
+          fontFamily: `header`,
+          p: 6,
+          textAlign: `center`,
         }}
       >
         <h1
-          css={{
-            fontWeight: fontWeights[1],
-            marginTop: 0,
-            marginBottom: space[6],
+          sx={{
+            fontWeight: `heading`,
+            mb: 6,
+            mt: 0,
             [mediaQueries.md]: {
-              marginTop: space[6],
+              mt: 6,
             },
           }}
         >
           How Gatsby works
         </h1>
-        <div css={{ maxWidth: rhythm(20), margin: `0 auto ${space[9]}` }}>
+        <div sx={{ maxWidth: `30rem`, mt: 0, mx: `auto`, mb: 9 }}>
           <FuturaParagraph>
             Pull data from <em>anywhere</em>
           </FuturaParagraph>
@@ -295,24 +276,32 @@ const Diagram = () => (
           <VerticalLine />
           <SegmentTitle>Build</SegmentTitle>
           <div
-            css={{
+            sx={{
               ...box,
-              ...stripeBg,
-              paddingTop: 0,
-              paddingBottom: 0,
+              backgroundColor: `purple.70`,
+              backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
+              backgroundImage: t =>
+                `linear-gradient(45deg, ${
+                  t.colors.purple[80]
+                } 25%, transparent 25%, transparent 50%, ${
+                  t.colors.purple[80]
+                } 50%, ${
+                  t.colors.purple[80]
+                } 75%, transparent 75%, transparent)`,
+              py: 0,
             }}
           >
             <VerticalLine />
             <Gatsby />
             <VerticalLine />
             <div
-              css={{
+              sx={{
                 ...borderAndBoxShadow,
                 ...boxPadding,
-                paddingTop: space[3],
-                paddingBottom: space[3],
-                width: `auto`,
+                bg: `white`,
                 display: `inline-block`,
+                py: 3,
+                width: `auto`,
               }}
             >
               <ItemDescription>
@@ -331,9 +320,9 @@ const Diagram = () => (
           <VerticalLine />
           <SegmentTitle>Deploy</SegmentTitle>
           <div
-            css={{
+            sx={{
               ...box,
-              paddingBottom: space[5],
+              pb: 5,
             }}
           >
             <ItemTitle>Static Web Host</ItemTitle>

@@ -1,101 +1,97 @@
-import React from "react"
-import { colors, space, radii, mediaQueries, fonts } from "../../utils/presets"
-import ShareMenu from "../../components/share-menu"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
 
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import ShareMenu from "../../components/share-menu"
+import Button from "../../components/button"
+
 const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
-    css={{
-      fontFamily: fonts.header,
+    sx={{
       display: `flex`,
-      flexWrap: `wrap`,
-      width: `100%`,
-      minWidth: `320px`,
       flexDirection: `column-reverse`,
-      padding: space[6],
-      paddingTop: 0,
+      flexWrap: `wrap`,
+      fontFamily: `header`,
+      minWidth: `320px`,
+      p: 6,
+      pt: 0,
+      width: `100%`,
       [mediaQueries.sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
-        paddingBottom: 0,
+        pb: 0,
       },
       [mediaQueries.lg]: {
-        padding: space[8],
-        paddingTop: 0,
-        paddingBottom: 0,
+        px: 8,
+        py: 0,
       },
     }}
   >
     <div
-      css={{
-        marginTop: space[6],
-        paddingRight: 15,
+      sx={{
         display: `flex`,
+        flexShrink: 0,
         flexWrap: `wrap`,
         justifyContent: `space-between`,
-        flexShrink: 0,
+        mt: 6,
         [mediaQueries.sm]: {
+          pr: 4,
           justifyContent: `flex-start`,
         },
       }}
     >
       <div>
         <span
-          css={{
+          sx={{
             alignItems: `center`,
-            color: colors.accent,
+            color: `textMuted`,
             display: `inline-flex`,
-            paddingRight: space[5],
+            [mediaQueries.sm]: { pr: 5 },
           }}
         >
           <MdStar />
           {` `}
-          <span css={{ color: colors.text.primary, paddingLeft: space[1] }}>
-            {starter.stars}
-          </span>
+          <span sx={{ color: `text`, pl: 1 }}>{starter.stars}</span>
         </span>
       </div>
 
-      <div>
-        <span css={{ paddingRight: 8 }}>Updated</span>
-        {showDate(starter.lastUpdated)}
-      </div>
+      <div>Updated {showDate(starter.lastUpdated)}</div>
     </div>
 
     <div
-      css={{
-        marginTop: space[6],
-        marginRight: 15,
+      sx={{
+        borderBottom: t => `1px solid ${t.colors.ui.border}`,
         display: `flex`,
-        flexWrap: `nowrap`,
         flexGrow: 1,
-        borderBottom: `1px solid ${colors.ui.border.subtle}`,
-        paddingBottom: space[3],
+        flexWrap: `nowrap`,
+        mt: 6,
+        pb: 3,
         [mediaQueries.sm]: {
           borderBottom: 0,
         },
       }}
     >
       <div
-        css={{
-          paddingRight: 15,
-          paddingBottom: 15,
+        sx={{
+          pr: 4,
+          pb: 4,
           whiteSpace: `nowrap`,
           overflow: `hidden`,
           textOverflow: `ellipsis`,
         }}
       >
-        <span css={{ color: colors.text.secondary }}>{`By `}</span>
+        By{` `}
         <a
-          css={{
+          sx={{
             "&&": {
               borderBottom: 0,
-              color: colors.lilac,
+              color: `lilac`,
               cursor: `pointer`,
-              fontFamily: fonts.header,
+              fontFamily: `header`,
               "&:hover": {
-                color: colors.gatsby,
+                color: `gatsby`,
               },
             },
           }}
@@ -113,44 +109,27 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         }}
       >
         <div
-          css={{
+          sx={{
             position: `absolute`,
-            right: space[6],
+            right: 0,
             top: 0,
             left: `auto`,
             zIndex: 1,
             display: `flex`,
           }}
         >
-          <a
-            href={demo}
-            css={{
-              border: 0,
-              borderRadius: radii[1],
-              fontFamily: fonts.header,
-              fontWeight: `bold`,
-              marginRight: space[2],
-              padding: `${space[1]} ${space[4]}`,
-              WebkitFontSmoothing: `antialiased`,
-              "&&": {
-                backgroundColor: colors.accent,
-                borderBottom: `none`,
-                color: colors.gatsby,
-              },
-            }}
+          <Button
+            tag="href"
+            to={demo}
+            overrideCSS={{ mr: 2 }}
+            icon={<MdLink />}
           >
-            <MdLink
-              style={{
-                verticalAlign: `sub`,
-              }}
-            />
-            {` Visit demo `}
-          </a>
+            Visit demo
+          </Button>
           <ShareMenu
             url={`https://github.com/${starter.githubFullName}`}
             title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
             image={imageSharp.childImageSharp.resize.src}
-            theme={`accent`}
           />
         </div>
       </div>

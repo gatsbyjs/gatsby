@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
@@ -5,16 +7,7 @@ import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "../components/layout"
-import {
-  colors,
-  space,
-  transition,
-  mediaQueries,
-  lineHeights,
-  fontSizes,
-  fonts,
-} from "../utils/presets"
-import { rhythm } from "../utils/typography"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
 import TagsSection from "../components/tags-section"
@@ -31,11 +24,11 @@ class BlogPostTemplate extends React.Component {
     } = this.props
     const BioLine = ({ children }) => (
       <p
-        css={{
-          lineHeight: lineHeights.dense,
-          fontFamily: fonts.header,
-          margin: 0,
-          color: colors.text.secondary,
+        sx={{
+          color: `textMuted`,
+          fontFamily: `header`,
+          lineHeight: `dense`,
+          m: 0,
         }}
       >
         {children}
@@ -51,7 +44,7 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location}>
         <Container>
           {
-            // todo
+            // TODO
             // - settle on `docSearch-content` as selector to identify
             //   Algolia DocSearch content
             // - make use of components/docsearch-content in place of <main>
@@ -114,87 +107,112 @@ class BlogPostTemplate extends React.Component {
               />
               {canonicalLink}
             </Helmet>
-            <section
-              css={{
-                display: `flex`,
-                marginBottom: space[5],
-                [mediaQueries.md]: {
-                  marginTop: space[3],
-                  marginBottom: space[9],
-                },
-              }}
-            >
-              <div css={{ flex: `0 0 auto` }}>
-                <Link
-                  to={post.frontmatter.author.fields.slug}
-                  css={{ "&&": { borderBottom: 0 } }}
-                >
-                  <Avatar
-                    image={post.frontmatter.author.avatar.childImageSharp.fixed}
-                  />
-                </Link>
-              </div>
-              <div css={{ flex: `1 1 auto` }}>
-                <Link to={post.frontmatter.author.fields.slug}>
-                  <h4
-                    css={{
-                      fontSize: fontSizes[3],
-                      marginBottom: space[1],
-                      color: colors.link.color,
-                    }}
+            <div sx={{ display: `flex`, flexDirection: `column` }}>
+              <section
+                sx={{
+                  display: `flex`,
+                  mb: 5,
+                  [mediaQueries.md]: {
+                    mt: 3,
+                    mb: 9,
+                  },
+                  [mediaQueries.lg]: {
+                    ml: `-8em`,
+                  },
+                }}
+              >
+                <div css={{ flex: `0 0 auto` }}>
+                  <Link
+                    to={post.frontmatter.author.fields.slug}
+                    css={{ "&&": { borderBottom: 0 } }}
                   >
-                    <span
-                      css={{
-                        borderBottom: `1px solid ${colors.link.border}`,
-                        transition: `all ${transition.speed.fast} ${transition.curve.default}`,
-                        "&:hover": { borderColor: colors.link.hoverBorder },
+                    <Avatar
+                      image={
+                        post.frontmatter.author.avatar.childImageSharp.fixed
+                      }
+                      overrideCSS={{ mr: 5 }}
+                    />
+                  </Link>
+                </div>
+                <div css={{ flex: `1 1 auto` }}>
+                  <Link to={post.frontmatter.author.fields.slug}>
+                    <h4
+                      sx={{
+                        fontSize: 3,
+                        mb: 1,
+                        color: `link.color`,
                       }}
                     >
-                      {post.frontmatter.author.id}
-                    </span>
-                  </h4>
-                </Link>
-                <BioLine>{post.frontmatter.author.bio}</BioLine>
-                <BioLine>
-                  {post.timeToRead} min read · {post.frontmatter.date}
-                  {post.frontmatter.canonicalLink && (
-                    <span>
-                      {` `}
-                      (originally published at
-                      {` `}
-                      <a href={post.frontmatter.canonicalLink}>
-                        {post.fields.publishedAt}
-                      </a>
-                      )
-                    </span>
-                  )}
-                </BioLine>
-              </div>
-            </section>
-            <h1
-              css={{
-                marginTop: 0,
-                [mediaQueries.lg]: { marginBottom: rhythm(5 / 4) },
-              }}
-            >
-              {post.frontmatter.title}
-            </h1>
-            {post.frontmatter.image &&
-              post.frontmatter.showImageInArticle !== false && (
-                <div css={{ marginBottom: space[5] }}>
-                  <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
-                  {post.frontmatter.imageAuthor &&
-                    post.frontmatter.imageAuthorLink && (
-                      <em>
-                        Image by
+                      <span
+                        sx={{
+                          borderBottom: t =>
+                            `1px solid ${t.colors.link.border}`,
+                          transition: t =>
+                            `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
+                          "&:hover": { borderColor: `link.hoverBorder` },
+                        }}
+                      >
+                        {post.frontmatter.author.id}
+                      </span>
+                    </h4>
+                  </Link>
+                  <BioLine>{post.frontmatter.author.bio}</BioLine>
+                  <BioLine>
+                    {post.timeToRead} min read · {post.frontmatter.date}
+                    {post.frontmatter.canonicalLink && (
+                      <span>
                         {` `}
-                        <a href={post.frontmatter.imageAuthorLink}>
-                          {post.frontmatter.imageAuthor}
+                        (originally published at
+                        {` `}
+                        <a href={post.frontmatter.canonicalLink}>
+                          {post.fields.publishedAt}
                         </a>
-                      </em>
+                        )
+                      </span>
                     )}
+                  </BioLine>
                 </div>
-              )}
+              </section>
+              <h1
+                sx={{
+                  marginTop: 0,
+                  order: 0,
+                  letterSpacing: `tight`,
+                  lineHeight: `dense`,
+                  fontSize: [5, 6, 7, 8, 9, 11],
+                  [mediaQueries.lg]: {
+                    ml: `-8rem`,
+                    mb: 8,
+                  },
+                }}
+              >
+                {post.frontmatter.title}
+              </h1>
+              {post.frontmatter.image &&
+                post.frontmatter.showImageInArticle !== false && (
+                  <div
+                    sx={{
+                      mt: 8,
+                      mb: 12,
+                      [mediaQueries.lg]: {
+                        ml: `-8em`,
+                      },
+                    }}
+                  >
+                    <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
+                    {post.frontmatter.imageAuthor &&
+                      post.frontmatter.imageAuthorLink && (
+                        <em>
+                          Image by
+                          {` `}
+                          <a href={post.frontmatter.imageAuthorLink}>
+                            {post.frontmatter.imageAuthor}
+                          </a>
+                        </em>
+                      )}
+                  </div>
+                )}
+            </div>
             <section className="post-body">
               <MDXRenderer>{post.body}</MDXRenderer>
             </section>
@@ -203,15 +221,11 @@ class BlogPostTemplate extends React.Component {
           </main>
         </Container>
         <div
-          css={{
-            borderTop: `1px solid ${colors.ui.border.subtle}`,
-            marginTop: space[9],
-            [mediaQueries.md]: {
-              paddingTop: space[5],
-            },
-            [mediaQueries.lg]: {
-              paddingTop: space[7],
-            },
+          sx={{
+            borderTop: t => `1px solid ${t.colors.ui.border}`,
+            mt: 9,
+            [mediaQueries.md]: { pt: 5 },
+            [mediaQueries.lg]: { pt: 7 },
           }}
         >
           <Container>
