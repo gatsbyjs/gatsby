@@ -228,6 +228,15 @@ type InitOptions = {
   rootPath?: string,
 }
 
+const endInstruction = Path => {
+  report.info(`
+Successfully Added Gatsby site !!
+start developing your site now by running the following instructions
+  $ cd ${Path}
+  $ ${getPackageManager()} run develop
+`)
+}
+
 /**
  * Main function that clones or copies the starter.
  */
@@ -286,5 +295,6 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starterPath, rootPath)
+  await endInstruction(rootPath)
   trackCli(`NEW_PROJECT_END`)
 }
