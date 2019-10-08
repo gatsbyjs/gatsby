@@ -41,7 +41,7 @@ class EcosystemBoard extends Component {
           [mediaQueries.md]: {
             flexDirection: `row`,
             flexWrap: `wrap`,
-            height: t =>
+            minHeight: t =>
               `calc(100vh - (${t.sizes.bannerHeight} + ${t.sizes.headerHeight} + 1px))`,
             pt: 7,
             px: 4,
