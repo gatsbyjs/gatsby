@@ -162,7 +162,6 @@ exports.onCreateDevServer = (
   {
     app,
     createNodeId,
-    deleteNode,
     getNode,
     actions,
     store,
@@ -186,7 +185,7 @@ exports.onCreateDevServer = (
         )
       }
       if (action === `delete`) {
-        return deleteNode(getNode(id))
+        return actions.deleteNode(getNode(id))
       }
       return await handleWebhookUpdate(
         {
