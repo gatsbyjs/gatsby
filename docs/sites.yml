@@ -7592,6 +7592,17 @@
     - Freelance
   built_by: Guus van de Wal
   featured: false
+- title: VS Code GitHub Stats
+  url: https://vscode-github-stats.netlify.com
+  main_url: https://vscode-github-stats.netlify.com
+  source_url: https://github.com/lannonbr/vscode-github-stats/
+  description: >
+    Statistics Dashboard for VS Code GitHub repository
+  categories:
+    - Data
+  built_by: Benjamin Lannon
+  built_by_url: https://lannonbr.com
+  featured: false
 - title: MetaProjection
   main_url: https://www.metaprojection.ca
   url: https://www.metaprojection.ca
