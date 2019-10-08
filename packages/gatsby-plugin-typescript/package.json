@@ -11,12 +11,12 @@
   ],
   "dependencies": {
     "@babel/preset-typescript": "^7.6.0",
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7.6.3",
     "babel-plugin-remove-graphql-queries": "^2.7.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/core": "^7.6.2",
+    "@babel/cli": "^7.6.3",
+    "@babel/core": "^7.6.3",
     "babel-preset-gatsby-package": "^0.2.7",
     "cross-env": "^5.2.1"
   },
