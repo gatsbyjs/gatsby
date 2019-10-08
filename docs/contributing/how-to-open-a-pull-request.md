@@ -52,6 +52,10 @@ To test changes locally against the Gatsby [site and project files](https://gith
   git add .
   ```
   - Using a visual tool like [GitHub Desktop](https://desktop.github.com/) or [GitX](https://rowanj.github.io/gitx/) can help for choosing which files and lines to commit.
+- To make it easier for the new contributors we don't lint the commit names, but our preffered convention is [conventional commits](https://www.conventionalcommits.org)
+  ```shell
+  git commit -m '<type>(optional scope): <description>'
+  ```
 - Committing code will run the automated linter using [Prettier](https://prettier.io). To run the linter manually, run an npm script in the project's base directory:
   ```shell
   npm run format
