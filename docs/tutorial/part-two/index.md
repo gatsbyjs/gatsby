@@ -124,7 +124,7 @@ gatsby develop
 
 If you take a look at your project in the browser, you should see a lavender background applied to the "hello world" starter:
 
-![global-css](global-css.png)
+![Lavender Hello World!](global-css.png)
 
 > Tip: This part of the tutorial has focused on the quickest and most straightforward way to get started styling a Gatsby site — importing standard CSS files directly, using `gatsby-browser.js`. In most cases, the best way to add global styles is with a shared layout component. [Check out the docs](/docs/creating-global-styles/#how-to-add-global-styles-in-gatsby-with-standard-css-files) for more on that approach.
 
