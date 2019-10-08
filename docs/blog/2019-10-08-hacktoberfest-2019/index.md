@@ -57,7 +57,7 @@ Make OSS contributions to Gatsby plugins, transformers and core by searching [OS
 
 Learn how to contribute to the Gatsby Ecosystem (starter library, site showcase, themes and plugin library, etc.) by reading the doc on [Community Contributions](https://www.gatsbyjs.org/contributing/community-contributions/). You can gain credit for both Hacktoberfest and Gatsby swag by submitting a PR with your Gatsby project to the starter library or site showcase in this repo. You can also check out issues labeled with [ecosystem](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3AHacktoberfest+label%3A%F0%9F%8E%AFEcosystem+) to get Hacktoberfest credit!
 
-Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](https://www.gatsbyjs.org/docs/themes/building-themes/) [published with the necessary files](https://www.gatsbyjs.org/contributing/submit-to-plugin-library/) can also count toward Hacktoberfest credit and earn Gatsby swag. This post will list all plugins created during Hacktoberfest: create your own and add it here in a Pull Request to get credit!
+Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](https://www.gatsbyjs.org/docs/themes/building-themes/) (a type of plugin) [published with the necessary files](https://www.gatsbyjs.org/contributing/submit-to-plugin-library/) can also count toward Hacktoberfest credit and earn Gatsby swag. This post will list all plugins created during Hacktoberfest: create your own and add it here in a Pull Request to get credit!
 
 ## Gatsby's Hacktoberfest Goals
 
