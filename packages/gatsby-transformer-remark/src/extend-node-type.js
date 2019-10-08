@@ -588,7 +588,7 @@ module.exports = (
             timeToRead = Math.round(wordCount / avgWPM)
             const avgCJKPM = 400
             const CJKCount = pureText.match(
-              /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}\p{sc=Hangul}]/gu
+              /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu
             )
             timeToRead += CJKCount ? CJKCount.length / avgCJKPM : 0
             if (timeToRead === 0) {
