@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.54...gatsby-cli@2.7.55) (2019-10-08)
+
+### Bug Fixes
+
+- **gatsby:** catch more browser only variable for SSR error ([#18112](https://github.com/gatsbyjs/gatsby/issues/18112)) ([e9ef934](https://github.com/gatsbyjs/gatsby/commit/e9ef934))
+
 ## [2.7.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.53...gatsby-cli@2.7.54) (2019-10-04)
 
 ### Bug Fixes
