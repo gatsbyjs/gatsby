@@ -89,7 +89,7 @@ const Navigation = ({ pathname }) => {
         // "&:before": {
         //   content: `''`,
         //   position: `absolute`,
-        //   bottom: `1.25rem`,
+        //   bottom: `1.5rem`,
         //   left: 0,
         //   right: 0,
         //   width: `100%`,
