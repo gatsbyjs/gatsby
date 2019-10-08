@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.30...gatsby@2.15.31) (2019-10-08)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.15 ([#18295](https://github.com/gatsbyjs/gatsby/issues/18295)) ([7c3e8b3](https://github.com/gatsbyjs/gatsby/commit/7c3e8b3))
+
 ## [2.15.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.29...gatsby@2.15.30) (2019-10-08)
 
 ### Bug Fixes

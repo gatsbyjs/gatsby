@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.55...gatsby-cli@2.7.56) (2019-10-08)
+
+### Bug Fixes
+
+- update dependency hosted-git-info to ^3.0.2 ([#18292](https://github.com/gatsbyjs/gatsby/issues/18292)) ([133c2c5](https://github.com/gatsbyjs/gatsby/commit/133c2c5))
+
 ## [2.7.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.54...gatsby-cli@2.7.55) (2019-10-08)
 
 ### Bug Fixes
