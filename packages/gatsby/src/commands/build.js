@@ -1,6 +1,4 @@
 /* @flow */
-
-const _ = require(`lodash`)
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
@@ -18,7 +16,7 @@ const telemetry = require(`gatsby-telemetry`)
 const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
-const WorkerPool = require(`../utils/worker/pool`);
+const WorkerPool = require(`../utils/worker/pool`)
 const handleWebpackError = require(`../utils/webpack-error-parser`)
 
 type BuildArgs = {
@@ -93,81 +91,99 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   const workerPool = WorkerPool.create()
-  let isNewBuild = false; // by default we don't want to do a rebuild of all html
+  let isNewBuild = false // by default we don't want to do a rebuild of all html
 
   /*
    * A new webpack hash is returned from JS build if there are code changes
    * if the code is changed we want to delete the old html and build new ones
    */
 
-  if(fs.existsSync(`${program.directory}/temp/redux-state-old.json`)) {
-    const previousWebpackCompilationHash = require(`${program.directory}/temp/redux-state-old.json`);
+  if (fs.existsSync(`${program.directory}/temp/redux-state-old.json`)) {
+    const previousWebpackCompilationHash = require(`${program.directory}/temp/redux-state-old.json`)
 
-    if (stats.hash !== previousWebpackCompilationHash.webpackCompilationHashOld) {
-      isNewBuild = true;
-      activity = report.activityTimer(`delete html and css files from previous builds`, {});
-      activity.start();
-      await del([`public/**/*.{html}`, `!public/static`, `!public/static/**/*.{html,css}`]);
-      activity.end();
+    if (
+      stats.hash !== previousWebpackCompilationHash.webpackCompilationHashOld
+    ) {
+      isNewBuild = true
+      activity = report.activityTimer(
+        `delete html and css files from previous builds`,
+        {}
+      )
+      activity.start()
+      await del([
+        `public/**/*.{html}`,
+        `!public/static`,
+        `!public/static/**/*.{html,css}`,
+      ])
+      activity.end()
     }
-    
   }
 
   /*
-   * We let the page queries run creating the page data 
+   * We let the page queries run creating the page data
    */
 
   activity = report.activityTimer(`run page queries`, {
-    parentSpan: buildSpan
-  });
-  activity.start();
+    parentSpan: buildSpan,
+  })
+  activity.start()
   await queryUtil.processPageQueries(pageQueryIds, program, isNewBuild, {
-    activity
-  });
-  activity.end();
+    activity,
+  })
+  activity.end()
 
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`);
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
 
   /*
    * (This maybe reduanant code below as we are not updating the webpackHash)
-   * We check if the page-data fold exists if so we then change the webpack hash to blank 
-   * This removes the check that reloads the page if the html's window and the page-data hashs do not match.  
+   * We check if the page-data fold exists if so we then change the webpack hash to blank
+   * This removes the check that reloads the page if the html's window and the page-data hashs do not match.
    */
 
-  if(fs.existsSync(`${program.directory}/public/page-data`)) {
+  if (fs.existsSync(`${program.directory}/public/page-data`)) {
     activity = report.activityTimer(`Rewriting compilation hashes`, {
-      parentSpan: buildSpan
-    });
-    activity.start(); 
-    await pageDataUtil.updateCompilationHashes({
-      publicDir,
-      workerPool
-    }, [...store.getState().pages.keys()], "");
-    activity.end();
-  };
+      parentSpan: buildSpan,
+    })
+    activity.start()
+    await pageDataUtil.updateCompilationHashes(
+      {
+        publicDir,
+        workerPool,
+      },
+      [...store.getState().pages.keys()],
+      ``
+    )
+    activity.end()
+  }
 
   /*
    * We then save the JS compiled hash to compare in the next build
    */
   store.dispatch({
     type: `SET_WEBPACK_COMPILATION_HASH`,
-    payload: stats.hash
-  });
-  await waitJobsFinished();
-  await db.saveState();
+    payload: stats.hash,
+  })
+  await waitJobsFinished()
+  await db.saveState()
 
   /*
    * Lets start building some new HTML pages
    */
   activity = report.activityTimer(`Building static HTML for pages`, {
-    parentSpan: buildSpan
-  });
-  activity.start();
+    parentSpan: buildSpan,
+  })
+  activity.start()
 
   /*
    * Next we compare the old page data to the new data in state and returns the different page keys
    */
-  const newPageKeys = await pageDataUtil.getNewPageKeys(program.directory, store, isNewBuild);
+  const newPageKeys = await pageDataUtil.getNewPageKeys(
+    program.directory,
+    store,
+    isNewBuild
+  )
 
   try {
     await buildHTML.buildPages({
@@ -175,22 +191,22 @@ module.exports = async function build(program: BuildArgs) {
       stage: `build-html`,
       pagePaths: newPageKeys,
       activity,
-      workerPool
-    });
+      workerPool,
+    })
   } catch (err) {
-    let id = `95313`; // TODO: verify error IDs exist
+    let id = `95313` // TODO: verify error IDs exist
 
     if (err.message === `ReferenceError: window is not defined`) {
-      id = `95312`;
+      id = `95312`
     }
 
     report.panic({
       id,
       error: err,
       context: {
-        errorPath: err.context && err.context.path
-      }
-    });
+        errorPath: err.context && err.context.path,
+      },
+    })
   }
   activity.end()
 

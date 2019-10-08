@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
-const _ = require(`lodash`);
+const _ = require(`lodash`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -42,51 +42,58 @@ const updateCompilationHashes = (
 
 // Compare page data sets.
 // TODO: logic to remove old pages.
-const getNewPageKeys = (directory, store, isNewBuild) => { 
-    return new Promise(resolve => {
-      if(isNewBuild || !(fs.existsSync(`${directory}/temp/redux-state-old.json`))) {
-        console.log("return default pages")
-        resolve([...store.getState().pages.keys()]);
-        return;
-      }
-      
-      const newPageKeys = [];
-      const newPageData = Object.assign({}, store.getState());
-      const previousPageData = require(`${directory}/temp/redux-state-old.json`);
-  
-      Object.keys(newPageData).forEach(key => {
-        if (newPageData[key] instanceof Map) {
-          const obj = {};
-          newPageData[key].forEach ((v,k) => { obj[k] = v });
-          newPageData[key] = obj;
-        }
-      });
-    
-      console.log("Start looping over Redux state")
-      _.forEach(newPageData.pages, (value, key) => {
-        if(!(key in previousPageData.pages)) {
-          newPageKeys.push(key);
-        } else {
-          const newPageContext = value.context.page;
-          const previousPageContext = previousPageData.pages[key].context.page;
-          
-          if ( !_.isEqual(newPageContext, previousPageContext) ) {
-            newPageKeys.push(key);
-          }
-        }
-      });
-  
-      if (_.size(newPageKeys)) {
-        fs.writeFileSync(`${directory}/temp/newPageKeys.json`, JSON.stringify({ newPageKeys }), "utf-8");
-        console.log("file of newPageKeys created");
-      }
-  
-      console.log("Finished");
-      console.log(newPageKeys)
-      resolve(newPageKeys);
-    });
-  }
+const getNewPageKeys = (directory, store, isNewBuild) =>
+  new Promise(resolve => {
+    if (
+      isNewBuild ||
+      !fs.existsSync(`${directory}/temp/redux-state-old.json`)
+    ) {
+      console.log(`return default pages`)
+      resolve([...store.getState().pages.keys()])
+      return
+    }
 
+    const newPageKeys = []
+    const newPageData = Object.assign({}, store.getState())
+    const previousPageData = require(`${directory}/temp/redux-state-old.json`)
+
+    Object.keys(newPageData).forEach(key => {
+      if (newPageData[key] instanceof Map) {
+        const obj = {}
+        newPageData[key].forEach((v, k) => {
+          obj[k] = v
+        })
+        newPageData[key] = obj
+      }
+    })
+
+    console.log(`Start looping over Redux state`)
+    _.forEach(newPageData.pages, (value, key) => {
+      if (!(key in previousPageData.pages)) {
+        newPageKeys.push(key)
+      } else {
+        const newPageContext = value.context.page
+        const previousPageContext = previousPageData.pages[key].context.page
+
+        if (!_.isEqual(newPageContext, previousPageContext)) {
+          newPageKeys.push(key)
+        }
+      }
+    })
+
+    if (_.size(newPageKeys)) {
+      fs.writeFileSync(
+        `${directory}/temp/newPageKeys.json`,
+        JSON.stringify({ newPageKeys }),
+        `utf-8`
+      )
+      console.log(`file of newPageKeys created`)
+    }
+
+    console.log(`Finished`)
+    console.log(newPageKeys)
+    resolve(newPageKeys)
+  })
 
 module.exports = {
   read,

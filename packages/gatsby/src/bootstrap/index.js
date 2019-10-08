@@ -133,7 +133,7 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // Removed to keep old files. 
+  // Removed to keep old files.
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
   // if (process.env.NODE_ENV === `production`) {
@@ -195,31 +195,35 @@ module.exports = async (args: BootstrapArgs) => {
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
-  
+
   /*
    * Copy cache state for comparing data
    */
-  if(fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
-    console.log("Copied redux-state for comparing later");
-    await fs.copy(`${cacheDirectory}/redux-state.json`, `${program.directory}/temp/redux-state-old.json`, {
-      clobber: true
-    });
+  if (fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
+    console.log(`Copied redux-state for comparing later`)
+    await fs.copy(
+      `${cacheDirectory}/redux-state.json`,
+      `${program.directory}/temp/redux-state-old.json`,
+      {
+        clobber: true,
+      }
+    )
   }
 
   // Removed to force a new .cache on each build
   //if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
-    try {
-      // Attempt to empty dir if remove fails,
-      // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
-    } catch (e) {
-      report.error(`Failed to remove .cache files.`, e)
-    }
-    // Tell reducers to delete their data (the store will already have
-    // been loaded from the file system cache).
-    store.dispatch({
-      type: `DELETE_CACHE`,
-    })
+  try {
+    // Attempt to empty dir if remove fails,
+    // like when directory is mount point
+    await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+  } catch (e) {
+    report.error(`Failed to remove .cache files.`, e)
+  }
+  // Tell reducers to delete their data (the store will already have
+  // been loaded from the file system cache).
+  store.dispatch({
+    type: `DELETE_CACHE`,
+  })
   //}
 
   // Update the store with the new plugins hash.
