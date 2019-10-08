@@ -114,7 +114,7 @@
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^4.2.3",
     "react-error-overlay": "^3.0.0",
-    "react-hot-loader": "^4.12.14",
+    "react-hot-loader": "^4.12.15",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "semver": "^5.7.1",
