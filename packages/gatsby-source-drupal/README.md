@@ -156,6 +156,7 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
         concurrentFileRequests: 60, // optional, defaults to `20`
+        secret: `xxxx-xxxx-xxxxx`, // optional, must match Drupal instance preview secret
       },
     },
   ],
