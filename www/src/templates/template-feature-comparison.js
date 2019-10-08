@@ -1,4 +1,6 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import { Helmet } from "react-helmet"
 import { css } from "@emotion/core"
 import Layout from "../components/layout"
@@ -12,7 +14,6 @@ import Breadcrumb from "../components/docs-breadcrumb"
 
 import { itemListFeatures } from "../utils/sidebar/item-list"
 import { getFeaturesData } from "../utils/get-csv-features-data"
-import { space } from "../utils/presets"
 
 import { graphql } from "gatsby"
 
@@ -41,7 +42,7 @@ class FeatureComparison extends Component {
             <Breadcrumb location={location} itemList={itemListFeatures} />
             <h1>{titleString}</h1>
             {options.map(o => (
-              <section key={o.key} css={{ marginBottom: space[6] }}>
+              <section key={o.key} sx={{ mb: 6 }}>
                 <h2
                   css={css`
                     display: flex;

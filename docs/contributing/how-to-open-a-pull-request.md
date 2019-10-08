@@ -97,7 +97,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
 
 - Set Gatsby's repo URL as a remote source. The name of the remote is arbitrary; this example uses `upstream`.
   ```shell
-  git remote set-url upstream git@github.com:gatsbyjs/gatsby.git
+  git remote add upstream git@github.com:gatsbyjs/gatsby.git
   ```
   - _Note: this syntax [uses SSH and keys: you can also use `https`](https://help.github.com/en/articles/which-remote-url-should-i-use) and your username/password._
 - You can verify the remote name and URL at any time:
@@ -120,7 +120,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
 
 For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
 
-_**Note:** as a member of the Gatsby repo, you can also clone it directly instead of forking and push your changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)._
+_**Note:** as a member of the Gatsby repo, you can also clone it directly (instead of forking and using an upstream remote workflow). You can then push changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows) to open PRs._
 
 ## Additional resources
 
@@ -132,3 +132,4 @@ _**Note:** as a member of the Gatsby repo, you can also clone it directly instea
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
 - [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
+- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)

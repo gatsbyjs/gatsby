@@ -1,16 +1,15 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import MdLoop from "react-icons/lib/md/loop"
 
 import {
   fontSizes,
-  space,
-  colors,
   radii,
-  shadows,
   transition,
   mediaQueries,
-} from "../../utils/presets"
+} from "gatsby-design-tokens"
 
 // Components for building sections used in the model
 const LayerContentWrapper = ({ index, children }) => (
@@ -18,8 +17,9 @@ const LayerContentWrapper = ({ index, children }) => (
     id={`tabpanel${index}`}
     aria-labelledby={`tab${index}`}
     role="tabpanel"
-    css={{
-      padding: `${space[4]} 0`,
+    sx={{
+      py: 4,
+      px: 0,
       display: `grid`,
       gridTemplateRows: `repeat(2, 1fr)`,
       gridTemplateAreas: `"example" "content"`,
@@ -28,7 +28,7 @@ const LayerContentWrapper = ({ index, children }) => (
         gridTemplateRows: `1fr`,
         gridTemplateAreas: `"example content"`,
         gridTemplateColumns: `repeat(2, 1fr)`,
-        gridGap: space[6],
+        gridGap: 6,
       },
     }}
   >
@@ -38,8 +38,8 @@ const LayerContentWrapper = ({ index, children }) => (
 
 const ExampleWrapper = ({ children }) => (
   <div
-    css={{
-      borderRadius: radii[3],
+    sx={{
+      borderRadius: 3,
       overflow: `auto`,
     }}
   >
@@ -61,7 +61,7 @@ const CodeWrapper = ({
   <React.Fragment>
     {title && (
       <div
-        css={{
+        sx={{
           position: `relative`,
           display: `flex`,
           alignItems: `center`,
@@ -74,29 +74,29 @@ const CodeWrapper = ({
         <div css={{ fontSize: fontSizes[0] }}>{title}</div>
         {rotateButton && (
           <button
-            css={{
+            sx={{
               position: `absolute`,
-              right: space[3],
+              right: t => t.space[3],
               backgroundColor: `transparent`,
               border: `none`,
-              color: colors.grey[60],
+              color: `grey.60`,
               cursor: `pointer`,
-              padding: `${space[2]} ${space[2]}`,
+              p: 2,
               transition: transitionProperty,
-              borderRadius: radii[2],
+              borderRadius: 2,
               whiteSpace: `nowrap`,
               ":focus, :hover, :active": {
-                boxShadow: shadows.floating,
-                color: colors.white,
+                boxShadow: `floating`,
+                color: `white`,
               },
               ":hover": {
-                backgroundColor: colors.purple[40],
+                backgroundColor: `purple.40`,
               },
               ":focus": {
-                backgroundColor: colors.purple[50],
+                backgroundColor: `purple.50`,
               },
               ":active": {
-                backgroundColor: colors.purple[60],
+                backgroundColor: `purple.60`,
               },
               ":focus::before": {
                 content: `"cycle source "`,
@@ -303,23 +303,23 @@ const AppLayerContent = ({ index }) => (
         }}
       >
         <div
-          css={{
-            padding: space[2],
-            backgroundColor: colors.grey[10],
+          sx={{
+            padding: 2,
+            backgroundColor: `grey.10`,
             borderTopRightRadius: radii[2],
             borderTopLeftRadius: radii[2],
-            border: `1px solid ${colors.ui.border.subtle}`,
+            border: t => `1px solid ${t.colors.ui.border.subtle}`,
           }}
         >
           Home
         </div>
         <div
-          css={{
-            padding: space[2],
+          sx={{
+            p: 2,
             borderBottomRightRadius: radii[2],
             borderBottomLeftRadius: radii[2],
-            backgroundColor: colors.white,
-            border: `1px solid ${colors.ui.border.subtle}`,
+            backgroundColor: `white`,
+            border: t => `1px solid ${t.colors.ui.border.subtle}`,
             height: `100%`,
           }}
         >

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
@@ -8,7 +10,6 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
 import Container from "../components/container"
 import Layout from "../components/layout"
-import { space } from "../utils/presets"
 import { TAGS_AND_DOCS } from "../data/tags-docs"
 
 // Select first tag with whitespace instead of hyphens for
@@ -44,25 +45,31 @@ const Tags = ({ pageContext, data, location }) => {
       </Helmet>
       <Container>
         <h1>{tagHeader}</h1>
-        <Button small key="blog-post-view-all-tags-button" to="/blog/tags">
+        <Button
+          variant="small"
+          key="blog-post-view-all-tags-button"
+          to="/blog/tags"
+        >
           View all tags <TagsIcon />
         </Button>
         {doc ? (
-          <>
+          <React.Fragment>
             <span css={{ margin: 5 }} />
-            <Button small secondary key={`view-tag-docs-button`} to={doc}>
+            <Button
+              variant="small"
+              secondary
+              key={`view-tag-docs-button`}
+              to={doc}
+            >
               Read the documentation <TiArrowRight />
             </Button>
-          </>
+          </React.Fragment>
         ) : null}
         {edges.map(({ node }) => (
           <BlogPostPreviewItem
             post={node}
             key={node.fields.slug}
-            css={{
-              marginTop: space[9],
-              marginBottom: space[9],
-            }}
+            sx={{ my: 9 }}
           />
         ))}
       </Container>
