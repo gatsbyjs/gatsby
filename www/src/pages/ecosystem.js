@@ -6,7 +6,11 @@ import EcosystemBoard from "../components/ecosystem/ecosystem-board"
 import FooterLinks from "../components/shared/footer-links"
 
 import { EcosystemIcon } from "../assets/icons"
-import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"
+import {
+  PluginsIcon,
+  StartersIcon,
+  ThemesIcon,
+} from "../assets/icons/ecosystem-icons"
 
 class EcosystemPage extends Component {
   render() {
@@ -41,10 +45,16 @@ class EcosystemPage extends Component {
       }
     })
 
+    const themes = []
+
     const plugins = pluginsData.map(item => item.node)
 
     const pageTitle = `Ecosystem`
-    const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
+    const boardIcons = {
+      plugins: PluginsIcon,
+      starters: StartersIcon,
+      themes: ThemesIcon,
+    }
 
     return (
       <Layout
@@ -56,6 +66,7 @@ class EcosystemPage extends Component {
           icons={boardIcons}
           starters={starters}
           plugins={plugins}
+          themes={themes}
         />
         <FooterLinks />
       </Layout>

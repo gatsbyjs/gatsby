@@ -22,6 +22,7 @@ const EcosystemSectionRoot = styled(`section`)`
   background: ${colors.white};
   padding: 0 ${space[6]};
   margin-bottom: ${space[3]};
+  max-width: calc(33% - 1rem);
 
   ${mediaQueries.md} {
     box-shadow: ${shadows.raised};

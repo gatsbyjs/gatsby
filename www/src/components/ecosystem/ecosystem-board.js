@@ -13,11 +13,15 @@ import {
 const EcosystemBoardRoot = styled(`div`)`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
 
   ${mediaQueries.md} {
     flex-direction: row;
     flex-wrap: wrap;
-    height: calc(100vh - (${sizes.bannerHeight} + ${sizes.headerHeight} + 1px));
+    min-height: calc(
+      100vh - (${sizes.bannerHeight} + ${sizes.headerHeight} + 1px)
+    );
     padding: ${space[7]} ${space[4]} ${space[4]};
   }
 `
@@ -33,9 +37,14 @@ class EcosystemBoard extends Component {
 
   render() {
     const {
-      icons: { plugins: PluginsIcon, starters: StartersIcon },
+      icons: {
+        plugins: PluginsIcon,
+        starters: StartersIcon,
+        themes: ThemesIcon,
+      },
       starters,
       plugins,
+      themes,
     } = this.props
 
     return (
@@ -66,6 +75,26 @@ class EcosystemBoard extends Component {
             { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
           ]}
           featuredItems={starters}
+        />
+        <EcosystemSection
+          title="Themes"
+          description="Themes are packages that add preconfigured functionality to Gatsby sites. You can update central themes across sites and use multiple themes in your project!"
+          subTitle="Featured Themes – work in progress"
+          icon={ThemesIcon}
+          links={[
+            {
+              label: `Browse Themes`,
+              tag: `href`,
+              to: `https://themejam.gatsbyjs.org/showcase`,
+            },
+            { label: `Using Themes`, to: `/docs/themes/`, secondary: true },
+            {
+              label: `Building Themes`,
+              to: `/docs/themes/building-themes/`,
+              secondary: true,
+            },
+          ]}
+          featuredItems={themes}
         />
         <EcosystemSection
           title="External Resources"
