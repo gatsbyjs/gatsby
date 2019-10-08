@@ -201,14 +201,16 @@ const HomepageEcosystem = ({ featuredItems }) => (
         description="Themes are packages that add preconfigured functionality to Gatsby sites. You can update central themes across sites and use multiple themes in your project!"
         icon={ThemesIcon}
         links={[
-          { label: `Browse Themes`,
+          {
+            label: `Browse Themes`,
             tag: `href`,
-            to: `https://themejam.gatsbyjs.org/showcase`
+            to: `https://themejam.gatsbyjs.org/showcase`,
           },
           { label: `Using Themes`, to: `/docs/themes/`, secondary: true },
-          { label: `Building Themes`,
+          {
+            label: `Building Themes`,
             to: `/docs/themes/building-themes/`,
-            secondary: true
+            secondary: true,
           },
         ]}
       />
