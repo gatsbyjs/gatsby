@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 
 import { space } from "../gatsby-plugin-theme-ui"
@@ -378,7 +377,6 @@ class SearchForm extends Component {
   }
   render() {
     const { focussed } = this.state
-    const { offsetVertical } = this.props
     return (
       <form
         sx={{
@@ -386,8 +384,8 @@ class SearchForm extends Component {
           justifyContent: `flex-end`,
           display: `flex`,
           flex: [
-            `1 0 auto`,
-            `1 0 auto`,
+            `1 1 auto`,
+            `1 1 auto`,
             `1 0 auto`,
             `1 0 auto`,
             `0 0 auto`,
@@ -399,7 +397,6 @@ class SearchForm extends Component {
           position: `relative`,
           // minWidth: [null, null, null, null, null, `12rem`],
           // maxWidth: [`100%`, `100%`, `100%`, `100%`, null, `24rem`],
-          mt: offsetVertical ? offsetVertical : false,
           "& .algolia-autocomplete": {
             width: `100%`,
             display: `block !important`,
@@ -466,7 +463,5 @@ class SearchForm extends Component {
     )
   }
 }
-SearchForm.propTypes = {
-  offsetVertical: PropTypes.string,
-}
+
 export default SearchForm
