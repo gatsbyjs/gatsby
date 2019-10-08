@@ -1,36 +1,37 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
+import { mediaQueries } from "gatsby-design-tokens"
 
-import { colors, space, mediaQueries } from "../../utils/presets"
 import { Name } from "./homepage-section"
 
 const Section = styled(`section`)`
+  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
   overflow: hidden;
-  padding: ${space[5]} 0;
+  padding: ${p => p.theme.space[5]} 0;
   width: 100%;
-  border-bottom: 1px solid ${colors.ui.border.subtle};
 
   ${mediaQueries.xl} {
-    margin: -1px 0;
-    padding: ${space[5]} 0;
+    margin-top: -1px;
+    margin-bottom: -1px;
   }
 
   ${mediaQueries.xxl} {
-    padding: ${space[7]} 0;
+    padding: ${p => p.theme.space[7]} 0;
   }
 `
 
 const Title = styled(`header`)`
-  padding-right: ${space[6]};
-  padding-left: ${space[6]};
+  padding-right: ${p => p.theme.space[6]};
+  padding-left: ${p => p.theme.space[6]};
   ${mediaQueries.md} {
     max-width: 30rem;
   }
 
   ${mediaQueries.lg} {
-    margin-left: ${space[9]};
+    margin-left: ${p => p.theme.space[9]};
   }
 
   ${mediaQueries.xl} {
@@ -49,13 +50,13 @@ const LogoGroup = styled(`div`)`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
-  grid-gap: ${space[8]};
+  grid-gap: ${p => p.theme.space[8]};
   align-items: center;
   overflow-x: scroll;
-  padding-left: ${space[3]};
-  padding-bottom: ${space[1]};
+  padding-left: ${p => p.theme.space[3]};
+  padding-bottom: ${p => p.theme.space[4]};
   ${mediaQueries.xxl} {
-    padding-bottom: ${space[3]};
+    padding-bottom: ${p => p.theme.space[6]};
   }
   &::-webkit-scrollbar {
     display: none;
@@ -76,7 +77,7 @@ const HomepageLogoBanner = () => {
           node {
             base
             childImageSharp {
-              fixed(quality: 75, height: 36) {
+              fixed(quality: 75, height: 24) {
                 ...GatsbyImageSharpFixed_tracedSVG
               }
             }
@@ -97,7 +98,6 @@ const HomepageLogoBanner = () => {
             alt={`${image.base.split(`.`)[0]}`}
             fixed={image.childImageSharp.fixed}
             key={image.base}
-            style={{ opacity: 0.5 }}
           />
         ))}
       </LogoGroup>
