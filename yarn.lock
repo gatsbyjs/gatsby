@@ -10095,10 +10095,10 @@ highlight.js@^9.15.5:
   version "9.15.6"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
 
-hjson@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/hjson/-/hjson-3.1.2.tgz#1ae8a3a897a1fab8d45180f98e9abf9b56f95b55"
-  integrity sha512-2ILrho8eRl2Bniy61mDFiXRAloYqH2T6OwWkoF/8y55DPFgG2RcqQGNXIfBLp432dnAbLOpBJ4pJs63W3X27EA==
+hjson@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/hjson/-/hjson-3.2.0.tgz#76203ea69bc1c7c88422b48402cc34df8ff8de0e"
+  integrity sha512-XntQJHUg9QRKZYlADJKVoBMvuDbZve1X4Nd6ZIXCVPMwMvLhGjU9pGqW1XX8yPqBJSBAQwpcBDGTspURotVxbA==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
