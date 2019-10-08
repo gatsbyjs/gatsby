@@ -79,7 +79,7 @@ To see a fully complete Gatsby+ButterCMS project check out this [Gatsby ButterCM
 ## Webhooks
 
 Webhooks are a powerful feature that allow you to notify your internal systems whenever content in ButterCMS has changed.
-Your host platform need to be notified so that gatsby can create fresh pages from the new data. You can learn more about Webhooks in this [blog post](https://buttercms.com/blog/webhook-vs-api-whats-the-difference). Checkout your host platform form incoming webhooks so we can hit it anytime your content changes. Netlify lets you generate a build hook that will be triggered by butter on certain event e.g when we create or update a blog post more details [here](https://buttercms.com/docs/api/#webhooks)
+Your host platform need to be notified so that gatsby can create fresh pages from the new data. You can learn more about Webhooks in this [blog post](https://buttercms.com/blog/webhook-vs-api-whats-the-difference). Checkout your host platform form incoming webhooks so we can hit it anytime your content changes. Netlify lets you generate a build hook that will be triggered by butter on certain event e.g. when we create or update a blog post more details [here](https://buttercms.com/docs/api/#webhooks)
 
 ![Webhook](https://buttercms.com/static/images/docs/guides/OverviewWebhooks.png "Webhook")
 

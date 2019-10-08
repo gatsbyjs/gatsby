@@ -75,7 +75,7 @@ e.g
 
 ### sync-requires.js
 
-This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g `component---src-blog-2-js`), and the values are expressions that require the component. E.g `/home/site/src/blog/2.js`. The file will look something like this:
+This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
 
 ```javascript
 exports.components = {

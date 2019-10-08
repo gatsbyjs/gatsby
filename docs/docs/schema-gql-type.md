@@ -30,7 +30,7 @@ During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [ga
 
 There are 3 categories of node fields that we can query.
 
-#### Fields on the created node object. E.g
+#### Fields on the created node object. E.g.
 
 ```graphql
 node {
@@ -41,7 +41,7 @@ node {
 }
 ```
 
-#### Child/Parent. E.g:
+#### Child/Parent. E.g.:
 
 ```graphql
 node {
@@ -74,13 +74,13 @@ With the exampleValue in hand, we can use each of its key/values to infer the Ty
 
 ### Fields on the created node object
 
-Fields on the node that were created directly by the source and transform plugins. E.g for `File` type, these would be `relativePath`, `size`, `accessTime` etc.
+Fields on the node that were created directly by the source and transform plugins. E.g. for `File` type, these would be `relativePath`, `size`, `accessTime` etc.
 
 The creation of these fields is handled by the [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
 1.  It involves a mapping in [gatsby-config.js](/docs/gatsby-config/#mapping-node-types)
 2.  It's value is a foreign key reference to some other node (ends in `___NODE`)
-3.  It's a plain object or value (e.g String, number, etc)
+3.  It's a plain object or value (e.g. String, number, etc)
 
 #### Mapping field
 
@@ -102,7 +102,7 @@ Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which 
 
 If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/docs/pixabay-source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
 
-This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g for `author___NODE___name`, the linkedField would be `name` instead of `id`.
+This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g. `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g. for `author___NODE___name`, the linkedField would be `name` instead of `id`.
 
 Now we can return a new GraphQL Field object, whose type is the one found above. Its resolver searches through all redux nodes until it finds one with the matching ID. As usual, it also creates a [page dependency](/docs/page-node-dependencies/), from the query context's path to the node ID.
 
@@ -110,9 +110,9 @@ If the foreign key value is an array of IDs, then instead of returning a Field d
 
 #### Plain object or value field
 
-If the field was not handled as a mapping or foreign key reference, then it must be a normal every day field. E.g a scalar, string, or plain object. These cases are handled by [inferGraphQLType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L38).
+If the field was not handled as a mapping or foreign key reference, then it must be a normal every day field. E.g. a scalar, string, or plain object. These cases are handled by [inferGraphQLType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L38).
 
-The core of this step creates a GraphQL Field object, where the type is inferred directly via the result of `typeof`. E.g `typeof(value) === 'boolean'` would result in type `GraphQLBoolean`. Since these are simple values, resolvers are not defined (graphql-js takes care of that for us).
+The core of this step creates a GraphQL Field object, where the type is inferred directly via the result of `typeof`. E.g. `typeof(value) === 'boolean'` would result in type `GraphQLBoolean`. Since these are simple values, resolvers are not defined (graphql-js takes care of that for us).
 
 If however, the value is an object or array, we recurse, using [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) to create the GraphQL fields.
 
@@ -122,9 +122,9 @@ In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js
 
 #### Child fields creation
 
-Let's continue with the `File` type example. There are many transformer plugins that implement `onCreateNode` for `File` nodes. These produce `File` children that are of their own type. E.g `markdownRemark`, `postsJson`.
+Let's continue with the `File` type example. There are many transformer plugins that implement `onCreateNode` for `File` nodes. These produce `File` children that are of their own type. E.g. `markdownRemark`, `postsJson`.
 
-Gatsby stores these children in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves (see [Node Creation](/docs/node-creation/#node-relationship-storage-model) for more). E.g for a File node with two children, it will be stored in the redux `nodes` namespace as:
+Gatsby stores these children in redux as IDs in the parent's `children` field. And then stores those child nodes as full redux nodes themselves (see [Node Creation](/docs/node-creation/#node-relationship-storage-model) for more). E.g. for a File node with two children, it will be stored in the redux `nodes` namespace as:
 
 ```javascript
 {
