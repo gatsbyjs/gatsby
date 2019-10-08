@@ -39,6 +39,7 @@ const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  justify-content: center;
 
   ${mediaQueries.md} {
     flex-direction: row;
