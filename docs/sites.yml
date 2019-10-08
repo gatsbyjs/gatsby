@@ -7643,3 +7643,16 @@
   built_by: Peter Hironaka
   built_by_url: "https://peterhironaka.com"
   featured: false
+- title: Roman Kravets
+  description: >
+    Portfolio of Roman Kravets. Web Developer, HTML & CSS Coder.
+  main_url: "https://romkravets.netlify.com/"
+  url: "https://romkravets.netlify.com/"
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+    - Blog
+  built_by: Roman Kravets
+  built_by_url: "https://github.com/romkravets/dev-page"
+  featured: false
