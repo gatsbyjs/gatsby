@@ -1,7 +1,7 @@
 const v8 = require(`v8`)
 const fs = require(`fs-extra`)
 
-const file = `${process.cwd()}/.cache/redux.state`
+const file = `${process.cwd()}/.cache/redux-state.json`
 
 const readFromCache = () => v8.deserialize(fs.readFileSync(file))
 
