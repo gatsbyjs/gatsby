@@ -586,6 +586,11 @@ module.exports = (
             const avgWPM = 265
             const wordCount = _.words(pureText).length
             timeToRead = Math.round(wordCount / avgWPM)
+            const avgCJKPM = 400
+            const CJKCount = pureText.match(
+              /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}\p{sc=Hangul}]/gu
+            )
+            timeToRead += CJKCount ? CJKCount.length / avgCJKPM : 0
             if (timeToRead === 0) {
               timeToRead = 1
             }
