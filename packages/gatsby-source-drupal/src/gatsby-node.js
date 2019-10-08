@@ -185,7 +185,8 @@ exports.onCreateDevServer = (
         )
       }
       if (action === `delete`) {
-        return actions.deleteNode(getNode(id))
+        actions.deleteNode({ node: getNode(createNodeId(id)) })
+        return reporter.log(`Deleted node: ${id}`)
       }
       return await handleWebhookUpdate(
         {
