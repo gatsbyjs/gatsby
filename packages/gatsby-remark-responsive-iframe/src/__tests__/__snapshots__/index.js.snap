@@ -14,8 +14,7 @@ exports[`gatsby-remark-responsive-iframe can copy JSX images 1`] = `
             height: 100%;
           \\"></iframe>
     
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe doesn't transform an iframe with dimensions: '100%' '100' 1`] = `
@@ -72,8 +71,7 @@ exports[`gatsby-remark-responsive-iframe transforms an iframe and maintains exis
             height: 100%;
           \\"></iframe>
     
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe transforms an iframe and maintains existing styles when a semicolon exists 1`] = `
@@ -90,8 +88,7 @@ exports[`gatsby-remark-responsive-iframe transforms an iframe and maintains exis
             height: 100%;
           \\"></iframe>
     
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe transforms an iframe with pixel width and height 1`] = `
@@ -108,8 +105,7 @@ exports[`gatsby-remark-responsive-iframe transforms an iframe with pixel width a
             height: 100%;
           \\"></iframe>
     
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe transforms an iframe with unitless width and height 1`] = `
@@ -126,8 +122,7 @@ exports[`gatsby-remark-responsive-iframe transforms an iframe with unitless widt
             height: 100%;
           \\"></iframe>
     
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe transforms an object and maintains existing styles 1`] = `
@@ -143,8 +138,7 @@ exports[`gatsby-remark-responsive-iframe transforms an object and maintains exis
             width: 100%;
             height: 100%;
           \\"></object>
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe transforms an object and maintains existing styles when a semicolon exists 1`] = `
@@ -160,8 +154,7 @@ exports[`gatsby-remark-responsive-iframe transforms an object and maintains exis
             width: 100%;
             height: 100%;
           \\"></object>
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe transforms an object with pixel width and height 1`] = `
@@ -177,8 +170,7 @@ exports[`gatsby-remark-responsive-iframe transforms an object with pixel width a
             width: 100%;
             height: 100%;
           \\"></object>
-          </div>
-          "
+          </div>"
 `;
 
 exports[`gatsby-remark-responsive-iframe transforms an object with unitless width and height 1`] = `
@@ -194,6 +186,5 @@ exports[`gatsby-remark-responsive-iframe transforms an object with unitless widt
             width: 100%;
             height: 100%;
           \\"></object>
-          </div>
-          "
+          </div>"
 `;
