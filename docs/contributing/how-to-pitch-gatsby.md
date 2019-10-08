@@ -6,7 +6,7 @@ If you love Gatsby.js as much as we do, you might want to pitch your colleagues,
 
 Build blazing-fast websites without the hosting hassles of managing complex, costly infrastructure or fear that your site might go down. **Gatsby is a website development tool for React, the most modern way to build reliable, lightning fast websites.**
 
-## A website built with Gatsby is:
+## A website built with Gatsby is
 
 - **Fast:** Think rocket ship vs. Winnebago. Gatsby takes fast to a whole new level with
   websites that live on the edge—right where your customers are. Pages load in milliseconds
