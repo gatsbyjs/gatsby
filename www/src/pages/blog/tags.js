@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql, Link } from "gatsby"
 import styled from "@emotion/styled"
@@ -11,8 +13,8 @@ import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
-import styles from "../../views/shared/styles"
-import { colors, space, mediaQueries } from "../../utils/presets"
+import { themedInput } from "../../utils/styles"
+import { colors, space, mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const POPULAR_TAGS = [
   `themes`,
@@ -40,14 +42,7 @@ const PopularTagGrid = styled.div`
 `
 
 const PopularTagButton = ({ children, tag }) => (
-  <Button
-    small
-    secondary
-    to={`/blog/tags/${tag}`}
-    style={{
-      border: `1px solid ${colors.purple[20]}`,
-    }}
-  >
+  <Button variant="small" secondary to={`/blog/tags/${tag}`}>
     {tag}
     <TiArrowRight />
     {children}
@@ -131,7 +126,7 @@ class TagsPage extends React.Component {
               css={{
                 padding: `${space[6]} 0`,
                 margin: 0,
-                borderBottom: `1px solid ${colors.ui.border.subtle}`,
+                borderBottom: `1px solid ${colors.ui.border}`,
               }}
             >
               Tags ({Object.keys(uniqGroup).length || 0})
@@ -140,18 +135,17 @@ class TagsPage extends React.Component {
             <h2>Popular tags</h2>
             <PopularTagGrid>{PopularTagButtons}</PopularTagGrid>
             <div
-              css={{
+              sx={{
                 display: `flex`,
                 flexFlow: `row nowrap`,
                 justifyContent: `space-between`,
-                alignItems: `baseline`,
-                paddingBottom: space[4],
+                pb: 4,
               }}
             >
               <h2>All tags</h2>
               <label css={{ position: `relative` }}>
                 <input
-                  css={styles.searchInput}
+                  sx={{ ...themedInput, pl: 7 }}
                   id="tagsFilter"
                   name="filterQuery"
                   type="search"
@@ -161,27 +155,16 @@ class TagsPage extends React.Component {
                   value={filterQuery}
                   onChange={this.handleChange}
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    fill: colors.lilac,
-                    position: `absolute`,
-                    left: space[1],
-                    top: `50%`,
-                    width: space[4],
-                    height: space[4],
-                    pointerEvents: `none`,
-                    transform: `translateY(-50%)`,
-                  }}
-                />
+                <SearchIcon />
               </label>
             </div>
             <ul
-              css={{
+              sx={{
                 display: `flex`,
                 flexFlow: `row wrap`,
                 justifyContent: `start`,
-                padding: 0,
-                margin: 0,
+                p: 0,
+                m: 0,
               }}
             >
               {results.length > 0 ? (
@@ -191,9 +174,10 @@ class TagsPage extends React.Component {
                   const buildTag = (
                     <li
                       key={tag.fieldValue}
-                      css={{
-                        padding: `${space[3]} ${space[1]}`,
-                        margin: space[4],
+                      sx={{
+                        py: 3,
+                        px: 1,
+                        m: 4,
                         listStyleType: `none`,
                       }}
                     >
@@ -207,7 +191,7 @@ class TagsPage extends React.Component {
                     currentLetter = firstLetter
                     return (
                       <React.Fragment key={`letterheader-${currentLetter}`}>
-                        <h4 css={{ width: `100%`, flexBasis: `100%` }}>
+                        <h4 sx={{ width: `100%`, flexBasis: `100%` }}>
                           {currentLetter.toUpperCase()}
                         </h4>
                         {buildTag}

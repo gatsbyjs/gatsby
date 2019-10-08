@@ -79,7 +79,7 @@ In order to begin leveraging Formspree's features, you must add a form action di
 
 Once you've made the changes you can submit your own form for the first time and register using the email Formspree will send you, and all subsequent form submissions will be sent to your email address. You can find more information on the registration process or setup [on their website](https://formspree.io/).
 
-All forms set up in this way come with ReCAPTCHA by default, but you can also enable Honeypot spam filtering by adding a hidden input element with the `name="_gotcha"` field.
+All forms set up in this way come with reCAPTCHA by default, but you can also enable Honeypot spam filtering by adding a hidden input element with the `name="_gotcha"` field.
 
 ```jsx
 <input type="text" name="_gotcha" style="display:none" />
