@@ -838,12 +838,12 @@
   description: Gatsby starter using WordPress as the content source.
   tags:
     - Styling:CSS-in-JS
-    - CMS:Wordpress
+    - CMS:WordPress
   features:
     - All the features from gatsby-advanced-starter, plus
     - Leverages the WordPress plugin for Gatsby for data
     - Configured to work with WordPress Advanced Custom Fields
-    - Auto generated Navigation for your Wordpress Pages
+    - Auto generated Navigation for your WordPress Pages
     - Minimal UI and Styling — made to customize.
     - Styled Components
 - url: https://www.concisejavascript.org/
@@ -1947,7 +1947,7 @@
   repo: https://github.com/pablovila/gatsby-starter-wordpress-community
   description: Starter using gatsby-source-wordpress to display posts and pages from a WordPress site
   tags:
-    - CMS:Wordpress
+    - CMS:WordPress
     - Styling:Bulma
     - Blog
     - Pagination
@@ -3832,7 +3832,7 @@
   tags:
     - Blog
     - CMS:Headless
-    - CMS:Wordpress
+    - CMS:WordPress
   features:
     - New Header
     - Responsive
@@ -3898,10 +3898,10 @@
     - Optimized images with gatsby-image
 - url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
   repo: https://github.com/sagar7993/gatsby-wordpress-typescript-scss-blog
-  description: A Gatsby starter template for a Wordpress blog, built using TypeScript, SCSS and Ant Design
+  description: A Gatsby starter template for a WordPress blog, built using TypeScript, SCSS and Ant Design
   tags:
     - Blog
-    - CMS:Wordpress
+    - CMS:WordPress
     - CMS:Headless
     - Language:TypeScript
     - Pagination
@@ -3911,10 +3911,10 @@
     - Styling:SCSS
   features:
     - Typescript for type-safe code
-    - Source content from Wordpress CMS
-    - Auto generated Pagination for your Wordpress Posts
+    - Source content from WordPress CMS
+    - Auto generated Pagination for your WordPress Posts
     - Auto generated Navigation for next and previous post at the end Post
-    - Auto generated pages for tags and categories sourced from Wordpress
+    - Auto generated pages for tags and categories sourced from WordPress
     - SCSS stylesheets
     - PWA with offline support
     - Ant Design for UI components and theming
@@ -3922,7 +3922,7 @@
     - Responsive Design
     - Google Analytics
     - Comments using Staticman
-    - Images within wordpress post/page content downloaded to static folder and transformed to webp format during build
+    - Images within WordPress post/page content downloaded to static folder and transformed to webp format during build
     - Social widgets
     - Instagram feed of any profile (no API token needed)
     - Pinterest pin-it button on hovering on images (no API token needed)

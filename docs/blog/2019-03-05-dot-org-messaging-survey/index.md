@@ -80,7 +80,7 @@ At companies, 44% said this was crucial: “Performance and flexibility to use a
 
 Gatsby makes you productive right from the start -- it takes away the overhead of time-consuming dev and build tooling setup and configuration which leads to faster iterations.
 
-At agencies, 49% said this was crucial because “it makes the creation of optimal websites a breeze, [and] it’s important to have a fast workflow.” Another respondent said “I use Gatsby mostly at the agency I work at. Previously we were building wordpress sites and we would spend a ton of time manually configuring and setting things up to get gatsby level speeds and security. Essentially I chose gatsby because all of these things were crucial and gatsby ticks all the boxes.”
+At agencies, 49% said this was crucial because “it makes the creation of optimal websites a breeze, [and] it’s important to have a fast workflow.” Another respondent said “I use Gatsby mostly at the agency I work at. Previously we were building WordPress sites and we would spend a ton of time manually configuring and setting things up to get gatsby level speeds and security. Essentially I chose gatsby because all of these things were crucial and gatsby ticks all the boxes.”
 
 At companies, 43% said this was crucial. “It's f\*cking fast to dev with, ultimate performance and also good points for the "serverless" with solutions like Netlify.” Another person mentioned that with Gatsby, there’s “less tooling to get started. I like building websites fast, and focusing on content and design, instead of build/deployment.”
 
