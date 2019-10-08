@@ -95,7 +95,7 @@ class Plugins extends Component {
                   pluginName: `gatsby-plugin-google-analytics`,
                 },
                 {
-                  text: `Wordpress integration?`,
+                  text: `WordPress integration?`,
                   pluginName: `gatsby-source-wordpress`,
                 },
                 {

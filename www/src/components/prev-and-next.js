@@ -36,12 +36,13 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       sx={{
         [mediaQueries.sm]: {
           display: `flex`,
+          justifyContent: `space-between`,
           width: `100%`,
         },
       }}
       {...props}
     >
-      <div css={{ [mediaQueries.sm]: { width: `50%` } }}>
+      <div css={{ [mediaQueries.sm]: { width: `48%` } }}>
         {prev && (
           <Link to={prev.link} sx={prevNextLinkStyles}>
             <p sx={prevNextLabelStyles}>Previous</p>
@@ -62,7 +63,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
         sx={{
           textAlign: `right`,
           mt: 5,
-          [mediaQueries.sm]: { mt: 0, width: `50%` },
+          [mediaQueries.sm]: { mt: 0, width: `48%` },
         }}
       >
         {next && (
