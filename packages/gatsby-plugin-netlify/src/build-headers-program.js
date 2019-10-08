@@ -17,7 +17,7 @@ function getHeaderName(header) {
   return matches && matches[1]
 }
 
-function validHeaders(headers) {
+function validHeaders(headers, reporter) {
   if (!headers || !_.isObject(headers)) {
     return false
   }
@@ -26,10 +26,19 @@ function validHeaders(headers) {
     headers,
     (headersList, path) =>
       _.isArray(headersList) &&
-      _.every(
-        headersList,
-        header => _.isString(header) && getHeaderName(header)
-      )
+      _.every(headersList, header => {
+        if (_.isString(header)) {
+          if (!getHeaderName(header)) {
+            reporter.warn(
+              `${path} contains an invalid header (${header}). Please check your plugin configuration`
+            )
+          }
+
+          return true
+        }
+
+        return false
+      })
   )
 }
 
@@ -167,8 +176,8 @@ function stringifyHeaders(headers) {
 
 // program methods
 
-const validateUserOptions = pluginOptions => headers => {
-  if (!validHeaders(headers)) {
+const validateUserOptions = (pluginOptions, reporter) => headers => {
+  if (!validHeaders(headers, reporter)) {
     throw new Error(
       `The "headers" option to gatsby-plugin-netlify is in the wrong shape. ` +
         `You should pass in a object with string keys (representing the paths) and an array ` +
@@ -285,9 +294,13 @@ const transformToString = headers =>
 const writeHeadersFile = ({ publicFolder }) => contents =>
   writeFile(publicFolder(NETLIFY_HEADERS_FILENAME), contents)
 
-export default function buildHeadersProgram(pluginData, pluginOptions) {
+export default function buildHeadersProgram(
+  pluginData,
+  pluginOptions,
+  reporter
+) {
   return _.flow(
-    validateUserOptions(pluginOptions),
+    validateUserOptions(pluginOptions, reporter),
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
     applyCachingHeaders(pluginData, pluginOptions),

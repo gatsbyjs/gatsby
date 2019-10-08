@@ -4,6 +4,10 @@ import os from "os"
 import fs from "fs-extra"
 import { DEFAULT_OPTIONS } from "../constants"
 
+const reporter = {
+  warn: jest.fn(),
+}
+
 const createPluginData = async () => {
   const tmpDir = await fs.mkdtemp(
     path.join(os.tmpdir(), `gatsby-plugin-netlify-`)
@@ -156,7 +160,7 @@ test(`with caching headers`, async () => {
     mergeCachingHeaders: true,
   }
 
-  await buildHeadersProgram(pluginData, pluginOptions)
+  await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
   expect(
     await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
@@ -171,7 +175,7 @@ test(`without caching headers`, async () => {
     mergeCachingHeaders: false,
   }
 
-  await buildHeadersProgram(pluginData, pluginOptions)
+  await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
   expect(
     await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
@@ -193,7 +197,27 @@ test(`with security headers`, async () => {
     },
   }
 
-  await buildHeadersProgram(pluginData, pluginOptions)
+  await buildHeadersProgram(pluginData, pluginOptions, reporter)
+
+  expect(
+    await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
+  ).toMatchSnapshot()
+})
+
+test(`with badly headers configuration`, async () => {
+  const pluginData = await createPluginData()
+
+  const pluginOptions = {
+    ...DEFAULT_OPTIONS,
+    mergeSecurityHeaders: true,
+    headers: {
+      "X-Frame-Options": [`sameorigin`],
+    },
+  }
+
+  await buildHeadersProgram(pluginData, pluginOptions, reporter)
+
+  expect(reporter.warn).toHaveBeenCalled()
 
   expect(
     await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
