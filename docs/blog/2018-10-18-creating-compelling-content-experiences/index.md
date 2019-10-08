@@ -106,7 +106,7 @@ Middleman allows connections to third-party data sources, though currently only 
 
 Gatsby is the only content mesh option that creates fast websites, supports modern development frameworks, _and_ connects to enterprise content systems. Gatsby features:
 
-- **Integrations with 120+ backends**, including 15+ enterprise content systems like Wordpress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
+- **Integrations with 120+ backends**, including 15+ enterprise content systems like WordPress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
 
 - **A React development environment**, along with key plugins that provide key website features like SEO, routing, accessibility, and i18n.
 

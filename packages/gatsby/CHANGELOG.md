@@ -3546,7 +3546,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Fix url in Contentful example #1596 @axe312ger
 - Small fixes to tutorial #1586 @benmathews
 - Add missing dep to gatsby-source-filesystem #1607 @jquense
-- Wordpress -> WordPress #1608 @Alaev
+- WordPress -> WordPress #1608 @Alaev
 - Fix typo #1609 @fk
 - Update modifyWebpackConfig docs #1613 @KyleAMathews
 - Fix broken links #1614 @KyleAMathews
@@ -3659,7 +3659,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Adds Material Blog starter to the list of starters. #1344 @Vagr9K committed
   with KyleAMathews 4 days ago
 - Continuation: WIP update home page with new design #1355 @fk
-- Wordpress source plugin and example site #1321 @sebastienfi
+- WordPress source plugin and example site #1321 @sebastienfi
 - [v1.0] Documentation improvements. #1370 @Vagr9K
 - 1.0.0 announcement blog post #1379 @KyleAMathews
 - Adds gatsby-transformer-toml to the core. ##1382 @Vagr9K

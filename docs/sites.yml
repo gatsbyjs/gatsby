@@ -2397,7 +2397,7 @@
   featured: false
 - title: Fitekran
   description: >
-    One of the most visited Turkish blogs about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using Wordpress.
+    One of the most visited Turkish blogs about health, sports and healthy lifestyle, that has been rebuilt with Gatsby v2 using WordPress.
   main_url: "https://www.fitekran.com"
   url: "https://www.fitekran.com"
   categories:
@@ -5017,7 +5017,7 @@
   main_url: https://www.goldmedalflour.com
   url: https://www.goldmedalflour.com
   description: >
-    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from Wordpress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
+    Gold Medal Four is a brand of flour products owned by General Mills. The new site was built using Gatsby v2 with data sources from WordPress and an internal recipe API, and features multifaceted recipe filtering and a modified version of Gatsby Image to support art direction images.
   categories:
     - Food
   built_by: General Mills Branded Sites Dev Team
@@ -5475,7 +5475,7 @@
   main_url: https://camiloholguin.me
   source_url: https://github.com/camiloholguin/gatsby-portfolio
   description: >
-    Portfolio site using GatsbyJS and Wordpress REST API.
+    Portfolio site using GatsbyJS and WordPress REST API.
   categories:
     - WordPress
     - Portfolio

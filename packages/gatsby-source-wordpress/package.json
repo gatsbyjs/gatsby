@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-wordpress",
-  "description": "Gatsby source plugin for building websites using the Wordpress CMS as a data source.",
+  "description": "Gatsby source plugin for building websites using the WordPress CMS as a data source.",
   "version": "3.1.39",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "bugs": {

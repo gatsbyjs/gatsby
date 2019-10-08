@@ -98,7 +98,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Will Gatsby compile/export static files using the theme from a Ghost installation or will Gatsby compile/export based on another Gatsby theme?
 **Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [Modern publications with Gatsby & Ghost](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
 
-**Question:** Should I stop using Wordpress altogether? Does Wordpress play well with Gatsby or is Contentful better? Looks like JAMstack is a Wordpress killer.
+**Question:** Should I stop using WordPress altogether? Does WordPress play well with Gatsby or is Contentful better? Looks like JAMstack is a WordPress killer.
 **Answer:** It's not a 100% replacement yet — best to start experimenting with things and see how it feels!
 
 **Question:** How do content managers preview their changes?
@@ -117,7 +117,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** What are some best practices around aligning (dynamic) CMS content schema with code changes in Gatsby?
 **Answer:** Great question - and we have some thoughts here. We're launching cloud services to tackle this very problem in 2019. In the interim--most CMSs have some type of webhook content, so you can trigger a re-build (static content is cheap, and so are changes!) when content changes.
 
-**Question:** Would it be a good idea to manage several blogs or sites from one Wordpress install as back office, and build all the sites on Gatsby?
+**Question:** Would it be a good idea to manage several blogs or sites from one WordPress install as back office, and build all the sites on Gatsby?
 **Answer:** That would be a great idea! We've talked to some folks doing this.
 
 **Question:** If a company had numerous content managers (let's say 30), and they all needed to be able to create and publish content to a blog (which could be multiple on the same site) or a page, each update would require a new build? Is that an accurate understanding?
@@ -126,13 +126,13 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** The Preview feature is awesome. But I'm thinking like a 24 hours news channel, which our company has, and a manager needing to post content at 2 am, or even more, stories being posted multiple times an hour at all hours. Will each update require a new build?
 **Answer:** Yes. Builds are fast and automatic though so doesn't take any extra work or mental overhead.
 
-**Question:** How can I use gatsby-image for images in the content body like a Wordpress post?
+**Question:** How can I use gatsby-image for images in the content body like a WordPress post?
 **Answer:** That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out.
 
 **Question:** Is there a 3rd party CMS that you recommend that works particular well with Gatsby?
 **Answer:** Lots of CMS-s! Here's a list: [Headless CMS](/docs/headless-cms/)
 
-**Question:** How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a Wordpress CMS?
+**Question:** How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a WordPress CMS?
 **Answer:** You create a webhook on your CMS, and point the webhook at your CI system (eg Netlify).
 
 **Question:** I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?
@@ -206,7 +206,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is it overkill to build every site with Gatsby.js?
 **Answer:** We don't think so :)
 
-**Question:** Do you think there will be a market for Gatsby premium themes (like for Wordpress)?
+**Question:** Do you think there will be a market for Gatsby premium themes (like for WordPress)?
 **Answer:** Yep :) it's on the roadmap!
 
 **Question:** Beyond blogs and ecommerce websites, what other use cases are you seeing people building with Gatsby?
