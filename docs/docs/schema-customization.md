@@ -18,7 +18,9 @@ The following guide walks through some examples to showcase the API.
 > and with using Gatsby's Node APIs. For a higher level approach to using
 > Gatsby with GraphQL, refer to the [API reference](/docs/graphql-api/).
 
+## Approach: (1)
 ## Explicitly defining data types
+
 
 Our example project is a blog that gets its data from local Markdown files which
 provide the post contents, as well as author information in JSON format. We also
@@ -89,6 +91,7 @@ type Internal {
   type: String!
 }
 ```
+Here above its the basic schema created using Graphql. As you can see some ! marks.Here String! or ID! ... means that the field is non-nullable, meaning that the GraphQL service promises always to give you a value when you query this field. In the type language, we'll represent those with an exclamation mark (!). If in case it is [Node!] then it means all the elements of the array of values containing Node values are also Non-nullable. So as a whole children always contain values and non-nullable.
 
 Types created by source and transformer plugins implement this interface. For
 example, the node type created by `gatsby-transformer-json` for `authors.json`
@@ -111,6 +114,7 @@ type AuthorJson implements Node {
 > Start your project with `GATSBY_GRAPHQL_IDE=playground gatsby develop`, open the
 > playground at `http://localhost:8000/___graphql` and inspect the `Schema` tab on
 > the right.
+This Graphql playground provides you an interface to query on the left side and get its queried outputs on the right side of the window.
 
 ### Automatic type inference
 
@@ -147,6 +151,7 @@ not a valid Date.
 
 This will confuse Gatsby's type inference since the `joinedAt`
 field will now have both Date and String values.
+To make it more simple in automatic type inference at times the data given to the fields may satisfy the conditions of more than one data type whihc would confuse the Graphql. Which can be further solved by the below fix using an export of a function that ensures it is a Date always.
 
 #### Fixing field types
 
@@ -206,6 +211,7 @@ Note that you don't need to explicitly provide the Node interface fields (`id`,
 > If you wonder about the exclamation marks - those allow
 > [specifying nullability](https://graphql.org/learn/schema/#lists-and-non-null)
 > in GraphQL, i.e. if a field value is allowed to be `null` or not.
+In simple terms the exclamatory mark doesn't allow the value to be a null and always caters to make it remain as a non-nullable value.
 
 #### Nested types
 
@@ -252,6 +258,9 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 It is useful to think about your data, and the corresponding GraphQL schema, by
 always starting from the Node types created by source and transformer plugins.
+This is now helping us to create a new type called Frontmatter that can be further 
+used in mutation queries to be used and add this Frontmatter typed data to the database
+through our Graphql query.
 
 > Note that the `Frontmatter` type must not implement the Node interface since
 > it is not a top-level type created by source or transformer plugins: it has no
