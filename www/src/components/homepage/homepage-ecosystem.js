@@ -16,7 +16,11 @@ import {
 } from "../shared/horizontal-scroller"
 
 import { EcosystemIcon } from "../../assets/icons"
-import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
+import {
+  PluginsIcon,
+  StartersIcon,
+  ThemesIcon,
+} from "../../assets/icons/ecosystem-icons"
 
 import {
   colors,
@@ -34,6 +38,7 @@ import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 const Sections = styled(`div`)`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
 
   ${mediaQueries.md} {
     flex-direction: row;
@@ -46,9 +51,10 @@ const Section = styled(EcosystemSection)`
   border-radius: ${radii[2]}px;
   margin-bottom: ${space[6]};
   padding: ${space[6]};
+  max-width: calc(33% - 1rem);
 
   ${mediaQueries.md} {
-    margin: 0 ${space[2]} 0;
+    margin: ${space[2]};
     padding: ${space[6]};
 
     :last-child {
@@ -153,7 +159,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
   <HomepageSection
     sectionName="Ecosystem"
     sectionIcon={EcosystemIcon}
-    title="Plugins & Starters"
+    title="Plugins, Starters, & Themes"
     introduction="We have the tools to help you build for the web."
     links={[
       {
@@ -180,7 +186,6 @@ const HomepageEcosystem = ({ featuredItems }) => (
         ]}
         onHomepage={true}
       />
-
       <Section
         title="Starters"
         description="Starters are Gatsby sites that are preconfigured for different use cases to give you a head start for your project."
@@ -188,6 +193,16 @@ const HomepageEcosystem = ({ featuredItems }) => (
         links={[
           { label: `Browse Starters`, to: `/starters/` },
           { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
+        ]}
+      />
+      <Section
+        title="Themes"
+        description="Themes are configured, packaged, and composable Gatsby site functionality. You can update central themes across sites and use multiple themes in your project!"
+        icon={ThemesIcon}
+        links={[
+          { label: `Browse Themes`, tag: `href`, to: `https://themejam.gatsbyjs.org/showcase` },
+          { label: `Using Themes`, to: `/docs/themes/`, secondary: true },
+          { label: `Building Themes`, to: `/docs/themes/building-themes/`, secondary: true },
         ]}
       />
       <Section

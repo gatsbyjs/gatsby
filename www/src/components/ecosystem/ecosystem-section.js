@@ -124,10 +124,10 @@ const EcosystemSection = ({
       <Description>{description}</Description>
       <Actions>
         {links.map(item => {
-          const { to, label, secondary } = item
+          const { to, tag, label, secondary } = item
 
           return (
-            <Button key={to} to={to} secondary={secondary} tiny>
+            <Button key={to} to={to} tag={tag} secondary={secondary} tiny>
               {label}
             </Button>
           )
