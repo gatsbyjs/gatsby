@@ -9,7 +9,7 @@ Wordpress2016.overrideThemeStyles = () => {
   }
 }
 
-delete Wordpress2016.googleFonts
+Wordpress2016.googleFonts = undefined;
 
 const typography = new Typography(Wordpress2016)
 
