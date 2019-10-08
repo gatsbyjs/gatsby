@@ -133,7 +133,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Lots of CMS-s! Here's a list: [Headless CMS](/docs/headless-cms/)
 
 **Question:** How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a WordPress CMS?
-**Answer:** You create a webhook on your CMS, and point the webhook at your CI system (eg Netlify).
+**Answer:** You create a webhook on your CMS, and point the webhook at your CI system (e.g. Netlify).
 
 **Question:** I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?
 **Answer:** [`gatsby-source-drupal`](/packages/gatsby-source-drupal/) only supports Drupal 8 at the moment, I believe.
@@ -224,7 +224,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** You can do this client-side, there isn't any good out-of-the-box documentation on how to do this right now though. If you do it, write it up!
 
 **Question:** What is a 'route'?
-**Answer:** Basically a URL, eg `/blog/{post-name}`
+**Answer:** Basically a URL, e.g. `/blog/{post-name}`
 
 **Question:** Should i know React before starting to learn Gatsby?
 **Answer:** You don't need to! Gatsby is a great playground for learning React. Check out this post: [How Gatsby scales with your expertise & scope](/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/)
