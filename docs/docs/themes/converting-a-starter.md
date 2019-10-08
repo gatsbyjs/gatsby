@@ -36,7 +36,7 @@ const createPosts = (createPage, createRedirect, edges) => {
 }
 ```
 
-Since `path.resolve` is being used the starter will result `src/templates/post.js` rather than `node_modules/gatsby-theme-awesome-blog/src/templates/post.js`. In order to fix this you can use `require.resolve` which will look relative to the theme so the correct template is found.
+Since `path.resolve` is being used the starter will resolve `src/templates/post.js` rather than `node_modules/gatsby-theme-awesome-blog/src/templates/post.js`. In order to fix this you can use `require.resolve` which will look relative to the theme so the correct template is found.
 
 ```js
 const createPosts = (createPage, createRedirect, edges) => {
