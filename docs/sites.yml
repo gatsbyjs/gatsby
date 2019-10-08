@@ -7592,6 +7592,22 @@
     - Freelance
   built_by: Guus van de Wal
   featured: false
+- title: Pixelize Web Design Gold Coast | Web Design and SEO
+  url: https://www.pixelize.com.au/
+  main_url: https://www.pixelize.com.au/
+  description: >
+    Pixelize is a tight knit group of professional web developers, graphic designers, and content creators that work together to create high performing, blazing fast, beautiful websites with a strong focus on SEO.
+  categories:
+    - Agency
+    - Web Development
+    - Marketing
+    - SEO
+    - Design
+    - Portfolio
+    - Blog
+  built_by: Pixelize
+  built_by_url: https://www.pixelize.com.au
+  featured: false
 - title: VS Code GitHub Stats
   url: https://vscode-github-stats.netlify.com
   main_url: https://vscode-github-stats.netlify.com
