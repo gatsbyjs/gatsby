@@ -83,7 +83,7 @@ exports.handleReferences = handleReferences
 
 const handleWebhookUpdate = async (
   {
-    nodeToUpdate,
+    data,
     actions,
     cache,
     createNodeId,
@@ -96,7 +96,7 @@ const handleWebhookUpdate = async (
 ) => {
   const { createNode } = actions
 
-  const newNode = nodeFromData(nodeToUpdate, createNodeId)
+  const newNode = nodeFromData(data, createNodeId)
 
   const nodesToUpdate = [newNode]
 
