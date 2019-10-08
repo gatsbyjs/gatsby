@@ -162,6 +162,7 @@ exports.onCreateDevServer = (
   {
     app,
     createNodeId,
+    deleteNode,
     getNode,
     actions,
     store,
@@ -176,13 +177,20 @@ exports.onCreateDevServer = (
     bodyParser.text({
       type: `application/json`,
     }),
-    async (req, res) => {
-      // we are missing handling of node deletion
-      const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
-
-      await handleWebhookUpdate(
+    async (req, _res) => {
+      const requestBody = JSON.parse(JSON.parse(req.body))
+      const { data, secret, action, id } = requestBody.data
+      if (pluginOptions.secret && pluginOptions.secret !== secret) {
+        return reporter.warn(
+          `The secret in this request did not match your plugin options secret.`
+        )
+      }
+      if (action === `delete`) {
+        return deleteNode(getNode(id))
+      }
+      return await handleWebhookUpdate(
         {
-          nodeToUpdate,
+          data,
           actions,
           cache,
           createNodeId,
