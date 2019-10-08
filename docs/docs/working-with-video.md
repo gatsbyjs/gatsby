@@ -1,5 +1,5 @@
 ---
-title: Working With Video
+title: Working with Video
 ---
 
 - [Sourcing video from a host](#sourcing-video-from-a-host)
