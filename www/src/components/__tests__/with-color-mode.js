@@ -1,13 +1,6 @@
-describe(`mock match media test`, () => {
-  beforeAll(() => {
-    window.matchMedia = jest.fn().mockImplementation(query => {
-      return {
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      }
-    })
-  })
+import "./matchMedia.mock"
+import withColorMode from "../with-color-mode"
+
+describe(`withColorMode()`, () => {
+  withColorMode()
 })
