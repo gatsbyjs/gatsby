@@ -3,8 +3,11 @@ const { GuessPlugin } = require(`guess-webpack`)
 let guessPlugin
 exports.onPreBootstrap = (_, pluginOptions) => {
   const { period, jwt, GAViewID, reportProvider } = pluginOptions
-  period.startDate = new Date(period.startDate)
-  period.endDate = new Date(period.endDate)
+  if (period) {
+    period.startDate = new Date(period.startDate)
+    period.endDate = new Date(period.endDate)
+  }
+
   guessPlugin = new GuessPlugin({
     // GA view ID.
     GA: GAViewID,
