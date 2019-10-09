@@ -68,7 +68,7 @@ export default (content, className = ``) => {
   if (filtered.length === 0) {
     for (let i = 0; i < split.length; i++) {
       const line = split[i]
-      if (containsDirective(line) && className !== ``) {
+      if (containsDirective(line) && className !== `language-none`) {
         const [, keyword, directive] = line.match(DIRECTIVE)
         switch (directive) {
           case `start`: {
@@ -146,7 +146,7 @@ export default (content, className = ``) => {
       .join(`\n`)
       .trim(),
     filtered.reduce((lookup, { highlighted }, index) => {
-      if (highlighted && className !== ``) {
+      if (highlighted) {
         lookup[index] = true
       }
       return lookup

@@ -269,7 +269,7 @@ You may also choose to include line highlighting in your code snippets, using th
 
 ##### `highlight-line`: highlights the current line
 
-````
+````none
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -291,7 +291,7 @@ module.exports = {
 
 ##### `highlight-next-line`: highlights the next line
 
-````
+````none
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -315,7 +315,7 @@ module.exports = {
 
 ##### `highlight-start` & `highlight-end`: highlights a range
 
-````
+````none
 ```javascript:title=gatsby-config.js
 module.exports = {
 	// highlight-start
