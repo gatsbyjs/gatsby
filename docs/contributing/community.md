@@ -57,7 +57,7 @@ This event is held on a recurring basis, every Wednesday at 8:30 AM Pacific Stan
 
 Many members of the community use Stack Overflow to ask questions. Read through
 the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
-tagged with **gatsby** or
+tagged with `gatsby` or
 [ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
 
 ### Discord
@@ -70,7 +70,7 @@ useful resources.
 
 Many members of the community also use Hashnode to ask questions and share their tips. Read through
 the [existing questions and posts](https://hashnode.com/n/gatsby)
-tagged with **gatsby** or
+tagged with `gatsby` or
 [ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
 
 ## Learn More About Gatsby:
