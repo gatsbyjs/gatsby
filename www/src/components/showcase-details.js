@@ -130,9 +130,10 @@ const SourceLink = ({ ...props }) => (
       display: `flex`,
       alignItems: `center`,
       mr: 3,
+      color: `link.color`,
     }}
   >
-    <GithubIcon sx={{ fontSize: 3, mr: 2 }} />
+    <GithubIcon sx={{ fontSize: 3, mr: 2, color: `link.color` }} />
     Source
   </a>
 )
