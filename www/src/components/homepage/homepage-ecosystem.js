@@ -191,7 +191,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
       />
       <Section
         title="Themes"
-        description="Themes are packages that add preconfigured functionality to Gatsby sites. You can update central themes across sites and use multiple themes in your project!"
+        description="Themes are plugins that add preconfigured functionality to Gatsby sites, just like starters. You can update central themes across sites and use multiple themes in your project!"
         icon={ThemesIcon}
         links={[
           {
