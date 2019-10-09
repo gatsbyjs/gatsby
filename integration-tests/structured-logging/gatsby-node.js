@@ -44,4 +44,8 @@ exports.createPages = async ({ reporter }) => {
   if (process.env.PROCESS_EXIT) {
     process.exit(1)
   }
+
+  if (process.env.PROCESS_KILL) {
+    process.kill(process.pid, `SIGTERM`)
+  }
 }

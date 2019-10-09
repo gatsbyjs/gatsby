@@ -21,6 +21,46 @@ const gatsbyBin = path.join(
   `gatsby.js`
 )
 
+const defaultStdio = `ignore`
+
+const collectEventsForDevelop = (events, env = {}) => {
+  const gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+    stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
+    env: {
+      ...process.env,
+      NODE_ENV: `development`,
+      ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+      ...env,
+    },
+  })
+
+  const finishedPromise = new Promise(resolve => {
+    let listening = true
+    gatsbyProcess.on(`message`, msg => {
+      if (!listening) {
+        return
+      }
+
+      events.push(msg)
+      // we are ready for tests
+      if (
+        msg.action &&
+        msg.action.type === `SET_STATUS` &&
+        msg.action.payload !== `IN_PROGRESS`
+      ) {
+        listening = false
+        gatsbyProcess.kill()
+        resolve()
+      }
+    })
+  })
+
+  return {
+    finishedPromise,
+    gatsbyProcess,
+  }
+}
+
 // Inlined from https://github.com/tamas-pap/jest-joi-schema/blob/master/index.js
 const toMatchSchema = (received, schema) => {
   const validationResult = schema.validate(received, { allowUnknown: false })
@@ -191,37 +231,12 @@ const commonAssertionsForFailure = events => {
 
 describe(`develop`, () => {
   describe(`initial work finishes with SUCCESS`, () => {
-    let gatsbyProcess
     let events = []
 
-    beforeAll(async done => {
-      gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-        // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-        stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-        env: {
-          ...process.env,
-          NODE_ENV: `development`,
-          ENABLE_GATSBY_REFRESH_ENDPOINT: true,
-        },
-      })
-
-      gatsbyProcess.on(`message`, msg => {
-        //   console.log(msg)
-        events.push(msg)
-        // we are ready for tests
-        if (
-          msg.action &&
-          msg.action.type === `SET_STATUS` &&
-          msg.action.payload !== `IN_PROGRESS`
-        ) {
-          done()
-        }
-      })
+    beforeAll(async () => {
+      await collectEventsForDevelop(events).finishedPromise
     })
 
-    afterAll(async () => {
-      gatsbyProcess.kill()
-    })
     commonAssertionsForSuccess(events)
 
     // We need to check if Cloud depends on the emission of certain
@@ -233,149 +248,87 @@ describe(`develop`, () => {
 
   describe(`work finishes with FAILED`, () => {
     describe(`called with reporter.panic`, () => {
-      let gatsbyProcess
       let events = []
 
-      beforeAll(async done => {
-        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          env: {
-            ...process.env,
-            NODE_ENV: `development`,
-            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
-            PANIC_ON_BUILD: true,
-          },
-        })
-
-        gatsbyProcess.on(`message`, msg => {
-          //   console.log(msg)
-          events.push(msg)
-          // we are ready for tests
-          if (
-            msg.action &&
-            msg.action.type === `SET_STATUS` &&
-            msg.action.payload !== `IN_PROGRESS`
-          ) {
-            done()
-          }
-        })
+      beforeAll(async () => {
+        await collectEventsForDevelop(events, {
+          PANIC_ON_BUILD: true,
+        }).finishedPromise
       })
 
-      afterAll(async () => {
-        gatsbyProcess.kill()
-      })
       commonAssertionsForFailure(events)
     })
 
     // Skipping for now because we don't handle these correctly
     // Documented in https://github.com/gatsbyjs/gatsby/issues/18383
     describe.skip(`unhandledRejection`, () => {
-      let gatsbyProcess
       let events = []
 
-      beforeAll(async done => {
-        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          env: {
-            ...process.env,
-            NODE_ENV: `development`,
-            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
-            UNHANDLED_REJECTION: true,
-          },
-        })
-
-        gatsbyProcess.on(`message`, msg => {
-          //   console.log(msg)
-          events.push(msg)
-          // we are ready for tests
-          if (
-            msg.action &&
-            msg.action.type === `SET_STATUS` &&
-            msg.action.payload !== `IN_PROGRESS`
-          ) {
-            done()
-          }
-        })
+      beforeAll(async () => {
+        await collectEventsForDevelop(events, {
+          UNHANDLED_REJECTION: true,
+        }).finishedPromise
       })
 
-      afterAll(async () => {
-        gatsbyProcess.kill()
-      })
       commonAssertionsForFailure(events)
     })
     describe(`process.exit`, () => {
-      let gatsbyProcess
       let events = []
 
-      beforeAll(async done => {
-        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          env: {
-            ...process.env,
-            NODE_ENV: `development`,
-            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
-            PROCESS_EXIT: true,
-          },
-        })
-
-        gatsbyProcess.on(`message`, msg => {
-          //   console.log(msg)
-          events.push(msg)
-          // we are ready for tests
-          if (
-            msg.action &&
-            msg.action.type === `SET_STATUS` &&
-            msg.action.payload !== `IN_PROGRESS`
-          ) {
-            done()
-          }
-        })
+      beforeAll(async () => {
+        await collectEventsForDevelop(events, {
+          PROCESS_EXIT: true,
+        }).finishedPromise
       })
 
-      afterAll(async () => {
-        gatsbyProcess.kill()
-      })
       commonAssertionsForFailure(events)
     })
 
     // in cloud we kill gatsby process with SIGTERM
     describe(`process.kill`, () => {
-      let gatsbyProcess
       let events = []
 
-      beforeAll(async done => {
-        gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-          // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-          env: {
-            ...process.env,
-            NODE_ENV: `development`,
-            ENABLE_GATSBY_REFRESH_ENDPOINT: true,
-          },
-        })
-
-        gatsbyProcess.on(`message`, msg => {
-          //   console.log(msg)
-          events.push(msg)
-          // we are ready for tests
-          if (
-            msg.action &&
-            msg.action.type === `SET_STATUS` &&
-            msg.action.payload !== `IN_PROGRESS`
-          ) {
-            done()
-          }
-        })
-
-        setTimeout(() => {
-          gatsbyProcess.kill()
-        }, 1000)
+      beforeAll(async () => {
+        await collectEventsForDevelop(events, {
+          PROCESS_KILL: true,
+        }).finishedPromise
       })
 
       commonAssertionsForFailure(events)
+
+      // let gatsbyProcess
+      // let events = []
+
+      // beforeAll(async done => {
+      //   gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+      //     // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+      //     stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+      //     env: {
+      //       ...process.env,
+      //       NODE_ENV: `development`,
+      //       ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+      //     },
+      //   })
+
+      //   gatsbyProcess.on(`message`, msg => {
+      //     //   console.log(msg)
+      //     events.push(msg)
+      //     // we are ready for tests
+      //     if (
+      //       msg.action &&
+      //       msg.action.type === `SET_STATUS` &&
+      //       msg.action.payload !== `IN_PROGRESS`
+      //     ) {
+      //       done()
+      //     }
+      //   })
+
+      //   setTimeout(() => {
+      //     gatsbyProcess.kill()
+      //   }, 1000)
+      // })
+
+      // commonAssertionsForFailure(events)
     })
   })
 
@@ -408,11 +361,11 @@ describe(`build`, () => {
 
     beforeAll(async () => {
       gatsbyProcess = spawn(gatsbyBin, [`build`], {
-        // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-        stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+        stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
           NODE_ENV: `production`,
+          // GATSBY_LOGGER: `json`,
           ENABLE_GATSBY_REFRESH_ENDPOINT: true,
         },
       })
@@ -443,8 +396,7 @@ describe(`build`, () => {
 
       beforeAll(async () => {
         gatsbyProcess = spawn(gatsbyBin, [`build`], {
-          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
             NODE_ENV: `production`,
@@ -471,8 +423,7 @@ describe(`build`, () => {
 
       beforeAll(async () => {
         gatsbyProcess = spawn(gatsbyBin, [`build`], {
-          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
             NODE_ENV: `production`,
@@ -499,8 +450,7 @@ describe(`build`, () => {
 
       beforeAll(async () => {
         gatsbyProcess = spawn(gatsbyBin, [`build`], {
-          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
             NODE_ENV: `production`,
@@ -529,8 +479,7 @@ describe(`build`, () => {
 
       beforeAll(async () => {
         gatsbyProcess = spawn(gatsbyBin, [`build`], {
-          // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-          stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
+          stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
             NODE_ENV: `production`,

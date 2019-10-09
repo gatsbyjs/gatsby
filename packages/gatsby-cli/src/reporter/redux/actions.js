@@ -42,7 +42,10 @@ const getGlobalStatus = (id, status) => {
       activityStatus === ActivityStatuses.NotStarted
     ) {
       return ActivityStatuses.InProgress
-    } else if (activityStatus === ActivityStatuses.Failed) {
+    } else if (
+      activityStatus === ActivityStatuses.Failed &&
+      generatedStatus !== ActivityStatuses.InProgress
+    ) {
       return ActivityStatuses.Failed
     }
     return generatedStatus
@@ -50,6 +53,10 @@ const getGlobalStatus = (id, status) => {
 }
 
 let cancelDelayedSetStatus = null
+let weShouldExit = false
+signalExit(() => {
+  weShouldExit = true
+})
 /**
  * Like setTimeout, but also handle signalExit
  */
@@ -143,7 +150,7 @@ const actions = {
     }
 
     if (status !== currentStatus) {
-      if (status === `IN_PROGRESS` || force) {
+      if (status === `IN_PROGRESS` || force || weShouldExit) {
         dispatch({
           type: Actions.SetStatus,
           payload: status,
