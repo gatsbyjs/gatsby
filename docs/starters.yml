@@ -4061,3 +4061,19 @@
     - Google Analytics
     - Simple design
     - Markdown support
+- url: https://uno.dailysh.it
+  repo: https://github.com/nextlevelshit/gatsby-starter-uno
+  description: Minimal Gatsby Starter Template for a Landingpage with Tailwind CSS Support
+  tags:
+    - Onepage
+    - Portfolio
+    - Presentation
+    - Styling:Tailwind
+    - Styling:SCSS
+    - Transitions
+  features:
+    - Basic setup for a minimal landingpage
+    - Includes srcset's for all images
+    - Includes Tailwind style library
+    - Includes routes for modals
+    - SEO
