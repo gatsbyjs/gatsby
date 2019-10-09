@@ -1,11 +1,7 @@
-import React, { Component } from "react"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-} from "../../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { renderCell } from "./evaluation-cell"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
@@ -66,21 +62,22 @@ class EvaluationTable extends Component {
                         {nodeFieldProperties.map((nodeProperty, j) => (
                           <td
                             key={j}
-                            css={{
+                            sx={{
                               display: `table-cell`,
                               "&:hover": {
                                 cursor: j >= 0 ? `pointer` : `inherit`,
                               },
-                              borderBottom: !showTooltip(s, i)
-                                ? `1px solid ${colors.ui.border.subtle}`
-                                : `none`,
+                              borderBottom: t =>
+                                !showTooltip(s, i)
+                                  ? `1px solid ${t.colors.ui.border}`
+                                  : `none`,
                               minWidth: 40,
                               paddingRight: 0,
                               paddingLeft: 0,
                               textAlign: `left`,
                               verticalAlign: `middle`,
-                              fontSize: fontSizes[1],
-                              lineHeight: lineHeights.solid,
+                              fontSize: 1,
+                              lineHeight: `solid`,
                             }}
                             id={
                               j === 0
@@ -107,13 +104,11 @@ class EvaluationTable extends Component {
                         key={`section-${s}-second-row-${i}`}
                       >
                         <td
-                          css={{
-                            fontSize: fontSizes[1],
-                            paddingBottom: `calc(${space[5]} - 1px)`,
+                          sx={{
+                            paddingBottom: t => `calc(${t.space[5]} - 1px)`,
                             "&&": {
                               [mediaQueries.xs]: {
-                                paddingRight: `${space[3]}`,
-                                paddingLeft: `${space[3]}`,
+                                px: 3,
                               },
                             },
                           }}

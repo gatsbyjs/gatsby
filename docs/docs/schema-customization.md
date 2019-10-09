@@ -20,9 +20,9 @@ The following guide walks through some examples to showcase the API.
 
 ## Explicitly defining data types
 
-Our example project is a blog that gets its data from local Markdown files which
-provide the post contents, as well as author information in JSON format. We also
-have occasional guest contributors whose info we keep in a separate JSON file.
+The example project is a blog that gets its data from local Markdown files which
+provide the post contents, as well as author information in JSON format. There are also
+occasional guest contributors whose info is kept in a separate JSON file.
 
 ```markdown:title=src/data/post1.md
 ---
@@ -60,8 +60,8 @@ Text
 ]
 ```
 
-To be able to query the contents of these files with GraphQL, we need to first
-load them into Gatsby's internal data store. This is what source and transformer
+To be able to query the contents of these files with GraphQL, they need to first be
+loaded into Gatsby's internal data store. This is what source and transformer
 plugin accomplish - in this case `gatsby-source-filesystem` and
 `gatsby-transformer-remark` plus `gatsby-transformer-json`. Every markdown post
 file is hereby transformed into a "node" object in the internal data store with
@@ -131,7 +131,7 @@ GraphQL schema.
 
 ### Creating type definitions
 
-Let's take the latter case first. Assume a new author joins the team, but in the
+Look at the latter case first. Assume a new author joins the team, but in the
 new author entry there is a typo on the `joinedAt` field: "201-04-02" which is
 not a valid Date.
 
@@ -209,12 +209,12 @@ Note that you don't need to explicitly provide the Node interface fields (`id`,
 
 #### Nested types
 
-So far, we have only been dealing with scalar values (`String` and `Date`;
+So far, the example project has only been dealing with scalar values (`String` and `Date`;
 GraphQL also knows `ID`, `Int`, `Float`, `Boolean` and `JSON`). Fields can
 however also contain complex object values. To target those fields in GraphQL SDL, you
 can provide a full type definition for the nested type, which can be arbitrarily
-named (as long as the name is unique in the schema). In our example project, the
-`frontmatter` field on the `MarkdownRemark` node type is a good example. Say we
+named (as long as the name is unique in the schema). In the example project, the
+`frontmatter` field on the `MarkdownRemark` node type is a good example. Say you
 want to ensure that `frontmatter.tags` will always be an array of strings.
 
 ```js:title=gatsby-node.js
@@ -232,7 +232,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-Note that with `createTypes` we cannot directly target a `Frontmatter` type
+Note that with `createTypes` you cannot directly target a `Frontmatter` type
 without also specifying that this is the type of the `frontmatter` field on the
 `MarkdownRemark` type, The following would fail because Gatsby would have no way
 of knowing which field the `Frontmatter` type should be applied to:
@@ -301,7 +301,7 @@ schema.buildObjectType({
   },
   interfaces: ["Node"],
 + extensions: {
-+   // While in SDL we have two different directives, @infer and @dontInfer to
++   // While in SDL you have two different directives, @infer and @dontInfer to
 +   // control inference behavior, Gatsby Type Builders take a single `infer`
 +   // extension which accepts a Boolean
 +   infer: false
@@ -328,9 +328,9 @@ Creating foreign-key relations with the `createTypes` action,
 i.e. without relying on type inference and the `___NODE` field naming
 convention, requires a bit of manual setup.
 
-In our example project, we want the `frontmatter.author` field on
+In the example project, the `frontmatter.author` field on
 `MarkdownRemark` nodes to expand the provided field value to a full `AuthorJson` node.
-For this to work, we have to provide a custom field resolver. (see below for
+For this to work, there has to be provided a custom field resolver. (see below for
 more info on `context.nodeModel`)
 
 ```js:title=gatsby-node.js
@@ -344,14 +344,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         author: {
           type: "AuthorJson",
           resolve: (source, args, context, info) => {
-            // If we were linking by ID, we could use `getNodeById` to
+            // If you were linking by ID, you could use `getNodeById` to
             // find the correct author:
             // return context.nodeModel.getNodeById({
             //   id: source.author,
             //   type: "AuthorJson",
             // })
-            // But since we are using the author email as foreign key,
-            // we can use `runQuery`, or get all author nodes
+            // But since the example is using the author email as foreign key,
+            // you can use `runQuery`, or get all author nodes
             // with `getAllNodes` and manually find the linked author
             // node:
             return context.nodeModel
@@ -366,7 +366,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 }
 ```
 
-What is happening here is that we provide a custom field resolver that asks
+What is happening here is that you provide a custom field resolver that asks
 Gatsby's internal data store for the full node object with the specified
 `id` and `type`.
 
@@ -388,7 +388,7 @@ type AuthorJson implements Node {
 ```
 
 You provide a `@link` directive on a field and Gatsby will internally
-add a resolver that is quite similar to the one we wrote manually above. If no
+add a resolver that is quite similar to the one written manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
 optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`.
@@ -448,7 +448,7 @@ query {
 }
 ```
 
-For `publishedAt` we also provide a default `formatString` which will be used
+`publishedAt` is also provided a default `formatString` which will be used
 when no explicit formatting options are provided in the query.
 
 #### Setting default field values
@@ -469,7 +469,7 @@ exports.createSchemaCustomization = ({ action, schema }) => {
         tags: {
           type: "[String!]",
           resolve(source, args, context, info) {
-            // For a more generic solution, we could pick the field value from
+            // For a more generic solution, you could pick the field value from
             // `source[info.fieldName]`
             const { tags } = source
             if (source.tags == null || (Array.isArray(tags) && !tags.length)) {
@@ -489,10 +489,10 @@ exports.createSchemaCustomization = ({ action, schema }) => {
 
 With the [`createFieldExtension`](/docs/actions/#createFieldExtension) action
 it is possible to define custom extensions as a way to add reusable functionality
-to fields. Let's say we want to add a `fullName` field to `AuthorJson`
+to fields. Say you want to add a `fullName` field to `AuthorJson`
 and `ContributorJson`.
 
-We could of course write a `fullNameResolver`, and use it in two places:
+You could of course write a `fullNameResolver`, and use it in two places:
 
 ```js:title=gatsby-node.js
 const fullNameResolver = source => `${source.firstName} ${source.name}`
@@ -524,7 +524,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 ```
 
 However, to make this functionality available to other plugins as well, and make
-it usable in SDL, we can register it as a field extension.
+it usable in SDL, you can register it as a field extension.
 
 A field extension definition requires a name, and an `extend` function, which
 should return a (partial) field config (an object, with `type`, `args`, `resolve`)
@@ -611,7 +611,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-Note that in the above example, we have additionally provided configuration options
+Note that in the above example, there have been additional provided configuration options
 with `args`. This is e.g. useful to provide default field arguments:
 
 ```js:title=gatsby-node.js
@@ -646,7 +646,7 @@ If multiple field extensions are added to a field, resolvers are processed in th
 first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field
 extension resolvers execute from left to right.
 
-Finally, note that in order to get the current fieldValue, we use `context.defaultFieldResolver`.
+Finally, note that in order to get the current fieldValue, you use `context.defaultFieldResolver`.
 
 ## createResolvers API
 
@@ -677,7 +677,7 @@ Note that `createResolvers` allows adding new fields to types, modifying `args`
 and `resolver` -- but not overriding the field type. This is because
 `createResolvers` is run last in schema generation, and modifying a field type
 would mean having to regenerate corresponding input types (`filter`, `sort`),
-which we want to avoid. If possible, specifying field types should be done with
+which you want to avoid. If possible, specifying field types should be done with
 the `createTypes` action.
 
 ### Accessing Gatsby's data store from field resolvers
@@ -692,7 +692,7 @@ And running a query from inside your resolver functions can be accomplished
 with [`runQuery`](/docs/node-model/#runQuery), which accepts `filter` and `sort`
 query arguments.
 
-We could for example add a field to the `AuthorJson` type that lists all recent
+You could for example add a field to the `AuthorJson` type that lists all recent
 posts by an author:
 
 ```js:title=gatsby-node.js
@@ -745,7 +745,7 @@ One powerful approach enabled by `createResolvers` is adding custom root query
 fields. While the default root query fields added by Gatsby (e.g.
 `markdownRemark` and `allMarkdownRemark`) provide the whole range of query
 options, query fields designed specifically for your project can be useful. For
-example, we can add a query field for all external contributors to our example blog
+example, you can add a query field for all external contributors to the example blog
 who have received their swag:
 
 ```js:title=gatsby-node.js
@@ -772,7 +772,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-Because we might also be interested in the reverse - which contributors haven't
+Because you might also be interested in the reverse - which contributors haven't
 received their swag yet - why not add a (required) custom query arg?
 
 ```js:title=gatsby-node.js
@@ -803,7 +803,7 @@ exports.createResolvers = ({ createResolvers }) => {
 ```
 
 It is also possible to provide more complex custom input types which can be defined
-directly inline in SDL. We could for example add a field to the `ContributorJson`
+directly inline in SDL. You could for example add a field to the `ContributorJson`
 type that counts the number of posts by a contributor, and then add a custom root
 query field `contributors` which accepts `min` or `max` arguments to only return
 contributors who have written at least `min`, or at most `max` number of posts:
@@ -869,12 +869,12 @@ context.nodeModel.getAllNodes(
 
 ## Custom Interfaces and Unions
 
-Finally, let's say we want to have a page on our example blog that lists all
-team members (authors and contributors). What we could do is have two queries,
+Finally, say you want to have a page on the example blog that lists all
+team members (authors and contributors). What you could do is have two queries,
 one for `allAuthorJson` and one for `allContributorJson` and manually merge
 those. GraphQL however provides a more elegant solution to these kinds of
 problems with "abstract types" (Interfaces and Unions). Since authors and
-contributors actually share most of the fields, we can abstract those up into
+contributors actually share most of the fields, you can abstract those up into
 a `TeamMember` interface and add a custom query field for all team members
 (as well as a custom resolver for full names):
 
@@ -933,7 +933,7 @@ exports.createResolvers = ({ createResolvers }) => {
 ```
 
 To use the newly added root query field in a page query to get the full names of
-all team members, we can write:
+all team members, you could write:
 
 ```js
 export const query = graphql`
@@ -952,7 +952,7 @@ export const query = graphql`
 
 ### Queryable interfaces with the `@nodeInterface` extension
 
-Since Gatsby 2.13.22, we can achieve the same thing as above by adding the `@nodeInterface`
+Since Gatsby 2.13.22, you can achieve the same thing as above by adding the `@nodeInterface`
 extension to the `TeamMember` interface. This will treat the interface like a normal
 top-level type that implements the `Node` interface, and thus automatically add root
 query fields for the interface.
@@ -1039,11 +1039,11 @@ However, Gatsby also allows to integrate and modify third-party GraphQL schemas.
 
 Usually, those third-party schemas are retrieved from remote sources via introspection
 query with Gatsby's `gatsby-source-graphql` plugin. To customize types integrated from
-a third-party schema, we can use the [`createResolvers`](/docs/node-apis/#createResolvers) API.
+a third-party schema, you can use the [`createResolvers`](/docs/node-apis/#createResolvers) API.
 
 ### Feeding remote images into `gatsby-image`
 
-As an example, let's look at [using-gatsby-source-graphql](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js) to see how we could use `createResolvers` to feed images from a CMS into `gatsby-image` (the assumption is that `gatsby-source-graphql` was configured
+As an example, you could look at [using-gatsby-source-graphql](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js) to see how you could use `createResolvers` to feed images from a CMS into `gatsby-image` (the assumption is that `gatsby-source-graphql` was configured
 to prefix all types from the third-party schema with `CMS`):
 
 ```js:title=gatsby-node.js
@@ -1076,9 +1076,9 @@ exports.createResolvers = ({
 }
 ```
 
-We create a new `imageFile` field on the `CMS_Asset` type, which will create `File`
+You create a new `imageFile` field on the `CMS_Asset` type, which will create `File`
 nodes from every value on the `url` field. Since `File` nodes automatically have
-`childImageSharp` convenience fields available, we can feed the images from the CMS
+`childImageSharp` convenience fields available, you can then feed the images from the CMS
 into `gatsby-image` by simply querying:
 
 ```graphql
@@ -1087,8 +1087,8 @@ query {
     post {
       # In this example, the `post.image` field is of type `CMS_Asset`
       image {
-        # It is important to include all fields in the query which we want to
-        # access in the resolver. In this example we want to make sure to include
+        # It is important to include all fields in the query which you want to
+        # access in the resolver. In this example make sure to include
         # the `url` field. In the future, Gatsby might provide a `@projection`
         # extension to automatically include those fields.
         url

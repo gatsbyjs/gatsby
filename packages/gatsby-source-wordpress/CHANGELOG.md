@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.39...gatsby-source-wordpress@3.1.40) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.38...gatsby-source-wordpress@3.1.39) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
 ## [3.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.36...gatsby-source-wordpress@3.1.38) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-source-wordpress
@@ -533,7 +543,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-source-wordpress:** improve error logging for wordpress API requests ([#8967](https://github.com/gatsbyjs/gatsby/issues/8967)) ([3bac0c4](https://github.com/gatsbyjs/gatsby/commit/3bac0c4)), closes [#8928](https://github.com/gatsbyjs/gatsby/issues/8928)
+- **gatsby-source-wordpress:** improve error logging for WordPress API requests ([#8967](https://github.com/gatsbyjs/gatsby/issues/8967)) ([3bac0c4](https://github.com/gatsbyjs/gatsby/commit/3bac0c4)), closes [#8928](https://github.com/gatsbyjs/gatsby/issues/8928)
 
 <a name="3.0.3"></a>
 

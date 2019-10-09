@@ -11,7 +11,8 @@ const errorMap = {
     level: `ERROR`,
   },
   "95312": {
-    text: () => `"window" is not available during server side rendering.`,
+    text: context =>
+      `"${context.ref}" is not available during server side rendering.`,
     level: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
   },

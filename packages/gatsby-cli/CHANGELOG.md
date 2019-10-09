@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.55...gatsby-cli@2.7.56) (2019-10-08)
+
+### Bug Fixes
+
+- update dependency hosted-git-info to ^3.0.2 ([#18292](https://github.com/gatsbyjs/gatsby/issues/18292)) ([133c2c5](https://github.com/gatsbyjs/gatsby/commit/133c2c5))
+
+## [2.7.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.54...gatsby-cli@2.7.55) (2019-10-08)
+
+### Bug Fixes
+
+- **gatsby:** catch more browser only variable for SSR error ([#18112](https://github.com/gatsbyjs/gatsby/issues/18112)) ([e9ef934](https://github.com/gatsbyjs/gatsby/commit/e9ef934))
+
+## [2.7.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.53...gatsby-cli@2.7.54) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency execa to ^2.0.5 ([#18106](https://github.com/gatsbyjs/gatsby/issues/18106)) ([db8d4a8](https://github.com/gatsbyjs/gatsby/commit/db8d4a8))
+- **gatsby-cli:** Add isGlobal to update notifier. ([#18015](https://github.com/gatsbyjs/gatsby/issues/18015)) ([cb6920a](https://github.com/gatsbyjs/gatsby/commit/cb6920a))
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
 ## [2.7.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.51...gatsby-cli@2.7.53) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-cli

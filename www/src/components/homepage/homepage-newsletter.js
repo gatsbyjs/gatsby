@@ -7,47 +7,41 @@ import EmailCaptureForm from "../../components/email-capture-form"
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
 import { rhythm } from "../../utils/typography"
-import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  fontSizes,
-  letterSpacings,
-  lineHeights,
-  fonts,
-  fontWeights,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
-const stripedBorderHeight = space[1]
+const stripedBorderHeight = 1
 
 const Container = styled(`div`)`
-  border: 1px solid ${colors.ui.border.subtle};
-  border-radius: ${radii[2]}px;
+  background: ${p => p.theme.colors.newsletter.background};
+  border: 1px solid ${p => p.theme.colors.newsletter.border};
+  border-radius: ${p => p.theme.radii[2]}px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${space[8]};
-  padding: calc(${space[8]} * 1.2);
-  padding-bottom: calc(${rhythm(space[8] * 1.2)} + ${stripedBorderHeight});
+  margin-bottom: ${p => p.theme.space[8]};
+  padding: calc(${p => p.theme.space[8]} * 1.2);
+  padding-bottom: calc(
+    ${props => rhythm(props.theme.space[8] * 1.2)} +
+      ${p => p.theme.space[stripedBorderHeight]}
+  );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
-    background: ${colors.white}
+    border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
+    background: ${p => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
-        ${colors.yellow[40]},
-        ${colors.yellow[40]} 20px,
+        ${p => p.theme.colors.newsletter.stripeColorA},
+        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.teal[40]} 40px,
-        ${colors.teal[40]} 60px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
         transparent 60px,
         transparent 80px
       );
     bottom: 0;
     content: "";
-    height: ${stripedBorderHeight};
+    height: ${p => p.theme.space[stripedBorderHeight]};
     left: 0;
     right: 0;
     position: absolute;
@@ -64,32 +58,32 @@ const Container = styled(`div`)`
 `
 
 const Ornament = styled(`span`)`
-  left: -${space[1]};
+  left: -${p => p.theme.space[1]};
   position: absolute;
-  top: -${space[2]};
+  top: -${p => p.theme.space[2]};
 `
 
 const Name = styled(`h3`)`
-  color: ${colors.lilac};
-  font-family: ${fonts.header};
-  font-size: ${fontSizes[1]};
-  font-weight: ${fontWeights[0]};
-  letter-spacing: ${letterSpacings.tracked};
+  color: ${p => p.theme.colors.lilac};
+  font-family: ${p => p.theme.fonts.heading};
+  font-size: ${p => p.theme.fontSizes[1]};
+  font-weight: ${p => p.theme.fontWeights.body};
+  letter-spacing: ${p => p.theme.letterSpacings.tracked};
   margin: 0;
   text-transform: uppercase;
 `
 
 const Title = styled(`h1`)`
-  color: ${colors.gatsby};
-  font-size: ${fontSizes[4]};
-  font-weight: ${fontWeights[1]};
-  line-height: ${lineHeights.dense};
+  color: ${p => p.theme.colors.newsletter.heading};
+  font-size: ${p => p.theme.fontSizes[4]};
+  font-weight: ${p => p.theme.fontWeights.heading};
+  line-height: ${p => p.theme.lineHeights.dense};
   margin: 0;
-  margin-top: ${space[1]};
+  margin-top: ${p => p.theme.space[1]};
 `
 
 const Form = styled(EmailCaptureForm)`
-  margin-top: ${space[5]};
+  margin-top: ${p => p.theme.space[5]};
 
   ${mediaQueries.lg} {
     margin-top: 0;
