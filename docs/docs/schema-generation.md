@@ -2,9 +2,8 @@
 title: Schema Generation
 ---
 
-> This documentation isn't up to date with latest
-> [schema customization changes](/docs/schema-customization). Help Gatsby by
-> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+> This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
 Once the nodes have been sourced and transformed, the next step is to generate the GraphQL Schema. This is one of the more complex parts of the Gatsby code base. In fact, as of writing, it accounts for a third of the lines of code in core Gatsby. It involves inferring a GraphQL schema from all the nodes that have been sourced and transformed so far. Read on to find out how it's done.
 

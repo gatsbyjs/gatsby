@@ -2,6 +2,14 @@
 title: Building the JavaScript App
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> Outdated areas are:
+>
+> - _Load page resources_ section needs to be updated
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 Gatsby generates your site's HTML pages, but also creates a JavaScript runtime that takes over in the browser once the initial HTML has loaded. This enables other pages to load instantaneously. Read on to find out how that runtime is generated.
 
 ## Webpack config
