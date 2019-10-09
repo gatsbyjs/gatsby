@@ -1,5 +1,5 @@
 ---
-title: Deploying and Hosting
+title: Deploying & Hosting
 overview: true
 ---
 
