@@ -15,7 +15,7 @@ This quick start is intended for intermediate to advanced developers. For a gent
 
 ### Install Node.js
 
-In order to execute the Gatsby CLI (command-line interface) you will need to have [Node.js](https://nodejs.org/) installed on your machine. Node.js comes with `npm` and `npx` pre-installed. 
+In order to execute the Gatsby CLI (command-line interface) you will need to have [Node.js](https://nodejs.org/) installed on your machine. Node.js comes with `npm` and `npx` pre-installed.
 
 To install node.js head over to the official webpage at [nodejs.org](https://nodejs.org/). You will need to install node 6.11.5 or later to run Gatsby.
 

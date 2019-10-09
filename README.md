@@ -95,14 +95,20 @@ Gatsby is a modern web framework for blazing fast websites.
 
 You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
 
-1. **Install the Gatsby CLI.**
+1. Install Node.js
+
+In order to execute the Gatsby CLI (command-line interface) you will need to have [Node.js](https://nodejs.org/) installed on your machine. Node.js comes with `npm` and `npx` pre-installed.
+
+To install node.js head over to the official webpage at [nodejs.org](https://nodejs.org/). You will need to install node 6.11.5 or later to run Gatsby.
+
+2. **Install the Gatsby CLI.**
 
    ```shell
    npm install -g gatsby-cli
 
    ```
 
-2. **Create a Gatsby site from a Gatsby starter.**
+3. **Create a Gatsby site from a Gatsby starter.**
 
    Get your Gatsby blog set up in a single command:
 
@@ -111,7 +117,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
    gatsby new my-blazing-fast-site
    ```
 
-3. **Start the site in `develop` mode.**
+4. **Start the site in `develop` mode.**
 
    Next, move into your new site’s directory and start it up:
 
@@ -120,7 +126,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
    gatsby develop
    ```
 
-4. **Open the source code and start editing!**
+5. **Open the source code and start editing!**
 
    Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
