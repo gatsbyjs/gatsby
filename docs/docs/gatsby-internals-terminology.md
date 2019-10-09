@@ -2,6 +2,16 @@
 title: Terminology
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> Outdated areas are:
+>
+> - `data.json` doesn't exist anymore
+> - Add `page-data.json`
+> - Add `match-paths.json`
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 Throughout the Gatsby code, you'll see the below object fields and variables mentioned. Their definitions and reason for existence are defined below.
 
 ## Page

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.18...gatsby-plugin-netlify@2.1.19) (2019-10-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** add warning instead for invalid he… ([#18326](https://github.com/gatsbyjs/gatsby/issues/18326)) ([24ccbfd](https://github.com/gatsbyjs/gatsby/commit/24ccbfd))
+
 ## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.17...gatsby-plugin-netlify@2.1.18) (2019-10-08)
 
 ### Bug Fixes

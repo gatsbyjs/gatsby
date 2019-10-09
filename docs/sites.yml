@@ -3968,18 +3968,6 @@
     - Portfolio
   built_by: Maxim Andries
   featured: false
-- title: The Tenon.io blog
-  main_url: https://blog.tenon.io/
-  url: https://blog.tenon.io/
-  description: >
-    The Tenon.io blog features articles on accessibility written by some of the industry's leading lights and includes news, guidance, and education.
-  categories:
-    - Accessibility
-    - Blog
-    - Education
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
 - title: Algolia
   url: https://algolia.com
   main_url: https://algolia.com
@@ -7655,4 +7643,30 @@
     - Blog
   built_by: Roman Kravets
   built_by_url: "https://github.com/romkravets/dev-page"
+  featured: false
+- title: Phil Tietjen Portfolio
+  url: https://www.philtietjen.dev/
+  main_url: https://www.philtietjen.dev/
+  source_url: https://github.com/Phizzard/phil-portfolio
+  description: >
+    Portfolio of Phil Tietjen using Gatsby, TailwindCSS, and Emotion/styled
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Phil Tietjen
+  built_by_url: https://github.com/Phizzard
+  featured: false
+- title: Gatsby Bomb
+  description: >
+    A fan made version of the website Giantbomb, fully static and powered by Gatsby JS and the GiantBomb API.
+  main_url: "https://gatsbybomb.netlify.com"
+  url: "https://gatsbybomb.netlify.com"
+  categories:
+    - App
+    - Entertainment
+    - Media
+    - Video
+  built_by: Phil Tietjen
+  built_by_url: "https://github.com/Phizzard"
   featured: false
