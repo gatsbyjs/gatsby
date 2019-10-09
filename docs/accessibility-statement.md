@@ -24,7 +24,7 @@ Alternatively, we welcome you to reach out directly to Marcy Sutton, Head of Lea
 
 ## Building with Gatsby
 
-To learn how to build an accessible website with Gatsby, visit our guide [Making Your Site Accessible](/docs/making-your-site-accessible/). Contributions are very welcome as this page evolves.
+To learn how to build an accessible website with Gatsby, visit our guide [Making Your Site Accessible](/docs/docs/making-your-site-accessible.md). Contributions are very welcome as this page evolves.
 
 ## Third-party platforms, products and services
 
