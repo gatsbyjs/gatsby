@@ -20,35 +20,35 @@ q.drain = () => {
   totalJobs = 0
 }
 
-const setJobToProcess = (toProcess, job) => {
-  const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
-  const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
-  const jobPath = `["${inputFileKey}"].["${outputFileKey}"]`
+const getFileKey = filePath => filePath.replace(/\./g, `%2E`)
+
+const setJobToProcess = (toProcess, job, deferred) => {
+  const inputFileKey = getFileKey(job.inputPath)
+  const outputFileKey = getFileKey(job.outputPath)
+  const jobPath = `${inputFileKey}.${outputFileKey}`
 
   // Check if the job has already been queued. If it has, there's nothing
   // to do, return.
   if (_.has(toProcess, jobPath)) {
-    return _.get(toProcess, `${jobPath}.deferred.promise`)
+    return { existingPromise: _.get(toProcess, `${jobPath}.deferred.promise`) }
   }
 
   // Check if the output file already exists so we don't redo work.
   if (existsSync(job.outputPath)) {
-    return Promise.resolve(job)
+    return { existingPromise: Promise.resolve(job) }
   }
 
-  // deferred naming comes from https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/Promise.jsm/Deferred
-  let deferred = {}
-  deferred.promise = new Promise((resolve, reject) => {
-    deferred.resolve = resolve
-    deferred.reject = reject
-  })
+  let isQueued = false
+  if (toProcess[inputFileKey]) {
+    isQueued = true
+  }
 
   _.set(toProcess, jobPath, {
     job: job,
     deferred,
   })
 
-  return deferred
+  return { isQueued }
 }
 
 const scheduleJob = async (
@@ -58,21 +58,27 @@ const scheduleJob = async (
   reporter,
   reportStatus = true
 ) => {
-  const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
+  // deferred naming comes from https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/Promise.jsm/Deferred
+  let deferred = {}
+  deferred.promise = new Promise((resolve, reject) => {
+    deferred.resolve = resolve
+    deferred.reject = reject
+  })
 
-  let deferred = setJobToProcess(toProcess, job)
+  const { existingPromise, isQueued } = setJobToProcess(
+    toProcess,
+    job,
+    deferred
+  )
+  if (existingPromise) {
+    return existingPromise
+  }
 
   if (totalJobs === 0) {
     bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
   }
-
   totalJobs += 1
-
-  let isQueued = false
-  if (toProcess[inputFileKey]) {
-    isQueued = true
-  }
 
   if (!isQueued) {
     // Create image job
@@ -89,7 +95,7 @@ const scheduleJob = async (
     q.push(cb => {
       runJobs(
         jobId,
-        inputFileKey,
+        getFileKey(job.inputPath),
         boundActionCreators,
         pluginOptions,
         reportStatus,
@@ -179,4 +185,4 @@ function runJobs(
   }
 }
 
-export { scheduleJob, runJobs, setJobToProcess }
+export { scheduleJob, setJobToProcess }
