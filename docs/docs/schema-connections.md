@@ -2,9 +2,14 @@
 title: Schema connections
 ---
 
-> This documentation isn't up to date with latest
-> [schema customization changes](/docs/schema-customization). Help Gatsby by
-> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+> This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
+>
+> Outdated areas are:
+>
+> - add `nodes` as a sibling to `edges`
+> - there might be more convenience fields (ask @freiksenet)
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
 ## What are schema connections?
 

@@ -2,6 +2,14 @@
 title: Resource Handling & Service Workers
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> Outdated areas are:
+>
+> - mention the page shell
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 This document aims to outline how resources are fetched and cached by various parts of Gatsby.
 
 ## Offline Plugin (gatsby-plugin-offline)
