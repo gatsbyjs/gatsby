@@ -17,9 +17,7 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
   if (certFile ? !keyFile : keyFile) {
     report.panic({
       id: `11521`,
-      context: {
-        message: `for custom ssl --https, --cert-file, and --key-file must be used together`,
-      },
+      context: {},
     })
   }
 
