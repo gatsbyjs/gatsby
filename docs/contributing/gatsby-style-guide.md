@@ -275,7 +275,7 @@ This keyword highlights the current line. Replace `keyword` with `highlight-line
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
-		title: `GatsbyJS`, // keyword
+		title: `GatsbyJS`, // highlight-line
 		siteUrl: `https://www.gatsbyjs.org`,
 	},
 }
