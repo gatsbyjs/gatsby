@@ -197,6 +197,18 @@ const errorMap = {
     level: `ERROR`,
     docsUrl: `https://www.gatsbyjs.org/docs/actions/#createNode`,
   },
+  // local SSL certificate errors
+  "11521": {
+    text: () =>
+      `for custom ssl --https, --cert-file, and --key-file must be used together`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#custom-key-and-certificate-files`,
+  },
+  "11522": {
+    text: () => `Failed to generate dev SSL certificate`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#setup`,
+  },
 }
 
 module.exports = { errorMap, defaultError: errorMap[``] }

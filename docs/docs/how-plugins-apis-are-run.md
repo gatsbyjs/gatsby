@@ -2,6 +2,14 @@
 title: How APIs/Plugins Are Run
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> - mention how multiple configurations are merged
+> - the node creation flow in the diagram is no longer correct
+> - `CREATE_NODE` and `onCreateNode` are handled differently than described
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 For most sites, plugins take up the majority of the build time. So what's really happening when APIs are called?
 
 _Note: this section only explains how `gatsby-node` plugins are run. Not browser or ssr plugins_

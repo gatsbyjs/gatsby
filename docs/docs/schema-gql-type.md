@@ -2,9 +2,15 @@
 title: GraphQL Node Types Creation
 ---
 
-> This documentation isn't up to date with latest
-> [schema customization changes](/docs/schema-customization). Help Gatsby by
-> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+> This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
+>
+> Outdated areas are:
+>
+> - the `inferObjectStructureFromNodes` function doesn't exist anymore
+> - `setFieldsOnGraphQLNodeType` has been deprecated due to the new `createTypes` action
+> - file node creation has been moved away from `setFileNodeRootType`
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
 Gatsby creates a [GraphQLObjectType](https://graphql.org/graphql-js/type/#graphqlobjecttype) for each distinct `node.internal.type` that is created during the source-nodes phase. Find out below how this is done.
 

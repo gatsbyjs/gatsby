@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.11...gatsby-plugin-facebook-analytics@2.2.12) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
 ## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.10...gatsby-plugin-facebook-analytics@2.2.11) (2019-10-08)
 
 **Note:** Version bump only for package gatsby-plugin-facebook-analytics

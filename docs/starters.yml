@@ -4051,6 +4051,16 @@
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
     - Support GitHub Actions CI/CD workflow (beta)
+- url: https://flexible-gatsby.netlify.com/
+  repo: https://github.com/wangonya/flexible-gatsby
+  description: A simple and clean theme for Gatsby
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Google Analytics
+    - Simple design
+    - Markdown support
 - url: https://gatsby-starter-tailwind-blog.netlify.com/
   repo: https://github.com/Phizzard/gatsby-starter-tailwind-blog
   description: Basic blog with tags and minutes to read, built with gatsby-theme-tailwind-blog, TailwindCSS, Tailwind.macro, and Emotion styled.
