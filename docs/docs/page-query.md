@@ -1,5 +1,5 @@
 ---
-title: Querying data in pages with GraphQL
+title: Querying Data in Pages with GraphQL
 ---
 
 Gatsby's `graphql` tag enables page components to retrieve data via a GraphQL query.

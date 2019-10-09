@@ -1,5 +1,5 @@
 ---
-title: Adding search with Algolia
+title: Adding Search with Algolia
 ---
 
 Once you've added some content to your site, you'll want to make it easy for your visitors to find what they're looking for. This guide will run you through the process of setting up a custom search experience powered by [Algolia](https://www.algolia.com) on any Gatsby site. You'll be writing functional components that rely on React Hooks so following this guide requires you to be using [React 16.8](https://reactjs.org/blog/2019/02/06/react-v16.8.0) or higher.

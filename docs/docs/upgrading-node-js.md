@@ -1,5 +1,5 @@
 ---
-title: Upgrading your Node.js version
+title: Upgrading Your Node.js Version
 ---
 
 ## Gatsby's Node.js support policy

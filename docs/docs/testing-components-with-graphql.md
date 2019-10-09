@@ -1,5 +1,5 @@
 ---
-title: Testing components with GraphQL
+title: Testing Components with GraphQL
 ---
 
 If you try to run unit tests on components that use GraphQL queries, you will
