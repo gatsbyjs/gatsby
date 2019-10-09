@@ -190,3 +190,29 @@ exports.wrapPageElement = true
  * }
  */
 exports.wrapRootElement = true
+/**
+ *
+ * This hook allows Gatsby users to add parameters to io() when the socket is initialized
+ *
+ * This would allow multiple Gatsby develop sites to work behind a proxy
+ * The function documentation can be found here https://socket.io/docs/client-api/#io-url-options
+ *
+ * @param {string} the url for the socket
+ * @param {Object} options for the io constructor
+ * @example
+ * const React = require("react")
+ *
+ * exports.onSocketInit = ({setUrl, setSocketOptions}) => {
+ *      setUrl("htpps://localhost:42069")
+ *      setSocketOptions({ forceNew = false })
+ * }
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+exports.onSocketInit = true

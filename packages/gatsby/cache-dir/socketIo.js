@@ -1,11 +1,27 @@
 import { reportError, clearError } from "./error-overlay-handler"
 import normalizePagePath from "./normalize-page-path"
+import apiRunner from "./api-runner-ssr"
 
 let socket = null
 
 let staticQueryData = {}
 let pageQueryData = {}
 let isInitialized = false
+let url = null
+let socketOptions = {}
+
+const setUrl = givenUrl => {
+  url = givenUrl
+}
+
+const setSocketOptions = givenOptions => {
+  socketOptions = givenOptions
+}
+
+apiRunner(`onSocketInit`, {
+  setUrl,
+  setSocketOptions,
+})
 
 export const getStaticQueryData = () => staticQueryData
 export const getPageQueryData = () => pageQueryData
@@ -17,7 +33,11 @@ export default function socketIo() {
       // Try to initialize web socket if we didn't do it already
       try {
         // eslint-disable-next-line no-undef
-        socket = io()
+        if (!url) {
+          socket = io()
+        } else {
+          socket = io(url, socketOptions)
+        }
 
         const didDataChange = (msg, queryData) => {
           const id =
