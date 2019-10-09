@@ -33,6 +33,9 @@ exports.onPreBootstrap = (_, pluginOptions) => {
           endDate: new Date(),
         },
   })
+
+  // remove jwt from our config as we don't want it to leak into gatsby-browser.js
+  delete pluginOptions.jwt
 }
 
 exports.onCreateWebpackConfig = ({ actions }) => {
