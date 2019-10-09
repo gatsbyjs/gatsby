@@ -106,7 +106,7 @@ const commonAssertions = events => {
           payload: joi
             .string()
             .required()
-            .valid([`SUCCESS`, `IN_PROGRESS`, `FAILED`]),
+            .valid([`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`]),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
@@ -214,14 +214,6 @@ const commonAssertionsForFailure = events => {
     expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
     expect(event).toHaveProperty(`action.payload`, `IN_PROGRESS`)
   })
-  it(`emit final SET_STATUS with FAILED - last message`, () => {
-    const filteredEvents = events.filter(
-      event => event.action.type === `SET_STATUS`
-    )
-    const event = last(filteredEvents)
-    expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
-    expect(event).toHaveProperty(`action.payload`, `FAILED`)
-  })
   it(`it emits just 2 SET_STATUS`, () => {
     const filteredEvents = events.filter(
       event => event.action.type === `SET_STATUS`
@@ -258,6 +250,11 @@ describe(`develop`, () => {
       })
 
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with FAILED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `FAILED`)
+      })
     })
 
     // Skipping for now because we don't handle these correctly
@@ -272,6 +269,11 @@ describe(`develop`, () => {
       })
 
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with FAILED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `FAILED`)
+      })
     })
     describe(`process.exit`, () => {
       let events = []
@@ -283,6 +285,11 @@ describe(`develop`, () => {
       })
 
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with FAILED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `FAILED`)
+      })
     })
 
     // in cloud we kill gatsby process with SIGTERM
@@ -302,6 +309,11 @@ describe(`develop`, () => {
       })
 
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with INTERRUPTED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `INTERRUPTED`)
+      })
     })
   })
 
@@ -389,6 +401,11 @@ describe(`build`, () => {
         })
       })
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with FAILED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `FAILED`)
+      })
     })
     describe(`unhandledRejection`, () => {
       let gatsbyProcess
@@ -416,6 +433,11 @@ describe(`build`, () => {
         })
       })
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with FAILED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `FAILED`)
+      })
     })
     describe(`process.exit`, () => {
       let gatsbyProcess
@@ -443,6 +465,11 @@ describe(`build`, () => {
         })
       })
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with FAILED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `FAILED`)
+      })
     })
 
     // in cloud we kill gatsby process with SIGTERM
@@ -475,6 +502,11 @@ describe(`build`, () => {
         })
       })
       commonAssertionsForFailure(events)
+      it(`emit final SET_STATUS with INTERRUPTED - last message`, () => {
+        const event = last(events)
+        expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
+        expect(event).toHaveProperty(`action.payload`, `INTERRUPTED`)
+      })
     })
   })
 })
