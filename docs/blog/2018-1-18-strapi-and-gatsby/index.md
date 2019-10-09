@@ -184,7 +184,7 @@ _Important links from Video:_
 
 #### Create a Content Type
 
-Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in Wordpress).
+Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in WordPress).
 
 [Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder/) named `article` with four fields:
 
