@@ -49,52 +49,26 @@ const getGlobalStatus = (id, status) => {
   }, ActivityStatuses.Success)
 }
 
-const verySpecialDebounce = (fn, waitingTime) => {
-  let lastInvocationTime = 0
-  let lastCalledStatus = undefined
-  let lastActualledCalledStatus = undefined
-  let timeoutHandle = undefined
-
-  signalExit(() => {
-    if (timeoutHandle) {
-      clearTimeout(timeoutHandle)
-      if (lastCalledStatus !== lastActualledCalledStatus) {
-        fn(lastCalledStatus)
-      }
-    }
-  })
-
-  const debounceHandler = status => {
-    clearTimeout(timeoutHandle)
-    timeoutHandle = null
-    const currentTime = Date.now()
-    const waitingEnough = currentTime - lastInvocationTime > waitingTime
-    lastInvocationTime = currentTime
-    lastCalledStatus = status
-
-    if (waitingEnough) {
-      if (lastCalledStatus !== lastActualledCalledStatus) {
-        lastActualledCalledStatus = status
-        fn(status)
-      }
-    } else {
-      timeoutHandle = setTimeout(
-        () => debounceHandler(status),
-        currentTime - lastInvocationTime
-      )
-    }
+let cancelDelayedSetStatus = null
+/**
+ * Like setTimeout, but also handle signalExit
+ */
+const delayedCall = (fn, timeout) => {
+  const fnWrap = () => {
+    fn()
+    clear()
   }
 
-  return debounceHandler
-}
+  const timeoutID = setTimeout(fnWrap, timeout)
+  const cancelSignalExit = signalExit(fnWrap)
 
-const debouncedSetStatus = status =>
-  verySpecialDebounce(dispatchFn => {
-    dispatchFn({
-      type: Actions.SetStatus,
-      payload: status,
-    })
-  }, 1000)
+  const clear = () => {
+    clearTimeout(timeoutID)
+    cancelSignalExit()
+  }
+
+  return clear
+}
 
 const actions = {
   createLog: ({
@@ -160,7 +134,27 @@ const actions = {
 
     return actionsToEmit
   },
-  setStatus: status => debouncedSetStatus(status),
+  setStatus: (status, force = false) => dispatch => {
+    const currentStatus = getStore().getState().logs.status
+
+    if (cancelDelayedSetStatus) {
+      cancelDelayedSetStatus()
+      cancelDelayedSetStatus = null
+    }
+
+    if (status !== currentStatus) {
+      if (status === `IN_PROGRESS` || force) {
+        dispatch({
+          type: Actions.SetStatus,
+          payload: status,
+        })
+      } else {
+        cancelDelayedSetStatus = delayedCall(() => {
+          actions.setStatus(status, true)(dispatch)
+        }, 1000)
+      }
+    }
+  },
   startActivity: ({
     id,
     text,
