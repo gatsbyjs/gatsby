@@ -468,7 +468,7 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 - More on [Using CSS Modules](/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
-### Using SCSS/SASS
+### Using Sass/SCSS
 
 Sass is an extension of CSS that gives you more advanced features like nested rules, variables, mixins, and more.
 
@@ -518,13 +518,13 @@ import "./styles.scss"
 import "./styles.sass"
 ```
 
-_Note: You can use SASS/SCSS files as modules too, like mentioned above, with the difference that instead of .css the extensions have to be .scss or .sass_
+_Note: You can use Sass/SCSS files as modules too, like mentioned above, with the difference that instead of .css the extensions have to be .scss or .sass_
 
 #### Additional resources
 
 - [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
-- [A most complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
 
 ### Adding a Local Font
 
