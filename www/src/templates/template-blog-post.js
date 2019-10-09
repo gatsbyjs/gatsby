@@ -59,9 +59,7 @@ class BlogPostTemplate extends React.Component {
               <title>{post.frontmatter.title}</title>
               <link
                 rel="author"
-                href={`https://gatsbyjs.org${
-                  post.frontmatter.author.fields.slug
-                }`}
+                href={`https://gatsbyjs.org${post.frontmatter.author.fields.slug}`}
               />
               <meta
                 name="description"
@@ -79,17 +77,13 @@ class BlogPostTemplate extends React.Component {
               {post.frontmatter.image && (
                 <meta
                   property="og:image"
-                  content={`https://gatsbyjs.org${
-                    post.frontmatter.image.childImageSharp.resize.src
-                  }`}
+                  content={`https://gatsbyjs.org${post.frontmatter.image.childImageSharp.resize.src}`}
                 />
               )}
               {post.frontmatter.image && (
                 <meta
                   name="twitter:image"
-                  content={`https://gatsbyjs.org${
-                    post.frontmatter.image.childImageSharp.resize.src
-                  }`}
+                  content={`https://gatsbyjs.org${post.frontmatter.image.childImageSharp.resize.src}`}
                 />
               )}
               <meta property="og:type" content="article" />
@@ -151,9 +145,7 @@ class BlogPostTemplate extends React.Component {
                           borderBottom: t =>
                             `1px solid ${t.colors.link.border}`,
                           transition: t =>
-                            `all ${t.transition.speed.fast} ${
-                              t.transition.curve.default
-                            }`,
+                            `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
                           "&:hover": { borderColor: `link.hoverBorder` },
                         }}
                       >
