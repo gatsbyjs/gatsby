@@ -222,12 +222,15 @@ module.exports = async function build(program: BuildArgs) {
   /*
    * We then save the JS compiled hash to compare in the next build
    */
+  activity = report.activityTimer(`Save webpack and page data`)
+  activity.start()
   store.dispatch({
     type: `SET_WEBPACK_COMPILATION_HASH`,
     payload: stats.hash,
   })
   await waitJobsFinished()
   await db.saveState()
+  activity.end()
 
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,

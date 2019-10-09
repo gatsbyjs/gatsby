@@ -180,7 +180,10 @@ module.exports = async (args: BootstrapArgs) => {
    * Copy cache state for comparing data
    */
   if (fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
-    console.log(`Copied redux-state for comparing later`)
+    let activity = report.activityTimer(
+      `Copied redux-state for comparing later`
+    )
+    activity.start()
     await fs.copy(
       `${cacheDirectory}/redux-state.json`,
       `${program.directory}/temp/redux-state-old.json`,
@@ -188,6 +191,7 @@ module.exports = async (args: BootstrapArgs) => {
         clobber: true,
       }
     )
+    activity.end()
   }
 
   // Removed to force a new .cache on each build
