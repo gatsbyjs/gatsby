@@ -64,7 +64,7 @@ const typography = new Typography({
 export default typography
 ```
 
-If you're installing Typography.js into an existing Gatsby Project you've started, you will need to delete all css font styles from your codebase in favor of your new Typography.js settings.
+If you're installing Typography.js into an existing Gatsby project you've started, you will need to delete all conflicting CSS font styles from your codebase in favor of your new Typography.js settings.
 
 Font sizes of all elements in Typography.js grow and shrink in relation to the `baseFontSize` defined above. Try playing around with this value and see the visual difference it can make to your website.
 
