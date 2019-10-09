@@ -4051,3 +4051,19 @@
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
     - Support GitHub Actions CI/CD workflow (beta)
+- url: https://gatsby-starter-tailwind-blog.netlify.com/
+  repo: https://github.com/Phizzard/gatsby-starter-tailwind-blog
+  description: Basic blog with tags and minutes to read, built with gatsby-theme-tailwind-blog, TailwindCSS, Tailwind.macro, and Emotion styled.
+  tags:
+    - Blog
+    - Styling:CSS-in-JS
+    - Styling:Tailwind
+    - CMS:Netlify
+    - MDX
+  features:
+    - A simple blog built with Netlify CMS
+    - Minimalistic design (doesn't require images)
+    - Uses Tailwind for styling
+    - Component shadowing theme
+    - Tags
+    - Minutes read
