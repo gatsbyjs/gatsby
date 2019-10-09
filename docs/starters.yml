@@ -4061,3 +4061,19 @@
     - Google Analytics
     - Simple design
     - Markdown support
+- url: https://gatsby-starter-luke.netlify.com/
+  repo: https://github.com/lukethacoder/luke-gatsby-starter
+  description: An opinionated starter using TypeScript, styled-components (emotion flavoured), React Hooks & react-spring. Built as a BYOS (bring your own source) so you can get up and running with whatever data you choose.
+  tags:
+    - Language:TypeScript
+    - Transitions
+    - Styling:CSS-in-JS
+    - Netlify
+    - Linting
+  features:
+    - TypeScript
+    - react-spring animations
+    - BYOS (bring your own source)
+    - Emotion for styling components
+    - Minimal Design
+    - React Hooks (IntersectionObserver, KeyUp, LocalStorage)
