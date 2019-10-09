@@ -77,7 +77,7 @@ tagged with **gatsby** or
 
 DEV Community is another informative platform to ask questions and share tips as well. Read through
 the [existing questions and posts](https://dev.to/t/gatsby)
-tagged with **gatsby** or
+tagged with `gatsby` or
 [ask for help](https://dev.to/new/help). You could also [write your post](https://dev.to/new/gatsby) with the `gatsby` tag.
 
 ## Learn More About Gatsby:
