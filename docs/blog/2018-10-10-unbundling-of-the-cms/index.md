@@ -23,13 +23,13 @@ But creating compelling experiences is challenging:
 
 ## Generic vs best-of-breed
 
-When compared with purpose-built CMSs like Shopify for e-commerce or Wordpress for blogging, enterprise CMS applications like Sitecore, Evoq or Adobe Experience Manager (AEM) provide generic content modules.
+When compared with purpose-built CMSs like Shopify for e-commerce or WordPress for blogging, enterprise CMS applications like Sitecore, Evoq or Adobe Experience Manager (AEM) provide generic content modules.
 
 The enterprise CMS core development experiences are based in C#, ASP.NET, and J2EE -- languages and frameworks a decade out of date for frontend development. Add-ons are expensive and are difficult-to-use compared to pure-play alternatives.
 
 Best-of-breed products have emerged to provide top-notch alternatives in each of these areas, but have been difficult to integrate.
 
-One popular, paywalled, news site that currently stores all content and data in Drupal 7 is migrating to a microservices setup. They’ll handle stories in [Wordpress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), and user data in [Auth0](https://auth0.com/). They’re doing development in React and using [Segment](https://segment.com) for analytics, [Stripe](http://stripe.com) for payments and [Recurly](https://recurly.com/) for subscriptions.
+One popular, paywalled, news site that currently stores all content and data in Drupal 7 is migrating to a microservices setup. They’ll handle stories in [WordPress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), and user data in [Auth0](https://auth0.com/). They’re doing development in React and using [Segment](https://segment.com) for analytics, [Stripe](http://stripe.com) for payments and [Recurly](https://recurly.com/) for subscriptions.
 
 Another digital consumer brand moved from using Sitecore as a content and development platform to using [Contentful](https://www.contentful.com/) as a [headless CMS](/docs/headless-cms/), [Yotpo](https://www.yotpo.com/) for user-generated content -- primarily reviews, while development transitioned to React to provide a modern look and feel.
 

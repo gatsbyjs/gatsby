@@ -49,7 +49,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
-        // your wordpress source
+        // your WordPress source
         baseUrl: `wpexample.com`,
         protocol: `https`,
         // is it hosted on wordpress.com, or self-hosted?
@@ -134,4 +134,4 @@ created to support this guide.
 - [Blog post on which this guide is based on](/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
 - [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
 - [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)
-- More [Gatsby blog posts about using Gatsby + Wordpress](/blog/tags/wordpress/)
+- More [Gatsby blog posts about using Gatsby + WordPress](/blog/tags/wordpress/)

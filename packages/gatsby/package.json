@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.15.29",
+  "version": "2.15.33",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/core": "^7.6.2",
-    "@babel/parser": "^7.6.2",
+    "@babel/core": "^7.6.3",
+    "@babel/parser": "^7.6.3",
     "@babel/polyfill": "^7.6.0",
-    "@babel/runtime": "^7.6.2",
-    "@babel/traverse": "^7.6.2",
+    "@babel/runtime": "^7.6.3",
+    "@babel/traverse": "^7.6.3",
     "@gatsbyjs/relay-compiler": "2.0.0-printer-fix.4",
     "@hapi/joi": "^15.1.1",
     "@mikaelkristiansson/domready": "^1.0.9",
@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "address": "1.1.2",
-    "autoprefixer": "^9.6.2",
+    "autoprefixer": "^9.6.4",
     "axios": "^0.19.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
@@ -70,7 +70,7 @@
     "flat": "^4.1.0",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-cli": "^2.7.54",
+    "gatsby-cli": "^2.7.56",
     "gatsby-core-utils": "^1.0.12",
     "gatsby-graphiql-explorer": "^0.2.22",
     "gatsby-link": "^2.2.18",
@@ -114,7 +114,7 @@
     "raw-loader": "^0.5.1",
     "react-dev-utils": "^4.2.3",
     "react-error-overlay": "^3.0.0",
-    "react-hot-loader": "^4.12.14",
+    "react-hot-loader": "^4.12.15",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "semver": "^5.7.1",
@@ -143,8 +143,8 @@
     "yaml-loader": "^0.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/runtime": "^7.6.2",
+    "@babel/cli": "^7.6.3",
+    "@babel/runtime": "^7.6.3",
     "babel-preset-gatsby-package": "^0.2.7",
     "cross-env": "^5.2.1",
     "documentation": "^12.1.2",

@@ -151,7 +151,7 @@ const main = () => {
         .then(packages => filterArchived(packages))
         .then(packages =>
           packages.map(p => {
-            // TODO: notify / comment on github
+            // TODO: notify / comment on GitHub
             console.info(`Notify package "${p.name}"`)
             // return update status
             // will turn notified to true once notifications are created
