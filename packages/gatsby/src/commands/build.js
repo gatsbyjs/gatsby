@@ -8,7 +8,7 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
-const del = require(`del`) // new
+const del = require(`del`)
 const fs = require(`fs-extra`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
@@ -100,7 +100,7 @@ module.exports = async function build(program: BuildArgs) {
 
   if (fs.existsSync(`${program.directory}/temp/redux-state-old.json`)) {
     const previousWebpackCompilationHash = require(`${program.directory}/temp/redux-state-old.json`)
-
+    console.log("test");
     if (
       stats.hash !== previousWebpackCompilationHash.webpackCompilationHashOld
     ) {
@@ -159,16 +159,6 @@ module.exports = async function build(program: BuildArgs) {
   }
 
   /*
-   * We then save the JS compiled hash to compare in the next build
-   */
-  store.dispatch({
-    type: `SET_WEBPACK_COMPILATION_HASH`,
-    payload: stats.hash,
-  })
-  await waitJobsFinished()
-  await db.saveState()
-
-  /*
    * Lets start building some new HTML pages
    */
   activity = report.activityTimer(`Building static HTML for pages`, {
@@ -209,6 +199,29 @@ module.exports = async function build(program: BuildArgs) {
     })
   }
   activity.end()
+
+  /*
+   * We then check for pages that may have been removed and delete them.
+   */
+  if (
+    !isNewBuild ||
+    fs.existsSync(`${program.directory}/temp/redux-state-old.json`)
+  ) {
+    activity = report.activityTimer(`Delete old page and page data`)
+    activity.start()
+    await pageDataUtil.removeOldPageData(program.directory, store)
+    activity.end()
+  }
+
+  /*
+   * We then save the JS compiled hash to compare in the next build
+   */
+  store.dispatch({
+    type: `SET_WEBPACK_COMPILATION_HASH`,
+    payload: stats.hash,
+  })
+  await waitJobsFinished()
+  await db.saveState()
 
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,
