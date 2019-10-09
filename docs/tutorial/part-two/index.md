@@ -302,7 +302,7 @@ export default () => (
 
 The finished page should now look like:
 
-![css-modules-userlist](css-modules-userlist.png)
+![User list page with CSS modules](css-modules-userlist.png)
 
 ### CSS-in-JS
 
