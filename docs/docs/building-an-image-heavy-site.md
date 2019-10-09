@@ -1,5 +1,5 @@
 ---
-title: Building an image heavy site
+title: Building an Image Heavy Site
 ---
 
 This is a stub. Help our community expand it.
