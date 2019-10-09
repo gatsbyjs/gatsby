@@ -73,6 +73,13 @@ the [existing questions and posts](https://hashnode.com/n/gatsby)
 tagged with `gatsby` or
 [ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
 
+### DEV Community
+
+DEV Community is another informative platform to ask questions and share tips as well. Read through
+the [existing questions and posts](https://dev.to/t/gatsby)
+tagged with `gatsby` or
+[ask for help](https://dev.to/new/help). You could also [write your post](https://dev.to/new/gatsby) with the `gatsby` tag.
+
 ## Learn More About Gatsby:
 
 - [Why Contribute to Gatsby?](/contributing/why-contribute-to-gatsby/)
