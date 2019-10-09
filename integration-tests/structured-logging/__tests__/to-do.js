@@ -290,46 +290,18 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(async () => {
-        await collectEventsForDevelop(events, {
-          PROCESS_KILL: true,
-        }).finishedPromise
+        const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
+          events
+        )
+
+        setTimeout(() => {
+          gatsbyProcess.kill(`SIGTERM`)
+        }, 1000)
+
+        await finishedPromise
       })
 
       commonAssertionsForFailure(events)
-
-      // let gatsbyProcess
-      // let events = []
-
-      // beforeAll(async done => {
-      //   gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-      //     // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-      //     stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
-      //     env: {
-      //       ...process.env,
-      //       NODE_ENV: `development`,
-      //       ENABLE_GATSBY_REFRESH_ENDPOINT: true,
-      //     },
-      //   })
-
-      //   gatsbyProcess.on(`message`, msg => {
-      //     //   console.log(msg)
-      //     events.push(msg)
-      //     // we are ready for tests
-      //     if (
-      //       msg.action &&
-      //       msg.action.type === `SET_STATUS` &&
-      //       msg.action.payload !== `IN_PROGRESS`
-      //     ) {
-      //       done()
-      //     }
-      //   })
-
-      //   setTimeout(() => {
-      //     gatsbyProcess.kill()
-      //   }, 1000)
-      // })
-
-      // commonAssertionsForFailure(events)
     })
   })
 
