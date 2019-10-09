@@ -265,11 +265,9 @@ alert(s)
 
 #### Code formatting: Line highlighting
 
-You may also choose to include line highlighting in your code snippets, using the following keywords inline in the snippet:
+You may also choose to include line highlighting in your code snippets, using the following keywords as comments inline in the snippet:
 
-##### **keyword**: `highlight-line`
-
-This keyword highlights the current line. Replace `keyword` with `highlight-line`.
+##### `highlight-line`: highlights the current line
 
 ````
 ```javascript:title=gatsby-config.js
@@ -291,16 +289,14 @@ module.exports = {
 }
 ```
 
-##### **keyword**: `highlight-next-line`
-
-This keyword highlights the next line. Replace `keyword` with `highlight-next-line`.
+##### `highlight-next-line`: highlights the next line
 
 ````
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
 		title: `GatsbyJS`,
-		// keyword
+		// highlight-next-line
 		siteUrl: `https://www.gatsbyjs.org`,
 	},
 }
@@ -317,19 +313,17 @@ module.exports = {
 }
 ```
 
-##### **keywords**: `highlight-start` (first keyword) & `highlight-end` (second keyword)
-
-These keywords highlight a range. Replace `first keyword` with `highlight-start` and replace `second keyword` with `highlight-end`.
+##### `highlight-start` & `highlight-end`: highlights a range
 
 ````
 ```javascript:title=gatsby-config.js
 module.exports = {
-	// first keyword
+	// highlight-start
 	siteMetadata: {
 		title: `GatsbyJS`,
 		siteUrl: `https://www.gatsbyjs.org`,
 	},
-	// second keyword
+	// highlight-end
 }
 ```
 ````
