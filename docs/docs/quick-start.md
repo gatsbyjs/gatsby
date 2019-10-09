@@ -13,6 +13,12 @@ This quick start is intended for intermediate to advanced developers. For a gent
 
 **Note**: this video uses `npx`, which is a tool to execute an npm package without first installing it. Running the command `npx gatsby new` is the same as running `gatsby new` after installing the gatsby-cli on your computer.
 
+### Install Node.js
+
+In order to execute the Gatsby CLI (command-line interface) you will need to have Node.js installed on your machine. Node.js comes with `npm` and `npx` pre-installed. 
+
+To install node.js head over to the official webpage at https://nodejs.org/. You will need to install node 6.11.5 or later to run Gatsby.
+
 ### Install the Gatsby CLI.
 
 ```shell
