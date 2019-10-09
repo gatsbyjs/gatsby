@@ -1,7 +1,7 @@
 import { reportError, clearError } from "./error-overlay-handler"
 import normalizePagePath from "./normalize-page-path"
 import apiRunner from "./api-runner-ssr"
-import { io } from "sokcet.io"
+import { io } from "socket.io"
 
 let socket = null
 
