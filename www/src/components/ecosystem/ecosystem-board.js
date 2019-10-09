@@ -78,7 +78,7 @@ class EcosystemBoard extends Component {
         />
         <EcosystemSection
           title="Themes"
-          description="Themes are Plugins that add preconfigured functionality to Gatsby sites. You can update central themes across sites and use multiple themes in your project!"
+          description="Themes are special Plugins that add preconfigured functionality to Gatsby sites. You can update central themes across sites and use multiple themes in your project!"
           subTitle="Featured Themes – work in progress"
           icon={ThemesIcon}
           links={[
