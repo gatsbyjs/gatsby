@@ -7656,3 +7656,16 @@
   built_by: Roman Kravets
   built_by_url: "https://github.com/romkravets/dev-page"
   featured: false
+- title: Gatsby Bomb
+  description: >
+    A fan made version of the website Giantbomb, fully static and powered by Gatsby JS and the GiantBomb API.
+  main_url: "https://gatsbybomb.netlify.com"
+  url: "https://gatsbybomb.netlify.com"
+  categories:
+    - App
+    - Entertainment
+    - Media
+    - Video
+  built_by: Phil Tietjen
+  built_by_url: "https://github.com/Phizzard"
+  featured: false
