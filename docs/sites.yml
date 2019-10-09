@@ -7656,3 +7656,16 @@
   built_by: Roman Kravets
   built_by_url: "https://github.com/romkravets/dev-page"
   featured: false
+- title: Phil Tietjen Portfolio
+  url: https://www.philtietjen.dev/
+  main_url: https://www.philtietjen.dev/
+  source_url: (optional - https://github.com/Phizzard/phil-portfolio
+  description: >
+    Portfolio of Phil Tietjen using Gatsby, TailwindCSS, and Emotion/styled
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Phil Tietjen
+  built_by_url: https://github.com/Phizzard
+  featured: false
