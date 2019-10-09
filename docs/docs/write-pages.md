@@ -75,7 +75,7 @@ e.g
 
 ### sync-requires.js
 
-This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g `component---src-blog-2-js`), and the values are expressions that require the component. E.g `/home/site/src/blog/2.js`. The file will look something like this:
+This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
 
 ```javascript
 exports.components = {
@@ -90,7 +90,7 @@ It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/mast
 
 ---
 
-`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it instead uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
+`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
 
 `async-requires.js` also exports a `data` function that imports `data.json` ([see below](/docs/write-pages/#datajson))
 
@@ -99,7 +99,9 @@ An example of async-requires is:
 ```javascript
 exports.components = {
   "component---src-blog-2-js": () =>
-    import("/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */),
+    import(
+      "/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */
+    ),
   // more components
 }
 

@@ -26,11 +26,11 @@ describe(`Production build tests`, () => {
   it(`should NOT remount when navigating within client only paths`, () => {
     cy.visit(`/client-only-paths`).waitForRouteChange()
 
-    cy.getTestElement(`/profile`)
+    cy.getTestElement(`/page/profile`)
       .click()
       .waitForRouteChange()
 
-    cy.getTestElement(`/dashboard`)
+    cy.getTestElement(`/nested/foo`)
       .click()
       .waitForRouteChange()
 

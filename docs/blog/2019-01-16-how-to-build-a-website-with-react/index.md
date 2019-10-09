@@ -2,7 +2,7 @@
 title: How to Build a Website with React
 date: 2019-01-16
 author: Shannon Soper
-tags: ["React", "architecture"]
+tags: ["react"]
 ---
 
 # What is React?

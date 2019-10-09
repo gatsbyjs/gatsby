@@ -54,13 +54,12 @@ class ShowcaseView extends Component {
           <title>Showcase</title>
           <meta
             name="description"
-            content="Gallery of sites using Gatsby acros the web, find inspiration or inspect the code of popular projects."
+            content="Gallery of sites using Gatsby across the web, find inspiration or inspect the code of popular projects."
           />
         </Helmet>
         <FeaturedSites
           setFilters={this.setFilters}
           featured={data.featured.edges}
-          showcase={this.showcase}
         />
         <div id="showcase" css={{ height: 0 }} ref={this.showcase} />
         <FilteredShowcase

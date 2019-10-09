@@ -1,0 +1,49 @@
+const path = require('path')
+const documentation = require('documentation')
+const fs = require('fs-extra')
+
+const OUTPUT_FILE_NAME = `apis.json`
+
+async function outputFile() {
+  const apis = await Promise.all([
+    path.join('cache-dir', 'api-ssr-docs.js'),
+    path.join('src', 'utils', 'api-browser-docs.js'),
+    path.join('src', 'utils', 'api-node-docs.js')
+  ]
+    .map(filePath => {
+      const resolved = path.resolve(filePath)
+      const [,api] = path.basename(filePath).split('-')
+      return documentation.build(resolved, {
+        shallow: true
+      })
+        .then(contents => {
+          return [
+            contents,
+            api
+          ]
+        })
+    })
+  )
+
+  const output = apis.reduce((merged, [output, api]) => {
+    merged[api] = output.reduce((mergedOutput, doc) => {
+      const isAPI = doc.namespace.startsWith('.')
+      if (isAPI) {
+        const tags = doc.tags.reduce((mergedTags, tag) => {
+          mergedTags[tag.title] = tag.description
+          return mergedTags
+        }, {})
+        mergedOutput[doc.name] = {
+          deprecated: !!tags.deprecated || undefined,
+          version: tags.gatsbyVersion
+        }
+      }
+      return mergedOutput
+    }, {})
+    return merged
+  }, {})
+
+  return fs.writeFile(path.resolve(OUTPUT_FILE_NAME), JSON.stringify(output, null, 2), 'utf8')
+}
+
+outputFile()

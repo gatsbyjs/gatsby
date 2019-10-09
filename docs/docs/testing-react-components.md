@@ -4,7 +4,7 @@ title: "Testing React components"
 
 _The recommended testing framework is [Jest](https://jestjs.io/). This guide assumes that you followed the [Unit testing](/docs/unit-testing) guide to setup Jest._
 
-Kent C. Dodds' [react-testing-library](https://github.com/kentcdodds/react-testing-library) has risen in popularity since its release and is a great replacement for [enzyme](https://github.com/airbnb/enzyme). You can write unit and integration tests and it encourages you to query the DOM in the same way the user would. Hence the guiding principle:
+The [@testing-library/react](https://github.com/testing-library/react-testing-library) by Kent C. Dodds has risen in popularity since its release and is a great replacement for [enzyme](https://github.com/airbnb/enzyme). You can write unit and integration tests and it encourages you to query the DOM in the same way the user would. Hence the guiding principle:
 
 > The more your tests resemble the way your software is used, the more confidence they can give you.
 
@@ -12,19 +12,16 @@ It provides light utility functions on top of `react-dom` and `react-dom/test-ut
 
 ## Installation
 
-Install the library as one of your project's `devDependencies`. Optionally you may install `jest-dom` to use its [custom jest matchers](https://github.com/gnapse/jest-dom#custom-matchers).
+Install the library as one of your project's `devDependencies`. Optionally you may install `jest-dom` to use its [custom jest matchers](https://github.com/testing-library/jest-dom#custom-matchers).
 
 ```shell
-npm install --save-dev react-testing-library jest-dom
+npm install --save-dev @testing-library/react @testing-library/jest-dom
 ```
 
 Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
 ```js:title=setup-test-env.js
-import "jest-dom/extend-expect"
-
-// this is basically: afterEach(cleanup)
-import "react-testing-library/cleanup-after-each"
+import "@testing-library/jest-dom/extend-expect"
 ```
 
 This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.
@@ -39,11 +36,11 @@ module.exports = {
 
 ## Usage
 
-Let's create a little example test using the newly added library. If you haven't done already read the [unit testing guide](/docs/unit-testing) — essentially you'll use `react-testing-library` instead of `react-test-renderer` now. There are a lot of options when it comes to selectors, this example chooses `getByTestId` here. It also utilizes `toHaveTextContent` from `jest-dom`:
+Let's create a little example test using the newly added library. If you haven't done already read the [unit testing guide](/docs/unit-testing) — essentially you'll use `@testing-library/react` instead of `react-test-renderer` now. There are a lot of options when it comes to selectors, this example chooses `getByTestId` here. It also utilizes `toHaveTextContent` from `jest-dom`:
 
 ```js
 import React from "react"
-import { render } from "react-testing-library"
+import { render } from "@testing-library/react"
 
 // You have to write data-testid
 const Title = () => <h1 data-testid="hero-title">Gatsby is awesome!</h1>

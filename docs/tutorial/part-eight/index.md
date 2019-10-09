@@ -1,6 +1,7 @@
 ---
 title: Preparing a site to go live
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 Wow! You've come a long way! You've learned how to:
@@ -29,7 +30,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 
 ### ✋ Create a production build
 
-1.  Stop the development server (if it's still running) and run:
+1.  Stop the development server (if it's still running) and run the following command:
 
 ```shell
 gatsby build
@@ -43,7 +44,7 @@ gatsby build
 gatsby serve
 ```
 
-Once this starts, you can now view your site at `localhost:9000`.
+Once this starts, you can view your site at [`localhost:9000`](http://localhost:9000).
 
 ### Run a Lighthouse audit
 
@@ -85,7 +86,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install --save gatsby-plugin-manifest
 ```
 
-2. Add a favicon for your app under `src/images/icon.png`. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+2. Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
 
 3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
@@ -95,15 +96,15 @@ npm install --save gatsby-plugin-manifest
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: "GatsbyJS",
-        short_name: "GatsbyJS",
-        start_url: "/",
-        background_color: "#6b37bf",
-        theme_color: "#6b37bf",
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
         // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
         // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
-        display: "standalone",
-        icon: "src/images/icon.png", // This path is relative to the root of the site.
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
   ]
@@ -130,21 +131,30 @@ npm install --save gatsby-plugin-offline
 
 ```javascript:title=gatsby-config.js
 {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-manifest`,
-            options: {
-                ...
-            }
-        },
-        'gatsby-plugin-offline'
-    ]
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    // highlight-next-line
+    `gatsby-plugin-offline`,
+  ]
 }
 ```
 
 That's all you need to get started with service workers with Gatsby.
 
-> 💡 The manifest plugin should be listed _before_ the offline plugin so that the offline plugin can cache the created `manifest.webmanifest`.
+> 💡 The offline plugin should be listed _after_ the manifest plugin so that the offline plugin can cache the created `manifest.webmanifest`.
 
 ## Add page metadata
 
@@ -162,39 +172,173 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Make sure you have a `description` and an `author` configured inside your `siteMetadata` object. Also, add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
-{
-  plugins: [`gatsby-plugin-react-helmet`]
+module.exports = {
+  siteMetadata: {
+    title: `Pandas Eating Lots`,
+    // highlight-start
+    description: `A simple description about pandas eating lots...`,
+    author: `gatsbyjs`,
+    // highlight-end
+  },
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#6b37bf`,
+        theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: `standalone`,
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    `gatsby-plugin-offline`,
+    // highlight-next-line
+    `gatsby-plugin-react-helmet`,
+  ],
 }
 ```
 
-3.  Use `React Helmet` in your pages:
+3. In the `src/components` directory, create a file called `seo.js` and add the following:
 
-```jsx
+```jsx:title=src/components/seo.js
 import React from "react"
-import { Helmet } from "react-helmet"
+import PropTypes from "prop-types"
+import Helmet from "react-helmet"
+import { useStaticQuery, graphql } from "gatsby"
 
-class Application extends React.Component {
-  render() {
-    return (
-      <div className="application">
-        {/* highlight-start */}
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title>My Title</title>
-          <link rel="canonical" href="http://mysite.com/example" />
-        </Helmet>
-        ...
-        {/* highlight-end */}
-      </div>
-    )
-  }
+function SEO({ description, lang, meta, title }) {
+  const { site } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            description
+            author
+          }
+        }
+      }
+    `
+  )
+
+  const metaDescription = description || site.siteMetadata.description
+
+  return (
+    <Helmet
+      htmlAttributes={{
+        lang,
+      }}
+      title={title}
+      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      meta={[
+        {
+          name: `description`,
+          content: metaDescription,
+        },
+        {
+          property: `og:title`,
+          content: title,
+        },
+        {
+          property: `og:description`,
+          content: metaDescription,
+        },
+        {
+          property: `og:type`,
+          content: `website`,
+        },
+        {
+          name: `twitter:card`,
+          content: `summary`,
+        },
+        {
+          name: `twitter:creator`,
+          content: site.siteMetadata.author,
+        },
+        {
+          name: `twitter:title`,
+          content: title,
+        },
+        {
+          name: `twitter:description`,
+          content: metaDescription,
+        },
+      ].concat(meta)}
+    />
+  )
 }
+
+SEO.defaultProps = {
+  lang: `en`,
+  meta: [],
+  description: ``,
+}
+
+SEO.propTypes = {
+  description: PropTypes.string,
+  lang: PropTypes.string,
+  meta: PropTypes.arrayOf(PropTypes.object),
+  title: PropTypes.string.isRequired,
+}
+
+export default SEO
 ```
 
-> 💡 The above example is from the [React Helmet docs](https://github.com/nfl/react-helmet#example). Check those out for more!
+The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work with in the rest of your project. Pretty cool, right?
+
+4.  Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
+
+```jsx:title=src/templates/blog-post.js
+import React from "react"
+import { graphql } from "gatsby"
+import Layout from "../components/layout"
+// highlight-next-line
+import SEO from "../components/seo"
+
+export default ({ data }) => {
+  const post = data.markdownRemark
+  return (
+    <Layout>
+      // highlight-start
+      <SEO
+        title={post.frontmatter.title}
+        description={post.frontmatter.excerpt}
+      />
+      // highlight-end
+      <div>
+        <h1>{post.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      </div>
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      frontmatter {
+        title
+        // highlight-next-line
+        excerpt
+      }
+    }
+  }
+`
+```
+
+The above example is based off the [Gatsby Starter Blog](/starters/gatsbyjs/gatsby-starter-blog/). By passing props to the `<SEO>` component, you can dynamically change the metadata for a post. In this case, the blog post `title` and `excerpt` (if it exists in the blog post markdown file) will be used instead of the default `siteMetadata` properties in your `gatsby-config.js` file.
+
+Now, if you run the Lighthouse audit again as laid out above, you should get close to--if not a perfect-- 100 score!
+
+> 💡 For further reading and examples, check out [Adding an SEO Component](docs/add-seo-component) and the [React Helmet docs](https://github.com/nfl/react-helmet#example)!
 
 ## Keep making it better
 
@@ -206,7 +350,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ### Official Documentation
 
-- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
+- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
 
 ### Official Plugins
 
@@ -220,7 +364,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ## That's all, folks
 
-Well, not quite; just for this tutorial. There are also [Advanced Tutorials](/tutorial/advanced-tutorials/) to check out for more guided use cases.
+Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutorial/additional-tutorials/) to check out for more guided use cases.
 
 This is just the beginning. Keep going!
 

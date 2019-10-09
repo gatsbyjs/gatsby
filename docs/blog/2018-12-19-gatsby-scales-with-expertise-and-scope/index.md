@@ -4,8 +4,6 @@ date: 2019-01-03
 author: LekoArts
 canonicalLink: "https://www.lekoarts.de/en/blog/how-gatsby-scales-with-your-expertise-and-scope"
 publishedAt: lekoarts.de
-tags:
-  - gatsby
 ---
 
 _This blog post was originally posted on the [LekoArts Blog](https://www.lekoarts.de/en/blog/how-gatsby-scales-with-your-expertise-and-scope)_
@@ -18,7 +16,7 @@ In any scenario, this individual of disparate experience and expertise was able 
 
 I myself am even an example of this general scaling idea. I began my career doing UI design, and have since been doing HTML, CSS, and JavaScript for several years now. As my skills have broadened, so too have they improved and scaled by adding Gatsby to my go-to toolchain.
 
-In this post, I want to explain how Gatsby led me into learning React and how your Gatsby project can scale by considering my [personal site](https://www.lekoarts.de/en) and experience, as an example. Gatsby seamlessly scales from basic React usage to complex React patterns, from basic Markdown to full-featured headless CMS — Gatsby scales with your expertise and scope.
+In this post, I want to explain how Gatsby led me into learning React and how your Gatsby project can scale by considering my [personal site](https://www.lekoarts.de/en) and experience, as an example. Gatsby seamlessly scales from basic React usage to complex React patterns, from basic Markdown to full-featured [headless CMS](/docs/headless-cms/) — Gatsby scales with your expertise and scope.
 
 ## The beginnings
 

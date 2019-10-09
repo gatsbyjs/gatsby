@@ -1,50 +1,60 @@
-const path = require(`path`)
+const withDefaults = require(`./utils/default-options`)
 
-module.exports = {
-  siteMetadata: {
-    title: `Gatsby Theme Blog Core`,
-    author: `Chris Biscardi`,
-    description: `A blog core theme that people can build on top of`,
-  },
-  plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `src/pages`,
-        name: `pages`,
-      },
+module.exports = themeOptions => {
+  const options = withDefaults(themeOptions)
+  const { mdx = true } = themeOptions
+  return {
+    siteMetadata: {
+      title: `Blog Title Placeholder`,
+      author: `Name Placeholder`,
+      description: `Description placeholder`,
+      social: [
+        {
+          name: `Twitter`,
+          url: `https://twitter.com/gatsbyjs`,
+        },
+        {
+          name: `GitHub`,
+          url: `https://github.com/gatsbyjs`,
+        },
+      ],
     },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 590,
+    plugins: [
+      mdx && {
+        resolve: `gatsby-plugin-mdx`,
+        options: {
+          extensions: [`.mdx`, `.md`],
+          gatsbyRemarkPlugins: [
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                // should this be configurable by the end-user?
+                maxWidth: 1380,
+                linkImagesToOriginal: false,
+              },
             },
-          },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
-            },
-          },
-          `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
-        ],
+            { resolve: `gatsby-remark-copy-linked-files` },
+            { resolve: `gatsby-remark-smartypants` },
+          ],
+          remarkPlugins: [require(`remark-slug`)],
+        },
       },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-feed`,
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-page-creator`,
-      options: {
-        path: path.dirname(require.resolve(`./src/pages`)),
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: options.contentPath || `content/posts`,
+          name: options.contentPath || `content/posts`,
+        },
       },
-    },
-  ],
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: options.assetPath || `content/assets`,
+          name: options.assetPath || `content/assets`,
+        },
+      },
+      `gatsby-transformer-sharp`,
+      `gatsby-plugin-sharp`,
+    ].filter(Boolean),
+  }
 }

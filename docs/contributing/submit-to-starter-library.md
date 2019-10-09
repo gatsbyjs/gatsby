@@ -18,7 +18,7 @@ To get your site added to the starter library, follow the two steps below.
   description: Your starter description
 
   # These correspond to the category filters in the library
-  # Make an effort to use the existing tags, and add more if needed!
+  # See docs/categories.yml for valid tags.
   tags:
     - Redux
 
@@ -49,3 +49,7 @@ If there are linting issues with your PR, you can fix them by running `npm run f
 ### Need to change details?
 
 If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR. GitHub data (like stars) will be automatically pulled and updated, but your starter description, tags, and feature list are up to you!
+
+### Adding new tag
+
+If you think that there is something missing in the tag list, you can update [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) and add a new one. However, we encourage you to use existing tags.

@@ -31,7 +31,7 @@ To generate static files in the simplest way, write
 gatsby build
 ```
 
-Then in the `Public` directory will be files to copy to the server.
+Then in the `public` directory will be files to copy to the server.
 
 ## Adding a Path Prefix
 
@@ -46,9 +46,9 @@ If you have a server from one of the following providers, you should read the in
 - [S3/Cloudfront](/docs/deploying-to-s3-cloudfront)
 - [Aerobatic](/docs/deploying-to-aerobatic)
 - [Heroku](/docs/deploying-to-heroku)
-- [Now](/docs/deploying-to-now)
+- [ZEIT Now](/docs/deploying-to-zeit-now)
 - [GitLab Pages](/docs/deploying-to-gitlab-pages)
-- [Netlify](/docs/hosting-on-netlify)
+- [Netlify](/docs/deploying-to-netlify)
 - [Render](/docs/deploying-to-render)
 - [Surge](/docs/deploying-to-surge)
 - [GitHub Pages](/docs/how-gatsby-works-with-github-pages)

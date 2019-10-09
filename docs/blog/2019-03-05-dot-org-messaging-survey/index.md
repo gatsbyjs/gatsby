@@ -2,7 +2,7 @@
 title: Results from .org messaging survey are in
 date: 2019-03-05
 author: Shannon Soper
-tags: ["ux", "design"]
+tags: ["ux", "user-testing", "cutting-edge-experiences"]
 ---
 
 Recently, we sent out a survey asking people in the Gatsby community how they would define Gatsby and what they value most about Gatsby. The results are in, and I want to share them with you! Thanks to everyone who filled out the survey.
@@ -80,7 +80,7 @@ At companies, 44% said this was crucial: “Performance and flexibility to use a
 
 Gatsby makes you productive right from the start -- it takes away the overhead of time-consuming dev and build tooling setup and configuration which leads to faster iterations.
 
-At agencies, 49% said this was crucial because “it makes the creation of optimal websites a breeze, [and] it’s important to have a fast workflow.” Another respondent said “I use Gatsby mostly at the agency I work at. Previously we were building wordpress sites and we would spend a ton of time manually configuring and setting things up to get gatsby level speeds and security. Essentially I chose gatsby because all of these things were crucial and gatsby ticks all the boxes.”
+At agencies, 49% said this was crucial because “it makes the creation of optimal websites a breeze, [and] it’s important to have a fast workflow.” Another respondent said “I use Gatsby mostly at the agency I work at. Previously we were building WordPress sites and we would spend a ton of time manually configuring and setting things up to get gatsby level speeds and security. Essentially I chose gatsby because all of these things were crucial and gatsby ticks all the boxes.”
 
 At companies, 43% said this was crucial. “It's f\*cking fast to dev with, ultimate performance and also good points for the "serverless" with solutions like Netlify.” Another person mentioned that with Gatsby, there’s “less tooling to get started. I like building websites fast, and focusing on content and design, instead of build/deployment.”
 
@@ -129,7 +129,10 @@ Here are some ideas to keep in mind throughout for a potential redesign of the .
 
 Quote:
 
-<Pullquote>[I didn’t think the value Gatsby provides was] that crucial until I experienced it firsthand.</Pullquote>
+<Pullquote>
+  [I didn’t think the value Gatsby provides was] that crucial until I
+  experienced it firsthand.
+</Pullquote>
 
 ## How you can participate
 

@@ -4,9 +4,6 @@ date: 2018-11-07
 author: Dustin Schau
 tags:
   - apps
-  - web apps
-  - applications
-  - beyond static
 excerpt: Gatsby is great for not only static sites but also traditional web applications. Using Gatsby enables the benefits of both static and web applications so you don't have to sacrifice the advantages of one approach to reap the benefits of the other.
 cover: images/what-if-i-told-you.jpg
 ---
@@ -160,7 +157,7 @@ These performance optimizations aren't opt-in; they're enabled, by default. As n
 
 ### Plugins and the Gatsby Ecosystem
 
-One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from Wordpress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
+One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from WordPress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
 
 Let's take a look at that image functionality provided by one of our components, `gatsby-image`, in slightly more detail.
 
@@ -234,7 +231,7 @@ We can't wait to see what you build.
 [gatsby-graphql]: /docs/querying-with-graphql/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
 [authentication-data]: /tutorial/authentication-tutorial/
-[client-only-routes]: /docs/building-apps-with-gatsby/#client-only-routes--user-authentication
+[client-only-routes]: /docs/client-only-routes-and-user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
 [cdm]: https://reactjs.org/docs/react-component.html#componentdidmount

@@ -4,7 +4,7 @@ Easily add Facebook Analytics to your Gatsby site.
 
 You must have a [Facebook App](https://developers.facebook.com/apps) ID to use this plugin.
 
-This loads the Facebook Javascript SDK which means that [Social Plugins](https://developers.facebook.com/docs/plugins/) can also be used. If you're not using social plugins, setting `xfbml` to `false` will improve page load times.
+This loads the Facebook JavaScript SDK which means that [Social Plugins](https://developers.facebook.com/docs/plugins/) can also be used. If you're not using social plugins, setting `xfbml` to `false` will improve page load times.
 
 ## Install
 
@@ -20,7 +20,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-facebook-analytics`,
     options: {
-      // Required - set this to the ID of your facebook app.
+      // Required - set this to the ID of your Facebook app.
       appId: `YOUR_APP_ID`,
 
       // Which version of the SDK to load.
@@ -32,7 +32,7 @@ plugins: [
       // Determines whether a cookie is created for the session or not.
       cookie: false,
 
-      // Include facebook analytics in development.
+      // Include Facebook analytics in development.
       // Defaults to false meaning the library will only be loaded in production.
       includeInDevelopment: false,
 

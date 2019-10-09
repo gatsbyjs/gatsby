@@ -2,7 +2,7 @@
 title: How to export a Drupal site to Gatsby
 date: 2018-12-18
 author: Joaquín Bravo Contreras
-tags: ["drupal", "tutorials"]
+tags: ["drupal", "getting-started"]
 ---
 
 This blogpost explains how I learned to reduce the cost of maintaining a simple brochure or blog site. When using Drupal, you need at least a shared hosting platform (there is no Wordpress.com for Drupal sites). So, migrating to a static site generator, like Jekyll or Gatsby, seemed like a good idea. Gatsby is also a great opportunity to learn React and then get hosting for free using something like GitHub Pages. This post is going to describe how to migrate a simple blog--that has featured images on the posts, comments and tags--from Drupal to Gatsby.

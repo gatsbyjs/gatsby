@@ -93,7 +93,7 @@ We welcome any and all contributions! 💪
       )
       .concat(node))
 
-    await writeFile(this.dbFilePath, updated, `utf8`)
+    await writeFile(this.dbFilePath, updated)
 
     return [updated, difference(updated, existing)]
   },
@@ -101,3 +101,5 @@ We welcome any and all contributions! 💪
     return writeFile(this.dbFilePath, [])
   },
 }
+
+module.exports.getNode = getNode

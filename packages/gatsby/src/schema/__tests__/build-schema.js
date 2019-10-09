@@ -9,17 +9,34 @@ const {
 const { SchemaComposer } = require(`graphql-compose`)
 jest.mock(`../../utils/api-runner-node`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
 } = require(`../types/type-builders`)
+const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = require(`./fixtures/node-model`)
 
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => report.warn.mockClear())
 
@@ -31,7 +48,10 @@ describe(`Build schema`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      actions.createNode(
+        { ...node, internal: { ...node.internal } },
+        { name: `test` }
+      )(store.dispatch)
     )
   })
 
@@ -605,6 +625,46 @@ describe(`Build schema`, () => {
       )
     })
 
+    it(`merges types owned by same plugin`, async () => {
+      createTypes(
+        `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
+         type PluginDefinedNested { foo: Int }`,
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      createTypes(
+        `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
+         type PluginDefinedNested { bar: Int }`,
+        {
+          name: `some-gatsby-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
+      const nestedFields = PluginDefinedNested.getFields()
+      const PluginDefined = schema.getType(`PluginDefined`)
+      const fields = PluginDefined.getFields()
+      expect(Object.keys(nestedFields)).toEqual([`foo`, `bar`])
+      expect(Object.keys(fields)).toEqual([
+        `foo`,
+        `baz`,
+        `bar`,
+        `qux`,
+        `id`,
+        `parent`,
+        `children`,
+        `internal`,
+      ])
+      expect(PluginDefined._gqcExtensions).toEqual(
+        expect.objectContaining({
+          createdFrom: `sdl`,
+          plugin: `some-gatsby-plugin`,
+          infer: false,
+        })
+      )
+    })
+
     it(`does not merge plugin-defined type with type defined by other plugin`, async () => {
       createTypes(
         `type PluginDefined implements Node { foo: Int, baz: PluginDefinedNested }
@@ -766,7 +826,7 @@ describe(`Build schema`, () => {
       )
     })
 
-    it(`displays error message for reserved type names`, () => {
+    it(`displays error message for reserved type names`, async () => {
       const typeDefs = [
         [`TestSortInput`, `type TestSortInput { foo: Boolean }`],
         [
@@ -782,34 +842,40 @@ describe(`Build schema`, () => {
           buildObjectType({ name: `TestFilterInput`, fields: {} }),
         ],
       ]
-      return Promise.all(
-        typeDefs.map(([name, def]) => {
-          store.dispatch({ type: `DELETE_CACHE` })
-          createTypes(def)
-          return expect(buildSchema()).rejects.toThrow(
+      expect.assertions(4)
+      for (const [name, def] of typeDefs) {
+        store.dispatch({ type: `DELETE_CACHE` })
+        createTypes(def)
+        try {
+          await buildSchema()
+        } catch (error) {
+          expect(error.message).toBe(
             `GraphQL type names ending with "FilterInput" or "SortInput" are ` +
               `reserved for internal use. Please rename \`${name}\`.`
           )
-        })
-      )
+        }
+      }
     })
 
-    it(`displays error message for reserved type names`, () => {
+    it(`displays error message for reserved built-in type names`, async () => {
       const typeDefs = [
         [`JSON`, `type JSON { foo: Boolean }`],
         [`Date`, new GraphQLObjectType({ name: `Date`, fields: {} })],
         [`Float`, buildObjectType({ name: `Float`, fields: {} })],
       ]
-      return Promise.all(
-        typeDefs.map(([name, def]) => {
-          store.dispatch({ type: `DELETE_CACHE` })
-          createTypes(def)
-          return expect(buildSchema()).rejects.toThrow(
+      expect.assertions(3)
+      for (const [name, def] of typeDefs) {
+        store.dispatch({ type: `DELETE_CACHE` })
+        createTypes(def)
+        try {
+          await buildSchema()
+        } catch (error) {
+          expect(error.message).toBe(
             `The GraphQL type \`${name}\` is reserved for internal use by ` +
               `built-in scalar types.`
           )
-        })
-      )
+        }
+      }
     })
 
     it(`allows modifying nested types`, async () => {
@@ -867,7 +933,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -877,7 +943,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -913,7 +979,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -923,7 +989,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -1056,20 +1122,20 @@ describe(`Build schema`, () => {
       const type = schema.getType(`PostFrontmatter`)
       const fields = type.getFields()
       expect(
-        fields[`date`].resolve(
+        await fields[`date`].resolve(
           { date: new Date(2019, 10, 10) },
           { formatString: `YYYY` },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `date`,
           }
         )
       ).toEqual(`2019`)
       expect(
-        fields[`date`].resolve(
+        await fields[`date`].resolve(
           { date: new Date(2010, 10, 10) },
           { formatString: `YYYY` },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `date`,
           }

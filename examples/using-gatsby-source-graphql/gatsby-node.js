@@ -35,6 +35,7 @@ exports.createResolvers = ({
   createNodeId,
   createResolvers,
   store,
+  reporter,
 }) => {
   const { createNode } = actions
   createResolvers({
@@ -64,6 +65,7 @@ exports.createResolvers = ({
             cache,
             createNode,
             createNodeId,
+            reporter,
           })
         },
       },

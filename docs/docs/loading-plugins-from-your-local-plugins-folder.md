@@ -2,7 +2,7 @@
 title: Loading Plugins from Your Local Plugins Folder
 ---
 
-Gatsby can also load plugins from the your local website plugins folder which is a folder named `plugins` in the website's root directory.
+Gatsby can also load plugins from your website's local plugins folder which is a folder named `plugins` in the website's root directory.
 
 ```javascript:title=gatsby-config.js
 module.exports = {

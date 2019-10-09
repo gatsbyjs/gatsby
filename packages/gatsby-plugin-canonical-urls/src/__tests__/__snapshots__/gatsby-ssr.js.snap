@@ -48,7 +48,7 @@ exports[`gatsby-plugin-canonical-urls strips a trailing slash on the siteUrl and
 }
 `;
 
-exports[`gatsby-plugin-canonical-urls strips search paramaters if option stripQueryString is true 1`] = `
+exports[`gatsby-plugin-canonical-urls strips search parameters if option stripQueryString is true 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [

@@ -1,4 +1,5 @@
 const Remark = require(`remark`)
+const toString = require(`mdast-util-to-string`)
 const visit = require(`unist-util-visit`)
 
 const plugin = require(`../`)
@@ -181,5 +182,61 @@ describe(`gatsby-remark-autolink-headers`, () => {
       expect(node.data.id).toBeDefined()
       expect(node.data.id).toEqual(expect.stringMatching(/^heading/))
     })
+  })
+
+  it(`extracts custom id`, () => {
+    const markdownAST = remark.parse(`
+# Heading One {#custom_h1}
+
+## Heading Two {#custom-heading-two}
+
+# With *Bold* {#custom-withbold}
+
+# Invalid {#this_is_italic}
+
+# No custom ID
+
+# {#id-only}
+
+# {#text-after} custom ID
+    `)
+    const enableCustomId = true
+
+    const transformed = plugin({ markdownAST }, { enableCustomId })
+
+    const headers = []
+    visit(transformed, `heading`, node => {
+      headers.push({ text: toString(node), id: node.data.id })
+    })
+    expect(headers).toEqual([
+      {
+        id: `custom_h1`,
+        text: `Heading One`,
+      },
+      {
+        id: `custom-heading-two`,
+        text: `Heading Two`,
+      },
+      {
+        id: `custom-withbold`,
+        text: `With Bold`,
+      },
+      {
+        id: `invalid-thisisitalic`,
+        text: `Invalid {#thisisitalic}`,
+      },
+      {
+        id: `no-custom-id`,
+        text: `No custom ID`,
+      },
+      {
+        id: `id-only`,
+        text: `{#id-only}`,
+      },
+      {
+        id: `text-after-custom-id`,
+        text: `{#text-after} custom ID`,
+      },
+    ])
   })
 })

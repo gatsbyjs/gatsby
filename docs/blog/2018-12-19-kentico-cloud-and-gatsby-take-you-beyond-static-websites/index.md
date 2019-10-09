@@ -4,7 +4,7 @@ date: 2019-01-07
 author: "Ondrej Polesny"
 image: "images/teaser.png"
 imageTitle: Kentico Cloud and Gatsby
-tags: ["react", "kentico cloud", "graphql"]
+tags: ["react", "graphql", "content-mesh"]
 ---
 
 I have to admit I have never really been a fan of JavaScript. I know, shame on me! When I was finishing my studies, I was all about .NET as it was easy to understand, debugging capabilities came with Visual Studio out-of-the-box, and the inheritance and objects model was simple. I looked at JavaScript with thoughts like "what kind of language would allow you to create objects freely, clone them, add functions to only specific instances or allow anyone to see the source code?"
@@ -19,7 +19,7 @@ The great presentation by Callum MacDonald explained basic Gatsby features and p
 
 ## Why static site?
 
-One of the websites in our company stack is [Kentico Advantage](http://bit.ly/2T0ynXJ). It is a content-oriented website where we provide our customers with our own methodology on how to build amazing and successful websites with traditional CMS. The website was originally also built on top of a traditional CMS until we switched to MVC during this year. We did that to be able to use a headless CMS as content storage and drop all the pieces that required maintenance like the database server. The business logic was in the MVC layer and we hosted the front-end on Microsoft Azure.
+One of the websites in our company stack is [Kentico Advantage](http://bit.ly/2T0ynXJ). It is a content-oriented website where we provide our customers with our own methodology on how to build amazing and successful websites with traditional CMS. The website was originally also built on top of a traditional CMS until we switched to MVC during this year. We did that to be able to use a [headless CMS](/docs/headless-cms/) as content storage and drop all the pieces that required maintenance like the database server. The business logic was in the MVC layer and we hosted the front-end on Microsoft Azure.
 
 So why did I decide to make Kentico Advantage a static site? A key aspect was performance. We wanted to enable our clients to access the site while being on-site with their customers, using mobile devices and a slow internet connection. I personally wanted the source code to be as little as possible, in a language that everyone would understand. I won't be the only developer on the project for eternity and we tend to have more front-end developers in-house these days. And obviously I did not want to spend months on it. With Gatsby we were fine on all those counts. I was not familiar with React all that much before, but having the site content-oriented and well structured, the implementation was a piece of cake. Saving money on server costs was a nice side-effect, but more on that later.
 
@@ -99,11 +99,11 @@ Implementing the site using Gatsby and the Kentico Cloud source plugin is super 
 - Where should I host the static files?
 - How can I automatically regenerate the site when there are content or implementation changes?
 
-The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
+The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub Pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
 
 ![Deploying static site](images/illustration-02.png)
 
-The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) - this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files - your static site. The last step of Travis is deployment to GitHub pages.
+The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub Pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) - this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files - your static site. The last step of Travis is deployment to GitHub Pages.
 
 ## Build a Static Site Today
 

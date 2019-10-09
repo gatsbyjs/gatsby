@@ -2,10 +2,14 @@ module.exports = options => {
   const { mdx = true, mdxLayouts = {} } = options
 
   return {
-    __experimentalThemes: [],
+    siteMetadata: {
+      title: `Notes Title Placeholder`,
+      description: `Description placeholder`,
+      siteUrl: `http://example.com/`,
+    },
     plugins: [
       mdx && {
-        resolve: `gatsby-mdx`,
+        resolve: `gatsby-plugin-mdx`,
         options: {
           extensions: [`.md`, `.mdx`],
           defaultLayouts: {
@@ -17,8 +21,8 @@ module.exports = options => {
       {
         resolve: `gatsby-source-filesystem`,
         options: {
-          path: options.notes || `notes`,
-          name: `notes`,
+          path: options.contentPath || `content/notes`,
+          name: options.contentPath || `content/notes`,
         },
       },
       `gatsby-plugin-redirects`,
@@ -30,6 +34,7 @@ module.exports = options => {
           modules: [`gatsby-theme-notes`],
         },
       },
+      `gatsby-plugin-theme-ui`,
     ].filter(Boolean),
   }
 }

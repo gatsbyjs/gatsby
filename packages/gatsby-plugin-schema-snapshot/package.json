@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-plugin-schema-snapshot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "files": [
+    "gatsby-node.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-schema-snapshot"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-schema-snapshot#readme",
+  "peerDependencies": {
+    "gatsby": "^2.13.55"
+  }
+}

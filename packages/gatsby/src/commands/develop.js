@@ -9,13 +9,13 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const graphqlPlayground = require(`graphql-playground-middleware-express`)
   .default
+const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
 const { formatError } = require(`graphql`)
 const got = require(`got`)
-const rl = require(`readline`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
 const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
@@ -26,6 +26,7 @@ const chalk = require(`chalk`)
 const address = require(`address`)
 const cors = require(`cors`)
 const telemetry = require(`gatsby-telemetry`)
+const WorkerPool = require(`../utils/worker/pool`)
 
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
@@ -38,8 +39,8 @@ const db = require(`../db`)
 const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
 const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
-const queryQueue = require(`../query/queue`)
 const queryWatcher = require(`../query/query-watcher`)
+const requiresWriter = require(`../bootstrap/requires-writer`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -50,29 +51,34 @@ setTimeout(() => {
   syncStaticDir()
 }, 10000)
 
-const rlInterface = rl.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-// Quit immediately on hearing ctrl-c
-rlInterface.on(`SIGINT`, () => {
-  process.exit()
-})
-
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
 
-async function startServer(program) {
+const waitJobsFinished = () =>
+  new Promise((resolve, reject) => {
+    const onEndJob = () => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
+
+async function startServer(program, { activity }) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = async () => {
+  const workerPool = WorkerPool.create()
+  const createIndexHtml = async ({ activity }) => {
     try {
       await buildHTML.buildPages({
         program,
         stage: `develop-html`,
         pagePaths: [`/`],
+        workerPool,
+        activity,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
@@ -90,20 +96,14 @@ async function startServer(program) {
     }
   }
 
-  // Start bootstrap process.
-  await bootstrap(program)
-
-  db.startAutosave()
-  queryUtil.startListening(queryQueue.createDevelopQueue())
-  queryWatcher.startWatchDeletePage()
-
-  await createIndexHtml()
+  await createIndexHtml({ activity })
 
   const devConfig = await webpackConfig(
     program,
     directory,
     `develop`,
-    program.port
+    program.port,
+    { parentSpan: activity.span }
   )
 
   const compiler = webpack(devConfig)
@@ -136,18 +136,27 @@ async function startServer(program) {
       }),
       () => {}
     )
+  } else {
+    graphiqlExplorer(app, {
+      graphqlEndpoint,
+    })
   }
 
   app.use(
     graphqlEndpoint,
     graphqlHTTP(() => {
-      const schema = store.getState().schema
+      const { schema, schemaCustomization } = store.getState()
+
       return {
         schema,
-        graphiql:
-          process.env.GATSBY_GRAPHQL_IDE === `playground` ? false : true,
-        context: withResolverContext({}, schema),
-        formatError(err) {
+        graphiql: false,
+        context: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context: {},
+          customContext: schemaCustomization.context,
+        }),
+        customFormatErrorFn(err) {
           return {
             ...formatError(err),
             stack: err.stack ? err.stack.split(`\n`) : [],
@@ -162,7 +171,9 @@ async function startServer(program) {
    * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
-  app.post(`/__refresh`, (req, res) => {
+  const REFRESH_ENDPOINT = `/__refresh`
+  app.use(REFRESH_ENDPOINT, express.json())
+  app.post(REFRESH_ENDPOINT, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
     const authorizedRefresh =
@@ -170,7 +181,9 @@ async function startServer(program) {
 
     if (enableRefresh && authorizedRefresh) {
       console.log(`Refreshing source data`)
-      sourceNodes()
+      sourceNodes({
+        webhookBody: req.body,
+      })
     }
     res.end()
   })
@@ -198,7 +211,7 @@ async function startServer(program) {
   const { developMiddleware } = store.getState().config
 
   if (developMiddleware) {
-    developMiddleware(app)
+    developMiddleware(app, program)
   }
 
   // Set up API proxy.
@@ -207,17 +220,29 @@ async function startServer(program) {
     const { prefix, url } = proxy
     app.use(`${prefix}/*`, (req, res) => {
       const proxiedUrl = url + req.originalUrl
-      const { headers, method } = req
+      const {
+        // remove `host` from copied headers
+        // eslint-disable-next-line no-unused-vars
+        headers: { host, ...headers },
+        method,
+      } = req
       req
         .pipe(
-          got.stream(proxiedUrl, { headers, method }).on(`error`, err => {
-            const message = `Error when trying to proxy request "${
-              req.originalUrl
-            }" to "${proxiedUrl}"`
+          got
+            .stream(proxiedUrl, { headers, method, decompress: false })
+            .on(`response`, response =>
+              res.writeHead(response.statusCode, response.headers)
+            )
+            .on(`error`, (err, _, response) => {
+              if (response) {
+                res.writeHead(response.statusCode, response.headers)
+              } else {
+                const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
-            report.error(message, err)
-            res.status(500).end()
-          })
+                report.error(message, err)
+                res.sendStatus(500)
+              }
+            })
         )
         .pipe(res)
     })
@@ -259,9 +284,7 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${
-            program.port
-          } as there's already a process listening on that port.`
+          `Unable to start Gatsby on port ${program.port} as there's already a process listening on that port.`
         )
         return
       }
@@ -299,6 +322,16 @@ module.exports = async (program: any) => {
     )
   }
 
+  try {
+    program.port = await detectPortInUseAndPrompt(port)
+  } catch (e) {
+    if (e.message === `USER_REJECTED`) {
+      process.exit(0)
+    }
+
+    throw e
+  }
+
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
   // Scoped names are converted from @npm/package-name to npm--package-name
@@ -311,9 +344,42 @@ module.exports = async (program: any) => {
     })
   }
 
-  program.port = await detectPortInUseAndPrompt(port, rlInterface)
+  // Start bootstrap process.
+  const { graphqlRunner } = await bootstrap(program)
 
-  const [compiler] = await startServer(program)
+  // Start the createPages hot reloader.
+  require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
+
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
+  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+
+  let activity = report.activityTimer(`run static queries`)
+  activity.start()
+  await queryUtil.processStaticQueries(staticQueryIds, {
+    activity,
+    state: store.getState(),
+  })
+  activity.end()
+
+  activity = report.activityTimer(`run page queries`)
+  activity.start()
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
+  activity.end()
+
+  require(`../redux/actions`).boundActionCreators.setProgramStatus(
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  )
+
+  await waitJobsFinished()
+  requiresWriter.startListener()
+  db.startAutosave()
+  queryUtil.startListeningToDevelopQueue()
+  queryWatcher.startWatchDeletePage()
+
+  activity = report.activityTimer(`start webpack server`)
+  activity.start()
+  const [compiler] = await startServer(program, { activity })
+  activity.end()
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -332,8 +398,12 @@ module.exports = async (program: any) => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let lanUrlForConfig, lanUrlForTerminal
+    let prettyHost = host,
+      lanUrlForConfig,
+      lanUrlForTerminal
     if (isUnspecifiedHost) {
+      prettyHost = `localhost`
+
       try {
         // This can only return an IPv4 address
         lanUrlForConfig = address.ip()
@@ -359,8 +429,8 @@ module.exports = async (program: any) => {
     // TODO collect errors (GraphQL + Webpack) in Redux so we
     // can clear terminal and print them out on every compile.
     // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(host)
-    const localUrlForBrowser = formatUrl(host)
+    const localUrlForTerminal = prettyPrintUrl(prettyHost)
+    const localUrlForBrowser = formatUrl(prettyHost)
     return {
       lanUrlForConfig,
       lanUrlForTerminal,
@@ -370,7 +440,13 @@ module.exports = async (program: any) => {
   }
 
   function printInstructions(appName, urls, useYarn) {
-    console.log()
+    report._setStage({
+      stage: `DevelopBootstrapFinished`,
+      context: {
+        url: urls.localUrlForBrowser,
+        appName,
+      },
+    })
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
 
@@ -394,12 +470,26 @@ module.exports = async (program: any) => {
       }, an in-browser IDE, to explore your site's data and schema`
     )
     console.log()
-    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${
+          urls.localUrlForTerminal
+        }___graphql`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${
+          urls.lanUrlForTerminal
+        }___graphql`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}___graphql`)
+    }
 
     console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
-      `To create a production build, use ` + `${chalk.cyan(`npm run build`)}`
+      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
     )
     console.log()
   }
@@ -437,9 +527,7 @@ module.exports = async (program: any) => {
           chalk.yellow(`is deprecated. Please use`),
           chalk.cyan(fixMap[api].newName),
           chalk.yellow(
-            `instead. For migration instructions, see ${
-              fixMap[api].docsLink
-            }\nCheck the following files:`
+            `instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`
           )
         )
         console.log()
@@ -448,7 +536,6 @@ module.exports = async (program: any) => {
       }
     })
   }
-
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
@@ -463,10 +550,6 @@ module.exports = async (program: any) => {
       program.port
     )
     const isSuccessful = !messages.errors.length
-    // if (isSuccessful) {
-    // console.log(chalk.green(`Compiled successfully!`))
-    // }
-    // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
@@ -482,36 +565,6 @@ module.exports = async (program: any) => {
     }
 
     isFirstCompile = false
-
-    // If errors exist, only show errors.
-    // if (messages.errors.length) {
-    // // Only keep the first error. Others are often indicative
-    // // of the same problem, but confuse the reader with noise.
-    // if (messages.errors.length > 1) {
-    // messages.errors.length = 1
-    // }
-    // console.log(chalk.red("Failed to compile.\n"))
-    // console.log(messages.errors.join("\n\n"))
-    // return
-    // }
-
-    // Show warnings if no errors were found.
-    // if (messages.warnings.length) {
-    // console.log(chalk.yellow("Compiled with warnings.\n"))
-    // console.log(messages.warnings.join("\n\n"))
-
-    // // Teach some ESLint tricks.
-    // console.log(
-    // "\nSearch for the " +
-    // chalk.underline(chalk.yellow("keywords")) +
-    // " to learn more about each warning."
-    // )
-    // console.log(
-    // "To ignore, add " +
-    // chalk.cyan("// eslint-disable-next-line") +
-    // " to the line before.\n"
-    // )
-    // }
 
     done()
   })

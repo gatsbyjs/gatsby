@@ -171,6 +171,51 @@ Customize the path to Netlify CMS on your Gatsby site.
 Customize the value of the `title` tag in your CMS HTML (shows in the browser
 bar).
 
+### `htmlFavicon`
+
+(_optional_, type: `string`, default: `""`)
+
+Customize the value of the `favicon` tag in your CMS HTML (shows in the browser
+bar).
+
+### `includeRobots`
+
+(_optional_, type: `boolean`, default: `false`)
+
+By default, the CMS page is not indexed by crawlers. Use this to add a `meta` tag to invite robots to index the CMS page.
+
+### `customizeWebpackConfig`
+
+(_optional_, type: `function`)
+
+Function to customize webpack configuration.
+
+Function parameters:
+
+- config: webpack configuration for NetlifyCMS
+- destructured object from onCreateWebpackConfig { store, stage, pathPrefix, getConfig, rules, loaders, plugins} as seen in https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-netlify-cms`,
+    options: {
+      customizeWebpackConfig: (config, { plugins }) => {
+        const Plugin = require("...")
+
+        config.plugins.push(
+          plugins.define({
+            "process.env.MY_VAR": JSON.stringify("my var value"),
+          })
+        )
+
+        config.plugins.push(new Plugin())
+      },
+    },
+  },
+]
+```
+
 ## Example
 
 Here is the plugin with example values for all options (note that no option is
@@ -185,6 +230,8 @@ plugins: [
       enableIdentityWidget: true,
       publicPath: `admin`,
       htmlTitle: `Content Manager`,
+      htmlFavicon: `path/to/favicon`,
+      includeRobots: false,
     },
   },
 ]

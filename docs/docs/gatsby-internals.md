@@ -1,5 +1,5 @@
 ---
-title: Gatsby Internals
+title: Behind the Scenes with Gatsby Internals
 ---
 
 Curious how Gatsby works under the hood? The pages in this section describe how a Gatsby build works from an internal code/architecture point of view. It should be useful for anyone who needs to work on the internals of Gatsby, or for those who are simply curious how it all works, or perhaps you're a plugin author and need to understand how core works to track down a bug? Come one, come all!
@@ -35,7 +35,7 @@ digraph graphname {
 
   ## Source Nodes
 
-  dataSource [ label = "data sources. e.g file, contentful", shape = cylinder, fillcolor = gray ];
+  dataSource [ label = "data sources. e.g. file, contentful", shape = cylinder, fillcolor = gray ];
   sourceNodes [ label = "source nodes" URL = "/docs/node-creation/" ];
   nodes [ label = "nodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/" ];
   nodesTouched [ label = "touchedNodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/#freshstale-nodes" ];

@@ -1,8 +1,6 @@
 ---
-title: ESLint
+title: Using ESLint
 ---
-
-## Why use ESLint
 
 ESLint is an open source JavaScript linting utility. Code linting is a type of static analysis that is frequently used to find problematic patterns. There are code linters for most programming languages, and compilers sometimes incorporate linting into the compilation process.
 
@@ -12,7 +10,7 @@ JavaScript, being a dynamic and loosely-typed language, is especially prone to d
 
 Gatsby ships with a built-in [ESLint](https://eslint.org) setup. For _most_ users, our built-in ESlint setup is all you need. If you know however that you'd like to customize your ESlint config e.g. your company has their own custom ESlint setup, this shows how this can be done.
 
-We'll replicate (mostly) the [ESlint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/.eslintrc.json) so you can then add additional presets, plugins, and rules.
+We'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.js) so you can then add additional presets, plugins, and rules.
 
 ```shell
 

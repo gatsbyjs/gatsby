@@ -2,6 +2,10 @@ const preset = require(`../`)
 
 jest.mock(`../resolver`, () => jest.fn(moduleName => moduleName))
 
+beforeEach(() => {
+  delete process.env.BABEL_ENV
+})
+
 describe(`babel-preset-gatsby-package`, () => {
   describe(`in node mode`, () => {
     it(`specifies the proper plugins`, () => {
@@ -17,6 +21,19 @@ describe(`babel-preset-gatsby-package`, () => {
     it(`specifies proper presets for debugging`, () => {
       const { presets } = preset(null, { debug: true })
       expect(presets).toMatchSnapshot()
+    })
+
+    it(`can pass custom nodeVersion target`, () => {
+      process.env.BABEL_ENV = `production`
+    
+      const nodeVersion = `6.0`
+      const { presets } = preset(null, {
+        nodeVersion
+      })
+
+      const [_, opts] = presets.find(preset => [].concat(preset).includes('@babel/preset-env'))
+      
+      expect(opts.targets.node).toBe(nodeVersion)
     })
   })
 
@@ -38,15 +55,8 @@ describe(`babel-preset-gatsby-package`, () => {
   })
 
   describe(`in production mode`, () => {
-    let env
-
-    beforeAll(() => {
-      env = process.env.BABEL_ENV
+    beforeEach(() => {
       process.env.BABEL_ENV = `production`
-    })
-
-    afterAll(() => {
-      process.env.BABEL_ENV = env
     })
 
     it(`specifies proper presets for node mode`, () => {

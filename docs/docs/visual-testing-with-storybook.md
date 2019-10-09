@@ -99,6 +99,30 @@ module.exports = ({ config }) => {
 
 > Note that if you're using a [StaticQuery](/docs/static-query/) in your components, `babel-plugin-remove-graphql-queries` is required to render them in Storybook. This is because the queries are run at build time in Gatsby, and will not have been run when rendering the components directly.
 
+> When using TypeScript, add this rule:
+
+```diff:title=.storybook/webpack.config.js
+// Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
+config.resolve.mainFields = ["browser", "module", "main"]
++
++   config.module.rules.push({
++     test: /\.(ts|tsx)$/,
++     loader: require.resolve('babel-loader'),
++     options: {
++       presets: [['react-app', {flow: false, typescript: true}]],
++       plugins: [
++         require.resolve('@babel/plugin-proposal-class-properties'),
++         // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
++         require.resolve('babel-plugin-remove-graphql-queries'),
++       ],
++     },
++   });
++
++   config.resolve.extensions.push('.ts', '.tsx');
++
+return config
+```
+
 **For Storybook v4:**
 
 ```js:title=.storybook/webpack.config.js
@@ -142,8 +166,8 @@ However, if you use `StaticQuery` or `useStaticQuery` in your project Storybook 
 ```json:title=package.json
 {
   "scripts": {
-    "storybook": "NODE_ENV=production start-storybook -s static",
-    "build-storybook": "NODE_ENV=production build-storybook -s static"
+    "storybook": "NODE_ENV=production start-storybook -s public",
+    "build-storybook": "NODE_ENV=production build-storybook -s public"
   }
 }
 ```

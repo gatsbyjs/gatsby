@@ -5,9 +5,12 @@ const instance = new Telemetry()
 
 process.on(`exit`, flush)
 
-// For longrunning commands we want to occasinally flush the data
+// For long running commands we want to occasionally flush the data
 // The data is also sent on exit.
-const interval = 10 * 60 * 1000 // 10 min
+
+const interval = Number.isFinite(+process.env.TELEMETRY_BUFFER_INTERVAL)
+  ? Math.max(Number(process.env.TELEMETRY_BUFFER_INTERVAL), 1000)
+  : 10 * 60 * 1000 // 10 min
 
 const tick = _ => {
   flush()
@@ -16,7 +19,7 @@ const tick = _ => {
 }
 
 module.exports = {
-  trackCli: (input, tags) => instance.captureEvent(input, tags),
+  trackCli: (input, tags, opts) => instance.captureEvent(input, tags, opts),
   trackError: (input, tags) => instance.captureError(input, tags),
   trackBuildError: (input, tags) => instance.captureBuildError(input, tags),
   setDefaultTags: tags => instance.decorateAll(tags),

@@ -134,42 +134,50 @@ specified examples directory. (This will avoid broken links at runtime.)
     // eg <a href="...">Click here</a>
     defaultText: 'Click here',
 
-    // Optional runtime dependencies to load from NPM.
-    // This option only applies to REPLs that support it (eg CodeSandbox).
-    // eg ['react', 'react-dom'] or ['react@15', 'react-dom@15']
-    dependencies: [],
 
     // Example code links are relative to this dir.
     // eg examples/path/to/file.js
     directory: `${__dirname}/examples/`,
-
-    // Optional externals to load from a CDN.
-    // This option only applies to REPLs that support it (eg Codepen).
-    // eg '//unpkg.com/react/umd/react.development.js'
-    externals: [],
-
-    // Optional HTML contents to inject into REPL.
-    // Defaults to `<div id="root"></div>`.
-    // This option only applies to REPLs that support it (eg Codepen, CodeSandbox).
-    // eg '<div id="root"></div>'
-    html: '',
-
-    // Optional path to a custom redirect template.
-    // The redirect page is only shown briefly,
-    // But you can use this setting to override its CSS styling.
-    redirectTemplate: `${__dirname}/src/redirect-template.js`,
 
     // Optional link target.
     // Note that if a target is specified, "noreferrer" will also be added.
     // eg <a href="..." target="_blank" rel="noreferrer">...</a>
     target: '_blank',
 
-    // Include CSS with matching name.
-    // This option only applies to REPLs that support it (eg Codepen).
-    // If set to `true`, when specifying `file1.js` as example file,
-    // it will try to inject the CSS in `file1.css` if the file exists,
-    // otherwise the default behaviour is preserved
-    includeMatchingCSS: false,
+
+    // Provider specific options
+    codepen: {
+      // Optional path to a custom redirect template.
+      // The redirect page is only shown briefly,
+      // But you can use this setting to override its CSS styling.
+      redirectTemplate: `${__dirname}/src/redirect-template.js`,
+
+      // Optional HTML contents to inject into REPL.
+      // Defaults to `<div id="root"></div>`.
+      // eg '<div id="root"></div>'
+      html: '',
+
+      // Optional externals to load from a CDN.
+      // eg '//unpkg.com/react/umd/react.development.js'
+      externals: [],
+
+      // Include CSS with matching name.
+      // If set to `true`, when specifying `file1.js` as example file,
+      // it will try to inject the CSS in `file1.css` if the file exists,
+      // otherwise the default behaviour is preserved
+      includeMatchingCSS: false,
+    },
+
+    codesandbox: {
+      // Optional HTML contents to inject into REPL.
+      // Defaults to `<div id="root"></div>`.
+      // eg '<div id="root"></div>'
+      html: '',
+
+      // Optional runtime dependencies to load from NPM.
+      // eg ['react', 'react-dom'] or ['react@15', 'react-dom@15']
+      dependencies: [],
+    }
   },
 },
 ```

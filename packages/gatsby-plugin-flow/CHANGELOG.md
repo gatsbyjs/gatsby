@@ -3,13 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.0.6](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-flow/compare/gatsby-plugin-flow@1.0.5...gatsby-plugin-flow@1.0.6) (2019-05-24)
+## [1.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.7...gatsby-plugin-flow@1.1.9) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+## [1.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.7...gatsby-plugin-flow@1.1.8) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+## [1.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.6...gatsby-plugin-flow@1.1.7) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+## [1.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.5...gatsby-plugin-flow@1.1.6) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+## [1.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.4...gatsby-plugin-flow@1.1.5) (2019-09-01)
 
 ### Bug Fixes
 
-- **PnP:** use `require.resolve` on `setBabelPreset` ([#14288](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-flow/issues/14288)) ([5e54afe](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-flow/commit/5e54afe))
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
 
-## [1.0.5](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-flow/compare/gatsby-plugin-flow@1.0.4...gatsby-plugin-flow@1.0.5) (2019-04-23)
+## [1.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.3...gatsby-plugin-flow@1.1.4) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.2...gatsby-plugin-flow@1.1.3) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.1...gatsby-plugin-flow@1.1.2) (2019-07-12)
+
+### Bug Fixes
+
+- correct links in package changelogs ([#15630](https://github.com/gatsbyjs/gatsby/issues/15630)) ([d07b9dd](https://github.com/gatsbyjs/gatsby/commit/d07b9dd))
+
+## [1.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.1.0...gatsby-plugin-flow@1.1.1) (2019-07-11)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+# [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.0.6...gatsby-plugin-flow@1.1.0) (2019-06-20)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
+## [1.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.0.5...gatsby-plugin-flow@1.0.6) (2019-05-24)
+
+### Bug Fixes
+
+- **PnP:** use `require.resolve` on `setBabelPreset` ([#14288](https://github.com/gatsbyjs/gatsby/issues/14288)) ([5e54afe](https://github.com/gatsbyjs/gatsby/commit/5e54afe))
+
+## [1.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-flow@1.0.4...gatsby-plugin-flow@1.0.5) (2019-04-23)
 
 **Note:** Version bump only for package gatsby-plugin-flow
 

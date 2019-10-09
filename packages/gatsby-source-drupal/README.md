@@ -162,6 +162,17 @@ module.exports = {
 }
 ```
 
+## Gatsby Preview (experimental)
+
+You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby
+
+In your Drupal module configuration, set the update URL to your Gatsby Preview instance URL.
+
+_NOTES_:
+
+- This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` drupal module are incompatible).
+- It's not feature complete yet. There is no handling of deleting content yet.
+
 ## How to query
 
 You can query nodes created from Drupal like the following:

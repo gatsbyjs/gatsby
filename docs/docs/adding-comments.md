@@ -10,9 +10,13 @@ There are many options out there for adding comment functionality, several of th
 - [Commento](https://commento.io)
 - [Facebook comments](https://www.npmjs.com/package/react-facebook)
 - [Staticman](https://staticman.net)
-- [JustComments](https://just-comments.com)
+- [JustComments](https://just-comments.com) \([official plugin for Gatsby](https://www.gatsbyjs.org/packages/gatsby-plugin-just-comments/)\)
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
+
+You can also [roll your own comment system](/blog/2019-08-27-roll-your-own-comment-system/), as Tania Rascia wrote on the Gatsby blog.
+
+## Using Disqus for comments
 
 In this guide, we'll show you how to implement Disqus on your blog as it has a number of nice features.
 

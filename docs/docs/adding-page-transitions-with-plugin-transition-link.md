@@ -113,7 +113,7 @@ If you want to access these props in one of your components instead of a page/te
 Here's an example using `TransitionState` and `react-pose` to trigger enter/exit transitions for a `Box` component.
 
 ```javascript
-import { TransitionLink } from "gatsby-plugin-transition-link"
+import { TransitionState } from "gatsby-plugin-transition-link"
 
 const Box = posed.div({
   hidden: { opacity: 0 },

@@ -3,7 +3,7 @@ const slash = require(`slash`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
-const { getValueAt } = require(`../utils/get-value-at`)
+const { getValueAt } = require(`../../utils/get-value-at`)
 
 const isFile = (nodeStore, field, relativePath) => {
   const filePath = getFilePath(nodeStore, field, relativePath)

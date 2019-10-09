@@ -38,7 +38,7 @@ Depending on your type of your organization, not all of these challenges may app
 
 A somewhat complete list of potential areas that may have in-house, standard solutions: authentication, SSO, error logging, deployments, staging, hosting, security, CDN, middleware (data fetching), analytics, and internationalization/localization.
 
-These requirements tend to be in place to enable enable marketing, security, analytics, and operations teams to function effectively.
+These requirements tend to be in place to enable marketing, security, analytics, and operations teams to function effectively.
 
 **Solution 1: Dedicate a few days or weeks to build integrations.** If your company has these requirements, building integrations is quite feasible with Gatsby’s plugin system (and even well-documented, with many examples for each category of integration).
 
@@ -73,3 +73,5 @@ Because technology choices are more sticky in the enterprise, driving adoption o
 The benefits your company will derive, such as performance and the ability to rapidly iterate on its consumer-facing web presence and digital footprint, will provide significant benefits in the marketplace. Your company will be more likely to thrive _because of the work you did_.
 
 Typically, individuals who guide and lead a shift to Gatsby are seen as forward-thinking and as agents of change, which can be [very beneficial for their careers within the company](/docs/how-gatsby-boosts-career/). In addition, as the Gatsby rollout gains steam and proceeds through the company, they are prime candidates to spearhead the effort.
+
+For more, see [blog posts on Gatsby in the enterprise](/blog/tags/enterprise).

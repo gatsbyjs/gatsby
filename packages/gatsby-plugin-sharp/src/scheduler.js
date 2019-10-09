@@ -1,8 +1,9 @@
 const _ = require(`lodash`)
-const ProgressBar = require(`progress`)
 const { existsSync } = require(`fs`)
+const uuidv4 = require(`uuid/v4`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
+const { createProgress } = require(`./utils`)
 
 const toProcess = {}
 let totalJobs = 0
@@ -10,18 +11,20 @@ const q = queue((task, callback) => {
   task(callback)
 }, 1)
 
-const bar = new ProgressBar(
-  `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
+let bar
+// when the queue is empty we stop the progressbar
+q.drain = () => {
+  if (bar) {
+    bar.done()
   }
-)
+  totalJobs = 0
+}
 
 exports.scheduleJob = async (
   job,
   boundActionCreators,
   pluginOptions,
+  reporter,
   reportStatus = true
 ) => {
   const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
@@ -50,6 +53,10 @@ exports.scheduleJob = async (
     deferred.resolve = resolve
     deferred.reject = reject
   })
+  if (totalJobs === 0) {
+    bar = createProgress(`Generating image thumbnails`, reporter)
+    bar.start()
+  }
 
   totalJobs += 1
 
@@ -59,8 +66,20 @@ exports.scheduleJob = async (
   })
 
   if (!isQueued) {
+    // Create image job
+    const jobId = uuidv4()
+    boundActionCreators.createJob(
+      {
+        id: jobId,
+        description: `processing image ${job.inputPath}`,
+        imagesCount: 1,
+      },
+      { name: `gatsby-plugin-sharp` }
+    )
+
     q.push(cb => {
       runJobs(
+        jobId,
         inputFileKey,
         boundActionCreators,
         pluginOptions,
@@ -74,6 +93,7 @@ exports.scheduleJob = async (
 }
 
 function runJobs(
+  jobId,
   inputFileKey,
   boundActionCreators,
   pluginOptions,
@@ -86,21 +106,25 @@ function runJobs(
 
   // Delete the input key from the toProcess list so more jobs can be queued.
   delete toProcess[inputFileKey]
-  boundActionCreators.createJob(
+
+  // Update job info
+  boundActionCreators.setJob(
     {
-      id: `processing image ${job.inputPath}`,
-      imagesCount: _.values(toProcess[inputFileKey]).length,
+      id: jobId,
+      imagesCount: jobs.length,
     },
     { name: `gatsby-plugin-sharp` }
   )
 
   // We're now processing the file's jobs.
   let imagesFinished = 0
+
   bar.total = totalJobs
 
   try {
     const promises = processFile(
       job.inputPath,
+      job.contentDigest,
       jobs.map(job => job.job),
       pluginOptions
     ).map(promise =>
@@ -124,7 +148,7 @@ function runJobs(
 
           boundActionCreators.setJob(
             {
-              id: `processing image ${job.inputPath}`,
+              id: jobId,
               imagesFinished,
             },
             { name: `gatsby-plugin-sharp` }
@@ -133,10 +157,7 @@ function runJobs(
     )
 
     Promise.all(promises).then(() => {
-      boundActionCreators.endJob(
-        { id: `processing image ${job.inputPath}` },
-        { name: `gatsby-plugin-sharp` }
-      )
+      boundActionCreators.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
       cb()
     })
   } catch (err) {

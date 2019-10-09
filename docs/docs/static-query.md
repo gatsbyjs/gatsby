@@ -8,11 +8,10 @@ In this guide, we'll walk through an example using `StaticQuery`, and discuss [t
 
 ## How to use `StaticQuery` in components
 
-<iframe class="egghead-video" width={600} height={348} src="https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery/embed" />
-
-Video hosted on [egghead.io][egghead].
-
-[egghead]: https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-load-data-using-graphql-queries-directly-in-a-gatsby-v2-component-with-staticquery"
+  lessonTitle="Load Data using GraphQL Queries Directly in a Gatsby v2 Component with StaticQuery"
+/>
 
 ### Basic example
 

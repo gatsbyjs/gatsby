@@ -147,9 +147,7 @@ exports.checkDepsChanges = async ({
           // changes - they will be covered
           if (!monoRepoPackages.includes(key)) {
             acc.push(
-              ` - '${key}' changed version from ${
-                localPKGjson.dependencies[key]
-              } to ${monorepoPKGjson.dependencies[key]}`
+              ` - '${key}' changed version from ${localPKGjson.dependencies[key]} to ${monorepoPKGjson.dependencies[key]}`
             )
             needPublishing = true
           }
@@ -172,7 +170,7 @@ exports.checkDepsChanges = async ({
         )
       } else {
         console.warn(
-          `Installation of depenencies after initial scan is not implemented`
+          `Installation of dependencies after initial scan is not implemented`
         )
       }
       return {

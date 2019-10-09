@@ -4,7 +4,7 @@ export default () => {
   const data = useStaticQuery(graphql`
     {
       notesConfig(id: { eq: "gatsby-theme-notes-config" }) {
-        notesPath
+        basePath
         homeText
         breadcrumbSeparator
       }

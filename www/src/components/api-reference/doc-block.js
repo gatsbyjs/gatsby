@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import styled from "@emotion/styled"
 import { css } from "@emotion/core"
@@ -14,7 +16,6 @@ import {
 import ReturnBlock from "./returns"
 import { Header, LinkBox } from "./utils"
 import { scale } from "../../utils/typography"
-import { fonts, space, colors } from "../../utils/presets"
 import { linkStyles } from "../../utils/styles"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
@@ -30,13 +31,13 @@ const Deprecated = ({ definition }) => {
   if (definition.deprecated && definition.deprecated.childMdx) {
     return (
       <div
-        css={css`
-          p:before {
-            color: #e8bd36;
-            content: "(deprecated) ";
-            font-family: ${fonts.header};
-          }
-        `}
+        sx={{
+          "p:before": {
+            color: `#e8bd36`,
+            content: `(deprecated) `,
+            fontFamily: `header`,
+          },
+        }}
       >
         <MDXRenderer>{definition.deprecated.childMdx.body}</MDXRenderer>
       </div>
@@ -46,20 +47,18 @@ const Deprecated = ({ definition }) => {
   return null
 }
 
-const APILink = ({ definition, githubPath }) => {
-  if (definition.codeLocation && githubPath) {
+const APILink = ({ definition, relativeFilePath }) => {
+  if (definition.codeLocation && relativeFilePath) {
     return (
       <a
-        css={{
+        sx={{
           ...linkStyles,
           display: `inline-flex !important`,
         }}
-        href={`${githubPath}#L${definition.codeLocation.start.line}-L${
-          definition.codeLocation.end.line
-        }`}
+        href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${relativeFilePath}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
-        <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+        <GithubIcon focusable="false" sx={{ mr: 2 }} />
         <span>Source</span>
       </a>
     )
@@ -67,23 +66,19 @@ const APILink = ({ definition, githubPath }) => {
 
   if (
     definition.codeLocation &&
-    !githubPath &&
+    !relativeFilePath &&
     !Array.isArray(definition.codeLocation)
   ) {
     return (
       <a
-        css={{
+        sx={{
           ...linkStyles,
           display: `inline-flex !important`,
         }}
-        href={`https://github.com/gatsbyjs/gatsby/blob/${
-          process.env.COMMIT_SHA
-        }/packages/${definition.codeLocation.file}#L${
-          definition.codeLocation.start.line
-        }-L${definition.codeLocation.end.line}`}
+        href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${definition.codeLocation.file}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
-        <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+        <GithubIcon focusable="false" sx={{ mr: 2 }} />
         <span>Source</span>
       </a>
     )
@@ -91,35 +86,59 @@ const APILink = ({ definition, githubPath }) => {
 
   if (
     definition.codeLocation &&
-    !githubPath &&
+    !relativeFilePath &&
     Array.isArray(definition.codeLocation)
   ) {
     return (
       <div
-        css={{
+        sx={{
           ...linkStyles,
           "&&:hover": {
-            color: colors.text.secondary,
+            color: `textMuted`,
           },
           display: `inline-flex !important`,
           alignItems: `center`,
         }}
       >
-        <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+        <GithubIcon focusable="false" sx={{ mr: 2 }} />
         <span>Source</span>
-        <div css={{ marginLeft: space[2] }}>
+        <div sx={{ ml: 3 }}>
           {definition.codeLocation.map((loc, index) => (
             <LinkBox
               key={`${loc.file}${loc.start.line}-${loc.end.line}`}
-              href={`https://github.com/gatsbyjs/gatsby/blob/${
-                process.env.COMMIT_SHA
-              }/packages/${loc.file}#L${loc.start.line}-L${loc.end.line}`}
+              href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${loc.file}#L${loc.start.line}-L${loc.end.line}`}
               aria-label={`View source #${index + 1} on GitHub`}
             >
               {index + 1}
             </LinkBox>
           ))}
         </div>
+      </div>
+    )
+  }
+
+  return null
+}
+
+const AvailableIn = ({ definition }) => {
+  if (definition.availableIn && definition.availableIn.length) {
+    return (
+      <div>
+        <span>Only available in:</span>
+        {definition.availableIn.map(api => (
+          <a
+            key={api}
+            href={`/docs/node-apis/#${api}`}
+            css={linkStyles}
+            sx={{
+              ...linkStyles,
+              display: `inline-block`,
+              ml: 2,
+            }}
+          >
+            {api}
+          </a>
+        ))}
       </div>
     )
   }
@@ -149,7 +168,7 @@ const Description = ({ definition }) => {
 
 const DocBlock = ({
   definition,
-  githubPath = null,
+  relativeFilePath = null,
   level = 0,
   linkableTitle = false,
   title = null,
@@ -187,7 +206,7 @@ const DocBlock = ({
       }}
     >
       <Header level={level}>
-        <div css={{ marginRight: space[3], display: `inline-block` }}>
+        <div sx={{ mr: 3, display: `inline-block` }}>
           {titleElement}
           {showSignature && (
             <React.Fragment>
@@ -203,11 +222,15 @@ const DocBlock = ({
           )}
         </div>
         {level === 0 && (
-          <APILink githubPath={githubPath} definition={definition} />
+          <APILink
+            relativeFilePath={relativeFilePath}
+            definition={definition}
+          />
         )}
         {definition.optional && <Optional />}
       </Header>
       {showSignature && !showSignatureNextToTitle && signatureElement}
+      <AvailableIn definition={definition} />
       <Description definition={definition} />
       <Deprecated definition={definition} />
       <ParamsBlock

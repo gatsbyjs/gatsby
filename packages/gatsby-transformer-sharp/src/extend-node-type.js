@@ -41,11 +41,13 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs }) =>
+const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
   traceSVG({
     file,
     args: { ...fieldArgs.traceSVG },
     fileArgs: fieldArgs,
+    cache,
+    reporter,
   })
 
 const fixedNodeType = ({
@@ -63,7 +65,12 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: GraphQLFloat },
@@ -154,9 +161,21 @@ const fixedNodeType = ({
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
       },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
+      },
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
       },
     },
     resolve: (image, fieldArgs, context) => {
@@ -195,7 +214,12 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         src: { type: GraphQLString },
@@ -298,6 +322,10 @@ const fluidNodeType = ({
         type: GraphQLInt,
         defaultValue: 0,
       },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
+      },
       sizes: {
         type: GraphQLString,
         defaultValue: ``,
@@ -380,9 +408,7 @@ module.exports = ({
         const dimensions = imageSize.sync(
           toArray(fs.readFileSync(details.absolutePath))
         )
-        const imageName = `${details.name}-${image.internal.contentDigest}${
-          details.ext
-        }`
+        const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`
         const publicPath = path.join(
           process.cwd(),
           `public`,
@@ -394,9 +420,7 @@ module.exports = ({
           fsExtra.copy(details.absolutePath, publicPath, err => {
             if (err) {
               console.error(
-                `error copying file from ${
-                  details.absolutePath
-                } to ${publicPath}`,
+                `error copying file from ${details.absolutePath} to ${publicPath}`,
                 err
               )
             }
@@ -417,7 +441,12 @@ module.exports = ({
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent => getTracedSVG(parent),
+            resolve: parent =>
+              getTracedSVG({
+                ...parent,
+                cache,
+                reporter,
+              }),
           },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
@@ -471,8 +500,20 @@ module.exports = ({
           type: ImageCropFocusType,
           defaultValue: sharp.strategy.attention,
         },
+        fit: {
+          type: ImageFitType,
+          defaultValue: sharp.fit.cover,
+        },
+        background: {
+          type: GraphQLString,
+          defaultValue: `rgba(0,0,0,1)`,
+        },
         rotate: {
           type: GraphQLInt,
+          defaultValue: 0,
+        },
+        trim: {
+          type: GraphQLFloat,
           defaultValue: 0,
         },
       },

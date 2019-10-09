@@ -1,16 +1,6 @@
-import { GraphQLClient } from "graphql-request"
 import prettyjson from "prettyjson"
-import { get, last } from "lodash/fp"
-
-/**
- * Create a Shopify Storefront GraphQL client for the provided name and token.
- */
-export const createClient = (shopName, accessToken) =>
-  new GraphQLClient(`https://${shopName}.myshopify.com/api/graphql`, {
-    headers: {
-      "X-Shopify-Storefront-Access-Token": accessToken,
-    },
-  })
+import chalk from "chalk"
+import { get, getOr, last } from "lodash/fp"
 
 /**
  * Print an error from a GraphQL client
@@ -18,8 +8,13 @@ export const createClient = (shopName, accessToken) =>
 export const printGraphQLError = e => {
   const prettyjsonOptions = { keysColor: `red`, dashColor: `red` }
 
-  if (e.response && e.response.errors)
+  if (e.response && e.response.errors) {
+    if (e.message.startsWith(`access denied`)) {
+      console.error(chalk`\n{yellow Check your token has this read authorization,
+      or omit fetching this object using the "includeCollections" options in gatsby-source-shopify plugin options}`)
+    }
     console.error(prettyjson.render(e.response.errors, prettyjsonOptions))
+  }
 
   if (e.request) console.error(prettyjson.render(e.request, prettyjsonOptions))
 }
@@ -43,8 +38,7 @@ export const queryAll = async (
   aggregatedResponse = null
 ) => {
   const data = await queryOnce(client, query, first, after)
-
-  const edges = get([...path, `edges`], data)
+  const edges = getOr([], [...path, `edges`], data)
   const nodes = edges.map(edge => edge.node)
 
   aggregatedResponse = aggregatedResponse

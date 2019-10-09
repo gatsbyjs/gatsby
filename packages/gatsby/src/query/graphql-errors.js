@@ -1,7 +1,7 @@
 // @flow
 
 import { print, visit, GraphQLError, getLocation } from "graphql"
-import babelCodeFrame from "@babel/code-frame"
+import { codeFrameColumns } from "@babel/code-frame"
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
 
@@ -70,6 +70,8 @@ function extractError(error: Error): { message: string, docName: string } {
     message = error.toString()
   }
 
+  message = message.trim()
+
   return { message, codeBlock, docName }
 }
 
@@ -88,11 +90,20 @@ function findLocation(extractedMessage, def) {
   return location
 }
 
-function getCodeFrame(query: string, lineNumber?: number, column?: number) {
-  return babelCodeFrame(query, lineNumber, column, {
-    linesAbove: 10,
-    linesBelow: 10,
-  })
+function getCodeFrame(query: string, line?: number, column?: number) {
+  return codeFrameColumns(
+    query,
+    {
+      start: {
+        line,
+        column,
+      },
+    },
+    {
+      linesAbove: 10,
+      linesBelow: 10,
+    }
+  )
 }
 
 function getCodeFrameFromRelayError(
@@ -125,30 +136,52 @@ export function multipleRootQueriesError(
       `Only the first ("${otherName}") will be registered.`,
     filePath,
     `  ${report.format.yellow(`Instead of:`)} \n\n` +
-      babelCodeFrame(report.stripIndent`
-      query ${otherName} {
-        bar {
-          #...
+      codeFrameColumns(
+        report.stripIndent`
+        query ${otherName} {
+          bar {
+            #...
+          }
         }
-      }
 
-      query ${name} {
-        foo {
-          #...
+        query ${name} {
+          foo {
+            #...
+          }
         }
-      }
-    `) +
+      `,
+        {
+          start: {
+            column: 0,
+            line: 0,
+          },
+        },
+        {
+          linesBelow: Number.MAX_SAFE_INTEGER,
+        }
+      ) +
       `\n\n  ${report.format.green(`Do:`)} \n\n` +
-      babelCodeFrame(report.stripIndent`
-      query ${unifiedName} {
-        bar {
-          #...
+      codeFrameColumns(
+        report.stripIndent`
+        query ${unifiedName} {
+          bar {
+            #...
+          }
+          foo {
+            #...
+          }
         }
-        foo {
-          #...
+      `,
+        {
+          start: {
+            column: 0,
+            line: 0,
+          },
+        },
+        {
+          linesBelow: Number.MAX_SAFE_INTEGER,
         }
-      }
-    `)
+      )
   )
 }
 

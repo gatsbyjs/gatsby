@@ -16,7 +16,7 @@ We welcome all contributions from you in the community, and would be thrilled to
 
 ...and anything else you can think of. Our showcase and library contribution docs are a great place to start:
 
-- [Submit to Site Showcase](/contributing/submit-to-site-showcase/)
+- [Submit to Site Showcase](/contributing/site-showcase-submissions)
 - [Submit to Starter Library](/contributing/submit-to-starter-library/)
 - [Submit to Plugin Library](/contributing/submit-to-plugin-library/)
 

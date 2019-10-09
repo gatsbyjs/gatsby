@@ -1,9 +1,8 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import FaAngleDown from "react-icons/lib/fa/angle-down"
 import FaAngleUp from "react-icons/lib/fa/angle-up"
-
-import { rhythm } from "../../utils/typography"
-import { colors, space, fontSizes, letterSpacings } from "../../utils/presets"
 
 class Collapsible extends Component {
   state = {
@@ -20,8 +19,9 @@ class Collapsible extends Component {
 
     return (
       <div
-        css={{
-          borderBottom: collapsed ? 0 : `1px solid ${colors.ui.border.subtle}`,
+        sx={{
+          borderBottom: t =>
+            collapsed ? 0 : `1px solid ${t.colors.ui.border}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,
           minHeight: fixed ? `${fixed}px` : `initial`,
@@ -39,27 +39,27 @@ class Collapsible extends Component {
           }}
         >
           <h4
-            css={{
+            sx={{
               alignItems: `center`,
-              color: colors.lilac,
+              color: `textMuted`,
               cursor: `pointer`,
               display: `flex`,
               flexShrink: 0,
-              fontWeight: `normal`,
-              fontSize: fontSizes[1],
-              marginTop: space[6],
-              marginRight: rhythm(5 / 4),
-              letterSpacing: letterSpacings.tracked,
+              fontWeight: `body`,
+              fontSize: 1,
+              mt: 6,
+              mr: 7,
+              letterSpacing: `tracked`,
               textTransform: `uppercase`,
               "&:hover": {
-                color: colors.gatsby,
+                color: `gatsby`,
               },
             }}
             onClick={this.handleClick}
           >
             {heading}
             {` `}
-            <span css={{ marginLeft: `auto` }}>
+            <span sx={{ ml: `auto` }}>
               {collapsed ? <FaAngleDown /> : <FaAngleUp />}
             </span>
           </h4>

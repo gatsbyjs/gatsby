@@ -1,16 +1,18 @@
 import React from "react"
-import MDXRenderer from "gatsby-mdx/mdx-renderer"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Layout from "./layout"
 
 const WikiPage = ({
   data: {
-    note: {
-      code: { body },
+    note: { body },
+    site: {
+      siteMetadata: { title },
     },
   },
+  ...props
 }) => (
-  <Layout>
+  <Layout {...props} title={title}>
     <MDXRenderer>{body}</MDXRenderer>
   </Layout>
 )

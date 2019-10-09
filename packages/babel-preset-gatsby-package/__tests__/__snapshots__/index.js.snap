@@ -64,6 +64,7 @@ Array [
   "@babel/plugin-proposal-optional-chaining",
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
+  "babel-plugin-dynamic-import-node",
 ]
 `;
 
@@ -72,6 +73,7 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
+      "corejs": 2,
       "debug": false,
       "loose": true,
       "modules": "commonjs",
@@ -97,6 +99,7 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
+      "corejs": 2,
       "debug": true,
       "loose": true,
       "modules": "commonjs",
@@ -123,6 +126,7 @@ Array [
   "@babel/plugin-proposal-optional-chaining",
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
+  "babel-plugin-dynamic-import-node",
 ]
 `;
 
@@ -160,12 +164,13 @@ Array [
   Array [
     "@babel/preset-env",
     Object {
+      "corejs": 2,
       "debug": false,
       "loose": true,
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": 6,
+        "node": "8.0",
       },
       "useBuiltIns": "entry",
     },

@@ -14,7 +14,7 @@ In production, you should use a tested and robust solution to handle the authent
 
 ## Building your Gatsby app
 
-Start by creating a new Gatsby project using barebones `hello-world` starter:
+Start by creating a new Gatsby project using the barebones `hello-world` starter:
 
 ```shell
 gatsby new gatsby-auth gatsbyjs/gatsby-starter-hello-world
@@ -253,14 +253,13 @@ Though the routing is working now, you still can access all routes without restr
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
 ```jsx:title=src/components/privateRoute.js
-import React from "react"
+import React, { Component } from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
   if (!isLoggedIn() && location.pathname !== `/app/login`) {
-    // If the user is not logged in, redirect to the login page.
-    navigate(`/app/login`)
+    navigate("/app/login")
     return null
   }
 

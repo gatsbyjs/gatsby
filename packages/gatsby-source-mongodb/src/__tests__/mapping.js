@@ -20,7 +20,6 @@ const params = {
   text: `someText`,
   mediaType: `someMediaType`,
   createContentDigest: jest.fn().mockReturnValue(`contentDigest`),
-  createNode: jest.fn(),
 }
 
 test(`it returns an object`, () => {
@@ -30,8 +29,7 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest,
-      params.createNode
+      params.createContentDigest
     )
   ).toHaveProperty(`id`)
   expect(
@@ -40,8 +38,7 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest,
-      params.createNode
+      params.createContentDigest
     )
   ).toHaveProperty(`parent`)
   expect(
@@ -50,8 +47,7 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest,
-      params.createNode
+      params.createContentDigest
     )
   ).toHaveProperty(`children`)
   expect(
@@ -60,8 +56,7 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest,
-      params.createNode
+      params.createContentDigest
     )
   ).toHaveProperty(`internal`)
   expect(
@@ -70,8 +65,7 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest,
-      params.createNode
+      params.createContentDigest
     )
   ).toHaveProperty(`someKey`)
 })
@@ -95,8 +89,7 @@ test(`it returns a transformed object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest,
-      params.createNode
+      params.createContentDigest
     )
   ).toMatchObject(desiredResult)
 })

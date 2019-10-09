@@ -1066,7 +1066,7 @@
     </testcase>
     <testcase classname="watching copying files copies cache-dir files" name="watching copying files copies cache-dir files" time="0.001">
     </testcase>
-    <testcase classname="watching copying files filters non-existant files/directories" name="watching copying files filters non-existant files/directories" time="0.001">
+    <testcase classname="watching copying files filters non-existent files/directories" name="watching copying files filters non-existent files/directories" time="0.001">
     </testcase>
     <testcase classname="watching copying files filters duplicate directories" name="watching copying files filters duplicate directories" time="0.001">
     </testcase>
@@ -1208,7 +1208,7 @@
     </testcase>
     <testcase classname="Merge gatsby config Merging siteMetadata is recursive" name="Merge gatsby config Merging siteMetadata is recursive" time="0.002">
     </testcase>
-    <testcase classname="Merge gatsby config Merging proxy is overriden" name="Merge gatsby config Merging proxy is overriden" time="0">
+    <testcase classname="Merge gatsby config Merging proxy is overridden" name="Merge gatsby config Merging proxy is overridden" time="0">
     </testcase>
   </testsuite>
   <testsuite name="&lt;Img /&gt;" errors="0" failures="0" skipped="0" timestamp="2018-11-27T15:50:30" time="2.154" tests="5">

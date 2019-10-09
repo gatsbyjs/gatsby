@@ -14,7 +14,7 @@ module.exports = {
   testURL: `http://localhost`,
   setupFiles: [`<rootDir>/loadershim.js`],
   setupFilesAfterEnv: [
-    `react-testing-library/cleanup-after-each`,
+    `@testing-library/react/cleanup-after-each`,
     `jest-dom/extend-expect`,
   ],
 }

@@ -3,11 +3,8 @@ title: "How we're migrating a government open data site to Gatsby"
 date: 2019-02-08
 author: Ryan Johnson
 tags:
-  - open data
-  - government
-  - design
-  - data
-  - d3
+  - cutting-edge-experiences
+  - data-visualization
   - case-studies
 canonicalLink: https://revenuedata.doi.gov/blog/homepage-revamp-part-two/
 ---

@@ -23,6 +23,9 @@ See the [library of official and community plugins](/plugins/)
 
 ## Podcasts
 
+- [2019-06-05: Jason Lengstorf on Syntax #150: Gatsby Themes](https://syntax.fm/show/150/gatsby-themes)
+- [2019-05-22: Jason Lengstorf on Full Stack Radio #115: Gatsby for Skeptics](http://www.fullstackradio.com/115)
+- [2019-04-12: Jason Lengstorf on JS Party #71](https://changelog.com/jsparty/71)
 - [2018-11-30: Kyle Mathews on Founders Talk #59](https://changelog.com/founderstalk/59)
 - [2018-11-14: Jason Lengstorf on React Podcast](https://reactpodcast.simplecast.fm/28)
 - [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
@@ -42,6 +45,10 @@ See the [library of official and community plugins](/plugins/)
 - [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
 - [GraphQL Summit Open Source Lightning Talk on Gatsby — Kyle Mathews](https://youtu.be/y588qNiCZZo)
 - [Talk on GatsbyJS @ ViennaJS — Gerald Bauer](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
+
+## Livestreams
+
+- [Learn with Jason](https://www.youtube.com/playlist?list=PLCU2qJekvcN0RuMHCnjMYAKlpSKQ_e1hO)
 
 ## Gatsby tutorials
 
@@ -72,6 +79,8 @@ See the [library of official and community plugins](/plugins/)
 - [Reading Data From A JSON File With Gatsby + GraphQL](https://itnext.io/reading-data-from-a-json-file-with-gatsby-graphql-572b18ab98a)
 - [The Great Gatsby Bootcamp \[Full Course\] - Andrew Mead](https://www.youtube.com/watch?v=8t0vNu2fCCM)
 - [Understanding the Gatsby lifecycle](https://medium.com/narative/understanding-gatsbys-lifecycle-31c473ba2f2d)
+- [GatsbyGuides.com series on building web applications with Gatsby & Drupal](https://gatsbyguides.com/)
+- [Deep dive into Gatsby – Building a static blog using Gatsby, React and GraphQL](https://zocada.com/deep-dive-gatsby-building-a-simple-static-blog-using-gatsby-react-and-graphql/)
 
 ### German
 
@@ -85,6 +94,10 @@ See the [library of official and community plugins](/plugins/)
 
 - [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
 
+### Turkish
+
+- [GatsbyJS ile Modern Web Sitesi | 1. Bölüm (Başlangıç ve Kurulum) (Turkish)](https://medium.com/@raufsamestone/reactjs-ve-gatsbyjs-ile-modern-web-sitesi-1-b%C3%B6l%C3%BCm-ba%C5%9Flang%C4%B1%C3%A7-ve-kurulum-27437d6aaf54)
+
 ## Other resources
 
 ### DEV Community
@@ -94,3 +107,7 @@ See the [library of official and community plugins](/plugins/)
 ### Hashnode Community
 
 [Gatsby community on Hashnode](https://hashnode.com/n/gatsby) is a place where you can read discussions about Gatsby projects, read articles and tutorials and ask the rest of the Hashnode community Gatsby-related questions.
+
+### Reddit Community
+
+[Gatsby community on Reddit](https://www.reddit.com/r/gatsbyjs) is a place where you can read news about Gatsby, interact with other Gatsby developers and get advice on Gatsby-related Questions.

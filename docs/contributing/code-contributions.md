@@ -9,6 +9,7 @@ On this page:
 - [Repo setup](#repo-setup)
 - [Creating your own plugins and loaders](#creating-your-own-plugins-and-loaders)
 - [Making changes to the starter Library](#making-changes-to-the-starter-library)
+- [Contributing example sites](#contributing-example-sites)
 - [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
 - [Development tools](#development-tools)
 
@@ -17,6 +18,8 @@ On this page:
 This page includes details specific to the Gatsby core and ecosystem codebase.
 
 To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-CLI, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/).
+
+Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment/).
 
 To contribute to the blog or Gatsbyjs.org website, check out the setup steps on the [blog and website contributions](/contributing/blog-and-website-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
 
@@ -40,15 +43,21 @@ GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 
 The `.env.development` file is ignored by git. Your token should never be committed.
 
+## Contributing example sites
+
+Gatsby's policy is that "Using" example sites (like those in the [examples part of the repo](https://github.com/gatsbyjs/gatsby/tree/master/examples)) should only be around plugins that are maintained by the core team as it's hard to keep things up to date otherwise.
+
+To contribute example sites, it is recommended to create your own GitHub repo and link to it from your source plugin, etc.
+
 ## Using Docker to set up test environments
 
 With all of the possible Gatsby integrations, it might help to spin up a Docker container with the software application you need to test. This makes installation a breeze, so you can focus less on getting set up and more on the integration details that matter to you.
 
 > Do you have a setup not listed here? Let us know by adding it to this file and opening a PR.
 
-### Docker, Wordpress and Gatsby
+### Docker, WordPress and Gatsby
 
-To install Wordpress to use with Gatsby, this `docker-compose.yml` file will come in handy:
+To install WordPress to use with Gatsby, this `docker-compose.yml` file will come in handy:
 
 ```
 version: '2'
@@ -100,12 +109,16 @@ services:
        - /sessions
 ```
 
-Use the above file contents when following the Docker Wordpress install instructions: https://docs.docker.com/compose/wordpress/
+Use the above file contents when following the Docker WordPress install instructions: https://docs.docker.com/compose/wordpress/
 
-Using Docker Compose, you can start and stop a Wordpress instance and integrate it with the [Gatsby Wordpress source plugin](/docs/sourcing-from-wordpress/).
+Using Docker Compose, you can start and stop a WordPress instance and integrate it with the [Gatsby WordPress source plugin](/docs/sourcing-from-wordpress/).
 
 ## Development tools
 
 ### Debugging the build process
 
 Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
+
+## Feedback
+
+At any point during the contributing process, the Gatsby Core team would love to help! We hold a weekly [Core Maintainer's meeting](/contributing/community#core-maintainers-meeting) where you can share your creation(s) and receive advice and feedback directly from the team!

@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const select = require(`unist-util-select`)
 const sharp = require(`./safe-sharp`)
 const axios = require(`axios`)
@@ -15,7 +14,16 @@ const { buildResponsiveSizes } = require(`./utils`)
 // 5. Set the html w/ aspect ratio helper.
 
 module.exports = async (
-  { files, markdownNode, markdownAST, pathPrefix, getNode, reporter, cache },
+  {
+    files,
+    markdownNode,
+    markdownAST,
+    pathPrefix,
+    getNode,
+    reporter,
+    cache,
+    createContentDigest,
+  },
   pluginOptions
 ) => {
   const defaults = {
@@ -50,16 +58,13 @@ module.exports = async (
     const fileName = srcSplit[srcSplit.length - 1]
     const options = _.defaults(pluginOptions, defaults)
 
-    const optionsHash = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(options))
-      .digest(`hex`)
+    const optionsHash = createContentDigest(options)
 
     const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
-    let cahedRawHTML = await cache.get(cacheKey)
+    let cachedRawHTML = await cache.get(cacheKey)
 
-    if (cahedRawHTML) {
-      return cahedRawHTML
+    if (cachedRawHTML) {
+      return cachedRawHTML
     }
     const metaReader = sharp()
 
@@ -137,15 +142,11 @@ module.exports = async (
     let rawHTML = `
       <span
         class="gatsby-resp-image-wrapper"
-        style="position: relative; display: block; ${
-          options.wrapperStyle
-        }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+        style="position: relative; display: block; ${options.wrapperStyle}; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
       >
         <span
           class="gatsby-resp-image-background-image"
-          style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      responsiveSizesResult.base64
-    }'); background-size: cover; display: block;"
+          style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
         >
           ${imageTag}
         </span>

@@ -4,17 +4,6 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
 
-On this page:
-
-- [Top priorities](#top-priorities)
-- [Options for contributing to the Gatsby docs](#options-for-contributing-to-the-gatsby-docs)
-- [Modifying markdown files](#modifying-markdown-files)
-  - [Converting a document from a stub](#converting-a-document-from-a-stub)
-- [Docs site setup instructions](#docs-site-setup-instructions)
-- [Docs renaming instructions](#docs-renaming-instructions)
-- [Claim your swag](#claim-your-swag)
-- [Want more?](#want-more)
-
 > _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-and-website-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
 
 ## Top priorities
@@ -28,7 +17,23 @@ When working on the Gatsby.js documentation, you can choose between two major st
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
 - Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content and infrastructure changes. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
 
-## Modifying markdown files
+## Fixing image and link paths
+
+If you find a broken image URL in the Gatsby docs, it should be fixed and kept relative to the site source rather than linked to the remote repo on GitHub. This ensures that when the site is deployed, all images are included in the build.
+
+To address missing images, check the doc or tutorial source [in the Gatsby repo](https://github.com/gatsbyjs/gatsby/tree/master/docs) to see if it was moved in its history and if the images are still in its old location. Check to see if those images are also referenced from more than one doc. If they aren't, move them to the new directory location (and update URL references relative to the content, if necessary). If they are referenced in more than one location, use relative paths and don't duplicate images.
+
+If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
+
+## Headings
+
+Docs with frontmatter metadata at the top including a `title` will automatically receive an `<h1>` heading in the rendered page, and it should be the only one. Additional headings in docs content should start with `<h2>`, denoted by `##` in Markdown.
+
+For the purposes of an accessible document outline, content headings should go in order from h2-h4 (`####`) until all levels have been established. This will ensure the Gatsby docs have a content hierarchy that works well for users of assistive technology. Read more about the importance of [headings and semantic structure in HTML](https://webaim.org/techniques/semanticstructure/).
+
+## Modifying Markdown files
+
+> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/mdx/markdown-syntax/)!
 
 1. If you want to add/modify any Gatsby documentation, go to the
    [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and
@@ -63,11 +68,21 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
   ...
 ```
 
+3. (Optional) if the name of the title seems long, consider adding a `breadcrumbTitle` to the entry in the `doc-links.yaml` file that is a shorter version of the title, and will show up in the breadcrumb on the docs page instead.
+
+```diff:title=www/src/data/sidebars/doc-links.yaml
+  ...
+  - title: Really, Really Long Example Document or Guide Title
+    link: /docs/example-document/
++   breadcrumbTitle: Shorter Title to Display
+  ...
+```
+
 ## Docs site setup instructions
 
-After going through the development setup instructions above, there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/). which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) directory.
+After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
 
-- Clone the Gatsby repo as described above.
+- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
 - For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
 - Change directories into the docs site folder: `cd www`
 - Install dependencies with Yarn: `yarn install`
@@ -75,13 +90,13 @@ After going through the development setup instructions above, there are a few ad
 - Start a build of `www` with `gatsby develop`.
 - Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
 - View the changes in your browser at `http://localhost:8000`.
-- Commit your changes and submit a pull request!
+- Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request/)!
 
 ## Docs renaming instructions
 
 Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
 
-- Run proposed structure changes by the Gatsby docs team in [a Github issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
+- Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
 - For SEO purposes, add a redirect to the `createPages` function in [`www/gatsby-node.js`](https://github.com/gatsbyjs/gatsby/tree/master/www/gatsby-node.js). Here's an example:
 

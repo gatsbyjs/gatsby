@@ -37,7 +37,7 @@ module.exports = {
 
 ## Plugin options
 
-- **connectionString**: if you need to use a connection string compatable with later versions of MongoDB, or for connections to MongoDB Atlas, you can enter the entire string, minus the `dbName` and `extraParams.` Use the In this case, the authentication information should already be embedded in the string ex. `mongodb+srv://<USERNAME>:<PASSWORD>@<SERVERNANE>-fsokc.mongodb.net`. Pass `dbName` and `extraParams` as options per below.
+- **connectionString**: if you need to use a connection string compatible with later versions of MongoDB, or for connections to MongoDB Atlas, you can enter the entire string, minus the `dbName` and `extraParams.` Use the In this case, the authentication information should already be embedded in the string ex. `mongodb+srv://<USERNAME>:<PASSWORD>@<SERVERNANE>-fsokc.mongodb.net`. Pass `dbName` and `extraParams` as options per below.
 - **dbName**: indicates the database name that you want to use
 - **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
