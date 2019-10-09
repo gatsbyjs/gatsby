@@ -369,6 +369,8 @@ describe(`develop`, () => {
           const codeWithError = `import React from "react"
     import { graphql } from "gatsby"
 
+    import Something from "not-existing-package"
+
     const IndexPage = ({ data }) => (
       <div>
         Hello world!
