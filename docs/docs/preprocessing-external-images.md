@@ -32,7 +32,7 @@ By default, this is a string value as you haven't told Gatsby yet how to interpr
 
 In your `gatsby-node.js` file, you can do some processing to create file nodes for the custom `featuredImgUrl` Frontmatter field.
 
-As we may not want all blog posts to have a featured image, we should define some GraphQL types with the [Schema Customization API](/docs/schema-customization/). Explicitly defining these types allows you to not need to add the fields in the frontmatter to every single blog post and will return `null` when not present. Even if there are no blog posts with these fields, the type will still exist in the schema and can be used in your code.
+As you may not want to require all blog posts to have a featured image, you can define some GraphQL types with Gatsby's [Schema Customization API](/docs/schema-customization/) to provide flexibility and control with your queries. Explicitly defining these types allows you to return `null` when a blog post does not contain a featured image in its frontmatter data. Even if there are no blog posts with these data fields, the type will still exist in the schema and can be used in your code.
 
 ```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
@@ -67,7 +67,7 @@ exports.onCreateNode = async ({
   ) {
     let fileNode = await createRemoteFileNode({
       url: node.frontmatter.featuredImgUrl, // string that points to the URL of the image
-      parentNodeId: node.id, // id of the parent node of the fileNode we are going to create
+      parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
       createNode, // helper function in gatsby-node to generate the node
       createNodeId, // helper function in gatsby-node to generate the node id
       cache, // Gatsby's cache
