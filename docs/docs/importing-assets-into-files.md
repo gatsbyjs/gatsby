@@ -48,7 +48,7 @@ Please be advised that this is also a custom feature of Webpack.
   lessonTitle="Import a Local Image into a Gatsby Component with webpack"
 />
 
-#### Additional resources
+### Additional resources:
 
 - More on [using an imported font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font).
 
