@@ -29,8 +29,7 @@ const createDevelopQueue = getRunner => {
   const queueOptions = {
     ...createBaseOptions(),
     priority: (job, cb) => {
-      const activePaths = Array.from(websocketManager.activePaths.values())
-      if (job.id && activePaths.includes(job.id)) {
+      if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
         cb(null, 1)

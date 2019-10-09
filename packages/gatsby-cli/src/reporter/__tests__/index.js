@@ -68,6 +68,9 @@ describe(`report.error`, () => {
   it(`handles "structuredError" signature correctly`, () => {
     reporter.error({
       id: `95312`,
+      context: {
+        ref: `navigator`,
+      },
     })
     const generatedError = getErrorMessages(reporterActions.createLog)[0]
     expect(generatedError).toMatchSnapshot()

@@ -334,7 +334,7 @@ class LocalNodeModel {
    */
   trackInlineObjectsInRootNode(node) {
     if (!this._trackedRootNodes.has(node.id)) {
-      addRootNodeToInlineObject(this._rootNodeMap, node, node.id, true, true)
+      addRootNodeToInlineObject(this._rootNodeMap, node, node.id, true)
       this._trackedRootNodes.add(node.id)
     }
   }
