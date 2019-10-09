@@ -27,10 +27,7 @@ const linkPrefetchStrategy = function(url) {
     // Handle special JSON requirements
     if (/\.json$/.test(url)) {
       link.setAttribute(`as`, `fetch`)
-
-      if (new URL(url).origin !== window.location.origin) {
-        link.setAttribute(`crossorigin`, `anonymous`)
-      }
+      link.setAttribute(`crossorigin`, `anonymous`)
     }
 
     link.onload = resolve
