@@ -15,6 +15,12 @@ exports.createPages = async ({ reporter }) => {
   await sleep(500)
   successfulActivity.done()
 
+  reporter.info(`info`)
+  reporter.success(`success`)
+  reporter.warn(`warn`)
+  reporter.log(`log`)
+  reporter.error(`error`)
+
   if (process.env.FAILING_ACTIVITY) {
     const unsuccessfulActivity = reporter.createProgress(
       `Failing activity`,
@@ -27,12 +33,6 @@ exports.createPages = async ({ reporter }) => {
     unsuccessfulActivity.panicOnBuild(`Your car is on fire`)
   }
 
-  reporter.info(`info`)
-  reporter.success(`success`)
-  reporter.warn(`warn`)
-  reporter.log(`log`)
-  reporter.error(`error`)
-
   if (process.env.PANIC_ON_BUILD) {
     reporter.panic(`Your house is on fire`)
   }
@@ -43,8 +43,5 @@ exports.createPages = async ({ reporter }) => {
 
   if (process.env.PROCESS_EXIT) {
     process.exit(1)
-  }
-  if (process.env.PROCESS_KILL) {
-    process.kill(process.pid, `SIGTERM`)
   }
 }

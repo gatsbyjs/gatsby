@@ -42,10 +42,7 @@ const getGlobalStatus = (id, status) => {
       activityStatus === ActivityStatuses.NotStarted
     ) {
       return ActivityStatuses.InProgress
-    } else if (
-      activityStatus === ActivityStatuses.Failed &&
-      generatedStatus !== ActivityStatuses.InProgress
-    ) {
+    } else if (activityStatus === ActivityStatuses.Failed) {
       return ActivityStatuses.Failed
     }
     return generatedStatus
