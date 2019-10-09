@@ -207,12 +207,5 @@ exports.wrapRootElement = true
  *      setSocketOptions({ forceNew = false })
  * }
  *
- *
- *
- *
- *
- *
- *
- *
  */
 exports.onSocketInit = true
