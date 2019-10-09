@@ -47,6 +47,8 @@ const setJobToProcess = (toProcess, job) => {
     job: job,
     deferred,
   })
+
+  return deferred
 }
 
 const scheduleJob = async (
@@ -58,7 +60,7 @@ const scheduleJob = async (
 ) => {
   const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
 
-  setJobToProcess(toProcess, job)
+  let deferred = setJobToProcess(toProcess, job)
 
   if (totalJobs === 0) {
     bar = createProgress(`Generating image thumbnails`, reporter)
