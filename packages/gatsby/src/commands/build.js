@@ -100,7 +100,6 @@ module.exports = async function build(program: BuildArgs) {
 
   if (fs.existsSync(`${program.directory}/temp/redux-state-old.json`)) {
     const previousWebpackCompilationHash = require(`${program.directory}/temp/redux-state-old.json`)
-    console.log("test");
     if (
       stats.hash !== previousWebpackCompilationHash.webpackCompilationHashOld
     ) {
@@ -139,7 +138,7 @@ module.exports = async function build(program: BuildArgs) {
   /*
    * (This maybe reduanant code below as we are not updating the webpackHash)
    * We check if the page-data fold exists if so we then change the webpack hash to blank
-   * This removes the check that reloads the page if the html's window and the page-data hashs do not match.
+   * This removes the check that reloads the page if the html's window and the page-data hashes do not match.
    */
 
   if (fs.existsSync(`${program.directory}/public/page-data`)) {
@@ -159,21 +158,24 @@ module.exports = async function build(program: BuildArgs) {
   }
 
   /*
+   * Next we compare the old page data to the new data in state and returns the different page keys
+   */
+  activity = report.activityTimer(`Comparing old data set`)
+  activity.start()
+  const newPageKeys = await pageDataUtil.getNewPageKeys(
+    program.directory,
+    store,
+    isNewBuild
+  )
+  activity.end()
+  console.log(`Pages to be created`, newPageKeys)
+  /*
    * Lets start building some new HTML pages
    */
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
   })
   activity.start()
-
-  /*
-   * Next we compare the old page data to the new data in state and returns the different page keys
-   */
-  const newPageKeys = await pageDataUtil.getNewPageKeys(
-    program.directory,
-    store,
-    isNewBuild
-  )
 
   try {
     await buildHTML.buildPages({
@@ -209,8 +211,12 @@ module.exports = async function build(program: BuildArgs) {
   ) {
     activity = report.activityTimer(`Delete old page and page data`)
     activity.start()
-    await pageDataUtil.removeOldPageData(program.directory, store)
+    const deletedKeys = await pageDataUtil.removeOldPageData(
+      program.directory,
+      store
+    )
     activity.end()
+    console.log(`Deleted keys`, deletedKeys)
   }
 
   /*
