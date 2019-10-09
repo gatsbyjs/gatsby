@@ -146,7 +146,7 @@ export default (content, className = ``) => {
       .join(`\n`)
       .trim(),
     filtered.reduce((lookup, { highlighted }, index) => {
-      if (highlighted) {
+      if (highlighted && className !== ``) {
         lookup[index] = true
       }
       return lookup
