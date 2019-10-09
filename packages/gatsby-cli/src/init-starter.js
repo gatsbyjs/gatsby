@@ -231,7 +231,6 @@ type InitOptions = {
 const endInstruction = Path => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
-start developing your site now by running the following instructions
   $ cd ${Path}
   $ ${getPackageManager()} run develop
 `)
