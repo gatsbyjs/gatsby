@@ -86,12 +86,12 @@ describe(`Failing Build`, () => {
   beforeAll(async done => {
     fs.writeFileSync(
       path.join(`src`, `pages`, `index.js`),
-      `
-import React from "react"
+      `import React from "react"
 
 const IndexPage = () => <div>Hello world!</div>
 
 // export default IndexPage
+
     `
     )
     gatsbyProcess = spawn(gatsbyBin, [`build`], {
@@ -120,13 +120,13 @@ const IndexPage = () => <div>Hello world!</div>
   afterAll(async () => {
     fs.writeFileSync(
       path.join(`src`, `pages`, `index.js`),
-      `
-import React from "react"
+      `import React from "react"
 
 const IndexPage = () => <div>Hello world!</div>
 
 export default IndexPage
-    `
+
+`
     )
   })
 
