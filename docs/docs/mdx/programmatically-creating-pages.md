@@ -71,7 +71,7 @@ touch content/posts/blog-{1,2}.mdx
 > _`touch <filename>` will create an empty file named `<filename>`. The
 > brackets (`{}`) are [an
 > expansion](https://twitter.com/kentcdodds/status/1083399683932868609?s=19)
-> which means we can create multiple files in one command._
+> which means you can create multiple files in one command._
 
 Open up each of the files you just created and add some content.
 
@@ -104,8 +104,8 @@ const { createFilePath } = require("gatsby-source-filesystem")
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  // We only want to operate on `Mdx` nodes. If we had content from a
-  // remote CMS we could also check to see if the parent node was a
+  // you only want to operate on `Mdx` nodes. If you had content from a
+  // remote CMS you could also check to see if the parent node was a
   // `File` node here
   if (node.internal.type === "Mdx") {
     const value = createFilePath({ node, getNode })
@@ -115,7 +115,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: "slug",
       // Individual MDX node
       node,
-      // Generated value based on filepath with "blog" prefix. We
+      // Generated value based on filepath with "blog" prefix. you
       // don't need a separating "/" before the value because
       // createFilePath returns a path with the leading "/".
       value: `/blog${value}`,
@@ -124,7 +124,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 ```
 
-The `value` in the `createNodeField` call is the URL we'll use later
+The `value` in the `createNodeField` call is the URL you'll use later
 to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
@@ -197,15 +197,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Create blog post pages.
   const posts = result.data.allMdx.edges
 
-  // We'll call `createPage` for each result
+  // you'll call `createPage` for each result
   posts.forEach(({ node }, index) => {
     createPage({
-      // This is the slug we created before
+      // This is the slug you created before
       // (or `node.frontmatter.slug`)
       path: node.fields.slug,
       // This component will wrap our MDX content
       component: path.resolve(`./src/components/posts-page-layout.js`),
-      // We can use the values in this context in
+      // You can use the values in this context in
       // our page layout component
       context: { id: node.id },
     })
@@ -260,7 +260,7 @@ export const pageQuery = graphql`
 `
 ```
 
-When we put the component and page query all together, the
+When you put the component and page query all together, the
 component should look like:
 
 ```javascript:title=src/components/posts-page-layout.js

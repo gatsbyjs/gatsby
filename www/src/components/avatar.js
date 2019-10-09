@@ -1,21 +1,19 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import Img from "gatsby-image"
 
-import { space, radii } from "../utils/presets"
-
-const Avatar = ({ image, alt }) => (
+const Avatar = ({ image, alt, overrideCSS }) => (
   <Img
     alt={alt ? alt : ``}
     fixed={image}
-    css={{
-      borderRadius: radii[6],
+    sx={{
+      borderRadius: 6,
       display: `inline-block`,
-      // todo remove
-      marginRight: space[3],
-      marginBottom: 0,
-      verticalAlign: `top`,
+      m: 0,
       // prevents image twitch in Chrome when hovering the card
       transform: `translateZ(0)`,
+      verticalAlign: `top`,
+      ...overrideCSS,
     }}
   />
 )

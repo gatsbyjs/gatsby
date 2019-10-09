@@ -411,6 +411,7 @@ class Image extends React.Component {
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
+      itemProp,
     }
 
     if (fluid) {
