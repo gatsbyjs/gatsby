@@ -40,7 +40,7 @@
     "gatsby-plugin-offline": "^3.0.12",
     "gatsby-plugin-react-helmet": "^3.1.10",
     "gatsby-plugin-sentry": "^1.0.1",
-    "gatsby-plugin-theme-ui": "^0.2.6",
+    "gatsby-plugin-theme-ui": "^0.2.43",
     "gatsby-plugin-sharp": "^2.2.28",
     "gatsby-plugin-sitemap": "^2.2.16",
     "gatsby-plugin-twitter": "^2.1.9",
