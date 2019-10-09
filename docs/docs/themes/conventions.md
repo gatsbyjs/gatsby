@@ -9,7 +9,7 @@ As we begin to formalize and standardize the methodologies for building Gatsby T
 It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
 can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme` enables gatsby in identifying theme packages for compilation.
 
-## Initializing Required Directories
+## Initializing required directories
 
 If your theme relies on the presence of particular directories, like `posts` for `gatsby-source-filesystem`, you can use the `onPreBootstrap` hook to initialize them to avoid a crash when Gatsby tries to build the site.
 
@@ -32,11 +32,11 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 }
 ```
 
-## Separating Queries and Presentational Components
+## Separating queries and presentational components
 
 As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to override a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
 
-### Page Queries
+### Page queries
 
 You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
 
@@ -75,7 +75,7 @@ export const query = graphql`
 `
 ```
 
-### Static Queries
+### Static queries
 
 You can use static queries at the top level template as well and pass the data to other presentational components as props:
 
@@ -119,7 +119,7 @@ const Layout = ({ children }) => {
 export default Layout
 ```
 
-## Site Metadata
+## Site metadata
 
 For commonly customized things, such as site title and social media handles, you
 can have the user set site metadata in their `gatsby-config.js`. Then, throughout
@@ -172,7 +172,7 @@ export default () => {
 }
 ```
 
-## Breaking Changes
+## Breaking changes
 
 Since themes will typically be installed by an end user from npm, it's
 important to follow [semantic versioning](https://semver.org/), commonly
@@ -187,7 +187,7 @@ major versions are.
 Patches are defined as bug fixes that are done in a backwards-compatible way. This
 means that public facing APIs are unaffected.
 
-#### Example patch versions
+#### Examples of patch versions
 
 - **Fixing a bug** in a component, such as fixing a warning or adding a fallback value.
 - **Upgrading dependencies** to their latest minor and patch versions.
@@ -197,7 +197,7 @@ means that public facing APIs are unaffected.
 Minor versions are defined as new features or functionality that are added in a
 backwards-compatible way. This means that _existing_ public facing APIs are unaffected.
 
-#### Example minor versions
+#### Examples of minor versions
 
 - **Adding new pages or queries** to your theme. For example, adding tag pages to a blog.
 - **Adding new configuration options** to further customize a theme.
@@ -213,7 +213,7 @@ backwards-compatibility. These are often called "breaking changes".
 These changes should be accompanied with a migration guide that users can follow along
 for performing a theme upgrade.
 
-#### Example major versions
+#### Examples of major versions
 
 - **Changing a filename in `src`** will always be a breaking change due to shadowing.
   - Moving where a query occurs
