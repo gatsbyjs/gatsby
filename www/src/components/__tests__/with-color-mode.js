@@ -1,4 +1,4 @@
-describe(`Test`, () => {
+describe(`mock match media test`, () => {
   beforeAll(() => {
     window.matchMedia = jest.fn().mockImplementation(query => {
       return {
