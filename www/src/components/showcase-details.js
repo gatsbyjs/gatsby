@@ -23,7 +23,7 @@ const gutterDesktop = 8
 
 const styles = {
   link: {
-    color: `link.default`,
+    color: `link.color`,
     textDecoration: `none`,
   },
   prevNextLink: {
@@ -415,6 +415,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         <Link
                           to={`/showcase?${qs.stringify({ filters: [c] })}`}
                           state={{ isModal: true }}
+                          sx={styles.link}
                         >
                           {c}
                         </Link>
