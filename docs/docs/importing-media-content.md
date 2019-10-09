@@ -8,7 +8,7 @@ title: Importing Media Content
 
 - [Image graphics can be imported](/docs/importing-assets-into-files/) with Webpack and queried with GraphQL.
 - Images can also be [included from the `static folder`](/docs/static-folder/).
-- SVG content can be embedded into JSX. Here's a [handy JSX converter](https://transform.now.sh/html-to-jsx/).
+- SVG content can be embedded into JSX. Here's a [handy JSX converter](https://transform.tools/svg-to-jsx).
 - SVG can be included in `img` tags or CSS backgrounds. [SVG Tips from CSS Tricks](https://css-tricks.com/using-svg/).
 - For PDF files, we recommend embedding an [image of the PDF](https://helpx.adobe.com/acrobat/using/exporting-pdfs-file-formats.html) with [alternative text](https://a11y-101.com/development/infographics), and providing a link to download a [tagged PDF](https://helpx.adobe.com/acrobat/using/creating-accessible-pdfs.html).
 

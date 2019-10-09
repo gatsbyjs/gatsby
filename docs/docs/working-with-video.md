@@ -181,7 +181,7 @@ Even though there are two `<source>` elements, only one video will be displayed,
 
 One advantage of integrating a custom component with your own hosted video is it can give you more control over the video player, including its accessibility. Elements of accessible video and audio include:
 
-- captions: a text version of the audio, syncronized with the video
+- captions: a text version of the audio, synchronized with the video
 - transcript (or subtitles): a text version of the audio and visual content, like captions but also including descriptions of key visual elements in the video
 - audio description: an audio version of visual information not conveyed in dialogue
 - accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers

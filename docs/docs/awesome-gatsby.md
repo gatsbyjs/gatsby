@@ -80,6 +80,7 @@ See the [library of official and community plugins](/plugins/)
 - [The Great Gatsby Bootcamp \[Full Course\] - Andrew Mead](https://www.youtube.com/watch?v=8t0vNu2fCCM)
 - [Understanding the Gatsby lifecycle](https://medium.com/narative/understanding-gatsbys-lifecycle-31c473ba2f2d)
 - [GatsbyGuides.com series on building web applications with Gatsby & Drupal](https://gatsbyguides.com/)
+- [Deep dive into Gatsby – Building a static blog using Gatsby, React and GraphQL](https://zocada.com/deep-dive-gatsby-building-a-simple-static-blog-using-gatsby-react-and-graphql/)
 
 ### German
 
@@ -92,6 +93,10 @@ See the [library of official and community plugins](/plugins/)
 ### Spanish
 
 - [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
+
+### Turkish
+
+- [GatsbyJS ile Modern Web Sitesi | 1. Bölüm (Başlangıç ve Kurulum) (Turkish)](https://medium.com/@raufsamestone/reactjs-ve-gatsbyjs-ile-modern-web-sitesi-1-b%C3%B6l%C3%BCm-ba%C5%9Flang%C4%B1%C3%A7-ve-kurulum-27437d6aaf54)
 
 ## Other resources
 

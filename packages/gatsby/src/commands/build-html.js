@@ -109,7 +109,10 @@ const doBuildPages = async ({
   try {
     await renderHTMLQueue({ workerPool, activity }, rendererPath, pagePaths)
   } catch (e) {
-    const prettyError = createErrorFromString(e.stack, `${rendererPath}.map`)
+    const prettyError = await createErrorFromString(
+      e.stack,
+      `${rendererPath}.map`
+    )
     prettyError.context = e.context
     throw prettyError
   }

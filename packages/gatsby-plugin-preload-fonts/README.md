@@ -78,7 +78,7 @@ scraper if your application routes don't change but you add new font assets).
 
 ## Configuration options
 
-**`crossOrigin`** [boolean|string|function][default: `true`]
+**`crossOrigin`** [string|function][default: `anonymous`]
 
 Whether or not to include the `cross-origin` attribute on injected `<link>` tags. By default, this will be set to `anonymous` (this is usually correct).
 
@@ -88,8 +88,6 @@ module.exports = {
     {
       resolve: `gatsby-plugin-preload-fonts`,
       options: {
-        crossOrigin: false,
-        // OR
         crossOrigin: `use-credentials`,
         // OR
         crossOrigin: pathname =>

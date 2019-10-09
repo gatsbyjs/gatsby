@@ -11,7 +11,8 @@ const errorMap = {
     level: `ERROR`,
   },
   "95312": {
-    text: () => `"window" is not available during server side rendering.`,
+    text: context =>
+      `"${context.ref}" is not available during server side rendering.`,
     level: `ERROR`,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
@@ -180,6 +181,33 @@ const errorMap = {
         )
         .join(`\n`),
     level: `ERROR`,
+  },
+  // node object didn't pass validation
+  "11467": {
+    text: context =>
+      [
+        `The new node didn't pass validation: ${context.validationErrorMessage}`,
+        `Failing node:`,
+        JSON.stringify(context.node, null, 4),
+        `Note: there might be more nodes that failed validation. Output is limited to one node per type of validation failure to limit terminal spam.`,
+        context.codeFrame,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/actions/#createNode`,
+  },
+  // local SSL certificate errors
+  "11521": {
+    text: () =>
+      `for custom ssl --https, --cert-file, and --key-file must be used together`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#custom-key-and-certificate-files`,
+  },
+  "11522": {
+    text: () => `Failed to generate dev SSL certificate`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#setup`,
   },
 }
 

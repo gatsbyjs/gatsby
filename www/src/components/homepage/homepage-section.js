@@ -1,58 +1,36 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
 import Button from "../button"
-
 import { rhythm } from "../../utils/typography"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  fonts,
-  fontWeights,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
-const ICON_SIZE = space[7]
+const ICON_SIZE = 7
 
-const HomepageSectionRoot = styled(`section`)`
-  background: ${props => (props.inverse ? colors.purple[80] : colors.white)};
-  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
-  padding: ${space[5]} ${space[6]};
-  width: 100%;
-
-  ${mediaQueries.xl} {
-    margin: -1px 0;
-    padding: ${space[5]} 5%;
-  }
-
-  ${mediaQueries.xxl} {
-    padding: ${space[7]} 8%;
-  }
-`
 export const Header = styled(`header`)`
   ${mediaQueries.md} {
     max-width: 30rem;
   }
 
   ${mediaQueries.lg} {
-    margin-left: ${space[9]};
+    margin-left: ${p => p.theme.space[9]};
   }
 `
 
 export const Name = styled(`h3`)`
   align-items: center;
-  color: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
+  color: ${p => p.theme.colors.lilac};
   display: flex;
-  font-size: ${fontSizes[2]};
-  font-weight: ${fontWeights[0]};
+  font-size: ${p => p.theme.fontSizes[2]};
+  font-weight: ${p => p.theme.fontWeights.body};
   margin: 0;
-  margin-left: calc(${ICON_SIZE} * -0.2);
+  margin-left: calc(${p => p.theme.space[ICON_SIZE]} * -0.2);
   margin-bottom: 0.5em;
 
   ${mediaQueries.lg} {
-    margin-left: calc(${ICON_SIZE} * -1.2);
+    margin-left: calc(${p => p.theme.space[ICON_SIZE]} * -1.2);
   }
 `
 
@@ -60,28 +38,28 @@ const Icon = styled(`span`)`
   display: block;
 
   ${mediaQueries.md} {
-    margin-right: calc(${ICON_SIZE} / 5);
+    margin-right: calc(${p => p.theme.space[ICON_SIZE]} / 5);
   }
 
   svg {
     fill: transparent;
-    height: ${ICON_SIZE};
-    stroke: ${props => (props.inverse ? colors.purple[10] : colors.lilac)};
-    width: ${ICON_SIZE};
+    height: ${p => p.theme.space[ICON_SIZE]};
+    stroke: ${p => p.theme.colors.lilac};
+    width: ${p => p.theme.space[ICON_SIZE]};
   }
 `
 
 export const Title = styled(`h1`)`
-  color: ${props => (props.inverse ? colors.yellow[40] : colors.gatsby)};
-  font-size: ${fontSizes[6]};
-  font-weight: ${fontWeights[1]};
+  color: ${p => p.theme.colors.heading};
+  font-size: ${p => p.theme.fontSizes[6]};
+  font-weight: ${p => p.theme.fontWeights.heading};
   margin: 0;
 `
 
 const Introduction = styled(`p`)`
-  color: ${props => (props.inverse ? colors.purple[10] : colors.purple[80])};
-  font-size: ${fontSizes[3]};
-  font-family: ${fonts.header};
+  color: ${p => p.theme.colors.textMuted};
+  font-size: ${p => p.theme.fontSizes[3]};
+  font-family: ${p => p.theme.fonts.heading};
   margin: 0;
   margin-top: ${rhythm(4 / 5)};
 `
@@ -89,14 +67,14 @@ const Introduction = styled(`p`)`
 const Actions = styled(`div`)`
   display: flex;
   flex-wrap: wrap;
-  margin: ${space[4]} 0 ${space[6]};
+  margin: ${p => p.theme.space[4]} 0 ${p => p.theme.space[6]};
 
   > a {
-    margin-right: ${space[1]};
+    margin-right: ${p => p.theme.space[1]};
   }
 
   ${mediaQueries.lg} {
-    margin: ${space[4]} 0 ${space[8]};
+    margin: ${p => p.theme.space[4]} 0 ${p => p.theme.space[8]};
   }
 `
 
@@ -106,26 +84,39 @@ const HomepageSection = ({
   sectionIcon,
   title,
   introduction,
-  inverseStyle,
   links,
   className,
 }) => (
-  <HomepageSectionRoot inverse={inverseStyle} className={className}>
+  <section
+    sx={{
+      bg: `background`,
+      color: `purple.80`,
+      px: 6,
+      py: 5,
+      width: `100%`,
+      [mediaQueries.xl]: {
+        my: `-1px`,
+        mx: 0,
+        py: 5,
+        px: `5%`,
+      },
+      [mediaQueries.xxl]: {
+        py: 7,
+        px: `8%`,
+      },
+    }}
+    className={className}
+  >
     {sectionName && (
       <Header>
-        <Name inverse={inverseStyle}>
+        <Name>
           {sectionIcon && (
-            <Icon
-              dangerouslySetInnerHTML={{ __html: sectionIcon }}
-              inverse={inverseStyle}
-            />
+            <Icon dangerouslySetInnerHTML={{ __html: sectionIcon }} />
           )}
           {sectionName}
         </Name>
-        {title && <Title inverse={inverseStyle}>{title}</Title>}
-        {introduction && (
-          <Introduction inverse={inverseStyle}>{introduction}</Introduction>
-        )}
+        {title && <Title>{title}</Title>}
+        {introduction && <Introduction>{introduction}</Introduction>}
         {links && (
           <Actions>
             {links.map(item => {
@@ -135,8 +126,7 @@ const HomepageSection = ({
                 <Button
                   key={label}
                   to={to}
-                  small
-                  ondark={inverseStyle ? true : false}
+                  variant="small"
                   secondary={secondary}
                   tracking={tracking}
                 >
@@ -149,7 +139,7 @@ const HomepageSection = ({
       </Header>
     )}
     {children}
-  </HomepageSectionRoot>
+  </section>
 )
 
 HomepageSection.propTypes = {
@@ -159,7 +149,6 @@ HomepageSection.propTypes = {
   title: PropTypes.string,
   introduction: PropTypes.string,
   links: PropTypes.array,
-  inverseStyle: PropTypes.bool,
   className: PropTypes.string,
 }
 

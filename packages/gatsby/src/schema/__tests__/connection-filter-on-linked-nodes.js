@@ -2,11 +2,17 @@ const { graphql } = require(`graphql`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
   return [
-    { id: `child_1`, internal: { type: `Child` }, hair: `brown`, children: [] },
+    {
+      id: `child_1`,
+      internal: { type: `Child` },
+      hair: `brown`,
+      children: [],
+    },
     {
       id: `child_2`,
       internal: { type: `Child` },
@@ -21,13 +27,22 @@ function makeNodes() {
       array: [{ linked___NODE: `linked_B` }],
       single: { linked___NODE: `linked_B` },
     },
-    { id: `linked_B`, internal: { type: `Linked_B` }, children: [] },
+    {
+      id: `linked_B`,
+      internal: { type: `Linked_B` },
+      children: [],
+    },
   ]
 }
 
 async function queryResult(nodes, query) {
   store.dispatch({ type: `DELETE_CACHE` })
-  nodes.forEach(node => store.dispatch({ type: `CREATE_NODE`, payload: node }))
+  nodes.forEach(node => {
+    if (!node.internal.contentDigest) {
+      node.internal.contentDigest = `0`
+    }
+    actions.createNode(node, { name: `test` })(store.dispatch)
+  })
 
   await build({})
   const { schema, schemaCustomization } = store.getState()
@@ -37,7 +52,12 @@ async function queryResult(nodes, query) {
     schema,
     query,
     undefined,
-    withResolverContext(context, schema, schemaCustomization.context)
+    withResolverContext({
+      schema,
+      schemaComposer: schemaCustomization.composer,
+      context,
+      customContext: schemaCustomization.context,
+    })
   )
 }
 
@@ -205,17 +225,53 @@ describe(`filtering on linked nodes`, () => {
       ]),
       `
         {
-          eq:allTest(filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }) {
-            edges { node { foo } }
+          eq: allTest(
+            filter: { linked: { elemMatch: { hair: { eq: "brown" } } } }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
-          in:allTest(filter: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } }) {
-            edges { node { foo } }
+          in: allTest(
+            filter: {
+              linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } }
+            }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
-          insideInlineArrayEq:allTest(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } } } }) {
-            edges { node { foo } }
+          insideInlineArrayEq: allTest(
+            filter: {
+              array: {
+                elemMatch: { linked: { elemMatch: { hair: { eq: "brown" } } } }
+              }
+            }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
-          insideInlineArrayIn:allTest(filter: { array: { elemMatch: { linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } } } } }) {
-            edges { node { foo } }
+          insideInlineArrayIn: allTest(
+            filter: {
+              array: {
+                elemMatch: {
+                  linked: { elemMatch: { hair: { in: ["brown", "blonde"] } } }
+                }
+              }
+            }
+          ) {
+            edges {
+              node {
+                foo
+              }
+            }
           }
         }
       `
