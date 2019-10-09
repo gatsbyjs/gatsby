@@ -20,13 +20,7 @@ q.drain = () => {
   totalJobs = 0
 }
 
-exports.scheduleJob = async (
-  job,
-  boundActionCreators,
-  pluginOptions,
-  reporter,
-  reportStatus = true
-) => {
+const setJobToProcess = (toProcess, job) => {
   const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
   const jobPath = `["${inputFileKey}"].["${outputFileKey}"]`
@@ -42,17 +36,30 @@ exports.scheduleJob = async (
     return Promise.resolve(job)
   }
 
-  let isQueued = false
-  if (toProcess[inputFileKey]) {
-    isQueued = true
-  }
-
   // deferred naming comes from https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/Promise.jsm/Deferred
   let deferred = {}
   deferred.promise = new Promise((resolve, reject) => {
     deferred.resolve = resolve
     deferred.reject = reject
   })
+
+  _.set(toProcess, jobPath, {
+    job: job,
+    deferred,
+  })
+}
+
+const scheduleJob = async (
+  job,
+  boundActionCreators,
+  pluginOptions,
+  reporter,
+  reportStatus = true
+) => {
+  const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
+
+  setJobToProcess(toProcess, job)
+
   if (totalJobs === 0) {
     bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
@@ -60,10 +67,10 @@ exports.scheduleJob = async (
 
   totalJobs += 1
 
-  _.set(toProcess, jobPath, {
-    job: job,
-    deferred,
-  })
+  let isQueued = false
+  if (toProcess[inputFileKey]) {
+    isQueued = true
+  }
 
   if (!isQueued) {
     // Create image job
@@ -169,3 +176,5 @@ function runJobs(
     })
   }
 }
+
+export { scheduleJob, runJobs, setJobToProcess }
