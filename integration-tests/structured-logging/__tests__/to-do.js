@@ -2,7 +2,10 @@
 // Should errors that are not followed panic(onBuild)/process.exit be actually errors
 // or warnings? If yes, then we should add assertions for SUCCESS status that no errors are
 // emitted
-const { spawn } = require(`child_process`)
+const { spawn, execSync } = require(`child_process`)
+const EventEmitter = require(`events`)
+const fetch = require(`node-fetch`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
 const { first, last } = require(`lodash`)
 // const { groupBy, filter } = require(`lodash`)
@@ -49,9 +52,11 @@ const collectEventsForDevelop = (events, env = {}) => {
         msg.action.type === `SET_STATUS` &&
         msg.action.payload !== `IN_PROGRESS`
       ) {
-        listening = false
-        gatsbyProcess.kill()
-        resolve()
+        setTimeout(() => {
+          listening = false
+          gatsbyProcess.kill()
+          resolve()
+        }, 2000)
       }
     })
   })
@@ -317,23 +322,146 @@ describe(`develop`, () => {
     })
   })
 
-  describe.skip(`test preview workflows`, () => {
-    describe(`code change`, () => {
-      describe(`valid`, () => {
-        commonAssertionsForSuccess()
+  describe(`test preview workflows`, () => {
+    let gatsbyProcess
+    const mitt = new EventEmitter()
+    const events = []
+    const clearEvents = () => {
+      events.splice(0, events.length)
+    }
+    beforeAll(async done => {
+      gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+        stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
+        env: {
+          ...process.env,
+          NODE_ENV: `development`,
+          GATSBY_LOGGER: `json`,
+          ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+        },
       })
+
+      gatsbyProcess.on(`message`, msg => {
+        events.push(msg)
+
+        // we are ready for tests
+        if (
+          msg.action &&
+          msg.action.type === `SET_STATUS` &&
+          msg.action.payload !== `IN_PROGRESS`
+        ) {
+          setTimeout(() => {
+            mitt.emit(`done`)
+            done()
+          }, 2000)
+        }
+      })
+    })
+
+    afterAll(() => {
+      gatsbyProcess.kill()
+    })
+
+    describe(`code change`, () => {
       describe(`invalid`, () => {
-        commonAssertionsForFailure()
+        beforeAll(async done => {
+          clearEvents()
+
+          const codeWithError = `import React from "react"
+    import { graphql } from "gatsby"
+
+    const IndexPage = ({ data }) => (
+      <div>
+        Hello world!
+        <br />
+        {JSON.stringify(data, null, 2)}
+      </div>
+    )
+
+    export default IndexPage
+
+    export const pageQuery = graphql\`
+      {
+        allTest {
+          nodes {
+            field
+          }
+        }
+      }
+    \`
+    `
+          await fs.writeFile(
+            require.resolve(`../src/pages/index.js`),
+            codeWithError
+          )
+
+          mitt.once(`done`, () => {
+            done()
+          })
+        })
+
+        commonAssertionsForFailure(events)
+      })
+      describe(`valid`, () => {
+        beforeAll(async done => {
+          clearEvents()
+
+          execSync(
+            `git checkout -- ${require.resolve(`../src/pages/index.js`)}`
+          )
+
+          mitt.once(`done`, () => {
+            done()
+          })
+        })
+
+        commonAssertionsForSuccess(events)
       })
     })
     describe(`data change`, () => {
       describe(`via refresh webhook`, () => {
-        commonAssertionsForSuccess()
+        beforeAll(async done => {
+          clearEvents()
+
+          await fetch(`http://localhost:8000/__refresh`, {
+            method: `POST`,
+            headers: {
+              "Content-Type": `application/json`,
+            },
+            body: JSON.stringify({
+              data: {
+                field: `Dolor sit amet`,
+              },
+            }),
+          })
+
+          mitt.once(`done`, () => {
+            done()
+          })
+        })
+        commonAssertionsForSuccess(events)
       })
       describe(`with stateful plugin (i.e. Sanity)`, () => {
-        commonAssertionsForSuccess()
-        // TO-DO: do we need test for SET_STATUS thrashing due to rapid
-        // data changes
+        beforeAll(async done => {
+          clearEvents()
+
+          await fetch(`http://localhost:8000/___statefulUpdate/`, {
+            method: `POST`,
+            headers: {
+              "Content-Type": `application/json`,
+            },
+            body: JSON.stringify({
+              data: {
+                field: `Consectetur adipiscing elit`,
+              },
+            }),
+          })
+
+          mitt.once(`done`, () => {
+            done()
+          })
+        })
+
+        commonAssertionsForSuccess(events)
       })
     })
   })

@@ -1,3 +1,5 @@
+const express = require(`express`)
+
 const sleep = timeout =>
   new Promise(resolve => {
     setTimeout(resolve, timeout)
@@ -44,4 +46,61 @@ exports.createPages = async ({ reporter }) => {
   if (process.env.PROCESS_EXIT) {
     process.exit(1)
   }
+}
+
+const getCreateTestNode = ({
+  actions,
+  createNodeId,
+  createContentDigest,
+}) => data => {
+  actions.createNode({
+    ...data,
+    id: createNodeId(`test-id`),
+    internal: {
+      type: `Test`,
+      contentDigest: createContentDigest(data),
+    },
+  })
+}
+
+exports.sourceNodes = ({
+  actions,
+  webhookBody,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const createTestNode = getCreateTestNode({
+    actions,
+    createNodeId,
+    createContentDigest,
+  })
+
+  if (webhookBody && webhookBody.data) {
+    createTestNode(webhookBody.data)
+  } else {
+    createTestNode({
+      field: `Lorem Ipsum`,
+    })
+  }
+
+  console.log({ webhookBody })
+}
+
+exports.onCreateDevServer = ({
+  app,
+  actions,
+  createNodeId,
+  createContentDigest,
+}) => {
+  app.post(`/___statefulUpdate/`, express.json(), (req, res) => {
+    const createTestNode = getCreateTestNode({
+      actions,
+      createNodeId,
+      createContentDigest,
+    })
+
+    createTestNode(req.body.data)
+
+    res.end()
+  })
 }
