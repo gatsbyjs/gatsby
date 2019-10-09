@@ -42,13 +42,7 @@ cd prismic-tutorial
 npm install --save gatsby-source-prismic
 ```
 
-In addition to installing the Prismic plugin, you also have to install the package `dotenv` to securely use your access tokens locally as you should never commit secret API keys to your repository!
-
-```shell
-npm install --save-dev dotenv
-```
-
-Create a file called `.env.development` at the root of your project with the following content:
+As you may or may not be aware but a good practice is that you should never commit secret secret API keys to your repository. When you created your website based the starter, Gatsby added a package that helps you secure your tokens and API keys safely. Now you only need to create a file called `.env.development` at the root of your project with the following content:
 
 ```
 API_KEY=paste-your-secret-access-token-here-wou7evoh0eexuf
