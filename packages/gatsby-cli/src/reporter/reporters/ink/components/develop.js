@@ -44,7 +44,7 @@ class Develop extends Component {
     })
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.stdout !== prevProps.stdout) {
       this.props.stdout.off(`resize`)
       const stdout = this.props.stdout
