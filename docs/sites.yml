@@ -3968,18 +3968,6 @@
     - Portfolio
   built_by: Maxim Andries
   featured: false
-- title: The Tenon.io blog
-  main_url: https://blog.tenon.io/
-  url: https://blog.tenon.io/
-  description: >
-    The Tenon.io blog features articles on accessibility written by some of the industry's leading lights and includes news, guidance, and education.
-  categories:
-    - Accessibility
-    - Blog
-    - Education
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
 - title: Algolia
   url: https://algolia.com
   main_url: https://algolia.com
