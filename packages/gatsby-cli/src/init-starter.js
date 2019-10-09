@@ -232,7 +232,7 @@ const successMessage = path => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
   $ cd ${path}
-  $ ${getPackageManager()} run develop
+  $ gatsby develop
 `)
 }
 
