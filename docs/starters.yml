@@ -4056,7 +4056,7 @@
   tags:
     - Styling:Bootstrap
     - Styling:SCSS
-    - Sourcing:Wordpress
+    - CMS:Wordpress
   features:
     - SASS stylesheets to make styling components easy
     - Sample navbar that sticks to the top of the page on scroll
