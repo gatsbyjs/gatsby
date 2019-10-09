@@ -155,7 +155,7 @@ class Rotator extends Component {
                 {!enableSlider ? (
                   <>{text}</>
                 ) : (
-                  <Slider items={[text]} color="black" />
+                  <Slider items={[text]} color="inherit" />
                 )}
               </span>
             </span>
