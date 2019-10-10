@@ -112,7 +112,7 @@
               breadcrumbTitle: Preoptimizing Images
             - title: Working with Video
               link: /docs/working-with-video/
-              breadcrumbTitle: Video
+              breadcrumbTitle: Videos in Gatsby
             - title: Importing Media Content
               link: /docs/importing-media-content/
             - title: Working with GIFs
