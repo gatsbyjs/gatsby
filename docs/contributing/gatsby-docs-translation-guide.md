@@ -12,8 +12,6 @@ Each translation has its own repository in the [gatsbyjs](https://github.com/gat
 
 The Gatsby learning team is in charge of determining priorities for which docs should be translated. Refer to the [i18n page spreadsheet](https://docs.google.com/spreadsheets/d/1u2amGnqFLKxJuL5h9UrDblUueFgg0EBt7xbau4n8iTM/edit) to get the most up-to-date priority list.
 
-> ⚠️ Note: All contributors are expected to follow the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and work professionally with fellow contributors. For issues with conduct, if you are unable to work things out amicably amongst yourselves (perhaps after filing a public issue), you can contact the Gatsby team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) with details about the situation.
-
 ## Use English as the source
 
 The [gatsbyjs.org](https://gatsbyjs.org) website is written in English and should be considered the source material for all translations (as opposed to translating from another translation). When a repository is created, it will provide the space to copy over prioritized docs and [make pull requests](/contributing/how-to-open-a-pull-request/) against them in the relevant language.
@@ -37,17 +35,24 @@ Once a language repository is created and someone on the Gatsby team has assigne
 
 Maintainers of a translation are expected to review translations for quality, friendly and encouraging tone of voice, and technical accuracy. These qualities should be considered in every pull request regardless of who it comes from; contributions should be encouraged from anyone in the community, not just maintainers.
 
-If disputes arise, having a conversation on Discord or over a GitHub issue should be the start. If all attempts have been made and something can not be resolved on your own, you can contact the Gatsby team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) with details about the situation.
+> ⚠️ Note: All contributors are expected to follow the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and work professionally with fellow contributors. For issues with conduct, if you are unable to work things out amicably amongst yourselves (perhaps after filing a public issue or having a discussion on Discord), you can contact the Gatsby team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) with details about the situation.
 
 ### Code review process
 
-    - Invite comments for a code review process (Google Translate, etc.)
+Translation contributions must be opened as pull requests to provide time for review and comments. If actionable feedback is given on a PR review, the author must acknowledge the review and make changes with their discretion. Ignoring review feedback completely is not allowed (see response templates below for help with this).
 
 ### Templates for responses on PRs
 
-    - PR templates for responses (e.g. non-meaningful changes, etc.)
+Sometimes a PR has a valid reason to not be merged as-is. Templates can help speed up the process of responding to someone while encouraging future contributions. Examples include:
+
+- PRs that don't meet expectations and need some work
+- ?
 
 ## Which decisions are flexible? Which are firm guidelines?
+
+Each language translation may have some specific ways it differs from the advice Gatsby provides for writing in English, such as the use of "you" as the pronoun or the Oxford comma. Each translation group should decide on conventions and stick with them for consistency, documenting those decisions in the repo's README file to set contributors up for success. Having trouble making descision? See above recommendations for settling disputes and working together.
+
+Guidelines that remain firm no matter the language stem from the goals and values of Gatsby as a project: to provide a **friendly community for Gatsby learners of all skill and experience levels** that's also **safe and welcoming to contributors**. Translated docs and learning materials should [maintain these values](/blog/2019-04-19-gatsby-why-we-write/) with **high-quality spelling and grammar**, accurate information, similar structure and purpose. For any questions about guidelines, feel free to [get in touch](/contributing/how-to-contribute/#not-sure-how-to-start-contributing) with the Gatsby team.
 
 ## Language-specific maintainer channels
 
