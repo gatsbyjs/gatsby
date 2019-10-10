@@ -393,6 +393,22 @@ const config = {
       px: 3,
     },
   },
+  links: {
+    muted: {
+      fontSize: 1,
+      lineHeight: `solid`,
+      py: 3,
+      "&&": {
+        border: 0,
+        color: `textMuted`,
+        display: `flex`,
+        fontWeight: `body`,
+      },
+      "&&:hover": {
+        color: `link.hoverColor`,
+      },
+    },
+  },
 }
 
 export default config
