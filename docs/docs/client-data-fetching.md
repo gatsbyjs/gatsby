@@ -14,13 +14,13 @@ Compiling pages at [build-time](/docs/glossary#build) is useful when your websit
 
 Because a Gatsby site [hydrates](/docs/glossary#hydration) into a React app after loading statically, Gatsby is not just for static sites. You can also fetch data dynamically on the client-side as needed, like you would with any other React app.
 
-To illustrate this, we'll walk through a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. This example is based loosely on Jason Lengstorf's [Gatsby with Apollo](https://github.com/jlengstorf/gatsby-with-apollo) example. We'll be fetching character data for Rick (of Rick and Morty) and a random pupper image.
+To illustrate this, you'll walk through a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. This example is based loosely on Jason Lengstorf's [Gatsby with Apollo](https://github.com/jlengstorf/gatsby-with-apollo) example. You'll be fetching character data for Rick (of Rick and Morty) and a random pupper image.
 
 > Note: Check out the [full example here](https://github.com/amberleyromo/gatsby-client-data-fetching), if helpful.
 
 ### 1. Create a Gatsby page component
 
-No data yet. Just the basic React page that we'll be populating.
+No data yet. Just the basic React page that you'll be populating.
 
 ```jsx:title=index.js
 import React, { Component } from "react"
@@ -45,7 +45,7 @@ export default ClientFetchingExample
 
 ### 2. Query for character info at build time
 
-To query for Rick's character info and image, we'll use the `gatsby-source-graphql` plugin. This will allow us to query the Rick and Morty API using Gatsby queries.
+To query for Rick's character info and image, you'll use the `gatsby-source-graphql` plugin. This will allow you to query the Rick and Morty API using Gatsby queries.
 
 > Note: To learn more about using [`gatsby-source-graphql`](/packages/gatsby-source-graphql/), or about [Gatsby's GraphQL data layer](/docs/graphql/), check out their respective docs. The purpose of including it here is only for comparison.
 
@@ -64,7 +64,7 @@ module.exports = {
 }
 ```
 
-Now we can add the query to our `index.js` page:
+Now you can add the query to your `index.js` page:
 
 ```jsx:title=index.js
 import React, { Component } from "react"
@@ -117,7 +117,7 @@ export default ClientFetchingExample
 
 ### 3. Fetch pupper info and image data on the client
 
-Now we'll finish out by fetching pupper info from the [Dog CEO Dog API](https://dog.ceo/dog-api/). (We'll fetch a random pupper. Rick isn't picky.)
+Now you'll finish out by fetching pupper info from the [Dog CEO Dog API](https://dog.ceo/dog-api/). (You'll fetch a random pupper. Rick isn't picky.)
 
 ```jsx:title=index.js
 import React, { Component } from "react"
