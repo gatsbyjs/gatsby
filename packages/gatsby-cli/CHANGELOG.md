@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.57...gatsby-cli@2.7.58) (2019-10-10)
+
+### Bug Fixes
+
+- fixed warning componentWillUpdate has been renamed ([#18026](https://github.com/gatsbyjs/gatsby/issues/18026)) ([53473cc](https://github.com/gatsbyjs/gatsby/commit/53473cc)), closes [#17994](https://github.com/gatsbyjs/gatsby/issues/17994)
+- update dependency execa to ^2.1.0 ([#18369](https://github.com/gatsbyjs/gatsby/issues/18369)) ([e05096e](https://github.com/gatsbyjs/gatsby/commit/e05096e))
+
 ## [2.7.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.56...gatsby-cli@2.7.57) (2019-10-09)
 
 **Note:** Version bump only for package gatsby-cli
