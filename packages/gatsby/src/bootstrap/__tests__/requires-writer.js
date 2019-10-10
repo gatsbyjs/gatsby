@@ -145,5 +145,68 @@ describe(`requires-writer`, () => {
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
       expect(matchPaths).toMatchSnapshot()
     })
+
+    it(`should have index pages with higher priority than matchPaths`, async () => {
+      const pages = generatePagesState([
+        {
+          path: `/`,
+        },
+        {
+          path: `/custom-404`,
+          matchPath: `/*`,
+        },
+      ])
+
+      await requiresWriter.writeAll({
+        pages,
+        program,
+      })
+
+      expect(matchPaths[0].path).toBe(pages.get(`/`).path)
+      expect(matchPaths).toMatchSnapshot()
+    })
+
+    it(`should prefer more specific matchPaths`, async () => {
+      const pages = generatePagesState([
+        {
+          path: `/`,
+        },
+        {
+          path: `/custom-404`,
+          matchPath: `/*`,
+        },
+        {
+          path: `/mp4`,
+          matchPath: `/mp1/mp2/mp3/mp4/*`,
+        },
+        {
+          path: `/mp1`,
+          matchPath: `/mp1/*`,
+        },
+        {
+          path: `/mp2`,
+          matchPath: `/mp1/mp2/*`,
+        },
+        {
+          path: `/mp3`,
+          matchPath: `/mp1/mp2/mp3/*`,
+        },
+      ])
+
+      await requiresWriter.writeAll({
+        pages,
+        program,
+      })
+      console.log(matchPaths.map(p => p.path))
+      expect(matchPaths.map(p => p.path)).toBe([
+        `/mp4`,
+        `/mp3`,
+        `/mp2`,
+        `/mp1`,
+        `/`,
+        `/custom-404`,
+      ])
+      expect(matchPaths).toMatchSnapshot()
+    })
   })
 })
