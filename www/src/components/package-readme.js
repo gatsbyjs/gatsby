@@ -10,7 +10,6 @@ import MarkdownPageFooter from "../components/markdown-page-footer"
 import FooterLinks from "../components/shared/footer-links"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import GatsbyIcon from "../components/gatsby-monogram"
-import { linkStyles } from "../utils/styles"
 
 const PackageReadMe = props => {
   const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
@@ -50,7 +49,7 @@ const PackageReadMe = props => {
               packageName[0] !== `@` && (
                 <div
                   sx={{
-                    ...linkStyles,
+                    variant: `links.muted`,
                     mr: 8,
                     "&&": {
                       border: 0,
@@ -76,7 +75,7 @@ const PackageReadMe = props => {
                 </div>
               )}
             <a
-              css={{ ...linkStyles }}
+              sx={{ variant: `links.muted` }}
               href={githubUrl}
               aria-labelledby="github-link-label"
             >
@@ -85,7 +84,10 @@ const PackageReadMe = props => {
             </a>
           </div>
           {githubUrl && (
-            <Link to={`/starters?d=${packageName}`} css={{ ...linkStyles }}>
+            <Link
+              to={`/starters?d=${packageName}`}
+              sx={{ variant: `links.muted` }}
+            >
               See starters using this
             </Link>
           )}
