@@ -16,6 +16,7 @@ const IconWrapper = styled.button`
     older iOS versions — tested on iOS 12.4.2 / iPhone 5s
   */
   padding: 0;
+  outline: none;
   appearance: none;
   align-items: center;
   background: transparent;
