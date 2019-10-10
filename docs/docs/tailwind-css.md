@@ -70,7 +70,7 @@ These steps assume you have a CSS-in-JS library already installed, and the examp
 
 1. Install Tailwind Babel Macro
 
-**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a compatible beta is available at `tailwind.macro@next`. Feel free to either use the beta or revert to TailwindCSS 0.7.4.
+**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a compatible beta is available at `tailwind.macro@next`. Feel free to either use the beta or revert to Tailwind CSS 0.7.4.
 
 **Option 1**: Install `tailwind.macro@next` and use Tailwind 1.0.0+
 
@@ -130,7 +130,7 @@ plugins: [
     options: {
       postCssPlugins: [
         require("tailwindcss"),
-        // require("./tailwind.config.js"), // Optional: Load custom tailwindcss configuration
+        // require("./tailwind.config.js"), // Optional: Load custom Tailwind CSS configuration
       ],
       // implementation: require("sass"), // Alternatively you can use another Sass implementation
     },
