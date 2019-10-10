@@ -117,7 +117,7 @@
               link: /docs/importing-media-content/
             - title: Working with GIFs
               link: /docs/working-with-gifs/
-              breadcrumbTitle: GIFs
+              breadcrumbTitle: GIFs in Gatsby
             - title: Working with Images in Markdown
               link: /docs/working-with-images-in-markdown/
               breadcrumbTitle: Images in Markdown
