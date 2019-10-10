@@ -3,30 +3,19 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-
-import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
-
 import StarIcon from "react-icons/lib/md/star"
 import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 
-import {
-  colors,
-  space,
-  transition,
-  radii,
-  shadows,
-  mediaQueries,
-  fontSizes,
-  fonts,
-} from "../../utils/presets"
+import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${space[6]};
+  margin-right: ${p => p.theme.space[6]};
 
   ${mediaQueries.md} {
-    border-bottom: 1px solid ${colors.ui.border.subtle};
+    border-bottom: 1px solid ${p => p.theme.colors.ui.border};
     box-shadow: none;
     margin: 0;
     padding: 0;
@@ -35,23 +24,24 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 `
 
 export const BlockLink = styled(Link)`
-  background: ${colors.white};
-  border-radius: ${radii[2]}px;
-  box-shadow: ${shadows.raised};
+  background: ${p => p.theme.colors.card.background};
+  border-radius: ${p => p.theme.radii[2]}px;
+  box-shadow: ${p => p.theme.shadows.raised};
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${space[6]};
+  padding: ${p => p.theme.space[6]};
 
   ${mediaQueries.md} {
     border-radius: 0;
     box-shadow: none;
-    transition: all ${transition.speed.default} ${transition.curve.default};
+    transition: all ${p => p.theme.transition.speed.default}
+      ${p => p.theme.transition.curve.default};
   }
 
   ${mediaQueries.lg} {
     :hover {
-      background: ${colors.ui.hover};
+      background: ${p => p.theme.colors.ui.hover};
     }
   }
 `
@@ -62,23 +52,23 @@ const Header = styled(`header`)`
   justify-content: space-between;
 
   h3 {
-    color: ${colors.purple[80]};
-    font-size: ${fontSizes[2]};
+    color: ${p => p.theme.colors.heading};
+    font-size: ${p => p.theme.fontSizes[2]};
     margin: 0;
   }
 
   span {
     align-items: center;
-    color: ${colors.lilac};
+    color: ${p => p.theme.colors.lilac};
     display: flex;
-    font-size: ${fontSizes[1]};
-    padding-left: ${space[3]};
+    font-size: ${p => p.theme.fontSizes[1]};
+    padding-left: ${p => p.theme.space[3]};
 
     svg {
-      fill: ${colors.lilac};
+      fill: ${p => p.theme.colors.lilac};
       height: auto;
-      margin-left: ${space[1]};
-      width: ${space[4]};
+      margin-left: ${p => p.theme.space[1]};
+      width: ${p => p.theme.space[4]};
     }
   }
 `
@@ -86,25 +76,25 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  font-family: ${fonts.system};
+  font-family: ${p => p.theme.fonts.system};
   justify-content: space-between;
-  padding: ${space[3]} 0 0;
+  padding: ${p => p.theme.space[3]} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
-  height: ${space[11]};
-  padding-right: ${space[4]};
-  margin-top: ${space[1]};
+  height: ${p => p.theme.space[11]};
+  padding-right: ${p => p.theme.space[4]};
+  margin-top: ${p => p.theme.space[1]};
 
   img {
-    border: 1px solid ${colors.ui.border.subtle};
+    border: 1px solid ${p => p.theme.colors.ui.border};
   }
 `
 
 const Description = styled(`p`)`
-  color: ${colors.text.secondary};
+  color: ${p => p.theme.colors.textMuted};
   flex-grow: 1;
-  font-size: ${fontSizes[1]};
+  font-size: ${p => p.theme.fontSizes[1]};
   margin: 0;
 `
 

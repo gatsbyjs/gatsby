@@ -2,6 +2,15 @@
 title: Static vs Normal Queries
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> Outdated areas are:
+>
+> - mention the useStaticQuery hook
+> - describe how queries are stripped and JSON imports are rewritten
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 ## How StaticQuery differs from page query
 
 StaticQuery can do most of the things that page query can, including fragments. The main differences are:

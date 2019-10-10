@@ -392,16 +392,16 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ### Near-perfect example of a plugin README
 
-`[gatsby-source-filesystem]`(/packages/gatsby-source-filesystem/)
+[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 
 ```markdown
 ## Description
 
-Include a summary of what this plugin accomplishes. Is there a demo site that shows how this plugin operates? If so, include a link to the deployed demo site and/or its src code here.
+Include a summary of what this plugin accomplishes. Is there a demo site that shows how this plugin operates? If so, include a link to the deployed demo site and/or its source code here.
 
 ### Dependencies (optional)
 
-Are there any plugins that must be installed in order to make this plugin work, please include a list of those plugins and links to their pages here.
+Are there any plugins that must be installed in order to make this plugin work? If so, please include a list of those plugins and links to their pages here.
 
 ### Learning Resources (optional)
 

@@ -1,14 +1,13 @@
 ---
 title: Commands (Gatsby CLI)
+tableOfContentsDepth: 2
 ---
-
-# gatsby-cli
 
 The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including like running a development server and building out your Gatsby application for deployment.
 
 _We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md), and our [cheat sheet](/docs/cheat-sheet/) has all the top CLI commands ready to print out._
 
-## How to use
+## How to use gatsby-cli
 
 The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
@@ -24,12 +23,50 @@ You can also use the `package.json` script variant of these commands, typically 
 }
 ```
 
+## API commands
+
 ### `new`
 
-`gatsby new gatsby-site`
+```
+gatsby new [<site-name> [<starter-url>]]
+```
 
-See the [Gatsby starters docs](/docs/starters/)
-for a comprehensive list of starters to get started with Gatsby.
+#### Arguments
+
+| Argument    | Description                                                                                                                                                                                                     |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                        |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+
+> Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
+
+#### Examples
+
+- Create a Gatsby site named `my-awesome-site` using the default starter:
+
+```shell
+gatsby new my-awesome-site
+```
+
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+
+```shell
+gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
+```
+
+- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
+
+```shell
+gatsby new
+? What is your project called? › my-gatsby-project
+? What starter would you like to use? › - Use arrow-keys. Return to submit.
+❯  gatsby-starter-default
+   gatsby-starter-hello-world
+   gatsby-starter-blog
+   (Use a different starter)
+```
+
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more details.
 
 ### `develop`
 
@@ -165,7 +202,7 @@ You can type in a command, such as one of these:
 
 When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
-See the Gatsby REPL documentation [here](/docs/gatsby-repl/).
+For more information, check out the [Gatsby REPL documentation](/docs/gatsby-repl/).
 
 ### Disabling colored output
 
