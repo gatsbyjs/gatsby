@@ -198,7 +198,7 @@ describe(`requires-writer`, () => {
         program,
       })
       console.log(matchPaths.map(p => p.path))
-      expect(matchPaths.map(p => p.path)).toBe([
+      expect(matchPaths.map(p => p.path)).toEqual([
         `/mp4`,
         `/mp3`,
         `/mp2`,

@@ -26,7 +26,7 @@ const getComponents = pages =>
  */
 const getMatchPaths = pages => {
   const createMatchPathEntry = (page, index) => {
-    let score = page.matchPath.replace(/\/$/, ``).split(`/`).length
+    let score = page.matchPath.replace(/[/][*]?$/, ``).split(`/`).length
     if (!page.matchPath.includes(`*`)) {
       score += 1
     }
