@@ -145,8 +145,8 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          filename: `[name].js`, // Removed hash to allow js files to be overwritten
-          chunkFilename: `[name].js`, // Removed hash to allow js files to be overwritten
+          filename: `[name]-[contenthash].js`,
+          chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
           publicPath: withTrailingSlash(publicPath),
         }

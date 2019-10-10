@@ -98,6 +98,11 @@ const getNewPageKeys = (directory, store, isNewBuild) =>
 
 const removeOldPageData = (directory, store) =>
   new Promise(resolve => {
+    if (!fs.existsSync(`${directory}/temp/redux-state-old.json`)) {
+      resolve([])
+      return
+    }
+
     const previousPageData = require(`${directory}/temp/redux-state-old.json`)
     const newPageData = stateToObject(store.getState())
     const deletedKeys = []

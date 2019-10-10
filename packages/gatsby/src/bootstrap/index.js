@@ -5,7 +5,7 @@ const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
-//const del = require(`del`)
+const del = require(`del`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
@@ -22,6 +22,8 @@ const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
+
+const isNewBuild = true
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -175,7 +177,7 @@ module.exports = async (args: BootstrapArgs) => {
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
-
+  activity.end()
   /*
    * Copy cache state for comparing data
    */
@@ -191,6 +193,25 @@ module.exports = async (args: BootstrapArgs) => {
         clobber: true,
       }
     )
+    activity.end()
+  }
+
+  // During builds, delete html and css files from the public directory as we don't want
+  // deleted pages and styles from previous builds to stick around.
+  if (isNewBuild) {
+    activity = report.activityTimer(
+      `delete html and css files from previous builds`,
+      {
+        parentSpan: bootstrapSpan,
+      }
+    )
+    activity.start()
+    await del([
+      `public/**/*.{html,css,js,map}`,
+      `!public/page-data/**/*`,
+      `!public/static`,
+      `!public/static/**/*.{html,css}`,
+    ])
     activity.end()
   }
 
@@ -223,8 +244,6 @@ module.exports = async (args: BootstrapArgs) => {
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
 
-  activity.end()
-
   if (process.env.GATSBY_DB_NODES === `loki`) {
     const loki = require(`../db/loki`)
     // Start the nodes database (in memory loki js with interval disk
@@ -246,6 +265,8 @@ module.exports = async (args: BootstrapArgs) => {
     }
     activity.end()
   }
+
+  // remove all files if new build
 
   activity = report.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
