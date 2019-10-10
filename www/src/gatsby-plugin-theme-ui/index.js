@@ -298,7 +298,7 @@ const col = {
         border: darkBorder,
       },
       widget: {
-        background: c.grey[90],
+        background: darkBackground,
         border: darkBorder,
         color: c.white,
       },
