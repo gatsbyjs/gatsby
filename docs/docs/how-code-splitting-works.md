@@ -47,7 +47,7 @@ digraph {
   subgraph cluster_chunks {
     label = "chunks";
     node [ shape = "Mrecord" ];
-    "id0" [ label = "id: 0 | asset: 0-d55d2d6645e11739b63c.js | common libs (e.g react)" ];
+    "id0" [ label = "id: 0 | asset: 0-d55d2d6645e11739b63c.js | common libs (e.g. react)" ];
     "id1" [ label = "id: 1 | asset: 1-4c94a37dc2061cb7beb9.js | more common libs" ];
     "id5" [ label = "id: 5 | asset: app-2e49587d85e03a033f58.js | Gatsby core app" ];
     "id42" [ label = "id: 42 | asset: webpack-runtime-e402cdceeae5fad2aa61.js | webpack runtime" ];
@@ -83,11 +83,11 @@ Remember that the chunk group name was assigned by the `/* webpackChunkName: ...
 
 ## Referencing chunks in build HTML
 
-Webpack can now split our code into different bundles, and we've named them appropriately. But those bundles will still be named with a content hash. E.g for a component `component--src-blog-js`, the output chunk bundle might be named something like `component--src-blog-js-2e49587d85e03a033f58.js`. Webpack will replace `import()` calls with links to the generated bundle filenames. This works great for our pure JavaScript bundles. But things get complicated when generating our page HTML files.
+Webpack can now split our code into different bundles, and we've named them appropriately. But those bundles will still be named with a content hash. E.g. for a component `component--src-blog-js`, the output chunk bundle might be named something like `component--src-blog-js-2e49587d85e03a033f58.js`. Webpack will replace `import()` calls with links to the generated bundle filenames. This works great for our pure JavaScript bundles. But things get complicated when generating our page HTML files.
 
 HTML file generation is covered under the [Page HTML Generation](/docs/html-generation/) docs. In summary, webpack builds `static-entry.js` which produces a `render-page.js` bundle. This is a function that accepts a page and renders its HTML. The HTML is enough to drive a site, and enhance SEO, but once the page is loaded, Gatsby also loads the JavaScript bundle so that page rendering occurs clientside from then on. This gives the advantage of fast initial page loads combined with client side rendering for future page clicks.
 
-To do this, we need to be able to create `<link>` and `<script>` tags in the HTML the Gatsby runtime chunk, and the page chunk (e.g index). But as mentioned above, only webpack knows the name of the generated filename for each chunk. All Gatsby knows is the `componentChunkName`.
+To do this, we need to be able to create `<link>` and `<script>` tags in the HTML the Gatsby runtime chunk, and the page chunk (e.g. index). But as mentioned above, only webpack knows the name of the generated filename for each chunk. All Gatsby knows is the `componentChunkName`.
 
 #### webpack.stats.json
 
@@ -197,6 +197,6 @@ At this stage, we know the page that we're navigating to, and can retrieve its `
 
 Now the loader can create the full component asset path using [chunkMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L69). It then dynamically constructs a `<link rel="prefetch" ... />` tag and adds it to the DOM (in [prefetch.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/prefetch.js)).
 
-You may notice that prefetching doesn't prefetch the shared chunks (e.g `id0` and `id1`). Why? This is a punt. We're guessing that shared chunks will have been loaded earlier for other pages. And if not, then the main page loading logic will download it. It just won't be prefetched.
+You may notice that prefetching doesn't prefetch the shared chunks (e.g. `id0` and `id1`). Why? This is a punt. We're guessing that shared chunks will have been loaded earlier for other pages. And if not, then the main page loading logic will download it. It just won't be prefetched.
 
 One more thing, prefetching can be disabled by implementing the [disableCorePrefetching](/docs/browser-apis/#disableCorePrefetching) browser API and returning true. This value is checked in [loader.enqueue](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L242). An example plugin that implements this is [gatsby-plugin-guess-js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-guess-js/src/gatsby-browser.js#L3).
