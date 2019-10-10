@@ -20,7 +20,7 @@ The `cache-control` header should be `cache-control: public, max-age=0, must-rev
 
 ## Static files
 
-All files in `static/` should be cached forever. For files in this directory, Gatsby creates paths that are directly tied to the content of the file. Meaning that if the file content changes, then the file path changes also. These paths look weird e.g. `reactnext-gatsby-performance.001-a3e9d70183ff294e097c4319d0f8cff6-0b1ba.png` but since you know that you'll always get the same file when you request that path, you can cache it forever.
+All files in `static/` should be cached forever. For files in this directory, Gatsby creates paths that are directly tied to the content of the file. Meaning that if the file content changes, then the file path changes also. These paths look weird e.g. `reactnext-gatsby-performance.001-a3e9d70183ff294e097c4319d0f8cff6-0b1ba.png` but since the same file will always be returned when that path is requested, Gatsby can cache it forever.
 
 The `cache-control` header should be `cache-control: public, max-age=31536000, immutable`
 
