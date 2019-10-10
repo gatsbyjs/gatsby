@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/core": "^7.6.3",
-    "@babel/parser": "^7.6.3",
+    "@babel/core": "^7.6.4",
+    "@babel/parser": "^7.6.4",
     "@babel/polyfill": "^7.6.0",
     "@babel/runtime": "^7.6.3",
     "@babel/traverse": "^7.6.3",
@@ -143,7 +143,7 @@
     "yaml-loader": "^0.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.3",
+    "@babel/cli": "^7.6.4",
     "@babel/runtime": "^7.6.3",
     "babel-preset-gatsby-package": "^0.2.8",
     "cross-env": "^5.2.1",
