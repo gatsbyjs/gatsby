@@ -6,12 +6,13 @@ Tailwind is a utility-first CSS framework for rapidly building custom user inter
 
 ## Overview
 
-There are two ways you can use Tailwind with Gatsby:
+There are three ways you can use Tailwind with Gatsby:
 
 1. Standard: Use PostCSS to generate Tailwind classes, then you can apply those classes using `className`.
 2. CSS-in-JS: Integrate Tailwind classes into Styled Components.
+3. Sass/SCSS: Use [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) to support Tailwind classes in your Sass/SCSS files.
 
-You have to install and configure Tailwind for both of these methods, so this guide will walk through that step first, then you can follow the instructions for either PostCSS or CSS-in-JS.
+You have to install and configure Tailwind for all of these methods, so this guide will walk through that step first, then you can follow the instructions for PostCSS, CSS-in-JS or Sass/SCSS.
 
 ## Installing and Configuring Tailwind
 
@@ -104,6 +105,41 @@ const Button = tw.button`
   bg-blue hover:bg-blue-dark text-white p-2 rounded
 `
 ```
+
+### Option #3: Sass/SCSS
+
+1.  Install the Gatsby Sass plugin [**gatsby-plugin-sass**](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+
+```shell
+npm install --save node-sass gatsby-plugin-sass
+```
+
+_The default Sass implementation wil lbe `node-sass`, but can be changed. Alternatively you can switch to the Dart implementation `sass`:_
+
+```shell
+npm install --save-dev sass
+npm install --save gatsby-plugin-sass
+```
+
+2. To be able to use Tailwind classes in your Sass/SCSS files, add the `tailwindcss` package into the `postCSSPlugins` parameter in your `gatsby-config.js`. If you want to use the Dart implementation of Sass, you will need to add the `implementation` parameter.
+
+```javascript:title=gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-sass`,
+    options: {
+      postCssPlugins: [
+        require("tailwindcss"),
+        // require("./tailwind.config.js"), // Optional: Load custom tailwindcss configuration
+      ],
+      // implementation: require("sass"), // Alternatively you can use another Sass implementation
+    },
+  },
+],
+```
+
+**Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
+If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
 ## Other resources
 
