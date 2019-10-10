@@ -23,7 +23,7 @@ If you find a broken image URL in the Gatsby docs, it should be fixed and kept r
 
 To address missing images, check the doc or tutorial source [in the Gatsby repo](https://github.com/gatsbyjs/gatsby/tree/master/docs) to see if it was moved in its history and if the images are still in its old location. Check to see if those images are also referenced from more than one doc. If they aren't, move them to the new directory location (and update URL references relative to the content, if necessary). If they are referenced in more than one location, use relative paths and don't duplicate images.
 
-If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
+If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR! Note that at present some links will not work on both GitHub and gatsbyjs.org. Since we must choose, the priority is for links to work on gatsbyjs.org.
 
 ## Headings
 
