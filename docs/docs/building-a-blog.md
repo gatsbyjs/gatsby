@@ -1,5 +1,5 @@
 ---
-title: Building a blog
+title: Building a Blog
 ---
 
 This is a stub. Help our community expand it.

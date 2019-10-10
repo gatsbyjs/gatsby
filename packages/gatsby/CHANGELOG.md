@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.34...gatsby@2.15.35) (2019-10-10)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.15.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.33...gatsby@2.15.34) (2019-10-09)
 
 **Note:** Version bump only for package gatsby
