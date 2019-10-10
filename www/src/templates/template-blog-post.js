@@ -116,9 +116,6 @@ class BlogPostTemplate extends React.Component {
                     mt: 3,
                     mb: 9,
                   },
-                  [mediaQueries.lg]: {
-                    ml: `-8em`,
-                  },
                 }}
               >
                 <div css={{ flex: `0 0 auto` }}>
@@ -181,7 +178,6 @@ class BlogPostTemplate extends React.Component {
                   lineHeight: `dense`,
                   fontSize: [5, 6, 7, 8, 9, 11],
                   [mediaQueries.lg]: {
-                    ml: `-8rem`,
                     mb: 8,
                   },
                 }}

@@ -93,26 +93,31 @@
               breadcrumbTitle: ESLint
             - title: Proxying API Requests
               link: /docs/api-proxy/
-        - title: Images, Files, and Video
+        - title: Images, Files & Video
           link: /docs/images-and-files/
           items:
-            - title: Importing Assets Directly Into Files
+            - title: Importing Assets Directly into Files
               link: /docs/importing-assets-into-files/
-              breadcrumbTitle: Importing Assets Into Files
+              breadcrumbTitle: Importing Assets into Files
             - title: Using the Static Folder
               link: /docs/static-folder/
+              breadcrumbTitle: Static Folder
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
             - title: Working with Images in Gatsby
               link: /docs/working-with-images/
-            - title: Preoptimizing your Images
+              breadcrumbTitle: Images in Gatsby
+            - title: Preoptimizing Your Images
               link: /docs/preoptimizing-images/
-            - title: Working With Video
+              breadcrumbTitle: Preoptimizing Images
+            - title: Working with Video
               link: /docs/working-with-video/
+              breadcrumbTitle: Videos in Gatsby
             - title: Importing Media Content
               link: /docs/importing-media-content/
             - title: Working with GIFs
               link: /docs/working-with-gifs/
+              breadcrumbTitle: GIFs in Gatsby
             - title: Working with Images in Markdown
               link: /docs/working-with-images-in-markdown/
               breadcrumbTitle: Images in Markdown

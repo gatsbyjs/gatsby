@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.13...gatsby-source-npm-package-search@2.1.14) (2019-10-09)
+
+### Bug Fixes
+
+- update dependency algoliasearch to ^3.35.1 ([#18334](https://github.com/gatsbyjs/gatsby/issues/18334)) ([2155c9a](https://github.com/gatsbyjs/gatsby/commit/2155c9a))
+
 ## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.1.12...gatsby-source-npm-package-search@2.1.13) (2019-10-04)
 
 ### Bug Fixes

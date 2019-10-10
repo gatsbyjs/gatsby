@@ -45,7 +45,7 @@ Want to do help us translate the Gatsby docs? Consider contributing to an existi
 
 - Spanish repo: https://github.com/gatsbyjs/gatsby-es
 - Russian repo: https://github.com/gatsbyjs/gatsby-ru
-- New translation repo request: https://github.com/gatsbyjs/gatsby/issues/new?template=feature_request.md
+- New translation repo request: https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md
 
 ### [OSS][oss]
 

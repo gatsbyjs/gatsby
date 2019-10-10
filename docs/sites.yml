@@ -3968,18 +3968,6 @@
     - Portfolio
   built_by: Maxim Andries
   featured: false
-- title: The Tenon.io blog
-  main_url: https://blog.tenon.io/
-  url: https://blog.tenon.io/
-  description: >
-    The Tenon.io blog features articles on accessibility written by some of the industry's leading lights and includes news, guidance, and education.
-  categories:
-    - Accessibility
-    - Blog
-    - Education
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
 - title: Algolia
   url: https://algolia.com
   main_url: https://algolia.com
@@ -7530,6 +7518,17 @@
   categories:
     - Education
     - Learning
+- title: blog.kwst.site
+  main_url: https://blog.kwst.site
+  url: https://blog.kwst.site
+  description: A blog of frontend engineer working in Fukuoka
+  source_url: https://github.com/SatoshiKawabata/blog
+  featured: false
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+    - JavaScript
 - title: Run Leeds
   main_url: http://www.runleeds.co.uk
   url: http://www.runleeds.co.uk
@@ -7655,4 +7654,45 @@
     - Blog
   built_by: Roman Kravets
   built_by_url: "https://github.com/romkravets/dev-page"
+  featured: false
+- title: Phil Tietjen Portfolio
+  url: https://www.philtietjen.dev/
+  main_url: https://www.philtietjen.dev/
+  source_url: https://github.com/Phizzard/phil-portfolio
+  description: >
+    Portfolio of Phil Tietjen using Gatsby, TailwindCSS, and Emotion/styled
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Phil Tietjen
+  built_by_url: https://github.com/Phizzard
+  featured: false
+- title: Gatsby Bomb
+  description: >
+    A fan made version of the website Giantbomb, fully static and powered by Gatsby JS and the GiantBomb API.
+  main_url: "https://gatsbybomb.netlify.com"
+  url: "https://gatsbybomb.netlify.com"
+  categories:
+    - App
+    - Entertainment
+    - Media
+    - Video
+  built_by: Phil Tietjen
+  built_by_url: "https://github.com/Phizzard"
+  featured: false
+- title: AtomLinter
+  url: https://atomlinter.github.io/
+  main_url: https://atomlinter.github.io/
+  source_url: https://github.com/AtomLinter/atomlinter.github.io
+  description: >
+    Landing page for the AtomLinter project, offering a curation of Atom packages associated with the project.
+  categories:
+    - Directory
+    - Landing Page
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Kepler Sticka-Jones
+  built_by_url: https://keplersj.com/
   featured: false
