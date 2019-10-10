@@ -7,7 +7,9 @@ const fs = require(`fs`)
 /**
  * Create Mdx types and resolvers
  */
-exports.sourceNodes = require(`./gatsby/source-nodes`)
+exports.createSchemaCustomization = require(`./gatsby/create-schema-customization`)
+
+exports.createPages = require(`./gatsby/create-pages`)
 
 /**
  * Create Mdx nodes from MDX files.
@@ -17,7 +19,7 @@ exports.onCreateNode = require(`./gatsby/on-create-node`)
 /**
  * Add frontmatter as page context for MDX pages
  */
-exports.onCreatePage = require(`./gatsby/on-create-page`)
+// exports.onCreatePage = require(`./gatsby/on-create-page`)
 
 /**
  * Add the webpack config for loading MDX files
