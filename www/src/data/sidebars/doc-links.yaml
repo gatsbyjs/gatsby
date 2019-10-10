@@ -104,7 +104,6 @@
               breadcrumbTitle: Static Folder
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
-              breadcrumbTitle: gatsby-image
             - title: Working with Images in Gatsby
               link: /docs/working-with-images/
               breadcrumbTitle: Images in Gatsby
