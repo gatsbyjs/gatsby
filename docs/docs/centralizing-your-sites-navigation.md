@@ -1,5 +1,5 @@
 ---
-title: Centralizing your site's navigation
+title: Centralizing Your Site's Navigation
 ---
 
 ## Creating dynamic navigation in Gatsby
