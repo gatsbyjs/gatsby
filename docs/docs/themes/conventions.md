@@ -2,7 +2,7 @@
 title: Themes Conventions
 ---
 
-As we begin to formalize and standardize the methodologies for building Gatsby Themes, we're documenting them all here. These aren't intended to be the only way to solve things, but are recommended approaches. If you have other ideas and best practices please open up a PR to update this page.
+As methodologies for building Gatsby Themes begin to formalize and standardize, documentation will be added here. These aren't intended to be the only way to solve things, but are recommended approaches. If you have other ideas and best practices please open up a PR to update this page.
 
 ## Naming
 
