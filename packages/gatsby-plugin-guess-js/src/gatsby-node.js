@@ -1,8 +1,10 @@
 const { GuessPlugin } = require(`guess-webpack`)
 
 let guessPlugin
-exports.onPreBootstrap = (_, pluginOptions) => {
+exports.onPreInit = (_, pluginOptions) => {
   const { period, jwt, GAViewID, reportProvider } = pluginOptions
+  // delete sensitive information after use
+  delete pluginOptions.jwt
   period.startDate = new Date(period.startDate)
   period.endDate = new Date(period.endDate)
   guessPlugin = new GuessPlugin({
