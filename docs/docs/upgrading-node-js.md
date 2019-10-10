@@ -25,7 +25,7 @@ This example shows Node version 10, specifically v10.16.0.
 
 Node version 6 reached _End-of-life_ status on 30th April 2019. Many of Gatsby's dependencies are updating to Node version 8 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
 
-Generally we'd recommend using [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
+Generally it's recommend to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
 
 > What about Node 7? Stable versions of Node are evenly numbered releases - Node 6, Node 8, Node 10 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
 
@@ -33,7 +33,7 @@ There are multiple ways to update your version of Node depending on how you orig
 
 ### Using Homebrew
 
-This is our recommended way to install a newer version of Node.
+This is the recommended way to install a newer version of Node.
 
 You will have homebrew installed on your computer if you [followed part zero of the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/#-install-nodejs-and-npm). Homebrew is a program that allows you to install specific versions of Node (and other software).
 
