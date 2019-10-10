@@ -352,7 +352,7 @@ describe(`develop`, () => {
           setTimeout(() => {
             mitt.emit(`done`)
             done()
-          }, 2000)
+          }, 5000)
         }
       })
     })
