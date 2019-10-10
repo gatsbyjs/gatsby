@@ -11,7 +11,7 @@ Some things that developers care about include:
 - **Not getting bogged down in configuration and setup** These things are often time consuming, frustrating, and prevent developers from getting to focus on the work they actually care about.
 - **Developing as efficiently and effectively as possible** The more things can be streamlined, automated, and/or simplified, the better.
 
-## Basic Explanation
+## Basic explanation
 
 Here's an example of a basic explanation of Gatsby for developers:
 

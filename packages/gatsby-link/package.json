@@ -1,14 +1,14 @@
 {
   "name": "gatsby-link",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
-  "version": "2.2.19",
+  "version": "2.2.20",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "@types/reach__router": "^1.2.5",
+    "@types/reach__router": "^1.2.6",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {

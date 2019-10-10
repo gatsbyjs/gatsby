@@ -82,7 +82,7 @@ const searchBoxStyles = t => css`
 
     :active,
     :focus {
-      /* box-shadow: 0 0 0 2px ${t.colors.themedInput.focusBoxShadow}; */
+      box-shadow: 0 0 0 2px ${t.colors.themedInput.focusBoxShadow};
       background: ${t.colors.themedInput.backgroundFocus};
     }
 

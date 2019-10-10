@@ -1,5 +1,5 @@
 ---
-title: Unit testing
+title: Unit Testing
 ---
 
 Unit testing is a great way to protect against errors in your code before you
