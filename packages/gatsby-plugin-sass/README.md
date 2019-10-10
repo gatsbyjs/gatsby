@@ -16,8 +16,7 @@ plugins: [`gatsby-plugin-sass`]
 
 2. Write your stylesheets in Sass/SCSS and require or import them as normal.
 
-```scss
-// in src/index.scss
+```scss:title="src/index.scss"
 html {
   background-color: rebeccapurple;
   p {
@@ -26,8 +25,7 @@ html {
 }
 ```
 
-```javascript
-// in gatsby-browser.js
+```javascript:title="gatsby-browser.js"
 import("./src/index.scss")
 ```
 
@@ -36,8 +34,7 @@ import("./src/index.scss")
 If you need to pass options to Sass use the plugins options, see [node-sass](https://github.com/sass/node-sass)/[dart-sass](https://github.com/sass/dart-sass) docs
 for all available options.
 
-```js
-// in gatsby-config.js
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -51,8 +48,7 @@ plugins: [
 
 If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader):
 
-```javascript
-// in gatsby-config.js
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -73,8 +69,7 @@ By default the node implementation of Sass (`node-sass`) is used. To use the imp
 npm install --save-dev sass
 ```
 
-```javascript
-// in gatsby-config.js
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -93,8 +88,7 @@ SASS defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297
 
 See [Bootstrap's documentation on theming](https://github.com/twbs/bootstrap/blob/master/site/content/docs/4.3/getting-started/theming.md#sass) for reference.
 
-```javascript
-// in gatsby-config.js
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -110,8 +104,7 @@ plugins: [
 
 See [`bootstrap-sass`](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision) for reference.
 
-```js
-// in gatsby-config.js
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -132,8 +125,7 @@ Any file with the `module` extension will use CSS Modules.
 
 To override the file regex for SASS or CSS modules,
 
-```javascript
-// in gatsby-config.js
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -160,8 +152,7 @@ To be able to use [TailwindCSS](https://tailwindcss.com/) within your Sass/SCSS 
 Optionally you can add a corresponding configuration file (By default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-```javascript
-// in gatsby-config.js
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
@@ -193,7 +184,7 @@ yarn add resolve-url-loader --dev
 
 And then:
 
-```javascript
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: "gatsby-plugin-sass",
@@ -206,7 +197,7 @@ plugins: [
 
 You can also configure resolve-url-plugin providing some options (see plugin documentation for all options https://github.com/bholloway/resolve-url-loader):
 
-```javascript
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: "gatsby-plugin-sass",
@@ -223,7 +214,7 @@ plugins: [
 
 NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for sass files in the plugin:
 
-```javascript
+```javascript:title="gatsby-config.js"
 plugins: [
   {
     resolve: "gatsby-plugin-sass",
