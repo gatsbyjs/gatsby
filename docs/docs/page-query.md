@@ -10,6 +10,8 @@ If you’re curious, you can also read more about [why Gatsby uses GraphQL](/doc
 
 ## How to use the `graphql` tag in pages
 
+Gatsby uses the concept of a page query, which is a query for a specific page in a site. It is unique in that it can take query variables unlike Gatsby's static queries.
+
 ### Add `description` to `siteMetadata`
 
 The first step in displaying the description will be ensuring you have one to begin with.
