@@ -9,11 +9,6 @@ one: two
 three: 4
 array: [1,2,3]
 ---`,
-    defaultLayout: `export default ({children, ...props}) => (
-<div>
-{children}
-</div>
-)`,
     namedExports: `export const meta = {author: "chris"}`,
     body: `# Some title
     
@@ -30,7 +25,6 @@ some content`,
         .join(`-`) || `body`,
     content: [
       input.frontmatter ? code.frontmatter : ``,
-      input.layout ? code.defaultLayout : ``,
       input.namedExports ? code.namedExports : ``,
       code.body,
     ].join(`\n\n`),
@@ -41,8 +35,8 @@ some content`,
 const fixtures = c
   .baseN([true, false], 3)
   .toArray()
-  .map(([frontmatter, layout, namedExports]) =>
-    genMDXFile({ frontmatter, layout, namedExports })
+  .map(([frontmatter, namedExports]) =>
+    genMDXFile({ frontmatter, namedExports })
   )
   .map(({ name, content }) => [
     name,

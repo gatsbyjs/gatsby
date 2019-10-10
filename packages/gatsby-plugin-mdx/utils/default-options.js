@@ -45,11 +45,15 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
     options.remarkPlugins = mdPlugins
   }
 
-  // support single layout set in the `defaultLayouts` option
+  // remove the defaultLayouts APIs
   if (options.defaultLayouts && isString(options.defaultLayouts)) {
-    options.defaultLayouts = {
-      default: options.defaultLayouts,
-    }
+    console.warn(
+      `defaultLayouts in your gatsby-plugin-mdx config has no effect. Shadow the component using a file at \`gatsby-plugin-mdx/components/mdx-page.js\``
+    )
+  } else if (Object.keys(options.defaultLayouts).length > 0) {
+    console.warn(
+      `defaultLayouts in your gatsby-plugin-mdx config has no effect. Shadow the component using a file at \`gatsby-plugin-mdx/components/mdx-page.js\``
+    )
   }
 
   optDebug(options)
