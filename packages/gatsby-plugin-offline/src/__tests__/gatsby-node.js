@@ -90,6 +90,8 @@ describe(`onPostBuild`, () => {
   })
 
   it(`configures the Workbox debug option`, async () => {
+    swText = `workbox.setConfig({modulePathPrefix: "workbox-v4.3.1"});`
+
     await gatsbyNode.onPostBuild(
       {
         pathPrefix: ``,
