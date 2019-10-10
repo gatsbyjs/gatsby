@@ -146,10 +146,10 @@ const ItemTitle = ({ children }) => (
   </h3>
 )
 
-const ItemDescription = ({ children }) => (
+const ItemDescription = ({ children, color }) => (
   <small
     sx={{
-      color: `textMuted`,
+      color: color ? color : `textMuted`,
       display: `block`,
       fontFamily: `system`,
       fontSize: 1,
@@ -194,6 +194,7 @@ const Gatsby = () => (
     <ItemDescription>
       <small
         sx={{
+          color: `grey.50`,
           display: `block`,
           mt: 2,
           mb: 1,
@@ -304,7 +305,7 @@ const Diagram = () => (
                 width: `auto`,
               }}
             >
-              <ItemDescription>
+              <ItemDescription color="grey.50">
                 HTML &middot; CSS &middot;
                 {` `}
                 <TechWithIcon icon={ReactJSIcon} height="1.1em">

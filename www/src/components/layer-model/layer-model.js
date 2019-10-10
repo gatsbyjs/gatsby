@@ -30,7 +30,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         cursor: `pointer`,
         borderRadius: 3,
         p: 2,
-        color: `grey.60`,
+        color: `textMuted`,
         fontWeight: selected ? `bold` : `body`,
         backgroundColor: `ui.background`,
         border: selected

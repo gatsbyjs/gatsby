@@ -100,11 +100,11 @@ const col = {
     comment: `#527713`,
     tag: `#137886`,
     regex: `#dc0437`,
+    remove: c.red[70],
+    add: c.green[80],
     // unchanged
     border: `#faede5`,
     text: `#866c5b`,
-    remove: `#e45c5c`,
-    add: `#4a9c59`,
     punctuation: `#53450e`,
     cssString: `#a2466c`,
     invisibles: `#e0d7d1`,
@@ -208,7 +208,7 @@ const col = {
       background: darkBackground,
       text: c.grey[20],
       heading: c.white,
-      textMuted: c.grey[50],
+      textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
       icon: {
@@ -251,7 +251,7 @@ const col = {
         keyword: c.magenta[30],
         punctuation: c.whiteFade[70],
         regex: `#d88489`,
-        remove: c.red[60],
+        remove: c.red[40],
         selector: c.orange[30],
         tag: c.teal[60],
         text: c.grey[30],
@@ -391,6 +391,22 @@ const config = {
       fontSize: 2,
       py: 2,
       px: 3,
+    },
+  },
+  links: {
+    muted: {
+      fontSize: 1,
+      lineHeight: `solid`,
+      py: 3,
+      "&&": {
+        border: 0,
+        color: `textMuted`,
+        display: `flex`,
+        fontWeight: `body`,
+      },
+      "&&:hover": {
+        color: `link.hoverColor`,
+      },
     },
   },
 }
