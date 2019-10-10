@@ -3968,18 +3968,6 @@
     - Portfolio
   built_by: Maxim Andries
   featured: false
-- title: The Tenon.io blog
-  main_url: https://blog.tenon.io/
-  url: https://blog.tenon.io/
-  description: >
-    The Tenon.io blog features articles on accessibility written by some of the industry's leading lights and includes news, guidance, and education.
-  categories:
-    - Accessibility
-    - Blog
-    - Education
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
 - title: Algolia
   url: https://algolia.com
   main_url: https://algolia.com
@@ -7694,4 +7682,19 @@
     - SEO
   built_by: Josh Pensky
   built_by_url: https://github.com/joshpensky
+  featured: false
+- title: AtomLinter
+  url: https://atomlinter.github.io/
+  main_url: https://atomlinter.github.io/
+  source_url: https://github.com/AtomLinter/atomlinter.github.io
+  description: >
+    Landing page for the AtomLinter project, offering a curation of Atom packages associated with the project.
+  categories:
+    - Directory
+    - Landing Page
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Kepler Sticka-Jones
+  built_by_url: https://keplersj.com/
   featured: false

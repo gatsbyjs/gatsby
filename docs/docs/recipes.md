@@ -468,6 +468,64 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 - More on [Using CSS Modules](/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
+### Using Sass/SCSS
+
+Sass is an extension of CSS that gives you more advanced features like nested rules, variables, mixins, and more.
+
+Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset of CSS. That means all valid CSS syntax, is valid SCSS syntax. SCSS files use the extension .scss
+
+Sass will compile .scss and .sass files to .css files for you, so you can write your stylesheets with more advanced features.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/).
+
+#### Directions
+
+1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+
+`npm install --save node-sass gatsby-plugin-sass`
+
+2. Include the plugin in your `gatsby-config.js` file.
+
+```javascript:title=gatsby-config.js
+plugins: [`gatsby-plugin-sass`],
+```
+
+3.  Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+
+```css:title=styles.scss
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+```
+
+```css:title=styles.sass
+$font-stack:    Helvetica, sans-serif
+$primary-color: #333
+
+body
+  font: 100% $font-stack
+  color: $primary-color
+```
+
+```javascript
+import "./styles.scss"
+import "./styles.sass"
+```
+
+_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of .css the extensions have to be .scss or .sass_
+
+#### Additional resources
+
+- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
+- [Sass guide from the official Sass website](https://sass-lang.com/guide)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
+
 ### Adding a Local Font
 
 #### Prerequisites
