@@ -35,7 +35,9 @@ class EcosystemBoard extends Component {
             flexDirection: `row`,
             flexWrap: `wrap`,
             height: t =>
-              `calc(100vh - (${t.sizes.bannerHeight} + ${t.sizes.headerHeight} + 1px))`,
+              `calc(100vh - (${t.sizes.bannerHeight} + ${
+                t.sizes.headerHeight
+              } + 1px))`,
             pt: 7,
             px: 4,
             pb: 4,
@@ -72,7 +74,12 @@ class EcosystemBoard extends Component {
         <EcosystemSection
           title="External Resources"
           description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
-          links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
+          links={[
+            {
+              label: `Browse Resources`,
+              to: `/docs/awesome-gatsby-resources/`,
+            },
+          ]}
         />
       </div>
     )
