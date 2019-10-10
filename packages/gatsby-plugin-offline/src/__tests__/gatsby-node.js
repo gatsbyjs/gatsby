@@ -51,6 +51,10 @@ describe(`onPostBuild`, () => {
       swText += text
     },
 
+    writeFileSync(file, text) {
+      swText = text
+    },
+
     createReadStream() {
       return { pipe() {} }
     },
