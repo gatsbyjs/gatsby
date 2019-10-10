@@ -349,11 +349,13 @@ async function getPages(
     let result = []
 
     const getOptions = page => {
+      const hasPrivilage = _accessToken && url.includes("wp/v2/posts")
       let o = {
         method: `get`,
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
           page: page,
+          ...(hasPrivilage ? { status: "any" } : {}),
         })}`,
       }
 
