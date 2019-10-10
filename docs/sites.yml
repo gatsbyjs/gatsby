@@ -7670,3 +7670,18 @@
   built_by: Phil Tietjen
   built_by_url: "https://github.com/Phizzard"
   featured: false
+- title: AtomLinter
+  url: https://atomlinter.github.io/
+  main_url: https://atomlinter.github.io/
+  source_url: https://github.com/AtomLinter/atomlinter.github.io
+  description: >
+    Landing page for the AtomLinter project, offering a curation of Atom packages associated with the project.
+  categories:
+    - Directory
+    - Landing Page
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Kepler Sticka-Jones
+  built_by_url: https://keplersj.com/
+  featured: false
