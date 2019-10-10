@@ -146,28 +146,6 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your Sass output you can specify plugins
 in the plugin options.
 
-#### TailwindCSS
-
-To be able to use [TailwindCSS](https://tailwindcss.com/) within your Sass/SCSS files, add the `tailwindcss` package into the `postCSSPlugins` parameter.
-Optionally you can add a corresponding configuration file (By default it will be `tailwind.config.js`).
-If you are adding a custom configuration, you will need to load it after `tailwindcss`.
-
-```javascript:title="gatsby-config.js"
-plugins: [
-  {
-    resolve: `gatsby-plugin-sass`,
-    options: {
-      postCssPlugins: [
-        require("tailwindcss"),
-        // require('./tailwind.config.js') // Load custom tailwindcss configuration
-      ],
-    },
-  },
-]
-```
-
-Learn here [how to customize your tailwindcss configuration](https://tailwindcss.com/docs/configuration#creating-your-configuration-file).
-
 ## Relative paths & url()
 
 This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
