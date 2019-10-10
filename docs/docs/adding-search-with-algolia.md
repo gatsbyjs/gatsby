@@ -429,7 +429,7 @@ export const Input = styled.input`
   background: transparent;
   transition: ${props => props.theme.shortTrans};
   border-radius: ${props => props.theme.smallBorderRadius};
-  {hightlight-next-line}
+  {highlight-next-line}
   ${props => (props.collapse ? collapse : expand)};
 `
 

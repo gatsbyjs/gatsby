@@ -47,3 +47,5 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 ## How to add new guides to this section
 
 If you don’t see your preferred CMS in this list, you can [write a new guide yourself](/contributing/how-to-contribute/) or [open an issue to request it](https://github.com/gatsbyjs/gatsby/issues/new/choose).
+
+You can also [write your own source plugin](/docs/creating-a-source-plugin/) to integrate Gatsby with a CMS that is not in the list.

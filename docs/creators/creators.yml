@@ -413,3 +413,16 @@
   image: images/desarol.png
   for_hire: true
   hiring: true
+- name: Arvind Kumar
+  type: individual
+  description: >-
+    Hi! I am a full stack developer with focus on frontend and I work as an independent contractor.
+    Although I've been writing code for the past decade, I've also given talks and guest lectures on software related topics and enjoy writing about tech.
+    I am also a musician and an amateur astronomer. Feel free to get in touch!
+  location: India
+  website: "https://arvind.io/"
+  github: "https://github.com/EnKrypt/"
+  image: images/arvind-kumar.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
