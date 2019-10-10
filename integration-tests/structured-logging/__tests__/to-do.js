@@ -56,7 +56,7 @@ const collectEventsForDevelop = (events, env = {}) => {
           listening = false
           gatsbyProcess.kill()
           resolve()
-        }, 2000)
+        }, 5000)
       }
     })
   })
