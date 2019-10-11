@@ -1,16 +1,11 @@
 import React from "react"
 import { Box, Color } from "ink"
-import stripAnsi from "strip-ansi"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
 
-const ColorSwitcher = ({ hideColors, children, ...props }) => {
-  if (hideColors) {
-    return stripAnsi(children)
-  }
-
-  return <Color {...props}>{children}</Color>
-}
+const ColorSwitcher = ({ children, ...props }) => (
+  <Color {...props}>{children}</Color>
+)
 
 const createLabel = (text, color) => (...props) => (
   <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
@@ -37,7 +32,7 @@ const getLabel = level => {
   }
 }
 
-export const Message = ({ level, hideColors, text, duration, statusText }) => {
+export const Message = ({ level, text, duration, statusText }) => {
   let message = text
   if (duration) {
     message += ` - ${duration.toFixed(3)}s`
@@ -53,7 +48,7 @@ export const Message = ({ level, hideColors, text, duration, statusText }) => {
 
   return (
     <Box textWrap="wrap" flexDirection="row">
-      <TextLabel hideColors={hideColors} />
+      <TextLabel />
       {` `}
       {message}
     </Box>

@@ -110,8 +110,6 @@ const reporter: Reporter = {
    * @param {boolean} [isNoColor=false]
    */
   setNoColor(isNoColor = false) {
-    // reporterInstance.setColors(isNoColor)
-
     if (isNoColor) {
       errorFormatter.withoutColors()
     }

@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, Static } from "ink"
-import { isCI } from "ci-info"
+import isTTY from "../../../util/is-tty"
+import { trackBuildError } from "gatsby-telemetry"
 
 import Spinner from "../ink/components/spinner"
 import ProgressBar from "../ink/components/progress-bar"
@@ -9,14 +10,46 @@ import { Message } from "../ink/components/messages"
 import Error from "./components/error"
 import Develop from "../ink/components/develop"
 
-const showProgress = process.stdout.isTTY && !isCI
+const showProgress = isTTY()
 
 class CLI extends React.Component {
+  state = {
+    hasError: false,
+  }
+
+  componentDidCatch(error, info) {
+    trackBuildError(`INK`, {
+      error: {
+        stack: info.componentStack,
+        text: error.message,
+        context: {},
+      },
+    })
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error }
+  }
+
   render() {
     const {
       logs: { messages, activities },
       showStatusBar,
     } = this.props
+
+    const { hasError, error } = this.state
+
+    if (hasError) {
+      // You can render any custom fallback UI
+      return (
+        <Box flexDirection="row">
+          <Message
+            level="ACTIVITY_FAILED"
+            text={`We've encountered an error: ${error.message}`}
+          />
+        </Box>
+      )
+    }
 
     const spinners = []
     const progressBars = []
@@ -43,7 +76,7 @@ class CLI extends React.Component {
               msg.level === `ERROR` ? (
                 <Error details={msg} key={index} />
               ) : (
-                <Message hideColors={true} key={index} {...msg} />
+                <Message key={index} {...msg} />
               )
             )}
           </Static>

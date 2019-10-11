@@ -7,6 +7,9 @@ const { Actions } = require(`../../constants`)
 onLogAction(action => {
   const sanitizedAction = {
     ...action,
+    /* Payload can either be a String or an Object
+     * See more at integration-tests/structured-logging/__tests__/to-do.js
+     */
     payload: _.isPlainObject(action.payload)
       ? {
           ...action.payload,
