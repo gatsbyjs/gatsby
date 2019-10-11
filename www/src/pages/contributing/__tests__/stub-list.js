@@ -1,5 +1,3 @@
-import "./matchMedia.mock"
-
 jest.mock(`../../../utils/sidebar/item-list`, () => {
   return {
     itemListContributing: {
