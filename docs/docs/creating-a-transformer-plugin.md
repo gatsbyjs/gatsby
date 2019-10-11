@@ -27,7 +27,7 @@ Just like a source plugin, a transformer plugin is a normal NPM package. It has 
 
 `gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
-Checkout this example of rebuilding a simplified `gatsby-transformer-yaml` directly in an example site. For this example, you have aa default gatsby starter site which includes a `src/data/example.yml` file:
+Check out this example of rebuilding a simplified `gatsby-transformer-yaml` directly in a site. Say you have a default Gatsby starter site which includes a `src/data/example.yml` file:
 
 ```yaml:title=src/data/example.yml
 - name: Jane Doe
