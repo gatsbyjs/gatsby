@@ -378,7 +378,7 @@ creating dynamic pages (blog posts!), extending the babel or webpack configs,
 modifying the created nodes or pages, etc. This API is exposed in the
 `gatsby-node.js` file in the root directory of your project—e.g. at the same
 level as `gatsby-config.js`. Each export found in this file will be parsed by
-Gatsby, as detailed in its [Node API specification][node-spec]. However, you only need to 
+Gatsby, as detailed in its [Node API specification][node-spec]. However, you only need to
 care about one particular API in this instance, `createPages`.
 
 ```javascript:title=gatsby-node.js
