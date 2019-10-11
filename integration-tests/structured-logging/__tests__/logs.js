@@ -11,7 +11,7 @@ const gatsbyBin = path.join(
   `gatsby.js`
 )
 
-describe(`Activity`, () => {
+describe(`Activities`, () => {
   let gatsbyProcess
   let events = []
 
@@ -46,7 +46,14 @@ describe(`Activity`, () => {
 
   it.todo(`emits actions with a timestamp`)
 
-  it(`emits start, update and end for a successful activity`, async () => {
+  /* There are two typical lifecycles for activities. Most activities have
+    - Start
+    - Update (Optional)
+    - End
+    
+    These tests assert whether events are correctly emitted for the complete lifecycle. 
+   */
+  it(`emit start, update and end events for a successful activity`, async () => {
     const activityEvents = events.filter(
       event =>
         event.type === `LOG_ACTION` &&
@@ -94,7 +101,7 @@ describe(`Activity`, () => {
     ])
   })
 
-  it(`emits start, update and end for a failed activity`, async () => {
+  it(`emit start, update and end events for a failed activity`, async () => {
     const activityEvents = events.filter(
       event =>
         event.type === `LOG_ACTION` &&
