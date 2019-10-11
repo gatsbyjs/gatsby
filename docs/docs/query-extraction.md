@@ -61,7 +61,7 @@ digraph {
 
 You're now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68) function.
 
-If the query is a `StaticQuery`, you call the `replaceStaticQuery` action to save it to to the `staticQueryComponents` namespace which is a mapping from a component's path to an object that contains the raw GraphQL Query amongst other things. More details in [Static Queries](/docs/static-vs-normal-queries/). We also remove component's `jsonName` from the `components` Redux namespace. See [Page -> Node Dependencies](/docs/page-node-dependencies/).
+If the query is a `StaticQuery`, Gatsby will call the `replaceStaticQuery` action to save it to the `staticQueryComponents` namespace which is a mapping from a component's path to an object that contains the raw GraphQL Query amongst other things. More details can be found in the doc on [Static Queries](/docs/static-vs-normal-queries/). Gatsby also removes a component's `jsonName` from the `components` Redux namespace. See [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
 If the query is just a normal every-day query (not StaticQuery), then Gatsby updates its component's `query` in the redux `components` namespace via the [replaceComponentQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L827) action.
 
