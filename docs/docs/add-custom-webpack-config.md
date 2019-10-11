@@ -1,5 +1,5 @@
 ---
-title: Adding a Custom Webpack Config
+title: Adding a Custom webpack Config
 ---
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby
