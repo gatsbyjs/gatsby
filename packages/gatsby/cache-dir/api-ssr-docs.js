@@ -215,4 +215,4 @@ exports.wrapRootElement = true
  * }
  *
  */
-// exports.onSocketInit = true
+exports.onSocketInit = true
