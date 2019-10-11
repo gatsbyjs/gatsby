@@ -209,6 +209,30 @@ const errorMap = {
     level: `ERROR`,
     docsUrl: `https://www.gatsbyjs.org/docs/local-https/#setup`,
   },
+  // cli new command errors
+  "11610": {
+    text: context =>
+      `It looks like you gave wrong argument orders . Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  "11611": {
+    text: context =>
+      `It looks like you passed a URL to your project name. Try running instead "gatsby new new-gatsby-project ${context.rootPath}"`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  "11612": {
+    text: context =>
+      `Could not create a project in "${context.path}" because it's not a valid path`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  "11613": {
+    text: context => `Directory ${context.rootPath} is already an npm project`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
 }
 
 module.exports = { errorMap, defaultError: errorMap[``] }

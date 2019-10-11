@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.15.35",
+  "version": "2.15.36",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -133,7 +133,7 @@
     "util.promisify": "^1.0.0",
     "uuid": "^3.3.3",
     "v8-compile-cache": "^1.1.2",
-    "webpack": "~4.41.0",
+    "webpack": "~4.41.1",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.8.2",
     "webpack-hot-middleware": "^2.25.0",
