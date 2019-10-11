@@ -90,32 +90,7 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   const workerPool = WorkerPool.create()
-  let isNewBuild = true // by default we don't want to do a rebuild of all html
-
-  /*
-   * A new webpack hash is returned from JS build if there are code changes
-   * if the code is changed we want to delete the old html and build new ones
-   */
-
-  // if (fs.existsSync(`${program.directory}/temp/redux-state-old.json`)) {
-  //   const previousWebpackCompilationHash = require(`${program.directory}/temp/redux-state-old.json`)
-  //   if (
-  //     stats.hash !== previousWebpackCompilationHash.webpackCompilationHashOld
-  //   ) {
-  //     isNewBuild = true
-  //     activity = report.activityTimer(
-  //       `delete html and css files from previous builds`,
-  //       {}
-  //     )
-  //     activity.start()
-  //     await del([
-  //       `public/**/*.{html}`,
-  //       `!public/static`,
-  //       `!public/static/**/*.{html,css}`,
-  //     ])
-  //     activity.end()
-  //   }
-  // }
+  let isNewBuild = false // by default we don't want to do a rebuild of all html
 
   /*
    * We let the page queries run creating the page data
