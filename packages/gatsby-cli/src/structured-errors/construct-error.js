@@ -20,7 +20,10 @@ const constructError = ({ details: { id, ...otherDetails } }) => {
       ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))
       : null,
     docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
-    code: id,
+  }
+
+  if (id) {
+    structuredError.code = id
   }
 
   // validate
