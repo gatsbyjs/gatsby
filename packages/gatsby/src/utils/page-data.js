@@ -3,6 +3,8 @@ const path = require(`path`)
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 
+const { readFromCache } = require(`../redux/persist.js`)
+
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
   return path.join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
@@ -55,19 +57,16 @@ const stateToObject = state => {
   return newPageData
 }
 
-const getNewPageKeys = (directory, store, isNewBuild) =>
+const getNewPageKeys = (store, incrementalBuild) =>
   new Promise(resolve => {
-    if (
-      isNewBuild ||
-      !fs.existsSync(`${directory}/temp/redux-state-old.json`)
-    ) {
+    if (!incrementalBuild) {
       resolve([...store.getState().pages.keys()])
       return
     }
 
     const newPageKeys = []
     const newPageData = stateToObject(store.getState())
-    const previousPageData = require(`${directory}/temp/redux-state-old.json`)
+    const previousPageData = stateToObject(readFromCache())
 
     _.forEach(newPageData.pages, (value, key) => {
       if (!(key in previousPageData.pages)) {
@@ -82,29 +81,13 @@ const getNewPageKeys = (directory, store, isNewBuild) =>
       }
     })
 
-    if (_.size(newPageKeys)) {
-      fs.writeFileSync(
-        `${directory}/temp/newPageKeys.json`,
-        JSON.stringify({
-          newPageKeys,
-        }),
-        `utf-8`
-      )
-      console.log(`file of newPageKeys created`)
-    }
-
     resolve(newPageKeys)
   })
 
 const removeOldPageData = (directory, store) =>
   new Promise(resolve => {
-    if (!fs.existsSync(`${directory}/temp/redux-state-old.json`)) {
-      resolve([])
-      return
-    }
-
-    const previousPageData = require(`${directory}/temp/redux-state-old.json`)
     const newPageData = stateToObject(store.getState())
+    const previousPageData = stateToObject(readFromCache())
     const deletedKeys = []
 
     _.forEach(previousPageData.pages, (value, key) => {

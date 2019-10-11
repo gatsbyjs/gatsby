@@ -1,28 +1,16 @@
+"use strict"
+
 const v8 = require(`v8`)
+
 const fs = require(`fs-extra`)
 
-const file = `${process.cwd()}/.cache/redux-state.json`
+const file = `${process.cwd()}/.cache/redux-state`
 
 const readFromCache = () => v8.deserialize(fs.readFileSync(file))
 
-const writeToCache = contents => {
-  Object.keys(contents).forEach(key => {
-    if (contents[key] instanceof Map) {
-      const obj = {}
-      contents[key].forEach((v, k) => {
-        obj[k] = v
-      })
-      contents[key] = obj
-    }
-  })
-  return fs.writeFileSync(
-    file,
-    JSON.stringify({
-      pages: contents.pages,
-      webpackCompilationHashOld: contents.webpackCompilationHash,
-    }),
-    `utf-8`
-  )
-}
+const writeToCache = contents => fs.writeFileSync(file, v8.serialize(contents))
 
-module.exports = { readFromCache, writeToCache }
+module.exports = {
+  readFromCache,
+  writeToCache,
+}

@@ -158,7 +158,7 @@ module.exports = async (args: BootstrapArgs) => {
   /*
    * Copy cache state for comparing data
    */
-  if (fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
+  if (incrementalBuild && fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
     let activity = report.activityTimer(
       `Copied redux-state for comparing later`
     )

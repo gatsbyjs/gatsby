@@ -204,8 +204,7 @@ const createPageQueryJob = (state, page) => {
 
 const processPageQueries = async (
   queryIds,
-  program,
-  isNewBuild,
+  incrementalBuild,
   { state, activity }
 ) => {
   state = state || store.getState()
@@ -215,11 +214,7 @@ const processPageQueries = async (
   // created during `gatsby develop`.
 
   // Return new page keys
-  const newPageKeys = await pageDataUtil.getNewPageKeys(
-    program.directory,
-    store,
-    isNewBuild
-  )
+  const newPageKeys = await pageDataUtil.getNewPageKeys(store, incrementalBuild)
 
   // if page keys then change queryIds value
   if (newPageKeys.length) {

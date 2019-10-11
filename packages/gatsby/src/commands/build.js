@@ -8,7 +8,6 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
-const fs = require(`fs-extra`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
@@ -90,7 +89,34 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   const workerPool = WorkerPool.create()
-  let isNewBuild = false // by default we don't want to do a rebuild of all html
+  const incrementalBuild = true // by default we don't want to do a rebuild of all html
+
+  const webpackCompilationHash = stats.hash
+  if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
+    store.dispatch({
+      type: `SET_WEBPACK_COMPILATION_HASH`,
+      payload: webpackCompilationHash,
+    })
+
+    activity = report.activityTimer(`Rewriting compilation hashes`, {
+      parentSpan: buildSpan,
+    })
+
+    // We need to update all page-data.json files with the new
+    // compilation hash. As a performance optimization however, we
+    // don't update the files for `pageQueryIds` (dirty queries),
+    // since they'll be written after query execution.
+    // const cleanPagePaths = _.difference(
+    //   [...store.getState().pages.keys()],
+    //   pageQueryIds
+    // )
+    await pageDataUtil.updateCompilationHashes(
+      { publicDir, workerPool },
+      [...store.getState().pages.keys()],
+      webpackCompilationHash
+    )
+    activity.end()
+  }
 
   /*
    * We let the page queries run creating the page data
@@ -99,7 +125,7 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, program, isNewBuild, {
+  await queryUtil.processPageQueries(pageQueryIds, incrementalBuild, {
     activity,
   })
   activity.end()
@@ -109,56 +135,11 @@ module.exports = async function build(program: BuildArgs) {
   )
 
   /*
-   * (This maybe reduanant code below as we are not updating the webpackHash)
-   * We check if the page-data fold exists if so we then change the webpack hash to blank
-   * This removes the check that reloads the page if the html's window and the page-data hashes do not match.
-   */
-
-  if (fs.existsSync(`${program.directory}/public/page-data`)) {
-    let previousWebpackCompilationHash = {}
-    let hasOldState = fs.existsSync(
-      `${program.directory}/temp/redux-state-old.json`
-    )
-
-    if (hasOldState) {
-      previousWebpackCompilationHash = require(`${program.directory}/temp/redux-state-old.json`)
-    }
-
-    activity = report.activityTimer(`Rewriting compilation hashes`, {
-      parentSpan: buildSpan,
-    })
-    const webHash =
-      !isNewBuild && hasOldState
-        ? previousWebpackCompilationHash.webpackCompilationHashOld
-        : stats.hash
-
-    activity.start()
-    store.dispatch({
-      type: `SET_WEBPACK_COMPILATION_HASH`,
-      payload: webHash,
-    })
-
-    await pageDataUtil.updateCompilationHashes(
-      {
-        publicDir,
-        workerPool,
-      },
-      [...store.getState().pages.keys()],
-      webHash
-    )
-    activity.end()
-  }
-
-  /*
    * Next we compare the old page data to the new data in state and returns the different page keys
    */
   activity = report.activityTimer(`Comparing old data set`)
   activity.start()
-  const newPageKeys = await pageDataUtil.getNewPageKeys(
-    program.directory,
-    store,
-    isNewBuild
-  )
+  const newPageKeys = await pageDataUtil.getNewPageKeys(store, incrementalBuild)
   activity.end()
   console.log(`Pages to be created`, newPageKeys)
   /*
@@ -197,10 +178,7 @@ module.exports = async function build(program: BuildArgs) {
   /*
    * We then check for pages that may have been removed and delete them.
    */
-  if (
-    !isNewBuild ||
-    fs.existsSync(`${program.directory}/temp/redux-state-old.json`)
-  ) {
+  if (incrementalBuild) {
     activity = report.activityTimer(`Delete old page and page data`)
     activity.start()
     const deletedKeys = await pageDataUtil.removeOldPageData(
@@ -214,12 +192,8 @@ module.exports = async function build(program: BuildArgs) {
   /*
    * We then save the JS compiled hash to compare in the next build
    */
-  activity = report.activityTimer(`Save webpack and page data`)
+  activity = report.activityTimer(`Update cache for next build`)
   activity.start()
-  store.dispatch({
-    type: `SET_WEBPACK_COMPILATION_HASH`,
-    payload: stats.hash,
-  })
   await waitJobsFinished()
   await db.saveState()
   activity.end()
