@@ -170,7 +170,7 @@ export default () => {
           category: "Special Button",
           // string - required - Type of interaction (e.g. 'play')
           action: "Click",
-          string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+          // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
           label: "Gatsby Plugin Example Campaign",
           // number - optional - Numeric value associated with the event. (e.g. A product ID)
           value: 43
