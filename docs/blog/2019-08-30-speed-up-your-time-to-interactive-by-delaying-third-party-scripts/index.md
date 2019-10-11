@@ -10,7 +10,7 @@ tags:
 
 Gatsby does many things to get a website visible as fast as possible. But getting a website visible isn't the only interesting metric. There are others that, if you're not careful, can easily take much longer than needed. Even if your site still feels fast.
 
-The one this article focuses on is "[Time to interactive](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive)", which is the time it takes for all your initial scripts to run. This one is particularly interesting for a couple of reasons:
+The metric this article focuses on is "[Time to interactive](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive)", which is the time it takes for all your initial scripts to run. This one is particularly interesting for a couple of reasons:
 
 - It's not super noticable when you use a website on desktop
 - Scripts loaded asynchronously are counted towards this number (even though they're async, they're still loaded in sequence after a page load)
