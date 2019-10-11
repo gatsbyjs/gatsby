@@ -322,7 +322,8 @@ describe(`develop`, () => {
     })
   })
 
-  describe(`test preview workflows`, () => {
+  // See https://github.com/gatsbyjs/gatsby/issues/18518
+  describe.skip(`test preview workflows`, () => {
     let gatsbyProcess
     const mitt = new EventEmitter()
     const events = []
