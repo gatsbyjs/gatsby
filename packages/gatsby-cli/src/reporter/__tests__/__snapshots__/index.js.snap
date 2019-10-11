@@ -2,6 +2,7 @@
 
 exports[`report.error handles "Array of Errors" signature correctly 1`] = `
 Object {
+  "code": undefined,
   "context": Object {
     "sourceMessage": "Message 3 from new Error",
   },
@@ -15,6 +16,7 @@ Object {
 
 exports[`report.error handles "Error" signature correctly 1`] = `
 Object {
+  "code": undefined,
   "context": Object {
     "sourceMessage": "Message from new Error",
   },
@@ -28,6 +30,7 @@ Object {
 
 exports[`report.error handles "String" signature correctly 1`] = `
 Object {
+  "code": undefined,
   "context": Object {
     "sourceMessage": "Error created in Jest",
   },
@@ -40,6 +43,7 @@ Object {
 
 exports[`report.error handles "String, Error" signature correctly 1`] = `
 Object {
+  "code": undefined,
   "context": Object {
     "sourceMessage": "Error string passed to reporter Message from new Error",
   },
