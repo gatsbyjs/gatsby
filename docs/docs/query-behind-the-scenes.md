@@ -2,7 +2,7 @@
 title: How Queries Work
 ---
 
-You're talking about GraphQL queries here. These can be tagged graphql expressions at the bottom of your component source file (e.g. [query for Gatsby frontpage](https://github.com/gatsbyjs/gatsby/blob/master/www/src/pages/index.js#L165)), StaticQueries within your components (e.g. [showcase site details](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/showcase-details.js#L103)), or fragments created by plugins (e.g. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/fragments.js)).
+As part of Gatsby's data layer, GraphQL queries can be specified as tagged graphql expressions at the bottom of your component source file (e.g. [query for Gatsby frontpage](https://github.com/gatsbyjs/gatsby/blob/master/www/src/pages/index.js#L165)), StaticQueries within your components (e.g. [showcase site details](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/showcase-details.js#L103)), or fragments created by plugins (e.g. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/fragments.js)).
 
 Note that you are NOT talking about queries involved in the creation of your pages, which is usually performed in your site's gatsby-node.js (e.g. [Gatsby's website](https://github.com/gatsbyjs/gatsby/blob/master/www/gatsby-node.js#L165)). You're only talking about queries that are tied to particular pages or templates.
 
