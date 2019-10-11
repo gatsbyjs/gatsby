@@ -88,28 +88,14 @@ class Runner {
     this.parentSpan = parentSpan
   }
 
-  async compileAll(activity) {
-    const messages = []
-
-    let nodes = await this.parseEverything(messages)
-    const results = await this.write(nodes, messages)
-
-    if (messages.length !== 0) {
-      const errors = activity.panicOnBuild(messages)
-      if (process.env.gatsby_executing_command === `develop`) {
-        websocketManager.emitError(overlayErrorID, errors)
-      }
-    } else {
-      activity.end()
-      if (process.env.gatsby_executing_command === `develop`) {
-        websocketManager.emitError(overlayErrorID, null)
-      }
-    }
+  async compileAll(addError) {
+    let nodes = await this.parseEverything(addError)
+    const results = await this.write(nodes, addError)
 
     return results
   }
 
-  async parseEverything(messages) {
+  async parseEverything(addError) {
     const filesRegex = `*.+(t|j)s?(x)`
     // Pattern that will be appended to searched directories.
     // It will match any .js, .jsx, .ts, and .tsx files, that are not
@@ -155,10 +141,10 @@ class Runner {
 
     let parser = new FileParser({ parentSpan: this.parentSpan })
 
-    return await parser.parseFiles(files, messages)
+    return await parser.parseFiles(files, addError)
   }
 
-  async write(nodes: Map<string, DocumentNode>, messages): Promise<Queries> {
+  async write(nodes: Map<string, DocumentNode>, addError): Promise<Queries> {
     const compiledNodes: Queries = new Map()
     const namePathMap = new Map()
     const nameDefMap = new Map()
@@ -170,7 +156,7 @@ class Runner {
       let errors = validate(this.schema, doc, validationRules)
 
       if (errors && errors.length) {
-        messages.push(
+        addError(
           ...errors.map(error => {
             const location = {
               start: locInGraphQlToLocInFile(
@@ -238,7 +224,7 @@ class Runner {
       })
 
       const filePath = namePathMap.get(docName)
-      messages.push(errorParser({ message, filePath }))
+      addError(errorParser({ message, filePath }))
 
       return false
     }
@@ -266,7 +252,7 @@ class Runner {
       if (compiledNodes.has(filePath)) {
         let otherNode = compiledNodes.get(filePath)
 
-        messages.push(
+        addError(
           multipleRootQueriesError(
             filePath,
             nameDefMap.get(name),
@@ -305,7 +291,7 @@ class Runner {
           .filter(f => f.score < 10)
           .sort((a, b) => a.score > b.score)[0]?.fragment
 
-        report.panicOnBuild({
+        addError({
           id: `85908`,
           filePath,
           context: { fragmentName, closestFragment },
@@ -376,7 +362,23 @@ export default async function compile({ parentSpan } = {}): Promise<
     { parentSpan: activity.span }
   )
 
-  const queries = await runner.compileAll(activity)
+  const errors = []
+  const addError = errors.push.bind(errors)
+
+  const queries = await runner.compileAll(addError)
+
+  if (errors.length !== 0) {
+    const structuredErrors = activity.panicOnBuild(errors)
+    if (process.env.gatsby_executing_command === `develop`) {
+      websocketManager.emitError(overlayErrorID, structuredErrors)
+    }
+  } else {
+    activity.end()
+    if (process.env.gatsby_executing_command === `develop`) {
+      // emitError with `null` as 2nd param to clear browser error overlay
+      websocketManager.emitError(overlayErrorID, null)
+    }
+  }
 
   return queries
 }

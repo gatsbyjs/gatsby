@@ -43,11 +43,7 @@ Perhaps the variable name has a typo?
 Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
   )
 
-async function parseToAst(
-  filePath,
-  fileStr,
-  { parentSpan, messages = [] } = {}
-) {
+async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   let ast
 
   // Preprocess and attempt to parse source; return an AST if we can, log an
@@ -71,7 +67,7 @@ async function parseToAst(
       }
     }
     if (ast === undefined) {
-      messages.push({
+      addError({
         id: `85912`,
         filePath,
         context: {
@@ -93,7 +89,7 @@ async function parseToAst(
         error,
       })
 
-      messages.push({
+      addError({
         id: `85911`,
         filePath,
         context: {
@@ -118,10 +114,10 @@ const warnForGlobalTag = file =>
 async function findGraphQLTags(
   file,
   text,
-  { parentSpan, messages } = {}
+  { parentSpan, addError } = {}
 ): Promise<Array<DefinitionNode>> {
   return new Promise((resolve, reject) => {
-    parseToAst(file, text, { parentSpan, messages })
+    parseToAst(file, text, { parentSpan, addError })
       .then(ast => {
         let queries = []
         if (!ast) {
@@ -344,12 +340,12 @@ export default class FileParser {
     this.parentSpan = parentSpan
   }
 
-  async parseFile(file: string, messages = []): Promise<?DocumentNode> {
+  async parseFile(file: string, addError): Promise<?DocumentNode> {
     let text
     try {
       text = await fs.readFile(file, `utf8`)
     } catch (err) {
-      messages.push({
+      addError({
         id: `85913`,
         filePath: file,
         context: {
@@ -376,7 +372,7 @@ export default class FileParser {
         cache[hash] ||
         (cache[hash] = await findGraphQLTags(file, text, {
           parentSpan: this.parentSpan,
-          messages,
+          addError,
         }))
 
       // If any AST definitions were extracted, report success.
@@ -459,7 +455,7 @@ export default class FileParser {
         }
       }
 
-      messages.push({
+      addError({
         ...structuredError,
         filePath: file,
       })
@@ -473,13 +469,13 @@ export default class FileParser {
 
   async parseFiles(
     files: Array<string>,
-    messages
+    addError
   ): Promise<Map<string, DocumentNode>> {
     const documents = new Map()
 
     return Promise.all(
       files.map(file =>
-        this.parseFile(file, messages).then(doc => {
+        this.parseFile(file, addError).then(doc => {
           if (!doc) return
           documents.set(file, doc)
         })
