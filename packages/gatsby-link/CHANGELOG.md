@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.19...gatsby-link@2.2.20) (2019-10-10)
+
+### Bug Fixes
+
+- update dependency @types/reach\_\_router to ^1.2.6 ([#18405](https://github.com/gatsbyjs/gatsby/issues/18405)) ([6c37aa3](https://github.com/gatsbyjs/gatsby/commit/6c37aa3))
+
 ## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.18...gatsby-link@2.2.19) (2019-10-09)
 
 **Note:** Version bump only for package gatsby-link

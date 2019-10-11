@@ -379,7 +379,7 @@
 - name: Adaltas
   type: company
   description: >-
-    Adaltas is a team of consultants with a focus on Open Source, Big Data and 
+    Adaltas is a team of consultants with a focus on Open Source, Big Data and
     distributed systems based in France, Canada and Morocco. Our core expertises include
     Data Engineering, Data Science, DevOps, Cloud Computing and Web technologies.
   location: France
@@ -413,6 +413,14 @@
   image: images/desarol.png
   for_hire: true
   hiring: true
+- name: AJonP
+  type: company
+  image: images/ajonp.png
+  description: >-
+    A Community of developers, creating resources for all to use!
+  location: United States
+  website: https://ajonp.com
+  github: https://github.com/AJONPLLC
 - name: Arvind Kumar
   type: individual
   description: >-
