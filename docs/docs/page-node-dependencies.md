@@ -2,6 +2,15 @@
 title: Page -> Node Dependency Tracking
 ---
 
+> This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
+>
+> Outdated areas are:
+>
+> - `createPageDependency` is not the only way to mutate dependencies now
+> - other helpers exist now
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 In almost every GraphQL Resolver, you'll see the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L788), or [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/index.js#L198) functions. These are responsible for recording which nodes are depended on by which pages. In `develop` mode, if a node's content changes, we re-run pages whose queries depend on that node. This is one of the things that makes `develop` so awesome.
 
 ## How dependencies are recorded
