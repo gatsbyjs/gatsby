@@ -24,6 +24,11 @@ for (let b in bp) {
   breakpointsTokens.push(bp[b])
 }
 
+// remove the first breakpoint, `xxs: 0`
+// this made sense for styled-system and using an object
+// to define breakpoints, but not here
+breakpointsTokens.splice(0, 1)
+
 let fontsTokens = {}
 for (let fontFamily in f) {
   fontsTokens[fontFamily] = f[fontFamily].join(`, `)
