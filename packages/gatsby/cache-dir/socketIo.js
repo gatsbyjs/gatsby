@@ -8,21 +8,21 @@ let socket = null
 let staticQueryData = {}
 let pageQueryData = {}
 let isInitialized = false
-// let url = null
-// let socketOptions = {}
+let url = null
+let socketOptions = {}
 
-// const setUrl = givenUrl => {
-//   url = givenUrl
-// }
+const setUrl = givenUrl => {
+  url = givenUrl
+}
 
-// const setSocketOptions = givenOptions => {
-//   socketOptions = givenOptions
-// }
+const setSocketOptions = givenOptions => {
+  socketOptions = givenOptions
+}
 
-// apiRunner(`onSocketInit`, {
-//   setUrl,
-//   setSocketOptions,
-// })
+apiRunner(`onSocketInit`, {
+  setUrl,
+  setSocketOptions,
+})
 
 export const getStaticQueryData = () => staticQueryData
 export const getPageQueryData = () => pageQueryData
@@ -34,12 +34,11 @@ export default function socketIo() {
       // Try to initialize web socket if we didn't do it already
       try {
         // eslint-disable-next-line no-undef
-        // if (!url) {
-        //   socket = io()
-        // } else {
-        //   socket = io(url, socketOptions)
-        // }
-        socket = io()
+        if (!url) {
+          socket = io()
+        } else {
+          socket = io(url, socketOptions)
+        }
 
         const didDataChange = (msg, queryData) => {
           const id =
