@@ -8,71 +8,78 @@ module.exports = (
   },
   action
 ) => {
-  if (action.type === Actions.SetStatus) {
-    state = {
-      ...state,
-      status: action.payload,
-    }
-  } else if (action.type === Actions.Log) {
-    if (!action.payload.text) {
-      // set empty character to fix ink
-      action.payload.text = `\u2800`
+  switch (action.type) {
+    case Actions.SetStatus: {
+      return {
+        ...state,
+        status: action.payload,
+      }
     }
 
-    state = {
-      ...state,
-      messages: [...state.messages, action.payload],
-    }
-  } else if (action.type === Actions.StartActivity) {
-    const { id } = action.payload
-    state = {
-      ...state,
-      activities: {
-        ...state.activities,
-        [id]: action.payload,
-      },
-    }
-  } else if (
-    action.type === Actions.UpdateActivity ||
-    action.type === Actions.PendingActivity
-  ) {
-    const { id, ...rest } = action.payload
-    const activity = state.activities[id]
+    case Actions.Log: {
+      if (!action.payload.text) {
+        // set empty character to fix ink
+        action.payload.text = `\u2800`
+      }
 
-    state = {
-      ...state,
-      activities: {
-        ...state.activities,
-        [id]: {
-          ...activity,
-          ...rest,
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
+      }
+    }
+
+    case Actions.StartActivity: {
+      const { id } = action.payload
+      return {
+        ...state,
+        activities: {
+          ...state.activities,
+          [id]: action.payload,
         },
-      },
-    }
-  } else if (
-    action.type === Actions.EndActivity ||
-    action.type === Actions.CancelActivity
-  ) {
-    const { id, status, duration } = action.payload
-    const activity = state.activities[id]
-    if (!activity) {
-      return state
+      }
     }
 
-    const activities = { ...state.activities }
-    activities[id] = {
-      ...activity,
-      status,
-      duration,
+    case Actions.UpdateActivity:
+    case Actions.PendingActivity: {
+      const { id, ...rest } = action.payload
+      const activity = state.activities[id]
+
+      return {
+        ...state,
+        activities: {
+          ...state.activities,
+          [id]: {
+            ...activity,
+            ...rest,
+          },
+        },
+      }
     }
 
-    state = {
-      ...state,
-      activities,
+    case Actions.EndActivity:
+    case Actions.CancelActivity: {
+      const { id, status, duration } = action.payload
+      const activity = state.activities[id]
+      if (!activity) {
+        return state
+      }
+
+      const activities = { ...state.activities }
+      activities[id] = {
+        ...activity,
+        status,
+        duration,
+      }
+
+      return {
+        ...state,
+        activities,
+      }
     }
-  } else if (action.type === Actions.SetLogs) {
-    state = action.payload
+
+    case Actions.SetLogs: {
+      return action.payload
+    }
   }
-
   return state
 }
