@@ -362,6 +362,7 @@ After you've made a query, you can pass additional options to the gatsby-image c
 | `placeholderStyle`     | `object`            | Spread into the default styles of the placeholder `img` element                                                               |
 | `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                       |
 | `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string.   |
+| `onClick` | `func` | Passed to the rendered HTML `img` element |
 | `onLoad`               | `func`              | A callback that is called when the full-size image has loaded.                                                                |
 | `onStartLoad`          | `func`              | A callback that is called when the full-size image starts loading, it gets the parameter `{ wasCached: <boolean> }` provided. |
 | `onError`              | `func`              | A callback that is called when the image fails to load.                                                                       |
