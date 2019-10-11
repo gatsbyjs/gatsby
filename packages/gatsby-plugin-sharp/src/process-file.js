@@ -7,7 +7,7 @@ const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
-const { cpuCoreCount } = require(`gatsby-core-utils`)
+const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
 const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
@@ -41,11 +41,6 @@ const argsWhitelist = [
   `fit`,
   `background`,
 ]
-
-let createContentDigest
-exports.setCreateContentDigestFunction = createContentDigestFunction => {
-  createContentDigest = createContentDigestFunction
-}
 
 /**
  * @typedef {Object} TransformArgs

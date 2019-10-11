@@ -7,10 +7,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 
 const { scheduleJob } = require(`./scheduler`)
-const {
-  createArgsDigest,
-  setCreateContentDigestFunction,
-} = require(`./process-file`)
+const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
@@ -41,10 +38,6 @@ const duotone = require(`./duotone`)
 let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
-}
-
-exports.setCreateContentDigestFunction = createContentDigestFunction => {
-  setCreateContentDigestFunction(createContentDigestFunction)
 }
 
 // We set the queue to a Map instead of an array to easily search in onCreateDevServer Api hook

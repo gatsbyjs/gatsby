@@ -1,5 +1,4 @@
 const path = require(`path`)
-const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const sharp = require(`sharp`)
 jest.mock(`../scheduler`)
@@ -19,7 +18,6 @@ const {
   queueImageResizing,
   getImageSize,
   stats,
-  setCreateContentDigestFunction,
 } = require(`../`)
 const { scheduleJob } = require(`../scheduler`)
 scheduleJob.mockResolvedValue(Promise.resolve())
@@ -55,15 +53,6 @@ describe(`gatsby-plugin-sharp`, () => {
     const regEx = /[0-9]+w/g
     return srcSet.match(regEx)
   }
-
-  beforeAll(() => {
-    setCreateContentDigestFunction(options =>
-      crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(options))
-        .digest(`hex`)
-    )
-  })
 
   describe(`queueImageResizing`, () => {
     it(`should round height when auto-calculated`, () => {

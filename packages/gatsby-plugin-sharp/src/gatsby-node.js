@@ -1,6 +1,5 @@
 const {
   setBoundActionCreators,
-  setCreateContentDigestFunction,
   // queue: jobQueue,
   // reportError,
 } = require(`./index`)
@@ -52,8 +51,7 @@ const { setPluginOptions } = require(`./plugin-options`)
 //       reportError(message || err.message, err, reporter)
 //     })
 
-exports.onPreBootstrap = ({ actions, createContentDigest }, pluginOptions) => {
-  setCreateContentDigestFunction(createContentDigest)
+exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
   // normalizedOptions = setPluginOptions(pluginOptions)
