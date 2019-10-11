@@ -32,7 +32,7 @@ The reason for this was that I recently switched to [Segment](https://segment.co
 
 The SEO performance post included a tip from Dave of [ToDesktop](https://www.todesktop.com/) who has similar problems. His tip: Prevent loading the scripts until after a user has scrolled, along with some timeout to prevent [scroll jank](http://jankfree.org/).
 
-This way, your "Time to interactive" won't take these scripts into account, and the user won't need your support widget in the first second of a page anyway, so this works well for everyone. There is a downside: your [bounce rate](https://support.google.com/analytics/answer/1009409?hl=en) will become less accurate as the people that open your site, don't scroll and leave will never show up in your analytics.
+By adding a timeout, your "Time to interactive" won't take these scripts into account. The user won't need your support widget in the first second of a page anyway, so this works well for everyone.. With any upside, there is always a downside: your [bounce rate](https://support.google.com/analytics/answer/1009409?hl=en) will become less accurate as the people that open your site, don't scroll and leave will never show up in your analytics.
 
 Wanting to improve the performance rating of my own site, I forked the [gatsby-plugin-segment-js](https://github.com/Kilian/gatsby-plugin-segment-js) repository and set to work.
 
