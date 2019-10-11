@@ -296,31 +296,28 @@ const AppLayerContent = ({ index }) => (
   <LayerContentWrapper key={`content-wrapper${index}`} index={index}>
     <ExampleWrapper>
       <div
-        css={{
+        sx={{
+          border: t => `1px solid ${t.colors.ui.border}`,
+          borderRadius: 2,
           display: `flex`,
           flexDirection: `column`,
           height: `100%`,
+          background: `ui.background`,
         }}
       >
         <div
           sx={{
-            padding: 2,
-            backgroundColor: `grey.10`,
-            borderTopRightRadius: radii[2],
-            borderTopLeftRadius: radii[2],
-            border: t => `1px solid ${t.colors.ui.border.subtle}`,
+            p: 3,
+            borderBottom: t => `1px solid ${t.colors.ui.border}`,
           }}
         >
           Home
         </div>
         <div
           sx={{
-            p: 2,
-            borderBottomRightRadius: radii[2],
-            borderBottomLeftRadius: radii[2],
-            backgroundColor: `white`,
-            border: t => `1px solid ${t.colors.ui.border.subtle}`,
+            p: 3,
             height: `100%`,
+            background: `ui.background`,
           }}
         >
           Gatsby tips

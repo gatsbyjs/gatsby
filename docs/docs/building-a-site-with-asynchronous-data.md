@@ -1,5 +1,5 @@
 ---
-title: Building a site with asynchronous data
+title: Building a Site with Asynchronous Data
 ---
 
 This is a stub. Help our community expand it.
