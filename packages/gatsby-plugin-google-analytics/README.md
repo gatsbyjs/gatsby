@@ -156,7 +156,7 @@ To use it, import the package and call the event within your components and busi
 
 ```jsx
 import React
-import { CustomTrackingEvent } from 'gatsby-plugin-google-analytics'
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
 
 export default () => {
   <div>
