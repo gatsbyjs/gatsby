@@ -1,19 +1,19 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
-import { space, sizes, mediaQueries } from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const Container = ({ children, withSidebar = true, overrideCSS }) => (
   <div
-    css={{
+    sx={{
       maxWidth: withSidebar
-        ? sizes.mainContentWidth.withSidebar
-        : sizes.mainContentWidth.default,
-      margin: `0 auto`,
-      padding: space[6],
+        ? `mainContentWidth.withSidebar`
+        : `mainContentWidth.default`,
+      mx: `auto`,
+      p: 6,
       position: `relative`,
       [mediaQueries.lg]: {
-        paddingTop: space[9],
-        paddingBottom: space[9],
+        py: 9,
       },
       ...overrideCSS,
     }}

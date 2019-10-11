@@ -1,61 +1,45 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { rhythm } from "../utils/typography"
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-  letterSpacings,
-  fonts,
-} from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Button from "./button"
 
 const MastheadContent = () => (
   <div
     className="masthead-content"
-    css={{
+    sx={{
       margin: `0 auto`,
-      paddingBottom: space[9],
-      paddingTop: space[9],
-      paddingLeft: space[8],
-      paddingRight: space[8],
+      px: 8,
+      py: 9,
       textAlign: `center`,
-      [mediaQueries.md]: {
-        paddingBottom: rhythm(3),
-        paddingTop: rhythm(3),
-      },
+      [mediaQueries.md]: { py: 12 },
     }}
   >
     <h1
-      css={{
-        color: colors.gatsby,
-        fontSize: `calc(12px + 2vh + 3vw)`,
-        letterSpacing: letterSpacings.tight,
-        lineHeight: lineHeights.solid,
-        margin: `0 auto ${space[6]}`,
+      sx={{
+        fontSize: `calc(16px + 1vh + 2.25vw)`,
+        letterSpacing: `tight`,
+        lineHeight: `solid`,
         maxWidth: `15em`,
-        WebkitFontSmoothing: `antialiased`,
+        mb: 6,
+        mt: 0,
+        mx: `auto`,
       }}
     >
       Fast in every way that&nbsp;matters
     </h1>
     <p
-      css={{
-        fontFamily: fonts.header,
-        fontSize: fontSizes[4],
-        lineHeight: lineHeights.dense,
-        maxWidth: rhythm(30),
-        margin: `0 auto ${space[10]}`,
-        WebkitFontSmoothing: `antialiased`,
-        [mediaQueries.sm]: {
-          fontSize: fontSizes[5],
-        },
-        [mediaQueries.lg]: {
-          fontSize: fontSizes[6],
-        },
+      sx={{
+        color: `text`,
+        fontFamily: `header`,
+        fontSize: 4,
+        lineHeight: `dense`,
+        maxWidth: `45rem`,
+        mb: 10,
+        mt: 0,
+        mx: `auto`,
+        [mediaQueries.sm]: { fontSize: 5 },
       }}
     >
       Gatsby is a free and open source framework based on React that helps
@@ -64,7 +48,7 @@ const MastheadContent = () => (
       <strong>apps</strong>
     </p>
     <Button
-      large
+      variant="large"
       to="/docs/"
       tracking="MasterHead -> Get Started"
       icon={<ArrowForwardIcon />}
