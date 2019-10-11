@@ -4066,10 +4066,10 @@
   description: Project boilerplate of a blog app. The starter was built using Gatsby and Typescript.
   tags:
     - Markdown
-    - TypeScript
+    - Language:TypeScript
     - SEO
     - PWA
-    - SASS
+    - Styling:SCSS
   features:
     - A complete responsive theme built wiss Scss
     - Easy editable posts in Markdown files
