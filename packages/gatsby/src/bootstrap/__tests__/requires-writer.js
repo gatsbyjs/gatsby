@@ -183,6 +183,12 @@ describe(`requires-writer`, () => {
           path: `/some-page`,
         },
         {
+          path: `/mp1/mp2`,
+        },
+        {
+          path: `/mp1/mp2/hello`,
+        },
+        {
           path: `/mp1`,
           matchPath: `/mp1/*`,
         },
@@ -202,6 +208,8 @@ describe(`requires-writer`, () => {
       })
 
       expect(matchPaths.map(p => p.path)).toEqual([
+        `/mp1/mp2/hello`,
+        `/mp1/mp2`,
         `/some-page`,
         `/`,
         `/mp4`,

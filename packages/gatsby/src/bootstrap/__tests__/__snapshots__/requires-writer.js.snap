@@ -3,6 +3,14 @@
 exports[`requires-writer matchPath have static pages first and prefer more specific matchPaths 1`] = `
 Array [
   Object {
+    "matchPath": "/mp1/mp2/hello",
+    "path": "/mp1/mp2/hello",
+  },
+  Object {
+    "matchPath": "/mp1/mp2",
+    "path": "/mp1/mp2",
+  },
+  Object {
     "matchPath": "/some-page",
     "path": "/some-page",
   },
