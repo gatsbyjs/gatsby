@@ -20,7 +20,7 @@ The high level process is:
 
 ## Webpack
 
-For the first step, Use webpack to build an optimized Node.js bundle. The entry point for this is called `static-entry.js`
+For the first step, use webpack to build an optimized Node.js bundle. The entry point for this is called `static-entry.js`
 
 ## static-entry.js
 
