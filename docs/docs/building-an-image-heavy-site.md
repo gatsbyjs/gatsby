@@ -1,5 +1,5 @@
 ---
-title: Building an image heavy site
+title: Building an Image Heavy Site
 issue: https://github.com/gatsbyjs/gatsby/issues/18423
 ---
 
