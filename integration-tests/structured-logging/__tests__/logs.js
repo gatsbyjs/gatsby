@@ -17,7 +17,6 @@ describe(`Activity`, () => {
 
   beforeAll(async done => {
     gatsbyProcess = spawn(gatsbyBin, [`develop`], {
-      // stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       env: {
         ...process.env,

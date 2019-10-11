@@ -15,6 +15,7 @@ module.exports = (
     }
   } else if (action.type === Actions.Log) {
     if (!action.payload.text) {
+      // set empty character to fix ink
       action.payload.text = `\u2800`
     }
 

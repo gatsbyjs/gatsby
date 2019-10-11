@@ -96,9 +96,7 @@ const createHash = (matchPaths, components) =>
 
 // Write out pages information.
 const writeAll = async state => {
-  // reporter.activityTimer()
   // console.log(`on requiresWriter progress`)
-  // reporter.stateUpdate(`requiresWriter`, `IN_PROGRESS`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
@@ -108,7 +106,6 @@ const writeAll = async state => {
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    // reporter.stateUpdate(`requiresWriter`, `SUCCESS`)
     // console.log(`on requiresWriter END1`)
     return false
   }
