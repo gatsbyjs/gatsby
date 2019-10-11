@@ -89,7 +89,7 @@ my-blog
 
 In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any file placed in that directory that corresponds to a file in the blog theme will completely shadow the theme.
 
-> 💡 The name of the directory (here `gatsby-theme-blog`) must exactly mirror the name of the name of the published theme package, which in this case is [`gatsby-theme-blog`](https://www.npmjs.com/package/gatsby-theme-blog).
+> 💡 The name of the directory (here `gatsby-theme-blog`) must exactly mirror the name of the published theme package, which in this case is [`gatsby-theme-blog`](https://www.npmjs.com/package/gatsby-theme-blog).
 
 Open up the `bio-content.js` file and make some content edits:
 

@@ -20,7 +20,7 @@ However, the original design allowed some uncertainties to still creep in. In ad
 - Resolvers and arguments of fields like Date and File was determined by inferred data
 - There was no easy way to use arguments/resolvers to override the above
 - Inference was run even when `@dontInfer` flag was on
-- There was no way to control inference outside of SDL, eg in Type Builders
+- There was no way to control inference outside of SDL, e.g. in Type Builders
 
 Therefore we are excited to announce some changes in how we perform inference. In addition, we are deprecating some of the features introduced in 2.2.0 and will remove them in Gatsby v3.
 

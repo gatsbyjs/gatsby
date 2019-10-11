@@ -21,7 +21,8 @@ const {
 
 const logger = createLogger(LOG_LEVEL)
 
-const endpoint = path => `http://${HOST}:${PORT}${path}`
+const devServer = `http://${HOST}:${PORT}`
+const endpoint = path => `${devServer}${path}`
 
 export async function main() {
   logger.newline()
@@ -65,8 +66,16 @@ export async function main() {
       if (!Object.prototype.hasOwnProperty.call(cache.assets, pathname)) {
         cache.assets[pathname] = Object.create(null)
       }
-      cache.assets[pathname][req.url()] = true
-      bar.interrupt(green(ellipses(` found ${req.url()}`, 80)))
+
+      const isSelfHosted = req.url().startsWith(devServer)
+
+      const fontUrl = isSelfHosted
+        ? req.url().slice(devServer.length)
+        : req.url()
+
+      cache.assets[pathname][fontUrl] = true
+
+      bar.interrupt(green(ellipses(` found ${fontUrl}`, 80)))
     }
   })
 
