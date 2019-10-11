@@ -22,7 +22,7 @@ The first thing it does is use [babylon-traverse](https://babeljs.io/docs/en/nex
 1. It informs us of any malformed queries, which are promptly reported back to the user.
 1. It builds a tree of queries and fragments they depend on. And outputs a single optimized query string with the fragments.
 
-After this step, you will have a map of file paths (of site files with queries in them) to Query Objects, which contain the raw optimized query text, as well as other metadata such as the component path and page `jsonName`. The following diagram shows the flow involved during query compilation
+After this step, Gatsby will have a map of file paths (of site files with queries in them) to Query Objects, which contain the raw optimized query text, as well as other metadata such as the component path and page `jsonName`. The following diagram shows the flow involved during query compilation
 
 ```dot
 digraph {
