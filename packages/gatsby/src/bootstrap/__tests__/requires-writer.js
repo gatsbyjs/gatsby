@@ -166,7 +166,7 @@ describe(`requires-writer`, () => {
       expect(matchPaths).toMatchSnapshot()
     })
 
-    it(`should prefer more specific matchPaths`, async () => {
+    it(`have static pages first and prefer more specific matchPaths`, async () => {
       const pages = generatePagesState([
         {
           path: `/`,
@@ -178,6 +178,9 @@ describe(`requires-writer`, () => {
         {
           path: `/mp4`,
           matchPath: `/mp1/mp2/mp3/mp4/*`,
+        },
+        {
+          path: `/some-page`,
         },
         {
           path: `/mp1`,
@@ -197,13 +200,14 @@ describe(`requires-writer`, () => {
         pages,
         program,
       })
-      console.log(matchPaths.map(p => p.path))
+
       expect(matchPaths.map(p => p.path)).toEqual([
+        `/some-page`,
+        `/`,
         `/mp4`,
         `/mp3`,
         `/mp2`,
         `/mp1`,
-        `/`,
         `/custom-404`,
       ])
       expect(matchPaths).toMatchSnapshot()
