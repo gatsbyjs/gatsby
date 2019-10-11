@@ -18,7 +18,7 @@ The metric this article focuses on is "[Time to interactive](https://developers.
 
 These together might mean that you have a website that _feels_ fast under some circumstances, but Google will give you a penalty because it's slow.
 
-To get an overview of how your site scores, you can use Lighthouse, either in your Chrome developer tools by going to the "Audits" tab, or by going to [web.dev](https://web.dev/measure). This will test your site on a number of different metrics, such as accessibility, SEO (Search Engine Optimization), and best practices, but the one we're interested in is "performance".
+To get an overview of how your site scores, you can use Lighthouse, either in your Chrome developer tools by going to the "Audits" tab, or by going to [web.dev](https://web.dev/measure). Lighthouse will test your site on a number of different metrics, such as accessibility, SEO (Search Engine Optimization), and best practices, but the one we're interested in is "performance".
 
 ## The performance metric
 
