@@ -1,0 +1,43 @@
+{
+  "name": "gatsby-theme-guidelines",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "develop": "gatsby develop"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.15.36",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
+  },
+  "devDependencies": {
+    "gatsby": "^2.15.36",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
+    "@styled-system/prop-types": "^5.1.2",
+    "@styled-system/should-forward-prop": "^5.1.2",
+    "@styled-system/theme-get": "^5.1.2",
+    "color-blend": "^2.0.7",
+    "gatsby-image": "^2.2.27",
+    "gatsby-plugin-theme-ui": "^0.2.43",
+    "gatsby-source-filesystem": "^2.1.31",
+    "gatsby-transformer-yaml": "^2.2.13",
+    "hex-rgb": "^4.1.0",
+    "lodash-es": "^4.17.15",
+    "range": "^0.0.3",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-helmet": "^5.2.1",
+    "react-icons": "^2.2.7",
+    "react-modal": "^3.10.1",
+    "styled-system": "^5.1.2",
+    "theme-ui": "^0.2.44",
+    "wcag-contrast": "^2.1.1"
+  }
+}

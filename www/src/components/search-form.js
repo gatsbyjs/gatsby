@@ -7,10 +7,10 @@ import { space } from "../gatsby-plugin-theme-ui"
 import SearchIcon from "./search-icon"
 import { themedInput } from "../utils/styles"
 
+import { Global, css } from "@emotion/core"
+
 const loadJS = () => import(`./docsearch.min.js`)
 let loadedJs = false
-
-import { Global, css } from "@emotion/core"
 
 // Override default search result styles (docsearch.css)
 const searchDropdownOffsetTop = space[9]
