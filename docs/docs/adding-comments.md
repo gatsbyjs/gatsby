@@ -1,5 +1,5 @@
 ---
-title: Adding comments
+title: Adding Comments
 ---
 
 If you're using Gatsby to run a blog and you've started adding some content to it, the next thing to think about is how to increase engagement among your visitors. A great way to do that is to allow them to ask questions and express their views on what you've written. This will make your blog seem much more lively to anyone visiting it.
@@ -8,7 +8,7 @@ There are many options out there for adding comment functionality, several of th
 
 - [Disqus](https://disqus.com)
 - [Commento](https://commento.io)
-- [Facebook comments](https://www.npmjs.com/package/react-facebook)
+- [Facebook Comments](https://www.npmjs.com/package/react-facebook)
 - [Staticman](https://staticman.net)
 - [JustComments](https://just-comments.com) \([official plugin for Gatsby](https://www.gatsbyjs.org/packages/gatsby-plugin-just-comments/)\)
 - [TalkYard](https://www.talkyard.io)
@@ -20,11 +20,11 @@ You can also [roll your own comment system](/blog/2019-08-27-roll-your-own-comme
 
 In this guide, we'll show you how to implement Disqus on your blog as it has a number of nice features.
 
-- It is low maintenance, meaning [moderating your comments and maintaining your forum](https://help.disqus.com/moderation/moderating-101) is easy.
+- It is low maintenance, meaning [moderating your comments and maintaining your forum](https://help.disqus.com/moderation/moderating-101) less hassle.
 - It provides official [React support](https://github.com/disqus/disqus-react).
 - It offers a [generous free tier](https://disqus.com/pricing).
 - It [seems to be by far the most widely used service](https://www.datanyze.com/market-share/comment-systems/disqus-market-share).
-- It’s easy to comment: Disqus has a large existing user base and the onboarding experience for new users is fast. You can register with your Google, Facebook or Twitter account and users can easily share the comments they write through those channels.
+- It’s easier to comment: Disqus has a large existing user base and the onboarding experience for new users is fast. You can register with your Google, Facebook or Twitter account and users can more seamlessly share the comments they write through those channels.
 - The Disqus UI has a distinct but unobtrusive look that many users will recognize and trust.
 - All Disqus components are lazy-loaded, meaning they won't negatively impact the load time of your posts.
 

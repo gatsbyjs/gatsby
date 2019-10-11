@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import MdLaunch from "react-icons/lib/md/launch"
 
@@ -5,13 +7,12 @@ import { Box, Flex, Link, Text } from "../system"
 import BoxWithBorder from "../box-with-border"
 import { getTextColor } from "../../../utils/guidelines/color"
 import { SrOnly } from "../typography"
-import { colors } from "../../../utils/presets"
 
 const ColorValue = ({ label, inverted, value, href }) => (
   <Box mt={4} px={2} css={{ flexShrink: 0, flexBase: `50%` }}>
     <Text
       color={inverted ? `whiteFade.70` : `blackFade.70`}
-      fontFamily="header"
+      fontFamily="heading"
       fontSize={1}
     >
       {label}
@@ -24,22 +25,21 @@ const ColorValue = ({ label, inverted, value, href }) => (
       >
         {value}
         {href && (
-          <>
+          <React.Fragment>
             {` `}
             <Link
               href={href}
-              css={{
+              sx={{
                 "&&": {
-                  // couldn't get `themeGet` to work here
                   border: 0,
-                  color: inverted ? colors.whiteFade[80] : colors.blackFade[80],
+                  color: inverted ? `whiteFade.80` : `blackFade.80`,
                 },
               }}
             >
               <MdLaunch style={{ marginLeft: `0.25rem` }} />
               <SrOnly>Pantone Matching System reference</SrOnly>
             </Link>
-          </>
+          </React.Fragment>
         )}
       </Text>
     </Flex>
@@ -60,10 +60,10 @@ const ColorSwatch = ({ color, ...rest }) => {
       withBorder={!inverted}
     >
       <Text
-        fontFamily="header"
+        fontFamily="heading"
         fontSize={4}
         px={2}
-        fontWeight={1}
+        fontWeight="heading"
         color={textColor}
       >
         {color.name}

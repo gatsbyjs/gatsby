@@ -25,13 +25,17 @@ To address missing images, check the doc or tutorial source [in the Gatsby repo]
 
 If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
 
+Keep in mind that some links in here are already correct because they work on gatsbyjs.org. While it would be nice to links in documentation to work on GitHub, have them working on gatsbyjs.org is a higher priority!
+
 ## Headings
 
 Docs with frontmatter metadata at the top including a `title` will automatically receive an `<h1>` heading in the rendered page, and it should be the only one. Additional headings in docs content should start with `<h2>`, denoted by `##` in Markdown.
 
 For the purposes of an accessible document outline, content headings should go in order from h2-h4 (`####`) until all levels have been established. This will ensure the Gatsby docs have a content hierarchy that works well for users of assistive technology. Read more about the importance of [headings and semantic structure in HTML](https://webaim.org/techniques/semanticstructure/).
 
-## Modifying markdown files
+## Modifying Markdown files
+
+> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/mdx/markdown-syntax/)!
 
 1. If you want to add/modify any Gatsby documentation, go to the
    [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and

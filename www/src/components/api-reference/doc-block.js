@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import styled from "@emotion/styled"
 import { css } from "@emotion/core"
@@ -14,8 +16,6 @@ import {
 import ReturnBlock from "./returns"
 import { Header, LinkBox } from "./utils"
 import { scale } from "../../utils/typography"
-import { fonts, space, colors } from "../../utils/presets"
-import { linkStyles } from "../../utils/styles"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const Optional = styled(`span`)`
@@ -30,13 +30,13 @@ const Deprecated = ({ definition }) => {
   if (definition.deprecated && definition.deprecated.childMdx) {
     return (
       <div
-        css={css`
-          p:before {
-            color: #e8bd36;
-            content: "(deprecated) ";
-            font-family: ${fonts.header};
-          }
-        `}
+        sx={{
+          "p:before": {
+            color: `#e8bd36`,
+            content: `(deprecated) `,
+            fontFamily: `header`,
+          },
+        }}
       >
         <MDXRenderer>{definition.deprecated.childMdx.body}</MDXRenderer>
       </div>
@@ -50,14 +50,14 @@ const APILink = ({ definition, relativeFilePath }) => {
   if (definition.codeLocation && relativeFilePath) {
     return (
       <a
-        css={{
-          ...linkStyles,
+        sx={{
+          variant: `links.muted`,
           display: `inline-flex !important`,
         }}
         href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${relativeFilePath}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
-        <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+        <GithubIcon focusable="false" sx={{ mr: 2 }} />
         <span>Source</span>
       </a>
     )
@@ -70,14 +70,14 @@ const APILink = ({ definition, relativeFilePath }) => {
   ) {
     return (
       <a
-        css={{
-          ...linkStyles,
+        sx={{
+          variant: `links.muted`,
           display: `inline-flex !important`,
         }}
         href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${definition.codeLocation.file}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
       >
-        <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+        <GithubIcon focusable="false" sx={{ mr: 2 }} />
         <span>Source</span>
       </a>
     )
@@ -90,18 +90,18 @@ const APILink = ({ definition, relativeFilePath }) => {
   ) {
     return (
       <div
-        css={{
-          ...linkStyles,
+        sx={{
+          variant: `links.muted`,
           "&&:hover": {
-            color: colors.text.secondary,
+            color: `textMuted`,
           },
           display: `inline-flex !important`,
           alignItems: `center`,
         }}
       >
-        <GithubIcon focusable="false" style={{ marginRight: space[2] }} />
+        <GithubIcon focusable="false" sx={{ mr: 2 }} />
         <span>Source</span>
-        <div css={{ marginLeft: space[2] }}>
+        <div sx={{ ml: 3 }}>
           {definition.codeLocation.map((loc, index) => (
             <LinkBox
               key={`${loc.file}${loc.start.line}-${loc.end.line}`}
@@ -128,10 +128,10 @@ const AvailableIn = ({ definition }) => {
           <a
             key={api}
             href={`/docs/node-apis/#${api}`}
-            css={linkStyles}
-            style={{
+            sx={{
+              variant: `links.muted`,
               display: `inline-block`,
-              marginLeft: space[2],
+              ml: 2,
             }}
           >
             {api}
@@ -204,7 +204,7 @@ const DocBlock = ({
       }}
     >
       <Header level={level}>
-        <div css={{ marginRight: space[3], display: `inline-block` }}>
+        <div sx={{ mr: 3, display: `inline-block` }}>
           {titleElement}
           {showSignature && (
             <React.Fragment>

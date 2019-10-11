@@ -109,7 +109,7 @@ npm run upgrade-interactive
 
 Aside from some specific cases, such as [Gatsby's dropping of support for Node 6](/blog/2019-06-18-dropping-support-for-node-6/), upgrading for minor or patch releases should not require you to make changes to your code. It is recommended to run your suite of tests (in case you have one) after upgrading Gatsby or its dependencies.
 
-In case you get stuck in dependencies conflicts, you can use the [npm-force-resolutinos package](https://www.npmjs.com/package/npm-force-resolutions?activeTab=readme) on npm.
+In case you get stuck in dependencies conflicts, you can use the [npm-force-resolutions package](https://www.npmjs.com/package/npm-force-resolutions?activeTab=readme) on npm.
 
 ## Related content
 

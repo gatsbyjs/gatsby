@@ -10,7 +10,7 @@ Additionally - but very recommended - you can add CloudFront, a global CDN to ma
 Create a [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create a access id and secret for it.
 You'll need these in the next step.
 
-Install the AWS CLI and configure it (ensure python is installed before running these commands)
+Install the AWS CLI and configure it (ensure Python is installed before running these commands)
 
 ```shell
 pip install awscli
