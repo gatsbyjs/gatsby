@@ -148,7 +148,7 @@ This plugin also supports several optional General fields documented in [Google 
 
 These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.
 
-## CustomTrackingEvent Function
+## TrackCustomEvent Function
 
 To allow custom events to be tracked, the plugin exposes a function to include in your project.
 
