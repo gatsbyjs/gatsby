@@ -178,7 +178,7 @@ exports.onCreateDevServer = (
     }),
     async (req, _res) => {
       const requestBody = JSON.parse(JSON.parse(req.body))
-      const { data, secret, action, id } = requestBody
+      const { secret, action, id } = requestBody
       if (pluginOptions.secret && pluginOptions.secret !== secret) {
         return reporter.warn(
           `The secret in this request did not match your plugin options secret.`
@@ -188,9 +188,10 @@ exports.onCreateDevServer = (
         actions.deleteNode({ node: getNode(createNodeId(id)) })
         return reporter.log(`Deleted node: ${id}`)
       }
+      const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
       return await handleWebhookUpdate(
         {
-          data,
+          nodeToUpdate,
           actions,
           cache,
           createNodeId,
