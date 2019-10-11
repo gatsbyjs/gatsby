@@ -52,10 +52,10 @@ Another option is to supply a path (relative or absolute) to a local folder cont
 gatsby new [SITE_DIRECTORY] [LOCAL_PATH_TO_STARTER]
 ```
 
-Here is an example assuming a starter exists on the path `Code/my-local-starter`:
+Here is an example assuming a starter exists on the path `./Code/my-local-starter`:
 
 ```shell
-gatsby new blog Code/my-local-starter
+gatsby new blog ./Code/my-local-starter
 ```
 
 ## Official starters

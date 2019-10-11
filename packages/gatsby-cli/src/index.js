@@ -12,7 +12,7 @@ const report = require(`./reporter`)
 const pkg = require(`../package.json`)
 const updateNotifier = require(`update-notifier`)
 // Check if update is available
-updateNotifier({ pkg }).notify()
+updateNotifier({ pkg }).notify({ isGlobal: true })
 
 const MIN_NODE_VERSION = `>=8.0.0`
 

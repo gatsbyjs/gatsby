@@ -42,6 +42,10 @@ In Gatsby, this is the process of taking your code and content and packaging it 
 
 ## C
 
+### Cache
+
+A storage of information locally that might be used again, so computations and lookups can be retrieved faster from one place. Gatsby uses a cache to store information so it can build your site faster when you're developing without needing to do the same work twice.
+
 ### CLI
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
@@ -154,6 +158,10 @@ A [CMS](#cms) that only handles the [backend](#backend) content management inste
 
 A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting/) projects include Netlify, AWS, S3, Surge, Heroku, and more.
 
+### Hot module replacement
+
+A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window.
+
 ### Hydration
 
 Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
@@ -265,6 +273,10 @@ Runtime is when a program is running (or being executable); it can refer to a fe
 Routing is the mechanism for loading the correct content in a website or app based on a network request - usually a URL. For example, it allows for routing URLs like `/about-us` to the appropriate [page](#page), [template](#template), or [component](#component).
 
 ## S
+
+### Schema
+
+An exact representation of how data is stored in a system, such as tables and fields in a database or a JSON file structure. In Gatsby, the GraphQL schema expresses all queryable data - or data that components can ask about as part of Gatsby's data layer.
 
 ### Server-side
 
