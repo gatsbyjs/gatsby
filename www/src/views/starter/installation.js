@@ -1,45 +1,40 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import Copy from "../../components/copy"
-import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  fontSizes,
-} from "../../utils/presets"
+import { mediaQueries } from "gatsby-design-tokens"
 
 const StarterInstallation = ({ repoName, repoUrl }) => {
   const content = `gatsby new ${repoName || `my-gatsby-project`} ${repoUrl}`
   return (
     <div
-      css={{
-        padding: `0px ${space[6]}`,
+      sx={{
+        mx: 6,
         [mediaQueries.lg]: {
-          padding: `0px ${space[8]}`,
+          mx: 8,
           display: `grid`,
           gridTemplateRows: `auto auto`,
-          gridRowGap: space[2],
+          gridRowGap: 2,
         },
       }}
     >
-      <div css={{ fontSize: fontSizes[1], color: colors.text.secondary }}>
+      <div sx={{ fontSize: 1, color: `textMuted` }}>
         Install this starter locally:
       </div>
       <pre
-        css={{
-          padding: 0,
-          background: colors.code.bg,
+        sx={{
+          background: `code.bg`,
+          p: 0,
         }}
       >
         <code
-          css={{
-            display: `flex`,
+          sx={{
             alignItems: `center`,
+            display: `flex`,
             justifyContent: `space-between`,
-            padding: space[2],
             overflowWrap: `break-word`,
+            p: 2,
             [mediaQueries.lg]: {
-              padding: space[3],
+              p: 3,
             },
             "&:before": {
               display: `none`,
@@ -53,7 +48,7 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
           <Copy
             fileName="Install command"
             content={content}
-            css={{ borderRadius: `${radii[1]}px` }}
+            sx={{ borderRadius: 1 }}
           />
         </code>
       </pre>

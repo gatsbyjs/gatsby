@@ -2,8 +2,8 @@ import React from "react"
 import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
 import fs from "fs"
 import { createContentDigest } from "gatsby-core-utils"
-
 import { defaultIcons, addDigestToPath } from "./common.js"
+import getManifestForPathname from "./get-manifest-pathname"
 
 // TODO: remove for v3
 const withPrefix = withAssetPrefix || fallbackWithPrefix
@@ -14,20 +14,6 @@ exports.onRenderBody = (
   { setHeadComponents, pathname = `/` },
   { localize, ...pluginOptions }
 ) => {
-  if (Array.isArray(localize)) {
-    const locales = pluginOptions.start_url
-      ? localize.concat(pluginOptions)
-      : localize
-    const manifest = locales.find(locale =>
-      RegExp(`^${locale.start_url}.*`, `i`).test(pathname)
-    )
-    pluginOptions = {
-      ...pluginOptions,
-      ...manifest,
-    }
-    if (!pluginOptions) return false
-  }
-
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   let headComponents = []
 
@@ -66,14 +52,14 @@ exports.onRenderBody = (
     }
   }
 
-  const suffix = pluginOptions.lang ? `_${pluginOptions.lang}` : ``
+  const manifestFileName = getManifestForPathname(pathname, localize)
 
   // Add manifest link tag.
   headComponents.push(
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`/manifest${suffix}.webmanifest`)}
+      href={withPrefix(`/${manifestFileName}`)}
       crossOrigin={pluginOptions.crossOrigin}
     />
   )

@@ -100,7 +100,7 @@ export default class GatsbyReporter extends React.Component {
   }
 
   _addMessage(type, details) {
-    // threat null/undefind as an empty character, it seems like ink can't handle empty str
+    // treat null/undefined as an empty character, it seems like ink can't handle empty str
     if (!details) {
       details = `\u2800`
     }

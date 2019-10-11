@@ -108,7 +108,7 @@ module.exports = (
       if (linkNode && linkNode.absolutePath) {
         const newFilePath = newPath(linkNode, options)
 
-        // Prevent uneeded copying
+        // Prevent unneeded copying
         if (linkPath === newFilePath) return
 
         const linkURL = newLinkURL(linkNode, options, pathPrefix)

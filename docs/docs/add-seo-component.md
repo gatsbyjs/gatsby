@@ -2,7 +2,7 @@
 title: "Adding an SEO component"
 ---
 
-Every site on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone, e.g. shares your website on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and have rich previews for other clients, smartphone users, and search engines.
+Every site on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone shares your website, e.g. on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and have rich previews for other clients, smartphone users, and search engines.
 
 _Note: This component will use StaticQuery. If you're unfamiliar with that, have a look at the [StaticQuery documentation](/docs/static-query/). You also have to have `react-helmet` installed for which you can have a look at [this document](/docs/add-page-metadata)._
 
@@ -221,4 +221,4 @@ You could also put the Facebook and Twitter meta-tags into their own components,
 - [marisamorby.com](https://github.com/marisamorby/marisamorby.com/blob/master/packages/gatsby-theme-blog-sanity/src/components/seo.js)
 - [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic/blob/master/src/components/SEO/SEO.jsx)
 
-As mentioned at the beginning you are also able to use the component in templates, like in [this example](https://github.com/jlengstorf/marisamorby.com/blob/master/src/templates/post.js#L12-L18).
+As mentioned at the beginning you are also able to use the component in templates, like in [this example](https://github.com/jlengstorf/marisamorby.com/blob/6e86f845185f9650ff95316d3475bb8ac86b15bf/src/templates/post.js#L12-L18).

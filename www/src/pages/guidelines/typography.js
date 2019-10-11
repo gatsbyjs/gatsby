@@ -1,6 +1,6 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import styled from "@emotion/styled"
-import { ThemeProvider } from "emotion-theming"
 import MdWarning from "react-icons/lib/md/warning"
 
 import {
@@ -22,8 +22,12 @@ import Starter from "../../components/guidelines/cards/starter"
 import Blog from "../../components/guidelines/cards/blog"
 import ImagePlaceholder from "../../components/guidelines/image-placeholder"
 
-import theme from "../../utils/guidelines/theme"
-import themeInverted from "../../utils/guidelines/theme-inverted"
+import {
+  fontSizes,
+  fontWeights,
+  letterSpacings,
+  lineHeights,
+} from "../../gatsby-plugin-theme-ui"
 import {
   Box,
   Button,
@@ -37,16 +41,16 @@ const ExampleBox = styled(Box)({ pt: 4 })
 
 const MarketingColumn = ({ children, title }) => (
   <Box width={{ lg: 1 / 2 }} px={{ md: 8 }} py={{ xxs: 4, lg: 0 }}>
-    <Heading fontSize={5} mb={3} fontWeight={1}>
+    <Heading fontSize={5} mb={3} fontWeight="heading">
       {title}
     </Heading>
-    <Text color="grey.70">{children}</Text>
+    <Text color="textMuted">{children}</Text>
   </Box>
 )
 
 const Typeface = ({ children, fontFamily }) => (
   <Text
-    color="grey.90"
+    color="text"
     fontFamily={fontFamily}
     fontSize={{ xxs: 8, lg: 12 }}
     lineHeight="solid"
@@ -111,7 +115,7 @@ const Typography = ({ location }) => (
         </CopyColumn>
         <ContentColumn css={{ alignSelf: `flex-end`, display: `flex` }}>
           <Flex flexDirection="column">
-            <Typeface fontFamily="header">Futura PT</Typeface>
+            <Typeface fontFamily="heading">Futura PT</Typeface>
           </Flex>
         </ContentColumn>
       </Columns>
@@ -161,12 +165,12 @@ const Typography = ({ location }) => (
           </Text>
         </CopyColumn>
         <ContentColumn fullWidth>
-          {theme.fontSizes.map((size, index) => (
+          {fontSizes.map((size, index) => (
             <div key={`${index}-${size}`}>
               <Text
                 // don't scale based on root font size here
                 fontSize={`${parseFloat(size) * 16}px`}
-                color="grey.90"
+                color="text"
                 css={{
                   overflow: `hidden`,
                   position: `relative`,
@@ -181,8 +185,8 @@ const Typography = ({ location }) => (
               </Text>
               <Box
                 fontSize={0}
-                mb={theme.fontSizes.length === index + 1 ? 0 : 3}
-                color="grey.70"
+                mb={fontSizes.length === index + 1 ? 0 : 3}
+                color="textMuted"
               >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
@@ -215,11 +219,11 @@ const Typography = ({ location }) => (
           <SectionSubheading mt={0}>Font Weights</SectionSubheading>
           <Flex flexWrap="wrap" flexDirection="row">
             <Box maxWidth={{ xl: `40%` }} mr={{ xl: 6 }}>
-              <Weight fontFamily="header" fontWeight={2}>
-                {theme.fontWeights[2]}
+              <Weight fontFamily="heading" fontWeight="headingPrimary">
+                {fontWeights.headingPrimary}
               </Weight>
               <Box pb={4}>
-                <code>fontWeights[2]</code>
+                <code>fontWeights.headingPrimary</code>
                 <Text as="p" pt={4}>
                   Use this for the main headline, set in Futura PT Bold, only.
                 </Text>
@@ -227,11 +231,11 @@ const Typography = ({ location }) => (
             </Box>
 
             <Box maxWidth={{ xl: `40%` }}>
-              <Weight fontFamily="header" fontWeight={1}>
-                {theme.fontWeights[1]}
+              <Weight fontFamily="heading" fontWeight="bold">
+                {fontWeights.bold}
               </Weight>
               <Box pb={4}>
-                <code>fontWeights[1]</code> — <code>bold</code>
+                <code>fontWeights.bold</code> — <code>bold</code>
                 <Text as="p" pt={4}>
                   Use this for the all headlines but the main page title, and to
                   emphasize text throughout regular copy.
@@ -239,10 +243,10 @@ const Typography = ({ location }) => (
               </Box>
             </Box>
             <Box>
-              <Weight fontFamily="header" fontWeight={0}>
-                {theme.fontWeights[0]}
+              <Weight fontFamily="heading" fontWeight="body">
+                {fontWeights.body}
               </Weight>
-              <code>fontWeights[0]</code> — <code>normal</code>
+              <code>fontWeights.body</code> — <code>normal</code>
             </Box>
           </Flex>
 
@@ -259,7 +263,7 @@ const Typography = ({ location }) => (
             <Text as="p" mb={0}>
               <strong>Normal</strong> — <code>letterSpacings.normal</code> —
               {` `}
-              <code>{theme.letterSpacings.normal}</code>
+              <code>{letterSpacings.normal}</code>
             </Text>
             <p>Use for almost everything.</p>
           </ExampleBox>
@@ -269,7 +273,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Tight</strong> — <code>letterSpacings.tight</code> —{` `}
-              <code>{theme.letterSpacings.tight}</code>
+              <code>{letterSpacings.tight}</code>
             </Text>
             <p>Use for headlines set in Futura PT.</p>
             <Heading lineHeight="solid" pb={8}>
@@ -283,15 +287,15 @@ const Typography = ({ location }) => (
             <Text as="p" mb={0}>
               <strong>Tracked</strong> — <code>letterSpacings.tracked</code> —
               {` `}
-              <code>{theme.letterSpacings.tracked}</code>
+              <code>{letterSpacings.tracked}</code>
             </Text>
             <p>
               Use for small caps, particularly at small sizes — when using
               capital letters together, the default spacing looks too tight.
             </p>
             <Text
-              color="grey.60"
-              fontFamily="header"
+              color="textMuted"
+              fontFamily="heading"
               fontSize={1}
               letterSpacing="tracked"
               pb={8}
@@ -308,7 +312,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Default</strong> — <code>lineHeights.default</code> —{` `}
-              <code>{theme.lineHeights.default}</code>
+              <code>{lineHeights.default}</code>
             </Text>
             <Text as="p" lineHeight="default" pb={8} pt={4}>
               It eluded us then, but that’s no matter—tomorrow we will run
@@ -323,7 +327,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Solid</strong> — <code>lineHeights.solid</code> —{` `}
-              <code>{theme.lineHeights.solid}</code>
+              <code>{lineHeights.solid}</code>
             </Text>
             <Heading pb={8} pt={4} lineHeight="solid">
               Scale to the entire internet
@@ -335,9 +339,9 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Dense</strong> — <code>lineHeights.dense</code> —{` `}
-              <code>{theme.lineHeights.dense}</code>
+              <code>{lineHeights.dense}</code>
             </Text>
-            <Heading pb={8} pt={4} fontWeight={1}>
+            <Heading pb={8} pt={4} fontWeight="heading">
               Stop managing content.
               <br />
               Start telling your story.
@@ -349,7 +353,7 @@ const Typography = ({ location }) => (
           <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Loose</strong> — <code>lineHeights.loose</code> —{` `}
-              <code>{theme.lineHeights.loose}</code>
+              <code>{lineHeights.loose}</code>
             </Text>
             <Intro lineHeight="loose" pb={8} pt={4} mb={0}>
               As a popular and growing framework for building websites and web
@@ -379,7 +383,7 @@ const Typography = ({ location }) => (
           <Box maxWidth="35rem">
             <Text
               as="p"
-              fontFamily="header"
+              fontFamily="heading"
               fontWeight={0}
               fontSize={4}
               mb={4}
@@ -398,7 +402,7 @@ const Typography = ({ location }) => (
             >
               Create digital experiences on the edge—faster
             </Heading>
-            <Heading as="h2" mb={8} fontSize={6} fontWeight={1}>
+            <Heading as="h2" mb={8} fontSize={6} fontWeight="heading">
               Gatsby provides a modern framework for turning content into
               feature-rich, visually engaging apps and websites.
             </Heading>
@@ -433,95 +437,78 @@ const Typography = ({ location }) => (
                 requirements by shifting resources around.
               </p>
             </Text>
-            <Button bg="black">Read more</Button>
+            <Button>Read more</Button>
           </Box>
         </ContentColumn>
       </Columns>
     </Section>
 
-    <ThemeProvider theme={themeInverted}>
-      <Container
-        bg="white"
-        py={8}
-        my={8}
-        textAlign="center"
-        css={{ WebkitFontSmoothing: `antialiased` }}
-      >
-        <Text fontSize={1} color="blackFade.70">
-          Simple landing page (using an inverted theme)
-        </Text>
+    <Container py={8} my={8} textAlign="center">
+      <Text fontSize={1}>Simple landing page</Text>
 
-        <Box maxWidth={1040} mx="auto">
-          <PageHeading
-            fontSize={{ md: 11 }}
-            lineHeight="solid"
-            maxWidth="48rem"
-            mb={3}
-            mx="auto"
-          >
-            Stop managing content.
-            <br /> Start telling your story.
-          </PageHeading>
-          <Intro color="blackFade.80" maxWidth="40rem" mx="auto" mb={6}>
-            Gatsby brings your content to the edge for lightning fast, safe
-            website delivery with no CMS overhead.
-          </Intro>
-          <Button
-            bg="black"
-            mx="auto"
-            mb={4}
-            css={{ color: `black !important` }}
-          >
-            Start a free trial
-          </Button>
-          <Text color="blackFade.70" fontSize={1}>
-            14 day free trial — no credit card required
-          </Text>
+      <Box maxWidth={1040} mx="auto">
+        <PageHeading
+          fontSize={{ md: 11 }}
+          lineHeight="solid"
+          maxWidth="48rem"
+          mb={3}
+          mx="auto"
+        >
+          Stop managing content.
+          <br /> Start telling your story.
+        </PageHeading>
+        <Intro maxWidth="40rem" mx="auto" mb={6}>
+          Gatsby brings your content to the edge for lightning fast, safe
+          website delivery with no CMS overhead.
+        </Intro>
+        <Button mx="auto" mb={4}>
+          Start a free trial
+        </Button>
+        <Text fontSize={1}>14 day free trial — no credit card required</Text>
 
-          <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
-            <MarketingColumn title="Modern web tech without the headache">
-              Enjoy the power of the latest web technologies – React.js ,
-              Webpack , modern JavaScript and CSS and more — all set up and
-              waiting for you to start building.
-            </MarketingColumn>
-            <MarketingColumn title="Bring your own data">
-              Gatsby’s rich data plugin ecosystem lets you build sites with the
-              data you want — pull data from headless CMSs, SaaS services, APIs,
-              databases, your file system, and more.
-            </MarketingColumn>
-          </Box>
-          <Box display={{ md: `flex ` }} pb={12} textAlign="left">
-            <MarketingColumn title="Future-proof your website">
-              Do not build a website with last decade’s tech. The future of the
-              web is mobile, JavaScript and APIs—the JAMstack. Every website is
-              a web app and every web app is a website. Gatsby.js is the
-              universal JavaScript framework you’ve been waiting for.
-            </MarketingColumn>
-            <MarketingColumn title="Scale to the entire internet">
-              Forget complicated deploys with databases and servers and their
-              expensive, time-consuming setup costs, maintenance, and scaling
-              fears — Gatsby builds your site as “static” files which can be
-              deployed easily on various services.
-            </MarketingColumn>
-          </Box>
-          <Box display={{ md: `flex ` }} pb={12} textAlign="left">
-            <MarketingColumn title="Speed past the competition">
-              Gatsby.js builds the fastest possible website. Instead of waiting
-              to generate pages when requested, pre-build pages and lift them
-              into a global cloud of servers — ready to be delivered instantly
-              to your users wherever they are.
-            </MarketingColumn>
-            <MarketingColumn title="Static Progressive Web Apps">
-              Gatsby.js is a static PWA (Progressive Web App) generator. You get
-              code and data splitting out-of-the-box. Gatsby loads only the
-              critical HTML, CSS, data, and JavaScript so your site loads as
-              fast as possible. Once loaded, Gatsby prefetches resources for
-              other pages so clicking around the site feels incredibly fast.
-            </MarketingColumn>
-          </Box>
+        <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
+          <MarketingColumn title="Modern web tech without the headache">
+            Enjoy the power of the latest web technologies – React.js , Webpack
+            , modern JavaScript and CSS and more — all set up and waiting for
+            you to start building.
+          </MarketingColumn>
+          <MarketingColumn title="Bring your own data">
+            Gatsby’s rich data plugin ecosystem lets you build sites with the
+            data you want — pull data from headless CMSs, SaaS services, APIs,
+            databases, your file system, and more.
+          </MarketingColumn>
         </Box>
-      </Container>
-    </ThemeProvider>
+        <Box display={{ md: `flex ` }} pb={12} textAlign="left">
+          <MarketingColumn title="Future-proof your website">
+            Do not build a website with last decade’s tech. The future of the
+            web is mobile, JavaScript and APIs—the JAMstack. Every website is a
+            web app and every web app is a website. Gatsby.js is the universal
+            JavaScript framework you’ve been waiting for.
+          </MarketingColumn>
+          <MarketingColumn title="Scale to the entire internet">
+            Forget complicated deploys with databases and servers and their
+            expensive, time-consuming setup costs, maintenance, and scaling
+            fears — Gatsby builds your site as “static” files which can be
+            deployed easily on various services.
+          </MarketingColumn>
+        </Box>
+        <Box display={{ md: `flex ` }} pb={12} textAlign="left">
+          <MarketingColumn title="Speed past the competition">
+            Gatsby.js builds the fastest possible website. Instead of waiting to
+            generate pages when requested, pre-build pages and lift them into a
+            global cloud of servers — ready to be delivered instantly to your
+            users wherever they are.
+          </MarketingColumn>
+          <MarketingColumn title="Static Progressive Web Apps">
+            Gatsby.js is a static PWA (Progressive Web App) generator. You get
+            code and data splitting out-of-the-box. Gatsby loads only the
+            critical HTML, CSS, data, and JavaScript so your site loads as fast
+            as possible. Once loaded, Gatsby prefetches resources for other
+            pages so clicking around the site feels incredibly fast.
+          </MarketingColumn>
+        </Box>
+      </Box>
+    </Container>
 
     <Container>
       <Box bt={1} py={8} my={8}>
@@ -542,14 +529,14 @@ const Typography = ({ location }) => (
       <Flex as="section" py={4} my={4}>
         <Box mt={8} mr="auto" pr={7} display={{ xxs: `none`, md: `block` }}>
           <Box
-            css={{
+            sx={{
               borderRightWidth: 1,
               borderRightStyle: `solid`,
-              borderColor: `#F5F5F5`,
+              borderColor: `ui.border`,
             }}
             pr={7}
           >
-            <Heading fontWeight="1" fontSize={3} mb={5}>
+            <Heading fontWeight="heading" fontSize={3} mb={5}>
               Documentation
             </Heading>
             <SidebarUL>
@@ -557,7 +544,7 @@ const Typography = ({ location }) => (
                 <SidebarLI key={`sidebar-item-1-${index}`}>{item}</SidebarLI>
               ))}
             </SidebarUL>
-            <Heading fontWeight="1" fontSize={3} mt={8} mb={5}>
+            <Heading fontWeight="heading" fontSize={3} mt={8} mb={5}>
               Guides
             </Heading>
             <SidebarUL>
@@ -596,7 +583,7 @@ const Typography = ({ location }) => (
           <Text
             fontSize={{ xxs: 2, md: 3, lg: 4 }}
             color="black.50"
-            fontWeight={0}
+            fontWeight="body"
             // fontFamily="serif"
           >
             <ImagePlaceholder mb={4} />
@@ -644,7 +631,13 @@ const Typography = ({ location }) => (
               and then{` `}
               <code>useStaticQuery</code>.
             </p>
-            <Box bg="grey.10" p={5} my={6} fontSize={{ xxs: 1, md: 2 }}>
+            <Box
+              bg="grey.10"
+              color="grey.80"
+              p={5}
+              my={6}
+              fontSize={{ xxs: 1, md: 2 }}
+            >
               💡 For a great introduction to using the command line, check out
               {` `}
               <a href="https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command">

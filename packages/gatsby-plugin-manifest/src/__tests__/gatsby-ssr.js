@@ -112,6 +112,7 @@ describe(`gatsby-plugin-manifest`, () => {
       it(testName, () => {
         onRenderBody(args, {
           start_url: `/`,
+          lang: `en`,
           localize: [
             {
               start_url: `/de/`,

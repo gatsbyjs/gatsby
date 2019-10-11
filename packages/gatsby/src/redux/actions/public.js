@@ -379,6 +379,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       !fileContent.includes(`module.exports`) &&
       !fileContent.includes(`exports.default`) &&
       !fileContent.includes(`exports["default"]`) &&
+      !fileContent.match(/export \{.* as default.*\}/s) &&
       // this check only applies to js and ts, not mdx
       /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
@@ -777,9 +778,9 @@ const createNode = (
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
-      type: `TOUCH_NODE`,
-      plugin,
       ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
       payload: node.id,
     }
   } else {
@@ -788,9 +789,9 @@ const createNode = (
     if (oldNode) {
       const createDeleteAction = node => {
         return {
+          ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          ...actionOptions,
           payload: node,
         }
       }
@@ -800,10 +801,10 @@ const createNode = (
     }
 
     updateNodeAction = {
+      ...actionOptions,
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      ...actionOptions,
       payload: node,
     }
   }
@@ -958,9 +959,9 @@ actions.createNodeField = (
   node = sanitizeNode(node)
 
   return {
+    ...actionOptions,
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    ...actionOptions,
     payload: node,
   }
 }

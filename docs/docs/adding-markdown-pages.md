@@ -190,7 +190,7 @@ For more information, have a look in the working example `using-markdown-pages`.
 
 ## Other tutorials
 
-Check out tutorials listed on the [Awesome Gatsby](/docs/awesome-gatsby/#gatsby-tutorials) page for more information on building Gatsby sites with Markdown.
+Check out tutorials listed on the [Awesome Gatsby](/docs/awesome-gatsby-resources/#gatsby-tutorials) page for more information on building Gatsby sites with Markdown.
 
 ## Gatsby Markdown starters
 
