@@ -55,7 +55,7 @@ const NavItem = ({ linkTo, children }) => (
         ...navItemStyles,
         "&.active": {
           borderBottomColor: `lilac`,
-          color: `lilac`,
+          color: `navigation.linkActive`,
         },
       }}
     >
