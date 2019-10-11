@@ -4,16 +4,17 @@ exports[`prepare visits each provided route 1`] = `
 Object {
   "assets": Object {
     "/bar": Object {
-      "/path/to/a/font.woff": true,
       "/path/to/another.ttf": true,
+      "https://foo.bar/path/to/a/font.woff": true,
     },
     "/baz": Object {
-      "/another/font.ttf": true,
       "/another/font.woff2": true,
       "/some/external/font.ttf": true,
+      "https://foo.bar/another/font.ttf": true,
     },
     "/foo": Object {
       "/path/to/font.otf": true,
+      "https://foo.bar/path/to/font.otf": true,
     },
   },
   "hash": "7c709be36bd82265bb0eb74a233f3040",

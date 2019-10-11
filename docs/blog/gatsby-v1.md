@@ -16,7 +16,7 @@ frameworks — _better performance, higher security, lower cost of scaling, and 
 better developer experience._
 
 In v1, Gatsby blazes new ground for static site generators by enabling rich
-integrations with CMSs like Contentful, Wordpress, and Drupal, and a suite of
+integrations with CMSs like Contentful, WordPress, and Drupal, and a suite of
 features, on by default, that make your sites startlingly fast — route-based
 code splitting, service workers, offline support, and more.
 
@@ -85,7 +85,7 @@ v1 heads out to sea delivering components to ports far and wide_
 The first building block for answering to these questions was a
 [plugin system](/docs/plugins/).
 
-Wordpress & Jekyll are both great examples of open source communities with
+WordPress & Jekyll are both great examples of open source communities with
 robust plugins ecosystems.
 
 Plugins help accelerate developing websites as you can build on what others have
@@ -112,7 +112,7 @@ Plugins can:
 ## GraphQL-based data processing layer
 
 Plugins also drive the new GraphQL data processing layer. This new system
-enables rich integrations with CMSs like Contentful, Wordpress, and Drupal along
+enables rich integrations with CMSs like Contentful, WordPress, and Drupal along
 with other remote and local sources.
 
 In Gatsby v0, (like pretty much every static site generator) data was processed
@@ -208,7 +208,7 @@ so they're mobile ready.
 
 There's also source plugins written for
 [Contentful](/packages/gatsby-source-contentful/),
-[Wordpress](/packages/gatsby-source-wordpress/),
+[WordPress](/packages/gatsby-source-wordpress/),
 [Drupal](/packages/gatsby-source-drupal/),
 [Hacker News](/packages/gatsby-source-hacker-news/) (really 😛), and more as
 well as transformer plugins for

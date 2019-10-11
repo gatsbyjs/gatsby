@@ -1,5 +1,5 @@
 ---
-title: Upgrading your Node.js version
+title: Upgrading Your Node.js Version
 ---
 
 ## Gatsby's Node.js support policy
@@ -10,34 +10,34 @@ Gatsby will stop supporting the _End of Life_ Node release in a minor version.
 
 Check [Node's releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
-## What version of Node do I have?
+## What version of Node.js do I have?
 
-Run `node -v` in a terminal to see which version of Node you have.
+Run `node -v` in a terminal to see which version of Node.js you have.
 
 ```
 node -v
 v10.16.0
 ```
 
-This example shows Node version 10, specifically v10.16.0.
+This example shows Node.js version 10, specifically v10.16.0.
 
-## Upgrading from Node version 6
+## Upgrading from Node.js version 6
 
-Node version 6 reached _End-of-life_ status on 30th April 2019. Many of Gatsby's dependencies are updating to Node version 8 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
+Node.js version 6 reached _End-of-life_ status on 30th April 2019. Many of Gatsby's dependencies are updating to Node.js version 8 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
 
-Generally we'd recommend using [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
+Generally we'd recommend using [the Node.js version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node.js 10 at time of writing). However, in this document you'll learn how to update from Node.js 6 to Node.js 8 as this is likely to be the least disruptive upgrade for you.
 
-> What about Node 7? Stable versions of Node are evenly numbered releases - Node 6, Node 8, Node 10 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
+> What about Node.js 7? Stable versions of Node.js are evenly numbered releases - Node.js 6, Node.js 8, Node.js 10 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
 
-There are multiple ways to update your version of Node depending on how you originally installed it. Read on to find the best approach for you.
+There are multiple ways to update your version of Node.js depending on how you originally installed it. Read on to find the best approach for you.
 
 ### Using Homebrew
 
-This is our recommended way to install a newer version of Node.
+This is our recommended way to install a newer version of Node.js.
 
-You will have homebrew installed on your computer if you [followed part zero of the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/#-install-nodejs-and-npm). Homebrew is a program that allows you to install specific versions of Node (and other software).
+You will have homebrew installed on your computer if you [followed part zero of the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/#-install-nodejs-and-npm). Homebrew is a program that allows you to install specific versions of Node.js (and other software).
 
-To update from Node 6 to Node 8 using Homebrew, open a terminal and run the following commands:
+To update from Node.js 6 to Node.js 8 using Homebrew, open a terminal and run the following commands:
 
 ```
 brew search node
@@ -53,7 +53,7 @@ leafnode                         node ✔                           node@8      
 libbitcoin-node                  node-build                       node_exporter                    nodenv
 ```
 
-You're interested in the next stable version of Node after Node 6, which is Node 8. Homebrew makes this available in a package called `node@8`. Run:
+You're interested in the next stable version of Node.js after Node.js 6, which is Node.js 8. Homebrew makes this available in a package called `node@8`. Run:
 
 ```
 brew install node@8
@@ -65,13 +65,13 @@ Once that's complete, run:
 node -v
 ```
 
-to confirm that you've upgraded from Node version 6 up to version 8.
+to confirm that you've upgraded from Node.js version 6 up to version 8.
 
-### Using a Node version management package
+### Using a Node.js version management package
 
-There are two popular packages used for managing multiple versions of Node on your system. Use one of these to update to a newer version of Node if they're already available on your computer.
+There are two popular packages used for managing multiple versions of Node.js on your system. Use one of these to update to a newer version of Node.js if they're already available on your computer.
 
-These packages are very useful for people that regularly work with different versions of Node.
+These packages are very useful for people that regularly work with different versions of Node.js.
 
 #### nvm
 
@@ -88,7 +88,7 @@ nvm install 8
 nvm alias default 8
 ```
 
-to install and use Node version 8.
+to install and use Node.js version 8.
 
 [Check nvm's documentation for further instructions](https://github.com/nvm-sh/nvm).
 
@@ -100,20 +100,20 @@ Run:
 n
 ```
 
-in a terminal to see if n is installed on your system. If it's installed, you can run `n 8` to install and use Node version 8.
+in a terminal to see if n is installed on your system. If it's installed, you can run `n 8` to install and use Node.js version 8.
 
 [Check n's documentation for further instructions](https://github.com/tj/n).
 
 ### Installing from nodejs.org
 
-If you aren't using any of the previously listed installation methods, you can [download a Node installer directly from nodejs.org](https://nodejs.org/en/).
+If you aren't using any of the previously listed installation methods, you can [download a Node.js installer directly from nodejs.org](https://nodejs.org/en/).
 
-Gatsby's recommended way to install Node is by using Homebrew. Refer to the previous [Homebrew section of this document](#using-homebrew) for more info.
+Gatsby's recommended way to install Node.js is by using Homebrew. Refer to the previous [Homebrew section of this document](#using-homebrew) for more info.
 
 ## Conclusion
 
-Gatsby takes backwards compatibility seriously and aims to support older versions of Node for as long as possible. We understand that juggling different software versions is not a productive way to spend your day.
+Gatsby takes backwards compatibility seriously and aims to support older versions of Node.js for as long as possible. We understand that juggling different software versions is not a productive way to spend your day.
 
-Gatsby also relies on a huge ecosystem of JavaScript dependencies. As the ecosystem moves away from older, unsupported Node versions we have to keep pace to ensure that bugs can be fixed and new features can be released.
+Gatsby also relies on a huge ecosystem of JavaScript dependencies. As the ecosystem moves away from older, unsupported Node.js versions we have to keep pace to ensure that bugs can be fixed and new features can be released.
 
-In this document you learned how you upgrade from Node version 6 (which has reached _End of Life_ status), to Node version 8 (which has reached _Maintenance_) status.
+In this document you learned how you upgrade from Node.js version 6 (which has reached _End of Life_ status), to Node.js version 8 (which has reached _Maintenance_) status.

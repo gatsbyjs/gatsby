@@ -15,7 +15,7 @@ const BlogCard = ({ ...props }) => (
   >
     <ImagePlaceholder aspectRatio={1 / 2} mb={2} />
     <Box p={{ xxs: 4, md: 5 }}>
-      <Heading fontSize={{ xxs: 4, md: 6, lg: 7 }} fontWeight={1}>
+      <Heading fontSize={{ xxs: 4, md: 6, lg: 7 }} fontWeight="heading">
         Using decoupled Drupal with Gatsby with Kyle Mathews
       </Heading>
 

@@ -1,13 +1,7 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import {
-  fontSizes,
-  colors,
-  space,
-  mediaQueries,
-  letterSpacings,
-  transition,
-} from "../utils/presets"
+import { mediaQueries, colors } from "../gatsby-plugin-theme-ui"
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -25,22 +19,19 @@ function createItems(items, location, depth, maxDepth) {
     items &&
     items.map(item => (
       <li
-        css={{
-          [mediaQueries.xl]: {
-            fontSize: fontSizes[1],
-          },
-        }}
+        sx={{ [mediaQueries.xl]: { fontSize: 1 } }}
         key={location.pathname + item.url}
       >
         <Link
-          css={{
+          sx={{
             "&&": {
-              color: colors.grey[60],
+              color: `textMuted`,
               border: 0,
-              transition: `all ${transition.speed.fast} ${transition.curve.default}`,
+              transition: t =>
+                `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
               ":hover": {
-                color: colors.link.color,
-                borderBottom: `1px solid ${colors.link.hoverBorder}`,
+                color: `link.color`,
+                borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`,
               },
             },
           }}
@@ -59,11 +50,7 @@ function createItems(items, location, depth, maxDepth) {
           {item.title}
         </Link>
         {item.items && isUnderDepthLimit(depth, maxDepth) && (
-          <ul
-            css={{
-              marginLeft: space[6],
-            }}
-          >
+          <ul sx={{ ml: 6 }}>
             {createItems(item.items, location, depth + 1, maxDepth)}
           </ul>
         )}
@@ -76,21 +63,21 @@ function TableOfContents({ page, location }) {
   return page.tableOfContents.items ? (
     <nav>
       <h2
-        css={{
+        sx={{
           textTransform: `uppercase`,
-          fontSize: fontSizes[1],
-          color: colors.grey[80],
-          letterSpacing: letterSpacings.tracked,
-          marginTop: 0,
+          fontSize: 1,
+          color: `textMuted`,
+          letterSpacing: `tracked`,
+          mt: 0,
         }}
       >
         Table of Contents
       </h2>
       <ul
-        css={{
+        sx={{
           [mediaQueries.xl]: {
             listStyle: `none`,
-            margin: 0,
+            m: 0,
           },
         }}
       >
