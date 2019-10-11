@@ -155,24 +155,6 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   const cacheDirectory = `${program.directory}/.cache`
-  /*
-   * Copy cache state for comparing data
-   */
-  if (incrementalBuild && fs.existsSync(`${cacheDirectory}/redux-state.json`)) {
-    let activity = report.activityTimer(
-      `Copied redux-state for comparing later`
-    )
-    activity.start()
-    await fs.copy(
-      `${cacheDirectory}/redux-state.json`,
-      `${program.directory}/temp/redux-state-old.json`,
-      {
-        clobber: true,
-      }
-    )
-    activity.end()
-  }
-
   activity = report.activityTimer(`initialize cache`, {
     parentSpan: bootstrapSpan,
   })
