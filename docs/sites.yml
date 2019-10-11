@@ -7518,6 +7518,21 @@
   categories:
     - Education
     - Learning
+- title: AJ on Purr-fect Solutions
+  url: https://ajonp.com
+  main_url: https://ajonp.com
+  description: >
+    A Community of developers, creating resources for all to use!
+  categories:
+    - Education
+    - Learning
+    - Programming
+    - Web Development
+    - API
+    - Blog
+    - SEO
+  built_by: AJonP
+  built_by_url: http://ajonp.com/authors/alex-patterson
 - title: blog.kwst.site
   main_url: https://blog.kwst.site
   url: https://blog.kwst.site
