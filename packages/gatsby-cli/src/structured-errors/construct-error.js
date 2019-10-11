@@ -7,29 +7,20 @@ const { sanitizeStructuredStackTrace } = require(`../reporter/errors`)
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
 // TODO: 'details' is not a descriptive name
-const constructError = ({ details }) => {
-  const result = (details.id && errorMap[details.id]) || defaultError
+const constructError = ({ details: { id, ...otherDetails } }) => {
+  const result = (id && errorMap[id]) || defaultError
 
   // merge
   const structuredError = {
-    ...details,
+    context: {},
+    ...otherDetails,
     ...result,
-    text: result.text(details.context),
-    stack: details.error
-      ? sanitizeStructuredStackTrace(stackTrace.parse(details.error))
+    text: result.text(otherDetails.context),
+    stack: otherDetails.error
+      ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))
       : null,
     docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
-  }
-
-  if (!structuredError.context) {
-    structuredError.context = {}
-  }
-
-  if (`id` in structuredError) {
-    // this is hacky - we should change reporter.error calls to use `code` instead of `id`
-    // but for sake of speed - I'll use this for now
-    structuredError.code = structuredError.id
-    delete structuredError.id
+    code: id,
   }
 
   // validate
