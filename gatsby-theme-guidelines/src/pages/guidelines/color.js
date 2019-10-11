@@ -2,9 +2,9 @@ import React from "react"
 import Modal from "react-modal"
 import MdWarning from "react-icons/lib/md/warning"
 
-import Layout from "../components/layout"
+import Layout from "../../components/layout"
 
-import { Box, Flex, Text } from "../components/system"
+import { Box, Flex, Text } from "../../components/system"
 
 import {
   Container,
@@ -12,19 +12,19 @@ import {
   Columns,
   CopyColumn,
   ContentColumn,
-} from "../components/containers"
+} from "../../components/containers"
 import {
   Intro,
   PageHeading,
   SectionHeading,
   SectionSubheading,
-} from "../components/typography"
+} from "../../components/typography"
 
-import Badge from "../components/badge"
-import Overview from "../components/color/overview"
-import ColorModal from "../components/color/modal"
+import Badge from "../../components/badge"
+import Overview from "../../components/color/overview"
+import ColorModal from "../../components/color/modal"
 
-import palette from "../utils/extend-palette-info"
+import palette from "../../utils/extend-palette-info"
 
 // http://reactcommunity.org/react-modal/accessibility/
 Modal.setAppElement(`#___gatsby`)

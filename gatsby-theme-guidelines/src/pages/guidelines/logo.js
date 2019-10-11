@@ -8,30 +8,30 @@ import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
 import themeGet from "@styled-system/theme-get"
 import { useColorMode } from "theme-ui"
 
-import Layout from "../components/layout"
-import BoxWithBorder from "../components/box-with-border"
-import { Intro, PageHeading, SectionHeading } from "../components/typography"
+import Layout from "../../components/layout"
+import BoxWithBorder from "../../components/box-with-border"
+import { Intro, PageHeading, SectionHeading } from "../../components/typography"
 import {
   Container,
   Section,
   Columns,
   ContentColumn,
   CopyColumn,
-} from "../components/containers"
+} from "../../components/containers"
 
-import GatsbyLogo from "../components/logo"
-import GatsbyMonogram from "../components/logo/monogram"
-import Wordmark from "!raw-loader!../assets/wordmark.svg"
-import Clearspace from "!raw-loader!../assets/clearspace.svg"
-import ClearspaceMonogram from "!raw-loader!../assets/clearspace-monogram.svg"
-import ManuallyTracked from "!raw-loader!../assets/manually-tracked.svg"
-import PartnershipLockups from "!raw-loader!../assets/partnership-lockups.svg"
+import GatsbyLogo from "../../components/logo"
+import GatsbyMonogram from "../../components/logo/monogram"
+import Wordmark from "!raw-loader!../../assets/wordmark.svg"
+import Clearspace from "!raw-loader!../../assets/clearspace.svg"
+import ClearspaceMonogram from "!raw-loader!../../assets/clearspace-monogram.svg"
+import ManuallyTracked from "!raw-loader!../../assets/manually-tracked.svg"
+import PartnershipLockups from "!raw-loader!../../assets/partnership-lockups.svg"
 
-import ColorSwatch from "../components/color/card"
+import ColorSwatch from "../../components/color/card"
 
-import { Box, Button, Flex, Text } from "../components/system"
-import theme from "../gatsby-plugin-theme-ui"
-import palette from "../utils/extend-palette-info"
+import { Box, Button, Flex, Text } from "../../components/system"
+import theme from "../../gatsby-plugin-theme-ui"
+import palette from "../../utils/extend-palette-info"
 
 const List = styled(`ul`)`
   margin-left: 0;
@@ -668,13 +668,13 @@ export const pageQuery = graphql`
       edges {
         node {
           description
-          # image {
-          #   childImageSharp {
-          #     fluid(maxWidth: 380, quality: 80) {
-          #       ...GatsbyImageSharpFluid_noBase64
-          #     }
-          #   }
-          # }
+          image {
+            childImageSharp {
+              fluid(maxWidth: 380, quality: 80) {
+                ...GatsbyImageSharpFluid_noBase64
+              }
+            }
+          }
         }
       }
     }

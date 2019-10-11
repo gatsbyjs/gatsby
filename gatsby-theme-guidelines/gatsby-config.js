@@ -8,5 +8,7 @@ module.exports = {
     },
     `gatsby-transformer-yaml`,
     `gatsby-plugin-theme-ui`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
   ],
 }

@@ -8,18 +8,18 @@ import {
   Columns,
   ContentColumn,
   CopyColumn,
-} from "../components/containers"
+} from "../../components/containers"
 import {
   Intro,
   PageHeading,
   SectionHeading,
   SrOnly,
-} from "../components/typography"
-import Layout from "../components/layout"
-import Badge from "../components/badge"
+} from "../../components/typography"
+import Layout from "../../components/layout"
+import Badge from "../../components/badge"
 
-import theme, { mediaQueries } from "../gatsby-plugin-theme-ui"
-import { Box, Flex, Text } from "../components/system"
+import theme, { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { Box, Flex, Text } from "../../components/system"
 
 const ColorExample = ({ hex, token }) => (
   <tr>

@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { Global } from "@emotion/core"
 
-// import { globalStyles } from "../../../www/src/utils/styles/global"
+import { globalStyles } from "../../../www/src/utils/styles/global"
 import { Box } from "./system"
 import Header from "./header"
 // import AnotherHeader from "../../../www/src/components/navigation"
@@ -13,7 +13,7 @@ import Header from "./header"
 // import Footer from "../../../www/src/components/shared/footer-links"
 
 // Import Futura PT typeface
-// import "../../../www/src/assets/fonts/futura"
+import "../../../www/src/assets/fonts/futura"
 
 const Layout = ({ children, background, pathname, pageTitle }) => (
   <React.Fragment>
@@ -34,7 +34,7 @@ const Layout = ({ children, background, pathname, pageTitle }) => (
         },
       }}
     />
-    {/* <Global styles={globalStyles} /> */}
+    <Global styles={globalStyles} />
     <Helmet>
       <title>
         {pageTitle ? `${pageTitle} | Guidelines | GatsbyJS` : `GatsbyJS`}
