@@ -7724,3 +7724,14 @@
   built_by: Kepler Sticka-Jones
   built_by_url: https://keplersj.com/
   featured: false
+- title: viviGuides - Your travel guides
+  url: https://vivitravels.com/en/guides/
+  main_url: https://vivitravels.com/en/guides/
+  description: >
+    viviGuides is viviTravels' blog: here you will find travel tips, useful information about the cities and the best guides for your next vacation.
+  categories:
+    - Travel
+    - Blog
+  built_by: Kframe Interactive SA
+  built_by_url: https://kframeinteractive.com/
+  featured: false
