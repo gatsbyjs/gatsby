@@ -2,7 +2,6 @@
 import { jsx } from "theme-ui"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Button from "./button"
 
 const MastheadContent = () => (
@@ -11,9 +10,9 @@ const MastheadContent = () => (
     sx={{
       margin: `0 auto`,
       px: 8,
-      py: 9,
+      py: [9, null, null, 12],
+      mb: [null, null, null, 6],
       textAlign: `center`,
-      [mediaQueries.md]: { py: 12 },
     }}
   >
     <h1
@@ -33,13 +32,12 @@ const MastheadContent = () => (
       sx={{
         color: `text`,
         fontFamily: `header`,
-        fontSize: 4,
+        fontSize: [4, 5],
         lineHeight: `dense`,
         maxWidth: `45rem`,
         mb: 10,
         mt: 0,
         mx: `auto`,
-        [mediaQueries.sm]: { fontSize: 5 },
       }}
     >
       Gatsby is a free and open source framework based on React that helps

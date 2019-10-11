@@ -24,6 +24,11 @@ for (let b in bp) {
   breakpointsTokens.push(bp[b])
 }
 
+// remove the first breakpoint, `xxs: 0`
+// this made sense for styled-system and using an object
+// to define breakpoints, but not here
+breakpointsTokens.splice(0, 1)
+
 let fontsTokens = {}
 for (let fontFamily in f) {
   fontsTokens[fontFamily] = f[fontFamily].join(`, `)
@@ -365,7 +370,9 @@ export const zIndices = z
 const config = {
   // this enables the color modes feature
   // and is used as the name for the top-level colors object
-  initialColorMode: `light`,
+  initialColorModeName: `light`,
+  // `prefers-color-scheme: dark` media query
+  useColorSchemeMediaQuery: true,
   // borders: borders,
   breakpoints: breakpointsTokens,
   colors: col,
