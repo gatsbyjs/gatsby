@@ -253,29 +253,42 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
       starter && !url.parse(starter).hostname && !url.parse(starter).protocol
 
     if (/gatsby-starter/gi.test(rootPath) && isStarterAUrl) {
-      report.panic(
-        `It looks like you gave wrong argument orders . Try running instead "gatsby new ${starter} ${rootPath}"`
-      )
+      report.panic({
+        id: `11610`,
+        context: {
+          starter,
+          rootPath,
+        },
+      })
       return
     }
-    report.panic(
-      `It looks like you passed a URL to your project name. Try running instead "gatsby new new-gatsby-project ${rootPath}"`
-    )
+    report.panic({
+      id: `11611`,
+      context: {
+        rootPath,
+      },
+    })
     return
   }
 
   if (!isValid(rootPath)) {
-    report.panic(
-      `Could not create a project in "${sysPath.resolve(
-        rootPath
-      )}" because it's not a valid path`
-    )
+    report.panic({
+      id: `11612`,
+      context: {
+        path: sysPath.resolve(rootPath),
+      },
+    })
     return
   }
 
   if (existsSync(sysPath.join(rootPath, `package.json`))) {
     trackError(`NEW_PROJECT_IS_NPM_PROJECT`)
-    report.panic(`Directory ${rootPath} is already an npm project`)
+    report.panic({
+      id: `11613`,
+      context: {
+        rootPath,
+      },
+    })
     return
   }
 

@@ -5,7 +5,7 @@ title: Deploying to S3/Cloudfront
 In this guide, we'll walk through how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
 Additionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
 
-## Getting Started - AWS CLI
+## Getting Started: AWS CLI
 
 Create a [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create a access id and secret for it.
 You'll need these in the next step.
@@ -53,6 +53,25 @@ And finally, add the deployment script to your `package.json`:
 
 That's it!
 Run `npm run build && npm run deploy` to do a build and have it immediately deployed to S3!
+
+## Deploying with `.env` variables
+
+Some deployments require passing environment variables. To deploy with environment variables, update the deployment script to your `package.json`:
+
+```js:title=package.json
+"scripts" : {
+    ...
+    "deploy": "npm run -n \"-r dotenv/config\" && npm run build && gatsby-plugin-s3 deploy"
+}
+```
+
+This command requires `dotenv` first, runs build next, and finally deploys to s3. `dotenv`, a dependency of Gatsby that doesn't need to be installed directly, loads environment variables and makes them available globally.
+
+If you have multiple AWS profiles in your machine, you can deploy by declaring your `AWS_PROFILE` before the deploy script:
+
+```sh
+AWS_PROFILE=yourprofilename npm run deploy
+```
 
 ## Setting up: CloudFront
 
