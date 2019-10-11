@@ -365,7 +365,9 @@ export const zIndices = z
 const config = {
   // this enables the color modes feature
   // and is used as the name for the top-level colors object
-  initialColorMode: `light`,
+  initialColorModeName: `light`,
+  // `prefers-color-scheme: dark` media query
+  useColorSchemeMediaQuery: true,
   // borders: borders,
   breakpoints: breakpointsTokens,
   colors: col,
