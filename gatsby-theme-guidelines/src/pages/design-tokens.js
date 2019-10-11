@@ -18,7 +18,7 @@ import {
 import Layout from "../components/layout"
 import Badge from "../components/badge"
 
-import theme, { mediaQueries } from "../../../www/src/gatsby-plugin-theme-ui"
+import theme, { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { Box, Flex, Text } from "../components/system"
 
 const ColorExample = ({ hex, token }) => (

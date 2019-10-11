@@ -13,7 +13,7 @@ import {
   zIndices,
   sizes,
   transition,
-} from "../../../www/src/gatsby-plugin-theme-ui"
+} from "../gatsby-plugin-theme-ui"
 
 const theme = {
   colors: colors,

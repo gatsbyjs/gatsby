@@ -30,7 +30,7 @@ import PartnershipLockups from "!raw-loader!../assets/partnership-lockups.svg"
 import ColorSwatch from "../components/color/card"
 
 import { Box, Button, Flex, Text } from "../components/system"
-import theme from "../../../www/src/gatsby-plugin-theme-ui"
+import theme from "../gatsby-plugin-theme-ui"
 import palette from "../utils/extend-palette-info"
 
 const List = styled(`ul`)`

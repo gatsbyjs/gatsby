@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 
 import { Heading, Text } from "./system"
-import { visuallyHidden } from "../../../www/src/utils/styles"
+import { visuallyHidden } from "../utils/styles"
 
 export const PageHeading = styled(Heading)({ position: `relative` })
 

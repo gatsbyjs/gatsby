@@ -1,5 +1,5 @@
 import React from "react"
-import { colors } from "../../../../www/src/gatsby-plugin-theme-ui"
+import { colors } from "../../gatsby-plugin-theme-ui"
 
 const GatsbyLogo = ({ inverted, invertedWordmark, color, monogramColor }) => {
   let monogram = monogramColor || colors.purple[`60`]

@@ -4,8 +4,8 @@ import themeGet from "@styled-system/theme-get"
 
 import { Box, Flex, Heading, Text } from "../system"
 import { getA11yLabel, getTextColor, a11y } from "../../utils/color"
-import { focusStyle } from "../../../../www/src/utils/styles"
-import { colors as themeColors } from "../../../../www/src/gatsby-plugin-theme-ui"
+import { focusStyle } from "../../utils/styles"
+import { colors as themeColors } from "../../gatsby-plugin-theme-ui"
 
 const Column = styled(Flex)()
 

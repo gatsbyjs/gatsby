@@ -27,7 +27,7 @@ import {
   fontWeights,
   letterSpacings,
   lineHeights,
-} from "../../../www/src/gatsby-plugin-theme-ui"
+} from "../gatsby-plugin-theme-ui"
 import { Box, Button, Flex, Link, Heading, Text } from "../components/system"
 
 const ExampleBox = styled(Box)({ pt: 4 })

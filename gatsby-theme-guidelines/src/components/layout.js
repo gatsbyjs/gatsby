@@ -13,7 +13,7 @@ import Header from "./header"
 // import Footer from "../../../www/src/components/shared/footer-links"
 
 // Import Futura PT typeface
-import "../../../www/src/assets/fonts/futura"
+// import "../../../www/src/assets/fonts/futura"
 
 const Layout = ({ children, background, pathname, pageTitle }) => (
   <React.Fragment>

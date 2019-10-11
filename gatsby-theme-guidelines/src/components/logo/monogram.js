@@ -1,5 +1,5 @@
 import React from "react"
-import { colors } from "../../../../www/src/gatsby-plugin-theme-ui"
+import { colors } from "../../gatsby-plugin-theme-ui"
 
 const GatsbyMonogram = ({ fill }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" focusable="false">
