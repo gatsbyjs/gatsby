@@ -1,6 +1,6 @@
 import React from "react"
 import { cleanup, fireEvent, render } from "@testing-library/react"
-import { CustomTrackingEvent, OutboundLink } from "../"
+import { trackCustomEvent, OutboundLink } from "../"
 
 describe(`index.js`, () => {
   describe(`<OutboundLink />`, () => {
