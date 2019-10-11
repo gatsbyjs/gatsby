@@ -4061,3 +4061,17 @@
     - Google Analytics
     - Simple design
     - Markdown support
+- url: https://friendly-cray-96d631.netlify.com/
+  repo: https://github.com/PABlond/Gatsby-TypeScript-Starter-Blog
+  description: Project boilerplate of a blog app. The starter was built using Gatsby and Typescript.
+  tags:
+    - Markdown
+    - TypeScript
+    - SEO
+    - PWA
+    - SASS
+  features:
+    - A complete responsive theme built wiss Scss
+    - Easy editable posts in Markdown files
+    - SEO component
+    - Optimized with Google Lighthouse
