@@ -232,13 +232,10 @@ const watch = async rootDir => {
   })
 
   watcher = chokidar
-    .watch(
-      [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
-      {
-        // Setting useFsEvents to false fixes https://github.com/gatsbyjs/gatsby/issues/17131
-        useFsEvents: process.env.GATSBY_USE_FSEVENTS !== `0`,
-      }
-    )
+    .watch([
+      slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
+      ...packagePaths,
+    ])
     .on(`change`, path => {
       debounceCompile()
     })

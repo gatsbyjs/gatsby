@@ -44,10 +44,7 @@ exports.copyStaticDirs = () => {
 exports.syncStaticDir = () => {
   const staticDir = nodePath.join(process.cwd(), `static`)
   chokidar
-    .watch(staticDir, {
-      // Setting useFsEvents to false fixes https://github.com/gatsbyjs/gatsby/issues/17131
-      useFsEvents: process.env.GATSBY_USE_FSEVENTS !== `0`,
-    })
+    .watch(staticDir)
     .on(`add`, path => {
       const relativePath = nodePath.relative(staticDir, path)
       fs.copy(path, `${process.cwd()}/public/${relativePath}`)
