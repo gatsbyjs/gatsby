@@ -204,7 +204,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 1`] = `
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the target type name explicitly retrieved from the YAML content 1`] = `
 Array [
   Array [
     Object {
@@ -235,7 +235,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 2`] = `
+exports[`Processing YAML nodes with internal type 'File' from a YAML array of dictionaries, with the target type name explicitly retrieved from the YAML content 2`] = `
 Array [
   Array [
     Object {
@@ -416,7 +416,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 1`] = `
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the target type name explicitly retrieved from the YAML content 1`] = `
 Array [
   Array [
     Object {
@@ -434,7 +434,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 2`] = `
+exports[`Processing YAML nodes with internal type 'File' from a single YAML dictionary, with the target type name explicitly retrieved from the YAML content 2`] = `
 Array [
   Array [
     Object {
@@ -667,7 +667,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 1`] = `
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the target type name explicitly retrieved from the YAML content 1`] = `
 Array [
   Array [
     Object {
@@ -698,7 +698,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the target type name explicitely retrieved from the YAML content 2`] = `
+exports[`Processing YAML nodes with internal type other than 'File' from a YAML array of dictionaries, with the target type name explicitly retrieved from the YAML content 2`] = `
 Array [
   Array [
     Object {
@@ -871,7 +871,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 1`] = `
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the target type name explicitly retrieved from the YAML content 1`] = `
 Array [
   Array [
     Object {
@@ -889,7 +889,7 @@ Array [
 ]
 `;
 
-exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the target type name explicitely retrieved from the YAML content 2`] = `
+exports[`Processing YAML nodes with internal type other than 'File' from a single YAML dictionary, with the target type name explicitly retrieved from the YAML content 2`] = `
 Array [
   Array [
     Object {

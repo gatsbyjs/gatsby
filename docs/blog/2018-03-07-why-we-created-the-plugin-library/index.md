@@ -38,7 +38,7 @@ Next, we analyzed over 10 admirable and/or popular plugin libraries to draw from
 - [Sketch extension library](https://sketchapp.com/extensions/)
 - [Chrome plugin library](https://chrome.google.com/webstore/detail/plugins/mmcblfncjaclajmegihojiekebofjcen?hl=en)
 - [Microsoft Visual Studio Code Extensions](https://marketplace.visualstudio.com/VSCode)
-- [Wordpress Plugins](https://wordpress.org/plugins/)
+- [WordPress Plugins](https://wordpress.org/plugins/)
 - [Npms.io](https://npms.io/)
 - [Yarnpkg.com](https://yarnpkg.com/en/packages)
 - [Apple App store](https://www.apple.com/ios/app-store/)

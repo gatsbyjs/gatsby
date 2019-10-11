@@ -212,7 +212,6 @@ async function sqipContentful({ type, cache, store }) {
 
         if (width && height) {
           const aspectRatio = height / width
-          width = 256
           height = height * aspectRatio
         }
 

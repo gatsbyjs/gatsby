@@ -232,7 +232,7 @@ const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
 
 async function base64(arg) {
   if (arg.cache) {
-    // Not all tranformer plugins are going to provide cache
+    // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(arg, generateCacheKey, generateBase64)
   }
 
@@ -241,7 +241,7 @@ async function base64(arg) {
 
 async function traceSVG(args) {
   if (args.cache) {
-    // Not all tranformer plugins are going to provide cache
+    // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
   }
   return await memoizedTraceSVG(args)
