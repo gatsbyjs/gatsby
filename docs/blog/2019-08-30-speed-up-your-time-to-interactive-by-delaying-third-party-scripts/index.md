@@ -1,6 +1,6 @@
 ---
 title: Speed up your time to interactive by delaying third party scripts
-date: 2019-08-30
+date: 2019-10-12
 author: Kilian Valkhof
 excerpt: "Delay loading scripts to lower your time to interactive by over 60%"
 tags:
