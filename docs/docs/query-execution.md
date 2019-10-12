@@ -139,4 +139,4 @@ As queries are consumed from the queue and executed, their results are saved to 
 
 For static queries, instead of using the page's jsonName, Gatsby uses a hash of the query.
 
-Now you need to store the association of the page -> the query result in redux so we can recall it later. This is accomplished via the [json-data-paths](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/json-data-paths.js) reducer which you invoke by creating a `SET_JSON_DATA_PATH` action with the page's jsonName and the saved dataPath.
+Now Gatsby needs to store the association of the page -> the query result in redux so it can be recalled later. This is accomplished via the [json-data-paths](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/json-data-paths.js) reducer which is invoked by creating a `SET_JSON_DATA_PATH` action with the page's jsonName and the saved dataPath.
