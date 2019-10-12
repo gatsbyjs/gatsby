@@ -47,7 +47,7 @@ const lineHeightsTokens = {
   heading: lh.dense,
 }
 
-const darkBackground = `#111014` // meh
+const darkBackground = `#131217` // meh
 const darkBorder = c.grey[90]
 // const darkBackground = c.purple[90]
 // const darkBorder = c.purple[80]
@@ -211,8 +211,8 @@ const col = {
   modes: {
     dark: {
       background: darkBackground,
-      text: c.grey[20],
-      heading: c.white,
+      text: c.grey[30],
+      heading: c.whiteFade[90],
       textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
