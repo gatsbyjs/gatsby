@@ -113,7 +113,7 @@ There is now a list of all pages that need to be executed (linked to their Query
 }
 ```
 
-This Query Job contains everything you need to execute the query (and do things like recording dependencies between pages and nodes). So, you push it onto the queue in [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) and then wait for the queue to empty. Let's see how `query-queue` works.
+This Query Job contains everything it needs to execute the query (and do things like recording dependencies between pages and nodes). It gets pushed onto the queue in [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) and then waits for the queue to empty. Next, this doc will cover how `query-queue` works.
 
 #### Query Queue Execution
 
