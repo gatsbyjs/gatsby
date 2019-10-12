@@ -4065,10 +4065,10 @@
   repo: https://github.com/JoeTrubenstein/gatsby-starter-material-album
   description: A simple portfolio starter based on the Material UI Album Layout
   tags:
-    - Gallery
-    - Portfolio
-    - Styling:Material
+    - Gallery
+    - Portfolio
+    - Styling:Material
   features:
-    - Pagination
-    - Material UI
-    - Exif Data Parsing
+    - Pagination
+    - Material UI
+    - Exif Data Parsing
