@@ -1,5 +1,5 @@
 ---
-title: Introduction to Styling in Gatsby
+title: Introduction to styling in Gatsby
 typora-copy-images-to: ./
 disableTableOfContents: true
 ---
