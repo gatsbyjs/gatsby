@@ -16,17 +16,23 @@ Some specific things that content creators care about include:
 
 Content creators may be curious about topics such as current workflow, new possibilities, flexibility.
 
-### Current workflow
+### Use the tools you already know and love
 
-> Gatsby integrates with a bunch of data sources and CMS's, there are ways to integrate your current workflow using Gatsby. If you love using your current CMS, great! Gatsby doesn’t decide your workflow, you do.
+> Gatsby can be configured to work with any CMS, database, or any other tools, including tools you're already using. If you love using your current CMS, great! Gatsby doesn’t decide your workflow, you do.
 
-### Possibilities
+### Choose the best tools for your content and audience
 
-> Multiple data sources make it possible to create your content wherever you want to. You could add YouTube videos or any other external API as content to Gatsby. Reach your audience in new ways.
+> With Gatsby, you can pick whichever tools work best for your site and your content - choose the best CMS, the best ecommerce tool, the best video hosting, and build your own content stack without worrying about unreliable plugins or the politics of software partnerships. Have full control over how your content gets delivered to your audience.
 
 ## Conclusion
 
-Gatsby offers an immense possibilities use data from different sources. The content creator can use his or her current workflow and even expand it in ways not possible before. This allows content creators to do what they do best, create captivating content for their audience.
+Gatsby offers unparalleled flexibility so you can have the benefits of Gatsby without compromising the efficiency and power of your favorite content tools. Content creators can keep their existing workflows and have plenty of room to grow their site in exciting new ways, empowering them to do what they do best, create captivating content for their audience.
+
+## Other resources
+
+- If your content creator is also a marketer [The winning over marketers](/docs/winning-over-marketers) could also be useful.
+- If you want to read up on how to integrate Gatsby with diffrent CMSs [This part of the docs is a great starting point](/docs/headless-cms). Another great article is ["Building Sites with Headless CMSs"](/blog/2018-2-3-sites-with-headless-cms/) by Shannon Soper.
+- Another great resource is the two-part blog by Michelle Gienow ["Delicious Simplicity ❤️ Gatsby: Building Happily Ever After"](/blog/2019-06-08-delicious-simplicity-case-study-part-1/) and ["Sharing the Gatsby Love with Content Creators"](/blog/2019-09-18-delicious-simplicity-case-study-part2/) by Linda Watkins.
 
 --
 
