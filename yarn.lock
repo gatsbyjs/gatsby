@@ -9816,24 +9816,24 @@ gud@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
 
-guess-ga@^0.4.8:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.4.8.tgz#52190d8d19a4346ef39d84c7c2e6e5c98da419e3"
-  integrity sha512-sR8Nd3DsxQGGvt+nVmlJdMK9KobN9pStJp+VCkjlWQEItGboEwwSbaeGe5/EmN2KIog6aYx1FWcDLLOxFfIr3Q==
+guess-ga@^0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.4.9.tgz#d7631795c928f753a83b8b982a497c230c89fa55"
+  integrity sha512-+bSXuqlVOuzPggitFTGuNbitUgFu1S1MWeiemzggtxNjgLw/0UCFrxqpQOfx85/xLz4ITXHcvOfj1YZs8esjdg==
   dependencies:
     googleapis "^43.0.0"
 
-guess-webpack@~0.4.8:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.8.tgz#f742472064ddad921be2f167fc0a81b84177dfcb"
-  integrity sha512-WQ6HbV02vlFm+FtLDgS4G6xZBnhiuoTVrTe13KrK0epnf8ggRcFj2ZMpon9RgMQscNT9//yY7w9pL8xzyqKzDA==
+guess-webpack@~0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.9.tgz#d23b35b7cf1b6c1b95face95d594f9b69494274f"
+  integrity sha512-rdtsMI3vTZzgWHO3tsw6iM9nbrkeK9Mjar0gHD1unVa1x5MCxoXWHjroIXCokLEInzi/VWbkpIY/ng6ulyqigQ==
   dependencies:
     chalk "^2.4.2"
     copy-webpack-plugin "^5.0.0"
     flat-cache "^2.0.0"
     google-oauth2-node "0.0.3"
     googleapis "^43.0.0"
-    guess-ga "^0.4.8"
+    guess-ga "^0.4.9"
     lodash.template "^4.4.0"
     rollup "^1.0.0"
     rollup-plugin-hypothetical "^2.1.0"
