@@ -2,7 +2,7 @@
 title: Deploying to Netlify
 ---
 
-In this guide, we'll walk through how to deploy and host your next Gatsby site on [Netlify](https://www.netlify.com/).
+In this guide, you'll walk through how to deploy and host your next Gatsby site on [Netlify](https://www.netlify.com/).
 
 Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified
 platform that automates your code to create performant, easily maintainable

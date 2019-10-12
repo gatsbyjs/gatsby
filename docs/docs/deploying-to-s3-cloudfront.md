@@ -2,7 +2,7 @@
 title: Deploying to S3/Cloudfront
 ---
 
-In this guide, we'll walk through how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
+In this guide, you'll walk through how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
 Additionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
 
 ## Getting Started: AWS CLI
@@ -21,9 +21,9 @@ The AWS CLI will now prompt you for the key & secret, add them.
 
 ## Setting up: S3
 
-Now that we have our Gatsby site up & running, and our AWS access sorted out: let's add hosting & make the site live on AWS.
+Now that you have your Gatsby site up & running, and your AWS access sorted out: let's add hosting & make the site live on AWS.
 
-First, we'll install the Gatsby S3 plugin:
+First, you'll install the Gatsby S3 plugin:
 
 ```shell
 npm i gatsby-plugin-s3
