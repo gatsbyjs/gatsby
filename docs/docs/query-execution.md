@@ -117,7 +117,7 @@ This Query Job contains everything it needs to execute the query (and do things 
 
 #### Query Queue Execution
 
-[query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) creates a [better-queue](https://www.npmjs.com/package/better-queue) queue that offers advanced features like parallel execution, which is handy since queries do not depend on each other so you can take advantage of this. Every time an item is consumed from the queue, you call [query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js) where you finally actually execute the query!
+[query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) creates a [better-queue](https://www.npmjs.com/package/better-queue) queue that offers advanced features like parallel execution, which is handy since queries do not depend on each other so Gatsby can take advantage of this. Every time an item is consumed from the queue, it calls [query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js) where it can finally execute the query!
 
 Query execution involves calling the [graphql-js](https://graphql.org/graphql-js/) library with 3 pieces of information:
 
