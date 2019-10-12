@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.6.3",
+    "@babel/core": "^7.6.4",
     "@babel/node": "^7.6.3",
     "@babel/runtime": "^7.6.3",
     "@lerna/prompt": "3.13.0",
