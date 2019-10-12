@@ -50,7 +50,7 @@ function createItems(items, location, depth, maxDepth) {
           {item.title}
         </Link>
         {item.items && isUnderDepthLimit(depth, maxDepth) && (
-          <ul sx={{ ml: 6 }}>
+          <ul sx={{ color: `textMuted`, listStyle: `none`, ml: 5 }}>
             {createItems(item.items, location, depth + 1, maxDepth)}
           </ul>
         )}
@@ -61,24 +61,35 @@ function createItems(items, location, depth, maxDepth) {
 
 function TableOfContents({ page, location }) {
   return page.tableOfContents.items ? (
-    <nav>
+    <nav
+      sx={{
+        mb: [8, null, null, null, null, 0],
+        pb: [6, null, null, null, null, 0],
+        borderBottom: t => [
+          `1px solid ${t.colors.ui.border}`,
+          null,
+          null,
+          null,
+          null,
+          0,
+        ],
+      }}
+    >
       <h2
         sx={{
-          textTransform: `uppercase`,
-          fontSize: 1,
           color: `textMuted`,
+          fontSize: 1,
           letterSpacing: `tracked`,
           mt: 0,
+          textTransform: `uppercase`,
         }}
       >
         Table of Contents
       </h2>
       <ul
         sx={{
-          [mediaQueries.xl]: {
-            listStyle: `none`,
-            m: 0,
-          },
+          listStyle: `none`,
+          m: 0,
         }}
       >
         {createItems(
