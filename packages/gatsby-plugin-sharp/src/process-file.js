@@ -33,6 +33,9 @@ const argsWhitelist = [
   `toFormat`,
   `pngCompressionLevel`,
   `quality`,
+  `jpeg_quality`,
+  `png_quality`,
+  `webp_quality`,
   `jpegProgressive`,
   `grayscale`,
   `rotate`,
@@ -50,6 +53,9 @@ const argsWhitelist = [
  * @property {string} toFormat
  * @property {number} pngCompressionLevel
  * @property {number} quality
+ * @property {number} jpeg_quality
+ * @property {number} png_quality
+ * @property {number} webp_quality
  * @property {boolean} jpegProgressive
  * @property {boolean} grayscale
  * @property {number} rotate
@@ -144,7 +150,7 @@ exports.processFile = (file, contentDigest, transforms, options = {}) => {
         force: args.toFormat === `png`,
       })
       .webp({
-        quality: args.quality,
+        quality: args.webp_quality || args.quality,
         force: args.toFormat === `webp`,
       })
       .tiff({
@@ -155,7 +161,7 @@ exports.processFile = (file, contentDigest, transforms, options = {}) => {
     // jpeg
     if (!options.useMozJpeg) {
       clonedPipeline = clonedPipeline.jpeg({
-        quality: args.quality,
+        quality: args.jpeg_quality || args.quality,
         progressive: args.jpegProgressive,
         force: args.toFormat === `jpg`,
       })
@@ -210,10 +216,12 @@ const compressPng = (pipeline, outputPath, options) =>
       .buffer(sharpBuffer, {
         plugins: [
           imageminPngquant({
-            quality: `${options.quality}-${Math.min(
-              options.quality + 25,
-              100
-            )}`, // e.g. 40-65
+            quality: options.png_quality
+              ? `${options.png_quality}-${Math.min(
+                  options.png_quality + 25,
+                  100
+                )}`
+              : `${options.quality}-${Math.min(options.quality + 25, 100)}`, // e.g. 40-65
             speed: options.pngCompressionSpeed
               ? options.pngCompressionSpeed
               : undefined,
@@ -230,7 +238,7 @@ const compressJpg = (pipeline, outputPath, options) =>
       .buffer(sharpBuffer, {
         plugins: [
           imageminMozjpeg({
-            quality: options.quality,
+            quality: options.jpeg_quality || options.quality,
             progressive: options.jpegProgressive,
           }),
         ],
@@ -242,7 +250,9 @@ const compressWebP = (pipeline, outputPath, options) =>
   pipeline.toBuffer().then(sharpBuffer =>
     imagemin
       .buffer(sharpBuffer, {
-        plugins: [imageminWebp({ quality: options.quality })],
+        plugins: [
+          imageminWebp({ quality: options.webp_quality || options.quality }),
+        ],
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )

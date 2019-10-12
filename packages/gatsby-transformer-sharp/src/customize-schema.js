@@ -148,6 +148,15 @@ const fixedNodeType = ({
       quality: {
         type: GraphQLInt,
       },
+      jpeg_quality: {
+        type: GraphQLInt,
+      },
+      png_quality: {
+        type: GraphQLInt,
+      },
+      webp_quality: {
+        type: GraphQLInt,
+      },
       toFormat: {
         type: ImageFormatType,
         defaultValue: ``,
@@ -294,6 +303,15 @@ const fluidNodeType = ({
         defaultValue: false,
       },
       quality: {
+        type: GraphQLInt,
+      },
+      jpeg_quality: {
+        type: GraphQLInt,
+      },
+      png_quality: {
+        type: GraphQLInt,
+      },
+      webp_quality: {
         type: GraphQLInt,
       },
       toFormat: {
@@ -454,6 +472,15 @@ const createFields = ({
           type: GraphQLInt,
         },
         quality: {
+          type: GraphQLInt,
+        },
+        jpeg_quality: {
+          type: GraphQLInt,
+        },
+        png_quality: {
+          type: GraphQLInt,
+        },
+        webp_quality: {
           type: GraphQLInt,
         },
         jpegProgressive: {

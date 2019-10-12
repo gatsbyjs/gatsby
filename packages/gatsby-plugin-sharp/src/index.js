@@ -176,12 +176,12 @@ async function generateBase64({ file, args, reporter }) {
       force: args.toFormat === `png`,
     })
     .jpeg({
-      quality: options.quality,
+      quality: options.jpeg_quality ? options.jpeg_quality : options.quality,
       progressive: options.jpegProgressive,
       force: args.toFormat === `jpg`,
     })
     .webp({
-      quality: options.quality,
+      quality: options.webp_quality ? options.webp_quality : options.quality,
       force: args.toFormat === `webp`,
     })
 
