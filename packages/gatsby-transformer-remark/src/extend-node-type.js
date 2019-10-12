@@ -301,7 +301,9 @@ module.exports = (
 
             return node
           }
-          tocAst.map = addSlugToUrl(tocAst.map)
+          if (!appliedTocOptions.relative) {
+            tocAst.map = addSlugToUrl(tocAst.map)
+          }
 
           toc = hastToHTML(toHAST(tocAst.map))
         } else {
@@ -599,6 +601,7 @@ module.exports = (
       tableOfContents: {
         type: `String`,
         args: {
+          relative: `Boolean`,
           pathToSlugField: {
             type: `String`,
             defaultValue: `fields.slug`,
