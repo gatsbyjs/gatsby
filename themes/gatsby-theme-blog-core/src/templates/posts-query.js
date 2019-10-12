@@ -22,6 +22,13 @@ export const query = graphql`
           slug
           title
           date(formatString: "MMMM DD, YYYY")
+          featuredImage {
+            childImageSharp {
+              fluid(maxWidth: 1380) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
         }
       }
     }

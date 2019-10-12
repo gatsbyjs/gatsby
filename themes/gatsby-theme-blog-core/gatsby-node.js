@@ -55,6 +55,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       tags: [String]!
       keywords: [String]!
       excerpt: String!
+      featuredImage: File @fileByRelativePath
   }`)
 
   createTypes(
@@ -71,6 +72,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         date: { type: `Date!`, extensions: { dateformat: {} } },
         tags: { type: `[String]!` },
         keywords: { type: `[String]!` },
+        featuredImage: { type: `File`, extensions: { fileByRelativePath: {} } },
         excerpt: {
           type: `String!`,
           args: {
@@ -135,6 +137,7 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
+      featuredImage: node.frontmatter.featuredImage,
     }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)

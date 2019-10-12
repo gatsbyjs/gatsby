@@ -23,6 +23,13 @@ export const query = graphql`
       tags
       keywords
       date(formatString: "MMMM DD, YYYY")
+      featuredImage {
+        childImageSharp {
+          fluid(maxWidth: 1380) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
     }
     previous: blogPost(id: { eq: $previousId }) {
       id
