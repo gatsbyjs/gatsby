@@ -4061,3 +4061,17 @@
     - Google Analytics
     - Simple design
     - Markdown support
+- url: https://gatsby-starter-leaflet.netlify.com/
+  repo: https://github.com/colbyfayock/gatsby-starter-leaflet
+  description: A Gatsby starter with Leafet!
+  tags:
+    - Landing Page
+    - Linting
+    - Mapping:Leaflet
+    - Styling:SCSS
+    - Testing
+  features:
+    - Simply landing page to get started with Leaflet
+    - Includes Leaflet and React Leaflet
+    - Starts with some basic Sass stylesheets for styling
+    - Linting and testing preconfigured
