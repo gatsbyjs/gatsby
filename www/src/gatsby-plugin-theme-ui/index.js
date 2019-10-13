@@ -212,7 +212,7 @@ const col = {
     dark: {
       background: darkBackground,
       text: c.grey[30],
-      heading: c.whiteFade[90],
+      heading: c.whiteFade[80],
       textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
