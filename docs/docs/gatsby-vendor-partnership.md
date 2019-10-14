@@ -78,7 +78,7 @@ Depending on your size and reach, there are a few ways we can work together.
 
 2. **Blogging about your integration.** Our [gatsbyjs.org](/blog/) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
 
-If you’re an established vendor adding a Gatsby integration, we’d love for you to tell that story on our blog (eg [Kentico Cloud](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](/docs/how-to-contribute/#contributing-to-the-blog).
+If you’re an established vendor adding a Gatsby integration, we’d love for you to tell that story on our blog (e.g. [Kentico Cloud](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](/docs/how-to-contribute/#contributing-to-the-blog).
 
 3. **Writing a case study**. If you have customers using Gatsby & your solution, you can work with our marketing team at marketing@gatsbyjs.com to put together a joint case study of how our solutions work together, and post this on the gatsbyjs.org blog
 
@@ -98,7 +98,7 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 - A button in the CMS editor where users can click through to Preview
 
-- Featured on a plugin marketplace, if applicable. Eg, [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview-sidebar/)
+- Featured on a plugin marketplace, if applicable. E.g., [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview-sidebar/)
 
 #### Marketing & Sales:
 

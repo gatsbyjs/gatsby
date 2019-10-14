@@ -3968,18 +3968,6 @@
     - Portfolio
   built_by: Maxim Andries
   featured: false
-- title: The Tenon.io blog
-  main_url: https://blog.tenon.io/
-  url: https://blog.tenon.io/
-  description: >
-    The Tenon.io blog features articles on accessibility written by some of the industry's leading lights and includes news, guidance, and education.
-  categories:
-    - Accessibility
-    - Blog
-    - Education
-  built_by: Tenon.io
-  built_by_url: https://tenon.io
-  featured: false
 - title: Algolia
   url: https://algolia.com
   main_url: https://algolia.com
@@ -7530,6 +7518,32 @@
   categories:
     - Education
     - Learning
+- title: AJ on Purr-fect Solutions
+  url: https://ajonp.com
+  main_url: https://ajonp.com
+  description: >
+    A Community of developers, creating resources for all to use!
+  categories:
+    - Education
+    - Learning
+    - Programming
+    - Web Development
+    - API
+    - Blog
+    - SEO
+  built_by: AJonP
+  built_by_url: http://ajonp.com/authors/alex-patterson
+- title: blog.kwst.site
+  main_url: https://blog.kwst.site
+  url: https://blog.kwst.site
+  description: A blog of frontend engineer working in Fukuoka
+  source_url: https://github.com/SatoshiKawabata/blog
+  featured: false
+  categories:
+    - Blog
+    - Technology
+    - Web Development
+    - JavaScript
 - title: Run Leeds
   main_url: http://www.runleeds.co.uk
   url: http://www.runleeds.co.uk
@@ -7642,4 +7656,88 @@
     - Technology
   built_by: Peter Hironaka
   built_by_url: "https://peterhironaka.com"
+  featured: false
+- title: Roman Kravets
+  description: >
+    Portfolio of Roman Kravets. Web Developer, HTML & CSS Coder.
+  main_url: "https://romkravets.netlify.com/"
+  url: "https://romkravets.netlify.com/"
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+    - Blog
+  built_by: Roman Kravets
+  built_by_url: "https://github.com/romkravets/dev-page"
+  featured: false
+- title: Phil Tietjen Portfolio
+  url: https://www.philtietjen.dev/
+  main_url: https://www.philtietjen.dev/
+  source_url: https://github.com/Phizzard/phil-portfolio
+  description: >
+    Portfolio of Phil Tietjen using Gatsby, TailwindCSS, and Emotion/styled
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Phil Tietjen
+  built_by_url: https://github.com/Phizzard
+  featured: false
+- title: Gatsby Bomb
+  description: >
+    A fan made version of the website Giantbomb, fully static and powered by Gatsby JS and the GiantBomb API.
+  main_url: "https://gatsbybomb.netlify.com"
+  url: "https://gatsbybomb.netlify.com"
+  categories:
+    - App
+    - Entertainment
+    - Media
+    - Video
+  built_by: Phil Tietjen
+  built_by_url: "https://github.com/Phizzard"
+  featured: false
+- title: AtomBuild
+  url: https://atombuild.github.io/
+  main_url: https://atombuild.github.io/
+  source_url: https://github.com/AtomBuild/atombuild.github.io
+  description: >
+    Landing page for the AtomBuild project, offering a curation of Atom packages associated with the project.
+- title: Josh Pensky
+  main_url: https://joshpensky.com
+  url: https://joshpensky.com
+  description: >
+    Josh Pensky is an interactive developer based in Boston. He designs and builds refreshing web experiences, packed to the punch with delightful interactions.
+  categories:
+    - Portfolio
+    - Web Development
+    - Design
+    - SEO
+  built_by: Josh Pensky
+  built_by_url: https://github.com/joshpensky
+  featured: false
+- title: AtomLinter
+  url: https://atomlinter.github.io/
+  main_url: https://atomlinter.github.io/
+  source_url: https://github.com/AtomLinter/atomlinter.github.io
+  description: >
+    Landing page for the AtomLinter project, offering a curation of Atom packages associated with the project.
+  categories:
+    - Directory
+    - Landing Page
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Kepler Sticka-Jones
+  built_by_url: https://keplersj.com/
+  featured: false
+- title: viviGuides - Your travel guides
+  url: https://vivitravels.com/en/guides/
+  main_url: https://vivitravels.com/en/guides/
+  description: >
+    viviGuides is viviTravels' blog: here you will find travel tips, useful information about the cities and the best guides for your next vacation.
+  categories:
+    - Travel
+    - Blog
+  built_by: Kframe Interactive SA
+  built_by_url: https://kframeinteractive.com/
   featured: false

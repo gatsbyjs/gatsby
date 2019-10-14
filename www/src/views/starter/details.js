@@ -1,9 +1,9 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import { colors, space, radii, mediaQueries, fonts } from "../../utils/presets"
-import { options, rhythm } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
-import FaExtLink from "react-icons/lib/fa/external-link"
+import MdLaunch from "react-icons/lib/md/launch"
+
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const Details = ({
   allDeps,
@@ -13,26 +13,27 @@ const Details = ({
   startersYaml,
 }) => (
   <div
-    css={{
-      padding: space[6],
-      [mediaQueries.lg]: {
-        padding: space[8],
+    sx={{
+      p: 6,
+      [mediaQueries.md]: {
         display: `grid`,
+        gridRowGap: 6,
+        gridColumnGap: 6,
         gridTemplateColumns: `auto 1fr`,
-        gridRowGap: space[5],
+        p: 8,
       },
     }}
   >
-    <div css={styles.headline}>Tags</div>
-    <div>{startersYaml.tags.join(`, `)}</div>
+    <h2 sx={styles.headline}>Tags</h2>
+    <div sx={styles.content}>{startersYaml.tags.join(`, `)}</div>
 
-    <div css={styles.headline}>Description</div>
-    <div>{startersYaml.description}</div>
+    <h2 sx={styles.headline}>Description</h2>
+    <div sx={styles.content}>{startersYaml.description}</div>
 
-    <div css={styles.headline}>Features</div>
-    <div>
+    <h2 sx={styles.headline}>Features</h2>
+    <div sx={styles.content}>
       {startersYaml.features ? (
-        <ul css={{ marginTop: 0 }}>
+        <ul sx={{ mt: 0 }}>
           {startersYaml.features.map((f, i) => (
             <li key={i}>{f}</li>
           ))}
@@ -42,16 +43,15 @@ const Details = ({
       )}
     </div>
 
-    <div css={styles.headline}>Dependencies</div>
+    <h2 sx={styles.headline}>Dependencies</h2>
 
     <div>
       <div
-        css={{
+        sx={{
           display: `grid`,
-          marginBottom: rhythm(options.blockMarginBottom * 5),
           [mediaQueries.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridGap: space[5],
+            gridGap: 5,
           },
         }}
       >
@@ -62,16 +62,16 @@ const Details = ({
                 <Link to={`/packages/${dep}`}>{dep}</Link>
               </div>
             ) : (
-              <div key={dep} css={{ ...sharedStyles.truncate }}>
+              <div key={dep}>
                 <a href={`https://npm.im/${dep}`}>
                   {`${dep} `}
-                  <FaExtLink />
+                  <MdLaunch />
                 </a>
               </div>
             )
           )}
         {showMore && (
-          <button css={{ ...styles.showMoreButton }} onClick={showAllDeps}>
+          <button sx={styles.showMoreButton} onClick={showAllDeps}>
             {`Show ${allDeps.length - shownDeps.length} more`}
           </button>
         )}
@@ -84,22 +84,31 @@ export default Details
 
 const styles = {
   headline: {
-    color: colors.text.secondary,
-    fontFamily: fonts.header,
-    paddingRight: space[5],
+    color: `textMuted`,
+    fontWeight: `normal`,
+    fontSize: 3,
+    mt: 0,
+    mb: 2,
+    [mediaQueries.md]: {
+      mb: 0,
+    },
+  },
+  content: {
+    pb: 8,
+    [mediaQueries.md]: { pb: 0 },
   },
   showMoreButton: {
-    backgroundColor: colors.gatsby,
+    backgroundColor: `gatsby`,
     border: 0,
-    borderRadius: radii[1],
+    borderRadius: 1,
     cursor: `pointer`,
-    fontFamily: fonts.header,
+    fontFamily: `header`,
     fontWeight: `bold`,
-    padding: `${space[1]} ${space[4]}`,
-    WebkitFontSmoothing: `antialiased`,
+    py: 1,
+    px: 4,
     "&&": {
       borderBottom: `none`,
-      color: colors.white,
+      color: `white`,
     },
   },
 }

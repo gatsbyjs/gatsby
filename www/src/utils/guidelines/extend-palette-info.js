@@ -1,7 +1,7 @@
 import { capitalize } from "lodash-es"
 
 import { colorable } from "../../utils/guidelines/color"
-import theme from "../../utils/guidelines/theme"
+import { colors } from "../../gatsby-plugin-theme-ui"
 
 // Palette meta information
 const meta = {
@@ -68,21 +68,21 @@ const meta = {
   },
 }
 
-// Merge info from `meta` and `theme.colors`
+// Merge info from `meta` and `colors`
 // and add contrast and accessibility information
 let palette = []
 
-for (var color in theme.colors) {
+for (var color in colors) {
   let m = meta[color]
   let c = {}
 
-  if (m && typeof theme.colors[color] === `object` && color !== `ui`) {
-    Object.keys(theme.colors[color])
+  if (m && typeof colors[color] === `object` && color !== `ui`) {
+    Object.keys(colors[color])
       .sort((a, b) => a - b)
       .forEach(shade => {
         c[shade] = {
-          hex: theme.colors[color][shade],
-          ...colorable(theme.colors[color][shade]),
+          hex: colors[color][shade],
+          ...colorable(colors[color][shade]),
           ...(m.base && m.base === shade && { base: true }),
           ...(m.meta &&
             m.meta[shade] && {
@@ -98,12 +98,12 @@ for (var color in theme.colors) {
       ...(m.base && m.base ? { base: m.base } : {}), // Base color index
       colors: c,
     }
-  } else if (typeof theme.colors[color] === `string`) {
+  } else if (typeof colors[color] === `string`) {
     palette[color] = {
       name: capitalize(color), // Color group name
       color: {
-        hex: theme.colors[color],
-        ...colorable(theme.colors[color]),
+        hex: colors[color],
+        ...colorable(colors[color]),
         ...(m &&
           m.meta && {
             name: m.meta.name,

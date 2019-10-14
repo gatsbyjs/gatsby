@@ -1,34 +1,28 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 
-import {
-  colors,
-  space,
-  mediaQueries,
-  lineHeights,
-  fontSizes,
-  fonts,
-} from "../utils/presets"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const prevNextLinkStyles = {
   // bump specificity to override the border applied to Link's by default
   "&&": {
     borderBottom: 0,
   },
-  color: colors.gatsby,
-  fontFamily: fonts.header,
-  fontSize: fontSizes[3],
+  color: `gatsby`,
+  fontFamily: `header`,
+  fontSize: 3,
   fontWeight: `bold`,
-  lineHeight: lineHeights.dense,
+  lineHeight: `dense`,
 }
 const prevNextLabelStyles = {
-  color: colors.text.secondary,
-  fontSize: fontSizes[2],
-  fontWeight: `normal`,
-  marginBottom: space[2],
-  marginTop: 0,
+  color: `textMuted`,
+  fontSize: 2,
+  fontWeight: `body`,
+  mb: 2,
+  mt: 0,
 }
 
 const PrevAndNext = ({ prev = null, next = null, ...props }) => {
@@ -39,7 +33,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
   return (
     <nav
       aria-label="pagination"
-      css={{
+      sx={{
         [mediaQueries.sm]: {
           display: `flex`,
           justifyContent: `space-between`,
@@ -50,40 +44,40 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
     >
       <div css={{ [mediaQueries.sm]: { width: `48%` } }}>
         {prev && (
-          <Link to={prev.link} css={prevNextLinkStyles}>
-            <h4 css={prevNextLabelStyles}>Previous</h4>
+          <Link to={prev.link} sx={prevNextLinkStyles}>
+            <p sx={prevNextLabelStyles}>Previous</p>
             <span
-              css={{
+              sx={{
                 [mediaQueries.md]: {
-                  marginLeft: `-${space[4]}`,
+                  marginLeft: t => `-${t.space[4]}`,
                 },
               }}
             >
-              <ArrowBackIcon style={{ verticalAlign: `sub` }} />
+              <ArrowBackIcon sx={{ verticalAlign: `sub` }} />
               {prev.title}
             </span>
           </Link>
         )}
       </div>
       <div
-        css={{
+        sx={{
           textAlign: `right`,
-          marginTop: space[5],
-          [mediaQueries.sm]: { marginTop: 0, width: `48%` },
+          mt: 5,
+          [mediaQueries.sm]: { mt: 0, width: `48%` },
         }}
       >
         {next && (
-          <Link to={next.link} css={prevNextLinkStyles}>
-            <h4 css={prevNextLabelStyles}>Next</h4>
+          <Link to={next.link} sx={prevNextLinkStyles}>
+            <p sx={prevNextLabelStyles}>Next</p>
             <span
-              css={{
+              sx={{
                 [mediaQueries.md]: {
-                  marginRight: `-${space[4]}`,
+                  marginRight: t => `-${t.space[4]}`,
                 },
               }}
             >
               {next.title}
-              <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
+              <ArrowForwardIcon sx={{ verticalAlign: `sub` }} />
             </span>
           </Link>
         )}
