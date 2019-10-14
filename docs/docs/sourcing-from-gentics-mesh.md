@@ -20,7 +20,7 @@ Gentics Mesh is a self-hosted CMS. You can run it for example via [Docker](https
 docker run -p 8080:8080 -d gentics/mesh-demo
 ```
 
-The UI can be accessed on http://localhost:8080/mesh-ui/ with default login (admin/admin).
+The UI can be accessed on `http://localhost:8080/mesh-ui/` with default login (admin/admin).
 
 ### Install the boilerplate
 
