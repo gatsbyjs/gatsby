@@ -22,7 +22,7 @@ One more step - when you build out this application, you need to add a flag so t
 
 ### The `--prefix-paths` flag
 
-When building with an `assetPrefix`, you require a `--prefix-paths` flag. If this flag is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure your build out successfully, use the following command:
+When building with an `assetPrefix`, you require a `--prefix-paths` flag. If this flag is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure you build out successfully, use the following command:
 
 ```shell
 gatsby build --prefix-paths
