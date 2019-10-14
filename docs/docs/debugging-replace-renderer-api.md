@@ -51,7 +51,7 @@ You'll need to override your plugins' `replaceRenderer` code in your `gatsby-ssr
 
 ### Initial setup
 
-In this example project we're using [`redux`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) and [Gatsby's Styled Components plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components).
+In this example project you're using [`redux`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux) and [Gatsby's Styled Components plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-styled-components).
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -80,7 +80,7 @@ Note that the Styled Components plugin uses `replaceRenderer`, and the code in `
 
 ### Fixing the `replaceRenderer` error
 
-Our `gatsby-config.js` file will remain unchanged. However, our `gatsby-ssr.js` file will update to include the [`replaceRenderer` functionality from the Styled Components plugin](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-styled-components/src/gatsby-ssr.js)
+Your `gatsby-config.js` file will remain unchanged. However, your `gatsby-ssr.js` file will update to include the [`replaceRenderer` functionality from the Styled Components plugin](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-styled-components/src/gatsby-ssr.js)
 
 ```js:title=gatsby-ssr.js
 import React from "react"
