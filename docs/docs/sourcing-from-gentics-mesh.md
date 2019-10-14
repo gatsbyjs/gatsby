@@ -24,7 +24,7 @@ The UI can be accessed on http://localhost:8080/mesh-ui/ with default login (adm
 
 ### Install the boilerplate
 
-Now let's create a simple Gatsby starter site.
+Now create a simple Gatsby starter site.
 
 ```shell
 gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
