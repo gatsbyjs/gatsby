@@ -1,5 +1,5 @@
 ---
-title: Adding search with js-search
+title: Adding Search with JS Search
 ---
 
 ## Prerequisites

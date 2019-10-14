@@ -46,6 +46,6 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 
 - **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
 
-### Miscellaneous:
+### Miscellaneous
 
 The file/folder structure described above reflects Gatsby-specific files and folders. Since Gatsby sites are also React apps, it's common to use standard React code organization patterns such as folders like `/components` and `/utils` inside `/src`. The [React docs](https://reactjs.org/docs/faq-structure.html) have more information on a typical React app folder structure.
