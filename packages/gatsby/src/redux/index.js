@@ -49,6 +49,7 @@ const configureStore = initialState =>
   )
 
 const initialState = readState()
+// Page data does not be persisted
 initialState.pages = new Map()
 const store = configureStore(initialState) // Persist state.
 
