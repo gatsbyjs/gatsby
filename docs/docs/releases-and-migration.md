@@ -1,5 +1,5 @@
 ---
-title: "Releases & Migration"
+title: Releases & Migration
 overview: true
 ---
 
