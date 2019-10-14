@@ -363,7 +363,7 @@ module.exports = async (program: any) => {
 
   activity = report.activityTimer(`run page queries`)
   activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, program, { activity })
+  await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
