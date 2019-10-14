@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.59...gatsby-cli@2.8.0) (2019-10-14)
+
+### Features
+
+- **gatsby:** structured logging ([#14973](https://github.com/gatsbyjs/gatsby/issues/14973)) ([eafb8c6](https://github.com/gatsbyjs/gatsby/commit/eafb8c6))
+
 ## [2.7.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.58...gatsby-cli@2.7.59) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-cli
