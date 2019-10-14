@@ -7750,3 +7750,14 @@
   built_by: Kframe Interactive SA
   built_by_url: https://kframeinteractive.com/
   featured: false
+- title: Arturo Alviar's Portfolio
+  main_url: "https://arturoalviar.com"
+  url: "https://arturoalviar.com"
+  source_url: "https://github.com/arturoalviar/portfolio"
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Arturo Alviar
+  built_by_url: "https://github.com/arturoalviar"
+  featured: false
