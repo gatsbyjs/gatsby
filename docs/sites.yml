@@ -7796,6 +7796,22 @@
   built_by: Kframe Interactive SA
   built_by_url: https://kframeinteractive.com/
   featured: false
+- title: Sagar Hani Portfolio
+  url: http://sagarhani.in/
+  main_url: http://sagarhani.in/
+  source_url: https://github.com/sagarhani
+  description: >
+    Sagar Hani is a Software Developer & an Open Source Enthusiast. He blogs about JavaScript, Open Source and his Life experiences.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+    - Open Source
+    - Technology
+    - Programming
+    - JavaScript
+  built_by: Sagar Hani
+  built_by_url: http://sagarhani.in/about
 - title: Arturo Alviar's Portfolio
   main_url: "https://arturoalviar.com"
   url: "https://arturoalviar.com"
