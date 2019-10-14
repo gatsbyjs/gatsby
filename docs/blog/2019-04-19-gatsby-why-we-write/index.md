@@ -50,11 +50,11 @@ There's tons of overlap - _why_ points to _how_, and _how_ points to _why_. You 
 
 - Marcy's Q2 2019 project is to catalogue the **[Top 25 Workflows](https://docs.google.com/presentation/d/1YJ_4NGwxPqtMo-kyWBmg7NBr_YYZezKZ1phXjl0abD4/edit#slide=id.gcb9a0b074_1_0)** people do with Gatsby and improve the experience for 5-10 of them. You'll notice that many of them are not exclusive to Gatsby, instead they're "what you need to do in order to build a website".
 
-- We identified about 50 key messages relating Gatsby to _high-level benefits_ (such as improving security, reducing cost, simplifying your stack), to _different technologies_ (Wordpress, Drupal), _vendors_ (Contentful, AWS), and _communities_(JAMStack, modern development, accessibility). In addition, they cover messages that are important for the wide range of personas in the Gatsby ecosystem -- marketers, educators, open-source contributors, plugin authors, numerous flavors of developers, etc.
+- We identified about 50 key messages relating Gatsby to _high-level benefits_ (such as improving security, reducing cost, simplifying your stack), to _different technologies_ (WordPress, Drupal), _vendors_ (Contentful, AWS), and _communities_(JAMStack, modern development, accessibility). In addition, they cover messages that are important for the wide range of personas in the Gatsby ecosystem -- marketers, educators, open-source contributors, plugin authors, numerous flavors of developers, etc.
 
 Each of these 70-80 messages & workflows probably has ~10 sub-workflows/sub-messages/features — imagine for each of these we had 3-5 case studies, docs pages, dedicated tutorials, starters/themes with annotated open-source source code -- that's thousands, probably tens of thousands, of pieces of content. _That's why we've only scratched the surface of what's possible._
 
-Our ideal version of Gatsby is a hyperconnected city — connected to all of these somewhat disparate communities (Wordpress, Drupal, modern frontend, accessibility), and so on.
+Our ideal version of Gatsby is a hyperconnected city — connected to all of these somewhat disparate communities (WordPress, Drupal, modern frontend, accessibility), and so on.
 
 People from each of the communities who have discovered Gatsby are the experts on delivering the message of "why Gatsby" to that community.
 
@@ -64,7 +64,7 @@ In our content database, which lives in Airtable, we store an auto-updating colu
 
 But...there's a lot of ground to cover? **Yes, there is.**
 
-It's essential to our mission, though, because in order to become the default choice for building on the web, people need to realize that _Gatsby can do anything you conceivably want_ - this is why Wordpress became 30% of the internet! - and we emphasize that by writing about all use cases.
+It's essential to our mission, though, because in order to become the default choice for building on the web, people need to realize that _Gatsby can do anything you conceivably want_ - this is why WordPress became 30% of the internet! - and we emphasize that by writing about all use cases.
 
 _"Gatsby can't do X"_ gets rebutted by _"Here's a case study of Gatsby doing X"_.
 
