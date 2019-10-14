@@ -18,31 +18,31 @@ module.exports = {
 }
 ```
 
-One more step - when we build out this application, we need to add a flag so that Gatsby picks up this option.
+One more step - when you build out this application, you need to add a flag so that Gatsby picks up this option.
 
 ### The `--prefix-paths` flag
 
-When building with an `assetPrefix`, we require a `--prefix-paths` flag. If this flag is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure we build out successfully, use the following command:
+When building with an `assetPrefix`, you require a `--prefix-paths` flag. If this flag is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure you build out successfully, use the following command:
 
 ```shell
 gatsby build --prefix-paths
 ```
 
-That's it! We now have an application that is ready to have its assets deployed from a CDN and its core files (e.g. HTML files) can be hosted on a separate domain.
+That's it! You have an application that is ready to have its assets deployed from a CDN and its core files (e.g. HTML files) can be hosted on a separate domain.
 
 ## Building / Deploying
 
-Once your application is built out, all assets will be automatically prefixed by this asset prefix. For example, if we have a JavaScript file `app-common-1234.js`, the script tag will look something like:
+Once your application is built out, all assets will be automatically prefixed by this asset prefix. For example, if you have a JavaScript file `app-common-1234.js`, the script tag will look something like:
 
 ```html
 <script src="https://cdn.example.com/app-common-1234.js"></script>
 ```
 
-However - if we were to deploy our application as-is, those assets would not be available! We can do this in a few ways, but the general approach will be to deploy the contents of the `public` folder to _both_ your core domain, and the CDN/asset prefix location.
+However - if you were to deploy our application as-is, those assets would not be available! You can do this in a few ways, but the general approach will be to deploy the contents of the `public` folder to _both_ your core domain, and the CDN/asset prefix location.
 
 ### Using `onPostBuild`
 
-We expose an [`onPostBuild`](/docs/node-apis/#onPostBuild) API hook. This can be used to deploy your content to the CDN, like so:
+You expose an [`onPostBuild`](/docs/node-apis/#onPostBuild) API hook. This can be used to deploy your content to the CDN, like so:
 
 ```js:title=gatsby-node.js
 const assetsDirectory = `public`
@@ -55,7 +55,7 @@ exports.onPostBuild = async function onPostBuild() {
 
 ### Using `package.json` scripts
 
-Additionally, we can use an npm script, which will let us use some command line interfaces/executables to perform some action, in this case, deploying our assets directory!
+Additionally, you can use an npm script, which will let us use some command line interfaces/executables to perform some action, in this case, deploying our assets directory!
 
 In this example, I'll use the `aws-cli` and `s3` to sync the `public` folder (containing all our assets) to the `s3` bucket.
 
@@ -68,7 +68,7 @@ In this example, I'll use the `aws-cli` and `s3` to sync the `public` folder (co
 }
 ```
 
-Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild` script will be invoked _after_ the build completes, therefore making our assets available on a _separate_ domain after we have finished building out our application with prefixed assets.
+Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild` script will be invoked _after_ the build completes, therefore making our assets available on a _separate_ domain after you have finished building out our application with prefixed assets.
 
 ## Additional Considerations
 

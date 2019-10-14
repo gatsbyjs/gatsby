@@ -383,20 +383,13 @@ class SearchForm extends Component {
           alignItems: `flex-end`,
           justifyContent: `flex-end`,
           display: `flex`,
-          flex: [
-            `1 1 auto`,
-            `1 1 auto`,
-            `1 0 auto`,
-            `1 0 auto`,
-            `0 0 auto`,
-            `1 0 auto`,
-          ],
+          flex: [`1 1 auto`, null, `1 0 auto`, null, `0 0 auto`, `1 0 auto`],
           flexDirection: `row`,
           mb: 0,
-          mx: [3, 3, 3, 3, 4],
+          mx: [3, null, null, 4],
           position: `relative`,
-          // minWidth: [null, null, null, null, null, `12rem`],
-          // maxWidth: [`100%`, `100%`, `100%`, `100%`, null, `24rem`],
+          // minWidth: [null, null, null, null, `12rem`],
+          // maxWidth: [`100%`, `100%`, `100%`, null, `24rem`],
           "& .algolia-autocomplete": {
             width: `100%`,
             display: `block !important`,
@@ -411,14 +404,7 @@ class SearchForm extends Component {
         <label
           sx={{
             position: `relative`,
-            width: [
-              `100%`,
-              `100%`,
-              `100%`,
-              `100%`,
-              focussed ? `14rem` : 24,
-              `100%`,
-            ],
+            width: [`100%`, `100%`, `100%`, focussed ? `14rem` : 24, `100%`],
             transition: t =>
               `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
@@ -429,21 +415,13 @@ class SearchForm extends Component {
               ...themedInput,
               bg: [
                 `themedInput.background`,
-                `themedInput.background`,
-                `themedInput.background`,
-                `themedInput.background`,
+                null,
+                null,
                 focussed ? `themedInput.background` : `transparent`,
                 `themedInput.background`,
               ],
-              pl: [7, 7, 7, 7, focussed ? 7 : 24, 7],
-              width: [
-                `100%`,
-                `100%`,
-                `100%`,
-                `100%`,
-                focussed ? `14rem` : 24,
-                `100%`,
-              ],
+              pl: [7, null, null, focussed ? 7 : 24, 7],
+              width: [`100%`, null, null, focussed ? `14rem` : 24, `100%`],
               transition: t =>
                 `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
             }}

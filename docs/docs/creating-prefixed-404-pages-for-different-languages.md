@@ -4,7 +4,7 @@ title: Creating Prefixed 404 Pages for Different Languages
 
 Using the [`onCreatePage`](/docs/node-apis/#onCreatePage) API in your project's `gatsby-node.js` file, it's possible to create different 404 pages for different URL prefixes, such as `/en/`).
 
-In the following example, we will create an English 404 page at `src/pages/en/404.js`, and a German 404 page at `/src/pages/de/404.js`. Here is a simple example:
+Here is an example that shows you how to create an English 404 page at `src/pages/en/404.js`, and a German 404 page at `/src/pages/de/404.js`:
 
 ```javascript:title=src/pages/en/404.js
 import React from "react"

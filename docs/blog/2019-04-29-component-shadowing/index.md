@@ -26,7 +26,7 @@ Component Shadowing let's you replace the theme's original file,
 `gatsby-theme-blog/src/components/bio.js`, with your own to implement any changes you
 need.
 
-## Shadowing Example
+## Shadowing example
 
 If you've installed `gatsby-theme-blog` you'll notice that it renders a
 [`Bio` component](https://github.com/gatsbyjs/gatsby/blob/666a9bc3c8d91be8a3118b1128340a06e895735e/themes/gatsby-theme-blog/src/components/bio.js)
@@ -51,7 +51,7 @@ gatsby-theme-blog
         └── typography.js
 ```
 
-### Customizing the `Bio` Component
+### Customizing the `Bio` component
 
 Component Shadowing uses a naming convention to determine which component will be rendered.
 In order to override the `Bio` component in `gatsby-theme-blog`, create a file named
@@ -87,7 +87,7 @@ even layer in new functionality.
 **Note**: In the future we'll publish a technical post that will dive into the internals
 of Component Shadowing.
 
-## Changing Styling
+## Changing styling
 
 Component Shadowing isn't restricted to React components; you can override any
 JavaScript, Markdown, MDX, or CSS file. For example, `gatsby-theme-blog` has a
@@ -123,7 +123,7 @@ user-site
 Now, blue and red will have your custom values and will be reflected in the theme wherever
 `theme.colors.blue` and `theme.colors.red` are used.
 
-#### How Much Shadowing is too Much Shadowing?
+#### How much shadowing is too much shadowing?
 
 If you've found yourself shadowing a large amount of components in a particular theme it
 might make sense to use a fork instead.
@@ -140,7 +140,7 @@ Component Shadowing is a powerful feature for making one-off changes to a theme 
 need for complex configuration or maintaining a fork of the code. It's a stable feature in
 Gatsby Themes and is currently being used in production.
 
-## Further Reading
+## Further reading
 
 - [Component Shadowing Documentation](/docs/themes/api-reference/#component-shadowing)
 - [Latent Component Shadowing](https://johno.com/latent-component-shadowing)
