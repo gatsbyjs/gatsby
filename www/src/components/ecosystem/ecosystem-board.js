@@ -43,18 +43,28 @@ class EcosystemBoard extends Component {
         }}
       >
         <EcosystemSection
-          title="Plugins"
-          description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more!"
+          title="Plugins & Themes"
+          description="Plugins are packages that extend Gatsby sites. They can source content, transform data, and more! Themes are special plugins designed to add preconfigured site functionality for your Gatsby site. You can use multiple themes and update a central theme across sites."
           subTitle="Featured Plugins"
           icon={PluginsIcon}
           links={[
-            { label: `Browse Plugins`, to: `/plugins/` },
+            { label: `Browse all Plugins & Themes`, to: `/plugins/` },
             {
               label: `Creating Plugins`,
               to: `/docs/creating-plugins/`,
               secondary: true,
             },
             { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
+            {
+              label: `Creating Themes`,
+              to: `/docs/themes/building-themes/`,
+              secondary: true,
+            },
+            {
+              label: `Using Themes`,
+              to: `/docs/themes/using-a-gatsby-theme/`,
+              secondary: true,
+            },
           ]}
           featuredItems={plugins}
         />
