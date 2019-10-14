@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-remove-trailing-slashes",
   "description": "Removes trailing slashes from your project's paths. For example, yoursite.com/about/ becomes yoursite.com/about",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "author": "scott.eckenthal@gmail.com",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
