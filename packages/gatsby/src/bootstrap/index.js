@@ -154,7 +154,6 @@ module.exports = async (args: BootstrapArgs) => {
     activity.end()
   }
 
-  const cacheDirectory = `${program.directory}/.cache`
   activity = report.activityTimer(`initialize cache`, {
     parentSpan: bootstrapSpan,
   })
@@ -196,7 +195,7 @@ module.exports = async (args: BootstrapArgs) => {
       data
     `)
   }
-  // Removed to force a new .cache on each build
+  const cacheDirectory = `${program.directory}/.cache`
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       // Attempt to empty dir if remove fails,
