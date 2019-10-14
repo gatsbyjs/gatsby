@@ -16,7 +16,7 @@
     "glob": "^7.1.4",
     "globby": "^10.0.1",
     "inquirer": "^6.5.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
     "npm-keyword": "^6.1.0"
   }
