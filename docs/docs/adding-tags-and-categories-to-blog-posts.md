@@ -27,7 +27,7 @@ title: "A Trip To the Zoo"
 I went to the zoo today. It was terrible.
 ```
 
-Fields can be strings, numbers, or arrays. Since a post can usually have many tags, it makes sense to define it as an array. Here we add our new tags field:
+Fields can be strings, numbers, or arrays. Since a post can usually have many tags, it makes sense to define it as an array. Here you add your new tags field:
 
 ```md
 ---
@@ -57,13 +57,13 @@ Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql
 }
 ```
 
-The above query groups posts by `tags`, and returns each `tag` with the number of posts as `totalCount`. As an addition, we could extract some post data in each group if we need to. To keep this tutorial small, we're only using the tag name in our tag pages. Let's make the tag page template now:
+The above query groups posts by `tags`, and returns each `tag` with the number of posts as `totalCount`. As an addition, you could extract some post data in each group if you need to. To keep this tutorial small, you're only using the tag name in your tag pages. Make the tag page template now:
 
 ## Make a tags page template (for `/tags/{tag}`)
 
-If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: we'll make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
+If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: Make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
 
-First, we'll add a tags template at `src/templates/tags.js`:
+First, you'll add a tags template at `src/templates/tags.js`:
 
 ```jsx:title=src/templates/tags.js
 import React from "react"
@@ -95,7 +95,7 @@ const Tags = ({ pageContext, data }) => {
       </ul>
       {/*
               This links to a page that does not yet exist.
-              We'll come back to it!
+              You'll come back to it!
             */}
       <Link to="/tags">All tags</Link>
     </div>
@@ -154,7 +154,7 @@ export const pageQuery = graphql`
 
 ## Modify `gatsby-node.js` to render pages using that template
 
-Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
+Now you've got a template. Great! Assuming you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
 ```js:title=gatsby-node.js
 const path = require("path")
@@ -225,13 +225,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
 Some notes:
 
-- Our GraphQL query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
-- We have referenced two `allMarkdownRemark` fields in our query. To avoid naming collisions we must [alias](/docs/graphql-reference/#aliasing) one of them. We alias both to make our code more human-readable.
-- While making the tag pages, note that we pass `tag.name` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
+- Our GraphQL query only looks for data you need to generate these pages. Anything else can be queried again later (and, if you notice, you do this above in the tags template for the post title).
+- You have referenced two `allMarkdownRemark` fields in our query. To avoid naming collisions you must [alias](/docs/graphql-reference/#aliasing) one of them. You alias both to make our code more human-readable.
+- While making the tag pages, note that you pass `tag.name` through in the `context`. This is the value that gets used in the `TagPage` query to limit your search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
-Our `/tags` page will simply list out all tags, followed by the number of posts with that tag. We can get the data with the first query we wrote earlier, that groups posts by tags:
+Your `/tags` page will simply list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
 
 ```jsx:title=src/pages/tags.js
 import React from "react"

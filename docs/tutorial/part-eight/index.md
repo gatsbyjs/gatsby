@@ -1,5 +1,5 @@
 ---
-title: Preparing a site to go live
+title: Preparing a Site to Go Live
 typora-copy-images-to: ./
 disableTableOfContents: true
 ---
@@ -14,7 +14,7 @@ Wow! You've come a long way! You've learned how to:
 - use GraphQL to query data for pages
 - programmatically create pages from your data
 
-In this final section, we're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, we'll introduce a few more plugins you'll often want to use in your Gatsby sites.
+In this final section, you're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, we'll introduce a few more plugins you'll often want to use in your Gatsby sites.
 
 ## Audit with Lighthouse
 
@@ -24,7 +24,7 @@ Quoting from the [Lighthouse website](https://developers.google.com/web/tools/li
 
 Lighthouse is included in Chrome DevTools. Running its audit -- and then addressing the errors it finds and implementing the improvements it suggests -- is a great way to prepare your site to go live. It helps give you confidence that your site is as fast and accessible as possible.
 
-Let's try it out!
+Try it out!
 
 First, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast; But the site that it generates, while closely resembling a production version of the site, isn't as optimized.
 
@@ -60,11 +60,11 @@ Now you're going to run your first Lighthouse test.
 
 ![Lighthouse audit results](./lighthouse-audit-results.png)
 
-As you can see, Gatsby's performance is excellent out of the box but we're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines).
+As you can see, Gatsby's performance is excellent out of the box but you're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines).
 
 ## Add a manifest file
 
-Looks like we have a pretty lackluster score in the "Progressive Web App" category. Let's address that.
+Looks like you have a pretty lackluster score in the "Progressive Web App" category. Let's address that.
 
 But first, what exactly _are_ PWAs?
 
