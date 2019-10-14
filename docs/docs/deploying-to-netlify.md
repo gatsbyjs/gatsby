@@ -2,26 +2,26 @@
 title: Deploying to Netlify
 ---
 
-In this guide, we'll walk through how to deploy and host your next Gatsby site on [Netlify](https://www.netlify.com/).
+This guide walks through how to deploy and host your next Gatsby site on [Netlify](https://www.netlify.com/).
 
 Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified
 platform that automates your code to create performant, easily maintainable
-sites, and web apps. They provide continuous deployment (Git-triggered builds);
+sites and web apps. They provide continuous deployment (Git-triggered builds);
 an intelligent, global CDN; full DNS (including custom domains); automated
 HTTPS; asset acceleration; and a lot more.
 
 Their free tier includes unlimited personal and commercial projects, HTTPS,
-continuous deployment from public or private repos and more.
+continuous deployment from public or private repos, and more.
 
-## Hosting Setup
+## Hosting setup
 
-There are two ways you can host your site.
+There are two ways you can host your site:
 
-1.) [Git Repository Setup](#git-repository-setup)
+1.) [Git repository setup](#git-repository-setup)
 
-2.) [Upload Site Folder](#upload-site-folder)
+2.) [Upload site folder](#upload-site-folder)
 
-### Git Repository Setup
+### Git repository setup
 
 Netlify currently has built in support for [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/) and [Bitbucket](https://bitbucket.org/). This approach allows you to roll back to past versions of the website whenever you want. You also gain the ability to redeploy the site simply by pushing the code to the respective repository, with no need to manually rebuild and upload every time you make changes. Your repository can be private or public.
 
@@ -29,12 +29,12 @@ Now, login to Netlify and you will see a `New site from git` button at the top r
 
 - Branch to deploy: You can specify a branch to monitor. When you push to that particular branch, only then will Netlify build and deploy the site. The default is `master`.
 - Build Command: You can specify the command you want Netlify to run when you push to the above branch. The default is `npm run build`.
-- Publish directory: You can specify which folder Netlify should use to host the website. e.g. public, dist, build. The default is `public`.
+- Publish directory: You can specify which folder Netlify should use to host the website, e.g., public, dist, build. The default is `public`.
 - Advanced build settings: If the site needs environment variables to build, you can specify them by clicking on `Show advanced` and then the `New Variable` button.
 
-Click on the `Deploy site` button and Netlify will start the build and deploy process you have specified. You can go to the `Deploys` tab and see the process unfold in the `Deploy log`. After a few moments, it will give you the live site URL e.g. `random-name.netlify.com`.
+Click on the `Deploy site` button and Netlify will start the build and deploy process you have specified. You can go to the `Deploys` tab and see the process unfold in the `Deploy log`. After a few moments, it will give you the live site URL, e.g., `random-name.netlify.com`.
 
-### Upload Site Folder
+### Upload site folder
 
 There is also the option to upload your site to Netlify without using git.
 
@@ -55,15 +55,15 @@ To start the deploy process, you need only drag and drop the `public` folder ove
 
 ![alt text](./images/gatsby-default-starter.png "Gatsby Default Starter")
 
-## Continuous Deployment
+## Continuous deployment
 
 Now that your site is connected to your repository, Netlify will deploy the site and publish it whenever you push to your Git repo.
 
-## Domain Setup
+## Domain setup
 
 From the site `Overview`, you can go to `Domain Settings`. By adding a custom domain and setting the `CNAME` record as the Netlify project URL in your DNS provider settings, you should be able to see the Netlify project at your domain URL.
 
-## Other Resources
+## Other resources
 
 - [A Step-by-Step Guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify/)
 - More [blog posts on Gatsby + Netlify](/blog/tags/netlify)

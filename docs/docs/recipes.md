@@ -2098,7 +2098,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 4. Choose a custom website name if you want or press enter to receive a random one.
 
-5. Choose your [Team](/docs/teams/).
+5. Choose your [Team](https://www.netlify.com/docs/teams/).
 
 6. Change the deploy path to `public/`
 
