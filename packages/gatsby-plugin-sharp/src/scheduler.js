@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const { existsSync } = require(`fs`)
+const uuidv4 = require(`uuid/v4`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
 const { createProgress } = require(`./utils`)
@@ -19,26 +20,22 @@ q.drain = () => {
   totalJobs = 0
 }
 
-exports.scheduleJob = async (
-  job,
-  boundActionCreators,
-  pluginOptions,
-  reporter,
-  reportStatus = true
-) => {
-  const inputFileKey = job.inputPath.replace(/\./g, `%2E`)
-  const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
-  const jobPath = `${inputFileKey}.${outputFileKey}`
+const getFileKey = filePath => filePath.replace(/\./g, `%2E`)
+
+const setJobToProcess = (toProcess, job, deferred) => {
+  const inputFileKey = getFileKey(job.inputPath)
+  const outputFileKey = getFileKey(job.outputPath)
+  const jobPath = `["${inputFileKey}"].["${outputFileKey}"]`
 
   // Check if the job has already been queued. If it has, there's nothing
   // to do, return.
   if (_.has(toProcess, jobPath)) {
-    return _.get(toProcess, `${jobPath}.deferred.promise`)
+    return { existingPromise: _.get(toProcess, `${jobPath}.deferred.promise`) }
   }
 
   // Check if the output file already exists so we don't redo work.
   if (existsSync(job.outputPath)) {
-    return Promise.resolve(job)
+    return { existingPromise: Promise.resolve(job) }
   }
 
   let isQueued = false
@@ -46,29 +43,50 @@ exports.scheduleJob = async (
     isQueued = true
   }
 
+  _.set(toProcess, jobPath, {
+    job: job,
+    deferred,
+  })
+
+  return { isQueued }
+}
+
+const scheduleJob = async (
+  job,
+  boundActionCreators,
+  pluginOptions,
+  reporter,
+  reportStatus = true
+) => {
   // deferred naming comes from https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/Promise.jsm/Deferred
   let deferred = {}
   deferred.promise = new Promise((resolve, reject) => {
     deferred.resolve = resolve
     deferred.reject = reject
   })
+
+  const { existingPromise, isQueued } = setJobToProcess(
+    toProcess,
+    job,
+    deferred
+  )
+  if (existingPromise) {
+    return existingPromise
+  }
+
   if (totalJobs === 0) {
     bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
   }
-
   totalJobs += 1
-
-  _.set(toProcess, jobPath, {
-    job: job,
-    deferred,
-  })
 
   if (!isQueued) {
     // Create image job
+    const jobId = uuidv4()
     boundActionCreators.createJob(
       {
-        id: `processing image ${job.inputPath}`,
+        id: jobId,
+        description: `processing image ${job.inputPath}`,
         imagesCount: 1,
       },
       { name: `gatsby-plugin-sharp` }
@@ -76,7 +94,8 @@ exports.scheduleJob = async (
 
     q.push(cb => {
       runJobs(
-        inputFileKey,
+        jobId,
+        getFileKey(job.inputPath),
         boundActionCreators,
         pluginOptions,
         reportStatus,
@@ -89,6 +108,7 @@ exports.scheduleJob = async (
 }
 
 function runJobs(
+  jobId,
   inputFileKey,
   boundActionCreators,
   pluginOptions,
@@ -105,7 +125,7 @@ function runJobs(
   // Update job info
   boundActionCreators.setJob(
     {
-      id: `processing image ${job.inputPath}`,
+      id: jobId,
       imagesCount: jobs.length,
     },
     { name: `gatsby-plugin-sharp` }
@@ -143,7 +163,7 @@ function runJobs(
 
           boundActionCreators.setJob(
             {
-              id: `processing image ${job.inputPath}`,
+              id: jobId,
               imagesFinished,
             },
             { name: `gatsby-plugin-sharp` }
@@ -152,10 +172,7 @@ function runJobs(
     )
 
     Promise.all(promises).then(() => {
-      boundActionCreators.endJob(
-        { id: `processing image ${job.inputPath}` },
-        { name: `gatsby-plugin-sharp` }
-      )
+      boundActionCreators.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
       cb()
     })
   } catch (err) {
@@ -167,3 +184,5 @@ function runJobs(
     })
   }
 }
+
+export { scheduleJob, setJobToProcess }

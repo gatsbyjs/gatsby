@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.11...gatsby-plugin-less@3.0.12) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [3.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.10...gatsby-plugin-less@3.0.11) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.9...gatsby-plugin-less@3.0.10) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [3.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.7...gatsby-plugin-less@3.0.9) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [3.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.7...gatsby-plugin-less@3.0.8) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.6...gatsby-plugin-less@3.0.7) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.5...gatsby-plugin-less@3.0.6) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
 ## [3.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@3.0.4...gatsby-plugin-less@3.0.5) (2019-09-01)
 
 ### Bug Fixes

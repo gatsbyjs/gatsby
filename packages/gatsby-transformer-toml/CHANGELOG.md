@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.14...gatsby-transformer-toml@2.2.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.13...gatsby-transformer-toml@2.2.14) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.12...gatsby-transformer-toml@2.2.13) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.11...gatsby-transformer-toml@2.2.12) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.9...gatsby-transformer-toml@2.2.11) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.9...gatsby-transformer-toml@2.2.10) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
+## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.8...gatsby-transformer-toml@2.2.9) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.7...gatsby-transformer-toml@2.2.8) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-transformer-toml
+
 ## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-toml@2.2.6...gatsby-transformer-toml@2.2.7) (2019-09-01)
 
 ### Bug Fixes

@@ -1,4 +1,5 @@
 const loadPlugins = require(`../index`)
+const slash = require(`slash`)
 
 describe(`Load plugins`, () => {
   /**
@@ -9,8 +10,19 @@ describe(`Load plugins`, () => {
    */
   const replaceFieldsThatCanVary = plugins =>
     plugins.map(plugin => {
+      if (plugin.pluginOptions && plugin.pluginOptions.path) {
+        plugin.pluginOptions = {
+          ...plugin.pluginOptions,
+          path: plugin.pluginOptions.path.replace(
+            slash(process.cwd()),
+            `<PROJECT_ROOT>`
+          ),
+        }
+      }
+
       return {
         ...plugin,
+        id: ``,
         resolve: ``,
         version: `1.0.0`,
       }
@@ -29,6 +41,26 @@ describe(`Load plugins`, () => {
       plugins: [
         {
           resolve: `___TEST___`,
+        },
+      ],
+    }
+
+    let plugins = await loadPlugins(config)
+
+    plugins = replaceFieldsThatCanVary(plugins)
+
+    expect(plugins).toMatchSnapshot()
+  })
+
+  it(`Overrides the options for gatsby-plugin-page-creator`, async () => {
+    const config = {
+      plugins: [
+        {
+          resolve: `gatsby-plugin-page-creator`,
+          options: {
+            path: `${__dirname}/src/pages`,
+            ignore: [`___Test___.(js|ts)?(x)`],
+          },
         },
       ],
     }

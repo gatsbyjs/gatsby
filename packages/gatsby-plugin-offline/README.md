@@ -21,7 +21,22 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Available options
 
-As of `gatsby-plugin-offline` 3.0.0, the following options are available:
+In `gatsby-plugin-offline` 3.x, the following options are available:
+
+- `precachePages` lets you specify pages whose resources should be precached by the service worker, using an array of globs. For example:
+
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [`/about-us/`, `/projects/*`],
+      },
+    },
+  ]
+  ```
+
+  Note: while essential resources of specified pages will be precached, such as JavaScript and CSS, non-essential resources such as fonts and images will not be included. Instead, these will be cached at runtime when a user visits a given page that includes these resources.
 
 - `appendScript` lets you specify a file to be appended at the end of the generated service worker (`sw.js`). For example:
 
@@ -30,11 +45,13 @@ As of `gatsby-plugin-offline` 3.0.0, the following options are available:
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        appendScript: `src/custom-sw-code.js`,
+        appendScript: require.resolve(`src/custom-sw-code.js`),
       },
     },
   ]
   ```
+
+  <br />
 
   ```javascript:title=src/custom-sw-code.js
   // show a notification after 15 seconds (the notification
@@ -49,6 +66,8 @@ As of `gatsby-plugin-offline` 3.0.0, the following options are available:
   })
   workbox.routing.registerRoute(customRoute)
   ```
+
+- `debug` specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on `localhost` only.
 
 - `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
 

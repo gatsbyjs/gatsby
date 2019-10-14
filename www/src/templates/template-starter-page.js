@@ -1,13 +1,13 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-
-import { mediaQueries } from "../utils/presets"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
-import StarterScreenshot from "../views/starter/screenshot"
+import Screenshot from "../views/shared/screenshot"
 import StarterSource from "../views/starter/source"
 import StarterInstallation from "../views/starter/installation"
 import StarterDetails from "../views/starter/details"
@@ -59,15 +59,11 @@ class StarterTemplate extends React.Component {
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            maxWidth: isModal ? false : 1080,
             margin: isModal ? false : `0 auto`,
+            maxWidth: isModal ? false : 1080,
           }}
         >
-          <div
-            css={{
-              width: `100%`,
-            }}
-          >
+          <div css={{ width: `100%` }}>
             <Helmet>
               <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
@@ -99,12 +95,9 @@ class StarterTemplate extends React.Component {
             </Helmet>
             <StarterHeader stub={starterShowcase.stub} />
             <div
-              css={{
+              sx={{
                 display: `flex`,
-                flexDirection: `column-reverse`,
-                [mediaQueries.sm]: {
-                  flexDirection: `column`,
-                },
+                flexDirection: [`column-reverse`, `column`],
               }}
             >
               <StarterMeta
@@ -113,7 +106,10 @@ class StarterTemplate extends React.Component {
                 imageSharp={screenshot}
                 demo={demoUrl}
               />
-              <StarterScreenshot imageSharp={screenshot} repoName={repoName} />
+              <Screenshot
+                imageSharp={screenshot.childImageSharp.fluid}
+                alt={`Screenshot of ${repoName}`}
+              />
             </div>
             <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
             <StarterInstallation repoName={repoName} repoUrl={repoUrl} />

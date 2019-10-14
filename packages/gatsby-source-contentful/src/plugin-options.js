@@ -32,6 +32,14 @@ const optionsSchema = Joi.object().keys({
   downloadLocal: Joi.boolean(),
   localeFilter: Joi.func(),
   forceFullSync: Joi.boolean(),
+  proxy: Joi.object().keys({
+    host: Joi.string().required(),
+    port: Joi.number().required(),
+    auth: Joi.object().keys({
+      username: Joi.string(),
+      password: Joi.string(),
+    }),
+  }),
   // default plugins passed by gatsby
   plugins: Joi.array(),
 })
