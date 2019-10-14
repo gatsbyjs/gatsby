@@ -1,5 +1,5 @@
 ---
-title: "Using Third-Party GraphQL APIs"
+title: Using Third-party GraphQL APIs
 ---
 
 Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's GraphQL. You can integrate both third-party APIs, like GitHub's, APIs of services like GraphCMS or your custom GraphQL API.
