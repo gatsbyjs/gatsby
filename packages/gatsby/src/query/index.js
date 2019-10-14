@@ -7,7 +7,6 @@ const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const queryQueue = require(`./queue`)
 const GraphQLRunner = require(`./graphql-runner`)
-const pageDataUtil = require(`../utils/page-data`)
 
 let seenIdsWithoutDataDependencies = []
 let queuedDirtyActions = []
