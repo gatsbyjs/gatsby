@@ -48,7 +48,7 @@ Please be advised that this is also a custom feature of Webpack.
   lessonTitle="Import a Local Image into a Gatsby Component with webpack"
 />
 
-#### Additional resources
+### Additional resources
 
 - More on [using an imported font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font).
 
@@ -56,7 +56,7 @@ Please be advised that this is also a custom feature of Webpack.
 
 You can also import files using GraphQL by querying for them in your data layer, which will trigger copying of those files to the public directory. Querying for the `publicURL` field of `File` nodes will provide URLs you can use in your JavaScript components, pages and templates.
 
-### Examples:
+### Examples
 
 1. Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
 
