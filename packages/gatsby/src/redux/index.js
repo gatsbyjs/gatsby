@@ -48,7 +48,9 @@ const configureStore = initialState =>
     Redux.applyMiddleware(thunk, multi)
   )
 
-const store = configureStore(readState())
+const initialState = readState()
+initialState.pages = new Map()
+const store = configureStore(initialState) // Persist state.
 
 // Persist state.
 const saveState = () => {
