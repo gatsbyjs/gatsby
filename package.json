@@ -45,7 +45,7 @@
     "yargs": "^10.1.2"
   },
   "engines": {
-    "yarn": "^1.17.3",
+    "yarn": "^1.19.1",
     "node": ">=6.11.5"
   },
   "eslintIgnore": [
