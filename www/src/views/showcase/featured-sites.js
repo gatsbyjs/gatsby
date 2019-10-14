@@ -213,7 +213,9 @@ class FeaturedSites extends Component {
                   }}
                 >
                   {node.built_by && (
-                    <div sx={{ fontFamily: `header` }}>
+                    <div
+                      sx={{ color: `text`, fontFamily: `header`, fontSize: 2 }}
+                    >
                       Built by {node.built_by}
                     </div>
                   )}
