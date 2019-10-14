@@ -47,7 +47,7 @@ You can install this component with:
 The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array.
 This example uses the local Gentics Mesh Demo server that you have just started.
 
-```js
+```javascript:title=gatsby-config.js
 {
     resolve: "gatsby-source-graphql",
         options: {
