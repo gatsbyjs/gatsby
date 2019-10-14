@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.36...gatsby@2.15.37) (2019-10-14)
+
+### Bug Fixes
+
+- update dependency webpack to v4.41.1 ([#18504](https://github.com/gatsbyjs/gatsby/issues/18504)) ([a93df04](https://github.com/gatsbyjs/gatsby/commit/a93df04))
+
 ## [2.15.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.35...gatsby@2.15.36) (2019-10-11)
 
 ### Bug Fixes
