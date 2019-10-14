@@ -4068,7 +4068,6 @@
     - Language:TypeScript
     - Transitions
     - Styling:CSS-in-JS
-    - Netlify
     - Linting
   features:
     - TypeScript
