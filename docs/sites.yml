@@ -7796,6 +7796,18 @@
   built_by: Kframe Interactive SA
   built_by_url: https://kframeinteractive.com/
   featured: false
+- title: KNC Blog
+  main_url: https://nagakonada.com
+  url: https://nagakonada.com/
+  description: >
+    Nagakonada is my blogging and portfolio site where I list my projects, experience, capabilities and the blog mostly talks about technical and personal writings.
+  categories:
+    - Blog
+    - Web Development
+    - Portfolio
+  built_by: Konada, Naga Chaitanya
+  built_by_url: https://github.com/ChaituKNag
+  featured: false
 - title: Vishal Nakum
   url: https://nakum.tech/
   main_url: https://nakum.tech/
