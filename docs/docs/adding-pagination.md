@@ -1,5 +1,5 @@
 ---
-title: Adding pagination
+title: Adding Pagination
 ---
 
 A page displaying a list of content gets longer as the amount of content grows.
@@ -13,7 +13,7 @@ The information needed to query for those specific items (i.e. values for [`limi
 
 ### Example
 
-```js{20-25}:title=src/templates/blog-list-template.js
+```js:title=src/templates/blog-list-template.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -33,12 +33,14 @@ export default class BlogList extends React.Component {
 }
 
 export const blogListQuery = graphql`
+// highlight-start
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
       limit: $limit
       skip: $skip
     ) {
+// highlight-end
       edges {
         node {
           fields {
@@ -54,57 +56,58 @@ export const blogListQuery = graphql`
 `
 ```
 
-```js{34-47}:title=gatsby-node.js
+```js:title=gatsby-node.js
 const path = require("path")
 const { createFilePath } = require("gatsby-source-filesystem")
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    resolve(
-      graphql(
-        `
-          {
-            allMarkdownRemark(
-              sort: { fields: [frontmatter___date], order: DESC }
-              limit: 1000
-            ) {
-              edges {
-                node {
-                  fields {
-                    slug
-                  }
-                }
+  const result = await graphql(
+    `
+      {
+        allMarkdownRemark(
+          sort: { fields: [frontmatter___date], order: DESC }
+          limit: 1000
+        ) {
+          edges {
+            node {
+              fields {
+                slug
               }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(result.errors)
         }
+      }
+    `
+  )
 
-        // ...
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
 
-        // Create blog-list pages
-        const posts = result.data.allMarkdownRemark.edges
-        const postsPerPage = 6
-        const numPages = Math.ceil(posts.length / postsPerPage)
+  // ...
 
-        Array.from({ length: numPages }).forEach((_, i) => {
-          createPage({
-            path: i === 0 ? `/blog` : `/blog/${i + 1}`,
-            component: path.resolve("./src/templates/blog-list-template.js"),
-            context: {
-              limit: postsPerPage,
-              skip: i * postsPerPage,
-            },
-          })
-        })
-      })
-    )
+  // Create blog-list pages
+  // highlight-start
+  const posts = result.data.allMarkdownRemark.edges
+  const postsPerPage = 6
+  const numPages = Math.ceil(posts.length / postsPerPage)
+
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+      component: path.resolve("./src/templates/blog-list-template.js"),
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    })
   })
+  // highlight-end
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

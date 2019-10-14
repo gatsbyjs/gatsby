@@ -1,80 +1,83 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import styled from "react-emotion"
+import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import { rhythm, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import hex2rgba from "hex2rgba"
-import { formInput } from "../utils/form-styles"
-import { buttonStyles } from "../utils/styles"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { themedInput, formInputFocus, buttonStyles } from "../utils/styles"
+import { rhythm } from "../utils/typography"
+
+const Container = styled(`div`)`
+  background: ${p => p.theme.colors.newsletter.background};
+  box-shadow: ${p => p.theme.shadows.floating},
+    inset 0 0 0 1px ${p => p.theme.colors.newsletter.border};
+  border-radius: ${p => p.theme.radii[2]}px;
+  margin-top: ${p => p.theme.space[8]};
+  padding: calc(${p => p.theme.space[6]} * 1.2);
+  padding-bottom: calc(
+    ${props => rhythm(props.theme.space[6] * 1.2)} + ${p => p.theme.space[1]}
+  );
+  position: relative;
+
+  :after {
+    border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
+    background: ${p => p.theme.colors.newsletter.background}
+      repeating-linear-gradient(
+        135deg,
+        ${p => p.theme.colors.newsletter.stripeColorA},
+        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
+        transparent 20px,
+        transparent 40px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
+        transparent 60px,
+        transparent 80px
+      );
+    bottom: 0;
+    content: "";
+    height: ${p => p.theme.space[1]};
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  ${mediaQueries.lg} {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > * {
+      flex-basis: 50%;
+    }
+  }
+`
 
 const StyledForm = styled(`form`)`
   margin: 0;
 
-  ${presets.Desktop} {
+  ${mediaQueries.lg} {
     display: ${props => (props.isHomepage ? `flex` : `block`)};
   }
 `
 
 const Label = styled(`label`)`
+  font-size: ${p => p.theme.fontSizes[1]};
   :after {
     content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${colors.warning};
+    color: ${p => p.theme.colors.textMuted};
   }
-`
-
-const SingleLineInput = styled(`input`)`
-  ${formInput};
-  width: 100%;
-
-  :focus {
-    border-color: ${colors.gatsby};
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)};
-  }
-`
-
-const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 1rem;
-  padding: 0.6rem;
 `
 
 const ErrorMessage = styled(`div`)`
-  color: ${colors.warning};
-  font-family: ${options.systemFontFamily.join(`,`)};
-  font-size: 0.875rem;
-  margin: calc(1.05rem / 2) 0;
+  color: ${p => p.theme.colors.warning};
+  font-family: ${p => p.theme.fonts.system};
+  font-size: ${p => p.theme.fontSizes[1]};
+  margin: ${p => p.theme.space[2]} 0;
 `
 
-const SuccesMessage = styled(`div`)`
-  font-family: ${options.systemFontFamily.join(`,`)};
-`
-
-const Submit = styled(`input`)`
-  ${buttonStyles.default};
-  margin-top: 20px;
-`
-
-const SubmitOnHomepage = styled(`button`)`
-  ${buttonStyles.default};
-  font-size: 1.125rem;
-  width: 100%;
-  margin-top: 10px;
-
-  span {
-    align-items: center;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  ${presets.Desktop} {
-    width: auto;
-    margin-top: 0;
-    margin-left: 0.5rem;
-  }
+const SuccessMessage = styled(`div`)`
+  font-family: ${p => p.theme.fonts.system};
 `
 
 class Form extends React.Component {
@@ -161,10 +164,6 @@ class Form extends React.Component {
   render() {
     const { isHomepage } = this.props
 
-    const SingleLineInputComponent = isHomepage
-      ? SingleLineInputOnHomepage
-      : SingleLineInput
-
     return (
       <StyledForm onSubmit={this.onSubmit} isHomepage={isHomepage}>
         {!isHomepage && (
@@ -172,17 +171,24 @@ class Form extends React.Component {
             Email
           </Label>
         )}
-        <SingleLineInputComponent
+        <input
           id="email"
           name="email"
           type="email"
           required
           autoComplete="email"
-          innerRef={input => {
+          ref={input => {
             this.email = input
           }}
           aria-label={isHomepage ? `Email` : ``}
-          placeholder={isHomepage ? `your.email@example.com` : ``}
+          placeholder={`your.email@example.com`}
+          sx={{
+            ...themedInput,
+            width: `100%`,
+            "&:focus": {
+              ...formInputFocus,
+            },
+          }}
         />
         {this.state.fieldErrors.email && (
           <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
@@ -192,14 +198,40 @@ class Form extends React.Component {
         )}
 
         {isHomepage ? (
-          <SubmitOnHomepage type="submit">
+          <button
+            type="submit"
+            sx={{
+              ...buttonStyles().default,
+              fontSize: 3,
+              mt: 3,
+              width: `100%`,
+              span: {
+                alignItems: `center`,
+                display: `flex`,
+                justifyContent: `space-between`,
+                width: `100%`,
+              },
+              [mediaQueries.lg]: {
+                ml: 2,
+                mt: 0,
+                width: `auto`,
+              },
+            }}
+          >
             <span>
               Subscribe
               <SendIcon />
             </span>
-          </SubmitOnHomepage>
+          </button>
         ) : (
-          <Submit type="submit" value="Subscribe" />
+          <input
+            type="submit"
+            value="Subscribe"
+            sx={{
+              ...buttonStyles().default,
+              mt: 3,
+            }}
+          />
         )}
       </StyledForm>
     )
@@ -221,7 +253,7 @@ class EmailCaptureForm extends React.Component {
   }
 
   render() {
-    const { signupMessage, overrideCSS, isHomepage, className } = this.props
+    const { signupMessage, isHomepage, className } = this.props
 
     const FormComponent = props => (
       <Form
@@ -238,7 +270,7 @@ class EmailCaptureForm extends React.Component {
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
-              <SuccesMessage
+              <SuccessMessage
                 dangerouslySetInnerHTML={{ __html: this.state.successMessage }}
               />
             ) : (
@@ -246,38 +278,28 @@ class EmailCaptureForm extends React.Component {
             )}
           </div>
         ) : (
-          <div
-            css={{
-              borderTop: `2px solid ${colors.lilac}`,
-              fontFamily: options.headerFontFamily.join(`,`),
-              marginTop: rhythm(3),
-              paddingTop: `${rhythm(1)}`,
-              ...overrideCSS,
-            }}
-          >
-            <div>
-              <p>{signupMessage}</p>
+          <Container>
+            <p
+              sx={{
+                color: `newsletter.heading`,
+                fontWeight: `bold`,
+                fontSize: 3,
+                fontFamily: `header`,
+                lineHeight: `dense`,
+              }}
+            >
+              {signupMessage}
+            </p>
+            {this.state.successMessage ? (
               <div
-                css={{
-                  backgroundColor: colors.ui.light,
-                  borderRadius: presets.radius,
-                  color: colors.gatsby,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  padding: `15px`,
+                dangerouslySetInnerHTML={{
+                  __html: this.state.successMessage,
                 }}
-              >
-                {this.state.successMessage ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: this.state.successMessage,
-                    }}
-                  />
-                ) : (
-                  <FormComponent />
-                )}
-              </div>
-            </div>
-          </div>
+              />
+            ) : (
+              <FormComponent />
+            )}
+          </Container>
         )}
       </React.Fragment>
     )
@@ -287,7 +309,6 @@ class EmailCaptureForm extends React.Component {
 EmailCaptureForm.defaultProps = {
   signupMessage: `Enjoyed this post? Receive the next one in your inbox!`,
   confirmMessage: `Thank you! Youʼll receive your first email shortly.`,
-  overrideCSS: {},
   isHomepage: false,
   className: ``,
 }

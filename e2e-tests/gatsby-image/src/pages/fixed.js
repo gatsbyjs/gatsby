@@ -24,7 +24,7 @@ export const pageQuery = graphql`
     fruitsFixed: file(relativePath: { eq: "citrus-fruits.jpg" }) {
       childImageSharp {
         fixed(width: 500) {
-          ...GatsbyImageSharpFixed
+          ...GatsbyImageSharpFixed_withWebp
         }
       }
     }

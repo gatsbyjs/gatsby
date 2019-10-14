@@ -1,5 +1,2 @@
-/gatsby-node.js
-/gatsby-ssr.js
-/gatsby-browser.js
-/common.js
-/app-shell.js
+/*.js
+!index.js

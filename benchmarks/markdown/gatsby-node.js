@@ -3,8 +3,7 @@ const template = require(`./page-template`)
 
 exports.sourceNodes = ({ actions: { createNode } }) => {
   // Create markdown nodes
-  let step
-  for (step = 0; step < NUM_PAGES; step++) {
+  for (let step = 0; step < NUM_PAGES; step++) {
     createNode({
       id: step.toString(),
       parent: null,
@@ -26,7 +25,7 @@ exports.createPages = ({ actions: { createPage } }) => {
       path: `/path/${step}/`,
       component: require.resolve(`./src/templates/blank.js`),
       context: {
-        id: step,
+        id: step.toString(),
       },
     })
   }

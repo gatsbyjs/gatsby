@@ -2,7 +2,7 @@
 title: SendGrid Knowledge Center cuts page load times in half with Gatsby
 date: 2018-10-02
 author: Linda Watkins
-tags: ["case study"]
+tags: ["case-studies"]
 ---
 
 Justin Hall, Senior Web Developer at SendGrid had to find a way to rebuild the [SendGrid Knowledge Center](https://sendgrid.com/docs/) (docs site) as it was becoming outdated and the SendGrid team thought there was room for improvement on performance.

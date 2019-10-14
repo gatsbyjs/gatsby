@@ -54,15 +54,15 @@ For example, lets say your project has a data layout like:
 
 Where each of `a.hjson`, `b.hjson` and `c.hjson` look like:
 
-```hjson
+```
 value: a
 ```
 
-```hjson
+```
 value: b
 ```
 
-```hjson
+```
 value: c
 ```
 

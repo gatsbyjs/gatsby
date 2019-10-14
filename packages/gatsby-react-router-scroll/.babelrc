@@ -1,6 +1,3 @@
 {
-  "presets": [
-    ["babel-preset-gatsby-package", { "browser": true }]
-  ],
-  "plugins": ["dev-expression"]
+  "presets": [["babel-preset-gatsby-package", { "browser": true }]]
 }

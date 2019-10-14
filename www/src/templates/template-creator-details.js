@@ -1,36 +1,33 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
-import Helmet from "react-helmet"
-import typography, { rhythm, scale, options } from "../utils/typography"
+import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
-import CommunityHeader from "../views/community/community-header"
-import Badge from "../views/community/badge"
-import presets, { colors } from "../utils/presets"
+import CreatorsHeader from "../views/creators/creators-header"
+import Badge from "../views/creators/badge"
+import FooterLinks from "../components/shared/footer-links"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
-const breakpoint2Columns = presets.Tablet
+const breakpoint2Columns = mediaQueries.md
 
 const MetaTitle = ({ children }) => (
   <p
-    css={{
+    sx={{
       margin: `0`,
-      textTransform: `uppercase`,
-      color: colors.gray.calm,
-      letterSpacing: `0.03em`,
-      ...scale(-1 / 3),
-      marginBottom: rhythm(options.blockMarginBottom / 4),
-      [presets.Mobile]: {
+      color: `textMuted`,
+      mb: 1,
+      flexShrink: 0,
+      [mediaQueries.xs]: {
         width: 150,
       },
       [breakpoint2Columns]: {
-        fontWeight: `600`,
-        letterSpacing: 0,
-        ...scale(0),
-        marginBottom: 0,
-        color: colors.gray.dark,
+        fontWeight: `bold`,
+        mb: 0,
         textTransform: `none`,
       },
     }}
@@ -41,21 +38,18 @@ const MetaTitle = ({ children }) => (
 
 const MetaSection = ({ children, background, last, first }) => (
   <div
-    css={{
-      background: background ? background : colors.ui.whisper,
-      marginLeft: rhythm(-3 / 4),
-      marginRight: rhythm(-3 / 4),
-      padding: rhythm(3 / 4),
-      borderTop: first ? `1px solid ${colors.ui.light}` : null,
-      borderBottom: last ? null : `1px solid ${colors.ui.light}`,
+    sx={{
+      background: background ? background : `ui.background`,
+      mx: t => `-${t.space[5]}`,
+      p: 5,
+      borderTop: t => (first ? `1px solid ${t.colors.ui.border}` : null),
+      borderBottom: t => (last ? null : `1px solid ${t.colors.ui.border}`),
       [breakpoint2Columns]: {
         background: `transparent`,
-        paddingLeft: 0,
-        paddingRight: 0,
-        marginLeft: 0,
-        marginRight: 0,
+        px: 0,
+        mx: 0,
       },
-      [presets.Phablet]: {
+      [mediaQueries.sm]: {
         display: `flex`,
       },
     }}
@@ -81,78 +75,71 @@ class CreatorTemplate extends Component {
     return (
       <Layout location={location}>
         <Helmet>
-          <title>{creator.name}</title>
+          <title>{`${creator.name} - Creator`}</title>
         </Helmet>
-        <CommunityHeader submissionText="Add Yourself" />
+        <CreatorsHeader submissionText="Add Yourself" />
         <main
           role="main"
-          css={{
-            padding: rhythm(3 / 4),
-            paddingBottom: `10vh`,
+          sx={{
+            p: 6,
+            pb: `10vh`,
             display: `flex`,
             flexDirection: `column`,
             alignItems: `center`,
             justifyContent: `center`,
             width: `100%`,
             [breakpoint2Columns]: {
-              paddingBottom: rhythm(3 / 4),
+              pb: 6,
               flexDirection: `row`,
               alignItems: `flex-start`,
             },
-            fontFamily: typography.options.headerFontFamily.join(`,`),
           }}
         >
           <div
-            css={{
-              margin: rhythm(3 / 4),
-              marginBottom: rhythm(options.blockMarginBottom / 4),
+            sx={{
+              m: 6,
+              mb: 1,
               flexGrow: `1`,
               width: `100%`,
               [breakpoint2Columns]: {
                 width: `auto`,
                 maxWidth: 480,
               },
-              [presets.Desktop]: {
+              [mediaQueries.lg]: {
                 maxWidth: 560,
               },
             }}
           >
             <Img
               alt={`${creator.name}`}
-              css={{ borderRadius: presets.radius }}
+              sx={{ borderRadius: 1 }}
               fluid={creator.image.childImageSharp.fluid}
             />
           </div>
           <div
-            css={{
-              margin: rhythm(3 / 4),
+            sx={{
+              m: 6,
               flex: `1`,
               width: `100%`,
-              [presets.Desktop]: {
+              [mediaQueries.lg]: {
                 width: `auto`,
                 maxWidth: 640,
               },
             }}
           >
-            <h1
-              css={{
-                margin: `0`,
-              }}
-            >
-              {creator.name}
-            </h1>
+            <h1 sx={{ m: 0 }}>{creator.name}</h1>
             <div
               css={{
                 alignItems: `center`,
                 display: `flex`,
-                marginTop: rhythm(options.blockMarginBottom / 2),
+                mt: 3,
               }}
             >
               {isAgencyOrCompany && (
                 <span
-                  css={{
-                    color: colors.gray.calm,
-                    marginRight: `.5rem`,
+                  sx={{
+                    color: `textMuted`,
+                    mr: 2,
                   }}
                 >
                   {creator.type.charAt(0).toUpperCase() + creator.type.slice(1)}
@@ -161,17 +148,17 @@ class CreatorTemplate extends Component {
 
               {creator.for_hire || creator.hiring ? (
                 <div
-                  css={{
+                  sx={{
                     alignSelf: `flex-start`,
-                    ...scale(-1 / 3),
-                    marginRight: `.5rem`,
+                    fontSize: 1,
+                    mr: 2,
                   }}
                 >
                   <Badge
                     forHire={creator.for_hire}
-                    customCSS={{
-                      background: colors.success,
-                      color: `#fff`,
+                    overrideCSS={{
+                      background: `green.50`,
+                      color: `white`,
                     }}
                   >
                     {creator.for_hire ? `Open for work` : `Hiring`}
@@ -181,15 +168,13 @@ class CreatorTemplate extends Component {
               {creator.github && (
                 <a
                   href={creator.github}
-                  css={{
+                  sx={{
                     "& svg": { display: `block` },
                     "&&": {
                       border: 0,
-                      boxShadow: `none`,
-                      lineHeight: 1,
+                      lineHeight: `solid`,
                       "&:hover": {
-                        background: `none`,
-                        color: colors.gatsby,
+                        color: `gatsby`,
                       },
                     },
                   }}
@@ -198,13 +183,7 @@ class CreatorTemplate extends Component {
                 </a>
               )}
             </div>
-            <div
-              css={{
-                padding: `${rhythm()} 0`,
-              }}
-            >
-              {creator.description}
-            </div>
+            <div sx={{ py: 6 }}>{creator.description}</div>
             <MetaSection first>
               <MetaTitle>Get in touch</MetaTitle>
               <a
@@ -217,56 +196,48 @@ class CreatorTemplate extends Component {
             </MetaSection>
             <MetaSection>
               <MetaTitle>From</MetaTitle>
-              <p
-                css={{
-                  margin: `0`,
-                }}
-              >
-                {creator.location}
-              </p>
+              <p sx={{ m: 0 }}>{creator.location}</p>
             </MetaSection>
-            {creator.portfolio === true &&
-              sites.length > 0 && (
-                <MetaSection background="transparent" last>
-                  <MetaTitle>Worked On</MetaTitle>
-                  <div
-                    css={{
-                      display: `flex`,
-                      alignItems: `flex-start`,
-                    }}
-                  >
-                    {sites.map(site => (
-                      <Link
-                        key={site.node.title}
-                        css={{
-                          "&&": {
-                            marginRight: rhythm(3 / 4),
-                            borderBottom: `none`,
-                            boxShadow: `none`,
-                            transition: `all ${
-                              presets.animation.speedDefault
-                            } ${presets.animation.curveDefault}`,
-                            "&:hover": {
-                              background: `none`,
-                            },
-                          },
-                        }}
-                        to={site.node.fields.slug}
-                      >
-                        <Img
-                          alt={`${site.node.title}`}
-                          fixed={
-                            site.node.childScreenshot.screenshotFile
-                              .childImageSharp.fixed
-                          }
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </MetaSection>
-              )}
+            {creator.portfolio === true && sites.length > 0 && (
+              <MetaSection background="transparent" last>
+                <MetaTitle>Worked On</MetaTitle>
+                <div
+                  css={{
+                    display: `flex`,
+                    alignItems: `flex-start`,
+                    flexWrap: `wrap`,
+                  }}
+                >
+                  {sites.map(site => (
+                    <Link
+                      key={site.node.title}
+                      sx={{
+                        "&&": {
+                          mr: 6,
+                          mb: 6,
+                          borderBottom: `none`,
+                          lineHeight: 0,
+                          transition: t =>
+                            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+                        },
+                      }}
+                      to={site.node.fields.slug}
+                    >
+                      <Img
+                        alt={`${site.node.title}`}
+                        fixed={
+                          site.node.childScreenshot.screenshotFile
+                            .childImageSharp.fixed
+                        }
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </MetaSection>
+            )}
           </div>
         </main>
+        <FooterLinks />
       </Layout>
     )
   }
@@ -297,7 +268,7 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allSitesYaml {
+    allSitesYaml(filter: { fields: { hasScreenshot: { eq: true } } }) {
       edges {
         node {
           built_by

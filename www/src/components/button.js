@@ -1,5 +1,8 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
+
 import { buttonStyles } from "../utils/styles"
 
 const components = {
@@ -14,11 +17,9 @@ const Button = ({
   icon,
   children,
   tag,
-  large,
-  small,
-  tiny,
   secondary,
-  ondark,
+  tracking,
+  variant,
   ...rest
 }) => {
   const Tag = components[tag || `link`]
@@ -29,22 +30,55 @@ const Button = ({
     ...rest,
   }
 
-  const css = {
-    "&&": {
-      ...buttonStyles.default,
-      ...overrideCSS,
-      ...(secondary && buttonStyles.secondary),
-      ...(large && buttonStyles.large),
-      ...(small && buttonStyles.small),
-      ...(tiny && buttonStyles.tiny),
-      ...(ondark && buttonStyles.ondark),
-    },
+  const trackingOnClick = e => {
+    if (typeof props.onClick === `function`) {
+      props.onClick(e)
+    }
+
+    let redirect = true
+
+    // Slightly modified logic from the gatsby-plugin-google-analytics
+    // But this one should work with `Link` component as well
+    if (
+      e.button !== 0 ||
+      e.altKey ||
+      e.ctrlKey ||
+      e.metaKey ||
+      e.shiftKey ||
+      e.defaultPrevented
+    ) {
+      redirect = false
+    }
+
+    if (props.target && props.target.toLowerCase() !== `_self`) {
+      redirect = false
+    }
+
+    if (tracking && window.ga) {
+      window.ga(`send`, `event`, {
+        eventCategory: `Outbound Link`,
+        eventAction: `click`,
+        eventLabel: `${tracking} - ${props.to || props.href}`,
+        transport: redirect ? `beacon` : ``,
+      })
+    }
   }
 
   return (
-    <Tag {...props} css={css}>
+    <Tag
+      {...props}
+      onClick={trackingOnClick}
+      sx={{
+        "&&": {
+          ...buttonStyles().default,
+          ...(secondary && buttonStyles().secondary),
+          variant: `buttons.${variant}`,
+          ...overrideCSS,
+        },
+      }}
+    >
       {children}
-      {icon && <>{icon}</>}
+      {icon && <React.Fragment>{icon}</React.Fragment>}
     </Tag>
   )
 }

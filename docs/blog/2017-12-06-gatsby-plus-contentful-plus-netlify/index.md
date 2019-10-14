@@ -1,6 +1,6 @@
 ---
 title: Gatsby + Contentful + Netlify (and Algolia)
-date: "2017-12-06"
+date: 2017-12-06
 author: "Josh Weaver"
 image: "gatsby-contentful-netlify-algolia.jpg"
 excerpt: "Gatsby has been getting a lot of recognition and adoption lately, and for good reason. It’s so flexible and it works well with nearly everything."
@@ -11,7 +11,7 @@ tags:
     "algolia",
     "getting-started",
     "hosting",
-    "ci",
+    "deployment",
     "performance",
   ]
 ---
@@ -49,7 +49,7 @@ for a quick breakdown on why web development is, for lack of a better phrase,
 “going back to the basics.”
 
 Having dealt with my share of CMS headaches with Joomla in the almost-forgotten
-past, and Wordpress in the more recent years, I’ve been on a quest to simplify
+past, and WordPress in the more recent years, I’ve been on a quest to simplify
 things. I don’t want to worry about having a plugin or theme get hacked or the
 constant nagging to install updates. I also would prefer to not deal with themes
 at all and just have flexible building blocks to shape my site’s appearance via
@@ -83,31 +83,31 @@ Okay, now back to some static hurdles.
 Our site has a lot of content (~300 articles) that needs to be maintained by
 non-developers, my co-workers. This meant we needed an approachable interface
 for copy and content editing. I wanted to make it as convenient as logging into
-Wordpress and publishing from there, without the Wordpress. So the publishing
+WordPress and publishing from there, without the WordPress. So the publishing
 experience couldn’t rely on creating a file and committing changes to a Git
 repo.
 
 > Sidebar: There is
-> [Gatsby-Source-Wordpress](/packages/gatsby-source-wordpress/)
-> plugin that pulls in content via a Wordpress API. However, to me, this was not
+> [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress/)
+> plugin that pulls in content via a WordPress API. However, to me, this was not
 > appealing because I was trying to avoid hosting a traditional CMS entirely.
 
 # Solution: Contentful + Gatsby
 
-Contentful is a hosted headless CMS with a fantastic user experience. It’s
-similar to having a backend like Wordpress, but you are fully responsible for
-the front-end layer. The beauty of Contentful is threefold.
+Contentful is a hosted [headless CMS](/docs/headless-cms/) with a fantastic user experience. It’s
+similar to having a backend like WordPress, but you are fully responsible for
+the frontend layer. The beauty of Contentful is threefold.
 
 - Intuitive and attractive UI
 - Simple content modeling
 - [Free tier](https://www.contentful.com/pricing/)
 
-Dealing with the back-end of Contentful is refreshing and the content modeling
+Dealing with the backend of Contentful is refreshing and the content modeling
 really leads the pack when compared to other headless content management
 systems. It doesn’t feel like something that just gets the job done, it’s
 actually really nice to use. They also just pushed some
 [great new changes](https://www.contentful.com/blog/2017/11/28/work-smarter-with-our-new-search-features/)
-that made it even easier to search and filter our articles on the back-end.
+that made it even easier to search and filter our articles on the backend.
 
 Contentful also happens to offer a
 [generous free tier](https://www.contentful.com/pricing/) with useful features
@@ -286,7 +286,7 @@ And back to using it with Gatsby.
 
 After you link your Netlify site to a specific code repository, Netlify’s build
 bots take care of the rest. From that point on, when you push a change to your
-repo, the build bot says, “Hey look! a change! I need to run the `gatsby build`
+repo, the build bot says, “Hey look! a change! I need to run the `npm run build`
 command...”, then it follows the package.json (or yarn file) in the repo and
 downloads the necessary dependencies if they aren’t already cached, and then
 builds out the static site.

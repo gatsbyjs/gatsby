@@ -1,0 +1,15 @@
+{
+  "name": "gatsby-site-showcase-validator-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "cheerio": "^1.0.0-rc.2",
+    "js-yaml": "^3.12.2",
+    "node-fetch": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node ./index.js"
+  }
+}

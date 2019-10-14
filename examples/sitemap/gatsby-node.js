@@ -4,43 +4,38 @@ const slash = require(`slash`)
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-    graphql(
-      `
-        {
-          allMarkdownRemark(
-            limit: 1000
-            filter: { frontmatter: { draft: { ne: true } } }
-          ) {
-            edges {
-              node {
-                fields {
-                  slug
-                }
+  const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+  return graphql(
+    `
+      {
+        allMarkdownRemark(
+          limit: 1000
+          filter: { frontmatter: { draft: { ne: true } } }
+        ) {
+          edges {
+            node {
+              fields {
+                slug
               }
             }
           }
         }
-      `
-    ).then(result => {
-      if (result.errors) {
-        console.log(result.errors)
-        reject(result.errors)
       }
+    `
+  ).then(result => {
+    if (result.errors) {
+      throw result.errors
+    }
 
-      // Create blog posts pages.
-      result.data.allMarkdownRemark.edges.forEach(edge => {
-        createPage({
-          path: edge.node.fields.slug, // required
-          component: slash(blogPostTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
+    // Create blog posts pages.
+    result.data.allMarkdownRemark.edges.forEach(edge => {
+      createPage({
+        path: edge.node.fields.slug, // required
+        component: slash(blogPostTemplate),
+        context: {
+          slug: edge.node.fields.slug,
+        },
       })
-
-      resolve()
     })
   })
 }

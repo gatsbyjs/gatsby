@@ -1,56 +1,37 @@
-import React from "react"
-import presets, { colors } from "../utils/presets"
-import { rhythm } from "../utils/typography"
-import { vP, vPHd, vPVHd } from "../components/gutters"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const Card = ({ children }) => (
   <div
-    css={{
+    sx={{
       boxSizing: `border-box`,
       display: `flex`,
       transform: `translateZ(0)`,
-      [presets.Tablet]: {
+      [mediaQueries.md]: {
         flex: `0 0 auto`,
         maxWidth: `50%`,
-        boxShadow: `0 1px 0 0 ${colors.ui.light}`,
-        "&:nth-child(5),&:nth-child(6)": {
-          boxShadow: `none`,
-        },
-        "&:nth-child(2n)": {
-          borderLeft: `1px solid ${colors.ui.light}`,
+        boxShadow: t => `0 1px 0 0 ${t.colors.ui.border}`,
+        "&:nth-of-type(5), &:nth-of-type(6)": { boxShadow: `none` },
+        "&:nth-of-type(2n)": {
+          borderLeft: t => `1px solid ${t.colors.ui.border}`,
         },
       },
-      [presets.Hd]: {
+      [mediaQueries.xl]: {
         flex: `0 0 auto`,
         maxWidth: `33.33333333%`,
-        borderLeft: `1px solid ${colors.ui.light}`,
-        "&:nth-child(4)": {
-          boxShadow: `none`,
-        },
-        "&:nth-child(3n+1)": {
-          borderLeft: 0,
-        },
+        borderLeft: t => `1px solid ${t.colors.ui.border}`,
+        "&:nth-of-type(4)": { boxShadow: `none` },
+        "&:nth-of-type(3n+1)": { borderLeft: 0 },
       },
     }}
   >
     <div
-      css={{
-        padding: rhythm(presets.gutters.default / 2),
-        paddingBottom: 0,
+      sx={{
+        p: 8,
+        pb: [0, 8],
         transform: `translateZ(0)`,
-        [presets.Mobile]: {
-          padding: vP,
-          paddingBottom: 0,
-        },
-        [presets.Phablet]: {
-          padding: vP,
-        },
-        [presets.VHd]: {
-          padding: vPHd,
-        },
-        [presets.VVHd]: {
-          padding: vPVHd,
-        },
       }}
     >
       {children}

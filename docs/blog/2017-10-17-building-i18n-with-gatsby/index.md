@@ -79,7 +79,7 @@ To get started, you'll need to install a few packages:
 ## Setting up
 
 This is straight from the
-[i18n code examples](https://react.i18next.com/components/i18next-instance.html),
+[i18n code examples](https://react.i18next.com/latest/i18next-instance),
 but copied here for convenience. You'll need to create an i18n component and
 import it somewhere (we did it in our index layout):
 

@@ -1,9 +1,4 @@
-import styled from "react-emotion"
-
-import { rhythm } from "../../utils/typography"
-import presets from "../../utils/presets"
-
-const BOX_SHADOW_BLUR = `8px`
+import styled from "@emotion/styled"
 
 export const HorizontalScroller = styled(`div`)`
   overflow-x: scroll;
@@ -13,17 +8,17 @@ export const HorizontalScroller = styled(`div`)`
 export const HorizontalScrollerContent = styled(`ul`)`
   display: inline-flex;
   list-style: none;
-  padding: ${BOX_SHADOW_BLUR} ${rhythm(presets.gutters.default / 2)}
-    calc(${BOX_SHADOW_BLUR} * 1.5);
+  padding: ${p => p.theme.space[2]} ${p => p.theme.space[6]}
+    calc(${p => p.theme.space[2]} * 1.5);
   margin: 0;
 `
 
 export const HorizontalScrollerItem = styled(`li`)`
-  background: #fff;
-  border-radius: ${presets.radiusLg}px;
-  box-shadow: 0 0 ${BOX_SHADOW_BLUR} rgba(0, 0, 0, 0.2);
+  background: ${p => p.theme.colors.card.background};
+  border-radius: ${p => p.theme.radii[2]}px;
+  box-shadow: ${p => p.theme.shadows.raised};
   margin: 0;
-  margin-right: ${rhythm(presets.gutters.default / 2)};
+  margin-right: ${p => p.theme.space[6]};
   width: 77vw;
 
   :last-child {

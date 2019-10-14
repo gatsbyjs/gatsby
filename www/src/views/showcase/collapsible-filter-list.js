@@ -1,18 +1,16 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
 import Collapsible from "../shared/collapsible"
-
-import { scale } from "../../utils/typography"
-import { colors } from "../../utils/presets"
-import styles from "../../views/shared/styles"
+import { filterButton, filterCheckbox } from "../../views/shared/styles"
 
 const CollapsibleFilterList = ({
   filters,
   categoryKeys,
   aggregatedCategories,
-  updateQuery,
+  setFilters,
   heading,
 }) => (
   <Collapsible heading={heading}>
@@ -22,39 +20,25 @@ const CollapsibleFilterList = ({
         className={filters.includes(c) ? `selected` : ``}
         onClick={() => {
           if (filters.includes(c)) {
-            updateQuery(() => {
-              return { filters: filters.filter(f => f !== c) }
-            })
+            setFilters(filters.filter(f => f !== c))
           } else {
-            updateQuery(() => {
-              return { filters: [...filters, c] }
-            })
+            setFilters([...filters, c])
           }
         }}
-        css={styles.filterButton}
+        sx={{
+          ...filterButton,
+          color: filters.includes(c) ? `link.color` : `textMuted`,
+        }}
       >
-        <div
-          css={{
-            color: filters.includes(c) ? colors.gatsby : colors.ui.bright,
-            ...scale(0),
-            marginRight: 8,
-          }}
-        >
+        <div sx={filterCheckbox}>
           {filters.includes(c) ? (
             <MdCheckbox style={{ verticalAlign: `-0.125em` }} />
           ) : (
             <MdCheckboxBlank style={{ verticalAlign: `-0.125em` }} />
           )}
         </div>
-        <div
-          css={{
-            color: filters.includes(c) ? colors.gatsby : false,
-            marginRight: `auto`,
-          }}
-        >
-          {c}
-        </div>
-        <div css={styles.filterCount}>{aggregatedCategories[c]}</div>
+        <div sx={{ mr: `auto` }}>{c}</div>
+        <div>{aggregatedCategories[c]}</div>
       </button>
     ))}
   </Collapsible>

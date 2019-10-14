@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const loki = require(`@moocar/lokijs`)
+const loki = require(`lokijs`)
 const uuidv4 = require(`uuid/v4`)
 const customComparators = require(`./custom-comparators`)
 
@@ -9,6 +9,7 @@ const customComparators = require(`./custom-comparators`)
 // implementation. See `custom-comparators.js` for why.
 loki.Comparators.lt = customComparators.ltHelper
 loki.Comparators.gt = customComparators.gtHelper
+loki.Comparators.aeq = customComparators.aeqHelper
 
 // Loki is a document store with the same semantics as mongo. This
 // means there are no tables or relationships. Just a bunch of
@@ -60,7 +61,7 @@ function ensureNodeCollections(db) {
   })
 }
 
-function startFileDb(saveFile) {
+function startFileDb({ saveFile, lokiDBOptions = {} }) {
   return new Promise((resolve, reject) => {
     const dbOptions = {
       autoload: true,
@@ -71,8 +72,7 @@ function startFileDb(saveFile) {
           resolve()
         }
       },
-      autosave: true,
-      autosaveInterval: 1000,
+      ...lokiDBOptions,
     }
     db = new loki(saveFile, dbOptions)
   })
@@ -95,23 +95,41 @@ async function startInMemory() {
  * the existing state has been loaded (if there was an existing
  * saveFile)
  */
-async function start({ saveFile } = {}) {
+async function start({ saveFile, lokiDBOptions } = {}) {
   if (saveFile && !_.isString(saveFile)) {
     throw new Error(`saveFile must be a path`)
   }
   if (saveFile) {
     const saveDir = path.dirname(saveFile)
     await fs.ensureDir(saveDir)
-    await startFileDb(saveFile)
+    await startFileDb({ saveFile, lokiDBOptions })
   } else {
     await startInMemory()
   }
   ensureNodeCollections(db)
 }
 
+// Saves the database to disk and returns a promise that will be
+// resolved once the save has finished
+function saveState() {
+  return new Promise((resolve, reject) => {
+    if (db) {
+      db.saveDatabase(err => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    } else {
+      reject(`No database found.`)
+    }
+  })
+}
+
 /**
  * Returns a reference to the database. If undefined, the db has not been
- * initalized yet. Call `start()`
+ * initialized yet. Call `start()`
  *
  * @returns {Object} database, or undefined
  */
@@ -123,4 +141,5 @@ module.exports = {
   start,
   getDb,
   colls,
+  saveState,
 }
