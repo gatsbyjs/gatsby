@@ -16,7 +16,7 @@ When Gatsby creates its webpack config, this function will be called allowing
 you to modify the default webpack config using
 [webpack-merge](https://github.com/survivejs/webpack-merge).
 
-Gatsby does multiple webpack builds with somewhat different configuration. Gatsby 
+Gatsby does multiple webpack builds with somewhat different configuration. Gatsby
 calls each build type a "stage". The following stages exist:
 
 1.  develop: when running the `gatsby develop` command. Has configuration for hot
