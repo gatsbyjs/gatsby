@@ -39,7 +39,7 @@ Additionally, you need the the `gatsby-source-graphql` library. Because Gentics 
 You can install this component with:
 
 ```shell
-  npm install --save gatsby-source-graphql
+npm install --save gatsby-source-graphql
 ```
 
 ### Configure the plugin
