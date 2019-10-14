@@ -73,7 +73,7 @@ This will show you an interface where you can test your new content GraphQL API.
 
 Try running this query:
 
-```js
+```graphql
 query {
   mesh {
     nodes(filter: {schema: {is: vehicle}}, perPage: 2, page:5) {
