@@ -327,7 +327,7 @@ export const query = graphql`
 `
 ```
 
-Now, we can use the component together with the exported fragment in our index page.
+Now, you can use the component together with the exported fragment in your index page.
 
 ```jsx:title=src/pages/index.jsx
 import React from "react"
