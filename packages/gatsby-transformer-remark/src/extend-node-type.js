@@ -301,7 +301,7 @@ module.exports = (
 
             return node
           }
-          if (!appliedTocOptions.relative) {
+          if (appliedTocOptions.pathToSlugField) {
             tocAst.map = addSlugToUrl(tocAst.map)
           }
 
@@ -602,10 +602,7 @@ module.exports = (
         type: `String`,
         args: {
           relative: `Boolean`,
-          pathToSlugField: {
-            type: `String`,
-            defaultValue: `fields.slug`,
-          },
+          pathToSlugField: `String`,
           maxDepth: `Int`,
           heading: `String`,
         },

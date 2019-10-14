@@ -900,7 +900,7 @@ some text
 
 some other text
 `,
-    `tableOfContents
+    `tableOfContents(pathToSlugField: "test123")
     frontmatter {
         title
     }`,
@@ -955,7 +955,7 @@ some other text
 
 final text
 `,
-    `tableOfContents(relative: true)
+    `tableOfContents
     frontmatter {
         title
     }`,
