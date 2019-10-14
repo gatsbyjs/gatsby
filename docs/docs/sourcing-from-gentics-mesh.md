@@ -135,7 +135,7 @@ Again, if everything is working properly, you should see a successful response i
 
 For the purpose of this guide I've removed all the layout, SEO, link or other components in the Gatsby starter. The components are still there and 99% of users will likely want to put them back in once they understand what's happening in the code. Open the index file located at `src/pages/index.js` and replace the content with this code:
 
-```js
+```javascript:title=src/pages/index.js
 import React from "react"
 import { StaticQuery } from "gatsby"
 
