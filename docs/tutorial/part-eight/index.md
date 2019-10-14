@@ -14,7 +14,7 @@ Wow! You've come a long way! You've learned how to:
 - use GraphQL to query data for pages
 - programmatically create pages from your data
 
-In this final section, you're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, you'll be introduce in a few more plugins you'll often want to use in your Gatsby sites.
+In this final section, you're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, we'll introduce a few more plugins you'll often want to use in your Gatsby sites.
 
 ## Audit with Lighthouse
 
