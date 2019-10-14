@@ -111,6 +111,5 @@
   ],
   "resolutions": {
     "write-file-atomic": "2.4.1"
-  },
-  "version": "0.0.0"
+  }
 }
