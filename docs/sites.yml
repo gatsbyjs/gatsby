@@ -5568,15 +5568,20 @@
   main_url: https://www.element84.com
   url: https://www.element84.com
   description: >
-    A software development firm that designs and builds ambitious software products engineered for high scalability.
+    Element 84 is software engineering and design firm that helps companies and government agencies solve problems using remote sensing, life sciences, and transportation data in the cloud.
   categories:
     - Agency
     - Blog
+    - Business
     - Consulting
+    - Data
+    - Design
+    - Government
     - Portfolio
     - Programming
     - Science
     - Technology
+    - User Experience
     - Web Development
 - title: Measures for Justice
   main_url: https://www.measuresforjustice.org
@@ -7696,6 +7701,35 @@
   built_by: Phil Tietjen
   built_by_url: "https://github.com/Phizzard"
   featured: false
+- title: Divyanshu Maithani
+  main_url: https://divyanshu013.dev
+  url: https://divyanshu013.dev
+  source_url: https://github.com/divyanshu013/blog
+  description: >
+    Personal blog of Divyanshu Maithani. Life, music, code and things in between...
+  categories:
+    - Blog
+    - JavaScript
+    - Open Source
+    - Music
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Divyanshu Maithani
+  built_by_url: https://twitter.com/divyanshu013
+- title: TFE Energy
+  main_url: https://tfe.energy
+  url: https://tfe.energy
+  source_url: https://gitlab.com/marcfehrmedia/2019-07-03-tfe-energy
+  description: >
+    TFE Energy believes in the future. Their new website is programmed with Gatsby, Scrollmagic, Contentful, Cloudify.
+  categories:
+    - Technology
+    - Consulting
+    - Video
+    - Business
+  built_by: Marc Fehr
+  built_by_url: https:/www.marcfehr.media
 - title: AtomBuild
   url: https://atombuild.github.io/
   main_url: https://atombuild.github.io/
@@ -7749,4 +7783,15 @@
     - Blog
   built_by: Kframe Interactive SA
   built_by_url: https://kframeinteractive.com/
+  featured: false
+- title: Arturo Alviar's Portfolio
+  main_url: "https://arturoalviar.com"
+  url: "https://arturoalviar.com"
+  source_url: "https://github.com/arturoalviar/portfolio"
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Arturo Alviar
+  built_by_url: "https://github.com/arturoalviar"
   featured: false

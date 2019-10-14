@@ -1,5 +1,5 @@
 ---
-title: Schema Customization
+title: Customizing the GraphQL Schema
 ---
 
 One of Gatsby's main strengths is the ability to query data from a variety of
