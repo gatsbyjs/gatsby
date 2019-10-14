@@ -1,34 +1,17 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
-import { SkipNavLink } from "@reach/skip-nav"
-import styled from "@emotion/styled"
 
 import Banner from "../banner"
 import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
-
-import { mediaQueries, sizes, fontSizes } from "../../utils/presets"
-import { skipLink } from "../../utils/styles"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import SkipNavLink from "../skip-nav-link"
 
 // Import Futura PT typeface
 import "../../assets/fonts/futura"
-
-const Content = styled(`div`)`
-  padding-top: ${sizes.bannerHeight};
-  padding-bottom: ${fontSizes[10]};
-
-  ${mediaQueries.md} {
-    margin-left: ${sizes.pageHeadingDesktopWidth};
-    padding-top: calc(${sizes.bannerHeight} + ${sizes.headerHeight});
-    padding-bottom: 0;
-  }
-`
-
-const StyledSkipNavLink = styled(SkipNavLink)({
-  ...skipLink,
-})
 
 const LayoutWithHeading = props => {
   const {
@@ -50,18 +33,24 @@ const LayoutWithHeading = props => {
         <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
         <html lang="en" />
       </Helmet>
-
-      <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
-
+      <SkipNavLink />
       <Banner />
-
       <Navigation pathname={props.location.pathname} />
+      <div
+        sx={{
+          pt: t => t.sizes.bannerHeight,
+          pb: t => t.fontSizes[10],
 
-      <Content>
+          [mediaQueries.md]: {
+            ml: t => t.sizes.pageHeadingDesktopWidth,
+            pt: t => `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+            pb: 0,
+          },
+        }}
+      >
         {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
         {children}
-      </Content>
-
+      </div>
       <MobileNavigation />
     </div>
   )

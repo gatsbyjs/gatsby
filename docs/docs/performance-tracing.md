@@ -1,5 +1,5 @@
 ---
-title: "Performance tracing"
+title: "Performance Tracing"
 ---
 
 Gatsby allows a build to be traced, enabling you to find which plugins or parts of the build are taking the longest. The trace information can be viewed in any [OpenTracing](http://opentracing.io/) compatible tool such as [Jaeger](https://www.jaegertracing.io/). You can also use Zipkin compatible tools such as [Zipkin](https://zipkin.io/) or [Honeycomb](https://www.honeycomb.io/).
@@ -108,7 +108,7 @@ To provide custom tracing, you can use the `tracing` object, which is present in
 exports.sourceNodes = async ({ actions, tracing }) => {
   const span = tracing.startSpan(`foo`)
 
-  // Perform any span operations. E.g add a tag to your span
+  // Perform any span operations. E.g. add a tag to your span
   span.setTag(`bar`, `baz`)
 
   // Rest of your plugin code
