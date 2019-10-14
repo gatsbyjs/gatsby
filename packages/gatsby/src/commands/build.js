@@ -40,6 +40,7 @@ const waitJobsFinished = () =>
 
 module.exports = async function build(program: BuildArgs) {
   const publicDir = path.join(program.directory, `public`)
+  const incrementalBuild = process.env.INCREMENTAL_BUILD === `true` || false
   initTracer(program.openTracingConfigFile)
 
   telemetry.trackCli(`BUILD_START`)
@@ -90,7 +91,6 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   const workerPool = WorkerPool.create()
-  const incrementalBuild = true // by default we don't want to do a rebuild of all html
 
   const webpackCompilationHash = stats.hash
   if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
