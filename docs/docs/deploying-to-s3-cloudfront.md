@@ -33,12 +33,12 @@ Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
 
 ```javascript:title=gatsby-config.js
 plugins: [
- {
-     resolve: `gatsby-plugin-s3`,
-     options: {
-         bucketName: 'my-website-bucket'
-     },
- },
+  {
+    resolve: `gatsby-plugin-s3`,
+    options: {
+      bucketName: "my-website-bucket",
+    },
+  },
 ]
 ```
 
