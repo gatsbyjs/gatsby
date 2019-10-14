@@ -62,4 +62,3 @@ can follow these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-
 
 Go check out the [writing MDX guide](/docs/mdx/writing-pages) to find out what else you can do
 with Gatsby and MDX.
-
