@@ -24,7 +24,7 @@ You add tags by defining them in the `frontmatter` of your Markdown file. The `f
 title: "A Trip To the Zoo"
 ---
 
-You went to the zoo today. It was terrible.
+I went to the zoo today. It was terrible.
 ```
 
 Fields can be strings, numbers, or arrays. Since a post can usually have many tags, it makes sense to define it as an array. Here you add your new tags field:
@@ -35,7 +35,7 @@ title: "A Trip To the Zoo"
 tags: ["animals", "Chicago", "zoos"]
 ---
 
-You went to the zoo today. It was terrible.
+I went to the zoo today. It was terrible.
 ```
 
 If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
@@ -61,7 +61,7 @@ The above query groups posts by `tags`, and returns each `tag` with the number o
 
 ## Make a tags page template (for `/tags/{tag}`)
 
-If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: you'll make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
+If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: Make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
 
 First, you'll add a tags template at `src/templates/tags.js`:
 
@@ -154,7 +154,7 @@ export const pageQuery = graphql`
 
 ## Modify `gatsby-node.js` to render pages using that template
 
-Now you've got a template. Great! Assumed you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
+Now you've got a template. Great! Assuming you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
 ```js:title=gatsby-node.js
 const path = require("path")
