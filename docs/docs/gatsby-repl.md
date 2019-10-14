@@ -83,7 +83,7 @@ gatsby > getNode('SitePage /404.html')
 
 ### `getNodes()`
 
-Returns an array of objects (the nodes). Because this is
+Returns an array of objects (the nodes).
 
 Usage: `getNodes()`
 

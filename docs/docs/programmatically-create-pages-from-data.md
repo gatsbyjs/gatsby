@@ -16,7 +16,7 @@ create pages from markdown files (following after the example introduced in
 
 The Gatsby Node API provides the
 [`createPages`](/docs/node-apis/#createPages)
-extension point which we'll use to add pages. This function will give us
+extension point which you'll use to add pages. This function will give you
 access to the
 [`createPage`](/docs/actions/#createPage) action
 which is at the core of programmatically creating a page.
@@ -49,9 +49,9 @@ exports.createPages = async function({ actions, graphql }) {
 }
 ```
 
-For each page we want to create we must specify the `path` for visiting that
+For each page you want to create you must specify the `path` for visiting that
 page, the `component` template used to render that page, and any `context`
-we need in the component for rendering.
+you need in the component for rendering.
 
 The `context` parameter is _optional_, though often times it will include a
 unique identifier that can be used to query for associated data that will be
@@ -69,7 +69,7 @@ export const query = graphql`
 
 ### Specifying A Template
 
-The `createPage` action required that we specify the `component` template
+The `createPage` action required that you specify the `component` template
 that will be used to render the page. Here is an example of what the
 referenced template could look like:
 
@@ -102,10 +102,10 @@ export const query = graphql`
 `
 ```
 
-Notice that we're able to query with the `$slug` value from our `context` as
-an argument, which ensures that we're returning only the data that matches
-that specific page. As a result, we can provide the `title` and `html` from
-the matching `markdownRemark` record to our component. The `context` values
+Notice that you're able to query with the `$slug` value from your `context` as
+an argument, which ensures that you're returning only the data that matches
+that specific page. As a result, you can provide the `title` and `html` from
+the matching `markdownRemark` record to your component. The `context` values
 are also available as the `pageContext` prop in the template component itself.
 
 ### Not Just Markdown

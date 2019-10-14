@@ -1,5 +1,5 @@
 ---
-title: "Location Data from Props"
+title: Location Data from Props
 ---
 
 ## What is location data

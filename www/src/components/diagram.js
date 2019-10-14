@@ -4,7 +4,6 @@ import { Fragment } from "react"
 import { keyframes } from "@emotion/core"
 import { Link, StaticQuery, graphql } from "gatsby"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -108,17 +107,11 @@ const boxPadding = { py: 3, px: 4 }
 const SourceItem = ({ children }) => (
   <div
     sx={{
-      boxSizing: `border-box`,
       py: 4,
       px: 5,
       display: `flex`,
-      [mediaQueries.xs]: {
-        flex: `1 1 50%`,
-      },
-      [mediaQueries.sm]: {
-        flex: `1 1 33%`,
-        maxWidth: `33%`,
-      },
+      flex: [null, `1 1 50%`, null, `1 1 33%`],
+      maxWidth: [null, null, null, `33%`],
     }}
   >
     <div
@@ -181,13 +174,10 @@ const Gatsby = () => (
       src={logo}
       sx={{
         display: `inline-block`,
-        height: t => t.space[8],
+        height: [t => t.space[8], null, null, null, t => t.space[9]],
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
-        [mediaQueries.lg]: {
-          height: t => t.space[9],
-        },
       }}
       alt="Gatsby"
     />
@@ -237,10 +227,6 @@ const Diagram = () => (
           sx={{
             fontWeight: `heading`,
             mb: 6,
-            mt: 0,
-            [mediaQueries.md]: {
-              mt: 6,
-            },
           }}
         >
           How Gatsby works

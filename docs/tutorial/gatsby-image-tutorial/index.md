@@ -361,7 +361,7 @@ Now for errors to watch out for. If you change your image processing from `fixed
 
 ![In image cache error message.](./ErrorMessage.png)
 
-Despite its appearance, solving this doesn't actually require flushing any kind of cache. In reality, it has to do with incompatible references. You likely triggered it because you changed the query to process the image as `fluid` but the JSX key was still set to `fixed`, or visa versa.
+Despite its appearance, solving this doesn't actually require flushing any kind of cache. In reality, it has to do with incompatible references. You likely triggered it because you changed the query to process the image as `fluid` but the JSX key was still set to `fixed`, or vice versa.
 
 ## The end
 
