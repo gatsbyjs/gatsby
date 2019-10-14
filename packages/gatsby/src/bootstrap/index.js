@@ -203,6 +203,7 @@ module.exports = async (args: BootstrapArgs) => {
       if (!incrementalBuild) {
         await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
       } else {
+        // Remove all files except the cache file
         await del([`${cacheDirectory}/**/*.{json,js,css}`])
       }
     } catch (e) {
