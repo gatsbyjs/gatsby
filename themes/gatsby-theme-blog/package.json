@@ -39,7 +39,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.15.37",
+    "gatsby": "^2.16.0",
     "prettier": "^1.18.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
