@@ -144,7 +144,7 @@ In the example `Node` is `undefined` and to figure out why, let's go backwards. 
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 
-We can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing our code to fail. Adjusting our code to use a lowercase `node` fixes the problem and we did that without adding tons of `console.log` output!
+You can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing your code to fail. Adjusting your code to use a lowercase `node` fixes the problem and you did that without adding tons of `console.log` output!
 
 ### Finishing thoughts on DevTools
 
