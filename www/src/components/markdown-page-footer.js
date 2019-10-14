@@ -4,8 +4,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import EditIcon from "react-icons/lib/md/create"
 
-import { linkStyles } from "../utils/styles"
-
 export default class MarkdownPageFooter extends React.Component {
   constructor() {
     super()
@@ -17,7 +15,7 @@ export default class MarkdownPageFooter extends React.Component {
         <hr sx={{ display: `none` }} />
         {this.props.page && (
           <a
-            sx={{ ...linkStyles, marginTop: 9 }}
+            sx={{ variant: `links.muted`, mt: 9 }}
             href={`https://github.com/gatsbyjs/gatsby/blob/master/${
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
