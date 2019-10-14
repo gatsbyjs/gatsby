@@ -13809,10 +13809,9 @@ methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-microbundle@^0.12.0-next.6:
+microbundle@gatsbyjs/microbundle#brotli-try-catch-plus-dist:
   version "0.12.0-next.6"
-  resolved "https://registry.yarnpkg.com/microbundle/-/microbundle-0.12.0-next.6.tgz#e5f60d45e2a082b7ddac3a6953715717019e2fa7"
-  integrity sha512-IoH9ooNAKAjg+kLXW9Q7/9viaccnRdRTq/IQoM9rRkfxJl+DoW8RPftxg2kEFKjbecQB0mGk/dvBQa208ayBJw==
+  resolved "https://codeload.github.com/gatsbyjs/microbundle/tar.gz/6e09b71d72e71458dcdeef2759086c79637580d5"
   dependencies:
     "@babel/core" "^7.5.5"
     "@babel/plugin-proposal-class-properties" "7.5.5"
