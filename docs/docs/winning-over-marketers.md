@@ -9,7 +9,7 @@ Some things that marketers care about include:
 - **Making the website faster**. This tends to decrease the "bounce rate", which is the proportion of visitors leaving the website.
 - **Generating revenue**. If the product is bought online through a checkout flow, such as e-commerce, marketers are often measured on revenue the site generates -- the dollar value of total sales.
 
-## Basic Explanation
+## Basic explanation
 
 A basic explanation of Gatsby to marketers is often along these lines:
 
@@ -23,15 +23,15 @@ Marketers may be curious about more information on specific topics such as SEO, 
 
 > Think rocket ship vs. sea turtle. Gatsby takes fast to a whole new level with websites that are pre-built and live on the edge—right where your customers are. Pages load in milliseconds rather than seconds. Gatsby enables teams to create lightning-fast, content-driven websites without needing to become performance experts.
 
-### SEO Optimized
+### SEO optimized
 
 > Think of all the time a team spends on creating compelling, optimized content just to have the search ranking penalized by a slow website. A Search Engine Optimized website means a higher organic search ranking and more website traffic, which can mean more leads and revenue. Get as much out of your website as you do your content and see the impact.
 
-### Optimized for Lead Conversion
+### Optimized for lead conversion
 
 > For every second it takes a page to load, the bounce rate increases and the lead conversion drops. For e-commerce sites, some estimates say you may lose up to 1% in revenue for every 100ms delay in page load time. The longer it takes a page to load, the more customers/leads/revenue you lose. Get greater lead conversion with a fast website that loads on even slow connections.
 
-### Generating Revenue
+### Generating revenue
 
 > Generating revenue with your website is especially important for e-commerce sites. If an e-commerce company doesn’t get a high enough ROI (return on investment), then they may be out of business in a few months. Even just a one second improvement in page load time can increase revenue by 7%. The less time it takes a page to load, the more money you make.
 

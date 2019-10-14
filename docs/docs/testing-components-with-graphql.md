@@ -249,10 +249,45 @@ export const Header = props => (
 export default Header
 ```
 
+If you prefer to utilize `useStaticQuery` instead, you can rewrite
+the Header component as:
+
+```jsx:title=src/components/header.js
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+
+export const PureHeader = ({ data }) => (
+  <header>
+    <h1>{data.site.siteMetadata.title}</h1>
+  </header>
+)
+
+export const Header = props => (
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return <PureHeader {...props} data={data}></PureHeader>
+)
+
+export default Header
+```
+
+Note that because `useStaticQuery` is a React Hook, it is simply a function and so can
+be assigned to `data` which is then passed as a prop to the `PureHeader`. This is only
+possible since we have also made `Header` a function component.
+
 Now you have two components exported from the file: the component that includes
 the StaticQuery data which is still the default export, and another component
 that you can test. This means you can test the component independently of the
-GraphQL.
+GraphQL. In addition, whether you utilize StaticQuery or useStaticQuery, your
+test should still function properly.
 
 This is a good example of the benefits of keeping components "pure", meaning
 they always generate the same output if given the same inputs and have no

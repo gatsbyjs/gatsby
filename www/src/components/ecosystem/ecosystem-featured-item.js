@@ -59,13 +59,13 @@ const Header = styled(`header`)`
 
   span {
     align-items: center;
-    color: ${p => p.theme.colors.lilac};
+    color: ${p => p.theme.colors.textMuted};
     display: flex;
     font-size: ${p => p.theme.fontSizes[1]};
     padding-left: ${p => p.theme.space[3]};
 
     svg {
-      fill: ${p => p.theme.colors.lilac};
+      fill: ${p => p.theme.colors.textMuted};
       height: auto;
       margin-left: ${p => p.theme.space[1]};
       width: ${p => p.theme.space[4]};
