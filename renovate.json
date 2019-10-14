@@ -16,6 +16,12 @@
   "bumpVersion": null,
   "semanticCommitScope": null,
   "prHourlyLimit": 0,
+  "packageRules": [
+    {
+      "groupName": "minor updates in packages",
+      "updateTypes": ["minor"]
+    }
+  ],
   "timezone": "GMT",
   "schedule": "after 10am on Monday"
 }
