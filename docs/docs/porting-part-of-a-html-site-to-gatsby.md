@@ -40,6 +40,7 @@ Here is the structure of an example static HTML/CSS website that this guide will
  asset-domain
  ├── favicon.ico
  ├── person.png
+ ├── normalize.css
  └── style.css
 website-domain
   ├── index.html
@@ -483,7 +484,7 @@ module.exports = {
 
 ### Build step
 
-Running the development server, you now have a site that mirrors the existing HTML site section. To stop the development server, press ctrl+c in the shell. It's time to run the build! 🎉
+You now have a site that mirrors the existing HTML site section. Stop the development server if it's still running, it's time to run the build! 🎉
 
 ```shell
 gatsby build --prefix-paths
@@ -499,6 +500,7 @@ Here is the structure of the HTML & non JavaScript asset files after the built, 
  asset-domain
 ├── favicon.ico
 ├── person.png
+├── normalize.css
 ├── style.css
 {/* highlight-start */}
 └── gatsby
