@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-postcss",
   "description": "Gatsby plugin to handle PostCSS",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "author": "Marat Dreizin <marat.dreizin@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

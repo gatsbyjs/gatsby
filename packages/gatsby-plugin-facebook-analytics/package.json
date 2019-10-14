@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-facebook-analytics",
   "description": "Gatsby plugin to add facebook analytics  onto a site",
-  "version": "2.2.12",
+  "version": "2.2.13",
   "author": "Yeison Daza <jahir045@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
