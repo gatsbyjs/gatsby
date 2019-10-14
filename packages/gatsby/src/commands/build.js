@@ -57,7 +57,6 @@ module.exports = async function build(program: BuildArgs) {
   })
 
   const {
-    pageQueryIds,
     processPageQueries,
     processStaticQueries,
   } = queryUtil.getInitialQueryProcessors({
