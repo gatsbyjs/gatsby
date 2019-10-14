@@ -31,7 +31,7 @@ starter:
   - Language:Other
   - Language:TypeScript
   - Linting
-  - Mapping:Leaflet
+  - Mapping
   - Markdown
   - MDX
   - Netlify
