@@ -14,7 +14,7 @@ In this guide you'll create a complete project capable of querying data from a G
 
 ### Start Mesh
 
-Gentics Mesh is a self-hosted CMS. You can run it for example via docker:
+Gentics Mesh is a self-hosted CMS. You can run it for example via [Docker](https://www.docker.com/):
 
 ```shell
 docker run -p 8080:8080 -d gentics/mesh-demo
