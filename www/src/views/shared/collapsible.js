@@ -59,7 +59,7 @@ class Collapsible extends Component {
           >
             {heading}
             {` `}
-            <span sx={{ ml: `auto` }}>
+            <span sx={{ ml: `auto` }} css={{ display: `flex` }}>
               {collapsed ? <FaAngleDown /> : <FaAngleUp />}
             </span>
           </h4>
