@@ -2,19 +2,19 @@
 title: Sourcing from Forestry
 ---
 
-### Overview
+## Overview
 
-In this guide, we'll walk through setting up a site with content management using [Forestry.io](https://forestry.io/).
+In this guide, you'll walk through setting up a site with content management using [Forestry.io](https://forestry.io/).
 
-Forestry (also Forestry.io or Forestry CMS) is a Git-backed CMS that is built to work with static site generators[1](https://forestry.io/about/). There are no additional dependencies or plugins required to run Forestry with Gatsby apart from what is included in the [Gatsby Default Starter](https://github.com/gatsbyjs/gatsby-starter-default).
+Forestry (also Forestry.io or Forestry CMS) is a Git-backed CMS that is built to work with static site generators[\[1\]](https://forestry.io/about/). There are no additional dependencies or plugins required to run Forestry with Gatsby apart from what is included in the [Gatsby Default Starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
 All configurations can be done through your Forestry site dashboard, but they can also be done directly in your Gatsby site repository.
 
 To complete this tutorial, you will need a Forestry account. You can sign-up at [Forestry.io](https://app.forestry.io/signup).
 
-_Note_: you can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
 
-### Setup
+## Setup
 
 First, clone the Gatsby default starter repository.
 
@@ -39,7 +39,7 @@ git pull
 
 This will add a `.forestry` directory in your project root with the `settings.yml` file. This file allows you to configure your CMS settings including adding content collections. You should also see a new `/admin` directory that contains `index.html`. Create a directory named `static` in your root directory. Move the `/admin` directory into the new `/static` directory. _Important_: The `/admin` directory must be located inside of `/static`. Do not name this directory anything else.
 
-#### Settings Configuration
+### Settings Configuration
 
 Open `.forestry/settings.yml`. You will see the following default configuration values:
 
@@ -73,7 +73,7 @@ upload_dir: static/uploads
 public_path: "/static/uploads"
 ```
 
-This sets where media is saved. For more information on Gatsby's static directory check out this [Gatsby doc guide](https://www.gatsbyjs.org/docs/static-folder/). The rest of the settings can remain the same.
+This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/static-folder/) to learn more. The rest of the settings can remain the same.
 
 Open `package.json` and add the following to scripts:
 
@@ -93,9 +93,9 @@ For preview to work on Forestry's dashboard, port 8080 must be used and all netw
 
 _Note_: The `forestry:preview` script can be named anything, but it must match the `instant_preview_command` setting in `.forestry/settings.yml`. This sets up Forestry to run a local server so that CMS content can be previewed from the Forestry dashboard using `gatsby develop`.
 
-#### CMS Content Configuration
+### CMS Content Configuration
 
-Now we can set up a content collection. Create the file `.forestry/front_matter/blog.yml` and paste in the following:
+Now you can set up a content collection. Create the file `.forestry/front_matter/blog.yml` and paste in the following:
 
 ```yml:title=.forestry/front_matter/blog.yml
 ---
@@ -155,7 +155,7 @@ Then in your terminal run `gatsby develop` to start the Gatsby development serve
 
 You should now be viewing your Forestry login page. Login to view your dashboard. If you don't have a user yet, create one on the Forestry Dashboard. This will allow you to login on the Gatsby site admin login page. On the left side of your dashboard you will see "Posts". If you click on it you can add a new post. When you save your post, Forestry will push the change directly to your GitHub repo.
 
-#### Deploying to Netlify
+### Deploying to Netlify
 
 Now you can publish your Gatsby site straight from GitHub to Netlify from the [create site
 page](https://app.netlify.com/start) - the proper build command for Gatsby will be provided
@@ -166,7 +166,7 @@ minutes since a lot of things aren't cached yet. Subsequent deploys will be fast
 Once deployment is complete you'll be able to view your live site, which should look the same as it
 did locally.
 
-#### Making Changes
+### Making Changes
 
 Alright - you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!
 Open the Forestry dashboard on your deployed site at `/admin`, allow access to GitHub when the permissions
@@ -174,12 +174,12 @@ window pops up (check for blocked pop ups if you don't see it), and try creating
 new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
 containing a Markdown file with your blog post content!
 
-Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](https://www.gatsbyjs.org/docs/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](https://www.gatsbyjs.org/docs/mdx/writing-pages/).
+Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/mdx/writing-pages/).
 
 Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses to locate markdown files.
 
-### Wrapping Up
+## Wrapping Up
 
 For more examples and help, visit the [Forestry.io docs](https://forestry.io/docs/welcome/).
 
-_Note_: you can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
