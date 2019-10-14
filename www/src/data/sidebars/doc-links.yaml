@@ -37,9 +37,9 @@
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
-            - title: Deploying to S3 and CloudFront
+            - title: Deploying to S3 & CloudFront
               link: /docs/deploying-to-s3-cloudfront/
-              breadcrumbTitle: S3 and CloudFront
+              breadcrumbTitle: S3 & CloudFront
             - title: Deploying to Aerobatic
               link: /docs/deploying-to-aerobatic/
               breadcrumbTitle: Aerobatic
@@ -121,7 +121,7 @@
             - title: Working with Images in Markdown
               link: /docs/working-with-images-in-markdown/
               breadcrumbTitle: Images in Markdown
-        - title: Sourcing Content and Data
+        - title: Sourcing Content & Data
           link: /docs/content-and-data/
           items:
             - title: Using Gatsby Without GraphQL
@@ -174,7 +174,7 @@
               link: /docs/graphql-reference/
             - title: Running Queries with the GraphiQL UI
               link: /docs/running-queries-with-graphiql/
-            - title: Creating and Modifying Pages
+            - title: Creating & Modifying Pages
               link: /docs/creating-and-modifying-pages/
             - title: Querying Data in Pages with GraphQL
               link: /docs/page-query/
@@ -275,7 +275,7 @@
                   link: /docs/emotion/
                 - title: Styled-Components
                   link: /docs/styled-components/
-            - title: CSS Libraries and Frameworks
+            - title: CSS Libraries & Frameworks
               link: /docs/css-libraries-and-frameworks/
               items:
                 - title: Typography.js
@@ -374,7 +374,7 @@
             - title: Adding an SEO Component
               link: /docs/add-seo-component/
               breadcrumbTitle: SEO Component
-            - title: Adding Tags and Categories to Blog Posts
+            - title: Adding Tags & Categories to Blog Posts
               link: /docs/adding-tags-and-categories-to-blog-posts/
               breadcrumbTitle: Blog Tags and Categories
             - title: Adding Pagination
@@ -444,7 +444,7 @@
               breadcrumbTitle: Guess.js
             - title: Scaling Issues
               link: /docs/scaling-issues/
-        - title: Localization and Internationalization with Gatsby
+        - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
           items:
@@ -571,7 +571,7 @@
               link: /docs/static-vs-normal-queries/
         - title: Write out Pages
           link: /docs/write-pages/
-        - title: Webpack and SSR
+        - title: Webpack & SSR
           link: /docs/webpack-and-ssr/
           items:
             - title: Building the JavaScript App
@@ -660,7 +660,7 @@
     - title: Partnering With Gatsby
       link: /docs/partnering-with-gatsby/
       items:
-        - title: Integrating and Partnering For Vendors
+        - title: Integrating & Partnering For Vendors
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
