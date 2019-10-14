@@ -1,6 +1,10 @@
 describe(`hot reloading new page component`, () => {
   before(() => {
     cy.exec(`npm run update -- --file src/pages/sample.js`)
+    // TO-DO remove `wait` below and fix this properly in core,
+    // we shouldn't have to wait here and core
+    // should be smart enough to recover on it's own.
+    cy.wait(1000)
   })
 
   beforeEach(() => {
