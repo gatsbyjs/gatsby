@@ -13,8 +13,8 @@ for folder in $GLOB; do
   [ -d "$folder" ] || continue # only directories
   cd $BASE
 
-  NAME=$(cat $folder/package.json | jq -r '.name')
-  IS_WORKSPACE=$(cat $folder/package.json | jq -r '.workspaces')
+  NAME=$(jq -r '.name' $folder/package.json)
+  IS_WORKSPACE=$(jq -r '.workspaces' $folder/package.json)
   CLONE_DIR="__${NAME}__clone__"
   
   # sync to read-only clones

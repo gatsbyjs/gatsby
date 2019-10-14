@@ -108,14 +108,14 @@ const updateSchemaComposer = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  let activity = report.activityTimer(`Add explicit types`, {
+  let activity = report.phantomActivity(`Add explicit types`, {
     parentSpan: parentSpan,
   })
   activity.start()
   await addTypes({ schemaComposer, parentSpan: activity.span, types })
   activity.end()
 
-  activity = report.activityTimer(`Add inferred types`, {
+  activity = report.phantomActivity(`Add inferred types`, {
     parentSpan: parentSpan,
   })
   activity.start()
@@ -128,7 +128,7 @@ const updateSchemaComposer = async ({
   })
   activity.end()
 
-  activity = report.activityTimer(`Processing types`, {
+  activity = report.phantomActivity(`Processing types`, {
     parentSpan: parentSpan,
   })
   activity.start()

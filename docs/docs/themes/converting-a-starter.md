@@ -8,13 +8,13 @@ Gatsby themes are designed to be easy to create from an existing starter. Here w
 
 To start converting your starter to a library, get started by updating your `package.json` to use the `gatsby-theme-*` naming convention. If your starter is `gatsby-starter-awesome-blog` you can update the name key to `gatsby-theme-awesome-blog` (and double check that it's available on [npm](https://npmjs.com)).
 
-Specify `gatsby`, `react`, and `react-dom` as `devDependencies` . It's preferable to add them as `peerDependencies` as well. This is needed so that end users can determine which versions they want and npm/yarn will be able to resolve them properly.
+Specify `gatsby`, `react`, and `react-dom` as `devDependencies` . It's preferable to add them as `peerDependencies` as well. This helps end users determine which versions they want and npm/yarn will be able to resolve them properly.
 
-In addition to updating your dependencies you will need to create an `index.js` file in the root of your project. This is needed so that when Gatsby attempts to resolve the theme it can do so since Node automatically looks for `index.js`.
+In addition to updating your dependencies, you will need to create an `index.js` file in the root of your project. This allows Gatsby to resolve the theme since Node automatically looks for `index.js`.
 
-## Handling Path Resolution
+## Handling path resolution
 
-One of the key differences between themes and starters is that a theme is no longer executed where the Gatsby CLI is being run since it's now a dependency. This often results in errors sourcing content and finding templates since they will look in the end user's directory.
+One of the key differences between themes and starters is that a theme is no longer executed when the Gatsby CLI is being run since it's now a dependency. This often results in errors sourcing content and finding templates since they will look in the end user's directory.
 
 In order to fix this, consider the following code that works as a starter:
 
@@ -36,7 +36,7 @@ const createPosts = (createPage, createRedirect, edges) => {
 }
 ```
 
-Since `path.resolve` is being used we result in `src/templates/post.js` rather than `node_modules/gatsby-theme-awesome-blog/src/templates/post.js`. In order to fix this we can use `require.resolve` which will look relative to the theme so the correct template is found.
+Since `path.resolve` is being used the starter will resolve `src/templates/post.js` rather than `node_modules/gatsby-theme-awesome-blog/src/templates/post.js`. In order to fix this you can use `require.resolve` which will look relative to the theme so the correct template is found.
 
 ```js
 const createPosts = (createPage, createRedirect, edges) => {
@@ -58,7 +58,7 @@ const createPosts = (createPage, createRedirect, edges) => {
 
 There may be other locations where you will need to update the path resolution like your `gatsby-config.js` as well.
 
-## Sourcing Pages
+## Sourcing pages
 
 If your theme provides pages for things like the blog post index and a homepage, you will need to source them.
 Gatsby will only look in the relative `src/pages` directory when `gatsby develop` is run.
@@ -79,9 +79,9 @@ Then, tell the plugin to look in your theme's `src/pages` directory.
 },
 ```
 
-## Publishing to NPM
+## Publishing to npm
 
-In order to allow others to install your theme you will need to publish it to npm. If you haven't published to npm before, learn how [here](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+In order to allow others to install your theme you will need to publish it to npm. If this is new for you, learn how [to publish to npm](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
 
 From the root of your newly created theme run `npm publish`.
 
