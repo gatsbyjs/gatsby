@@ -21,7 +21,7 @@
     "common-tags": "^1.8.0",
     "configstore": "^5.0.0",
     "convert-hrtime": "^2.0.0",
-    "core-js": "^2.6.9",
+    "core-js": "^2.6.10",
     "envinfo": "^5.12.1",
     "execa": "^2.1.0",
     "fs-exists-cached": "^1.0.0",
