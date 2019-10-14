@@ -33,7 +33,7 @@ BadgeBase.defaultProps = {
   color: `yellow.90`,
   fontFamily: `system`,
   fontSize: 0,
-  fontWeight: 0,
+  fontWeight: `body`,
   letterSpacing: `tracked`,
   lineHeight: `solid`,
   py: 1,

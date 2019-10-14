@@ -1,5 +1,5 @@
 ---
-title: "Using Gatsby Professionally"
+title: Using Gatsby Professionally
 overview: true
 ---
 

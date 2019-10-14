@@ -1,9 +1,9 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 
 import DocBlock from "./doc-block"
-
-import { space } from "../../utils/presets"
 
 export default ({
   docs,
@@ -16,7 +16,7 @@ export default ({
       <div
         id={definition.name}
         key={`reference list ${definition.name}`}
-        css={{ marginBottom: space[6] }}
+        sx={{ mb: 6 }}
       >
         {i !== 0 && <hr />}
         <DocBlock
