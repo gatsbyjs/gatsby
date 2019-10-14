@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`setJobToProcess allows brackets in paths 1`] = `
+Object {
+  "1234/file%2Ejpg": Object {
+    "myoutputpath/1234/file[new]%2Ejpg": Object {
+      "deferred": Object {
+        "promise": Promise {},
+        "reject": [Function],
+        "resolve": [Function],
+      },
+      "job": Object {
+        "args": Object {},
+        "contentDigest": "8675309jenny",
+        "inputPath": "1234/file.jpg",
+        "outputPath": "myoutputpath/1234/file[new].jpg",
+      },
+    },
+  },
+}
+`;

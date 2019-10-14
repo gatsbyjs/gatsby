@@ -267,11 +267,11 @@ alert(s)
 
 #### Code formatting: Line highlighting
 
-You may also choose to include line highlighting in your code snippets, using the following keywords inline in the snippet:
+You may also choose to include line highlighting in your code snippets, using the following keywords as comments inline in the snippet:
 
 ##### `highlight-line`: highlights the current line
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -293,7 +293,7 @@ module.exports = {
 
 ##### `highlight-next-line`: highlights the next line
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -317,7 +317,7 @@ module.exports = {
 
 ##### `highlight-start` & `highlight-end`: highlights a range
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	// highlight-start
