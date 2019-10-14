@@ -12,7 +12,7 @@ Some things executives care about include:
 - **Competitive edge** Distinguishing yourself from your competitors by delivering unique value that helps you claim a greater share of the market.
 - **Growing the business** For most executives, success means gaining clients, leads, users, purchases and awareness - getting more orders moving through that sales funnel.
 
-## Basic Explanation
+## Basic explanation
 
 Here's an example of a basic explanation of Gatsby for executives:
 
@@ -26,7 +26,7 @@ Sites built with Gatsby have experienced major sales and engagement benefits as 
 
 > Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site's load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](/blog/2018-11-16-youfit-case-study/).
 
-### Improved Search Traffic
+### Improved search traffic
 
 > Site speed is one of the factors Google uses in its search ranking algorithm, and slow site speeds can have a negative snowball effect on your SEO. Slower sites take longer to be crawled and indexed by search engines, they have higher bounce rates, and lower conversion rates, all of which will hurt your rankings. Gatsby sites have [built-in web and mobile performance optimizations](/blog/2018-11-07-gatsby-for-apps/#why-gatsby-for-apps). It actually takes _more_ effort to make a Gatsby site perform badly. Learn more about [the impact of page speed on SEO](https://moz.com/learn/seo/page-speed) on Moz.
 
