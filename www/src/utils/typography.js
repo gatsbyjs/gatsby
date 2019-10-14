@@ -10,8 +10,8 @@ const _options = {
   headerFontFamily: fonts.header,
   baseLineHeight: lineHeights.body,
   headerLineHeight: lineHeights.heading,
-  headerColor: colors.text.header,
-  bodyColor: colors.text.primary,
+  headerColor: colors.heading,
+  bodyColor: colors.text,
   plugins: [new CodePlugin()],
 }
 
