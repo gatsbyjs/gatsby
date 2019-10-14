@@ -202,24 +202,12 @@ const createPageQueryJob = (state, page) => {
   }
 }
 
-const processPageQueries = async (
-  queryIds,
-  incrementalBuild,
-  { state, activity }
-) => {
+const processPageQueries = async (queryIds, { state, activity }) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
   // /dev-404-page/, whose SitePage node is created via
   // `internal-data-bridge`, but the actual page object is only
   // created during `gatsby develop`.
-
-  // Return new page keys
-  const newPageKeys = await pageDataUtil.getNewPageKeys(store, incrementalBuild)
-
-  // if page keys then change queryIds value
-  if (newPageKeys.length) {
-    queryIds = newPageKeys
-  }
 
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(

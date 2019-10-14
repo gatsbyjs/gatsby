@@ -57,13 +57,8 @@ const stateToObject = state => {
   return newPageData
 }
 
-const getNewPageKeys = (store, incrementalBuild) =>
+const getNewPageKeys = store =>
   new Promise(resolve => {
-    if (!incrementalBuild) {
-      resolve([...store.getState().pages.keys()])
-      return
-    }
-
     const newPageKeys = []
     const newPageData = stateToObject(store.getState())
     const previousPageData = stateToObject(readFromCache())

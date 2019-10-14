@@ -1,4 +1,5 @@
 /* @flow */
+const { difference } = require(`lodash`)
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
@@ -101,50 +102,48 @@ module.exports = async function build(program: BuildArgs) {
     activity = report.activityTimer(`Rewriting compilation hashes`, {
       parentSpan: buildSpan,
     })
+    activity.start()
 
     // We need to update all page-data.json files with the new
     // compilation hash. As a performance optimization however, we
     // don't update the files for `pageQueryIds` (dirty queries),
     // since they'll be written after query execution.
-    // const cleanPagePaths = _.difference(
-    //   [...store.getState().pages.keys()],
-    //   pageQueryIds
-    // )
+    const cleanPagePaths = difference(
+      [...store.getState().pages.keys()],
+      pageQueryIds
+    )
     await pageDataUtil.updateCompilationHashes(
       { publicDir, workerPool },
-      [...store.getState().pages.keys()],
+      cleanPagePaths,
       webpackCompilationHash
     )
     activity.end()
   }
 
-  /*
-   * We let the page queries run creating the page data
-   */
+  let newPageKeys = []
+  if (incrementalBuild) {
+    activity = report.activityTimer(`Comparing old data set`)
+    activity.start()
+    newPageKeys = await pageDataUtil.getNewPageKeys(store)
+    activity.end()
+  }
+
   activity = report.activityTimer(`run page queries`, {
     parentSpan: buildSpan,
   })
   activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, incrementalBuild, {
-    activity,
-  })
+  await queryUtil.processPageQueries(
+    incrementalBuild ? newPageKeys : pageQueryIds,
+    {
+      activity,
+    }
+  )
   activity.end()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
-  /*
-   * Next we compare the old page data to the new data in state and returns the different page keys
-   */
-  activity = report.activityTimer(`Comparing old data set`)
-  activity.start()
-  const newPageKeys = await pageDataUtil.getNewPageKeys(store, incrementalBuild)
-  activity.end()
-  console.log(`Pages to be created`, newPageKeys)
-  /*
-   * Lets start building some new HTML pages
-   */
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
   })
@@ -154,7 +153,9 @@ module.exports = async function build(program: BuildArgs) {
     await buildHTML.buildPages({
       program,
       stage: `build-html`,
-      pagePaths: newPageKeys,
+      pagePaths: incrementalBuild
+        ? newPageKeys
+        : [...store.getState().pages.keys()],
       activity,
       workerPool,
     })
@@ -175,24 +176,16 @@ module.exports = async function build(program: BuildArgs) {
   }
   activity.end()
 
-  /*
-   * We then check for pages that may have been removed and delete them.
-   */
   if (incrementalBuild) {
     activity = report.activityTimer(`Delete old page and page data`)
     activity.start()
-    const deletedKeys = await pageDataUtil.removeOldPageData(
-      program.directory,
-      store
-    )
+    await pageDataUtil.removeOldPageData(program.directory, store)
     activity.end()
-    console.log(`Deleted keys`, deletedKeys)
   }
 
-  /*
-   * We then save the JS compiled hash to compare in the next build
-   */
-  activity = report.activityTimer(`Update cache for next build`)
+  activity = report.activityTimer(`Update cache for next build`, {
+    parentSpan: buildSpan,
+  })
   activity.start()
   await waitJobsFinished()
   await db.saveState()
