@@ -19,6 +19,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 
 ## Gatsby repo install instructions
 
+- Ensure you have the latest version of Node installed (>= 10.16.0). `node --version`
 - [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
 - Ensure you have the latest version of Yarn installed (>= 1.0.2). `yarn --version`
 - Fork the [official repository](https://github.com/gatsbyjs/gatsby).

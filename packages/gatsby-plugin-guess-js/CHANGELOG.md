@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.19...gatsby-plugin-guess-js@1.1.20) (2019-10-14)
+
+### Bug Fixes
+
+- update dependency guess-webpack to ~0.4.9 ([#18537](https://github.com/gatsbyjs/gatsby/issues/18537)) ([a24b9ef](https://github.com/gatsbyjs/gatsby/commit/a24b9ef))
+
 ## [1.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.18...gatsby-plugin-guess-js@1.1.19) (2019-10-10)
 
 ### Bug Fixes
