@@ -1,5 +1,5 @@
 ---
-title: Add a Manifest File
+title: Adding a Manifest File
 ---
 
 If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "Progressive Web App" category. Let's address how you can improve that score.

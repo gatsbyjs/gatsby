@@ -1,5 +1,5 @@
 ---
-title: "Awesome Gatsby Resources"
+title: Awesome Gatsby Resources
 ---
 
 A curated list of interesting Gatsby community projects and learning resources.

@@ -228,6 +228,14 @@ type InitOptions = {
   rootPath?: string,
 }
 
+const successMessage = path => {
+  report.info(`
+Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
+  $ cd ${path}
+  $ gatsby develop
+`)
+}
+
 /**
  * Main function that clones or copies the starter.
  */
@@ -299,5 +307,6 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starterPath, rootPath)
+  successMessage(rootPath)
   trackCli(`NEW_PROJECT_END`)
 }

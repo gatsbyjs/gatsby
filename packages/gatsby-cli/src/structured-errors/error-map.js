@@ -1,4 +1,4 @@
-const { stripIndent } = require(`common-tags`)
+const { stripIndent, stripIndents } = require(`common-tags`)
 
 const errorMap = {
   "": {
@@ -54,6 +54,80 @@ const errorMap = {
   },
   "85909": {
     text: context => context.sourceMessage,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85910": {
+    text: context =>
+      stripIndents(`
+        Multiple "root" queries found in file: "${context.name}" and "${context.otherName}".
+        Only the first ("${context.otherName}") will be registered.
+
+        Instead of:
+        ${context.beforeCodeFrame}
+
+        Do:
+        ${context.afterCodeFrame}
+      `),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85911": {
+    text: context =>
+      stripIndent(`
+        There was a problem parsing "${context.filePath}"; any GraphQL
+        fragments or queries in this file were not processed.
+
+        This may indicate a syntax error in the code, or it may be a file type
+        that Gatsby does not know how to parse.
+      `),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85912": {
+    text: context => `Failed to parse preprocessed file ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85913": {
+    text: context =>
+      `There was a problem reading the file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85914": {
+    text: context =>
+      `There was a problem reading the file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  // default parsing error
+  "85915": {
+    text: context =>
+      `There was a problem parsing the GraphQL query in file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85916": {
+    text: context =>
+      `String interpolation is not allowed in graphql tag:\n\n${context.codeFrame}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85917": {
+    text: context =>
+      `Unexpected empty graphql tag${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85918": {
+    text: context =>
+      stripIndent(`
+        GraphQL syntax error in query:\n\n${context.sourceMessage}${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }`),
     type: `GRAPHQL`,
     level: `ERROR`,
   },

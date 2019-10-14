@@ -1,5 +1,5 @@
 ---
-title: Get to know Gatsby building blocks
+title: Get to Know Gatsby Building Blocks
 typora-copy-images-to: ./
 disableTableOfContents: true
 ---

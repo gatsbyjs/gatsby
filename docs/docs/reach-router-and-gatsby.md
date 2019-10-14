@@ -1,5 +1,5 @@
 ---
-title: "@reach/router and Gatsby"
+title: @reach/router and Gatsby
 ---
 
 This is a stub. Help our community expand it.
