@@ -6,9 +6,18 @@ const Position = Joi.object().keys({
 })
 
 const errorSchema = Joi.object().keys({
-  id: Joi.string(),
+  code: Joi.string(),
   text: Joi.string(),
-  stack: Joi.array().items(Joi.object({}).unknown()),
+  stack: Joi.array()
+    .items(
+      Joi.object().keys({
+        fileName: Joi.string(),
+        functionName: Joi.string().allow(null),
+        lineNumber: Joi.number().allow(null),
+        columnNumber: Joi.number().allow(null),
+      })
+    )
+    .allow(null),
   level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
   type: Joi.string().valid([`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`]),
   filePath: Joi.string(),
@@ -22,6 +31,8 @@ const errorSchema = Joi.object().keys({
   }),
   error: Joi.object({}).unknown(),
   context: Joi.object({}).unknown(),
+  group: Joi.string(),
+  panicOnBuild: Joi.boolean(),
 })
 
 module.exports = errorSchema
