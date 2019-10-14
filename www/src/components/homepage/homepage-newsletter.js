@@ -64,7 +64,7 @@ const Ornament = styled(`span`)`
 `
 
 const Name = styled(`h3`)`
-  color: ${p => p.theme.colors.lilac};
+  color: ${p => p.theme.colors.textMuted};
   font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[1]};
   font-weight: ${p => p.theme.fontWeights.body};

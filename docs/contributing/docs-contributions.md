@@ -25,6 +25,8 @@ To address missing images, check the doc or tutorial source [in the Gatsby repo]
 
 If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
 
+Keep in mind that some links in here are already correct because they work on gatsbyjs.org. While it would be nice to links in documentation to work on GitHub, have them working on gatsbyjs.org is a higher priority!
+
 ## Headings
 
 Docs with frontmatter metadata at the top including a `title` will automatically receive an `<h1>` heading in the rendered page, and it should be the only one. Additional headings in docs content should start with `<h2>`, denoted by `##` in Markdown.

@@ -23,7 +23,7 @@ const gutterDesktop = 8
 
 const styles = {
   link: {
-    color: `link.default`,
+    color: `link.color`,
     textDecoration: `none`,
   },
   prevNextLink: {
@@ -130,9 +130,10 @@ const SourceLink = ({ ...props }) => (
       display: `flex`,
       alignItems: `center`,
       mr: 3,
+      color: `link.color`,
     }}
   >
-    <GithubIcon sx={{ fontSize: 3, mr: 2 }} />
+    <GithubIcon sx={{ fontSize: 3, mr: 2, color: `link.color` }} />
     Source
   </a>
 )
@@ -415,6 +416,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                         <Link
                           to={`/showcase?${qs.stringify({ filters: [c] })}`}
                           state={{ isModal: true }}
+                          sx={styles.link}
                         >
                           {c}
                         </Link>
