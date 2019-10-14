@@ -12,12 +12,12 @@ To add custom webpack configurations, create (if there's not one already) a
 `gatsby-node.js` file in your root directory. Inside this file, export a
 function called `onCreateWebpackConfig`.
 
-When Gatsby creates its webpack config, this function will be called allowing 
+When Gatsby creates its webpack config, this function will be called allowing
 you to modify the default webpack config using
 [webpack-merge](https://github.com/survivejs/webpack-merge).
 
-Gatsby does multiple webpack builds with somewhat different configuration. You 
-call each build type a "stage". The following stages exist:
+Gatsby does multiple webpack builds with somewhat different configuration. Gatsby 
+calls each build type a "stage". The following stages exist:
 
 1.  develop: when running the `gatsby develop` command. Has configuration for hot
     reloading and CSS injection into page
@@ -76,7 +76,7 @@ exports.onCreateWebpackConfig = ({
 }
 ```
 
-### Absolute Imports
+### Absolute imports
 
 Instead of writing `import Header from '../../components/header'` over and over again you can just write `import Header from 'components/header'` with absolute imports:
 
@@ -92,7 +92,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 
 You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).
 
-### Modifying the Babel Loader
+### Modifying the Babel loader
 
 You need this if you want to do things like transpile parts of `node_modules`.
 
