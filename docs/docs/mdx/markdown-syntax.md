@@ -92,7 +92,7 @@ How unordered lists are rendered in HTML:
 1. Two
 1. Three
 
-## Links and Images
+## Links and images
 
 ### Link
 
@@ -145,14 +145,14 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 >
 > more quotes
 
-## Code Comments
+## Code comments
 
 ### Inline
 
 - Enclose the text in backticks \`code\`
 - Inline `code` looks like this sentence
 
-### Code Blocks
+### Code blocks
 
 - Indent a block by four spaces
 
@@ -160,7 +160,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 
 - MDX is a superset of Markdown. It allows you to write JSX inside markdown. This includes importing and rendering React components!
 
-## Processing Markdown and MDX in Gatsby:
+## Processing markdown and MDX in Gatsby:
 
 - In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](/docs/sourcing-from-the-filesystem) plugin
 - You can check out the package [README](/packages/gatsby-source-filesystem) for more information on how it works!
@@ -180,7 +180,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
   ---
   ```
 
-## Frontmatter + MDX Example
+## Frontmatter + MDX example
 
 ```
 ---
@@ -196,7 +196,7 @@ The chart is rendered inside our MDX document.
 <Chart description={description} />
 ```
 
-## Helpful Resources
+## Helpful resources
 
 - https://daringfireball.net/projects/markdown/syntax
 - https://www.markdownguide.org/basic-syntax
