@@ -154,7 +154,8 @@ module.exports = class AnalyticsTracker {
       }
 
       tags.errorV2 = {
-        id: tags.error.id,
+        // errorCode field was changed from `id` to `code`
+        id: tags.error.code || tags.error.id,
         text: cleanPaths(tags.error.text),
         level: tags.error.level,
         type: tags.error?.type,

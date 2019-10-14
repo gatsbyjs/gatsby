@@ -1,17 +1,92 @@
 // @flow
+
+const semver = require(`semver`)
+const { isCI } = require(`ci-info`)
+const signalExit = require(`signal-exit`)
+const reporterActions = require(`./redux/actions`)
+
+const { LogLevels, ActivityStatuses, ActivityTypes } = require(`./constants`)
+
+let inkExists = false
+try {
+  inkExists = require.resolve(`ink`)
+  // eslint-disable-next-line no-empty
+} catch (err) {}
+
+if (!process.env.GATSBY_LOGGER) {
+  if (
+    inkExists &&
+    semver.satisfies(process.version, `>=8`) &&
+    !isCI &&
+    typeof jest === `undefined`
+  ) {
+    process.env.GATSBY_LOGGER = `ink`
+  } else {
+    process.env.GATSBY_LOGGER = `yurnalist`
+  }
+}
+// if child process - use ipc logger
+if (process.send) {
+  // process.env.FORCE_COLOR = `0`
+
+  require(`./loggers/ipc`)
+}
+
+if (process.env.GATSBY_LOGGER.includes(`json`)) {
+  require(`./loggers/json`)
+} else if (process.env.GATSBY_LOGGER.includes(`yurnalist`)) {
+  require(`./loggers/yurnalist`)
+} else {
+  require(`./loggers/ink`)
+}
+
 const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
 const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
 const tracer = require(`opentracing`).globalTracer()
+
 const { getErrorFormatter } = require(`./errors`)
-const reporterInstance = require(`./reporters`)
+const { getStore } = require(`./redux`)
 const constructError = require(`../structured-errors/construct-error`)
+
 const errorFormatter = getErrorFormatter()
-const { trackCli } = require(`gatsby-telemetry`)
-const convertHrtime = require(`convert-hrtime`)
 
 import type { ActivityTracker, ActivityArgs, Reporter } from "./types"
+
+const addMessage = level => text => reporterActions.createLog({ level, text })
+
+let isVerbose = false
+
+const interuptActivities = () => {
+  const { activities } = getStore().getState().logs
+  Object.keys(activities).forEach(activityId => {
+    const activity = activities[activityId]
+    if (
+      activity.status === ActivityStatuses.InProgress ||
+      activity.status === ActivityStatuses.NotStarted
+    ) {
+      reporter.completeActivity(activityId, ActivityStatuses.Interrupted)
+    }
+  })
+}
+
+const prematureEnd = () => {
+  // hack so at least one activity is surely failed, so
+  // we are guaranteed to generate FAILED status
+  // if none of activity did explicitly fail
+  reporterActions.createPendingActivity({
+    id: `panic`,
+    status: ActivityStatuses.Failed,
+  })
+
+  interuptActivities()
+}
+
+signalExit((code, signal) => {
+  if (code !== 0 && signal !== `SIGINT` && signal !== `SIGTERM`) prematureEnd()
+  else interuptActivities()
+})
 
 /**
  * Reporter module.
@@ -27,14 +102,14 @@ const reporter: Reporter = {
    * Toggle verbosity.
    * @param {boolean} [isVerbose=true]
    */
-  setVerbose: (isVerbose = true) => reporterInstance.setVerbose(isVerbose),
+  setVerbose: (_isVerbose = true) => {
+    isVerbose = _isVerbose
+  },
   /**
    * Turn off colors in error output.
    * @param {boolean} [isNoColor=false]
    */
   setNoColor(isNoColor = false) {
-    reporterInstance.setColors(isNoColor)
-
     if (isNoColor) {
       errorFormatter.withoutColors()
     }
@@ -51,17 +126,20 @@ const reporter: Reporter = {
    * @param {*} args
    */
   panic(...args) {
-    const error = this.error(...args)
+    const error = reporter.error(...args)
     trackError(`GENERAL_PANIC`, { error })
+    prematureEnd()
     process.exit(1)
   },
 
   panicOnBuild(...args) {
-    const error = this.error(...args)
+    const error = reporter.error(...args)
     trackError(`BUILD_PANIC`, { error })
     if (process.env.gatsby_executing_command === `build`) {
+      prematureEnd()
       process.exit(1)
     }
+    return error
   },
 
   error(errorMeta, error) {
@@ -92,7 +170,9 @@ const reporter: Reporter = {
     }
 
     const structuredError = constructError({ details })
-    if (structuredError) reporterInstance.error(structuredError)
+    if (structuredError) {
+      reporterActions.createLog(structuredError)
+    }
 
     // TODO: remove this once Error component can render this info
     // log formatted stacktrace
@@ -110,11 +190,25 @@ const reporter: Reporter = {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   },
 
-  success: reporterInstance.success,
-  verbose: reporterInstance.verbose,
-  info: reporterInstance.info,
-  warn: reporterInstance.warn,
-  log: reporterInstance.log,
+  verbose: text => {
+    if (isVerbose) {
+      reporterActions.createLog({
+        level: LogLevels.Debug,
+        text,
+      })
+    }
+  },
+
+  success: addMessage(LogLevels.Success),
+  info: addMessage(LogLevels.Info),
+  warn: addMessage(LogLevels.Warning),
+  log: addMessage(LogLevels.Log),
+
+  pendingActivity: reporterActions.createPendingActivity,
+
+  completeActivity: (id: string, status: string = ActivityStatuses.Success) => {
+    reporterActions.endActivity({ id, status })
+  },
 
   /**
    * Time an activity.
@@ -123,42 +217,104 @@ const reporter: Reporter = {
    * @returns {ActivityTracker} The activity tracker.
    */
   activityTimer(
-    name: string,
+    text: string,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    const { parentSpan } = activityArgs
+    let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
-    const span = tracer.startSpan(name, spanArgs)
-    let startTime = 0
+    if (!id) {
+      id = text
+    }
 
-    const activity = reporterInstance.createActivity({
-      type: `spinner`,
-      id: name,
-      status: ``,
-    })
+    const span = tracer.startSpan(text, spanArgs)
 
     return {
-      start() {
-        startTime = process.hrtime()
-        activity.update({
-          startTime: startTime,
+      start: () => {
+        reporterActions.startActivity({
+          id,
+          text,
+          type: ActivityTypes.Spinner,
         })
       },
-      setStatus(status) {
-        activity.update({
-          status: status,
+      setStatus: statusText => {
+        reporterActions.setActivityStatusText({
+          id,
+          statusText,
+        })
+      },
+      panicOnBuild(...args) {
+        span.finish()
+
+        reporterActions.endActivity({
+          id,
+          status: ActivityStatuses.Failed,
+        })
+
+        return reporter.panicOnBuild(...args)
+      },
+      panic(...args) {
+        span.finish()
+
+        reporterActions.endActivity({
+          id,
+          status: ActivityStatuses.Failed,
+        })
+
+        return reporter.panic(...args)
+      },
+      end() {
+        span.finish()
+
+        reporterActions.endActivity({
+          id,
+          status: ActivityStatuses.Success,
+        })
+      },
+      span,
+    }
+  },
+
+  /**
+   * Create an Activity that is not visible to the user
+   *
+   * During the lifecycle of the Gatsby process, sometimes we need to do some
+   * async work and wait for it to complete. A typical example of this is a job.
+   * This work should set the status of the process to `in progress` while running and
+   * `complete` (or `failure`) when complete. Activities do just this! However, they
+   * are visible to the user. So this function can be used to create a _hidden_ activity
+   * that while not displayed in the CLI, still triggers a change in process status.
+   *
+   * @param {string} name - Name of activity.
+   * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
+   * @returns {ActivityTracker} The activity tracker.
+   */
+  phantomActivity(
+    text: string,
+    activityArgs: ActivityArgs = {}
+  ): ActivityTracker {
+    let { parentSpan, id } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    if (!id) {
+      id = text
+    }
+
+    const span = tracer.startSpan(text, spanArgs)
+
+    return {
+      start: () => {
+        reporterActions.startActivity({
+          id,
+          text,
+          type: ActivityTypes.Hidden,
         })
       },
       end() {
-        trackCli(`ACTIVITY_DURATION`, {
-          name: name,
-          duration: Math.round(
-            convertHrtime(process.hrtime(startTime))[`milliseconds`]
-          ),
-        })
-
         span.finish()
-        activity.done()
+
+        reporterActions.endActivity({
+          id,
+          status: ActivityStatuses.Success,
+        })
       },
       span,
     }
@@ -173,62 +329,68 @@ const reporter: Reporter = {
    * @returns {ActivityTracker} The activity tracker.
    */
   createProgress(
-    name: string,
-    total,
+    text: string,
+    total = 0,
     start = 0,
     activityArgs: ActivityArgs = {}
   ): ActivityTracker {
-    const { parentSpan } = activityArgs
+    let { parentSpan, id } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan } : {}
-    const span = tracer.startSpan(name, spanArgs)
-
-    let hasStarted = false
-    let current = start
-    const activity = reporterInstance.createActivity({
-      type: `progress`,
-      id: name,
-      current,
-      total,
-    })
+    if (!id) {
+      id = text
+    }
+    const span = tracer.startSpan(text, spanArgs)
 
     return {
-      start() {
-        if (hasStarted) {
-          return
-        }
-
-        hasStarted = true
-        activity.update({
-          startTime: process.hrtime(),
+      start: () => {
+        reporterActions.startActivity({
+          id,
+          text,
+          type: ActivityTypes.Progress,
+          current: start,
+          total,
         })
       },
-      setStatus(status) {
-        activity.update({
-          status: status,
+      setStatus: statusText => {
+        reporterActions.setActivityStatusText({
+          id,
+          statusText,
         })
       },
-      tick() {
-        activity.update({
-          current: ++current,
-        })
+      tick: (increment = 1) => {
+        reporterActions.activityTick({ id, increment })
       },
-      done() {
+      panicOnBuild(...args) {
         span.finish()
-        activity.done()
+
+        reporterActions.endActivity({
+          id,
+          status: ActivityStatuses.Failed,
+        })
+
+        return reporter.panicOnBuild(...args)
+      },
+      panic(...args) {
+        span.finish()
+
+        reporterActions.endActivity({
+          id,
+          status: ActivityStatuses.Failed,
+        })
+
+        return reporter.panic(...args)
+      },
+      done: () => {
+        span.finish()
+        reporterActions.endActivity({
+          id,
+          status: ActivityStatuses.Success,
+        })
       },
       set total(value) {
-        total = value
-        activity.update({
-          total: value,
-        })
+        reporterActions.setActivityTotal({ id, total: value })
       },
       span,
-    }
-  },
-  // Make private as we'll probably remove this in a future refactor.
-  _setStage(stage) {
-    if (reporterInstance.setStage) {
-      reporterInstance.setStage(stage)
     }
   },
 }

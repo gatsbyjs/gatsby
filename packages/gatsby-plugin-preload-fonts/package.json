@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-preload-fonts",
   "description": "Gatsby plugin for preloading fonts per page",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "author": "Aaron Ross <superhawk610@gmail.com>",
   "main": "index.js",
   "bin": {
@@ -19,8 +19,8 @@
     "puppeteer": "^1.20.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.3",
-    "@babel/core": "^7.6.3",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
     "babel-preset-gatsby-package": "^0.2.8",
     "cross-env": "^5.2.1"
   },

@@ -177,22 +177,26 @@ exports.onCreateDevServer = (
       type: `application/json`,
     }),
     async (req, res) => {
-      // we are missing handling of node deletion
-      const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
+      if (!_.isEmpty(req.body)) {
+        // we are missing handling of node deletion
+        const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
 
-      await handleWebhookUpdate(
-        {
-          nodeToUpdate,
-          actions,
-          cache,
-          createNodeId,
-          createContentDigest,
-          getNode,
-          reporter,
-          store,
-        },
-        pluginOptions
-      )
+        await handleWebhookUpdate(
+          {
+            nodeToUpdate,
+            actions,
+            cache,
+            createNodeId,
+            createContentDigest,
+            getNode,
+            reporter,
+            store,
+          },
+          pluginOptions
+        )
+      } else {
+        res.status(400).send(`Received body was empty!`)
+      }
     }
   )
 }
