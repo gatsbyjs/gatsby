@@ -29,8 +29,7 @@ const createDevelopQueue = getRunner => {
   const queueOptions = {
     ...createBaseOptions(),
     priority: (job, cb) => {
-      const activePaths = Array.from(websocketManager.activePaths.values())
-      if (job.id && activePaths.includes(job.id)) {
+      if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
         cb(null, 1)
@@ -100,7 +99,15 @@ const processBatch = async (queue, jobs, activity) => {
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job, activity))
+
+  const runningJobs = jobs.map(job =>
+    pushJob(queue, job).then(v => {
+      if (activity.tick) {
+        activity.tick()
+      }
+      return v
+    })
+  )
   return await Promise.all(runningJobs)
 }
 

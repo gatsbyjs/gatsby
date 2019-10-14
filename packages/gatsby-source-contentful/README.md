@@ -156,6 +156,10 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 
 Prevents the use of sync tokens when accessing the Contentful API.
 
+**`proxy`** [object][optional] [default: `undefined`]
+
+Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.

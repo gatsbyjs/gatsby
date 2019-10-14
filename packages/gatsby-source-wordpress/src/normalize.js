@@ -504,7 +504,7 @@ exports.downloadMediaFiles = async ({
 
         // If we don't have cached data, download the file
         if (!fileNodeID) {
-          // wordpress does not properly encode it's media urls
+          // WordPress does not properly encode it's media urls
           const encodedSourceUrl = encodeURI(e.source_url)
 
           try {

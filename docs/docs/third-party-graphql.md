@@ -47,7 +47,7 @@ Third-party APIs will be available under the `fieldName` specified, so you can q
 }
 ```
 
-Note that types of the third-party API will be prefixed with `${typeName}_`. You need to prefix it too, eg when using variables or fragments.
+Note that types of the third-party API will be prefixed with `${typeName}_`. You need to prefix it too, e.g. when using variables or fragments.
 
 ```graphql
 {
