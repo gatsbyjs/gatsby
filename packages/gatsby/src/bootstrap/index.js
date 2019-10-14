@@ -47,6 +47,23 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
+  /* Time for a little story...
+   * When running `gatsby develop`, the globally installed gatsby-cli starts
+   * and sets up a Redux store (which is where logs are now stored). When gatsby
+   * finds your project's locally installed gatsby-cli package in node_modules,
+   * it switches over. This instance will have a separate redux store. We need to
+   * ensure that the correct store is used which is why we call setStore
+   * (/packages/gatsby-cli/src/reporter/redux/index.js)
+   *
+   * This function
+   * - copies over the logs from the global gatsby-cli to the local one
+   * - sets the store to the local one (so that further actions dispatched by
+   * the global gatsby-cli are handled by the local one)
+   */
+  if (args.setStore) {
+    args.setStore(store)
+  }
+
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
   require(`../redux/plugin-runner`)
@@ -64,6 +81,24 @@ module.exports = async (args: BootstrapArgs) => {
     type: `SET_PROGRAM`,
     payload: program,
   })
+
+  let activityForJobs
+
+  emitter.on(`CREATE_JOB`, () => {
+    if (!activityForJobs) {
+      activityForJobs = report.phantomActivity(`Running jobs`)
+      activityForJobs.start()
+    }
+  })
+
+  const onEndJob = () => {
+    if (activityForJobs && store.getState().jobs.active.length === 0) {
+      activityForJobs.end()
+      activityForJobs = null
+    }
+  }
+
+  emitter.on(`END_JOB`, onEndJob)
 
   // Try opening the site's gatsby-config.js file.
   let activity = report.activityTimer(`open and validate gatsby-configs`, {
@@ -445,13 +480,7 @@ module.exports = async (args: BootstrapArgs) => {
   await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
   activity.end()
 
-  // Extract queries
-  activity = report.activityTimer(`extract queries from components`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await extractQueries({ parentSpan: activity.span })
-  activity.end()
+  await extractQueries({ parentSpan: bootstrapSpan })
 
   // Write out files.
   activity = report.activityTimer(`write out requires`, {
