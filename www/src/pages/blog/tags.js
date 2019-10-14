@@ -140,6 +140,7 @@ class TagsPage extends React.Component {
                 flexFlow: `row nowrap`,
                 justifyContent: `space-between`,
                 pb: 4,
+                alignItems: `center`,
               }}
             >
               <h2>All tags</h2>

@@ -195,14 +195,7 @@ const searchBoxStyles = t => css`
 class Search extends Component {
   render() {
     return (
-      <div
-        sx={{
-          pb: 11,
-          [mediaQueries.md]: {
-            pb: 0,
-          },
-        }}
-      >
+      <div sx={{ pb: [11, null, null, 0] }}>
         <div
           sx={{
             borderBottomWidth: `1px`,

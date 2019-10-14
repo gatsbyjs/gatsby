@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-postcss",
   "description": "Gatsby plugin to handle PostCSS",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "author": "Marat Dreizin <marat.dreizin@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -11,8 +11,8 @@
     "postcss-loader": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.3",
-    "@babel/core": "^7.6.3",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
     "babel-preset-gatsby-package": "^0.2.8",
     "cross-env": "^5.2.1"
   },

@@ -24,6 +24,11 @@ for (let b in bp) {
   breakpointsTokens.push(bp[b])
 }
 
+// remove the first breakpoint, `xxs: 0`
+// this made sense for styled-system and using an object
+// to define breakpoints, but not here
+breakpointsTokens.splice(0, 1)
+
 let fontsTokens = {}
 for (let fontFamily in f) {
   fontsTokens[fontFamily] = f[fontFamily].join(`, `)
@@ -42,7 +47,7 @@ const lineHeightsTokens = {
   heading: lh.dense,
 }
 
-const darkBackground = `#111014` // meh
+const darkBackground = `#131217` // meh
 const darkBorder = c.grey[90]
 // const darkBackground = c.purple[90]
 // const darkBorder = c.purple[80]
@@ -206,8 +211,8 @@ const col = {
   modes: {
     dark: {
       background: darkBackground,
-      text: c.grey[20],
-      heading: c.white,
+      text: c.grey[30],
+      heading: c.whiteFade[80],
       textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
@@ -365,7 +370,9 @@ export const zIndices = z
 const config = {
   // this enables the color modes feature
   // and is used as the name for the top-level colors object
-  initialColorMode: `light`,
+  initialColorModeName: `light`,
+  // `prefers-color-scheme: dark` media query
+  useColorSchemeMediaQuery: true,
   // borders: borders,
   breakpoints: breakpointsTokens,
   colors: col,
