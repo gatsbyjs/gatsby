@@ -44,8 +44,9 @@ const mdxResolverPassthrough = fieldName => async (
   return result
 }
 
-exports.createSchemaCustomization = ({ actions, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
   const { createTypes } = actions
+  const { excerptLength } = withDefaults(themeOptions)
   createTypes(`interface BlogPost @nodeInterface {
       id: ID!
       title: String!
@@ -76,7 +77,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           args: {
             pruneLength: {
               type: `Int`,
-              defaultValue: 140,
+              defaultValue: excerptLength,
             },
           },
           resolve: mdxResolverPassthrough(`excerpt`),
