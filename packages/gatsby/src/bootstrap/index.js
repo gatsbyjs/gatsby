@@ -223,7 +223,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Ensure the public/static directory
   await fs.ensureDir(`${program.directory}/public/static`)
+
   activity.end()
+
   if (process.env.GATSBY_DB_NODES === `loki`) {
     const loki = require(`../db/loki`)
     // Start the nodes database (in memory loki js with interval disk
