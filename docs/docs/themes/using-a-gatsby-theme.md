@@ -65,8 +65,8 @@ I'm an example post!
 
 Once you've made some edits, run `gatsby develop` to start a development server and view your changes in a browser.
 
-## Updating a Theme
+## Updating a theme
 
-In order to update the theme to pull in the latest updates you can update the `gatsby-theme-blog` version in your site's `package.json`.
+To pull in the latest updates of your theme you can update the `gatsby-theme-blog` version in your site's `package.json`.
 
 You can do this by running the install of the theme package again: `npm install --save gatsby-theme-blog`.

@@ -11,7 +11,7 @@ objects, and anything else in a theme's `src` directory.
 
 Shadowing works by using a [webpack resolver plugin](https://webpack.js.org/api/resolvers/)
 that maps themes in a `gatsby-config.js` to possible shadowed files. This gets
-especially mind melty because themes can add parent themes to a configuration so we
+especially mind melty because themes can add parent themes to a configuration so you
 need to be able to walk the composition of themes to determine the "last shadow"
 since the last shadowed theme file wins in the algorithm.
 
@@ -32,7 +32,7 @@ module.exports = {
 ```
 
 Both of the themes above (blog and portfolio) can install and configure
-any other theme so we end up with a tree of themes which we call a theme
+any other theme so you end up with a tree of themes which we call a theme
 composition.
 
 The theme composition itself has a few properties:
@@ -42,9 +42,9 @@ The theme composition itself has a few properties:
 - a theme that is used by another theme is the parent theme
 - theme trees are flattened during resolution
 
-These characteristics are what we use in the component shadowing algorithm
+These characteristics are used in the component shadowing algorithm
 to decide which component to render. So, for example, if `gatsby-theme-tomato-blog`
-has `gastby-theme-parent` as a parent theme we'd result in the following themes
+has `gatsby-theme-parent` as a parent theme it results in the following themes
 array:
 
 ```js

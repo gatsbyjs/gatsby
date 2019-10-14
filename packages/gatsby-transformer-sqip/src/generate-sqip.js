@@ -1,4 +1,3 @@
-const crypto = require(`crypto`)
 const { resolve, parse } = require(`path`)
 
 const Debug = require(`debug`)
@@ -6,6 +5,7 @@ const { exists, readFile, writeFile } = require(`fs-extra`)
 const svgToMiniDataURI = require(`mini-svg-data-uri`)
 const PQueue = require(`p-queue`)
 const sqip = require(`sqip`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const queue = new PQueue({ concurrency: 1 })
 const debug = Debug(`gatsby-transformer-sqip`)
@@ -36,10 +36,7 @@ module.exports = async function generateSqip(options) {
     mode,
   }
 
-  const optionsHash = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(sqipOptions))
-    .digest(`hex`)
+  const optionsHash = createContentDigest(sqipOptions)
 
   const cacheKey = `${contentDigest}-${optionsHash}`
   const cachePath = resolve(cacheDir, `${contentDigest}-${optionsHash}.svg`)

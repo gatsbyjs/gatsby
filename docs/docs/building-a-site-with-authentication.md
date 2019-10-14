@@ -1,5 +1,5 @@
 ---
-title: Building a site with authentication
+title: Building a Site with Authentication
 ---
 
 With Gatsby, you are able to create restricted areas in your app. For that, you
