@@ -2,28 +2,28 @@
 title: Deploying to S3/Cloudfront
 ---
 
-In this guide, we'll walk through how to host & publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
-Additionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
+This guide walks through how to host and publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
+Optionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
 
 ## Getting Started: AWS CLI
 
-Create a [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create a access id and secret for it.
+Create an [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create an access id and secret for it.
 You'll need these in the next step.
 
-Install the AWS CLI and configure it (ensure Python is installed before running these commands)
+Install the AWS CLI and configure it (ensure Python is installed before running these commands):
 
 ```shell
 pip install awscli
 aws configure
 ```
 
-The AWS CLI will now prompt you for the key & secret, add them.
+The AWS CLI will now prompt you for the key and secret, so add them.
 
 ## Setting up: S3
 
-Now that we have our Gatsby site up & running, and our AWS access sorted out: let's add hosting & make the site live on AWS.
+Now that your Gatsby site is up and running and AWS access is sorted out, you'll need to add hosting and make the site live on AWS.
 
-First, we'll install the Gatsby S3 plugin:
+First, install the Gatsby S3 plugin:
 
 ```shell
 npm i gatsby-plugin-s3
@@ -31,20 +31,20 @@ npm i gatsby-plugin-s3
 
 Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
 
-```
+```javascript:title=gatsby-config.js
 plugins: [
- {
-     resolve: `gatsby-plugin-s3`,
-     options: {
-         bucketName: 'my-website-bucket'
-     },
- },
+  {
+    resolve: `gatsby-plugin-s3`,
+    options: {
+      bucketName: "my-website-bucket",
+    },
+  },
 ]
 ```
 
 And finally, add the deployment script to your `package.json`:
 
-```js
+```json:title=package.json
 "scripts": {
    ...
    "deploy": "gatsby-plugin-s3 deploy"
@@ -89,7 +89,7 @@ In the gatsby-plugin-s3 configuration file, there are a couple of optional param
 
 By specifying the `protocol` and `hostname` parameters, you can cause redirects to be applied relative to a domain of your choosing.
 
-```javascript
+```javascript:title=gatsby-config.js
 {
     resolve: `gatsby-plugin-s3`,
     options: {
@@ -100,15 +100,15 @@ By specifying the `protocol` and `hostname` parameters, you can cause redirects 
 }
 ```
 
-If you use your site's URL elsewhere in gatsby-config.js, I have a tip for you. You can define the URL once at the top of the config:
+If you use your site's URL elsewhere in gatsby-config.js, you can define the URL once at the top of the config:
 
-```javascript
+```javascript:title=gatsby-config.js
 const siteAddress = new URL("https://www.example.com")
 ```
 
 And then in the Gatsby config you can reference it like so:
 
-```javascript
+```javascript:title=gatsby-config.js
 {
     resolve: `gatsby-plugin-s3`,
     options: {

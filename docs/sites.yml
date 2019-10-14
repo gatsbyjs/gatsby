@@ -5568,15 +5568,20 @@
   main_url: https://www.element84.com
   url: https://www.element84.com
   description: >
-    A software development firm that designs and builds ambitious software products engineered for high scalability.
+    Element 84 is software engineering and design firm that helps companies and government agencies solve problems using remote sensing, life sciences, and transportation data in the cloud.
   categories:
     - Agency
     - Blog
+    - Business
     - Consulting
+    - Data
+    - Design
+    - Government
     - Portfolio
     - Programming
     - Science
     - Technology
+    - User Experience
     - Web Development
 - title: Measures for Justice
   main_url: https://www.measuresforjustice.org
@@ -7696,12 +7701,50 @@
   built_by: Phil Tietjen
   built_by_url: "https://github.com/Phizzard"
   featured: false
+- title: Divyanshu Maithani
+  main_url: https://divyanshu013.dev
+  url: https://divyanshu013.dev
+  source_url: https://github.com/divyanshu013/blog
+  description: >
+    Personal blog of Divyanshu Maithani. Life, music, code and things in between...
+  categories:
+    - Blog
+    - JavaScript
+    - Open Source
+    - Music
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Divyanshu Maithani
+  built_by_url: https://twitter.com/divyanshu013
+- title: TFE Energy
+  main_url: https://tfe.energy
+  url: https://tfe.energy
+  source_url: https://gitlab.com/marcfehrmedia/2019-07-03-tfe-energy
+  description: >
+    TFE Energy believes in the future. Their new website is programmed with Gatsby, Scrollmagic, Contentful, Cloudify.
+  categories:
+    - Technology
+    - Consulting
+    - Video
+    - Business
+  built_by: Marc Fehr
+  built_by_url: https:/www.marcfehr.media
 - title: AtomBuild
   url: https://atombuild.github.io/
   main_url: https://atombuild.github.io/
   source_url: https://github.com/AtomBuild/atombuild.github.io
   description: >
     Landing page for the AtomBuild project, offering a curation of Atom packages associated with the project.
+  categories:
+    - Directory
+    - Landing Page
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Kepler Sticka-Jones
+  built_by_url: https://keplersj.com/
+  featured: false
 - title: Josh Pensky
   main_url: https://joshpensky.com
   url: https://joshpensky.com
@@ -7730,6 +7773,18 @@
   built_by: Kepler Sticka-Jones
   built_by_url: https://keplersj.com/
   featured: false
+- title: rathes.me
+  url: https://rathes.me/
+  main_url: https://rathes.me/
+  source_url: https://github.com/rathesDot/rathes.me
+  description: >
+    The Portfolio Website of Rathes Sachchithananthan
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Rathes Sachchithananthan
+  built_by_url: https://rathes.me/
 - title: viviGuides - Your travel guides
   url: https://vivitravels.com/en/guides/
   main_url: https://vivitravels.com/en/guides/
@@ -7752,4 +7807,30 @@
     - Blog
   built_by: Amol Tangade
   built_by_url: https://amoltangade.me/
+- title: Sagar Hani Portfolio
+  url: http://sagarhani.in/
+  main_url: http://sagarhani.in/
+  source_url: https://github.com/sagarhani
+  description: >
+    Sagar Hani is a Software Developer & an Open Source Enthusiast. He blogs about JavaScript, Open Source and his Life experiences.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+    - Open Source
+    - Technology
+    - Programming
+    - JavaScript
+  built_by: Sagar Hani
+  built_by_url: http://sagarhani.in/about
+- title: Arturo Alviar's Portfolio
+  main_url: "https://arturoalviar.com"
+  url: "https://arturoalviar.com"
+  source_url: "https://github.com/arturoalviar/portfolio"
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Arturo Alviar
+  built_by_url: "https://github.com/arturoalviar"
   featured: false

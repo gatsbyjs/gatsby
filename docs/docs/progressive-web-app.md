@@ -1,5 +1,5 @@
 ---
-title: Progressive web apps (PWAs)
+title: Progressive Web Apps (PWAs)
 ---
 
 ## What is a progressive web app?
