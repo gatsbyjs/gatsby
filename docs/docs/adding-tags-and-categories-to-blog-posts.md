@@ -57,7 +57,7 @@ Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql
 }
 ```
 
-The above query groups posts by `tags`, and returns each `tag` with the number of posts as `totalCount`. As an addition, you could extract some post data in each group if you need to. To keep this tutorial small, you're only using the tag name in your tag pages. You make the tag page template now:
+The above query groups posts by `tags`, and returns each `tag` with the number of posts as `totalCount`. As an addition, you could extract some post data in each group if you need to. To keep this tutorial small, you're only using the tag name in your tag pages. Make the tag page template now:
 
 ## Make a tags page template (for `/tags/{tag}`)
 
