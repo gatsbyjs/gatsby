@@ -29,10 +29,10 @@ Now, login to Netlify and you will see a `New site from git` button at the top r
 
 - Branch to deploy: You can specify a branch to monitor. When you push to that particular branch, only then will Netlify build and deploy the site. The default is `master`.
 - Build Command: You can specify the command you want Netlify to run when you push to the above branch. The default is `npm run build`.
-- Publish directory: You can specify which folder Netlify should use to host the website. eg. public, dist, build. The default is `public`.
+- Publish directory: You can specify which folder Netlify should use to host the website. e.g. public, dist, build. The default is `public`.
 - Advanced build settings: If the site needs environment variables to build, you can specify them by clicking on `Show advanced` and then the `New Variable` button.
 
-Click on the `Deploy site` button and Netlify will start the build and deploy process you have specified. You can go to the `Deploys` tab and see the process unfold in the `Deploy log`. After a few moments, it will give you the live site URL eg. `random-name.netlify.com`.
+Click on the `Deploy site` button and Netlify will start the build and deploy process you have specified. You can go to the `Deploys` tab and see the process unfold in the `Deploy log`. After a few moments, it will give you the live site URL e.g. `random-name.netlify.com`.
 
 ### Upload Site Folder
 
@@ -51,7 +51,7 @@ Once the build is complete, you are ready to upload your site to Netlify. Go to 
           Drag and drop your site folder here
 ```
 
-To start the deploy process, you need only drag and drop the `public` folder over the above area on the Netlify website. Netlify will create a new site with a random name, then start uploading and hosting the application files. After a few moments, it will give you a live site URL eg. `random-name.netlify.com`.
+To start the deploy process, you need only drag and drop the `public` folder over the above area on the Netlify website. Netlify will create a new site with a random name, then start uploading and hosting the application files. After a few moments, it will give you a live site URL e.g. `random-name.netlify.com`.
 
 ![alt text](./images/gatsby-default-starter.png "Gatsby Default Starter")
 

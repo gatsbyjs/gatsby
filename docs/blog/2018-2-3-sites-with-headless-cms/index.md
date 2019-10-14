@@ -7,7 +7,7 @@ tags: ["headless-cms", "contentful", "content-mesh"]
 
 ## What is a traditional CMS?
 
-A traditional Content Management System (CMS)--like Wordpress, Drupal, or Joomla--manages three things for a website: content, admin screens, and presentation layer. These three things are tightly integrated, which has advantages. For example, there’s only one system to learn / one vendor relationship, and overall, there may be fewer choices to make. In addition, traditional CMSs have been around for so long that many teams are familiar with them and many websites are already be running on them. Both advantages.
+A traditional Content Management System (CMS)--like WordPress, Drupal, or Joomla--manages three things for a website: content, admin screens, and presentation layer. These three things are tightly integrated, which has advantages. For example, there’s only one system to learn / one vendor relationship, and overall, there may be fewer choices to make. In addition, traditional CMSs have been around for so long that many teams are familiar with them and many websites are already be running on them. Both advantages.
 
 You can think of a traditional CMS like an old home built by one person and with custom fittings. Gorgeous, and expensive to maintain, like the home in _The Money Pit_ (1986) with Tom Hanks and Shelley Long.
 

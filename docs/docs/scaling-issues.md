@@ -55,7 +55,7 @@ If you are seeing errors or slowness **and** your Gatsby app matches one of the 
 
 It's difficult to pin down exactly _how_ to fix a scaling issue. We have some recommendations and workarounds that _may_ work for your application.
 
-Note: the application of these techniques should be considered analogous to a applying a bandage. A bandage solves the underlying issue, but at some indeterminate point in the future the underlying issue may be healed! In much the same way--treat these techniques as temporary and re-visit in the future if underlying scaling issues in Gatsby have since been resolved.
+Note: the application of these techniques should be considered analogous to applying a bandage. A bandage solves the underlying issue, but at some indeterminate point in the future the underlying issue may be healed! In much the same way--treat these techniques as temporary and re-visit in the future if underlying scaling issues in Gatsby have since been resolved.
 
 ### `GATSBY_DB_NODES`
 

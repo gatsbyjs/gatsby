@@ -10,7 +10,7 @@ const Card = () => (
     <Flex>
       <Text
         color="grey.60"
-        fontFamily="header"
+        fontFamily="heading"
         fontSize={1}
         letterSpacing="tracked"
         css={{
@@ -23,7 +23,7 @@ const Card = () => (
         <MdStar /> 167
       </Flex>
     </Flex>
-    <Heading as="h3" fontSize={4} fontWeight={1}>
+    <Heading as="h3" fontSize={4} fontWeight="heading">
       gatsby-starter-personal-blog
     </Heading>
     <Text fontSize={1}>A Gatsby starter for a personal blog</Text>
