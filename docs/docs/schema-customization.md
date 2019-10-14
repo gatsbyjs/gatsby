@@ -1,4 +1,6 @@
-# Customizing the GraphQL Schema
+---
+title: Customizing the GraphQL Schema
+---
 
 One of Gatsby's main strengths is the ability to query data from a variety of
 sources in a uniform way with GraphQL. For this to work, a GraphQL Schema must
