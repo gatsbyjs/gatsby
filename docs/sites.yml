@@ -7834,3 +7834,12 @@
   built_by: Arturo Alviar
   built_by_url: "https://github.com/arturoalviar"
   featured: false
+- title: Edenspiekermann
+  url: "https://www.edenspiekermann.com"
+  main_url: "https://www.edenspiekermann.com"
+  description: >
+    Hello. We are Edenspiekermann, an independent global creative agency.
+  categories:
+    - Agency
+    - Portfolio
+  featured: true
