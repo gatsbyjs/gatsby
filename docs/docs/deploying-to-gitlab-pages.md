@@ -27,7 +27,7 @@ module.exports = {
 }
 ```
 
-## Build and Deploy with GitLab CI
+## Build and deploy with GitLab CI
 
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml` configuration file. This is the file that GitLab uses to manage the CI job.
 
