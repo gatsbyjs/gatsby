@@ -195,7 +195,7 @@ exports.onCreateDevServer = (
           pluginOptions
         )
       } else {
-        res.status(500).send(`Received body was empty!`)
+        res.status(400).send(`Received body was empty!`)
       }
     }
   )
