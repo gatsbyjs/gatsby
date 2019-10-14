@@ -158,6 +158,7 @@
   },
   "files": [
     "apis.json",
+    "ipc.json",
     "cache-dir",
     "dist",
     "graphql.js",
