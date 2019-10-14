@@ -164,7 +164,7 @@ const updateSchemaComposer = async ({
     parentSpan: activity.span,
   })
   await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
-  await addTracingToResolvers({ schemaComposer, parentSpan: activity.span })
+  await addTracingToResolvers({ schemaComposer })
   activity.end()
 }
 
