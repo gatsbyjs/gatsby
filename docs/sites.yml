@@ -7796,6 +7796,17 @@
   built_by: Kframe Interactive SA
   built_by_url: https://kframeinteractive.com/
   featured: false
+- title: Vishal Nakum
+  url: https://nakum.tech/
+  main_url: https://nakum.tech/
+  source_url: https://github.com/vishalnakum011/contentful
+  description: >
+    Portfolio of Vishal Nakum. Made with Gatsby, Contentful. Deployed on Netlify.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Amol Tangade
+  built_by_url: https://amoltangade.me/
 - title: Sagar Hani Portfolio
   url: http://sagarhani.in/
   main_url: http://sagarhani.in/
