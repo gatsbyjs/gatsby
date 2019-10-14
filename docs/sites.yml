@@ -7701,6 +7701,22 @@
   built_by: Phil Tietjen
   built_by_url: "https://github.com/Phizzard"
   featured: false
+- title: Divyanshu Maithani
+  main_url: https://divyanshu013.dev
+  url: https://divyanshu013.dev
+  source_url: https://github.com/divyanshu013/blog
+  description: >
+    Personal blog of Divyanshu Maithani. Life, music, code and things in between...
+  categories:
+    - Blog
+    - JavaScript
+    - Open Source
+    - Music
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Divyanshu Maithani
+  built_by_url: https://twitter.com/divyanshu013
 - title: TFE Energy
   main_url: https://tfe.energy
   url: https://tfe.energy
