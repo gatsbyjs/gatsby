@@ -7741,3 +7741,30 @@
   built_by: Kframe Interactive SA
   built_by_url: https://kframeinteractive.com/
   featured: false
+  
+ - title: KNC Blog
+
+  # this is the URL that is linked from the showcase
+  main_url: https://nagakonada.com
+
+  # this URL is used to generate a screenshot
+  url: https://nagakonada.com/
+
+  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
+  description: >
+    {nagakonada} is my blogging and portfolio site where I list my projects, experience, capabilities and the blog mostly talks about technical and personal writings.
+
+  # You can list as many categories as you want here. Check list of Categories below in this doc!
+  # If you'd like to create a new category, simply list it here.
+  categories:
+    - gatsby
+    - blog
+    - development
+    - portfolio
+
+  # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
+  built_by: Konada, Naga Chaitanya
+  built_by_url: https://github.com/ChaituKNag
+
+  # leave as false, the Gatsby site review board will choose featured sites quarterly
+  featured: false
