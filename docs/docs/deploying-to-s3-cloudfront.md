@@ -31,7 +31,7 @@ npm i gatsby-plugin-s3
 
 Add it to your `gatsby-config.js`: (don't forget to change the bucket name)
 
-```js:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
  {
      resolve: `gatsby-plugin-s3`,
