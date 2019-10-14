@@ -24,7 +24,7 @@ module.exports = {
 }
 ```
 
-## SEO Component
+## SEO component
 
 Create a new component with this initial boilerplate:
 
