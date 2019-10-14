@@ -72,7 +72,12 @@ class EcosystemBoard extends Component {
         <EcosystemSection
           title="External Resources"
           description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
-          links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
+          links={[
+            {
+              label: `Browse Resources`,
+              to: `/docs/awesome-gatsby-resources/`,
+            },
+          ]}
         />
       </div>
     )

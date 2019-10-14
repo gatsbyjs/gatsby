@@ -1,0 +1,25 @@
+{
+  "name": "structured-logging-tests",
+  "description": "structured logging tests",
+  "license": "MIT",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "test-comment": "We use --runInBand to ensure we don't spawn multiple gatsby processes concurrently",
+    "test": "jest --config=jest.config.js --runInBand",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "gatsby": "2.15.34-dev-1570799776640",
+    "gray-percentage": "^2.0.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "devDependencies": {
+    "babel-plugin-dynamic-import-node-sync": "^2.0.1",
+    "jest": "^24.0.0",
+    "jest-cli": "^24.0.0",
+    "joi": "^14.3.1",
+    "node-fetch": "^2.6.0"
+  }
+}

@@ -1,5 +1,5 @@
 ---
-title: Winning over Engineering Leaders
+title: Winning Over Engineering Leaders
 ---
 
 Engineering leaders and managers typically make decisions about how to build the sites and products that fall under their ownership. These decisions are based on things like cost, complexity, team needs, business requirements, and the success metrics they are accountable for.
@@ -13,7 +13,7 @@ Some specific things that engineering leaders and managers care about include:
 - **Not reinventing the wheel** While many managers appreciate and sympathize with their team's or colleagues' desire to try out cool new tech, they'd rather not spend valuable time and resources on a new thing when the job is already being done to their satisfaction. As the saying goes, "If it ain't broke, don't fix it."
 - **Helping their team work smarter** New tech is interesting to managers when it removes obstacles for their team, helps them be more effective, and/or reduces [yak shaving](https://www.hanselman.com/blog/YakShavingDefinedIllGetThatDoneAsSoonAsIShaveThisYak.aspx). However, these benefits have to outweigh the cost of integrating a new tool and/or re-implementing an existing product.
 
-## Basic Explanation
+## Basic explanation
 
 Here's an example of a basic explanation of Gatsby for engineering leaders and managers:
 
@@ -39,7 +39,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 > CDN hosting for static sites is much, _much_ less expensive than traditional hosting costs. Read more about this here: [Enterprise Gatsby: How to Reduce Your Digital Total Cost of Ownership (TCO) with Gatsby](/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/). You'll also save money on team resources as your developers will spend much less time working on performance optimization and configuring integrations. Many managers have also found it easier and less expensive to recruit for Gatsby projects because they don't require specialized CMS skills or the advanced expertise needed to handle complex tooling and development environments.
 
-### Improved Development Process
+### Improved development process
 
 > Gatsby [unifies your stack](/docs/sanitize-your-stack) and eliminates a lot of the complicated and time-consuming configuration steps that come with most development processes. This means happier developers and clearer division between front-end and back-end tasks. Front-end developers can spend more time making great UIs and back-end developers can focus on adding the features and integrations that make your product better. You can find more information on this subject in Sam Bhagwat's article [How Gatsby Changes Teams' Website Development Workflow](/blog/2018-04-25-how-gatsby-changes-teams-website-development-workflow/#architecture)
 

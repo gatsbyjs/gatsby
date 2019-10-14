@@ -1,6 +1,9 @@
+const reporter = require(`gatsby-cli/lib/reporter`)
+
 const stageCodeToReadableLabel = {
   "build-javascript": `Generating JavaScript bundles`,
   "build-html": `Generating SSR bundle`,
+  develop: `Generating development JavaScript bundle`,
 }
 
 const transformWebpackError = (stage, webpackError) => {
@@ -27,10 +30,21 @@ const transformWebpackError = (stage, webpackError) => {
   }
 }
 
-module.exports = (stage, webpackError) => {
+exports.structureWebpackErrors = (stage, webpackError) => {
   if (Array.isArray(webpackError)) {
     return webpackError.map(e => transformWebpackError(stage, e))
   }
 
   return transformWebpackError(stage, webpackError)
+}
+
+exports.reportWebpackWarnings = stats => {
+  stats.compilation.warnings.forEach(webpackWarning => {
+    if (webpackWarning.warning) {
+      // grab inner Exception if it exists
+      reporter.warn(webpackWarning.warning.toString())
+    } else {
+      reporter.warn(webpackWarning.message)
+    }
+  })
 }
