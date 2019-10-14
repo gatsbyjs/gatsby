@@ -88,7 +88,7 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
-_Note:_ To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
+**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
 
 ### Understanding the parts of a query
 
@@ -142,8 +142,7 @@ a live GraphQL server from the browser.
 
 Most usages of GraphQL involve manually creating a GraphQL schema.
 
-With Gatsby, we use plugins which fetch data from different sources. We then use that data
-to automatically _infer_ a GraphQL schema.
+Gatsby uses plugins which can fetch data from different sources. That data is used to automatically _infer_ a GraphQL schema.
 
 If you give Gatsby data that looks like this:
 
@@ -179,11 +178,11 @@ People often store dates like "2018-01-05" but want to display the date in some 
 }
 ```
 
-See the full list of formatting options by viewing our [GraphQL Reference page](/docs/graphql-reference/#dates).
+See the full list of formatting options by viewing our [GraphQL reference page](/docs/graphql-reference/#dates).
 
 ### Markdown
 
-Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify you want the transformed HTML version instead of markdown:
+Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify if you want the transformed HTML version instead of markdown:
 
 ```graphql
 markdownRemark {
