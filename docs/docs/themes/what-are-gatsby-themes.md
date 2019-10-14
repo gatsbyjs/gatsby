@@ -33,7 +33,7 @@ Themes solve the problems that traditional starters experience:
 
 - You already have an existing Gatsby site and can't start from a starter
 - You want to be able to update to the latest version of a feature on your site
-- You have multiple features you want on your site, but there is no starter for all the features -- you can use multiple themes in one Gatsby site
+- You want multiple features on your site, but there is no starter with all the features -- you can use multiple themes, composed in one Gatsby site
 
 **Consider building a theme if:**
 
