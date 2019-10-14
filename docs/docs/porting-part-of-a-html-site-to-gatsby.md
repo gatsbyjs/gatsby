@@ -6,7 +6,7 @@ title: Porting Part of a HTML Site to Gatsby
 
 When introducing Gatsby into an existing static HTML site, it might not be feasible to rewrite the entire site at once. In these cases, porting pieces of the site to Gatsby one at a time, while the rest of the site still uses HTML, might be preferable. This page will guide you through this process.
 
-> **Note**: The aim of this guide is to take a shallow, focused path to porting part of a static HTML website to Gatsby. The full [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/) is more broad, with deeper dives on the core concepts and technologies.
+> **Note**: The aim of this guide is to take a shallow, focused path to porting part of a static HTML website to Gatsby. The full [Gatsby tutorial](/tutorial/) is more broad, with deeper dives on the core concepts and technologies.
 
 ## Why Gatsby?
 
@@ -67,7 +67,7 @@ The example site uses global CSS files (`style.css` and `normalize.css`), more s
 
 ### Development environment
 
-Gatsby generates websites and compiles applications, but also has a tool for local development. With some setup your computer can run generation and the local development environment. Follow the [Gatsby development environment tutorial](https://www.gatsbyjs.org/tutorial/part-zero/) to get setup and then return here to continue.
+Gatsby generates websites and compiles applications, but also has a tool for local development. With some setup your computer can run generation and the local development environment. Follow the [Gatsby development environment tutorial](/tutorial/part-zero/) to get setup and then return here to continue.
 
 ### Gatsby Project
 
@@ -447,12 +447,6 @@ With the implementation of the site section into Gatsby complete, it's time to b
 By default, Gatsby assumes that the build will be hosted at the root path of a domain, e.g `https://gatsbyjs.org/`. After the initial static HTML file is loaded, Gatsby reaches out for other generated JavaScript files in the same location in order to progressively enable enhancements for the user. In the example site, the path at which the Gatsby site will be hosted is `/who`. The gatsby `pathPrefix` option will ensure that the generated JavaSript files are available to load and the generated links from `index.js` to internal pages work correctly:
 
 ```js:title=/gatsby-config.js
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
- */
-
 module.exports = {
   plugins: [`gatsby-plugin-react-helmet`],
   {/* highlight-start */}
@@ -466,12 +460,6 @@ module.exports = {
 A common situation is for assets to be hosted from a separate domain than the HTML files. Gatsby has a config option to accommodate this for the generated JavaScript files created at build time. In the example site there are two assets already hosted at an asset domain, the global style sheet `style.css` and the bio picture `person.png`. With the `assetPrefix` option set, after the initial HTML file being served from the website domain at `/who`, all the following Gatsby JavaScript files for that page will be fetched from the asset domain at `/gatsby/who`.
 
 ```js:title=/gatsby-config.js
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
- */
-
 module.exports = {
   plugins: [`gatsby-plugin-react-helmet`],
   pathPrefix: `/who`,
@@ -535,10 +523,10 @@ website-domain
 
 ## Next steps
 
-The [building with components page](https://www.gatsbyjs.org/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
+The [building with components page}(/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 
-[Sourcing content and data](https://www.gatsbyjs.org/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code
+[Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code
 
-Short guides can be found at the [recipes section](https://www.gatsbyjs.org/docs/recipes), for adding functionality such as optimizing and querying local images, adding markdown support and integrating various modern CSS tools. The [adding website functionality page](https://www.gatsbyjs.org/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication and doing client side data fetching.
+Short guides can be found at the [recipes section](/docs/recipes), for adding functionality such as optimizing and querying local images, adding markdown support and integrating various modern CSS tools. The [adding website functionality page](/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication and doing client side data fetching.
 
-Gatsby is dedicated to making you feel welcome! Learn more and engage with the community by starting a conversation or contributing yourself. The [community page](https://www.gatsbyjs.org/contributing/community/) has further information and channels where you can get support.
+Gatsby is dedicated to making you feel welcome! Learn more and engage with the community by starting a conversation or contributing yourself. The [community page](/contributing/community/) has further information and channels where you can get support.
