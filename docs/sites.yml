@@ -7702,6 +7702,15 @@
   source_url: https://github.com/AtomBuild/atombuild.github.io
   description: >
     Landing page for the AtomBuild project, offering a curation of Atom packages associated with the project.
+  categories:
+    - Directory
+    - Landing Page
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Kepler Sticka-Jones
+  built_by_url: https://keplersj.com/
+  featured: false
 - title: Josh Pensky
   main_url: https://joshpensky.com
   url: https://joshpensky.com
