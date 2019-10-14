@@ -15,7 +15,7 @@
     "fast-levenshtein": "^2.0.6",
     "glob": "^7.1.4",
     "globby": "^10.0.1",
-    "inquirer": "^6.4.1",
+    "inquirer": "^6.5.2",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
     "npm-keyword": "^6.1.0"
