@@ -1,5 +1,5 @@
 ---
-title: gatsby-source-filesystem programmatic import
+title: gatsby-source-filesystem Programmatic Import
 issue: https://github.com/gatsbyjs/gatsby/issues/9018
 ---
 

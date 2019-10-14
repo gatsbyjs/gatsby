@@ -49,7 +49,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
-        // your wordpress source
+        // your WordPress source
         baseUrl: `wpexample.com`,
         protocol: `https`,
         // is it hosted on wordpress.com, or self-hosted?
@@ -122,7 +122,7 @@ When you restart your server with the `gatsby develop` command, you'll be able t
 
 In the GraphiQL IDE at [localhost:8000/\_\_graphql](http://localhost:8000/__graphql) you should now see queryable fields for `allWordpressPosts` in the docs or explorer sidebar.
 
-## Wrapping Up
+## Wrapping up
 
 This was a very basic example meant to help you understand how you can fetch data from WordPress and use it with Gatsby. As
 the guide mentioned already, if you got stuck, you can have a look at
@@ -134,4 +134,4 @@ created to support this guide.
 - [Blog post on which this guide is based on](/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
 - [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
 - [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)
-- More [Gatsby blog posts about using Gatsby + Wordpress](/blog/tags/wordpress/)
+- More [Gatsby blog posts about using Gatsby + WordPress](/blog/tags/wordpress/)

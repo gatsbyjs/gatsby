@@ -1,5 +1,5 @@
 ---
-title: The gatsby-config.js API file
+title: The gatsby-config.js API File
 ---
 
 The file `gatsby-config.js` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site.

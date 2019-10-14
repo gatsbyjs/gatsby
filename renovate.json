@@ -5,7 +5,7 @@
     "starters/**",
     "themes/**",
     "packages/**",
-    "www"
+    "www/package.json"
   ],
   "major": {
     "masterIssueApproval": true
@@ -15,5 +15,7 @@
   "rangeStrategy": "bump",
   "bumpVersion": null,
   "semanticCommitScope": null,
-  "prHourlyLimit": 0
+  "prHourlyLimit": 0,
+  "timezone": "GMT",
+  "schedule": "after 10am on Monday"
 }

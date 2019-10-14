@@ -1,26 +1,21 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import styled from "@emotion/styled"
 import logo from "../../assets/monogram.svg"
 import logoDictionary from "./logo-dictionary"
-import {
-  colors,
-  space,
-  mediaQueries,
-  lineHeights,
-  fonts,
-} from "../../utils/presets"
+import { space, mediaQueries } from "gatsby-design-tokens"
 import { rhythm } from "../../utils/typography"
 
 const Td = styled.td`
   display: table-cell;
-  background: ${colors.ui.background};
+  background: ${t => t.theme.colors.background};
   font-weight: 600;
-  line-height: ${lineHeights.dense};
+  line-height: ${t => t.theme.lineHeights.dense};
   text-align: left;
   vertical-align: middle;
-  font-family: ${fonts.header};
-  border-color: ${colors.ui.light};
-  padding: ${space[3]};
+  font-family: ${t => t.theme.fonts.heading};
+  border-color: ${t => t.theme.colors.ui.light};
+  padding: ${t => t.theme.space[3]};
 `
 
 const subHeaderTitleStyles = {

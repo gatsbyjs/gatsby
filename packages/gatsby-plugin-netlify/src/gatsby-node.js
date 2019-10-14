@@ -25,7 +25,10 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
+exports.onPostBuild = async (
+  { store, pathPrefix, reporter },
+  userPluginOptions
+) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
@@ -45,7 +48,7 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
   }
 
   await Promise.all([
-    buildHeadersProgram(pluginData, pluginOptions),
+    buildHeadersProgram(pluginData, pluginOptions, reporter),
     createRedirects(pluginData, redirects, rewrites),
   ])
 }
