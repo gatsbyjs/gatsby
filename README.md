@@ -89,7 +89,7 @@ Gatsby is a modern web framework for blazing fast websites.
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
 - [License](#memo-license)
-- [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
+- [Thanks to Our Contributors and Sponsors](#-thanks)
 
 ## 🚀 Get Up and Running in 5 Minutes
 

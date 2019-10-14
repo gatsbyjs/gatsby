@@ -108,7 +108,7 @@ class DefaultLayout extends React.Component {
           >
             <div
               sx={{
-                bg: `widget.background`,
+                bg: `card.background`,
                 borderRadius: 2,
                 boxShadow: `dialog`,
                 position: `relative`,
@@ -117,7 +117,7 @@ class DefaultLayout extends React.Component {
               <button
                 onClick={this.handleCloseModal}
                 sx={{
-                  bg: `widget.background`,
+                  bg: `card.background`,
                   border: 0,
                   borderRadius: 6,
                   color: `textMuted`,

@@ -65,7 +65,12 @@ function getPrecachePages(globs, base) {
 
 exports.onPostBuild = (
   args,
-  { precachePages: precachePagesGlobs = [], appendScript = null, workboxConfig }
+  {
+    precachePages: precachePagesGlobs = [],
+    appendScript = null,
+    debug = undefined,
+    workboxConfig = {},
+  }
 ) => {
   const { pathPrefix, reporter } = args
   const rootDir = `public`
@@ -161,6 +166,16 @@ exports.onPostBuild = (
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
       if (warnings) warnings.forEach(warning => console.warn(warning))
+
+      if (debug !== undefined) {
+        const swText = fs
+          .readFileSync(swDest, `utf8`)
+          .replace(
+            /(workbox\.setConfig\({modulePathPrefix: "[^"]+")}\);/,
+            `$1, debug: ${JSON.stringify(debug)}});`
+          )
+        fs.writeFileSync(swDest, swText)
+      }
 
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
