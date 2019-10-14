@@ -96,15 +96,15 @@ The following diagram shows a GraphQL query, with each word highlighted in a col
 
 ![GraphQL query diagram](./images/basic-query.png)
 
-#### Query Operation Type
+#### Query operation type
 
 The diagram marks the word `query` as the "Operation Type", for Gatsby's uses the only operation type you will deal with is `query`, this can be omitted from your queries if you prefer (like in the above example).
 
-#### Operation Name
+#### Operation name
 
 `SiteInformation` is marked as the "Operation Name", which is a unique name that you assign to a query yourself. This is similar to how you would name a function or a variable, and like a function this can be omitted if you would rather the query be anonymous.
 
-#### Query Fields
+#### Query fields
 
 The four words `site`, `id`, `siteMetadata`, and `title` are marked as "Fields". Any top-level fields -- like `site` in the diagram -- are sometimes referred to as **root level fields**, though the name doesn't signify functional significance as all fields in GraphQL queries behave the same.
 

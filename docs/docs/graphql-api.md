@@ -10,11 +10,11 @@ A great advantage of Gatsby is a built-in data layer that combines any and all d
 
 This doc serves as a reference for GraphQL features built into Gatsby, including methods for querying and sourcing data, and customizing GraphQL for your site's needs.
 
-## Getting Started with GraphQL
+## Getting started with GraphQL
 
 GraphQL is available in Gatsby without a special install: a schema is automatically inferred and created when you run `gatsby develop` or `gatsby build`. When the site compiles, the data layer can be [explored](/docs/running-queries-with-graphiql/) at: `http://localhost:8000/___graphql`
 
-## Sourcing Data
+## Sourcing data
 
 Data needs to be [sourced](/docs/content-and-data/) — or added to the GraphQL schema — to be queried and pulled into pages using GraphQL. Gatsby uses [source plugins](/plugins/?=gatsby-source) to pull in data.
 
@@ -231,7 +231,7 @@ For more information, check out the docs guide on [using fragments in Gatsby](/d
 
 Some fragments come included in Gatsby plugins, such as fragments for returning optimized image data in various formats with `gatsby-image` and `gatsby-transformer-sharp`, or data fragments with `gatsby-source-contentful`.
 
-#### Image Sharp fragments
+#### Image sharp fragments
 
 The following fragments are available in any site with `gatsby-transformer-sharp` installed and included in your `gatsby-config.js`.
 
@@ -261,7 +261,7 @@ The following fragments are available in any site with `gatsby-source-contentful
 
 _**Note**: the above fragments are from officially maintained Gatsby starters; other plugins like `gatsby-source-datocms` and `gatsby-source-sanity` ship with fragments of their own. A list of those fragments can be found in the [`gatsby-image` README](/packages/gatsby-image#fragments)._
 
-## Advanced Customizations
+## Advanced customizations
 
 It's possible to customize sourced data in the GraphQL layer and create relationships between nodes with the [Gatsby Node APIs](/docs/node-apis/).
 
