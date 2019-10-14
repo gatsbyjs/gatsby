@@ -86,6 +86,6 @@ Copy the credentials of your new app listed on [GitHub oAuth Apps](https://githu
 
 #### Benefits of Netlify CMS, GitHub, and Netlify Workflow
 
-Congrats! Now that Netlify CMS is successfully configured to your project, every time you add a new post, the content will be stored in your repostory and versioned on GitHub because Netlify CMS is Git-based. Also, thanks to [Netlify's Continuous Deployment](https://www.netlify.com/docs/continuous-deployment/), a new version will be deployed every time you add or edit a post.
+Congrats! Now that Netlify CMS is successfully configured to your project, every time you add a new post, the content will be stored in your repository and versioned on GitHub because Netlify CMS is Git-based. Also, thanks to [Netlify's Continuous Deployment](https://www.netlify.com/docs/continuous-deployment/), a new version will be deployed every time you add or edit a post.
 
 You can learn more about Netlify CMS and how to configure it further in the [Netlify CMS documentation](https://www.netlifycms.org/docs/intro/).

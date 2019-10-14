@@ -1,5 +1,5 @@
 ---
-title: Centralizing your site's navigation
+title: Centralizing Your Site's Navigation
 ---
 
 ## Creating dynamic navigation in Gatsby
@@ -115,7 +115,7 @@ const Layout = ({ children }) => (
     render={data => (
       <React.Fragment>
         <Helmet
-          title={'tite'}
+          title={'title'}
           meta={[
             { name: 'description', content: 'Sample' },
             { name: 'keywords', content: 'sample, something' },
@@ -162,7 +162,7 @@ const Layout = ({ children }) => (
     render={data => (
       <React.Fragment>
         <Helmet
-          title={'tite'}
+          title={'title'}
           meta={[
             { name: 'description', content: 'Sample' },
             { name: 'keywords', content: 'sample, something' },

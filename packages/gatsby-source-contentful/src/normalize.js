@@ -66,13 +66,17 @@ exports.fixIds = object => {
   }
 }
 
-const makeId = ({ id, currentLocale, defaultLocale }) =>
-  currentLocale === defaultLocale ? id : `${id}___${currentLocale}`
+const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
+  currentLocale === defaultLocale
+    ? `${spaceId}___${id}`
+    : `${spaceId}___${id}___${currentLocale}`
 
 exports.makeId = makeId
 
-const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => id =>
-  createNodeId(makeId({ id, currentLocale, defaultLocale }))
+const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
+  spaceId,
+  id
+) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale }))
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
@@ -116,6 +120,7 @@ exports.buildForeignReferenceMap = ({
   resolvable,
   defaultLocale,
   locales,
+  space,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -147,6 +152,7 @@ exports.buildForeignReferenceMap = ({
                 foreignReferenceMap[v.sys.id].push({
                   name: `${contentTypeItemId}___NODE`,
                   id: entryItem.sys.id,
+                  spaceId: space.sys.id,
                 })
               })
             }
@@ -163,6 +169,7 @@ exports.buildForeignReferenceMap = ({
             foreignReferenceMap[entryItemFieldValue.sys.id].push({
               name: `${contentTypeItemId}___NODE`,
               id: entryItem.sys.id,
+              spaceId: space.sys.id,
             })
           }
         }
@@ -244,6 +251,7 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
   locales,
+  space,
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
@@ -310,7 +318,7 @@ exports.createContentTypeNodes = ({
                   return resolvable.has(v.sys.id)
                 })
                 .map(function(v) {
-                  return mId(v.sys.id)
+                  return mId(space.sys.id, v.sys.id)
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
                 entryItemFields[
@@ -328,6 +336,7 @@ exports.createContentTypeNodes = ({
           ) {
             if (resolvable.has(entryItemFieldValue.sys.id)) {
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
+                space.sys.id,
                 entryItemFieldValue.sys.id
               )
             }
@@ -347,19 +356,22 @@ exports.createContentTypeNodes = ({
             // skip it. However, if it is an array, add it:
             if (Array.isArray(existingReference)) {
               entryItemFields[foreignReference.name].push(
-                mId(foreignReference.id)
+                mId(foreignReference.spaceId, foreignReference.id)
               )
             }
           } else {
             // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.
-            entryItemFields[foreignReference.name] = [mId(foreignReference.id)]
+            entryItemFields[foreignReference.name] = [
+              mId(foreignReference.spaceId, foreignReference.id),
+            ]
           }
         })
       }
 
       let entryNode = {
-        id: mId(entryItem.sys.id),
+        id: mId(space.sys.id, entryItem.sys.id),
+        spaceId: space.sys.id,
         contentful_id: entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
@@ -503,6 +515,7 @@ exports.createAssetNodes = ({
   createNodeId,
   defaultLocale,
   locales,
+  space,
 }) => {
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
@@ -533,7 +546,7 @@ exports.createAssetNodes = ({
     }
     const assetNode = {
       contentful_id: localizedAsset.sys.contentful_id,
-      id: mId(localizedAsset.sys.id),
+      id: mId(space.sys.id, localizedAsset.sys.id),
       parent: null,
       children: [],
       ...localizedAsset.fields,

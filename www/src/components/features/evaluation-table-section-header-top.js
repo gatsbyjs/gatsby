@@ -1,40 +1,32 @@
-import React from "react"
-import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-} from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const superHeader = ({ columnHeaders }) => (
   <tr>
     {columnHeaders.map((header, i) => (
       <td
         key={i}
-        css={{
-          "&&": {
-            padding: `${space[3]} ${space[3]} ${rhythm(3 / 8)}`,
-          },
+        sx={{
+          "&&": { p: 3 },
           display: `none`,
           textTransform: `uppercase`,
-          fontSize: fontSizes[0],
-          lineHeight: lineHeights.solid,
-          fontWeight: 500,
+          fontSize: 0,
+          lineHeight: `solid`,
+          fontWeight: `body`,
           textAlign: `center`,
           verticalAlign: `bottom`,
           width: i === 0 ? 120 : `inherit`,
           border: 0,
-          color: colors.text.secondary,
-          background: colors.ui.background,
+          color: `textMuted`,
+          bg: `ui.background`,
           "span:first-of-type": {
-            borderTopLeftRadius: radii[2],
+            borderTopLeftRadius: 2,
             textAlign: `left`,
           },
           "&:last-child": {
-            borderTopRightRadius: radii[2],
+            borderTopRightRadius: 2,
           },
           [mediaQueries.xs]: {
             display: `table-cell`,
@@ -49,7 +41,7 @@ const superHeader = ({ columnHeaders }) => (
         }}
       >
         <span
-          css={{
+          sx={{
             WebkitHyphens: `auto`,
             MsHyphens: `auto`,
             hyphens: `auto`,

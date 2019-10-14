@@ -1,40 +1,35 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
 import { Link } from "gatsby"
 
-import styles from "../shared/styles"
+import {
+  showcaseList,
+  showcaseItem,
+  shortcutIcon,
+  meta,
+} from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import qs from "qs"
 
 import ShowcaseItemCategories from "./showcase-item-categories"
-import {
-  space,
-  lineHeights,
-  transition,
-  mediaQueries,
-  colors,
-  radii,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 import GithubIcon from "react-icons/lib/go/mark-github"
 import LaunchSiteIcon from "react-icons/lib/md/launch"
-import FeaturedIcon from "../../assets/icons/featured-sites-icons--white.svg"
+import FeaturedIcon from "../../assets/icons/featured-sites-icons"
 
 const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)
 
   return (
-    <main id={`reach-skip-nav`} css={{ ...styles.showcaseList }}>
+    <main id={`reach-skip-nav`} sx={showcaseList}>
       {items.map(
         ({ node }) =>
           node.fields &&
           node.fields.slug && ( // have to filter out null fields from bad data
-            <div
-              key={node.id}
-              css={{
-                ...styles.showcaseItem,
-              }}
-            >
+            <div key={node.id} sx={showcaseItem}>
               <ThumbnailLink
                 slug={node.fields.slug}
                 image={node.childScreenshot}
@@ -44,19 +39,14 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 <strong className="title">{node.title}</strong>
               </ThumbnailLink>
               <div
-                css={{
-                  ...styles.meta,
+                sx={{
+                  ...meta,
                   display: `flex`,
                   justifyContent: `space-between`,
                 }}
                 className="meta"
               >
-                <div
-                  css={{
-                    paddingRight: space[5],
-                    lineHeight: lineHeights.dense,
-                  }}
-                >
+                <div sx={{ pr: 5 }}>
                   <ShowcaseItemCategories
                     categories={node.categories}
                     onCategoryClick={onCategoryClick}
@@ -66,7 +56,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                   {node.source_url && (
                     <Fragment>
                       <a
-                        css={{ ...styles.shortcutIcon }}
+                        sx={shortcutIcon}
                         href={node.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -77,7 +67,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     </Fragment>
                   )}
                   <a
-                    css={{ ...styles.shortcutIcon }}
+                    sx={shortcutIcon}
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -87,28 +77,33 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 </div>
                 {node.featured && (
                   <Link
-                    css={{
+                    sx={{
                       "&&": {
                         display: `none`,
-                        transition: `background ${transition.speed.slow} ${transition.curve.default}, transform ${transition.speed.slow} ${transition.curve.default}`,
                         [mediaQueries.lg]: {
                           alignItems: `center`,
-                          background: colors.accent,
+                          bg: `accent`,
                           border: `none`,
-                          borderTopRightRadius: radii[1],
-                          borderBottomLeftRadius: radii[1],
+                          borderTopRightRadius: 1,
+                          borderBottomLeftRadius: 1,
                           boxShadow: `none`,
+                          color: `white`,
                           cursor: `pointer`,
                           display: `flex`,
-                          height: 24,
+                          fontSize: 2,
+                          justifyContent: `center`,
+                          height: 20,
                           margin: 0,
                           padding: 0,
                           position: `absolute`,
                           top: 0,
                           right: 0,
-                          width: 24,
+                          width: 20,
                           "&:hover": {
-                            background: colors.gatsby,
+                            bg: `gatsby`,
+                          },
+                          "& svg": {
+                            display: `block`,
                           },
                         },
                       },
@@ -118,18 +113,14 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     })}`}
                     className="featured-site"
                   >
-                    <img
-                      src={FeaturedIcon}
-                      alt="icon"
-                      css={{ margin: `0 auto`, display: `block` }}
-                    />
+                    <FeaturedIcon />
                   </Link>
                 )}
               </div>
             </div>
           )
       )}
-      {items.length && <EmptyGridItems styles={styles.showcaseItem} />}
+      {items.length && <EmptyGridItems styles={showcaseItem} />}
     </main>
   )
 }
