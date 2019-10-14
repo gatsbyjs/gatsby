@@ -55,7 +55,7 @@ exports.onCreateWebpackConfig = ({
           test: /\.less$/,
           use: [
             // You don't need to add the matching ExtractText plugin
-            // because gatsby already includes it and makes sure it only
+            // because gatsby already includes it and makes sure it's only
             // run at the appropriate stages, e.g. not in development
             loaders.miniCssExtract(),
             loaders.css({ importLoaders: 1 }),
