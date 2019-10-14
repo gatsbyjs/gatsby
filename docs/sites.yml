@@ -7696,6 +7696,19 @@
   built_by: Phil Tietjen
   built_by_url: "https://github.com/Phizzard"
   featured: false
+- title: TFE Energy
+  main_url: https://tfe.energy
+  url: https://tfe.energy
+  source_url: https://gitlab.com/marcfehrmedia/2019-07-03-tfe-energy
+  description: >
+    TFE Energy believes in the future. Their new website is programmed with Gatsby, Scrollmagic, Contentful, Cloudify.
+  categories:
+    - Technology
+    - Consulting
+    - Video
+    - Business
+  built_by: Marc Fehr
+  built_by_url: https:/www.marcfehr.media
 - title: AtomBuild
   url: https://atombuild.github.io/
   main_url: https://atombuild.github.io/
