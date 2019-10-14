@@ -7828,7 +7828,6 @@
   url: "https://arturoalviar.com"
   source_url: "https://github.com/arturoalviar/portfolio"
   categories:
-    - featured
     - Portfolio
     - Open Source
     - Web Development
@@ -7841,6 +7840,7 @@
   description: >
     Hello. We are Edenspiekermann, an independent global creative agency.
   categories:
+    - Featured
     - Agency
     - Portfolio
   featured: true
@@ -7850,7 +7850,7 @@
   description: >
     At IBM, our design philosophy is to help guide people so they can do their best work. Our human-centered design practices help us deliver on that goal.
   categories:
-    - featured
+    - Featured
     - Technology
     - Web Development
   built_by: IBM
