@@ -18,7 +18,7 @@ npm install --save gatsby-plugin-feed
 
 ## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
 
-Once you complete installation, you can add the plugin to your site's config file, like so:
+At this point, you can add the plugin to your site's config file, like so:
 
 ```js:title=gatsby-config.js
 module.exports = {
