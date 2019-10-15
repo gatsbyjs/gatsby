@@ -20,7 +20,8 @@ Describe the issue that you're seeing.
 ### Steps to reproduce
 
 Clear steps describing how to reproduce the issue. Please please please link to a demo project if possible, this makes your issue _much_ easier to diagnose (seriously).
-You can check how to make a minimal reproduction case [here](https://www.gatsbyjs.org/contributing/how-to-make-a-reproducible-test-case/)
+
+How to Make a Minimal Reproduction: https://www.gatsbyjs.org/contributing/how-to-make-a-reproducible-test-case/
 
 ### Expected result
 
