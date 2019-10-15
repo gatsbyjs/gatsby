@@ -27,7 +27,7 @@ For example, if a feature developer need to change a library component, that dev
 
 There are two different approaches for versioning component libraries.
 
-The first is to version on globally across the component library. At any given commit, the library has one version number (eg `30.3.1`). Any commit updating a component will then bump the version number accordingly. Both Carbon Design System and Blueprint take this approach.
+The first is to version on globally across the component library. At any given commit, the library has one version number (e.g. `30.3.1`). Any commit updating a component will then bump the version number accordingly. Both Carbon Design System and Blueprint take this approach.
 
 The second approach is to version each component in the component library. This was used, for example, [by Walmart.com](https://medium.com/walmartlabs/how-to-achieve-reusability-with-react-components-81edeb7fb0e0) -- they built their component library as React components, and created every component as a separate, versioned npm package.
 

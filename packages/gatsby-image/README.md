@@ -145,7 +145,7 @@ export const query = graphql`
 `
 ```
 
-For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e) or this one by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/)
+For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e), this post by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/), or [this free playlist on egghead.io](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e) with examples for using `gatsby-image`.
 
 ## Polyfilling object-fit/object-position for IE
 
@@ -414,6 +414,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                                       |
 | `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                                                 |
 | `title`                | `string`            | Passed to the `img` element                                                                                                                   |
+| `onClick`              | `func`              | Passed to the `img` element                                                                                                                   |
 | `alt`                  | `string`            | Passed to the `img` element. Defaults to an empty string `alt=""`                                                                             |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                                   |
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                                  |

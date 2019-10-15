@@ -4,7 +4,7 @@ about: Suggest a new idea for the project.
 ---
 
 <!--
-  Please fill out each section below, otherwise your issue will be closed.
+  Please fill out each section below, otherwise, your issue will be closed.
 
   Useful Links:
   - Gatsby RFCs: https://github.com/gatsbyjs/rfcs
