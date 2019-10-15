@@ -1,13 +1,16 @@
 const {
-  createUrl,
   resolveFixed,
   resolveFluid,
   resolveResize,
 } = require(`../extend-node-type`)
 
+const {
+  createUrl,
+} = require(`../resolve-fixed-and-fluid/helpers/shared-helpers`)
+
 describe(`contentful extend node type`, () => {
   describe(`createUrl`, () => {
-    it(`allows you to create URls`, () => {
+    it(`allows you to create URLs`, () => {
       expect(
         createUrl(`//images.contentful.com/dsf/bl.jpg`, { width: 100 })
       ).toMatchSnapshot()
