@@ -116,14 +116,6 @@ For Stripe Checkout to work without any backend component, you need to create a 
 
 Note: You will need to create both test and live product SKUs in the Stripe admin. Make sure you toggle to 'Viewing test data' and then create your products for local development.
 
-To use your SKUs with the client-only integration of Stripe,as it is demonstrated in the following section, your SKUs need to have a name attribute, to do that, first add the name attribute alongside the rest of your attributes on the products form.
-
-![Product edition form on the Stripe platform with the attributes input highlighted](stripe-product-attributes.png)
-
-This is going to enable a field on the SKUs form to set the name for your SKUs.
-
-![SKUs edition form on the Stripe platform with the name field enabled](stripe-sku-form.png)
-
 #### Create a checkout component that loads StripeJS and redirects to the checkout
 
 Create a new file at `src/components/checkout.js`. Your `checkout.js` file should look like this:
