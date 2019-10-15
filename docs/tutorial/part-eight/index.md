@@ -307,10 +307,7 @@ export default ({ data }) => {
   return (
     <Layout>
       // highlight-start
-      <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.excerpt}
-      />
+      <SEO title={post.frontmatter.title} description={post.excerpt} />
       // highlight-end
       <div>
         <h1>{post.frontmatter.title}</h1>
@@ -326,9 +323,9 @@ export const query = graphql`
       html
       frontmatter {
         title
-        // highlight-next-line
-        excerpt
       }
+      // highlight-next-line
+      excerpt
     }
   }
 `
