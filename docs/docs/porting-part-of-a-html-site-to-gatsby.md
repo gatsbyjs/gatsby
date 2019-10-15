@@ -334,7 +334,7 @@ export default ({ children }) => (
 
 Like in `/src/pages/index.js` the file exports a JavaScript function that returns an HTML like structure, but this time the function takes an argument. The first argument provided to a component function is always an object called the props. On the props object, the children of the component are available. Within the HTML like markup, the curly braces wrap a JavaScript expression whose result will be placed there. In this case it is a very simple expression that results in the contents of the `children` variable.
 
-The common elements from the `/index.html` and `/who/ella-arborist.html` files can now copied into the `<Layout>` component. A second prop is also added and used in a second JavaScript expression in the `<title>` element. The added expression results in the title, with the `staffName` prop added only if it is provided. We'll see the prop used later on when porting the `/who/ella-arborist.html` page.
+The common elements from the `/index.html` and `/who/ella-arborist.html` files can now copied into the `<Layout>` component. A second prop is also added and used in a second JavaScript expression in the `<title>` element. The added expression results in the title, with the `staffName` prop added only if it is provided. You'll see the prop used later on when porting the `/who/ella-arborist.html` page.
 
 ```jsx:title=/gatsby-site-section/src/components/Layout.js
 import React from "react"
@@ -440,11 +440,11 @@ The other 2 pages for Marin and Sam can now be made with a similar structure. Ma
 
 ## Build
 
-With the implementation of the site section into Gatsby complete, it's time to build and integrate into the rest of the website. There are a couple of config items to take care of to ensure a ported Gatsby site section is seamlessly integrated.
+With your new Gatsby application complete, it's time to integrate it into your existing HTML website. If you were to build the Gatsby application into static files now and upload them in the place of the existing HTML files, the paths of the links made by Gatsby would not be correct. There are a couple of Gatsby configuration options to fix this.
 
 ### Path Prefix
 
-By default, Gatsby assumes that the build will be hosted at the root path of a domain, e.g `https://gatsbyjs.org/`. After the initial static HTML file is loaded, Gatsby reaches out for other generated JavaScript files in the same location in order to [progressively enable enhancements](/docs/glossary/#progressive-enhancement) for the user. In the example site, the path at which the Gatsby site will be hosted is `/who`. The gatsby `pathPrefix` option will ensure that the generated JavaSript files are available to load and the generated links from `index.js` to internal pages work correctly:
+The `pathPrefix` option in `/gatsby-config.js` tells Gatsby the path at which the build output will be served from. Links to other pages and to the generated JavaScript files that provide [progressive enhancements](/docs/glossary/#progressive-enhancement) for the user will be prefixed with the `pathPrefix` value. This is the config addition for the example Gatsby application, served at the `/who` path:
 
 ```js:title=/gatsby-config.js
 module.exports = {
@@ -455,7 +455,7 @@ module.exports = {
 
 ### Asset Prefix
 
-A common situation is for assets to be hosted from a separate domain than the HTML files. Gatsby has a config option to accommodate this for the generated JavaScript files created at build time. In the example site there are two assets already hosted at an asset domain, the global style sheet `style.css` and the bio picture `person.png`. With the `assetPrefix` option set, after the initial HTML file being served from the website domain at `/who`, all the following Gatsby JavaScript files for that page will be fetched from the asset domain at `/gatsby/who`.
+The `assetPrefix` option tells Gatsby about an external location, the asset domain, where its compiled JavaScript files will be served from. In addition to the `pathPrefix`, the link paths for Gatsby's generated JavaScript files will be prefixed with the `assetPrefix` value if provided. In the example website there are three assets already hosted at an asset domain; the style sheets `style.css` and `normalize.css`, and the image `person.png`. If Gatsby's generated JavaScript assets are also to be served from the asset domain, the `assetPrefix` must be set with its address:
 
 ```js:title=/gatsby-config.js
 module.exports = {
@@ -476,7 +476,9 @@ You now have a site that mirrors the existing HTML site section. Stop the develo
 gatsby build --prefix-paths
 ```
 
-Once a build is complete, the compiled set of files can be found in `/public`. This folder is deployed directly to the `/who` path of the website domain in place of the existing HTML files. If `assetPrefix` is also being used, the same folder is uploaded to a new `/gatsby/who` folder on the asset domain.
+> **Note**: The `--prefix-paths` option _must_ be used for path and asset prefixes to be applied
+
+Once a build is complete, the compiled set of files can be found in `/public`. It's all in there and ready to replace the existing files! In the case of the example site, the folder contents are deployed directly to the `/who` path of the website domain in place of the existing HTML files. If `assetPrefix` is also being used, the contents are also uploaded to a new `/gatsby/who` folder on the asset domain.
 
 ### Integrated site file structure
 
