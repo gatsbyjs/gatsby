@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.16.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.1...gatsby@2.16.2) (2019-10-15)
+
+### Bug Fixes
+
+- **gatsby:** create page dependencies from contextual node model methods even if no path is passed ([#18650](https://github.com/gatsbyjs/gatsby/issues/18650)) ([3d38af2](https://github.com/gatsbyjs/gatsby/commit/3d38af2))
+- **gatsby:** Extend fields when merging types ([#18500](https://github.com/gatsbyjs/gatsby/issues/18500)) ([302aa26](https://github.com/gatsbyjs/gatsby/commit/302aa26))
+
 ## [2.16.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.0...gatsby@2.16.1) (2019-10-14)
 
 ### Bug Fixes
