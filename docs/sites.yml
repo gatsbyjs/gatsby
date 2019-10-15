@@ -7846,6 +7846,20 @@
   built_by: Arturo Alviar
   built_by_url: "https://github.com/arturoalviar"
   featured: false
+- title: MarceloNM
+  url: https://marcelonm.com
+  main_url: https://marcelonm.com
+  description: >
+    Personal landing page and blog for MarceloNM, a frontend developer based in Brazil.
+  categories:
+    - Blog
+    - JavaScript
+    - Landing Page
+    - Programming
+    - Web Development
+  built_by: Marcelo Nascimento Menezes
+  built_by_url: https://github.com/mrcelo
+  featured: false
 - title: Open Source Galaxy
   main_url: https://www.opensourcegalaxy.com
   url: https://www.opensourcegalaxy.com
