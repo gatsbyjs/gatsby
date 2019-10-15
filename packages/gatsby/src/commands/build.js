@@ -40,7 +40,8 @@ const waitJobsFinished = () =>
 
 module.exports = async function build(program: BuildArgs) {
   const publicDir = path.join(program.directory, `public`)
-  const incrementalBuild = process.env.INCREMENTAL_BUILD === `true` || false
+  const incrementalBuild =
+    process.env.GATSBY_INCREMENTAL_BUILD === `true` || false
   initTracer(program.openTracingConfigFile)
 
   telemetry.trackCli(`BUILD_START`)
@@ -122,7 +123,7 @@ module.exports = async function build(program: BuildArgs) {
 
   let newPageKeys = []
   if (incrementalBuild) {
-    activity = report.activityTimer(`Comparing old data set`)
+    activity = report.activityTimer(`Comparing previous data set`)
     activity.start()
     newPageKeys = await pageDataUtil.getNewPageKeys(store)
     activity.end()
@@ -177,9 +178,9 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   if (incrementalBuild) {
-    activity = report.activityTimer(`Delete old page and page data`)
+    activity = report.activityTimer(`Delete previous page data`)
     activity.start()
-    await pageDataUtil.removeOldPageData(program.directory, store)
+    await pageDataUtil.removePreviousPageData(program.directory, store)
     activity.end()
   }
 

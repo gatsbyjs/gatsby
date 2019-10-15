@@ -79,7 +79,7 @@ const getNewPageKeys = store =>
     resolve(newPageKeys)
   })
 
-const removeOldPageData = (directory, store) =>
+const removePreviousPageData = (directory, store) =>
   new Promise(resolve => {
     const newPageData = stateToObject(store.getState())
     const previousPageData = stateToObject(readFromCache())
@@ -100,5 +100,5 @@ module.exports = {
   write,
   updateCompilationHashes,
   getNewPageKeys,
-  removeOldPageData,
+  removePreviousPageData,
 }

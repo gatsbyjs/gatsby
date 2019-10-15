@@ -23,7 +23,8 @@ const preferDefault = require(`./prefer-default`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
-const incrementalBuild = process.env.INCREMENTAL_BUILD === `true` || false
+const incrementalBuild =
+  process.env.GATSBY_INCREMENTAL_BUILD === `true` || false
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
