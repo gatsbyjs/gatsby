@@ -307,10 +307,7 @@ export default ({ data }) => {
   return (
     <Layout>
       // highlight-start
-      <SEO
-        title={post.frontmatter.title}
-        description={post.excerpt}
-      />
+      <SEO title={post.frontmatter.title} description={post.excerpt} />
       // highlight-end
       <div>
         <h1>{post.frontmatter.title}</h1>
