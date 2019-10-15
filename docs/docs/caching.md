@@ -1,5 +1,5 @@
 ---
-title: "Caching Static Sites"
+title: Caching Static Sites
 ---
 
 An important part of creating a very fast website is setting up proper HTTP caching. HTTP caching allows browsers to cache resources from a website so that when the user returns to a site, very few parts of the website have to be downloaded.

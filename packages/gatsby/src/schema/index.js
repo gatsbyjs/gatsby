@@ -39,9 +39,14 @@ module.exports.build = async ({ parentSpan }) => {
   const typeConflictReporter = new TypeConflictReporter()
 
   // Ensure that user-defined types are processed last
-  const sortedTypes = types.sort(
-    type => type.plugin && type.plugin.name === `default-site-plugin`
-  )
+  const sortedTypes = [
+    ...types.filter(
+      type => type.plugin && type.plugin.name !== `default-site-plugin`
+    ),
+    ...types.filter(
+      type => !type.plugin || type.plugin.name === `default-site-plugin`
+    ),
+  ]
 
   const schemaComposer = createSchemaComposer({ fieldExtensions })
   const schema = await buildSchema({
