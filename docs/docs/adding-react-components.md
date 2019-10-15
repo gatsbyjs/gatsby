@@ -27,11 +27,11 @@ export default () => (
 )
 ```
 
-### Importing 3rd party components
+### Importing third-party components
 
-Just like React, Gatsby also supports 3rd party components and libraries. You can install a third party component or library via your package manager (either `yarn` or `npm`).
+Just like React, Gatsby also supports third-party components and libraries. You can install a third-party component or library via your package manager (either `yarn` or `npm`).
 
-Here's a short example on adding a 3rd party component to your site.
+Here's a short example on adding a third-party component to your site.
 
 First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers (don't use npm and yarn at the same time).
 
@@ -48,14 +48,14 @@ After, import and use it in your page's source:
 ```jsx:title=my-page.jsx
 import React from "react"
 
-// import my fancy 3rd party component
+// import my fancy third-party component
 import Button from "@material-ui/core/Button"
 
 export default () => (
   <div>
     <p>This is my super awesome page made with Gatsby!</p>
 
-    {/* use my fancy 3rd party component */}
+    {/* use my fancy third-party component */}
     <Button>Fancy button!</Button>
   </div>
 )
@@ -73,83 +73,13 @@ Some components or code references on "browser globals" such as `window`, `docum
 WebpackError: ReferenceError: window is not defined
 ```
 
-#### Fixing your code
-
-You can use conditionals to check that the browser global is defined in your code:
-
-```js
-if (typeof window !== "undefined") {
-  // code that references the browser global
-  window.alert("Woohoo!")
-}
-```
-
-You can also drop the code that uses the browser global inside [`componentDidMount`](https://reactjs.org/docs/react-component.html#componentdidmount):
-
-```jsx
-import React, { useEffect } from "react"
-
-export default () => {
-  useEffect(() => {
-    // code that references the browser global
-    window.alert("Woohoo!")
-  })
-
-  return (
-    <div>
-      <p>Component</p>
-    </div>
-  )
-}
-```
-
-...or you can use [a `useEffect` hook](https://reactjs.org/docs/hooks-reference.html#useeffect):
-
-```jsx
-import React, { Component } from "react"
-
-class MyComponment() extends Component {
-  componentDidMount() {
-    // code that references the browser global
-    window.alert("Woohoo!")
-  }
-
-  render() {
-    return (
-      <div>
-        <p>Component</p>
-      </div>
-    )
-  }
-}
-```
+There's a great section on fixing these issues on the [Porting from Create React App](/docs/porting-from-create-react-app-to-gatsby#server-side-rendering-and-browser-apis) page.
 
 #### Fixing third-party modules
 
-So, the worst has happened and you’re using an NPM module that expects `window` to be defined. You may be able to file an issue and get the module patched, but what to do in the mean time?
+Some packages expect `window` or another browser global to be defined. These packages will have to be patched.
 
-One solution is to [customize your webpack configuration](https://www.gatsbyjs.org/docs/add-custom-webpack-config) to replace the offending module with a dummy module during server rendering.
-
-Edit `gatsby-node.js`
-
-```js:title=gatsby-node.js
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  if (stage === "build-html") {
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /bad-module/,
-            use: loaders.null(),
-          },
-        ],
-      },
-    })
-  }
-}
-```
-
-Another solution is to use a package like [react-loadable](https://github.com/jamiebuilds/react-loadable). The module that tries to use `window` will be dynamically loaded only on the client side (and not during SSR).
+You can learn how to patch these packages on the [Debugging HTML Builds](docs/debugging-html-builds/#fixing-third-party-modules) page.
 
 ### Components without server-side rendering
 
