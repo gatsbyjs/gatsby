@@ -421,6 +421,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     program.ssl = await getSslCert({
       name: sslHost,
+      caFile: program[`ca-file`],
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
