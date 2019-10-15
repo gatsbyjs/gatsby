@@ -22,7 +22,7 @@ Data needs to be [sourced](/docs/content-and-data/) — or added to the GraphQL 
 
 To source data with an existing plugin you have to install all needed packages. Furthermore you have to add the plugin to the plugins array in the `gatsby-config` with any optional configurations. If you want to source data from the filesystem for use with GraphQL, such as Markdown files, images, and more, refer to the [filesystem data sourcing docs](/docs/sourcing-from-the-filesystem/) and [recipes](/docs/recipes/#5-sourcing-data).
 
-For instructions on installing plugins from npm, take a look in the instructions in the docs on [using a plugin](/docs/using-a-plugin-in-your-site/).
+For instructions on installing plugins from npm, take a look at the instructions in the docs on [using a plugin](/docs/using-a-plugin-in-your-site/).
 
 You can also [create custom plugins](/docs/creating-plugins/) to fit your own use cases and pull in data however you want.
 
