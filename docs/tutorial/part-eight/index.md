@@ -309,7 +309,7 @@ export default ({ data }) => {
       // highlight-start
       <SEO
         title={post.frontmatter.title}
-        description={post.frontmatter.excerpt}
+        description={post.excerpt}
       />
       // highlight-end
       <div>
@@ -326,9 +326,9 @@ export const query = graphql`
       html
       frontmatter {
         title
-        // highlight-next-line
-        excerpt
       }
+      // highlight-next-line
+      excerpt
     }
   }
 `
