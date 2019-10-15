@@ -1,9 +1,8 @@
 import React from "react"
 import { graphql } from "gatsby"
-import _ from "lodash"
+import { pick } from "lodash-es"
 
 import PackageReadme from "../components/package-readme"
-import Unbird from "../components/unbird"
 
 class DocsLocalPackagesTemplate extends React.Component {
   render() {
@@ -30,7 +29,7 @@ class DocsLocalPackagesTemplate extends React.Component {
     return (
       <>
         <PackageReadme
-          page={markdownRemark ? _.pick(markdownRemark, `parent`) : false}
+          page={markdownRemark ? pick(markdownRemark, `parent`) : false}
           packageName={
             markdownRemark
               ? markdownRemark.fields.title
@@ -67,11 +66,6 @@ class DocsLocalPackagesTemplate extends React.Component {
               ? npmPackage.lastPublisher
               : npmPackageNotFound.lastPublisher
           }
-        />
-        <Unbird
-          dataSetId="5c1ac24b4a828a169b6c235c"
-          publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
-          feedbackPrompt="Have feedback on the Plugin Library?"
         />
       </>
     )

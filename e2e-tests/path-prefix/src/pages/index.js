@@ -17,6 +17,9 @@ const IndexPage = () => (
     >
       Go to page 2 with navigate()
     </button>
+    <Link data-testid="404-link" to="/not-existing-page">
+      Go to not existing page
+    </Link>
   </Layout>
 )
 

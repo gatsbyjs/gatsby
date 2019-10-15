@@ -2,7 +2,7 @@ const fluidTestId = `image-fluid`
 
 describe(`Production gatsby-image`, () => {
   beforeEach(() => {
-    cy.visit(`/fluid`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/fluid`).waitForRouteChange()
   })
 
   describe(`wrapping elements`, () => {

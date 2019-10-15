@@ -1,5 +1,5 @@
 ---
-title: Creating slugs for pages
+title: Creating Slugs for Pages
 ---
 
 The logic for creating slugs from file names can get tricky, the `gatsby-source-filesystem` plugin ships with a function for creating them.
@@ -36,7 +36,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 ## Query created slugs
 
-Open refresh Graph_i_QL, then run this GraphQL query to see all your slugs:
+Open refresh GraphiQL, then run this GraphQL query to see all your slugs:
 
 ```graphql
 {

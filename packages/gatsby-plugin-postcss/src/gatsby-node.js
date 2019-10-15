@@ -3,22 +3,6 @@ import resolve from "./resolve"
 const CSS_PATTERN = /\.css$/
 const MODULE_CSS_PATTERN = /\.module\.css$/
 
-const getOptions = pluginOptions => {
-  const options = { ...pluginOptions }
-
-  delete options.plugins
-
-  const postcssPlugins = options.postCssPlugins
-
-  if (postcssPlugins) {
-    options.plugins = postcssPlugins
-  }
-
-  delete options.postCssPlugins
-
-  return options
-}
-
 const isCssRules = rule =>
   rule.test &&
   (rule.test.toString() === CSS_PATTERN.toString() ||
@@ -31,13 +15,19 @@ const findCssRules = config =>
 
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
-  pluginOptions
+  { cssLoaderOptions = {}, postCssPlugins, ...postcssOptions }
 ) => {
   const isProduction = !stage.includes(`develop`)
   const isSSR = stage.includes(`html`)
   const config = getConfig()
   const cssRules = findCssRules(config)
-  const postcssOptions = getOptions(pluginOptions)
+
+  delete postcssOptions.plugins
+
+  if (postCssPlugins) {
+    postcssOptions.plugins = postCssPlugins
+  }
+
   const postcssLoader = {
     loader: resolve(`postcss-loader`),
     options: { sourceMap: !isProduction, ...postcssOptions },
@@ -46,15 +36,12 @@ exports.onCreateWebpackConfig = (
     test: CSS_PATTERN,
     use: isSSR
       ? [loaders.null()]
-      : [loaders.css({ importLoaders: 1 }), postcssLoader],
+      : [loaders.css({ ...cssLoaderOptions, importLoaders: 1 }), postcssLoader],
   }
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [
-      loaders.css({
-        modules: true,
-        importLoaders: 1,
-      }),
+      loaders.css({ ...cssLoaderOptions, importLoaders: 1, modules: true }),
       postcssLoader,
     ],
   }

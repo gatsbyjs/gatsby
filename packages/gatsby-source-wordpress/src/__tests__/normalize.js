@@ -25,7 +25,11 @@ describe(`Process WordPress data`, () => {
   it(`creates Gatsby IDs for each entity`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    entities = normalize.createGatsbyIds(createNodeId, entities)
+    entities = normalize.createGatsbyIds(
+      createNodeId,
+      entities,
+      `http://dev-gatbsyjswp.pantheonsite.io`
+    )
     expect(entities).toMatchSnapshot()
   })
   it(`Creates map of types`, () => {
@@ -103,16 +107,21 @@ describe(`Process WordPress data`, () => {
     })
   })
 
-  // Actually let's not test this since it's a bit tricky to mock
+  // Skipped for now since it's a bit tricky to mock
   // as it needs access to the store/cache + would download file.
-  // it(`Downloads media files and removes "sizes" data as useless in Gatsby context`, () => {
-  // entities = await normalize.downloadMediaFiles(entities)
-  // expect(entities).toMatchSnapshot()
-  // })
+  it.skip(`downloads media files and removes "sizes" if keepMediaSizes is set to false (default)`, async () => {
+    entities = await normalize.downloadMediaFiles(entities)
+    expect(entities).toMatchSnapshot()
+  })
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
-    normalize.createNodesFromEntities({ entities, createNode })
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+    normalize.createNodesFromEntities({
+      entities,
+      createNode,
+      createContentDigest,
+    })
     expect(createNode.mock.calls).toMatchSnapshot()
   })
 })

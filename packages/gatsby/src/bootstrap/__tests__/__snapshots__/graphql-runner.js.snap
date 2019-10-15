@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`grapqhl-runner should throw a structured error when created from createPage file 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        Object {
+          "context": Object {
+            "fromGraphQLFunction": true,
+            "sourceMessage": "Cannot query field boyhowdy on RootQueryType",
+          },
+          "filePath": "my-gatsby-project/gatsby-node.js",
+          "id": "85901",
+          "location": Object {
+            "start": Object {
+              "column": 17,
+              "line": 32,
+            },
+          },
+        },
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

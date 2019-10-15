@@ -13,9 +13,4 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
-// TODO: import as "gatsby-cypress" once this is published to NPM
-import "../../../../packages/gatsby-cypress"
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+import "gatsby-cypress"

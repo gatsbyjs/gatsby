@@ -2,6 +2,8 @@
 title: Building with Components
 ---
 
+import LayerModel from "../../www/src/components/layer-model"
+
 To use Gatsby, you will need a basic understanding of React components.
 
 The [official tutorial](https://reactjs.org/tutorial/tutorial.html)
@@ -14,6 +16,10 @@ modularity, reusability, and clear abstractions. React has a large ecosystem of
 open source components, tutorials, and tooling that can be used seamlessly for
 building sites with Gatsby. Gatsby is built to behave almost exactly like a
 normal React application.
+
+The following model shows how data from a source can be queried by GraphQL for use inside components in the process of building a Gatsby site:
+
+<LayerModel initialLayer="View" />
 
 [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 is a good resource for learning how to structure applications with React.
@@ -75,7 +81,7 @@ pages are React components but very often these components are just wrappers aro
 `src/templates/post.jsx` is an example of a page component. It queries GraphQL
 for markdown data and then renders the page using this data.
 
-See [part four](/tutorial/part-four/) of the tutorial for a detailed
+See [part seven](/tutorial/part-seven/) of the tutorial for a detailed
 introduction to programmatically creating pages.
 
 Example:
@@ -167,3 +173,8 @@ These are examples of the different ways React components are used in Gatsby
 sites. To see full working examples, check out the
 [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in
 the Gatsby repo.
+
+### Non-page components
+
+A Non-page component is one that's embedded inside some other component, forming a component hierarchy. An example would be a Header component that's included in multiple page components.
+Gatsby uses GraphQL to enable components to declare the data they need. Using the [StaticQuery](/docs/static-query/) component or [useStaticQuery hook](/docs/use-static-query/), you can colocate a non-page component with its data.

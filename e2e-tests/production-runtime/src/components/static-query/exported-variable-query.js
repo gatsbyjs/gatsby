@@ -5,7 +5,7 @@ function ExportedVariable(props) {
   return (
     <StaticQuery
       query={nameQuery}
-      render={data => <p {...props}>{data.site.siteMetadata.author.name}</p>}
+      render={data => <p {...props}>{data.site.siteMetadata.author}</p>}
     />
   )
 }
@@ -14,9 +14,7 @@ export const nameQuery = graphql`
   {
     site {
       siteMetadata {
-        author {
-          name
-        }
+        author
       }
     }
   }

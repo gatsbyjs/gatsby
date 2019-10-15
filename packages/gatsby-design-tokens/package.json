@@ -1,0 +1,31 @@
+{
+  "name": "gatsby-design-tokens",
+  "version": "1.0.10",
+  "description": "Gatsby Design Tokens",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "source": "src/index.js",
+  "sideEffects": "false",
+  "author": "Florian Kissling <flo@gatsbyjs.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-design-tokens"
+  },
+  "files": [
+    "./dist/**/*"
+  ],
+  "scripts": {
+    "build": "(microbundle build --sourcemap=false -f es,cjs && agadoo dist/index.esm.js) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "microbundle watch --sourcemap=false -f es,cjs"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-design-tokens#readme",
+  "devDependencies": {
+    "agadoo": "^1.1.0",
+    "cross-env": "^5.2.1",
+    "microbundle": "gatsbyjs/microbundle#brotli-try-catch-plus-dist",
+    "preval.macro": "^3.0.0"
+  }
+}

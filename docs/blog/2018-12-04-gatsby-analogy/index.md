@@ -3,7 +3,7 @@ title: 5 analogies that explain what Gatsby can do for you
 date: 2018-12-04
 author: Amberley Romo
 tags:
-  - gatsby concepts
+  - core-concepts
 ---
 
 Gatsby does an incredible amount of cool stuff for you, automatically. This makes Gatsby an incredibly powerful, versatile tool. However, this broad depth of functionality can make it difficult to explain what Gatsby does in a concise and approachable way.
@@ -18,7 +18,7 @@ In this post, I'll aim for the latter -- an approachable explanation of what Gat
 
 ## 1. Start off with a pre-configured development environment and build process
 
-Gatsby uses [React](https://reactjs.org/) for its UI layer. It can be notoriously difficult for newcomers to get started with React, or even for experienced React devs to configure a new React project from the ground up every time. (See: [Javascript Fatigue](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4)).
+Gatsby uses [React](https://reactjs.org/) for its UI layer. It can be notoriously difficult for newcomers to get started with React, or even for experienced React devs to configure a new React project from the ground up every time. (See: [JavaScript Fatigue](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4)).
 
 Is it possible to learn every fine-grained detail to optimize a development environment and build process for React? Sure. Is it necessary to get up and going on a project? No, not anymore.
 
@@ -46,9 +46,9 @@ Similarly, you could spend 10,000 hours becoming a kung fu master in performance
 
 In [Gatsby for apps](/blog/2018-11-07-gatsby-for-apps/), we recently explained:
 
-<pullquote citation="Dustin Schau">
+<Pullquote citation="Dustin Schau">
   Gatsby is great for building web experiences that leverage the benefits of both so-called static sites and web applications — simultaneously. You don’t have to sacrifice the advantages of one approach to reap the benefits of the other.
-</pullquote>
+</Pullquote>
 
 When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then it hydrates into a React app.
 
@@ -76,11 +76,11 @@ Say you order delivery for dinner. It arrives, you eat. Later, you look at the m
 
 ## 5. Consolidate data sourcing and transformations
 
-With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)”:
+With Gatsby, your data can be sourced from just about anywhere -- content management systems, Markdown, APIs, databases, etc. A recent series on the Gatsby blog detailed the concept of the “[content mesh](/blog/2018-10-04-journey-to-the-content-mesh/)”:
 
-<pullquote>
+<Pullquote>
   [Gatsby is] the infrastructure layer for a decoupled website. The content mesh stitches together content systems in a modern development environment while optimizing website delivery for performance.
-</pullquote>
+</Pullquote>
 
 With Gatsby, you can source your data into a consolidated data layer, which you can query against directly. No matter where your data comes from, you can access it all from a single query. Get data from wherever it lives to the right place in your website in the right form exactly when it's needed.
 

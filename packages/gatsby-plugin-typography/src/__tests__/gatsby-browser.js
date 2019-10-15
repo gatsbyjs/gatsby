@@ -1,48 +1,44 @@
 import React from "react"
-import * as path from "path"
-import { existsSync, mkdirSync, writeFileSync, unlinkSync, rmdirSync } from "fs"
 
-const cacheDir = path.join(__dirname, `../.cache`)
+jest.mock(`react-typography`, () => {
+  return {
+    GoogleFont: () => <link />,
+  }
+})
 
-describe(`gatsby-plugin-typography`, () => {
-  let onClientEntry
-  beforeAll(() => {
-    jest.mock(`react-typography`, () => {
-      return {
-        GoogleFont: () => <link />,
-      }
-    })
-    process.env.BUILD_STAGE = `develop`
-
-    if (!existsSync(cacheDir)) {
-      mkdirSync(cacheDir)
-    }
-
-    writeFileSync(`${cacheDir}/typography.js`, `module.exports = {}`)
-  })
-
-  afterAll(() => {
-    process.env.BUILD_STAGE = `develop`
-
-    unlinkSync(`${cacheDir}/typography.js`)
-    rmdirSync(cacheDir)
-  })
-
-  beforeEach(() => {
-    Array.from(global.document.head.children).forEach(child => child.remove())
-    jest.resetModules()
-    jest.mock(`../.cache/typography`, () => {
+const mockTypographyCache = (googleFonts = [`Roboto`]) => {
+  jest.doMock(
+    `../.cache/typography`,
+    () => {
       return {
         injectStyles: () => {},
         options: {
-          googleFonts: [`Roboto`],
+          googleFonts: [].concat(googleFonts),
         },
       }
-    })
+    },
+    { virtual: true }
+  )
+}
+
+describe(`gatsby-plugin-typography`, () => {
+  beforeAll(() => {
+    process.env.BUILD_STAGE = `develop`
+  })
+
+  afterAll(() => {
+    delete process.env.BUILD_STAGE
+  })
+
+  beforeEach(() => {
+    jest.resetModules()
+    jest.resetAllMocks()
+    Array.from(global.document.head.children).forEach(child => child.remove())
+    mockTypographyCache()
   })
 
   it(`should render googlefonts`, () => {
-    onClientEntry = require(`../gatsby-browser`).onClientEntry
+    const onClientEntry = require(`../gatsby-browser`).onClientEntry
     onClientEntry(null, {})
 
     const link = document.querySelector(`[data-gatsby-typography]`)
@@ -50,7 +46,7 @@ describe(`gatsby-plugin-typography`, () => {
   })
 
   it(`shouldn't render googlefonts when omitGoogleFonts is true`, () => {
-    onClientEntry = require(`../gatsby-browser`).onClientEntry
+    const onClientEntry = require(`../gatsby-browser`).onClientEntry
     onClientEntry(null, {
       omitGoogleFont: true,
     })
@@ -60,15 +56,8 @@ describe(`gatsby-plugin-typography`, () => {
   })
 
   it(`shouldn't render googlefonts when no fonts are set`, () => {
-    jest.mock(`../.cache/typography`, () => {
-      return {
-        injectStyles: () => {},
-        options: {
-          googleFonts: [],
-        },
-      }
-    })
-    onClientEntry = require(`../gatsby-browser`).onClientEntry
+    mockTypographyCache([])
+    const onClientEntry = require(`../gatsby-browser`).onClientEntry
     onClientEntry(null, {})
 
     const link = document.querySelector(`[data-gatsby-typography]`)

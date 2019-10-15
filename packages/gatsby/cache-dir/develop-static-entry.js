@@ -27,7 +27,9 @@ try {
 Html = Html && Html.__esModule ? Html.default : Html
 
 export default (pagePath, callback) => {
-  let headComponents = []
+  let headComponents = [
+    <meta key="environment" name="note" content="environment=development" />,
+  ]
   let htmlAttributes = {}
   let bodyAttributes = {}
   let preBodyComponents = []
@@ -84,6 +86,7 @@ export default (pagePath, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: pagePath,
   })
 
   apiRunner(`onPreRenderHTML`, {
@@ -93,6 +96,7 @@ export default (pagePath, callback) => {
     replacePreBodyComponents,
     getPostBodyComponents,
     replacePostBodyComponents,
+    pathname: pagePath,
   })
 
   const htmlElement = React.createElement(Html, {

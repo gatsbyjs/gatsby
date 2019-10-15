@@ -9,7 +9,7 @@ Array [
       "funny": "yup",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
+        "contentDigest": "contentDigest",
         "type": "TestCsv__Sheet1",
       },
       "parent": "whatever",
@@ -22,7 +22,7 @@ Array [
       "funny": "nope",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+        "contentDigest": "contentDigest",
         "type": "TestCsv__Sheet1",
       },
       "parent": "whatever",
@@ -33,7 +33,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+        "contentDigest": "contentDigest",
         "type": "TestCsv",
       },
       "parent": "whatever",
@@ -52,7 +52,7 @@ Array [
         "funny": "yup",
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
+          "contentDigest": "contentDigest",
           "type": "TestCsv__Sheet1",
         },
         "parent": "whatever",
@@ -82,7 +82,7 @@ FALSE,nope
         "funny": "nope",
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+          "contentDigest": "contentDigest",
           "type": "TestCsv__Sheet1",
         },
         "parent": "whatever",
@@ -110,7 +110,7 @@ FALSE,nope
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+          "contentDigest": "contentDigest",
           "type": "TestCsv",
         },
         "parent": "whatever",
@@ -142,7 +142,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c685d551c99950924e4b7a78a267a993",
+        "contentDigest": "contentDigest",
         "type": "TestCsv__Sheet1",
       },
       "parent": "whatever",
@@ -155,7 +155,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+        "contentDigest": "contentDigest",
         "type": "TestCsv__Sheet1",
       },
       "parent": "whatever",
@@ -168,7 +168,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+        "contentDigest": "contentDigest",
         "type": "TestCsv",
       },
       "parent": "whatever",
@@ -185,7 +185,7 @@ Array [
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "c685d551c99950924e4b7a78a267a993",
+          "contentDigest": "contentDigest",
           "type": "TestCsv__Sheet1",
         },
         "parent": "whatever",
@@ -215,7 +215,7 @@ FALSE,nada
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+          "contentDigest": "contentDigest",
           "type": "TestCsv__Sheet1",
         },
         "parent": "whatever",
@@ -245,7 +245,7 @@ FALSE,nada
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+          "contentDigest": "contentDigest",
           "type": "TestCsv",
         },
         "parent": "whatever",
@@ -277,7 +277,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c685d551c99950924e4b7a78a267a993",
+        "contentDigest": "contentDigest",
         "type": "TestCsv__Sheet1",
       },
       "parent": "whatever",
@@ -290,7 +290,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+        "contentDigest": "contentDigest",
         "type": "TestCsv__Sheet1",
       },
       "parent": "whatever",
@@ -303,7 +303,7 @@ Array [
       "children": Array [],
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+        "contentDigest": "contentDigest",
         "type": "TestCsv",
       },
       "parent": "whatever",
@@ -320,7 +320,7 @@ Array [
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "c685d551c99950924e4b7a78a267a993",
+          "contentDigest": "contentDigest",
           "type": "TestCsv__Sheet1",
         },
         "parent": "whatever",
@@ -350,7 +350,7 @@ FALSE,nada
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "f197dfd371325c9aa0693a4c406f6cff",
+          "contentDigest": "contentDigest",
           "type": "TestCsv__Sheet1",
         },
         "parent": "whatever",
@@ -380,7 +380,7 @@ FALSE,nada
         "children": Array [],
         "id": "uuid-from-gatsby",
         "internal": Object {
-          "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
+          "contentDigest": "contentDigest",
           "type": "TestCsv",
         },
         "parent": "whatever",

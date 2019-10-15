@@ -1,60 +1,17 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
-import { SkipNavLink } from "@reach/skip-nav"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
-import styled from "@emotion/styled"
 
 import Banner from "../banner"
 import PageHeading from "./page-heading"
 import Navigation from "../navigation"
 import MobileNavigation from "../navigation-mobile"
-
-import presets from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import SkipNavLink from "../skip-nav-link"
 
 // Import Futura PT typeface
-import "../../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
-import "../../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-// Other fonts
-import "typeface-spectral"
-
-const Content = styled(`div`)`
-  padding-top: ${presets.bannerHeight};
-  padding-bottom: 3.5rem;
-
-  ${presets.Md} {
-    margin-left: ${presets.pageHeadingDesktopWidth};
-    padding-top: calc(${presets.bannerHeight} + ${presets.headerHeight});
-    padding-bottom: 0;
-  }
-`
-
-const StyledSkipNavLink = styled(SkipNavLink)`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: 100;
-  font-size: 0.85rem;
-
-  :focus {
-    padding: 0.9rem;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: white;
-    text-decoration: none;
-    width: auto;
-    height: auto;
-    clip: auto;
-  }
-`
+import "../../assets/fonts/futura"
 
 const LayoutWithHeading = props => {
   const {
@@ -76,26 +33,24 @@ const LayoutWithHeading = props => {
         <link rel="canonical" href={`https://gatsbyjs.org${pathname}`} />
         <html lang="en" />
       </Helmet>
-
-      <StyledSkipNavLink>Skip to main content</StyledSkipNavLink>
-
-      <Banner>
-        <OutboundLink
-          href="https://www.gatsbyjs.com/behind-the-scenes/"
-          css={{ color: `#fff`, "&:hover": { color: `#fff` } }}
-        >
-          Watch now
-        </OutboundLink>
-        {`: “Behind the Scenes: What makes Gatsby Great”.`}
-      </Banner>
-
+      <SkipNavLink />
+      <Banner />
       <Navigation pathname={props.location.pathname} />
+      <div
+        sx={{
+          pt: t => t.sizes.bannerHeight,
+          pb: t => t.fontSizes[10],
 
-      <Content>
+          [mediaQueries.md]: {
+            ml: t => t.sizes.pageHeadingDesktopWidth,
+            pt: t => `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+            pb: 0,
+          },
+        }}
+      >
         {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
         {children}
-      </Content>
-
+      </div>
       <MobileNavigation />
     </div>
   )

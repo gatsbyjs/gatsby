@@ -25,6 +25,21 @@ module.exports = (a, b) => {
   // return the fully merged config
   return mergedConfig
 }
+
+/**
+ * Normalize plugin spec before comparing so
+ *  - `gatsby-plugin-name`
+ *  - { resolve: `gatsby-plugin-name` }
+ *  - { resolve: `gatsby-plugin-name`, options: {} }
+ * are all considered equal
+ */
+const normalizePluginEntry = entry =>
+  _.isString(entry)
+    ? { resolve: entry, options: {} }
+    : _.isObject(entry)
+    ? { options: {}, ...entry }
+    : entry
+
 const howToMerge = {
   /**
    * pick a truthy value by default.
@@ -34,6 +49,9 @@ const howToMerge = {
   byDefault: (a, b) => b || a,
   siteMetadata: (objA, objB) => _.merge({}, objA, objB),
   // plugins are concatenated and uniq'd, so we don't get two of the same plugin value
-  plugins: (a = [], b = []) => _.uniqWith(a.concat(b), _.isEqual),
+  plugins: (a = [], b = []) =>
+    _.uniqWith(a.concat(b), (a, b) =>
+      _.isEqual(normalizePluginEntry(a), normalizePluginEntry(b))
+    ),
   mapping: (objA, objB) => _.merge({}, objA, objB),
 }

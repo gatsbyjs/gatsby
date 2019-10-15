@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
@@ -9,110 +11,86 @@ import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Pagination from "../components/pagination"
 import EmailCaptureForm from "../components/email-capture-form"
+import FooterLinks from "../components/shared/footer-links"
 
-import presets, { colors } from "../utils/presets"
-import { rhythm, options } from "../utils/typography"
-import logo from "../monogram.svg"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 class BlogPostsIndex extends React.Component {
   render() {
-    const { allMarkdownRemark } = this.props.data
+    const { allMdx } = this.props.data
 
     return (
       <Layout location={this.props.location}>
-        <main
-          id={`reach-skip-nav`}
-          css={{
-            [presets.Md]: {
-              background: colors.ui.whisper,
-              paddingBottom: rhythm(options.blockMarginBottom * 4),
-            },
-          }}
-        >
+        <main id={`reach-skip-nav`}>
           <Helmet>
-            <title>Blog</title>
+            <title>{`Blog | Page ${this.props.pageContext.currentPage}`}</title>
           </Helmet>
-          <Container
-            css={{
-              [presets.Md]: {
-                background: `url(${logo})`,
-                paddingBottom: `${rhythm(
-                  options.blockMarginBottom * 4
-                )} !important`,
-                backgroundSize: `30px 30px`,
-                backgroundRepeat: `no-repeat`,
-                backgroundPosition: `bottom center`,
-              },
-            }}
-          >
-            <h1
-              css={{
-                marginTop: 0,
-                [presets.Md]: {
-                  marginTop: 0,
-                  position: `absolute`,
-                  width: 1,
-                  height: 1,
-                  padding: 0,
-                  overflow: `hidden`,
-                  clip: `rect(0,0,0,0)`,
-                  whiteSpace: `nowrap`,
-                  clipPath: `inset(50%)`,
+          <Container>
+            <div
+              sx={{
+                ...pullIntoGutter,
+                display: `flex`,
+                justifyContent: `space-between`,
+                borderBottom: t => `1px solid ${t.colors.ui.border}`,
+                mb: 6,
+                pb: 6,
+                [breakpointGutter]: {
+                  pb: 0,
+                  border: 0,
                 },
               }}
             >
-              Blog
-            </h1>
-            {allMarkdownRemark.edges.map(({ node }) => (
+              <h1 sx={{ mb: 0 }}>Blog</h1>
+              <Button
+                key="blog-view-all-tags-button"
+                to="/blog/tags"
+                variant="small"
+              >
+                View all Tags <TagsIcon />
+              </Button>
+            </div>
+            {allMdx.edges.map(({ node }, index) => (
               <BlogPostPreviewItem
                 post={node}
                 key={node.fields.slug}
-                css={{
-                  marginBottom: rhythm(options.blockMarginBottom),
-                  [presets.Md]: {
-                    ...presets.boxShadows.card,
-                    background: `#fff`,
-                    borderRadius: presets.radiusLg,
-                    padding: rhythm(options.blockMarginBottom * 2),
-                    paddingLeft: rhythm(options.blockMarginBottom * 3),
-                    paddingRight: rhythm(options.blockMarginBottom * 3),
-                    marginLeft: rhythm(-options.blockMarginBottom * 2),
-                    marginRight: rhythm(-options.blockMarginBottom * 2),
-                    transition: `transform ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    },  box-shadow ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }, padding ${presets.animation.speedDefault} ${
-                      presets.animation.curveDefault
-                    }`,
+                sx={{
+                  borderBottomWidth: `1px`,
+                  borderBottomStyle: `solid`,
+                  borderColor: `ui.border`,
+                  pb: 8,
+                  mb: index === allMdx.edges.length - 1 ? 0 : 8,
+                  ...pullIntoGutter,
+                  [breakpointGutter]: {
+                    p: 9,
+                    boxShadow: `raised`,
+                    bg: `card.background`,
+                    borderRadius: 2,
+                    border: 0,
+                    mb: 6,
+                    mx: 0,
+                    transition: t =>
+                      `transform ${t.transition.speed.default} ${t.transition.curve.default},  box-shadow ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
                     "&:hover": {
-                      transform: `translateY(-4px)`,
-                      ...presets.boxShadows.cardHover,
+                      transform: t => `translateY(-${t.space[1]})`,
+                      boxShadow: `overlay`,
                     },
                     "&:active": {
-                      boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+                      boxShadow: `cardActive`,
                       transform: `translateY(0)`,
-                      transition: `transform 50ms`,
                     },
+                  },
+                  [mediaQueries.md]: {
+                    marginLeft: t => `-${t.space[9]}`,
+                    marginRight: t => `-${t.space[9]}`,
                   },
                 }}
               />
             ))}
             <Pagination context={this.props.pageContext} />
-            <div
-              css={{
-                display: `flex`,
-                flexFlow: `row nowrap`,
-                width: `100%`,
-                justifyContent: `flex-end`,
-              }}
-            >
-              <Button key="blog-view-all-tags-button" to="/blog/tags" small>
-                View All Tags <TagsIcon />
-              </Button>
-            </div>
             <EmailCaptureForm signupMessage="Enjoying our blog? Receive the next post in your inbox!" />
           </Container>
+          <FooterLinks />
         </main>
       </Layout>
     )
@@ -123,7 +101,7 @@ export default BlogPostsIndex
 
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(
+    allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
         frontmatter: { draft: { ne: true } }

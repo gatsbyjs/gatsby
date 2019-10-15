@@ -1,26 +1,60 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import PropTypes from "prop-types"
-import { graphql } from "gatsby"
-
-// Utilities
-import kebabCase from "lodash/kebabCase"
-
-// Components
+import { graphql, Link } from "gatsby"
+import styled from "@emotion/styled"
 import { Helmet } from "react-helmet"
-import { Link } from "gatsby"
+import PropTypes from "prop-types"
+import { kebabCase } from "lodash-es"
+import TiArrowRight from "react-icons/lib/ti/arrow-right"
+
+import Button from "../../components/button"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
-import styles from "../../views/shared/styles"
-import { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
+import { TAGS_AND_DOCS } from "../../data/tags-docs"
+import { themedInput } from "../../utils/styles"
+import { colors, space, mediaQueries } from "../../gatsby-plugin-theme-ui"
+
+const POPULAR_TAGS = [
+  `themes`,
+  `case-studies`,
+  `content-mesh`,
+  `plugins`,
+  `accessibility`,
+  `graphql`,
+  `netlify`,
+  `performance`,
+  `wordpress`,
+  `releases`,
+  `community`,
+  `contentful`,
+]
+
+const PopularTagGrid = styled.div`
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: ${space[2]};
+  ${mediaQueries.md} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`
+
+const PopularTagButton = ({ children, tag }) => (
+  <Button variant="small" secondary to={`/blog/tags/${tag}`}>
+    {tag}
+    <TiArrowRight />
+    {children}
+  </Button>
+)
 
 let currentLetter = ``
 
 class TagsPage extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      allMarkdownRemark: PropTypes.shape({
+      allMdx: PropTypes.shape({
         group: PropTypes.arrayOf(
           PropTypes.shape({
             fieldValue: PropTypes.string.isRequired,
@@ -46,80 +80,92 @@ class TagsPage extends React.Component {
   render() {
     const {
       data: {
-        allMarkdownRemark: { group },
+        allMdx: { group },
       },
       location,
     } = this.props
     const { filterQuery } = this.state
-    const uniqGroup = group.reduce((lookup, tag) => {
-      const key = kebabCase(tag.fieldValue.toLowerCase())
-      if (!lookup[key]) {
-        lookup[key] = Object.assign(tag, {
-          slug: `/blog/tags/${key}`,
-        })
-      }
-      return lookup
-    }, {})
+    const uniqGroup = group
+      .filter(x => TAGS_AND_DOCS.has(x.fieldValue))
+      .reduce((lookup, tag) => {
+        const key = kebabCase(tag.fieldValue.toLowerCase())
+        if (!lookup[key]) {
+          lookup[key] = Object.assign(tag, {
+            slug: `/blog/tags/${key}`,
+          })
+        } else {
+          lookup[key].totalCount += tag.totalCount
+        }
+        // Prefer spaced tag names (instead of hyphenated) for display
+        if (tag.fieldValue.includes(` `)) {
+          lookup[key].fieldValue = tag.fieldValue
+        }
+        return lookup
+      }, {})
     const results = Object.keys(uniqGroup)
       .sort((tagA, tagB) => tagA.localeCompare(tagB))
       .filter(key => uniqGroup[key].fieldValue.includes(filterQuery))
 
+    let PopularTagButtons = []
+    POPULAR_TAGS.forEach(key => {
+      PopularTagButtons.push(<PopularTagButton tag={key} />)
+    })
+
     return (
       <Layout location={location}>
         <Container>
-          <Helmet title="Tags" />
+          <Helmet>
+            <title>Tags</title>
+            <meta
+              name={`description`}
+              content={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
+            />
+          </Helmet>
           <div>
-            <div
+            <h1
               css={{
-                display: `flex`,
-                flexFlow: `row nowrap`,
-                justifyContent: `space-between`,
-                alignItems: `center`,
-                paddingTop: rhythm(options.blockMarginBottom * 2),
-                paddingBottom: rhythm(options.blockMarginBottom),
+                padding: `${space[6]} 0`,
+                margin: 0,
                 borderBottom: `1px solid ${colors.ui.border}`,
               }}
             >
-              <h1 css={{ margin: 0 }}>
-                Tags ({Object.keys(uniqGroup).length || 0})
-              </h1>
-              <div>
-                <label css={{ position: `relative` }}>
-                  <input
-                    css={{
-                      ...styles.searchInput,
-                    }}
-                    id="tagsFilter"
-                    name="filterQuery"
-                    type="search"
-                    placeholder="Search tags"
-                    aria-label="Tag Search"
-                    title="Filter tag list"
-                    value={filterQuery}
-                    onChange={this.handleChange}
-                  />
-                  <SearchIcon
-                    overrideCSS={{
-                      fill: colors.lilac,
-                      position: `absolute`,
-                      left: `5px`,
-                      top: `50%`,
-                      width: `16px`,
-                      height: `16px`,
-                      pointerEvents: `none`,
-                      transform: `translateY(-50%)`,
-                    }}
-                  />
-                </label>
-              </div>
+              Tags ({Object.keys(uniqGroup).length || 0})
+            </h1>
+            <div />
+            <h2>Popular tags</h2>
+            <PopularTagGrid>{PopularTagButtons}</PopularTagGrid>
+            <div
+              sx={{
+                display: `flex`,
+                flexFlow: `row nowrap`,
+                justifyContent: `space-between`,
+                pb: 4,
+                alignItems: `center`,
+              }}
+            >
+              <h2>All tags</h2>
+              <label css={{ position: `relative` }}>
+                <input
+                  sx={{ ...themedInput, pl: 7 }}
+                  id="tagsFilter"
+                  name="filterQuery"
+                  type="search"
+                  placeholder="Search tags"
+                  aria-label="Tag Search"
+                  title="Filter tag list"
+                  value={filterQuery}
+                  onChange={this.handleChange}
+                />
+                <SearchIcon />
+              </label>
             </div>
             <ul
-              css={{
+              sx={{
                 display: `flex`,
                 flexFlow: `row wrap`,
                 justifyContent: `start`,
-                padding: 0,
-                margin: 0,
+                p: 0,
+                m: 0,
               }}
             >
               {results.length > 0 ? (
@@ -129,9 +175,10 @@ class TagsPage extends React.Component {
                   const buildTag = (
                     <li
                       key={tag.fieldValue}
-                      css={{
-                        padding: `10px 5px`,
-                        margin: `15px`,
+                      sx={{
+                        py: 3,
+                        px: 1,
+                        m: 4,
                         listStyleType: `none`,
                       }}
                     >
@@ -145,7 +192,7 @@ class TagsPage extends React.Component {
                     currentLetter = firstLetter
                     return (
                       <React.Fragment key={`letterheader-${currentLetter}`}>
-                        <h4 css={{ width: `100%`, flexBasis: `100%` }}>
+                        <h4 sx={{ width: `100%`, flexBasis: `100%` }}>
                           {currentLetter.toUpperCase()}
                         </h4>
                         {buildTag}
@@ -173,7 +220,7 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query {
-    allMarkdownRemark(
+    allMdx(
       limit: 2000
       filter: {
         fields: { released: { eq: true } }

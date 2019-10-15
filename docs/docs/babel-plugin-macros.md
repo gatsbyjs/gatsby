@@ -1,5 +1,5 @@
 ---
-title: Babel Plugin Macros
+title: Using Babel Plugin Macros
 ---
 
 Gatsby includes a powerful new way of applying compile-time code

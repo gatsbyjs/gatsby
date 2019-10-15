@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import PackageReadme from "../components/package-readme"
-import Unbird from "../components/unbird"
 
 class DocsRemotePackagesTemplate extends React.Component {
   render() {
@@ -25,11 +24,6 @@ class DocsRemotePackagesTemplate extends React.Component {
           timeToRead={npmPackage.readme.childMarkdownRemark.timeToRead}
           keywords={npmPackage.keywords}
           lastPublisher={npmPackage.lastPublisher}
-        />
-        <Unbird
-          dataSetId="5c1ac24b4a828a169b6c235c"
-          publicKey={process.env.GATSBY_FEEDBACK_KEY_PLUGINLIB}
-          feedbackPrompt="Have feedback on the Plugin Library?"
         />
       </>
     )

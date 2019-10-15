@@ -2,7 +2,7 @@ const resolvableExtensions = () => [`.ts`, `.tsx`]
 
 function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPreset({
-    name: `@babel/preset-typescript`,
+    name: require.resolve(`@babel/preset-typescript`),
     options,
   })
 }
