@@ -38,7 +38,7 @@ Once your application is built out, all assets will be automatically prefixed by
 <script src="https://cdn.example.com/app-common-1234.js"></script>
 ```
 
-However - if you were to deploy our application as-is, those assets would not be available! You can do this in a few ways, but the general approach will be to deploy the contents of the `public` folder to _both_ your core domain, and the CDN/asset prefix location.
+However - if you were to deploy your application as-is, those assets would not be available! You can do this in a few ways, but the general approach will be to deploy the contents of the `public` folder to _both_ your core domain, and the CDN/asset prefix location.
 
 ### Using `onPostBuild`
 
@@ -55,7 +55,7 @@ exports.onPostBuild = async function onPostBuild() {
 
 ### Using `package.json` scripts
 
-Additionally, you can use an npm script, which will let us use some command line interfaces/executables to perform some action, in this case, deploying our assets directory!
+Additionally, you can use an npm script, which will let you use some command line interfaces/executables to perform some action, in this case, deploying your assets directory!
 
 In this example, I'll use the `aws-cli` and `s3` to sync the `public` folder (containing all our assets) to the `s3` bucket.
 
@@ -68,7 +68,7 @@ In this example, I'll use the `aws-cli` and `s3` to sync the `public` folder (co
 }
 ```
 
-Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild` script will be invoked _after_ the build completes, therefore making our assets available on a _separate_ domain after you have finished building out our application with prefixed assets.
+Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild` script will be invoked _after_ the build completes, therefore making your assets available on a _separate_ domain after you have finished building out your application with prefixed assets.
 
 ## Additional Considerations
 
