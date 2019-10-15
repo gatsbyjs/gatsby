@@ -7846,3 +7846,26 @@
   built_by: Arturo Alviar
   built_by_url: "https://github.com/arturoalviar"
   featured: false
+- title: Edenspiekermann
+  url: "https://www.edenspiekermann.com/eu/"
+  main_url: "https://www.edenspiekermann.com/eu/"
+  description: >
+    Hello. We are Edenspiekermann, an independent global creative agency.
+  categories:
+    - Featured
+    - Agency
+    - Design
+    - Portfolio
+  featured: true
+- title: IBM Design
+  url: "https://www.ibm.com/design/"
+  main_url: "https://www.ibm.com/design/"
+  description: >
+    At IBM, our design philosophy is to help guide people so they can do their best work. Our human-centered design practices help us deliver on that goal.
+  categories:
+    - Featured
+    - Design
+    - Technology
+    - Web Development
+  built_by: IBM
+  featured: true
