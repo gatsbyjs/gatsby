@@ -18,7 +18,7 @@ npm install --save gatsby-plugin-feed
 
 ## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
 
-Once installation is complete, you can now add this plugin to your site's config file, like so:
+Once you complete installation, you can add the plugin to your site's config file, like so:
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
 }
 ```
 
-Here's an example of how you could implement this plugin with Markdown, but for other sources, you will need a way to uniquely identify content--typically a URL or slug.
+This example implements this plugin using Markdown. For other sources, you need to uniquely identify content; yypically you can us a slug or URL.
 
 ```js:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
@@ -48,7 +48,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 ```
 
-Next run a build (`npm run build`) since the RSS feed generation will only happen for production builds. By default, the generated RSS feed path is `/rss.xml`, but the plugin exposes options to configure this default functionality.
+Next run a build (`npm run build`) since the RSS feed generation only happens for production builds. By default, plugin generates an RSS feed path of `/rss.xml`.  The plugin also exposes options to configure this default functionality.
 
 For basic setups with Markdown content like the [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog), that's all you need! However, you can craft a custom RSS feed schema using custom code in your `gatsby-node.js` and `gatsby-config.js` files.
 
@@ -57,11 +57,11 @@ For basic setups with Markdown content like the [gatsby-starter-blog](https://gi
 Your content might not fit neatly into the blog-starter scenario, for various reasons like:
 
 - Your content isn't in Markdown so the plugin doesn't know about it
-- Your Markdown files have dates in the filenames, for which the slug URLs cause 404s
+- Your Markdown files have dates in the filenames, so the slug URLs cause 404s
 
-The good news is you can accommodate these scenarios and more in `gatsby-config.js` and `gatsby-node.js`.
+Good news! You can accommodate these scenarios (and more!) in `gatsby-config.js` and `gatsby-node.js`.
 
-To customize the default feed schema (a.k.a. structure) output by the plugin to work with your website's content, you can start with the following code:
+To work with your website's content by customizing the default feed schema (a.k.a. structure) output, start with the following code:
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -126,19 +126,19 @@ module.exports = {
 }
 ```
 
-This snippet contains a custom `gatsby-plugin-feed` setup in `gatsby-config.js` to query metadata for your site, like its `title` and `siteUrl`. It also includes a `feeds` array with at least one object containing a GraphQL query and `serialize` method, which allows you to output a custom RSS feed structure. In this example, the RSS content comes from Markdown files sourced from your site, and queried with the key `allMarkdownRemark` and its associated filters and fields.
+This snippet contains a custom `gatsby-plugin-feed` setup in `gatsby-config.js` to query metadata for your site, such as `title` and `siteUrl`. It also includes a `feeds` array, with at least one object that contains a GraphQL query and `serialize` method. This allows you to output a custom RSS feed structure. In this example, the RSS content comes from Markdown files sourced from your site, queried with the key `allMarkdownRemark` (and its associated filters and fields).
 
-The `output` field in your feed object allows you to customize the filename for your RSS feed, and `title` for the name of your site's RSS feed.
+The `output` field in your feed object allows you to customize the filename for your RSS feed as well as the `title` for your site's RSS feed.
 
-By default, feed is referenced in every page. You can customize this behavior by providing an extra field `match` of type `string`. This string will be used to build a `RegExp`, and this regular expression will be used to test the `pathname` of current page. Only pages that satisfied the regular expression will have feed reference included.
+By default, the feed is referenced in every page. You can customize this behavior by providing an extra field `match` of type `string`. This string will be used to build a `RegExp`, and this regular expression will be used to test the `pathname` of current page. Only pages that satisfy the regular expression have feed reference included.
 
-To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`.
+To see your feed in action, run `gatsby build && gatsby serve`. Then, you can inspect the RSS File content and URLs at `http://localhost:9000/rss.xml`.
 
 > NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
 
 ## Syntax for iTunes RSS blocks
 
-If creating a RSS feed for a podcast you probably will want to include iTunes RSS blocks. They take the format of `itunes:author` which GraphQL does not read. Here's an example of how to implement iTunes RSS blocks using this plugin:
+To create an RSS feed for a podcast, you probably will want to include iTunes RSS blocks. They take the format of `itunes:author`, which GraphQL does not read. Here's an example of how to implement iTunes RSS blocks using this plugin:
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -182,7 +182,7 @@ module.exports = {
 
 ## Happy blogging!
 
-With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
+With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with subscribers using RSS readers like [Feedly](https://feedly.com) or [Feed Wrangler](https://feedwrangler.net). Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
 
 ## More resources
 
