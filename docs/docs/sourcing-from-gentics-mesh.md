@@ -76,7 +76,7 @@ Try running this query:
 ```graphql
 query {
   mesh {
-    nodes(filter: {schema: {is: vehicle}}, perPage: 2, page:5) {
+    nodes(filter: { schema: { is: vehicle } }, perPage: 2, page: 5) {
       elements {
         uuid
         ... on MESH_vehicle {
