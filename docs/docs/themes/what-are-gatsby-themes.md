@@ -27,11 +27,28 @@ Themes solve the problems that traditional starters experience:
 
 > A Gatsby theme is effectively a composable Gatsby config. They provide a higher-level approach to working with Gatsby that abstracts away the complex or repetitive parts into a reusable package.
 
+## When should I use or build a theme?
+
+**Consider using a theme if:**
+
+- You already have an existing Gatsby site and can't start from a starter
+- You want to be able to update to the latest version of a feature on your site
+- You want multiple features on your site, but there is no starter with all the features -- you can use multiple themes, composed in one Gatsby site
+
+**Consider building a theme if:**
+
+- You plan on re-using similar functionality across multiple Gatsby sites
+- You would like to share new Gatsby functionality to the community
+
 ## What's next?
 
 - [Using a Gatsby Theme](/docs/themes/using-a-gatsby-theme)
 - [Using Multiple Gatsby Themes](/docs/themes/using-multiple-gatsby-themes)
+- [Shadowing](/docs/themes/shadowing/)
 - [Building Themes](/docs/themes/building-themes)
+- [Converting a Starter](/docs/themes/converting-a-starter/)
+- [Theme Composition](/docs/themes/theme-composition/)
+- [Conventions](/docs/themes/conventions/)
 
 ## Related blog posts
 

@@ -4,7 +4,7 @@ about: Something isn't working as expected? Here is the right place to report.
 ---
 
 <!--
-  Please fill out each section below, otherwise your issue will be closed. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible.
+  Please fill out each section below, otherwise, your issue will be closed. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible.
 
   Useful Links:
   - Documentation: https://www.gatsbyjs.org/docs/
