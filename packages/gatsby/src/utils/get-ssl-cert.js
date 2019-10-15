@@ -47,10 +47,16 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
       const mkdtemp = fs.mkdtempSync(path.join(os.tmpdir(), `home-`))
       process.env.HOME = mkdtemp
     }
-    const certificateFor = require(`devcert`).certificateFor
-    return await certificateFor(name, {
+    const getDevCert = require(`devcert`).certificateFor
+    const ssl = await getDevCert(name, {
+      returnCa: true,
       installCertutil: true,
     })
+    if (ssl.ca) process.env.NODE_EXTRA_CA_CERTS = ssl.ca
+    return {
+      key: ssl.key,
+      cert: ssl.cert,
+    }
   } catch (err) {
     report.panic({
       id: `11522`,
