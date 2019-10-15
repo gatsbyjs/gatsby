@@ -4707,7 +4707,6 @@
 - title: Mevish Aslam, business coach
   url: "https://mevishaslam.com/"
   main_url: "https://mevishaslam.com/"
-  source_url: ""
   description: >
     Mevish Aslam helps women build a life they love and coaches women to launch and grow businesses.
   categories:
@@ -4723,7 +4722,7 @@
 - title: Principles of wealth
   url: "https://principlesofwealth.net"
   main_url: "https://principlesofwealth.net"
-  source_url: ""
+  source_url: "https://github.com/flowen/principlesofwealth"
   description: >
     Principles of wealth. How to get rich without being lucky, a summary of Naval Ravikant's tweets and podcast.`
   categories:
