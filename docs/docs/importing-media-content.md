@@ -14,7 +14,7 @@ title: Importing Media Content
 
 ## Video assets
 
-Like images, video assets present many options and requirements for cross-browser support. Learn about video embeds on the Gatsby docs page on [working with video](/docs/working-with-video/).
+Like images, video assets present many options and requirements for cross-browser support. You can learn how to embed a videos in the Gatsby docs in the [working with video](/docs/working-with-video/) section.
 
 ## Canvas and WebGL
 
@@ -22,4 +22,4 @@ The HTML5 `<canvas>` element provides a space for 2-dimensional drawing in a web
 
 [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL), on the other hand, creates a 3-dimensional space in a web environment using the `<canvas>` element. Libraries like [Three.js](https://threejs.org/) are often used to enable WebGL experiences in React apps.
 
-> Using canvas and/or WebGL may require modifying your Webpack config. Do you have experience with making this work in your Gatsby site? Contribute to the docs by adding more details to this page.
+> You maybe have to modify your Webpack config if you want so use canvas and/or WebGL. Do you have experience with making this work in your Gatsby site? Contribute to the docs by adding more details to this page.
