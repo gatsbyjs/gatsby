@@ -421,9 +421,9 @@ import Layout from "../components/Layout"
 import { Link } from "gatsby"
 
 export default () => (
+  {/* highlight-start */}
   <Layout staffName="Ella">
-    {" "}
-    // highlight-line
+  {/* highlight-end */}
     <h2>Ella is an excellent Arborist. We guarantee it.</h2>
     <div className="bio-card">
       <img
