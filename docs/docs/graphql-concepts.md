@@ -88,7 +88,7 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
-_Note:_ To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
+**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
 
 ### Understanding the parts of a query
 
@@ -96,15 +96,15 @@ The following diagram shows a GraphQL query, with each word highlighted in a col
 
 ![GraphQL query diagram](./images/basic-query.png)
 
-#### Query Operation Type
+#### Query operation type
 
 The diagram marks the word `query` as the "Operation Type", for Gatsby's uses the only operation type you will deal with is `query`, this can be omitted from your queries if you prefer (like in the above example).
 
-#### Operation Name
+#### Operation name
 
 `SiteInformation` is marked as the "Operation Name", which is a unique name that you assign to a query yourself. This is similar to how you would name a function or a variable, and like a function this can be omitted if you would rather the query be anonymous.
 
-#### Query Fields
+#### Query fields
 
 The four words `site`, `id`, `siteMetadata`, and `title` are marked as "Fields". Any top-level fields -- like `site` in the diagram -- are sometimes referred to as **root level fields**, though the name doesn't signify functional significance as all fields in GraphQL queries behave the same.
 
@@ -142,8 +142,7 @@ a live GraphQL server from the browser.
 
 Most usages of GraphQL involve manually creating a GraphQL schema.
 
-With Gatsby, we use plugins which fetch data from different sources. We then use that data
-to automatically _infer_ a GraphQL schema.
+Gatsby uses plugins which can fetch data from different sources. That data is used to automatically _infer_ a GraphQL schema.
 
 If you give Gatsby data that looks like this:
 
@@ -179,11 +178,11 @@ People often store dates like "2018-01-05" but want to display the date in some 
 }
 ```
 
-See the full list of formatting options by viewing our [GraphQL Reference page](/docs/graphql-reference/#dates).
+See the full list of formatting options by viewing our [GraphQL reference page](/docs/graphql-reference/#dates).
 
 ### Markdown
 
-Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify you want the transformed HTML version instead of markdown:
+Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify if you want the transformed HTML version instead of markdown:
 
 ```graphql
 markdownRemark {
