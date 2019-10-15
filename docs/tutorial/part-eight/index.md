@@ -338,7 +338,7 @@ The above example is based off the [Gatsby Starter Blog](/starters/gatsbyjs/gats
 
 Now, if you run the Lighthouse audit again as laid out above, you should get close to--if not a perfect-- 100 score!
 
-> 💡 For further reading and examples, check out [Adding an SEO Component](docs/add-seo-component) and the [React Helmet docs](https://github.com/nfl/react-helmet#example)!
+> 💡 For further reading and examples, check out [Adding an SEO Component](/docs/add-seo-component/) and the [React Helmet docs](https://github.com/nfl/react-helmet#example)!
 
 ## Keep making it better
 
