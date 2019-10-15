@@ -2,7 +2,7 @@
 title: Community
 ---
 
-As of September 2019, the Gatsby community is comprised of over 2,400 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
+As of September 2019, the Gatsby community is consist of of over 2,400 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
 
 Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
 
@@ -32,13 +32,13 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 
 ## Gatsby news
 
-### Newsletter
+### Gatsby Newsletter
 
 Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community! Hear about new features, tips & tricks, and what people are building.
 
 [Sign up here](/newsletter/)
 
-### Twitter
+### Gatsby Twitter
 
 For the latest news about Gatsby,
 [follow **@gatsbyjs** on Twitter](https://twitter.com/gatsbyjs).
