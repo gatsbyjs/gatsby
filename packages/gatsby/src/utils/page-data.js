@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
-const _ = require(`lodash`)
+const { chunk, isEqual } = require(`lodash`)
 
 const { readFromCache } = require(`../redux/persist.js`)
 
@@ -32,7 +32,7 @@ const updateCompilationHashes = (
   pagePaths,
   webpackCompilationHash
 ) => {
-  const segments = _.chunk(pagePaths, 50)
+  const segments = chunk(pagePaths, 50)
   return Promise.map(segments, segment =>
     workerPool.updateCompilationHashes(
       { publicDir },
@@ -42,35 +42,20 @@ const updateCompilationHashes = (
   )
 }
 
-const stateToObject = state => {
-  const newPageData = Object.assign({}, state)
-  Object.keys(newPageData).forEach(key => {
-    if (newPageData[key] instanceof Map) {
-      const obj = {}
-      newPageData[key].forEach((v, k) => {
-        obj[k] = v
-      })
-      newPageData[key] = obj
-    }
-  })
-
-  return newPageData
-}
-
 const getNewPageKeys = store =>
   new Promise(resolve => {
     const newPageKeys = []
-    const newPageData = stateToObject(store.getState())
-    const previousPageData = stateToObject(readFromCache())
+    const newPageData = store.getState()
+    const previousPageData = readFromCache()
 
-    _.forEach(newPageData.pages, (value, key) => {
-      if (!(key in previousPageData.pages)) {
+    newPageData.pages.forEach((value, key) => {
+      if (!previousPageData.pages.has(key)) {
         newPageKeys.push(key)
       } else {
         const newPageContext = value.context.page
-        const previousPageContext = previousPageData.pages[key].context.page
+        const previousPageContext = previousPageData.pages.get(key).context.page
 
-        if (!_.isEqual(newPageContext, previousPageContext)) {
+        if (!isEqual(newPageContext, previousPageContext)) {
           newPageKeys.push(key)
         }
       }
@@ -81,17 +66,18 @@ const getNewPageKeys = store =>
 
 const removePreviousPageData = (directory, store) =>
   new Promise(resolve => {
-    const newPageData = stateToObject(store.getState())
-    const previousPageData = stateToObject(readFromCache())
+    const newPageDataMap = store.getState()
+    const previousPageDataMap = readFromCache()
     const deletedKeys = []
 
-    _.forEach(previousPageData.pages, (value, key) => {
-      if (!(key in newPageData.pages)) {
+    previousPageDataMap.pages.forEach((value, key) => {
+      if (!newPageDataMap.pages.has(key)) {
         deletedKeys.push(key)
         fs.removeSync(`${directory}/public${key}`)
         fs.removeSync(`${directory}/public/page-data${key}`)
       }
     })
+
     resolve(deletedKeys)
   })
 
