@@ -7846,6 +7846,21 @@
   built_by: Arturo Alviar
   built_by_url: "https://github.com/arturoalviar"
   featured: false
+- title: enBonnet Blog
+  url: https://enbonnet.me/
+  main_url: https://enbonnet.me/
+  source_url: https://github.com/enbonnet
+  description: >
+    Hola, este es mi sitio personal, estare escribiendo sobre Javascript, Frontend y Tecnologia que utilice en mi dia a dia.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+    - Technology
+    - Programming
+    - JavaScript
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
 - title: Edenspiekermann
   url: "https://www.edenspiekermann.com/eu/"
   main_url: "https://www.edenspiekermann.com/eu/"
