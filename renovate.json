@@ -20,6 +20,10 @@
     {
       "groupName": "minor updates in packages",
       "updateTypes": ["minor"]
+    },
+    {
+      "groupName": "patch updates in packages",
+      "updateTypes": ["patch"]
     }
   ],
   "timezone": "GMT",
