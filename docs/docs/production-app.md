@@ -56,7 +56,7 @@ Once Webpack has finished compilation, it will have produced a few key types of 
 
 ##### app-[contenthash].js
 
-This is bundle produced from [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) which you'll mostly be discussing in this section. It is configured in [webpack entry](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L130)
+This bundle is produced from [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) which will mostly be discussed in this section. It is configured in [webpack entry](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L130)
 
 ##### webpack-runtime-[contenthash].js
 
