@@ -1,5 +1,5 @@
 ---
-title: Add Offline Support with a Service Worker
+title: Adding Offline Support with a Service Worker
 ---
 
 If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "Progressive Web App" category. Let's address how you can improve that score.
@@ -48,7 +48,7 @@ Note: Service worker registers only in production builds (`gatsby build`).
 To display a custom message once your service worker finds an update, you can use the [`onServiceWorkerUpdateReady`](/docs/browser-apis/#onServiceWorkerUpdateReady) browser API in your `gatsby-browser.js` file. The following code will display a confirm prompt asking the user whether they would like to refresh the page when an update is found:
 
 ```javascript:title=gatsby-browser.js
-exports.onServiceWorkerUpdateReady = () => {
+export const onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(
     `This application has been updated. ` +
       `Reload to display the latest version?`
@@ -69,7 +69,7 @@ Add a file called `sw.js` in the `static` folder.
 Use the [`registerServiceWorker`](/docs/browser-apis/#registerServiceWorker) browser API in your `gatsby-browser.js` file.
 
 ```javascript:title=gatsby-browser.js
-exports.registerServiceWorker = () => true
+export const registerServiceWorker = () => true
 ```
 
 That's all! Gatsby will register your custom service worker.

@@ -102,7 +102,7 @@ Using the credentials in the .contentful.json file, [content can now be imported
 
 Time to check out your new website - preview changes in a local environment by running your project using the npm run dev command. This uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/) to show unpublished content as if they were already published - perfect for a development or staging environment.
 
-If you like what you see, use the npm run build command to start a static production build of your near-ready website and put it on a static host of your choice. After that, the npm run deploy command allows you to publish what you have on the production build onto GitHub pages.
+If you like what you see, use the npm run build command to start a static production build of your near-ready website and put it on a static host of your choice. After that, the npm run deploy command allows you to publish what you have on the production build onto GitHub Pages.
 
 ###Deployment
 

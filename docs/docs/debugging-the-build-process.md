@@ -1,13 +1,13 @@
 ---
-title: Debugging the build process
+title: Debugging the Build Process
 ---
 
 Gatsby's `build` and `develop` steps run as a Node.js application which you can debug using standard tools for Node.js applications.
 
 In this guide you will learn how to debug some code using:
 
-- [VS Code debugger](<#vs-code-debugger-(auto-config)>) (Auto-Config)
-- [VS Code debugger](<#vs-code-debugger-(manual-config)>) (Manual-Config)
+- [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
+- [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
 - [Chrome DevTools for Node](#chrome-devtools-for-node)
 
 As an example let's use the following code snippet in a `gatsby-node.js` file:
@@ -47,9 +47,12 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
     ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2.  Using VS Code's integrated terminal run `node --inspect node_modules/.bin/gatsby develop` instead of `gatsby develop`
+2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/.bin/gatsby develop` instead of `gatsby develop`
 
 3.  Set breakpoints and debug!
+
+> **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
+> try running `gatsby clean` to delete the `.cache` and `public` folder and try again.
 
 ## VS Code Debugger (Manual Config)
 
@@ -90,6 +93,9 @@ We won't go in depth here about how to debug in VS Code - for that you can check
 After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
 
 ![VSCode breakpoint hit](./images/vscode-debug.png)
+
+> **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
+> try running `gatsby clean` to delete the `.cache` and `public` folder and try again.
 
 ## Chrome DevTools for Node
 
@@ -138,7 +144,7 @@ In the example `Node` is `undefined` and to figure out why, let's go backwards. 
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 
-We can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing our code to fail. Adjusting our code to use a lowercase `node` fixes the problem and we did that without adding tons of `console.log` output!
+You can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing your code to fail. Adjusting your code to use a lowercase `node` fixes the problem and you did that without adding tons of `console.log` output!
 
 ### Finishing thoughts on DevTools
 

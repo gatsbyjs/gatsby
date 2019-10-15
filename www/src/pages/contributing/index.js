@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import { Helmet } from "react-helmet"
@@ -7,6 +9,8 @@ import { itemListContributing } from "../../utils/sidebar/item-list"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
+import FooterLinks from "../../components/shared/footer-links"
+import PrevAndNext from "../../components/prev-and-next"
 
 class IndexRoute extends React.Component {
   render() {
@@ -16,13 +20,21 @@ class IndexRoute extends React.Component {
           <Container>
             <Helmet>
               <title>Contributing</title>
+              <meta
+                name="description"
+                content="Learn about contributing to one of the most welcoming communities helping develop the future of the web"
+              />
             </Helmet>
             <h1 id="contributing-gatsby" css={{ marginTop: 0 }}>
               Contributing to Gatsby.js
             </h1>
             <p>
-              Find guides on the Gatsby.js community, code of conduct, and how
-              to get started contributing:
+              Thanks for being interested in contributing! We're so glad you
+              want to help!
+            </p>
+            <p>
+              Below you'll find guides on the Gatsby.js community, code of
+              conduct, and how to get started contributing:
             </p>
             <ul>
               <li>
@@ -59,7 +71,12 @@ class IndexRoute extends React.Component {
               </li>
             </ul>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
+            <PrevAndNext
+              sx={{ mt: 9 }}
+              next={{ title: `Community`, link: `/contributing/community/` }}
+            />
           </Container>
+          <FooterLinks />
         </DocSearchContent>
       </Layout>
     )

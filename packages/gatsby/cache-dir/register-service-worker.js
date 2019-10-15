@@ -9,7 +9,7 @@ if (
   )
 } else if (`serviceWorker` in navigator) {
   navigator.serviceWorker
-    .register(`${__PATH_PREFIX__}/sw.js`)
+    .register(`${__BASE_PATH__}/sw.js`)
     .then(function(reg) {
       reg.addEventListener(`updatefound`, () => {
         apiRunner(`onServiceWorkerUpdateFound`, { serviceWorker: reg })

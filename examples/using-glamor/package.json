@@ -11,7 +11,7 @@
     "gatsby-plugin-offline": "^2.0.5",
     "gatsby-plugin-typography": "^2.2.0",
     "glamor": "^2.20.40",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-typography": "^0.16.13",

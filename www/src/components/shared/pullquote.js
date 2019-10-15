@@ -3,36 +3,33 @@ import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
-
-import { options } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const PullquoteRoot = styled(`blockquote`)`
   border: 1px solid #ebddf2;
-  border-radius: ${presets.radiusLg}px;
-  color: ${colors.gatsby};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: 1.2rem;
+  border-radius: ${p => p.theme.radii[2]}px;
+  color: ${p => p.theme.colors.gatsby};
+  font-family: ${p => p.theme.fonts.heading};
+  font-size: ${p => p.theme.fontSizes[3]};
   font-weight: bold;
-  line-height: 1.5;
-  padding: 2rem 3rem;
+  padding: ${p => p.theme.space[7]} 3rem;
   position: relative;
-  text-indent: 2rem;
-  margin: 2.5rem 0;
+  text-indent: ${p => p.theme.space[7]};
+  margin: ${p => p.theme.space[8]} 0;
 
   /* needed for overriding typography.js style "p *:last-child {"" */
   p > & {
-    margin: 2.5rem 0;
+    margin: ${p => p.theme.space[8]} 0;
   }
 
-  ${presets.Lg} {
-    line-height: 1.7;
-    margin: 2.5rem -3.5rem;
+  ${mediaQueries.lg} {
+    line-height: ${p => p.theme.lineHeights.loose};
+    margin: ${p => p.theme.space[8]} -3.5rem;
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
     p > & {
-      margin: 2.5rem -3.5rem;
+      margin: ${p => p.theme.space[8]} -3.5rem;
     }
   }
 `
@@ -41,26 +38,26 @@ const Citation = styled(`cite`)`
   display: block;
   font-style: italic;
   font-weight: normal;
-  margin-top: 1rem;
+  margin-top: ${p => p.theme.space[4]};
   text-align: right;
 `
 
 const QuotationMark = styled(`span`)`
   display: flex;
-  left: 2.5rem;
+  left: ${p => p.theme.space[8]};
   position: absolute;
-  top: 2rem;
+  top: ${p => p.theme.space[7]};
 
   svg {
-    fill: ${colors.gatsbyDark};
+    fill: ${p => p.theme.colors.purple[80]};
   }
 
-  ${presets.Lg} {
+  ${mediaQueries.lg} {
     left: 3rem;
     top: 2.8rem;
 
     svg {
-      fill: ${colors.gatsbyDark};
+      fill: ${p => p.theme.colors.purple[80]};
       transform: scale(1.1);
     }
   }
@@ -83,10 +80,10 @@ const Star = styled(`span`)`
     width: 20px;
 
     svg {
-      fill: ${colors.lemon};
+      fill: ${p => p.theme.colors.yellow[40]};
     }
 
-    ${presets.Lg} {
+    ${mediaQueries.lg} {
       height: 27px;
       width: 27px;
     }
@@ -94,7 +91,7 @@ const Star = styled(`span`)`
     .variantB & {
       left: auto;
       right: 0;
-      top: 2rem;
+      top: ${p => p.theme.space[7]};
       transform: translate(50%, 0);
     }
 
@@ -115,7 +112,7 @@ const Star = styled(`span`)`
     width: 14px;
 
     svg {
-      fill: ${colors.mint};
+      fill: ${p => p.theme.colors.teal[40]};
     }
     .variantB & {
       bottom: 0;
@@ -135,13 +132,13 @@ const Star = styled(`span`)`
 
   :nth-of-type(3) {
     bottom: 0;
-    height: 12px;
+    height: ${p => p.theme.space[3]};
     right: 4rem;
     transform: translateY(50%);
-    width: 12px;
+    width: ${p => p.theme.space[3]};
 
     svg {
-      fill: ${colors.warning};
+      fill: ${p => p.theme.colors.red[60]};
     }
 
     .variantB & {

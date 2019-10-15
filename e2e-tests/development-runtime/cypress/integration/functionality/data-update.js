@@ -10,7 +10,7 @@ A brand new post
 
 describe(`on new file`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   /*

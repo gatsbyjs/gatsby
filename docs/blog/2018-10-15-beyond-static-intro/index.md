@@ -4,7 +4,7 @@ date: 2018-10-15
 author: Dustin Schau
 image: images/dynamic.jpg
 showImageInArticle: false
-tags: ["apps", "beyond static", "webinar"]
+tags: ["apps"]
 ---
 
 We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for when your data changes regularly and/or you need an "app." This raises a question... what actually _is_ an app?

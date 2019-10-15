@@ -1,14 +1,13 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import SearchIcon from "../../components/search-icon"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { options, rhythm } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
-
-import styles from "../shared/styles"
-
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
 import StarterList from "./starter-list"
 import Button from "../../components/button"
@@ -20,8 +19,10 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
+import { themedInput } from "../../utils/styles"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
@@ -104,7 +105,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div css={{ height: `3.5rem` }}>
+            <div sx={{ height: t => t.space[10] }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -158,10 +159,10 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${rhythm(3 / 4)}`,
-              [presets.Sm]: {
-                height: presets.headerHeight,
-                paddingTop: `0px`,
+              pt: 6,
+              [mediaQueries.sm]: {
+                height: `headerHeight`,
+                pt: 0,
               },
             }}
           >
@@ -174,90 +175,58 @@ export default class FilteredStarterLibrary extends Component {
               what="size"
             />
             <div
-              css={{
+              sx={{
                 display: `flex`,
                 justifyContent: `space-between`,
-                marginBottom: `.4rem`,
+                mb: 2,
                 width: `100%`,
-                [presets.Sm]: {
+                [mediaQueries.sm]: {
                   justifyContent: `flex-end`,
-                  marginBottom: `0rem`,
+                  mb: 0,
                   width: `50%`,
                 },
               }}
             >
-              {/* @todo: add sorting. */}
+              {/* TODO add sorting. */}
               <label
-                css={{
+                sx={{
                   display: `none`,
-                  [presets.Lg]: {
+                  [mediaQueries.lg]: {
                     border: 0,
-                    borderRadius: presets.radiusLg,
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    width: rhythm(5),
+                    borderRadius: 2,
+                    color: `gatsby`,
+                    fontFamily: `header`,
+                    py: 1,
+                    pr: 1,
+                    width: `10rem`,
                   },
                 }}
                 onClick={toggleSort}
               >
-                <MdSort css={{ marginRight: 8 }} />
+                <MdSort sx={{ mr: 2 }} />
                 {urlState.sort === `recent` ? `Most recent` : `Most stars`}
               </label>
               <label css={{ position: `relative` }}>
                 <DebounceInput
-                  css={{
-                    border: 0,
-                    borderRadius: presets.radiusLg,
-                    color: colors.gatsby,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    marginTop: rhythm(1 / 8),
-                    paddingTop: rhythm(1 / 8),
-                    paddingRight: rhythm(1 / 5),
-                    paddingBottom: rhythm(1 / 8),
-                    paddingLeft: rhythm(1),
-                    width: rhythm(6),
-                    ":focus": {
-                      outline: `${colors.wisteria} solid thin`,
-                      backgroundColor: colors.ui.light,
-                      borderRadius: presets.radiusLg,
-                      transition: `width ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }, background-color ${presets.animation.speedDefault} ${
-                        presets.animation.curveDefault
-                      }`,
-                    },
+                  sx={{
+                    ...themedInput,
+                    pl: 7,
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    fill: colors.lilac,
-                    height: `16px`,
-                    left: `5px`,
-                    pointerEvents: `none`,
-                    position: `absolute`,
-                    top: `50%`,
-                    transform: `translateY(-50%)`,
-                    width: `16px`,
-                  }}
-                />
+                <SearchIcon />
               </label>
               <Button
                 to="https://gatsbyjs.org/contributing/submit-to-starter-library/"
                 tag="href"
                 target="_blank"
                 rel="noopener noreferrer"
-                small
+                variant="small"
                 icon={<ArrowForwardIcon />}
-                overrideCSS={{
-                  marginLeft: 10,
-                }}
+                overrideCSS={{ ml: 3 }}
               >
                 Submit a Starter
               </Button>
@@ -271,14 +240,16 @@ export default class FilteredStarterLibrary extends Component {
           />
           {this.state.sitesToShow < starters.length && (
             <Button
+              variant="large"
               tag="button"
-              overrideCSS={styles.loadMoreButton}
+              overrideCSS={loadMoreButton}
               onClick={() => this.showMoreSites(starters)}
               icon={<MdArrowDownward />}
             >
               Load More
             </Button>
           )}
+          <FooterLinks />
         </ContentContainer>
       </section>
     )

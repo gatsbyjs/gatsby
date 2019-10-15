@@ -3,7 +3,7 @@ const TEST_ID = `sub-title`
 
 describe(`hot reloading non-js file`, () => {
   beforeEach(() => {
-    cy.visit(`/2018-12-14-hello-world/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/2018-12-14-hello-world/`).waitForRouteChange()
   })
 
   it(`displays placeholder content on launch`, () => {

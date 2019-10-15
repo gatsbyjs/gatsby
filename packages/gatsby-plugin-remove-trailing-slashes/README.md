@@ -19,7 +19,7 @@ For example, if the current route is `/about`, the component `<Link to="/about/"
 
 #### Netlify Trailing Slashes
 
-[Netlify](https://www.netlify.com) users should also take into account that that the service will match paths to redirect rules regardless of whether or not they contain a trailing slash, potentially causing infinite redirect loops and unexpected behaviors.
+[Netlify](https://www.netlify.com) users should also take into account that the service will match paths to redirect rules regardless of whether or not they contain a trailing slash, potentially causing infinite redirect loops and unexpected behaviors.
 
 This can be negated through the use of their Pretty URL feature, which rewrites URLs to pretty URLs.
 

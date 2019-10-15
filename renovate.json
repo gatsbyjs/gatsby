@@ -1,13 +1,21 @@
 {
-  "extends": ["config:base"],
-  "includePaths": ["starters/**"],
+  "extends": ["config:base", ":disablePeerDependencies"],
+  "includePaths": [
+    "package.json",
+    "starters/**",
+    "themes/**",
+    "packages/**",
+    "www/package.json"
+  ],
   "major": {
-    "enabled": false
+    "masterIssueApproval": true
   },
-  "prHourlyLimit": 2,
-  "prConcurrentLimit": 20,
+  "masterIssue": true,
   "rebaseStalePrs": false,
   "rangeStrategy": "bump",
   "bumpVersion": null,
-  "semanticCommitScope": "starters"
+  "semanticCommitScope": null,
+  "prHourlyLimit": 0,
+  "timezone": "GMT",
+  "schedule": "after 10am on Monday"
 }

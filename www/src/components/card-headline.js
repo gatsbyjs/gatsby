@@ -1,22 +1,12 @@
-import React from "react"
-import presets from "../utils/presets"
-import { scale } from "../utils/typography"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
 const CardHeadline = ({ children }) => (
   <h2
-    css={{
-      ...scale(2 / 5),
-      lineHeight: 1.2,
-      marginTop: 0,
-      [presets.Md]: {
-        fontSize: scale(1 / 10).fontSize,
-      },
-      [presets.Lg]: {
-        fontSize: scale(3 / 10).fontSize,
-      },
-      [presets.Xxl]: {
-        fontSize: scale(5 / 10).fontSize,
-      },
+    sx={{
+      fontSize: 4,
+      lineHeight: `dense`,
+      mt: 0,
     }}
   >
     {children}
