@@ -1,9 +1,11 @@
 const {
-  createUrl,
   resolveFixed,
   resolveFluid,
   resolveResize,
 } = require(`../extend-node-type`)
+const {
+  createUrl,
+} = require(`../resolve-fixed-and-fluid/helpers/shared-helpers`)
 
 describe(`contentful extend node type`, () => {
   describe(`createUrl`, () => {
