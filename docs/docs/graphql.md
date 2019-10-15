@@ -1,5 +1,5 @@
 ---
-title: GraphQL and Gatsby
+title: GraphQL & Gatsby
 overview: true
 ---
 
