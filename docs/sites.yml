@@ -7910,3 +7910,39 @@
     - Web Development
   built_by: IBM
   featured: true
+- title: Mevish Aslam, business coach
+  url: "https://mevishaslam.com/"
+  main_url: "https://mevishaslam.com/"
+  description: >
+    Mevish Aslam helps women build a life they love and coaches women to launch and grow businesses.
+  categories:
+    - Business
+    - Consulting
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Portfolio
+  built_by: Rou Hun Fan
+  built_by_url: "https://flowen.me"
+  featured: false
+- title: Principles of wealth
+  url: "https://principlesofwealth.net"
+  main_url: "https://principlesofwealth.net"
+  source_url: "https://github.com/flowen/principlesofwealth"
+  description: >
+    Principles of wealth. How to get rich without being lucky, a summary of Naval Ravikant's tweets and podcast.`
+  categories:
+    - Business
+    - Consulting
+    - Education
+    - Entrepreneurship
+    - Finance
+    - Learning
+    - Marketing
+    - Media
+    - Nonprofit
+    - Productivity
+    - Science
+  built_by: Rou Hun Fan
+  built_by_url: "https://flowen.me"
+  featured: false
