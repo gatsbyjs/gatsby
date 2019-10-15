@@ -2,6 +2,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs`)
 const path = require(`path`)
 const os = require(`os`)
+const prompts = require(`prompts`)
 
 const absoluteOrDirectory = (directory, filePath) => {
   // Support absolute paths
@@ -49,6 +50,28 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
     const ssl = await getDevCert(name, {
       returnCa: true,
       installCertutil: true,
+      ui: {
+        getWindowsEncryptionPassword: async () => {
+          report.info(
+            [
+              `A password is required to access the secure certificate authority credentials`,
+              `used for signing certificates.`,
+              ``,
+              `If this is the first time this has run, then this is to set the password`,
+              `for future use.  If any new certificates are signed later, you will need`,
+              `to use this same password.`,
+              ``,
+            ].join(`\n`)
+          )
+          const results = await prompts({
+            type: `password`,
+            name: `value`,
+            message: `Please enter the CA password`,
+            validate: input => input.length > 0 || `You must enter a password.`,
+          })
+          return results.value
+        },
+      },
     })
     if (ssl.ca) process.env.NODE_EXTRA_CA_CERTS = ssl.ca
     return {
