@@ -1,7 +1,5 @@
 "use strict"
-
 const v8 = require(`v8`)
-
 const fs = require(`fs-extra`)
 
 const file = `${process.cwd()}/.cache/redux.state`

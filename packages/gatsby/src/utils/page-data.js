@@ -2,7 +2,6 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
 const { chunk, isEqual } = require(`lodash`)
-
 const { readFromCache } = require(`../redux/persist.js`)
 
 const getFilePath = ({ publicDir }, pagePath) => {

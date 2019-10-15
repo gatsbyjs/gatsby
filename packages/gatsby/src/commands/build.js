@@ -149,7 +149,6 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   activity.start()
-
   try {
     await buildHTML.buildPages({
       program,
@@ -162,7 +161,6 @@ module.exports = async function build(program: BuildArgs) {
     })
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
-
     if (err.message === `ReferenceError: window is not defined`) {
       id = `95312`
     }
