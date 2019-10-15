@@ -6,7 +6,7 @@ title: Sourcing from Gentics Mesh
 
 [Gentics Mesh](https://getmesh.io) is an open-source self-hosted headless CMS that supports GraphQL. Contents like posts, products, images and more are represented by elements called "nodes". These nodes can then be queried with the familiar GraphQL syntax.
 
-The model of nodes can be defined within "schemas". In our demo we have schemas for vehicles, images and categories.
+The model of nodes can be defined within "schemas". The demo data contains schemas for vehicles, images and categories.
 
 ## Getting started
 
