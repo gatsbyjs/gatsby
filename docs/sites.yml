@@ -7910,3 +7910,16 @@
     - Web Development
   built_by: IBM
   featured: true
+- title: We Do Plugins
+  url: https://wedoplugins.com
+  main_url: https://wedoplugins.com
+  description: >
+    Free & premium WordPress plugins development studio from Wroclaw, Poland.
+  categories:
+    - Portfolio
+    - Agency
+    - Open Source
+    - Web Development
+  built_by: We Do Plugins
+  built_by_url: https://wedoplugins.com
+  featured: false
