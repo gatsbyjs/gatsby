@@ -263,7 +263,7 @@ export const PureHeader = ({ data }) => (
 )
 
 export const Header = props => {
-  const { data } = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     query {
       site {
         siteMetadata {
