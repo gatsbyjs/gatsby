@@ -25,6 +25,7 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
     const keyPath = absoluteOrDirectory(directory, keyFile)
     const certPath = absoluteOrDirectory(directory, certFile)
 
+    process.env.NODE_EXTRA_CA_CERTS = certPath
     return await {
       keyPath,
       certPath,
