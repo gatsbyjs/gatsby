@@ -84,7 +84,7 @@ You now have a folder called `gatsby-site-section` containing a basic Gatsby web
 cd gatsby-site-section
 ```
 
-The `/src` folder contains all code for the Gatsby site. In the Gatsby build stage [every file in the `/src/pages` folder will result in a HTML file](https://www.gatsbyjs.org/docs/recipes/#creating-pages-automatically). Currently, the only page file is the root `/src/pages/index.js`:
+The `/src` folder contains all code for the Gatsby site. In the Gatsby build stage [every file in the `/src/pages` folder will result in a HTML file](/docs/recipes/#creating-pages-automatically). Currently, the only page file is the root `/src/pages/index.js`:
 
 ```jsx:title=/gatsby-site-section/src/pages/index.js
 import React from "react"
@@ -92,15 +92,7 @@ import React from "react"
 export default () => <div>Hello world!</div>
 ```
 
-Run the development server in the command line to see the website:
-
-```shell
-gatsby develop
-```
-
-Once started, visit the link shown in your command line, usually `http://localhost:8000`, in your browser. Hello Gatsby! 👋
-
-Change the word `World` in the `/src/pages/index.js` file to `Gatsby`. The change is instantly pushed to the browser by the Gatsby development server!
+[Run the development server](/docs/quick-start/#start-development-server) in the command line to see the website in your browser. Hello Gatsby! 👋
 
 ## Porting index.html
 
@@ -150,7 +142,9 @@ Here is `/who/index.html` from the example site structure above:
   </body>
 </html>
 ```
+
 In the following sections, you'll convert this block of HTML into its equivalent code in Gatsby.
+
 ### Head elements
 
 You might have noticed that the `/src/pages/index.js` file doesn't have a `<html>`, `<head>` or `<body>`. Gatsby makes a basic html structure for each page and places the `/src/pages/index.js` output into its body. More `<head>` elements and `<html>` attributes are added to the output page with a module called [React Helmet](https://github.com/nfl/react-helmet). React Helmet is added to a Gatsby project in the command line with NPM and then to the Gatsby config file:
@@ -169,9 +163,7 @@ Gatsby projects have a config file at `/gatsby-config.js` where options can be s
  */
 
 module.exports = {
-  {/* highlight-start */}
-  plugins: ['gatsby-plugin-react-helmet']
-  {/* highlight-end */}
+  plugins: ["gatsby-plugin-react-helmet"], // highlight-line
 }
 ```
 
@@ -203,6 +195,7 @@ import Helmet from "react-helmet"
 export default () => (
   <>
     <Helmet>
+      {/* highlight-start */}
       <title>Taylor's Tidy Trees - Who We Are</title>
       <link
         href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/favicon.ico"
@@ -219,8 +212,10 @@ export default () => (
         type="text/css"
         href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/style.css"
       />
+      {/* highlight-end */}
     </Helmet>
     <header>
+      {/* highlight-start */}
       <h3 className="brand-color">Taylor's Tidy Trees </h3>
       <nav>
         <ul>
@@ -238,8 +233,10 @@ export default () => (
           </li>
         </ul>
       </nav>
+      {/* highlight-end */}
     </header>
     <main>
+      {/* highlight-start */}
       <h2>These are our staff:</h2>
       <ul>
         <li>
@@ -252,6 +249,7 @@ export default () => (
           <a href="/who/marin-leafer.html">Marin (Leafer)</a>
         </li>
       </ul>
+      {/* highlight-end */}
     </main>
   </>
 )
@@ -423,7 +421,9 @@ import Layout from "../components/Layout"
 import { Link } from "gatsby"
 
 export default () => (
-  <Layout staffName="Ella"> // highlight-line
+  <Layout staffName="Ella">
+    {" "}
+    // highlight-line
     <h2>Ella is an excellent Arborist. We guarantee it.</h2>
     <div className="bio-card">
       <img
@@ -449,9 +449,7 @@ By default, Gatsby assumes that the build will be hosted at the root path of a d
 ```js:title=/gatsby-config.js
 module.exports = {
   plugins: [`gatsby-plugin-react-helmet`],
-  {/* highlight-start */}
-  pathPrefix: `/who`
-  {/* highlight-end */}
+  pathPrefix: `/who`, // highlight-line
 }
 ```
 
