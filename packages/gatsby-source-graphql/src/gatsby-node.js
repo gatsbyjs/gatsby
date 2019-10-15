@@ -26,6 +26,7 @@ exports.sourceNodes = async (
     fieldName,
     headers = {},
     fetchOptions = {},
+    customSchemaTransfomer,
     createLink,
     createSchema,
     refetchInterval,
@@ -95,8 +96,13 @@ exports.sourceNodes = async (
     })
     return {}
   }
+  
+  let resultSchema = remoteSchema;
+  if (customSchemaTransfomer){
+    resultSchema = customSchemaTransfomer(remoteSchema);
+  }
 
-  const schema = transformSchema(remoteSchema, [
+  const schema = transformSchema(resultSchema, [
     new StripNonQueryTransform(),
     new RenameTypes(name => `${typeName}_${name}`),
     new NamespaceUnderFieldTransform({
