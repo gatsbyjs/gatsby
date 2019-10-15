@@ -18,7 +18,7 @@ You'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.c
 npm install --save-dev eslint-config-react-app
 ```
 
-Now that your packages installed, create a new file at the root of the site named `.eslintrc.js` using the command below.
+Now that your packages have been installed, create a new file at the root of the site named `.eslintrc.js` using the command below.
 
 ```shell
 # Create a config file for ESLint
