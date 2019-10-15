@@ -4119,8 +4119,8 @@
   description: A starter template for an awesome static blog utilizing Contentful as a CMS and deployed to Netlify.
   tags:
     - CMS:Contentful
-    - CMS:Headless 
-    - Blog 
+    - CMS:Headless
+    - Blog
     - Netlify
     - Markdown
     - Styling:CSS-in-JS
