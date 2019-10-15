@@ -7846,6 +7846,18 @@
   built_by: Arturo Alviar
   built_by_url: "https://github.com/arturoalviar"
   featured: false
+- title: Open Source Galaxy
+  main_url: https://www.opensourcegalaxy.com
+  url: https://www.opensourcegalaxy.com
+  description: >
+    Explore the Open Source Galaxy and help other earthlings by contributing to open source.
+  categories:
+    - Open Source
+    - Programming
+    - Web Development
+  built_by: Justin Juno
+  built_by_url: https://www.justinjuno.dev
+  featured: false
 - title: enBonnet Blog
   url: https://enbonnet.me/
   main_url: https://enbonnet.me/
