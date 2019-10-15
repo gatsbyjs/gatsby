@@ -1,5 +1,5 @@
 ---
-title: Gatsby video tutorials a four part video series on Gatsby and Contentful by Khaled Garbaya
+title: Gatsby Video Tutorials, a Four Part Video Series on Gatsby and Contentful by Khaled Garbaya
 date: 2018-04-05
 author: Carolyn Stransky
 canonicalLink: https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/

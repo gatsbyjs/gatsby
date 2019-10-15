@@ -1,5 +1,5 @@
 ---
-title: Why Narative loves Gatsby
+title: Why Narative Loves Gatsby
 date: 2018-06-18
 author: "Dennis Brotzky"
 tags: ["graphql", "blogs", "agencies"]

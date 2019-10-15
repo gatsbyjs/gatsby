@@ -1,5 +1,5 @@
 ---
-title: Gatsby's first beta release
+title: Gatsby's First Beta Release
 date: 2017-06-15
 author: "Kyle Mathews"
 image: "images/13382568193_31cfce63be_o-edited.jpg"

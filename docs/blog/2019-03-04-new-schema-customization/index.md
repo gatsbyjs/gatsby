@@ -1,5 +1,5 @@
 ---
-title: New schema customization API in Gatsby
+title: New Schema Customization API in Gatsby
 date: 2019-03-04
 author: Mikhail Novikov
 tags: ["graphql", "releases"]

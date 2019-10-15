@@ -1,5 +1,5 @@
 ---
-title: Adding and retrieving localized strings from Kentico Cloud to GatsbyJS and GraphQL
+title: Adding and Retrieving Localized Strings from Kentico Cloud to GatsbyJS and GraphQL
 date: 2019-08-13
 author: Ilesh Mistry
 image: "images/country-clocks.jpg"

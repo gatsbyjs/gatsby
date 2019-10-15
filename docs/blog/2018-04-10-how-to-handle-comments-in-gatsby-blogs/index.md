@@ -1,5 +1,5 @@
 ---
-title: How to handle comments in Gatsby blogs
+title: How to Handle Comments in Gatsby Blogs
 date: 2018-04-09
 author: "Gatsby Central"
 canonicalLink: https://www.gatsbycentral.com/how-to-handle-comments-in-gatsby-blogs

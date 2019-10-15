@@ -1,5 +1,5 @@
 ---
-title: My search for the perfect universal JavaScript framework
+title: My Search for the Perfect Universal Javascript Framework
 date: 2017-10-29
 author: "Tal Bereznitskey"
 tags: ["react", "ssr"]

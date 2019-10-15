@@ -1,5 +1,5 @@
 ---
-title: Per-Link Gatsby page transitions with TransitionLink
+title: Per-Link Gatsby Page Transitions with TransitionLink
 date: 2018-12-27
 author: Tyler Barnes
 tags:

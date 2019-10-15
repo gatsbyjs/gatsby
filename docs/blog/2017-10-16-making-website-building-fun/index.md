@@ -1,5 +1,5 @@
 ---
-title: "Making website building fun"
+title: "Making Website Building Fun"
 date: 2017-10-16
 author: "Kyle Mathews"
 typora-copy-images-to: ./

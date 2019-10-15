@@ -1,5 +1,5 @@
 ---
-title: "Modern static site generation with Gatsby"
+title: "Modern Static Site Generation with Gatsby"
 date: 2017-09-18
 image: "code-image.jpg"
 author: "Kostas Bariotis"

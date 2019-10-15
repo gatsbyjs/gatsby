@@ -1,5 +1,5 @@
 ---
-title: Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington
+title: Building a Large, Internationalized E-commerce Website with Gatsby at Daniel Wellington
 date: 2019-01-28
 author: "Thibaut Remy"
 tags: ["case-studies", "large-sites", "i18n"]

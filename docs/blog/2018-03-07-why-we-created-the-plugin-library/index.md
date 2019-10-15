@@ -1,5 +1,5 @@
 ---
-title: Why we created the Gatsby plugin library
+title: Why We Created the Gatsby Plugin Library
 date: 2018-03-07
 author: Shannon Soper
 tags: ["plugins", "documentation"]

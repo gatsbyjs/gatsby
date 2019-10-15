@@ -1,5 +1,5 @@
 ---
-title: Announcing Gatsby Manor, themes for Gatsby 🎉🎊
+title: Announcing Gatsby Manor, Themes for Gatsby 🎉🎊
 date: 2018-02-09
 image: "gatsbymanor.jpg"
 author: "Steven Natera"

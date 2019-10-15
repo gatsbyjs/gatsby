@@ -1,5 +1,5 @@
 ---
-title: "Why I created my blog with Gatsby and Contentful"
+title: "Why I Created My Blog with Gatsby and Contentful"
 date: 2017-11-09
 author: "Fernando Poumian"
 tags: ["contentful", "netlify", "getting-started", "hosting", "static"]

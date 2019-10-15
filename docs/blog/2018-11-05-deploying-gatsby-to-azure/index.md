@@ -1,5 +1,5 @@
 ---
-title: "Deploying a Gatsby blog to Azure"
+title: "Deploying a Gatsby Blog to Azure"
 author: Doug McDonald
 date: 2018-11-05
 image: images/rocket.jpg

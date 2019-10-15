@@ -1,5 +1,5 @@
 ---
-title: "How we're migrating a government open data site to Gatsby"
+title: "How We're Migrating a Government Open Data Site to Gatsby"
 date: 2019-02-08
 author: Ryan Johnson
 tags:

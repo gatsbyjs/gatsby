@@ -1,5 +1,5 @@
 ---
-title: Improvements to GraphiQL IDE - adding GraphiQL Explorer
+title: Improvements to GraphiQL IDE - Adding GraphiQL Explorer
 date: 2019-06-03
 author: Michal Piechowiak
 tags:

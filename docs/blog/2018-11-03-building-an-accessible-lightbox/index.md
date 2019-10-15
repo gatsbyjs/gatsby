@@ -1,5 +1,5 @@
 ---
-title: "Building a custom, accessible image lightbox"
+title: "Building a Custom, Accessible Image Lightbox"
 date: 2018-12-20
 author: "Sergiy Dybskiy"
 tags: ["cutting-edge-experiences", "gatsby-image", "accessibility"]

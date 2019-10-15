@@ -1,5 +1,5 @@
 ---
-title: Taking Gatsby for a spin
+title: Taking Gatsby for a Spin
 date: 2017-12-06
 author: "Arden de Raaij"
 image: "great-gatsby.jpg"

@@ -1,5 +1,5 @@
 ---
-title: What the JAMstack means for marketing
+title: What the JAMstack Means for Marketing
 date: 2019-03-26
 author: Kym Ellis
 excerpt: "Learn what JAMstack is and the pros and cons JAMstack websites have from a marketing perspective!"

@@ -1,5 +1,5 @@
 ---
-title: "Building a static blog using Gatsby and Strapi"
+title: "Building a Static Blog Using Gatsby and Strapi"
 date: 2018-01-18
 author: "Pierre Burgy"
 canonicalLink: https://blog.strapi.io/building-a-static-website-using-gatsby-and-strapi/

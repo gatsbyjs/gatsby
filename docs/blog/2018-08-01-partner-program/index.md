@@ -1,5 +1,5 @@
 ---
-title: Grow with Gatsby- Announcing the new Gatsby Partner Program!
+title: Grow with Gatsby- Announcing the New Gatsby Partner Program!
 date: 2018-08-01
 author: Linda Watkins
 tags: ["partner-program", "agencies"]

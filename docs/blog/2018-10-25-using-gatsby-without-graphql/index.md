@@ -1,5 +1,5 @@
 ---
-title: Using Gatsby without GraphQL
+title: Using Gatsby Without GraphQL
 date: 2018-10-25
 author: Amberley Romo
 tags: ["content-mesh"]

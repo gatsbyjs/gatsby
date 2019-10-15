@@ -1,5 +1,5 @@
 ---
-title: Announcing support for natively querying 3rd-party GraphQL APIs with Gatsby
+title: Announcing Support for Natively Querying 3rd-party GraphQL APIs With Gatsby
 date: 2018-09-25
 author: "Mikhail Novikov"
 tags: ["graphql", "plugins", "content-mesh", "releases"]

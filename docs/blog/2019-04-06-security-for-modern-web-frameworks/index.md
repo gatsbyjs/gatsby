@@ -1,5 +1,5 @@
 ---
-title: Security for Modern Web Frameworks.
+title: Security for Modern Web Frameworks
 date: 2019-04-06
 author: Alex Moon
 excerpt: "While more secure than their server-side counterparts, modern web frameworks provide new and unique security concerns."

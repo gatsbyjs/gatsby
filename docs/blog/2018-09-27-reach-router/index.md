@@ -1,5 +1,5 @@
 ---
-title: How we improved Gatsby's accessibility in v2 by switching to @reach/router
+title: How We Improved Gatsby's Accessibility in v2 by Switching to @reach/Router
 date: 2018-09-27
 author: Amberley Romo
 tags: ["v2", "accessibility", "client-side-routing"]

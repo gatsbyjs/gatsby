@@ -1,5 +1,5 @@
 ---
-title: What's coming in Gatsby 1.0
+title: What's Coming in Gatsby 1.0
 date: 2017-02-23
 author: "Kyle Mathews"
 image: "ui-and-code.png"

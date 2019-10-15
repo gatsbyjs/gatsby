@@ -1,5 +1,5 @@
 ---
-title: Results from .org messaging survey are in
+title: Results From .org Messaging Survey Are In
 date: 2019-03-05
 author: Shannon Soper
 tags: ["ux", "user-testing", "cutting-edge-experiences"]

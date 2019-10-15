@@ -1,5 +1,5 @@
 ---
-title: Automatically create pages from components in any directory
+title: Automatically Create Pages from Components in Any Directory
 date: 2018-07-07
 image: "gatsbymanor.jpg" # change this to the npm package stats
 author: "Steven Natera"

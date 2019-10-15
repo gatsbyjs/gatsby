@@ -1,5 +1,5 @@
 ---
-title: Performance improvements for large sites
+title: Performance Improvements for Large Sites
 date: 2019-06-12
 author: Anthony Marcar
 tags:

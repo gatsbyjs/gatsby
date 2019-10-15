@@ -1,5 +1,5 @@
 ---
-title: Announcing new Gatsby Company
+title: Announcing New Gatsby Company
 date: 2018-05-24
 author: "Kyle Mathews"
 tags: ["gatsby-inc"]

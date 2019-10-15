@@ -1,5 +1,5 @@
 ---
-title: 5 analogies that explain what Gatsby can do for you
+title: 5 Analogies That Explain What Gatsby Can Do for You
 date: 2018-12-04
 author: Amberley Romo
 tags:

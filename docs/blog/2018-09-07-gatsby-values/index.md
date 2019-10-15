@@ -1,5 +1,5 @@
 ---
-title: What kind of company will we be? A look at Gatsby’s mission and values.
+title: What Kind of Company Will We Be? A Look at Gatsby’s Mission and Values
 author: Jason Lengstorf
 date: 2018-09-07
 image: images/values-whiteboard.jpg

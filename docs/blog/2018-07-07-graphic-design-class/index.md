@@ -1,5 +1,5 @@
 ---
-title: Learning how to code with Gatsby
+title: Learning How to Code with Gatsby
 date: 2018-07-07
 author: "Shannon Soper"
 tags:

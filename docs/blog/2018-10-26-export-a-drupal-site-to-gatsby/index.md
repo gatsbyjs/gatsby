@@ -1,5 +1,5 @@
 ---
-title: How to export a Drupal site to Gatsby
+title: How to Export a Drupal Site to Gatsby
 date: 2018-12-18
 author: Joaquín Bravo Contreras
 tags: ["drupal", "getting-started"]

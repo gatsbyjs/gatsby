@@ -1,5 +1,5 @@
 ---
-title: Migration to GatsbyJS and JAM stack from WordPress
+title: Migration to GatsbyJS and JAM Stack from WordPress
 date: 2018-03-29
 author: Vojtech Ruzicka
 canonicalLink: https://www.vojtechruzicka.com/gatsby-migration/

@@ -1,5 +1,5 @@
 ---
-title: Picking a backend for GatsbyJS
+title: Picking a Backend for GatsbyJS
 date: 2018-02-06
 author: "Ross Whitehouse"
 tags: ["headless-cms", "wordpress", "contentful", "netlify-cms", "jamstack"]

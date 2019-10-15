@@ -1,5 +1,5 @@
 ---
-title: Youfit uses Gatsby to increase lead generation by 60%
+title: Youfit Uses Gatsby to Increase Lead Generation by 60%
 date: 2018-11-16
 author: Linda Watkins
 tags:

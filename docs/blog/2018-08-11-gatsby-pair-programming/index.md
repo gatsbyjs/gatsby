@@ -1,5 +1,5 @@
 ---
-title: My experience doing pair programming with the Gatsby team and why you should do it
+title: My Experience Doing Pair Programming with the Gatsby Team and Why You Should Do It
 date: 2018-08-11
 image: images/screenshot.jpg
 author: Horacio Herrera

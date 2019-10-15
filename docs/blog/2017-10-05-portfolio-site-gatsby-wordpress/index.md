@@ -1,5 +1,5 @@
 ---
-title: "Rebuilding my portfolio website with the great GatsbyJS and WordPress"
+title: "Rebuilding My Portfolio Website with the Great GatsbyJS and Wordpress"
 date: 2017-10-05
 image: "gatsby-article-cover-image.jpg"
 author: "David James"

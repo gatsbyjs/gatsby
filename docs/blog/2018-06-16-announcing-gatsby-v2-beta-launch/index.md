@@ -1,5 +1,5 @@
 ---
-title: Announcing Gatsby v2 beta launch!
+title: Announcing Gatsby v2 Beta Launch!
 date: 2018-06-16
 author: "Mike Allanson"
 tags: ["v2"]

@@ -1,5 +1,5 @@
 ---
-title: How Gatsby scales with your expertise & scope
+title: How Gatsby Scales with Your Expertise & Scope
 date: 2019-01-03
 author: LekoArts
 canonicalLink: "https://www.lekoarts.de/en/blog/how-gatsby-scales-with-your-expertise-and-scope"

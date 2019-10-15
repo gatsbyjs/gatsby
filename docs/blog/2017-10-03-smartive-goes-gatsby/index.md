@@ -1,5 +1,5 @@
 ---
-title: "Why we choose Gatsby over Next.js and Wintersmith"
+title: "Why We Choose Gatsby over Next.Js and Wintersmith"
 date: 2017-10-03
 image: "smartive-loves-gatsby.png"
 author: "Moreno Feltscher"

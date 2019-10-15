@@ -1,5 +1,5 @@
 ---
-title: Web Performance 101—also, why is Gatsby so fast?
+title: Web Performance 101—also, Why Is Gatsby so Fast?
 date: 2017-09-13
 author: "Kyle Mathews"
 image: "reactnext-gatsby-performance.001.png"

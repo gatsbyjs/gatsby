@@ -1,5 +1,5 @@
 ---
-title: Gatsby Days, Meetups, and more!
+title: Gatsby Days, Meetups, and More!
 date: 2018-11-27
 author: Linda Watkins
 tags:

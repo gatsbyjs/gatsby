@@ -1,5 +1,5 @@
 ---
-title: "How we tested prototypes for the new gatsbyjs.org homepage"
+title: "How We Tested Prototypes for the New Gatsbyjs.org Homepage"
 date: 2019-03-11
 author: Shannon Soper
 tags: ["ux", "user-testing", "cutting-edge-experiences"]

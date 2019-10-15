@@ -1,5 +1,5 @@
 ---
-title: How Boston.gov used Gatsby to be selected as an Amazon HQ2 candidate city
+title: How Boston.gov Used Gatsby to Be Selected as an Amazon Hq2 Candidate City
 date: 2018-01-18
 author: "Sam Bhagwat"
 tags: ["case-studies", "building-sites-faster"]

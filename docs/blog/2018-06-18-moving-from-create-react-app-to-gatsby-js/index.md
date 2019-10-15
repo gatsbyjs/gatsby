@@ -1,5 +1,5 @@
 ---
-title: Moving from create-react-app to Gatsby.js
+title: Moving From create-react-app to Gatsby.js
 date: 2018-06-18
 author: Khaled Garbaya
 canonicalLink: https://khaledgarbaya.net/articles/moving-from-create-react-app-to-gatsby-js

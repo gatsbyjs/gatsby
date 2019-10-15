@@ -1,5 +1,5 @@
 ---
-title: How Gatsby does high-impact, low-effort UX research (and you can too!)
+title: How Gatsby Does High-impact, Low-effort Ux Research (and You Can Too!)
 author: Shannon Soper
 date: 2018-12-31
 tags:
