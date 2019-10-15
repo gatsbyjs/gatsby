@@ -297,7 +297,7 @@ Now you have all the pieces you need to programmatically create pages
 with Gatsby and `gatsby-plugin-mdx`. You can check out our other guides to find out
 more about all of the cool stuff you can do with `gatsby-plugin-mdx`.
 
-## Bonus: make a blog index
+## Bonus: Make a blog index
 
 ```javascript:title=src/pages/index.js
 import React from "react"
