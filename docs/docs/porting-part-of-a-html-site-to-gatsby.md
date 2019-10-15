@@ -523,7 +523,7 @@ website-domain
 
 ## Next steps
 
-The [building with components page}(/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
+The [building with components page](/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 
 [Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code
 
