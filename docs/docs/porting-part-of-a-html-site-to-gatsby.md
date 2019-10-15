@@ -84,7 +84,7 @@ You now have a folder called `gatsby-site-section` containing a basic Gatsby web
 cd gatsby-site-section
 ```
 
-The `/src` folder contains all code for the Gatsby site. In the Gatsby build stage every file in the `/src/pages` folder will result in a HTML file. Currently, the only page file is the root `/src/pages/index.js`:
+The `/src` folder contains all code for the Gatsby site. In the Gatsby build stage [every file in the `/src/pages` folder will result in a HTML file](https://www.gatsbyjs.org/docs/recipes/#creating-pages-automatically). Currently, the only page file is the root `/src/pages/index.js`:
 
 ```jsx:title=/gatsby-site-section/src/pages/index.js
 import React from "react"
@@ -150,7 +150,7 @@ Here is `/who/index.html` from the example site structure above:
   </body>
 </html>
 ```
-
+In the following sections, you'll convert this block of HTML into its equivalent code in Gatsby.
 ### Head elements
 
 You might have noticed that the `/src/pages/index.js` file doesn't have a `<html>`, `<head>` or `<body>`. Gatsby makes a basic html structure for each page and places the `/src/pages/index.js` output into its body. More `<head>` elements and `<html>` attributes are added to the output page with a module called [React Helmet](https://github.com/nfl/react-helmet). React Helmet is added to a Gatsby project in the command line with NPM and then to the Gatsby config file:
@@ -265,7 +265,7 @@ The code for Gatsby pages look like a hybrid of JavaScript and HTML. The code fo
 
 The appearance of Gatsby page code depends on how dynamic the content and behaviour is. The code for a very static page will _almost_ look like pure HTML. The code for a page with many inputs, and logic applied to those inputs, will look more like pure JavaScript. This guide will stay on the HTML side of the balance to suit the your static site. Using Gatsby to arrange the necessary JavaScript now, opens many future possibilities though. Gatsby delivers your JavaScript page functions to the user after the static HTML, ready for client side dynamic behaviour .
 
-Your pasted HTML in `/gatsby-site-section/src/pages/index.js` needs a small change to be valid. `class` attributes must be renamed to `className` as class is a reserved word in JavaScript.
+Your pasted HTML in `/gatsby-site-section/src/pages/index.js` needs a small change to be valid. `class` attributes [must be renamed to `className`](https://reactjs.org/docs/dom-elements.html#classname) for usage with React, as class is a reserved word in JavaScript.
 
 ### Layout component
 
@@ -317,7 +317,7 @@ There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of th
 </html>
 ```
 
-The foundational building block in most Gatsby sites is a `<Layout>` component. The `<Layout>` component wraps around page content, providing the common structure that appears on all pages. Looking at the `/index.html` and `/who/ella-arborist.html` you can see that most of the page is identical. Other than the title of the page, everything except for the contents of the main block is repeated.
+The foundational building block for building and styling pages in Gatsby is [the `<Layout>` component](https://www.gatsbyjs.org/docs/layout-components/). The `<Layout>` component wraps around page content, providing the common structure that appears on all pages. Looking at the `/index.html` and `/who/ella-arborist.html` you can see that most of the page is identical. Other than the title of the page, everything except for the contents of the main block is repeated.
 
 Create a folder inside `/src`, next to `/src/pages` called `components`. Inside components make a file called `Layout.js`. Here is a basic structure to use for the file:
 
@@ -334,7 +334,7 @@ export default ({ children }) => (
 )
 ```
 
-Like in `/src/pages/index.js` the file exports a JavaScript function that returns a HTML like structure, but this time the function takes an argument. The first argument provided to a component function is always an object called the props. On the props object, the children of the component are available. Within the HTML like markup, the curly braces wrap a JavaScript expression whose result will be placed there. In this case it is a very simple expression that results in the contents of the `children` variable.
+Like in `/src/pages/index.js` the file exports a JavaScript function that returns an HTML like structure, but this time the function takes an argument. The first argument provided to a component function is always an object called the props. On the props object, the children of the component are available. Within the HTML like markup, the curly braces wrap a JavaScript expression whose result will be placed there. In this case it is a very simple expression that results in the contents of the `children` variable.
 
 The common elements from the `/index.html` and `/who/ella-arborist.html` files can now copied into the `<Layout>` component. A second prop is also added and used in a second JavaScript expression in the `<title>` element. The added expression results in the title, with the `staffName` prop added only if it is provided. We'll see the prop used later on when porting the `/who/ella-arborist.html` page.
 
@@ -423,7 +423,7 @@ import Layout from "../components/Layout"
 import { Link } from "gatsby"
 
 export default () => (
-  <Layout staffName="Ella">
+  <Layout staffName="Ella"> // highlight-line
     <h2>Ella is an excellent Arborist. We guarantee it.</h2>
     <div className="bio-card">
       <img
@@ -444,7 +444,7 @@ With the implementation of the site section into Gatsby complete, it's time to b
 
 ### Path Prefix
 
-By default, Gatsby assumes that the build will be hosted at the root path of a domain, e.g `https://gatsbyjs.org/`. After the initial static HTML file is loaded, Gatsby reaches out for other generated JavaScript files in the same location in order to progressively enable enhancements for the user. In the example site, the path at which the Gatsby site will be hosted is `/who`. The gatsby `pathPrefix` option will ensure that the generated JavaSript files are available to load and the generated links from `index.js` to internal pages work correctly:
+By default, Gatsby assumes that the build will be hosted at the root path of a domain, e.g `https://gatsbyjs.org/`. After the initial static HTML file is loaded, Gatsby reaches out for other generated JavaScript files in the same location in order to [progressively enable enhancements](/docs/glossary/#progressive-enhancement) for the user. In the example site, the path at which the Gatsby site will be hosted is `/who`. The gatsby `pathPrefix` option will ensure that the generated JavaSript files are available to load and the generated links from `index.js` to internal pages work correctly:
 
 ```js:title=/gatsby-config.js
 module.exports = {
