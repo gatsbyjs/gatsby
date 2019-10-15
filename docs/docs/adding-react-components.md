@@ -27,6 +27,40 @@ export default () => (
 )
 ```
 
+### Importing 3rd party components
+
+Just like React, Gatsby also supports 3rd party components and libraries. You can install a third party component or library via your package manager (either `yarn` or `npm`).
+
+Here's a short example on adding a 3rd party component to your site.
+
+First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers (don't use npm and yarn at the same time).
+
+```shell
+// Install material-ui with npm
+npm install @material-ui/core
+
+// Or with yarn
+yarn add @material-ui/core
+```
+
+After, import and use it in your page's source:
+
+```jsx:title=my-page.jsx
+import React from "react"
+
+// import my fancy 3rd party component
+import Button from "@material-ui/core/Button"
+
+export default () => (
+  <div>
+    <p>This is my super awesome page made with Gatsby!</p>
+
+    {/* use my fancy 3rd party component */}
+    <Button>Fancy button!</Button>
+  </div>
+)
+```
+
 ## Things to watch out for
 
 Since Gatsby uses Server Side Rendering (SSR) to generate your site's pages, the JSX code you write is usually compiled before the browser loads the page. Because of this, certain features are not available at compile time and can cause a build to error.
