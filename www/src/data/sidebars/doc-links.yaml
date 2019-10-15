@@ -637,7 +637,7 @@
                   link: /docs/answering-it-security/
                 - title: Setting Up Gatsby Without Gatsby New
                   link: /docs/setting-up-gatsby-without-gatsby-new/
-        - title: Best Practices for Orgs*
+        - title: Best Practices for Organizations*
           link: /docs/best-practices-for-orgs/
           items:
             - title: Sharing Components Across Websites
