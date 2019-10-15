@@ -93,9 +93,9 @@ You can read more about it on [`@reach/router`'s documentation](https://reach.te
 
 ### Show active styles for partially matched and parent links
 
-By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, we may want to style a `<Link>` as active even if it partially matches the current URL. For example:
+By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, you may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
-- We may want `/blog/hello-world` to match `<Link to="/blog">`
+- You may want `/blog/hello-world` to match `<Link to="/blog">`
 - Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
 In instances like these, just add the `partiallyActive` prop to your `<Link>` component and the style will also be applied even if the `to` prop only is a partial match:
