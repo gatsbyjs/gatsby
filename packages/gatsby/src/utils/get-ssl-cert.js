@@ -27,8 +27,6 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
 
     process.env.NODE_EXTRA_CA_CERTS = certPath
     return await {
-      keyPath,
-      certPath,
       key: fs.readFileSync(keyPath),
       cert: fs.readFileSync(certPath),
     }
