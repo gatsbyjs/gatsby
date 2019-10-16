@@ -57,9 +57,25 @@ describe(`gatsby-plugin-typescript`, () => {
       })
     })
 
-    it(`does not set the webpack config if there isn't a js or eslint loader`, () => {
+    it(`does not set the webpack config if there isn't a js loader`, () => {
       const actions = { setWebpackConfig: jest.fn() }
-      const loaders = { js: jest.fn(), eslint: jest.fn() }
+      const eslintLoader = {}
+      const loaders = {
+        js: jest.fn(),
+        eslint: jest.fn(() => eslintLoader),
+      }
+      const store = { getState: jest.fn() }
+      onCreateWebpackConfig({ actions, loaders, store })
+      expect(actions.setWebpackConfig).not.toHaveBeenCalled()
+    })
+    
+    it(`does not set the webpack config if there isn't an eslint loader`, () => {
+      const actions = { setWebpackConfig: jest.fn() }
+      const jsLoader = {}
+      const loaders = {
+        js: jest.fn(() => jsLoader),
+        eslint: jest.fn(),
+      }
       const store = { getState: jest.fn() }
       onCreateWebpackConfig({ actions, loaders, store })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
