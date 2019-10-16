@@ -154,9 +154,6 @@ module.exports = function highlightLineRange(code, highlights = []) {
       })
       .map(line => {
         if (line.highlight) {
-          
-          // use non-breakable space to retain empty line in source listing 
-          // as it is important when both line highlight and line numbering are used.
           line.code
             ? (line.code = highlightWrap(line.code))
             : (line.code = highlightWrap("&nbsp;"))
