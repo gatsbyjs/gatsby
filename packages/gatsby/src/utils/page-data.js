@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
-const { chunk, isEqual } = require(`lodash`)
+const { chunk, isEqual, size } = require(`lodash`)
 const { readFromCache } = require(`../redux/persist.js`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
@@ -76,6 +76,14 @@ const removePreviousPageData = (directory, store) =>
         fs.removeSync(`${directory}/public/page-data${key}`)
       }
     })
+
+    if (size(deletedKeys)) {
+      fs.writeFileSync(
+        `${directory}/temp/delete.txt`,
+        JSON.stringify({ deletedKeys }),
+        `utf-8`
+      )
+    }
 
     resolve(deletedKeys)
   })
