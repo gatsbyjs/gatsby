@@ -68,7 +68,7 @@ describe(`gatsby-plugin-typescript`, () => {
       onCreateWebpackConfig({ actions, loaders, store })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
     })
-    
+
     it(`does not set the webpack config if there isn't an eslint loader`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
