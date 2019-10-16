@@ -56,7 +56,7 @@ On MacOS, you should be able to run:
 brew install nss
 ```
 
-Windows is a different story.  There's not many precompiled binaries out there.  If you search, you should find some, but otherwise, you will need to compile the library yourself.
+Windows is a different story.  There's not too many precompiled libraries out there, so the only option would be to go searching for one, or compile it yourself.  Because of how difficult Windows makes it, `devcert` will not even try to update the Firefox trust store automatically; instead, it will fallback to using the "Firefox wizard", detailed below.
 
 If you choose not to install `certutil`, you may get the following errors/prompts:
 
