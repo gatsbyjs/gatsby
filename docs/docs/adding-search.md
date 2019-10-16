@@ -1,5 +1,5 @@
 ---
-title: "Adding search"
+title: Adding Search
 overview: true
 ---
 

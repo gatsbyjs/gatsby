@@ -160,6 +160,12 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
 
+  integration_tests_structured_logging:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/structured-logging
+
   e2e_tests_path-prefix:
     <<: *e2e-executor
     environment:
@@ -326,6 +332,8 @@ workflows:
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
+      - integration_tests_structured_logging:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow

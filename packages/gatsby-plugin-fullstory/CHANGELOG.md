@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-fullstory@2.1.13...gatsby-plugin-fullstory@2.1.14) (2019-10-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-fullstory:** Update snippet ([#18461](https://github.com/gatsbyjs/gatsby/issues/18461)) ([e7c7dfc](https://github.com/gatsbyjs/gatsby/commit/e7c7dfc)), closes [#18456](https://github.com/gatsbyjs/gatsby/issues/18456)
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-fullstory@2.1.12...gatsby-plugin-fullstory@2.1.13) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-fullstory
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-fullstory@2.1.11...gatsby-plugin-fullstory@2.1.12) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-fullstory
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-fullstory@2.1.10...gatsby-plugin-fullstory@2.1.11) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-fullstory
+
 ## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-fullstory@2.1.8...gatsby-plugin-fullstory@2.1.10) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-plugin-fullstory

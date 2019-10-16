@@ -1,6 +1,6 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
-import { colors } from "../../utils/presets"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/tech-logos"
 import Card from "../card"
 import CardHeadline from "../card-headline"
@@ -9,11 +9,12 @@ import FuturaParagraph from "../futura-paragraph"
 
 const HomepageFeatures = () => (
   <div
-    css={{
+    sx={{
+      borderBottom: t => `1px solid ${t.colors.ui.border}`,
       display: `flex`,
       flex: `0 1 auto`,
       flexWrap: `wrap`,
-      borderBottom: `1px solid ${colors.purple[10]}`,
+      px: 8,
     }}
   >
     <Card>
@@ -57,11 +58,7 @@ const HomepageFeatures = () => (
       </FuturaParagraph>
     </Card>
     <Card>
-      <CardHeadline>
-        <em css={{ color: colors.gatsby, fontStyle: `normal` }}>Static</em>
-        {` `}
-        Progressive Web Apps
-      </CardHeadline>
+      <CardHeadline>Static Progressive Web Apps</CardHeadline>
       <FuturaParagraph>
         Gatsby.js is a static PWA (Progressive Web App) generator. You get code
         and data splitting out-of-the-box. Gatsby loads only the critical HTML,
