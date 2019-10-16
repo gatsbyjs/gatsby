@@ -8042,3 +8042,15 @@
   built_by: Musthaq Ahamad
   built_by_url: "https://haxzie.com"
   featured: false
+- title: GBT
+  url: "https://yangmuzi.com/"
+  main_url: "https://yangmuzi.com/"
+  source_url: "https://github.com/yangnianbing/blog-by-gatsby"
+  description: >
+    It is a basic Gatsby site project
+  categories:
+    - Blog
+    - Portfolio
+    - Documentation
+  built_by: yangnianbing
+  featured: false
