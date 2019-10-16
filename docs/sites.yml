@@ -7946,6 +7946,42 @@
   built_by: Rou Hun Fan
   built_by_url: "https://flowen.me"
   featured: false
+- title: Plenty of Fish
+  main_url: https://www.pof.com/
+  url: https://pof.com
+  description: >
+    Plenty of Fish is one of the world's largest dating platforms.
+  categories:
+    - Community
+  featured: true
+- title: Bitcoin
+  main_url: https://www.bitcoin.com/
+  url: https://bitcoin.com
+  description: >
+    One of the largest crypto-currency platforms in the world.
+  categories:
+    - Technology
+    - Finance
+  featured: true
+- title: Frame.io
+  main_url: https://www.frame.io/
+  url: https://frame.io
+  description: >
+    Frame.io is a cloud-based video collaboration platform that allows its users to easily work on media projects together
+  categories:
+    - Technology
+    - Entertainment
+    - Media
+  featured: true
+- title: Sainsbury’s Homepage
+  main_url: https://www.sainsburys.co.uk/
+  url: https://www.sainsburys.co.uk
+  description: >
+    Sainsbury’s is an almost 150 year old supermarket chain in the United Kingdom.
+  categories:
+    - eCommerce
+    - Food
+  featured: true
 - title: Haxzie, Portfolio and Blog
   url: "https://haxzie.com/"
   main_url: "https://haxzie.com/"
