@@ -201,7 +201,7 @@ const fileByPath = (options = {}, fieldConfig) => async (
     // the linked file.
 
     if (parentFileNode.dir === null || parentFileNode.dir === undefined) {
-      return null;
+      return null
     }
 
     const fileLinkPath = normalize(
