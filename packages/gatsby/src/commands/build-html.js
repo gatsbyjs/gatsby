@@ -2,14 +2,14 @@
 const Promise = require(`bluebird`)
 const webpack = require(`webpack`)
 const fs = require(`fs-extra`)
-const convertHrtime = require(`convert-hrtime`)
+// const convertHrtime = require(`convert-hrtime`)
 const { chunk } = require(`lodash`)
 const webpackConfig = require(`../utils/webpack.config`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const telemetry = require(`gatsby-telemetry`)
 
-const handleWebpackError = require(`../utils/webpack-error-parser`)
+const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 const runWebpack = compilerConfig =>
   new Promise((resolve, reject) => {
@@ -28,7 +28,9 @@ const doBuildRenderer = async (program, webpackConfig) => {
   // render-page.js is hard coded in webpack.config
   const outputFile = `${directory}/public/render-page.js`
   if (stats.hasErrors()) {
-    reporter.panic(handleWebpackError(`build-html`, stats.compilation.errors))
+    reporter.panic(
+      structureWebpackErrors(`build-html`, stats.compilation.errors)
+    )
   }
   return outputFile
 }
@@ -64,9 +66,9 @@ const renderHTMLQueue = (
       gatsby_log_level: process.env.gatsby_log_level,
     })
 
-    const start = process.hrtime()
+    // const start = process.hrtime()
     const segments = chunk(pages, 50)
-    let finished = 0
+    // let finished = 0
 
     Promise.map(
       segments,
@@ -79,13 +81,14 @@ const renderHTMLQueue = (
               envVars,
             })
             .then(() => {
-              finished += pageSegment.length
-              if (activity) {
-                activity.setStatus(
-                  `${finished}/${pages.length} ${(
-                    finished / convertHrtime(process.hrtime(start)).seconds
-                  ).toFixed(2)} pages/second`
-                )
+              // finished += pageSegment.length
+              if (activity && activity.tick) {
+                activity.tick(pageSegment.length)
+                // activity.setStatus(
+                //   `${finished}/${pages.length} ${(
+                //     finished / convertHrtime(process.hrtime(start)).seconds
+                //   ).toFixed(2)} pages/second`
+                // )
               }
               resolve()
             })
