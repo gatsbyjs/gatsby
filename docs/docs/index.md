@@ -1,5 +1,6 @@
 ---
 title: Gatsby.js Documentation
+disableTableOfContents: true
 ---
 
 import EmailCaptureForm from "../../www/src/components/email-capture-form"
