@@ -28,7 +28,7 @@ export default async function writeRedirectsFile(
     let status = isPermanent ? `301` : `302`
     if (statusCode) status = statusCode
 
-    if (force) status = status.concat(`!`)
+    if (force) status = `${status}!`
 
     // The order of the first 3 parameters is significant.
     // The order for rest params (key-value pairs) is arbitrary.
