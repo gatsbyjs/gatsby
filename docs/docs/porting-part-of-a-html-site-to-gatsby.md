@@ -10,7 +10,7 @@ When introducing Gatsby into an existing static HTML site, it might not be feasi
 
 ## Why Gatsby?
 
-### Web Building Blocks
+### Web building blocks
 
 A static web site is generally composed of distinct building blocks made of HTML. With Gatsby you will define the blocks that make up your site once and then reuse them. Building a website with these custom parts is fun! A lot of the repetitive tasks disappear as your changes take immediate effect across a site.
 
@@ -26,7 +26,7 @@ There are two common issues faced when porting part of a static site:
 - Hosting static assets (CSS, images etc.) on a separate domain from the HTML files.
   Gatsby has built in options to set consistent and functional paths for both pages and assets.
 
-### Dynamic Content
+### Dynamic content
 
 Gatsby gathers content from any number of sources, into a single input point for each page. Once ported, content extracted from the site is easy to maintain in isolation from code. You can choose from many content management platforms such as Prismic and Contentful. Gatsby will bring the content together for consumption in your pages.
 
@@ -63,7 +63,7 @@ The `/who` section of the site is a great candidate for porting as it is all wit
 
 ### Assumptions
 
-The example site uses global CSS files (`style.css` and `normalize.css`), more sophisticated styling structures can be accommodated but will not be covered here. No client side JavaScript (e.g JQuery etc.) is on the example site, Gatsby may conflict with client side JavaScript if it is not removed when porting.
+The example site uses global CSS files (`style.css` and `normalize.css`), more sophisticated styling structures can be accommodated but will not be covered here. No client side JavaScript (e.g jQuery etc.) is on the example site, Gatsby may conflict with client side JavaScript if it is not removed when porting.
 
 ### Development environment
 
@@ -92,7 +92,7 @@ import React from "react"
 export default () => <div>Hello world!</div>
 ```
 
-[Run the development server](/docs/quick-start/#start-development-server) in the command line to see the website in your browser. Hello Gatsby! 👋
+[Run the development server](/docs/quick-start/#start-development-server) with `gatsby develop` in the command line to see the website in your browser. Hello Gatsby! 👋
 
 ## Porting index.html
 
@@ -167,7 +167,7 @@ module.exports = {
 }
 ```
 
-Now you can import the `<Helmet>` component to the index.js file and place `<header>` & `<main>` elements for the existing HTML. Gatsby pages must have a single root parent so add a [React Fragment component](https://reactjs.org/docs/fragments.html) around them:
+Now you can import the `<Helmet>` component to the `index.js` file and place `<header>` & `<main>` elements for the existing HTML. Gatsby pages must have a single root parent so add a [React Fragment component](https://reactjs.org/docs/fragments.html) around them:
 
 ```jsx:title=/src/pages/index.js
 import React from "react"
@@ -261,7 +261,7 @@ Take a look in the browser and we should have a functional website! Let's take a
 
 The code for Gatsby pages look like a hybrid of JavaScript and HTML. The code for each page is a JavaScript function describing a block of HTML given a set of inputs. Gatsby runs each page's JavaScript function during build to get a static HTML file.
 
-The appearance of Gatsby page code depends on how dynamic the content and behaviour is. The code for a very static page will _almost_ look like pure HTML. The code for a page with many inputs, and logic applied to those inputs, will look more like pure JavaScript. This guide will stay on the HTML side of the balance to suit the your static site. Using Gatsby to arrange the necessary JavaScript now, opens many future possibilities though. Gatsby delivers your JavaScript page functions to the user after the static HTML, ready for client side dynamic behaviour .
+The appearance of Gatsby page code depends on how dynamic the content and behaviour is. The code for a very static page will _almost_ look like pure HTML. The code for a page with many inputs, and logic applied to those inputs, will look more like pure JavaScript. This guide will stay on the HTML side of the balance to suit the your static site. Using Gatsby to arrange the necessary JavaScript now, opens many future possibilities though. Gatsby delivers your JavaScript page functions to the user after the static HTML, ready for client side dynamic behaviour.
 
 Your pasted HTML in `/gatsby-site-section/src/pages/index.js` needs a small change to be valid. `class` attributes [must be renamed to `className`](https://reactjs.org/docs/dom-elements.html#classname) for usage with React, as class is a reserved word in JavaScript.
 
@@ -315,7 +315,7 @@ There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of th
 </html>
 ```
 
-The foundational building block for building and styling pages in Gatsby is [the `<Layout>` component](https://www.gatsbyjs.org/docs/layout-components/). The `<Layout>` component wraps around page content, providing the common structure that appears on all pages. Looking at the `/index.html` and `/who/ella-arborist.html` you can see that most of the page is identical. Other than the title of the page, everything except for the contents of the main block is repeated.
+The foundational building block for building and styling pages in Gatsby is [the `<Layout>` component](/docs/layout-components/). The `<Layout>` component wraps around page content, providing the common structure that appears on all pages. Looking at the `/index.html` and `/who/ella-arborist.html` you can see that most of the page is identical. Other than the title of the page, everything except for the contents of the main block is repeated.
 
 Create a folder inside `/src`, next to `/src/pages` called `components`. Inside components make a file called `Layout.js`. Here is a basic structure to use for the file:
 
