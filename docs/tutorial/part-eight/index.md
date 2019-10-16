@@ -307,10 +307,7 @@ export default ({ data }) => {
   return (
     <Layout>
       // highlight-start
-      <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.excerpt}
-      />
+      <SEO title={post.frontmatter.title} description={post.excerpt} />
       // highlight-end
       <div>
         <h1>{post.frontmatter.title}</h1>
@@ -326,9 +323,9 @@ export const query = graphql`
       html
       frontmatter {
         title
-        // highlight-next-line
-        excerpt
       }
+      // highlight-next-line
+      excerpt
     }
   }
 `
@@ -338,7 +335,7 @@ The above example is based off the [Gatsby Starter Blog](/starters/gatsbyjs/gats
 
 Now, if you run the Lighthouse audit again as laid out above, you should get close to--if not a perfect-- 100 score!
 
-> 💡 For further reading and examples, check out [Adding an SEO Component](docs/add-seo-component) and the [React Helmet docs](https://github.com/nfl/react-helmet#example)!
+> 💡 For further reading and examples, check out [Adding an SEO Component](/docs/add-seo-component/) and the [React Helmet docs](https://github.com/nfl/react-helmet#example)!
 
 ## Keep making it better
 
