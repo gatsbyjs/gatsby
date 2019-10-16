@@ -168,13 +168,22 @@ describe(`<Image />`, () => {
     expect(component).toMatchSnapshot()
   })
 
-  it(`should have the the "critical" prop set "loading='eager'"`, () => {
+  it(`should have the "critical" prop set "loading='eager'"`, () => {
     jest.spyOn(global.console, `log`)
 
     const props = { critical: true }
     const imageTag = setup(false, props).querySelector(`picture img`)
     expect(imageTag.getAttribute(`loading`)).toEqual(`eager`)
     expect(console.log).toBeCalled()
+  })
+
+  it(`should not have the "loading" prop when "nativeLazyLoading" is set to false`, () => {
+    const props = { nativeLazyLoading: false }
+    const component = setup(false, props)
+    const imageTag = component.querySelector(`picture img`)
+    const noscriptTag = component.querySelector(`noscript`)
+    expect(imageTag.getAttribute(`loading`)).toEqual(null)
+    expect(noscriptTag.innerHTML).not.toContain(`loading`)
   })
 
   it(`should warn if image variants provided are missing media keys.`, () => {

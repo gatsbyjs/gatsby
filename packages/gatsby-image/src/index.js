@@ -207,7 +207,10 @@ const noscriptImg = props => {
   const crossOrigin = props.crossOrigin
     ? `crossorigin="${props.crossOrigin}" `
     : ``
-  const loading = props.loading ? `loading="${props.loading}" ` : ``
+  const loading =
+    props.loading && props.nativeLazyLoading
+      ? `loading="${props.loading}" `
+      : ``
   const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
 
   const sources = generateNoscriptSources(props.imageVariants)
@@ -232,31 +235,16 @@ const Placeholder = ({ src, imageVariants, generateSources, spreadProps }) => {
 }
 
 const Img = React.forwardRef((props, ref) => {
-  const {
-    sizes,
-    srcSet,
-    src,
-    style,
-    onLoad,
-    onError,
-    onClick,
-    loading,
-    draggable,
-    ...otherProps
-  } = props
+  const { style, nativeLazyLoading, ...otherProps } = props
+
+  if (!nativeLazyLoading) {
+    delete otherProps.loading
+  }
 
   return (
     <img
-      sizes={sizes}
-      srcSet={srcSet}
-      src={src}
       {...otherProps}
-      onLoad={onLoad}
-      onError={onError}
-      onClick={onClick}
       ref={ref}
-      loading={loading}
-      draggable={draggable}
       style={{
         position: `absolute`,
         top: 0,
@@ -288,16 +276,19 @@ class Image extends React.Component {
 
     this.isCritical = props.loading === `eager` || props.critical
 
+    const shouldUseNativeLazyLoading =
+      props.nativeLazyLoading && hasNativeLazyLoadSupport
+
     this.addNoScript = !(this.isCritical && !props.fadeIn)
     this.useIOSupport =
-      !hasNativeLazyLoadSupport &&
+      !shouldUseNativeLazyLoading &&
       hasIOSupport &&
       !this.isCritical &&
       !this.seenBefore
 
     const isVisible =
       this.isCritical ||
-      (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
+      (isBrowser && (shouldUseNativeLazyLoading || !this.useIOSupport))
 
     this.state = {
       isVisible,
@@ -384,6 +375,7 @@ class Image extends React.Component {
       itemProp,
       loading,
       draggable,
+      nativeLazyLoading,
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -496,6 +488,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                nativeLazyLoading={nativeLazyLoading}
               />
             </picture>
           )}
@@ -508,6 +501,7 @@ class Image extends React.Component {
                   alt,
                   title,
                   loading,
+                  nativeLazyLoading,
                   ...image,
                   imageVariants,
                 }),
@@ -597,6 +591,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                nativeLazyLoading={nativeLazyLoading}
               />
             </picture>
           )}
@@ -609,6 +604,7 @@ class Image extends React.Component {
                   alt,
                   title,
                   loading,
+                  nativeLazyLoading,
                   ...image,
                   imageVariants,
                 }),
@@ -631,6 +627,7 @@ Image.defaultProps = {
   // We set it to `lazy` by default because it's best to default to a performant
   // setting and let the user "opt out" to `eager`
   loading: `lazy`,
+  nativeLazyLoading: true,
 }
 
 const fixedObject = PropTypes.shape({
@@ -681,6 +678,7 @@ Image.propTypes = {
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
+  nativeLazyLoading: PropTypes.bool,
   draggable: PropTypes.bool,
 }
 
