@@ -2,6 +2,8 @@
 title: PRPL Pattern
 ---
 
+## What is PRPL?
+
 PRPL is a web site architecture developed by Google for building websites and
 apps that work exceptionally well on smartphones and other devices with
 unreliable network connections.
@@ -19,6 +21,8 @@ PRPL stands for:
 _**Note** HTTP/2 Server Push is a developing server technology and not available on
 most hosts just yet._
 
+## Gatsby and PRPL
+
 Gatsby follows the PRPL architectural pattern. Gatsby sites _render_ a static
 HTML version of the initial route and then load the code bundle for the page.
 Then immediately starts _pre-caching_ resources for pages linked to from the
@@ -31,4 +35,4 @@ on how Gatsby works to guarantee high performance.
 https://github.com/gatsbyjs/gatsby/issues/431
 
 This blog post also covers how we think about performance —
-["Web Performance 101—also, why is Gatsby so fast?"](/blog/2017-09-13-why-is-gatsby-so-fast/)
+[Web Performance 101—also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/)
