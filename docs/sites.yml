@@ -7846,6 +7846,16 @@
   built_by: Arturo Alviar
   built_by_url: "https://github.com/arturoalviar"
   featured: false
+- title: Pearly
+  url: https://www.pearlyplan.com
+  main_url: https://www.pearlyplan.com
+  description: >
+    Dental Membership Growth Platform
+  categories:
+    - Technology
+    - Healthcare
+    - App
+  built_by: Sean Emmer and Jeff Cole
 - title: MarceloNM
   url: https://marcelonm.com
   main_url: https://marcelonm.com
@@ -7922,4 +7932,88 @@
     - Web Development
   built_by: We Do Plugins
   built_by_url: https://wedoplugins.com
+- title: Mevish Aslam, business coach
+  url: "https://mevishaslam.com/"
+  main_url: "https://mevishaslam.com/"
+  description: >
+    Mevish Aslam helps women build a life they love and coaches women to launch and grow businesses.
+  categories:
+    - Business
+    - Consulting
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Portfolio
+  built_by: Rou Hun Fan
+  built_by_url: "https://flowen.me"
+  featured: false
+- title: Principles of wealth
+  url: "https://principlesofwealth.net"
+  main_url: "https://principlesofwealth.net"
+  source_url: "https://github.com/flowen/principlesofwealth"
+  description: >
+    Principles of wealth. How to get rich without being lucky, a summary of Naval Ravikant's tweets and podcast.`
+  categories:
+    - Business
+    - Consulting
+    - Education
+    - Entrepreneurship
+    - Finance
+    - Learning
+    - Marketing
+    - Media
+    - Nonprofit
+    - Productivity
+    - Science
+  built_by: Rou Hun Fan
+  built_by_url: "https://flowen.me"
+  featured: false
+- title: Plenty of Fish
+  main_url: https://www.pof.com/
+  url: https://pof.com
+  description: >
+    Plenty of Fish is one of the world's largest dating platforms.
+  categories:
+    - Community
+  featured: true
+- title: Bitcoin
+  main_url: https://www.bitcoin.com/
+  url: https://bitcoin.com
+  description: >
+    One of the largest crypto-currency platforms in the world.
+  categories:
+    - Technology
+    - Finance
+  featured: true
+- title: Frame.io
+  main_url: https://www.frame.io/
+  url: https://frame.io
+  description: >
+    Frame.io is a cloud-based video collaboration platform that allows its users to easily work on media projects together
+  categories:
+    - Technology
+    - Entertainment
+    - Media
+  featured: true
+- title: Sainsbury’s Homepage
+  main_url: https://www.sainsburys.co.uk/
+  url: https://www.sainsburys.co.uk
+  description: >
+    Sainsbury’s is an almost 150 year old supermarket chain in the United Kingdom.
+  categories:
+    - eCommerce
+    - Food
+  featured: true
+- title: Haxzie, Portfolio and Blog
+  url: "https://haxzie.com/"
+  main_url: "https://haxzie.com/"
+  source_url: "https://github.com/haxzie/haxzie.com"
+  description: >
+    Haxzie.com is the portfolio and personal blog of Musthaq Ahamad, UX Engineer and Visual Designer
+  categories:
+    - Blog
+    - Portfolio
+    - Documentation
+  built_by: Musthaq Ahamad
+  built_by_url: "https://haxzie.com"
   featured: false

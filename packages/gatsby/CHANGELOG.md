@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.16.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.2...gatsby@2.16.3) (2019-10-15)
+
+### Performance Improvements
+
+- **schema:** speed up and lower memory usage of type inference ([#18008](https://github.com/gatsbyjs/gatsby/issues/18008)) ([e87ac50](https://github.com/gatsbyjs/gatsby/commit/e87ac50))
+
 ## [2.16.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.1...gatsby@2.16.2) (2019-10-15)
 
 ### Bug Fixes
