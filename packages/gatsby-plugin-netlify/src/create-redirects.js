@@ -26,7 +26,7 @@ export default async function writeRedirectsFile(
     } = redirect
 
     let status = isPermanent ? `301` : `302`
-    if (statusCode) status = statusCode
+    if (statusCode) status = String(statusCode)
 
     if (force) status = `${status}!`
 
