@@ -13,7 +13,6 @@ const {
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
-type IDOrNode = string | { id: string }
 type TypeOrTypeName = string | GraphQLOutputType
 
 /**
@@ -36,11 +35,11 @@ interface QueryArguments {
 
 export interface NodeModel {
   getNodeById(
-    { id: IDOrNode, type?: TypeOrTypeName },
+    { id: string, type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
   ): any | null;
   getNodesByIds(
-    { ids: Array<IDOrNode>, type?: TypeOrTypeName },
+    { ids: Array<string>, type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
   ): Array<any>;
   getAllNodes(
@@ -158,10 +157,10 @@ class LocalNodeModel {
       result = this.nodeStore.getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodes = nodeTypeNames.reduce(
-        (acc, typeName) => acc.concat(this.nodeStore.getNodesByType(typeName)),
-        []
-      )
+      const nodes = nodeTypeNames.reduce((acc, typeName) => {
+        acc.push(...this.nodeStore.getNodesByType(typeName))
+        return acc
+      }, [])
       result = nodes.filter(Boolean)
     }
 
@@ -197,6 +196,8 @@ class LocalNodeModel {
       `Querying GraphQLUnion types is not supported.`
     )
 
+    const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+
     const fields = getQueryFields({
       filter: query.filter,
       sort: query.sort,
@@ -207,15 +208,9 @@ class LocalNodeModel {
       this.schemaComposer,
       this.schema,
       gqlType,
-      fields
+      fields,
+      nodeTypeNames
     )
-
-    let nodeTypeNames
-    if (isAbstractType(gqlType)) {
-      nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
-    } else {
-      nodeTypeNames = [gqlType.name]
-    }
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
 
@@ -339,7 +334,7 @@ class LocalNodeModel {
    */
   trackInlineObjectsInRootNode(node) {
     if (!this._trackedRootNodes.has(node.id)) {
-      addRootNodeToInlineObject(this._rootNodeMap, node, node.id, true, true)
+      addRootNodeToInlineObject(this._rootNodeMap, node, node.id, true)
       this._trackedRootNodes.add(node.id)
     }
   }
@@ -390,9 +385,11 @@ class LocalNodeModel {
         this.createPageDependency({ path, connection: connectionType })
       } else {
         const nodes = Array.isArray(result) ? result : [result]
-        nodes
-          .filter(Boolean)
-          .map(node => this.createPageDependency({ path, nodeId: node.id }))
+        for (const node of nodes) {
+          if (node) {
+            this.createPageDependency({ path, nodeId: node.id })
+          }
+        }
       }
     }
 
@@ -413,21 +410,41 @@ class ContextualNodeModel {
     })
   }
 
-  getNodeById(...args) {
-    return this.nodeModel.getNodeById(...args)
+  _getFullDependencies(pageDependencies) {
+    return {
+      path: this.context.path,
+      ...(pageDependencies || {}),
+    }
   }
 
-  getNodesByIds(...args) {
-    return this.nodeModel.getNodesByIds(...args)
+  getNodeById(args, pageDependencies) {
+    return this.nodeModel.getNodeById(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  getAllNodes(...args) {
-    return this.nodeModel.getAllNodes(...args)
+  getNodesByIds(args, pageDependencies) {
+    return this.nodeModel.getNodesByIds(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  runQuery(...args) {
-    return this.nodeModel.runQuery(...args)
+  getAllNodes(args, pageDependencies) {
+    const fullDependencies = pageDependencies
+      ? this._getFullDependencies(pageDependencies)
+      : null
+    return this.nodeModel.getAllNodes(args, fullDependencies)
   }
+
+  runQuery(args, pageDependencies) {
+    return this.nodeModel.runQuery(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
+  }
+
   prepareNodes(...args) {
     return this.nodeModel.prepareNodes(...args)
   }
@@ -449,24 +466,15 @@ class ContextualNodeModel {
   }
 
   trackPageDependencies(result, pageDependencies) {
-    const fullDependencies = {
-      path: this.context.path,
-      ...(pageDependencies || {}),
-    }
-
-    return this.nodeModel.trackPageDependencies(result, fullDependencies)
+    return this.nodeModel.trackPageDependencies(
+      result,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 }
 
-const getNodeById = (nodeStore, id) => {
-  // This is for cases when the `id` has already been resolved
-  // to a full Node for the input filter, and is also in the selection
-  // set. E.g. `{ foo(parent: { id: { eq: 1 } } ) { parent { id } } }`.
-  if (_.isPlainObject(id) && id.id) {
-    return id
-  }
-  return id != null ? nodeStore.getNode(id) : null
-}
+const getNodeById = (nodeStore, id) =>
+  id != null ? nodeStore.getNode(id) : null
 
 const toNodeTypeNames = (schema, gqlTypeName) => {
   const gqlType =
@@ -530,6 +538,15 @@ const dropQueryOperators = filter =>
     return acc
   }, {})
 
+const getFields = (schema, type, node) => {
+  if (!isAbstractType(type)) {
+    return type.getFields()
+  }
+
+  const concreteType = type.resolveType(node)
+  return schema.getType(concreteType).getFields()
+}
+
 async function resolveRecursive(
   nodeModel,
   schemaComposer,
@@ -539,7 +556,7 @@ async function resolveRecursive(
   queryFields,
   fieldsToResolve
 ) {
-  const gqlFields = type.getFields()
+  const gqlFields = getFields(schema, type, node)
   let resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
@@ -636,7 +653,13 @@ function resolveField(
   )
 }
 
-const determineResolvableFields = (schemaComposer, schema, type, fields) => {
+const determineResolvableFields = (
+  schemaComposer,
+  schema,
+  type,
+  fields,
+  nodeTypeNames
+) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
   Object.keys(fields).forEach(fieldName => {
@@ -644,16 +667,25 @@ const determineResolvableFields = (schemaComposer, schema, type, fields) => {
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    const needsResolve = typeComposer.getFieldExtension(
-      fieldName,
-      `needsResolve`
-    )
+    let possibleTCs = [
+      typeComposer,
+      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
+    ]
+    let needsResolve = false
+    for (const tc of possibleTCs) {
+      needsResolve = tc.getFieldExtension(fieldName, `needsResolve`) || false
+      if (needsResolve) {
+        break
+      }
+    }
+
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
         schemaComposer,
         schema,
         gqlFieldType,
-        field
+        field,
+        toNodeTypeNames(schema, gqlFieldType)
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved

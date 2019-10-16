@@ -22,7 +22,7 @@ You'll need to use `gatsby-source-filesystem` and tell it to source
 "posts" from a folder called `content/posts` located in the project's
 root.
 
-> **NOTE**: `gatsby-plugin-mdx` uses `.mdx` by default as a file extension to
+> **Note**: `gatsby-plugin-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
 > extension](/packages/gatsby-plugin-mdx#extensions) if you want.
 
@@ -49,7 +49,7 @@ You can read about
 [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
 if you'd like to learn more.
 
-## Add MDX Files
+## Add MDX files
 
 Before you can write any GraphQL queries and programmatically create
 pages, you need to add some content.
@@ -64,20 +64,20 @@ mkdir -p content/posts
 touch content/posts/blog-{1,2}.mdx
 ```
 
-> **NOTE**:
+> **Note**:
 > `mkdir -p path/to/a/directory` will create every folder in the path if
 > it does not exist.
 >
-> _`touch <filename>` will create an empty file named `<filename>`. The
+> `touch <filename>` will create an empty file named `<filename>`. The
 > brackets (`{}`) are [an
 > expansion](https://twitter.com/kentcdodds/status/1083399683932868609?s=19)
-> which means we can create multiple files in one command._
+> which means you can create multiple files in one command.
 
 Open up each of the files you just created and add some content.
 
 ```md:title=blog-1.mdx
 ---
-title: "Blog Post 1"
+title: Blog Post 1
 ---
 
 Trying out MDX
@@ -85,7 +85,7 @@ Trying out MDX
 
 ```md:title=blog-2.mdx
 ---
-title: "Blog Post 2"
+title: Blog Post 2
 ---
 
 Gatsby is the best
@@ -104,8 +104,8 @@ const { createFilePath } = require("gatsby-source-filesystem")
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  // We only want to operate on `Mdx` nodes. If we had content from a
-  // remote CMS we could also check to see if the parent node was a
+  // you only want to operate on `Mdx` nodes. If you had content from a
+  // remote CMS you could also check to see if the parent node was a
   // `File` node here
   if (node.internal.type === "Mdx") {
     const value = createFilePath({ node, getNode })
@@ -115,7 +115,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: "slug",
       // Individual MDX node
       node,
-      // Generated value based on filepath with "blog" prefix. We
+      // Generated value based on filepath with "blog" prefix. you
       // don't need a separating "/" before the value because
       // createFilePath returns a path with the leading "/".
       value: `/blog${value}`,
@@ -124,7 +124,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 ```
 
-The `value` in the `createNodeField` call is the URL we'll use later
+The `value` in the `createNodeField` call is the URL you'll use later
 to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
@@ -138,7 +138,7 @@ paths to usable URLs.
 
 [`onCreateNode`](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode)
 is a Gatsby lifecycle method that gets called whenever a new node is
-created. In this case only `Mdx` nodes are touched.
+created. In this case only `MDX` nodes are touched.
 
 ## Create pages from sourced MDX files
 
@@ -146,7 +146,7 @@ In order to create pages from the sourced MDX files, you need
 to construct a query that finds all MDX nodes and pulls out
 the `slug` field added earlier.
 
-> **NOTE**: You can open up a GraphiQL console for query testing
+> **Note**: You can open up a GraphiQL console for query testing
 > in your browser at <http://localhost:8000/___graphql>
 
 ```graphql
@@ -197,15 +197,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Create blog post pages.
   const posts = result.data.allMdx.edges
 
-  // We'll call `createPage` for each result
+  // you'll call `createPage` for each result
   posts.forEach(({ node }, index) => {
     createPage({
-      // This is the slug we created before
+      // This is the slug you created before
       // (or `node.frontmatter.slug`)
       path: node.fields.slug,
       // This component will wrap our MDX content
       component: path.resolve(`./src/components/posts-page-layout.js`),
-      // We can use the values in this context in
+      // You can use the values in this context in
       // our page layout component
       context: { id: node.id },
     })
@@ -219,7 +219,7 @@ API.
 
 ## Make a template for your posts
 
-Make a file called `posts-page-layout.js` in `src/components`. This component
+You can create a file called `posts-page-layout.js` in `src/components` - this component
 will be rendered as the template for all posts. There's a component,
 `MDXRenderer` which is used by `gatsby-plugin-mdx` that will be used to render any
 programmatically accessed MDX content.
@@ -260,7 +260,7 @@ export const pageQuery = graphql`
 `
 ```
 
-When we put the component and page query all together, the
+When you put the component and page query all together, the
 component should look like:
 
 ```javascript:title=src/components/posts-page-layout.js
@@ -294,10 +294,10 @@ That's it, you're done. Run `gatsby develop` and enjoy your new MDX
 powers.
 
 Now you have all the pieces you need to programmatically create pages
-with Gatsby and `gatsby-plugin-mdx`. Check out our other guides to find out
+with Gatsby and `gatsby-plugin-mdx`. You can check out our other guides to find out
 more about all of the cool stuff you can do with `gatsby-plugin-mdx`.
 
-## Bonus: Make a Blog Index
+## Bonus: Make a blog index
 
 ```javascript:title=src/pages/index.js
 import React from "react"

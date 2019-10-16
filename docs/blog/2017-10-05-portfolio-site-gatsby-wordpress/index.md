@@ -76,7 +76,7 @@ GraphQL schema. Here is an example of my Projects page which includes pulling
 some ACF fields which were originally defined in my Projects page template:
 
 ```js
-// Pull the project page content from Wordpress
+// Pull the project page content from WordPress
 export const projectsPageQuery = graphql`
   query projectsPageQuery {
     wordpressPage(slug: { eq: "projects" }) {

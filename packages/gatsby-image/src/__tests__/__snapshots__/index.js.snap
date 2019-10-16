@@ -13,6 +13,7 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
     <img
       alt=""
       class="placeholder"
+      itemprop="item-prop-for-the-image"
       src="string_of_base64"
       style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 1000ms; color: red;"
       title="Title for the image"
@@ -59,6 +60,7 @@ exports[`<Image /> should render fixed size images 1`] = `
     <img
       alt=""
       class="placeholder"
+      itemprop="item-prop-for-the-image"
       src="string_of_base64"
       style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;"
       title="Title for the image"
@@ -108,6 +110,7 @@ exports[`<Image /> should render fluid images 1`] = `
     <img
       alt=""
       class="placeholder"
+      itemprop="item-prop-for-the-image"
       src="string_of_base64"
       style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;"
       title="Title for the image"
@@ -163,6 +166,7 @@ exports[`<Image /> should render multiple fixed image variants 1`] = `
       <img
         alt=""
         class="placeholder"
+        itemprop="item-prop-for-the-image"
         src="other_string_of_base64"
         style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;"
         title="Title for the image"
@@ -229,6 +233,7 @@ exports[`<Image /> should render multiple fluid image variants 1`] = `
       <img
         alt=""
         class="placeholder"
+        itemprop="item-prop-for-the-image"
         src="string_of_base64"
         style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;"
         title="Title for the image"

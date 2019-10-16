@@ -38,7 +38,10 @@ describe(`default behavior: has network connectivity`, () => {
   it(`makes a request to unpkg to request file`, async () => {
     const data = await getLatestAPIs()
 
-    expect(axios.get).toHaveBeenCalledWith(expect.stringContaining(`unpkg.com`))
+    expect(axios.get).toHaveBeenCalledWith(
+      expect.stringContaining(`unpkg.com`),
+      expect.any(Object)
+    )
     expect(data).toEqual(getMockAPIFile())
   })
 

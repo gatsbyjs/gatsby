@@ -97,6 +97,15 @@ describe(`NodeModel`, () => {
         })
       })
 
+      it(`creates page dependency when called with context`, () => {
+        nodeModel.withContext({ path: `/` }).getNodeById({ id: `person2` })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `person2`,
+        })
+      })
+
       it(`returns null when no id provided`, () => {
         expect(nodeModel.getNodeById()).toBeNull()
         expect(nodeModel.getNodeById({})).toBeNull()
@@ -116,14 +125,6 @@ describe(`NodeModel`, () => {
       it(`does not create page dependency when no matching node found`, () => {
         nodeModel.getNodeById({ id: `person4` }, { path: `/` })
         expect(createPageDependency).not.toHaveBeenCalled()
-      })
-
-      it(`handles already resolved id`, () => {
-        const result = nodeModel.getNodeById({
-          id: { id: `person1`, name: `Person1` },
-        })
-        expect(result.id).toBe(`person1`)
-        expect(result.name).toBe(`Person1`)
       })
     })
 
@@ -179,6 +180,21 @@ describe(`NodeModel`, () => {
         })
       })
 
+      it(`creates page dependencies when called with context`, () => {
+        nodeModel
+          .withContext({ path: `/` })
+          .getNodesByIds({ ids: [`person3`, `post3`] })
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `person3`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
       it(`returns empty array when no ids provided`, () => {
         expect(nodeModel.getNodesByIds()).toEqual([])
         expect(nodeModel.getNodesByIds({})).toEqual([])
@@ -202,23 +218,6 @@ describe(`NodeModel`, () => {
       it(`does not create page dependencies when no matching nodes found`, () => {
         nodeModel.getNodesByIds({ ids: [`person4`, `post4`] }, { path: `/` })
         expect(createPageDependency).not.toHaveBeenCalled()
-      })
-
-      it(`handles already resolved ids`, () => {
-        const result = nodeModel.getNodesByIds({
-          ids: [
-            { id: `person1`, name: `Person1` },
-            `person2`,
-            { id: `post1`, frontmatter: { published: false } },
-          ],
-        })
-        expect(result.length).toBe(3)
-        expect(result[0].id).toBe(`person1`)
-        expect(result[0].name).toBe(`Person1`)
-        expect(result[1].id).toBe(`person2`)
-        expect(result[1].name).toBe(`Person2`)
-        expect(result[2].id).toBe(`post1`)
-        expect(result[2].frontmatter.published).toBe(false)
       })
     })
 
@@ -246,6 +245,18 @@ describe(`NodeModel`, () => {
       it(`creates page dependencies`, () => {
         nodeModel.getAllNodes({}, { path: `/` })
         expect(createPageDependency).toHaveBeenCalledTimes(9)
+      })
+
+      it(`creates page dependencies when called with context and connection type`, () => {
+        nodeModel
+          .withContext({ path: `/` })
+          .getAllNodes({ type: `Post` }, { connectionType: `Post` })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+      })
+
+      it(`does not create page dependencies when called with context without connection type`, () => {
+        nodeModel.withContext({ path: `/` }).getAllNodes()
+        expect(createPageDependency).toHaveBeenCalledTimes(0)
       })
 
       it(`returns empty array when no nodes of type found`, () => {
@@ -299,6 +310,24 @@ describe(`NodeModel`, () => {
         const query = { filter: { frontmatter: { published: { eq: false } } } }
         const firstOnly = false
         await nodeModel.runQuery({ query, firstOnly, type }, { path: `/` })
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
+      it(`creates page dependencies when called with context`, async () => {
+        const type = `Post`
+        const query = { filter: { frontmatter: { published: { eq: false } } } }
+        const firstOnly = false
+        await nodeModel
+          .withContext({ path: `/` })
+          .runQuery({ query, firstOnly, type })
         expect(createPageDependency).toHaveBeenCalledTimes(2)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,

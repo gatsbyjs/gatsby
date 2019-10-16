@@ -1,47 +1,43 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import { colors, space, mediaQueries, fontSizes } from "../../utils/presets"
-import sharedStyles from "../shared/styles"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
+
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { withTitleHover } from "../shared/styles"
 
 const Header = ({ stub }) => (
   <div
     className="starter-detail-header"
-    css={{
-      padding: space[6],
-      paddingBottom: space[6],
-      [mediaQueries.sm]: {
-        paddingBottom: 0,
-      },
-      [mediaQueries.lg]: {
-        padding: space[8],
-        paddingBottom: 0,
-      },
+    sx={{
+      p: 6,
+      [mediaQueries.sm]: { pb: 0 },
+      [mediaQueries.lg]: { p: 8, pb: 0 },
     }}
   >
-    <div css={{ paddingBottom: space[1] }}>
+    <div sx={{ pb: 1 }}>
       <Link
         to={`/starters`}
-        css={{
+        sx={{
           "&&": {
-            fontSize: fontSizes[1],
+            fontSize: 1,
             borderBottom: 0,
-            color: colors.gatsby,
-            fontWeight: `normal`,
+            color: `link.color`,
+            fontWeight: `body`,
             "&:hover": {
-              color: colors.lilac,
+              color: `link.hoverColor`,
             },
           },
-          ...sharedStyles.withTitleHover,
+          ...withTitleHover,
         }}
       >
-        <MdArrowBack style={{ marginRight: space[1] }} />
+        <MdArrowBack sx={{ mr: 1 }} />
         &nbsp;
         <span className="title">All Starters</span>
       </Link>
     </div>
     <div>
-      <h1 css={{ margin: 0, display: `inline-block` }}>{stub}</h1>
+      <h1 sx={{ m: 0, display: `inline-block` }}>{stub}</h1>
     </div>
   </div>
 )
