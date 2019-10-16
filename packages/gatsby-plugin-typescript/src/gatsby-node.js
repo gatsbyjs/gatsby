@@ -7,11 +7,11 @@ function onCreateBabelConfig({ actions }, options) {
   })
 }
 
-function onCreateWebpackConfig({ actions, loaders }) {
-  const { schema } = store.getState();
+function onCreateWebpackConfig({ actions, loaders, store }) {
+  const { schema } = store.getState()
 
-  const jsLoader = loaders.js();
-  const eslintLoader = loaders.eslint(schema);
+  const jsLoader = loaders.js()
+  const eslintLoader = loaders.eslint(schema)
 
   if (!jsLoader) {
     return
@@ -28,7 +28,7 @@ function onCreateWebpackConfig({ actions, loaders }) {
           enforce: `pre`,
           test: /\.tsx?$/,
           exclude: /(node_modules|bower_components)/,
-          use: eslintLoader
+          use: eslintLoader,
         },
       ],
     },
