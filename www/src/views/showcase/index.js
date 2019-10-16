@@ -50,7 +50,7 @@ class ShowcaseView extends Component {
 
     return (
       <Layout location={location}>
-        <Helmet>
+        <Helmet defer={false}>
           <title>Showcase</title>
           <meta
             name="description"
