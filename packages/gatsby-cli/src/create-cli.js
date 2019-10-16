@@ -144,7 +144,7 @@ function buildLocalCommands(cli, isLocalSite) {
           default: ``,
           describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
         })
-        .option(`ca`, {
+        .option(`ca-file`, {
           type: `string`,
           default: ``,
           describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,

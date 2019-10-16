@@ -75,25 +75,25 @@ You may find that you need a custom key and certificate file for https if you us
 machines for development (or if your dev environment is containerized in Docker).
 
 If you need to use a custom https setup, you can pass the `--https`, `--key-file`,
-`--cert-file`, and `--ca` flags to `npm run develop`.
+`--cert-file`, and `--ca-file` flags to `npm run develop`.
 
 - `--cert-file` [relative/absolute path to ssl certificate file]
 - `--key-file` [relative/absolute path to ssl key file]
-- `--ca` [relative/absolute path to ssl certificate authority file]
+- `--ca-file` [relative/absolute path to ssl certificate authority file]
 
 See the example command:
 
 ```shell
 # Using relative paths
-$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca ../relative/path/to/ca.crt
+$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
 
 # Or using absolute paths
-$ gatsby develop --https --key-file /absolute/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca /absolute/path/to/ca.crt
+$ gatsby develop --https --key-file /absolute/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
 ```
 
-Usage of the `--ca` flag is only required if your certificate is signed by a certificate authority.
+Usage of the `--ca-file` flag is only required if your certificate is signed by a certificate authority.
 
-If your certificate is self-signed, then do not include the `--ca` flag. Also, if you want your browser to trust a self-signed certificate, you will need to add it to your operating system (or browser's, in Firefox's case) root certificate store in order for your browser to trust it.
+If your certificate is self-signed, then do not include the `--ca-file` flag. Also, if you want your browser to trust a self-signed certificate, you will need to add it to your operating system (or browser's, in Firefox's case) root certificate store in order for your browser to trust it.
 
 In most cases, the `--https` passed by itself is easier and more convenient to get local https.
 
