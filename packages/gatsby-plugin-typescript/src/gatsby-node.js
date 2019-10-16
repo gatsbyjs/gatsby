@@ -13,7 +13,7 @@ function onCreateWebpackConfig({ actions, loaders, store }) {
   const jsLoader = loaders.js()
   const eslintLoader = loaders.eslint(schema)
 
-  if (!jsLoader) {
+  if (!jsLoader || !eslintLoader) {
     return
   }
 
