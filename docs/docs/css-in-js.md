@@ -18,6 +18,8 @@ _Note that this functionality is not a part of React or Gatsby, and requires usi
 
 > Adding a stable CSS class to your JSX markup along with your CSS-in-JS can make it easier to users to include [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility. See [Styled Components](/docs/styled-components#enabling-user-stylesheets-with-a-stable-class-name) example.
 
+Keep in mind that styles aren't applied until the JavaScript loads hence a plugin to extract the styles is necessary to prevent flash of unstyled content (FOUC). To cater for this, every CSS-in-JS library has a Gatsby plugin which you need to extract styles and insert them into the HTML during builds and this prevents FOUC.
+
 This section contains guides for styling your site with some of the most popular CSS-in-JS libraries, including how to set up global styles using each library.
 
 <GuideList slug={props.slug} />

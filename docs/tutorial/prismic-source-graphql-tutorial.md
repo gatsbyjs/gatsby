@@ -137,7 +137,7 @@ export default ({ data }) => {
 
 Save the file and check on your site running at [`http://localhost:8000`](http://localhost:8000)
 
-You can use the helper function `RichText` to [render formatted text](https://prismic.io/docs/reactjs/rendering/rich-text) and generally, this is the process you will use to query your Prismic repository and then render it. We can clean this up and include a function that will render the array of queried blog posts.
+You can use the helper function `RichText` to [render formatted text](https://prismic.io/docs/reactjs/rendering/rich-text) and generally, this is the process you will use to query your Prismic repository and then render it. You can clean this up and include a function that will render the array of queried blog posts.
 
 ```js:title=src/pages/index.js
 //highlight-start
@@ -181,7 +181,7 @@ export default ({ data }) => {
 
 ## Building links to your documents
 
-Now things are really taking shape. We will turn these blog post titles into links by building a [link resolver function](https://prismic.io/docs/reactjs/beyond-the-api/link-resolving), which will build the correct route for your posts.
+Now things are really taking shape. You will turn these blog post titles into links by building a [link resolver function](https://prismic.io/docs/reactjs/beyond-the-api/link-resolving), which will build the correct route for your posts.
 
 ```javascript:title=src/utils/linkResolver.js
 exports.linkResolver = function linkResolver(doc) {

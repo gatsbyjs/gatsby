@@ -161,7 +161,7 @@ export default ({ children }) => (
 )
 ```
 
-You'll notice we imported a css module file named `container.module.css`. Let's create that file now.
+You'll notice you imported a css module file named `container.module.css`. Let's create that file now.
 
 2. In the same directory (`src/components`), create a `container.module.css` file and copy/paste the following:
 
