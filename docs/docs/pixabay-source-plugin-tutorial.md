@@ -96,7 +96,7 @@ to create the file using default options.
 
 ### Add dependencies
 
-You'll use a couple of modules from `npm` to add some helper functionality. Install them with:
+You'll use a couple of modules from npm to add some helper functionality. Install them with:
 
 ```shell
 npm install node-fetch query-string --save
@@ -377,7 +377,7 @@ You've written a local Gatsby plugin that:
 
 Congratulations!
 
-## What's next?
+## Where next?
 
 Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugin](https://www.npmjs.com/package/gatsby-source-pixabay). Check out [the source on GitHub](https://github.com/jlengstorf/gatsby-source-pixabay).
 

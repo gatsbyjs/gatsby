@@ -1,5 +1,5 @@
 ---
-title: Page Node Dependency Tracking
+title: Page -> Node Dependency Tracking
 ---
 
 > This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
