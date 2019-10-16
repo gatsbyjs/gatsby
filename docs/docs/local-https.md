@@ -1,14 +1,14 @@
 ---
-title: "Local HTTPS"
+title: Local HTTPS
 ---
 
 Gatsby provides an easy way to use a local HTTPS server during development, thanks to [devcert](https://github.com/davewasmer/devcert). When you enable the `https` option, a private key and certificate file will be created for your project and used by the development server.
 
 ## Usage (Automatic HTTPS)
 
-Start the development server using `gatsby develop` as usual, and add either the `-S` or `--https` flag.
+Start the development server using `npm run develop` as usual, and add either the `-S` or `--https` flag.
 
-    $ gatsby develop --https
+    $ npm run develop -- --https
 
 ## Setup
 
@@ -39,12 +39,16 @@ You may find that you need a custom key and certificate file for https if you us
 machines for development (or if your dev environment is containerized in Docker).
 
 If you need to use a custom https setup, you can pass the `--https`, `--key-file` and
-`--cert-file` flags to `gatsby develop`.
+`--cert-file` flags to `npm run develop`.
 
 - `--cert-file` [relative path to ssl certificate file]
 - `--key-file` [relative path to ssl key file]
 
-  $ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
+See the example command:
+
+```shell
+$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
+```
 
 in most cases, the `--https` passed by itself is easier and more convenient to get local https.
 

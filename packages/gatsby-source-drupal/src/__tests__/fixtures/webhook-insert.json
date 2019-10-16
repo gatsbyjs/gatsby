@@ -1,0 +1,23 @@
+{
+  "data": {
+      "type": "node--article",
+      "id": "article-4",
+      "attributes": {
+        "id": 24,
+        "uuid": "article-4",
+        "title": "Article #4",
+        "body": "Praesent accumsan nisl nulla."
+      },
+      "relationships": {
+        "field_tags": {
+          "data": [
+            {
+              "type": "taxonomy_term--tags",
+              "id": "tag-1"
+            }
+          ]
+        }
+      }
+  },
+  "links": {}
+}

@@ -1,6 +1,7 @@
 ---
 title: Transformer plugins
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 > This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.
@@ -21,12 +22,12 @@ content from source plugins and _transform_ it into something more usable.
 For example, markdown files. Markdown is nice to write in but when you build a
 page with it, you need the markdown to be HTML.
 
-Let's add a markdown file to your site at
+Add a markdown file to your site at
 `src/pages/sweet-pandas-eating-sweets.md` (This will become your first markdown
 blog post) and learn how to _transform_ it to HTML using transformer plugins and
 GraphQL.
 
-```markdown
+```markdown:title=src/pages/sweet-pandas-eating-sweets.md
 ---
 title: "Sweet Pandas Eating Sweets"
 date: "2017-08-10"
@@ -41,11 +42,11 @@ Here's a video of a panda eating sweets.
 
 Once you save the file, look at `/my-files/` again—the new markdown file is in
 the table. This is a very powerful feature of Gatsby. Like the earlier
-`siteMetadata` example, source plugins can live reload data.
+`siteMetadata` example, source plugins can live-reload data.
 `gatsby-source-filesystem` is always scanning for new files to be added and when
 they are, re-runs your queries.
 
-Let's add a transformer plugin that can transform markdown files:
+Add a transformer plugin that can transform markdown files:
 
 ```shell
 npm install --save gatsby-transformer-remark
@@ -53,7 +54,7 @@ npm install --save gatsby-transformer-remark
 
 Then add it to the `gatsby-config.js` like normal:
 
-```javascript{13}
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Pandas Eating Lots`,
@@ -66,7 +67,7 @@ module.exports = {
         path: `${__dirname}/src/`,
       },
     },
-    `gatsby-transformer-remark`,
+    `gatsby-transformer-remark`, // highlight-line
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -78,25 +79,25 @@ module.exports = {
 }
 ```
 
-Restart the development server then refresh (or open again) Graph_i_QL and look
+Restart the development server then refresh (or open again) GraphiQL and look
 at the autocomplete:
 
 ![markdown-autocomplete](markdown-autocomplete.png)
 
-Select `allMarkdownRemark` again and run it like you did for `allFile`. You'll
+Select `allMarkdownRemark` again and run it as you did for `allFile`. You'll
 see there the markdown file you recently added. Explore the fields that are
 available on the `MarkdownRemark` node.
 
 ![markdown-query](markdown-query.png)
 
-Ok! Hopefully some basics are starting to fall into place. Source plugins bring
+Ok! Hopefully, some basics are starting to fall into place. Source plugins bring
 data _into_ Gatsby's data system and _transformer_ plugins transform raw content
 brought by source plugins. This pattern can handle all data sourcing and
 data transformation you might need when building a Gatsby site.
 
 ## Create a list of your site's markdown files in `src/pages/index.js`
 
-Let's now create a list of your markdown files on the front page. Like many
+Now you'll have to create a list of your markdown files on the front page. Like many
 blogs, you want to end up with a list of links on the front page pointing to each
 blog post. With GraphQL you can _query_ for the current list of markdown blog
 posts so you won't need to maintain the list manually.
@@ -104,10 +105,10 @@ posts so you won't need to maintain the list manually.
 Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a GraphQL query with some initial HTML and styling.
 
-```jsx
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import { css } from "react-emotion"
+import { css } from "@emotion/core"
 import { rhythm } from "../utils/typography"
 import Layout from "../components/layout"
 
@@ -117,7 +118,7 @@ export default ({ data }) => {
     <Layout>
       <div>
         <h1
-          className={css`
+          css={css`
             display: inline-block;
             border-bottom: 1px solid;
           `}
@@ -128,13 +129,13 @@ export default ({ data }) => {
         {data.allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.id}>
             <h3
-              className={css`
+              css={css`
                 margin-bottom: ${rhythm(1 / 4)};
               `}
             >
               {node.frontmatter.title}{" "}
               <span
-                className={css`
+                css={css`
                   color: #bbb;
                 `}
               >
@@ -175,7 +176,7 @@ Now the frontpage should look like:
 But your one blog post looks a bit lonely. So let's add another one at
 `src/pages/pandas-and-bananas.md`
 
-```markdown
+```markdown:title=src/pages/pandas-and-bananas.md
 ---
 title: "Pandas and Bananas"
 date: "2017-08-21"
@@ -198,10 +199,10 @@ this powerful set of operators, you can select any data you want—in the format
 need.
 
 In your index page's GraphQL query, change `allMarkdownRemark` to
-`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. Save
+`allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })`. _Note: There are 3 underscores between `frontmatter` and `date`._ Save
 this and the sort order should be fixed.
 
-Try opening Graph_i_QL and playing with different sort options. You can sort the
+Try opening GraphiQL and playing with different sort options. You can sort the
 `allFile` connection along with other connections.
 
 For more documentation on our query operators, explore our [GraphQL reference guide.](/docs/graphql-reference/)
@@ -213,7 +214,7 @@ Try creating a new page containing a blog post and see what happens to the list 
 ## What's coming next?
 
 This is great! You've just created a nice index page where you're querying your markdown
-files and producing a list of blogpost titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
+files and producing a list of blog post titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
 
 You could continue to create pages by placing React components in `src/pages`. However, you'll
 next learn how to _programmatically_ create pages from _data_. Gatsby is _not_

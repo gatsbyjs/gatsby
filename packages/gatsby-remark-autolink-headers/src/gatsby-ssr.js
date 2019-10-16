@@ -7,11 +7,10 @@ const pluginDefaults = {
 }
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  const {
-    className,
-    icon,
-    offsetY,
-  } = Object.assign(pluginDefaults, pluginOptions)
+  const { className, icon, offsetY } = Object.assign(
+    pluginDefaults,
+    pluginOptions
+  )
 
   const styles = `
     .${className} {
@@ -59,11 +58,13 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     })
   `
 
-  const style = icon
-    ?  <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
-        {styles}
-      </style>
-    : undefined
+  const style = icon ? (
+    <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
+      {styles}
+    </style>
+  ) : (
+    undefined
+  )
 
   return setHeadComponents([
     style,

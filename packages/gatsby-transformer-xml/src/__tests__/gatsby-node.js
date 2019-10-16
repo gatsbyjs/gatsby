@@ -5,7 +5,7 @@ describe(`Process XML nodes correctly`, () => {
   const node = {
     name: `nodeName`,
     id: `whatever`,
-    parent: `SOURCE`,
+    parent: null,
     children: [],
     internal: {
       contentDigest: `whatever`,
@@ -47,12 +47,14 @@ describe(`Process XML nodes correctly`, () => {
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
       createNodeId,
+      createContentDigest,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

@@ -4,12 +4,12 @@ about: Suggest a new idea for the project.
 ---
 
 <!--
-  Please fill out each section below, otherwise your issue will be closed.
+  Please fill out each section below, otherwise, your issue will be closed.
 
   Useful Links:
   - Gatsby RFCs: https://github.com/gatsbyjs/rfcs
-  - How to Contribute: https://www.gatsbyjs.org/docs/how-to-contribute/
-  - How to File an Issue: https://www.gatsbyjs.org/docs/how-to-file-an-issue/
+  - How to Contribute: https://www.gatsbyjs.org/contributing/how-to-contribute/
+  - How to File an Issue: https://www.gatsbyjs.org/contributing/how-to-file-an-issue/
 
   Before opening a new issue, please search existing issues:  https://github.com/gatsbyjs/gatsby/issues
 

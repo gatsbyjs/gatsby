@@ -1,0 +1,21 @@
+{
+  "extends": ["config:base", ":disablePeerDependencies"],
+  "includePaths": [
+    "package.json",
+    "starters/**",
+    "themes/**",
+    "packages/**",
+    "www/package.json"
+  ],
+  "major": {
+    "masterIssueApproval": true
+  },
+  "masterIssue": true,
+  "rebaseStalePrs": false,
+  "rangeStrategy": "bump",
+  "bumpVersion": null,
+  "semanticCommitScope": null,
+  "prHourlyLimit": 0,
+  "timezone": "GMT",
+  "schedule": "after 10am on Monday"
+}

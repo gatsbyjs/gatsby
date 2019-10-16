@@ -3,6 +3,39 @@ const graphql = require(`gatsby/graphql`)
 const murmurhash = require(`./murmur`)
 const nodePath = require(`path`)
 
+class StringInterpolationNotAllowedError extends Error {
+  constructor(interpolationStart, interpolationEnd) {
+    super(
+      `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
+        `fragments. Included fragments should be referenced ` +
+        `as \`...MyModule_foo\`.`
+    )
+    this.interpolationStart = JSON.parse(JSON.stringify(interpolationStart))
+    this.interpolationEnd = JSON.parse(JSON.stringify(interpolationEnd))
+    Error.captureStackTrace(this, StringInterpolationNotAllowedError)
+  }
+}
+
+class EmptyGraphQLTagError extends Error {
+  constructor(locationOfGraphqlString) {
+    super(`BabelPluginRemoveGraphQLQueries: Unexpected empty graphql tag.`)
+    this.templateLoc = locationOfGraphqlString
+    Error.captureStackTrace(this, EmptyGraphQLTagError)
+  }
+}
+
+class GraphQLSyntaxError extends Error {
+  constructor(documentText, originalError, locationOfGraphqlString) {
+    super(
+      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${documentText}\n\nmessage:\n\n${originalError}`
+    )
+    this.documentText = documentText
+    this.originalError = originalError
+    this.templateLoc = locationOfGraphqlString
+    Error.captureStackTrace(this, GraphQLSyntaxError)
+  }
+}
+
 const isGlobalIdentifier = tag =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
 
@@ -67,6 +100,13 @@ function removeImport(tag) {
   const identifier = isExpression ? tag.get(`object`) : tag
   const importPath = getTagImport(identifier)
 
+  const removeVariableDeclaration = statement => {
+    let declaration = statement.findParent(p => p.isVariableDeclaration())
+    if (declaration) {
+      declaration.remove()
+    }
+  }
+
   if (!importPath) return
 
   const parent = importPath.parentPath
@@ -76,12 +116,12 @@ function removeImport(tag) {
     else importPath.remove()
   }
   if (importPath.isObjectProperty()) {
-    if (parent.node.properties.length === 1)
-      importPath.findParent(p => p.isVariableDeclaration())?.remove()
-    else importPath.remove()
+    if (parent.node.properties.length === 1) {
+      removeVariableDeclaration(importPath)
+    } else importPath.remove()
   }
   if (importPath.isIdentifier()) {
-    importPath.findParent(p => p.isVariableDeclaration())?.remove()
+    removeVariableDeclaration(importPath)
   }
 }
 
@@ -94,10 +134,9 @@ function getGraphQLTag(path) {
   const quasis = path.node.quasi.quasis
 
   if (quasis.length !== 1) {
-    throw new Error(
-      `BabelPluginRemoveGraphQL: String interpolations are not allowed in graphql ` +
-        `fragments. Included fragments should be referenced ` +
-        `as \`...MyModule_foo\`.`
+    throw new StringInterpolationNotAllowedError(
+      quasis[0].loc.end,
+      quasis[1].loc.start
     )
   }
 
@@ -108,15 +147,11 @@ function getGraphQLTag(path) {
     const ast = graphql.parse(text)
 
     if (ast.definitions.length === 0) {
-      throw new Error(`BabelPluginRemoveGraphQL: Unexpected empty graphql tag.`)
+      throw new EmptyGraphQLTagError(quasis[0].loc)
     }
     return { ast, text, hash, isGlobal }
   } catch (err) {
-    throw new Error(
-      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${
-        err.message
-      }`
-    )
+    throw new GraphQLSyntaxError(text, err, quasis[0].loc)
   }
 }
 
@@ -163,6 +198,55 @@ export default function({ types: t }) {
           },
         }
 
+        const nestedHookVisitor = {
+          CallExpression(path2) {
+            if (
+              [`production`, `test`].includes(process.env.NODE_ENV) &&
+              path2.node.callee.name === `useStaticQuery` &&
+              path2.get(`callee`).referencesImport(`gatsby`)
+            ) {
+              const identifier = t.identifier(`staticQueryData`)
+              const filename = state.file.opts.filename
+              const shortResultPath = `public/static/d/${this.queryHash}.json`
+              const resultPath = nodePath.join(process.cwd(), shortResultPath)
+
+              // Remove query variable since it is useless now
+              if (this.templatePath.parentPath.isVariableDeclarator()) {
+                this.templatePath.parentPath.remove()
+              }
+
+              // Remove imports to useStaticQuery
+              const importPath = path2.scope.getBinding(`useStaticQuery`).path
+              const parent = importPath.parentPath
+              if (importPath.isImportSpecifier())
+                if (parent.node.specifiers.length === 1) parent.remove()
+                else importPath.remove()
+
+              // Add query
+              path2.replaceWith(
+                t.memberExpression(identifier, t.identifier(`data`))
+              )
+
+              // Add import
+              const importDefaultSpecifier = t.importDefaultSpecifier(
+                identifier
+              )
+              const importDeclaration = t.importDeclaration(
+                [importDefaultSpecifier],
+                t.stringLiteral(
+                  filename
+                    ? nodePath.relative(
+                        nodePath.parse(filename).dir,
+                        resultPath
+                      )
+                    : shortResultPath
+                )
+              )
+              path.unshiftContainer(`body`, importDeclaration)
+            }
+          },
+        }
+
         const tagsToRemoveImportsFrom = new Set()
 
         const setImportForStaticQuery = templatePath => {
@@ -183,18 +267,33 @@ export default function({ types: t }) {
           // Replace the query with the hash of the query.
           templatePath.replaceWith(t.StringLiteral(queryHash))
 
+          // traverse upwards until we find top-level JSXOpeningElement or Program
+          // this handles exported queries and variable queries
+          let parent = templatePath
+          while (
+            parent &&
+            ![`Program`, `JSXOpeningElement`].includes(parent.node.type)
+          ) {
+            parent = parent.parentPath
+          }
+
           // modify StaticQuery elements and import data only if query is inside StaticQuery
-          templatePath.parentPath.parentPath.parentPath.traverse(
-            nestedJSXVistor,
-            {
-              queryHash,
-              query,
-            }
-          )
+          parent.traverse(nestedJSXVistor, {
+            queryHash,
+            query,
+          })
+
+          // modify useStaticQuery elements and import data only if query is inside useStaticQuery
+          parent.traverse(nestedHookVisitor, {
+            queryHash,
+            query,
+            templatePath,
+          })
 
           return null
         }
 
+        // Traverse for <StaticQuery/> instances
         path.traverse({
           JSXElement(jsxElementPath) {
             if (
@@ -210,7 +309,7 @@ export default function({ types: t }) {
                 }
                 jsxPath.traverse({
                   TaggedTemplateExpression(templatePath, state) {
-                    setImportForStaticQuery(templatePath, jsxElementPath)
+                    setImportForStaticQuery(templatePath)
                   },
                   Identifier(identifierPath) {
                     if (identifierPath.node.name !== `graphql`) {
@@ -224,10 +323,7 @@ export default function({ types: t }) {
                           ) {
                             varPath.traverse({
                               TaggedTemplateExpression(templatePath) {
-                                setImportForStaticQuery(
-                                  templatePath,
-                                  jsxElementPath
-                                )
+                                setImportForStaticQuery(templatePath)
                               },
                             })
                           }
@@ -241,8 +337,48 @@ export default function({ types: t }) {
           },
         })
 
+        // Traverse once again for useStaticQuery instances
         path.traverse({
-          // Run it again to remove non-staticquery versions
+          CallExpression(hookPath) {
+            if (
+              hookPath.node.callee.name !== `useStaticQuery` ||
+              !hookPath.get(`callee`).referencesImport(`gatsby`)
+            ) {
+              return
+            }
+
+            hookPath.traverse({
+              // Assume the query is inline in the component and extract that.
+              TaggedTemplateExpression(templatePath) {
+                setImportForStaticQuery(templatePath)
+              },
+              // // Also see if it's a variable that's passed in as a prop
+              // // and if it is, go find it.
+              Identifier(identifierPath) {
+                if (identifierPath.node.name !== `graphql`) {
+                  const varName = identifierPath.node.name
+                  path.traverse({
+                    VariableDeclarator(varPath) {
+                      if (
+                        varPath.node.id.name === varName &&
+                        varPath.node.init.type === `TaggedTemplateExpression`
+                      ) {
+                        varPath.traverse({
+                          TaggedTemplateExpression(templatePath) {
+                            setImportForStaticQuery(templatePath)
+                          },
+                        })
+                      }
+                    },
+                  })
+                }
+              },
+            })
+          },
+        })
+
+        // Run it again to remove non-staticquery versions
+        path.traverse({
           TaggedTemplateExpression(path2, state) {
             const { ast, hash, isGlobal } = getGraphQLTag(path2)
 
@@ -269,4 +405,9 @@ export default function({ types: t }) {
   }
 }
 
-export { getGraphQLTag }
+export {
+  getGraphQLTag,
+  StringInterpolationNotAllowedError,
+  EmptyGraphQLTagError,
+  GraphQLSyntaxError,
+}

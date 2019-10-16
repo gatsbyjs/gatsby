@@ -1,9 +1,8 @@
-import { codeFrameColumns } from "@babel/code-frame"
-import { parse, resolver, handlers } from "react-docgen"
+import { handlers, parse, resolver } from "react-docgen"
 import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
-
-import { cleanDoclets, parseDoclets, applyPropDoclets } from "./Doclets"
-import { createDisplayNameHandler } from "react-docgen-displayname-handler"
+import { codeFrameColumns } from "@babel/code-frame"
+import { createDisplayNameHandler } from "./displayname-handler"
+import { applyPropDoclets, cleanDoclets, parseDoclets } from "./doclets"
 
 const defaultHandlers = [
   handlers.propTypeHandler,
@@ -33,12 +32,16 @@ function makeHandlers(node, handlers) {
 
 export default function parseMetadata(content, node, options) {
   let components = []
-  options = options || {}
+  const { handlers, resolver: userResolver, ...parseOptions } = options || {}
   try {
     components = parse(
       content,
-      options.resolver || resolver.findAllComponentDefinitions,
-      defaultHandlers.concat(makeHandlers(node, options.handlers))
+      userResolver || resolver.findAllComponentDefinitions,
+      defaultHandlers.concat(makeHandlers(node, handlers)),
+      {
+        ...parseOptions,
+        filename: node.absolutePath,
+      }
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []

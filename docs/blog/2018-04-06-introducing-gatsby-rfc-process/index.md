@@ -1,7 +1,7 @@
 ---
 title: "Introducing the Gatsby RFC Process"
 author: Kyle Mathews
-date: "2018-04-06"
+date: 2018-04-06
 ---
 
 We're adopting an RFC ("request for comments") process for contributing ideas to Gatsby.
@@ -16,11 +16,11 @@ Inspired by [React](https://github.com/reactjs/rfcs), [Yarn](https://github.com/
 
 RFCs are accepted when they are approved for implementation in Gatsby. A more thorough description of the process is available in the repository's [README](https://github.com/gatsbyjs/rfcs/blob/master/README.md). The exact details may be refined in the future.
 
-## Who Can Submit RFCs?
+## Who can submit RFCs?
 
 Anyone! No knowledge of Gatsby's internals is required, nor are you expected to implement the proposal yourself.
 
-## What Types of Changes Should Be Submitted As RFCs?
+## What types of changes should be submitted as RFCs?
 
 Generally, any idea that would benefit from additional review or design before being implemented is a good candidate for an RFC. As a rule of thumb, this means any proposal that adds, changes, or removes a Gatsby API.
 

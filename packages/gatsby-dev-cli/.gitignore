@@ -28,3 +28,6 @@ node_modules
 
 decls
 dist
+
+# verdaccio local storage
+verdaccio

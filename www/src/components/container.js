@@ -1,29 +1,22 @@
-import React from "react"
-import presets from "../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
-import { rhythm, options } from "../utils/typography"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
-const Container = ({
-  children,
-  className,
-  hasSideBar = true,
-  overrideCSS = {},
-}) => (
+const Container = ({ children, withSidebar = true, overrideCSS }) => (
   <div
-    css={{
-      maxWidth: hasSideBar
-        ? rhythm(presets.maxWidthWithSidebar)
-        : rhythm(presets.maxWidth),
-      margin: `0 auto`,
-      padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
-      paddingBottom: rhythm(3.5),
+    sx={{
+      maxWidth: withSidebar
+        ? `mainContentWidth.withSidebar`
+        : `mainContentWidth.default`,
+      mx: `auto`,
+      p: 6,
       position: `relative`,
-      [presets.Tablet]: {
-        paddingBottom: rhythm(1.5),
+      [mediaQueries.lg]: {
+        py: 9,
       },
       ...overrideCSS,
     }}
-    className={className}
   >
     {children}
   </div>

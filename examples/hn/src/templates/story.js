@@ -27,7 +27,7 @@ class Story extends React.Component {
         comment.depth = depth
         seenComments[comment.id] = true
         childComments.push(comment)
-        if (comment && comment.children && comment.children.length > 0) {
+        if (comment.children && comment.children.length > 0) {
           childComments = childComments.concat(
             flattenComments(comment.children, depth + 1)
           )

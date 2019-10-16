@@ -1,18 +1,28 @@
 import "@babel/polyfill"
 import React from "react"
-import { render, cleanup } from "react-testing-library"
+import { render, cleanup } from "@testing-library/react"
 import {
   createMemorySource,
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { push, replace, withPrefix } from "../"
+import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+
+beforeEach(() => {
+  global.__BASE_PATH__ = ``
+  global.__PATH_PREFIX__ = ``
+})
 
 afterEach(cleanup)
 
 const getInstance = (props, pathPrefix = ``) => {
   getWithPrefix()(pathPrefix)
-  return Link(props)
+  return <Link {...props} />
+}
+
+const getNavigate = () => {
+  global.___navigate = jest.fn()
+  return navigate
 }
 
 const getPush = () => {
@@ -26,12 +36,17 @@ const getReplace = () => {
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
-  global.__PATH_PREFIX__ = pathPrefix
+  global.__BASE_PATH__ = pathPrefix
   return withPrefix
 }
 
+const getWithAssetPrefix = (prefix = ``) => {
+  global.__PATH_PREFIX__ = prefix
+  return withAssetPrefix
+}
+
 const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
-  global.__PATH_PREFIX__ = pathPrefix
+  global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
 
@@ -66,10 +81,40 @@ describe(`<Link />`, () => {
     expect(container).toMatchSnapshot()
   })
 
+  it(`matches partially active snapshot`, () => {
+    const { container } = setup({
+      linkProps: { to: `/active/nested`, partiallyActive: true },
+    })
+    expect(container).toMatchSnapshot()
+  })
+
   it(`does not fail to initialize without --prefix-paths`, () => {
     expect(() => {
       getInstance({})
     }).not.toThrow()
+  })
+
+  it(`does not fail with missing __BASE_PATH__`, () => {
+    global.__PATH_PREFIX__ = ``
+    global.__BASE_PATH__ = undefined
+
+    const source = createMemorySource(`/active`)
+
+    expect(() =>
+      render(
+        <LocationProvider history={createHistory(source)}>
+          <Link
+            to="/"
+            className="link"
+            style={{ color: `black` }}
+            activeClassName="is-active"
+            activeStyle={{ textDecoration: `underline` }}
+          >
+            link
+          </Link>
+        </LocationProvider>
+      )
+    ).not.toThrow()
   })
 
   describe(`the location to link to`, () => {
@@ -80,7 +125,6 @@ describe(`<Link />`, () => {
     it(`accepts to as a string`, () => {
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location } })
-
       expect(link.getAttribute(`href`)).toEqual(location)
     })
 
@@ -89,6 +133,20 @@ describe(`<Link />`, () => {
       const location = `/courses?sort=name`
       const { link } = setup({ linkProps: { to: location }, pathPrefix })
       expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
+    })
+
+    it(`does not warn when internal`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `/courses?sort=name`
+      setup({ linkProps: { to } })
+      expect(console.warn).not.toBeCalled()
+    })
+
+    it(`warns when not internal`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `https://gatsby.org`
+      setup({ linkProps: { to } })
+      expect(console.warn).toBeCalled()
     })
   })
 
@@ -117,5 +175,81 @@ describe(`withPrefix`, () => {
       const root = getWithPrefix(pathPrefix)(to)
       expect(root).toEqual(`${pathPrefix}${to}`)
     })
+
+    it(`falls back to __PATH_PREFIX__ if __BASE_PATH__ is undefined`, () => {
+      global.__BASE_PATH__ = undefined
+      global.__PATH_PREFIX__ = `/blog`
+
+      const to = `/abc/`
+
+      expect(withPrefix(to)).toBe(`${global.__PATH_PREFIX__}${to}`)
+    })
+  })
+})
+
+describe(`withAssetPrefix`, () => {
+  it(`default prefix does not return "//"`, () => {
+    const to = `/`
+    const root = getWithAssetPrefix()(to)
+    expect(root).toEqual(to)
+  })
+
+  it(`respects pathPrefix`, () => {
+    const to = `/abc/`
+    const pathPrefix = `/blog`
+    const root = getWithAssetPrefix(pathPrefix)(to)
+    expect(root).toEqual(`${pathPrefix}${to}`)
+  })
+
+  it(`respects joined assetPrefix + pathPrefix`, () => {
+    const to = `/itsdatboi/`
+    const pathPrefix = `https://cdn.example.com/blog`
+    const root = getWithAssetPrefix(pathPrefix)(to)
+    expect(root).toEqual(`${pathPrefix}${to}`)
+  })
+})
+
+describe(`navigate`, () => {
+  it(`navigates to correct path`, () => {
+    const to = `/some-path`
+    getNavigate()(to)
+
+    expect(global.___navigate).toHaveBeenCalledWith(to, undefined)
+  })
+
+  it(`respects pathPrefix`, () => {
+    const to = `/some-path`
+    global.__BASE_PATH__ = `/blog`
+    getNavigate()(to)
+
+    expect(global.___navigate).toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`,
+      undefined
+    )
+  })
+})
+
+describe(`ref forwarding`, () => {
+  it(`forwards ref`, () => {
+    const ref = jest.fn()
+    setup({ linkProps: { ref } })
+
+    expect(ref).toHaveBeenCalledTimes(1)
+    expect(ref).toHaveBeenCalledWith(expect.any(HTMLElement))
+  })
+
+  it(`remains backwards compatible with innerRef`, () => {
+    const innerRef = jest.fn()
+    setup({ linkProps: { innerRef } })
+
+    expect(innerRef).toHaveBeenCalledTimes(1)
+    expect(innerRef).toHaveBeenCalledWith(expect.any(HTMLElement))
+  })
+
+  it(`handles a RefObject (React >=16.4)`, () => {
+    const ref = React.createRef(null)
+    setup({ linkProps: { ref } })
+
+    expect(ref.current).toEqual(expect.any(HTMLElement))
   })
 })

@@ -1,0 +1,59 @@
+{
+  "name": "gatsby-starter-blog",
+  "private": true,
+  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "version": "0.1.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "gatsby": "^2.16.1",
+    "gatsby-image": "^2.2.29",
+    "gatsby-plugin-feed": "^2.3.18",
+    "gatsby-plugin-google-analytics": "^2.1.23",
+    "gatsby-plugin-manifest": "^2.2.23",
+    "gatsby-plugin-offline": "^3.0.16",
+    "gatsby-plugin-react-helmet": "^3.1.13",
+    "gatsby-plugin-sharp": "^2.2.31",
+    "gatsby-plugin-typography": "^2.3.14",
+    "gatsby-remark-copy-linked-files": "^2.1.28",
+    "gatsby-remark-images": "^3.1.28",
+    "gatsby-remark-prismjs": "^3.3.20",
+    "gatsby-remark-responsive-iframe": "^2.2.25",
+    "gatsby-remark-smartypants": "^2.1.14",
+    "gatsby-source-filesystem": "^2.1.33",
+    "gatsby-transformer-remark": "^2.6.30",
+    "gatsby-transformer-sharp": "^2.2.23",
+    "prismjs": "^1.17.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-helmet": "^5.2.1",
+    "react-typography": "^0.16.19",
+    "typeface-merriweather": "0.0.72",
+    "typeface-montserrat": "0.0.75",
+    "typography": "^0.16.19",
+    "typography-theme-wordpress-2016": "^0.16.19"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
+  }
+}

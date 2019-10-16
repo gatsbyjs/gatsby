@@ -1,25 +1,23 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import Modal from "react-modal"
-import Helmet from "react-helmet"
-import MdClose from "react-icons/lib/md/close"
 import { navigate, PageRenderer } from "gatsby"
-import presets, { colors } from "../utils/presets"
+import mousetrap from "mousetrap"
+import Modal from "react-modal"
+import MdClose from "react-icons/lib/md/close"
+import { Global } from "@emotion/core"
+
+import { globalStyles } from "../utils/styles/global"
+import { colors, space, zIndices } from "../gatsby-plugin-theme-ui"
+import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
+import withColorMode from "../components/with-color-mode"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
-
-import mousetrap from "mousetrap"
-
-// Import Futura PT typeface
-import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
-import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
-import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
-import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
-
-// Other fonts
-import "typeface-spectral"
-import "typeface-space-mono"
+import SiteMetadata from "../components/site-metadata"
+import SkipNavLink from "../components/skip-nav-link"
+import "../assets/fonts/futura"
 
 let windowWidth
 
@@ -56,8 +54,6 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const isHomepage = this.props.location.pathname === `/`
-
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
     const isSidebarDisabled =
       this.props.isSidebarDisabled || !this.props.itemList
@@ -68,10 +64,12 @@ class DefaultLayout extends React.Component {
     if (this.props.isModal && windowWidth > 750) {
       isModal = true
     }
+    const isDark = this.props.colorMode[0] === `dark`
 
     if (isModal && window.innerWidth > 750) {
       return (
-        <React.Fragment>
+        <>
+          <Global styles={globalStyles} />
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
@@ -79,58 +77,61 @@ class DefaultLayout extends React.Component {
             isOpen={true}
             style={{
               content: {
-                top: `inherit`,
-                left: `inherit`,
-                right: `inherit`,
-                bottom: `inherit`,
-                margin: `0 auto`,
-                width: `750px`,
                 background: `none`,
                 border: `none`,
-                padding: `40px 0`,
+                bottom: `inherit`,
+                left: `inherit`,
+                margin: `0 auto`,
                 overflow: `visible`,
+                padding: `${space[8]} 0`,
+                right: `inherit`,
+                top: `inherit`,
+                width: `750px`,
               },
               overlay: {
-                position: `absolute`,
-                top: 0,
-                left: 0,
-                right: 0,
+                backgroundColor: isDark
+                  ? colors.modes.dark.modal.overlayBackground
+                  : colors.modal.overlayBackground,
                 bottom: `unset`,
+                left: 0,
                 minHeight: `100%`,
                 minWidth: `100%`,
-                zIndex: 10,
                 overflowY: `auto`,
-                backgroundColor: `rgba(255, 255, 255, 0.95)`,
+                position: `absolute`,
+                right: 0,
+                top: 0,
+                zIndex: zIndices.modal,
               },
             }}
             onRequestClose={() => navigate(this.props.modalBackgroundPath)}
             contentLabel="Site Details Modal"
           >
             <div
-              css={{
-                backgroundColor: `#ffffff`,
-                borderRadius: presets.radius,
-                boxShadow: `0 0 90px -24px ${colors.gatsby}`,
+              sx={{
+                bg: `card.background`,
+                borderRadius: 2,
+                boxShadow: `dialog`,
                 position: `relative`,
               }}
             >
               <button
                 onClick={this.handleCloseModal}
-                css={{
-                  background: colors.ui.bright,
+                sx={{
+                  bg: `card.background`,
                   border: 0,
-                  borderBottomLeftRadius: presets.radius,
-                  borderTopRightRadius: presets.radius,
-                  color: colors.gatsby,
+                  borderRadius: 6,
+                  color: `textMuted`,
                   cursor: `pointer`,
-                  position: `absolute`,
-                  left: `auto`,
-                  right: 0,
+                  fontSize: 4,
                   height: 40,
+                  left: `auto`,
+                  position: `absolute`,
+                  right: t => t.space[7],
+                  top: t => t.space[8],
                   width: 40,
                   "&:hover": {
-                    background: colors.gatsby,
-                    color: `#fff`,
+                    bg: `ui.hover`,
+                    color: `gatsby`,
                   },
                 }}
               >
@@ -141,56 +142,28 @@ class DefaultLayout extends React.Component {
               {this.props.modalNextLink}
             </div>
           </Modal>
-        </React.Fragment>
+        </>
       )
     }
 
     return (
-      <div className={isHomepage ? `is-homepage` : ``}>
-        <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
-          <meta name="twitter:site" content="@gatsbyjs" />
-          <meta name="og:type" content="website" />
-          <meta name="og:site_name" content="GatsbyJS" />
-          <link
-            rel="canonical"
-            href={`https://gatsbyjs.org${this.props.location.pathname}`}
-          />
-          <html lang="en" />
-        </Helmet>
-        <Banner background={isHomepage ? `#402060` : false}>
-          These are the docs for v2.
-          {` `}
-          <a
-            href="https://v1.gatsbyjs.org/"
-            css={{
-              color: `#fff`,
-            }}
-          >
-            View the v1 docs
-            <span
-              css={{
-                display: `none`,
-                [presets.Mobile]: {
-                  display: `inline`,
-                },
-              }}
-            >
-              {` `}
-              instead
-            </span>
-          </a>
-          .
-        </Banner>
+      <>
+        <Global styles={globalStyles} />
+        <SiteMetadata pathname={this.props.location.pathname} />
+        <SkipNavLink />
+        <Banner />
         <Navigation pathname={this.props.location.pathname} />
         <div
-          className={`main-body`}
-          css={{
-            paddingTop: presets.bannerHeight,
-            [presets.Tablet]: {
-              margin: `0 auto`,
-              paddingTop: isHomepage
-                ? presets.bannerHeight
-                : `calc(${presets.bannerHeight} + ${presets.headerHeight})`,
+          className={`main-body docSearch-content`}
+          sx={{
+            px: `env(safe-area-inset-left)`,
+            pt: t => t.sizes.bannerHeight,
+            // make room for the mobile navigation
+            pb: t => t.sizes.headerHeight,
+            [breakpointGutter]: {
+              pt: t =>
+                `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+              pb: 0,
             },
           }}
         >
@@ -203,9 +176,9 @@ class DefaultLayout extends React.Component {
           />
         </div>
         <MobileNavigation />
-      </div>
+      </>
     )
   }
 }
 
-export default DefaultLayout
+export default withColorMode(DefaultLayout)
