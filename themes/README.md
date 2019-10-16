@@ -39,7 +39,6 @@ Gatsby themes allow Gatsby site functionality to be packaged as a standalone pro
 
 A starter is a simplified example to get up and running with Gatsby quickly and easily. These starters are directly integrated with the Gatsby Command Line Interface (CLI).
 
-
 The names tell you what they are: `gatsby-starter-*` vs `gatsby-theme-*`. For example:
 
 - `gatsby-starter-blog-theme` is a starter that uses the blog theme and comes with demo content, etc. [Starters](https://www.gatsbyjs.org/starters/?v=2) are a fairly common concept in the Gatsby ecosystem.
