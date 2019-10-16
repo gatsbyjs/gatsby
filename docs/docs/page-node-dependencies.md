@@ -11,15 +11,15 @@ title: Page -> Node Dependency Tracking
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-In almost every GraphQL Resolver, you'll see the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L788), or [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/index.js#L198) functions. These are responsible for recording which nodes are depended on by which pages. In `develop` mode, if a node's content changes, we re-run pages whose queries depend on that node. This is one of the things that makes `develop` so awesome.
+In almost every GraphQL Resolver, you'll see the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L788), or [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/index.js#L198) functions. These are responsible for recording which nodes are depended on by which pages. In `develop` mode, when a node's content is changed the pages whose queries depend on that node will be re-run. This is one of the things that makes `develop` so awesome.
 
 ## How dependencies are recorded
 
 Recording of Page -> Node dependencies are handled by the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L788) action. It takes the page (in the form of its `path`), and either a `nodeId`, or `connection`.
 
-If a `nodeId` is passed, we're telling Gatsby that the page depends specifically on this node. So, if the node is changed, then the page's query needs to be re-executed.
+Passing `nodeId` tells Gatsby that the page depends specifically on this node. So, if the node is changed, then the page's query needs to be re-executed.
 
-`connection` is a Type string. E.g. `MarkdownRemark`, or `File`. If `createPageDependency` is called with a page path and a `connection`, we are telling Gatsby that this page depends on all nodes of this type. Therefore if any node of this type changes (e.g. a change to a markdown node), then this page must be rebuilt. This variant is only called from [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L264) when we're running a query such as `allFile`, or `allMarkdownRemark`. See [Schema Connections](/docs/schema-connections/) for more info.
+`connection` is a Type string. E.g. `MarkdownRemark`, or `File`. Calling `createPageDependency` with a page path and a `connection` tells Gatsby that this page depends on all nodes of this type. Therefore if any node of this type changes (e.g. a change to a markdown node), then this page must be rebuilt. This variant is only called from [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L264) when a query such as `allFile`, or `allMarkdownRemark` is run. See [Schema Connections](/docs/schema-connections/) for more info.
 
 ## How dependencies are stored
 

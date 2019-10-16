@@ -111,3 +111,7 @@ See the [library of official and community plugins](/plugins/)
 ### Reddit Community
 
 [Gatsby community on Reddit](https://www.reddit.com/r/gatsbyjs) is a place where you can read news about Gatsby, interact with other Gatsby developers and get advice on Gatsby-related Questions.
+
+### FreeCodeCamp Community
+
+[The FreeCodeCamp News Gatsby tag](https://www.freecodecamp.org/news/tag/gatsby/) is a place where you can write and read substantial articles around Gatsby-related topics.
