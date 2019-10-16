@@ -670,5 +670,7 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+    - title: Gatsby Telemetry
+      link: /docs/telemetry/
     - title: Gatsby REPL
       link: /docs/gatsby-repl/

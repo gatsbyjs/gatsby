@@ -68,6 +68,8 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
+_**Note**: when you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands, you can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry)._
+
 To see the commands available, run `gatsby --help`.
 
 ![Check gatsby commands in terminal](05-gatsby-help.png)
@@ -84,7 +86,7 @@ Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. U
 4.  Run `gatsby develop`.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./03-create-site.mp4"></source>
+  <source type="video/mp4" src="./03-create-site.mp4" />
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
