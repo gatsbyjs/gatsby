@@ -9,6 +9,7 @@ const {
 const { SchemaComposer } = require(`graphql-compose`)
 jest.mock(`../../utils/api-runner-node`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const {
   buildObjectType,
@@ -33,6 +34,12 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 
@@ -47,7 +54,10 @@ describe(`Build schema`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      actions.createNode(
+        { ...node, internal: { ...node.internal } },
+        { name: `test` }
+      )(store.dispatch)
     )
   })
 
@@ -802,6 +812,33 @@ describe(`Build schema`, () => {
           `\`PluginDefined\`, which has already been defined by the plugin ` +
           `\`some-gatsby-plugin\`.`
       )
+    })
+
+    it(`extends fieldconfigs when merging types`, async () => {
+      createTypes(
+        buildObjectType({
+          name: `Mdx`,
+          interfaces: [`Node`],
+          fields: {
+            body: {
+              type: `String`,
+              resolve: () => `Mdx!`,
+            },
+          },
+        })
+      )
+      createTypes(`
+        type Mdx implements Node {
+          body: String!
+        }
+      `)
+
+      const schema = await buildSchema()
+      const fields = schema.getType(`Mdx`).getFields()
+
+      expect(fields.body.type.toString()).toBe(`String!`)
+      expect(typeof fields.body.resolve).toBe(`function`)
+      expect(fields.body.resolve()).toBe(`Mdx!`)
     })
 
     it(`displays error message for reserved Node interface`, () => {

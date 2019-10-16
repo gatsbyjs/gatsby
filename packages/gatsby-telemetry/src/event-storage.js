@@ -83,12 +83,24 @@ module.exports = class EventStorage {
     try {
       const res = await fetch(this.analyticsApi, {
         method: `POST`,
-        headers: { "content-type": `application/json` },
+        headers: {
+          "content-type": `application/json`,
+          "user-agent": this.getUserAgent(),
+        },
         body: JSON.stringify(events),
       })
       return res.ok
     } catch (e) {
       return false
+    }
+  }
+
+  getUserAgent() {
+    try {
+      const { name, version } = require(`../package.json`)
+      return `${name}:${version}`
+    } catch (e) {
+      return `Gatsby Telemetry`
     }
   }
 
