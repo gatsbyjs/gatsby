@@ -171,7 +171,7 @@ const Checkout = class extends React.Component {
 export default Checkout
 ```
 
-Be sure to enable the "Checkout client-only integration" on your Stripe dashboard to be able to use the redirectToCheckout integration. You can activate the integration in your [Stripe settings](https://dashboard.stripe.com/account/checkout/settings).
+Be sure to enable the "Checkout client-only integration" on your Stripe dashboard to be able to use the `redirectToCheckout()` function. You can activate the integration in your [Stripe settings](https://dashboard.stripe.com/account/checkout/settings).
 
 ![Stripe control to enable the Checkout client-side only integration highlighted](stripe-checkout-clientside-functionlality.png)
 
