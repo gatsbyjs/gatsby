@@ -277,7 +277,7 @@ export default ({ data }) => {
 }
 ```
 
-We're rendering a very minimalistic page for each blog post; consisting of:
+You're rendering a very minimalistic page for each blog post; consisting of:
 
 - A link back to the homepage.
 - The article's title and page.
