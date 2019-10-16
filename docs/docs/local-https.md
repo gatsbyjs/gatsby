@@ -117,7 +117,7 @@ See the example command:
 $ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
 
 # Or using absolute paths
-$ gatsby develop --https --key-file /absolute/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
+$ gatsby develop --https --key-file /absolute/path/to/key.key --cert-file /absolute/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
 ```
 
 Usage of the `--ca-file` flag is only required if your certificate is signed by a certificate authority.
