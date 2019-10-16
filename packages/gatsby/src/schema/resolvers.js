@@ -199,8 +199,10 @@ const fileByPath = (options = {}, fieldConfig) => async (
   const findLinkedFileNode = relativePath => {
     // Use the parent File node to create the absolute path to
     // the linked file.
-    
-    if (parentFileNode.dir === null || parentFileNode.dir === undefined) return null;
+
+    if (parentFileNode.dir === null || parentFileNode.dir === undefined) {
+        return null;
+    }
 
     const fileLinkPath = normalize(
       systemPath.resolve(parentFileNode.dir, relativePath)
