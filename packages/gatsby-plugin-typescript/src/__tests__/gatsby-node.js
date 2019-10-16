@@ -37,7 +37,8 @@ describe(`gatsby-plugin-typescript`, () => {
         js: jest.fn(() => jsLoader),
         eslint: jest.fn(() => eslintLoader),
       }
-      const store = { getState: jest.fn(() => ({})) }
+      const state = {}
+      const store = { getState: jest.fn(() => state) }
       onCreateWebpackConfig({ actions, loaders, store })
       expect(actions.setWebpackConfig).toHaveBeenCalledWith({
         module: {
@@ -64,7 +65,8 @@ describe(`gatsby-plugin-typescript`, () => {
         js: jest.fn(),
         eslint: jest.fn(() => eslintLoader),
       }
-      const store = { getState: jest.fn(() => ({})) }
+      const state = {}
+      const store = { getState: jest.fn(() => state) }
       onCreateWebpackConfig({ actions, loaders, store })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
     })
@@ -76,7 +78,8 @@ describe(`gatsby-plugin-typescript`, () => {
         js: jest.fn(() => jsLoader),
         eslint: jest.fn(),
       }
-      const store = { getState: jest.fn(() => ({})) }
+      const state = {}
+      const store = { getState: jest.fn(() => state) }
       onCreateWebpackConfig({ actions, loaders, store })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
     })
