@@ -482,7 +482,7 @@ Once a build is complete, the compiled set of files can be found in `/public`. I
 
 ### Integrated site file structure
 
-Here is the structure of the HTML & non JavaScript asset files after the built, Gatsby `/who` section is added to asset-domain and the `/gatsby/who/` folder is added at the asset domain:
+Here is the structure of the HTML & non JavaScript asset files after the built, Gatsby `/who` section is added to website-domain and the `/gatsby/who/` folder is added at the asset domain:
 
 ```
  asset-domain
@@ -521,11 +521,48 @@ website-domain
 {/* highlight-end */}
 ```
 
+## Porting more parts
+
+To replace multiple parts of a website with a single Gatsby application there are a few additional steps:
+
+1. Mirror the website structure within the Gatsby `/src/pages` folder.
+
+2. Adjust the `pathPrefix` Gatsby configuration option to reflect the new root path at which the Gatsby application will be served.
+
+3. Ensure the `to` props on all Gatsby `<Link>` components are correct relative to `/src/pages/` as the application root.
+
+For the example website covered in this guide, here is what each step involves for also migrating the `services` part of the site:
+
+1. Create a `/src/pages/who` folder, and move into it all the files currently in `/src/pages`. Create a new `/src/pages/services` folder and follow the html migration steps above for the `/services/` HTML files. The already completed Layout component will save a lot of the work!
+
+```
+gatsby-site-sections/src/pages
+
+├── who
+│   ├── index.js
+│   ├── ellla-arborist.js
+│   ├── marin-leafer.js
+│   └── sam-surgeon.js
+└── services
+    ├── index.js
+    ├── growing.js
+    ├── cleaning.js
+    └── shrinking.js
+```
+
+2. The `pathPrefix` configuration option is no longer needed as the Gatsby application will now be served at the root of the site alongside the remaining HTML files.
+
+3. Add `/who` to the start of the `to` attributes in the existing index.js, and do the equivalent for `/services`. In the `Layout.js` component file, change the `<a>` tag linking to the services page to a Gatsby `<Link>` component.
+
+After following those steps for the example site it is pretty much entirely Gatsby! Migrating the rest of the HTML files, `/about.html`, `/contact.html`, `/404.html` and `/index.html` to Gatsby pages would enable pre-fetching links between all the pages in the site. The complete Gatsby application is ready to take full advantage of Gatsby and it's community.
+
 ## Next steps
+
+Gatsby can handle assets through direct imports to page and component files, the [asset import documentation](/docs/importing-assets-into-files/) covers imports as well as the less optimized static folder. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
 The [building with components page](/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 
-[Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code
+[Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code.
 
 Short guides can be found at the [recipes section](/docs/recipes), for adding functionality such as optimizing and querying local images, adding markdown support and integrating various modern CSS tools. The [adding website functionality page](/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication and doing client side data fetching.
 
