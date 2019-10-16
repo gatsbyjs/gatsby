@@ -90,6 +90,11 @@ See the [library of official and community plugins](/plugins/)
 - [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 
+### Russian
+
+- [JAMstack: Как создать свой блог используя Gatsby + Contentful + Netlify (Russian)](https://habr.com/ru/post/439232/)
+- [Gatsby.js в деталях (Russian)](https://habr.com/ru/post/442298/)
+
 ### Spanish
 
 - [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
@@ -97,6 +102,11 @@ See the [library of official and community plugins](/plugins/)
 ### Turkish
 
 - [GatsbyJS ile Modern Web Sitesi | 1. Bölüm (Başlangıç ve Kurulum) (Turkish)](https://medium.com/@raufsamestone/reactjs-ve-gatsbyjs-ile-modern-web-sitesi-1-b%C3%B6l%C3%BCm-ba%C5%9Flang%C4%B1%C3%A7-ve-kurulum-27437d6aaf54)
+
+### Ukrainian
+
+- [JAMstack: створюємо блог з Gatsby + Contentful + Netlify (Ukrainian)](https://dou.ua/lenta/articles/creating-blog-with-jamstack/)
+- [Детально про Gatsby.js — інструмент для створення складних веб-сайтів (Ukrainian)](https://dou.ua/lenta/articles/gatsbyjs-guide/)
 
 ## Other resources
 
