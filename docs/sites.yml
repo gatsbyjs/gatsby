@@ -7946,3 +7946,16 @@
   built_by: Rou Hun Fan
   built_by_url: "https://flowen.me"
   featured: false
+- title: Haxzie, Portfolio and Blog
+  url: "https://haxzie.com/"
+  main_url: "https://haxzie.com/"
+  source_url: "https://github.com/haxzie/haxzie.com"
+  description: >
+    Haxzie.com is the portfolio and personal blog of Musthaq Ahamad, UX Engineer and Visual Designer
+  categories:
+    - Blog
+    - Portfolio
+    - Documentation
+  built_by: Musthaq Ahamad
+  built_by_url: "https://haxzie.com"
+  featured: false
