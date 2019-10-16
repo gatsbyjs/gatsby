@@ -12,7 +12,7 @@ const absoluteOrDirectory = (directory, filePath) => {
   return path.join(directory, filePath)
 }
 
-module.exports = async ({ name, certFile, keyFile, directory }) => {
+module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
   if (certFile ? !keyFile : keyFile) {
@@ -26,7 +26,9 @@ module.exports = async ({ name, certFile, keyFile, directory }) => {
     const keyPath = absoluteOrDirectory(directory, keyFile)
     const certPath = absoluteOrDirectory(directory, certFile)
 
-    process.env.NODE_EXTRA_CA_CERTS = certPath
+    process.env.NODE_EXTRA_CA_CERTS = caFile
+      ? absoluteOrDirectory(directory, caFile)
+      : certPath
     return await {
       key: fs.readFileSync(keyPath),
       cert: fs.readFileSync(certPath),
