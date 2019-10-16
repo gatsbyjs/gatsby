@@ -29,8 +29,8 @@ function buildLocalCommands(cli, isLocalSite) {
   // 'not dead' query not available in browserslist used in Gatsby v1
   const DEFAULT_BROWSERS =
     getLocalGatsbyMajorVersion() === 1
-      ? [`> 1%`, `last 2 versions`, `IE >= 9`]
-      : [`>0.25%`, `not dead`]
+      ? [ `> 1%`, `last 2 versions`, `IE >= 9` ]
+      : [ `>0.25%`, `not dead` ]
 
   const siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
@@ -44,7 +44,7 @@ function buildLocalCommands(cli, isLocalSite) {
     let version = getLocalGatsbyVersion()
 
     if (version) {
-      version = Number(version.split(`.`)[0])
+      version = Number(version.split(`.`)[ 0 ])
     }
 
     return version
@@ -56,8 +56,8 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`current directory: ${directory}`)
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site.\n` +
-          `Either the current working directory does not contain a valid package.json or ` +
-          `'gatsby' is not specified as a dependency`
+        `Either the current working directory does not contain a valid package.json or ` +
+        `'gatsby' is not specified as a dependency`
       )
     }
 
@@ -160,7 +160,7 @@ function buildLocalCommands(cli, isLocalSite) {
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
         // kills it so this is fine.
-        return new Promise(resolve => {})
+        return new Promise(resolve => { })
       })
     ),
   })
@@ -250,10 +250,10 @@ function buildLocalCommands(cli, isLocalSite) {
 
         envinfo
           .run({
-            System: [`OS`, `CPU`, `Shell`],
-            Binaries: [`Node`, `npm`, `Yarn`],
-            Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
-            Languages: [`Python`],
+            System: [ `OS`, `CPU`, `Shell` ],
+            Binaries: [ `Node`, `npm`, `Yarn` ],
+            Browsers: [ `Chrome`, `Edge`, `Firefox`, `Safari` ],
+            Languages: [ `Python` ],
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
           })
@@ -445,10 +445,10 @@ Creating a plugin:
     .strict()
     .fail((msg, err, yargs) => {
       const availableCommands = yargs.getCommands().map(commandDescription => {
-        const [command] = commandDescription
-        return command.split(` `)[0]
+        const [ command ] = commandDescription
+        return command.split(` `)[ 0 ]
       })
-      const arg = argv.slice(2)[0]
+      const arg = argv.slice(2)[ 0 ]
       const suggestion = arg ? didYouMean(arg, availableCommands) : ``
 
       cli.showHelp()
