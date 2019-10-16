@@ -50,7 +50,7 @@ const configureStore = initialState =>
 
 const initialState = readState()
 // Page data is not required to be in the initial redux store.
-// This will enabled us to make comparison of the cached state and new state.
+// This will enable us to make a comparison of the cached state and new state.
 // Allowing us to add and delete pages.
 initialState.pages = new Map()
 const store = configureStore(initialState) // Persist state.
