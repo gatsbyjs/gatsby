@@ -8022,3 +8022,13 @@
     - Blog
     - Education
   featured: false
+  - title: Gatsby Starter Ghost 
+  main_url: https://ghost.org/
+  url: https://gatsby.ghost.org/
+  description: >
+   Blog of a professional publishing platform . Their blog contains things realted to Gatsby configs and admin setting and so on.
+  categories:
+    - Technology
+    - Blog
+    - Education
+  featured: false
