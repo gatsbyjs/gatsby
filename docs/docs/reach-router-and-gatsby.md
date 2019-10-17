@@ -14,7 +14,7 @@ The main reasons Gatsby uses `@reach/router` are:
 
 ## Client and Server Routing 🤝
 
-Did you know that besides using the `<Link />` ([docs](https://www.gatsbyjs.org/docs/gatsby-link/)) api for declaring routes, you define your own client side routes? See this [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) on how to use `<Router />` from `@reach/router` to have server and client routes work seamlessly
+Besides using the [`<Link />` API](https://www.gatsbyjs.org/docs/gatsby-link/) for linking between pages Gatsby generates, you can define your own client-side routes. See this [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) on how to use `<Router />` from `@reach/router` to have server and client routes work seamlessly
 together with your server routes.
 
 ## Other resources
