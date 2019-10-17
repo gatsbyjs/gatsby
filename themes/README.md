@@ -1,4 +1,4 @@
-## Gatsby Themes and Starters
+# Gatsby Themes and Starters
 
 Here are the first party themes maintained by Gatsby.
 
