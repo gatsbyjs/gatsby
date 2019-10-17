@@ -2680,12 +2680,6 @@
   built_by: Ian Busko
   built_by_url: https://github.com/ianbusko
   featured: false
-- title: Got Milk
-  main_url: "https://www.gotmilk.com/"
-  url: "https://www.gotmilk.com/"
-  featured: false
-  categories:
-    - Food
 - title: People For Bikes
   url: "https://2017.peopleforbikes.org/"
   main_url: "https://2017.peopleforbikes.org/"
@@ -4984,14 +4978,6 @@
   categories:
     - Portfolio
     - Photography
-- title: Pantene
-  main_url: https://pantene.com
-  url: https://pantene.com
-  featured: false
-  description: >
-    Pantene is a Swiss-created American brand of hair care products owned by Procter & Gamble
-  categories:
-    - Business
 - title: Prevue
   main_url: https://www.prevue.io
   url: https://www.prevue.io
@@ -7262,19 +7248,6 @@
   built_by: Ridvan Karadag
   built_by_url: http://www.rootvan.com
   featured: false
-- title: Fifteen Seconds Istanbul
-  url: https://fifteenseconds.istanbul/
-  main_url: https://fifteenseconds.istanbul/
-  description: >
-    Landing page of FifteenSeconds Istanbul Event
-  categories:
-    - Event
-    - Conference
-    - Business
-    - Landing Page
-  built_by: İbrahim Telman
-  built_by_url: https://github.com/ibrahimtelman/
-  featured: false
 - title: spon.io
   url: https://www.spon.io
   main_url: https://www.spon.io
@@ -7434,16 +7407,6 @@
     - Law
   built_by: Merbin J Anselm
   built_by_url: https://anselm.in
-- title: Saint New York
-  url: https://www.saintnewyork.com
-  main_url: https://www.saintnewyork.com
-  description: >
-    A powerful fresh-scent formula made with clean ingredients.
-  categories:
-    - eCommerce
-    - Business
-  built_by: Peter Hironaka
-  built_by_url: https://peterhironaka.com
 - title: Runlet
   main_url: https://runlet.app
   url: https://runlet.app
