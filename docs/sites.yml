@@ -8022,3 +8022,11 @@
     - Blog
     - Education
   featured: false
+- title: asyncbits
+ built_by: HariRVA
+  built_by_url: "https://github.com/gatsbyjs/gatsby/edit/master/docs/sites.yml"
+  main_url: https://asyncbits.com/
+  url: https://asyncbits.com/
+ description: >
+    It is a blog containing technical articles
+ featured: false
