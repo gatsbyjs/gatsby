@@ -96,7 +96,7 @@ exports.sourceNodes = async (
     })
     return {}
   }
-  
+
   let resultSchema = remoteSchema
   if (customSchemaTransformer) {
     resultSchema = customSchemaTransformer(remoteSchema)
