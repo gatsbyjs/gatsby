@@ -19,7 +19,7 @@ jest.mock(`fs-extra`, () => {
   }
 })
 
-describe(`Page Data util`, () => {
+describe(`Page Data`, () => {
   const initialPageState = _.cloneDeep(store.getState().pages)
 
   beforeEach(() => {
@@ -96,23 +96,23 @@ describe(`Page Data util`, () => {
       type: `DELETE_CACHE`,
     })
 
-    const pageDeletedKeys = await removePreviousPageData(
+    const deletedPageKeys = await removePreviousPageData(
       dir,
       store.getState(),
       readState()
     )
-    expect(pageDeletedKeys).toEqual([`/my-test-page/`])
+    expect(deletedPageKeys).toEqual([`/my-test-page/`])
   })
 
   it(`expect no action page data is in state and cache`, async () => {
     await saveState()
     const dir = `/Users/username/`
 
-    const pageDeletedKeys = await removePreviousPageData(
+    const deletedPageKeys = await removePreviousPageData(
       dir,
       store.getState(),
       readState()
     )
-    expect(pageDeletedKeys).toEqual([])
+    expect(deletedPageKeys).toEqual([])
   })
 })
