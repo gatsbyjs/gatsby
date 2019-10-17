@@ -32,9 +32,7 @@ describe(`gatsby-plugin-typescript`, () => {
     it(`sets the correct webpack config`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
-      const loaders = {
-        js: jest.fn(() => jsLoader),
-      }
+      const loaders = { js: jest.fn(() => jsLoader) }
       const stage = "develop"
       const eslintLoader = { loader: "eslint-loader" }
       const webpackConfig = {
@@ -77,9 +75,7 @@ describe(`gatsby-plugin-typescript`, () => {
 
     it(`does not set the webpack config if there isn't a js loader`, () => {
       const actions = { setWebpackConfig: jest.fn() }
-      const loaders = {
-        js: jest.fn(),
-      }
+      const loaders = { js: jest.fn() }
       const stage = "develop"
       const getConfig = jest.fn()
       onCreateWebpackConfig({ actions, getConfig, loaders, stage })
@@ -125,9 +121,7 @@ describe(`gatsby-plugin-typescript`, () => {
     it(`set the eslint webpack config only if in develop stage`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
-      const loaders = {
-        js: jest.fn(() => jsLoader),
-      }
+      const loaders = { js: jest.fn(() => jsLoader) }
       const stage = "build-html"
       const eslintLoader = { loader: "eslint-loader" }
       const webpackConfig = {
