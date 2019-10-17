@@ -8021,4 +8021,15 @@
   categories:
     - Blog
     - Education
+  featured: false'
+  - title: Sanity Gatsby blog
+  url: "https://www.sanity.io/create/?template=sanity-io%2Fsanity-template-gatsby-blog"
+  main_url: "https://www.sanity.io"
+  source_url: "https://github.com/IhariR/sanity-gatsby-blog"
+  description: >
+    It is a basic Gatsby website service built.
+  categories:
+    - Blog
+    - Business
+  built_by: IhariR
   featured: false
