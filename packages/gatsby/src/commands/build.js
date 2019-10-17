@@ -148,6 +148,7 @@ module.exports = async function build(program: BuildArgs) {
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
+  await waitJobsFinished()
 
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
@@ -195,7 +196,6 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   activity.start()
-  await waitJobsFinished()
   await db.saveState()
   activity.end()
 
