@@ -8,7 +8,7 @@ Sass will compile `.sass` and `.scss` files to `.css` files for you, so you can 
 
 > **Note**: the difference between using a `.sass` or `.scss` file is the syntax that you write your styles in. All valid CSS is valid SCSS as well so it is the easiest to use and most popular. You can read more about the differences in the [Sass documentation](https://sass-lang.com/documentation/syntax).
 
-## Installing and Configuring Sass
+## Installing and configuring Sass
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start/), then come back.
 
@@ -53,5 +53,5 @@ import "./styles.sass"
 ## Other resources
 
 - [Introduction to Sass](https://designmodo.com/introduction-sass/)
-- [Sass Documentation](https://sass-lang.com/documentation)
+- [Sass documentation](https://sass-lang.com/documentation)
 - [Gatsby starters that use Sass](/starters/?c=Styling%3ASCSS)
