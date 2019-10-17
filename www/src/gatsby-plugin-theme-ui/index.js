@@ -116,6 +116,8 @@ const col = {
     // add a bunch of UI colors
     copyButton: c.grey[60],
     lineHighlightBackground: `#fbf0ea`,
+    lineAddedBackground: `#f3ffcc`,
+    lineAddedBorder: `#daffcc`,
     scrollbarTrack: `#faede5`,
   },
   ui: {

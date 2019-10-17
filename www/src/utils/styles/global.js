@@ -175,6 +175,15 @@ const gatsbyHighlight = t => {
       borderLeft: `${t.space[1]} solid ${t.colors.code.lineHighlightBorder}`,
       display: `block`,
     },
+    ".gatsby-added-code-line": {
+      background: t.colors.code.lineAddedBackground,
+      marginLeft: `-${t.space[6]}`,
+      marginRight: `-${t.space[6]}`,
+      paddingLeft: t.space[5],
+      paddingRight: t.space[6],
+      borderLeft: `${t.space[1]} solid ${t.colors.code.lineAddedBorder}`,
+      display: `block`,
+    },
     ".gatsby-highlight pre::-webkit-scrollbar": {
       width: t.space[2],
       height: t.space[2],

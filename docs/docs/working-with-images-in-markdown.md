@@ -81,24 +81,24 @@ Also in the Markdown post template, import the `gatsby-image` package and pass t
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-// highlight-start
+// added-start
 import Img from "gatsby-image"
-// highlight-end
+// added-end
 
 export default ({ data }) => {
   let post = data.markdownRemark
 
-  // highlight-start
+  // added-start
   let featuredImgFluid = post.frontmatter.featuredImage.childImageSharp.fluid
-  // highlight-end
+  // added-end
 
   return (
     <Layout>
       <div>
         <h1>{post.frontmatter.title}</h1>
-        // highlight-start
+        // added-start
         <Img fluid={featuredImgFluid} />
-        // highlight-end
+        // added-end
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
     </Layout>
