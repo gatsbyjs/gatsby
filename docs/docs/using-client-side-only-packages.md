@@ -2,7 +2,7 @@
 title: Using Client-Side Only Packages
 ---
 
-On occasion, you may need to use a function or library that only works client side. This usually is because the library in question accesses something that isn't available during server-side rendering (SSR), like [browser DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) methods.
+On occasion, you may need to use a function or library that only works client-side. This usually is because the library in question accesses something that isn't available during server-side rendering (SSR), like [browser DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) methods.
 
 You'll need to use one of the workarounds outlined below if your project fails to compile with `gatsby develop` or `gatsby build` with an error like:
 
@@ -21,7 +21,7 @@ In the component where you need it, load the package via CDN using a [`<script /
 To embed your script, you can:
 
 - Include it in a custom component as needed using [`react-helmet`](https://github.com/nfl/react-helmet).
-- Add the script tag directly in your base html using Gatsby's [html.js](/docs/custom-html/)
+- Add the script tag directly in your base HTML using Gatsby's [html.js](/docs/custom-html/)
 
 You should then follow React's guidelines for [Integrating with DOM Manipulation Plugins](https://reactjs.org/docs/integrating-with-other-libraries.html#integrating-with-dom-manipulation-plugins), using the methods available in the [React Component Lifecycle](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to interact with the library you're using.
 
@@ -52,7 +52,7 @@ class MyComponent extends Component {
 
 ## Workaround 3: Load client-side dependent components with react-loadable
 
-Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client side only package.
+Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client-side only package.
 
 ```bash
 npm install @loadable/component
@@ -80,10 +80,10 @@ const LoadableBuyButton = Loadable(() => import("./ShopifyBuyButton"))
 export default LoadableBuyButton
 ```
 
-## Workaround 4: Use React.lazy and Suspense on client side only
+## Workaround 4: Use React.lazy and Suspense on client-side only
 
-React.lazy and Suspense are still not ready for server side rendering, but they can still be used by checking that the code is executed only on the client.
-While this solution is inferior to `loadable-components`, that works both on server side and client, it still provides an alternative for dealing with client side only packages, without an added dependency.
+React.lazy and Suspense are still not ready for server-side rendering, but they can still be used by checking that the code is executed only on the client.
+While this solution is inferior to `loadable-components`, that works both on server side and client, it still provides an alternative for dealing with client-side only packages, without an added dependency.
 Remember that the following code could break if executed without the `isSSR` guard.
 
 ```jsx

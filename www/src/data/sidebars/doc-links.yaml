@@ -127,10 +127,10 @@
             - title: Using Gatsby Without GraphQL
               link: /docs/using-gatsby-without-graphql/
               breadcrumbTitle: Gatsby Without GraphQL
-            - title: Sourcing From the Filesystem
+            - title: Sourcing from the Filesystem
               link: /docs/sourcing-from-the-filesystem/
               breadcrumbTitle: From the Filesystem
-            - title: Sourcing From Databases
+            - title: Sourcing from Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
             - title: Sourcing from Hosted Services

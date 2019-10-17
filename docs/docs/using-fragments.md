@@ -1,5 +1,5 @@
 ---
-title: Using Fragments
+title: Using GraphQL Fragments
 ---
 
 Fragments allow you to reuse parts of GraphQL queries. It also allows you to split up complex queries into smaller, easier to understand components.
