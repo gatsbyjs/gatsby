@@ -35,9 +35,9 @@ describe(`gatsby-plugin-typescript`, () => {
       const loaders = {
         js: jest.fn(() => jsLoader),
       }
-      const state = "develop"
+      const stage = "develop"
       const eslintLoader = { loader: "eslint-loader" }
-      webpackConfig = {
+      const webpackConfig = {
         module: {
           rules: [
             {
@@ -45,12 +45,12 @@ describe(`gatsby-plugin-typescript`, () => {
               test: /\.jsx?$/,
               exclude: /(node_modules|bower_components)/,
               use: [eslintLoader],
-            }
-          ]
-        }
+            },
+          ],
+        },
       }
       const getConfig = jest.fn(() => webpackConfig)
-      onCreateWebpackConfig({ actions, getConfig, loaders, state })
+      onCreateWebpackConfig({ actions, getConfig, loaders, stage })
       expect(actions.setWebpackConfig).toHaveBeenCalledWith({
         module: {
           rules: [
@@ -77,28 +77,95 @@ describe(`gatsby-plugin-typescript`, () => {
 
     it(`does not set the webpack config if there isn't a js loader`, () => {
       const actions = { setWebpackConfig: jest.fn() }
-      const eslintLoader = {}
       const loaders = {
         js: jest.fn(),
-        eslint: jest.fn(() => eslintLoader),
       }
-      const state = {}
-      const store = { getState: jest.fn(() => state) }
-      onCreateWebpackConfig({ actions, loaders, store })
+      const stage = "develop"
+      const getConfig = jest.fn()
+      onCreateWebpackConfig({ actions, getConfig, loaders, stage })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
     })
 
-    it(`does not set the webpack config if there isn't an eslint loader`, () => {
+    it(`does not set the typescript-eslint webpack config if the built-in eslint-loader isn't set`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
       const loaders = {
         js: jest.fn(() => jsLoader),
-        eslint: jest.fn(),
       }
-      const state = {}
+      const stage = `develop`
+      const webpackConfig = {
+        module: {
+          rules: [
+            {
+              enforce: `pre`,
+              test: /\.jsx?$/,
+              exclude: /(node_modules|bower_components)/,
+              use: [],
+            },
+          ],
+        },
+      }
+      const getConfig = jest.fn(() => webpackConfig)
       const store = { getState: jest.fn(() => state) }
-      onCreateWebpackConfig({ actions, loaders, store })
-      expect(actions.setWebpackConfig).not.toHaveBeenCalled()
+      onCreateWebpackConfig({ actions, getConfig, loaders, stage })
+      expect(actions.setWebpackConfig).not.toHaveBeenCalledWith({
+        module: {
+          rules: [
+            {
+              enforce: `pre`,
+              test: /\.tsx?$/,
+              exclude: /(node_modules|bower_components)/,
+              use: [],
+            },
+          ],
+        },
+      })
+    })
+
+    it(`set the eslint webpack config only if in develop stage`, () => {
+      const actions = { setWebpackConfig: jest.fn() }
+      const jsLoader = {}
+      const loaders = {
+        js: jest.fn(() => jsLoader),
+      }
+      const stage = "build-html"
+      const eslintLoader = { loader: "eslint-loader" }
+      const webpackConfig = {
+        module: {
+          rules: [
+            {
+              enforce: `pre`,
+              test: /\.jsx?$/,
+              exclude: /(node_modules|bower_components)/,
+              use: [eslintLoader],
+            }
+          ]
+        }
+      }
+      const getConfig = jest.fn(() => webpackConfig)
+      onCreateWebpackConfig({ actions, getConfig, loaders, stage })
+      expect(actions.setWebpackConfig).toHaveBeenCalledWith({
+        module: {
+          rules: [
+            {
+              test: /\.tsx?$/,
+              use: jsLoader,
+            },
+          ],
+        },
+      })
+      expect(actions.setWebpackConfig).not.toHaveBeenCalledWith({
+        module: {
+          rules: [
+            {
+              enforce: `pre`,
+              test: /\.tsx?$/,
+              exclude: /(node_modules|bower_components)/,
+              use: [eslintLoader],
+            },
+          ],
+        },
+      })
     })
   })
 })
