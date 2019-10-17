@@ -482,7 +482,7 @@ Once a build is complete, the compiled set of files can be found in `/public`. I
 
 ### Integrated site file structure
 
-Here is the structure of the HTML & non JavaScript asset files after the built, Gatsby `/who` section is added to website-domain and the `/gatsby/who/` folder is added at the asset domain:
+Here is the structure of the HTML & non JavaScript asset files after the built, Gatsby `/who` section is added to website domain and the `/gatsby/who/` folder is added at the asset domain:
 
 ```
  asset-domain
