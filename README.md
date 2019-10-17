@@ -1,11 +1,8 @@
 <p align="center">
   <a href="https://gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+    <img alt="Gatsby" src="https://lh3.googleusercontent.com/_lzXsdf9fqUMwgNPDecjfstRDhgLDen0uKzEmHDZp2W3ErFEtwaNupBh8sfx205cXUt7RdvMegHWduZv7XuEIadc_YAZGQHn1eLocxZVFiI9nq3gYtH0jLIiecrwnVAu5lvi5rJKKA=w2400" />
   </a>
 </p>
-<h1 align="center">
-  Gatsby v2
-</h1>
 
 <h3 align="center">
   ⚛️ 📄 :rocket:
