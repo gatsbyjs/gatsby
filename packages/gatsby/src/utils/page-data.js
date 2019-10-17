@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
-const { chunk, isEqual, size } = require(`lodash`)
+const { chunk, isEqual } = require(`lodash`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
