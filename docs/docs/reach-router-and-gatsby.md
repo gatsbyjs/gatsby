@@ -4,7 +4,7 @@ title: "@reach/router and Gatsby"
 
 This guide gives a peek under the hood of using `@reach/router` with Gatsby.
 
-## Why do we use @react/router?
+## Why do we use @reach/router?
 
 The main reasons Gatsby uses `@reach/router` are:
 
