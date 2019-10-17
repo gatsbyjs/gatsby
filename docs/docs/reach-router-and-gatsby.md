@@ -2,7 +2,22 @@
 title: "@reach/router and Gatsby"
 ---
 
-This is a stub. Help our community expand it.
+This guide gives a peek under the hood of using `@reach/router` with Gatsby.
 
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
-pull request gets accepted.
+## Why do we use @react/router?
+
+The main reasons Gatsby uses `@reach/router` are:
+
+1. Preloading. You can read more about Preloading In the docs for the [Gastby Link api](https://www.gatsbyjs.org/docs/gatsby-link/).
+2. The [routing accessibility](https://reach.tech/router/accessibility) it provides.
+3. It supports [server rendering](https://reach.tech/router/server-rendering) which helps Gatsby build routed files at build time.
+
+## Client and Server Routing 🤝
+
+Did you know that besides using the `<Link />` ([docs](https://www.gatsbyjs.org/docs/gatsby-link/)) api for declaring routes, you define your own client side routes? See this [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) on how to use `<Router />` from `@reach/router` to have server and client routes work seamlessly
+together with your server routes.
+
+## Other resources
+
+- [Reach Router docs](https://reach.tech/router)
+- [Video about using @reach/router in a standalone project (not Gatsby)](https://www.youtube.com/watch?v=J1vsBrSUptA).
