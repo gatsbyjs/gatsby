@@ -1,4 +1,14 @@
-# How Gatsby can power your site offline - even without JavaScript
+---
+title: "How Gatsby can power your site offline - even without JavaScript"
+date: 2019-10-17
+author: David Bailey
+excerpt: >
+  With Gatsby's offline plugin, network troubles are a thing of the past.
+tags:
+  - plugins
+  - performance
+  - accessibility
+---
 
 You know the feeling: you saw a cool website or read an interesting article the other day, and you'd like to check back on it, or maybe you’re with some people that you’d like to share it with. But what’s this? You don’t have any phone signal, and the wi-fi connection is spotty at best – if there is one at all! You attempt to open the page, but try as you might, the loading spinner just keeps on spinning...
 
