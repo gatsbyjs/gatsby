@@ -103,6 +103,16 @@ describe(`gatsby-plugin-typescript`, () => {
       }
       const getConfig = jest.fn(() => webpackConfig)
       onCreateWebpackConfig({ actions, getConfig, loaders, stage })
+      expect(actions.setWebpackConfig).toHaveBeenCalledWith({
+        module: {
+          rules: [
+            {
+              test: /\.tsx?$/,
+              use: jsLoader,
+            },
+          ],
+        },
+      })
       expect(actions.setWebpackConfig).not.toHaveBeenCalledWith({
         module: {
           rules: [
@@ -117,7 +127,7 @@ describe(`gatsby-plugin-typescript`, () => {
       })
     })
 
-    it(`set the eslint webpack config only if in develop stage`, () => {
+    it(`set the typescript-eslint webpack config only if in develop stage`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
       const loaders = { js: jest.fn(() => jsLoader) }
