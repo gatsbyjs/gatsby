@@ -26,10 +26,10 @@ exports.sourceNodes = async (
     fieldName,
     headers = {},
     fetchOptions = {},
-    customSchemaTransfomer,
     createLink,
     createSchema,
     refetchInterval,
+    customSchemaTransformer,
   } = options
 
   invariant(
@@ -97,9 +97,9 @@ exports.sourceNodes = async (
     return {}
   }
   
-  let resultSchema = remoteSchema;
-  if (customSchemaTransfomer){
-    resultSchema = customSchemaTransfomer(remoteSchema);
+  let resultSchema = remoteSchema
+  if (customSchemaTransformer) {
+    resultSchema = customSchemaTransformer(remoteSchema)
   }
 
   const schema = transformSchema(resultSchema, [
