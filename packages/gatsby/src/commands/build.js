@@ -210,7 +210,7 @@ module.exports = async function build(program: BuildArgs) {
   await stopTracer()
   workerPool.end()
 
-  if (process.argv.length && process.argv.indexOf(`--log-pages`)) {
+  if (incrementalBuild && process.argv.indexOf(`--log-pages`) > -1) {
     console.log(`incrementalBuildPages:`, newPageKeys)
     console.log(`incrementalBuildDeletedPages:`, deletedPageKeys)
   }
