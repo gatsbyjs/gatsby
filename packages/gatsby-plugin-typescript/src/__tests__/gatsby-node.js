@@ -33,8 +33,8 @@ describe(`gatsby-plugin-typescript`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
       const loaders = { js: jest.fn(() => jsLoader) }
-      const stage = "develop"
-      const eslintLoader = { loader: "eslint-loader" }
+      const stage = `develop`
+      const eslintLoader = { loader: `eslint-loader` }
       const webpackConfig = {
         module: {
           rules: [
@@ -76,7 +76,7 @@ describe(`gatsby-plugin-typescript`, () => {
     it(`does not set the webpack config if there isn't a js loader`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const loaders = { js: jest.fn() }
-      const stage = "develop"
+      const stage = `develop`
       const getConfig = jest.fn()
       onCreateWebpackConfig({ actions, getConfig, loaders, stage })
       expect(actions.setWebpackConfig).not.toHaveBeenCalled()
@@ -102,7 +102,6 @@ describe(`gatsby-plugin-typescript`, () => {
         },
       }
       const getConfig = jest.fn(() => webpackConfig)
-      const store = { getState: jest.fn(() => state) }
       onCreateWebpackConfig({ actions, getConfig, loaders, stage })
       expect(actions.setWebpackConfig).not.toHaveBeenCalledWith({
         module: {
@@ -122,8 +121,8 @@ describe(`gatsby-plugin-typescript`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
       const loaders = { js: jest.fn(() => jsLoader) }
-      const stage = "build-html"
-      const eslintLoader = { loader: "eslint-loader" }
+      const stage = `build-html`
+      const eslintLoader = { loader: `eslint-loader` }
       const webpackConfig = {
         module: {
           rules: [
@@ -132,9 +131,9 @@ describe(`gatsby-plugin-typescript`, () => {
               test: /\.jsx?$/,
               exclude: /(node_modules|bower_components)/,
               use: [eslintLoader],
-            }
-          ]
-        }
+            },
+          ],
+        },
       }
       const getConfig = jest.fn(() => webpackConfig)
       onCreateWebpackConfig({ actions, getConfig, loaders, stage })
