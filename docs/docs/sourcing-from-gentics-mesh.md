@@ -65,7 +65,7 @@ If everything works correctly, you should now have your Gentics Mesh API added t
 
 ### Querying for content
 
-From the root of your project, run the development environment with `npm run develop`. Once the server has started, you should be able to open the following URL in your browser:
+From the root of your project, run the development environment with `gatsby develop`. Once the server has started, you should be able to open the following URL in your browser:
 
 `http://localhost:8000/___graphql`
 
