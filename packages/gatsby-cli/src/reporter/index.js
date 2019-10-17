@@ -119,6 +119,9 @@ const reporter: Reporter = {
     //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
     if (isNoColor) {
       process.env.FORCE_COLOR = `0`
+      // chalk determines color level at import time. Before we reach this point,
+      // chalk was already imported, so we need to retroactively adjust level
+      chalk.level = 0
     }
   },
   /**
