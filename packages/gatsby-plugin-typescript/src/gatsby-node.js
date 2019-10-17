@@ -24,27 +24,25 @@ function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
       ],
     },
   })
-  
-  if (stage === "develop") {
+
+  if (stage === `develop`) {
     const builtInEslintRule = getConfig().module.rules.find(rule => {
       if (rule.enforce === `pre`) {
-        return rule.use.some(use => {
-          return /eslint-loader/.test(use.loader)
-        })
+        return rule.use.some(use => /eslint-loader/.test(use.loader))
       }
       return false
-    });
+    })
 
     if (builtInEslintRule) {
       const typescriptEslintRule = {
         ...builtInEslintRule,
         test: /\.tsx?$/,
-      };
+      }
       actions.setWebpackConfig({
         module: {
           rules: [typescriptEslintRule],
-        }
-      });
+        },
+      })
     }
   }
 }
