@@ -7,13 +7,10 @@ function onCreateBabelConfig({ actions }, options) {
   })
 }
 
-function onCreateWebpackConfig({ actions, loaders, store }) {
-  const { schema } = store.getState()
-
+function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
   const jsLoader = loaders.js()
-  const eslintLoader = loaders.eslint(schema)
 
-  if (!jsLoader || !eslintLoader) {
+  if (!jsLoader) {
     return
   }
 
@@ -24,15 +21,32 @@ function onCreateWebpackConfig({ actions, loaders, store }) {
           test: /\.tsx?$/,
           use: jsLoader,
         },
-        {
-          enforce: `pre`,
-          test: /\.tsx?$/,
-          exclude: /(node_modules|bower_components)/,
-          use: eslintLoader,
-        },
       ],
     },
   })
+  
+  if (stage === "develop") {
+    const builtInEslintRule = getConfig().module.rules.find(rule => {
+      if (rule.enforce === `pre`) {
+        return rule.use.some(use => {
+          return /eslint-loader/.test(use.loader)
+        })
+      }
+      return false
+    });
+
+    if (builtInEslintRule) {
+      const typescriptEslintRule = {
+        ...builtInEslintRule,
+        test: /\.tsx?$/,
+      };
+      actions.setWebpackConfig({
+        module: {
+          rules: [typescriptEslintRule],
+        }
+      });
+    }
+  }
 }
 
 exports.resolvableExtensions = resolvableExtensions
