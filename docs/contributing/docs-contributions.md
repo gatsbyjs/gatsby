@@ -25,7 +25,7 @@ To address missing images, check the doc or tutorial source [in the Gatsby repo]
 
 If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
 
-Keep in mind that some links in here are already correct because they work on gatsbyjs.org. While it would be nice to links in documentation to work on GitHub, have them working on gatsbyjs.org is a higher priority!
+Keep in mind that some links in here are already correct because they work on gatsbyjs.org. While it would be nice for links in documentation to work on GitHub, having them working on gatsbyjs.org is a higher priority!
 
 ## Headings
 
