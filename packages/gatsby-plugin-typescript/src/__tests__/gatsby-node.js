@@ -32,14 +32,25 @@ describe(`gatsby-plugin-typescript`, () => {
     it(`sets the correct webpack config`, () => {
       const actions = { setWebpackConfig: jest.fn() }
       const jsLoader = {}
-      const eslintLoader = {}
       const loaders = {
         js: jest.fn(() => jsLoader),
-        eslint: jest.fn(() => eslintLoader),
       }
-      const state = {}
-      const store = { getState: jest.fn(() => state) }
-      onCreateWebpackConfig({ actions, loaders, store })
+      const state = "develop"
+      const eslintLoader = { loader: "eslint-loader" }
+      webpackConfig = {
+        module: {
+          rules: [
+            {
+              enforce: `pre`,
+              test: /\.jsx?$/,
+              exclude: /(node_modules|bower_components)/,
+              use: [eslintLoader],
+            }
+          ]
+        }
+      }
+      const getConfig = jest.fn(() => webpackConfig)
+      onCreateWebpackConfig({ actions, getConfig, loaders, state })
       expect(actions.setWebpackConfig).toHaveBeenCalledWith({
         module: {
           rules: [
@@ -47,11 +58,17 @@ describe(`gatsby-plugin-typescript`, () => {
               test: /\.tsx?$/,
               use: jsLoader,
             },
+          ],
+        },
+      })
+      expect(actions.setWebpackConfig).toHaveBeenCalledWith({
+        module: {
+          rules: [
             {
               enforce: `pre`,
               test: /\.tsx?$/,
               exclude: /(node_modules|bower_components)/,
-              use: eslintLoader,
+              use: [eslintLoader],
             },
           ],
         },
