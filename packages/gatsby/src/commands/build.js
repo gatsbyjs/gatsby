@@ -17,6 +17,7 @@ const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const handleWebpackError = require(`../utils/webpack-error-parser`)
+const { readFromCache } = require(`../redux/persist.js`)
 
 type BuildArgs = {
   directory: string,
@@ -125,7 +126,10 @@ module.exports = async function build(program: BuildArgs) {
   if (incrementalBuild) {
     activity = report.activityTimer(`Comparing previous data set`)
     activity.start()
-    newPageKeys = await pageDataUtil.getNewPageKeys(store)
+    newPageKeys = await pageDataUtil.getNewPageKeys(
+      store.getState(),
+      readFromCache()
+    )
     activity.end()
   }
 
@@ -175,10 +179,15 @@ module.exports = async function build(program: BuildArgs) {
   }
   activity.end()
 
+  let deletedPageKeys = []
   if (incrementalBuild) {
     activity = report.activityTimer(`Delete previous page data`)
     activity.start()
-    await pageDataUtil.removePreviousPageData(program.directory, store)
+    deletedPageKeys = await pageDataUtil.removePreviousPageData(
+      program.directory,
+      store.getState(),
+      readFromCache()
+    )
     activity.end()
   }
 
@@ -200,4 +209,9 @@ module.exports = async function build(program: BuildArgs) {
   buildSpan.finish()
   await stopTracer()
   workerPool.end()
+
+  if (process.argv.length && process.argv.indexOf(`--log-pages`)) {
+    console.log(`incrementalBuildPages:`, newPageKeys)
+    console.log(`incrementalBuildDeletedPages:`, deletedPageKeys)
+  }
 }

@@ -2,7 +2,6 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
 const { chunk, isEqual, size } = require(`lodash`)
-const { readFromCache } = require(`../redux/persist.js`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -41,18 +40,16 @@ const updateCompilationHashes = (
   )
 }
 
-const getNewPageKeys = store =>
+const getNewPageKeys = (store, cacheData) =>
   new Promise(resolve => {
     const newPageKeys = []
-    const newPageData = store.getState()
-    const previousPageData = readFromCache()
 
-    newPageData.pages.forEach((value, key) => {
-      if (!previousPageData.pages.has(key)) {
+    store.pages.forEach((value, key) => {
+      if (!cacheData.pages.has(key)) {
         newPageKeys.push(key)
       } else {
         const newPageContext = value.context.page
-        const previousPageContext = previousPageData.pages.get(key).context.page
+        const previousPageContext = cacheData.pages.get(key).context.page
 
         if (!isEqual(newPageContext, previousPageContext)) {
           newPageKeys.push(key)
@@ -63,27 +60,17 @@ const getNewPageKeys = store =>
     resolve(newPageKeys)
   })
 
-const removePreviousPageData = (directory, store) =>
+const removePreviousPageData = (directory, store, cacheData) =>
   new Promise(resolve => {
-    const newPageDataMap = store.getState()
-    const previousPageDataMap = readFromCache()
     const deletedKeys = []
 
-    previousPageDataMap.pages.forEach((value, key) => {
-      if (!newPageDataMap.pages.has(key)) {
+    cacheData.pages.forEach((value, key) => {
+      if (!store.pages.has(key)) {
         deletedKeys.push(key)
         fs.removeSync(`${directory}/public${key}`)
         fs.removeSync(`${directory}/public/page-data${key}`)
       }
     })
-
-    if (size(deletedKeys)) {
-      fs.writeFileSync(
-        `${directory}/temp/delete.txt`,
-        JSON.stringify({ deletedKeys }),
-        `utf-8`
-      )
-    }
 
     resolve(deletedKeys)
   })
