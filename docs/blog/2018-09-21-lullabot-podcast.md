@@ -1,5 +1,5 @@
 ---
-title: Listen to this Gatsby interview on the Lullabot podcast
+title: Listen to This Gatsby Interview on the Lullabot Podcast
 author: Linda Watkins
 date: 2018-09-21
 ---
