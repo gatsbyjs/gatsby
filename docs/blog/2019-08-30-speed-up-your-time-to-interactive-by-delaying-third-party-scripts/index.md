@@ -28,7 +28,7 @@ Harry from [marketingexamples.com](https://marketingexamples.com/) linked me to 
 
 When looking at the performance data, the site's first meaningful paint took slightly over a second, but the time to interactive was _eleven seconds_. Yikes!
 
-The reason for this was that I recently switched to [Segment](https://segment.com) (using [gatsby-plugin-segment-js](//packages/gatsby-plugin-segment-js/)) and was loading other scripts through that, like support chat and analytics. These scripts all counted towards my "time to interactive".
+The reason for this was that I recently switched to [Segment](https://segment.com) (using [gatsby-plugin-segment-js](/packages/gatsby-plugin-segment-js/)) and was loading other scripts through that, like support chat and analytics. These scripts all counted towards my "time to interactive".
 
 The SEO performance post included a tip from Dave of [ToDesktop](https://www.todesktop.com/) who has similar problems. His tip: Prevent loading the scripts until after a user has scrolled, along with some timeout to prevent [scroll jank](http://jankfree.org/).
 
