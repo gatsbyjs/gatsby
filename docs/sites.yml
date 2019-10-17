@@ -8022,3 +8022,12 @@
     - Blog
     - Education
   featured: false
+- title: diff001a's blog
+  main_url: https://diff001a.netlify.com/
+  url: https://diff001a.netlify.com/
+  description: >
+    This is diff001a's blog which contains blogs realted to programming.
+  categories:
+    - Blog
+  builtby: diff001a
+  featured: false
