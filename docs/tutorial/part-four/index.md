@@ -35,8 +35,8 @@ integers (`42`), objects (`{ pizza: true }`), etc.
 For the purpose of working in Gatsby, however, a more useful answer is
 "everything that lives outside a React component".
 
-So far, you've been writing text and adding images _directly_ in components.
-Which is an _excellent_ way to build many websites. But, often you want to store
+So far, you've been writing text and adding images _directly_ in components 
+(which is an _excellent_ way to build many websites). But, often you want to store
 data _outside_ components and then bring the data _into_ the component as
 needed.
 
