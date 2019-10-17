@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react"
 import { Box, Color, StdoutContext } from "ink"
-import { connect } from "react-redux"
+import StoreStateContext from "../context"
 
 // Track the width and height of the terminal. Responsive app design baby!
 const useTerminalResize = () => {
@@ -44,12 +44,16 @@ const Develop = ({ pagesCount, appName, status }) => {
   )
 }
 
-const ConnectedDevelop = connect(state => {
-  return {
-    pagesCount: state.pages ? state.pages.size : 0,
-    appName: state.program.sitePackageJson.name || ``,
-    status: state.logs.status,
-  }
-})(Develop)
+const ConnectedDevelop = () => {
+  const state = useContext(StoreStateContext)
+
+  return (
+    <Develop
+      pagesCount={state.pages ? state.pages.size : 0}
+      appName={state.program ? state.program.sitePackageJson.name || `` : ``}
+      status={state.logs ? state.logs.status : ``}
+    />
+  )
+}
 
 export default ConnectedDevelop
