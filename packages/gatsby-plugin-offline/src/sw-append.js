@@ -3,12 +3,16 @@
 importScripts(`idb-keyval-iife.min.js`)
 
 const { NavigationRoute } = workbox.routing
+
+let lastNavigationRequest = null
 let offlineShellEnabled = true
 
 const navigationRoute = new NavigationRoute(async ({ event }) => {
   if (!offlineShellEnabled) {
     return await fetch(event.request)
   }
+
+  lastNavigationRequest = event.request.url
 
   let { pathname } = new URL(event.request.url)
   pathname = pathname.replace(new RegExp(`^%pathPrefix%`), ``)
@@ -63,8 +67,28 @@ self.addEventListener(`message`, event => {
 workbox.routing.registerRoute(/\/.gatsby-plugin-offline:.+/, ({ event }) => {
   const { pathname } = new URL(event.request.url)
 
-  const api = pathname.match(/:(.+)/)[1]
-  MessageAPI[api]()
+  const params = pathname.match(/:(.+)/)[1]
+  const data = {}
 
-  return new Response()
+  if (params.indexOf(`=`) !== -1) {
+    params.split(`&`).forEach(param => {
+      const [key, val] = param.split(`=`)
+      data[key] = val
+    })
+  } else {
+    data.api = params
+  }
+
+  MessageAPI[data.api]()
+
+  if (!data.redirect) {
+    return new Response()
+  }
+
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: lastNavigationRequest,
+    },
+  })
 })
