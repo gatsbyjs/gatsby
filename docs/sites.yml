@@ -8022,3 +8022,13 @@
     - Blog
     - Education
   featured: false
+- title: Aprende GatsbyJS en español
+  description: >
+    Free GatsbyJS tutorials in spanish
+  url: "https://aprendegatsby.com/"
+  main_url: "https://aprendegatsby.com/"
+  source_url: "https://github.com/horacioh/aprendegatsby.com"
+  categories:
+    - Education
+    - Web Development
+  featured: false
