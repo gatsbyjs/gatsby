@@ -6,11 +6,11 @@ import "@babel/polyfill"
 const semver = require(`semver`)
 const util = require(`util`)
 
-const yargs = require(`yargs`).option(`logger`, {
-  choices: [`json`, `ink`, `yurnalist`],
-}).argv
+const yargs = require(`yargs`).option(`logger`).argv
 
-process.env.GATSBY_LOGGER = yargs.logger
+if (yargs.logger) {
+  process.env.GATSBY_LOGGER = yargs.logger
+}
 
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
