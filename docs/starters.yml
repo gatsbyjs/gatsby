@@ -4064,7 +4064,7 @@
     - Pagination
     - PWA
     - SEO
-    - Styling:CSS-in-JS       
+    - Styling:CSS-in-JS
   features:
     - Translations by using GraphQL, hooks and context API
     - Content in markdown for pages and posts in different languages
