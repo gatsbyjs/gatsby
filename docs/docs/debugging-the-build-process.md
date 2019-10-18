@@ -6,6 +6,7 @@ Gatsby's `build` and `develop` steps run as a Node.js application which you can 
 
 In this guide you will learn how to debug some code using:
 
+- [Debugging with Node.js' built-in console](#debugging-with-nodejs-built-in-console)
 - [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
 - [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
 - [Chrome DevTools for Node](#chrome-devtools-for-node)
@@ -39,6 +40,33 @@ TypeError: Cannot read property 'internal' of undefined
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]
     D:/dev/blog-v2/gatsby-node.js:6:12
 ```
+
+## Debugging with Node.js' built-in console
+
+One of the fastest ways to gain insight into Gatsby's build process is using the `console` functionality [built into Node.js](https://nodejs.org/en/knowledge/getting-started/the-console-module/). This works similar to how you might be used to in the browser.
+
+Adding a console.log statement in our sample from above will print the variable into your terminal. There you might notice that `args` contains a lower-cased node variable.
+
+```diff:title=gatsby-node.js
+const { createFilePath } = require("gatsby-source-filesystem")
+
+exports.onCreateNode = args => {
++ console.log(args)
+  const { actions, Node } = args
+  if (Node.internal.type === "MarkdownRemark") {
+    const { createNodeField } = actions
+
+    const value = createFilePath({ node, getNode })
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    })
+  }
+}
+```
+
+For a refresher what is part of the build process check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally spoken, Node.js is responsible for building Gatsby pages and therefore its' built-in objects like `console` can be used.
 
 ## VS Code Debugger (Auto-Config)
 
