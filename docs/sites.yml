@@ -2680,12 +2680,6 @@
   built_by: Ian Busko
   built_by_url: https://github.com/ianbusko
   featured: false
-- title: Got Milk
-  main_url: "https://www.gotmilk.com/"
-  url: "https://www.gotmilk.com/"
-  featured: false
-  categories:
-    - Food
 - title: People For Bikes
   url: "https://2017.peopleforbikes.org/"
   main_url: "https://2017.peopleforbikes.org/"
@@ -4984,14 +4978,6 @@
   categories:
     - Portfolio
     - Photography
-- title: Pantene
-  main_url: https://pantene.com
-  url: https://pantene.com
-  featured: false
-  description: >
-    Pantene is a Swiss-created American brand of hair care products owned by Procter & Gamble
-  categories:
-    - Business
 - title: Prevue
   main_url: https://www.prevue.io
   url: https://www.prevue.io
@@ -5568,15 +5554,20 @@
   main_url: https://www.element84.com
   url: https://www.element84.com
   description: >
-    A software development firm that designs and builds ambitious software products engineered for high scalability.
+    Element 84 is software engineering and design firm that helps companies and government agencies solve problems using remote sensing, life sciences, and transportation data in the cloud.
   categories:
     - Agency
     - Blog
+    - Business
     - Consulting
+    - Data
+    - Design
+    - Government
     - Portfolio
     - Programming
     - Science
     - Technology
+    - User Experience
     - Web Development
 - title: Measures for Justice
   main_url: https://www.measuresforjustice.org
@@ -7257,19 +7248,6 @@
   built_by: Ridvan Karadag
   built_by_url: http://www.rootvan.com
   featured: false
-- title: Fifteen Seconds Istanbul
-  url: https://fifteenseconds.istanbul/
-  main_url: https://fifteenseconds.istanbul/
-  description: >
-    Landing page of FifteenSeconds Istanbul Event
-  categories:
-    - Event
-    - Conference
-    - Business
-    - Landing Page
-  built_by: İbrahim Telman
-  built_by_url: https://github.com/ibrahimtelman/
-  featured: false
 - title: spon.io
   url: https://www.spon.io
   main_url: https://www.spon.io
@@ -7429,16 +7407,6 @@
     - Law
   built_by: Merbin J Anselm
   built_by_url: https://anselm.in
-- title: Saint New York
-  url: https://www.saintnewyork.com
-  main_url: https://www.saintnewyork.com
-  description: >
-    A powerful fresh-scent formula made with clean ingredients.
-  categories:
-    - eCommerce
-    - Business
-  built_by: Peter Hironaka
-  built_by_url: https://peterhironaka.com
 - title: Runlet
   main_url: https://runlet.app
   url: https://runlet.app
@@ -7518,6 +7486,21 @@
   categories:
     - Education
     - Learning
+- title: AJ on Purr-fect Solutions
+  url: https://ajonp.com
+  main_url: https://ajonp.com
+  description: >
+    A Community of developers, creating resources for all to use!
+  categories:
+    - Education
+    - Learning
+    - Programming
+    - Web Development
+    - API
+    - Blog
+    - SEO
+  built_by: AJonP
+  built_by_url: http://ajonp.com/authors/alex-patterson
 - title: blog.kwst.site
   main_url: https://blog.kwst.site
   url: https://blog.kwst.site
@@ -7681,6 +7664,63 @@
   built_by: Phil Tietjen
   built_by_url: "https://github.com/Phizzard"
   featured: false
+- title: Divyanshu Maithani
+  main_url: https://divyanshu013.dev
+  url: https://divyanshu013.dev
+  source_url: https://github.com/divyanshu013/blog
+  description: >
+    Personal blog of Divyanshu Maithani. Life, music, code and things in between...
+  categories:
+    - Blog
+    - JavaScript
+    - Open Source
+    - Music
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Divyanshu Maithani
+  built_by_url: https://twitter.com/divyanshu013
+- title: TFE Energy
+  main_url: https://tfe.energy
+  url: https://tfe.energy
+  source_url: https://gitlab.com/marcfehrmedia/2019-07-03-tfe-energy
+  description: >
+    TFE Energy believes in the future. Their new website is programmed with Gatsby, Scrollmagic, Contentful, Cloudify.
+  categories:
+    - Technology
+    - Consulting
+    - Video
+    - Business
+  built_by: Marc Fehr
+  built_by_url: https:/www.marcfehr.media
+- title: AtomBuild
+  url: https://atombuild.github.io/
+  main_url: https://atombuild.github.io/
+  source_url: https://github.com/AtomBuild/atombuild.github.io
+  description: >
+    Landing page for the AtomBuild project, offering a curation of Atom packages associated with the project.
+  categories:
+    - Directory
+    - Landing Page
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Kepler Sticka-Jones
+  built_by_url: https://keplersj.com/
+  featured: false
+- title: Josh Pensky
+  main_url: https://joshpensky.com
+  url: https://joshpensky.com
+  description: >
+    Josh Pensky is an interactive developer based in Boston. He designs and builds refreshing web experiences, packed to the punch with delightful interactions.
+  categories:
+    - Portfolio
+    - Web Development
+    - Design
+    - SEO
+  built_by: Josh Pensky
+  built_by_url: https://github.com/joshpensky
+  featured: false
 - title: AtomLinter
   url: https://atomlinter.github.io/
   main_url: https://atomlinter.github.io/
@@ -7695,4 +7735,290 @@
     - Technology
   built_by: Kepler Sticka-Jones
   built_by_url: https://keplersj.com/
+  featured: false
+- title: Dashbouquet
+  url: https://dashbouquet.com/
+  main_url: https://dashbouquet.com/
+  categories:
+    - Agency
+    - Blog
+    - Business
+    - Mobile Development
+    - Portfolio
+    - Web Development
+  built_by: Dashbouquet team
+  featured: false
+- title: rathes.me
+  url: https://rathes.me/
+  main_url: https://rathes.me/
+  source_url: https://github.com/rathesDot/rathes.me
+  description: >
+    The Portfolio Website of Rathes Sachchithananthan
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Rathes Sachchithananthan
+  built_by_url: https://rathes.me/
+- title: viviGuides - Your travel guides
+  url: https://vivitravels.com/en/guides/
+  main_url: https://vivitravels.com/en/guides/
+  description: >
+    viviGuides is viviTravels' blog: here you will find travel tips, useful information about the cities and the best guides for your next vacation.
+  categories:
+    - Travel
+    - Blog
+  built_by: Kframe Interactive SA
+  built_by_url: https://kframeinteractive.com/
+  featured: false
+- title: KNC Blog
+  main_url: https://nagakonada.com
+  url: https://nagakonada.com/
+  description: >
+    Nagakonada is my blogging and portfolio site where I list my projects, experience, capabilities and the blog mostly talks about technical and personal writings.
+  categories:
+    - Blog
+    - Web Development
+    - Portfolio
+  built_by: Konada, Naga Chaitanya
+  built_by_url: https://github.com/ChaituKNag
+  featured: false
+- title: Vishal Nakum
+  url: https://nakum.tech/
+  main_url: https://nakum.tech/
+  source_url: https://github.com/vishalnakum011/contentful
+  description: >
+    Portfolio of Vishal Nakum. Made with Gatsby, Contentful. Deployed on Netlify.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Amol Tangade
+  built_by_url: https://amoltangade.me/
+- title: Sagar Hani Portfolio
+  url: http://sagarhani.in/
+  main_url: http://sagarhani.in/
+  source_url: https://github.com/sagarhani
+  description: >
+    Sagar Hani is a Software Developer & an Open Source Enthusiast. He blogs about JavaScript, Open Source and his Life experiences.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+    - Open Source
+    - Technology
+    - Programming
+    - JavaScript
+  built_by: Sagar Hani
+  built_by_url: http://sagarhani.in/about
+- title: Arturo Alviar's Portfolio
+  main_url: "https://arturoalviar.com"
+  url: "https://arturoalviar.com"
+  source_url: "https://github.com/arturoalviar/portfolio"
+  categories:
+    - Portfolio
+    - Open Source
+    - Web Development
+  built_by: Arturo Alviar
+  built_by_url: "https://github.com/arturoalviar"
+  featured: false
+- title: Pearly
+  url: https://www.pearlyplan.com
+  main_url: https://www.pearlyplan.com
+  description: >
+    Dental Membership Growth Platform
+  categories:
+    - Technology
+    - Healthcare
+    - App
+  built_by: Sean Emmer and Jeff Cole
+- title: MarceloNM
+  url: https://marcelonm.com
+  main_url: https://marcelonm.com
+  description: >
+    Personal landing page and blog for MarceloNM, a frontend developer based in Brazil.
+  categories:
+    - Blog
+    - JavaScript
+    - Landing Page
+    - Programming
+    - Web Development
+  built_by: Marcelo Nascimento Menezes
+  built_by_url: https://github.com/mrcelo
+  featured: false
+- title: Open Source Galaxy
+  main_url: https://www.opensourcegalaxy.com
+  url: https://www.opensourcegalaxy.com
+  description: >
+    Explore the Open Source Galaxy and help other earthlings by contributing to open source.
+  categories:
+    - Open Source
+    - Programming
+    - Web Development
+  built_by: Justin Juno
+  built_by_url: https://www.justinjuno.dev
+  featured: false
+- title: enBonnet Blog
+  url: https://enbonnet.me/
+  main_url: https://enbonnet.me/
+  source_url: https://github.com/enbonnet
+  description: >
+    Hola, este es mi sitio personal, estare escribiendo sobre Javascript, Frontend y Tecnologia que utilice en mi dia a dia.
+  categories:
+    - Portfolio
+    - Blog
+    - Web Development
+    - Technology
+    - Programming
+    - JavaScript
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
+- title: Edenspiekermann
+  url: "https://www.edenspiekermann.com/eu/"
+  main_url: "https://www.edenspiekermann.com/eu/"
+  description: >
+    Hello. We are Edenspiekermann, an independent global creative agency.
+  categories:
+    - Featured
+    - Agency
+    - Design
+    - Portfolio
+  featured: true
+- title: IBM Design
+  url: "https://www.ibm.com/design/"
+  main_url: "https://www.ibm.com/design/"
+  description: >
+    At IBM, our design philosophy is to help guide people so they can do their best work. Our human-centered design practices help us deliver on that goal.
+  categories:
+    - Featured
+    - Design
+    - Technology
+    - Web Development
+  built_by: IBM
+  featured: true
+- title: We Do Plugins
+  url: https://wedoplugins.com
+  main_url: https://wedoplugins.com
+  description: >
+    Free & premium WordPress plugins development studio from Wroclaw, Poland.
+  categories:
+    - Portfolio
+    - Agency
+    - Open Source
+    - Web Development
+  built_by: We Do Plugins
+  built_by_url: https://wedoplugins.com
+- title: Mevish Aslam, business coach
+  url: "https://mevishaslam.com/"
+  main_url: "https://mevishaslam.com/"
+  description: >
+    Mevish Aslam helps women build a life they love and coaches women to launch and grow businesses.
+  categories:
+    - Business
+    - Consulting
+    - Entrepreneurship
+    - Freelance
+    - Marketing
+    - Portfolio
+  built_by: Rou Hun Fan
+  built_by_url: "https://flowen.me"
+  featured: false
+- title: Principles of wealth
+  url: "https://principlesofwealth.net"
+  main_url: "https://principlesofwealth.net"
+  source_url: "https://github.com/flowen/principlesofwealth"
+  description: >
+    Principles of wealth. How to get rich without being lucky, a summary of Naval Ravikant's tweets and podcast.`
+  categories:
+    - Business
+    - Consulting
+    - Education
+    - Entrepreneurship
+    - Finance
+    - Learning
+    - Marketing
+    - Media
+    - Nonprofit
+    - Productivity
+    - Science
+  built_by: Rou Hun Fan
+  built_by_url: "https://flowen.me"
+  featured: false
+- title: North X South
+  main_url: https://northxsouth.co
+  url: https://northxsouth.co
+  description: >
+    We work with small businesses and non-profits to develop their brands, build an online identity, create stellar designs, and give a voice to their causes.
+  categories:
+    - Agency
+    - Consulting
+    - Business
+    - Design
+    - Web Development
+  built_by: North X South
+  built_by_url: https://northxsouth.co
+- title: Plenty of Fish
+  main_url: https://www.pof.com/
+  url: https://pof.com
+  description: >
+    Plenty of Fish is one of the world's largest dating platforms.
+  categories:
+    - Community
+  featured: true
+- title: Bitcoin
+  main_url: https://www.bitcoin.com/
+  url: https://bitcoin.com
+  description: >
+    One of the largest crypto-currency platforms in the world.
+  categories:
+    - Technology
+    - Finance
+  featured: true
+- title: Frame.io
+  main_url: https://www.frame.io/
+  url: https://frame.io
+  description: >
+    Frame.io is a cloud-based video collaboration platform that allows its users to easily work on media projects together
+  categories:
+    - Technology
+    - Entertainment
+    - Media
+  featured: true
+- title: Sainsbury’s Homepage
+  main_url: https://www.sainsburys.co.uk/
+  url: https://www.sainsburys.co.uk
+  description: >
+    Sainsbury’s is an almost 150 year old supermarket chain in the United Kingdom.
+  categories:
+    - eCommerce
+    - Food
+  featured: true
+- title: Haxzie, Portfolio and Blog
+  url: "https://haxzie.com/"
+  main_url: "https://haxzie.com/"
+  source_url: "https://github.com/haxzie/haxzie.com"
+  description: >
+    Haxzie.com is the portfolio and personal blog of Musthaq Ahamad, UX Engineer and Visual Designer
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Musthaq Ahamad
+  built_by_url: "https://haxzie.com"
+  featured: false
+- title: GBT
+  url: "https://yangmuzi.com/"
+  main_url: "https://yangmuzi.com/"
+  source_url: "https://github.com/yangnianbing/blog-by-gatsby"
+  description: >
+    It is a basic Gatsby site project
+  categories:
+    - Blog
+    - Portfolio
+  built_by: yangnianbing
+  featured: false
+- title: Robin Wieruch's Blog
+  url: "https://www.robinwieruch.de/"
+  main_url: "https://www.robinwieruch.de/"
+  categories:
+    - Blog
+    - Education
   featured: false

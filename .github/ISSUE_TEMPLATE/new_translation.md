@@ -4,7 +4,7 @@ about: Suggest a new language translation of the repo.
 ---
 
 <!--
-  Please fill out the YAML form below, otherwise your issue will be closed.
+  Please fill out the YAML form below, otherwise, your issue will be closed.
 
   - *Name*: Language name in *English*
   - *Code*: [ISO-693 Code]() or [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) of the language

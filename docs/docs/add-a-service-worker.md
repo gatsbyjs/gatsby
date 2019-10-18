@@ -1,5 +1,5 @@
 ---
-title: Add a Service Worker
+title: Adding a Service Worker
 ---
 
 ## What is a service worker

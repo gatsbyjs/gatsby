@@ -59,6 +59,10 @@ Learn how to contribute to the Gatsby Ecosystem (starter library, site showcase,
 
 Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](https://www.gatsbyjs.org/docs/themes/building-themes/) (a type of plugin) [published with the necessary files](https://www.gatsbyjs.org/contributing/submit-to-plugin-library/) can also count toward Hacktoberfest credit and earn Gatsby swag. This post will list all plugins created during Hacktoberfest: create your own and add it here in a Pull Request to get credit!
 
+#### Plugins Created During Hacktoberfest
+
+- [gatsby-source-etsy](https://www.npmjs.com/package/gatsby-source-etsy): Source plugin for creative goods shop listings
+
 ## Gatsby's Hacktoberfest Goals
 
 1. To provide a range of issues with a clearly defined scope, with minimal context needed outside of the issue description.

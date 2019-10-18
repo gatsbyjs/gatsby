@@ -29,10 +29,9 @@ const Card = ({ children }) => (
   >
     <div
       sx={{
-        p: 6,
-        pb: 0,
+        p: 8,
+        pb: [0, 8],
         transform: `translateZ(0)`,
-        [mediaQueries.sm]: { p: 8 },
       }}
     >
       {children}

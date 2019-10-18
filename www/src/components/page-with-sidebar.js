@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import { Fragment } from "react"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 export default props => {
   if (props.disable) {
@@ -13,8 +12,13 @@ export default props => {
       <Fragment>
         <div
           sx={{
-            [mediaQueries.md]: { pl: t => t.sizes.sidebarWidth.default },
-            [mediaQueries.lg]: { pl: t => t.sizes.sidebarWidth.large },
+            pl: [
+              null,
+              null,
+              null,
+              t => t.sizes.sidebarWidth.default,
+              t => t.sizes.sidebarWidth.large,
+            ],
           }}
         >
           {props.renderContent()}

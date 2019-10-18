@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.2...gatsby-cli@2.8.3) (2019-10-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** re-add reporter.\_setStage as no-op function ([#18797](https://github.com/gatsbyjs/gatsby/issues/18797)) ([22f3da7](https://github.com/gatsbyjs/gatsby/commit/22f3da7))
+
+## [2.8.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.1...gatsby-cli@2.8.2) (2019-10-17)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.0...gatsby-cli@2.8.1) (2019-10-14)
+
+### Bug Fixes
+
+- **gatsby-cli:** work around react-redux hidden dependency on react-dom ([#18607](https://github.com/gatsbyjs/gatsby/issues/18607)) ([01a8354](https://github.com/gatsbyjs/gatsby/commit/01a8354))
+- update dependency core-js to ^2.6.10 ([#18569](https://github.com/gatsbyjs/gatsby/issues/18569)) ([7a20eb7](https://github.com/gatsbyjs/gatsby/commit/7a20eb7))
+- update dependency react-redux to ^7.1.1 ([#18592](https://github.com/gatsbyjs/gatsby/issues/18592)) ([e7da47e](https://github.com/gatsbyjs/gatsby/commit/e7da47e))
+
+### Features
+
+- **gatsby-cli:** Add instructions after new ([#18332](https://github.com/gatsbyjs/gatsby/issues/18332)) ([a1dffac](https://github.com/gatsbyjs/gatsby/commit/a1dffac))
+
+# [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.59...gatsby-cli@2.8.0) (2019-10-14)
+
+### Features
+
+- **gatsby:** structured logging ([#14973](https://github.com/gatsbyjs/gatsby/issues/14973)) ([eafb8c6](https://github.com/gatsbyjs/gatsby/commit/eafb8c6))
+
+## [2.7.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.58...gatsby-cli@2.7.59) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.7.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.57...gatsby-cli@2.7.58) (2019-10-10)
 
 ### Bug Fixes

@@ -2,7 +2,9 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const { setStore } = require(`./reporter/redux`)
 const didYouMean = require(`./did-you-mean`)
+const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 const clipboardy = require(`clipboardy`)
@@ -92,7 +94,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, report, useYarn }
+      let args = { ...argv, ...siteInfo, report, useYarn, setStore }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -281,29 +283,6 @@ function isLocalGatsbySite() {
     /* ignore */
   }
   return !!inGatsbySite
-}
-
-function getLocalGatsbyVersion() {
-  let version
-  try {
-    const packageInfo = require(path.join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
-    version = packageInfo.version
-
-    try {
-      setDefaultTags({ installedGatsbyVersion: version })
-    } catch (e) {
-      // ignore
-    }
-  } catch (err) {
-    /* ignore */
-  }
-
-  return version
 }
 
 function getVersionInfo() {
