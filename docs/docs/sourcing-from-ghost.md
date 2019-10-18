@@ -25,7 +25,7 @@ The fastest way to get started is with the official **Gatsby Starter Ghost** rep
 
 ---
 
-## Install & setup
+## Install and setup
 
 If you prefer to start from scratch or integrate the Ghost Content API into an existing site, you can set up the **Gatsby Source Ghost** plugin.
 
