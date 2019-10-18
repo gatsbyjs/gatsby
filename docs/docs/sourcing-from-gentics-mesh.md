@@ -36,7 +36,7 @@ Navigate inside of the project with `cd gatsby-site`.
 
 Additionally, you need the `gatsby-source-graphql` plugin. Because Gentics Mesh uses GraphQL, you will take advantage of Gatsby's ability to stitch two GraphQL APIs together, reducing the time required to transform content. There is no need to use a special gatsby-source-x-cms plugin, the GraphQL source plugin is all you need.
 
-You can install this component with:
+Install the plugin:
 
 ```shell
 npm install --save gatsby-source-graphql
