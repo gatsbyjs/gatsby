@@ -4060,3 +4060,25 @@
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
     - Support Github Actions CI/CD workflow (beta)
+- url: https://iceberg-gatsby-multilang.netlify.com/
+  repo: https://github.com/diogorodrigues/iceberg-gatsby-multilang
+  description: Gatsby multi-language starter. Internationalization / i18n without third party plugins or packages for Posts and Pages. Different URLs dependending on the language. Focused on SEO, PWA, Image Optimization, Styled Components and more. This starter is also integrate with Netlify CMS to manage all pages, posts and images.
+  tags:
+    - Markdown
+    - SEO
+    - PWA
+    - Pagination
+    - Blog
+    - Netlify
+    - CMS
+    - Styling:CSS-in-JS
+    - i18n
+  features:
+    - Translations by using GraphQL, hooks and context API
+    - Content in markdown for pages and posts in different languages
+    - General translations for any content
+    - Creation of menu by using translations and GraphQL
+    - Styled Components to styles
+    - All important seetings for speedy and optimized images
+    - Blog Posts list with pagination
+    - Focus on SEO and PWA
