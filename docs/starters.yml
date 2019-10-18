@@ -4059,8 +4059,8 @@
     - CMS:Headless
     - CMS:Netlify
     - i18n
-    - Markdown
     - Netlify
+    - Markdown
     - Pagination
     - PWA
     - SEO
