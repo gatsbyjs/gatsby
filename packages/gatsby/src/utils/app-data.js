@@ -4,7 +4,7 @@ const path = require(`path`)
 const APP_DATA_JSON = `app-data.json`
 
 const write = (publicDir, hash) => {
-  fs.writeJson(path.join(publicDir, `page-data`, APP_DATA_JSON), {
+  fs.outputJson(path.join(publicDir, `page-data`, APP_DATA_JSON), {
     webpackCompilationHash: hash,
   })
 }
