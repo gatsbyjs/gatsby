@@ -84,7 +84,7 @@ cd gatsby-source-pixabay
 
 ### Create a `package.json` file
 
-Now create a `package.json` file, this describes your plugin and any third-party code it might depend on. `npm` has a command to create this file for you. Run:
+Now create a `package.json` file, this describes your plugin and any third-party code it might depend on. npm has a command to create this file for you. Run:
 
 ```shell
 npm init --yes
@@ -362,9 +362,9 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 ## Publishing a plugin
 
-Don't publish this particular plugin to `npm` or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, `npm` allows you to publish your plugins. Check out the `npm` docs on [How to publish & update a package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
+Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to publish & update a package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby plugin library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
+> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby plugin library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
 
 ## Summary
 
