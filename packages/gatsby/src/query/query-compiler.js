@@ -17,13 +17,9 @@ import { store } from "../redux"
 const { boundActionCreators } = require(`../redux/actions`)
 import FileParser from "./file-parser"
 import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
-import {
-  graphqlError,
-  graphqlValidationError,
-  multipleRootQueriesError,
-} from "./graphql-errors"
+import { graphqlError, multipleRootQueriesError } from "./graphql-errors"
 import report from "gatsby-cli/lib/reporter"
-import errorParser from "./error-parser"
+import errorParser, { locInGraphQlToLocInFile } from "./error-parser"
 const websocketManager = require(`../utils/websocket-manager`)
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
@@ -65,7 +61,6 @@ const validationRules = [
   VariablesInAllowedPositionRule,
 ]
 
-let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
 const resolveThemes = (themes = []) =>
@@ -93,20 +88,14 @@ class Runner {
     this.parentSpan = parentSpan
   }
 
-  reportError(message) {
-    const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
-    if (process.env.gatsby_executing_command === `develop`) {
-      websocketManager.emitError(overlayErrorID, queryErrorMessage)
-      lastRunHadErrors = true
-    }
+  async compileAll(addError) {
+    let nodes = await this.parseEverything(addError)
+    const results = await this.write(nodes, addError)
+
+    return results
   }
 
-  async compileAll() {
-    let nodes = await this.parseEverything()
-    return await this.write(nodes)
-  }
-
-  async parseEverything() {
+  async parseEverything(addError) {
     const filesRegex = `*.+(t|j)s?(x)`
     // Pattern that will be appended to searched directories.
     // It will match any .js, .jsx, .ts, and .tsx files, that are not
@@ -152,10 +141,10 @@ class Runner {
 
     let parser = new FileParser({ parentSpan: this.parentSpan })
 
-    return await parser.parseFiles(files)
+    return await parser.parseFiles(files, addError)
   }
 
-  async write(nodes: Map<string, DocumentNode>): Promise<Queries> {
+  async write(nodes: Map<string, DocumentNode>, addError): Promise<Queries> {
     const compiledNodes: Queries = new Map()
     const namePathMap = new Map()
     const nameDefMap = new Map()
@@ -167,29 +156,18 @@ class Runner {
       let errors = validate(this.schema, doc, validationRules)
 
       if (errors && errors.length) {
-        const locationOfGraphQLDocInSourceFile = doc.definitions[0].templateLoc
-
-        report.panicOnBuild(
-          errors.map(error => {
-            const graphqlLocation = error.locations[0]
-            // get location of error relative to soure file (not just graphql text)
+        addError(
+          ...errors.map(error => {
             const location = {
-              start: {
-                line:
-                  graphqlLocation.line +
-                  locationOfGraphQLDocInSourceFile.start.line -
-                  1,
-                column:
-                  (graphqlLocation.line === 0
-                    ? locationOfGraphQLDocInSourceFile.start.column - 1
-                    : 0) + graphqlLocation.column,
-              },
+              start: locInGraphQlToLocInFile(
+                doc.definitions[0].templateLoc,
+                error.locations[0]
+              ),
             }
             return errorParser({ message: error.message, filePath, location })
           })
         )
 
-        this.reportError(graphqlValidationError(errors, filePath))
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -246,12 +224,7 @@ class Runner {
       })
 
       const filePath = namePathMap.get(docName)
-      const structuredError = errorParser({ message, filePath })
-      report.panicOnBuild(structuredError)
-
-      // report error to browser
-      // TODO: move browser error overlay reporting to reporter
-      this.reportError(formattedMessage)
+      addError(errorParser({ message, filePath }))
 
       return false
     }
@@ -278,13 +251,15 @@ class Runner {
       let filePath = namePathMap.get(name) || ``
       if (compiledNodes.has(filePath)) {
         let otherNode = compiledNodes.get(filePath)
-        this.reportError(
+
+        addError(
           multipleRootQueriesError(
             filePath,
             nameDefMap.get(name),
             otherNode && nameDefMap.get(otherNode.name)
           )
         )
+
         boundActionCreators.queryExtractionGraphQLError({
           componentPath: filePath,
         })
@@ -316,7 +291,7 @@ class Runner {
           .filter(f => f.score < 10)
           .sort((a, b) => a.score > b.score)[0]?.fragment
 
-        report.panicOnBuild({
+        addError({
           id: `85908`,
           filePath,
           context: { fragmentName, closestFragment },
@@ -355,14 +330,6 @@ class Runner {
       compiledNodes.set(filePath, query)
     })
 
-    if (
-      process.env.gatsby_executing_command === `develop` &&
-      lastRunHadErrors
-    ) {
-      websocketManager.emitError(overlayErrorID, null)
-      lastRunHadErrors = false
-    }
-
     return compiledNodes
   }
 }
@@ -373,6 +340,12 @@ export default async function compile({ parentSpan } = {}): Promise<
 > {
   // TODO: swap plugins to themes
   const { program, schema, themes, flattenedPlugins } = store.getState()
+
+  const activity = report.activityTimer(`extract queries from components`, {
+    parentSpan,
+    id: `query-extraction`,
+  })
+  activity.start()
 
   const runner = new Runner(
     program.directory,
@@ -386,10 +359,26 @@ export default async function compile({ parentSpan } = {}): Promise<
           })
     ),
     schema,
-    { parentSpan }
+    { parentSpan: activity.span }
   )
 
-  const queries = await runner.compileAll()
+  const errors = []
+  const addError = errors.push.bind(errors)
+
+  const queries = await runner.compileAll(addError)
+
+  if (errors.length !== 0) {
+    const structuredErrors = activity.panicOnBuild(errors)
+    if (process.env.gatsby_executing_command === `develop`) {
+      websocketManager.emitError(overlayErrorID, structuredErrors)
+    }
+  } else {
+    activity.end()
+    if (process.env.gatsby_executing_command === `develop`) {
+      // emitError with `null` as 2nd param to clear browser error overlay
+      websocketManager.emitError(overlayErrorID, null)
+    }
+  }
 
   return queries
 }

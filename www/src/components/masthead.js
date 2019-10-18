@@ -17,7 +17,7 @@ const MastheadContent = () => (
   >
     <h1
       sx={{
-        fontSize: `calc(16px + 1vh + 2.25vw)`,
+        fontSize: `calc(28px + 0.5vh + 1.5vw)`,
         letterSpacing: `tight`,
         lineHeight: `solid`,
         maxWidth: `15em`,

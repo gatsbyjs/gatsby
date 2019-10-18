@@ -21,4 +21,4 @@ Build blazing-fast websites without the hosting hassles of managing complex, cos
 
 - **Secure:** Gatsby websites are inherently more secure because there are no servers involved. All your content is compiled ahead of time so hackers can’t get to your database or into your CMS. And your site is more resilient to DDoS attacks because the biggest point of failure — a server — is no longer part of the equation.
 
-Want more? Check out this blog post from Linda Watkins, our inimitable marketing director, on why she loves Gatsby (including a one-page overview for you to share): https://www.gatsbyjs.org/blog/2018-06-08-gatsby-marketers-managers-agencies-teams/
+Want more? Check out this [blog post from Linda Watkins](/blog/2018-06-08-gatsby-marketers-managers-agencies-teams/), Gatsby's inimitable marketing director, on why she loves Gatsby (including a one-page overview for you to share).

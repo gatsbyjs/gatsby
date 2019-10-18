@@ -17,7 +17,7 @@ Ten months and one day ago
 followed a month later by posting
 [an issue kickstarting the rewrite of Gatsby for a 1.0 release](https://github.com/gatsbyjs/gatsby/issues/419)
 
-Since then 40 contributors have pushed 723 commits contributing to 23 alpha
+Since then, 40 contributors have pushed 723 commits contributing to 23 alpha
 releases before today's first beta release. It's been a really enjoyable
 experience watching Gatsby v1 take form and helping shape that and the growing
 community around it.

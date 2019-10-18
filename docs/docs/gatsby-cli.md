@@ -13,7 +13,7 @@ The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used glob
 
 Run `gatsby --help` for full help.
 
-You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
+You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if you want to make the [`gatsby develop`](#develop) command available in your application, open up `package.json` and add a script like so:
 
 ```json:title=package.json
 {
