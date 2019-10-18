@@ -285,7 +285,7 @@ describe(`Dev loader`, () => {
           .header(`content-type`, `application/json`)
           .body(
             JSON.stringify({
-              appHash: `123`,
+              webpackCompilationHash: `123`,
             })
           )
       )
