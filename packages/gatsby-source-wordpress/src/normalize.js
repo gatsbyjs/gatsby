@@ -2,6 +2,7 @@ const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
+const { name: packageName } = require(`../package.json`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -588,6 +589,27 @@ const prepareACFChildNodes = (
   childrenNodes.unshift(acfChildNode)
 
   return acfChildNode
+}
+
+exports.deleteNodesThatDoNotExistInEntities = ({
+  entities,
+  getNode,
+  getNodes,
+  deleteNode,
+}) => {
+  const nodes = getNodes()
+  const wordpressIds = nodes
+    .filter(node => node.internal.owner === packageName)
+    .map(node => node.id)
+
+  const entityIds = entities.map(entity => entity.id)
+
+  wordpressIds
+    .filter(x => !entityIds.includes(x))
+    .forEach(id => {
+      const node = getNode(id)
+      deleteNode({ node })
+    })
 }
 
 exports.createNodesFromEntities = ({

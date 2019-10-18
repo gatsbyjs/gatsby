@@ -15925,3 +15925,23 @@ Array [
   ],
 ]
 `;
+
+exports[`Process WordPress data deletes nodes not found in entities 1`] = `
+Array [
+  Array [
+    9998,
+  ],
+]
+`;
+
+exports[`Process WordPress data deletes nodes not found in entities 2`] = `
+Array [
+  Array [
+    Object {
+      "node": Object {
+        "id": 9998,
+      },
+    },
+  ],
+]
+`;

@@ -29,6 +29,7 @@ exports.sourceNodes = async (
   {
     actions,
     getNode,
+    getNodes,
     store,
     cache,
     createNodeId,
@@ -53,7 +54,7 @@ exports.sourceNodes = async (
     keepMediaSizes = false,
   }
 ) => {
-  const { createNode, touchNode } = actions
+  const { createNode, deleteNode, touchNode } = actions
   const normalizedBaseUrl = normalizeBaseUrl(baseUrl)
 
   _verbose = verboseOutput
@@ -186,6 +187,13 @@ exports.sourceNodes = async (
       keepMediaSizes,
     })
   }
+
+  normalize.deleteNodesThatDoNotExistInEntities({
+    entities,
+    getNode,
+    getNodes,
+    deleteNode,
+  })
 
   // creates nodes for each entry
   normalize.createNodesFromEntities({

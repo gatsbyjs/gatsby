@@ -1,4 +1,5 @@
 const normalize = require(`../normalize`)
+const { name: packageName } = require(`../../package.json`)
 
 let entities = require(`./data.json`)
 
@@ -112,6 +113,28 @@ describe(`Process WordPress data`, () => {
   it.skip(`downloads media files and removes "sizes" if keepMediaSizes is set to false (default)`, async () => {
     entities = await normalize.downloadMediaFiles(entities)
     expect(entities).toMatchSnapshot()
+  })
+
+  it(`deletes nodes not found in entities`, () => {
+    const getNode = jest.fn().mockImplementation(id => {
+      return { id }
+    })
+    const getNodes = jest.fn().mockImplementation(() => [
+      // ID does not exist in entities, but was created by this package
+      { id: 9998, internal: { owner: packageName } },
+      // ID does not exist in entities, but was NOT created by this package and ignored
+      { id: 9999, internal: { owner: `some-package` } },
+    ])
+    const deleteNode = jest.fn()
+    normalize.deleteNodesThatDoNotExistInEntities({
+      entities,
+      getNode,
+      getNodes,
+      deleteNode,
+    })
+    expect(getNodes).toHaveBeenCalled()
+    expect(getNode.mock.calls).toMatchSnapshot()
+    expect(deleteNode.mock.calls).toMatchSnapshot()
   })
 
   it(`creates nodes for each entry`, () => {
