@@ -2,8 +2,15 @@
   repo: https://github.com/awesome1888/gatsby-starter-grayscale-promo
   description: one-page promo site
   tags:
-    - Promo
+    - Language:TypeScript
     - Styling:CSS-in-JS
+    - Linting
+    - Markdown
+    - Netlify
+    - Onepage
+    - SEO
+    - CMS:Netlify
+    - Landing Page
   features:
     - Styled-Components
     - NetlifyCMS
