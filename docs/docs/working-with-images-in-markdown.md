@@ -2,11 +2,11 @@
 title: Working With Images in Markdown Posts and Pages
 ---
 
-When building Gatsby sites composed primarily of Markdown pages or posts, insertion of images can enhance the content. Adding images can be done in multiple ways.
+When building Gatsby sites composed primarily of Markdown pages or posts, insertion of images can enhance the content. You can add images in multiple ways.
 
 ## Featured images with Frontmatter metadata
 
-In sites like a blog, you may want to include a featured image that appears at the top of a page. One way to do this is to grab the image filename from a frontmatter field and then transforming it with `gatsby-plugin-sharp` in a GraphQL query.
+In sites like a blog, you may want to include a featured image that appears at the top of a page. One way to do this is to grab the image filename from a frontmatter field and then transform it with `gatsby-plugin-sharp` in a GraphQL query.
 
 This solution assumes you already have programmatically generated pages from Markdown with renderers like `gatsby-transformer-remark` or `gatsby-plugin-mdx`. If not, take a read through up to [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/). This will build upon the tutorial and as such, `gatsby-transformer-remark` will be used for this example.
 
@@ -75,7 +75,7 @@ export const query = graphql`
 `
 ```
 
-Also in the Markdown post template, import the `gatsby-image` package and pass the results of the graphQL query into an `<Img />` component.
+Also in the Markdown post template, import the `gatsby-image` package and pass the results of the GraphQL query into an `<Img />` component.
 
 ```jsx:title=src/templates/blog-post.js
 import React from "react"
@@ -128,7 +128,7 @@ Your featured image should now appear on the generated page right below the main
 
 ## Inline images with `gatsby-remark-images`
 
-Images also may be included in the Markdown body itself. The plugin [gatsby-remark-images](/packages/gatsby-remark-images) comes in handy for this.
+You may also include images in the Markdown body itself. The plugin [gatsby-remark-images](/packages/gatsby-remark-images) comes in handy for this.
 
 Start out by installing `gatsby-remark-images` and `gatsby-plugin-sharp`.
 

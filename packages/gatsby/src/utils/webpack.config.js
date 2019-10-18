@@ -3,7 +3,6 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -205,10 +204,6 @@ module.exports = async (
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
-
-          new FriendlyErrorsWebpackPlugin({
-            clearConsole: false,
-          }),
         ])
         break
       case `build-javascript`: {

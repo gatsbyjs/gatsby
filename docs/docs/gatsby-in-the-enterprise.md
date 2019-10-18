@@ -1,5 +1,5 @@
 ---
-title: "Building With Gatsby in the Enterprise"
+title: Building With Gatsby in the Enterprise
 ---
 
 Some Gatsby advocates may be working inside “enterprise” software development organizations. Others may work at agencies which work closely with such organizations.

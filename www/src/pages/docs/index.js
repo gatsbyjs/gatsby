@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import { Helmet } from "react-helmet"
 
 import Layout from "../../components/layout"
 import { itemListDocs } from "../../utils/sidebar/item-list"
-import { space } from "../../utils/presets"
 import Container from "../../components/container"
 import EmailCaptureForm from "../../components/email-capture-form"
 import DocSearchContent from "../../components/docsearch-content"
@@ -29,7 +30,7 @@ class IndexRoute extends React.Component {
               itemList={itemListDocs}
               location={this.props.location}
             />
-            <h1 id="gatsby-documentation" css={{ marginTop: 0 }}>
+            <h1 id="gatsby-documentation" sx={{ mt: 0 }}>
               Gatsby.js Documentation
             </h1>
             <p>Gatsby is a blazing fast modern site generator for React.</p>
@@ -106,7 +107,7 @@ class IndexRoute extends React.Component {
             </p>
             <EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
             <PrevAndNext
-              css={{ marginTop: space[9] }}
+              sx={{ mt: 9 }}
               next={{ title: `Quick Start`, link: `/docs/quick-start/` }}
             />
           </Container>

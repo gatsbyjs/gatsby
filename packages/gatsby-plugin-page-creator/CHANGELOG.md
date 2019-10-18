@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.26...gatsby-plugin-page-creator@2.1.27) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.25...gatsby-plugin-page-creator@2.1.26) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.24...gatsby-plugin-page-creator@2.1.25) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.23...gatsby-plugin-page-creator@2.1.24) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
 ## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.1.21...gatsby-plugin-page-creator@2.1.23) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

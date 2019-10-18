@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.32...gatsby-telemetry@1.1.33) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.31...gatsby-telemetry@1.1.32) (2019-10-14)
+
+### Features
+
+- **gatsby:** structured logging ([#14973](https://github.com/gatsbyjs/gatsby/issues/14973)) ([eafb8c6](https://github.com/gatsbyjs/gatsby/commit/eafb8c6))
+
+## [1.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.30...gatsby-telemetry@1.1.31) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.29...gatsby-telemetry@1.1.30) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+## [1.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.28...gatsby-telemetry@1.1.29) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
 ## [1.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.26...gatsby-telemetry@1.1.28) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-telemetry

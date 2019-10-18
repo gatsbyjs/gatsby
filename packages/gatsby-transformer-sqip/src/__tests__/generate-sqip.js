@@ -28,7 +28,7 @@ afterEach(() => {
   writeFile.mockClear()
 })
 
-describe(`gatsby-transformer-sqip`, async () => {
+describe(`gatsby-transformer-sqip`, () => {
   const absolutePath = resolve(
     __dirname,
     `images`,

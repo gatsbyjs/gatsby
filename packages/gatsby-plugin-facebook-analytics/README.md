@@ -20,7 +20,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-facebook-analytics`,
     options: {
-      // Required - set this to the ID of your facebook app.
+      // Required - set this to the ID of your Facebook app.
       appId: `YOUR_APP_ID`,
 
       // Which version of the SDK to load.
@@ -32,7 +32,7 @@ plugins: [
       // Determines whether a cookie is created for the session or not.
       cookie: false,
 
-      // Include facebook analytics in development.
+      // Include Facebook analytics in development.
       // Defaults to false meaning the library will only be loaded in production.
       includeInDevelopment: false,
 

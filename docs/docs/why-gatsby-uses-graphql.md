@@ -203,7 +203,7 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
 1. The images can be collocated with the products in `data/images/`.
 2. Image paths in `data/products.json` can be relative to the JSON file.
 3. Gatsby can automatically optimize images for faster loading and better user experience.
-4. We no longer need to pass all product data into `context` when creating pages.
+4. You no longer need to pass all product data into `context` when creating pages.
 5. Data is loaded using GraphQL in the components where it’s used, making it much easier to see where data comes from and how to change it.
 
 ### Add the necessary plugins to load data into GraphQL
@@ -213,10 +213,10 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
   lessonTitle="Make Data Queryable in GraphQL With Gatsby"
 />
 
-In order to load the product and image data into GraphQL, we need to add a few [Gatsby plugins](/plugins/). Namely, we need plugins to:
+In order to load the product and image data into GraphQL, you need to add a few [Gatsby plugins](/plugins/). Namely, you need plugins to:
 
 - Load the JSON file into Gatsby’s internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
-- Convert JSON files into a format we can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
+- Convert JSON files into a format you can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
 - Optimize images ([`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/))
 - Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/))
 
@@ -246,7 +246,7 @@ module.exports = {
 }
 ```
 
-To check that this worked, let’s use the GraphQL Playground, which is available during development, by running:
+To check that this worked, you can use the GraphQL Playground, which is available during development, by running:
 
 ```shell
 GATSBY_GRAPHQL_IDE=playground gatsby develop
@@ -258,7 +258,7 @@ You can explore the available data schema using the “Docs” tab at the right.
 
 One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”.
 
-The JSON transformer plugin has created one node for each product, and inside the node we can select the data we need for that product.
+The JSON transformer plugin has created one node for each product, and inside the node you can select the data you need for that product.
 
 You can write a query to select each product’s slug like this:
 
@@ -287,7 +287,7 @@ The results will appear in the panel between the query and the docs, and they’
   lessonTitle="Create Pages in Gatsby Using GraphQL"
 />
 
-In `gatsby-node.js`, we can use the GraphQL query we just wrote to generate pages.
+In `gatsby-node.js`, you can use the GraphQL query you just wrote to generate pages.
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage }, graphql }) => {
