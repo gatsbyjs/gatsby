@@ -203,7 +203,9 @@ export class BaseLoader {
               finalResult.notFound = true
             }
             pageData = Object.assign(pageData, {
-              webpackCompilationHash: allData[0] ? allData[0].appHash : ``,
+              webpackCompilationHash: allData[0]
+                ? allData[0].webpackCompilationHash
+                : ``,
             })
             pageResources = toPageResources(pageData, component)
             finalResult.payload = pageResources
@@ -313,17 +315,22 @@ export class BaseLoader {
     return page && page.notFound === true
   }
 
-  loadAppData() {
-    return doFetch(`${__PATH_PREFIX__}/app-data.json`).then(req => {
+  loadAppData(retries = 0) {
+    return doFetch(`${__PATH_PREFIX__}/page-data/app-data.json`).then(req => {
       const { status, responseText } = req
 
       let appData
+
+      if (status !== 200 && retries < 3) {
+        // Retry 3 times incase of failures
+        return this.loadAppData(retries + 1)
+      }
 
       // Handle 200
       if (status === 200) {
         try {
           const jsonPayload = JSON.parse(responseText)
-          if (jsonPayload.appHash === undefined) {
+          if (jsonPayload.webpackCompilationHash === undefined) {
             throw new Error(`not a valid app-data response`)
           }
 
