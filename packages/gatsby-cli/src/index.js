@@ -6,11 +6,17 @@ import "@babel/polyfill"
 const semver = require(`semver`)
 const util = require(`util`)
 
+const yargs = require(`yargs`).option(`logger`, {
+  choices: [`json`, `ink`, `yurnalist`],
+}).argv
+
+process.env.GATSBY_LOGGER = yargs.logger
+
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
-
 const pkg = require(`../package.json`)
 const updateNotifier = require(`update-notifier`)
+
 // Check if update is available
 updateNotifier({ pkg }).notify({ isGlobal: true })
 

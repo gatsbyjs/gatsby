@@ -326,6 +326,11 @@ module.exports = argv => {
       describe: `Turn off the color in output`,
       global: true,
     })
+    .option(`logger`, {
+      describe: `Define a logger for output`,
+      choices: [`json`, `ink`, `yurnalist`],
+      global: true,
+    })
 
   buildLocalCommands(cli, isLocalSite)
 
