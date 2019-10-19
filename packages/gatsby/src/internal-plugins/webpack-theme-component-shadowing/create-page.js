@@ -23,9 +23,7 @@ module.exports = function({ pageComponent }) {
     )
   }
 
-  if (matchingThemes.length !== 1) {
-    return false
-  } else {
+  if (matchingThemes.length == 1) {
     const [theme] = matchingThemes
     const [, component] = pageComponent.split(path.join(theme.themeDir, `src`))
     const componentPath = shadowingPlugin.resolveComponentPath({
@@ -34,8 +32,8 @@ module.exports = function({ pageComponent }) {
       component,
     })
     if (componentPath) {
-      //      page.component = componentPath
       return componentPath
     }
   }
+  return false
 }
