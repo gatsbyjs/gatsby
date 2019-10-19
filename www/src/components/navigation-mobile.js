@@ -51,7 +51,7 @@ const MobileNavigation = () => (
       bottom: 0,
       display: `flex`,
       fontFamily: `header`,
-      height: `headerHeight`,
+      height: `headerHeight + env(safe-area-inset-bottom)`,
       justifyContent: `space-around`,
       left: 0,
       paddingBottom: `env(safe-area-inset-bottom)`,
