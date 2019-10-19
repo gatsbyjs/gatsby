@@ -24,7 +24,7 @@ module.exports = function({ pageComponent }) {
   }
 
   if (matchingThemes.length !== 1) {
-    return undefined
+    return false
   } else {
     const [theme] = matchingThemes
     const [, component] = pageComponent.split(path.join(theme.themeDir, `src`))
