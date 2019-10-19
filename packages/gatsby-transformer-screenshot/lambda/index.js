@@ -1,6 +1,6 @@
 const setup = require(`./starter-kit/setup`)
 
-const crypto = require(`crypto`)
+const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
 const AWS = require(`aws-sdk`)
 const s3 = new AWS.S3({
@@ -56,7 +56,7 @@ exports.run = async (browser, url, width, height, fullPage) => {
   }
 
   const keyBase = `${url}-(${width},${height})`
-  const digest = crypto
+  const contentDigest = createContentDigest
     .createHash(`md5`)
     .update(keyBase)
     .digest(`hex`)

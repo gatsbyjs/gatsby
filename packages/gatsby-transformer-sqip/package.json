@@ -24,7 +24,7 @@
     "debug": "^3.2.6"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0",
+    "gatsby": "^2.0.15",
     "gatsby-source-contentful": "^2.0.0",
     "gatsby-transformer-sharp": "^2.0.0"
   },
