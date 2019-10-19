@@ -16,7 +16,7 @@ _Note: If you’re new to the command line, "running" a command, means writing t
 
 ## Mac prerequisites
 
-To install Gatsby and Node.js, we recommend you to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
 
 ### How to install or verify Homebrew on your computer:
 
