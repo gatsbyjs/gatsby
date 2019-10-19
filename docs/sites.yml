@@ -8022,3 +8022,16 @@
     - Blog
     - Education
   featured: false
+- title: Utah Pumpkins
+  url: https://www.utahpumpkins.com/
+  main_url: https://www.utahpumpkins.com/
+  source_url: https://github.com/cadekynaston/utah-pumpkins
+  description: >
+    An awesome pumpkin gallery built using Gatsby and Contentful.
+  categories:
+    - Gallery
+    - Blog
+    - Photography
+  built_by: Cade Kynaston
+  built_by_url: https://cade.codes
+  featured: false
