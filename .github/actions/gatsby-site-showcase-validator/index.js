@@ -6,7 +6,7 @@ const chalk = require("chalk")
 
 async function run() {
   // Grab down sites.yml
-  let url =
+  const url =
     "https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/sites.yml"
 
   let yamlStr
@@ -19,17 +19,18 @@ async function run() {
   }
 
   // Parse YAML
-  let parsedYaml = yaml.safeLoad(yamlStr, "utf8")
+  const parsedYaml = yaml.safeLoad(yamlStr, "utf8")
 
   let sitesVisited = 0
   let nonGatsbySiteCount = 0
+  let nonPublicRepoCount = 0
   let erroredOut = 0
-  let totalSitesCount = parsedYaml.length
+  const totalSitesCount = parsedYaml.length
 
   // Loop over each site
   for (let site of parsedYaml) {
-    let siteUrl = site.main_url
-
+    const siteUrl = site.main_url
+    const sourceUrl = site.source_url
     let siteHtml
 
     // Fetch site
@@ -47,29 +48,41 @@ async function run() {
     }
 
     // Pass html into a parser
-    let $ = cheerio.load(siteHtml)
+    const $ = cheerio.load(siteHtml)
 
     // Most Gatsby sites have an id of "___gatsby"
-    let gatsbyContainer = $("#___gatsby")
+    const gatsbyContainer = $("#___gatsby")
 
-    if (gatsbyContainer.length !== 0) {
-      // The site is a gatsby site don't do anything
-      sitesVisited++
-    } else {
-      // The site is not a gatsby site, print out some info
+    // The site is not a gatsby site, print out some info
+    if (!gatsbyContainer.length) {
       console.log(
         `${chalk.yellow(`[Notice]`)}: ${
           site.title
         } (${siteUrl}) is not a Gatsby site`
       )
-      sitesVisited++
       nonGatsbySiteCount++
     }
+
+    // Check if provided repository is public
+    if (sourceUrl) {
+      const status = await fetch(sourceUrl).then(({ status }) => status)
+
+      if (status !== 200) {
+        console.log(
+          `${chalk.yellow(`[Notice]`)}: ${
+            site.title
+          } (${siteUrl}) provided a 'source_url', but it's repository is private (${sourceUrl})`
+        )
+        nonPublicRepoCount++
+      }
+    }
+
+    sitesVisited++
   }
 
   console.log(
     chalk.green(
-      `We visited ${sitesVisited}/${totalSitesCount} sites. Out of them, ${nonGatsbySiteCount} sites were not a Gatsby site and ${erroredOut} errored out when visiting it.`
+      `We visited ${sitesVisited}/${totalSitesCount} sites. Out of them, ${nonGatsbySiteCount} sites were not a Gatsby site, ${nonPublicRepoCount} provided private repositories, and ${erroredOut} errored out when visiting it.`
     )
   )
 
