@@ -921,6 +921,7 @@
     - PWA
     - Disqus
     - SEO
+    - MDX
     - Styling:CSS-in-JS
   features:
     - Blog post listing with previews (image + summary) for each blog post
