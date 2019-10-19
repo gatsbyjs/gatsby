@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-example-using-boostrap",
+  "private": true,
+  "description": "Example of using Gatsby with Bootstrap",
+  "version": "1.0.0",
+  "author": "Chun Rapeepat <chunza2542@gmail.com>",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "gatsby": "^2.0.91",
+    "react": "^16.7.0",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.7.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop"
+  }
+}
