@@ -12,14 +12,18 @@ class IndexPage extends React.Component {
           <p>
             The example of using Gatsby with Bootstrap. You can see all
             components here{` `}
-            <a href="https://react-bootstrap.netlify.com" target="_blank">
+            <a
+              href="https://react-bootstrap.netlify.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               React Bootstrap
             </a>
           </p>
           <br />
 
           <Row>
-            <Col>
+            <Col key={1}>
               <Card>
                 <Card.Body>
                   <Card.Title>Card Title</Card.Title>
@@ -31,7 +35,7 @@ class IndexPage extends React.Component {
                 </Card.Body>
               </Card>
             </Col>
-            <Col>
+            <Col key={2}>
               <Card>
                 <Card.Body>
                   <Card.Title>Card Title</Card.Title>
@@ -43,7 +47,7 @@ class IndexPage extends React.Component {
                 </Card.Body>
               </Card>
             </Col>
-            <Col>
+            <Col key={3}>
               <Card>
                 <Card.Body>
                   <Card.Title>Card Title</Card.Title>
