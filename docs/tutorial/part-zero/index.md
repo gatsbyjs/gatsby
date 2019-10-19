@@ -32,17 +32,36 @@ To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.
    1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
-## Installing Node.js and npm
+## ⌚ Install Node.js and npm
 
-Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer. npm comes bundled with Node.js so if you don't have npm, chances are that you don't have Node.js too.
+Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
 1. Open your Terminal.
 1. Install Node.js for your appropriate operating system.
+
    - On **MacOS** with homebrew installed, run `brew install node`. If you don't want to install it through homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
    - On **Windows**, download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
-   - On **Linux**, run `sudo apt-get install curl`. After it finishes installing, run `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -` and install Node.js by running `sudo apt-get install nodejs`. If it asks for confirmation, type `y` and press enter. If you're on Fedora, follow [this guide to install Node.js and npm](https://tecadmin.net/install-latest-nodejs-on-fedora/) instead.
+   - On **Linux**:
+     - Using pacman (Arch, Manjaro, etc):
+       - Run `pacman -S nodejs npm`
+     - Using apt-get (Ubuntu, Debian, Mint, elementaryOS, etc):
+       - Run `sudo apt-get install curl` to install the tool to download Node.js
+       - After it finishes installing, run `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -` to download the Node.js installer.
+       - Install Node.js by running `sudo apt-get install nodejs`.
+     - Using yum (Fedora, CentOS, RHEL):
+       - Run `sudo yum install -y gcc-c++ make` to install the prequesites used to compile Node.js.
+       - Run `curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -` to download the Node.js installer.
+       - Install Node.js by running `sudo yum install nodejs`.
+     - Using dnf (Fedora 22+):
+       - Run `sudo dnf install -y gcc-c++ make` to install the prequesites used to compile Node.js.
+       - Run `curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -` to download the Node.js installer.
+       - Install Node.js by running `sudo dnf install nodejs`.
+
+   If the Linux distribution you are using is not listed here, please find instructions on the web.  
+   _💡 If when installing a package, it asks for confirmation, type `y` and press enter._
+
 1. Verify you have Node.js and npm installed by running `node --version` and `npm --version` in the terminal.
 1. The output of each of those commands should be a version number. Your versions may not be the same as those shown below! If entering those commands doesn’t show you a version number, go back and make sure you have installed Node.js.
    ![Check node and npm versions in terminal](01-node-npm-versions.png)
