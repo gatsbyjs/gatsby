@@ -32,9 +32,9 @@ To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.
    1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
-## ⌚ Install Node.js and npm
+## Install Node.js and npm
 
-Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
+Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer. npm comes bundled with Node.js so if you don't have npm, chances are that you don't have Node.js too.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
