@@ -86,8 +86,9 @@ async function run() {
     )
   )
 
-  // If there are any non Gatsby sites, fail (non-zero exit code)
-  process.exit(nonGatsbySiteCount > 0 ? 1 : 0)
+  // If there are any non Gatsby sites or their `source_url` is private, fail (non-zero exit code)
+  const exitCode = nonGatsbySiteCount > 0 || nonPublicRepoCount > 0 ? 1 : 0
+  process.exit(exitCode)
 }
 
 run()
