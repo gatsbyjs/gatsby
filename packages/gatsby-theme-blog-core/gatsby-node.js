@@ -129,6 +129,8 @@ exports.onCreateNode = async (
 
       slug = urlResolve(basePath, filePath)
     }
+    // normalize use of trailing slash
+    slug = slug.replace(/\/*$/, `/`)
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],

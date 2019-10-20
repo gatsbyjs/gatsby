@@ -3,7 +3,6 @@
   "includePaths": [
     "package.json",
     "starters/**",
-    "themes/**",
     "packages/**",
     "www/package.json"
   ],
@@ -16,6 +15,16 @@
   "bumpVersion": null,
   "semanticCommitScope": null,
   "prHourlyLimit": 0,
+  "packageRules": [
+    {
+      "groupName": "minor updates in packages",
+      "updateTypes": ["minor"]
+    },
+    {
+      "groupName": "patch updates in packages",
+      "updateTypes": ["patch"]
+    }
+  ],
   "timezone": "GMT",
   "schedule": "after 10am on Monday"
 }

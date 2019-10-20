@@ -4114,3 +4114,19 @@
     - Pagination
     - Material UI
     - Exif Data Parsing
+- url: https://peaceful-ptolemy-d7beb4.netlify.com
+  repo: https://github.com/TRamos5/gatsby-contentful-starter
+  description: A starter template for an awesome static blog utilizing Contentful as a CMS and deployed to Netlify.
+  tags:
+    - CMS:Contentful
+    - CMS:Headless
+    - Blog
+    - Netlify
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Netlify integration with pre built contact form
+    - "CMS: Contentful integration with placeholders included"
+    - Mobile friendly responsive design made to be customized or leave as is
+    - Separate components for everything
+    - ...and more

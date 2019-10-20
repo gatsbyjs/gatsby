@@ -6,11 +6,11 @@ title: Environment Variables
 
 You can provide environment variables to your site to customise its behavior in different environments.
 
-First we need to distinguish between different types of Env variables.
-There are env variables that are defined in special places intended to be used in different deployment environments. Let's call these “Project Env Vars”.
+Environment variables can be distinguished between different types.
+There are environment variables that are defined in special places intended to be used in different deployment environments. Let's call these “Project Env Vars”.
 And there are true OS-level environment variables that might be used in command-line calls. Let's call these “OS Env Vars”.
 
-In both cases we want to be able to access the relevant value of these variables for the environment we’re in.
+In both cases you want to be able to access the relevant value of these variables for the environment you are in.
 
 By default gatsby supports only 2 environments:
 

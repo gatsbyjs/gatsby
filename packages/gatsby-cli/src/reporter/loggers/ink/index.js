@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from "react"
+import React, { useContext } from "react"
 import { render } from "ink"
-import { Provider, connect } from "react-redux"
-
-import { getStore, onStoreSwap } from "../../redux/index"
+import StoreStateContext, { StoreStateProvider } from "./context"
 
 import CLI from "./cli"
 
-const ConnectedCLI = connect(state => {
+const ConnectedCLI = () => {
+  const state = useContext(StoreStateContext)
   const showStatusBar =
     state.program &&
     state.program._ &&
     state.program._[0] === `develop` &&
     state.program.status === `BOOTSTRAP_FINISHED`
-  return {
-    logs: state.logs,
-    showStatusBar,
-  }
-})(CLI)
 
-const ReduxStoreProvider = ({ children }) => {
-  const [store, setStore] = useState(getStore())
-  useEffect(() => {
-    onStoreSwap(newStore => {
-      setStore(newStore)
-    })
-  }, [])
-
-  return <Provider store={store}>{children}</Provider>
+  return <CLI showStatusBar={Boolean(showStatusBar)} logs={state.logs} />
 }
 
 render(
-  <ReduxStoreProvider>
+  <StoreStateProvider>
     <ConnectedCLI />
-  </ReduxStoreProvider>
+  </StoreStateProvider>
 )

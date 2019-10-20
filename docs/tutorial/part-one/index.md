@@ -246,7 +246,7 @@ Over in `header.js`, the header component expects to receive the `headerText` pr
 
 > 💡 In JSX, you can embed any JavaScript expression by wrapping it with `{}`. This is how you can access the `headerText` property (or “prop!”) from the “props” object.
 
-If you had passed another prop to our `<Header />` component, like so...
+If you had passed another prop to your `<Header />` component, like so...
 
 ```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
@@ -308,7 +308,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 ...the Gatsby development 404 page. Why? Because you're attempting to link to a page that doesn't exist yet.
 
-2.  Now you'll have to create a page component for our new "Contact" page at `src/pages/contact.js` and have it link back to the homepage:
+2.  Now you'll have to create a page component for your new "Contact" page at `src/pages/contact.js` and have it link back to the homepage:
 
 ```jsx:title=src/pages/contact.js
 import React from "react"
@@ -385,4 +385,4 @@ In this section you:
 - Learned about Gatsby page components and sub-components
 - Learned about React “props” and reusing React components
 
-Now, move on to [**adding styles to our site**](/tutorial/part-two/)!
+Now, move on to [**adding styles to your site**](/tutorial/part-two/)!
