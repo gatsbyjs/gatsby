@@ -9,25 +9,14 @@ When introducing Gatsby into an existing static HTML site, it may or may not be 
 
 ## Why Gatsby?
 
-### Web building blocks
+There are a few particularly helpful Gatsby features for porting HTML websites:
 
-A static web site is generally composed of distinct building blocks made of HTML. With Gatsby you will define the blocks that make up your site once and then reuse them. Building a website with these custom parts is fun! A lot of the repetitive tasks disappear as your changes take immediate effect across a site.
+- Defining the blocks that make up your site once and then reusing them. Building a website with custom parts is fun!
+- Options to accomodate serving your website at a path, such as `/docs`, and hosting your assets at a seperate domain.
+- An open and ongoing conversation to join, with our vibrant community of contributors. Over 2500 people have worked on Gatsby and its wealth of documentation to date.
+- A modular system to lift the content out of your code and into files or external services, when the time is right.
 
-### Community
-
-Gatsby is Open Source and extensible in every way. A vibrant and active community of contributors, over 2500 to date, are constantly improving Gatsby itself. The Gatsby community also adds extra functionality through plugins and themes. The comprehensive documentation here at [gatsbyjs.org](https://gatsbyjs.org) is also maintained by the community.
-
-### Built in path prefixing
-
-There are two common issues faced when porting part of a static site:
-
-- Correctly prefixing link paths within the site.
-- Hosting static assets (CSS, images etc.) on a separate domain from the HTML files.
-  Gatsby has built in options to set consistent and functional paths for both pages and assets.
-
-### Dynamic content
-
-Gatsby gathers content from any number of sources, into a single input point for each page. Once ported, content extracted from the site is easy to maintain in isolation from code. You can choose from many content management platforms such as Prismic and Contentful. Gatsby will bring the content together for consumption in your pages.
+We're proud of the [Gatsby core philosophy](https://www.gatsbyjs.org/docs/gatsby-core-philosophy/), it sets out the overall vision, and philosophy on tooling and community. In short, as a member of the community, You belong here!
 
 ## Getting Started
 
