@@ -47,7 +47,7 @@ website-domain
       └── sam-surgeon.html
 ```
 
-The `/who` section of the site is a great candidate for porting as it is all within a single folder. Through this guide, you will develop the ported Gatsby section in isolation before integrating into the site.
+The `/who` section of the site is a great candidate for porting as it is all within a single folder. Through this guide, you will develop the ported Gatsby section in isolation before integrating into the site by telling Gatsby about the hosting path, `/who` and the asset hosting location, `asset-domain`.
 
 ### Assumptions
 
