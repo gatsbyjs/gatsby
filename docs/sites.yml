@@ -8022,3 +8022,15 @@
     - Blog
     - Education
   featured: false
+- title: MyPrograming Steps
+  main_url: "https://mysteps.netlify.com/" 
+  url: "https://mysteps.netlify.com/" 
+  featured: false 
+  categories: 
+    - Blog
+    - Portfolio
+  source_url: "https://github.com/IoT-Arduino/Gatsby-MySteps" 
+  description: >
+   FrontEnd Tutorial Information 
+  built_by: Maruo 
+  built_by_url: "https://twitter.com/DengenT?lang=ja" 
