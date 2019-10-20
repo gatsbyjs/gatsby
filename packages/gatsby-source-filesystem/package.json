@@ -14,7 +14,7 @@
     "file-type": "^12.3.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.0.15",
-    "got": "^7.1.0",
+    "got": "^9.6.0",
     "md5-file": "^3.2.3",
     "mime": "^2.4.4",
     "pretty-bytes": "^4.0.2",
