@@ -8022,3 +8022,15 @@
     - Blog
     - Education
   featured: false
+- title: superstylin
+  url: "https://superstylin.netlify.com/"
+  main_url: "https://superstylin.netlify.com/"
+  source_url: "https://github.com/bntzio/gatsby-theme-superstylin"
+  description: >
+    It is a basic Gatsby blogging website project
+  categories:
+    - Blog
+    - Portfolio
+  built_by: bntzio
+  featured: false
+  
