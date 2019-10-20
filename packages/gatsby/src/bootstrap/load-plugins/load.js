@@ -89,10 +89,12 @@ function resolvePlugin(pluginName, rootDir) {
         ? createRequireFromPath(`${rootDir}/:internal:`)
         : require
     const resolvedPath = slash(path.dirname(requireSource.resolve(pluginName)))
+    const pluginNameIsPath = path.isAbsolute(pluginName)
+    const packageJSONPath = pluginNameIsPath
+      ? `${resolvedPath}/package.json`
+      : requireSource.resolve(`${pluginName}/package.json`)
 
-    const packageJSON = JSON.parse(
-      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-    )
+    const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, `utf-8`))
     warnOnIncompatiblePeerDependency(packageJSON.name, packageJSON)
 
     return {
@@ -100,6 +102,7 @@ function resolvePlugin(pluginName, rootDir) {
       id: createPluginId(packageJSON.name),
       name: packageJSON.name,
       version: packageJSON.version,
+      packageJSONPath,
     }
   } catch (err) {
     throw new Error(

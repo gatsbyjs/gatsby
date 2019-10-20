@@ -63,11 +63,13 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
 
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
+
+    const packageJSONPath =
+      plugin.packageJSONPath || `${plugin.resolve}/package.json`
+
     createNode({
       ...plugin,
-      packageJson: transformPackageJson(
-        require(`${plugin.resolve}/package.json`)
-      ),
+      packageJson: transformPackageJson(require(packageJSONPath)),
       parent: null,
       children: [],
       internal: {
