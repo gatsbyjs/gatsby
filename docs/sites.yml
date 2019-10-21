@@ -1245,18 +1245,18 @@
     - Technology
   built_by: Thrive
   built_by_url: "https://thriveweb.com.au/"
-- title: Evergov
-  main_url: "https://evergov.com/"
-  url: "https://evergov.com/"
+- title: Papergov
+  main_url: "https://papergov.com/"
+  url: "https://papergov.com/"
   featured: false
-  description: Finding local government services made easier.
+  description: Manage all your government services in a single place
   categories:
     - Directory
     - Government
     - Technology
   source_url: "https://github.com/WeOpenly/localgov.fyi"
-  built_by: Evergov
-  built_by_url: "https://evergov.com/about/"
+  built_by: Openly Technologies
+  built_by_url: "https://papergov.com/about/"
 - title: Kata.ai Documentation
   main_url: "https://docs.kata.ai/"
   url: "https://docs.kata.ai/"
