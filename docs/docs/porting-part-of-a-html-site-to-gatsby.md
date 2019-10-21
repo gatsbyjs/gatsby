@@ -337,6 +337,7 @@ The common elements from the `/index.html` and `/who/ella-arborist.html` files c
 ```jsx:title=/gatsby-site-section/src/components/Layout.js
 import React from "react"
 import Helmet from "react-helmet"
+import { Link } from "gatsby"
 
 export default ({ children, staffName }) => (
   <>
@@ -371,7 +372,7 @@ export default ({ children, staffName }) => (
             <a href="/services/index.html">Services</a>
           </li>
           <li>
-            <a href="/who/index.html">Who We Are</a>
+            <Link to="/">Who We Are</Link>
           </li>
           <li>
             <a href="/contact.html">Contact</a>
@@ -493,11 +494,6 @@ Here is the structure of the HTML & non-JavaScript asset files after the built G
     └── who
 {/* highlight-end */}
 website-domain
-  ├── assets
-  │   ├── person.png
-  │   ├── style.css
-  │   └── gatsby
-  │       └── who
   ├── index.html
   ├── 404.html
   ├── about.html
@@ -550,7 +546,30 @@ gatsby-site-sections/src/pages
 
 2. The `pathPrefix` configuration option is no longer needed as the Gatsby application will now be served at the root of the site alongside the remaining HTML files.
 
-3. Add `/who` to the start of the `to` attributes in the existing index.js, and do the equivalent for `/services`. In the `Layout.js` component file, change the `<a>` tag linking to the services page to a Gatsby `<Link>` component.
+3. Update `<Link>` tag `to` props to be relative to the new serving location; the root of the domain. This should be done in `/src/pages/who/index.js`, `/src/pages/services/index.js`, and `/src/components/Layout.js`. Here's the updated `index.js` for `/who`:
+
+```jsx:title=/gatsby-site-section/src/pages/who/index.js
+import React from "react"
+import Layout from "../components/Layout"
+import { Link } from "gatsby"
+
+export default () => (
+  <Layout>
+    <h2>These are our staff:</h2>
+    <ul>
+      <li>
+        <Link to="/who/ella-arborist">Ella (Arborist)</Link>
+      </li>
+      <li>
+        <Link to="/who/sam-surgeon">Sam (Tree Surgeon)</Link>
+      </li>
+      <li>
+        <Link to="/who/marin-leafer">Marin (Leafer)</Link>
+      </li>
+    </ul>
+  </Layout>
+)
+```
 
 After following those steps for the example site it is pretty much entirely Gatsby! Migrating the rest of the HTML files, `/about.html`, `/contact.html`, `/404.html` and `/index.html` to Gatsby pages would enable pre-fetching links between all the pages in the site. The complete Gatsby application is ready to take full advantage of Gatsby and it's community.
 
