@@ -13,7 +13,7 @@ title: Query Extraction
 
 ### Extracting Queries from Files
 
-Up until now, we have [sourced all nodes](/docs/node-creation/) into redux, [inferred a schema](/docs/schema-generation/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all graphql queries from our source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js), which immediately compiles all graphql queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js).
+Up until now, we have [sourced all nodes](/docs/node-creation/) into redux, [inferred a schema](/docs/schema-generation/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all graphql queries from our source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js), which immediately compiles all graphql queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-compiler.js).
 
 #### Query Compilation
 
@@ -59,7 +59,7 @@ digraph {
 
 #### Store Queries in Redux
 
-We're now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68) function.
+We're now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/3d2f82d6909c5ed9621f232b9746cc0196d36193/packages/gatsby/src/query/query-watcher.js#L54) function.
 
 If the query is a `StaticQuery`, we call the `replaceStaticQuery` action to save it to to the `staticQueryComponents` namespace which is a mapping from a component's path to an object that contains the raw GraphQL Query amongst other things. More details in [Static Queries](/docs/static-vs-normal-queries/). We also remove component's `jsonName` from the `components` Redux namespace. See [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
@@ -91,7 +91,7 @@ digraph {
 
 #### Queue for execution
 
-Now that we've saved our query, we're ready to queue it for execution. Query execution is mainly handled by [page-query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js), so we accomplish this by passing the component's path to `queueQueryForPathname` function.
+Now that we've saved our query, we're ready to queue it for execution. Query execution is mainly handled by [query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.js), so we accomplish this by passing the component's path to `queueQueryForPathname` function.
 
 ```dot
 digraph {
