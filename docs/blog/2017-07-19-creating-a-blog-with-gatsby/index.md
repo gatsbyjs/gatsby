@@ -8,7 +8,7 @@ imageAuthorLink: "https://flic.kr/p/oSmRd6"
 imageTitle: "Old typewriter"
 canonicalLink: "https://objectpartners.com/2017/07/19/creating-a-static-blog-with-gatsby/"
 publishedAt: "Object Partners, Inc."
-excerpt: "In this post, we'll take a deep dive into Gatsby and some of the new 1.0 features by creating a static blog. Let's get on it!"
+excerpt: "In this post, you will take a deep dive into Gatsby and some of the new 1.0 features by creating a static blog. Let's get on it!"
 tags: ["getting-started", "blogs", "markdown"]
 ---
 
@@ -28,7 +28,7 @@ Gatsby [recently released][gatsby-release] a v1.0.0 with a bunch of new
 features, including (but not limited to) the ability to create content queries
 with GraphQL, integration with various CMSs--including WordPress, Contentful,
 Drupal, etc., and route based code splitting to keep the end-user experience as
-snappy as possible. In this post, we'll take a deep dive into Gatsby and some of
+snappy as possible. In this post, you will take a deep dive into Gatsby and some of
 these new features by creating a static blog. Let's get on it!
 
 ## Getting started
@@ -262,7 +262,7 @@ import { Helmet } from "react-helmet"
 // import '../css/blog-post.css'; // make it pretty!
 
 export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
+  data, // this prop will be injected by the GraphQL query you will write in a bit
 }) {
   const { markdownRemark: post } = data // data.markdownRemark holds your post data
   return (
@@ -343,7 +343,7 @@ _Note: To learn more about GraphQL, consider this [excellent
 resource][learn-graphql]_
 
 The underlying query name `BlogPostByPath` (note: these query names need to be
-unique!) will be injected with the current path, e.g. the specific blog post we
+unique!) will be injected with the current path, e.g. the specific blog post you
 are viewing. This path will be available as `$path` in your query. For instance,
 if you were viewing your previously created blog post, the path of the file that
 data will be pulled from will be `/hello-world`.
@@ -353,7 +353,7 @@ named in the GraphQL query. Each property you pull via the GraphQL query will be
 available under this `markdownRemark` property. For example, to access the
 transformed HTML, you would access the `data` prop via `data.markdownRemark.html`.
 
-`frontmatter`, is of course the data structure we provided at the beginning of
+`frontmatter`, is of course the data structure you provided at the beginning of
 the Markdown file. Each key you define there will be available to be injected
 into the query.
 
@@ -530,15 +530,15 @@ template, i.e. a React component and a GraphQL query.
 
 ## Creating the Blog Listing
 
-I won't go into quite as much detail for this section because we've already
-done something very similar for our blog template! Look at us, we're pro
+I won't go into quite as much detail for this section because you have already
+done something very similar for your blog template! Look at us, you are pro
 Gatsby-ers at this point!
 
-Gatsby has a standard for "listing pages," and they're placed in the root of our
-filesystem we specified in `gatsby-source-filesystem`, e.g.
+Gatsby has a standard for "listing pages," and they're placed in the root of your
+filesystem you specified in `gatsby-source-filesystem`, e.g.
 `src/pages/index.js`. So, create that file if it does not exist, and let's get it
 working! Additionally, note that any static JavaScript files (that export a React
-component!) will get a corresponding static HTML file. For instance, if we
+component!) will get a corresponding static HTML file. For instance, if you
 create `src/pages/tags.js`, the path `http://localhost:8000/tags/` will be
 available within the browser and the statically generated site.
 
@@ -589,11 +589,11 @@ export const pageQuery = graphql`
 `
 ```
 
-OK! So we've followed a similar approach to your blog post template, so this
-should hopefully seem pretty familiar. Once more we're exporting `pageQuery`
-which contains a GraphQL query. Note that we're pulling a slightly different
-data set -- specifically, we are pulling an `excerpt` of 250 characters rather than
-the full HTML as we are formatting the pulled date with a format
+OK! So you have followed a similar approach to your blog post template, so this
+should hopefully seem pretty familiar. Once more you are exporting `pageQuery`
+which contains a GraphQL query. Note that you are pulling a slightly different
+data set -- specifically, you are pulling an `excerpt` of 250 characters rather than
+the full HTML as you are formatting the pulled date with a format
 string! GraphQL is awesome.
 
 The actual React component is fairly trivial, but one important note should be
@@ -604,8 +604,8 @@ are not routed via this utility. Additionally, this utility also works with
 This is useful if this blog will be hosted on something like GitHub Pages or
 perhaps hosted at `/blog`.
 
-Now, this is getting exciting and it feels like we're finally getting somewhere!
-At this point, we have a fully functional blog generated by Gatsby, with real
+Now, this is getting exciting and it feels like you are finally getting somewhere!
+At this point, you have a fully functional blog generated by Gatsby, with real
 content authored in Markdown, a blog listing, and the ability to navigate around
 in the blog. If you run `yarn develop`, `http://localhost:8000` should display a
 preview of each blog post, and each post title links to the content of the blog
