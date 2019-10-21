@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.17.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.5...gatsby@2.17.0) (2019-10-21)
+
+### Features
+
+- **gatsby:** Move webpackCompilationHash into app-data.json ([#16686](https://github.com/gatsbyjs/gatsby/issues/16686)) ([ebff315](https://github.com/gatsbyjs/gatsby/commit/ebff315))
+
 ## [2.16.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.4...gatsby@2.16.5) (2019-10-18)
 
 **Note:** Version bump only for package gatsby
