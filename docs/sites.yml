@@ -8022,3 +8022,14 @@
     - Blog
     - Education
   featured: false
+- title: Happy Studio
+  main_url: https://www.samsonlarsson.studio
+  url: https://www.samsonlarsson.studio
+  description: >
+    HappyStudio is a brand & creative studio theme built on React and Gatsby, offering a complete creative portfolio solution, to transform enhance online presence.
+  categories:
+    - Agency
+    - Portfolio
+  built_by: Samson Larsson
+  built_by_url: https://samsonlarsson.com
+  featured: false
