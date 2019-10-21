@@ -68,7 +68,7 @@ No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on 
 
 ### Development environment
 
-Gatsby generates websites and compiles applications, but also has a tool for local development. With some setup your computer can run generation and the local development environment. Follow the [Gatsby development environment tutorial](/tutorial/part-zero/) to get setup and then return here to continue.
+Gatsby generates websites and web applications for production through a compilation and build process, and it also has tools optimized for local development. To set up the Gatsby [CLI](/docs/glossary#cli) and development environment (if you haven't already) check out [Part Zero of the Gatsby tutorial](/tutorial/part-zero/).
 
 ### Gatsby Project
 
@@ -453,7 +453,7 @@ With your new Gatsby application taking shape, it's time to integrate it into yo
 
 ### Path Prefix
 
-The `pathPrefix` option in `/gatsby-config.js` tells Gatsby the path at which the build output will be served from. Links to other pages and to the generated JavaScript files that provide [progressive enhancements](/docs/glossary/#progressive-enhancement) for the user will be prefixed with the `pathPrefix` value. This is the config addition for the example Gatsby application, served at the `/who` path:
+The `pathPrefix` option in `/gatsby-config.js` tells Gatsby the path at which the build output will be served from. For example, links to other pages within your Gatsby site will be prefixed with the `pathPrefix` value. Here is some config code to tell Gatsby it should only handle and care about the `/who` path for now:
 
 ```js:title=/gatsby-config.js
 module.exports = {
