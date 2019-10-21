@@ -59,7 +59,7 @@ digraph {
 
 #### Store Queries in Redux
 
-We're now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/3d2f82d6909c5ed9621f232b9746cc0196d36193/packages/gatsby/src/query/query-watcher.js#L54) function.
+We're now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js#L54) function.
 
 If the query is a `StaticQuery`, we call the `replaceStaticQuery` action to save it to to the `staticQueryComponents` namespace which is a mapping from a component's path to an object that contains the raw GraphQL Query amongst other things. More details in [Static Queries](/docs/static-vs-normal-queries/). We also remove component's `jsonName` from the `components` Redux namespace. See [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
