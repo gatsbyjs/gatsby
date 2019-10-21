@@ -232,7 +232,7 @@ let apisRunningById = new Map()
 let apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = async (api, args = {}, pluginSource) =>
+module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
   new Promise(resolve => {
     const { parentSpan } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -332,15 +332,27 @@ module.exports = async (api, args = {}, pluginSource) =>
           pluginName: `${plugin.name}@${plugin.version}`,
         })
 
-        reporter.panicOnBuild({
-          id: `11321`,
-          context: {
-            pluginName,
-            api,
-            message: err instanceof Error ? err.message : err,
-          },
-          error: err instanceof Error ? err : undefined,
-        })
+        if (activity) {
+          activity.panicOnBuild({
+            id: `11321`,
+            context: {
+              pluginName,
+              api,
+              message: err instanceof Error ? err.message : err,
+            },
+            error: err instanceof Error ? err : undefined,
+          })
+        } else {
+          reporter.panicOnBuild({
+            id: `11321`,
+            context: {
+              pluginName,
+              api,
+              message: err instanceof Error ? err.message : err,
+            },
+            error: err instanceof Error ? err : undefined,
+          })
+        }
 
         return null
       })
