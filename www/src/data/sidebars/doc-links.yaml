@@ -458,7 +458,7 @@
               link: /docs/porting-from-create-react-app-to-gatsby/
               breadcrumbTitle: Create React App to Gatsby
             - title: Porting Part of a HTML Site to Gatsby
-              link: /docs/porting-part-of-a-html-site-to-gatsby/
+              link: /docs/porting-an-html-site-to-gatsby/
               breadcrumbTitle: Partial HTML to Gatsby
     - title: Gatsby API
       link: /docs/api-reference/
