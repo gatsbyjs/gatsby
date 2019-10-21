@@ -190,7 +190,7 @@ export default () => (
   </>
 )
 ```
-
+Note the mix of components and native HTML elements in the React markup here: this is the [JSX](https://reactjs.org/docs/introducing-jsx.html) templating language, which Gatsby compiles into HTML that browsers can parse and render to users. Further sections of this guide will explain it even more.
 ### Page content
 
 Copy in the contents of each of the 3 sections from the `/who/index.html` file above:
@@ -268,7 +268,9 @@ Opening the site in a browser again at `http://localhost:8000`, you should have 
 
 The code for Gatsby pages looks like a hybrid of JavaScript and HTML. The code for each page is typically a JavaScript function describing a block of HTML given a set of inputs, or "props". Gatsby runs each page's JavaScript function during the build process to produce a static HTML file.
 
-The appearance of Gatsby page code depends on how dynamic the content and behaviour is. The code for a very static page will _almost_ look like pure HTML. The code for a page with many inputs, and logic applied to those inputs, will look more like pure JavaScript. This guide will stay on the HTML side of the balance to suit the your static site. Using Gatsby to arrange the necessary JavaScript now, opens many future possibilities though. Gatsby delivers your JavaScript page functions to the user after the static HTML, ready for client side dynamic behaviour.
+The appearance of a Gatsby component depends on how dynamic the content and behavior is. The code for a very static page will include mostly all HTML markup wrapped in a bit of JavaScript for Gatsby to assemble. The code for a component with props (a.k.a. "inputs"), and logic applied to those props, will interweave more JavaScript through JSX: examples could include data [sourced with GraphQL](/docs/graphql-api/) or [imported from a file](/docs/sourcing-content-from-json-or-yaml/) to produce dynamic markup, such as a list of related links.
+
+This guide will stay on the HTML side of the balance to suit a more static site. Using Gatsby to arrange the necessary client-side JavaScript with React early can open many future possibilities though. While Gatsby produces static pages from your components, it can also deliver dynamic client-side JavaScript after the page loads and the site [hydrates](/docs/glossary#hydration) into a full React web application.
 
 Your pasted HTML in `/gatsby-site-section/src/pages/index.js` needs a small change to be valid: `class` attributes [must be renamed to `className`](https://reactjs.org/docs/dom-elements.html#classname) for usage with React, as `class` is a reserved word in JavaScript.
 
@@ -339,7 +341,7 @@ export default ({ children }) => (
 )
 ```
 
-Like in `/src/pages/index.js` the file exports a JavaScript function that returns an HTML like structure, but this time the function takes an argument. The first argument provided to a component function is always an object called the props. On the props object, the children of the component are available. Within the HTML like markup, the curly braces wrap a JavaScript expression whose result will be placed there. In this case it is a very simple expression that results in the contents of the `children` variable.
+Like in `/src/pages/index.js` the file exports a JavaScript function that returns an HTML-like JSX structure, but this time the function takes an argument. The first argument provided to a component function is always an object for the props. On the props object, the children of the component are available to be passed in. Within the JSX markup, the curly braces wrap a JavaScript expression whose result will be placed there. In this case it is an expression that results in the contents of the `children` variable.
 
 The common elements from the `/index.html` and `/who/ella-arborist.html` files can now copied into the `<Layout>` component. A second prop is also added and used in a second JavaScript expression in the `<title>` element. The added expression results in the title with the `staffName` prop added conditionally if it is provided. You'll see the prop used again later on when porting the `/who/ella-arborist.html` page.
 
