@@ -22,6 +22,12 @@
  *  * copy over contents of the repo gatsby-i18n-source, containing all translateable files
  *  * post an issue to the new repo with a prioritized list of pages to translate
  *  * close the original issue and comment with a link to the created repo
+ *
+ * It requires two environment variables defined in the environment:
+ *
+ * GITHUB_ADMIN_AUTH_TOKEN - An auth token with admin permissions in the gatsbyjs org
+ * GITHUB_BOT_AUTH_TOKEN - An auth token with write permissions for the gatsbybot
+ *
  */
 const yaml = require(`js-yaml`)
 const shell = require(`shelljs`)
