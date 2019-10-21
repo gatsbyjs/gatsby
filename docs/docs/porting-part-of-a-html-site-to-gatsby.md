@@ -1,10 +1,9 @@
 ---
-title: Porting Part of a HTML Site to Gatsby
+title: Porting an HTML Site to Gatsby
 ---
 
-## Why partially port a HTML website?
 
-When introducing Gatsby into an existing static HTML site, it might not be feasible to rewrite the entire site at once. In these cases, porting pieces of the site to Gatsby one at a time, while the rest of the site still uses HTML, might be preferable. This page will guide you through this process.
+When introducing Gatsby into an existing static HTML site, it may or may not be feasible to rewrite the entire site at once. It's possible to port pieces of a site to Gatsby one at a time, while the rest of the site still uses HTML, might be preferable. This page will guide you through this process.
 
 > **Note**: The aim of this guide is to take a shallow, focused path to porting part of a static HTML website to Gatsby. The full [Gatsby tutorial](/tutorial/) is more broad, with deeper dives on the core concepts and technologies.
 
