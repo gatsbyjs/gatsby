@@ -8022,6 +8022,23 @@
     - Blog
     - Education
   featured: false
+- title: RegexGuide
+  main_url: "https://regex.guide"
+  url: "https://regex.guide/playground"
+  source_url: "https://github.com/pacdiv/regex.guide"
+  description: >
+    The easiest way to learn regular expressions! The RegexGuide is a playground helping developers to discover regular expressions. Trying it is adopting regular expressions!
+  categories:
+    - App
+    - Education
+    - JavaScript
+    - Nonprofit
+    - Open Source
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Loïc J.
+  built_by_url: https://growthnotes.dev
 - title: re:store
   url: https://www.visitrestore.com
   main_url: https://www.visitrestore.com
