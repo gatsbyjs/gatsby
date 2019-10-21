@@ -10,7 +10,7 @@ When introducing Gatsby into an existing static HTML site, it may or may not be 
 
 There are a few particularly helpful Gatsby features for porting HTML websites:
 
-- Defining the blocks that make up your site once and then reusing them. Building a website with custom parts is fun!
+- Defining the blocks that make up your site as reusable components that can take inputs.
 - Options to accomodate serving your website at a path, such as `/docs`, and hosting your assets at a seperate domain.
 - An open and ongoing conversation to join, with our vibrant community of contributors. Over 2500 people have worked on Gatsby and its wealth of documentation to date.
 - A modular system to lift the content out of your code and into files or external services, when the time is right.
@@ -24,12 +24,12 @@ We're proud of the [Gatsby core philosophy](https://www.gatsbyjs.org/docs/gatsby
 Here is the structure of an example static HTML/CSS website that this guide will walk through:
 
 ```
- asset-domain
- ├── favicon.ico
- ├── person.png
- ├── normalize.css
- └── style.css
 website-domain
+  ├── assets
+  │   ├── favicon.ico
+  │   ├── person.png
+  │   ├── normalize.css
+  │   └── style.css
   ├── index.html
   ├── 404.html
   ├── about.html
@@ -38,7 +38,7 @@ website-domain
   │   ├── index.html
   │   ├── growing.html
   │   ├── cleaning.html
-  │   ├── shrinking.html
+  │   └── shrinking.html
   └── who
       ├── index.html
       ├── ellla-arborist.html
@@ -46,7 +46,7 @@ website-domain
       └── sam-surgeon.html
 ```
 
-The `/who` section of the site is a great candidate for porting as it is all within a single folder. Through this guide, you will develop the ported Gatsby section in isolation before integrating into the site by telling Gatsby about the hosting path, `/who` and the asset hosting location, `asset-domain`.
+The `/who` section of the site is a great candidate for porting as it is all within a single folder. Through this guide, you will develop the ported Gatsby section in isolation before integrating into the site by telling Gatsby about the hosting path, `/who`.
 
 ### Assumptions
 
@@ -97,22 +97,9 @@ Here is `/who/index.html` from the example site structure above:
 <html lang="en">
   <head>
     <title>Taylor's Tidy Trees - Who We Are</title>
-    <link
-      href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/favicon.ico"
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-      integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU="
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/style.css"
-    />
+    <link href="/assets/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/style.css" />
   </head>
   <body>
     <header>
@@ -196,20 +183,12 @@ export default () => (
       {/* highlight-start */}
       <title>Taylor's Tidy Trees - Who We Are</title>
       <link
-        href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/favicon.ico"
+        href="/assets/favicon.ico"
         rel="shortcut icon"
         type="image/x-icon"
       />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/normalize.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/style.css"
-      />
+      <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
+      <link rel="stylesheet" type="text/css" href="/assets/style.css" />
       {/* highlight-end */}
     </Helmet>
     <header>
@@ -276,21 +255,9 @@ There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of th
 <html lang="en">
   <head>
     <title>Taylor's Tidy Trees - Who We Are - Ella</title>
-    <link
-      href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/favicon.ico"
-      rel="shortcut icon"
-      type="image/x-icon"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/normalize.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/style.css"
-    />
+    <link href="/assets/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/style.css" />
   </head>
   <body>
     <header>
@@ -310,7 +277,7 @@ There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of th
       <div class="bio-card">
         <img
           alt="Comically crude stick person sketch"
-          src="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/person.png"
+          src="/assets/person.png"
         />
         <p>Ella</p>
       </div>
@@ -352,20 +319,12 @@ export default ({ children, staffName }) => (
         Taylor's Tidy Trees - Who We Are{staffName ? ` - ${staffName}` : ""}
       </title>
       <link
-        href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/favicon.ico"
+        href="/assets/favicon.ico"
         rel="shortcut icon"
         type="image/x-icon"
       />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/normalize.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/style.css"
-      />
+      <link rel="stylesheet" type="text/css" href="/assets/normalize.css" />
+      <link rel="stylesheet" type="text/css" href="/assets/style.css" />
     </Helmet>
     <header>
       <a href="/" className="brand-color logo-text">
@@ -437,7 +396,7 @@ export default () => (
     <div className="bio-card">
       <img
         alt="Comically crude stick person sketch"
-        src="https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/person.png"
+        src="/assets/person.png"
       />
       <p>Ella</p>
     </div>
@@ -462,20 +421,7 @@ module.exports = {
 }
 ```
 
-### Asset Prefix
-
-The `assetPrefix` option tells Gatsby about an external location, the asset domain, where its compiled JavaScript files will be served from. In addition to the `pathPrefix`, the link paths for Gatsby's generated JavaScript files will be prefixed with the `assetPrefix` value if provided. In the example website there are three assets already hosted at an asset domain; the style sheets `style.css` and `normalize.css`, and the image `person.png`. If Gatsby's generated JavaScript assets are also to be served from the asset domain, the `assetPrefix` must be set with its address:
-
-```js:title=/gatsby-config.js
-module.exports = {
-  plugins: [`gatsby-plugin-react-helmet`],
-  pathPrefix: `/who`,
-  {/* highlight-start */}
-  assetPrefix:
-    "https://gatsby-html-partial-assets.s3.eu-west-2.amazonaws.com/gatsby",
-  {/* highlight-end */}
-}
-```
+> **Note**: If you want to host non-HTML resources on a dedicated CDN, Gatsby can accomodate this with the [Asset Prefix](https://www.gatsbyjs.org/docs/asset-prefix/) option.
 
 ### Build step
 
@@ -485,25 +431,21 @@ You now have a site that mirrors the existing HTML site section. Stop the develo
 gatsby build --prefix-paths
 ```
 
-> **Note**: The `--prefix-paths` option _must_ be used for path and asset prefixes to be applied
+> **Note**: The `--prefix-paths` option _must_ be used for path prefix to be applied
 
-Once a build is complete, the compiled set of files can be found in `/public`. It's all in there and ready to replace the existing files! In the case of the example site, the folder contents are deployed directly to the `/who` path of the website domain in place of the existing HTML files. If `assetPrefix` is also being used, the contents are also uploaded to a new `/gatsby/who` folder on the asset domain.
+Once a build is complete, the compiled set of files can be found in `/public`. It's all in there and ready to replace the existing files! In the case of the example site, the folder contents are deployed directly to the `/who` path of the website domain in place of the existing HTML files.
 
 ### Integrated site file structure
 
-Here is the structure of the HTML & non-JavaScript asset files after the built Gatsby `/who` section is added to website domain and the `/gatsby/who/` folder is added at the asset domain:
+Here is the structure of the HTML & non-JavaScript asset files after the built Gatsby `/who` section is added to website domain:
 
 ```
- asset-domain
-├── favicon.ico
-├── person.png
-├── normalize.css
-├── style.css
-{/* highlight-start */}
-└── gatsby
-    └── who
-{/* highlight-end */}
 website-domain
+  ├── assets
+  │   ├── favicon.ico
+  │   ├── person.png
+  │   ├── normalize.css
+  │   └── style.css
   ├── index.html
   ├── 404.html
   ├── about.html
