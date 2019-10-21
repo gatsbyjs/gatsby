@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.2...gatsby-cli@2.8.3) (2019-10-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** re-add reporter.\_setStage as no-op function ([#18797](https://github.com/gatsbyjs/gatsby/issues/18797)) ([22f3da7](https://github.com/gatsbyjs/gatsby/commit/22f3da7))
+
 ## [2.8.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.1...gatsby-cli@2.8.2) (2019-10-17)
 
 **Note:** Version bump only for package gatsby-cli
