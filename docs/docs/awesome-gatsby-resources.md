@@ -128,3 +128,7 @@ See the [library of official and community plugins](/plugins/)
 ### FreeCodeCamp Community
 
 [The FreeCodeCamp News Gatsby tag](https://www.freecodecamp.org/news/tag/gatsby/) is a place where you can write and read substantial articles around Gatsby-related topics.
+
+### JAMSTack Themes
+
+[JAMStack Themes](https://jamstackthemes.dev/ssg/gatsby/) hosts a list of community built themes filterable by supported static site generators and CMS (note: link is directly to Gatsby-specific themes).
