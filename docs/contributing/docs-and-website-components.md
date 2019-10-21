@@ -9,11 +9,11 @@ import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 import { itemListContributing } from "../../www/src/utils/sidebar/item-list"
 import TableOfContents from "../../www/src/components/docs-table-of-contents"
 
-The Gatsbyjs.org site has a handful of components that have already been developed to facilitate writing new content for the blog and the docs. There are also components that are good to be aware that help organize and lay out content in various pages.
+The Gatsbyjs.org site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
 
-This guide lists what components are available and explains how to use them. You can also refer to the [code for this page](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-website-components.md) to see to how each component can be used, because each is embedded on this page!
+This guide lists what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-website-components.md) to see to how each component can be used, because they are all embedded here!
 
-Information about authoring in markdown and styling components on the site is also listed.
+Information about authoring in Markdown and styling components on the site is also listed.
 
 ## Globally available components
 
@@ -21,15 +21,15 @@ A variety of components have been written to help with formatting code and conte
 
 ---
 
-### Guide list
+### Guide List
 
-The `<GuideList />` is a component that renders a list of docs nested below the current doc. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) page where many other pages are nested below it, to show what a doc contains.
+The `<GuideList />` is a component that renders a list of child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it, to show what a docs section contains.
 
 #### Usage
 
-It takes one prop:
+The Guide List component takes one prop:
 
-- `slug` - the value of which is already available on every page by default
+- `slug` - the value of which is already available on every page's context on Gatsbyjs.org by default
 
 The component can be used like this:
 
@@ -45,19 +45,19 @@ Overview information about headless CMSs...
 
 #### Sample
 
-And when rendered in a page, looks like this:
+When rendered in a page, the Guide List looks like this:
 
 <GuideList slug="/docs/headless-cms/" />
 
 ---
 
-### Egghead embed
+### Egghead Embed
 
-To embed content from [Egghead](https://egghead.io) on the site, there is an `<EggheadEmbed />` component that adds an iframe with the video inline with other content.
+To embed video content from [Egghead](https://egghead.io) on the site, there is an `<EggheadEmbed />` component that adds an iframe with the video inline with other content.
 
 #### Usage
 
-It takes two props:
+The Egghead Embed component takes two props:
 
 - `lessonLink` - the URL of the lesson from Egghead
 - `lessonTitle` - the name of the lesson that is used to add more information to the embedded iframe.
@@ -92,13 +92,13 @@ Rendered, it looks like this:
 
 ---
 
-### Pull quote
+### Pull Quote
 
 The `<Pullquote />` component is used to call out a quote in the blog. It applies borders and styles that make a section of the content pop out to readers.
 
 #### Usage
 
-It takes one prop, and uses the children it wraps to populate its inner content:
+The Pull Quote component takes one prop, and uses the children it wraps to populate its inner content:
 
 - `citation` - the reference of the person or entity that made the quoted statement
 
@@ -129,17 +129,17 @@ Rendered, the component looks like this:
 
 ## Other available components
 
-Other less commonly used components aren't globally available, but can imported at the top of a markdown file and used in other docs.
+Other less commonly used components aren't globally available, but can imported at the top of a Markdown file and used in other docs.
 
 ---
 
 ### Layer Model
 
-The `<LayerModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on pages to help explain and visual how Gatsby works at different levels.
+The `<LayerModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
 
 #### Usage
 
-The component takes one prop:
+The Layer Model component takes one prop:
 
 - `initialLayer` - defaults to `Content`, can be one of `Content`, `Build`, `Data`, `View`, `App` that correspond to the different layers
 
@@ -161,13 +161,13 @@ When used, it looks like this:
 
 <LayerModel initialLayer="Data" />
 
-### Horizontal navigation list
+### Horizontal Navigation List
 
-The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to subheadings on the page in a horizontal format. Because of it's specific use case, it isn't made globally available and can be imported if it's needed on other pages.
+The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format. Because of its specific use case, it isn't made globally available but can be imported if needed on other pages.
 
 #### Usage
 
-It takes two props:
+The Horizontal Nav List component takes two props:
 
 - `slug` - which is provided in the props of the page by default
 - `items` - an array of strings for items to render and wrap with a `<Link />` to subheadings
@@ -240,7 +240,7 @@ itemList={itemListContributing}
 
 ### Table of Contents
 
-The `<TableOfContents />` component is used to render a list of subheaders from a doc page and include links to them.
+The `<TableOfContents />` component is used to render a list of subheaders from a docs page and automatically provide deep links to them.
 
 #### Usage
 
@@ -340,15 +340,15 @@ page={{
 
 ---
 
-## Writing content in markdown
+## Writing content in Markdown
 
-New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color/).
+New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color/).
 
 You can read more about writing in Markdown in the [Markdown syntax guide](/docs/mdx/markdown-syntax).
 
 ### Code blocks
 
-Code can be formatted using normal markdown syntax, but the docs site has additional enhancements that can be used thanks to various Gatsby plugins that aren't all native Markdown.
+Code can be formatted using regular Markdown syntax, but the docs site has additional enhancements that can be used thanks to various Gatsby plugins that aren't all native Markdown.
 
 #### Usage
 
@@ -394,11 +394,11 @@ Line numbers and line highlighting can be added to code blocks as well, and is e
 
 ## Styling components on Gatsbyjs.org with Theme-UI
 
-Styles on the site are applied using [Theme-UI](https://theme-ui.com/), which allows for themeing across the site based off of design tokens.
+Styles on the site are applied using [Theme-UI](https://theme-ui.com/), which allows for theming across the site based on design tokens (also called variables).
 
 ### Design tokens
 
-Design tokens are used to limit the number of colors and style attributes that are applied to components throughout the site. By limiting the styles that can be applied, the site stays consistent with the guidelines for color, typography, spacing, etc.
+Design tokens are used to consolidate the number of colors and style attributes that are applied to components throughout the site. By limiting the styles that can be applied, the site stays consistent with the guidelines for color, typography, spacing, etc.
 
 Tables listing design tokens that are used on the site can be found in the [design guidelines](/guidelines/design-tokens/).
 
