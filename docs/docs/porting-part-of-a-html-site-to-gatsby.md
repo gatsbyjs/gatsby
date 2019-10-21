@@ -62,7 +62,9 @@ The `/who` section of the site is a great candidate for porting as it is all wit
 
 ### Assumptions
 
-The example site uses global CSS files (`style.css` and `normalize.css`), more sophisticated styling structures can be accommodated but will not be covered here. No client side JavaScript (e.g jQuery etc.) is on the example site, Gatsby may conflict with client side JavaScript if it is not removed when porting.
+The example site uses global CSS files (`style.css` and `normalize.css`); more sophisticated styling structures like [Sass](/docs/sass/) architectures or [CSS-in-JS](/docs/css-in-js/) can be accommodated but will not be covered here. 
+
+No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on the example site. If your site includes client-side JavaScript libraries and functionality, Gatsby may conflict with it if not handled or removed when porting. Learn more about [Debugging HTML Builds](/docs/debugging-html-builds/).
 
 ### Development environment
 
@@ -77,13 +79,13 @@ Make a new project using the Gatsby hello world starter with the following comma
 gatsby new gatsby-site-section https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-You now have a folder called `gatsby-site-section` containing a basic Gatsby website. Open the new folder in your code editor and `cd` (change directory) into the folder in your command line to continue:
+You should now have a folder called `gatsby-site-section` containing a basic Gatsby website. Open the new folder in your code editor and `cd` (change directory) into the folder in your terminal to continue:
 
 ```shell
 cd gatsby-site-section
 ```
 
-The `/src` folder contains all code for the Gatsby site. In the Gatsby build stage [every file in the `/src/pages` folder will result in a HTML file](/docs/recipes/#creating-pages-automatically). Currently, the only page file is the root `/src/pages/index.js`:
+The `/src` folder contains most of the front-end code for the Gatsby site. In the Gatsby [build](/docs/glossary#build) process, [every component file in the `/src/pages` folder will automatically create an HTML page](/docs/recipes/#creating-pages-automatically). Currently, the only page created is from the index page component in `/src/pages/index.js`:
 
 ```jsx:title=/gatsby-site-section/src/pages/index.js
 import React from "react"
@@ -91,7 +93,13 @@ import React from "react"
 export default () => <div>Hello world!</div>
 ```
 
-[Run the development server](/docs/quick-start/#start-development-server) with `gatsby develop` in the command line to see the website in your browser. Hello Gatsby! 👋
+[Run the development server](/docs/quick-start/#start-development-server) with `gatsby develop` in the command line to see the website in your browser.
+
+```sh
+gatsby develop
+```
+
+You can now visit the page running in your browser at `http://localhost:8000`. Hello Gatsby! 👋
 
 ## Porting index.html
 
@@ -146,13 +154,13 @@ In the following sections, you'll convert this block of HTML into its equivalent
 
 ### Head elements
 
-You might have noticed that the `/src/pages/index.js` file doesn't have a `<html>`, `<head>` or `<body>`. Gatsby makes a basic html structure for each page and places the `/src/pages/index.js` output into its body. More `<head>` elements and `<html>` attributes are added to the output page with a module called [React Helmet](https://github.com/nfl/react-helmet). React Helmet is added to a Gatsby project in the command line with NPM and then to the Gatsby config file:
+You might have noticed that the component in `/src/pages/index.js` doesn't include `<html>`, `<head>` or `<body>`. Gatsby makes a default HTML structure for each page and places the output from `/src/pages/index.js` into its body. More `<head>` child elements and HTML attributes are added to the output page with a module called [React Helmet](https://github.com/nfl/react-helmet). React Helmet is added to a Gatsby project in the command line with npm and then to the Gatsby config file:
 
 ```shell
 npm install --save react-helmet gatsby-plugin-react-helmet
 ```
 
-Gatsby projects have a config file at `/gatsby-config.js` where options can be specified and plugins added. Add a plugin line with `gatsby-plugin-react-helmet` to your config file:
+Gatsby projects have a config file at `/gatsby-config.js` where site metadata and options can be specified and plugins added. Add a plugin line with `gatsby-plugin-react-helmet` to your config file:
 
 ```js:title=/gatsby-site-section/gatsby-config.js
 /**
@@ -166,7 +174,7 @@ module.exports = {
 }
 ```
 
-Now you can import the `<Helmet>` component to the `index.js` file and place `<header>` & `<main>` elements for the existing HTML. Gatsby pages must have a single root parent so add a [React Fragment component](https://reactjs.org/docs/fragments.html) around them:
+Now you can import the `<Helmet>` component to the `index.js` file and place `<header>` & `<main>` elements for the existing HTML. Gatsby components must have a single root parent in their code structure so one technique is to add a [React Fragment component](https://reactjs.org/docs/fragments.html) around them:
 
 ```jsx:title=/src/pages/index.js
 import React from "react"
@@ -258,15 +266,15 @@ Take a look in the browser and we should have a functional website! Let's take a
 
 ### HTML and JavaScript
 
-The code for Gatsby pages look like a hybrid of JavaScript and HTML. The code for each page is a JavaScript function describing a block of HTML given a set of inputs. Gatsby runs each page's JavaScript function during build to get a static HTML file.
+The code for Gatsby pages looks like a hybrid of JavaScript and HTML. The code for each page is typically a JavaScript function describing a block of HTML given a set of inputs, or "props". Gatsby runs each page's JavaScript function during the build process to produce a static HTML file.
 
 The appearance of Gatsby page code depends on how dynamic the content and behaviour is. The code for a very static page will _almost_ look like pure HTML. The code for a page with many inputs, and logic applied to those inputs, will look more like pure JavaScript. This guide will stay on the HTML side of the balance to suit the your static site. Using Gatsby to arrange the necessary JavaScript now, opens many future possibilities though. Gatsby delivers your JavaScript page functions to the user after the static HTML, ready for client side dynamic behaviour.
 
-Your pasted HTML in `/gatsby-site-section/src/pages/index.js` needs a small change to be valid. `class` attributes [must be renamed to `className`](https://reactjs.org/docs/dom-elements.html#classname) for usage with React, as class is a reserved word in JavaScript.
+Your pasted HTML in `/gatsby-site-section/src/pages/index.js` needs a small change to be valid: `class` attributes [must be renamed to `className`](https://reactjs.org/docs/dom-elements.html#classname) for usage with React, as `class` is a reserved word in JavaScript.
 
 ### Layout component
 
-There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of the team, here is the one for Ella:
+There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of the team. Here is the one for Ella:
 
 ```html:title=/website-domain/who/ella-arborist.html
 <html lang="en">
@@ -316,7 +324,7 @@ There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of th
 
 The foundational building block for building and styling pages in Gatsby is [the `<Layout>` component](/docs/layout-components/). The `<Layout>` component wraps around page content, providing the common structure that appears on all pages. Looking at the `/index.html` and `/who/ella-arborist.html` you can see that most of the page is identical. Other than the title of the page, everything except for the contents of the main block is repeated.
 
-Create a folder inside `/src`, next to `/src/pages` called `components`. Inside components make a file called `Layout.js`. Here is a basic structure to use for the file:
+Create a folder inside `/src`, next to `/src/pages` called `components`. Inside `components` make a file called `Layout.js`. Here is a basic structure to use for the file:
 
 ```jsx:title=/gatsby-site-section/src/components/Layout.js
 import React from "react"
@@ -333,7 +341,7 @@ export default ({ children }) => (
 
 Like in `/src/pages/index.js` the file exports a JavaScript function that returns an HTML like structure, but this time the function takes an argument. The first argument provided to a component function is always an object called the props. On the props object, the children of the component are available. Within the HTML like markup, the curly braces wrap a JavaScript expression whose result will be placed there. In this case it is a very simple expression that results in the contents of the `children` variable.
 
-The common elements from the `/index.html` and `/who/ella-arborist.html` files can now copied into the `<Layout>` component. A second prop is also added and used in a second JavaScript expression in the `<title>` element. The added expression results in the title, with the `staffName` prop added only if it is provided. You'll see the prop used later on when porting the `/who/ella-arborist.html` page.
+The common elements from the `/index.html` and `/who/ella-arborist.html` files can now copied into the `<Layout>` component. A second prop is also added and used in a second JavaScript expression in the `<title>` element. The added expression results in the title with the `staffName` prop added conditionally if it is provided. You'll see the prop used again later on when porting the `/who/ella-arborist.html` page.
 
 ```jsx:title=/gatsby-site-section/src/components/Layout.js
 import React from "react"
@@ -385,7 +393,7 @@ export default ({ children, staffName }) => (
 )
 ```
 
-The next step is to use that `<Layout>` component in the `index.js` page file. Gatsby itself provides a number of core building blocks, `<Link>` is one of them. `<Link>` is imported at the top of the file to replace the `<a>` tags. The Link component takes a `to` prop as opposed to the `href` of an anchor tag. Using the `<Link>` component enables Gatsby to make optimizations like prefetching page content just before a user clicks a link.
+The next step is to use that `<Layout>` component in the `index.js` page file. Gatsby itself provides a number of core building blocks: `<Link>` is one of them. The `<Link>` component is imported at the top of the file to use in place of `<a>` tags for on-site links, with a `to` prop instead of the `href` attribute. When the site builds, `<Link>` produces native HTML anchors with added performance optimizations like prefetching page content before a user activates a link.
 
 ```jsx:title=/gatsby-site-section/src/pages/index.js
 import React from "react"
@@ -412,7 +420,7 @@ export default () => (
 
 ### Porting other section pages
 
-Now it's time for the work to really pay off! Ella's page is a matter of using your `<Layout>` component again and copying in the main content. Don't forget to change `class` to `className`! A `staffName` prop can be passed to `<Layout>` this time to change the dynamic page title, passing props is similar to an attribute on a HTML element:
+Now it's time for the work to really pay off! Ella's page is a matter of using your `<Layout>` component again and copying in the main content. Don't forget to change `class` to `className`! A `staffName` prop can be passed to `<Layout>` this time to change the dynamic page title. Passing props is similar to an attribute on an HTML element:
 
 ```jsx:title=/gatsby-site-section/src/pages/ella-arborist.js
 import React from "react"
@@ -439,7 +447,7 @@ The other 2 pages for Marin and Sam can now be made with a similar structure. Ma
 
 ## Build
 
-With your new Gatsby application complete, it's time to integrate it into your existing HTML website. If you were to build the Gatsby application into static files now and upload them in the place of the existing HTML files, the paths of the links made by Gatsby would not be correct. There are a couple of Gatsby configuration options to fix this.
+With your new Gatsby application taking shape, it's time to integrate it into your existing HTML website. If you were to build the Gatsby application into static files now and upload them in the place of the existing HTML files, the paths of the links made by Gatsby would not be correct. There are a couple of Gatsby configuration options to fix this.
 
 ### Path Prefix
 
@@ -469,7 +477,7 @@ module.exports = {
 
 ### Build step
 
-You now have a site that mirrors the existing HTML site section. Stop the development server if it's still running, it's time to run the build! 🎉
+You now have a site that mirrors the existing HTML site section. Stop the development server if it's still running; it's time to run the production build! 🎉
 
 ```shell
 gatsby build --prefix-paths
@@ -481,7 +489,7 @@ Once a build is complete, the compiled set of files can be found in `/public`. I
 
 ### Integrated site file structure
 
-Here is the structure of the HTML & non JavaScript asset files after the built, Gatsby `/who` section is added to website domain and the `/gatsby/who/` folder is added at the asset domain:
+Here is the structure of the HTML & non-JavaScript asset files after the built Gatsby `/who` section is added to website domain and the `/gatsby/who/` folder is added at the asset domain:
 
 ```
  asset-domain
@@ -557,12 +565,12 @@ After following those steps for the example site it is pretty much entirely Gats
 
 ## Next steps
 
-Gatsby can handle assets through direct imports to page and component files, the [asset import documentation](/docs/importing-assets-into-files/) covers imports as well as the less optimized static folder. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
+Gatsby can handle assets through direct imports to page and component files; the [asset import documentation](/docs/importing-assets-into-files/) covers imports as well as the less-optimized `static` folder. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
-The [building with components page](/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
+The [building with components doc](/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 
-[Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code.
+[Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code, such as sourcing the site title from `gatsby-config.js` with GraphQL.
 
-Short guides can be found at the [recipes section](/docs/recipes), for adding functionality such as optimizing and querying local images, adding markdown support and integrating various modern CSS tools. The [adding website functionality page](/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication and doing client side data fetching.
+Short guides can be found at the [recipes section](/docs/recipes) for adding functionality such as optimizing and querying local images, adding Markdown support and integrating various modern CSS tools. The [adding website functionality page](/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication, and fetching data with client-side JavaScript.
 
 Gatsby is dedicated to making you feel welcome! Learn more and engage with the community by starting a conversation or contributing yourself. The [community page](/contributing/community/) has further information and channels where you can get support.
