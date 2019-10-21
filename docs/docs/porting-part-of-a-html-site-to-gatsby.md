@@ -72,7 +72,7 @@ Gatsby generates websites and compiles applications, but also has a tool for loc
 
 ### Gatsby Project
 
-Now that you are setup we'll be using the Gatsby and NPM CLI tools on your command line to get this site section ported!
+Now that you are set up, you can use the Gatsby and npm CLI tools in your terminal to get this site section ported!
 Make a new project using the Gatsby hello world starter with the following command:
 
 ```shell
@@ -262,7 +262,7 @@ export default () => (
 )
 ```
 
-Take a look in the browser and we should have a functional website! Let's take a second to explore how HTML and JavaScript combine in a Gatsby application.
+Opening the site in a browser again at `http://localhost:8000`, you should have a functional website! Next, this guide will explore how HTML and JavaScript combine in a Gatsby application.
 
 ### HTML and JavaScript
 
