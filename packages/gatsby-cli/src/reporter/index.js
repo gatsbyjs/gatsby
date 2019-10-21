@@ -393,6 +393,9 @@ const reporter: Reporter = {
       span,
     }
   },
+  // This method was called in older versions of gatsby, so we need to keep it to avoid
+  // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
+  _setStage() {},
 }
 
 console.log = (...args) => reporter.log(util.format(...args))

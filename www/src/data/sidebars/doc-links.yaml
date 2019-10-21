@@ -121,6 +121,8 @@
             - title: Working with Images in Markdown
               link: /docs/working-with-images-in-markdown/
               breadcrumbTitle: Images in Markdown
+            - title: Preprocessing External Images
+              link: /docs/preprocessing-external-images/
         - title: Sourcing Content & Data
           link: /docs/content-and-data/
           items:
