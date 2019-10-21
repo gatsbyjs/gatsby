@@ -273,9 +273,7 @@ export const globalStyles = t => {
     ".main-body a": {
       color: t.colors.link.color,
       textDecoration: `none`,
-      transition: `all ${t.transition.speed.fast} ${
-        t.transition.curve.default
-      }`,
+      transition: `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
       borderBottom: `1px solid ${t.colors.link.border}`,
     },
     ".main-body a:hover": {
