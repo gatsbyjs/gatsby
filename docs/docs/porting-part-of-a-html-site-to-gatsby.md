@@ -2,7 +2,6 @@
 title: Porting an HTML Site to Gatsby
 ---
 
-
 When introducing Gatsby into an existing static HTML site, it may or may not be feasible to rewrite the entire site at once. It's possible to port pieces of a site to Gatsby one at a time, while the rest of the site still uses HTML, might be preferable. This page will guide you through this process.
 
 > **Note**: The aim of this guide is to take a shallow, focused path to porting part of a static HTML website to Gatsby. The full [Gatsby tutorial](/tutorial/) is more broad, with deeper dives on the core concepts and technologies.
@@ -51,7 +50,7 @@ The `/who` section of the site is a great candidate for porting as it is all wit
 
 ### Assumptions
 
-The example site uses global CSS files (`style.css` and `normalize.css`); more sophisticated styling structures like [Sass](/docs/sass/) architectures or [CSS-in-JS](/docs/css-in-js/) can be accommodated but will not be covered here. 
+The example site uses global CSS files (`style.css` and `normalize.css`); more sophisticated styling structures like [Sass](/docs/sass/) architectures or [CSS-in-JS](/docs/css-in-js/) can be accommodated but will not be covered here.
 
 No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on the example site. If your site includes client-side JavaScript libraries and functionality, Gatsby may conflict with it if not handled or removed when porting. Learn more about [Debugging HTML Builds](/docs/debugging-html-builds/).
 
@@ -117,7 +116,7 @@ Here is `/who/index.html` from the example site structure above:
   </head>
   <body>
     <header>
-      <h3 class="brand-color">Taylor's Tidy Trees</h3>
+      <a href="/" class="brand-color logo-text">Taylor's Tidy Trees</a>
       <nav>
         <ul>
           <li><a href="/about.html">About</a></li>
@@ -128,6 +127,7 @@ Here is `/who/index.html` from the example site structure above:
       </nav>
     </header>
     <main>
+      <h1>Who We Are</h1>
       <h2>These are our staff:</h2>
       <ul>
         <li><a href="/who/ella-arborist.html">Ella (Arborist)</a></li>
@@ -179,7 +179,9 @@ export default () => (
   </>
 )
 ```
+
 Note the mix of components and native HTML elements in the React markup here: this is the [JSX](https://reactjs.org/docs/introducing-jsx.html) templating language, which Gatsby compiles into HTML that browsers can parse and render to users. Further sections of this guide will explain it even more.
+
 ### Page content
 
 Copy in the contents of each of the 3 sections from the `/who/index.html` file above:
@@ -212,7 +214,9 @@ export default () => (
     </Helmet>
     <header>
       {/* highlight-start */}
-      <h3 className="brand-color">Taylor's Tidy Trees </h3>
+      <a href="/" className="brand-color logo-text">
+        Taylor's Tidy Trees
+      </a>
       <nav>
         <ul>
           <li>
@@ -233,6 +237,7 @@ export default () => (
     </header>
     <main>
       {/* highlight-start */}
+      <h1>Who We Are</h1>
       <h2>These are our staff:</h2>
       <ul>
         <li>
@@ -289,7 +294,7 @@ There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of th
   </head>
   <body>
     <header>
-      <h3 class="brand-color">Taylor's Tidy Trees</h3>
+      <a href="/" class="brand-color logo-text">Taylor's Tidy Trees</a>
       <nav>
         <ul>
           <li><a href="/about.html">About</a></li>
@@ -300,6 +305,7 @@ There are 3 pages in the `/who` section of Taylor's Tidy Trees for members of th
       </nav>
     </header>
     <main>
+      <h1>Ella - Arborist</h1>
       <h2>Ella is an excellent Arborist. We guarantee it.</h2>
       <div class="bio-card">
         <img
@@ -362,7 +368,9 @@ export default ({ children, staffName }) => (
       />
     </Helmet>
     <header>
-      <h3 class="brand-color">Taylor's Tidy Trees</h3>
+      <a href="/" className="brand-color logo-text">
+        Taylor's Tidy Trees
+      </a>
       <nav>
         <ul>
           <li>
@@ -394,6 +402,7 @@ import { Link } from "gatsby"
 
 export default () => (
   <Layout>
+    <h1>Who We Are</h1>
     <h2>These are our staff:</h2>
     <ul>
       <li>
@@ -423,6 +432,7 @@ export default () => (
   {/* highlight-start */}
   <Layout staffName="Ella">
   {/* highlight-end */}
+    <h1>Ella - Arborist</h1>
     <h2>Ella is an excellent Arborist. We guarantee it.</h2>
     <div className="bio-card">
       <img
@@ -555,6 +565,7 @@ import { Link } from "gatsby"
 
 export default () => (
   <Layout>
+    <h1>Who We Are</h1>
     <h2>These are our staff:</h2>
     <ul>
       <li>
