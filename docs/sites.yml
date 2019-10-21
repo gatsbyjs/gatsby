@@ -8022,6 +8022,14 @@
     - Blog
     - Education
   featured: false
+- title: diff001a's blog
+  main_url: https://diff001a.netlify.com/
+  url: https://diff001a.netlify.com/
+  description: >
+    This is diff001a's blog which contains blogs realted to programming.
+  categories:
+    - Blog
+  built_by: diff001a
 - title: Rockwong Blog
   main_url: http://rockwong.com/blog/
   url: http://rockwong.com/blog/
