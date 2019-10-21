@@ -20,7 +20,7 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 |-- gatsby-browser.js
 ```
 
-### Folders
+## Folders
 
 - **`/.cache`** _Automatically generated._ This folder is an internal cache created automatically by Gatsby. The files inside this folder are not meant for modification. Should be added to the `.gitignore` file if not added already.
 
@@ -36,7 +36,7 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 
 - **`/static`** If you put a file into the static folder, it will not be processed by Webpack. Instead it will be copied into the public folder untouched. Check out the [assets docs](/docs/static-folder/#adding-assets-outside-of-the-module-system) for more detail.
 
-### Files
+## Files
 
 - **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
 
@@ -46,6 +46,6 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 
 - **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
 
-### Miscellaneous
+## Miscellaneous
 
 The file/folder structure described above reflects Gatsby-specific files and folders. Since Gatsby sites are also React apps, it's common to use standard React code organization patterns such as folders like `/components` and `/utils` inside `/src`. The [React docs](https://reactjs.org/docs/faq-structure.html) have more information on a typical React app folder structure.

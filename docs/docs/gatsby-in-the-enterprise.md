@@ -8,7 +8,7 @@ If this describes you, you have unique challenges, but also opportunities, build
 
 This guide is designed to help you navigate the terrain in order to effectively advocate for Gatsby within your organization.
 
-### Common characteristics of enterprises
+## Common characteristics of enterprises
 
 People mean different things when they say “enterprise”. Some mean 500-person companies. Other people mean 20,000-person companies.
 
@@ -16,7 +16,7 @@ When we say “enterprise” we mean large companies with established infrastruc
 
 Other common characteristics include specified procurement processes, standardization on particular technology stacks, changeover at e.g. 5-year intervals, and frequent security audits. Often, enterprises are heavily invested in maintaining and improving existing web properties (“brownfield”) as opposed to creating new ones (“greenfield”).
 
-### Key benefits of Gatsby for enterprises
+## Key benefits of Gatsby for enterprises
 
 One of the key challenges that enterprises face is keeping their tech stack up to date in order to enjoy productivity and performance benefits, while preventing their tooling setups from degrading into “legacy” code.
 
@@ -64,7 +64,7 @@ Often, there are key individuals at agencies that are excited for personal and p
 
 One key to successfully completing a Gatsby project is having a pre-existing relationship of trust between the enterprise and its agency partners. When this isn’t true — perhaps because of past behavior on the part of one or both parties — any sort of change becomes difficult.
 
-### Conclusion
+## Conclusion
 
 Adopting Gatsby in an enterprise can be more difficult than in small companies. However, there are lasting benefits for the company as well as the individuals guiding the change.
 

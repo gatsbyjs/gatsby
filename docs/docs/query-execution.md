@@ -10,7 +10,7 @@ title: Query Execution
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-### Query Execution
+## Query Execution
 
 Query Execution is kicked off by bootstrap by calling [page-query-runner.js runInitialQuerys()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L29). The main files involved in this step are:
 
@@ -77,23 +77,23 @@ digraph {
 }
 ```
 
-#### Figuring out which queries need to be executed
+### Figuring out which queries need to be executed
 
 The first thing this query does is figure out what queries even need to be run. You would think this would simply be a matter of running the Queries that were enqueued in [Extract Queries](/docs/query-extraction/), but matters are complicated by support for `develop`. Below is the logic for figuring out which queries need to be executed (code is in [runQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L36)).
 
-##### Already queued queries
+#### Already queued queries
 
 All queries queued after being extracted (from `query-watcher.js`).
 
-##### Queries without node dependencies
+#### Queries without node dependencies
 
 All queries whose component path isn't listed in `componentDataDependencies`. As a recap, in [Schema Generation](/docs/schema-generation/), we showed that all Type resolvers record a dependency between the page whose query we're running and any nodes that were successfully resolved. So, If a component is declared in the `components` redux namespace (occurs during [Page Creation](/docs/page-creation/)), but is _not_ contained in `componentDataDependencies`, then by definition, the query has not been run. Therefore we need to run it. Checkout [Page -> Node Dependencies](/docs/page-node-dependencies/) for more info. The code for this step is in [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L96).
 
-##### Pages that depend on dirty nodes
+#### Pages that depend on dirty nodes
 
 In `develop` mode, every time a node is created, or is updated (e.g. via editing a markdown file), we add that node to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When we execute our queries, we can lookup all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-connections/)). Connections depend on a node's type. So if a node is dirty, we mark all connection nodes of that type dirty as well. The code for this step is in [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171). _Note: dirty ids is really talking about dirty paths_.
 
-#### Queue Queries for Execution
+### Queue Queries for Execution
 
 We now have the list of all pages that need to be executed (linked to their Query information). Let's queue them for execution (for realz this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L127) kicks off this step. For each page or static query, we create a Query Job that looks something like:
 
@@ -115,7 +115,7 @@ We now have the list of all pages that need to be executed (linked to their Quer
 
 This Query Job contains everything we need to execute the query (and do things like recording dependencies between pages and nodes). So, we push it onto the queue in [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) and then wait for the queue to empty. Let's see how `query-queue` works.
 
-#### Query Queue Execution
+### Query Queue Execution
 
 [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) creates a [better-queue](https://www.npmjs.com/package/better-queue) queue that offers advanced features like parallel execution, which is handy since queries do not depend on each other so we can take advantage of this. Every time an item is consumed from the queue, we call [query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js) where we finally actually execute the query!
 
@@ -129,7 +129,7 @@ Graphql-js will parse the query, and executes the top level query. E.g. `allMark
 
 Finally, a result is returned.
 
-#### Save Query results to redux and disk
+### Save Query results to redux and disk
 
 As queries are consumed from the queue and executed, their results are saved to redux and disk for consumption later on. This involves converting the result to pure JSON, and then saving it to its [dataPath](/docs/behind-the-scenes-terminology/#datapath). Which is relative to `public/static/d`. The data path includes the jsonName and hash. E.g: for the page `/blog/2018-07-17-announcing-gatsby-preview/`, the queries results would be saved to disk as something like:
 
