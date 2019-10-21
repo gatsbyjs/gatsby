@@ -10,6 +10,7 @@
   "dependencies": {
     "gatsby": "^2.16.1",
     "gatsby-theme-blog-core": "^1.0.0",
+    "@mdx-js/react": "^1.0.27",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   }

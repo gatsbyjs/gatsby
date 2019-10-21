@@ -224,8 +224,8 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "starters/*|themes/gatsby-starter-*|.circleci/*"
-      - run: sh ./scripts/validate-starters.sh "starters/* themes/gatsby-starter-*"
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/validate-starters.sh "starters/*"
 
   starters_publish:
     executor: node
@@ -238,7 +238,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
-      - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
+      - run: sh ./scripts/publish-starters.sh "starters/*"
 
   build_www:
     docker:
