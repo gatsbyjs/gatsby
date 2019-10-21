@@ -9,8 +9,6 @@ import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 import { itemListContributing } from "../../www/src/utils/sidebar/item-list"
 import TableOfContents from "../../www/src/components/docs-table-of-contents"
 
-<div onClick={console.log({ itemListContributing, props })} />
-
 The Gatsbyjs.org site has a handful of components that have already been developed to facilitate writing new content for the blog and the docs. There are also components that are good to be aware that help organize and lay out content in various pages.
 
 This guide lists what components are available and explains how to use them. You can also refer to the [code for this page](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-website-components.md) to see to how each component can be used, because each is embedded on this page!
@@ -135,7 +133,7 @@ Other less commonly used components aren't globally available, but can imported 
 
 ---
 
-### Layer model
+### Layer Model
 
 The `<LayerModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on pages to help explain and visual how Gatsby works at different levels.
 
@@ -213,7 +211,7 @@ The `<Breadcrumb />` component is used in layout files to display the hierarchy 
 
 #### Usage
 
-It takes one prop:
+The Breadcrumb component takes one prop:
 
 - `location` - an object provided in the props of page templates by default
 - `itemList` - an object comprised of the docs hierarchical structure
@@ -224,6 +222,8 @@ import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 
 <Breadcrumb location={props.location} itemList={itemList} />
 ```
+
+To alter the title of a doc that is displayed in the Breadcrumb component, a `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
 
 #### Sample
 
