@@ -978,7 +978,7 @@ class Post extends Component {
     return (
       <>
         <h1>{post.title}</h1>
-        <div>{post.content}</div>
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
       </>
     )
   }
@@ -996,11 +996,6 @@ export const pageQuery = graphql`
     wordpressPost(id: { eq: $id }) {
       title
       content
-    site {
-      siteMetadata {
-        title
-        subtitle
-      }
     }
   }
 `
