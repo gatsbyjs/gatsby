@@ -213,7 +213,7 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
                 <td>
                     <p>Perform a `gatsby clean` before building (delete /cache and /public directories) See <a href="https://www.gatsbyjs.org/docs/gatsby-cli/#clean">https://www.gatsbyjs.org/docs/gatsby-cli/#clean</a></p>
                 </td>
-            </tr>            
+            </tr>
         </tbody>
     </table>
     <h3><code>gatsby serve</code></h3>
