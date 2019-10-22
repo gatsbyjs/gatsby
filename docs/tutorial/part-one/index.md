@@ -324,7 +324,7 @@ export default () => (
 )
 ```
 
-After you save the file, you should see the contact page and be able to link between it and the homepage.
+After you save the file, you should see the contact page and be able to follow the link to the homepage.
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
