@@ -962,7 +962,7 @@ module.exports = {
 }
 ```
 
-> > **Note:** Refer to the [`gatsby-source-wordpress` plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
+> **Note:** Refer to the [`gatsby-source-wordpress` plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
 
 3. Create a template component such as `src/templates/post.js` with the following code in it:
 
