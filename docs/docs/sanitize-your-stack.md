@@ -2,7 +2,7 @@
 title: Sanitize Your Stack
 ---
 
-Websites come in a thousand different flavors. Timeframes, budgets, interactivity requirements and content systems can vary wildly from one project to the next.
+Websites come in a thousand different flavors. Timeframes, budgets, interactivity requirements, and content systems can vary wildly from one project to the next.
 
 This variety puts agency website teams between a rock and a hard place. They often have to maintain frontends built in multiple development systems, stretching their developers’ skill sets. Implementing the same dropdown in five different frameworks can be a huge headache. But what’s the alternative — turn down good client projects?
 

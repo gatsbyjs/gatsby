@@ -1,5 +1,5 @@
 ---
-title: Adding pagination
+title: Adding Pagination
 ---
 
 A page displaying a list of content gets longer as the amount of content grows.

@@ -212,7 +212,7 @@ describe("a new PR", () => {
     expect(mockedUtils.addErrorMsg).toHaveBeenCalledWith(
       0,
       expect.stringContaining(
-        '"repo" with value "https://gitlab.com/gatsbyjs/gatsby-starter-default" fails to match the required pattern: /^https?:\\/\\/github.com\\/[^\\/]+\\/[^\\/]+$/'
+        '"repo" with value "https://gitlab.com/gatsbyjs/gatsby-starter-default" fails to match the required pattern'
       ),
       expect.anything()
     )

@@ -300,7 +300,7 @@ import "./src/styles/global.css"
 
 #### Additional resources
 
-- More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
+- More on [adding global styles without a layout component](/docs/global-css/#adding-global-styles-without-a-layout-component)
 
 ### Using global styles in a layout component
 
@@ -468,6 +468,64 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 - More on [Using CSS Modules](/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
+### Using Sass/SCSS
+
+Sass is an extension of CSS that gives you more advanced features like nested rules, variables, mixins, and more.
+
+Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset of CSS. That means all valid CSS syntax, is valid SCSS syntax. SCSS files use the extension .scss
+
+Sass will compile .scss and .sass files to .css files for you, so you can write your stylesheets with more advanced features.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/).
+
+#### Directions
+
+1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+
+`npm install --save node-sass gatsby-plugin-sass`
+
+2. Include the plugin in your `gatsby-config.js` file.
+
+```javascript:title=gatsby-config.js
+plugins: [`gatsby-plugin-sass`],
+```
+
+3.  Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+
+```css:title=styles.scss
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+```
+
+```css:title=styles.sass
+$font-stack:    Helvetica, sans-serif
+$primary-color: #333
+
+body
+  font: 100% $font-stack
+  color: $primary-color
+```
+
+```javascript
+import "./styles.scss"
+import "./styles.sass"
+```
+
+_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of .css the extensions have to be .scss or .sass_
+
+#### Additional resources
+
+- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
+- [Sass guide from the official Sass website](https://sass-lang.com/guide)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
+
 ### Adding a Local Font
 
 #### Prerequisites
@@ -501,6 +559,8 @@ body {
 ```
 
 By targeting the HTML `body` element, your font will apply to most text on the page. Additional CSS can target other elements, such as `button` or `textarea`.
+
+If fonts are not updating following steps above, make sure to replace the existing font-family in relevant CSS.
 
 #### Additional resources
 
@@ -661,7 +721,7 @@ A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourci
 
 ### Creating a new site using a theme starter
 
-Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example we'll use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
+Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example you can use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
 
 #### Prerequisites
 
@@ -1660,6 +1720,11 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 
 Images can be imported right into a JavaScript module with webpack. This process automatically minifies and copies the image to your site's `public` folder, providing a dynamic image URL for you to pass to an HTML `<img>` element like a regular file path.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-import-a-local-image-into-a-gatsby-component-with-webpack"
+  lessonTitle="Import a Local Image into a Gatsby Component with webpack"
+/>
+
 #### Prerequisites
 
 - A [Gatsby Site](/docs/quick-start) with a `.js` file exporting a React component
@@ -1700,6 +1765,11 @@ export default () => (
 As an alternative to importing assets with webpack, the `static` folder allows access to content that gets automatically copied into the `public` folder when built.
 
 This is an **escape route** for [specific use cases](/docs/static-folder/#when-to-use-the-static-folder), and other methods like [importing with webpack](#import-an-image-into-a-component-with-webpack) are recommended to leverage optimizations made by Gatsby.
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-a-local-image-from-the-static-folder-in-a-gatsby-component"
+  lessonTitle="Use a local image from the static folder in a Gatsby component"
+/>
 
 #### Prerequisites
 
@@ -1937,6 +2007,7 @@ return (
 - [Gatsby Image API](/docs/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image)
 - [More on working with images in Gatsby](/docs/working-with-images/)
+- [Free egghead.io videos explaining these steps](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e)
 
 ### Optimizing and querying images in post frontmatter with gatsby-image
 
@@ -2160,7 +2231,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 4. Choose a custom website name if you want or press enter to receive a random one.
 
-5. Choose your [Team](/docs/teams/).
+5. Choose your [Team](https://www.netlify.com/docs/teams/).
 
 6. Change the deploy path to `public/`
 

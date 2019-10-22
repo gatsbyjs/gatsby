@@ -1,4 +1,4 @@
-# Using Wordpress
+# Using WordPress
 
 https://using-wordpress.gatsbyjs.org/
 

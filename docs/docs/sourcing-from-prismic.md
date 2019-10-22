@@ -2,7 +2,7 @@
 title: Sourcing from Prismic
 ---
 
-In this guide, we'll walk through setting up a site with content management using [Prismic](https://prismic.io/).
+In this guide, you'll set up a site with content management using [Prismic](https://prismic.io/).
 
 Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating and publishing content. It's suitable for marketers, editors, and developers as it has both a "Writing Room" and a fully-fledged API & content backend. Besides the usual advantages of a SaaS CMS (hosting, security, updates), Prismic offers features like custom type builder, scheduling and content versioning, and multi-language support.
 
@@ -10,7 +10,7 @@ Moreover, their [Content Slices](https://prismic.io/feature/dynamic-layout-conte
 
 In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
-_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, we highly recommend to check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
+_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 
 ## Setup
 
@@ -212,7 +212,7 @@ export const pageQuery = graphql`
 `
 ```
 
-## Wrapping Up
+## Wrapping up
 
 This was an example meant to help you understand how Prismic works with Gatsby. With your newfound knowledge of Prismic (and perhaps even Gatsby), you're now able to:
 

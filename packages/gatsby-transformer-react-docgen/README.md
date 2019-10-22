@@ -20,7 +20,7 @@ module.exports = {
 ```
 
 For custom resolvers or handlers, all config options are passed directly to react-docgen.
-In additiona any custom handlers are passed the component file `Node` object as their last
+In addition any custom handlers are passed the component file `Node` object as their last
 argument for more Gatsby specific handler behavior.
 
 ```js

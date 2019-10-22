@@ -3,9 +3,8 @@
   "includePaths": [
     "package.json",
     "starters/**",
-    "themes/**",
     "packages/**",
-    "www"
+    "www/package.json"
   ],
   "major": {
     "masterIssueApproval": true
@@ -18,10 +17,14 @@
   "prHourlyLimit": 0,
   "packageRules": [
     {
-      "updateTypes": ["minor"],
-      "groupName": "minor updates in packages except react, babel and eslint",
-      "excludePackagePatterns": ["^react", "^@babel/", "^eslint"],
-      "paths": ["packages/**"]
+      "groupName": "minor updates in packages",
+      "updateTypes": ["minor"]
+    },
+    {
+      "groupName": "patch updates in packages",
+      "updateTypes": ["patch"]
     }
-  ]
+  ],
+  "timezone": "GMT",
+  "schedule": "after 10am on Monday"
 }

@@ -2,6 +2,109 @@
 
 const PrettyError = require(`pretty-error`)
 const prepareStackTrace = require(`./prepare-stack-trace`)
+const _ = require(`lodash`)
+
+// copied from https://runpkg.com/?pretty-error@2.1.1/lib/nodePaths.js
+// and added `^internal/` test
+const nodePaths = [
+  /^_debugger.js$/,
+  /^_http_agent.js$/,
+  /^_http_client.js$/,
+  /^_http_common.js$/,
+  /^_http_incoming.js$/,
+  /^_http_outgoing.js$/,
+  /^_http_server.js$/,
+  /^_linklist.js$/,
+  /^_stream_duplex.js$/,
+  /^_stream_passthrough.js$/,
+  /^_stream_readable.js$/,
+  /^_stream_transform.js$/,
+  /^_stream_writable.js$/,
+  /^_tls_legacy.js$/,
+  /^_tls_wrap.js$/,
+  /^assert.js$/,
+  /^buffer.js$/,
+  /^child_process.js$/,
+  /^cluster.js$/,
+  /^console.js$/,
+  /^constants.js$/,
+  /^crypto.js$/,
+  /^dgram.js$/,
+  /^dns.js$/,
+  /^domain.js$/,
+  /^events.js$/,
+  /^freelist.js$/,
+  /^fs.js$/,
+  /^http.js$/,
+  /^https.js$/,
+  /^module.js$/,
+  /^net.js$/,
+  /^os.js$/,
+  /^path.js$/,
+  /^punycode.js$/,
+  /^querystring.js$/,
+  /^readline.js$/,
+  /^repl.js$/,
+  /^smalloc.js$/,
+  /^stream.js$/,
+  /^string_decoder.js$/,
+  /^sys.js$/,
+  /^timers.js$/,
+  /^tls.js$/,
+  /^tty.js$/,
+  /^url.js$/,
+  /^util.js$/,
+  /^vm.js$/,
+  /^zlib.js$/,
+  /^node.js$/,
+  /^internal[/\\]/,
+]
+
+const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
+
+const packagesToSkipTest = new RegExp(
+  `node_modules[\\/](${packagesToSkip.join(`|`)})`
+)
+
+// TO-DO: move this this out of this file (and probably delete this file completely)
+// it's here because it re-implements similar thing as `pretty-error` already does
+const sanitizeStructuredStackTrace = stack => {
+  // first filter out not useful call sites
+  stack = stack.filter(callSite => {
+    if (!callSite.fileName) {
+      return false
+    }
+
+    if (packagesToSkipTest.test(callSite.fileName)) {
+      return false
+    }
+
+    if (callSite.fileName.includes(`asyncToGenerator.js`)) {
+      return false
+    }
+
+    if (
+      nodePaths.some(regTest => {
+        if (regTest.test(callSite.fileName)) {
+          return true
+        }
+        return false
+      })
+    ) {
+      return false
+    }
+
+    return true
+  })
+
+  // then sanitize individual call site objects to make sure we don't
+  // emit objects with extra fields that won't be handled by consumers
+  stack = stack.map(callSite =>
+    _.pick(callSite, [`fileName`, `functionName`, `columnNumber`, `lineNumber`])
+  )
+
+  return stack
+}
 
 function getErrorFormatter() {
   const prettyError = new PrettyError()
@@ -80,4 +183,5 @@ async function createErrorFromString(
 module.exports = {
   createErrorFromString,
   getErrorFormatter,
+  sanitizeStructuredStackTrace,
 }

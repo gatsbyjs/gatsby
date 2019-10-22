@@ -27,7 +27,7 @@ Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
   ],
   "presets": Array [
     Array [
@@ -84,7 +84,7 @@ Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
     Array [
       "<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/lib/index.js",
       Object {
@@ -145,7 +145,7 @@ Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
   ],
   "presets": Array [
     Array [
@@ -200,7 +200,7 @@ Object {
         "loose": false,
       },
     ],
-    "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
+    "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
   ],
   "presets": Array [
     Array [

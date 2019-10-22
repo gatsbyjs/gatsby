@@ -78,7 +78,7 @@ Gatsby v1 was in many ways an experiment to prove out some meaningful ideas:
 - Static site generation _and_ app-like functionality with React hydration
 - A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers.
 
-[Pull data from Wordpress at build time][gatsby-source-wordpress]? Sure. [Author your application in TypeScript][gatsby-plugin-typescript]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
+[Pull data from WordPress at build time][gatsby-source-wordpress]? Sure. [Author your application in TypeScript][gatsby-plugin-typescript]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
 
 Gatsby v2 set out to build upon this solid foundation, while focusing on improvements in speed and developer experience.
 

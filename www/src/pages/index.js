@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
-import { colors, space, mediaQueries, fontWeights } from "../utils/presets"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
@@ -104,16 +105,10 @@ class IndexRoute extends React.Component {
         >
           <MastheadContent />
           <div
-            css={{
-              padding: space[6],
-              paddingTop: 0,
+            sx={{
               width: `100%`,
-              borderBottom: `1px solid ${colors.purple[10]}`,
-              borderTop: `1px solid ${colors.purple[10]}`,
-              background: colors.purple[5],
-              [mediaQueries.xl]: {
-                padding: space[8],
-              },
+              p: 8,
+              pt: 0,
             }}
           >
             <Diagram />
@@ -123,18 +118,16 @@ class IndexRoute extends React.Component {
           <div css={{ flex: `1 1 100%` }}>
             <Container withSidebar={false}>
               <section css={{ textAlign: `center` }}>
-                <h1 css={{ fontWeight: fontWeights[1], marginTop: 0 }}>
-                  Curious yet?
-                </h1>
+                <h1 sx={{ fontWeight: `heading`, mt: 0 }}>Curious yet?</h1>
                 <FuturaParagraph>
                   It only takes a few minutes to get up and running!
                 </FuturaParagraph>
                 <Button
                   secondary
-                  large
+                  variant="large"
                   to="/docs/"
                   tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ marginTop: space[4] }}
+                  overrideCSS={{ mt: 5 }}
                   icon={<ArrowForwardIcon />}
                 >
                   Get Started
