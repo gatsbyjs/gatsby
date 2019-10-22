@@ -1,5 +1,5 @@
 ---
-title: "Hot Off the Keyboard: Live Preview for Drupal + Gatsby (And 3 Steps to Get Started)"
+title: "Hot off the Keyboard: Live Preview for Drupal + Gatsby (and 3 Steps to Get Started)"
 date: 2019-07-29
 author: Grant Glidewell
 tags:
