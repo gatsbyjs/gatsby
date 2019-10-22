@@ -36,6 +36,10 @@ class ImageWithIEPolyfill extends Component {
   }
 }
 
+// If you modify these propTypes, please don't forget to update following files as well:
+// ../../withIEPolyfill/index.d.ts → TypeScript type definitions
+// ../../README.md → #gatsby-image-props section
+// ~/docs/docs/gatsby-image.md → #gatsby-image-props section
 ImageWithIEPolyfill.propTypes = {
   objectFit: PropTypes.string,
   objectPosition: PropTypes.string,
