@@ -178,7 +178,7 @@ class MyComponment() extends Component {
 }
 ```
 
-3. (if you use function components) moving references to browser globals into a `useEffect` hook:
+3. For function components: moving references to browser globals into a `useEffect` hook
 
 ```jsx
 import React from "react"
