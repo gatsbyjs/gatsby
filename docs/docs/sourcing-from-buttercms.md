@@ -285,7 +285,7 @@ Then click on Create Page Type and name it "Customer Case Study". This will allo
 
 #### Populate the content
 
-Then populate our new page with content. In the next step, we'll call the ButterCMS API to retrieve this content from our app.
+Then populate the new page with content. In the next step, you'll call the ButterCMS API to retrieve this content from your app.
 
 ![](https://buttercms.com/static/images/docs/guides/PagesNewPageTypeCreateContent.png)
 
