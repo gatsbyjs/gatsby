@@ -205,6 +205,7 @@ exports.onCreateDevServer = (
         )
       } else {
         res.status(400).send(`Received body was empty!`)
+        return reporter.log(`Received body was empty!`)
       }
     }
   )
