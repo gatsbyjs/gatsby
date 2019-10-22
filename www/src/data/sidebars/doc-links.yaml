@@ -6,6 +6,12 @@
       link: /docs/
     - title: Quick Start
       link: /docs/quick-start/
+    - title: Plugin Library
+      link: /plugins/
+    - title: Starter Library
+      link: /starters/
+    - title: Awesome Gatsby Resources
+      link: /docs/awesome-gatsby-resources/
     - title: Recipes
       link: /docs/recipes/
       items:
@@ -27,12 +33,6 @@
           link: /docs/recipes-transforming-data
         - title: Deploying your site
           link: /docs/recipes-deploying-your-site
-    - title: Plugin Library
-      link: /plugins/
-    - title: Starter Library
-      link: /starters/
-    - title: Awesome Gatsby Resources
-      link: /docs/awesome-gatsby-resources/
     - title: Reference Guides
       link: /docs/guides/
       items:
