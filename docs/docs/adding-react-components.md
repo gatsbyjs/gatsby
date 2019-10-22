@@ -14,7 +14,7 @@ For example, you could use a component for Buttons on your site. This would enab
 
 ## Importing React components
 
-In Gatsby, when using React components, you import and use them just like you would in normal React:
+In Gatsby, when using React components, you can import and use them like you would in a React application. Here's an example of the [Gatsby Link](/docs/gatsby-link/) component in action, which brings with it extra functionality for performance:
 
 ```jsx
 import React from "react"
