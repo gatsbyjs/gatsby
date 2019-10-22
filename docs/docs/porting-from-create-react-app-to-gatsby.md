@@ -137,7 +137,7 @@ if (typeof window !== `undefined`) {
 }
 ```
 
-2. (if you use class components) moving references to browser globals into a `componentDidMount`:
+2. For class components: moving references to browser globals into a `componentDidMount`
 
 ```jsx
 
