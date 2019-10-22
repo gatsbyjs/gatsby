@@ -8,7 +8,7 @@ This guide covers how to add React components to your Gatsby site.
 
 React components are prebuilt elements or groups of elements that can be used to split your User Interface (UI) into independent, reusable pieces.
 
-Components also offer the ability to be customized using "props" (properties). Props can be of any Javascript type, such as boolean, string, object, array or almost anything you can think of.
+Components also offer the ability to be customized using inputs, better known as "props" (properties). Props can be of any JavaScript type, such as Boolean, String, Object, Array or almost anything you can think of.
 
 For example, you could use a component for Buttons on your site. This is because they would likely be used multiple times across pages and would need different labels each time.
 
