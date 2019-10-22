@@ -1,5 +1,5 @@
 ---
-title: Maintaining the Site Showcase with GitHub Actions and the Gatsby Site Showcase Validator
+title: Maintaining the Site Showcase with Github Actions and the Gatsby Site Showcase Validator
 date: 2019-06-17
 author: Benjamin Lannon
 excerpt: "Keeping the longevity of the Site Showcase strong is to continue bring in exciting sites that use Gatsby, but as well to keep our existing showcase up to date."
