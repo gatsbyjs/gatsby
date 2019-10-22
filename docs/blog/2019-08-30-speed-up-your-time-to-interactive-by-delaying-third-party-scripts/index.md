@@ -24,11 +24,11 @@ To get an overview of how your site scores, you can use Lighthouse, either in yo
 
 While the other metrics are also important, the scope of this article is on performance. By default, a Gatsby site will easily get a score in the 90s (out of 100), but this can quickly become lower as you add more scripts to the page, especially third party scripts.
 
-Harry from [marketingexamples.com](https://marketingexamples.com/) linked me to a recent post of his on [SEO performance](https://marketingexamples.com/seo/performance) that mentioned the "Time to interactive" scoring and I decided to take another look at my website for [Polypane](https://polypane.rocks). I had checked it in the past and it had a good (90+) score, but I was pretty shocked when it came back with a suddenly had a score of 63!
+Harry from [marketingexamples.com](https://marketingexamples.com/) linked me to a recent post of his on [SEO performance](https://marketingexamples.com/seo/performance) that mentioned the "Time to interactive" scoring and I decided to take another look at my website for [Polypane](https://polypane.rocks). I had checked it in the past and it had a good (90+) score, but I was pretty shocked when it came back and suddenly had a score of 63!
 
 When looking at the performance data, the site's first meaningful paint took slightly over a second, but the time to interactive was _eleven seconds_. Yikes!
 
-The reason for this was that I recently switched to [Segment](https://segment.com) (using [gatsby-plugin-segment-js](//packages/gatsby-plugin-segment-js/)) and was loading other scripts through that, like support chat and analytics. These scripts all counted towards my "time to interactive".
+The reason for this was that I recently switched to [Segment](https://segment.com) (using [gatsby-plugin-segment-js](/packages/gatsby-plugin-segment-js/)) and was loading other scripts through that, like support chat and analytics. These scripts all counted towards my "time to interactive".
 
 The SEO performance post included a tip from Dave of [ToDesktop](https://www.todesktop.com/) who has similar problems. His tip: Prevent loading the scripts until after a user has scrolled, along with some timeout to prevent [scroll jank](http://jankfree.org/).
 

@@ -410,21 +410,41 @@ class ContextualNodeModel {
     })
   }
 
-  getNodeById(...args) {
-    return this.nodeModel.getNodeById(...args)
+  _getFullDependencies(pageDependencies) {
+    return {
+      path: this.context.path,
+      ...(pageDependencies || {}),
+    }
   }
 
-  getNodesByIds(...args) {
-    return this.nodeModel.getNodesByIds(...args)
+  getNodeById(args, pageDependencies) {
+    return this.nodeModel.getNodeById(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  getAllNodes(...args) {
-    return this.nodeModel.getAllNodes(...args)
+  getNodesByIds(args, pageDependencies) {
+    return this.nodeModel.getNodesByIds(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  runQuery(...args) {
-    return this.nodeModel.runQuery(...args)
+  getAllNodes(args, pageDependencies) {
+    const fullDependencies = pageDependencies
+      ? this._getFullDependencies(pageDependencies)
+      : null
+    return this.nodeModel.getAllNodes(args, fullDependencies)
   }
+
+  runQuery(args, pageDependencies) {
+    return this.nodeModel.runQuery(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
+  }
+
   prepareNodes(...args) {
     return this.nodeModel.prepareNodes(...args)
   }
@@ -446,12 +466,10 @@ class ContextualNodeModel {
   }
 
   trackPageDependencies(result, pageDependencies) {
-    const fullDependencies = {
-      path: this.context.path,
-      ...(pageDependencies || {}),
-    }
-
-    return this.nodeModel.trackPageDependencies(result, fullDependencies)
+    return this.nodeModel.trackPageDependencies(
+      result,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 }
 
