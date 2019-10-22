@@ -1,5 +1,5 @@
 ---
-title: How I used Theme UI to build my Gatsby Themes library
+title: How I Used Theme UI to Build My Gatsby Themes Library
 date: 2019-07-30
 author: LekoArts
 excerpt: "Theme UI helped me a lot to get this done quickly. Starting at the Design to Code Handoff (by using the same design tokens) and ending at using the breakpoint syntax in the GraphQL layer of Gatsby to individually style theme entries."
