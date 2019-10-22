@@ -4156,6 +4156,19 @@
     - Mobile friendly responsive design made to be customized or leave as is
     - Separate components for everything
     - ...and more
+- url: https://gatsby-tailwind-emotion-starter-demo.netlify.com/
+  repo: https://github.com/pauloelias/gatsby-tailwind-emotion-starter
+  description: Gatsby starter using the latest Tailwind CSS and Emotion.
+  tags:
+    - Styling:Tailwind
+    - Styling:CSS-in-JS
+    - Styling:PostCSS
+  features:
+    - Tailwind CSS for rapid development
+    - Emotion with `tailwind.macro` for flexible styled components
+    - PostCSS configured out-of-the-box for when you need to write your own CSS
+    - postcss-preset-env to write tomorrow's CSS today
+    - Bare bones starter to help you hit the ground running
 - url: https://gatsby-starter-grayscale-promo.netlify.com/
   repo: https://github.com/awesome1888/gatsby-starter-grayscale-promo
   description: one-page promo site
