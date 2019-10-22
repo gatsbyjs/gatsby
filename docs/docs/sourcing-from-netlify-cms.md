@@ -87,7 +87,7 @@ You should now be viewing your Netlify CMS instance. You defined a "blog" collec
 configuration above, so you can create new blogs, but Netlify CMS will only store them in memory -
 if you refresh, your changes won't be there.
 
-## Saving to a Git Repo
+## Saving to a Git repo
 
 To save your content in a Git repo, the repo will need to be hosted on a service like GitHub, and
 you'll need a way to authenticate with that service so Netlify CMS can make changes through the
