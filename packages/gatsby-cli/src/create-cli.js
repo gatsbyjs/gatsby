@@ -174,7 +174,12 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
-        }),
+        })
+        .option(`clean`, {
+          type: `boolean`,
+          default: false,
+          describe: `Perform 'gatsby clean' (purge .cache and .public dirs) before building`,
+        }),        
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`

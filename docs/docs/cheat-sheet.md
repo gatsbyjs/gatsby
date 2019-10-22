@@ -206,6 +206,14 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
                     <p>Tracer configuration file (OpenTracing compatible). See <a href="https://gatsby.dev/tracing">gatsby.dev/tracing</a></p>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <p><code>--clean</code></p>
+                </td>
+                <td>
+                    <p>Perform a `gatsby clean` before building (delete /cache and /public directories) See <a href="https://www.gatsbyjs.org/docs/gatsby-cli/#clean">https://www.gatsbyjs.org/docs/gatsby-cli/#clean</a></p>
+                </td>
+            </tr>            
         </tbody>
     </table>
     <h3><code>gatsby serve</code></h3>

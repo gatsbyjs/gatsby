@@ -16,6 +16,7 @@ const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+const cleanCommand = require(`../clean.js`)
 
 type BuildArgs = {
   directory: string,
@@ -23,6 +24,7 @@ type BuildArgs = {
   prefixPaths: boolean,
   noUglify: boolean,
   openTracingConfigFile: string,
+  clean: boolean,
 }
 
 const waitJobsFinished = () =>
@@ -47,6 +49,8 @@ module.exports = async function build(program: BuildArgs) {
   signalExit(exitCode => {
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
+
+  if (clean) await cleanCommand.clean()
 
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
