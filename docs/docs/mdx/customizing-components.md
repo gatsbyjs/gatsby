@@ -44,15 +44,15 @@ The following components can be customized with the MDXProvider:
 | `ul`            | [List](https://github.com/syntax-tree/mdast#list)                    | `-`                                                 |
 | `ol`            | [Ordered list](https://github.com/syntax-tree/mdast#list)            | `1.`                                                |
 | `li`            | [List item](https://github.com/syntax-tree/mdast#listitem)           |                                                     |
-| `table`         | [Table](https://github.com/syntax-tree/mdast#table)                  | `--- | --- | ---`                                   |
-| `tr`            | [Table row](https://github.com/syntax-tree/mdast#tablerow)           | `This | is | a | table row`                         |
+| `table`         | [Table](https://github.com/syntax-tree/mdast#table)                  | `--- \| --- \| --- \| ---`                          |
+| `tr`            | [Table row](https://github.com/syntax-tree/mdast#tablerow)           | `This \| is \| a \| table row`                      |
 | `td`/`th`       | [Table cell](https://github.com/syntax-tree/mdast#tablecell)         |                                                     |
-| `pre`           | [Pre](https://github.com/syntax-tree/mdast#code)                     |                                                     |
-| `code`          | [Code](https://github.com/syntax-tree/mdast#code)                    |                                                     |
+| `pre`           | [Pre](https://github.com/syntax-tree/mdast#code)                     | ` ```js console.log()``` `                          |
+| `code`          | [Code](https://github.com/syntax-tree/mdast#code)                    | `` `console.log()` ``                               |
 | `em`            | [Emphasis](https://github.com/syntax-tree/mdast#emphasis)            | `_emphasis_`                                        |
 | `strong`        | [Strong](https://github.com/syntax-tree/mdast#strong)                | `**strong**`                                        |
 | `delete`        | [Delete](https://github.com/syntax-tree/mdast#delete)                | `~~strikethrough~~`                                 |
-| `code`          | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
+| `code`          | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        | `` `console.log()` ``                               |
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
