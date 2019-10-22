@@ -68,7 +68,7 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const runAPI = (plugin, api, args) => {
+const runAPI = (plugin, api, args, activity) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -161,6 +161,9 @@ const runAPI = (plugin, api, args) => {
         },
       }
     }
+    let localReporter = activity
+      ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
+      : reporter
 
     const apiCallArgs = [
       {
@@ -177,7 +180,7 @@ const runAPI = (plugin, api, args) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter,
+        reporter: localReporter,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -326,7 +329,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
-        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
+        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
       }).catch(err => {
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
