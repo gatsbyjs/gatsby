@@ -1,5 +1,5 @@
 ---
-title: Recipes: Pages and Layouts
+title: Pages and Layouts
 ---
 
 ## Recipes: Pages and Layouts
