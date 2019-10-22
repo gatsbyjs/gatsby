@@ -45,7 +45,7 @@ Completing the above step means that you've "sourced" the Markdown files from th
 
 You'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognize files which are Markdown and read their content. The plugin will convert the frontmatter metadata part of your Markdown files as `frontmatter` and the content part as HTML.
 
-### Install
+### Install transformer plugin
 
 `npm install --save gatsby-transformer-remark`
 
