@@ -1,5 +1,5 @@
 ---
-title: "Using the Google Sheets API With Gatsby for Creating Fast Sites With Simple Data Sources"
+title: "Using the Google Sheets API with Gatsby for Creating Fast Sites with Simple Data Sources"
 date: 2019-08-02
 author: Kyle Pennell
 excerpt: "Learn how to use the Google Sheets API with Gatsby to build an AcroYoga video explorer site."
