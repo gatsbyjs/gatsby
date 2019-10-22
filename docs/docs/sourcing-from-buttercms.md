@@ -295,7 +295,7 @@ To Pull down content into gatsby run:
 gatsby develop
 ```
 
-#### Testing with GrapiQl
+### Testing with GraphiQL
 
 You can test out your Graphql queries with GrahiQl( A graphql debugger) fire up Graphiql on [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql)
 
