@@ -921,6 +921,7 @@
     - PWA
     - Disqus
     - SEO
+    - MDX
     - Styling:CSS-in-JS
   features:
     - Blog post listing with previews (image + summary) for each blog post
@@ -4168,3 +4169,20 @@
     - PostCSS configured out-of-the-box for when you need to write your own CSS
     - postcss-preset-env to write tomorrow's CSS today
     - Bare bones starter to help you hit the ground running
+- url: https://gatsby-starter-grayscale-promo.netlify.com/
+  repo: https://github.com/awesome1888/gatsby-starter-grayscale-promo
+  description: one-page promo site
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Linting
+    - Markdown
+    - Onepage
+    - CMS:Netlify
+    - Landing Page
+  features:
+    - Styled-Components
+    - NetlifyCMS
+    - TypeScript
+    - Basic design
+    - Visual effects
