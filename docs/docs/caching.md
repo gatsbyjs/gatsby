@@ -1,5 +1,5 @@
 ---
-title: "Caching Static Sites"
+title: Caching Static Sites
 ---
 
 An important part of creating a very fast website is setting up proper HTTP caching. HTTP caching allows browsers to cache resources from a website so that when the user returns to a site, very few parts of the website have to be downloaded.
@@ -15,6 +15,12 @@ The `cache-control` header should be `cache-control: public, max-age=0, must-rev
 ## Page data
 
 Similar to HTML files, the JSON files in the `public/page-data/` directory should never be cached by the browser. In fact, it's possible for these files to be updated even without doing a redeploy of your site. Because of this, browsers should be instructed to check on every request if the data in your application has changed.
+
+The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`<sup>1</sup>
+
+## App data
+
+The new `app-data.json` file which contains the build hash for the current deployment of the site should also share the same `cache-control` header as `page-data.json`. This is to ensure that the version of the site loaded in the browser is always synchronised with the currently deployed version.
 
 The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`<sup>1</sup>
 

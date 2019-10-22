@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-flow",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "Provides drop-in support for Flow by adding @babel/preset-flow.",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
-    "babel-preset-gatsby-package": "^0.2.8",
+    "babel-preset-gatsby-package": "^0.2.9",
     "cross-env": "^5.2.1"
   },
   "engines": {

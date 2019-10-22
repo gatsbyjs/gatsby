@@ -279,8 +279,8 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
             }}
           >
             <div css={{ width: `100%` }}>
-              <Helmet>
-                <title>{data.sitesYaml.title}: Showcase | GatsbyJS</title>
+              <Helmet titleTemplate="%s | GatsbyJS">
+                <title>{`${data.sitesYaml.title}: Showcase`}</title>
                 <meta
                   property="og:image"
                   content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}

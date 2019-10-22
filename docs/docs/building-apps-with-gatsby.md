@@ -1,5 +1,5 @@
 ---
-title: "Building Apps with Gatsby"
+title: Building Apps with Gatsby
 ---
 
 Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different approaches.

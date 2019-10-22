@@ -40,7 +40,7 @@ Skip over a number of results. In this query `skip` is used to omit the first 3 
 
 ## Filter
 
-In this query `filter` and the `ne` (not equals) operator is used to show only results that have a title. A good video tutorial on this is [here](https://www.youtube.com/watch?v=Lg1bom99uGM).
+In this query `filter` and the `ne` (not equals) operator is used to show only results that have a title. You can find a good video tutorial on this [here](https://www.youtube.com/watch?v=Lg1bom99uGM).
 
 <iframe title="Using a filter" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20filter%3A%20%7B%0A%20%20%20%20%20%20frontmatter%3A%20%7Btitle%3A%20%7Bne%3A%20%22%22%7D%7D%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
 
@@ -142,13 +142,13 @@ To add variables to page component queries, pass these in the `context` object [
 
 You can also group values on the basis of a field e.g. the title, date or category and get the field value, the total number of occurrences and edges.
 
-The query below gets us all categories (`fieldValue`) applied to a book and how many books (`totalCount`) given category is applied to. In addition we're grabbing the `title` of books in given category. You can see for example that there are 3 books in `magical creatures` category.
+The query below gets us all categories (`fieldValue`) applied to a book and how many books (`totalCount`) a given category is applied to. In addition we're grabbing the `title` of books in a given category. You can see for example that there are 3 books in the `magical creatures` category.
 
 <iframe title="Grouping values" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Btitle%3A%20%7Bne%3A%20%22%22%7D%7D%7D)%20%7B%0A%20%20%20%20group(field%3A%20frontmatter___categories)%20%7B%0A%20%20%20%20%20%20fieldValue%0A%20%20%20%20%20%20totalCount%0A%20%20%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%20%20nodes%20%7B%0A%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20categories%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
 
 ## Fragments
 
-Fragments are a way to save frequently used queries for re-use. To create a fragment, define it in a query and export it as a named export from any file Gatsby is aware of. A fragment is available for use in any other GraphQL query, regardless of location in the project. Fragments defined in a Gatsby project are global, so names must be unique.
+Fragments are a way to save frequently used queries for re-use. To create a fragment, define it in a query and export it as a named export from any file Gatsby is aware of. A fragment is available for use in any other GraphQL query, regardless of its location in the project. Fragments are globally defined in a Gatsby project, so names have to be unique.
 
 The query below defines a fragment to get the site title, and then uses the fragment to access this information.
 
@@ -156,7 +156,7 @@ The query below defines a fragment to get the site title, and then uses the frag
 
 ## Aliasing
 
-Want to run two queries on the same datasource? You can do this by aliasing your queries. See below for an example:
+Want to run two queries on the same datasource? You can do this by aliasing your queries. See the query below for an example:
 
 <iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20someEntries%3A%20allMarkdownRemark(skip%3A%203%2C%20limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20someMoreEntries%3A%20allMarkdownRemark(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
 

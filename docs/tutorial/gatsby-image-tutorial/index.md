@@ -249,7 +249,7 @@ Instead of a query constant and data that references the result like in the firs
 
 The last use case you may come across is how to handle a situation where you have multiple queries in the same file/page.
 
-This example is attempting to query for all the data in `speaking.yaml` and the direct file query in our first example. In order to do this you want to use aliasing in GraphQL.
+This example is attempting to query for all the data in `speaking.yaml` and the direct file query in the first example. In order to do this you want to use aliasing in GraphQL.
 
 The first thing to know is that an alias is assigning a name to a query. The second thing to know is that aliases are optional, but they can make your life easier! Below is an example.
 
