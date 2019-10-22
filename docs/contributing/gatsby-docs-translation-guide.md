@@ -74,11 +74,11 @@ Additional tips:
 
 Consistent with the [Code of Conduct](/docs/code-of-conduct/) the Gatsby team reserves the right to remove a maintainer (or contributor) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue,or generally harmful or abusive behavior inconsistent with Gatsby's policies.
 
-### Template responses for closing PRs
+#### Template responses for closing PRs
 
 Sometimes a PR has a valid reason to not be merged as-is. Templates can help speed up the process of responding to someone while encouraging future contributions.
 
-#### PRs with quality issues
+##### PRs with quality issues
 
 If a PR includes content that is of poor quality (such as from Google Translate or missing important nuance) or doesn't meet the requirements, it would help to include a drafted reply to encourage contributors to continue with the project. Here is an example that can be translated for a given repo:
 
@@ -93,7 +93,7 @@ Thanks again, and we look forward to seeing more PRs from you in the future! ðŸ’
 [open-issues]: YOUR_REPO_ISSUE_URL_HERE
 ```
 
-#### PRs with content changes more fitting for the main repo
+##### PRs with changes more fitting for the main Gatsby repo
 
 Because the main Gatsby repo is the source of content, more substantive changes should be closed and redirected there. Here is a template that could be translated for your repo:
 
