@@ -4186,3 +4186,20 @@
     - TypeScript
     - Basic design
     - Visual effects
+- url: https://martin2844.github.io/gatsby-starter-dev-portfolio/
+  repo: (required - https://github.com/martin2844/gatsby-starter-dev-portfolio
+  description: A GatsbyJS minimalistic portfolio site, with a blog and about section
+  tags:
+    - Portfolio
+    - Blog
+    - Markdown
+    - v2
+  features:
+    - createPages API
+    - Responsive
+    - Minimalistic
+    - Blazing fast (LINK)
+    - Graphql queries
+    - Sass
+    - Markdown
+    
