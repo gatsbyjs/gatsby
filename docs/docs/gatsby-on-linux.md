@@ -2,7 +2,6 @@
 title: Gatsby on Linux
 ---
 
-## Linux
 
 > This is a TODO. Help our community expand it.
 
