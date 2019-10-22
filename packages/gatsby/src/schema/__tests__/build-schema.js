@@ -814,6 +814,33 @@ describe(`Build schema`, () => {
       )
     })
 
+    it(`extends fieldconfigs when merging types`, async () => {
+      createTypes(
+        buildObjectType({
+          name: `Mdx`,
+          interfaces: [`Node`],
+          fields: {
+            body: {
+              type: `String`,
+              resolve: () => `Mdx!`,
+            },
+          },
+        })
+      )
+      createTypes(`
+        type Mdx implements Node {
+          body: String!
+        }
+      `)
+
+      const schema = await buildSchema()
+      const fields = schema.getType(`Mdx`).getFields()
+
+      expect(fields.body.type.toString()).toBe(`String!`)
+      expect(typeof fields.body.resolve).toBe(`function`)
+      expect(fields.body.resolve()).toBe(`Mdx!`)
+    })
+
     it(`displays error message for reserved Node interface`, () => {
       const typeDefs = [
         `interface Node { foo: Boolean }`,

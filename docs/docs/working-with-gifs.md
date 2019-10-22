@@ -1,5 +1,5 @@
 ---
-title: Working With GIFs
+title: Working with GIFs
 ---
 
 If you're building a blog with Gatsby, chances are you'll want to include some animated GIFs: who wouldn't want to include a dancing otter or cat GIF?
@@ -37,7 +37,7 @@ In Markdown posts and pages, including an animated GIF is the same as a static i
 
 ![otter dancing with a fish](./images/dancing-otter.gif)
 
-Animated GIFs can be quite large in size, however, so be careful not to sabotage your webpages' performance with extremely large files. You could reduce file size by [optimizing the frames](https://skylilies.livejournal.com/244378.html) or converting them to video.
+Animated GIFs can be quite large in size, so be careful not to sabotage your webpages' performance with extremely large files. You could reduce file size by [optimizing the frames](https://skylilies.livejournal.com/244378.html) or converting them to video.
 
 ## Accessibility concerns with animated GIFs
 

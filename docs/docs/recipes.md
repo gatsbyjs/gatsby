@@ -721,7 +721,7 @@ A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourci
 
 ### Creating a new site using a theme starter
 
-Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example we'll use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
+Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example you can use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
 
 #### Prerequisites
 
