@@ -10,7 +10,7 @@ React components are prebuilt elements or groups of elements that can be used to
 
 Components also offer the ability to be customized using inputs, better known as "props" (properties). Props can be of any JavaScript type, such as Boolean, String, Object, Array or almost anything you can think of.
 
-For example, you could use a component for Buttons on your site. This is because they would likely be used multiple times across pages and would need different labels each time.
+For example, you could use a component for Buttons on your site. This would enable them to be used multiple times across pages with different labels or actions each time.
 
 ## Importing React components
 
