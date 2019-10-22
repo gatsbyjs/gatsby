@@ -208,12 +208,6 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/images`,
-      },
-    },
   ],
 }
 ```
@@ -221,5 +215,5 @@ module.exports = {
 With this configuration, you can use the default Markdown syntax for images. They will be processed by Sharp and appear as if you placed them in a `gatsby-image` component.
 
 ```md
-![Awesome image](../images/my-awesome-image.png)
+![Hopper The Rabbit](./rabbit-friend.png)
 ```
