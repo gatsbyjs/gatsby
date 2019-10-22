@@ -1,11 +1,14 @@
-import React, { useRef, useState, useLayoutEffect } from "react"
+import React, { useRef, useState, useCallback, useLayoutEffect } from "react"
 import PropTypes from "prop-types"
 
 const EggheadEmbed = ({ lessonLink, lessonTitle }) => {
   const [iframeWidth, setIframeWidth] = useState(0)
   const iframeRef = useRef()
 
-  const handleResize = () => setIframeWidth(iframeRef.current.clientWidth)
+  const handleResize = useCallback(
+    () => setIframeWidth(iframeRef.current.clientWidth),
+    [iframeRef.current]
+  )
 
   useLayoutEffect(() => {
     handleResize()
