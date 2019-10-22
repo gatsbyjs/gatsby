@@ -1,5 +1,5 @@
 ---
-title: How The Couch Builds Websites in Half the Time with Gatsby
+title: How the Couch Builds Websites in Half the Time with Gatsby
 date: 2019-06-19
 author: Linda Watkins
 tags:
