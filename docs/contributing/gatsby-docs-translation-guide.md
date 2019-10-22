@@ -2,9 +2,9 @@
 title: Gatsby Docs Translation Guide
 ---
 
-Since the [RFC on localization](https://github.com/gatsbyjs/rfcs/pull/42) for Gatsby, there is now an ongoing effort to translate the content on Gatsbyjs.org into multiple languages. For members of the community around the world building Gatsby sites and learning about web development, having docs and learning materials in your own language provides a lot of value. There's also a great opportunity for folks like you to contribute to the translations of the Gatsby docs.
+There is an ongoing effort to translate the content on Gatsbyjs.org into multiple languages. For members of the community around the world building Gatsby sites and learning about web development, having docs and learning materials in your own language provides a lot of value. There's also a great opportunity for folks like you to contribute to the translations of the Gatsby docs.
 
-If you're a native speaker of a language other than English and you're interested in helping translate gatsbyjs.org, here is some information for you to know:
+If you're a native speaker of a language other than English and you're interested in helping translate [gatsbyjs.org](https://gatsbyjs.org), here is some information for you to know:
 
 ## The general process
 
@@ -20,7 +20,7 @@ The Gatsby learning team is in charge of determining priorities for which docs s
 
 ### Use English as the source
 
-The [gatsbyjs.org](https://gatsbyjs.org) website is written first in English and should be considered the source material for all translations (as opposed to starting from another translation). When a repository is created, it will provide a copy of the docs to be translated which you can then update through [pull requests](/contributing/how-to-open-a-pull-request/) against them in the relevant language. A bot will 
+The [gatsbyjs.org](https://gatsbyjs.org) website is written first in English and should be considered the source material for all translations (as opposed to starting from another translation). When a repository is created, it will provide a copy of the docs to be translated which you can then update through [pull requests](/contributing/how-to-open-a-pull-request/) against them in the relevant language. A bot will
 
 Changes to the meaning of a text or code example should be done in the main [English repo](https://github.com/gatsbyjs/gatsby/), and then translated afterwards to keep the content aligned across languages.
 
@@ -88,7 +88,7 @@ Hey! Thanks so much for opening a pull request!
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it doesn't meaningfully translate the Gatsby docs content.
 
 We absolutely want to have you as a contributor, so please take a look at [our open issues][open-issues] for ideas and reach out to the Gatsby team [on Twitter at @gatsbyjs](https://twitter.com/gatsbyjs) with questions.
- 
+
 Thanks again, and we look forward to seeing more PRs from you in the future! 💪💜
 [open-issues]: YOUR_REPO_ISSUE_URL_HERE
 ```
@@ -103,7 +103,7 @@ Hey! Thanks so much for opening a pull request!
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it includes broad changes to the docs content that should be done in the [main Gatsby repo](https://github.com/gatsbyjs/gatsby) instead.
 
 We absolutely want to have you as a contributor, so please take a look at the original source for these changes and make them there first before translating. You can also visit [our open issues][open-issues] for ideas and reach out to the Gatsby team [on Twitter at @gatsbyjs](https://twitter.com/gatsbyjs) with questions.
- 
+
 Thanks again, and we look forward to seeing more PRs from you in the future! 💪💜
 [open-issues]: YOUR_REPO_ISSUE_URL_HERE
 ```
