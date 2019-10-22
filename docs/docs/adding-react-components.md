@@ -83,6 +83,6 @@ You can learn how to patch these packages on the [Debugging HTML Builds](docs/de
 
 ### Components without server-side rendering
 
-Server-side rendering means pages and content are built out by the server, and then sent to a browser ready to go. It’s like your pages are constructed before even being sent to the user. Gatsby is server-side rendered at build time, meaning that the code that gets to your browser has already been run to build pages and content, but this doesn’t mean you can’t still have dynamic pages.
+Server-side rendering means pages and content are built out by the Node.js server and then sent to a browser ready to go. It’s like your pages are constructed before even being sent to the user. Gatsby is server-side rendered at build time, meaning that the code that gets to your browser has already been run to build pages and content, but this doesn’t mean you can’t still have dynamic pages.
 
 Some React components don't have server-side rendering support (SSR) out-of-the-box so you might have to add SSR yourself.
