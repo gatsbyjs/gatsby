@@ -103,7 +103,7 @@ ButterCMS has full support for localization of your content. Locale names and ke
 
 ## Creating pages
 
-### Creating a single page(home page)
+### Creating a single page (home page)
 
 #### Introduction
 
