@@ -47,5 +47,5 @@ As you can see, Gatsby's performance is excellent out of the box but we're missi
 Next steps:
 
 - [Add a manifest file](/docs/add-a-manifest-file/)
-- [Add offline support](/docs/add-offline-support/)
+- [Add offline support](/docs/add-offline-support-with-a-service-worker/)
 - [Add page metadata](/docs/add-page-metadata/)
