@@ -8066,3 +8066,13 @@
   built_by: The Couch
   built_by_url: https://thecouch.nyc
   featured: false
+- title: Bululu Eventos
+  url: https://bululueventos.cl/
+  main_url: https://bululueventos.cl/
+  source_url: https://github.com/enBonnet/bululu-front
+  description: >
+    Sitio de organizadores de eventos
+  categories:
+    - Marketing
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
