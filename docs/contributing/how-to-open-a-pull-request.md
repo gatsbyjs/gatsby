@@ -95,20 +95,20 @@ For the Gatsby blog, it's necessary to run your content idea by the Gatsby team 
 
 After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
 
-The Gatsby core team reviews and approves every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+The Gatsby core and learning teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
 
-These suggestions may also be called request changes by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR, from this page you can use the suggestions UI to:
+These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
 
 - Review the suggested changes using the "View changes" button.
 - [Commit](https://help.github.com/en/articles/incorporating-feedback-in-your-pull-request#applying-suggested-changes) the suggestions.
 - [Discuss suggestions](https://help.github.com/en/articles/about-conversations-on-github) to ask questions about the suggested changes.
 - [Add suggestions to a batch](https://help.github.com/en/articles/incorporating-feedback-in-your-pull-request#applying-suggested-changes) so they can be pushed in a single commit.
 
-For suggestions that may not be resolved using the GitHub UI, remember that you can keep adding commits to your PR before it is merged and those commits will also be a part of such PR.
+For suggestions that may not be resolved using the GitHub UI, remember that you can keep adding related commits to your PR before it is merged and those commits will also be a part of such PR.
 
 After all your questions have been resolved and the requested changes have been committed, you can [mark the conversation as solved](https://help.github.com/en/articles/commenting-on-a-pull-request#resolving-conversations).
 
-This process helps both the Gatsby core team and the community to contribute with improvements for your changes, before they are merged into the Gatsby GitHub repo.
+This process helps both the Gatsby team and the community to contribute with improvements for your changes before they are merged into the Gatsby GitHub repo.
 
 ## Update your fork with the latest Gatsby changes
 
