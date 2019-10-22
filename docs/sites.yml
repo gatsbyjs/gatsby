@@ -8011,6 +8011,18 @@
     - Blog
     - Education
   featured: false
+- title: Global Adviser Alpha
+  main_url: "https://globaladviseralpha.com"
+  url: "https://globaladviseralpha.com"
+  description: >
+    Lead by David Haintz, Global Adviser Alpha transforms advice business into world class firms.
+  categories:
+    - Business
+    - Blog
+    - Finance
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
 - title: Alcamine
   url: https://alcamine.com/
   main_url: https://alcamine.com/
