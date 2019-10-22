@@ -15,6 +15,8 @@
 </h3>
 <p align="center">
 Gatsby is a blazing fast static site generator built with React. Gatsby gives you all of the modern JavaScript tools you want; set up and ready to go out of the box.
+  
+Gatsby.js V2 was recently launched and there have been a few small changes to how Gatsby Image is implemented. Gatsby Image is a React component that makes it easy to optimize all the images on your website. It will resize images for you, so you don't load huge images on a mobile device, and it will also lazy load your images with a cool "blur-up" effect so that your initial page loads are blazing fast. 
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
