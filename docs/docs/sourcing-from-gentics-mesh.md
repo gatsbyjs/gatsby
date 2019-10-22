@@ -24,7 +24,7 @@ The demo Gentics server that gets setup has a UI that can be accessed on `http:/
 
 ### Install the boilerplate
 
-Now create a simple Gatsby starter site.
+Now create a simple Gatsby site from the default Gatsby starter.
 
 ```shell
 gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
