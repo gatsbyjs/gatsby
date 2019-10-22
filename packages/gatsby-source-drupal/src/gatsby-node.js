@@ -177,31 +177,35 @@ exports.onCreateDevServer = (
       type: `application/json`,
     }),
     async (req, _res) => {
-      const requestBody = JSON.parse(JSON.parse(req.body))
-      const { secret, action, id } = requestBody
-      if (pluginOptions.secret && pluginOptions.secret !== secret) {
-        return reporter.warn(
-          `The secret in this request did not match your plugin options secret.`
+      if (!_.isEmpty(req.body)) {
+        const requestBody = JSON.parse(JSON.parse(req.body))
+        const { secret, action, id } = requestBody
+        if (pluginOptions.secret && pluginOptions.secret !== secret) {
+          return reporter.warn(
+            `The secret in this request did not match your plugin options secret.`
+          )
+        }
+        if (action === `delete`) {
+          actions.deleteNode({ node: getNode(createNodeId(id)) })
+          return reporter.log(`Deleted node: ${id}`)
+        }
+        const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
+        return await handleWebhookUpdate(
+          {
+            nodeToUpdate,
+            actions,
+            cache,
+            createNodeId,
+            createContentDigest,
+            getNode,
+            reporter,
+            store,
+          },
+          pluginOptions
         )
+      } else {
+        res.status(400).send(`Received body was empty!`)
       }
-      if (action === `delete`) {
-        actions.deleteNode({ node: getNode(createNodeId(id)) })
-        return reporter.log(`Deleted node: ${id}`)
-      }
-      const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
-      return await handleWebhookUpdate(
-        {
-          nodeToUpdate,
-          actions,
-          cache,
-          createNodeId,
-          createContentDigest,
-          getNode,
-          reporter,
-          store,
-        },
-        pluginOptions
-      )
     }
   )
 }

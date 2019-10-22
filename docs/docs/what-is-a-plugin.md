@@ -1,5 +1,5 @@
 ---
-title: "What is a Plugin?"
+title: What is a Plugin?
 ---
 
 Gatsby plugins are Node.js packages that implement Gatsby APIs. For larger, more complex sites, plugins let you modularize your site customizations into site-specific plugins.

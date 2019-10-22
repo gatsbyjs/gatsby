@@ -193,7 +193,10 @@ export default () => {
   })
 
   it(`extracts query AST correctly from files`, async () => {
-    const results = await parser.parseFiles(Object.keys(MOCK_FILE_INFO))
+    const results = await parser.parseFiles(
+      Object.keys(MOCK_FILE_INFO),
+      jest.fn()
+    )
     expect(results).toMatchSnapshot()
     expect(reporter.warn).toMatchSnapshot()
   })

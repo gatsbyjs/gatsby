@@ -1,12 +1,12 @@
 ---
-title: "Adding a Custom webpack Config"
+title: "Adding a Custom Webpack Config"
 ---
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby
 plugin already built that handles your use case in the
 [plugins section](/docs/plugins/). If there's not yet one and your use case is a
-general one, we highly encourage you to contribute back your plugin to the
-Gatsby Plugin Library so it's available to others (including your future self 😀)._
+general one, it is highly encouraged you to contribute back your plugin to the
+Gatsby Plugin Library so it's available to others (including your future self)._
 
 To add custom webpack configurations, create (if there's not one already) a
 `gatsby-node.js` file in your root directory. Inside this file, export a
@@ -16,15 +16,15 @@ When Gatsby creates its webpack config, this function will be called allowing
 you to modify the default webpack config using
 [webpack-merge](https://github.com/survivejs/webpack-merge).
 
-Gatsby does multiple webpack builds with somewhat different configuration. We
-call each build type a "stage". The following stages exist:
+Gatsby does multiple webpack builds with somewhat different configuration. Gatsby
+calls each build type a "stage". The following stages exist:
 
 1.  develop: when running the `gatsby develop` command. Has configuration for hot
     reloading and CSS injection into page
 2.  develop-html: same as develop but without react-hmre in the babel config for
     rendering the HTML component.
 3.  build-javascript: production JavaScript and CSS build. Creates route JS bundles as well
-    as commons chunks for JS and CSS.
+    as common chunks for JS and CSS.
 4.  build-html: production build static HTML pages
 
 Check
@@ -54,8 +54,8 @@ exports.onCreateWebpackConfig = ({
         {
           test: /\.less$/,
           use: [
-            // We don't need to add the matching ExtractText plugin
-            // because gatsby already includes it and makes sure its only
+            // You don't need to add the matching ExtractText plugin
+            // because gatsby already includes it and makes sure it's only
             // run at the appropriate stages, e.g. not in development
             loaders.miniCssExtract(),
             loaders.css({ importLoaders: 1 }),
@@ -92,7 +92,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 
 You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).
 
-### Modifying the babel loader
+### Modifying the Babel loader
 
 You need this if you want to do things like transpile parts of `node_modules`.
 

@@ -240,26 +240,38 @@ exports.mapPostsToTagsCategories = entities => {
 
     let entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
     if (tags.length && entityHasTags) {
-      e.tags___NODE = e.tags.map(
-        t =>
-          tags.find(
+      e.tags___NODE = e.tags
+        .map(t => {
+          const tagNode = tags.find(
             tObj =>
               (Number.isInteger(t) ? t : t.wordpress_id) === tObj.wordpress_id
-          ).id
-      )
+          )
+          if (tagNode) {
+            return tagNode.id
+          } else {
+            return undefined
+          }
+        })
+        .filter(node => node != undefined)
       delete e.tags
     }
 
     let entityHasCategories =
       e.categories && Array.isArray(e.categories) && e.categories.length
     if (categories.length && entityHasCategories) {
-      e.categories___NODE = e.categories.map(
-        c =>
-          categories.find(
+      e.categories___NODE = e.categories
+        .map(c => {
+          const categoryNode = categories.find(
             cObj =>
               (Number.isInteger(c) ? c : c.wordpress_id) === cObj.wordpress_id
-          ).id
-      )
+          )
+          if (categoryNode) {
+            return categoryNode.id
+          } else {
+            return undefined
+          }
+        })
+        .filter(node => node != undefined)
       delete e.categories
     }
 

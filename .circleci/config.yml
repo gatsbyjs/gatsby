@@ -160,6 +160,12 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
 
+  integration_tests_structured_logging:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/structured-logging
+
   e2e_tests_path-prefix:
     <<: *e2e-executor
     environment:
@@ -218,8 +224,8 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "starters/*|themes/gatsby-starter-*|.circleci/*"
-      - run: sh ./scripts/validate-starters.sh "starters/* themes/gatsby-starter-*"
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/validate-starters.sh "starters/*"
 
   starters_publish:
     executor: node
@@ -232,7 +238,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
-      - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
+      - run: sh ./scripts/publish-starters.sh "starters/*"
 
   build_www:
     docker:
@@ -326,6 +332,8 @@ workflows:
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
+      - integration_tests_structured_logging:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
