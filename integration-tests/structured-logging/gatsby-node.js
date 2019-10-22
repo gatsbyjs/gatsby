@@ -33,6 +33,7 @@ exports.createPages = async ({ reporter }) => {
     await sleep(500)
     unsuccessfulActivity.tick(75)
     unsuccessfulActivity.panicOnBuild(`Your car is on fire`)
+    unsuccessfulActivity.done()
   }
 
   if (process.env.PANIC_ON_BUILD) {
