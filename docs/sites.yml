@@ -8011,6 +8011,17 @@
     - Blog
     - Education
   featured: false
+- title: Roger Ramos Development Journal
+  url: "https://rogerramos.me/"
+  main_url: "https://rogerramos.me/"
+  source_url: "https://github.com/rogerramosme/rogerramos.me/"
+  description: >
+    Personal development journal made with Netlify CMS
+  categories:
+    - Blog
+  built_by: Roger Ramos
+  built_by_url: https://rogerramos.me/
+  featured: false
 - title: Global Adviser Alpha
   main_url: "https://globaladviseralpha.com"
   url: "https://globaladviseralpha.com"
