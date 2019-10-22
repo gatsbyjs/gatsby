@@ -8022,6 +8022,20 @@
     - Blog
     - Education
   featured: false
+- title: Keycodes
+  url: https://www.keycodes.dev
+  main_url: https://www.keycodes.dev
+  source_url: https://github.com/justinjunodev/keycodes.dev
+  description: >
+    A developer resource for getting keyboard key codes.
+  categories:
+    - Programming
+    - Productivity
+    - Open Source
+    - Web Development
+  built_by: Justin Juno
+  built_by_url: https://www.justinjuno.dev
+  featured: false
 - title: Utah Pumpkins
   url: https://www.utahpumpkins.com/
   main_url: https://www.utahpumpkins.com/
