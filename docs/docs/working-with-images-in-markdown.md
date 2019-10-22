@@ -138,7 +138,11 @@ npm install --save gatsby-remark-images gatsby-plugin-sharp
 
 Also make sure that `gatsby-source-filesystem` is installed and points at the directory where your images are located.
 
-Configure the plugins in your `gatsby-config` file. As with the previous example, either `Remark` or `MDX` can be used; `gatsby-plugin-mdx` will be used in this case. Put the `gatsby-remark-images` plugin within the `gatsbyRemarkPlugins` option field of `gatsby-plugin-mdx`.
+Configure the plugins in your `gatsby-config` file. As with the previous example, either `Remark` or `MDX` can be used.
+
+### Using the MDX Plugin
+
+The `gatsby-plugin-mdx` plugin will be used in the example below. Put the `gatsby-remark-images` plugin within the `gatsbyRemarkPlugins` option field of `gatsby-plugin-mdx`.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -167,7 +171,9 @@ module.exports = {
 }
 ```
 
-Here is a similar example using the `gatsby-transformer-remark` plugin instead of `gatsby-plugin-mdx`.
+### Using the Transformer Remark Plugin
+
+Here is a similar example using the `gatsby-transformer-remark` plugin instead of `gatsby-plugin-mdx`. Put the `gatsby-remark-images` plugin within the `plugins` option field of `gatsby-transformer-remark`.
 
 ```js:title=gatsby-config.js
 module.exports = {
