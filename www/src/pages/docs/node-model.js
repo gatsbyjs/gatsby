@@ -1,11 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
-import { rhythm } from "../../utils/typography"
-import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -33,7 +33,8 @@ class NodeModelDocs extends React.Component {
             Gatsby exposes its internal data store and query capabilities to
             GraphQL field resolvers on <code>context.nodeModel</code>.
           </p>
-          <div className="gatsby-code-title">Example usage</div>
+          <h3>Example usage</h3>
+          <div className="gatsby-code-title">gatsby-node.js</div>
           <div className="gatsby-highlight">
             <pre
               className="language-javascript"
@@ -58,8 +59,7 @@ class NodeModelDocs extends React.Component {
               }}
             />
           </div>
-          <hr />
-          <h2 css={{ marginBottom: rhythm(space[3]) }}>Methods</h2>
+          <h2>Methods</h2>
           <ul>
             {funcs.map((node, i) => (
               <li key={`function list ${node.name}`}>
@@ -67,7 +67,6 @@ class NodeModelDocs extends React.Component {
               </li>
             ))}
           </ul>
-          <hr />
           <h2>Reference</h2>
           <APIReference docs={funcs} />
         </Container>

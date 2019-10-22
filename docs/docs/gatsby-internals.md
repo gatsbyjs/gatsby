@@ -12,6 +12,8 @@ A few more things. These docs are mostly focused on the build lifecycle (`gatsby
 
 The graph below shows roughly how all the sub systems of Gatsby fit together and the input/output artifacts at different parts of the build. To find out how different parts work, click on the nodes in the graph, or use the menu on the left.
 
+> Note: This diagram isn't up to date with the latest version of Gatsby. You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)
+
 ```dot
 digraph graphname {
 
@@ -35,7 +37,7 @@ digraph graphname {
 
   ## Source Nodes
 
-  dataSource [ label = "data sources. e.g file, contentful", shape = cylinder, fillcolor = gray ];
+  dataSource [ label = "data sources. e.g. file, contentful", shape = cylinder, fillcolor = gray ];
   sourceNodes [ label = "source nodes" URL = "/docs/node-creation/" ];
   nodes [ label = "nodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/" ];
   nodesTouched [ label = "touchedNodes", shape = box, fillcolor = skyblue, URL = "/docs/node-creation/#freshstale-nodes" ];

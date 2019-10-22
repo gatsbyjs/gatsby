@@ -604,6 +604,12 @@ Object {
 }
 `;
 
+exports[`Wordcount and timeToRead are generated correctly from schema correctly generate timeToRead for CJK 1`] = `
+Object {
+  "timeToRead": 2,
+}
+`;
+
 exports[`Wordcount and timeToRead are generated correctly from schema correctly uses a default value for timeToRead 1`] = `
 Object {
   "frontmatter": Object {

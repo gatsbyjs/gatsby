@@ -46,13 +46,13 @@ module.exports = {
   plugins: [
     /*
      * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
+     * plugins. Here the site sources its data from WordPress.
      */
     {
       resolve: "gatsby-source-wordpress",
       options: {
         /*
-         * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
          * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
          */
         baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
@@ -63,7 +63,7 @@ module.exports = {
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
-        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
+        // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on wordpress.com.
         // Defaults to true.
         useACF: true,
@@ -95,13 +95,13 @@ module.exports = {
           wpcom_pass: process.env.WORDPRESS_PASSWORD,
 
           // If you use "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
-          // or (https://github.com/jonathan-dejong/simple-jwt-authentication) requires jwt_base_path, path can be found in wordpress wp-api.
-          // plugin, you can specify user and password to obtain access token and use authenticated requests against wordpress REST API.
+          // or (https://github.com/jonathan-dejong/simple-jwt-authentication) requires jwt_base_path, path can be found in WordPress wp-api.
+          // plugin, you can specify user and password to obtain access token and use authenticated requests against WordPress REST API.
           jwt_user: process.env.JWT_USER,
           jwt_pass: process.env.JWT_PASSWORD,
           jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
-        // Set cookies that should be send with requests to wordpress as key value pairs
+        // Set cookies that should be send with requests to WordPress as key value pairs
         cookies: {},
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems.
@@ -186,7 +186,7 @@ plugins.
       the current locale and available translations to all post types translated with Polylang.
 
 - [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
-  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in wordpress.
+  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.
   - Work with Yoast premium :
     - Will create Yoast redirects model base on Yoast redirect
@@ -245,7 +245,7 @@ and would skip pulling Comments.
 
 ## How to query
 
-You can query nodes created from Wordpress using GraphQL like the following:
+You can query nodes created from WordPress using GraphQL like the following:
 Note : Learn to use the GraphQL tool and Ctrl+Spacebar at
 <http://localhost:3000/___graphiql> to discover the types and properties of your
 GraphQL model.
@@ -682,7 +682,7 @@ You can apply image processing to:
   - Image field type (return value must be set to `Image Object` or `Image URL` or field name must be `featured_media`),
   - Gallery field type.
 
-Image processing of inline images added in wordpress WYSIWIG editor is
+Image processing of inline images added in WordPress WYSIWIG editor is
 currently not supported.
 
 To access image processing in your queries you need to use this pattern:

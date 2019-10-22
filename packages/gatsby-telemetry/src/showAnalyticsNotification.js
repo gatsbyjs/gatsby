@@ -7,7 +7,7 @@ const defaultConfig = {
 }
 
 const defaultMessage =
-  `Gatsby has started collecting anonymous usage analytics\n` +
+  `Gatsby collects anonymous usage analytics\n` +
   `to help improve Gatsby for all users.\n` +
   `\n` +
   `If you'd like to opt-out, you can use \`gatsby telemetry --disable\`\n` +

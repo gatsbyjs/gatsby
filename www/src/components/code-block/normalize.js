@@ -68,7 +68,7 @@ export default (content, className = ``) => {
   if (filtered.length === 0) {
     for (let i = 0; i < split.length; i++) {
       const line = split[i]
-      if (containsDirective(line)) {
+      if (containsDirective(line) && className !== `language-no-highlight`) {
         const [, keyword, directive] = line.match(DIRECTIVE)
         switch (directive) {
           case `start`: {
