@@ -83,31 +83,30 @@ module.exports = {
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby" // highlight-line
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default () => {
+  // highlight-start
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
+  // highlight-end
   return (
     <Layout>
       <h1>I love my corgi!</h1>
     </Layout>
   )
 }
-
-// highlight-start
-export const query = graphql`
-  query {
-    fileName: file(relativePath: { eq: "images/corgi.jpg" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-  }
-`
-// highlight-end
 ```
 
 <EggheadEmbed
@@ -119,35 +118,35 @@ export const query = graphql`
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
-import { graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image" // highlight-line
 
-export default ({ data }) => {
+export default () => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
   return (
     <Layout>
       <h1>I love my corgi!</h1>
       // highlight-start
       <Img
-        fluid={data.fileName.childImageSharp.fluid}
+        fluid={data.file.childImageSharp.fluid}
         alt="A corgi smiling happily"
       />
       // highlight-end
     </Layout>
   )
 }
-
-export const query = graphql`
-  query {
-    fileName: file(relativePath: { eq: "images/corgi.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-  }
-`
 ```
 
 <EggheadEmbed
