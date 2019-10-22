@@ -657,6 +657,10 @@ const fluidObject = PropTypes.shape({
   media: PropTypes.string,
 })
 
+// If you modify these propTypes, please don't forget to update following files as well:
+// ../index.d.ts → TypeScript type definitions
+// ../README.md → #gatsby-image-props section
+// ~/docs/docs/gatsby-image.md → #gatsby-image-props section
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
