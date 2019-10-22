@@ -206,7 +206,7 @@ const Foo = () => {
 export default Foo
 ```
 
-If these browser globals aren't protected correctly, you'll see a Webpack error like the one below when building your site:
+If these browser globals aren't protected correctly, you'll see a webpack error like the one below when building your site:
 
 ```
 WebpackError: ReferenceError: window is not defined
