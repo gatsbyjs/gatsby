@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.3...gatsby-cli@2.8.4) (2019-10-22)
+
+### Bug Fixes
+
+- **gatsby-cli:** properly update chalk color level ([#18533](https://github.com/gatsbyjs/gatsby/issues/18533)) ([800d40c](https://github.com/gatsbyjs/gatsby/commit/800d40c))
+
 ## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.2...gatsby-cli@2.8.3) (2019-10-18)
 
 ### Bug Fixes
