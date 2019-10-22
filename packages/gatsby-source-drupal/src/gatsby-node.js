@@ -176,7 +176,7 @@ exports.onCreateDevServer = (
     bodyParser.text({
       type: `application/json`,
     }),
-    async (req, _res) => {
+    async (req, res) => {
       if (!_.isEmpty(req.body)) {
         const requestBody = JSON.parse(JSON.parse(req.body))
         const { secret, action, id } = requestBody
