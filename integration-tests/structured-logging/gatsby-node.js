@@ -5,7 +5,7 @@ const sleep = timeout =>
     setTimeout(resolve, timeout)
   })
 
-exports.createPages = async ({ reporter }) => {
+exports.createPages = async ({ actions, reporter }) => {
   const successfulActivity = reporter.createProgress(
     `Successful activity`,
     100,
@@ -34,6 +34,8 @@ exports.createPages = async ({ reporter }) => {
     unsuccessfulActivity.tick(75)
     unsuccessfulActivity.panicOnBuild(`Your car is on fire`)
     unsuccessfulActivity.done()
+
+    reporter.panicOnBuild(`Your car is on fire`)
   }
 
   if (process.env.PANIC_ON_BUILD) {
