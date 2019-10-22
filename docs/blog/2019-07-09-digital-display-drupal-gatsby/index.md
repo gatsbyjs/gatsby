@@ -1,5 +1,5 @@
 ---
-title: "Digital Display With Decoupled Drupal 8 & Gatsby"
+title: "Digital Display with Decoupled Drupal 8 & Gatsby"
 date: 2019-07-09
 author: Tara Arnold
 excerpt: "Sandy Springs partners with Mediacurrent to build a new Drupal and Gatsby decoupled platform architecture powering both the City Springs website and its digital signage network."
