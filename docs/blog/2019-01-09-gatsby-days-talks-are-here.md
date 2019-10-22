@@ -1,5 +1,5 @@
 ---
-title: Gatsby Days Talks are Here!
+title: Gatsby Days Talks Are Here!
 date: 2019-01-09T08:00:00+00:00
 author: Linda Watkins
 tags:
