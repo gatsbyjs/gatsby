@@ -4,7 +4,7 @@ title: Gatsby Docs Translation Guide
 
 There is an ongoing effort to translate the content on Gatsbyjs.org into multiple languages. For members of the community around the world building Gatsby sites and learning about web development, having docs and learning materials in your own language provides a lot of value. There's also a great opportunity for folks like you to contribute to the translations of the Gatsby docs.
 
-If you're a native speaker of a language other than English and you're interested in helping translate [gatsbyjs.org](https://gatsbyjs.org), here is some information for you to know:
+If you're a fluent speaker of a language other than English and you're interested in helping translate [gatsbyjs.org](https://gatsbyjs.org), here is some information for you to know:
 
 ## The general process
 
@@ -14,7 +14,7 @@ This doc will outline how to request a new language repository with its own team
 
 ### Page translation priorities
 
-The Gatsby learning team is in charge of determining priorities for which docs should be translated. Refer to the [i18n page spreadsheet](https://docs.google.com/spreadsheets/d/1u2amGnqFLKxJuL5h9UrDblUueFgg0EBt7xbau4n8iTM/edit) to get the most up-to-date priority list, which includes frequently-visited pages in the Gatsby docs, tutorial, recipes, other important pages.
+The Gatsby learning team is in charge of determining priorities for which docs should be translated. Refer to the [i18n page spreadsheet](https://docs.google.com/spreadsheets/d/1u2amGnqFLKxJuL5h9UrDblUueFgg0EBt7xbau4n8iTM/edit) to get the most up-to-date priority list, which includes frequently-visited pages in the Gatsby docs, tutorial, recipes, and other important pages.
 
 [Reference guide overview pages](/contributing/docs-templates/#reference-guide-overview) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/docs-templates/#reference-guides), though they are listed at a lower priority. Pages not translated will appear in English alongside translated pages to present a complete website without gaps, similar to the [React.js docs](https://reactjs.org).
 
@@ -74,7 +74,7 @@ Additional tips:
 
 Consistent with the [Code of Conduct](/docs/code-of-conduct/) the Gatsby team reserves the right to remove a maintainer (or contributor) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue,or generally harmful or abusive behavior inconsistent with Gatsby's policies.
 
-### Templates for responses on PRs
+### Template responses for closing PRs
 
 Sometimes a PR has a valid reason to not be merged as-is. Templates can help speed up the process of responding to someone while encouraging future contributions.
 
