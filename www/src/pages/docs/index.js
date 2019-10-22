@@ -34,7 +34,7 @@ class IndexRoute extends React.Component {
               Gatsby.js Documentation
             </h1>
             <p>Gatsby is a blazing fast modern site generator for React.</p>
-            <h2>Get Started</h2>
+            <h2>Get started</h2>
             <p>There are two main ways to get started with Gatsby:</p>
             <ol>
               <li>
