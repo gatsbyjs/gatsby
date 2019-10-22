@@ -49,7 +49,7 @@ You'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer
 
 `npm install --save gatsby-transformer-remark`
 
-### Add plugin
+### Configure plugin
 
 Add this to `gatsby-config.js` after the previously added `gatsby-source-filesystem`.
 
