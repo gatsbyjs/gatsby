@@ -1,24 +1,14 @@
 const _ = require(`lodash`)
 const { existsSync } = require(`fs`)
 const uuidv4 = require(`uuid/v4`)
-const queue = require(`async/queue`)
-const { processFile } = require(`./process-file`)
+const worker = require(`./worker`)
 const { createProgress } = require(`./utils`)
 
 const toProcess = {}
 let totalJobs = 0
-const q = queue((task, callback) => {
-  task(callback)
-}, 1)
+let jobsFinished = 0
 
 let bar
-// when the queue is empty we stop the progressbar
-q.drain = () => {
-  if (bar) {
-    bar.done()
-  }
-  totalJobs = 0
-}
 
 const getFileKey = filePath => filePath.replace(/\./g, `%2E`)
 
@@ -92,31 +82,34 @@ const scheduleJob = async (
       { name: `gatsby-plugin-sharp` }
     )
 
-    q.push(cb => {
-      runJobs(
-        jobId,
-        getFileKey(job.inputPath),
-        boundActionCreators,
-        pluginOptions,
-        reportStatus,
-        cb
-      )
-    })
+    runJobs(
+      jobId,
+      getFileKey(job.inputPath),
+      boundActionCreators,
+      pluginOptions,
+      jobs => {
+        jobsFinished++
+
+        // only show progress on build
+        jobs.forEach(() => {
+          if (reportStatus) {
+            bar.tick()
+          }
+        })
+
+        if (totalJobs === jobsFinished) {
+          bar.done()
+          totalJobs = 0
+        }
+      }
+    )
   }
 
   return deferred.promise
 }
 
-function runJobs(
-  jobId,
-  inputFileKey,
-  boundActionCreators,
-  pluginOptions,
-  reportStatus,
-  cb
-) {
+function runJobs(jobId, inputFileKey, boundActionCreators, pluginOptions, cb) {
   const jobs = _.values(toProcess[inputFileKey])
-  const findDeferred = job => jobs.find(j => j.job === job).deferred
   const { job } = jobs[0]
 
   // Delete the input key from the toProcess list so more jobs can be queued.
@@ -137,44 +130,41 @@ function runJobs(
   bar.total = totalJobs
 
   try {
-    const promises = processFile(
-      job.inputPath,
-      job.contentDigest,
-      jobs.map(job => job.job),
-      pluginOptions
-    ).map(promise =>
-      promise
-        .then(job => {
-          findDeferred(job).resolve()
-        })
-        .catch(err => {
-          findDeferred(job).reject({
-            err,
-            message: `Failed to process image ${job.inputPath}`,
-          })
-        })
-        .then(() => {
-          imagesFinished += 1
-
-          // only show progress on build
-          if (reportStatus) {
-            bar.tick()
-          }
-
-          boundActionCreators.setJob(
-            {
-              id: jobId,
-              imagesFinished,
-            },
-            { name: `gatsby-plugin-sharp` }
-          )
-        })
-    )
-
-    Promise.all(promises).then(() => {
-      boundActionCreators.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
-      cb()
+    worker({
+      inputPath: job.inputPath,
+      contentDigest: job.contentDigest,
+      transforms: jobs.map(child => {
+        return {
+          outputPath: child.job.outputPath,
+          transforms: child.job.args,
+        }
+      }),
+      pluginOptions,
     })
+      .then(() => {
+        jobs.map(job => {
+          job.deferred.resolve()
+        })
+
+        imagesFinished += jobs.length
+
+        boundActionCreators.setJob(
+          {
+            id: jobId,
+            imagesFinished,
+          },
+          { name: `gatsby-plugin-sharp` }
+        )
+      })
+      .catch(() => {})
+      .then(() => {
+        boundActionCreators.endJob(
+          { id: jobId },
+          { name: `gatsby-plugin-sharp` }
+        )
+
+        cb(jobs)
+      })
   } catch (err) {
     jobs.forEach(({ deferred }) => {
       deferred.reject({
