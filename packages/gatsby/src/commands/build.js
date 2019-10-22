@@ -50,7 +50,7 @@ module.exports = async function build(program: BuildArgs) {
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
-  if (clean) await cleanCommand.clean()
+  if (program.clean) await cleanCommand.clean()
 
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)

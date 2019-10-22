@@ -179,7 +179,7 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `boolean`,
           default: false,
           describe: `Perform 'gatsby clean' (purge .cache and .public dirs) before building`,
-        }),        
+        }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
         process.env.NODE_ENV = `production`
