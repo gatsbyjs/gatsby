@@ -1,5 +1,5 @@
 ---
-title: What is a Headless CMS and how to source content from one
+title: What is a Headless CMS and How to Source Content from One
 overview: true
 ---
 

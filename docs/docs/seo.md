@@ -60,4 +60,4 @@ When using structured data, you'll need to test during development and the [Stru
 
 ## Additional resources
 
-You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo/)
+You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo/).

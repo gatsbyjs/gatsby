@@ -1,5 +1,5 @@
 ---
-title: "Creating a Source Plugin"
+title: Creating a Source Plugin
 ---
 
 There are two types of plugins that work within Gatsby's data system: "source"
