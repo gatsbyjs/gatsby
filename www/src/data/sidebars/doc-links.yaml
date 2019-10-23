@@ -185,7 +185,7 @@
               link: /docs/use-static-query/
               breadcrumbTitle: The useStaticQuery Hook
             - title: Using GraphQL Fragments
-              link: /docs/using-fragments/
+              link: /docs/using-graphql-fragments/
             - title: Creating Slugs for Pages
               link: /docs/creating-slugs-for-pages/
             - title: Creating Pages from Data Programmatically
